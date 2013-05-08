@@ -1,0 +1,26 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="IBACustomer.cs" company="">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Admin.Business.BACustomer
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using Fanex.Tarus.Admin.Entities;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public interface IBACustomerService
+    {
+        List<Licensee> GetLicenseeBA();
+
+        FollowedCustomerDTO SelBACustomerList(int LicenseeId, int Status, string Username, int pageSize, int pageIndex, int fromCache);
+
+        Result InsBACustomerList(string strCustId, string Rate);
+    }
+}

@@ -1,0 +1,120 @@
+using System;
+using System.Data;
+using System.Web.UI;
+using DNAide.Web;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.Core.Web.Controls;
+using Sunplus.Core.LoggingLib;
+using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
+using IBCUtils.Web;
+using IBCUtils;
+using System.Text;
+using DNAide.Data;
+
+using DNAide.Core;
+
+using Sunplus.Accounting.Core.Web;
+
+public partial class Customer_EditCustomerInfo : RequiredAuthorizationPage
+{
+
+
+    public string username = "";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        Page.Title = "Edit Customer Info";
+        if (Session["AccId"] != null)
+        {
+            EditCustInfoContentHtml.Text = GenEditCustInfoContent();
+        }
+    }
+    private string GenEditCustInfoContent()
+    {
+        string strHtml = string.Empty;
+        try
+        {
+            DbResult ds = null;
+            if (Request["custId"] == null) return "";
+            ds = SelectCustomer.CustomerSelUserInfoRpt(Request["custId"]);
+            if (ds != null)
+            {
+                DataTable tbl = ds.ResultSet.Tables[0];
+                if (tbl.Rows.Count > 0)
+                {
+                    if (WebSettings.disableCS && DNAide.Core.CastAide.AsBoolean(tbl.Rows[0]["synccasino"],false))
+                    {
+                        return AlertMessage.GetMsg(string.Format(Resources.ErrorMsg.error_LockUpdateStatus, "USER INFO"), AlertMessage.MsgType.Error);
+                    }
+
+                    strHtml = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplateBySystem("Customer/EditCustomerInfo.htm");
+                    string strBirthday = Calendar.GenCalendarControl("txtBirthday", "../", "trigger_from", Convert.ToDateTime(tbl.Rows[0]["birthday"]).ToString("MM/dd/yyyy"), false, false, 0, 0, "");//Phuong.Nguyen <2009-01-03>, show others day of next month
+                    TemplateHandler.Assign(ref strHtml, "{vbirthday}", strBirthday);
+
+                    string nickname = DNAide.Core.CastAide.AsString(tbl.Rows[0]["username2"], string.Empty);
+                    if (nickname.Length > 0)
+                        nickname = " (" + nickname + ")";
+                    //TemplateHandler.Assign(ref strHtml, "{username}", tbl.Rows[0]["username"].ToString() + nickname);
+                    username = tbl.Rows[0]["username"].ToString() + nickname;
+                    TemplateHandler.Assign(ref strHtml, "{fname-Val}", tbl.Rows[0]["firstname"].ToString());
+                    TemplateHandler.Assign(ref strHtml, "{lname-Val}", tbl.Rows[0]["lastname"].ToString());
+                    TemplateHandler.Assign(ref strHtml, "{vphone-Val}", tbl.Rows[0]["phone"].ToString());
+                    TemplateHandler.Assign(ref strHtml, "{vmobile-Val}", tbl.Rows[0]["mobilephone"].ToString());
+                    TemplateHandler.Assign(ref strHtml, "{vemail-Val}", tbl.Rows[0]["email"].ToString());
+                    TemplateHandler.Assign(ref strHtml, "{vfax-Val}", tbl.Rows[0]["fax"].ToString());
+                    TemplateHandler.Assign(ref strHtml, "{vaddress-Val}", tbl.Rows[0]["address"].ToString());
+                    TemplateHandler.Assign(ref strHtml, "{vpostal-Val}", tbl.Rows[0]["postal"].ToString());
+                    TemplateHandler.Assign(ref strHtml, "{vref1-Val}", tbl.Rows[0]["refcode1"].ToString());
+                    TemplateHandler.Assign(ref strHtml, "{vref2-Val}", tbl.Rows[0]["refcode2"].ToString());
+                    TemplateHandler.Assign(ref strHtml, "{vcity-Val}", tbl.Rows[0]["city"].ToString());
+                    TemplateHandler.Assign(ref strHtml, "{vstate-Val}", tbl.Rows[0]["state"].ToString());
+                    TemplateHandler.Assign(ref strHtml, "{vremark-Val}", tbl.Rows[0]["remark"].ToString());
+                    TemplateHandler.Assign(ref strHtml, "{hidSynCS}", tbl.Rows[0]["synccasino"].ToString());
+                    TemplateHandler.Assign(ref strHtml, "{hidCur}", tbl.Rows[0]["exchangeid"].ToString());
+                    if (FormatHandler.GetBool(tbl.Rows[0]["important"]))
+                    {                        
+                        TemplateHandler.Assign(ref strHtml, "{vchecked}", "checked");
+                    }
+                    else
+                    {
+                        TemplateHandler.Assign(ref strHtml, "{vchecked}", "");
+                    }
+                    TemplateHandler.Assign(ref strHtml, "{vCountry}", tbl.Rows[0]["country"].ToString());
+                    strHtml += Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("Hidden.htm", new string[] { "{name}", "{strValue}" }, new string[] { "custId", Request["custId"] });
+                    strHtml += Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("Hidden.htm", new string[] { "{name}", "{strValue}" }, new string[] { "fcustinfo", Request["fcustinfo"] });
+                }
+            }
+        }
+        catch(Exception ex)
+        {
+            LogExtensions.ExceptionHandler(ex);
+
+        }
+        return strHtml;
+    }
+    private string GenListData(int from, int to, int currrent)
+    {
+        StringBuilder listContent = new StringBuilder();
+        try
+        {
+            for (int i = from; i <= to; i++)
+            {
+                if (currrent == i)
+                {
+                    listContent.Append("<option selected=\"true\" value=\"" + i + "\">" + i + "</option>");
+                }
+                else
+                {
+                    listContent.Append("<option value=\"" + i + "\">" + i + "</option>");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            LogExtensions.ExceptionHandler(ex);
+        }
+        return listContent.ToString();
+    }
+}

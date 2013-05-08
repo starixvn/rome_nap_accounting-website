@@ -1,0 +1,29 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="IResetWinning.cs" company="">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Sunplus.Accounting.WcfServiceLibrary.ResetWinning
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.ServiceModel;
+using System.ServiceModel.Web;
+    using Sunplus.Accounting.Entities.Report.ResetWinning;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    /// 
+    [ServiceContract]
+    public interface IResetWinning
+    {
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        ResetWinningDTO GetDataResetWinning(string date, int data);
+        
+    }
+}

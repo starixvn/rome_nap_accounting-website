@@ -1,0 +1,20 @@
+﻿using System.ServiceModel;
+using System.ServiceModel.Web;
+using ExcelUtil.Spreadsheet;
+
+// NOTE: If you change the interface name "IServiceDailyTran" here, you must also update the reference to "IServiceDailyTran" in Web.config.
+[ServiceContract]
+public interface IServiceNonePTMemSummary
+{
+    [OperationContract]
+    [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+    string LoadHeader();
+
+    [OperationContract]
+    [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+    string getNonePTMembers(string username, string currpage);
+
+    [OperationContract]
+    [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+    ExcelFile ExportToExcel_NonePTMemSummary(string username, string currpage);
+}

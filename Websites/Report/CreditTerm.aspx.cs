@@ -1,0 +1,151 @@
+using System;
+using System.Data;
+using System.Web;
+using DNAide.Web;
+using Sunplus.Accounting.Business.CacheManager;
+using Sunplus.Accounting.Business.Report;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Core.LoggingLib;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using System.Text;
+using IBCUtils;
+using DNAide.Core;
+
+
+/// <summary>
+/// CITS
+/// </summary>
+public partial class Report_CreditTerm : PageBase
+{
+
+    public StringBuilder sData = new StringBuilder();
+    public string display = "";
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+
+        Response.Cache.SetCacheability(HttpCacheability.NoCache);
+
+        string strHeaderAmt, bMember = "", bAgent = "", bMaster = "", bSuper = "";
+        string TitleExportExcel = "CREDIT TERM (INSTALL AMOUNT REPORT";
+        Title = Resources.Language.CreditTerm;
+        if (string.IsNullOrEmpty(Request["display"])) display = "pre";
+        else display = Request["display"];
+        display = display.Trim();
+
+        if (display.ToLower() == "pre")
+        {
+            string tplLink = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("CreditTeam/CreditTeamLink.htm");
+            link.Text = tplLink;
+            sData.Append(Reports.GetCreditTerm_1());
+        }
+        else // INSTALL AMOUNT REPORT
+        {
+            if (display.ToLower() == "install" || display.ToLower() == "1")
+                bMember = "font-weight:bold";
+            else if (display.ToLower() == "2")
+                bAgent = "font-weight:bold";
+            else if (display.ToLower() == "3")
+                bMaster = "font-weight:bold";
+            else if (display.ToLower() == "4")
+                bSuper = "font-weight:bold";
+
+            int roleid = (display == "install") ? 1 : Convert.ToInt32(display);
+            strHeaderAmt = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("CreditTeam/CreditTeamLinkSub.htm");
+            TemplateHandler.Assign(ref strHeaderAmt, "{bMember}", bMember);
+            TemplateHandler.Assign(ref strHeaderAmt, "{bAgent}", bAgent);
+            TemplateHandler.Assign(ref strHeaderAmt, "{bMaster}", bMaster);
+            TemplateHandler.Assign(ref strHeaderAmt, "{bSuper}", bSuper);
+            link.Text = strHeaderAmt;
+            sData.Append("<div style='width:708px'>" + InstallAmount(roleid) + "</div>");
+        }
+
+        if (CastAide.AsString(Request["btnExport"]) != "")
+        {
+            switch (display)
+            {
+                case "pre":
+                    TitleExportExcel = "CREDIT TERM (PRE AGREE REPORT)";
+                    break;
+                case "install":
+                    TitleExportExcel += " : " + "MEMBER)";
+                    break;
+                case "1"://member
+                    TitleExportExcel += " : " + "MEMBER)";
+                    break;
+                case "2"://agent
+                    TitleExportExcel += " : " + "AGENT)";
+                    break;
+                case "3"://master
+                    TitleExportExcel += " : " + "MASTER)";
+                    break;
+                case "4"://super
+                    TitleExportExcel += " : " + "SUPER)";
+                    break;
+            }
+            TitleExportExcel = "<div style='text-align:center'>" + TitleExportExcel + "</div>";
+            Sunplus.Accounting.Business.Report.Reports.ExportToExcel(TitleExportExcel + sData.ToString(), "CreditTerm");
+        }
+    }
+
+    #region string datevalue(object value)
+    string datevalue(object value)
+    {
+        DateTime date = Convert.ToDateTime(value);
+        int mm = date.Month;
+        int dd = date.Day;
+        int hh = date.Hour;
+        int mn = date.Minute;
+        return mm.ToString() + "/" + dd.ToString() + " " + hh.ToString() + ":" + mn.ToString();
+    }
+    #endregion
+
+    #region string InstallAmount (int roleid)
+    string InstallAmount(int roleid)
+    {
+        StringBuilder html = new StringBuilder();
+        string norow = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("NoInformation.htm");
+        TemplateHandler.Assign(ref norow, "{bgcolor-nodata}", "bgcolor-nodata");
+        TemplateHandler.Assign(ref norow, "{tdno}", "6");
+        TemplateHandler.Assign(ref norow, "{nodata}", Resources.Language.thereisnodata);
+
+        html.Append(Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("CreditTeam/CreditTeamInstallAmountAllHeader.htm"));
+        try
+        {
+            DataTable dt = AccountReport.Acc_Rpt_InstallAmount(roleid).ResultSet.Tables[0];
+            string rows = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("CreditTeam/CreditTeamInstallAmountAllRow.htm");
+            string odd_even = "";
+            if (dt.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    string row = rows.Clone().ToString();
+                    odd_even = (odd_even == "") ? "evenrow" : "";
+                    TemplateHandler.Assign(ref row, "{odd_even}", odd_even);
+                    TemplateHandler.Assign(ref row, "{member}", Convert.ToString(dr["username"]));
+                    TemplateHandler.Assign(ref row, "{curr}", CacheUtils.GetExchangeName(DNAide.Core.CastAide.AsInt32((dr["curr"]))));
+                    TemplateHandler.Assign(ref row, "{balance}", Reports.colorvalueCreditTerm(FormatHandler.GetDouble(dr["balance"])));
+                    TemplateHandler.Assign(ref row, "{basecurrency}", Reports.colorvalueCreditTerm(FormatHandler.GetDouble(dr["balance_base"])));
+                    TemplateHandler.Assign(ref row, "{install}", Reports.colorvalueCreditTerm(FormatHandler.GetDouble(dr["installmentamount"])));
+                    TemplateHandler.Assign(ref row, "{day}", Convert.ToString(dr["installmentdate"]));
+                    html.Append(row);
+                }
+            }
+            else
+            {
+                html.Append(norow);
+            }
+            html.Append("</table>");
+        }
+        catch (Exception ex)
+        {
+            html.Append("</table>");
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+        }
+
+        return html.ToString();
+    }
+    #endregion
+}

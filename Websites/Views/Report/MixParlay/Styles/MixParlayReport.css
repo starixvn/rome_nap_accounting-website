@@ -1,0 +1,17 @@
+﻿
+.nonBorderRight
+{
+    border-right: none !important;
+}
+
+.nonBorderBottom 
+{
+    border-bottom: none !important;
+}
+
+.live{ background-color:#DDD9C4 !important;}
+.nonlive{ background-color:#CAF091 !important;}
+.mix { background-color : #C5D9f1 !important;}
+.whiteText { color:White !important;}
+
+.total2 td { background-color: #D3E1C8 !important; }

@@ -1,0 +1,137 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="ViewLog.master.cs" Inherits="_ViewLog_ViewLog" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title>View log</title>
+    <link href="../App_Themes/Public/common.css" rel="stylesheet" type="text/css" />
+    <link href="../App_Themes/Log/ViewLog.css?v=2" rel="stylesheet" type="text/css" />
+    <link href="../App_Themes/Log/Tab.css" rel="stylesheet" type="text/css" />
+    <link href="../App_Themes/Log/Table.css" rel="stylesheet" type="text/css" />
+    
+    <link href="../App_Themes/Public/input.css" rel="stylesheet" type="text/css" />
+    <link href="../App_Themes/Public/Pagination.css" rel="stylesheet" type="text/css" />
+    <link type="text/css" rel="Stylesheet" href="../js/jQuery/autocomplete/styles.css?v=2" />
+    
+    <script src="../js/jQuery/jquery.js" type="text/javascript"></script>
+    <script src="../js/jQuery/autocomplete/autocomplete.js" type="text/javascript"></script>
+    <script src="../js/pager_v2.js" type="text/javascript"></script>
+    <script type="text/javascript" src="http://google.com/jsapi"></script>
+    <script type="text/javascript" src="../js/Calendar2/js/jscal2.js"></script>
+    <script type="text/javascript" src="../js/Calendar2/js/lang/en.js"></script>
+    <link rel="stylesheet" type="text/css" href="../js/Calendar2/css/jscal2.css" />
+    <link rel="stylesheet" type="text/css" href="../js/Calendar2/css/border-radius.css" />
+    <link rel="stylesheet" type="text/css" href="../js/Calendar2/css/blue/blue.css" />
+    <script type="text/javascript">
+        function getQuerystring(key, default_) {
+            if (default_ == null) default_ = "";
+            key = key.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+            var regex = new RegExp("[\\?&]" + key + "=([^&#]*)", "i");
+            var qs = regex.exec(window.location.href);
+            if (qs == null)
+                return default_;
+            else
+                return qs[1];
+
+        }
+        window.location = "Setting/Display.aspx?custName=" + getQuerystring('custname') + "&tab=" + getQuerystring('tabid');
+    </script>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div class="main">
+        <div class="maincontent">
+            <div class="maincontent_box">
+                <div class="box_header">
+                    <div class="left_tab">
+                        <ul>
+                            <li id="CustomerSetting"><a href="javascript:MenuGoTo('CustomerSetting')"><span>
+                                <asp:Literal ID="Literal10" Text="Customer Setting" EnableViewState="false" runat="server" />
+                            </span></a></li>
+                            <li id="Status"><a href="javascript:MenuGoTo('Status')"><span>
+                                <asp:Literal ID="Literal9" Text="Status" EnableViewState="false" runat="server" />
+                            </span></a></li>
+                            <li id="Credit"><a href="javascript:MenuGoTo('Credit')"><span>
+                                <asp:Literal ID="Literal2" Text="Credit" EnableViewState="false" runat="server" />
+                            </span></a></li>
+                            <li id="Login"><a href="javascript:MenuGoTo('Login')"><span>
+                                <asp:Literal ID="Literal5" Text="Login" EnableViewState="false" runat="server" />
+                            </span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <%--Search banner--%>
+                <div id="box_header" style="border-top: 0px; padding: 7px 7px 7px 7px;">
+                    <asp:Literal ID="Literal6" Text="User Name" runat="server"></asp:Literal>:
+                    <input type="text" class="textbox" id="txtUserName" style="width:135px" />
+                    <span id="RequiredUserName" class="required">*</span> &nbsp;&nbsp;
+                    <asp:Literal ID="Literal7" Text="From" runat="server"></asp:Literal>:
+                    <input type="text" class="date_no" id="txtFromDate" readonly="readonly" style="width:70px" />
+                    <a href="#" class="imaLink">
+                        <img alt="" id="imgCalFrom" title="Date selector" class="img-date-selector" src="../App_Themes/images/calendar.gif"
+                            border="0" />
+                    </a>&nbsp;&nbsp;
+                    <asp:Literal ID="Literal8" Text="To" EnableViewState="false" runat="server"></asp:Literal>:
+                    <input type="text" class="date_no" id="txtToDate" readonly="readonly" style="width:70px" />
+                    <a href="#" class="imaLink">
+                        <img alt="" id="imgCalTo" title="Date selector" class="img-date-selector" src="../App_Themes/images/calendar.gif"
+                            border="0" />
+                    </a>&nbsp;&nbsp;
+                    <span  id="ddlLogActionType" style="display: none">
+                        <asp:Literal ID="Literal1" Text="View by:" runat="server"></asp:Literal>
+                        <asp:DropDownList onChange="DoSearch();" ID="ddlActionType" runat="server" EnableViewState="false">
+                        </asp:DropDownList>
+                    </span>
+                    <input type="button" value='Search' id="Search" class="btn" />
+                    <img id="displayBox" src="../App_Themes/images/waiting7.gif" alt="" style="display: none;" />
+                    <div id="lnkOld" style="display:none;padding-top:5px">
+                        <span style="color:#90979A;font-weight:bold;">* For data before 01-Jan-2009, please <a class="link" onclick="OldForm()" href="#">click here</a></span>
+                    </div>
+                    <div id="loginMsg" style="display:none;padding-top:5px">
+                        <span style="color:#90979A;font-weight:bold;">* The Login Log data is only available within 90 days and is not applicable for member level</span>
+                    </div>
+                </div>
+            </div>
+            <div class="bg_table">
+                <asp:ContentPlaceHolder ID="contentData" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+        </div>
+    </div>
+    </form>
+    <script type="text/javascript">parent.jQuery.unblockUI();</script>
+    <script type="text/javascript" language="javascript">
+
+        var ctrInput = "<%=DateTime.Now.ToString()%>";
+        var ddlActionType = '#<%=ddlActionType.ClientID%>';
+        $(document).ready(function() {
+
+            // set default datetime    
+            var fromDate = getQuerystring('fromdate');
+            if (fromDate.length > 0) {
+                $('#txtFromDate').attr('value', getQuerystring('fromdate'));
+            }
+            else {
+                $('#txtFromDate').attr('value', '<%=DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy")%>');
+            }
+
+            var toDate = getQuerystring('todate');
+            if (toDate.length > 0) {
+                $('#txtToDate').attr('value', getQuerystring('todate'));
+            }
+            else {
+                $('#txtToDate').attr('value', '<%=DateTime.Now.ToString("MM/dd/yyyy")%>');
+            }
+
+            //setup autocomplete
+            var serviceUrl = "../Handlers/QueryUsername.ashx";
+
+            $('#txtUserName').autocomplete(
+                { serviceUrl: serviceUrl });
+        });
+    </script>
+
+    <script src="../js/ViewLogLibs.js?v=2" type="text/javascript"></script>
+
+</body>
+</html>

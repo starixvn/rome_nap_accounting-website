@@ -1,0 +1,503 @@
+using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+using System.Text;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.Business.Security;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Accounting.Core.Web.Controls;
+using Sunplus.Core.LoggingLib;
+using IBCUtils.DAL;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using IBCUtils.Web;
+using IBCUtils;
+using DNAide.Web;
+using DNAide.Core;
+using DNAide.Data;
+
+
+public partial class Statement_AccAllStatement : PageBase
+{
+
+
+    string odd_even = "";
+    string colspan="";
+    bool candelete = false;
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        try {
+            string fdate = Request["fdate"];
+            string tdate = Request["tdate"];
+            DateTime fdt, tdt;
+            if (!Validator.ValidDateMMDDYYYYNotNull(fdate, out fdt).IsSuccess())
+                if (Session["fdate"] != null)
+                    fdt = (DateTime)Session["fdate"];
+                else
+                    fdt = DateTime.Now.AddDays(-1);
+            if (!Validator.ValidDateMMDDYYYYNotNull(tdate, out tdt).IsSuccess())
+                if (Session["tdate"] != null)
+                    tdt = (DateTime)Session["tdate"];
+                else
+                    tdt = DateTime.Now;
+            Session["fdate"] = fdt;
+            Session["tdate"] = tdt;
+            //Check which report is used
+            int reportNo = 1;
+            int.TryParse(Request["repno"], out reportNo);
+            if (reportNo < 1 || reportNo > 5)
+                reportNo = 1;
+            //Report title
+            ReportTitle.Text = "Statement";
+            if (reportNo == 3)
+                ReportTitle.Text = "Statement Detail";
+            if (reportNo == 5)
+                ReportTitle.Text = "Company Statement";
+
+            StringBuilder htmlReport = new StringBuilder();
+            htmlReport.Append("<form><table><tr><td>" + Calendar.CreateDateRangeSelector("../", "fdate", "tdate", fdt, tdt, false, 0, 0, "")); //100: unlimited
+            htmlReport.Append("</td><td align='left'><input type='submit' value='    ' name='btnExport' id='btnExport' class='btnExcel'/><td></tr></table>");
+            htmlReport.Append("<input type='hidden' name='repno' value='" + reportNo + "' />" + "</form>"); 
+            string strHeader = GennerateHeader(reportNo);
+            htmlReport.Append(strHeader);
+
+            if ((Session["CustId"] == null || Session["CustUname"] == null) && reportNo != 5)
+            {
+
+                htmlReport.Append("</table>" + AlertMessage.GetMsg(IbcError.SESSION_EXPIRED_MSG, AlertMessage.MsgType.Error));
+            }
+            else if ((Session["CustRoleId"] == null || (int)Session["CustRoleId"] < 2) && reportNo == 4)
+            {
+                htmlReport.Append("</table>" + AlertMessage.GetMsg(IbcError.REPORT_NOT_AVAILABLE_MSG, AlertMessage.MsgType.Error));
+            }
+            else
+            {
+                DbResult ds = null;
+                try
+                {
+                    ds = AccountStatement.Acc_AllStatement(fdt, tdt, ((Session["CustId"] == null) ? 0 : (int)Session["CustId"]), ((Session["CustUname"] == null) ? "" : (string)Session["CustUname"]), reportNo);
+                }
+                catch (Exception ex)
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+
+                if (ds != null)
+                {
+                    candelete = Permissions.GetHostPermission(Enumerations.Functions.Transfer.DeleteTrans);
+
+                    if (ds.ResultSet.Tables[0].Rows.Count > 0)
+                    {
+                        string filenameSuffix = "-" + CastAide.AsString(Session["CustUname"], string.Empty) + "-" + fdt.ToString("yyyyMMdd") + "-" + tdt.ToString("yyyyMMdd");
+                        if (reportNo == 1 || reportNo == 2 || reportNo == 4)
+                            GenReport124(htmlReport, ds.ResultSet.Tables[0], reportNo, strHeader, filenameSuffix);
+                        if (reportNo == 3)
+                            GenReport3(htmlReport, ds.ResultSet.Tables[0], strHeader, filenameSuffix);
+                        if (reportNo == 5)
+                            GenReport5(htmlReport, ds.ResultSet.Tables[0], strHeader, filenameSuffix);
+                    }
+                    else
+                    {
+                        htmlReport.Append(AccCommon.GenNoInformation(colspan));
+                    }
+                    htmlReport.Append("</table>");
+                }
+                else
+                {
+                    htmlReport.Append("</table>" + AlertMessage.GetMsg(IbcError.INTERNAL_ERROR_MSG, AlertMessage.MsgType.Error));
+                }
+            }
+            HtmlBodyLiteral.Text = htmlReport.ToString();
+        }
+        catch(Exception ex)
+        {
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+        }
+
+
+        
+    }
+    /// <summary>
+    /// Generate report header
+    /// </summary>
+    /// <param name="htmlReport"></param>
+    /// <param name="reportNo"></param>
+    string GennerateHeader(int reportNo)
+    {
+        string headerHtml = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Statement\\AccAllStatementHeader.htm");
+        try
+        {
+            if (reportNo != 3 && reportNo != 1 )
+                TemplateHandler.RemoveBlock(ref headerHtml, "uname");
+            if (reportNo == 1 || reportNo == 2 || reportNo == 4)
+            {
+                if (reportNo == 1 || reportNo == 2)
+                {
+                    colspan="4";
+                    TemplateHandler.Assign(ref headerHtml, "{IsType}", "hidden");                    
+                    TemplateHandler.Assign(ref headerHtml, "{width}", "700");
+                    TemplateHandler.Assign(ref headerHtml, "{NotComp}", " rh-300");
+                    
+                    TemplateHandler.RemoveBlock(ref headerHtml, "Debit");
+                    TemplateHandler.RemoveBlock(ref headerHtml, "Credit");
+                    TemplateHandler.RemoveBlock(ref headerHtml, "RefNo");
+
+                    if (reportNo == 1)
+                        colspan = "5";
+                }
+                else
+                {
+                    colspan="5";
+                    TemplateHandler.Assign(ref headerHtml, "{width}", "900");
+                    TemplateHandler.Assign(ref headerHtml, "{NotComp}", string.Empty);
+                }
+                TemplateHandler.Assign(ref headerHtml, "{IsDetail}", "hidden");        
+                TemplateHandler.Assign(ref headerHtml, "{NotDetail}", string.Empty);
+                TemplateHandler.RemoveBlock(ref headerHtml, "Del");
+            }
+            else if (reportNo == 3)
+            {
+                colspan = "8";
+                TemplateHandler.Assign(ref headerHtml, "{IsType}", "hidden");
+                TemplateHandler.Assign(ref headerHtml, "{width}", "900");
+                TemplateHandler.Assign(ref headerHtml, "{IsDetail}", string.Empty);
+                TemplateHandler.Assign(ref headerHtml, "{NotComp}", string.Empty);
+                TemplateHandler.Assign(ref headerHtml, "{NotDetail}", "hidden");
+                TemplateHandler.RemoveBlock(ref headerHtml, "Total2");               
+            }
+            else
+            {
+                colspan = "4";
+                TemplateHandler.Assign(ref headerHtml, "{width}", "600");
+                TemplateHandler.Assign(ref headerHtml, "{IsDetail}", "hidden");
+                TemplateHandler.Assign(ref headerHtml, "{NotComp}", "hidden");
+                TemplateHandler.Assign(ref headerHtml, "{NotDetail}", string.Empty);
+                TemplateHandler.RemoveBlock(ref headerHtml, "RefNo");               
+            }
+        }
+        catch (Exception ex)
+        {
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+        }
+        
+        return headerHtml;
+    }
+    /// <summary>
+    /// Generate report rows: Statements from last balance-up and all statement
+    /// </summary>
+    /// <param name="htmlReport"></param>
+    /// <param name="table"></param>
+    /// <param name="reportNo"></param>
+    void GenReport124(StringBuilder htmlReport, DataTable table, int reportNo, string strHeader, string filenameSuffix)
+    {
+        string rowTpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Statement\\AccAllStatementRow.htm");
+        StringBuilder rows = new StringBuilder();
+
+        TemplateHandler.Assign(ref strHeader, "{style}", "style='height:18px;text-align: center;background-color: #737F88;line-height: 18px;font-weight: bold;	color: #FFFFFF;'");
+        TemplateHandler.RemoveBlock(ref strHeader, "RefNo");
+        TemplateHandler.RemoveBlock(ref strHeader, "Debit");
+        TemplateHandler.RemoveBlock(ref strHeader, "Credit");
+        rows.Append(strHeader);
+        
+        if(reportNo != 1)
+            TemplateHandler.RemoveBlock(ref rowTpl, "uname");
+        
+        /*int startIndex, endIndex, pageNum;
+        int pageSize = 20;
+        int page=1;
+        int.TryParse(Request["page"],out page);
+        AccCommon.CaculatePage(pageSize, page, table.Rows.Count, out startIndex, out endIndex, out pageNum);
+         */
+
+        try {
+            decimal total2 = 0;
+            int gotopen = 0;
+            double OpenBalance = 0, IsBalance = 0, linetotal = 0;
+            for (int i = 0; i < table.Rows.Count; ++i)
+            {
+                DataRow row = table.Rows[i];
+                string rowHtml = (string)rowTpl.Clone();
+
+                if (reportNo == 1)
+                {
+                    TemplateHandler.Assign(ref rowHtml, "{uname}",  (string.IsNullOrEmpty(CastAide.AsString(row["Creator"])) ? "--": CastAide.AsString(row["Creator"])));
+                }
+
+                string accDate = FormatHandler.FormatDateOptionalTime(row["accdate"]);
+                string remark = row["transdesc"] + "";
+                string type = row["transtype"] + "";
+                decimal total = FormatHandler.GetDecimal(row["totalamt"]);
+                total2 += total;
+
+                if (string.Compare(type, "bet", true) == 0 && reportNo == 1)
+                {
+                    TemplateHandler.Assign(ref rowHtml, "{Date}", accDate);
+                    accDate = "<!--Date-->" + Convert.ToDateTime(row["accdate"]).DayOfWeek.ToString() + "<br><!--/Date-->" + accDate;
+                    TemplateHandler.Assign(ref rowHtml, "{DateLink}", accDate);
+                    TemplateHandler.Assign(ref rowHtml, "{DateNoLink}", string.Empty);
+                    TemplateHandler.Assign(ref rowHtml, "{DetailUrl}", "../BetList.aspx?bltype=2&");
+                }
+                else
+                {
+                    accDate = "<!--Date-->" + Convert.ToDateTime(row["accdate"]).DayOfWeek.ToString() + "<br><!--/Date-->" + accDate;
+                    TemplateHandler.Assign(ref rowHtml, "{DateLink}", string.Empty);
+                    TemplateHandler.Assign(ref rowHtml, "{DateNoLink}", accDate);
+                }
+                odd_even = (odd_even == "") ? "evenrow" : "";
+                TemplateHandler.Assign(ref rowHtml, "{odd_even}", odd_even);
+                TemplateHandler.Assign(ref rowHtml, "{IsDetail}", "hidden");
+                TemplateHandler.Assign(ref rowHtml, "{NotComp}", string.Empty);
+                TemplateHandler.Assign(ref rowHtml, "{NotDetail}", string.Empty);
+
+                TemplateHandler.Assign(ref rowHtml, "{RefNo}", "");
+
+                if (reportNo == 1 || reportNo == 2)
+                {
+                    remark = "<b><!--NoType-->" + type.ToUpper() + "<br>-  <!--/NoType-->" + remark + "</b>";
+                    TemplateHandler.Assign(ref rowHtml, "{Type}", type);                    
+                }
+
+                TemplateHandler.RemoveBlock(ref rowHtml, "Del");
+                TemplateHandler.RemoveBlock(ref rowHtml, "RefNo");
+                TemplateHandler.RemoveBlock(ref rowHtml, "Debit");
+                TemplateHandler.RemoveBlock(ref rowHtml, "Credit");                    
+
+                TemplateHandler.Assign(ref rowHtml, "{Remark}", remark);
+                if (reportNo == 1 || reportNo == 2) TemplateHandler.Assign(ref rowHtml, "{IsType}", "hidden");
+                else TemplateHandler.Assign(ref rowHtml, "{Type}", type);
+                TemplateHandler.Assign(ref rowHtml, "{Total}", FormatHandler.FormatNumber20(total));
+
+                if (reportNo == 2)//all statement report
+                {
+                    int index = remark.ToLower().IndexOf("opening balance");
+                    if (index >= 0)
+                    {
+                        if (gotopen == 0)
+                        {
+                            gotopen = 1;
+                            OpenBalance = FormatHandler.GetDouble(row["totalamt"]);
+                            linetotal = OpenBalance;
+                        }
+                        IsBalance = 1;
+                    }
+                    else
+                    {
+                        linetotal += FormatHandler.GetDouble(row["totalamt"]);
+                        IsBalance = 0;
+                    }
+                    if (gotopen == 0) TemplateHandler.Assign(ref rowHtml, "{Total2}", "");
+                    else if (IsBalance == 1)
+                    {
+                        if (Math.Abs(linetotal - FormatHandler.GetDouble(row["totalamt"])) > 1)
+                        {
+                            string t = "NOT EQUAL<br><b>RESET Total<br>Diff:" + (linetotal - FormatHandler.GetDouble(row["totalamt"]));
+                            TemplateHandler.Assign(ref rowHtml, "{Total2}", t);
+                            TemplateHandler.Assign(ref rowHtml, "ralign {OkClass}", "f3pink");
+                            linetotal = FormatHandler.GetDouble(row["totalamt"]);
+                        }
+                        else
+                        {
+                            TemplateHandler.Assign(ref rowHtml, "{Total2}", "OK");
+                            TemplateHandler.Assign(ref rowHtml, "ralign {OkClass}", "f3green");
+                        }
+                    }
+                    else TemplateHandler.Assign(ref rowHtml, "{Total2}", FormatHandler.FormatNumber20(linetotal));
+                }
+                else
+                {
+                    TemplateHandler.Assign(ref rowHtml, "{Total2}", FormatHandler.FormatNumber20(total2));
+                    TemplateHandler.Assign(ref rowHtml, "{OkClass}", "");
+                }
+                htmlReport.Append(rowHtml + "\n");
+
+                rowHtml = rowHtml.Replace("<br>", "  ");
+                TemplateHandler.RemoveBlock(ref rowHtml, "Date");
+                TemplateHandler.RemoveBlock(ref rowHtml, "NoType");
+                rows.Append(rowHtml);                
+            }
+
+            if (Request["btnExport"] != null)
+            {
+
+                Sunplus.Accounting.Business.Report.Reports.ExportToExcel(rows.ToString().Replace("report-row-even", ""), "Statement" + filenameSuffix);
+            }
+        }
+        catch (Exception ex)
+        {
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+        }
+
+        
+    }
+    /// <summary>
+    /// Generate report rows for statement detail
+    /// </summary>
+    /// <param name="htmlReport"></param>
+    /// <param name="table"></param>
+    /// <param name="reportNo"></param>
+    void GenReport3(StringBuilder htmlReport, DataTable table, string strHeader, string filenameSuffix)
+    {
+        string rowTpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Statement\\AccAllStatementRow.htm");
+        string rowTotalTpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Statement\\AccAllStatementFooter_Detail.htm");
+        double total = 0;
+        StringBuilder rows = new StringBuilder();
+        TemplateHandler.Assign(ref strHeader, "{style}", "style='height:18px;text-align: center;background-color: #737F88;line-height: 18px;font-weight: bold;	color: #FFFFFF;'");
+        //TemplateHandler.RemoveBlock(ref strHeader, "Del");
+        rows.Append(strHeader);
+
+        try {
+            for (int i = 0; i < table.Rows.Count; ++i)
+            {
+                DataRow row = table.Rows[i];
+
+                string rowHtml = (string)rowTpl.Clone();
+                string transDate = FormatHandler.FormatDateOptionalTime(row["transdate"]);
+                string remark = row["transdesc"] + "";
+                string type = CacheRef.GetBettype(row["bettype"]);
+
+                odd_even = (odd_even == "") ? "evenrow" : "";
+                TemplateHandler.Assign(ref rowHtml, "{odd_even}", odd_even);
+                TemplateHandler.Assign(ref rowHtml, "{DateLink}", string.Empty);
+                transDate = "<!--Date-->" + Convert.ToDateTime(row["transdate"]).DayOfWeek.ToString() + "<br><!--/Date-->" + transDate;
+                TemplateHandler.Assign(ref rowHtml, "{DateNoLink}", transDate);
+
+                TemplateHandler.Assign(ref rowHtml, "{IsDetail}", string.Empty);
+                TemplateHandler.Assign(ref rowHtml, "{NotComp}", string.Empty);
+                TemplateHandler.Assign(ref rowHtml, "{NotDetail}", "hidden");
+                TemplateHandler.Assign(ref rowHtml, "{uname}", row["creator"].ToString());
+
+                string refno = row["refno"].ToString();
+                TemplateHandler.Assign(ref rowHtml, "{RefNo}", refno);
+
+                TemplateHandler.Assign(ref rowHtml, "{Credit}", FormatHandler.FormatNumber20(row["creditamt"]));
+                TemplateHandler.Assign(ref rowHtml, "{Debit}", FormatHandler.FormatNumber20(row["debitamt"]));
+                remark = "<b><!--NoType-->" + type.ToUpper() + "<br>-<!--/NoType-->" + remark + "</b>";
+                TemplateHandler.Assign(ref rowHtml, "{Remark}", remark);
+                TemplateHandler.Assign(ref rowHtml, "{IsType}", "hidden");
+                TemplateHandler.Assign(ref rowHtml, "{Type}", type);
+                TemplateHandler.Assign(ref rowHtml, "{Total}", FormatHandler.FormatNumber20(row["runningtotal"]));
+                TemplateHandler.Assign(ref rowHtml, "{ThemePath}", "../" + WebSettings.ThemePath);
+                total += Convert.ToDouble(row["creditamt"]) - Convert.ToDouble(row["debitamt"]);
+                
+
+                TemplateHandler.RemoveBlock(ref rowHtml, "Total2");
+                TemplateHandler.RemoveBlock(ref rowHtml, "Date");
+                TemplateHandler.RemoveBlock(ref rowHtml, "NoType");
+                //TemplateHandler.RemoveBlock(ref rowHtml, "Del");
+                if(CastAide.AsBoolean(row["allowdelete"], true) == false || candelete==false)
+                    TemplateHandler.RemoveBlock(ref rowHtml, "del-link");
+                htmlReport.Append(rowHtml + "\n");
+                rows.Append(rowHtml);
+            }
+            TemplateHandler.Assign(ref rowTotalTpl, "{total}", FormatHandler.FormatNumber40(total));
+            htmlReport.Append(rowTotalTpl);
+
+            if (Request["btnExport"] != null)
+            {
+
+                Sunplus.Accounting.Business.Report.Reports.ExportToExcel(rows.ToString().Replace("report-row-even", ""), "Detail" + filenameSuffix);
+            }
+        }
+        catch (Exception ex)
+        {
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+        }
+
+       
+    }
+    /// <summary>
+    /// Generate report rows for company statement
+    /// </summary>
+    /// <param name="htmlReport"></param>
+    /// <param name="table"></param>
+    void GenReport5(StringBuilder htmlReport, DataTable table, string strHeader, string filenameSuffix)
+    {
+        
+        string rowTpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Statement\\AccAllStatementRow.htm");
+        TemplateHandler.RemoveBlock(ref rowTpl, "uname");
+        StringBuilder rows = new StringBuilder();
+        TemplateHandler.Assign(ref strHeader, "{style}", "style='height:18px;text-align: center;background-color: #737F88;line-height: 18px;font-weight: bold;	color: #FFFFFF;'");
+        TemplateHandler.RemoveBlock(ref strHeader, "Remark");
+        TemplateHandler.RemoveBlock(ref strHeader, "Debit");
+        TemplateHandler.RemoveBlock(ref strHeader, "Credit");
+        TemplateHandler.RemoveBlock(ref strHeader, "Del");
+        TemplateHandler.RemoveBlock(ref strHeader, "RefNo");
+        rows.Append(strHeader);
+
+        TemplateHandler.RemoveBlock(ref rowTpl, "Remark");
+        TemplateHandler.RemoveBlock(ref rowTpl, "Debit");
+        TemplateHandler.RemoveBlock(ref rowTpl, "Credit");
+        TemplateHandler.RemoveBlock(ref rowTpl, "Del");
+        TemplateHandler.RemoveBlock(ref rowTpl, "RefNo");
+
+        decimal total2 = 0;
+        try {
+            for (int i = 0; i < table.Rows.Count; ++i)
+            {
+                DataRow row = table.Rows[i];
+
+                string rowHtml = (string)rowTpl.Clone();
+                string accDate = FormatHandler.FormatDateOptionalTime(row["accdate"]) ;
+                string type = row["transtype"] + "";
+                decimal total = Convert.IsDBNull(row["totalamt"]) ? 0 : Convert.ToDecimal(row["totalamt"]);
+                total2 += total;
+                if (string.Compare(type, "bet", true) == 0)
+                {
+                    TemplateHandler.Assign(ref rowHtml, "{DateLink}", string.Empty);
+                    accDate = "<!--Date-->" + Convert.ToDateTime(row["accdate"]).DayOfWeek.ToString() + "<br><!--/Date-->" + accDate;
+                    TemplateHandler.Assign(ref rowHtml, "{DateNoLink}", accDate);
+                }
+                else
+                {
+                    TemplateHandler.Assign(ref rowHtml, "{Date}", accDate);
+                    accDate = "<!--Date-->" + Convert.ToDateTime(row["accdate"]).DayOfWeek.ToString() + "<br><!--/Date-->" + accDate;
+                    TemplateHandler.Assign(ref rowHtml, "{DateLink}", accDate);
+                    TemplateHandler.Assign(ref rowHtml, "{DateNoLink}", string.Empty);
+
+                    TemplateHandler.Assign(ref rowHtml, "{DetailUrl}", "StatementByDay.aspx?transtype=" + type + "&");
+                }
+
+                TemplateHandler.Assign(ref rowHtml, "{IsDetail}", "hidden");
+                TemplateHandler.Assign(ref rowHtml, "{NotComp}", "hidden");
+                TemplateHandler.Assign(ref rowHtml, "{NotDetail}", "");
+
+                odd_even = (odd_even == "") ? "evenrow" : "";
+                TemplateHandler.Assign(ref rowHtml, "{odd_even}", odd_even);
+                TemplateHandler.Assign(ref rowHtml, "{RefNo}", string.Empty);
+                TemplateHandler.Assign(ref rowHtml, "{Credit}", string.Empty);
+                TemplateHandler.Assign(ref rowHtml, "{Debit}", string.Empty);
+                TemplateHandler.Assign(ref rowHtml, "{Remark}", string.Empty);
+                TemplateHandler.Assign(ref rowHtml, "{Type}", type);
+                TemplateHandler.Assign(ref rowHtml, "{Total}", FormatHandler.FormatNumber20(total));
+                TemplateHandler.Assign(ref rowHtml, "{Total2}", FormatHandler.FormatNumber20(total2));
+                TemplateHandler.Assign(ref rowHtml, "{ThemePath}", "../" + WebSettings.ThemePath);
+
+                htmlReport.Append(rowHtml + "\n");
+                
+                TemplateHandler.RemoveBlock(ref rowHtml, "Date");
+                rows.Append(rowHtml);
+
+            }
+
+            if (Request["btnExport"] != null)
+            {
+
+                Sunplus.Accounting.Business.Report.Reports.ExportToExcel(rows.ToString().Replace("report-row-even", ""), "Statement" + filenameSuffix);
+            }
+        }
+        catch (Exception ex)
+        {
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+        }
+
+        
+    }
+}

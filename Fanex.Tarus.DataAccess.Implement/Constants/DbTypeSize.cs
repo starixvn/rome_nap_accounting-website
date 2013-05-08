@@ -1,0 +1,10 @@
+﻿
+
+namespace Fanex.Tarus.DataAccess.Implement.Constants
+{
+    public class DbTypeSize
+    {
+        public const int DoubleType = 8;
+        public const int DecimalType = 8;
+    }
+}

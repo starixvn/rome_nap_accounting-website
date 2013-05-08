@@ -1,0 +1,75 @@
+﻿
+
+
+using System;
+using System.Data;
+using Fanex.Data;
+using Fanex.Tarus.Reports.Helpers;
+
+namespace Fanex.Tarus.Reports.DataAccess.MixParlay
+{
+    public class MixParlayReportAccess : IMixParlayReportAccess
+    {
+        public DataTable SelDirectMixParlay(DateTime reportDate, int betType)
+        {
+            DataTable dt = new DataTable();
+            string strMapping = "DailyWLDirect_MixParlay";
+                
+
+            using (ObjectDb objDB = new ObjectDb(strMapping))
+            {
+                objDB.AddInParameter("winlostdate", DbType.DateTime, reportDate);
+                objDB.AddInParameter("bettype", DbType.Int32, betType);
+
+                var ds = objDB.ExecuteDataSet();
+                if (ds.Tables.Count > 0)
+                {
+                    dt = ds.Tables[0];
+                }
+            }
+            return dt;
+        }
+
+        public DataTable SelAdvanceMixParlayReport(DateTime fromDate, DateTime toDate, bool isViewDW, int betType)
+        {
+            DataTable dt = new DataTable();
+            string strMapping = "DailyWLDirect_MixParlayAdvance";
+            if (isViewDW)
+                strMapping += "_WH";
+            using (ObjectDb objDB = new ObjectDb(strMapping))
+            {
+                objDB.AddInParameter("fromdate", DbType.DateTime, fromDate);
+                objDB.AddInParameter("todate", DbType.DateTime, toDate);
+                objDB.AddInParameter("bettype", DbType.Int32, betType);
+                var ds = objDB.ExecuteDataSet();
+                if (ds != null && ds.Tables.Count > 0)
+                {
+                    dt = ds.Tables[0];
+                }
+            }
+
+            return dt;
+        }
+
+
+        public DataTable SelDailyParlayCombinationWinLoss(DateTime fromDate, DateTime toDate, bool isViewDW)
+        {
+            DataTable dt = new DataTable();
+            string strMapping = "Acc_Rpt_DailyParlayWinloss";
+            if (isViewDW)
+                strMapping += "_WH";
+            using (ObjectDb objDB = new ObjectDb(strMapping))
+            {
+                objDB.AddInParameter("fromdate", DbType.DateTime, fromDate);
+                objDB.AddInParameter("todate", DbType.Date, toDate);
+                var ds = objDB.ExecuteDataSet();
+                if (ds != null && ds.Tables.Count > 0)
+                {
+                    dt = ds.Tables[0];
+                }
+            }
+
+            return dt;
+        }
+    }
+}

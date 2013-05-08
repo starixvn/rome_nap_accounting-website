@@ -1,0 +1,189 @@
+﻿using System;
+using System.Collections;
+using System.Data;
+using System.Text;
+
+using DNAide.Core;
+using DNAide.Data;
+using DNAide.Utils;
+using DNAide.Web;
+
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Accounting.DataAccess;
+using Sunplus.Accounting.DataAccess.Report;
+using Sunplus.Core.LoggingLib;
+
+namespace BLL.Report.OpenToteSettlement
+{
+    public class OpenToteSettlementBetlistManager : ReportBase
+    {
+        private bool hasError;
+        private string msg = "<span class='error-message'>{content}</span>";
+        private string user = "[" + AppSession.Username + "]";
+
+        #region ViewBetList
+
+        public string ViewBetList(string leagueid, string raceno, string currencyid, string winlostdate, string db,
+                                  bool IsTest)
+        {
+            DbResult ds = null;
+            var html = new StringBuilder();
+            string tpl = "";
+            try
+            {
+                var hashtable = new Hashtable();
+                hashtable.Add("leagueid", leagueid);
+                hashtable.Add("raceno", raceno);
+                hashtable.Add("currency", currencyid);
+                hashtable.Add("winlostdate", winlostdate);
+                hashtable.Add("db", db);
+
+                DateTime movebetsday = ReportUtils.BalanceUp.MoveBetsDay;
+
+                if (IsTest)
+                {
+                    if (CastAide.AsDateTime(winlostdate) <= movebetsday)
+                        ds = IBCProvider.ReportProvider.OpenToteSettlement().WinlostHR_OpenTote_BetList14_Test(hashtable);
+                    else
+                        ds = IBCProvider.ReportProvider.OpenToteSettlement().WinlostHR_OpenTote_BetList_Test(hashtable);
+                }
+                else
+                {
+                    if (CastAide.AsDateTime(winlostdate) <= movebetsday)
+                        ds = IBCProvider.ReportProvider.OpenToteSettlement().WinlostHR_OpenTote_BetList14(hashtable);
+                    else
+                        ds = IBCProvider.ReportProvider.OpenToteSettlement().WinlostHR_OpenTote_BetList(hashtable);
+                }
+
+
+                tpl = WebUtils.LoadTemplate("Report/OpenToteSettlement/OpenToteSettlementBetList.htm");
+                string tplContent = TemplateHandler.CopyBlock(tpl, "content");
+
+                var rows = new StringBuilder();
+                if (ds != null)
+                {
+                    DataTable dt = ds.ResultSet.Tables[0];
+                    int index = 0;
+                    if (dt.Rows.Count > 0)
+                    {
+                        string odd_even = "";
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            index++;
+                            string row = tplContent;
+                            odd_even = (odd_even == "") ? "evenrow" : "";
+                            TemplateHandler.Assign(ref row, "odd_even", odd_even);
+
+                            TemplateHandler.Assign(ref row, "No", index);
+                            TemplateHandler.Assign(ref row, "Member", dr["username"]);
+                            TemplateHandler.Assign(ref row, "TransID", dr["transid"]);
+                            TemplateHandler.Assign(ref row, "TransTime", dr["transdate"]);
+                            TemplateHandler.Assign(ref row, "Stake", NumberFormat.DecFormat(dr["stake"], 2));
+                            TemplateHandler.Assign(ref row, "WinLoss", NumberFormat.DecFormat(dr["winlost"], 2));
+                            TemplateHandler.Assign(ref row, "PlayerComm", NumberFormat.DecFormat(dr["PlayerComm"], 2));
+                            TemplateHandler.Assign(ref row, "WLPTAgency", NumberFormat.DecFormat(dr["WLPTAgency"], 2));
+                            TemplateHandler.Assign(ref row, "CommIncomeAgency",
+                                                   NumberFormat.DecFormat(dr["CommIncomeAgency"], 2));
+                            TemplateHandler.Assign(ref row, "WLPTIBC", NumberFormat.DecFormat(dr["WLPTIBC"], 2));
+                            TemplateHandler.Assign(ref row, "CommIncomeIBC",
+                                                   NumberFormat.DecFormat(dr["CommIncomeIBC"], 2));
+                            TemplateHandler.Assign(ref row, "Dividend", NumberFormat.DecFormat(dr["dividend"], 2));
+
+                            //OpenTote Exchange Rate
+                            bool isShowOtExRate = CastAide.AsBoolean(dr["isShowOTExRate"], false);
+                            double virtualRate = CastAide.AsDouble(dr["virtualrate"], 0.0);
+
+                            if (!isShowOtExRate)
+                            {
+                                TemplateHandler.RemoveBlock(ref row, "Exchangerate");
+                            }
+                            else
+                                TemplateHandler.Assign(ref row, "{ExchangeRate}",
+                                                       isShowOtExRate ? virtualRate.ToString() : string.Empty);
+
+                            int bettype = CastAide.AsInt32(dr["bettype"]);
+
+                            if (bettype == 31 || bettype == 32)
+                            {
+                                TemplateHandler.RemoveBlock(ref row, "winplace-status");
+                                TemplateHandler.RemoveBlock(ref row, "winplace-odds");
+                                TemplateHandler.Assign(ref row, "Status", dr["status"]);
+
+                                if (dr["status"].Equals(Status.WIN) || dr["status"].Equals(Status.Refund))
+                                    TemplateHandler.Assign(ref row, "{Odds}", NumberFormat.DecFormat(dr["Odds"], 2));
+                                else
+                                    TemplateHandler.Assign(ref row, "{Odds}", "-");
+                            }
+                            else
+                            {
+                                TemplateHandler.Assign(ref row, "WinStatus", dr["winStatus"]);
+                                TemplateHandler.Assign(ref row, "PlaceStatus", dr["placeStatus"]);
+                                TemplateHandler.Assign(ref row, "Status", "");
+
+                                TemplateHandler.Assign(ref row, "{WinOdds}",
+                                                       (dr["winStatus"].Equals(Status.WIN))
+                                                           ? NumberFormat.DecFormat(dr["WinOdds"], 2)
+                                                           : "0.00");
+                                TemplateHandler.Assign(ref row, "{PlaceOdds}",
+                                                       (dr["placeStatus"].Equals(Status.LOSE) ||
+                                                        dr["placeStatus"].Equals(Status.Refund))
+                                                           ? "0.00"
+                                                           : NumberFormat.DecFormat(dr["PlaceOdds"], 2));
+                                TemplateHandler.Assign(ref row, "{Odds}", string.Empty);
+                            }
+
+                            TemplateHandler.Assign(ref row, "choice",
+                                                   dr["HorseNo"] + " - " + CacheRef.GetHorseTeamName(dr["HorseId"]));
+                            TemplateHandler.Assign(ref row, "bettype", CacheRef.GetBettype(dr["bettype"]));
+
+                            rows.Append(row);
+                        }
+                        TemplateHandler.ReplaceBlock(ref tpl, "content", rows.ToString());
+
+                        //total
+                        TemplateHandler.Assign(ref tpl, "TotalStake",
+                                               NumberFormat.DecFormat(dt.Compute("sum(stake)", ""), 2));
+                        TemplateHandler.Assign(ref tpl, "TotalWL",
+                                               NumberFormat.DecFormat(dt.Compute("sum(winlost)", ""), 2));
+                        TemplateHandler.Assign(ref tpl, "TotalAgWL",
+                                               NumberFormat.DecFormat(dt.Compute("sum(WLPTAgency)", ""), 2));
+                        TemplateHandler.Assign(ref tpl, "TotalIBCWL",
+                                               NumberFormat.DecFormat(dt.Compute("sum(WLPTIBC)", ""), 2));
+                        TemplateHandler.Assign(ref tpl, "TotalCom",
+                                               NumberFormat.DecFormat(dt.Compute("sum(PlayerComm)", ""), 2));
+                        TemplateHandler.Assign(ref tpl, "TotalAgCom",
+                                               NumberFormat.DecFormat(dt.Compute("sum(CommIncomeAgency)", ""), 2));
+                        TemplateHandler.Assign(ref tpl, "TotalIBCCom",
+                                               NumberFormat.DecFormat(dt.Compute("sum(CommIncomeIBC)", ""), 2));
+                        TemplateHandler.Assign(ref tpl, "TotalDividend",
+                                               NumberFormat.DecFormat(dt.Compute("sum(dividend)", ""), 2));
+                    }
+                    else
+                    {
+                        TemplateHandler.ReplaceBlock(ref tpl, "content", AccCommon.GenNoInformation("11"));
+                        TemplateHandler.RemoveBlock(ref tpl, "total");
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+                TemplateHandler.ReplaceBlock(ref tpl, "content", exception.Message);
+                TemplateHandler.RemoveBlock(ref tpl, "total");
+            }
+            html.Append(tpl);
+            return html.ToString();
+        }
+
+        #endregion
+
+        public override string RenderHTML(Hashtable input)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

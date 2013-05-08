@@ -1,0 +1,50 @@
+using System;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web;
+using IBCUtils;
+using DNAide.Core;
+using BLL.Report;
+using System.Collections;
+
+
+/// <summary>
+/// @Khoa.Tran
+/// HedgeRecord.aspx
+/// HedgeRecord.cs
+/// HedgeRecordContent.tpl
+/// HedgeRecordHeaderTable.tpl
+/// DeleteHedgeRecord.ashx
+/// sp select: Acc_Rpt_HedgeRecord 
+/// AccountReport.cs
+/// </summary>
+public partial class Report_HedgeRecord : PageBase
+{
+    protected string ToDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today);
+    protected string MinDay = "";
+    protected string FDay = "";
+    protected string TDay = "";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        DateTime fdate = CastAide.AsDateTime(Request["fdate"], DateTime.Now);
+        DateTime tdate = CastAide.AsDateTime(Request["tdate"], DateTime.Now);
+        ToDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today);
+        MinDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today.AddMonths(-3));
+        FDay = string.Format("{0:MM/dd/yyyy}", fdate);
+        TDay = string.Format("{0:MM/dd/yyyy}", tdate);  
+        ReportBase report = new rptHedgeRecord();
+        Hashtable hash = new Hashtable();
+        hash.Add("fdate", FormatHandler.ResetStartDate(fdate));
+        hash.Add("tdate", FormatHandler.ResetEndDate(tdate));
+        if (CastAide.AsInt32(Request["IsExport"]) == 1)
+        {
+            string fileName = " BettingGraph";
+            hash.Add("FileName", fileName);
+            report.Export2Excel(hash);
+        }
+        else
+        {
+            SearchStandard.Text = report.CreateHeader(hash);
+            content.Text = report.RenderHTML(hash);
+        }
+    }    
+}

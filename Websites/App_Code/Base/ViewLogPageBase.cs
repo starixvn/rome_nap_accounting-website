@@ -1,0 +1,90 @@
+﻿using System;
+using System.Web;
+using Sunplus.Accounting.Business.Customer;
+using Sunplus.Accounting.Entities.Customer;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Accounting.Core.Web.Controls;
+using Sunplus.Shared.ViewLogLib;
+
+//using IBC.Shared.ViewLogLib;
+
+
+    /// <summary>
+    /// Summary description for ViewLogPageBase
+    /// </summary>
+    public class ViewLogPageBase : Sunplus.Shared.ViewLogLib.PageBase
+    {
+        /// <summary>
+        /// T: Enumerations.Functions (Customer, Reports)
+        /// </summary>
+        /// <returns></returns>
+        public const string TbodyLogId = "{tbodylogid}";
+
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+            if (!HasPermission())
+                RedirectDeny();
+        }
+
+        protected virtual bool HasPermission()
+        {
+            if (!Functions.Customer.AllowViewLog)
+                return false;
+            string url = Request.CurrentExecutionFilePath;
+            if (Request.ApplicationPath.Equals("/"))
+                url = "/" + url;
+            url = url.Replace(Request.ApplicationPath + "/", "").ToLower();
+            ;
+            // url = WebSettings.VirtualDir ? Request.RawUrl.Substring(Request.RawUrl.IndexOf("/", 1) + 1) : Request.RawUrl.Substring(1);
+            //url = url.Substring(0, url.IndexOf(".aspx") + 5).ToLower();
+            return AppSession.PageAccess.ContainsKey(url);
+        }
+
+        protected virtual void RedirectDeny()
+        {
+            HttpContext.Current.Server.Transfer(Sunplus.Accounting.Core.Common.Constants.Page.AccessDenied);
+        }
+
+    
+        /// <summary>
+        /// T: Enumerations.Functions (Customer, Reports)
+        /// </summary>
+        /// <returns></returns>
+   
+    
+        public override void RenderPager(int pageIndex, int totalPages)
+        {
+            Pager = PagerManager.GenPagingFooter(CurrentUrl, totalPages, pageIndex + 1);
+        }
+
+
+        public override IRequestViewLogContext CreateRequestViewLogContext()
+        {
+            IRequestViewLogContext requestViewLogContext = null;
+            CustDetail customer = CustomerUtils.GetCustomer(CustomerName);
+            if (customer != null)
+            {
+                requestViewLogContext = new RequestViewLogContext
+                                            {
+                                                CustomerName = CustomerName,
+                                                FromDate = FromDate,
+                                                ToDate = ToDate,
+                                                CustomerId = customer.CustId,
+                                                CustomerRole = customer.RoleId,
+                                                LanguageCode = ToLanguageCode("E"),
+                                                IsAdminAccess = true,
+                                                IsInternal = 1
+                                            };
+            }
+
+            return requestViewLogContext;
+        }
+
+        public override string GetCurrentLanguage()
+        {
+            return "en-US";
+        }
+    }
+

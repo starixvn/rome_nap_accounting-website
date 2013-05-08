@@ -1,0 +1,13 @@
+﻿
+using System.Collections;
+using System.Data;
+
+namespace Fanex.Tarus.VirtualSport.DataAccess.SpecialDelete
+{
+    public interface ISpecialDeleteAccess
+    {
+        DataSet CheckRefno(string matchid, string fromRefno, string toRefno, ref Hashtable outputParam);
+
+        DataTable SelMailingList();
+    }
+}

@@ -1,0 +1,20 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="VSWinlossByDate.cs" company="">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.VirtualSport.Entities.Report.Winloss
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    [Serializable]
+    public class WinlossByDate
+    {
+        public string Date { get; set; }
+        public List<WinlossDetail> WLDetailList { get; set; }
+    }
+}

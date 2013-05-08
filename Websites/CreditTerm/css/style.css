@@ -1,0 +1,197 @@
+﻿*
+{
+    margin: 0;
+    padding: 0;
+}
+div#credit_content 
+{
+    float: left; 
+    padding-bottom: 10px; 
+    display: none;
+    padding-top: 7px;
+}
+div.panel_search
+{
+    width: 562px;
+    background-color: #B5C4D0;
+    border: 1px solid #7C98A4;
+    margin-bottom: 5px;
+    text-align:left!important;
+    padding: 3px 0px;
+}
+div#credit_content div
+{
+    text-align: center;
+    float: left;
+}
+div.header
+{
+    background-color: #B5C4D0;
+    font-weight: bold;
+    border: 1px solid #7C98A4;
+    width: 562px;
+}
+div.header div
+{
+    float: left;
+    border-right: 1px solid #7C98A4;
+    padding: 4px 0px;
+}
+div.content
+{
+    height: 500px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 564px;
+}
+div.content div.item
+{
+    border-left: 1px solid #7C98A4;
+    border-bottom: 1px solid #7C98A4;
+    width: 546px;
+}
+div.content div.item div
+{
+    float: left;
+    border-right: 1px solid #7C98A4;
+    padding: 3px 0px;
+}
+div.content div.item.active
+{
+    background-color: #F8FF8D !important;
+    cursor: pointer;
+}
+div.content div.item.even
+{
+    background-color: #DFEAFF;
+}
+div.content div.item div
+{
+    height: 14px;
+    padding: 5px 0px;
+}
+div.index
+{
+    width: 50px;
+    height: 14px;
+}
+div.group
+{
+    width: 80px;
+    height: 14px;
+}
+div.uname
+{
+    width: 160px;
+    height: 14px;
+}
+div.currency
+{
+    width: 70px;
+    height: 14px;
+}
+div.checker
+{
+    width: 100px;
+    height: 14px;
+}
+div.edit
+{
+    width: 80px;
+    height: 14px;
+}
+div.end
+{
+    border-right: none!important;
+}
+div.refresh
+{
+    width: 16px;
+    height: 14px;
+    cursor: pointer;
+}
+/*css sorter*/
+div.sorter
+{
+    background-image: url(../../App_Themes/images/sorting_bg.gif);
+    background-repeat: no-repeat !important;
+    background-position: center right !important;
+    cursor: pointer;
+}
+div.sorter a
+{
+    color: #000 !important;
+}
+div.sorter a:hover
+{
+    color: #000 !important;
+}
+div.sorter.asc
+{
+    background-image: url(../../App_Themes/images/sorting_asc.gif) !important;
+}
+div.sorter.desc
+{
+    background-image: url(../../App_Themes/images/sorting_desc.gif) !important;
+}
+/*search*/
+span#search_ico
+{
+    background-image: url(../../App_Themes/images/view_ico.gif);
+    padding: 1px;
+    margin: -5px -30px;
+    background-repeat: no-repeat !important;
+    background-position: center right !important;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    z-index: 1000;
+    cursor: pointer;
+    display: none;
+}
+span#search
+{
+    width: 154px;
+    padding-left: 3px;
+    z-index: 1010;
+}
+span#search input.text
+{
+    border: 0 none!important;
+    height: 14px;
+    padding: 2px 2px;
+    width: 118px;
+}
+span#search input.btn_search
+{
+    background-image: url(../../App_Themes/images/view_ico.gif);
+    background-repeat: no-repeat !important;
+    background-position: left center !important;
+    background-color: #FFF;
+    border: 0 none!important;
+    width: 20px !important;
+    height: 18px;
+    cursor: pointer;
+}
+span#search input.btn_go
+{
+    background-image: url(../../App_Themes/images/go_icon.gif);
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-color: #B5C4D0;
+    border: 0 none!important;
+    width: 24px!important;
+    height: 18px!important;
+    cursor: pointer;
+}
+span#search input.btn_clear
+{
+    background-image: url(../../App_Themes/images/reset.png);
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+   
+    border: 0 none!important;
+    width: 24px!important;
+    height: 18px!important;
+    cursor: pointer;
+}

@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta content="notranslate" name="google">
+    <meta content="IE=9chrome=1;" http-equiv="X-UA-Compatible">
+    <title></title>
+   <style>
+    #tbl
+    {
+        border-collapse:collapse;
+        }   
+    #tbl td
+    {
+        border:solid 1px;    
+        }
+    #tbl tr.blue
+    {
+        background-color:Blue;
+        }    
+   </style>
+    <script src="../js/jQuery/jquery.js" type="text/javascript"></script>
+  
+    <script>
+        var grid;
+        var tpl = '<tr class="blue d2">\
+                            <td>test  <a onclick="showHide(false, this)" classDetail="d2" parentId="m2" collapse="false">[-]</a></td>\
+                            <td>test</td>\
+                            <td>test</td>\
+                            <td rowspan="3" id="333">test</td>\
+                        </tr>\
+                         <tr class="blue d2">\
+                            <td>test</td>\
+                            <td>test</td>\
+                            <td>test</td>\
+                        </tr>\
+                         <tr class="blue d2">\
+                            <td>test</td>\
+                            <td>test</td>\
+                            <td>test</td>\
+                        </tr>';
+        $(function () {
+            grid = $("#tbl");
+        });
+        function showHide(isMain, obj) {
+            if (isMain) {
+                var parentId = $(obj).attr("parentId");
+                var row = grid.find("#" + parentId);
+                var t = $(tpl);
+                row.after(t).hide();
+                alert($(t).find("td:last").height());
+            }
+            else {
+                var detailClass = $(obj).attr("classDetail");
+                var parentId = $(obj).attr("parentId");
+                grid.find("#" + parentId).show();
+                grid.find("tr." + detailClass).each(function () {
+                    $(this).hide();
+                });
+            }
+        }
+    </script>
+</head>
+<body>
+    <br />
+    <h2>Test Grid</h2>
+    <br />
+    <table id="tbl" style="width:400px;">
+        <tr>
+            <td>test</td>
+            <td>test</td>
+            <td>test</td>
+            <td>test</td>
+        </tr>
+         <tr id="m2">
+            <td>test <a onclick="showHide(true, this)" parentId="m2">[+]</a></td>
+            <td>test</td>
+            <td>test</td>
+            <td>test</td>
+        </tr>
+         <tr>
+            <td>test</td>
+            <td>test</td>
+            <td>test</td>
+            <td>test</td>
+        </tr>
+         <tr>
+            <td>test</td>
+            <td>test</td>
+            <td>test</td>
+            <td>test</td>
+        </tr>
+         <tr>
+            <td>test</td>
+            <td>test</td>
+            <td>test</td>
+            <td>test</td>
+        </tr>
+         <tr>
+            <td>test</td>
+            <td>test</td>
+            <td>test</td>
+            <td>test</td>
+        </tr>
+
+    </table>
+</body>
+</html>

@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using Sunplus.Accounting.Core.Common;
+
+public partial class SpecialDelete_V2_General : PageBase
+{
+    public string username;
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        username = AppSession.AccUserName;
+    }
+}

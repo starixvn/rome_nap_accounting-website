@@ -1,0 +1,43 @@
+﻿using System;
+using DNAide.Web;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web;
+using IBCUtils;
+using DNAide.Core;
+using BLL.Report;
+using System.Collections;
+using Sunplus.Accounting.Core.Web.Controls;
+
+public partial class Report_DailyCreatedCustomers : PageBase
+{
+    protected string ToDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today);
+    protected string FDay = "";
+    protected string TDay = "";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        DateTime fdate = CastAide.AsDateTime(Request["fdate"], DateTime.Now);
+        DateTime tdate = CastAide.AsDateTime(Request["tdate"], DateTime.Now);
+        ToDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today);
+        FDay = string.Format("{0:MM/dd/yyyy}", fdate);
+        TDay = string.Format("{0:MM/dd/yyyy}", tdate);
+        ReportBase report = new rptDailyCreatedCustomer();
+        Hashtable hash = new Hashtable();
+        hash.Add("fromdate", FormatHandler.ResetStartDate(fdate));
+        hash.Add("todate", FormatHandler.ResetEndDate(tdate));
+        if (CastAide.AsInt32(Request["IsExport"]) == 1)
+        {
+            string fileName = "CreatedCustomers";
+            hash.Add("FileName", fileName);
+            report.Export2Excel(hash);
+        }
+        else
+        {
+            string tpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Report/DailyCreatedCustomerHeader.htm");
+            TemplateHandler.Assign(ref tpl, "{Title}", Resources.Language.DailyCreatedCustomers);
+            TemplateHandler.Assign(ref tpl, "{fdate}", "<input type=\"text\" id=\"fdate\" readonly=\"readonly\" class=\"txtdate\" style=\"width: 100px; background-color: white;\" />");
+            TemplateHandler.Assign(ref tpl, "{tdate}", "<input type=\"text\" id=\"tdate\" readonly=\"readonly\" class=\"txtdate\" style=\"width: 100px; background-color: white;\" />");
+            TemplateHandler.Assign(ref tpl, "{mainContent}", report.CreateHeader(hash));
+            reportHeader.Text = tpl;
+        }
+    }
+}

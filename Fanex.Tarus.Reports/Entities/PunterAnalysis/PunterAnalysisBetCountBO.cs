@@ -1,0 +1,41 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="PunterAnalysisBetCountBO.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Reports.Entities.PunterAnalysis
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    [Serializable]
+    public class PunterAnalysisBetCountBO
+    {
+        public string Date { get; set; }
+
+        public string BetCount { get; set; }
+
+        public string WinCount { get; set; }
+
+        public string DrawCount { get; set; }
+
+        public string Winlost { get; set; }
+
+        public string HasData { get; set; }
+        
+    }
+
+    [Serializable]
+    public class PunterAnalysisBetCountDTO
+    {
+        public List<PunterAnalysisBetCountBO> Punters { get; set; }
+
+        public PunterAnalysisBetCountBO Total { get; set; }
+    }
+}

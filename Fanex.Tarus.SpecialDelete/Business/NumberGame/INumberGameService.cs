@@ -1,0 +1,47 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="INumberGameService.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.SpecialDelete.Business.NumberGame
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using Fanex.Tarus.SpecialDelete.Core;
+    using Fanex.Tarus.SpecialDelete.Entity.NumberGame;
+    using Fanex.Tarus.SpecialDelete.Entity;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public interface INumberGameService
+    {
+        List<BettypeModel> SelBettype(Product.ProductType productType);
+
+        Tickets GetTickets(string MatchID, string FromRefNo, string ToRefNo, string live, string dead);
+
+        string CheckMatchIDwithRefno(string MatchID, string FromRefNo, string ToRefNo, Fanex.Tarus.SpecialDelete.Core.Sport.SportType sportType);
+
+        List<NegativeBalance> SelNegativeBalanceCustomer(string transid, Function.ActionType actionType);
+
+
+        ResultModel DeleteBets(string matchid, string f_transid, string t_transid, string dead, string live,
+
+            string transids_n,
+            string transids_d,
+            string transids_bd,
+            string transids_12eu,
+            string transids_mhc,
+            string ip, bool isSendPrivateMSG, Message message
+            );
+
+        Tickets GetTicketsForRecoverBet(string transid, ResultModel result);
+
+        ResultModel RecoverBet(string transid, string userid, string username, string IP);
+
+        ResultModel CheckParamInput(string param, bool IsAllowNullOrEmpty);
+    }
+}

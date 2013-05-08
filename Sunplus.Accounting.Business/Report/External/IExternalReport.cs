@@ -1,0 +1,27 @@
+﻿using Sunplus.Accounting.Entities.Report.External;
+
+namespace Sunplus.Accounting.Business.Report.External
+{
+    public interface IExternalReport
+    {
+        ExternalWLDailyBO SelWinLossDailyByCom(string winlostdate);
+        ExternalWLDailyBO SelWinLossDailyBySuper(string winlostdate, int custid);
+
+        void Export2ExcelWinLossDailyByCom(string wlDate, string reportTitle, bool isExcludeMargin);
+        void Export2ExcelWinLossDailyBySuper(string wlDate, int uplineId, string reportTitle, bool isExcludeMargin);
+        void Export2ExcelWinLossDailyByMaster(string wlDate, int uplineId, string reportTitle, bool isExcludeMargin);
+        void Export2ExcelWinLossDailyByAgent(string wlDate, int uplineId, string reportTitle, bool isExcludeMargin);
+        ExternalWLDailyBO SelWinLossDailyByMaster(string winlostdate, int custid);
+        ExternalWLDailyBO SelWinLossDailyByAgent(string winlostdate, int custid);
+
+        ExternalWLDetail SelWinLossDetailByCom(string param, Sorting sorting);
+        ExternalWLDetail SelWinLossDetailBySuper(int custid, string param, Sorting sorting, int pageIndex, int pageSize);
+        ExternalWLDetail SelWinLossDetailByMaster(int custid, string param, Sorting sorting, int pageIndex, int pageSize);
+        ExternalWLDetail SelWinLossDetailByAgent(int custid, string param, Sorting sorting, int pageIndex, int pageSize);
+
+        void Export2ExcelWinLossDetailByCom(string reportTitle, Param param);
+        void Export2ExcelWinLossDetailBySuper(string reportTitle, Param param);
+        void Export2ExcelWinLossDetailByMaster(string reportTitle, Param param);
+        void Export2ExcelWinLossDetailByAgent(string reportTitle, Param param);
+    }
+}

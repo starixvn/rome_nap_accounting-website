@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Fanex.Tarus.Reports.DataAccess.Balance
+{
+    using System.Data;
+    using System.Collections;
+    using Sunplus.Accounting.DataAccess;
+    using Fanex.Data;
+    using DNAide.Core;
+
+    public class BalanceAccess : IBalanceAccess
+    {
+        public DataTable GetSuperBalanceData(string db, bool isYesterday, string usernameSearch, string firstletter, string currency)
+        {
+                DataTable datatable = null;
+                string alias = "";
+                alias = isYesterday ? "superbalanceyesterday" : "superbalance";
+                
+               // var balmoveday = new Dictionary<string, DateTime>();
+                using (ObjectDb objDB = new ObjectDb(alias))
+                {
+                    if (!string.IsNullOrEmpty(usernameSearch) && !usernameSearch.ToLower().Equals("all"))
+                        objDB.AddInParameter("keyword", DbType.String, usernameSearch);
+                    if (!string.IsNullOrEmpty(firstletter) && !firstletter.ToLower().Equals("all"))
+                        objDB.AddInParameter("firstchar", DbType.String, firstletter);
+                    if (!string.IsNullOrEmpty(currency) && !currency.ToLower().Equals("0"))
+                        objDB.AddInParameter("currency", DbType.Int32, CastAide.AsInt32(currency));
+                    var ds = objDB.ExecuteDataSet();
+                    datatable = ds.Tables[0];
+                }
+
+                return datatable;
+        }
+    }
+}

@@ -1,0 +1,46 @@
+using System;
+using System.Collections;
+using Sunplus.Accounting.Business.Customer;
+using Sunplus.Accounting.Core.Web;
+using DNAide.Web;
+
+using Sunplus.Accounting.Core.Common;
+
+public partial class NewCustomer_SuperAgentList : PageBase
+{
+
+
+    public string strsearchbox = "";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        //int PageIndex = 1, TotalPages = 0, type = 1;
+        //string searchText, selectAlpha = "", selectCurreny, status;
+
+        if (Session["AccId"] != null)
+        {
+            SuperAgentListHeaderStr.Text = "Super List";
+        }
+        strsearchbox = GenSearchBox();
+    }
+    public string GenSearchBox()
+    {
+        string strHtml = "";
+
+        strHtml = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Customer/Search.htm");
+        TemplateHandler.Assign(ref strHtml, "{rowspan}", "4");
+        TemplateHandler.Assign(ref strHtml, "{functionName}", "On_Submit");
+        TemplateHandler.Assign(ref strHtml, "{Keyword}", "Keyword");
+
+        TemplateHandler.Assign(ref strHtml, "{search-Val}", "All");
+        TemplateHandler.Assign(ref strHtml, "{listAlphaValue}", AccCommon.GetListAlPhabet(""));
+
+        TemplateHandler.Assign(ref strHtml, "{lfrom}", "");
+
+        TemplateHandler.Assign(ref strHtml, "{tblData}", "");
+        TemplateHandler.Assign(ref strHtml, "{listCurrencyValue}", CustomerUtils.GetListCurrencyBySystem(AppSession.SYSTEM, false, true, false));
+        TemplateHandler.Assign(ref strHtml, "{listStatus-Val}", AccCommon.GenListStatus(""));
+        TemplateHandler.RemoveBlock(ref strHtml, "type");
+
+        return strHtml;
+    }
+}

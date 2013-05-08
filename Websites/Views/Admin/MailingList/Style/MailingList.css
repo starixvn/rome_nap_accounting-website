@@ -1,0 +1,29 @@
+﻿
+ul.token-input-list-facebook {
+    width: 99% !important;
+     height: 130px !important; 
+}
+ul.token-input-list-facebook hover
+{
+    background-color : #ffc;
+    background:#ffc;
+}
+
+.invalidEmail
+{
+     border: 1px solid red !important; 
+}
+
+.content
+{
+    background-color: #EDECEA;
+    border: 1px solid #CECCCD;
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin-top: 5px;
+    display: none;
+}
+
+ul.token-input-list-facebook {
+    overflow: auto !important;
+}

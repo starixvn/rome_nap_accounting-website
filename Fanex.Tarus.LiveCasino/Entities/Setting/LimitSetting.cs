@@ -1,0 +1,52 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="LimitWin.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.LiveCasino.Entities.Setting
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+   
+
+    public class LimitSetting
+    {
+        public List<WinLimit> Limits { get; set; }
+
+        public decimal MaxWinLiveCasino { get; set; }
+
+        public decimal UplineMaxWinLiveCasino { get; set; }
+
+        public bool IsAutoResetLiveCasino { get; set; }
+
+        public bool UplineIsAutoResetLiveCasino { get; set; }        
+    }
+
+    public class CurrentWinLimit
+    {
+        public string Balance { get; set; }
+
+        public string WinPercent { get; set; }
+
+        public string MaxWinCredit { get; set; }
+
+        public string MaxWinLCS { get; set; }
+    }
+
+    
+    public class WinLimit
+    {        
+        public decimal Id { get; set; }
+        
+        public string Text { get; set; }
+        
+        public bool IsSelected { get; set; }
+    }
+}

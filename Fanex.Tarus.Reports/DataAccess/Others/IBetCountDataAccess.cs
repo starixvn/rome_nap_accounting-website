@@ -1,0 +1,19 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="IBetCountDataAccess.cs" company="">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Reports.DataAccess.Others
+{
+    using System.Data;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public interface IBetCountDataAccess
+    {
+        DataTable GetBetCountWithDateRange(string fromDate, string toDate, string products);
+        DataTable GetAllProducts();
+    }
+}

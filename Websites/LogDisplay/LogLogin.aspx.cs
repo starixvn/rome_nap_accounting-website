@@ -1,0 +1,57 @@
+﻿using System;
+using System.Collections.Generic;
+using Sunplus.Accounting.Business;
+using Sunplus.Accounting.Entities;
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Shared.ViewLogLib.Model;
+using Sunplus.Shared.ViewLogLib.ServiceLayger;
+using System.Collections;
+using System.Configuration;
+using DNAide.Core;
+using Sunplus.Accounting.Core.Extensions;
+public partial class _ViewLog_LogLogin : ViewLogPageBase
+{
+    private List<IPVNBean> _ipVnList = null;
+    protected override void PageLoadEvent(object sender, EventArgs e)
+    {
+        DataControl = rptDataLog;
+        NoInfoLabel = ltrNoInfo;
+        CurrentUrl = "LogLogin.aspx";
+        this.PageSize = 50;
+        _ipVnList = IpManagement.IPVNList;
+
+        if (CastAide.AsString(Request["custname"]).Trim() == "")
+            this.content.Style.Value = "display:none";
+
+    }
+
+    protected override IList GetLogData(out int totalPage)
+    {
+
+        IList entityList = null;
+        try
+        {
+            entityList = (new LogLoginService()).GetPaged(this.RequestViewLogContext, this.PageIndex, this.PageSize, out totalPage);
+        }
+        catch (Exception ex)
+        {
+            entityList = new List<LogLogin>();
+            LogExtensions.ExceptionHandler(ex);
+        }
+        totalPage = 0;
+        return entityList;
+    }
+    protected string ShowIp(object ip)
+    {
+        if (!ReferenceEquals(ip, null))
+        {
+            var ipReplaced =  IpManagement.ReplaceVNIP(CastAide.AsString(ip), _ipVnList);
+            if (string.IsNullOrEmpty(ipReplaced))
+                return string.Empty;
+            return ipReplaced.Trim() == WebSettings.IPVNReplace.Trim() ? WebSettings.IPVNReplace : string.Format("<a href='{0}' target=_blank>{1}</a>", string.Format(ConfigurationManager.AppSettings["iplocation"].Replace("{ip}", CastAide.AsString(ip))), CastAide.AsString(ip));
+        }
+
+        return string.Empty;
+    }
+
+}

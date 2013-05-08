@@ -1,0 +1,146 @@
+//using Sunplus.Core.LoggingLib;
+
+namespace Fanex.Tarus.Infrastructure.Configurations
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+
+    using Sunplus.Accounting.Core.Extensions;
+
+    /// <summary>
+    /// Summary description for Settings
+    /// </summary>
+    public static class AppSettings
+    {
+        //private static bool _useNewSpecialDelete;
+        public static string _getReportLegendUrl;
+        public static string GetReportLegendUrl
+        {
+            get
+            {
+                return _getReportLegendUrl;
+            }
+        }
+
+        public static bool _isLegendEnable;
+        public static bool IsLegendEnable
+        {
+            get
+            {
+                return _isLegendEnable;
+            }
+        }
+
+        public static int _noteViewCountToCollapse;
+        public static int NoteViewCountToCollapse
+        {
+            get
+            {
+                return _noteViewCountToCollapse;
+            }
+        }
+
+        /// <summary>
+        /// LiveCasinoFinancialReport_MinDate
+        ///     - FDL start operate live casino date: 12/17/2012
+        /// </summary>
+        public static DateTime _liveCasinoFinancialReport_MinDate;
+        public static DateTime LiveCasinoFinancialReport_MinDate
+        {
+            get
+            {
+                return _liveCasinoFinancialReport_MinDate;
+            }
+        }
+
+        public static List<int> _liveCasinoFinancialReport_Licensee;
+        public static List<int> LiveCasinoFinancialReport_Licensee
+        {
+            get
+            {
+                return _liveCasinoFinancialReport_Licensee;
+            }
+        }
+
+        public static List<int> _liveCasinoFinancialReport_Currency;
+        public static List<int> LiveCasinoFinancialReport_Currency
+        {
+            get
+            {
+                return _liveCasinoFinancialReport_Currency;
+            }
+        }
+
+        public static List<int> _liveCasinoFinancialReport_GameType;
+        public static List<int> LiveCasinoFinancialReport_GameType
+        {
+            get
+            {
+                return _liveCasinoFinancialReport_GameType;
+            }
+        }
+
+        static AppSettings()
+        {
+            try
+            {
+                // _calendarTheme = ConfigurationManager.AppSettings["UMCtrlUrl"];
+                _getReportLegendUrl = ConfigurationManager.AppSettings["GetReportLegendUrl"];
+                _noteViewCountToCollapse = Convert.ToInt32(ConfigurationManager.AppSettings["NoteViewCountToCollapse"]);
+                _isLegendEnable = Convert.ToBoolean(ConfigurationManager.AppSettings["IsLegendEnable"]);
+                _liveCasinoFinancialReport_MinDate = Convert.ToDateTime(ConfigurationManager.AppSettings["LiveCasinoFinancialReport_MinDate"]);
+
+                GetLiveCasinoFinancialReport_Licensee();
+                GetLiveCasinoFinancialReport_Currency();
+                GetLiveCasinoFinancialReport_GameType();
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+        }
+
+        private static void GetLiveCasinoFinancialReport_Licensee()
+        {
+            _liveCasinoFinancialReport_Licensee = new List<int>();
+            string[] licensees = ConfigurationManager
+                .AppSettings["LiveCasinoFinancialReport_Licensee"]
+                .ToString()
+                .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string licensee in licensees)
+            {
+                _liveCasinoFinancialReport_Licensee.Add(Convert.ToInt32(licensee));
+            }
+        }
+
+        private static void GetLiveCasinoFinancialReport_Currency()
+        {
+            _liveCasinoFinancialReport_Currency = new List<int>();
+            string[] currencies = ConfigurationManager
+                .AppSettings["LiveCasinoFinancialReport_Currency"]
+                .ToString()
+                .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string currency in currencies)
+            {
+                _liveCasinoFinancialReport_Currency.Add(Convert.ToInt32(currency));
+            }
+        }
+
+        private static void GetLiveCasinoFinancialReport_GameType()
+        {
+            _liveCasinoFinancialReport_GameType = new List<int>();
+            string[] gameTypes = ConfigurationManager
+                .AppSettings["LiveCasinoFinancialReport_GameType"]
+                .ToString()
+                .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string gameType in gameTypes)
+            {
+                _liveCasinoFinancialReport_GameType.Add(Convert.ToInt32(gameType));
+            }
+        }
+    }
+}

@@ -1,0 +1,48 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="LiveCasinoWLDetail.cs" company="">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Reports.Entities.Licensee.LiveCasinoWinLoss
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    [Serializable]
+    public class LiveCasinoWinLoss
+    {
+        public List<LiveCasinoWinLossByGroupLicensees> LicenseesWinLoss { get; set; }
+        public LiveCasinoWinLossDetail GrandTotal { get; set; }
+    }
+
+    [Serializable]
+    public class LiveCasinoWinLossByGroupLicensees
+    {
+        public LiveCasinoWinLossDetail RevenueInfo { get; set; }
+        public List<LiveCasinoWinLossByLicensee> Licensees { get; set; }
+    }
+
+    [Serializable]
+    public class LiveCasinoWinLossByLicensee
+    {
+        public LiveCasinoWinLossDetail WinLossTotal { get; set; }
+        public List<LiveCasinoWinLossDetail> LicenseeWinLossDetail { get; set; }
+    }
+
+
+    [Serializable]
+    public class LiveCasinoWinLossDetail
+    {
+        public int ResellerType { get; set; }
+        public string Licensee { get; set; }
+        public string Turnover { get; set; }
+        public string TotalTransaction { get; set; }
+        public string GrossWin { get; set; }
+        public string DistributorRevenue { get; set; }
+        public string StarExpressRevenue { get; set; }
+        public string AmountDueToOneWorks { get; set; }
+    }
+}

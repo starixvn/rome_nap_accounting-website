@@ -1,0 +1,50 @@
+﻿.pleft10
+{
+    padding-left: 10px;
+}
+
+.pleft20
+{
+    padding-left: 20px;
+}
+
+.pleft30
+{
+    padding-left: 30px;
+}
+
+.pleft40
+{
+    padding-left: 40px;
+}
+
+.space10
+{
+    padding-top: 10px;
+}
+
+input[type=checkbox]
+{
+    cursor: pointer;
+}
+
+.vsGrandTotal th
+{
+    background-color: #D6EFBA !important;
+}
+
+.vsTotal td, .vsTotal th
+{
+    background-color: #E8EBD3 !important;
+}
+
+.currencyLink
+{
+    color: Blue;
+    cursor: pointer;
+}
+.currencyLink:hover
+{
+    color: #C16605;
+    text-decoration: underline;
+}

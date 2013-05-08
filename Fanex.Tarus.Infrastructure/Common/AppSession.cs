@@ -1,0 +1,115 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="AppSession.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Infrastructure.Common
+{
+    using System.Web;
+    using DNAide.Core;
+    using System;
+    using System.Web.SessionState;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class AppSession
+    {
+        public static string CustUName
+        {
+            get { return CastAide.AsString(HttpContext.Current.Session["CustUname"]); }
+            set { HttpContext.Current.Session["CustUname"] = value; }
+        }
+
+        public static int CustID
+        {
+            get { return CastAide.AsInt32(HttpContext.Current.Session["custid"], 0); }
+            set { HttpContext.Current.Session["custid"] = value; }
+        }
+
+        public static string SYSTEM
+        {
+            get
+            {
+                try
+                {
+                    return CastAide.AsString(HttpContext.Current.Session["CurrentSystemName"]);
+                }
+                catch
+                {
+
+                    return string.Empty;
+                }
+
+            }
+            set { HttpContext.Current.Session["CurrentSystemName"] = value; }
+        }
+
+        public static string Username
+        {
+            get { return CastAide.AsString(HttpContext.Current.Session["Username"]); }
+            set { HttpContext.Current.Session["Username"] = value; }
+        }
+
+      
+        public static string AccPwd
+        {
+            get { return CastAide.AsString(HttpContext.Current.Session["AccPwd"]); }
+            set { HttpContext.Current.Session["AccPwd"] = value; }
+        }
+
+        public static int AccId
+        {
+            get
+            {
+                try
+                {
+                    return CastAide.AsInt32(HttpContext.Current.Session["AccId"], 0);
+                }
+                catch (Exception ex)
+                {
+                    return 0;
+                }
+            }
+            set { HttpContext.Current.Session["AccId"] = value; }
+        }
+
+        public static Enumerations.AccountingSystem CurrentSystemNAME
+        {
+            get
+            {
+                Enumerations.AccountingSystem accountingSystem = Enumerations.AccountingSystem.Accounting;
+                try
+                {
+                    accountingSystem =
+                        (Enumerations.AccountingSystem)HttpContext.Current.Session["CurrentSystem"];
+                    return accountingSystem;
+                }
+                catch
+                {
+                }
+                return accountingSystem;
+            }
+            set { HttpContext.Current.Session["CurrentSystem"] = value; }
+        }
+
+        public static string AccUserName
+        {
+            get { return CastAide.AsString(HttpContext.Current.Session["AccUserName"], string.Empty); }
+            set { HttpContext.Current.Session["AccUserName"] = value; }
+        }
+
+        public static void AddSession(HttpSessionState sessionState, string key, object value)
+        {
+            sessionState[key] = value;
+        }
+
+        public static object GetSession(HttpSessionState sessionState, string key)
+        {
+
+            return sessionState[key];
+
+        }
+    }
+}

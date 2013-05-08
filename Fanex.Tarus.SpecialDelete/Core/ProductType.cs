@@ -1,0 +1,28 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="ProductType.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.SpecialDelete.Core
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class Product
+    {
+        public enum ProductType
+        { 
+            SpecialDelete = 0,
+            NumberGame = 1,
+            EarlyKick_Off = 2,
+            TicketListing = 3,
+            MixParlay = 4
+        }
+    }
+}

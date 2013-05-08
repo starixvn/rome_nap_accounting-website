@@ -1,0 +1,515 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.ServiceModel.Activation;
+using System.Web;
+using System.Text;
+using System.Data;
+using System.IO;
+using System.Data.OleDb;
+using DNAide.Core;
+using DNAide.Data;
+using DNAide.Web;
+using ExcelUtil.Spreadsheet;
+
+using Sunplus.Accounting.Business.CacheManager;
+using Sunplus.Accounting.DataAccess.AdoNet;
+using Sunplus.Accounting.Entities;
+using System.Collections;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.Business.Security;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Accounting.DataAccess;
+using Sunplus.Core.LoggingLib;
+using Sunplus.Accounting.Core.Extensions;
+
+/// <summary>
+/// Summary description for ExchangeRateManager
+/// </summary>
+namespace Sunplus.Accounting.Business.ExChangeRate
+{
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+    public class ExchangeRateManager : IExchangeRateService
+    {
+        private readonly Sunplus.Accounting.DataAccess.IExchangeRateDAO _exchangeRateDAO;
+        private ILogger _logger;
+
+        public ExchangeRateManager()
+        { }
+
+        public ExchangeRateManager(IExchangeRateDAO exchangeRateDAO)
+        {
+            _exchangeRateDAO = exchangeRateDAO;
+        }
+        #region GenHeader
+        public string GenHeader()
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                string tpl = WebUtils.LoadTemplate("ExRate/ExRateHeader1.htm");
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            return html.ToString();
+        }
+        #endregion
+
+        #region GenNewRate
+        public string GenNewRate()
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                string tpl = WebUtils.LoadTemplate("ExRate/ExRateAdd.htm");
+                TemplateHandler.Assign(ref tpl, "Currency", "");
+                TemplateHandler.Assign(ref tpl, "BaseRate", "");
+                TemplateHandler.Assign(ref tpl, "Minbet", "");
+                TemplateHandler.Assign(ref tpl, "MinbetLive", "");
+                TemplateHandler.Assign(ref tpl, "GBPRate", "");
+                TemplateHandler.Assign(ref tpl, "AUDRate", "");
+                TemplateHandler.Assign(ref tpl, "ZARRate", "");
+                TemplateHandler.Assign(ref tpl, "EURORate", "");
+                TemplateHandler.Assign(ref tpl, "USDRate", "");
+                TemplateHandler.Assign(ref tpl, "submit", "Submit");
+                TemplateHandler.Assign(ref tpl, "reset", "Reset");
+                TemplateHandler.Assign(ref tpl, "function", "InsertExChangeRate();");
+                TemplateHandler.Assign(ref tpl, "Function_Reset", "ResetValue();");
+                TemplateHandler.Assign(ref tpl, "Description", "");
+                TemplateHandler.Assign(ref tpl, "MultipliedBy", "1");
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            return html.ToString();
+        }
+        public string GenNewRate4Update()
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                string tpl = WebUtils.LoadTemplate("ExRate/ExRateAdd.htm");
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            return html.ToString();
+        }
+        #endregion
+
+        #region ExportExRate
+        public ExcelFile ExportExRate()
+        {
+            ExcelFile excelFile = new ExcelFile();
+            try
+            {
+                DbResult rs = IBCProvider.ExChangeRate.ExchangeSelAccount();
+                ExcelGemboxUtils gembox = new ExcelGemboxUtils();
+
+                ExcelWorksheetCollection worksheets = excelFile.Worksheets;
+                ExcelWorksheet ws = null;
+                string tag = "ExRate";
+                ws = worksheets.Add(tag);
+
+                #region Header
+
+                ws.Cells.GetSubrangeAbsolute(0, 0, 0, 4).Merged = true;
+                ws.Cells.GetSubrangeAbsolute(0, 5, 0, 9).Merged = true;
+                //ws.Cells[0, 2].Value = "Open Tote";
+                ws.Cells.GetSubrangeAbsolute(0, 5, 0, 9).Value = "Open Tote";
+                ws.Cells.GetSubrangeAbsolute(0, 0, 0, 9).Style = gembox.GetStyleTitle(181, 196, 208);
+                string[] arrheaders = { "Currency", "Standard Code", "Base Rate", "Min Bet", "Min Bet Live", "GBP", "AUD", "ZAR", "EURO", "US$" };
+
+                for (int i = 0; i < arrheaders.Length; i++)
+                {
+                    ws.Cells[1, i].Value = arrheaders[i];
+                    ws.Cells[1, i].Style = gembox.GetStyleTitle(181, 196, 208);
+                }
+
+                #endregion
+
+                #region content
+                int indexrow = 2;
+                DataRow[] Rows = rs.ResultSet.Tables[0].Select();
+                string[] arrContent = { "currency", "currencyCode", "ActualRate", "MinBet", "MinBetLive", "GBPRate", "AUDRate", "ZARRate", "EURORate", "US$Rate" };
+                int red = 0, green = 0, blue = 0;
+
+                foreach (DataRow dr in Rows)
+                {
+                    int exid = CastAide.AsInt32(dr["exchangeid"]);
+                    var exchangeRate = new ExChangeRate();
+                    bool f =exchangeRate.IsHideCurrencies(exid);
+                    if (f) continue;
+
+                    if (indexrow % 2 == 0)
+                    {
+                        red = 255; green = 255; blue = 255;
+                    }
+                    else
+                    {
+                        red = 223; green = 234; blue = 255;
+                    }
+
+                    for (int j = 0; j < arrContent.Length; j++)
+                    {
+                        ws.Cells[indexrow, j].Value = dr[arrContent[j]];
+                        if (j == 0)
+                            ws.Cells[indexrow, j].Style = gembox.GetStyleText(red, green, blue);
+                        else
+                            ws.Cells[indexrow, j].Style = gembox.GetStyleNumber(0, "", red, green, blue);
+                    }
+                    indexrow++;
+                }
+                #endregion
+
+            }
+            catch (Exception ex)
+            {
+
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            return excelFile;
+        }
+        #endregion
+
+        #region IsHideCurrencies
+        bool IsHideCurrencies(int exid)
+        {
+            int[] exids = { 25, 26, 27, 28, 29 };
+            return exids.Where(n => n == exid).Count() > 0;
+        }
+        #endregion
+
+
+        #region IsValidExtension
+        bool IsValidExtension(string fileName, ref string ext)
+        {
+            bool f = false;
+            try
+            {
+                string[] arr = fileName.Split('\\');
+                string[] arr1 = arr[arr.Length - 1].Split('.');
+                ext = arr1[arr1.Length - 1].ToLower();
+                //return ext.Equals("xls") == true || ext.Equals("xlsx") == true || ext.Equals("ods") == true;
+                f = ext.Equals("xls") == true;
+            }
+            catch (Exception ex)
+            {
+
+                (new EntLibLogger()).Error(ex.Message + "bool IsValidExtension()", ex);
+
+            }
+            return f;
+        }
+        #endregion
+
+        DataTable GetDataFromExcel(string ExcelPath)
+        {
+            DataTable dtb = new DataTable();
+            string strConn = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + ExcelPath + ";Extended Properties=Excel 8.0;";
+            OleDbConnection excelCon = new OleDbConnection(strConn);
+            try
+            {
+                excelCon.Open();
+                OleDbCommand myCommand = new OleDbCommand("SELECT * FROM [ExRate$]", excelCon);
+                OleDbDataAdapter objAdap = new OleDbDataAdapter();
+                objAdap.SelectCommand = myCommand;
+                objAdap.Fill(dtb);
+                excelCon.Close();
+                excelCon.Dispose();
+                dtb.Rows.RemoveAt(0);//Remove the first (title) row 
+                return dtb;
+            }
+            catch (Exception ex)
+            {
+                excelCon.Close();
+                excelCon.Dispose();
+
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                //throw ex;
+            }
+            return null;
+        }
+
+        public ResultBO ReadExRateFromExcel()
+        {
+            //ExchangeRateResult result = new ExchangeRateResult();
+            ResultBO result = new ResultBO();
+            int rows = 0;
+            string strLocation = "";
+            bool IsUploadFileSuccess = true;
+            try
+            {
+
+                if (HttpContext.Current.Request.ContentLength < 1024000)
+                {
+                    if (HttpContext.Current.Request.Files.Count == 0)
+                    {
+                        result.ErrorCode = 1;
+                        result.ErrorMessage = "Your upload file don't successfull, Please try again";
+                        return result;
+                    }
+                    string newfilename = HttpContext.Current.Request.Files[0].FileName;
+                    string ext = string.Empty;
+                    if (!string.IsNullOrEmpty(newfilename))
+                    {
+                        if (IsValidExtension(newfilename, ref ext))
+                        {
+                            string strFileName = "ExRateOpenTote";
+                            strLocation = HttpContext.Current.Server.MapPath("") + "\\" + strFileName + ".xls";
+                            HttpContext.Current.Request.Files[0].SaveAs(strLocation);
+
+                            if (!File.Exists(strLocation))
+                                IsUploadFileSuccess = false;
+
+                            if (IsUploadFileSuccess)
+                            {
+                                try
+                                {
+                                    DataTable dtb = GetDataFromExcel(strLocation);
+                                    HttpContext.Current.Session["ExRateOpenTote"] = dtb;
+                                    FileInfo file = new FileInfo(strLocation);
+                                    if (file.Exists) file.Delete();
+
+                                    result.ErrorCode = 0;
+                                    result.ErrorMessage = "Upload file successfull.";
+                                }
+                                catch (Exception ex)
+                                {
+                                    result.ErrorCode = 1;
+                                    result.ErrorMessage = ex.ToString();
+                                    return result;
+                                }
+
+                            }
+                            else
+                            {
+                                result.ErrorCode = 1;
+                                result.ErrorMessage = "Your upload file don't successfull, Please try again.";
+                            }
+                        }
+                        else
+                        {
+                            result.ErrorCode = 1;
+                            result.ErrorMessage = "Sorry, You chose invalid file extension. Please choose an excel file.";
+                        }
+                    }
+                    else
+                    {
+                        result.ErrorCode = 1;
+                        result.ErrorMessage = "Sorry, You chose invalid file. Please choose an excel file.";
+                    }
+                }
+                else
+                {
+                    result.ErrorCode = 1;
+                    result.ErrorMessage = "Your upload file Size must be <= 1 MB.";
+                }
+            }
+            catch (Exception ex)
+            {
+                if (strLocation != "")
+                {
+                    FileInfo file = new FileInfo(strLocation);
+                    if (file.Exists) file.Delete();
+                }
+
+                if (ex.Message == "'ExRate' is not a valid name.  Make sure that it does not include invalid characters or punctuation and that it is not too long."
+                    || ex.Message == "String or binary data would be truncated.\r\nThe statement has been terminated.")
+                {
+                    result.ErrorCode = 1;
+                    result.ErrorMessage = "The Excel file is not in correct format. Sheet name must be ExRate";
+                }
+                else
+                {
+
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                    //throw;
+                    result.ErrorCode = 1;
+                    result.ErrorMessage = ex.ToString();
+                    //return result;
+                }
+            }
+            return result;
+        }
+
+        public List<ExchangeRate> LoadExchangeRateOpenTote()
+        {
+
+            List<ExchangeRate> ListExRate = new List<ExchangeRate>();
+            try
+            {
+                DataTable dt;
+                if (HttpContext.Current.Session["ExRateOpenTote"] != null)
+                {
+                    dt = (DataTable)HttpContext.Current.Session["ExRateOpenTote"];
+                    var exhangeList = CacheUtils.Exchange;
+
+                    var hCurrency = new Hashtable();
+                    var lsDuplicateCurrency = new List<object>();
+                    //const string keyCurrency = "Currency";
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        if (hCurrency.Contains(row[0]))
+                        {
+                            lsDuplicateCurrency.Add(row[0]);
+                        }
+                        else
+                        {
+                            hCurrency.Add(row[0], string.Empty);
+                        }
+                    }
+
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        bool isValidData = true;
+                        var isDuplicated = true;
+                        float fdata;
+                        var exrate = new ExchangeRate();
+                        exrate.Currency = row[0].ToString();
+                        exrate.StandardCode = row[1].ToString();
+                        exrate.Result = new ResultBO(0, string.Empty);
+
+                        isValidData = exrate.Currency == "" ? false : true;
+
+                        if (lsDuplicateCurrency.Contains(row[0]))
+                        {
+                            exrate.Result = new ResultBO(ExchangeRate.DuplicatedCurrencyError, ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "ExRate_Error_DuplicatedCurrency"));
+                        }
+
+                        if (!exrate.Currency.Equals(string.Empty))
+                            if (!exhangeList.ContainsValue(exrate.Currency))
+                            {
+                                exrate.Result = new ResultBO(ExchangeRate.InvalidCurrencyError, ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "ExRate_Error_InvalidCurrency"));
+                            }
+
+
+                        exrate.ActualRate = row[2].ToString();
+                        
+                        exrate.AUDRate = row[6].ToString();
+
+                        if (exrate.AUDRate.IndexOf("e-") == -1)
+                        {
+                            try
+                            {
+                                fdata = float.Parse(exrate.AUDRate);
+                            }
+                            catch
+                            {
+                                isValidData = false;
+                            }
+                        }
+                        exrate.EURORate = row[8].ToString();
+                        if (exrate.EURORate.IndexOf("e-") == -1)
+                        {
+                            try
+                            {
+                                fdata = float.Parse(exrate.EURORate);
+                            }
+                            catch
+                            {
+                                isValidData = false;
+                            }
+                        }
+                        exrate.GBPRate = row[5].ToString();
+                        if (exrate.GBPRate.IndexOf("e-") == -1)
+                        {
+                            try
+                            {
+                                fdata = float.Parse(exrate.GBPRate);
+                            }
+                            catch
+                            {
+                                isValidData = false;
+                            }
+                        }
+                        exrate.USDRate = row[9].ToString();
+                        if (exrate.USDRate.IndexOf("e-") == -1)
+                        {
+                            try
+                            {
+                                fdata = float.Parse(exrate.USDRate);
+                            }
+                            catch
+                            {
+                                isValidData = false;
+                            }
+                        }
+                        exrate.ZARRate = row[7].ToString();
+                        if (exrate.ZARRate.IndexOf("e-") == -1)
+                        {
+                            try
+                            {
+                                fdata = float.Parse(exrate.ZARRate);
+                            }
+                            catch
+                            {
+                                isValidData = false;
+                            }
+                        }
+                        if (!isValidData)
+                            exrate.Result = new ResultBO(ExchangeRate.InvalidDataError, ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "ExRate_Error_InvalidData"));
+                        ListExRate.Add(exrate);
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return ListExRate;
+
+
+        }
+
+        [DataContract]
+        public class ExchangeRateResult
+        {
+            [DataMember]
+            public List<ExchangeRate> ListExchangeRate
+            { get; set; }
+            [DataMember]
+            public ResultBO Result
+            { get; set; }
+        }
+
+        public ResultBO UpdateExRateOpenTote(List<ExchangeRate> ExRateList)
+        {
+            ResultBO result = new ResultBO();
+            if (!Permissions.GetHostPermission(Enumerations.Functions.ExRates.UpdateExchangeRateOpenTote))
+            {
+                result.ErrorCode = 500;
+                result.ErrorMessage = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "_500");
+                return result;
+            }
+            try
+            {
+                foreach (ExchangeRate exrate in ExRateList)
+                {
+                    ExchangeRateDAO exratedao = new ExchangeRateDAO();
+                    exratedao.ExChangeRateUpdateOpenTote(exrate.Currency, exrate.GBPRate, exrate.AUDRate, exrate.ZARRate, exrate.EURORate, exrate.USDRate);
+                }
+                result.ErrorCode = 0;
+                result.ErrorMessage = "Update Exchange Rate Open Tote successful.";
+            }
+            catch (Exception ex)
+            {
+                result.ErrorCode = 1;
+                result.ErrorMessage = ex.ToString();
+            }
+            return result;
+        }
+        
+    }
+}

@@ -1,0 +1,20 @@
+﻿using System;
+using Sunplus.Accounting.Core.Web.Controls;
+using Sunplus.Accounting.DataAccess.Report;
+
+public partial class Report_Others_DuplicateTickets : System.Web.UI.Page
+{
+    protected string ToDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today);
+    protected string MinDay = "";
+    protected string FDay = "";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        var moveBetsDay = ReportUtils.BalanceUp.MoveBetsDay.AddDays(1);
+        var displaydays = 0;
+        var sp = DateTime.Today - moveBetsDay;
+        displaydays = sp.Days;
+        ToDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today);
+        MinDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today.AddDays(-displaydays));
+        FDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today);
+    }
+}

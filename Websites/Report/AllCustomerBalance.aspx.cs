@@ -1,0 +1,111 @@
+using System;
+using System.Data;
+using System.Text;
+using DNAide.Web;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Core.LoggingLib;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using IBCUtils;
+using DNAide.Data;
+
+
+public partial class Report_AllCustomerBalance : System.Web.UI.Page
+{
+    private DateTime fDate;
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (Request["fdate"] != null)
+        {
+            fDate = Convert.ToDateTime(Request["fdate"]);
+            CustBalanceHeaderStr.Text = Resources.Language.AllCustBalance + " at: "+ fDate;
+            CustBalanceContentHtml.Text = GenCustBalance();
+        }
+    }
+    private string GenCustBalance()
+    {
+        StringBuilder html = new StringBuilder();
+        html.Append(Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("Balance/AllCustBalanceHeader.htm", new string[] { "{username}", "{currency}", "{+}", "{-}", "{base}", "{oustxn}" },
+            new string[] { Resources.Language.UserName, Resources.Language.Currency, "+", "-", Resources.Language.Base, Resources.Language.Running }));
+        string content = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Balance/AllCustBalanceRow.htm");
+        try
+        {
+            DbResult ds = AccountReport.RptAllCustomerBalance(fDate);
+            if (ds.ResultSet.Tables[0].Rows.Count > 0)
+            {
+                DataTable tbl = ds.ResultSet.Tables[0];
+                string nextCurrency = "";
+                double totalCurr = 0;
+                string row = "";
+                double pBalance = tbl.Rows[0].IsNull("positivebalance") ? 0 : FormatHandler.GetDouble(tbl.Rows[0]["positivebalance"]);
+                if (pBalance > 0)
+                {
+                    totalCurr=pBalance;
+                }
+                else
+                {
+                    totalCurr =tbl.Rows[0].IsNull("negativebalance")?0: FormatHandler.GetDouble(tbl.Rows[0]["negativebalance"]);
+                }
+
+                string odd_even = "";
+                for (int i = 0; i < tbl.Rows.Count; i++)
+                {
+                    row = content;
+                    odd_even = (odd_even == "") ? "evenrow" : "";
+                    string strCurrency=tbl.Rows[i]["currency"] as string ?? string.Empty;
+                    string strUsername= tbl.Rows[i]["username"] as string ?? string.Empty;
+                    TemplateHandler.Assign(ref row, "{odd_even}", odd_even);
+                    TemplateHandler.Assign(ref row, "{username}",strUsername);
+                    TemplateHandler.Assign(ref row, "{currency}", strCurrency);
+                    TemplateHandler.Assign(ref row, "{+}", FormatHandler.FormatNumber20(tbl.Rows[i]["positivebalance"]));
+                    TemplateHandler.Assign(ref row, "{-}", FormatHandler.FormatNumber20(tbl.Rows[i]["negativebalance"]));
+                    TemplateHandler.Assign(ref row, "{base}", FormatHandler.FormatNumber20(tbl.Rows[i]["BaseBalance"]));
+                    TemplateHandler.Assign(ref row, "{oustxn}", FormatHandler.FormatNumber20(tbl.Rows[i]["Oustxn"]));
+                    TemplateHandler.Assign(ref row, "{h5bold}", "");
+                    html.Append(row);
+                    row = content;
+                    if (i < tbl.Rows.Count - 1)
+                    {
+                        nextCurrency = tbl.Rows[i+1]["currency"] as string ?? string.Empty;
+                    }
+                    if (string.Compare(strCurrency, nextCurrency, true) != 0 || (i == tbl.Rows.Count - 1))
+                    {
+                        TemplateHandler.Assign(ref row, "{username}", "");
+                        TemplateHandler.Assign(ref row, "{currency}", "");
+                        TemplateHandler.Assign(ref row, "{+}", strCurrency);
+                        TemplateHandler.Assign(ref row, "{-}", Resources.Language.Total);
+                        TemplateHandler.Assign(ref row, "{base}", FormatHandler.FormatNumber20(totalCurr));
+                        TemplateHandler.Assign(ref row, "{oustxn}", "");
+                        TemplateHandler.Assign(ref row, "{h5bold}", "h5bold");
+                        html.Append(row);
+                    }
+                    else
+                    {
+                        pBalance = tbl.Rows[i].IsNull("positivebalance") ? 0 : FormatHandler.GetDouble(tbl.Rows[i]["positivebalance"]);
+                        if (pBalance > 0)
+                        {
+                            totalCurr += pBalance;
+                        }
+                        else
+                        {
+                            totalCurr +=tbl.Rows[i].IsNull("negativebalance")?0:FormatHandler.GetDouble(tbl.Rows[i]["negativebalance"]);
+                        }
+                    }
+                }
+                html.Append(Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("Balance/AllCustBalanceFooter.htm", new string[] { "{total}", "{totalvalue}", "" },
+                        new string[] { Resources.Language.Total, FormatHandler.FormatNumber20(ds.Outputs["totalbasebalance"]), "" }));
+            }
+            else
+            {
+                html.Append(Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("NoInformation.htm", new string[] { "{tdno}", "{nodata}" },
+                        new string[] { "6", Resources.Language.thereisnodata }));
+            }
+        }
+        catch(Exception ex)
+        {
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            Response.Write(ex.Message);
+        }
+        html.Append("</table>");
+        return html.ToString();
+    }
+}

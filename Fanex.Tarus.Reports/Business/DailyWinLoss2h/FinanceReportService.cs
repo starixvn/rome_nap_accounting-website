@@ -1,0 +1,178 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="FinanceReportService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
+
+namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
+{
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Diagnostics.CodeAnalysis;
+    using DNAide.Core;
+    using Fanex.Tarus.Infrastructure.Resource;
+    using Fanex.Tarus.Reports.Constants;
+    using Fanex.Tarus.Reports.Entities.DailyWinLoss2h;
+    using Fanex.Tarus.Reports.Entities.Sport;
+    using Sunplus.Accounting.Core.Cache;
+    using Sunplus.Accounting.Core.Extensions;
+
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    public partial class DailyWinLoss2hService : IDailyWinLoss2hService
+    {
+        #region FinancialReport
+
+        public LiveAndNoneLiveReportDWL2h SelFinanceReport(DailyWinLoss2hParam param)
+        {
+            var result = new LiveAndNoneLiveReportDWL2h
+            {
+                NoneLiveReport = new DailyWinLoss2hReport
+                {
+                    ReportDetails = new List<DailyWinLoss2hItem>(),
+                    ReportTotal = new DailyWinLoss2hReportTotal
+                    {
+                        NormalTotal = new DailyWinLoss2hItem
+                        {
+                            Name = Labels.All_Total + ":"
+                        },
+                        EightRMTotal = new DailyWinLoss2hItem(),
+                        BARMTotal = new DailyWinLoss2hItem(),
+                        AllTotal = new DailyWinLoss2hItem(),
+                        GrandTotal = new DailyWinLoss2hGrandTotal()
+                    },
+                    IsBARMActive = _barmConfig.IsActive
+                },
+                LiveReport = new DailyWinLoss2hReport
+                {
+                    ReportDetails = new List<DailyWinLoss2hItem>(),
+                    ReportTotal = new DailyWinLoss2hReportTotal
+                    {
+                        NormalTotal = new DailyWinLoss2hItem
+                        {
+                            Name = Labels.All_Total + ":"
+                        },
+                        EightRMTotal = new DailyWinLoss2hItem(),
+                        BARMTotal = new DailyWinLoss2hItem(),
+                        AllTotal = new DailyWinLoss2hItem(),
+                        GrandTotal = new DailyWinLoss2hGrandTotal()
+                    },
+                    IsBARMActive = _barmConfig.IsActive
+                }
+            };
+
+            try
+            {
+                Hashtable outParam = new Hashtable();
+                DataSet dbResult = _dailyWinLoss2hAccess.SelFinanceReport(param, ref outParam);
+                if (dbResult != null && dbResult.Tables.Count > 0)
+                {
+                    #region Declaration
+
+                    DataTable dtReport = dbResult.Tables[0];
+                    bool isHavingHedgeColumn = false;
+                    if (dtReport.Columns.Contains("IsHedge"))
+                    {
+                        isHavingHedgeColumn = true;
+                    }
+
+                    var emptyRow = new DailyWinLoss2hItem
+                    {
+                        RowTypeDWL2h = new Entities.Sport.BaseModel
+                        {
+                            Id = RowTypeConstants.EmptyRow
+                        }
+                    };
+
+                    var dailyWinLoss2hItemX = new DailyWinLoss2hItem();
+
+                    #endregion Declaration
+                    #region ForEach
+
+                    foreach (DataRow row in dtReport.Rows)
+                    {
+                        dailyWinLoss2hItemX = new DailyWinLoss2hItem
+                        {
+                            Id = CastAide.AsInt32(row["BetType"]),
+                            Name = CacheRef.GetBettype(CastAide.AsInt32(row["BetType"])),
+                            WinLoss = CastAide.AsDouble(row["WinLost"]),
+                            Position = CastAide.AsDouble(row["Position"]),
+                            Commission = CastAide.AsDouble(row["Commission"]),
+                            LineTotal = CastAide.AsDouble(row["LineTotal"]),
+                            Turnover = CastAide.AsDouble(row["Turnover"]),
+                            IsLive = CastAide.AsBoolean(row["LiveIndicator"]),
+
+                            RowTypeDWL2h = new Entities.Sport.BaseModel
+                            {
+                                Id = RowTypeConstants.Normal
+                            }
+                        };
+                        dailyWinLoss2hItemX.Bettype = new BaseModel
+                        {
+                            Id = dailyWinLoss2hItemX.Id,
+                            Name = dailyWinLoss2hItemX.Name
+                        };
+
+                        if (isHavingHedgeColumn)
+                        {
+                            dailyWinLoss2hItemX.Hedge = CastAide.AsString(row["IsHedge"]);
+                        }
+
+                        dailyWinLoss2hItemX.AliasName = GetBetTypeName(dailyWinLoss2hItemX);
+                        dailyWinLoss2hItemX.Margin = ReportService.CalculateMargin(dailyWinLoss2hItemX.LineTotal,
+                            dailyWinLoss2hItemX.Turnover) * 100;
+
+                        if (dailyWinLoss2hItemX.IsLive)
+                        {
+                            result.LiveReport.ReportTotal.NormalTotal.Add(dailyWinLoss2hItemX);
+                            dailyWinLoss2hItemX.Round();
+                            result.LiveReport.ReportDetails.Add(dailyWinLoss2hItemX);
+                        }
+                        else
+                        {
+                            result.NoneLiveReport.ReportTotal.NormalTotal.Add(dailyWinLoss2hItemX);
+                            dailyWinLoss2hItemX.Round();
+                            result.NoneLiveReport.ReportDetails.Add(dailyWinLoss2hItemX);
+                        }
+                    }
+
+                    #endregion ForEach
+
+                    result.NoneLiveReport.ReportTotal.NormalTotal.Margin = ReportService.CalculateMargin(result.NoneLiveReport.ReportTotal.NormalTotal.LineTotal,
+                        result.NoneLiveReport.ReportTotal.NormalTotal.Turnover) * 100;
+                    result.LiveReport.ReportTotal.NormalTotal.Margin = ReportService.CalculateMargin(result.LiveReport.ReportTotal.NormalTotal.LineTotal,
+                        result.LiveReport.ReportTotal.NormalTotal.Turnover) * 100;
+
+                    result.NoneLiveReport.ReportTotal.NormalTotal.Round();
+                    result.LiveReport.ReportTotal.NormalTotal.Round();
+
+                    if (dbResult.Tables.Count > 1)
+                    {
+                        DataTable dt8RM = dbResult.Tables[1];
+                        result.LiveReport.ReportTotal.EightRMTotal.WinLoss = CastAide.AsDouble(dt8RM.Compute("sum(WinLost8RM)", "liveindicator=1"));
+                        result.NoneLiveReport.ReportTotal.EightRMTotal.WinLoss = CastAide.AsDouble(dt8RM.Compute("sum(WinLost8RM)", "liveindicator=0"));
+                    }
+
+                    if (dbResult.Tables.Count > 2)
+                    {
+                        DataTable dtBARM = dbResult.Tables[2];
+                        result.LiveReport.ReportTotal.BARMTotal.WinLoss = CastAide.AsDouble(dtBARM.Compute("sum(WinLostBARM)", "liveindicator=1"));
+                        result.NoneLiveReport.ReportTotal.BARMTotal.WinLoss = CastAide.AsDouble(dtBARM.Compute("sum(WinLostBARM)", "liveindicator=0"));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return result;
+        }
+
+        #endregion FinancialReport
+    }
+}

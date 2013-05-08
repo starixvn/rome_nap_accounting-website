@@ -1,0 +1,23 @@
+﻿using System;
+using Fanex.Tarus.Reports.Entities.MixParlay;
+
+
+namespace Fanex.Tarus.Reports.Business.MixParlay
+{
+    public interface IMixParlayReportService
+    {
+        Report SelDirectMixParlay(DateTime reportDate, int betType);
+        void ExportToExcel_DirectMixParlay(DateTime reportDate, int betType);
+
+        LiveAndNoneLiveReport SelAdvanceMixParlayReport(DateTime fromDate, DateTime toDate, bool isViewDW, int betType);
+        void Export2Excel_MixParlayAdvanceMain(DateTime fromDate, DateTime toDate, int betType);
+
+        DailyParlayWinLoss SelDailyParlayWinLoss(DateTime fromDate, DateTime toDate, bool isViewDW);
+
+        DailyParlayWinLoss SelAdvanceParlayWinLoss(DateTime fromDate, DateTime toDate, bool isViewDW);
+
+        void ExportExcelDailyParlayWinLoss(DateTime fromDate, DateTime toDate, bool isViewDW);
+
+        void ExportExcelAdvanceParlayWinLoss(DateTime fromDate, DateTime toDate, bool isViewDW);
+    }
+}

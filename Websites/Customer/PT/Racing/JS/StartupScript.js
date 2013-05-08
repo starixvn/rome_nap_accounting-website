@@ -1,0 +1,1 @@
+﻿/*try { if (window.parent.location.toString().toLowerCase().indexOf('default.aspx') == -1) { var loc_dir = window.location.toString().substr(7).split('/'); var loc_url = 'http://'.concat(window.location.host).concat('/' + loc_dir[1].toString() + '/index.aspx?url=').concat(escape(window.location.toString())); window.location = loc_url; } } catch (e) { }*/

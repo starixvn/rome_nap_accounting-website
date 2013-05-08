@@ -1,0 +1,43 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="ICustomerSettingDataAccess.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
+{
+    using System.Collections.Generic;
+    using Fanex.Tarus.Customer.CreditCustomer.Entities;
+    using System.Data;
+    using System.Collections;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public interface ICustomerSettingDataAccess
+    {
+        /// <summary>
+        /// Get CurrencyList
+        /// </summary>
+        /// <param name="system">Name of system</param>
+        /// <returns>List of currency (name and id)</returns>
+        List<Currency> GetCurrencyList(string system);
+
+        /// <summary>
+        /// Get Site for add new super
+        /// </summary>
+        /// <param name="system">system name</param>
+        /// <returns>Return list of Site Name</returns>
+        List<Sites> GetSites(string system);
+
+        /// <summary>
+        /// Get Cutomer Info for Member Group
+        /// </summary>
+        /// <param name="paramerters">Paramerter contains agent id</param>
+        /// <returns>Data Table result</returns>
+        DataTable GetCustomerInfoForMemberGroup(Hashtable paramerters);
+
+        Fanex.Tarus.Customer.Entities.Result UpdateDoubleComm(int userId, int custId, bool isDoubleComm);
+        string GetRNGSiteNameByCustId(int custId);
+    }
+}

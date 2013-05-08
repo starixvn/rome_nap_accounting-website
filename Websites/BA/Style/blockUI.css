@@ -1,0 +1,15 @@
+﻿.blockel
+{
+	padding:0px;
+	border-spacing:0px;
+}
+.blockel td
+{
+	white-space:nowrap;
+	}
+.tdloadingel
+{
+	height:16px;
+	width:16px;
+	background: url(images/ajax-loader.gif) no-repeat center center;
+	}

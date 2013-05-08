@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.Text;
+
+namespace Fanex.Tarus.LiveCasino.Entities.Report
+{
+    [Serializable]
+    [DataContract]
+    public class DailyWinlossDetail
+    {
+        [DataMember]
+        public string TurnOver { get; set; }
+    }
+}

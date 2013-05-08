@@ -1,0 +1,54 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Fanex.Tarus.Balance.Business
+{
+    using Fanex.Tarus.Balance.DataAccess;
+    using Fanex.Tarus.Balance.Entities;
+
+    using Sunplus.Accounting.Core.Extensions;
+
+    public class ResetWinningService:IResetWinningService
+    {
+        private IResetWinningAccess _resetWinningAccess;
+
+        public ResetWinningService(IResetWinningAccess resetWinningAccess)
+        {
+            _resetWinningAccess = resetWinningAccess ?? new ResetWinningAccess();
+
+        }
+
+        public ResetWinningService()
+            : this(null)
+        {
+
+        }
+
+
+      
+        
+      
+        public ResetWinningDTO GetDataReportResetWinning(string date, int data)
+        {
+            var result = new ResetWinningDTO();
+            
+            try
+            {
+                result = this._resetWinningAccess.GetDataResetWinning(date, data);
+                return result;
+            
+            }
+            catch (Exception exception)
+            {
+                
+                LogExtensions.ExceptionHandler(exception);
+            }
+            return result;
+
+        }
+
+        
+    }
+}

@@ -1,0 +1,13 @@
+﻿
+
+using System;
+using Fanex.Tarus.Reports.Entities.MatchWinLoss;
+
+namespace Fanex.Tarus.Reports.Business.MatchWinLoss
+{
+    public interface IWLSummaryByBetTypeService
+    {
+        WLSummaryByBetTypeReport SelSummaryReportByBetType(DateTime reportDate);
+        void ExportWLSummaryByBetTypeReport(DateTime reportDate, string reportName);
+    }
+}

@@ -1,0 +1,37 @@
+using System;
+
+using ExcelUtil.Spreadsheet;
+using Sunplus.Accounting.Business.BootStrappers;
+using Sunplus.Accounting.Business.ExChangeRate;
+using Sunplus.Accounting.Core.Common;
+
+
+public partial class ExchangeRate : PageBase
+{
+    protected override bool HasPermission()
+    {
+        return Functions.ExchangeRate.IsAllowExchangeRate && base.HasPermission();
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        IExchangeRateService rate = CommonBootStrapper.Locator.GetInstance<IExchangeRateService>();
+      
+        if (Request["IsExport"] == "1")
+        {
+            ExcelFile excel = rate.ExportExRate();
+            Response.Clear();
+            Response.ContentType = "application/vnd.ms-excel";
+            Response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", "ExRate"));
+            excel.SaveXls(Response.OutputStream);
+        }
+        else
+        {
+            ExChangeRate ex = new ExChangeRate();
+            ExRateHeaderStr.Text = Resources.Language.ExRate;
+            //ExRateAddContentHtml.Text = ex.GenAddContent("InsertExChangeRate();");
+            ExRateAddContentHtml.Text = rate.GenHeader();
+            ExRateListContentHtml.Text = ex.GenListContent();
+        }
+    }    
+}

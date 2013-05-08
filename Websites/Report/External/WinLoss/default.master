@@ -1,0 +1,197 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="default.master.cs" Inherits="Report_WinLoss_default" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%--<%@ Import Namespace="SquishIt.Framework" %>--%>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <link href="~/App_Themes/Public/common.css" rel="stylesheet" type="text/css" />
+    <link href="~/App_Themes/Public/table.css" rel="stylesheet" type="text/css" />
+    <link href="~/App_Themes/Public/input.css" rel="stylesheet" type="text/css" />
+    <link href="~/js/Calendar2/css/jscal2.css" type="text/css" rel="stylesheet" />
+    <link href="~/js/Calendar2/css/border-radius.css" type="text/css" rel="stylesheet" />
+    <link href="~/js/Calendar2/css/blue/blue.css" type="text/css" rel="stylesheet" />    
+    <link href="WebResources/reportWinLoss.css" rel="stylesheet" type="text/css" />
+    <%--    <%= Bundle.Css()
+        .Add("~/App_Themes/Public/common.css")
+        .Add("~/App_Themes/Public/table.css")
+        .Add("~/App_Themes/Public/input.css")
+        .Add("~/js/Calendar2/css/jscal2.css")
+        .Add("~/js/Calendar2/css/border-radius.css")
+        .Add("~/js/Calendar2/css/border-radius.css")
+        .Add("~/js/Calendar2/css/blue/blue.css")
+        .Add("~/Report/WinLoss/WebResources/reportWinLoss.css")
+        .ForceRelease()
+        .Render("~/App_Themes/Public/combined_#.css")
+        %>--%>
+</head>
+<body onload="parent.jQuery.unblockUI();">
+    <form id="form1" runat="server">
+    <div class="main">
+        <div class="maincontent">
+            <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
+                <tr>
+                    <td class="maincontent_headerL">
+                    </td>
+                    <td class="maincontent_headerC">
+                        <%=_reportTitle%>
+                    </td>
+                    <td class="maincontent_headerR">
+                    </td>
+                </tr>
+            </table>
+            <div class="maincontent_box">
+                <table width="650px">
+                    <tr class="b">
+                        <td>
+                            From:
+                        </td>
+                        <td>
+                            <input type="text" name="fdate" readonly="readonly" class="dateTime" id="fdate" />
+                            <input type="image" src="../../../App_Themes/Images/calendar.gif" class="img-date-selector"
+                                title="Select start date" id="fdatetrigger" alt="" onclick="return false;" />
+                        </td>
+                        <td>
+                            To:
+                        </td>
+                        <td>
+                            <input type="text" name="tdate" readonly="readonly" class="dateTime" id="tdate" />
+                            <input type="image" src="../../../App_Themes/Images/calendar.gif" class="img-date-selector"
+                                title="Select end date" id="tdatetrigger" alt="" onclick="return false;" />
+                        </td>
+                        <td>
+                            <input type="button" value="View report" class="btn" id="btnViewReport" />
+                            <input type="button" class="btn" id="btnViewReportToday" />
+                            <input type="button" class="btn" id="btnViewReportYesterday" />
+                            <asp:ImageButton ID="btnExport" ImageUrl="~/App_Themes/Images/excel.gif" runat="server"
+                                ToolTip="Export excel file" OnClick="btnExport_Click" AlternateText="" />
+                        </td>
+                    </tr>
+                </table>
+                <asp:Literal ID="ltrHeader" runat="server"></asp:Literal>
+            </div>
+        </div>
+        <asp:ContentPlaceHolder ID="Content" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+<script src="../../../js/jQuery/jquery.min.js" type="text/javascript"></script>
+<script src="../../../js/Calendar2/js/jscal2.js" type="text/javascript"></script>
+<script src="../../../js/Calendar2/js/lang/en.js" type="text/javascript"></script>
+<script src="../../../js/jQuery/scrolltable/webtoolkit.jscrollable.js" type="text/javascript"></script>
+<script src="../../../js/jQuery/scrolltable/webtoolkit.scrollabletable.js" type="text/javascript"></script>
+<script src="../../../js/jQuery/jquery.blockUI.1.33.js" type="text/javascript"></script>
+<script src="WebResources/Js/date.format.js" type="text/javascript"></script>
+<script src="WebResources/Js/WinLossReport.js" type="text/javascript"></script>
+<%--<%= Bundle.JavaScript()
+    .Add("~/js/Calendar2/js/jscal2.js")
+    .Add("~/js/Calendar2/js/lang/en.js")
+    .Add("~/js/jQuery/scrolltable/webtoolkit.jscrollable.js")
+    .Add("~/js/jQuery/jquery.blockUI.1.33.js")
+    .Add("~/Report/WinLoss/WebResources/Js/date.format.js")
+    .Add("~/Report/WinLoss/WebResources/Js/WinLossReport.js")
+    .ForceRelease()
+    .Render("~/Report/WinLoss/WebResources/Js/combined_#.js")   %> --%>
+<script type="text/javascript" language="javascript">
+$(document).ready(function() {
+    //setup value button search today, and yesterday
+    var toDay;
+    toDay = <%="'"+DateTime.Now.ToString("MM/dd/yyyy")+"'"%>;
+    $("#btnViewReportToday").attr("value",toDay);     
+    var yesterday = <%="'"+DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy")+"'"%>;
+    $("#btnViewReportYesterday").attr("value", yesterday); 
+       
+    
+   //set value date time input
+   var fromDate =  <%="'"+_fromDate.ToString("MM/dd/yyyy")+"'"%>;
+   var toDate =   <%="'"+_toDate.ToString("MM/dd/yyyy")+"'"%>;
+   $("#fdate").attr("value", fromDate);    
+   $("#tdate").attr("value", toDate);   
+   
+  
+    //SetupCalendar("fdate", "fdatetrigger", <%=_fromDate.ToString("yyyyMMdd")%>, <%=_fromDate.ToString("yyyyMMdd")%>);      
+    //SetupCalendar("tdate", "tdatetrigger", <%=_toDate.ToString("yyyyMMdd")%>, <%=_toDate.ToString("yyyyMMdd")%>);      
+   
+   //bind event click on buttons View Report
+   
+   var currentUrl = <%="'"+_currentUrl+"'" %>;   
+   var uplineId = <%=_uplineId %>;
+   
+    $("#btnViewReport").click(function(){
+        ViewReport(currentUrl, uplineId, $("#fdate").val(), $("#tdate").val());
+    });
+    
+    $("#btnViewReportToday").click(function(){
+        ViewReport(currentUrl, uplineId, toDay, toDay);
+    });    
+    
+     $("#btnViewReportYesterday").click(function(){
+        ViewReport(currentUrl, uplineId, yesterday, yesterday);
+    });    
+    
+     //Set search options
+    var option = <%="'"+_option+"'" %>;
+   
+    $("#chkAll").attr('checked', (option.substring(0, 1) == 1) ? true : false);
+    var i = 1;
+    $("#chkItems input:checkbox").each(function() {
+        //if option[0] is 1, all other checkbox checked = true
+       // window.alert(option[i]);
+        this.checked = (option.substring(i, i+1) == 1 || option.substring(0, 1) == 1) ? true : false;
+        i++;
+    });  
+    
+    //begin process check all check box    
+    $("#chkAll").click(function() {
+        $("#chkItems input:checkbox").attr('checked', this.checked);
+    });
+
+    $("#chkItems input:checkbox").click(function() {
+        if ($("#chkAll").attr('checked') == true && this.checked == false)
+            $("#chkAll").attr('checked', false);
+
+        if (this.checked == true)
+            CheckSelectAll();
+    });   
+   
+   
+});
+
+ //setup calendar
+   var fromCalendar =  Calendar.setup
+    ({
+        animation: false,
+        showTime: false,
+        bottomBar: true,
+        trigger: "fdatetrigger",
+        inputField: "fdate",
+        dateFormat: "%m/%d/%Y",
+        min: <%=DateTime.Now.AddMonths(-18).ToString("yyyyMMdd") %>, 
+        max: <%=DateTime.Now.ToString("yyyyMMdd") %>,          
+        onSelect: function() {          
+            this.hide();            
+        }
+    });
+    
+    var toCalendar =  Calendar.setup
+    ({
+        animation: false,
+        showTime: false,
+        bottomBar: true,
+        trigger: "tdatetrigger",
+        inputField: "tdate",
+        dateFormat: "%m/%d/%Y",
+        min: <%=DateTime.Now.AddMonths(-18).ToString("yyyyMMdd") %>,
+        max:  <%=DateTime.Now.ToString("yyyyMMdd") %>,
+        onSelect: function() {                        
+            this.hide();
+        }
+    });
+    
+ var downlineUrl = <%="'"+_downlineUrl+"'"%>;
+    function ViewDownLineReport(uplineId) {
+        ViewReport(downlineUrl, uplineId, $("#fdate").val(), $("#tdate").val()); 
+    }   
+  
+</script>
+</html>

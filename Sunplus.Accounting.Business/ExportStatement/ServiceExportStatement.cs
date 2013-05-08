@@ -1,0 +1,39 @@
+﻿using System.ServiceModel.Activation;
+using ExcelUtil.Spreadsheet;
+
+namespace Sunplus.Accounting.Business.ExportStatement
+{
+    /// <summary>
+    /// Summary description for ServiceExportStatement
+    /// </summary>
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+    public class ServiceExportStatement : IServiceExportStatement
+    {
+        #region IServiceExportStatement Members
+
+        public string ReadUsers()
+        {
+            var s = new ExportStatementManager();
+            return s.ReadUsers();
+        }
+
+        public ExcelFile Export2Excel(string userslistvalid, string fdate, string tdate)
+        {
+            var s = new ExportStatementManager();
+            return s.Export2Excel(userslistvalid, fdate, tdate);
+        }
+        #endregion
+
+
+
+        #region IServiceExportStatement Members
+
+        public string AllStatement_UsersList(string userslistvalid, string fdate, string tdate)
+        {
+            var s = new ExportStatementManager();
+            return s.AllStatement_UsersList(userslistvalid, fdate, tdate);
+        }
+
+        #endregion
+    }
+}

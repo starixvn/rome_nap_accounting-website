@@ -1,0 +1,10 @@
+﻿
+
+namespace Fanex.Tarus.Reports.Business.Constants
+{
+    public class ReportType
+    {
+        public const string LiveReport = "LiveReport";
+        public const string NoneLiveReport = "NoneLiveReport";
+    }
+}

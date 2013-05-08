@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Page scrolling</title>
+    <script src="../js/jQuery/jquery.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('div[id$=tb1]').scroll(function () {
+                $('div[id$=tb2]')
+                .scrollTop($('div[id$=tb1]').scrollTop());
+                $('div[id$=tb2]')
+                .scrollLeft($('div[id$=tb1]').scrollLeft());
+            });
+            $('div[id$=tb2]').scroll(function () {
+                $('div[id$=tb1]')
+                .scrollTop($('div[id$=tb2]').scrollTop());
+                $('div[id$=tb1]')
+                .scrollLeft($('div[id$=tb2]').scrollLeft());
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="tb1" style="height: 100px;width: 200px; overflow-y:scroll; overflow-x: scroll; border: 1px solid green">
+        <div style="width: 500px;">The technique shown below synchronizes the scrolling of TextBox (tb2) with TextBox (tb1). As the user scrolls through the contents of tb1, the contents of tb2 is automatically scrolled to keep up with the display of tb1. The code shown here fits a requirement where two versions of the same document are to be compared with each other and the user need not have to explicitly scroll through both the textboxes to compare them</div>
+        The technique shown below synchronizes the scrolling of TextBox (tb2) with TextBox (tb1). As the user scrolls through the contents of tb1, the contents of tb2 is automatically scrolled to keep up with the display of tb1. The code shown here fits a requirement where two versions of the same document are to be compared with each other and the user need not have to explicitly scroll through both the textboxes to compare them.
+    </div>
+    <br />
+    <br />
+    <div id="tb2" style="height: 100px;width: 200px; overflow-y:scroll; overflow-x: scroll; border: 1px solid green">
+        <div style="width: 500px;">The technique shown below synchronizes the scrolling of TextBox (tb2) with TextBox (tb1). As the user scrolls through the contents of tb1, the contents of tb2 is automatically scrolled to keep up with the display of tb1. The code shown here fits a requirement where two versions of the same document are to be compared with each other and the user need not have to explicitly scroll through both the textboxes to compare them</div>
+        The technique shown below synchronizes the scrolling of TextBox (tb2) with TextBox (tb1). As the user scrolls through the contents of tb1, the contents of tb2 is automatically scrolled to keep up with the display of tb1. The code shown here fits a requirement where two versions of the same document are to be compared with each other and the user need not have to explicitly scroll through both the textboxes to compare them.
+    </div>
+</body>
+</html>

@@ -1,0 +1,131 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="DepositCustomerController.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+namespace Fanex.Tarus.VirtualSport.Controllers.Customer.DepositCustomer
+{
+    using System.Collections.Generic;
+    using System.Web.Mvc;
+    using Fanex.Tarus.Infrastructure.Common;
+    using Fanex.Tarus.VirtualSport.Business.Customer.DepositCustomer;
+    using Fanex.Tarus.VirtualSport.Entities.Customer.DepositCustomer;
+    using Fanex.Tarus.Web.Controllers;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class VirutalSportsDepositCustomerController : BaseController
+    {
+        /// <summary>
+        /// _customerService
+        /// </summary>
+        private static ICustomerService customerService;
+
+        /// <summary>
+        /// VirutalSportsDepositCustomerController
+        /// </summary>
+        /// <param name="customerService"></param>
+        public VirutalSportsDepositCustomerController(ICustomerService service) 
+        {
+            customerService = service ?? new CustomerService();
+        }
+
+        /// <summary>
+        /// VirutalSportsDepositCustomerController
+        /// </summary>
+        public VirutalSportsDepositCustomerController() : this(null)
+        {
+        }
+
+        public JsonResult AddNewSuperSettings(List<RequestParam> requestParams)
+        {
+            return Json(customerService.AddNewSuperSettings(requestParams), JsonRequestBehavior.AllowGet);
+        }
+                
+        public JsonResult GetSuperSettings()
+        {
+            var superId = AppSession.CustID;
+            return Json(customerService.GetSuperSetting(superId), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult UpdateSuperSettings(List<RequestParam> requestParams)
+        {
+            return Json(customerService.UpdateSuperSettings(requestParams), JsonRequestBehavior.AllowGet);
+        }
+        
+        public JsonResult GetDefaultSettingsByUplineForAddNew(int roleId)
+        {
+            var uplineId = AppSession.CustID;
+            var result = new CustomerSettings();
+            switch (roleId)
+            {
+                case (int)Enumerations.Role.Master:
+                    result = customerService.GetMasterSettingForAddNew(uplineId);
+                    break;
+                case (int)Enumerations.Role.Agent:
+                    result = customerService.GetAgentSettingForAddNew(uplineId);
+                    break;
+                case (int)Enumerations.Role.Member:
+                    result = customerService.GetMemberSettingForAddNew(uplineId);
+                    break;
+                default: 
+                    break;
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetDownlineSettings(int roleId)
+        {
+            var custId = AppSession.CustID;
+            var result = new CustomerSettings();
+            switch (roleId)
+            {
+                case (int)Enumerations.Role.Master:
+                    result = customerService.GetMasterSetting(custId);
+                    break;
+                case (int)Enumerations.Role.Agent:
+                    result = customerService.GetAgentSetting(custId);
+                    break;
+                case (int)Enumerations.Role.Member:
+                    result = customerService.GetMemberSetting(custId);
+                    break;
+                default:
+                    break;
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult AddNewMasterSettings(List<RequestParam> requestParams)
+        {
+            return Json(customerService.AddNewMasterSettings(requestParams), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult UpdateMasterSettings(List<RequestParam> requestParams)
+        {
+            return Json(customerService.UpdateMasterSettings(requestParams), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult AddNewAgentSettings(List<RequestParam> requestParams)
+        {
+            return Json(customerService.AddNewAgentSettings(requestParams), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult UpdateAgentSettings(List<RequestParam> requestParams)
+        {
+            return Json(customerService.UpdateAgentSettings(requestParams), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult AddNewMemberSettings(List<RequestParam> requestParams)
+        {
+            return Json(customerService.AddNewMemberSettings(requestParams), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult UpdateMemberSettings(List<RequestParam> requestParams)
+        {
+            return Json(customerService.UpdateMemberSettings(requestParams), JsonRequestBehavior.AllowGet);
+        }
+    }
+}

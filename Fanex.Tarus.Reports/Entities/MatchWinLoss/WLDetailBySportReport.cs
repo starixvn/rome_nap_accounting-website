@@ -1,0 +1,15 @@
+﻿
+
+
+using System;
+using System.Collections.Generic;
+
+namespace Fanex.Tarus.Reports.Entities.MatchWinLoss
+{
+    [Serializable]
+    public class WLDetailBySportReport
+    {
+        public List<WLDetailByBetTypeModel> ReportDetails { get; set; }
+        public WLDetailByBetTypeModel Total { get; set; }
+    }
+}

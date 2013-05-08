@@ -1,0 +1,187 @@
+﻿@using Sunplus.Accounting.Core.Configurations
+@using Sunplus.Accounting.Core.Common
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <link href="~/App_Themes/Public/common.css?version=@WebSettings.Version" rel="stylesheet"
+        type="text/css" />
+    <link href="~/App_Themes/Public/table.css?version=@WebSettings.Version" rel="stylesheet"
+        type="text/css" />
+    <link href="~/App_Themes/Public/Message.css?version=@WebSettings.Version" rel="stylesheet"
+        type="text/css" />
+    <link href="~/App_Themes/Public/input.css?version=@WebSettings.Version" rel="stylesheet"
+        type="text/css" />
+    <link href="~/App_Themes/Report/reportgrid.css" rel="stylesheet" type="text/css" />
+    <link href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" rel="stylesheet"
+        type="text/css" />
+    <link href="~/js/jQuery/GridScroller/gridscroller.css" rel="stylesheet" type="text/css" />
+    <link href="~/Views/VirtualSport/SpecialDelete/Styles/DeleteBets.css?version=@WebSettings.Version"  rel="stylesheet" type="text/css" />
+    <script src="~/js/jQuery/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="~/js/jQuery/jquery-ui-1.8.20.custom.min.js" type="text/javascript"> </script>
+    <script src="~/js/common.js" type="text/javascript"></script>
+    <script src="~/js/jQuery/Template/jquery.tmpl.js" type="text/javascript"></script>
+    <script src="~/js/jQuery/Number/jquery.formattyping.js" type="text/javascript"></script>
+    <script src="~/js/jQuery/GridScroller/jquery.gridscroller.js?version=@WebSettings.Version"
+        type="text/javascript"></script>
+    <script src="~/Views/VirtualSport/SpecialDelete/Scripts/SpecialDeleteEventBinding.js?version=@WebSettings.Version" type="text/javascript"> </script>
+    <script src="~/Views/VirtualSport/SpecialDelete/Scripts/SpecialDeleteUtils.js?version=@WebSettings.Version" type="text/javascript"> </script>
+    <script src="~/Views/VirtualSport/SpecialDelete/Scripts/Settings.js?version=@WebSettings.Version" type="text/javascript"> </script>
+    <script src="~/Views/VirtualSport/SpecialDelete/Scripts/DeleteBets.js?version=@WebSettings.Version" type="text/javascript"> </script>
+</head>
+<body style="overflow: auto;">
+    <script type="text/html" id="row_bet_tpl">
+        {{if NoRow==false}}        
+        <div class="betrow head border-grid-header" style="width: 1061px;">
+            <table border="0" cellpadding="0" cellspacing="0" style="width:90%"><tbody><tr>
+            <th class="border-right"><div class="betrow index">NO</div></th>
+            <th class="border-right"><div class="betrow account">ACCOUNT</div></th>
+            <th class="border-right"><div class="betrow refno">REFNO</div></th>
+            <th class="border-right"><div class="betrow bettype">BET TYPE</div></th>
+            <th class="border-right"><div class="betrow bet">BET</div></th>
+            <th class="border-right"><div class="betrow odds-header">ODDS</div></th>
+            <th class="border-right"><div class="betrow amount">AMOUNT</div></th>
+            <th class="border-right"><div class="betrow currency">CURRENCY</div></th>
+            <th class="border-right"><div class="betrow hdp">HDP</div></th>
+            <th class="border-right"><div class="betrow transtime">TRANS.TIME</div></th>
+            <th class="border-right"><div class="betrow score">SCORE</div></th>
+            <th class="border-right"><div class="betrow account">CREATOR</div></th>
+            <th class="border-right"><div class="betrow status">STATUS</div></th>
+            <th class="border-right"><div class="betrow option">OPTION</div></th>
+            </tr></tbody></table>
+        </div>
+        <div id="box_list_scroll">
+        </div>      
+    {{/if}}
+    </script>
+    <script type="text/html" id="row_nobet_tpl">
+        <div class="betrow head border-grid-header" style="width: 1061px;">
+            <table border="0" cellpadding="0" cellspacing="0" style="width: 90%;"><tbody><tr>
+            <th class="border-right"><div class="betrow index">NO</div></th>
+            <th class="border-right"><div class="betrow account">ACCOUNT</div></th>
+            <th class="border-right"><div class="betrow refno">REFNO</div></th>
+            <th class="border-right"><div class="betrow bettype">BET TYPE</div></th>
+            <th class="border-right"><div class="betrow bet">BET</div></th>
+            <th class="border-right"><div class="betrow odds-header">ODDS</div></th>
+            <th class="border-right"><div class="betrow amount">AMOUNT</div></th>
+            <th class="border-right"><div class="betrow currency">CURRENCY</div></th>
+            <th class="border-right"><div class="betrow hdp">HDP</div></th>
+            <th class="border-right"><div class="betrow transtime">TRANS.TIME</div></th>
+            <th class="border-right"><div class="betrow score">SCORE</div></th>
+            <th class="border-right"><div class="betrow account">CREATOR</div></th>
+            <th class="border-right"><div class="betrow status">STATUS</div></th>
+            <th class="border-right"><div class="betrow option">OPTION</div></th>
+            </tr></tbody></table>
+        </div>
+        <div id="box_list_scroll" style="margin-left:0px; width: 1061px;">        
+            <div id="bettype_Normal" class="bettype"style="width: 1061px;">
+                <table id="tbl_Normal" border="0" cellpadding="0" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+                    <tbody>
+                        <tr>
+                            <td colspan="15" class="b c" style="height: 17px;">There is no information available.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>  
+        </div>
+    </script>
+    <script type="text/html" id="row_match">
+        {{if MatchCode }}
+        <table style="width: 600px;" class="tblcollapse" cellspacing="1" border="0">
+            <tbody>
+                <tr class="title c">
+                    <td nowrap="">CODE</td><td>MATCH EVENT</td><td width="150">EVENT DATE</td>
+                </tr>
+                <tr class="h3 c">
+                    <td id="code">${MatchCode}</td><td nowrap="" id="teams">${HomeName} - vs - ${AwayName}</td><td id="transtime">${EventDate}</td>
+                </tr>
+            </tbody>
+        </table>
+        {{/if}}
+    </script>
+    <script id="item_bettype_tpl" type="text/html">
+        <div class="betrow title border-grid-row" id="betrow_title_${Type}" style="display: block; width: 1042px; border-bottom: 1px solid #666666; border-top: 0px solid;">
+            <div class="title_label" style="float: left;width: 950px;cursor: pointer;" rel="bettype_${Type}"><div>&nbsp;</div>${Type}</div>
+            <div style="float: right;margin-right: 5px;"> 
+                {{if IsAllowOptionDelete==true}}
+                <select onchange="specialDeleteUtils.ddlChange('${Type}');" name="ddl${Type}" id="ddl${Type}" class="sel-partner" partner="${Type}">
+                    <option value="0" {{if OptionType == 0}}selected="selected"{{/if}}>Not Delete</option>
+                    <option value="1" {{if OptionType == 1}}selected="selected"{{/if}}>Delete All</option>
+                    <option value="2" {{if OptionType == 2}}selected="selected"{{/if}}>Optional</option>
+                </select>
+                {{/if}}
+            </div>
+        </div>
+        <div id="bettype_${Type}" class="bettype" style="display: inline-block; float: left;">
+            <table id="tbl_${Type}" border="0" cellpadding="0" cellspacing="0" style="width:90%; border-collapse: collapse;">
+                <tbody>
+                </tbody>
+            </table>
+        </div>       
+    </script>
+    <script id="item_betrans_tpl" type="text/html">
+        <tr {{if SaFilter == 0}}class="betrow line border-grid-row" {{else}}class="betrow line border-grid-row highlightSA"{{/if}} rel="${Refno}-${TransId}-${CurrencyId}">
+            <td class="border right top"><div class="betrow index">${Order}</div></td>
+            <td class="border right top"><div class="betrow account"><span id="account-${TransId}">${Account}</span></div></td>
+            <td class="border right top"><div class="betrow refno">${Refno}</div></td>
+            <td class="border right top"><div class="betrow bettype">${Bettype}</div></td>
+            <td class="border right top"><div class="betrow bet">${Betteam}</div></td>
+            <td class="border right top"><div class="betrow odds"><strong><span style="color:blue;">${Odds}</span><br>${OddType}</strong></div></td>
+            <td class="border right top"><div class="betrow amount"><span id="amount-${TransId}">${Amount}</span></div></td>
+            <td class="border right top"><div class="betrow currency"><span id="currency-${TransId}">${Currency}</span></div></td>
+            <td class="border right top"><div class="betrow hdp">${Hdp}</div></td>
+            <td class="border right top"><div class="betrow transtime"><span id="transtime-${TransId}">${TransTime}</span></div></td>
+            <td class="border right top"><div class="betrow score">${Score}</div></td>
+            <td class="border right top"><div class="betrow account">${Creator}</div></td>
+            <td class="border right top"><div class="betrow status">${Status}</div></td>
+            <td class="border right top"><div class="betrow option">{{html specialDeleteUtils.genCheckOpt($item.data, $item.bettype)}}</div></td>
+        </tr>
+    </script>
+    <div id="deleteDiv" style="">
+        <div class="main" style="width: 100%;">
+            <table class="maincontent" style="width: 100%;" border="0" cellpadding="0px" cellspacing="0px">
+                <tr style="width: 100%;">
+                    <td>
+                        <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
+                            <tr>
+                                <td class="maincontent_headerL">
+                                </td>
+                                <td class="maincontent_headerC">
+                                    Special Delete for Virtual Sports
+                                </td>
+                                <td class="maincontent_headerR">
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.Partial("~/Views/VirtualSport/SpecialDelete/SpecialDeleteBets_Filters.cshtml")
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="bg_table" class="hidden" style="width: 1133px;">
+                            <div class="box_clear">
+                            </div>
+                            <div class="box_clear">
+                            </div>
+                            @Html.Partial("~/Views/VirtualSport/SpecialDelete/SpecialDeleteBets_TransactionsInfo.cshtml")
+                            @Html.Partial("~/Views/VirtualSport/SpecialDelete/SpecialDeleteBets_MessageList.cshtml")
+                            @Html.Partial("~/Views/VirtualSport/SpecialDelete/SpecialDeleteBets_ConfirmForm.cshtml")
+                            <div class="box_clear">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    @{string userName = AppSession.AccUserName;}
+</body>
+<script type="text/javascript">
+    var accUserName = '@userName';     
+</script>
+</html>

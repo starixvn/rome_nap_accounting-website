@@ -1,0 +1,88 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="SpecialDeleteService.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Admin.Business.MailingList
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using Fanex.Tarus.Admin.Entities;
+    using Fanex.Tarus.Admin.DataAccess.MailingList;
+    using System.Data;
+    using DNAide.Core;
+    using Sunplus.Accounting.Core.Extensions;
+    using Fanex.Tarus.Admin.Entities.MailingList;
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class SpecialDeleteService : ISpecialDeleteService
+    {
+        private readonly ISpecialDeleteAccess _specialDeleteAccess;
+         public SpecialDeleteService():this(null)
+        {
+            
+        }
+
+         public SpecialDeleteService(ISpecialDeleteAccess specialDeleteAccess)
+        {
+            _specialDeleteAccess = specialDeleteAccess ?? new SpecialDeleteAccess();
+        }
+
+        public SpecialDeleteMailing GetMailing()
+        {
+            var model = new SpecialDeleteMailing();
+            try
+            {
+                var datatable = _specialDeleteAccess.GetMailingList();
+                int index = 0;
+                foreach (DataRow row in datatable.Rows)
+                {
+                    var mailLicensee =  new MailLicensee();
+
+                    mailLicensee.SiteID  = CastAide.AsInt32(row["siteid"]);
+                    mailLicensee.SiteName = CastAide.AsString(row["site"]);
+                    mailLicensee.ToList = CastAide.AsString(row["tolist"]);
+                    mailLicensee.CCList = CastAide.AsString(row["cclist"]);
+                    mailLicensee.BCCList = CastAide.AsString(row["bcclist"]);
+                    mailLicensee.IsMailExist = CastAide.AsBoolean(row["isavailabe"]);
+
+                    model.LicenseeList.Add(mailLicensee);
+                    
+                    if (!mailLicensee.IsMailExist)
+                    {
+                        model.NonMailingList += index == 0 ? mailLicensee.SiteName : ", " + mailLicensee.SiteName ;
+                        index++;
+                    }
+                }
+                var promt = new MailLicensee()
+                {
+                    SiteName = "Please select",
+                    SiteID = -1
+                };
+                model.LicenseeList.Insert(0, promt);
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return model;
+        }
+
+        public Result UpdateInsertMailing(MailLicensee mailLicensee, bool update)
+        {
+            try
+            {
+                var result = _specialDeleteAccess.UpdateInsertMailing(mailLicensee, update);
+                return result;
+            }
+            catch (Exception e)
+            {
+                return new Result { ErrorCode = 1, ErrorMessage = e.Message };
+            }
+        }
+    }
+}

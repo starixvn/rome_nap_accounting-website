@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Fanex.Tarus.LiveCasino.Entities;
+using Fanex.Tarus.LiveCasino.Entities.ExRate;
+
+namespace Fanex.Tarus.LiveCasino.Business.ExRate
+{
+    public interface IExRateManager
+    {
+        Result UpdateExchange(ExRateBO exChangeRate);
+    }
+}

@@ -1,0 +1,129 @@
+﻿
+
+using System;
+using System.Web.Mvc;
+using Fanex.Tarus.Reports.Business.MixParlay;
+using Fanex.Tarus.Web.Controllers;
+using Fanex.Tarus.Web.Controllers.Filters;
+
+namespace Fanex.Tarus.Reports.Controllers.MixParlay
+{
+    public class MixParlayController : BaseController
+    {
+        #region IFields
+
+        //
+        // GET: /MixParlayReportService/
+        private readonly IMixParlayReportService _mixParlayReportService;
+
+        #endregion IFields
+        #region IConstructions
+
+        public MixParlayController()
+            : this(null)
+        {
+        }
+
+        public MixParlayController(IMixParlayReportService mixParlayReportService)
+        {
+            _mixParlayReportService = mixParlayReportService ?? new MixParlayReportService();            
+        }
+
+        #endregion IConstructions
+        #region IMethods
+
+        [AuthenticateRead]
+        public ActionResult MixParlayPopup()
+        {
+            return View("~/Views/Report/MixParlay/MixParlayReportPopup.cshtml");
+        }
+
+        [HttpPost]
+        public JsonResult SelDirectMixParlay(DateTime reportDate, int betType)
+        {
+            var result = _mixParlayReportService.SelDirectMixParlay(reportDate, betType);             
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+
+            
+        }
+        
+        [HttpPost]
+        public JsonResult ExportToExcel_DirectMixParlay(DateTime winlostdate, int betType)
+        {
+            _mixParlayReportService.ExportToExcel_DirectMixParlay(winlostdate, betType);
+            
+            int exportResult = 1;
+            var jsonResult = Json(exportResult);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }        
+
+        [HttpPost]
+        public JsonResult SelAdvanceMixParlayReport(DateTime fromDate, DateTime toDate, bool isViewDW, int betType)
+        {
+            var result = _mixParlayReportService.SelAdvanceMixParlayReport(fromDate, toDate, isViewDW, betType);
+
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public ActionResult Export2Excel_MixParlayAdvanceMain(DateTime fromDate, DateTime toDate,  int betType)
+        {
+            _mixParlayReportService.Export2Excel_MixParlayAdvanceMain(fromDate,toDate, betType);
+
+            int exportResult = 1;
+            var jsonResult = Json(exportResult);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        #endregion IMethods
+
+        #region DailyParlayWinLoss
+
+        [AuthenticateRead]
+        public ActionResult DailyParlayWinLoss()
+        {
+            return View("~/Views/Report/MixParlay/DailyParlayWinLoss.cshtml");
+        }
+
+        public JsonResult SelDailyParlayWinLoss(DateTime fromDate, DateTime toDate, bool isViewDW)
+        {
+            var result = _mixParlayReportService.SelDailyParlayWinLoss(fromDate, toDate, isViewDW);
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        public JsonResult SelAdvanceParlayWinLoss(DateTime fromDate, DateTime toDate, bool isViewDW)
+        {
+            var result = _mixParlayReportService.SelAdvanceParlayWinLoss(fromDate, toDate, isViewDW);
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        public ActionResult ExportExcelDailyParlayWinLoss(DateTime fromdate, DateTime todate, bool isViewDW)
+        {
+
+            _mixParlayReportService.ExportExcelDailyParlayWinLoss(fromdate, todate, isViewDW);
+            var jsonResult = Json(1);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        public ActionResult ExportExcelAdvanceParlayWinLoss(DateTime fromDate, DateTime toDate, bool isViewDW)
+        {
+
+            _mixParlayReportService.ExportExcelAdvanceParlayWinLoss(fromDate, toDate, isViewDW);
+            var jsonResult = Json(1);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+        #endregion
+    }
+}

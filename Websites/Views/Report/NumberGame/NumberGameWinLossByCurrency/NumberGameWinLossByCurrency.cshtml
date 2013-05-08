@@ -1,0 +1,952 @@
+﻿@using DNAide.Core
+@using Fanex.Tarus.Web.Controllers.Report;
+@using Sunplus.Accounting.Business.Report;
+@using Sunplus.Accounting.Core.Configurations;
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>@Reports.Title</title>
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/table.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Report/Report.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/commonIOM.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Report/reportgrid.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/Pager/pagination.css" />
+    <link rel="stylesheet" type="text/css" href="~/Views/Report/NumberGame/Styles/numbergamereport.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/MultipleSelect/jquery.multiselect.css" />
+    <script src="~/js/jQuery/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="~/js/json2.js" type="text/javascript"></script>
+    <script src="~/js/common.js" type="text/javascript"></script>
+    <script src="~/js/jQuery/jquery.json-2.2.min.js" type="text/javascript"></script>
+    <script src="~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js" type="text/javascript"></script>
+    <script src="~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js" type="text/javascript"></script>
+    <script src="~/js/jQuery/Pager/jpager.js" type="text/javascript"></script>
+    <script src="~/js/MultipleSelect/jquery.multiselect.js" type="text/javascript"></script>
+    <script src="~/Views/Report/NumberGame/NumberGameWinLossByCurrency/Scripts/NumberGameWinLossByCurrency.js?version=@WebSettings.Version"
+        type="text/javascript"></script>
+</head>
+<body>
+    <div id="main" class="main" style="margin-bottom: 6px;">
+        <table style="width: 100%" border="0" cellpadding="0px" cellspacing="0px">
+            <tr>
+                <td>
+                    <div id="divMainHeader" class="">
+                        <div id="left_tab1">
+                            <ul>
+                                <li class="lefticon"></li>
+                                <li class="current"><span>Number Game Win Loss By Currency</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="filter" class="maincontent">
+                        <div class="filterBox">
+                            <div class="filterContent">
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td style="padding-left: 4px; width: 60px;">
+                                            <div>
+                                                Company:</div>
+                                        </td>
+                                        <td style="width: 130px;">
+                                            <div>
+                                                <select id="selectCompany" style="width: 100px; height: 18px;" multiple="multiple">
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td style="padding-left: 4px; width: 60px;">
+                                            <div>
+                                                Currency:</div>
+                                        </td>
+                                        <td style="width: 130px;">
+                                            <select id="selectCurrency" style="width: 100px; height: 18px;" multiple="multiple">
+                                            </select>
+                                        </td>
+                                        <td style="padding-left: 4px; width: 70px;">
+                                            <div>
+                                                Bettypes:</div>
+                                        </td>
+                                        <td style="width: 170px;">
+                                            <select id="selectBettypes" style="width: 140px; height: 18px;" multiple="multiple">
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="chkExcludeTestAcc" />Show Comm
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left: 4px">
+                                            From Date:
+                                        </td>
+                                        <td>
+                                            <input id="txtfromdate" class="txtdate" readonly="readonly" style="width: 136px;" />
+                                        </td>
+                                        <td style="padding-left: 4px">
+                                            To Date:
+                                        </td>
+                                        <td>
+                                            <input id="txttodate" class="txtdate" readonly="readonly" style="width: 136px;" />
+                                        </td>
+                                        <td colspan="2">
+                                            <span></span>
+                                            <div style="padding-right: 4px; display: inline-block;">
+                                                <b>Live status:</b>
+                                            </div>
+                                            <span class="LeagueControl">
+                                                <input type="radio" id="rdall" value="-1" name="livetype" checked="checked" />All&nbsp;&nbsp;<input
+                                                    type="radio" id="rdnonelive" value="0" name="livetype" />Non-Live&nbsp;&nbsp;<input
+                                                        type="radio" id="rdlive" name="livetype" value="1" />Live </span>
+                                        </td>
+                                        <td>
+                                            <input type="button" onclick="NumberGameWinLossByCur.GetReportData(false)" class="btn"
+                                                value="REPORT" name="btnReport" id="btnReport" />
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div id="err">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contentBox" style="">
+                            <div id="NumberGameWinLossByCur" class="freegrid hidden">
+                                <div class="grid-title">
+                                    <div class="grid-title-lable" id="gridtitleBySporttype">
+                                        Main</div>
+                                    <div class="grid-toolbox">
+                                        <input type="button" onclick="MainReport.ExportExcelforMain(false)" value="  " id="btnExportExcelNumberGameWinLossByCur"
+                                            class="btnExcel" title="Export to Excel" />
+                                    </div>
+                                </div>
+                                <div class="free-cell free-top-left">
+                                    <table class="grid-fixed-table free-cell-top-left">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <div style="height: 39px; width: 100px;" class="table-cell">
+                                                        Currency</div>
+                                                </th>
+                                                <th>
+                                                    <div style="height: 39px; width: 100px;" class="table-cell">
+                                                        Turnover</div>
+                                                </th>
+                                                <th>
+                                                    <div style="height: 39px; width: 100px;" class="table-cell">
+                                                        Member W/L</div>
+                                                </th>
+                                                <th>
+                                                    <div style="height: 39px; width: 100px;" class="table-cell">
+                                                        Game Payout</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="row_header_wrapper">
+                                    <div class="row_header row-headers-background">
+                                        <table id="gridrowheader" class="grid-fixed-table row_header_content">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <div style="height: 39px; width: 100px;">
+                                                            Currency</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 39px; width: 100px;">
+                                                            Turnover</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 39px; width: 100px;">
+                                                            Member W/L</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 39px; width: 100px;">
+                                                            Game Payout</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col_header row-headers-background scroll-y">
+                                    <div class="header-container">
+                                        <table class="grid-fixed-table col_header_content">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            Turnover</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            Member W/L</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            Game Payout</div>
+                                                    </th>
+                                                    <th colspan="5">
+                                                        <div style="height: 17px; width: 415px;">
+                                                            Company</div>
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Net Turnover</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            PT Win/Loss</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Comm Expense</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Net Income</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Margin</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="grid-container container">
+                                    <div class="content-container">
+                                        <table id="grid" class="grid-fixed-table col_header_content">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th colspan="5">
+                                                        <div style="height: 17px; width: 415px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row_footer row-footer-background z999">
+                                    <table class="grid-fixed-table row_footer_content">
+                                        <thead>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="col_footer row-footer-background scroll-y">
+                                    <div class="footer-container">
+                                        <table class="grid-fixed-table col_footer_content">
+                                            <thead>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="NumberGameWinLossByCurNotComm" class="freegrid hidden">
+                                <div class="grid-title">
+                                    <div class="grid-title-lable" id="gridtitleBySporttypeNotComm">
+                                        Main</div>
+                                    <div class="grid-toolbox">
+                                        <input type="button" onclick="MainReport.ExportExcelforMain(false)" value="  " id="btnExportExcelNumberGameWinLossByCurNotComm"
+                                            class="btnExcel" title="Export to Excel" />
+                                    </div>
+                                </div>
+                                <div class="free-cell free-top-left">
+                                    <table class="grid-fixed-table free-cell-top-left">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <div style="height: 39px; width: 100px;" class="table-cell">
+                                                        Currency</div>
+                                                </th>
+                                                <th>
+                                                    <div style="height: 39px; width: 100px;" class="table-cell">
+                                                        Turnover</div>
+                                                </th>
+                                                <th>
+                                                    <div style="height: 39px; width: 100px;" class="table-cell">
+                                                        Member W/L</div>
+                                                </th>
+                                                <th>
+                                                    <div style="height: 39px; width: 100px;" class="table-cell">
+                                                        Game Payout</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="row_header_wrapper">
+                                    <div class="row_header row-headers-background">
+                                        <table id="gridrowheaderNotComm" class="grid-fixed-table row_header_content">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <div style="height: 39px; width: 100px;">
+                                                            Currency</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 39px; width: 100px;">
+                                                            Turnover</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 39px; width: 100px;">
+                                                            Member W/L</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 39px; width: 100px;">
+                                                            Game Payout</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col_header row-headers-background scroll-y">
+                                    <div class="header-container">
+                                        <table class="grid-fixed-table col_header_content">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            Turnover</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            Member W/L</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            Game Payout</div>
+                                                    </th>
+                                                    <th colspan="5">
+                                                        <div style="height: 17px; width: 415px;">
+                                                            Company</div>
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Net Turnover</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            PT Win/Loss</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Net Income</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Margin</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="grid-container container">
+                                    <div class="content-container">
+                                        <table id="gridNotComm" class="grid-fixed-table col_header_content">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th colspan="5">
+                                                        <div style="height: 17px; width: 415px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row_footer row-footer-background z999">
+                                    <table class="grid-fixed-table row_footer_content">
+                                        <thead>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="col_footer row-footer-background scroll-y">
+                                    <div class="footer-container">
+                                        <table class="grid-fixed-table col_footer_content">
+                                            <thead>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="NumberGameWinLossByCurDetail" class="freegrid hidden">
+                                <div class="grid-title">
+                                    <div class="grid-title-lable" id="gridtitleBySporttypeDetailNotComm">
+                                    </div>
+                                    <div class="grid-toolbox">
+                                        <input type="button" onclick="DetailReport.ExportExcelforDetail(false)" value="  "
+                                            id="btnExportExcelTopPunterBySporttypeDetailNotComm" class="btnExcel" title="Export to Excel" />
+                                    </div>
+                                </div>
+                                <div class="free-cell free-top-left">
+                                    <table class="grid-fixed-table free-cell-top-left">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <div style="height: 39px; width: 100px;" class="table-cell">
+                                                        Username</div>
+                                                </th>
+                                                <th>
+                                                    <div style="height: 39px; width: 100px;" class="table-cell">
+                                                        Turnover</div>
+                                                </th>
+                                                <th>
+                                                    <div style="height: 39px; width: 100px;" class="table-cell">
+                                                        GrossComm</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="row_header_wrapper">
+                                    <div class="row_header row-headers-background">
+                                        <table id="gridrowheaderDetail" class="grid-fixed-table row_header_content">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <div style="height: 39px; width: 100px;">
+                                                            Username</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 39px; width: 100px;">
+                                                            Turnover</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 39px; width: 100px;">
+                                                            GrossComm</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col_header row-headers-background scroll-y">
+                                    <div class="header-container">
+                                        <table class="grid-fixed-table col_header_content">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            Turnover</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            GrossComm</div>
+                                                    </th>
+                                                    <th colspan="3">
+                                                        <div style="height: 17px; width: 310px;">
+                                                            Member</div>
+                                                    </th>
+                                                    <th colspan="3">
+                                                        <div style="height: 17px; width: 310px;">
+                                                            Agent</div>
+                                                    </th>
+                                                    <th colspan="3">
+                                                        <div style="height: 17px; width: 310px;">
+                                                            Master</div>
+                                                    </th>
+                                                    <th colspan="3">
+                                                        <div style="height: 17px; width: 310px;">
+                                                            Super</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            Company</div>
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Win/Loss</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Comm</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Total</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Win/Loss</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Comm</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Total</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Win/Loss</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Comm</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Total</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Win/Loss</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Comm</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Total</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="grid-container container">
+                                    <div class="content-container">
+                                        <table id="gridDetail" class="grid-fixed-table col_header_content">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th colspan="3">
+                                                        <div style="height: 17px; width: 310px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th colspan="3">
+                                                        <div style="height: 17px; width: 310px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th colspan="3">
+                                                        <div style="height: 17px; width: 310px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th colspan="3">
+                                                        <div style="height: 17px; width: 310px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row_footer row-footer-background z999">
+                                    <table class="grid-fixed-table row_footer_content">
+                                        <thead>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="col_footer row-footer-background scroll-y">
+                                    <div class="footer-container">
+                                        <table class="grid-fixed-table col_footer_content">
+                                            <thead>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="NumberGameWinLossByCurDetailNotComm" class="freegrid hidden">
+                                <div class="grid-title">
+                                    <div class="grid-title-lable" id="gridtitleBySporttypeDetail">
+                                    </div>
+                                    <div class="grid-toolbox">
+                                        <input type="button" onclick="DetailReport.ExportExcelforDetail(false)" value="  "
+                                            id="btnExportExcelTopPunterBySporttypeDetail" class="btnExcel" title="Export to Excel" />
+                                    </div>
+                                </div>
+                                <div class="free-cell free-top-left">
+                                    <table class="grid-fixed-table free-cell-top-left">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <div style="height: 39px; width: 100px;" class="table-cell">
+                                                        Username</div>
+                                                </th>
+                                                <th>
+                                                    <div style="height: 39px; width: 100px;" class="table-cell">
+                                                        Turnover</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="row_header_wrapper">
+                                    <div class="row_header row-headers-background">
+                                        <table id="gridrowheaderDetailNotComm" class="grid-fixed-table row_header_content">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <div style="height: 39px; width: 100px;" class="table-cell">
+                                                            Username</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 39px; width: 100px;" class="table-cell">
+                                                            Turnover</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col_header row-headers-background scroll-y">
+                                    <div class="header-container">
+                                        <table class="grid-fixed-table col_header_content">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            Turnover</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Member</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Agent</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Master</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Super</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            Company</div>
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Win/Loss</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Win/Loss</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Win/Loss</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Win/Loss</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            Total</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="grid-container container">
+                                    <div class="content-container">
+                                        <table id="gridDetailNotComm" class="grid-fixed-table col_header_content">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="height: 17px; width: 100px;">
+                                                            &nbsp;</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row_footer row-footer-background z999">
+                                    <table class="grid-fixed-table row_footer_content">
+                                        <thead>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="col_footer row-footer-background scroll-y">
+                                    <div class="footer-container">
+                                        <table class="grid-fixed-table col_footer_content">
+                                            <thead>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    @{
+        if (Request["IsExport"] != null && DNAide.Core.CastAide.AsBoolean(Request["IsExport"]))
+        {
+            if (Request["IsDetail"] != null && DNAide.Core.CastAide.AsBoolean(Request["IsDetail"]))
+            {
+                var pRequest = new Fanex.Tarus.Reports.Entities.NumberGameWinLoss.NumberGameWinLossByCurrency.NumberGameWinLossByCurrency_DetailParams()
+                {
+                    CustID = DNAide.Core.CastAide.AsInt32(Request["CustID"]),
+                    RoleID = DNAide.Core.CastAide.AsInt32(Request["RoleID"]),
+                    Currencies = Request["Currencies"],
+                    FromDate = Request["FDate"],
+                    ToDate = Request["TDate"],
+                    Companies = Request["Companies"],
+                    Bettypes = Request["BetTypes"],
+                    LiveStatus = DNAide.Core.CastAide.AsInt32(Request["LiveStatus"]),
+                    PageSize = 0,
+                    FromCache = DNAide.Core.CastAide.AsBoolean(Request["FromCache"]),
+                    IsShowComm = DNAide.Core.CastAide.AsBoolean(Request["IsShowComm"])
+                };
+                Fanex.Tarus.Reports.Business.NumberGame.ByCurrency.IByCurrencyService exportData = new Fanex.Tarus.Reports.Business.NumberGame.ByCurrency.ByCurrencyService();
+                exportData.ExportExcelNumberGameWinLossByCurDetail(pRequest);
+            }
+            else
+            {
+                var pRequest = new Fanex.Tarus.Reports.Entities.NumberGameWinLoss.NumberGameWinLossByCurrency.NumberGameWinLossByCurrency_MainParams()
+                {
+                    Currencies = Request["Currencies"],
+                    FromDate = Request["FDate"],
+                    ToDate = Request["TDate"],
+                    Companies = Request["Companies"],
+                    Bettypes = Request["BetTypes"],
+                    LiveStatus = DNAide.Core.CastAide.AsInt32(Request["LiveStatus"]),
+                    FromCache = DNAide.Core.CastAide.AsBoolean(Request["FromCache"]),
+                    IsShowComm = DNAide.Core.CastAide.AsBoolean(Request["IsShowComm"])
+                };
+                Fanex.Tarus.Reports.Business.NumberGame.ByCurrency.IByCurrencyService exportData = new Fanex.Tarus.Reports.Business.NumberGame.ByCurrency.ByCurrencyService();
+                exportData.ExportExcelNumberGameWinLossByCurMain(pRequest);
+            }
+        }
+    }
+    <iframe id="frm" width="0" height="0" frameborder="0" style="display: none"></iframe>
+</body>
+</html>
+<script type="text/javascript">
+    var _today = '@DateTime.Today.AddDays(-1).ToShortDateString()';
+    window.rootUrl = '@Url.Content("~")';   
+</script>

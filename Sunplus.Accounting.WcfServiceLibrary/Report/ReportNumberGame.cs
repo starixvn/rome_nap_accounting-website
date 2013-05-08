@@ -1,0 +1,127 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.ServiceModel.Activation;
+using System.Text;
+using Sunplus.Accounting.Business.BootStrappers;
+using Sunplus.Accounting.Business.Report;
+using Sunplus.Accounting.Entities.Report.NumberGame;
+using Sunplus.Accounting.Entities.ViewModel;
+using Sunplus.Accounting.Entities;
+using DNAide.Core;
+
+
+namespace Sunplus.Accounting.WcfServiceLibrary.Report
+{
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+    public class ReportNumberGame : IReportNumberGame
+    {
+
+        public NumberGameTreeGridBO WinLoss_ByMatch_NumberGame(string date)
+        {
+            var winlossbymatch = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.INumberGameReport>();
+            return winlossbymatch.WinLoss_ByMatch_NumberGame(date);
+        }
+
+        public NumberGameTreeGridBO WinLoss_ByMatch_NumberGame(string date, int SiteID, int Currency)
+        {
+            var winlossbymatch = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.INumberGameReport>();
+            return winlossbymatch.WinLoss_ByMatch_NumberGame(date, SiteID, Currency);
+        }
+
+        public NumberGameDataGridBO WinLoss_Detail_NumberGame(string date, bool islive, int bettype, int matchid, int pageIndex, int pageSize, bool fromcache)
+        {
+            var winlossbymatch = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.INumberGameReport>();
+            return winlossbymatch.Acc_Rpt_NumberGameMemberWinlossByMatch_details(date, islive, bettype, matchid);
+            //return winlossbymatch.Acc_Rpt_NumberGameMemberWinlossByMatch_Details_Paging(date, islive, bettype, matchid, pageIndex, pageSize, fromcache);
+        }
+
+        public NumberGameDataGridBO WinLoss_Detail_NumberGame(string date, bool islive, int bettype, int matchid, int pageIndex, int pageSize, bool fromcache, int SiteID, int Currency)
+        {
+            var winlossbymatch = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.INumberGameReport>();
+            return winlossbymatch.Acc_Rpt_NumberGameMemberWinlossByMatch_details(date, islive, bettype, matchid, SiteID, Currency);
+            //return winlossbymatch.Acc_Rpt_NumberGameMemberWinlossByMatch_Details_Paging(date, islive, bettype, matchid, pageIndex, pageSize, fromcache);
+        }
+
+        public NumberGameByDateTreeGridBO WinLoss_ByDate_NumberGame(string fdate, string tdate)
+        {
+            var winlossbymatch = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.INumberGameReport>();
+            return winlossbymatch.WinLoss_ByDate_NumberGame(fdate, tdate);
+        }
+
+        public NumberGameByDateTreeGridBO WinLoss_ByDate_NumberGame(string fdate, string tdate, int SiteID, int Currency)
+        {
+            var winlossbymatch = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.INumberGameReport>();
+            return winlossbymatch.WinLoss_ByDate_NumberGame(fdate, tdate, SiteID, Currency);
+        }
+
+        public MonthlyWinloss MonthlyWinloss(int month, int year)
+        {
+            var numberGameReport = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.INumberGameReport>();
+            var monthlyWinloss = numberGameReport.MonthlyWinloss(month, year);
+            return monthlyWinloss;
+        }
+
+        public List<Sunplus.Accounting.Entities.Report.Licensee.Item> GetSiteList()
+        {
+            var numberGameReport = CommonBootStrapper.Locator.GetInstance<INumberGameReport>();
+            return numberGameReport.GetLicensees();
+        }
+
+        public List<Sunplus.Accounting.Entities.Report.NumberGame.Currency> GetCurrencyList()
+        {
+            var numberGameReport = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.INumberGameReport>();
+            return numberGameReport.GetCurrencyList();
+        }
+
+
+        public List<Entities.Report.Licensee.Item> GetBettypeList()
+        {
+            var numberGameReport = CommonBootStrapper.Locator.GetInstance<INumberGameReport>();
+            return numberGameReport.GetBettypeList();
+        }
+
+
+        public NumberGameByDateTreeGridBO NumberGameWinLossByDate(string companies, string currencies, string bettypes, string fromdate, string todate)
+        {
+            var numberGameReport = CommonBootStrapper.Locator.GetInstance<INumberGameReport>();
+            return numberGameReport.NumberGameWinLossByDate(companies, currencies, bettypes, fromdate, todate);
+        }
+
+
+        public BettypesWinLossDTO NumberGameWinLossByBettype(string companies, string currencies, string date)
+        {
+            var numberGameReport = CommonBootStrapper.Locator.GetInstance<INumberGameReport>();
+            return numberGameReport.NumberGameWinLossByBettype(companies, currencies, date);
+        }
+
+
+        public BettypeWinLossDetail NumberGameWinLossDetailByBettype(string date, int isLive, int bettype, string companies, string currencies)
+        {
+            var numberGameReport = CommonBootStrapper.Locator.GetInstance<INumberGameReport>();
+            return numberGameReport.NumberGameWinLossDetailByBettype(date, isLive, bettype, companies, currencies);
+        }
+
+
+        public BettypeWinLossDetailDTO NumberGameWinLossDetailByBettypeNew(string date, int isLive, int bettype, string companies, string currencies)
+        {
+            var numberGameReport = CommonBootStrapper.Locator.GetInstance<INumberGameReport>();
+            return numberGameReport.NumberGameWinLossDetailByBettypeNew(date, isLive, bettype, companies, currencies);
+        }
+
+        public NumberGameTreeGridBO NumberGameWinLossByMatch(string date, string companies, string currencies, string bettypes)
+        {
+            var numberGameReport = CommonBootStrapper.Locator.GetInstance<INumberGameReport>();
+            return numberGameReport.NumberGameWinLossByMatch(date, companies, currencies, bettypes);
+        }
+
+
+        public NumberGameDataGridBO NumberGameWinLossByMatchDetail(string date, bool islive, int matchid, string companies, string currencies, int bettype)
+        {
+            var numberGameReport = CommonBootStrapper.Locator.GetInstance<INumberGameReport>();
+            return numberGameReport.NumberGameWinLossByMatchDetails(date, islive, matchid, companies, currencies,
+                                                                    bettype);
+        }
+
+    }
+}

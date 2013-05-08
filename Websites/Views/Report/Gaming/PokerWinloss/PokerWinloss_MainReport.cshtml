@@ -1,0 +1,226 @@
+﻿<div id="mainPokerWinLossReport" class="freegrid hidden" style="margin-top: 6px; margin-left: 0px;
+    margin-bottom: 10px;">
+    <div class="grid-title">
+        <div id="mainPokerWinLossReport_Title" class="grid-title-lable">
+            Virtual Sports Win Loss</div>
+        <div class="grid-toolbox">
+            <input id="mainPokerWinLossReport_ExportExcel" class="btnExcel" type="button" title="Export to Excel"
+                value=" " onclick="PokerWinloss.exportMainReport('MainReport');" />
+        </div>
+    </div>
+    <div class="free-cell free-top-left">
+        <table class="grid-fixed-table free-cell-top-left">
+            <thead>
+                <tr style="">
+                    <th>
+                        <div class="col80 c table-cell " style="height: 39px;">
+                            Date
+                        </div>
+                    </th>
+                    <th>
+                        <div class="col100 c table-cell" style="height: 39px;">
+                            Currency
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="row_header_wrapper">
+        <div class="row_header row-headers-background" id="mainPokerWinLossReport_RowHeader">
+            <table class="grid-fixed-table row_header_content">
+                <thead>
+                    <tr style="">
+                        <th>
+                            <div class="col80 c " style="height: 39px;">
+                                Date
+                            </div>
+                        </th>
+                        <th>
+                            <div class="col100 c " style="height: 39px;">
+                                Currency
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col_header row-headers-background scroll-y">
+        <div class="header-container">
+            <table class="grid-fixed-table col_header_content">
+                <thead>
+                    <tr>
+                        <th rowspan="2">
+                            <div class="col80 c " style="height: 39px;">
+                                Date
+                            </div>
+                        </th>
+                        <th rowspan="2">
+                            <div class="col100 c " style="height: 39px;">
+                                Currency
+                            </div>
+                        </th>
+                        <th rowspan="2">
+                            <div class="col80 c table-cell" style="height: 39px;">
+                                Gross Comm
+                            </div>
+                        </th>
+                        <th colspan="3">
+                            <div class=" c table-cell" style="height: 17px; width:240px">
+                                Member
+                            </div>
+                        </th>
+                        <th colspan="4">
+                            <div class=" c table-cell" style="height: 17px; width:320px">
+                                Comm
+                            </div>
+                        </th>
+                        <th rowspan="2">
+                            <div class="col80 c table-cell" style="height: 39px;">
+                                Gross Comm Base (RM)
+                            </div>
+                        </th>
+                        <th rowspan="2">
+                            <div class="col80 c table-cell" style="height: 39px;">
+                               Company Comm Base (RM)
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class="col80 c table-cell" style="height: 17px;">
+                                Win/Loss
+                            </div>
+                        </th>
+                        <th>
+                            <div class="col80 c table-cell" style="height: 17px;">
+                                Comm
+                            </div>
+                        </th>
+                        <th>
+                            <div class="col80 c table-cell" style="height: 17px;">
+                                Total
+                            </div>
+                        </th>
+                        <th>
+                            <div class="col80 c table-cell" style="height: 17px;">
+                                Agent
+                            </div>
+                        </th>
+                        <th>
+                            <div class="col80 c table-cell" style="height: 17px;">
+                                Master
+                            </div>
+                        </th>
+                        <th>
+                            <div class="col80 c table-cell" style="height: 17px;">
+                                Super
+                            </div>
+                        </th>
+                        <th>
+                            <div class="col80 c table-cell" style="height: 17px;">
+                                Company
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div class="grid-container container">
+        <div class="content-container">
+            <table id="mainPokerWinLossReport_Container" class="grid-fixed-table col_header_content">
+                <thead>
+                    <tr>
+                        <th rowspan="2">
+                            <div class="col80 c" style="height: 39px;">
+                                Date
+                            </div>
+                        </th>
+                        <th rowspan="2">
+                            <div class="col100 c " style="height: 39px;">
+                                Currency
+                            </div>
+                        </th>
+                        <th rowspan="2">
+                            <div class="col80 c table-cell" style="height: 39px;">
+                                Gross Comm
+                            </div>
+                        </th>
+                        <th colspan="3">
+                            <div class=" c table-cell" style="height: 17px; width:240px">
+                                Member
+                            </div>
+                        </th>
+                        <th colspan="4">
+                            <div class=" c table-cell" style="height: 17px; width:320px">
+                                Comm
+                            </div>
+                        </th>
+                        <th rowspan="2">
+                            <div class="col80 c table-cell" style="height: 39px;">
+                                Gross Comm Base (RM)
+                            </div>
+                        </th>
+                        <th rowspan="2">
+                            <div class="col80 c table-cell" style="height: 39px;">
+                                Company Comm Base (RM)
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class="col80 c table-cell" style="height: 17px;">
+                                Win/Loss
+                            </div>
+                        </th>
+                        <th>
+                            <div class="col80 c table-cell" style="height: 17px;">
+                                Comm
+                            </div>
+                        </th>
+                         <th>
+                            <div class="col80 c table-cell" style="height: 17px;">
+                                Total
+                            </div>
+                        </th>
+                         <th>
+                            <div class="col80 c table-cell" style="height: 17px;">
+                                Agent
+                            </div>
+                        </th>
+                         <th>
+                            <div class="col80 c table-cell" style="height: 17px;">
+                                Master
+                            </div>
+                        </th>
+                         <th>
+                            <div class="col80 c table-cell" style="height: 17px;">
+                                Company
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row_footer row-footer-background z999">
+        <table class="grid-fixed-table row_footer_content">
+            <thead>
+            </thead>
+        </table>
+    </div>
+    <div class="col_footer row-footer-background scroll-y">
+        <div class="footer-container">
+            <table class="col_footer_content grid-fixed-table">
+                <thead>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>

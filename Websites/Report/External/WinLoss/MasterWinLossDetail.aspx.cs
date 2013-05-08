@@ -1,0 +1,96 @@
+﻿using System.Collections.Generic;
+using System.Web.UI.WebControls;
+using System.Text;
+using Sunplus.Accounting.Entities.Report;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Services.ReportServices;
+using System.Web.UI.HtmlControls;
+using ExcelUtil.Spreadsheet;
+using Sunplus.Accounting.Core.Web;
+
+public partial class Report_WinLoss_MasterWinLossDetail : WinLossReporPageBase
+{
+
+    public override string CurrentUrl 
+    {
+        get
+        {
+            return "MasterWinLossDetail.aspx";
+        }
+    }
+
+    public override string DownlineUrl
+    {
+        get
+        {
+            return "AgentWinLossDetail.aspx";
+        }
+    }
+
+    public override string ReportTitle
+    {
+        get
+        {
+            return "Agent Win/Loss Detail";
+        }
+    }
+
+    public override string ExportFileName
+    {
+        get
+        {
+            return string.Format(WinLossService.ReportNameAgentWinLossDetail, FromDate.ToString("yyyyMMdd") + "_" + ToDate.ToString("yyyyMMdd"));
+        }
+    }
+
+    public override ExcelFile CreateExcelFile()
+    {
+        return (new WinLossService()).CreateExcelFileAgentWinloss(UplineId, FromDate, ToDate, Option);
+    }
+
+    public override Repeater ReportControl
+    {
+        get
+        {
+            return rptWinLoss;
+        }
+    }
+
+    public override HtmlGenericControl NoInfoPanel
+    {
+        get
+        {
+            return noInfoPanel;
+        }
+    }
+
+    public override System.Collections.IList GetReportData()
+    {
+        List<AgentWinLoss> entityList = new List<AgentWinLoss>();
+        WinLossService winlossService = new WinLossService();
+        int uplineId = UplineId;
+
+        entityList = winlossService.GetAgentReportData(uplineId, FromDate, ToDate, Option);
+
+
+        if (entityList.Count > 0)
+        {
+            lastItem = winlossService.CreateTotalLastItem(entityList);
+        }
+
+        return entityList;
+    }
+
+
+    protected override string RenderWinLossCommTotalByReport(IWinLoss winloss)
+    {
+        StringBuilder itemHtml = new StringBuilder();
+
+        //render winloss comm and total
+        itemHtml.Append(RenderWinLossCommTotal((winloss as AgentWinLoss).Member));
+        itemHtml.Append(RenderWinLossCommTotal((winloss as AgentWinLoss).Agent));
+        itemHtml.Append(RenderWinLossCommTotal((winloss as AgentWinLoss).Master));
+
+        return itemHtml.ToString();
+    }
+}

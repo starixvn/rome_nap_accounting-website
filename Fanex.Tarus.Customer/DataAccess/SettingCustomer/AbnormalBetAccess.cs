@@ -1,0 +1,42 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="AbnormalBetAccess.cs" company="">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer
+{
+    using Fanex.Tarus.Customer.Entities.SettingCustomer;
+    using Fanex.Data;
+    using System.Data;
+    using DNAide.Core;
+    using Fanex.Tarus.Customer.Entities;
+  
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class AbnormalBetAccess: IAbnormalBetAccess
+    {
+        public Result UpdateLevelAbnormal(int custId, int updateDownline, int abnormalLevel, int userId, string ip)
+        {
+
+            var result = new Result();
+            using (var dbContext = new ObjectDb("UpdateCustomerStatusAbnormal"))
+            {
+                dbContext.AddInParameter("custid", DbType.Int32, custId);
+                dbContext.AddInParameter("updatedownline", DbType.Int32, updateDownline);
+                dbContext.AddInParameter("abnormallevel", DbType.Int32, abnormalLevel);
+                dbContext.AddInParameter("userid", DbType.Int32, userId);
+                dbContext.AddInParameter("ip", DbType.String, ip);
+                dbContext.AddOutParameter("ErrMsg", DbType.String, 4000);
+                dbContext.AddOutParameter("ErrCode", DbType.Int32, sizeof(int));
+                dbContext.ExecuteNonQuery();
+                result.ErrorMessage = CastAide.AsString(dbContext.GetParameterValue("ErrMsg"));
+                result.ErrorCode = CastAide.AsInt32(dbContext.GetParameterValue("ErrCode"));
+
+            }
+            return result;
+        }
+    }
+}

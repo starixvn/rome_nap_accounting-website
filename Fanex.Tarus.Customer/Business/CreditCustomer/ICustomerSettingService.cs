@@ -1,0 +1,77 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="ICustomerSettingService.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Customer.CreditCustomer.Business
+{
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using Fanex.Tarus.Customer.CreditCustomer.Entities;
+    using Fanex.PTEngine.BusinessObjects;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public interface ICustomerSettingService
+    {
+        /// <summary>
+        /// Get CurrencyList
+        /// </summary>
+        /// <param name="system">Name of system</param>
+        /// <returns>List of currency (name and id)</returns>
+        List<Currency> GetCurrencyList(string system);
+
+        /// <summary>
+        /// Get Site for add new super
+        /// </summary>
+        /// <param name="system">system name</param>
+        /// <returns>Return list of Site Name</returns>
+        List<Sites> GetSites(string system);
+
+        /// <summary>
+        /// Get Cutomer Info for Member Group
+        /// </summary>
+        /// <param name="paramerters">Paramerter contains agent id</param>
+        /// <returns>List Of Group</returns>
+        List<MemberGroup> GetListMemberGroup(int agentId);
+
+        /// <summary>
+        /// This function will update status after insert customer success
+        /// </summary>
+        /// <param name="custId">Id of customer've just inserted</param>
+        /// <param name="customer">Information of up-line customer</param>
+        /// <param name="currentContext">context of request</param>
+        /// <returns></returns>
+        void UpdateStatusThirdPartyAccountAfterInsertCustomer(int custId, ICustomer customer, IRequestContext currentContext);
+
+        /// <summary>
+        /// This funtion will return a boolean variable, let us know the current admin can edit credit or not
+        /// </summary>
+        /// <returns></returns>
+        bool CheckPermissionEditCredit();
+
+        /// <summary>
+        /// This funtion will return a boolean variable, let us know the current admin create internal user
+        /// </summary>
+        /// <returns></returns>
+        bool CheckPermissionFinance();
+
+        /// <summary>
+        /// Update syncCasino Data
+        /// </summary>
+        /// <param name="customer">Information of Customer</param>
+        /// <param name="currentContext">Current Context</param>
+        /// <returns></returns>
+        bool UpdateSyncCasinoAfterEditCustomer(ICustomer customer, IRequestContext currentContext);
+
+
+        Fanex.Tarus.Customer.Entities.Result UpdateDoubleComm(int userId, int custId, bool isDoubleComm);
+
+        string GetRNGSiteNameByCustId(int custId);
+    }
+}

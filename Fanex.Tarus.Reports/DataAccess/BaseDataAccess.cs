@@ -1,0 +1,66 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="BaseDataAccess.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Reports.DataAccess
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Data;
+    using Fanex.Data;
+    using DNAide.Core;
+
+  
+    public class BaseDataAccess
+    {
+
+        public static DataTable SelBalanceUpDay()
+        {
+            DataTable dt = new DataTable();
+            using (ObjectDb db = new ObjectDb("SelBalanceUpDay"))
+            {
+                var result = db.ExecuteDataSet();
+                if (result.Tables.Count > 0)
+                {
+                    dt = result.Tables[0];
+                }
+            }
+            return dt;
+        }
+
+        public static class BalanceUp
+        {
+            private static DateTime _balanceUpDay;
+            private static DateTime _moveBetDay;
+
+            private static void GetData()
+            {
+                DataTable dtb = SelBalanceUpDay();
+                _balanceUpDay = CastAide.AsDateTime(dtb.Rows[0]["BalanceUpDay"]);
+                _moveBetDay = CastAide.AsDateTime(dtb.Rows[0]["MovebetsDay"]);
+            }
+
+            public static DateTime BalanceUpDay
+            {
+                get
+                {
+                    GetData();
+                    return _balanceUpDay;
+                }
+            }
+
+            public static DateTime MoveBetDay
+            {
+                get
+                {
+                    GetData();
+                    return _moveBetDay;
+                }
+            }
+        }
+    }
+}

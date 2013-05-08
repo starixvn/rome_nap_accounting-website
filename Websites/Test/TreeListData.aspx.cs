@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using BLL.Report;
+using DNAide.Core;
+using Sunplus.Accounting.Entities.ViewModel;
+
+public partial class Test_TreeListData : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        try
+        {
+            Convert.ToInt32("dfa");
+        }
+        catch (Exception ex)
+        {
+
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+        }
+    }
+}

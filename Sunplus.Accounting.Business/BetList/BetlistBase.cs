@@ -1,0 +1,2892 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using DNAide.Core;
+using DNAide.Data;
+using DNAide.Utils;
+using DNAide.Web;
+using Fanex.Tarus.LiveCasino.Entities.Betlist;
+using Sunplus.Accounting.Business.BootStrappers;
+using Sunplus.Accounting.Business.Settle;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Web;
+//using Fanex.Tarus.LiveCasino.Entities.Betlist;
+
+
+//using Sunplus.Core.LoggingLib;
+
+/// <summary>
+/// Summary description for ReportBase
+/// </summary>
+namespace Sunplus.Accounting.Business.BetList
+{
+    public abstract class BetlistBase : BaseManager
+    {
+        #region global variables
+        protected string _NoShowOdds = "-";
+
+        protected string _OddsTypeName;
+
+        protected decimal _acomm;
+        protected double _acommRate;
+        protected decimal _apt;
+
+        protected string _away;
+
+        protected decimal _awinlost;
+
+        protected string _betteam;
+
+        protected int _bettype;
+        protected string _bettypeName;
+        protected decimal _com;
+        protected string _finalAwayScore;
+        protected string _finalHomeScore;
+
+        protected decimal _finalodds,
+                          _finalodds2;
+
+        protected decimal _hdp1,
+                          _hdp2;
+
+        protected string _home;
+        protected string _leagueName;
+        protected int _statusId;
+        protected string _liveAwayScore;
+        protected string _liveHomeScore;
+        protected string _liveStyle;
+
+        protected decimal _mOdds;
+
+        protected string _matchCode;
+
+        protected decimal _mcomm;
+        protected double _mcommRate;
+        protected decimal _mpt;
+        protected decimal _mwinlost;
+        protected string _odd_even;
+        protected decimal _odds;
+        protected decimal _modds;
+        protected int _placing;
+        protected string _race = "";
+        protected string _refno = "0";
+        protected decimal _scomm;
+        protected double _scommRate;
+        protected string _sportypeName;
+        protected decimal _spt;
+        protected decimal _stake;
+        protected decimal _actual_stake;
+        protected string _status;
+        protected string _strOdds;
+        protected decimal _swinlost;
+        protected decimal _totalcom;
+        protected string _transId = "0";
+        protected DateTime _transdate;
+        protected string _betId = "0";
+        protected int _liveindicator = 0;
+        protected string _showtime = "";
+     
+        #endregion
+
+        public abstract string RenderHTML(Hashtable input);
+        public virtual void Export2Excel(Hashtable input)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual string CreateHeader(Hashtable input)
+        {
+            throw new NotImplementedException();
+        }     
+
+        protected void GenEvent(ref string rowHtml, DataRow row, string eventItem, int listType)
+        {
+            switch (_bettype)
+            {
+                case 1://HDP
+                case 7://1st HDP
+                case 124://FT 1x2 AH
+                case 125://1st 1x2 AH
+                case 20:
+                case 22: //Next Goal bet type
+                case 21: //Next Goal bet type
+                case 1201://HDP               
+                    GenHdpRow(ref rowHtml);
+                    GenHdpEvent(ref eventItem, _home, _away, _betteam, listType, false);
+                    break;
+                case 2:
+                case 12:
+                    GenOERow(ref rowHtml);
+                    GenOEEvent(ref eventItem, _home, _away, listType, false);
+                    break;
+                case 3:
+                case 8:
+                case 1203:
+                case 1208:
+                    GenOURow(ref rowHtml);
+                    GenOUEvent(ref eventItem, _home, _away, listType, false);
+                    break;
+                case 4:
+                case 30:
+                case 1204:
+                    GenCSRow(ref rowHtml);
+                    GenCSEvent(ref eventItem, _home, _away, listType, false);
+                    break;
+                case 5://FT 1x2
+                case 1205://FT 1x2                
+                    Gen1x2Row(ref rowHtml, true);
+                    Gen1x2Event(ref eventItem, _home, _away, listType, false, true);
+                    break;
+                case 15://1st 1x2
+
+                    Gen1x2Row(ref rowHtml, false);
+                    Gen1x2Event(ref eventItem, _home, _away, listType, false, false);
+                    break;
+                case 6:
+                case 14:
+                case 16:
+                case 1206:
+                    GenTGRow(ref rowHtml);
+                    GenTGEvent(ref eventItem, _home, _away, listType, false);
+                    break;
+                case 10:
+                    GenOutrightRow(ref eventItem, listType);
+                    break;
+                case 121:
+                case 122:
+                case 123:
+                    GenHomeAwayDrawNoBet(ref eventItem, _bettype, false);
+                    break;
+                //Phuong.Nguyen, HR
+                case 31:
+                case 32:
+                case 33:
+                case 41:
+                case 42:
+                case 43:
+                    GenHREvent(ref eventItem);
+                    break;
+                case 9:
+                    //GenMPRow(ref eventItem, listType);
+                    eventItem = "<div id='spEvent_" + _refno +
+                                "' class='hide'></div><a class='lnk' href='javascript:void(\"\");' onclick='showMP(\"" +
+                                _refno + "\",\"" + listType + "\");' id='hidden0'>Mix Parlay</a>";
+                    break;
+                case 51: //Betting of Finance
+                case 52:
+                case 53:
+                case 54:
+                case 55:
+                case 56:
+                case 61:
+                case 62:
+                case 63:
+                case 64:
+                case 65:
+                case 66:
+                    _home = CacheRef.GetFncIndexName(row["homeid"]);
+                    GenFinancialRow(ref eventItem);
+                    break;
+                case 71:
+                case 72:
+                case 73:
+                case 112:
+                case 113:
+                case 114:
+                    //GenCasino(ref eventItem, bettype, CastAide.AsString(row["betid"]));
+                    GenCasino(ref eventItem, _bettype, _transId);
+                    break;
+                case 81://Number Game
+                case 82:
+                case 83:
+                case 84:
+                case 85:
+                case 86:
+                case 87:
+                case 88:
+                case 89:
+                case 90:
+                    GenEvent_NumberGame(ref eventItem, listType, false);
+                    break;
+                case 24:
+                case 1224:
+                    GenDoubleChanceEvent(ref eventItem, listType, false);
+                    break;
+                case 25:
+                    GenDrawNoBetEvent(ref eventItem, listType, false);
+                    break;
+                case 26:
+                    GenBothOneNeitherEvent(ref eventItem, listType, false);
+                    break;
+                case 27:
+                    GenToWinToNilEvent(ref eventItem, listType, false);
+                    break;
+                case 13:
+                    GenCleanSheetEvent(ref eventItem, listType, false);
+                    break;
+                case 28:
+                    GenThreeWayHandicap(ref eventItem, listType, false);
+                    break;
+                case 29://Combination
+                    GenEventCombination(ref eventItem, listType);
+                    break;
+                case 1000:
+                    GenP2PGames(ref eventItem);
+                    break;
+                case 1301:
+                case 1302:
+                case 1303:
+                case 1304:
+                case 1305:
+                case 1306:
+                case 1307:
+                case 1308:
+                case 1309:
+                case 1310:
+                case 1311:
+                case 1312:
+                case 1313:
+                case 1314:
+                case 1315:
+                case 1316:
+                case 1317:
+                case 1318:
+                case 1319:
+                case 1320:
+                case 1321:
+                case 1322:
+                case 1323:
+                case 1324:
+                case 1325:
+                case 1326:
+                case 1327:
+                case 1328:
+                case 1329:
+                case 1330:
+                case 1331:
+                case 1332:
+                case 1333:
+                case 1334:
+                    GenEvenSportingSolutions(ref eventItem, _home, _away, _betteam);
+                    break;
+                default:
+                    break;
+            }
+            //if (_bettype == 1101 || _bettype == 1102 || _bettype == 1103)
+            //{
+
+            //    TemplateHandler.Assign(ref rowHtml, "{sporttype}",_sportypeName);
+            //    string leagueName = _bettypeName + " " + _showtime;
+            //    TemplateHandler.Assign(ref rowHtml, "{leaguename}", leagueName);
+            //    TemplateHandler.Assign(ref rowHtml, "{Event}", eventItem);
+            //}
+            //else
+            //{
+            TemplateHandler.Assign(ref eventItem, "{BetType}", string.Empty);
+            TemplateHandler.Assign(ref eventItem, "{MoreBetInfo}", string.Empty);
+            TemplateHandler.Assign(ref rowHtml, "{Event}", eventItem);
+            //}
+
+
+        }
+
+        private void GenEvenSportingSolutions(ref string eventItem, string _home, string _away, string _betteam)
+        {
+            var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty :
+                string.Format(" <span class='bl-bettype'>[{0}-{1}]</span>", _liveHomeScore, _liveAwayScore);
+            var choice = string.Empty;
+            var Event = _home + " -VS- " + _away;
+            choice = Fanex.Tarus.BetList.Helper.ChoiceHelper.GetSportingSolutionsChoice(_bettype, _betId, _betteam, CastAide.AsInt32(_hdp1), CastAide.AsInt32(_hdp2), _home, _away);
+            TemplateHandler.Assign(ref eventItem, "{choice}", choice + liveScore);
+            TemplateHandler.Assign(ref eventItem, "{bettype}", _bettypeName);
+            TemplateHandler.Assign(ref eventItem, "{event}", Event);
+            TemplateHandler.Assign(ref eventItem, "{sporttype}", _sportypeName);
+            TemplateHandler.Assign(ref eventItem, "{leaguename}", _leagueName);
+        }
+
+
+        private void GenHomeAwayDrawNoBet(ref string eventItem, int bettype, bool isMP)
+        {
+            var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty :
+                string.Format(" <span class='bl-bettype'>[{0}-{1}]</span>", _liveHomeScore, _liveAwayScore);
+            var choice = string.Empty;
+            var Event = _home + " -VS- " + _away;
+
+            if (bettype == 121)
+            {
+                if (_betteam == "x") choice = "Draw";
+                else if(_betteam == "a") choice = _away;
+            }
+            else if (bettype == 122)
+            {
+                if (_betteam == "h") choice = _home;
+                else if(_betteam == "x") choice = "Draw";
+            }
+            else if (bettype == 123)
+            {
+                if (_betteam == "h") choice = "Draw";
+                else if(_betteam == "a") choice = "No Draw";
+            }
+            if (isMP) choice += oddMP();
+            TemplateHandler.Assign(ref eventItem, "{choice}", choice + liveScore);
+            TemplateHandler.Assign(ref eventItem, "{bettype}", _bettypeName);
+            TemplateHandler.Assign(ref eventItem, "{event}", Event);
+            TemplateHandler.Assign(ref eventItem, "{sporttype}", _sportypeName);
+            TemplateHandler.Assign(ref eventItem, "{leaguename}", _leagueName);
+        }
+
+        private void GenP2PGames(ref string eventItem)
+        {
+            TemplateHandler.Assign(ref eventItem, "{choice}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "P2PGames"));
+            TemplateHandler.Assign(ref eventItem, "{bettype}", string.Empty);
+            TemplateHandler.Assign(ref eventItem, "{event}", string.Empty);
+            TemplateHandler.Assign(ref eventItem, "{sporttype}", string.Empty);
+            TemplateHandler.Assign(ref eventItem, "{leaguename}", string.Empty);
+            TemplateHandler.RemoveBlock(ref eventItem, "P2Premove");
+        }
+
+        protected void GenEventLiveCasino(ref string eventItem, List<BetlistEvent> betlistEvent, int listType)
+        {
+
+            string Event = "";
+            for (int i = 0; i < betlistEvent.Count; i++)
+            {
+                Event += "<span style='color:Red; font-weight:bold'>" + betlistEvent[i].GameType + "</span>&nbsp;<span style='color:#86817B'>" + betlistEvent[i].Stake + "</span>&nbsp;@&nbsp;<span style='color:#7C9097'>" + betlistEvent[i].Odds + "</span>";
+                Event += "<br/>";
+            }
+            TemplateHandler.Assign(ref eventItem, "{Event}", Event);
+            TemplateHandler.Assign(ref eventItem, "{sporttype}", "Live Casino");
+            TemplateHandler.Assign(ref eventItem, "{bettype}", _bettypeName);
+            TemplateHandler.Assign(ref eventItem, "{showtime}", _showtime);
+        }
+        protected void GenEventCombination(ref string eventItem, int listType)
+        {
+            var strCombinationName = CacheRef.GetCombinationName(_betteam);
+            eventItem = "<a class='lnk' style='color:gray' href='javascript:void(\"\");' onclick='showCMP(event,\"" +
+                               _refno + "\",\"" + listType + "\");'><span style='color:blue'>System Parlay</span> - " + strCombinationName + "</a>"
+                               + "<div id='spEvent_" + _refno + _transId + "' class='hide'></div>";
+            eventItem += "<br/>";
+            eventItem += "<div align='right' style='float:right; cursor:pointer' href='javascript:void(\"\");' onclick='javascript:showDetailsCMP(\"" + _refno + "\",\"" + Fanex.Tarus.Infrastructure.Helper.SportHelper.Bettype.GetBettype(_bettype) + " - " + strCombinationName + "\", " + _transId + ", " + _betId + ");' onmouseover='javascript:cmpMouseOverDetailButton(event);' onmouseout='javascript:cmpMouseOutDetailButton(event);'>";
+            eventItem += "<table border='0' width='60' cellpadding='0' cellspacing='0' style='border-collapse:collapse'>";
+            eventItem += "<tr>";
+
+            eventItem += "<td style='width:20px; border:0px none'>";
+            eventItem += "<div style='width:14px; height:14px; background:url(\"Images/a_Icon.png\") no-repeat scroll 0 0 transparent'></div>";
+            eventItem += "</td>";
+
+            eventItem += "<td style='width:40px; border:0px none'>";
+            eventItem += "<a style='color:#0094E7; font-weight:bold'>Details</a>";
+            eventItem += "</td>";
+
+            eventItem += "</tr>";
+            eventItem += "</table></div>";
+        }
+
+        protected string oddMP()
+        {
+            return "<span class='style_12BB'><b> @ " + IBCUtils.FormatHandler.FormatNumber30(_odds) + "</b></span>";
+        }
+        protected void GenHdpRow(ref string row)
+        {
+            string liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty : "<br />@" + _liveHomeScore + "-" + _liveAwayScore;
+            if (_betteam == "h")
+            {
+                TemplateHandler.Assign(ref row, "{Choice}", _home.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
+                //if (bettype == 22)
+                //    TemplateHandler.Assign(ref row, "{Hdp_Score}", liveScore);
+                //else
+                TemplateHandler.Assign(ref row, "{Hdp_Score}", IBCUtils.FormatHandler.FormatNumber3(_hdp2 - _hdp1) + liveScore);
+            }
+            else
+            {
+                TemplateHandler.Assign(ref row, "{Choice}", _away);
+                //if (bettype == 22)
+                //    TemplateHandler.Assign(ref row, "{Hdp_Score}", liveScore);
+                //else
+                TemplateHandler.Assign(ref row, "{Hdp_Score}", IBCUtils.FormatHandler.FormatNumber3(_hdp1 - _hdp2) + liveScore);
+            }
+            TemplateHandler.Assign(ref row, "{color}", "blue");
+        }
+
+
+        protected void GenHdpEvent(ref string eventItem, string home, string away, string betteam, int listType, bool isMP)
+        {
+            var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty :
+                string.Format(" <span class='bl-bettype'>[{0}-{1}]</span>", _liveHomeScore, _liveAwayScore);
+            var choice = string.Empty;
+            var Event = home + " -VS- " + away;
+
+            if (_bettype == 20) //Money line
+            {
+                if (betteam == "h") choice = home;
+                else choice = away;
+            }
+            else
+            {
+                if (betteam == "h") choice = home + " " + IBCUtils.FormatHandler.FormatNumber20(_hdp2 - _hdp1) + liveScore;
+                else choice = away + " " + IBCUtils.FormatHandler.FormatNumber20(_hdp1 - _hdp2) + liveScore;
+            }
+
+            if (isMP) choice += oddMP();
+            if (_statusId == 102)
+            {
+                choice = string.Format("<s>{0}</s>", choice.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
+                Event = string.Format("<s>{0}</s>", Event);
+
+            }
+            TemplateHandler.Assign(ref eventItem, "{choice}", choice);
+            TemplateHandler.Assign(ref eventItem, "{bettype}", _bettypeName);
+            TemplateHandler.Assign(ref eventItem, "{event}", Event);
+            TemplateHandler.Assign(ref eventItem, "{sporttype}", _sportypeName);
+            TemplateHandler.Assign(ref eventItem, "{leaguename}", _leagueName);
+        }
+
+
+
+        //Odd/Even
+        protected void GenOERow(ref string row)
+        {
+            TemplateHandler.Assign(ref row, "{Hdp_Score}", string.Empty);
+            TemplateHandler.Assign(ref row, "{Choice}", ((_betteam == "h") ? "Odd" : "Even"));
+            TemplateHandler.Assign(ref row, "{color}", "blue");
+        }
+        protected void GenOEEvent(ref string eventItem, string home, string away, int listType, bool isMP)
+        {
+            var choice = string.Empty;
+            var Event = home + " -VS- " + away;
+            //string liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty : " <span class='bl-bettype'>[" + _liveHomeScore + "-" + _liveAwayScore + "]</span>";
+            var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty :
+                    string.Format(" <span class='bl-bettype'>[{0}-{1}]</span>", _liveHomeScore, _liveAwayScore);
+
+            if (_betteam == "h")
+                choice = "ODD " + liveScore;
+            else
+                choice = "EVEN " + liveScore;
+            //if (_betteam == "h") choice = "ODD";
+            //else choice = "EVEN";
+
+            if (isMP) choice += oddMP();
+            if (_statusId == 102)
+            {
+                choice = string.Format("<s>{0}</s>", choice);
+                Event = string.Format("<s>{0}</s>", Event);
+            }
+
+            TemplateHandler.Assign(ref eventItem, "{choice}", choice);
+            TemplateHandler.Assign(ref eventItem, "{bettype}", _bettypeName);
+            TemplateHandler.Assign(ref eventItem, "{event}", Event);
+            TemplateHandler.Assign(ref eventItem, "{sporttype}", _sportypeName);
+            TemplateHandler.Assign(ref eventItem, "{leaguename}", _leagueName);
+        }
+        //Over/Under
+        protected void GenOURow(ref string row)
+        {
+            string liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty : "<br />@" + _liveHomeScore + "-" + _liveAwayScore;
+            TemplateHandler.Assign(ref row, "{Hdp_Score}", IBCUtils.FormatHandler.FormatNumber3(_hdp1) + liveScore);
+            TemplateHandler.Assign(ref row, "{Choice}", ((_betteam == "h") ? "Over" : "Under"));
+            TemplateHandler.Assign(ref row, "{color}", "blue");
+        }
+        protected void GenOUEvent(ref string eventItem, string home, string away, int listType, bool isMP)
+        {
+            //string liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty : " <span class='bl-bettype'>[" + _liveHomeScore + "-" + _liveAwayScore + "]</span>";
+            var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty :
+                string.Format(" <span class='bl-bettype'>[{0}-{1}]</span>", _liveHomeScore, _liveAwayScore);
+            string choice = string.Empty;
+            var Event = home + " -VS- " + away;
+
+            if (_betteam == "h") choice = "OVER " + IBCUtils.FormatHandler.FormatNumber20(Math.Abs(_hdp1)) + liveScore;
+            else choice = "UNDER " + IBCUtils.FormatHandler.FormatNumber20(Math.Abs(_hdp1)) + liveScore;
+            if (isMP) choice += oddMP();
+
+            if (_statusId == 102)
+            {
+                choice = string.Format("<s>{0}</s>", choice);
+                Event = string.Format("<s>{0}</s>", Event);
+            }
+            TemplateHandler.Assign(ref eventItem, "{choice}", choice);
+            TemplateHandler.Assign(ref eventItem, "{bettype}", _bettypeName);
+            TemplateHandler.Assign(ref eventItem, "{event}", Event);
+            TemplateHandler.Assign(ref eventItem, "{sporttype}", _sportypeName);
+            TemplateHandler.Assign(ref eventItem, "{leaguename}", _leagueName);
+        }
+
+
+        //Number Game
+        protected void GenEvent_NumberGame(ref string eventItem, int listType, bool isMP)
+        {
+
+            var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty :
+                    string.Format(" [{0}]", _betId);
+            var choice = string.Empty;
+
+            #region check bettype & apply betty name
+            if (_bettype == 81 || _bettype == 82 || _bettype == 85)
+            {
+                var maxBall = (double.Parse(Bingo.Core.BingoSettings.MaxBall.ToString()) / 2);
+
+                choice = _betteam.ToLower() == "h" ? " OVER " : " UNDER ";
+                choice += string.Format("<span class='bl-bettype'>{0}</span>", maxBall);
+                choice += liveScore;
+            }
+            else if (_bettype == 83 || _bettype == 84 || _bettype == 86)
+            {
+                choice = _betteam.ToLower() == "h" ? "ODD " : "EVEN ";
+                choice += liveScore;
+            }
+            else if (_bettype == 87)//High-Low
+            {
+                choice = _betteam.ToLower() == "h" ? "HIGH " : "LOW ";
+                choice += liveScore;
+            }
+            else if (_bettype == Constants.BetType.Warrior)//warrior            
+                choice = _betteam.ToLower() == "h" ? "2nd ball to win " : "3rd ball to win ";
+            else if (_bettype == Constants.BetType.NextCombo)//next combo
+            {
+                #region number group - bettypes
+                switch (_betteam.ToLower())
+                {
+                    case "1:1":
+                        choice = "Over/Odd ";
+                        break;
+                    case "1:2":
+                        choice = "Over/Even ";
+                        break;
+                    case "2:1":
+                        choice = "Under/Odd ";
+                        break;
+                    case "2:2":
+                        choice = "Under/Even ";
+                        break;
+                    default:
+                        choice = "Over/Odd ";
+                        break;
+                }
+                #endregion
+                var maxBall = (double.Parse(Bingo.Core.BingoSettings.MaxBall.ToString()) / 2);
+                choice += string.IsNullOrEmpty(_liveStyle) ? string.Empty : string.Format("<span class='bl-bettype'>{0}</span>", maxBall);
+                choice += liveScore;
+            }
+            else if (_bettype == 90)
+            {
+                choice = Fanex.Tarus.BetList.Helper.ChoiceHelper.GetNumberWheelChoice(CastAide.AsInt32(_hdp1), CastAide.AsInt32(_betteam));
+                if (choice.Length > 37 && choice.Substring(36, 1) == ",")
+                {
+                    choice = choice.Substring(0, 37) + " " + choice.Substring(37);
+                }
+                else if (choice.Length > 37 && choice.Substring(36, 1) != ",")
+                {
+                    if (choice.Substring(35, 1) == ",")
+                    {
+                        choice = choice.Substring(0, 36) + " " + choice.Substring(36);
+                    }
+                    else
+                    {
+                        choice = choice.Substring(0, 38) + " " + choice.Substring(38);
+                    }
+                }
+                choice += liveScore;
+            }
+            #endregion
+
+            TemplateHandler.Assign(ref eventItem, "{choice}", choice);
+
+            string bettypeFormat = string.Empty;
+            switch (_bettype)
+            {
+                case 87:
+                case 88:
+                case 89:
+                case 90:
+                    bettypeFormat = _bettypeName;
+                    break;
+                case 81:
+                case 82:
+                case 83:
+                case 84:
+                    bettypeFormat = (string.IsNullOrEmpty(_liveStyle) ? string.Empty : "Next ") + _bettypeName;
+                    break;
+                default:
+                    bettypeFormat = (string.IsNullOrEmpty(_liveStyle) ? "FT. " : "Next ") + _bettypeName;
+                    break;
+            }
+
+            TemplateHandler.Assign(ref eventItem, "{bettype}", bettypeFormat);
+            TemplateHandler.Assign(ref eventItem, "{event}", string.Format("{0} {1}",
+                ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblNumberGameNo"), _matchCode));
+
+            TemplateHandler.Assign(ref eventItem, "{sporttype}", _sportypeName);
+            TemplateHandler.Assign(ref eventItem, "{leaguename}", _leagueName);
+        }
+
+        //Correct Score
+        protected void GenCSRow(ref string row)
+        {
+            TemplateHandler.Assign(ref row, "{Choice}", "Correct Score");
+            TemplateHandler.Assign(ref row, "{Hdp_Score}", IBCUtils.FormatHandler.FormatNumber1(_hdp1) + ":" + IBCUtils.FormatHandler.FormatNumber1(_hdp2));
+            TemplateHandler.Assign(ref row, "{color}", "black");
+        }
+        protected void GenCSEvent(ref string eventItem, string home, string away, int listType, bool isMP)
+        {
+            var Event = home + " -VS- " + away;
+           
+            string choice = "";
+            choice = (_betteam == "5:0" || _betteam == "0:5") ? _betteam+ " UP" : _betteam;
+            if (_bettype == 30)
+            {
+                choice = (_betteam == "4:0" || _betteam == "0:4") ? _betteam + " UP" : _betteam;
+            }
+            if (isMP) choice += oddMP();
+
+
+            if (_statusId == 102)
+            {
+                choice = string.Format("<s>{0}</s>", choice);
+                Event = string.Format("<s>{0}</s>", Event);
+            }
+            if (_liveindicator == 1)
+            {
+                choice += " <span style='color:blue'>[" + _liveHomeScore + ":" + _liveAwayScore + "]</span>";
+            }
+            TemplateHandler.Assign(ref eventItem, "{choice}", choice);
+            TemplateHandler.Assign(ref eventItem, "{bettype}", _bettypeName);
+            TemplateHandler.Assign(ref eventItem, "{event}", Event);
+            TemplateHandler.Assign(ref eventItem, "{sporttype}", _sportypeName);
+            TemplateHandler.Assign(ref eventItem, "{leaguename}", _leagueName);
+        }
+        //one x two
+        protected void Gen1x2Row(ref string row, bool isFT)
+        {
+            TemplateHandler.Assign(ref row, "{Choice}", isFT ? "FT." + _betteam : "HT." + _betteam);
+            TemplateHandler.Assign(ref row, "{Hdp_Score}", "");
+            TemplateHandler.Assign(ref row, "{color}", "black");
+        }
+        protected void Gen1x2Event(ref string eventItem, string home, string away, int listType, bool isMP, bool isFT)
+        {
+            var Event = home + " -VS- " + away;
+            string choice = isFT ? "FT." + _betteam : "HT." + _betteam;
+            if (listType == 1) { if (isMP) choice += oddMP(); }
+            if ((listType == 2 || listType == 3) && isMP) choice += " <span class='style_12BB'> @ " + IBCUtils.FormatHandler.FormatNumber20(_odds) + "</span>";
+
+            //string liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty : " <span class='bl-bettype'>[" + _liveHomeScore + "-" + _liveAwayScore + "]</span>";
+            var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty :
+                    string.Format(" <span class='bl-bettype'>[{0}-{1}]</span>", _liveHomeScore, _liveAwayScore);
+
+            choice += liveScore;
+
+            if (_statusId == 102)
+            {
+                choice = string.Format("<s>{0}</s>", choice);
+                Event = string.Format("<s>{0}</s>", Event);
+            }
+            TemplateHandler.Assign(ref eventItem, "{choice}", choice);
+            TemplateHandler.Assign(ref eventItem, "{bettype}", _bettypeName);
+            TemplateHandler.Assign(ref eventItem, "{event}", Event);
+            TemplateHandler.Assign(ref eventItem, "{sporttype}", _sportypeName);
+            TemplateHandler.Assign(ref eventItem, "{leaguename}", _leagueName);
+        }
+        //Total goal
+        protected void GenTGRow(ref string row)
+        {
+            TemplateHandler.Assign(ref row, "{Choice}", _betteam);
+            TemplateHandler.Assign(ref row, "{Hdp_Score}", "-");
+            TemplateHandler.Assign(ref row, "{color}", "black");
+        }
+        protected void GenTGEvent(ref string eventItem, string home, string away, int listType, bool isMP)
+        {
+            string choice = _betteam;
+            var Event = home + " -VS- " + away;
+            if (listType == 1) { if (isMP) choice += oddMP(); }
+            else if ((listType == 2 || listType == 3) && isMP) choice += " <span class='style_12BB'> @ " + IBCUtils.FormatHandler.FormatNumber20(_odds) + "</span>";
+
+            if (_statusId == 102)
+            {
+                choice = string.Format("<s>{0}</s>", choice);
+                Event = string.Format("<s>{0}</s>", Event);
+            }
+            TemplateHandler.Assign(ref eventItem, "{choice}", choice);
+            TemplateHandler.Assign(ref eventItem, "{bettype}", _bettypeName);
+            TemplateHandler.Assign(ref eventItem, "{event}", Event);
+            TemplateHandler.Assign(ref eventItem, "{sporttype}", _sportypeName);
+            TemplateHandler.Assign(ref eventItem, "{leaguename}", _leagueName);
+        }
+
+        protected void GenOutrightRow(ref string eventItem, int listType)
+        {
+            string choice = _home.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), "");
+            if (listType == 1 || listType == 3) choice = !string.IsNullOrEmpty(_away) ? _away : choice;
+            TemplateHandler.Assign(ref eventItem, "bl-event", "hidden");
+            TemplateHandler.Assign(ref eventItem, "{choice}", choice);
+            TemplateHandler.Assign(ref eventItem, "{bettype}", _bettypeName);
+            TemplateHandler.Assign(ref eventItem, "{event}", "");
+            TemplateHandler.Assign(ref eventItem, "{sporttype}", _sportypeName);
+            TemplateHandler.Assign(ref eventItem, "{leaguename}", _leagueName);
+            TemplateHandler.Assign(ref eventItem, "style_11B", "hidden");
+        }
+
+        #region GenCasino -- Simon:20090508
+        protected void GenCasino(ref string eventItem, int betType, string sessionid)
+        {
+            string choice = "";
+            if (betType == 71 || betType == 113)
+                choice = "Casino Game";
+            else if (betType == 72 || betType == 114)
+                choice = "Poker Game";
+            else if (betType == 112)
+                choice = "Casino Game - Transfer";
+            else if (betType == 73)
+                choice = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblIBCbetBingo");
+
+            TemplateHandler.Assign(ref eventItem, "{choice}", choice);
+            TemplateHandler.Assign(ref eventItem, "{event}", "");
+            TemplateHandler.RemoveBlock(ref eventItem, "Casino");
+            TemplateHandler.RemoveBlock(ref eventItem, "<span class=\"bl-sporttype\">{SuperPT}%</span><br/>");
+            TemplateHandler.RemoveBlock(ref eventItem, "<span class=\"bl-sporttype\">{MasterPT}%</span><br/>");
+            TemplateHandler.RemoveBlock(ref eventItem, "<span class=\"bl-sporttype\">{AgentPT}%</span><br/>");
+
+            TemplateHandler.RemoveBlock(ref eventItem, "<span class=\"r\">{SuperCommRate}%</span><br/>");
+            TemplateHandler.RemoveBlock(ref eventItem, "<span class=\"r\">{MasterCommRate}%</span><br/>");
+            TemplateHandler.RemoveBlock(ref eventItem, "<span class=\"r\">{AgentCommRate}%</span><br/>");
+        }
+        #endregion
+
+        //phuong.nguyen, get HR
+        protected void GenHREvent(ref string eventItem)
+        {
+            string choice = _home;
+            TemplateHandler.Assign(ref eventItem, "{choice}", choice);
+            TemplateHandler.Assign(ref eventItem, "{bettype}", _bettypeName);
+            TemplateHandler.Assign(ref eventItem, "{event}", _race);
+            TemplateHandler.Assign(ref eventItem, "{sporttype}", _sportypeName);
+            TemplateHandler.Assign(ref eventItem, "{leaguename}", _leagueName);
+            TemplateHandler.Assign(ref eventItem, "style_11B", "hidden");
+
+        }
+        //gen FI 
+        protected void GenFinancialRow(ref string eventItem)
+        {
+            //@Update App_GlobalResources lblFIPut=lblUnder; lblFICall=lblOver
+            string choice = GetFIBettypeName(_betteam, _bettype) + " <font color='#606060'>" + IBCUtils.FormatHandler.FormatNumber4(_hdp1) + "</font>";
+            TemplateHandler.Assign(ref eventItem, "{choice}", choice);
+            TemplateHandler.Assign(ref eventItem, "{bettype}", _bettypeName);
+            TemplateHandler.Assign(ref eventItem, "{event}", _home);//matchcode as FI Index        
+            TemplateHandler.Assign(ref eventItem, "{sporttype}", _sportypeName);
+            TemplateHandler.Assign(ref eventItem, "{leaguename}", _leagueName);
+            TemplateHandler.Assign(ref eventItem, "bl_match", "hidden");
+
+        }
+
+        public string GenMPRow(string refno, int listType)
+        {
+            try
+            {
+                #region DNAide
+                string eventTpl = WebUtils.LoadTemplate("BetList\\Event2.htm");
+
+                var ds = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.Betlist.BetList_SelMixParlay(refno);
+                string eventItems = "";
+
+                if (ds != null && ds.Tables.Count > 0)
+                {
+                    DataRowCollection rows = ds.Tables[0].Rows;
+                    foreach (DataRow row in rows)
+                    {
+                        string mpItem = (string)eventTpl.Clone();
+                        string mpEvent = (string)mpItem.Clone();
+                        string mpHome = CacheRef.GetTeamName(row["homeid"]) + (CastAide.AsBoolean(row["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : string.Empty);
+                        string mpAway = CacheRef.GetTeamName(row["awayid"]);
+
+                        string mpBetteam = Fanex.Tarus.Infrastructure.Helper.SportHelper.BetTeam.GetBetTeam(row["betteam"].ToString(), Convert.ToInt32(row["bettype"]), "e");
+                        _betteam = mpBetteam;
+                        //sportypeName = row2["SportName"] + "";
+                        //leagueName = row2["leaguename"] + "";
+                        _sportypeName = CacheRef.GetSportName(row["sporttype"]);
+                        _leagueName = CacheRef.GetLeagueName(row["leagueid"]);
+                        _statusId = CastAide.AsInt32(row["statusid"]);
+
+                        int mpBettype = Convert.IsDBNull(row["bettype"]) ? 0 : Convert.ToInt32(row["bettype"]);
+                        decimal mpHdp1 = Convert.IsDBNull(row["hdp1"]) ? 0 : Convert.ToDecimal(row["hdp1"]);
+                        decimal mpHdp2 = Convert.IsDBNull(row["hdp1"]) ? 0 : Convert.ToDecimal(row["hdp2"]);
+                        decimal mpHdp = (mpBetteam == "h") ? mpHdp2 - mpHdp1 : mpHdp1 - mpHdp2;
+                        decimal mpOdds = Convert.IsDBNull(row["odds"]) ? 0 : Convert.ToDecimal(row["odds"]);
+                        _odds = mpOdds;
+                        _hdp1 = mpHdp1;
+                        _hdp2 = mpHdp2;
+                        //decimal mpStake = Convert.IsDBNull(row2["stake"]) ? 0 : Convert.ToDecimal(row2["stake"]);
+                        //bettypeName = row2["typename"] + "";
+                        _bettypeName = Fanex.Tarus.Infrastructure.Helper.SportHelper.Bettype.GetBettype(CastAide.AsInt32(row["bettype"]));
+                        if (_statusId == 102)
+                        {
+                            _sportypeName = string.Format("<s>{0}</s>", _sportypeName);
+                            _bettypeName = string.Format("<s>{0}</s>", _bettypeName);
+                            _leagueName = string.Format("<s>{0}</s>", _leagueName);
+                        }
+                        //TemplateHandler.Assign(ref mpItem, "{BetType}", mpBtName);
+                        string moreBetInfo = string.Empty;
+                        _home = mpHome;
+                        _away = mpAway;
+
+                        switch (mpBettype)
+                        {
+                            case 1:
+                            case 7:
+                            case 20:
+                            case 21:
+                            case 1201:
+                                GenHdpEvent(ref mpItem, mpHome, mpAway, mpBetteam, listType, true);
+                                //   moreBetInfo += "<br>" + ((mpBetteam == "h") ? mpHome : mpAway) + "@" + FormatHandler.FormatNumber3(mpHdp) + "/" + FormatHandler.FormatNumber3(mpOdds);
+                                break;
+                            case 2:
+                            case 12:
+                                GenOEEvent(ref mpItem, mpHome, mpAway, listType, true);
+                                //  moreBetInfo += "<br>" + ((mpBetteam == "h") ? "Odd" : "Even") + "@" + FormatHandler.FormatNumber40(mpOdds);
+                                break;
+                            case 3:
+                            case 8:
+                            case 1203:
+                                GenOUEvent(ref mpItem, mpHome, mpAway, listType, true);
+                                // moreBetInfo += "<br>" + ((mpBetteam == "h") ? "Over" : "Under") + "@" + FormatHandler.FormatNumber3(mpHdp1) + "/" + FormatHandler.FormatNumber3(mpOdds);
+                                break;
+                            case 4:
+                            case 14:
+                            case 30:
+                                GenCSEventMP(ref mpItem, mpHome, mpAway, mpBettype, listType, true);
+                                //  moreBetInfo += "<br>" + FormatHandler.FormatNumber3(mpHdp1) + ":" + FormatHandler.FormatNumber3(mpHdp1) + "/" + FormatHandler.FormatNumber3(mpOdds);
+                                break;
+                            case 5:
+                            case 1205:
+                                Gen1x2Event(ref mpItem, mpHome, mpAway, listType, true, true);
+                                break;
+                            case 15:
+
+                                Gen1x2Event(ref mpItem, mpHome, mpAway, listType, true, false);
+                                //  moreBetInfo += "<br>" + mpBetteam + "@" + FormatHandler.FormatNumber3(mpOdds);
+                                break;
+                            case 6:
+                            case 16:
+                            case 1206:
+                                GenTGEvent(ref mpItem, mpHome, mpAway, listType, true);
+                                //  moreBetInfo += "<br>" + mpBetteam + "@" + FormatHandler.FormatNumber3(mpOdds);
+                                break;
+                            case 24:
+                            case 1224:
+                                GenDoubleChanceEvent(ref mpItem, listType, true);
+                                break;
+                            case 25:
+                                GenDrawNoBetEvent(ref mpItem, listType, true);
+                                break;
+                            case 26:
+                                GenBothOneNeitherEvent(ref mpItem, listType, true);
+                                break;
+                            case 27:
+                                GenToWinToNilEvent(ref mpItem, listType, true);
+                                break;
+                            case 28:
+                                GenThreeWayHandicap(ref mpItem, listType, true);
+                                break;
+                            case 13:
+                                GenCleanSheetEvent(ref mpItem, listType, true);
+                                break;
+                            case 121:
+                            case 122:
+                            case 123:
+                                GenHomeAwayDrawNoBet(ref mpItem, mpBettype, true);
+                                break;
+                            default:
+                                mpItem = string.Empty;
+                                break;
+                        }
+                        TemplateHandler.Assign(ref mpItem, "{MoreBetInfo}", moreBetInfo);
+                        if (CastAide.AsInt32(row["liveindicator"]) == 1)
+                        {
+                            TemplateHandler.Assign(ref mpItem, "{liveball}", " style='background-color:#FFFFCC'");
+                            if (_statusId == 102)
+                                TemplateHandler.Assign(ref mpItem, "{livescore}", " <s>[" + CastAide.AsInt32(row["livehomescore"]) + "-" + CastAide.AsInt32(row["liveawayscore"]) + "]</s>");
+                            else
+                                TemplateHandler.Assign(ref mpItem, "{livescore}", " [" + CastAide.AsInt32(row["livehomescore"]) + "-" + CastAide.AsInt32(row["liveawayscore"]) + "]");
+                        }
+                        else
+                        {
+                            TemplateHandler.Assign(ref mpItem, "{liveball}", "");
+                            TemplateHandler.Assign(ref mpItem, "{livescore}", "");
+                        }
+                        eventItems += mpItem;
+                    }
+                }
+
+                return eventItems;
+
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                throw ex;
+            }
+        }
+
+        private void GenCSEventMP(ref string eventItem, string home, string away, int mpBettype, int listType, bool isMP)
+        {
+            var Event = home + " -VS- " + away;
+           
+            string choice = "";
+            choice = (_betteam == "5:0" || _betteam == "0:5") ? _betteam + " UP" : _betteam;
+            if (mpBettype == 30)
+            {
+                choice = (_betteam == "4:0" || _betteam == "0:4") ? _betteam + " UP" : _betteam;
+            }
+            if (isMP) choice += oddMP();
+
+
+            if (_statusId == 102)
+            {
+                choice = string.Format("<s>{0}</s>", choice);
+                Event = string.Format("<s>{0}</s>", Event);
+            }
+            if (_liveindicator == 1)
+            {
+                choice += " <span style='color:blue'>[" + _liveHomeScore + ":" + _liveAwayScore + "]</span>";
+            }
+            TemplateHandler.Assign(ref eventItem, "{choice}", choice);
+            TemplateHandler.Assign(ref eventItem, "{bettype}", _bettypeName);
+            TemplateHandler.Assign(ref eventItem, "{event}", Event);
+            TemplateHandler.Assign(ref eventItem, "{sporttype}", _sportypeName);
+            TemplateHandler.Assign(ref eventItem, "{leaguename}", _leagueName);
+        }
+
+        #region combination mp
+
+        public string GenCombinationMP(int custid, string refno, double transid, string betid, DateTime movebetday, DateTime balanceupday)
+        {
+            double outStanding = 0;
+            var ds = DataAccess.IBCDLL.Accounting.Betlist.BetList_SelDetailCombinationMP(custid, refno, transid, betid, movebetday, balanceupday, ref outStanding);
+            if (ds != null && ds.Tables.Count != 2)
+            {
+                return WebUtils.LoadTemplate("BetList\\CombinationMP\\noinfo.htm");
+            }
+
+            string container = WebUtils.LoadTemplate("BetList\\CombinationMP\\container.htm");
+            string header = WebUtils.LoadTemplate("BetList\\CombinationMP\\header.htm");
+            string body = WebUtils.LoadTemplate("BetList\\CombinationMP\\body.htm");
+            string footer = WebUtils.LoadTemplate("BetList\\CombinationMP\\footer.htm");
+            string row = WebUtils.LoadTemplate("BetList\\CombinationMP\\row.htm");
+            var subtotal = WebUtils.LoadTemplate("BetList\\CombinationMP\\subtotal.htm");
+            string rowTemp = string.Empty;
+            var subtotalTemp = string.Empty;
+
+            var tblMaster = ds.Tables[0];
+            var tblDetail = ds.Tables[1];
+            var dateRange =
+                (from q in tblMaster.AsEnumerable().Cast<DataRow>() select q["winlostdate"]).Distinct().ToList();
+
+
+            #region header
+            TemplateHandler.Assign(ref container, "{header}", header);
+            #endregion
+
+            #region body
+            StringBuilder strBody = new StringBuilder();
+            var winlostdate = DateTime.MinValue;
+            decimal totalWin = 0;
+            string status = string.Empty;
+
+            foreach (DateTime wlDate in dateRange)
+            {
+                var selTrans =
+                    (from q in tblMaster.AsEnumerable().Cast<DataRow>() where q.Field<DateTime>("winlostdate") == wlDate select q).
+                        ToList();
+                decimal subTotalVal = 0;
+                subtotalTemp = CastAide.AsString(subtotal.Clone());
+                var isFirstRows = true;
+
+                #region won
+                foreach (DataRow rowMaster in selTrans)
+                {
+                    totalWin += CastAide.AsDecimal(rowMaster["winlost"]);
+                    totalWin += CastAide.AsDecimal(rowMaster["playercomm"]);
+                    subTotalVal += CastAide.AsDecimal(rowMaster["winlost"]);
+                    subTotalVal += CastAide.AsDecimal(rowMaster["playercomm"]);
+
+                    if (CastAide.AsInt32(rowMaster["serial"]) == 0) continue;
+
+                    status = CastAide.AsString(rowMaster["status"]);
+                    rowTemp = CastAide.AsString(row.Clone());
+
+                    #region date
+                    if (isFirstRows)
+                    {
+                        winlostdate = CastAide.AsDateTime(rowMaster["winlostdate"]);
+                        TemplateHandler.Assign(ref rowTemp, "{Date}", winlostdate.Month.ToString() + "/" + winlostdate.Day.ToString() + "/" + winlostdate.Year.ToString());
+                        TemplateHandler.Assign(ref rowTemp, "{row-spans}", string.Format("rowspan={0}", selTrans.Count));
+                        isFirstRows = false;
+                    }
+                    else
+                    {
+                        TemplateHandler.RemoveBlock(ref rowTemp, "wldate");
+                    }
+                    #endregion
+
+                    #region event
+                    var listRow = this.GetCombinationMPDetailRow(tblDetail, CastAide.AsInt32(rowMaster["serial"]));
+                    List<string> lstEvent = new List<string>();
+                    foreach (DataRow rowDetail in listRow)
+                    {
+                        string homename = CacheRef.GetTeamName(rowDetail["homeid"]);
+                        string awayname = CacheRef.GetTeamName(rowDetail["awayid"]);
+
+                        lstEvent.Add("<span>" + homename + " -vs- " + awayname + "</span>");
+                    }
+                    TemplateHandler.Assign(ref rowTemp, "{Event}", string.Join("<br/>", lstEvent.ToArray()));
+                    #endregion
+
+                    #region odds
+                    if (status.ToLower().Contains("running"))
+                    {
+                        TemplateHandler.Assign(ref rowTemp, "{Odds}", "-");
+                    }
+                    else
+                    {
+                        TemplateHandler.Assign(ref rowTemp, "{Odds}", CastAide.AsDouble(rowMaster["modds"]));
+                    }
+                    #endregion
+
+                    #region stake
+                    TemplateHandler.Assign(ref rowTemp, "{Stake}", IBCUtils.FormatHandler.FormatNumber20(CastAide.AsDouble(rowMaster["stake"])));
+                    #endregion
+
+                    #region win/lost
+                    TemplateHandler.Assign(ref rowTemp, "{Win/Lost}", IBCUtils.FormatHandler.FormatNumber20((CastAide.AsDouble(rowMaster["winlost"]))));
+                    TemplateHandler.Assign(ref rowTemp, "{wl-color}", "");
+                    TemplateHandler.Assign(ref rowTemp, "{Comm}", IBCUtils.FormatHandler.FormatNumber20((CastAide.AsDouble(rowMaster["playercomm"]))));
+                    #endregion
+
+                    #region status
+                    TemplateHandler.Assign(ref rowTemp, "{Status}", status.ToUpper());
+                    #endregion
+                    //----------------------------------------------------
+                    strBody.Append(rowTemp);
+                }
+                #endregion
+
+                #region lose
+                foreach (DataRow rowMaster in selTrans)
+                {
+                    if (CastAide.AsInt32(rowMaster["serial"]) != 0) continue;
+
+                    status = CastAide.AsString(rowMaster["status"]);
+                    rowTemp = CastAide.AsString(row.Clone());
+                    #region date
+                    if (isFirstRows)
+                    {
+                        winlostdate = CastAide.AsDateTime(rowMaster["winlostdate"]);
+                        TemplateHandler.Assign(ref rowTemp, "{Date}", winlostdate.Month.ToString() + "/" + winlostdate.Day.ToString() + "/" + winlostdate.Year.ToString());
+                        TemplateHandler.Assign(ref rowTemp, "{row-spans}", string.Format("rowspan={0}", selTrans.Count));
+                        isFirstRows = false;
+                    }
+                    else
+                    {
+                        TemplateHandler.RemoveBlock(ref rowTemp, "wldate");
+                    }
+                    #endregion
+
+                    #region event
+                    TemplateHandler.Assign(ref rowTemp, "{Event}", "Total of losing tickets");
+                    #endregion
+
+                    #region odds
+                    if (status.ToLower().Contains("running") || status.ToLower().Contains("lose"))
+                    {
+                        TemplateHandler.Assign(ref rowTemp, "{Odds}", "-");
+                    }
+                    else
+                    {
+                        TemplateHandler.Assign(ref rowTemp, "{Odds}", CastAide.AsDouble(rowMaster["modds"]));
+                    }
+                    #endregion
+
+                    #region stake
+                    TemplateHandler.Assign(ref rowTemp, "{Stake}", IBCUtils.FormatHandler.FormatNumber20(CastAide.AsDouble(rowMaster["stake"])));
+                    #endregion
+
+                    #region win/lost
+                    TemplateHandler.Assign(ref rowTemp, "{Win/Lost}", IBCUtils.FormatHandler.FormatNumber20((CastAide.AsDouble(rowMaster["winlost"]))));
+                    TemplateHandler.Assign(ref rowTemp, "{wl-color}", "color:red");
+                    TemplateHandler.Assign(ref rowTemp, "{Comm}", IBCUtils.FormatHandler.FormatNumber20((CastAide.AsDouble(rowMaster["playercomm"]))));
+                    #endregion
+
+                    #region status
+                    TemplateHandler.Assign(ref rowTemp, "{Status}", status.ToUpper());
+                    #endregion
+                    strBody.Append(rowTemp);
+                }
+                #endregion
+
+                #region subtotal
+                TemplateHandler.Assign(ref subtotalTemp, "{subtotal-val}", IBCUtils.FormatHandler.FormatNumber20(subTotalVal));
+                TemplateHandler.Assign(ref subtotalTemp, "{wl-color}", CastAide.AsDouble(subTotalVal) >= 0 ? "" : "color:red");
+
+                strBody.Append(subtotalTemp);
+
+                #endregion
+            }
+
+
+            TemplateHandler.Assign(ref body, "{rows}", strBody);
+            TemplateHandler.Assign(ref container, "{body}", body);
+            #endregion
+
+            #region footer
+            TemplateHandler.Assign(ref footer, "{total}", IBCUtils.FormatHandler.FormatNumber20(totalWin));
+            TemplateHandler.Assign(ref footer, "{wl-color}", CastAide.AsDouble(totalWin) >= 0 ? "" : "color:red");
+            TemplateHandler.Assign(ref footer, "{footer}", IBCUtils.FormatHandler.FormatNumber20(outStanding));
+            TemplateHandler.Assign(ref container, "{footer}", footer);
+            #endregion
+            return container;
+        }
+
+        private List<DataRow> GetCombinationMPDetailRow(DataTable tblDetail, int serial)
+        {
+            List<DataRow> listRow = new List<DataRow>();
+            foreach (DataRow row in tblDetail.Rows)
+            {
+                if (CastAide.AsInt32(row["serial"]) == serial)
+                {
+                    listRow.Add(row);
+                }
+            }
+            return listRow;
+        }
+
+        #endregion
+
+        #region Soccer - new bettypes
+        #region Double Chance (bettype = 24)
+        protected void GenDoubleChanceEvent(ref string eventItem, int listType, bool isMP)
+        {
+            //var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty : " <span class='bl-bettype'>[" + _liveHomeScore + "-" + _liveAwayScore + "]</span>";
+            var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty :
+                    string.Format("<span class='bl-bettype'>[{0}-{1}]</span>", _liveHomeScore, _liveAwayScore);
+            var choice = string.Empty;
+
+            #region assign value for choice parameter
+            if (_betteam.ToLower().Equals("1x"))
+                choice = string.Format("{0} <span style='color: #000; font-weight: normal;'>or</span> Draw", _home.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
+            else if (_betteam.ToLower().Equals("2x"))
+                choice = string.Format("{0} <span style='color: #000; font-weight: normal;'>or</span> Draw", _away.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
+            else if (_betteam.ToLower().Equals("12"))
+                choice = string.Format("{0} <span style='color: #000; font-weight: normal;'>or</span> {1}", _home.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""),
+                    _away.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
+
+            if (isMP) choice += oddMP();
+            #endregion
+
+            #region assign template
+            AssignDataForEventColumn(ref eventItem, listType, isMP, choice, liveScore);
+            #endregion
+        }
+        #endregion
+
+        #region Draw no bet (bettype = 25)
+        protected void GenDrawNoBetEvent(ref string eventItem, int listType, bool isMP)
+        {
+            //var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty : " <span class='bl-bettype'>[" + _liveHomeScore + "-" + _liveAwayScore + "]</span>";
+            var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty :
+                    string.Format(" <span class='bl-bettype'>[{0}-{1}]</span>", _liveHomeScore, _liveAwayScore);
+            var choice = string.Empty;
+
+            #region assign value for choice parameter
+            if (_betteam.ToLower().Equals("h"))
+                choice = string.Format("{0}", _home.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
+            else if (_betteam.ToLower().Equals("a"))
+                choice = string.Format("{0}", _away.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
+
+            if (isMP) choice += oddMP();
+            #endregion
+
+            #region assign template
+            AssignDataForEventColumn(ref eventItem, listType, isMP, choice, liveScore);
+            #endregion
+        }
+        #endregion
+
+        #region Both/One/Neither team to score (bettype = 26)
+        protected void GenBothOneNeitherEvent(ref string eventItem, int listType, bool isMP)
+        {
+            //var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty : " <span class='bl-bettype'>[" + _liveHomeScore + "-" + _liveAwayScore + "]</span>";
+            var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty :
+                    string.Format(" <span class='bl-bettype'>[{0}-{1}]</span>", _liveHomeScore, _liveAwayScore);
+            var choice = string.Empty;
+
+            #region assign value for choice parameter
+            if (_betteam.ToLower().Equals("b"))
+                choice = "Both";
+            else if (_betteam.ToLower().Equals("o"))
+                choice = "One";
+            else if (_betteam.ToLower().Equals("n"))
+                choice = "No Goal";
+
+            if (isMP) choice += oddMP();
+            #endregion
+
+            #region assign template
+            AssignDataForEventColumn(ref eventItem, listType, isMP, choice, liveScore);
+            #endregion
+        }
+        #endregion
+
+        #region To win to nil (bettype = 27)
+        protected void GenToWinToNilEvent(ref string eventItem, int listType, bool isMP)
+        {
+            //var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty : " <span class='bl-bettype'>[" + _liveHomeScore + "-" + _liveAwayScore + "]</span>";
+            var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty :
+                    string.Format(" <span class='bl-bettype'>[{0}-{1}]</span>", _liveHomeScore, _liveAwayScore);
+            var choice = string.Empty;
+
+            #region assign value for choice parameter
+            if (_betteam.ToLower().Equals("h"))
+                choice = string.Format("{0}", _home.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
+            else if (_betteam.ToLower().Equals("a"))
+                choice = string.Format("{0}", _away.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
+
+            if (isMP) choice += oddMP();
+            #endregion
+
+            #region assign template
+            AssignDataForEventColumn(ref eventItem, listType, isMP, choice, liveScore);
+            #endregion
+        }
+        #endregion
+
+        #region Clean sheet (bettype = 13)
+        protected void GenCleanSheetEvent(ref string eventItem, int listType, bool isMP)
+        {
+            //var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty : " <span class='bl-bettype'>[" + _liveHomeScore + "-" + _liveAwayScore + "]</span>";
+            var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty :
+                    string.Format(" <span class='bl-bettype'>[{0}-{1}]</span>", _liveHomeScore, _liveAwayScore);
+            var choice = string.Empty;
+
+            #region assign value for choice parameter
+            if (_betteam.ToLower().Equals("hy"))
+                choice = string.Format("{0} <span style='color:#000;'>{1}</span>", _home.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""), "YES");
+            else if (_betteam.ToLower().Equals("hn"))
+                choice = string.Format("{0} <span style='color:#000;'>{1}</span>", _home.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""), "NO");
+            else if (_betteam.ToLower().Equals("ay"))
+                choice = string.Format("{0} <span style='color:#000;'>{1}</span>", _away.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""), "YES");
+            else if (_betteam.ToLower().Equals("an"))
+                choice = string.Format("{0} <span style='color:#000;'>{1}</span>", _away.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""), "NO");
+
+            if (isMP) choice += oddMP();
+            #endregion
+
+            #region assign template
+            AssignDataForEventColumn(ref eventItem, listType, isMP, choice, liveScore);
+            #endregion
+        }
+        #endregion
+
+        #region 3-way handicap (bettype = 28)
+        protected void GenThreeWayHandicap(ref string eventItem, int listType, bool isMP)
+        {
+            //var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty : " <span class='bl-bettype'>[" + _liveHomeScore + "-" + _liveAwayScore + "]</span>";
+            var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty :
+                    string.Format(" <span class='bl-bettype'>[{0}-{1}]</span>", _liveHomeScore, _liveAwayScore);
+            var choice = string.Empty;
+            var hdpResult = 0;
+
+            #region assign value for choice parameter
+            if (_betteam.ToLower().Equals("1"))
+            {
+                hdpResult = (int)(_hdp1 - _hdp2 > 0 ? -(_hdp1 - _hdp2) : Math.Abs(_hdp1 - _hdp2));
+
+                choice = string.Format("{0} <span style='color:#000;'>({1}{2})</span>",
+                    _home.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""),
+                    (hdpResult > 0 ? "+" : string.Empty), hdpResult);
+                /*choice = string.Format("H <span style='color:#000;'>({0}{1})</span>", (hdpResult > 0 ? "+" : string.Empty), hdpResult);*/
+            }
+            else if (_betteam.ToLower().Equals("2"))
+            {
+                hdpResult = (int)(_hdp2 - _hdp1 > 0 ? -(_hdp2 - _hdp1) : Math.Abs(_hdp2 - _hdp1));
+                choice = string.Format("{0} <span style='color:#000;'>({1}{2})</span>",
+                    _away.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""),
+                    (hdpResult > 0 ? "+" : string.Empty), hdpResult);
+                /*choice = string.Format("A <span style='color:#000;'>({0}{1})</span>",(hdpResult > 0 ? "+" : string.Empty), hdpResult );*/
+            }
+            else if (_betteam.ToLower().Equals("x"))
+                /*choice = string.Format("Draw <span style='color:#000;'>(<span style='color:#ff0000;'>{0}</span> +{1})</span>",
+                    (_hdp1 - _hdp2 > 0 ? _away.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), "") :
+                    _home.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), "")),
+                    (int)(Math.Abs(_hdp1 - _hdp2)));*/
+                choice = string.Format("Draw <span style='color:#000'>(<span style='color:#ff0000;'>{0}</span> +{1})</span>", _hdp1 - _hdp2 > 0 ? "A" : "H", (int)(Math.Abs(_hdp1 - _hdp2)));
+
+            if (isMP) choice += oddMP();
+            #endregion
+
+            #region assign template
+            AssignDataForEventColumn(ref eventItem, listType, isMP, choice, liveScore);
+            #endregion
+        }
+        #endregion
+
+        #region assign event column
+        protected void AssignDataForEventColumn(ref string eventItem, int listType, bool isMP, string choice, string liveScore)
+        {
+            string Event = _home + " -VS- " + _away;
+            choice = string.Format("{0} {1}", choice, liveScore);
+
+            if (_statusId == 102)
+            {
+                Event = string.Format("<s>{0}</s>", Event);
+                choice = string.Format("<s>{0}</s>", choice);
+            }
+            TemplateHandler.Assign(ref eventItem, "{choice}", choice);
+            TemplateHandler.Assign(ref eventItem, "{bettype}", _bettypeName);
+            TemplateHandler.Assign(ref eventItem, "{event}", Event);
+            TemplateHandler.Assign(ref eventItem, "{sporttype}", _sportypeName);
+            TemplateHandler.Assign(ref eventItem, "{leaguename}", _leagueName);
+        }
+        #endregion
+        #endregion
+
+        protected bool IsFIBettype(int bettype)
+        {
+            switch (bettype)
+            {
+                case 51:
+                case 52:
+                case 53:
+                case 54:
+                case 55:
+                case 56:
+                case 61:
+                case 62:
+                case 63:
+                case 64:
+                case 65:
+                case 66:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        protected bool IsFIOU(int bettype)
+        {
+            switch (bettype)
+            {
+                case 51:
+                case 52:
+                case 53:
+                case 54:
+                case 55:
+                case 56:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        protected bool IsFIOE(int bettype)
+        {
+            switch (bettype)
+            {
+                case 61:
+                case 62:
+                case 63:
+                case 64:
+                case 65:
+                case 66:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        protected string GetFIBettypeName(string betteam, int bettype)
+        {
+            if (IsFIOU(bettype))
+            {
+                return betteam == "a" ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblUnder") : ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblOver");
+            }
+            else if (IsFIOE(bettype))
+            {
+                return betteam == "a" ? "EVEN" : "ODD";
+            }
+            return "";
+        }
+        protected bool IsSportBook(int bettype)
+        {
+            return (bettype == 1 || bettype == 2 || bettype == 3 || bettype == 7 || bettype == 8 || bettype == 12 || bettype == 20);
+        }
+        protected bool IsHRBettype(int bettype)
+        {
+            switch (bettype)
+            {
+                case 31:
+                case 32:
+                case 33:
+                case 41:
+                case 42:
+                case 43:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        //Kiet Mai
+        protected bool IsNumberGame(int betType)
+        {
+            switch (betType)
+            {
+                case 81:
+                case 82:
+                case 83:
+                case 84:
+                case 85:
+                case 86:
+                case 87:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+
+        protected bool IsHRFixOdds(int bettype)
+        {
+            switch (bettype)
+            {
+                case 41:
+                case 42:
+                case 43:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        protected bool IsHRWinPlaceBettype(int bettype)
+        {
+            switch (bettype)
+            {
+                case 33:
+                case 43:
+                    return true;
+            }
+            return false;
+        }
+
+        protected bool IsVoidRejectRefundLose(string status)
+        {
+            return (status.Equals(Status.VOID) || status.Equals(Status.REJECT) || status.Equals(Status.LOSE) || status.Equals(Status.Refund.ToUpper())); //Because it is "Refund" text.
+        }
+        protected bool IsRunningWaiting(string status)
+        {
+            return (status.Equals(Status.RUNNING) || status.Equals(Status.WAITING));
+        }
+
+
+
+        #region View Result Detail
+        #region SoccerHTML
+        public string SoccerHTML(DataRow r, bool isExistFGLG, string sporttype)
+        {
+            try
+            {
+                string _s = string.Empty;
+                _s = WebUtils.LoadTemplate("BetList/Soccer.htm");
+
+                FillHeaderSoccer(ref _s, r, sporttype);
+                FillDataForSoccer(ref _s, r, isExistFGLG);
+
+                return _s;
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                throw ex;
+            }
+        }       
+
+        public void FillHeaderSoccer(ref string _s, DataRow r, string sporttype)
+        {
+            TemplateHandler.Assign(ref _s, "lblLeague", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "league").ToUpper());
+            TemplateHandler.Assign(ref _s, "lblKickOffTime", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "kickofftime"));
+            TemplateHandler.Assign(ref _s, "lblTeam", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblTeam"));
+            TemplateHandler.Assign(ref _s, "lblHTScore", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblHTScore"));
+            TemplateHandler.Assign(ref _s, "lblFinalScore", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "finalscore"));
+            TemplateHandler.Assign(ref _s, "lblFirstGoal", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "firstgoal"));
+            TemplateHandler.Assign(ref _s, "lblLastGoal", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lastgoal"));
+            TemplateHandler.Assign(ref _s, "lblEventStatus", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEventStatus"));
+            TemplateHandler.Assign(ref _s, "{lblSportName}", sporttype);
+            TemplateHandler.Assign(ref _s, "{leaguename}", CacheRef.GetLeagueName(r["leagueid"]));
+        }
+
+        public void FillDataForSoccer(ref string _s, DataRow r, bool isExistFGLG)
+        {
+            var settle = CommonBootStrapper.Locator.GetInstance<ISettlement>();
+            var isPending = false;
+            TemplateHandler.Assign(ref _s, "{eventstatus}", settle.SelStatusConfirming(r, ref isPending));
+            TemplateHandler.Assign(ref _s, "{bgEventStatus}", (isPending ? "bgpending" : ""));
+
+            string strHome = CacheRef.GetTeamName(r["homeid"]) + (CastAide.AsBoolean(r["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : "");
+            string strAway = CacheRef.GetTeamName(r["awayid"]);
+
+
+            TemplateHandler.Assign(ref _s, "{hometeam}", strHome);
+            TemplateHandler.Assign(ref _s, "{awayteam}", strAway);
+            TemplateHandler.Assign(ref _s, "{date}", DateFormat.ShortDateFormat(r["eventdate"]));
+
+            string htHome = CastAide.AsString(r["hthomescore"]).Trim();
+            string htAway = CastAide.AsString(r["htawayscore"]).Trim();
+            string ftHome = CastAide.AsString(r["finalhomescore"]).Trim();
+            string ftAway = CastAide.AsString(r["finalawayscore"]).Trim();
+
+            if (CastAide.AsInt32(r["finalhomescore"]) > CastAide.AsInt32(r["finalawayscore"]))//Home win
+            {
+                TemplateHandler.Assign(ref _s, "homestyle", "b");
+                TemplateHandler.Assign(ref _s, "awaystyle", "");
+            }
+            else if (CastAide.AsInt32(r["finalhomescore"]) < CastAide.AsInt32(r["finalawayscore"]))//Away win
+            {
+                TemplateHandler.Assign(ref _s, "homestyle", "");
+                TemplateHandler.Assign(ref _s, "awaystyle", "b");
+            }
+            else//Draw
+            {
+                TemplateHandler.Assign(ref _s, "homestyle", "");
+                TemplateHandler.Assign(ref _s, "awaystyle", "");
+            }
+
+            if (!isExistFGLG)
+            {
+                TemplateHandler.RemoveBlock(ref _s, "FGLG");
+            }
+            else
+            {
+                if ((string.IsNullOrEmpty(htHome) || htHome == "0") && (string.IsNullOrEmpty(htAway) || htAway == "0")
+                && (string.IsNullOrEmpty(ftHome) || ftHome == "0") && (string.IsNullOrEmpty(ftAway) || ftAway == "0"))
+                {
+                    TemplateHandler.Assign(ref _s, "{isdisable}", "disabled='disabled'");
+                }
+                else
+                {
+                    bool _isRefund = Convert.ToBoolean(r["IsRefund"]);
+                    bool _isCalRefund = Convert.ToBoolean(r["IsCalRefund"]);
+                    string[] _betStatus = r["betstatus"].ToString().Split(':');
+                    if (!_isRefund && !_isCalRefund && !Convert.IsDBNull(r["betstatus"]) && !string.IsNullOrEmpty(CastAide.AsString(r["betstatus"])))
+                    {
+                        string _fg = _betStatus[1].Split('-')[0];
+                        string _lg = _betStatus[1].Split('-')[1];
+                        if (_fg == "1") TemplateHandler.Assign(ref _s, "hfgoal", "<div class='FirstGoal'>&nbsp;</div>"); ;// TemplateHandler.Assign(ref _s, "{fgHomeChecked}", "X");
+                        if (_fg == "2") TemplateHandler.Assign(ref _s, "afgoal", "<div class='FirstGoal'>&nbsp;</div>");
+                        if (_lg == "1") TemplateHandler.Assign(ref _s, "hlgoal", "<div class='LastGoal'>&nbsp;</div>");
+                        if (_lg == "2") TemplateHandler.Assign(ref _s, "algoal", "<div class='LastGoal'>&nbsp;</div>");
+                    }
+                }
+                TemplateHandler.Assign(ref _s, "{isdisable}", string.Empty);
+                TemplateHandler.Assign(ref _s, "{fgHomeChecked}", string.Empty);
+                TemplateHandler.Assign(ref _s, "{fgAwayChecked}", string.Empty);
+                TemplateHandler.Assign(ref _s, "{lgHomeChecked}", string.Empty);
+                TemplateHandler.Assign(ref _s, "{lgAwayChecked}", string.Empty);
+            }
+
+            TemplateHandler.Assign(ref _s, "hfgoal", string.Empty);
+            TemplateHandler.Assign(ref _s, "hlgoal", string.Empty);
+            TemplateHandler.Assign(ref _s, "afgoal", string.Empty);
+            TemplateHandler.Assign(ref _s, "algoal", string.Empty);
+
+
+            string betstatus = r["betstatus"].ToString().Trim();
+            if (betstatus.StartsWith("Refund HT"))
+            {
+                TemplateHandler.Assign(ref _s, "{homeHScore}", "N/A");
+                TemplateHandler.Assign(ref _s, "{awayHScore}", "N/A");
+                TemplateHandler.Assign(ref _s, "{homeFScore}", ftHome);
+                TemplateHandler.Assign(ref _s, "{awayFScore}", ftAway);
+            }
+            else if (betstatus.StartsWith("Refund FT"))
+            {
+                TemplateHandler.Assign(ref _s, "{homeHScore}", htHome);
+                TemplateHandler.Assign(ref _s, "{awayHScore}", htAway);
+                TemplateHandler.Assign(ref _s, "{homeFScore}", "N/A");
+                TemplateHandler.Assign(ref _s, "{awayFScore}", "N/A");
+            }
+            else if (betstatus.StartsWith("Refund"))
+            {
+                TemplateHandler.Assign(ref _s, "{homeHScore}", "N/A");
+                TemplateHandler.Assign(ref _s, "{awayHScore}", "N/A");
+                TemplateHandler.Assign(ref _s, "{homeFScore}", "N/A");
+                TemplateHandler.Assign(ref _s, "{awayFScore}", "N/A");
+            }
+            else
+            {
+                TemplateHandler.Assign(ref _s, "{homeHScore}", htHome);
+                TemplateHandler.Assign(ref _s, "{awayHScore}", htAway);
+                TemplateHandler.Assign(ref _s, "{homeFScore}", ftHome);
+                TemplateHandler.Assign(ref _s, "{awayFScore}", ftAway);
+            }
+        }
+
+        public string GetStatusStr(string _eventstatus, params string[] options)
+        {
+            switch (_eventstatus.ToLowerInvariant())
+            {
+                case "running":
+                    if (options != null && options.Length == 2)
+                    {
+                        bool isHTcal = false;
+                        bool calculate = false;
+                        if (options[0].Length > 1)//false,true
+                        {
+                            isHTcal = DNAide.Core.CastAide.AsBoolean(options[0].ToLower().Trim());
+                            calculate = DNAide.Core.CastAide.AsBoolean(options[1].ToLower().Trim());
+                        }
+                        else//0,1
+                        {
+                            isHTcal = DNAide.Core.CastAide.AsBoolean(Convert.ToInt16(options[0].Trim()));
+                            calculate = DNAide.Core.CastAide.AsBoolean(Convert.ToInt16(options[1].Trim()));
+                        }
+                        if (isHTcal) //isHTcal 
+                            return ResourceExtension.GetResourceValue(ResourceExtension.Resources.CategorizeStatus, "FTPending");
+                        else if (calculate) //calculate 
+                            return ResourceExtension.GetResourceValue(ResourceExtension.Resources.CategorizeStatus, "HTPending");
+                        else
+                            return ResourceExtension.GetResourceValue(ResourceExtension.Resources.CategorizeStatus, "Pending");
+                    }
+                    else
+                    {
+                        return "Pending";
+                    }
+                case "completed": return "Completed";
+                case "closed": return "Closed";
+                case "postponed": return "Postponed";
+                case "internal": return "Internal";
+                default: return _eventstatus;
+            }
+        }
+
+        #endregion
+        #region VirtualSoccerHTML
+        public string VirtualSoccerHTML(DataRow r, bool isExistFGLG, string sporttype)
+        {
+            try
+            {
+                string _s = string.Empty;
+                _s = WebUtils.LoadTemplate("BetList/Soccer.htm");
+
+                FillHeaderVirtualSoccer(ref _s, r, sporttype);
+                FillDataForVirtualSoccer(ref _s, r, isExistFGLG);
+
+                return _s;
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                throw ex;
+            }
+        }
+        public void FillHeaderVirtualSoccer(ref string _s, DataRow r, string sporttype)
+        {
+            TemplateHandler.Assign(ref _s, "lblLeague", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "league").ToUpper());
+            TemplateHandler.Assign(ref _s, "lblKickOffTime", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "kickofftime"));
+            TemplateHandler.Assign(ref _s, "lblTeam", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblTeam"));
+            TemplateHandler.Assign(ref _s, "lblHTScore", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblHTScore"));
+            TemplateHandler.Assign(ref _s, "lblFinalScore", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "finalscore"));
+            TemplateHandler.Assign(ref _s, "lblFirstGoal", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "firstgoal"));
+            TemplateHandler.Assign(ref _s, "lblLastGoal", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lastgoal"));
+            TemplateHandler.Assign(ref _s, "lblEventStatus", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEventStatus"));
+            TemplateHandler.Assign(ref _s, "{lblSportName}", sporttype);
+            TemplateHandler.Assign(ref _s, "{leaguename}", CacheRef.GetLeagueName(r["leagueid"]));
+        }
+
+        public void FillDataForVirtualSoccer(ref string _s, DataRow r, bool isExistFGLG)
+        {
+            var settle = CommonBootStrapper.Locator.GetInstance<ISettlement>();
+            var isPending = false;
+            TemplateHandler.Assign(ref _s, "{eventstatus}", settle.SelStatusConfirming(r, ref isPending));
+            TemplateHandler.Assign(ref _s, "{bgEventStatus}", (isPending ? "bgpending" : ""));
+
+            string strHome = CacheRef.GetTeamName(r["homeid"]) + (CastAide.AsBoolean(r["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : "");
+            string strAway = CacheRef.GetTeamName(r["awayid"]);
+
+
+            TemplateHandler.Assign(ref _s, "{hometeam}", strHome);
+            TemplateHandler.Assign(ref _s, "{awayteam}", strAway);
+            TemplateHandler.Assign(ref _s, "{date}", CastAide.AsDateTime(r["kickofftime"]));
+
+            string htHome = CastAide.AsString(r["hthomescore"]).Trim();
+            string htAway = CastAide.AsString(r["htawayscore"]).Trim();
+            string ftHome = CastAide.AsString(r["finalhomescore"]).Trim();
+            string ftAway = CastAide.AsString(r["finalawayscore"]).Trim();
+
+            if (CastAide.AsInt32(r["finalhomescore"]) > CastAide.AsInt32(r["finalawayscore"]))//Home win
+            {
+                TemplateHandler.Assign(ref _s, "homestyle", "b");
+                TemplateHandler.Assign(ref _s, "awaystyle", "");
+            }
+            else if (CastAide.AsInt32(r["finalhomescore"]) < CastAide.AsInt32(r["finalawayscore"]))//Away win
+            {
+                TemplateHandler.Assign(ref _s, "homestyle", "");
+                TemplateHandler.Assign(ref _s, "awaystyle", "b");
+            }
+            else//Draw
+            {
+                TemplateHandler.Assign(ref _s, "homestyle", "");
+                TemplateHandler.Assign(ref _s, "awaystyle", "");
+            }
+
+            if (!isExistFGLG)
+            {
+                TemplateHandler.RemoveBlock(ref _s, "FGLG");
+            }
+            else
+            {
+                if ((string.IsNullOrEmpty(htHome) || htHome == "0") && (string.IsNullOrEmpty(htAway) || htAway == "0")
+                && (string.IsNullOrEmpty(ftHome) || ftHome == "0") && (string.IsNullOrEmpty(ftAway) || ftAway == "0"))
+                {
+                    TemplateHandler.Assign(ref _s, "{isdisable}", "disabled='disabled'");
+                }
+                else
+                {
+                    bool _isRefund = Convert.ToBoolean(r["IsRefund"]);
+                    bool _isCalRefund = Convert.ToBoolean(r["IsCalRefund"]);
+                    string[] _betStatus = r["betstatus"].ToString().Split(':');
+                    if (!_isRefund && !_isCalRefund && !Convert.IsDBNull(r["betstatus"]) && !string.IsNullOrEmpty(CastAide.AsString(r["betstatus"])))
+                    {
+                        string _fg = _betStatus[1].Split('-')[0];
+                        string _lg = _betStatus[1].Split('-')[1];
+                        if (_fg == "1") TemplateHandler.Assign(ref _s, "hfgoal", "<div class='FirstGoal'>&nbsp;</div>"); ;// TemplateHandler.Assign(ref _s, "{fgHomeChecked}", "X");
+                        if (_fg == "2") TemplateHandler.Assign(ref _s, "afgoal", "<div class='FirstGoal'>&nbsp;</div>");
+                        if (_lg == "1") TemplateHandler.Assign(ref _s, "hlgoal", "<div class='LastGoal'>&nbsp;</div>");
+                        if (_lg == "2") TemplateHandler.Assign(ref _s, "algoal", "<div class='LastGoal'>&nbsp;</div>");
+                    }
+                }
+                TemplateHandler.Assign(ref _s, "{isdisable}", string.Empty);
+                TemplateHandler.Assign(ref _s, "{fgHomeChecked}", string.Empty);
+                TemplateHandler.Assign(ref _s, "{fgAwayChecked}", string.Empty);
+                TemplateHandler.Assign(ref _s, "{lgHomeChecked}", string.Empty);
+                TemplateHandler.Assign(ref _s, "{lgAwayChecked}", string.Empty);
+            }
+
+            TemplateHandler.Assign(ref _s, "hfgoal", string.Empty);
+            TemplateHandler.Assign(ref _s, "hlgoal", string.Empty);
+            TemplateHandler.Assign(ref _s, "afgoal", string.Empty);
+            TemplateHandler.Assign(ref _s, "algoal", string.Empty);
+
+
+            string betstatus = r["betstatus"].ToString().Trim();
+            if (betstatus.StartsWith("Refund HT"))
+            {
+                TemplateHandler.Assign(ref _s, "{homeHScore}", "N/A");
+                TemplateHandler.Assign(ref _s, "{awayHScore}", "N/A");
+                TemplateHandler.Assign(ref _s, "{homeFScore}", ftHome);
+                TemplateHandler.Assign(ref _s, "{awayFScore}", ftAway);
+            }
+            else if (betstatus.StartsWith("Refund FT"))
+            {
+                TemplateHandler.Assign(ref _s, "{homeHScore}", htHome);
+                TemplateHandler.Assign(ref _s, "{awayHScore}", htAway);
+                TemplateHandler.Assign(ref _s, "{homeFScore}", "N/A");
+                TemplateHandler.Assign(ref _s, "{awayFScore}", "N/A");
+            }
+            else if (betstatus.StartsWith("Refund"))
+            {
+                TemplateHandler.Assign(ref _s, "{homeHScore}", "N/A");
+                TemplateHandler.Assign(ref _s, "{awayHScore}", "N/A");
+                TemplateHandler.Assign(ref _s, "{homeFScore}", "N/A");
+                TemplateHandler.Assign(ref _s, "{awayFScore}", "N/A");
+            }
+            else
+            {
+                TemplateHandler.Assign(ref _s, "{homeHScore}", htHome);
+                TemplateHandler.Assign(ref _s, "{awayHScore}", htAway);
+                TemplateHandler.Assign(ref _s, "{homeFScore}", ftHome);
+                TemplateHandler.Assign(ref _s, "{awayFScore}", ftAway);
+            }
+        }
+
+        #endregion VirtualSoccerHTML
+        #region BasketballHTML
+        protected string BasketballHTML(DataRow r, string sporttype)
+        {
+            int totalSets = 4; // for Basketball & footballl
+            try
+            {
+                string _s = string.Empty;
+                _s = WebUtils.LoadTemplate("BetList/Basketball.htm");
+                FillHeaderBasketBall(ref _s, r, sporttype);
+                FillDataForBasketBall(ref _s, totalSets, r);
+                return _s;
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                throw ex;
+            }
+        }
+
+        public void FillHeaderBasketBall(ref string _s, DataRow r, string sporttype)
+        {
+            TemplateHandler.Assign(ref _s, "lblKickOffTime", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "kickofftime"));
+            TemplateHandler.Assign(ref _s, "lblTeam", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblTeam"));
+            TemplateHandler.Assign(ref _s, "lbl1Q", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Q1"));
+            TemplateHandler.Assign(ref _s, "lbl2Q", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Q2"));
+            TemplateHandler.Assign(ref _s, "lbl3Q", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Q3"));
+            TemplateHandler.Assign(ref _s, "lbl4Q", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Q4"));
+            TemplateHandler.Assign(ref _s, "lblOT", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "OT"));
+            TemplateHandler.Assign(ref _s, "lblHTScore", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblHTScore"));
+            TemplateHandler.Assign(ref _s, "lblFinalScore", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "finalscore"));
+            TemplateHandler.Assign(ref _s, "{lblSportName}", sporttype);
+            TemplateHandler.Assign(ref _s, "{leaguename}", CacheRef.GetLeagueName(r["leagueid"]));
+            TemplateHandler.Assign(ref _s, "lblEventStatus", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEventStatus"));
+        }
+
+        public void FillDataForBasketBall(ref string _s, int totalSets, DataRow r)
+        {
+            var settle = CommonBootStrapper.Locator.GetInstance<ISettlement>();
+            var isPending = false;
+            TemplateHandler.Assign(ref _s, "{eventstatus}", settle.SelStatusConfirming(r, ref isPending));
+            TemplateHandler.Assign(ref _s, "{bgEventStatus}", (isPending ? "bgpending" : ""));
+
+            TemplateHandler.Assign(ref _s, "{hometeam}", CacheRef.GetTeamName(r["homeid"]) + (CastAide.AsBoolean(r["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : ""));
+            TemplateHandler.Assign(ref _s, "{awayteam}", CacheRef.GetTeamName(r["awayid"]));
+            TemplateHandler.Assign(ref _s, "{date}", DateFormat.ShortDateFormat(r["eventdate"]));
+
+            bool _isRefund = Convert.ToBoolean(r["IsRefund"]);
+            bool _isCalRefund = Convert.ToBoolean(r["IsCalRefund"]);
+            int i = 0;
+            int totalGameHome = 0, totalGameAway = 0;
+            string _homeOT = string.Empty, _awayOT = string.Empty;
+            if (!_isRefund && !_isCalRefund && !Convert.IsDBNull(r["betstatus"]) && !string.IsNullOrEmpty(CastAide.AsString(r["betstatus"])))
+            {
+                string[] _betStatus = r["betstatus"].ToString().Split(',');
+                for (; i < _betStatus.Length; i++)
+                {
+                    string homeSet = _betStatus[i].Trim().Split('-')[0];
+                    string awaySet = _betStatus[i].Trim().Split('-')[1];
+                    totalGameHome += Convert.ToInt32(homeSet.Trim());
+                    totalGameAway += Convert.ToInt32(awaySet.Trim());
+                    TemplateHandler.Assign(ref _s, "{value" + (i + 1).ToString() + "qHome}", homeSet.Trim());
+                    TemplateHandler.Assign(ref _s, "{value" + (i + 1).ToString() + "qAway}", awaySet.Trim());
+                    if (i == totalSets)
+                    {
+                        _homeOT = _betStatus[i].Trim().Split('-')[0];
+                        _awayOT = _betStatus[i].Trim().Split('-')[1];
+                    }
+                }
+                i--;
+            }
+            for (; i < totalSets; i++)
+            {
+                TemplateHandler.Assign(ref _s, "{value" + (i + 1).ToString() + "qHome}", string.Empty);
+                TemplateHandler.Assign(ref _s, "{value" + (i + 1).ToString() + "qAway}", string.Empty);
+            }
+            TemplateHandler.Assign(ref _s, "{valueOTHome}", _homeOT);
+            TemplateHandler.Assign(ref _s, "{valueOTAway}", _awayOT);
+            int intHomeScore = CastAide.AsInt32(r["finalhomescore"], 0);
+            int intAwayScore = CastAide.AsInt32(r["finalawayscore"], 0);
+
+            if (intHomeScore > intAwayScore)
+            {
+                TemplateHandler.Assign(ref _s, "hstyle", "b");
+            }
+            else if (CastAide.AsInt32(r["finalhomescore"]) < CastAide.AsInt32(r["finalawayscore"]))
+            {
+                TemplateHandler.Assign(ref _s, "astyle", "b");
+            }
+            TemplateHandler.Assign(ref _s, "hstyle", "");
+            TemplateHandler.Assign(ref _s, "astyle", "");
+            TemplateHandler.Assign(ref _s, "{homeHScore}", CastAide.AsString(r["hthomescore"]));
+            TemplateHandler.Assign(ref _s, "{awayHScore}", CastAide.AsString(r["htawayscore"]));
+            TemplateHandler.Assign(ref _s, "{homeFScore}", CastAide.AsString(r["finalhomescore"]));
+            TemplateHandler.Assign(ref _s, "{awayFScore}", CastAide.AsString(r["finalawayscore"]));
+        }
+        #endregion
+        #region HockeyHTML
+        public string HockeyHTML(DataRow r, string sporttype)
+        {
+            try
+            {
+                string _s = string.Empty;
+                _s = WebUtils.LoadTemplate("BetList/Hockey.htm");
+                FillHeaderHockey(ref _s, r, sporttype);
+                FillDataHocKey(ref _s, r);
+                return _s;
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                throw ex;
+            }
+        }
+        public void FillDataHocKey(ref string _s, DataRow r)
+        {
+            int totalSets = 3; // for Hockey [1 Period, 2 Period, 3 Period]
+            try
+            {
+                var settle = CommonBootStrapper.Locator.GetInstance<ISettlement>();
+                var isPending = false;
+                TemplateHandler.Assign(ref _s, "{eventstatus}", settle.SelStatusConfirming(r, ref isPending));
+                TemplateHandler.Assign(ref _s, "{bgEventStatus}", (isPending ? "bgpending" : ""));
+
+                TemplateHandler.Assign(ref _s, "{leaguename}", CacheRef.GetLeagueName(r["leagueid"]));
+                TemplateHandler.Assign(ref _s, "{hometeam}", CacheRef.GetTeamName(r["homeid"]) + (CastAide.AsBoolean(r["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : ""));
+                TemplateHandler.Assign(ref _s, "{awayteam}", CacheRef.GetTeamName(r["awayid"]));
+                TemplateHandler.Assign(ref _s, "{date}", DateFormat.ShortDateFormat(r["eventdate"]));
+                bool _isRefund = Convert.ToBoolean(r["IsRefund"]);
+                bool _isCalRefund = Convert.ToBoolean(r["IsCalRefund"]);
+                int i = 0;
+                int totalGameHome = 0, totalGameAway = 0;
+
+                string _homeOT = string.Empty, _awayOT = string.Empty;
+                if (!_isRefund && !_isCalRefund && !Convert.IsDBNull(r["betstatus"]) &&
+                    !string.IsNullOrEmpty(r["betstatus"].ToString()))
+                {
+                    string[] _betStatus = r["betstatus"].ToString().Split(',');
+                    for (; i < _betStatus.Length; i++)
+                    {
+                        string homeSet = _betStatus[i].Trim().Split('-')[0];
+                        string awaySet = _betStatus[i].Trim().Split('-')[1];
+                        totalGameHome += Convert.ToInt32(homeSet.Trim());
+                        totalGameAway += Convert.ToInt32(awaySet.Trim());
+                        TemplateHandler.Assign(ref _s, "{value" + (i + 1).ToString() + "pHome}", homeSet.Trim());
+                        TemplateHandler.Assign(ref _s, "{value" + (i + 1).ToString() + "pAway}", awaySet.Trim());
+                        if (i == totalSets)
+                        {
+                            _homeOT = _betStatus[i].Trim().Split('-')[0];
+                            _awayOT = _betStatus[i].Trim().Split('-')[1];
+                        }
+                    }
+                    i--;
+                }
+                for (; i < totalSets; i++)
+                {
+                    TemplateHandler.Assign(ref _s, "{value" + (i + 1).ToString() + "pHome}", string.Empty);
+                    TemplateHandler.Assign(ref _s, "{value" + (i + 1).ToString() + "pAway}", string.Empty);
+                }
+                TemplateHandler.Assign(ref _s, "{valueOTHome}", _homeOT);
+                TemplateHandler.Assign(ref _s, "{valueOTAway}", _awayOT);
+                if (CastAide.AsInt32(r["finalhomescore"]) > CastAide.AsInt32(r["finalawayscore"]))
+                {
+                    TemplateHandler.Assign(ref _s, "hstyle", "bl_underdog");
+                }
+                else if (CastAide.AsInt32(r["finalhomescore"]) < CastAide.AsInt32(r["finalawayscore"]))
+                {
+                    TemplateHandler.Assign(ref _s, "astyle", "bl_underdog");
+                }
+                TemplateHandler.Assign(ref _s, "hstyle", "");
+                TemplateHandler.Assign(ref _s, "astyle", "");
+                TemplateHandler.Assign(ref _s, "{homeFScore}", CastAide.AsString(r["finalhomescore"]));
+                TemplateHandler.Assign(ref _s, "{awayFScore}", CastAide.AsString(r["finalawayscore"]));
+
+
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
+            }
+        }
+        public void FillHeaderHockey(ref string _s, DataRow r, string sporttype)
+        {
+            try
+            {
+                TemplateHandler.Assign(ref _s, "lblSportName", sporttype);
+                TemplateHandler.Assign(ref _s, "leaguename", CacheRef.GetLeagueName(r["leagueid"]));
+                TemplateHandler.Assign(ref _s, "lblKickOffTime", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "kickofftime"));
+                TemplateHandler.Assign(ref _s, "lblTeam", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblTeam"));
+                TemplateHandler.Assign(ref _s, "lbl1P", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "P1"));
+                TemplateHandler.Assign(ref _s, "lbl2P", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "P2"));
+                TemplateHandler.Assign(ref _s, "lbl3P", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "P3"));
+                TemplateHandler.Assign(ref _s, "lblFinalScore", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "finalscore"));
+                TemplateHandler.Assign(ref _s, "lblOT", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "OT"));
+                TemplateHandler.Assign(ref _s, "lblEventStatus", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEventStatus"));
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+        }
+
+        #endregion
+        #region TennisHTML
+        public string TennisHTML(DataRow r, string sporttype, int matchid, int bettype, string betid)
+        {
+            int totalSets = 5; // for Tennis
+            try
+            {
+                string _s = string.Empty;
+                _s = WebUtils.LoadTemplate("BetList/Tennis.htm");
+
+                FillHeaderTennis(ref _s, r, sporttype);
+                FillDataForTennis(ref _s, totalSets, r, matchid, bettype, betid);
+                return _s;
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                throw ex;
+            }
+        }
+
+        public void FillHeaderTennis(ref string _s, DataRow r, string sporttype)
+        {
+            TemplateHandler.Assign(ref _s, "lblLeague", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "league").ToUpper());
+            TemplateHandler.Assign(ref _s, "lblKickOffTime", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "kickofftime"));
+            TemplateHandler.Assign(ref _s, "lblTeam", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblTeam"));
+            TemplateHandler.Assign(ref _s, "lbl1Set", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lbl1Set"));
+            TemplateHandler.Assign(ref _s, "lbl2Set", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lbl2Set"));
+            TemplateHandler.Assign(ref _s, "lbl3Set", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lbl3Set"));
+            TemplateHandler.Assign(ref _s, "lbl4Set", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lbl4Set"));
+            TemplateHandler.Assign(ref _s, "lbl5Set", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lbl5Set"));
+            TemplateHandler.Assign(ref _s, "lblTotalGames", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "totalgame"));
+            TemplateHandler.Assign(ref _s, "lblTotalSet", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "totalset"));
+            TemplateHandler.Assign(ref _s, "{lblSportName}", sporttype);
+            TemplateHandler.Assign(ref _s, "{leaguename}", CacheRef.GetLeagueName(r["leagueid"]));
+            TemplateHandler.Assign(ref _s, "lblEventStatus", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEventStatus"));
+        }
+
+        public void FillDataForTennis(ref string _s, int totalSets, DataRow r, int matchid, int bettype, string betid)
+        {
+            try
+            {
+                string _eventstatus = r["eventstatus"].ToString();
+                TemplateHandler.Assign(ref _s, "{eventstatus}", this.GetStatusStr(_eventstatus));
+
+                TemplateHandler.Assign(ref _s, "{hometeam}", CacheRef.GetTeamName(r["homeid"]) + (CastAide.AsBoolean(r["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : ""));
+                TemplateHandler.Assign(ref _s, "{awayteam}", CacheRef.GetTeamName(r["awayid"]));
+                TemplateHandler.Assign(ref _s, "{date}", DateFormat.ShortDateFormat(r["eventdate"]));
+                bool _isRefund = Convert.ToBoolean(r["IsRefund"]);
+                bool _isCalRefund = Convert.ToBoolean(r["IsCalRefund"]);
+                int i = 0;
+                int totalGameHome = 0, totalGameAway = 0;
+                if (!_isRefund && !_isCalRefund && !Convert.IsDBNull(r["betstatus"]) && !string.IsNullOrEmpty(r["betstatus"].ToString()))
+                {
+                    string[] _betStatus = r["betstatus"].ToString().Split(',');
+                    for (; i < _betStatus.Length; i++)
+                    {
+                        string homeSet = _betStatus[i].Trim().Split('-')[0];
+                        string awaySet = _betStatus[i].Trim().Split('-')[1];
+                        totalGameHome += Convert.ToInt32(homeSet.Trim());
+                        totalGameAway += Convert.ToInt32(awaySet.Trim());
+                        TemplateHandler.Assign(ref _s, "{value" + (i + 1).ToString() + "sHome}", homeSet.Trim());
+                        TemplateHandler.Assign(ref _s, "{value" + (i + 1).ToString() + "sAway}", awaySet.Trim());
+                    }
+                    i--;
+                }
+                for (; i < totalSets; i++)
+                {
+                    TemplateHandler.Assign(ref _s, "{value" + (i + 1).ToString() + "sHome}", string.Empty);
+                    TemplateHandler.Assign(ref _s, "{value" + (i + 1).ToString() + "sAway}", string.Empty);
+                }
+                TemplateHandler.Assign(ref _s, "{valueTGHome}", (totalGameHome > 0) ? totalGameHome.ToString() : string.Empty);
+                TemplateHandler.Assign(ref _s, "{valueTGAway}", (totalGameAway > 0) ? totalGameAway.ToString() : string.Empty);
+                if (CastAide.AsInt32(r["finalhomescore"]) > CastAide.AsInt32(r["finalawayscore"]))
+                {
+                    TemplateHandler.Assign(ref _s, "hstyle", "b");
+                }
+                else if (CastAide.AsInt32(r["finalhomescore"]) < CastAide.AsInt32(r["finalawayscore"]))
+                {
+                    TemplateHandler.Assign(ref _s, "astyle", "b");
+                }
+                TemplateHandler.Assign(ref _s, "hstyle", "");
+                TemplateHandler.Assign(ref _s, "astyle", "");
+                TemplateHandler.Assign(ref _s, "{valueFSHome}", CastAide.AsString(r["finalhomescore"]));
+                TemplateHandler.Assign(ref _s, "{valueFSAway}", CastAide.AsString(r["finalawayscore"]));
+                if (bettype > 1310 && bettype < 1335)
+                {
+                    TemplateHandler.Assign(ref _s, "{setCss}", "");
+                    string setId = CastAide.AsInt32(betid.Substring(1, 2)).ToString();
+                    var strTblSet = string.Empty;
+                    strTblSet = "<tr class='title'><td rowspan='3' style='width:150px'>Set " + setId + " Score</td>";
+                    TemplateHandler.Assign(ref _s, "{setvalue}", setId);
+                    DataTable dtb = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.Betlist.GetSportingSolutionsResult(matchid, setId);
+                    if (dtb != null && dtb.Rows.Count > 0)
+                    {
+                        var resultValue = dtb.Rows[0]["resultvalue"].ToString();
+                        if (!String.IsNullOrEmpty(resultValue))
+                        {
+                            string[] arrGameValue = resultValue.Split(new char[] { ' ' });
+                            for (i = 0; i < arrGameValue.Length - 1; i++)
+                            {
+                                strTblSet += "<td style='width:40px'>" + (i + 1) + "</td>";
+                            }
+                            var arrGameHomeValue = new List<string>();
+                            var arrGameAwayValue = new List<string>();
+                            for (i = 1; i < arrGameValue.Length; i++)
+                            {
+                                string[] arr = arrGameValue[i].Split(new char[] { '-' });
+                                arrGameHomeValue.Add(arr[0].Replace("*", ""));
+                                arrGameAwayValue.Add(arr[1].Replace("*", ""));
+                            }
+                            strTblSet += "</tr><tr>";
+                            for (int j = 0; j < arrGameHomeValue.Count; j++)
+                            {
+                                strTblSet += "<td style='width:40px'>" + arrGameHomeValue[j] + "</td>";
+                            }
+                            strTblSet += "</tr><tr>";
+                            for (int k = 0; k < arrGameAwayValue.Count; k++)
+                            {
+                                strTblSet += "<td style='width:40px'>" + arrGameAwayValue[k] + "</td>";
+                            }
+                            strTblSet += "</tr>";
+                            TemplateHandler.Assign(ref _s, "{contenttblSet}", strTblSet);
+                        }
+                        else
+                        {
+                            TemplateHandler.Assign(ref _s, "{setCss}", "hidden");
+                            TemplateHandler.Assign(ref _s, "{contenttblSet}", string.Empty);
+                        }
+                    }
+                    else
+                    {
+                        TemplateHandler.Assign(ref _s, "{setCss}", "hidden");
+                        TemplateHandler.Assign(ref _s, "{contenttblSet}", string.Empty);
+                    }
+                   
+                }
+                else
+                {
+                    TemplateHandler.Assign(ref _s, "{setCss}", "hidden");
+                    TemplateHandler.Assign(ref _s, "{contenttblSet}", string.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+           
+        }
+
+        #endregion
+        #region BilliardHTML
+        public void FillHeaderBillard(ref string _s, DataRow r, string sporttype)
+        {
+            TemplateHandler.Assign(ref _s, "lblKickOffTime", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "kickofftime"));
+            TemplateHandler.Assign(ref _s, "lblTeam", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblTeam"));
+            TemplateHandler.Assign(ref _s, "lblFinalScore", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "finalscore"));
+            TemplateHandler.Assign(ref _s, "leaguename", CacheRef.GetLeagueName(r["leagueid"]));
+            TemplateHandler.Assign(ref _s, "lblSportName", sporttype);
+            TemplateHandler.Assign(ref _s, "lblEventStatus", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEventStatus"));
+        }
+        public void FillDataForBillard(ref string _s, DataRow r)
+        {
+            var settle = CommonBootStrapper.Locator.GetInstance<ISettlement>();
+            var isPending = false;
+            TemplateHandler.Assign(ref _s, "{eventstatus}", settle.SelStatusConfirming(r, ref isPending));
+            TemplateHandler.Assign(ref _s, "{bgEventStatus}", (isPending ? "bgpending" : ""));
+
+            TemplateHandler.Assign(ref _s, "date", DateFormat.ShortDateFormat(r["eventdate"]));
+
+            string strHome = CacheRef.GetTeamName(r["homeid"]) +
+                             (CastAide.AsBoolean(r["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : "");
+            string strAway = CacheRef.GetTeamName(r["awayid"]);
+            if (CastAide.AsInt32(r["finalhomescore"], 0) > CastAide.AsInt32(r["finalawayscore"], 0))
+            {
+                TemplateHandler.Assign(ref _s, "hometeam", "<b>" + strHome + "</b>");
+                TemplateHandler.Assign(ref _s, "awayteam", strAway);
+            }
+            else if (CastAide.AsInt32(r["finalhomescore"], 0) < CastAide.AsInt32(r["finalawayscore"], 0))
+            {
+                TemplateHandler.Assign(ref _s, "hometeam", strHome);
+                TemplateHandler.Assign(ref _s, "awayteam", "<b>" + strAway + "</b>");
+            }
+            else
+            {
+                TemplateHandler.Assign(ref _s, "hometeam", strHome);
+                TemplateHandler.Assign(ref _s, "awayteam", strAway);
+            }
+
+            TemplateHandler.Assign(ref _s, "homeFScore", r["finalhomescore"].ToString());
+            TemplateHandler.Assign(ref _s, "awayFScore", r["finalawayscore"].ToString());
+        }
+        public string BilliardHTML(DataRow r, string sporttype)
+        {
+            try
+            {
+                string _s = string.Empty;
+                _s = WebUtils.LoadTemplate("BetList/Billiard.htm");
+
+                FillHeaderBillard(ref _s, r, sporttype);
+                FillDataForBillard(ref _s, r);
+                return _s;
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                throw ex;
+            }
+        }
+
+        #endregion
+
+
+
+        #region BadmintonHTML
+        public void FillHeaderBadminton(ref string _s, DataRow r, string sporttype)
+        {
+            TemplateHandler.Assign(ref _s, "lblLeague", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "league").ToUpper());
+            TemplateHandler.Assign(ref _s, "lblKickOffTime", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "kickofftime"));
+            TemplateHandler.Assign(ref _s, "lblTeam", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblTeam"));
+            TemplateHandler.Assign(ref _s, "lbl1Set", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lbl1Set"));
+            TemplateHandler.Assign(ref _s, "lbl2Set", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lbl2Set"));
+            TemplateHandler.Assign(ref _s, "lbl3Set", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lbl3Set"));
+            TemplateHandler.Assign(ref _s, "lbl4Set", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lbl4Set"));
+            TemplateHandler.Assign(ref _s, "lbl5Set", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lbl5Set"));
+            TemplateHandler.Assign(ref _s, "lblTotalGames", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "totalgame"));
+            TemplateHandler.Assign(ref _s, "lblTotalSet", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "totalset"));
+            TemplateHandler.Assign(ref _s, "lblTotalPoint", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "totalpoint"));
+            TemplateHandler.Assign(ref _s, "lblSportName", sporttype);
+            TemplateHandler.Assign(ref _s, "{leaguename}", CacheRef.GetLeagueName(r["leagueid"]));
+            TemplateHandler.Assign(ref _s, "lblEventStatus", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEventStatus"));
+        }
+        public void FillDataForBadminton(ref string _s, DataRow r)
+        {
+            var settle = CommonBootStrapper.Locator.GetInstance<ISettlement>();
+            var isPending = false;
+            TemplateHandler.Assign(ref _s, "{eventstatus}", settle.SelStatusConfirming(r, ref isPending));
+            TemplateHandler.Assign(ref _s, "{bgEventStatus}", (isPending ? "bgpending" : ""));
+
+            int totalSets = 5;
+            TemplateHandler.Assign(ref _s, "{hometeam}",
+                                   CacheRef.GetTeamName(r["homeid"]) +
+                                   (CastAide.AsBoolean(r["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : ""));
+            TemplateHandler.Assign(ref _s, "{awayteam}", CacheRef.GetTeamName(r["awayid"]));
+            TemplateHandler.Assign(ref _s, "{date}", DateFormat.ShortDateFormat(r["eventdate"]));
+            bool _isRefund = Convert.ToBoolean(r["IsRefund"]);
+            bool _isCalRefund = Convert.ToBoolean(r["IsCalRefund"]);
+            int i = 0;
+            int totalGameHome = 0, totalGameAway = 0;
+            if (!_isRefund && !_isCalRefund && !Convert.IsDBNull(r["betstatus"]) &&
+                !string.IsNullOrEmpty(r["betstatus"].ToString()))
+            {
+                string[] _betStatus = r["betstatus"].ToString().Split(',');
+                for (; i < _betStatus.Length; i++)
+                {
+                    string homeSet = _betStatus[i].Trim().Split('-')[0];
+                    string awaySet = _betStatus[i].Trim().Split('-')[1];
+                    totalGameHome += CastAide.AsInt32(homeSet.Trim());
+                    totalGameAway += CastAide.AsInt32(awaySet.Trim());
+                    TemplateHandler.Assign(ref _s, "{value" + (i + 1) + "sHome}", homeSet.Trim());
+                    TemplateHandler.Assign(ref _s, "{value" + (i + 1) + "sAway}", awaySet.Trim());
+                }
+                i--;
+            }
+            for (; i < totalSets; i++)
+            {
+                TemplateHandler.Assign(ref _s, "{value" + (i + 1) + "sHome}", string.Empty);
+                TemplateHandler.Assign(ref _s, "{value" + (i + 1) + "sAway}", string.Empty);
+            }
+            TemplateHandler.Assign(ref _s, "{valueTPHome}",
+                                   (totalGameHome > 0) ? totalGameHome.ToString() : string.Empty);
+            TemplateHandler.Assign(ref _s, "{valueTPAway}",
+                                   (totalGameAway > 0) ? totalGameAway.ToString() : string.Empty);
+            if (CastAide.AsInt32(r["finalhomescore"]) > CastAide.AsInt32(r["finalawayscore"]))
+            {
+                TemplateHandler.Assign(ref _s, "hstyle", "b");
+            }
+            else if (CastAide.AsInt32(r["finalhomescore"]) < CastAide.AsInt32(r["finalawayscore"]))
+            {
+                TemplateHandler.Assign(ref _s, "astyle", "b");
+            }
+            TemplateHandler.Assign(ref _s, "hstyle", "");
+            TemplateHandler.Assign(ref _s, "astyle", "");
+            TemplateHandler.Assign(ref _s, "{valueTSHome}", CastAide.AsString(r["finalhomescore"]));
+            TemplateHandler.Assign(ref _s, "{valueTSAway}", CastAide.AsString(r["finalawayscore"]));
+        }
+        public string BadmintonHTML(DataRow r, string sporttype)
+        {
+            try
+            {
+                string _s = string.Empty;
+                _s = WebUtils.LoadTemplate("BetList/Badminton.htm");
+
+                FillHeaderBadminton(ref _s, r, sporttype);
+                FillDataForBadminton(ref _s, r);
+                return _s;
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                throw ex;
+            }
+        }
+
+        #endregion
+
+        #region BaseballHTML
+        protected string BaseballHTML(DataRow r, string sporttype)
+        {
+            int totalSets = 9; // for Hockey [1 Period, 2 Period, 3 Period]
+            try
+            {
+                string _s = string.Empty;
+                _s = WebUtils.LoadTemplate("BetList/Baseball.htm");
+
+                FillHeaderBaseball(ref _s, r, sporttype);
+                FillDataForBaseball(ref _s, totalSets, r);
+
+                return _s;
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                throw ex;
+            }
+        }
+
+        public void FillHeaderBaseball(ref string _s, DataRow r, string sporttype)
+        {
+            TemplateHandler.Assign(ref _s, "lblLeague", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "league").ToUpper());
+            TemplateHandler.Assign(ref _s, "lblKickOffTime", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "kickofftime"));
+            TemplateHandler.Assign(ref _s, "lblTeam", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblTeam"));
+            TemplateHandler.Assign(ref _s, "lbl1", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lbl1"));
+            TemplateHandler.Assign(ref _s, "lbl2", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lbl2"));
+            TemplateHandler.Assign(ref _s, "lbl3", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lbl3"));
+            TemplateHandler.Assign(ref _s, "lbl4", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lbl4"));
+            TemplateHandler.Assign(ref _s, "lbl5", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lbl5"));
+            TemplateHandler.Assign(ref _s, "lbl6", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lbl6"));
+            TemplateHandler.Assign(ref _s, "lbl7", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lbl7"));
+            TemplateHandler.Assign(ref _s, "lbl8", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lbl8"));
+            TemplateHandler.Assign(ref _s, "lbl9", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lbl9"));
+            TemplateHandler.Assign(ref _s, "lblEI", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEI"));
+            TemplateHandler.Assign(ref _s, "htscore", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblHTScore"));
+            TemplateHandler.Assign(ref _s, "finalscore", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "finalscore"));
+            TemplateHandler.Assign(ref _s, "{lblSportName}", sporttype);
+            TemplateHandler.Assign(ref _s, "{leaguename}", CacheRef.GetLeagueName(r["leagueid"]));
+            TemplateHandler.Assign(ref _s, "lblEventStatus", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEventStatus"));
+        }
+
+        public void FillDataForBaseball(ref string _s, int totalSets, DataRow r)
+        {
+            var settle = CommonBootStrapper.Locator.GetInstance<ISettlement>();
+            var isPending = false;
+            TemplateHandler.Assign(ref _s, "{eventstatus}", settle.SelStatusConfirming(r, ref isPending));
+            TemplateHandler.Assign(ref _s, "{bgEventStatus}", (isPending ? "bgpending" : ""));
+
+            TemplateHandler.Assign(ref _s, "{hometeam}",
+                                   CacheRef.GetTeamName(r["homeid"]) +
+                                   (CastAide.AsBoolean(r["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : ""));
+            TemplateHandler.Assign(ref _s, "{awayteam}", CacheRef.GetTeamName(r["awayid"]));
+            TemplateHandler.Assign(ref _s, "{date}", DateFormat.ShortDateFormat(r["eventdate"]));
+            bool _isRefund = Convert.ToBoolean(r["IsRefund"]);
+            bool _isCalRefund = Convert.ToBoolean(r["IsCalRefund"]);
+            int i = 0;
+            int totalGameHome = 0, totalGameAway = 0;
+            string _homeEI = string.Empty, _awayEI = string.Empty;
+            if (!_isRefund && !_isCalRefund && !Convert.IsDBNull(r["betstatus"]) &&
+                !string.IsNullOrEmpty(r["betstatus"].ToString()))
+            {
+                string[] _betStatus = r["betstatus"].ToString().Split(',');
+                for (; i < _betStatus.Length; i++)
+                {
+                    string homeSet = _betStatus[i].Trim().Split('-')[0];
+                    string awaySet = _betStatus[i].Trim().Split('-')[1];
+                    totalGameHome += Convert.ToInt32(homeSet.Trim());
+                    totalGameAway += Convert.ToInt32(awaySet.Trim());
+                    TemplateHandler.Assign(ref _s, "{value" + (i + 1) + "Home}", homeSet.Trim());
+                    TemplateHandler.Assign(ref _s, "{value" + (i + 1) + "Away}", awaySet.Trim());
+                    if (i == totalSets)
+                    {
+                        _homeEI = _betStatus[i].Trim().Split('-')[0];
+                        _awayEI = _betStatus[i].Trim().Split('-')[1];
+                    }
+                }
+                i--;
+            }
+            for (; i < totalSets; i++)
+            {
+                TemplateHandler.Assign(ref _s, "{value" + (i + 1) + "Home}", string.Empty);
+                TemplateHandler.Assign(ref _s, "{value" + (i + 1) + "Away}", string.Empty);
+            }
+            TemplateHandler.Assign(ref _s, "{valueEIHome}", _homeEI);
+            TemplateHandler.Assign(ref _s, "{valueEIAway}", _awayEI);
+            if (CastAide.AsInt32(r["finalhomescore"]) > CastAide.AsInt32(r["finalawayscore"]))
+            {
+                TemplateHandler.Assign(ref _s, "hstyle", "b");
+            }
+            else if (CastAide.AsInt32(r["finalhomescore"]) < CastAide.AsInt32(r["finalawayscore"]))
+            {
+                TemplateHandler.Assign(ref _s, "astyle", "b");
+            }
+            TemplateHandler.Assign(ref _s, "hstyle", "");
+            TemplateHandler.Assign(ref _s, "astyle", "");
+            TemplateHandler.Assign(ref _s, "{homeHScore}", CastAide.AsString(r["hthomescore"]));
+            TemplateHandler.Assign(ref _s, "{awayHScore}", CastAide.AsString(r["htawayscore"]));
+            TemplateHandler.Assign(ref _s, "{homeFScore}", CastAide.AsString(r["finalhomescore"]));
+            TemplateHandler.Assign(ref _s, "{awayFScore}", CastAide.AsString(r["finalawayscore"]));
+        }
+
+        #endregion
+
+        #region Cricket
+        public void FillHeaderCricket(ref string _s, DataRow r)
+        {
+            TemplateHandler.Assign(ref _s, "lblKickOffTime", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "kickofftime"));
+            TemplateHandler.Assign(ref _s, "lblTeam", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblTeam"));
+            TemplateHandler.Assign(ref _s, "lblHTScore", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblHTScore"));
+            TemplateHandler.Assign(ref _s, "finalscore", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "finalscore"));
+
+            TemplateHandler.Assign(ref _s, "leaguename", CacheRef.GetLeagueName(r["leagueid"]));
+            TemplateHandler.Assign(ref _s, "lblSportName", CacheRef.GetSportName(CastAide.AsInt32(r["sporttype"], 0)));
+
+            TemplateHandler.Assign(ref _s, "lblEventStatus", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEventStatus"));
+        }
+        public void FillDataForCricket(ref string _s, DataRow r)
+        {
+            var settle = CommonBootStrapper.Locator.GetInstance<ISettlement>();
+            var isPending = false;
+            TemplateHandler.Assign(ref _s, "{eventstatus}", settle.SelStatusConfirming(r, ref isPending));
+            TemplateHandler.Assign(ref _s, "{bgEventStatus}", (isPending ? "bgpending" : ""));
+
+            TemplateHandler.Assign(ref _s, "{hometeam}",
+                                   CacheRef.GetTeamName(r["homeid"]) +
+                                   (CastAide.AsBoolean(r["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : ""));
+            TemplateHandler.Assign(ref _s, "{awayteam}", CacheRef.GetTeamName(r["awayid"]));
+            TemplateHandler.Assign(ref _s, "{date}", DateFormat.ShortDateFormat(r["eventdate"]));
+            if (CastAide.AsInt32(r["finalhomescore"]) > CastAide.AsInt32(r["finalawayscore"]))
+            {
+                TemplateHandler.Assign(ref _s, "hstyle", "b");
+            }
+            else if (CastAide.AsInt32(r["finalhomescore"]) < CastAide.AsInt32(r["finalawayscore"]))
+            {
+                TemplateHandler.Assign(ref _s, "astyle", "b");
+            }
+            TemplateHandler.Assign(ref _s, "hstyle", "");
+            TemplateHandler.Assign(ref _s, "astyle", "");
+            TemplateHandler.Assign(ref _s, "{homeHScore}", CastAide.AsString(r["hthomescore"]));
+            TemplateHandler.Assign(ref _s, "{awayHScore}", CastAide.AsString(r["htawayscore"]));
+            TemplateHandler.Assign(ref _s, "{homeFScore}", CastAide.AsString(r["finalhomescore"]));
+            TemplateHandler.Assign(ref _s, "{awayFScore}", CastAide.AsString(r["finalawayscore"]));
+        }
+        #endregion
+
+        #region CommonHTML
+        public void FillHeaderCommon(ref string _s, DataRow r)
+        {
+            TemplateHandler.Assign(ref _s, "lblKickOffTime", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "kickofftime"));
+            TemplateHandler.Assign(ref _s, "lblTeam", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblTeam"));
+            TemplateHandler.Assign(ref _s, "lblHTScore", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblHTScore"));
+            TemplateHandler.Assign(ref _s, "finalscore", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "finalscore"));
+
+            TemplateHandler.Assign(ref _s, "leaguename", CacheRef.GetLeagueName(r["leagueid"]));
+            TemplateHandler.Assign(ref _s, "lblSportName", CacheRef.GetSportName(CastAide.AsInt32(r["sporttype"], 0)));
+            TemplateHandler.Assign(ref _s, "lblEventStatus", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEventStatus"));
+        }
+
+        public void FillDataForCommon(ref string _s, DataRow r)
+        {
+            var settle = CommonBootStrapper.Locator.GetInstance<ISettlement>();
+            var isPending = false;
+            TemplateHandler.Assign(ref _s, "{eventstatus}", settle.SelStatusConfirming(r, ref isPending));
+            TemplateHandler.Assign(ref _s, "{bgEventStatus}", (isPending ? "bgpending" : ""));
+
+            TemplateHandler.Assign(ref _s, "{hometeam}",
+                                   CacheRef.GetTeamName(r["homeid"]) +
+                                   (CastAide.AsBoolean(r["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : ""));
+            TemplateHandler.Assign(ref _s, "{awayteam}", CacheRef.GetTeamName(r["awayid"]));
+            TemplateHandler.Assign(ref _s, "{date}", DateFormat.ShortDateFormat(r["eventdate"]));
+            if (CastAide.AsInt32(r["finalhomescore"]) > CastAide.AsInt32(r["finalawayscore"]))
+            {
+                TemplateHandler.Assign(ref _s, "hstyle", "b");
+            }
+            else if (CastAide.AsInt32(r["finalhomescore"]) < CastAide.AsInt32(r["finalawayscore"]))
+            {
+                TemplateHandler.Assign(ref _s, "astyle", "b");
+            }
+            TemplateHandler.Assign(ref _s, "hstyle", "");
+            TemplateHandler.Assign(ref _s, "astyle", "");
+            TemplateHandler.Assign(ref _s, "{homeHScore}", CastAide.AsString(r["hthomescore"]));
+            TemplateHandler.Assign(ref _s, "{awayHScore}", CastAide.AsString(r["htawayscore"]));
+            TemplateHandler.Assign(ref _s, "{homeFScore}", CastAide.AsString(r["finalhomescore"]));
+            TemplateHandler.Assign(ref _s, "{awayFScore}", CastAide.AsString(r["finalawayscore"]));
+        }
+
+        public string CommonHTML(DataRow r)
+        {
+            try
+            {
+                string _s = string.Empty;
+                _s = WebUtils.LoadTemplate("BetList/Common.htm");
+
+                FillHeaderCommon(ref _s, r);
+                FillDataForCommon(ref _s, r);
+                return _s;
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                throw ex;
+            }
+        }
+
+        public string CricketHTML(DataRow r)
+        {
+            try
+            {
+                string _s = string.Empty;
+                _s = WebUtils.LoadTemplate("BetList/Cricket.htm");
+
+                FillHeaderCricket(ref _s, r);
+                FillDataForCricket(ref _s, r);
+                return _s;
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                throw ex;
+            }
+        }
+
+        #endregion
+
+        #region Number Game
+        public string NumberGameHTML(DataTable tb, string sporttype)
+        {
+            string _s = string.Empty;
+            _s = WebUtils.LoadTemplate("BetList/NumberGame/NumberGame.htm");
+
+            FillHeaderNumberGame(ref _s, tb, sporttype);
+            FillDataForNumberGame(ref _s, tb);
+
+            return _s;
+        }
+        public void FillHeaderNumberGame(ref string _s, DataTable dt, string sporttype)
+        {
+            TemplateHandler.Assign(ref _s, "lblKickOffTime", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "kickofftime"));
+            TemplateHandler.Assign(ref _s, "lblIndex", "Index");
+            TemplateHandler.Assign(ref _s, "lblBalNumber", "Ball Number");
+            TemplateHandler.Assign(ref _s, "{lblSportName}", sporttype);
+            TemplateHandler.Assign(ref _s, "{leaguename}", CacheRef.GetLeagueName(dt.Rows[0]["leagueid"]));
+            TemplateHandler.Assign(ref _s, "lblEventStatus", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEventStatus"));
+        }
+        public void FillDataForNumberGame(ref string _s, DataTable dt)
+        {
+            string rowHandler = TemplateHandler.CopyBlock(_s, "row");
+            TemplateHandler.RemoveBlock(ref _s, "row");
+
+            StringBuilder html = new StringBuilder();
+            for (int i = 1; i < 5; i++)
+            {
+                string rowHtml = (string)rowHandler.Clone();
+
+                TemplateHandler.Assign(ref rowHtml, "{nextIndex}", i + 1);
+                TemplateHandler.Assign(ref rowHtml, "{nextBall}", new Random().Next(1, 75));
+
+                html.Append(rowHtml);
+            }
+
+            TemplateHandler.Assign(ref _s, "{date}", DateFormat.ShortDateFormat(dt.Rows[0]["eventdate"]));
+            TemplateHandler.Assign(ref _s, "{totalRowspan}", 5);
+            TemplateHandler.Assign(ref _s, "{firstIndex}", "1");
+            TemplateHandler.Assign(ref _s, "{firstBall}", new Random().Next(1, 75));
+            TemplateHandler.Assign(ref _s, "{content}", html.ToString());
+
+        }
+        #endregion
+
+        #region LoadCalHTML
+        public string LoadCalHTML(int matchid, int bettype, string betid)
+        {
+            string html = "";
+            int sportID = 0;
+            string sportName = string.Empty;
+            try
+            {
+                
+                DataTable dbt = null;
+                DataRow r = null;
+                var dr = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.Betlist.BetList_SBResults(matchid);
+                if (dr != null && dr.Tables.Count > 0)
+                    dbt = dr.Tables[0];
+                if (dbt != null && dbt.Rows.Count > 0)
+                    r = dbt.Rows[0];
+                if (r == null)
+                    return "<div class='c'>" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata") + "</div>";
+
+                sportID = CastAide.AsInt32(r["sporttype"], 0);
+                switch (sportID)
+                {
+                    case 1: //Soccer
+                        sportName = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Soccer");
+                        html = SoccerHTML(r, CastAide.AsString(r["betstatus"] + string.Empty).Contains("FL"), sportName);
+                        break;
+                    case 2: //basket ball
+                        sportName = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Basketball");
+                        html = BasketballHTML(r, sportName);
+                        break;
+                    case 32: //netball
+                        sportName = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Netball");
+                        html = BasketballHTML(r, sportName);
+                        break;
+                    case 3: //foot ball
+                        sportName = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblFootball");
+                        html = BasketballHTML(r, sportName);
+                        break;
+                    case 26: //rugby
+                        sportName = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "rugby");
+                        html = BasketballHTML(r, sportName);
+                        break;
+
+                    case 4: //IceHockey
+                    case 28://FieldHockey
+                        if (sportID == 4)
+                            sportName = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "iceHockey");
+                        else if (sportID == 28)
+                            sportName = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "iceHockey");
+                        html = HockeyHTML(r, sportName);
+                        break;
+
+                    case 5: //Tennis
+                        sportName = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblTennis");
+                        html = TennisHTML(r, sportName, matchid, bettype, betid);
+                        break;
+
+                    case 7: //Billard
+                    case 10: //Golf
+                    case 11: //Motorsports
+                    case 29: //Winter sports
+                    case 33://     Cycling
+                    case 34://     Fencing
+                    case 35://     Judo
+                    case 36://     Modern Pentathlon
+                    case 37://     Rowing
+                    case 38://     Sailing
+                    case 39://     Shooting
+                    case 40://     Taekwondo
+                    case 41://     Triathlon
+                    case 42://     Wrestling
+                        sportName = CacheRef.GetSportName(sportID);
+                        html = BilliardHTML(r, sportName);
+                        break;
+
+                    case 8: //BaseBall
+                        sportName = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblBaseball");
+                        html = BaseballHTML(r, sportName);
+                        break;
+
+                    case 6: //VolleyBall
+                    case 9: //Badminton
+                    case 30://Squash
+                        if (sportID == 6)
+                            sportName = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "winterSports");
+                        else if (sportID == 9)
+                            sportName = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "badminton");
+                        else if (sportID == 30)
+                            sportName = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "squash");
+                        html = BadmintonHTML(r, sportName);
+                        break;
+                    /*
+                    case 151:HorseRacing
+                        html = ResultHR(dr, matchid, raceno, bettype);
+                        break;
+                    */
+                    case 161:
+                        sportName = CacheRef.GetSportName(r["sporttype"]);
+                        html = NumberGameHTML(dbt, sportName);
+                        break;
+                    case 27:
+                        html = CricketHTML(r);
+                        break;
+                    case 180: // VirtualSoccer
+                        sportName = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "virtualSports");
+                        html = VirtualSoccerHTML(r, CastAide.AsString(r["betstatus"] + string.Empty).Contains("FL"), sportName);
+                        break;
+                    default:
+                        html = CommonHTML(r);
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                throw ex;
+            }
+
+            return html;
+        }
+        #endregion
+
+        public string GetScore(Char[] goal, string tpl)
+        {
+            StringBuilder row = new StringBuilder();
+            int homescore = 0;
+            int awayscore = 0;
+            string team = "";
+            string scoreContent = "";
+            foreach (char c in goal)
+            {
+                scoreContent = tpl;
+                if (CastAide.AsString(c).ToLower() == "h")
+                {
+                    homescore += 1;
+                    team = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblHome");
+                }
+                else if (CastAide.AsString(c).ToLower() == "a")
+                {
+                    awayscore += 1;
+                    team = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAway");
+                }
+                TemplateHandler.Assign(ref scoreContent, "score", homescore + "-" + awayscore);
+                TemplateHandler.Assign(ref scoreContent, "team", team);
+                row.Append(scoreContent);
+            }
+            return row.ToString();
+        }
+
+        #endregion
+
+
+        #region combination mp
+
+        public string GenCombinationMP(string refno)
+        {
+            var outputValues = new Hashtable();
+            var ds = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.Betlist.BetList_SelDetailCombinationMP(refno, ref outputValues);
+            if (ds == null | ds.Tables.Count != 2)
+            {
+                return WebUtils.LoadTemplate("BetList\\CombinationMP\\noinfo.htm");
+            }
+
+            double outStanding = CastAide.AsDouble(outputValues["outstanding"]);
+
+            string container = WebUtils.LoadTemplate("BetList\\CombinationMP\\container.htm");
+            string header = WebUtils.LoadTemplate("BetList\\CombinationMP\\header.htm");
+            string body = WebUtils.LoadTemplate("BetList\\CombinationMP\\body.htm");
+            string footer = WebUtils.LoadTemplate("BetList\\CombinationMP\\footer.htm");
+            string row = WebUtils.LoadTemplate("BetList\\CombinationMP\\row.htm");
+            string rowTemp = string.Empty;
+
+            var tblMaster = ds.Tables[0];
+            var tblDetail = ds.Tables[1];
+
+            #region header
+            TemplateHandler.Assign(ref container, "{header}", header);
+            #endregion
+
+            #region body
+            StringBuilder strBody = new StringBuilder();
+            var winlostdate = DateTime.MinValue;
+            decimal totalWin = 0;
+            string status = string.Empty;
+            #region won
+            foreach (DataRow rowMaster in tblMaster.Rows)
+            {
+                totalWin += CastAide.AsDecimal(rowMaster["winlost"]);
+                totalWin += CastAide.AsDecimal(rowMaster["playercomm"]);
+                if (CastAide.AsInt32(rowMaster["serial"]) == 0) continue;
+
+                status = CastAide.AsString(rowMaster["status"]);
+                rowTemp = CastAide.AsString(row.Clone());
+
+                #region date
+                winlostdate = CastAide.AsDateTime(rowMaster["winlostdate"]);
+                TemplateHandler.Assign(ref rowTemp, "{Date}", winlostdate.Month.ToString() + "/" + winlostdate.Day.ToString() + "/" + winlostdate.Year.ToString());
+                #endregion
+
+                #region event
+                var listRow = this.GetCombinationMPDetailRow(tblDetail, CastAide.AsInt32(rowMaster["serial"]));
+                List<string> lstEvent = new List<string>();
+                foreach (DataRow rowDetail in listRow)
+                {
+                    string homename = CacheRef.GetTeamName(rowDetail["homeid"]);
+                    string awayname = CacheRef.GetTeamName(rowDetail["awayid"]);
+
+                    lstEvent.Add("<span>" + homename + " -vs- " + awayname + "</span>");
+                }
+                TemplateHandler.Assign(ref rowTemp, "{Event}", string.Join("<br/>", lstEvent.ToArray()));
+                #endregion
+
+                #region odds
+                if (status.ToLower().Contains("running"))
+                {
+                    TemplateHandler.Assign(ref rowTemp, "{Odds}", "-");
+                }
+                else
+                {
+                    TemplateHandler.Assign(ref rowTemp, "{Odds}", CastAide.AsDouble(rowMaster["modds"]));
+                }
+                #endregion
+
+                #region stake
+                TemplateHandler.Assign(ref rowTemp, "{Stake}", IBCUtils.FormatHandler.FormatNumber20(CastAide.AsDouble(rowMaster["stake"])));
+                #endregion
+
+                #region win/lost
+                TemplateHandler.Assign(ref rowTemp, "{Win/Lost}", IBCUtils.FormatHandler.FormatNumber20((CastAide.AsDouble(rowMaster["winlost"]))));
+                TemplateHandler.Assign(ref rowTemp, "{wl-color}", "");
+                TemplateHandler.Assign(ref rowTemp, "{Comm}", IBCUtils.FormatHandler.FormatNumber20((CastAide.AsDouble(rowMaster["playercomm"]))));
+                #endregion
+
+                #region status
+                TemplateHandler.Assign(ref rowTemp, "{Status}", status.ToUpper());
+                #endregion
+                //----------------------------------------------------
+                strBody.Append(rowTemp);
+            }
+            #endregion
+
+            #region lose
+            foreach (DataRow rowMaster in tblMaster.Rows)
+            {
+                if (CastAide.AsInt32(rowMaster["serial"]) != 0) continue;
+
+                status = CastAide.AsString(rowMaster["status"]);
+                rowTemp = CastAide.AsString(row.Clone());
+                #region date
+                winlostdate = CastAide.AsDateTime(rowMaster["winlostdate"]);
+                TemplateHandler.Assign(ref rowTemp, "{Date}", winlostdate.Month.ToString() + "/" + winlostdate.Day.ToString() + "/" + winlostdate.Year.ToString());
+                #endregion
+
+                #region event
+                TemplateHandler.Assign(ref rowTemp, "{Event}", "Total of losing tickets");
+                #endregion
+
+                #region odds
+                if (status.ToLower().Contains("running") || status.ToLower().Contains("lose"))
+                {
+                    TemplateHandler.Assign(ref rowTemp, "{Odds}", "-");
+                }
+                else
+                {
+                    TemplateHandler.Assign(ref rowTemp, "{Odds}", CastAide.AsDouble(rowMaster["modds"]));
+                }
+                #endregion
+
+                #region stake
+                TemplateHandler.Assign(ref rowTemp, "{Stake}", IBCUtils.FormatHandler.FormatNumber20(CastAide.AsDouble(rowMaster["stake"])));
+                #endregion
+
+                #region win/lost
+                TemplateHandler.Assign(ref rowTemp, "{Win/Lost}", IBCUtils.FormatHandler.FormatNumber20((CastAide.AsDouble(rowMaster["winlost"]))));
+                TemplateHandler.Assign(ref rowTemp, "{wl-color}", "color:red");
+                TemplateHandler.Assign(ref rowTemp, "{Comm}", IBCUtils.FormatHandler.FormatNumber20((CastAide.AsDouble(rowMaster["playercomm"]))));
+                #endregion
+
+                #region status
+                TemplateHandler.Assign(ref rowTemp, "{Status}", status.ToUpper());
+                #endregion
+                strBody.Append(rowTemp);
+            }
+            #endregion
+
+            TemplateHandler.Assign(ref body, "{rows}", strBody);
+            TemplateHandler.Assign(ref container, "{body}", body);
+            #endregion
+
+            #region footer
+            TemplateHandler.Assign(ref footer, "{total}", IBCUtils.FormatHandler.FormatNumber20(totalWin));
+            TemplateHandler.Assign(ref footer, "{wl-color}", CastAide.AsDouble(totalWin) >= 0 ? "" : "color:red");
+            TemplateHandler.Assign(ref footer, "{footer}", IBCUtils.FormatHandler.FormatNumber20(outStanding));
+            TemplateHandler.Assign(ref container, "{footer}", footer);
+            #endregion
+            return container;
+        }
+
+
+
+        #endregion
+    }
+}

@@ -1,0 +1,24 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="ISpecialDelete.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Admin.DataAccess.MailingList
+{
+    using System;
+    using System.Collections.Generic;
+    using Fanex.Tarus.Admin.Entities;
+    using System.Data;
+    using Fanex.Tarus.Admin.Entities.MailingList;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public interface ISpecialDeleteAccess
+    {
+        DataTable GetMailingList();
+
+        Result UpdateInsertMailing(MailLicensee mailLicensee, bool isUpdate);
+    }
+}

@@ -1,0 +1,570 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="LiveCasinoGameFinancialReportService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
+
+namespace Fanex.Tarus.Reports.Business.Gaming.LiveCasinoGameFinancialReport
+{
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Web;
+    using DNAide.Core;
+    using ExcelUtil.Spreadsheet;
+    using Fanex.Tarus.Infrastructure.Configurations;
+    using Fanex.Tarus.Infrastructure.Extensions;
+    using Fanex.Tarus.Infrastructure.Resource;
+    using Fanex.Tarus.Reports.Constants;
+    using Fanex.Tarus.Reports.Criteria.Gaming.LiveCasinoGameFinancialReport;
+    using Fanex.Tarus.Reports.DataAccess.Gaming.LiveCasinoGameFinancialReport;
+    using Fanex.Tarus.Reports.Entities.Gaming.LiveCasinoGameFinancialReport;
+    using Fanex.Tarus.Reports.Entities.Sport;
+    using Fanex.Tarus.Reports.Helpers;
+    using Sunplus.Accounting.Core.Extensions;
+    using System.Drawing;
+    using Fanex.Tarus.Infrastructure.Helper;
+
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    public class LiveCasinoGameFinancialReportService : ILiveCasinoGameFinancialReportService
+    {
+        private ILiveCasinoGameFinancialReportDataAccess _reportRepository;
+
+        public LiveCasinoGameFinancialReportService() :
+            this(null)
+        {
+        }
+
+        public LiveCasinoGameFinancialReportService(ILiveCasinoGameFinancialReportDataAccess reportRepository)
+        {
+            this._reportRepository = reportRepository ?? new LiveCasinoGameFinancialReportDataAccess();
+        }
+
+        public List<BaseModel> GetLicensees()
+        {
+            try
+            {
+                var rawData = this._reportRepository.GetReseller(new GetResellerCriteria
+                {
+                    ExcludeTest = true,
+                    ExcludeBA = false,
+                    ProductCode = Labels.LicasinoProductCode
+                });
+
+                var liveCasinoFinancialReport_Licensee = AppSettings.LiveCasinoFinancialReport_Licensee;
+                var report = new List<BaseModel>();
+
+                foreach (var data in rawData)
+                {
+                    var info = new BaseModel
+                    {
+                        Id = CastAide.AsInt32(data.LicenseeID),
+                        Name = CastAide.AsString(data.LicenseeName),
+                        AliasName = CastAide.AsString(data.ResellerName)
+                    };
+
+                    if (liveCasinoFinancialReport_Licensee.Contains(info.Id))
+                    {
+                        report.Add(info);
+                    }
+                }
+
+                report = report.OrderBy(info => info.Name).ToList();
+                return report;
+            }
+            catch (Exception ex)
+            {
+                Fanex.Tarus.Infrastructure.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+
+            return null;
+        }
+
+        public List<BaseModel> GetCurrencies()
+        {
+            try
+            {
+                var rawData = this._reportRepository.GetCurrencies();
+                var liveCasinoFinancialReport_Currency = AppSettings.LiveCasinoFinancialReport_Currency;
+                var report = new List<BaseModel>();
+
+                foreach (var data in rawData)
+                {
+                    var info = new BaseModel
+                    {
+                        Id = CastAide.AsInt32(data.ExchangeID),
+                        Name = CastAide.AsString(data.Currency)
+                    };
+
+                    if (liveCasinoFinancialReport_Currency.Contains(info.Id))
+                    {
+                        report.Add(info);
+                    }
+                }
+
+                report = report.OrderBy(info => info.Name).ToList();
+                return report;
+            }
+            catch (Exception ex)
+            {
+                Fanex.Tarus.Infrastructure.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+
+            return null;
+        }
+
+        public List<BaseModel> GetGameTypes()
+        {
+            try
+            {
+                var rawData = this._reportRepository.GetGameTypes();
+                var liveCasinoFinancialReport_GameType = AppSettings.LiveCasinoFinancialReport_GameType;
+                var report = new List<BaseModel>();
+
+                foreach (var data in rawData)
+                {
+                    var info = new BaseModel
+                    {
+                        Id = CastAide.AsInt32(data.typeID),
+                        Name = CastAide.AsString(data.typenamee)
+                    };
+
+                    if (liveCasinoFinancialReport_GameType.Contains(info.Id))
+                    {
+                        report.Add(info);
+                    }
+                }
+
+                report = report.OrderBy(info => info.Name).ToList();
+                return report;
+            }
+            catch (Exception ex)
+            {
+                Fanex.Tarus.Infrastructure.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+
+            return null;
+        }
+
+        public List<BaseModel> GetGameTables(GetGameTableCriteria criteria)
+        {
+            try
+            {
+                var rawData = this._reportRepository.GetGameTables(criteria);
+                var report = new List<BaseModel>();
+
+                foreach (var data in rawData)
+                {
+                    var info = new BaseModel
+                    {
+                        Id = CastAide.AsInt32(data.GameTableID),
+                        Name = CastAide.AsString(data.GameTable)
+                    };
+
+                    report.Add(info);
+                }
+
+                report = report.OrderBy(info => info.Name).ToList();
+                return report;
+            }
+            catch (Exception ex)
+            {
+                Fanex.Tarus.Infrastructure.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+
+            return null;
+        }
+
+        public FinancialReport GetFinancialReport(GetFinancialReportCriteria criteria)
+        {
+            try
+            {
+                Hashtable outputParam = new Hashtable();
+                var rawData = this._reportRepository.GetFinancialReport(criteria, ref outputParam);
+
+                FinancialReport report = new FinancialReport
+                {
+                    ChildInfo = new List<FinancialReport>(),
+                    GrandTotal = new FinancialReport
+                    {
+                        Name = string.Format("{0} ({1})", Labels.Grand_Total, Labels.USD)
+                    }
+                };
+
+                report.GameLevy = CastAide.AsDecimal(outputParam["gaminglevy"]);
+                report.GameLevyToPay = CastAide.AsDecimal(outputParam["prorated"]);
+                var totalDay = (criteria.dateend - criteria.datestart).Days + 1;
+                var gameLevyToPay = (report.GameLevyToPay * totalDay) / DateTime.DaysInMonth(criteria.datestart.Year, criteria.datestart.Month);
+                foreach (var data in rawData)
+                {
+                    var info = new FinancialReport
+                    {
+                        Name = CastAide.AsString(data.TableName),
+                        PlayerCount = CastAide.AsInt32(data.players),
+                        GameCount = CastAide.AsInt32(data.games),
+                        TotalBets = CastAide.AsDecimal(data.totalbets),
+                        TotalWins = CastAide.AsDecimal(data.totalwins),
+                        GrossIncome = CastAide.AsDecimal(data.GrossIncome),
+                        Commission = CastAide.AsDecimal(data.Comm),
+                        NetIncome = CastAide.AsDecimal(data.NetIncome)
+                    };
+
+
+                    info.GamePayout = this.CaculateGamePayout(info);
+                    info.GameLevy = report.GameLevy * info.NetIncome;
+                    info.GameLevyToPay = Math.Max(gameLevyToPay, info.GameLevy);
+
+                    report.AddToGrandTotal(info);
+                    info = this.FormatFinancialReport(info);
+                    report.ChildInfo.Add(info);
+                }
+
+                report.GrandTotal.PlayerCount = CastAide.AsInt32(outputParam["totalplayers"]);
+                report.GrandTotal.GameCount = CastAide.AsInt32(outputParam["totalgames"]);
+                report.GrandTotal.GamePayout = this.CaculateGamePayout(report.GrandTotal);
+                report.GrandTotal.GameLevy = report.GameLevy * report.GrandTotal.NetIncome;
+                SessionExtension.AddSession(HttpContext.Current.Session, GamingConstants.LIVE_CASINO_GAME_FINANCIAL_REPORT_SESSION_KEY, report);
+                return report;
+            }
+            catch (Exception ex)
+            {
+                Fanex.Tarus.Infrastructure.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+
+            SessionExtension.AddSession(HttpContext.Current.Session, GamingConstants.LIVE_CASINO_GAME_FINANCIAL_REPORT_SESSION_KEY, null);
+            return null;
+        }
+
+        private FinancialReport FormatFinancialReport(FinancialReport info)
+        {
+            info.TotalBets = Math.Round(info.TotalBets, 2);
+            info.TotalWins = Math.Round(info.TotalWins, 2);
+            info.GrossIncome = Math.Round(info.GrossIncome, 2);
+            info.Commission = Math.Round(info.Commission, 2);
+            info.NetIncome = Math.Round(info.NetIncome, 2);
+            info.GamePayout = Math.Round(info.GamePayout, 4);
+            info.GameLevy = Math.Round(info.GameLevy, 2);
+            info.GameLevyToPay = Math.Round(info.GameLevyToPay, 2);
+
+            return info;
+        }
+
+        private decimal CaculateGamePayout(FinancialReport info)
+        {
+            if (info.TotalWins != 0)
+            {
+                return info.TotalBets / info.TotalWins;
+            }
+
+            return 0;
+        }
+
+        public void ExportFinancialReport(GetFinancialReportCriteria criteria)
+        {
+            try
+            {
+                var report = (FinancialReport)SessionExtension.GetSession(HttpContext.Current.Session, GamingConstants.LIVE_CASINO_GAME_FINANCIAL_REPORT_SESSION_KEY);
+                if (report == null)
+                {
+                    report = this.GetFinancialReport(criteria);
+                }
+
+                #region ExcelTypes
+
+                ExcelFile excelFile = new ExcelFile();
+                ExcelWorksheetCollection worksheets = excelFile.Worksheets;
+                string sheetName = GamingResource.LiveCasinoGameFinancialReport_SheetName;
+                ExcelWorksheet workSheet = worksheets.Add(sheetName);
+                var gembox = new ExcelGemboxUtils();
+
+                int startRow = 0;
+                int startColumn = 0;
+                var currentRow = startRow;
+
+                #endregion ExcelTypes
+                #region MakeExcelFile
+
+                var headerColor = Color.FromArgb(205, 222, 255);
+                var grandTotalColor = Color.FromArgb(162, 212, 247);
+                var backGroundColor = Color.White;
+
+                var headerText = gembox.GetStyleTitle(headerColor);
+                var textType = gembox.GetStyleText(255, 255, 255);
+                var intType = gembox.GetStyleIntNumber(string.Empty, backGroundColor, false, false, false);
+                var negativeTwoDecimalNumberStyle = gembox.GetStyleIntNumber("0.00", backGroundColor, false, false, true);
+
+                var textType_GrandTotal = gembox.GetStyleText(162, 212, 247, true);
+                var intType_GrandTotal = gembox.GetStyleIntNumber(string.Empty, grandTotalColor, true, false, false);
+                var negativeTwoDecimalNumberStyle_GrandTotal = gembox.GetStyleIntNumber("0.00", grandTotalColor, true, false, true);
+
+                var currentColumn = startColumn;
+                CellRange currentCellRange;
+                ExcelCell currentCell;
+
+                #region Header
+
+                currentColumn = startColumn;
+                currentCellRange = workSheet.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 1, currentColumn + 10);
+                currentCellRange.Merged = true;
+                currentCellRange.Value = string.Format("Live Casino Game Financial Report From {0} To {1}",
+                    criteria.datestart.ToString("MM/dd/yyyy"),
+                    criteria.dateend.ToString("MM/dd/yyyy"));
+                currentCellRange.Style = headerText;
+                currentRow += 2;
+
+                currentCellRange = workSheet.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn + 10);
+                currentCellRange.Merged = true;
+                currentCellRange.Value = string.Empty;
+                currentCellRange.Style = textType;
+                currentRow++;
+
+                //FirstRow       
+                currentColumn = startColumn;
+                currentCellRange = workSheet.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 1, currentColumn);
+                currentCellRange.Merged = true;
+                currentCellRange.Value = Labels.Table;
+                currentCellRange.Style = headerText;
+                workSheet.Columns[startColumn + currentColumn].Width = 120 * 40;
+                currentColumn++;
+
+                currentCellRange = workSheet.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 1, currentColumn);
+                currentCellRange.Merged = true;
+                currentCellRange.Value = Labels.LiveCasinoGameFinancialReport_Players;
+                currentCellRange.Style = headerText;
+                workSheet.Columns[startColumn + currentColumn].Width = 80 * 40;
+                currentColumn++;
+
+                currentCellRange = workSheet.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 1, currentColumn);
+                currentCellRange.Merged = true;
+                currentCellRange.Value = Labels.LiveCasinoGameFinancialReport_Games;
+                currentCellRange.Style = headerText;
+                workSheet.Columns[startColumn + currentColumn].Width = 80 * 40;
+                currentColumn++;
+
+                currentCellRange = workSheet.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn + 4);
+                currentCellRange.Merged = true;
+                currentCellRange.Value = Labels.Company;
+                currentCellRange.Style = headerText;
+                currentColumn += 5;
+
+                currentCellRange = workSheet.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 1, currentColumn);
+                currentCellRange.Merged = true;
+                currentCellRange.Value = Labels.LiveCasinoGameFinancialReport_GamePayout;
+                currentCellRange.Style = headerText;
+                workSheet.Columns[startColumn + currentColumn].Width = 100 * 40;
+                currentColumn++;
+
+                currentCellRange = workSheet.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 1, currentColumn);
+                currentCellRange.Merged = true;
+                currentCellRange.Value = string.Format(Labels.LiveCasinoGameFinancialReport_GameLevy, Math.Round(report.GameLevy * 100, 0));
+                currentCellRange.Style = headerText;
+                workSheet.Columns[startColumn + currentColumn].Width = 100 * 40;
+                currentColumn++;
+
+                currentCellRange = workSheet.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 1, currentColumn);
+                currentCellRange.Merged = true;
+                currentCellRange.Value = Labels.Game_Levy_to_pay;
+                currentCellRange.Style = headerText;
+                workSheet.Columns[startColumn + currentColumn].Width = 100 * 40;
+                currentColumn++;
+                currentRow++;
+
+                //SecondRow
+                currentColumn = startColumn + 3;
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = Labels.Total_Bets;
+                currentCell.Style = headerText;
+                workSheet.Columns[startColumn + currentColumn].Width = 100 * 40;
+                currentColumn++;
+
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = Labels.Total_Wins;
+                currentCell.Style = headerText;
+                workSheet.Columns[startColumn + currentColumn].Width = 100 * 40;
+                currentColumn++;
+
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = Labels.Gross_Income;
+                currentCell.Style = headerText;
+                workSheet.Columns[startColumn + currentColumn].Width = 100 * 40;
+                currentColumn++;
+
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = Labels.Comm;
+                currentCell.Style = headerText;
+                workSheet.Columns[startColumn + currentColumn].Width = 100 * 40;
+                currentColumn++;
+
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = Labels.Net_Income;
+                currentCell.Style = headerText;
+                workSheet.Columns[startColumn + currentColumn].Width = 100 * 40;
+                currentColumn++;
+                currentRow++;
+
+                #endregion Header
+                #region Content
+
+                if (report != null && report.ChildInfo.Count > 0)
+                {
+                    var length = report.ChildInfo.Count;
+                    FinancialReport info;
+                    for (var i = 0; i < length; i++)
+                    {
+                        #region NormalRow
+
+                        info = report.ChildInfo[i];
+                        currentColumn = startColumn;
+                        currentCell = workSheet.Cells[currentRow, currentColumn];
+                        currentCell.Value = info.Name;
+                        currentCell.Style = textType;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+                        currentColumn++;
+
+                        currentCell = workSheet.Cells[currentRow, currentColumn];
+                        currentCell.Value = info.PlayerCount;
+                        currentCell.Style = intType;
+                        currentColumn++;
+
+                        currentCell = workSheet.Cells[currentRow, currentColumn];
+                        currentCell.Value = info.GameCount;
+                        currentCell.Style = intType;
+                        currentColumn++;
+
+                        currentCell = workSheet.Cells[currentRow, currentColumn];
+                        currentCell.Value = info.TotalBets;
+                        currentCell.Style = negativeTwoDecimalNumberStyle;
+                        currentColumn++;
+
+                        currentCell = workSheet.Cells[currentRow, currentColumn];
+                        currentCell.Value = info.TotalWins;
+                        currentCell.Style = negativeTwoDecimalNumberStyle;
+                        currentColumn++;
+
+                        currentCell = workSheet.Cells[currentRow, currentColumn];
+                        currentCell.Value = info.GrossIncome;
+                        currentCell.Style = negativeTwoDecimalNumberStyle;
+                        currentColumn++;
+
+                        currentCell = workSheet.Cells[currentRow, currentColumn];
+                        currentCell.Value = info.Commission;
+                        currentCell.Style = negativeTwoDecimalNumberStyle;
+                        currentColumn++;
+
+                        currentCell = workSheet.Cells[currentRow, currentColumn];
+                        currentCell.Value = info.NetIncome;
+                        currentCell.Style = negativeTwoDecimalNumberStyle;
+                        currentColumn++;
+
+                        currentCell = workSheet.Cells[currentRow, currentColumn];
+                        currentCell.Value = info.GamePayout * 100;
+                        currentCell.Style = negativeTwoDecimalNumberStyle;
+                        currentColumn++;
+
+                        currentCell = workSheet.Cells[currentRow, currentColumn];
+                        currentCell.Value = info.GameLevy;
+                        currentCell.Style = negativeTwoDecimalNumberStyle;
+                        currentColumn++;
+
+                        currentCell = workSheet.Cells[currentRow, currentColumn];
+                        currentCell.Value = info.GameLevyToPay;
+                        currentCell.Style = negativeTwoDecimalNumberStyle;
+                        currentColumn++;
+                        currentRow++;
+
+                        #endregion NormalRow
+                    }
+
+                    #region GrandTotalRow
+
+                    info = report.GrandTotal;
+                    currentColumn = startColumn;
+                    currentCell = workSheet.Cells[currentRow, currentColumn];
+                    currentCell.Value = info.Name;
+                    currentCell.Style = textType_GrandTotal;
+                    currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+                    currentColumn++;
+
+                    currentCell = workSheet.Cells[currentRow, currentColumn];
+                    currentCell.Value = info.PlayerCount;
+                    currentCell.Style = intType_GrandTotal;
+                    currentColumn++;
+
+                    currentCell = workSheet.Cells[currentRow, currentColumn];
+                    currentCell.Value = info.GameCount;
+                    currentCell.Style = intType_GrandTotal;
+                    currentColumn++;
+
+                    currentCell = workSheet.Cells[currentRow, currentColumn];
+                    currentCell.Value = info.TotalBets;
+                    currentCell.Style = negativeTwoDecimalNumberStyle_GrandTotal;
+                    currentColumn++;
+
+                    currentCell = workSheet.Cells[currentRow, currentColumn];
+                    currentCell.Value = info.TotalWins;
+                    currentCell.Style = negativeTwoDecimalNumberStyle_GrandTotal;
+                    currentColumn++;
+
+                    currentCell = workSheet.Cells[currentRow, currentColumn];
+                    currentCell.Value = info.GrossIncome;
+                    currentCell.Style = negativeTwoDecimalNumberStyle_GrandTotal;
+                    currentColumn++;
+
+                    currentCell = workSheet.Cells[currentRow, currentColumn];
+                    currentCell.Value = info.Commission;
+                    currentCell.Style = negativeTwoDecimalNumberStyle_GrandTotal;
+                    currentColumn++;
+
+                    currentCell = workSheet.Cells[currentRow, currentColumn];
+                    currentCell.Value = info.NetIncome;
+                    currentCell.Style = negativeTwoDecimalNumberStyle_GrandTotal;
+                    currentColumn++;
+
+                    currentCell = workSheet.Cells[currentRow, currentColumn];
+                    currentCell.Value = info.GamePayout * 100;
+                    currentCell.Style = negativeTwoDecimalNumberStyle_GrandTotal;
+                    currentColumn++;
+
+                    currentCell = workSheet.Cells[currentRow, currentColumn];
+                    currentCell.Value = info.GameLevy;
+                    currentCell.Style = negativeTwoDecimalNumberStyle_GrandTotal;
+                    currentColumn++;
+
+                    currentCell = workSheet.Cells[currentRow, currentColumn];
+                    currentCell.Value = info.GameLevyToPay;
+                    currentCell.Style = negativeTwoDecimalNumberStyle_GrandTotal;
+                    currentColumn++;
+                    currentRow++;
+
+                    #endregion GrandTotalRow
+                }
+                else
+                {
+                    currentColumn = startColumn;
+                    currentCellRange = workSheet.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn + 10);
+                    currentCellRange.Merged = true;
+                    currentCellRange.Value = Fanex.Tarus.Reports.Resource.Language.EmptyReportMessage;
+                    currentCellRange.Style = textType;
+                    currentCellRange.Style.Font.Weight = ExcelFont.BoldWeight;
+                    currentCellRange.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+                    currentRow++;
+                }
+
+                #endregion Content
+                #endregion MakeExcelFile
+
+                var reportName = GamingResource.LiveCasinoGameFinancialReport_ReportName;
+                (new Fanex.Tarus.Infrastructure.Helper.ReportHelpers()).ReponseExcelFile(excelFile, reportName);
+            }
+            catch (Exception ex)
+            {
+                Fanex.Tarus.Infrastructure.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+        }
+    }
+}

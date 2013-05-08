@@ -1,0 +1,17 @@
+﻿using System.Collections.Generic;
+using Sunplus.Accounting.Entities.Customer.Racing;
+
+namespace Sunplus.Accounting.Business.Customer.Racing
+{
+    public class RacingManager : IRacingManager
+    {
+        #region IRacingManager Members
+        public List<EnableRacebooksStatusDTO> GetMemberRacebooksStatus(int custId, int roleId)
+        {
+            var result = new List<EnableRacebooksStatusDTO>();
+            return result;
+        }
+
+        #endregion
+    }
+}

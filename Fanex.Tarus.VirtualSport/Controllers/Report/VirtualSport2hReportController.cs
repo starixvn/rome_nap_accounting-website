@@ -1,0 +1,123 @@
+﻿
+using System.Web.Mvc;
+using Fanex.Tarus.Reports.Business.DailyWinLoss2h;
+using Fanex.Tarus.VirtualSport.Business.Report.DailyWL2h;
+using Fanex.Tarus.VirtualSport.Entities.Report.DailyWL2h;
+using Fanex.Tarus.Web.Controllers;
+
+namespace Fanex.Tarus.VirtualSport.Controllers.Report
+{
+    public class VirtualSport2hReportController : BaseController
+    {
+        #region IFields
+
+        //
+        // GET: /VirtualSport2hReportService/
+        private readonly IVirtualSport2hReportService _virtualSport2hReportService;
+
+        #endregion IFields
+        #region IConstructions
+
+        public VirtualSport2hReportController()
+            : this(null)
+        {
+        }
+
+        public VirtualSport2hReportController(IVirtualSport2hReportService virtualSport2hReportService)
+        {
+            _virtualSport2hReportService = virtualSport2hReportService ?? new VirtualSport2hReportService();
+        }
+
+        #endregion IConstructions
+        #region IMethods   
+        #region PostMethod
+
+        [HttpPost]
+        public JsonResult SelVirtualSportsReport(DailyWinLoss2hParam param)
+        {
+            var result = _virtualSport2hReportService.SelVirtualSportsReport(param);
+
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public JsonResult SelVirtualSportsReportBySport(DailyWinLoss2hParam param)
+        {
+            var result = _virtualSport2hReportService.SelVirtualSportsReportBySport(param);
+
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public ActionResult ExportToExcel_VirtualSportsMain(DailyWinLoss2hParam param)
+        {
+            _virtualSport2hReportService.ExportToExcel_VirtualSportsMain(param);
+
+            int exportResult = 1;
+            var jsonResult = Json(exportResult);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public ActionResult ExportToExcel_VirtualSportsMain_NoneLive(DailyWinLoss2hParam param)
+        {
+            _virtualSport2hReportService.ExportToExcel_VirtualSportsMain_NoneLive(param);
+
+            int exportResult = 1;
+            var jsonResult = Json(exportResult);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public ActionResult ExportToExcel_VirtualSportsBySport(DailyWinLoss2hParam param)
+        {
+            _virtualSport2hReportService.ExportToExcel_VirtualSportsBySport(param);
+
+            int exportResult = 1;
+            var jsonResult = Json(exportResult);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public ActionResult ExportToExcel_VirtualSportsBySport_NoneLive(DailyWinLoss2hParam param)
+        {
+            _virtualSport2hReportService.ExportToExcel_VirtualSportsBySport_NoneLive(param);
+
+            int exportResult = 1;
+            var jsonResult = Json(exportResult);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public ActionResult ExportToExcel_DailyWLDirectDetails(DailyWinLoss2hParam param)
+        {
+            _virtualSport2hReportService.ExportToExcel_DailyWLDirectDetails(param);
+
+            int exportResult = 1;
+            var jsonResult = Json(exportResult);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public JsonResult SelDailyWLDirectDetails(DailyWinLoss2hParam param)
+        {
+            var result = _virtualSport2hReportService.SelDailyWLDirectDetails(param);
+
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        #endregion PostMethod
+        #endregion IMethods
+    }
+}

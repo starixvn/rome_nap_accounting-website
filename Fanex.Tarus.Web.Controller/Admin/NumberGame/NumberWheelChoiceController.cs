@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace Fanex.Tarus.Web.Controllers.Admin.NumberGame
+{
+    public class NumberWheelChoiceController : BaseController
+    {
+        //
+        // GET: /NumberWheelBettype/
+
+        public ActionResult Index()
+        {
+            return View("~/Views/Admin/NumberWheelBettype.cshtml");
+        }
+
+    }
+}

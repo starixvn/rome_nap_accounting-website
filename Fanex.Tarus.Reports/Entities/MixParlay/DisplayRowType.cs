@@ -1,0 +1,13 @@
+﻿
+
+
+using System;
+using Fanex.Tarus.Reports.Entities.Sport;
+
+namespace Fanex.Tarus.Reports.Entities.MixParlay
+{
+    [Serializable]
+    public class DisplayRowType : BaseModel
+    {
+    }
+}

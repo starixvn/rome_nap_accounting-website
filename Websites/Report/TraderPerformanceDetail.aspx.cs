@@ -1,0 +1,139 @@
+﻿using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+using System.Text;
+using DNAide.Core;
+using DNAide.Web;
+using DNAide.Utils;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Accounting.Core.Cache;
+
+public partial class Report_TraderPerformanceDetail : PageBase
+{
+
+    bool isExportExcel = false;
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        //title
+        this.ReportTitle.Text = Resources.Language.TraderPerformanceDetail;
+        string reportContent = string.Empty;
+        int IsSoccer = CastAide.AsInt32(Request["IsSoccer"], 1);
+
+        if (IsSoccer < 0 || IsSoccer > 1)
+            IsSoccer = 1;
+
+        if (CastAide.AsInt32(Request["IsExport"], 0) == 1)
+        {
+            isExportExcel = true;
+        }
+
+        reportHeader.Text = GetHeader(IsSoccer) + "<script>GetDataReport();</script>";
+
+        if (isExportExcel)
+        {
+            //apply cache
+            if (!string.IsNullOrEmpty(ReportCache.REPORT_TRADER_DETAIL))            
+                reportContent = ReportCache.REPORT_TRADER_DETAIL;            
+            else            
+                reportContent = ReportHTML.GetTraderPerformanceDetail(CastAide.AsString(Request["fdate"]), CastAide.AsString(Request["tdate"]), "", "", IsSoccer);
+
+            if (IsSoccer == 1)
+            {
+                reportContent = "<b>Soccer Sport: RISK CONTROLLER REPORT BY MATCH FROM " + CastAide.AsString(Request["fdate"]) + " TO " + CastAide.AsString(Request["tdate"]) + " </b> " + reportContent;
+                ExportToExcel(Response, reportContent, "TraderPerformanceDetail_Soccer");
+            }
+            else
+            {
+                reportContent = "<b>OTHER SPORT: RISK CONTROLLER REPORT BY MATCH FROM " + CastAide.AsString(Request["fdate"]) + " TO " + CastAide.AsString(Request["tdate"]) + " </b> " + reportContent;
+                ExportToExcel(Response, reportContent, "TraderPerformanceDetail_OtherSport");
+            }
+
+
+        }
+
+    }
+    private string GetHeader(int IsSoccer)
+    {
+        string tpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate(@"Report\TraderPerformanceDetail.htm");
+        tpl = TemplateHandler.CopyBlock(tpl, "Header");
+
+        if (IsSoccer == 0)
+            TemplateHandler.Assign(ref tpl, "{SportType}", "Other Sport");
+
+        TemplateHandler.Assign(ref tpl, "{SportType}", "Soccer Sport");
+        TemplateHandler.Assign(ref tpl, "{IsSoccer}", IsSoccer);
+        TemplateHandler.Assign(ref tpl, "{sortCol}", Request["sortCol"]);
+        TemplateHandler.Assign(ref tpl, "{order}", Request["order"]);
+        TemplateHandler.Assign(ref tpl, "{fdate}", Request["fdate"]);
+        TemplateHandler.Assign(ref tpl, "{tdate}", Request["tdate"]);
+        return tpl;
+    }
+    public static void ExportToExcel(HttpResponse Response, string data, string filename)
+    {
+        Response.Clear();
+        Response.AddHeader("content-disposition", "attachment;filename=" + filename.Replace(" ", "") + ".xls");
+        Response.Charset = "utf-8";
+        Response.ContentType = "application/vnd.ms-excel";
+
+        StringBuilder content = new StringBuilder();
+        //content.Append(ReportHTML.CSSExcelReport());
+
+        content.AppendLine("<style>");
+        content.AppendLine(".c {text-align:center;}");
+        content.AppendLine(".r {text-align:right;}");
+        content.AppendLine(".l {text-align:left;}");
+        content.AppendLine(".b {font-weight:bold;}");
+        content.AppendLine("td {font-family:Tahoma; font-size:11px;vertical-align:middle; height:21px; border-color:#7C98A4; border-style:solid; border-width:thin;}");
+        content.AppendLine("th {font-family:Tahoma; font-size:11px;vertical-align:middle; height:21px; border-color:#7C98A4; border-style:solid; border-width:thin;}");
+        content.AppendLine("table.tbllayout {font-family:Tahoma,Verdana; border-collapse:collapse;border-color:#7C98A4; border-style:solid; border-width:thin;}");
+        content.AppendLine("table.bg {font-family:Tahoma,Verdana; border-collapse:collapse;border-color:#7C98A4; border-style:solid; border-width:thin;}");
+        content.AppendLine("tr.title {background:#B5C4D0 none repeat scroll 0%; color:#000; font-weight:bold; text-align:center;}");
+        content.AppendLine("tr.title1 {background:#587281  none repeat scroll 0%; color:#fff; font-weight:bold; text-align:center;}");
+        content.AppendLine("tr.footer1 {background:#D3E1C8  none repeat scroll 0%; color:#000; font-weight:bold; text-align:center;}");
+        content.AppendLine("tr.footer2 {background:#FFEEDD  none repeat scroll 0%; color:#000;text-align:center;font-weight:bold;}");
+        content.AppendLine("tr.evenrow {background:#E6E9F0 none repeat scroll 0%;}");
+        content.AppendLine("tr.report-footer { background:#CCFFCC none repeat scroll 0%; color:#000; text-align:center; font-weight:bold}");
+        content.AppendLine("td.tdtitle {background:#B5C4D0 none repeat scroll 0%; color:#000; font-weight:bold; text-align:center;}");
+        content.AppendLine("td.tdtitle2 {background:#D0E8FB none repeat scroll 0%; color:#000; font-weight:bold; text-align:center;}");
+        content.AppendLine("td.report-rowspan {background:#8e8e8e none repeat scroll 0%; color:#fff; font-weight:bold; text-align:center;}");
+        content.AppendLine("td.total {background:#C4D0D7 none repeat scroll 0%; color:#000; font-weight:bold; text-align:right;}");
+        content.AppendLine("th.ag {background:#B5C4D0 none repeat scroll 0%; color:#000; font-weight:bold; text-align:center;}");
+        content.AppendLine("th.ibc {background:#D0E8FB none repeat scroll 0%; color:#000; font-weight:bold; text-align:center;}");
+        content.AppendLine(".a1{background-color: #CCFFFF !important;}");
+        content.AppendLine(".a2{background-color: #FFFF99  !important;}");
+        content.AppendLine(".a3{background-color: #ffffee !important;}");
+        content.AppendLine(".a4{background-color: #DFEAFF  !important;}");
+        content.AppendLine(".a5{background-color: #ffffff  !important;}");
+        content.AppendLine(".a6{background-color: #FFDDFF !important;}");
+        content.AppendLine("td.rpt-red-color {color:red !important;}");
+        content.AppendLine("td.tdhidden {border-style:none;}");
+        content.Append(".ag {background:none repeat scroll 0 0 #B5C4D0;} .ibc {background:none repeat scroll 0 0 #D0E8FB;} .phu {background:none repeat scroll 0 0 #B5C4D0;}");
+        content.Append(".tbllayout .bgnobold { background:#dddddd !important; color:#000; padding:1px;}");
+        content.Append(".tbllayout .bgnobold td{background:#dddddd !important;}	");
+        content.Append(".tbllayout .bgnobold1 { background:#99cccc !important; color:#000; padding:1px; }");
+        content.Append(".tbllayout .bgnobold1 td{background:#99cccc !important;}");
+        content.Append(".bgTotal td { background:none repeat scroll 0 0 #C4D0D7; color:#000000; text-align:right;}");
+        content.Append(".footernobold td{background:#d3e1c8 none repeat scroll 0 0;color:#000;}");
+        content.AppendLine("</style>");
+
+        TemplateHandler.RemoveBlock(ref data, "not-excel-export");
+        TemplateHandler.ReplaceBlock(ref data, "Excel-Total-Footer", "<tr align='right' class='report-footer'> ");
+        content.AppendLine(data);
+        content.Append("<table><tr><td class='tdhidden'></td></tr></table>");
+
+        content.Replace("href=\"", "href=\"#");
+        content.Replace("href='", "href='#");
+
+        Response.Write(content.ToString());
+        Response.End();
+    }
+
+}

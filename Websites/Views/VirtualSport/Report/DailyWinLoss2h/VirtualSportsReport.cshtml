@@ -1,0 +1,162 @@
+﻿<div id="virtualSportsReport" class="hidden" style="">
+    <table id="virtualSportsReportTable">
+        <tr>
+            <td style="padding-right: 1px; vertical-align: top;">
+                <div id="leftPaneVSR" class="hidden">
+                    <table class="tblcollapse" id="nonliveDailyWLVirtualSports" style="">
+                        <tr class="header bgtitle" style="border-bottom: 1px;">
+                            <td colspan="7">
+                                <span class="gridtitle" id="dailyWLVirtualSports_NonLiveTitle">VIRTUAL SPORTS PRODUCT
+                                    WIN/LOSS REPORT</span> <span class="btngroup">
+                                        <input type="button" value="  " name="btnBack" id="btnBackMainVirtualSportNonLive"
+                                            class="btnBack" title="Back To Main" style="float: right;" /></span>
+                            </td>
+                        </tr>
+                        <tr class="header title" style="border-top: 1px;">
+                            <td>
+                                <span class="">Bettype</span>
+                            </td>
+                            <td>
+                                <span class="">Winloss</span>
+                            </td>
+                            <td>
+                                <span class="" style="">Position</span>
+                            </td>
+                            <td>
+                                <span class="" style="">Comm</span>
+                            </td>
+                            <td>
+                                <span class="">Line Total</span>
+                            </td>
+                            <td>
+                                <span class="">Turnover</span>
+                            </td>
+                            <td>
+                                <span class="" style="">Margin</span>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="tblcollapse hidden" id="nonliveDailyWLVirtualSportsBySport" style="">
+                        <tr class="header bgtitle" style="border-bottom: 1px;">
+                            <td colspan="7">
+                                <span class="gridtitle" id="dailyWLVirtualSports_NonLiveTitleBySport"></span><span
+                                    class="btngroup">
+                                    <input type="button" value="  " name="btnBack" id="btnBackMainReportVirtualSportNonLive"
+                                        class="btnBack" title="Back To Main" style="float: right;" /></span>
+                            </td>
+                        </tr>
+                        <tr class="header title" style="border-top: 1px;">
+                            <td>
+                                <span class="">Bettype</span>
+                            </td>
+                            <td>
+                                <span class="">Winloss</span>
+                            </td>
+                            <td>
+                                <span class="" style="">Position</span>
+                            </td>
+                            <td>
+                                <span class="" style="">Comm</span>
+                            </td>
+                            <td>
+                                <span class="">Line Total</span>
+                            </td>
+                            <td>
+                                <span class="">Turnover</span>
+                            </td>
+                            <td>
+                                <span class="" style="">Margin</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+            <td style="width: 2px; height: 100px; background-color: #B5C4D0; border: 1px solid #7C98A4;
+                vertical-align: top;" id="gridSplitter_VSR" class="hidden">
+            </td>
+            <td style="padding-left: 1px; vertical-align: top;">
+                <div id="rightPaneVSR">
+                    <div class="hidden" id="gridbettypeVSR">
+                        <table class="tblcollapse" id="tblContent_RDtVsp">
+                            <tr class="header bgtitle" style="border-bottom: solid 1px;">
+                                <td colspan="10">
+                                    <div class="bgtitle">
+                                        <div class="gridtitle" id="gridtitlebettype_VSR">
+                                        </div>
+                                        <div class="btngroup">
+                                            <input type="button" onclick="virtualSportsReportManager.exportToExcel('4')" value="  "
+                                                name="btnExport" id="exportDetailsVSR" class="btnExcel" title="Export to Excel" />
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="header title">
+                                <td>
+                                    <span class="c" style="">Code</span>
+                                </td>
+                                <td colspan="3">
+                                    <span class="c" style="">Event</span>
+                                </td>
+                                <td style="">
+                                    <span class="c">Winloss</span>
+                                </td>
+                                <td style="">
+                                    <span class="c" style="">Position</span>
+                                </td>
+                                <td style="">
+                                    <span class="c" style="">Comm</span>
+                                </td>
+                                <td style="">
+                                    <span class="c">Line Total</span>
+                                </td>
+                                <td style="">
+                                    <span class="c">Turnover</span>
+                                </td>
+                                <td style="">
+                                    <span class="c" style="">Margin</span>
+                                </td>
+                            </tr>
+                        </table>
+                         <table class="tblcollapse" id="tblContent_RDtVsp_VirtualHR">
+                            <tr class="header bgtitle" style="border-bottom: solid 1px;">
+                                <td colspan="10">
+                                    <div class="bgtitle">
+                                        <div class="gridtitle" id="gridtitlebettype_VSR_VirtualHR">
+                                        </div>
+                                        <div class="btngroup">
+                                            <input type="button" onclick="virtualSportsReportManager.exportToExcel('4')" value="  "
+                                                name="btnExport" id="exportDetailsVSR_VirtualHR" class="btnExcel" title="Export to Excel" />
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="header title">
+                               <td style="">
+                                    <span class="c">Bettype</span>
+                                </td>
+                                <td style="">
+                                    <span class="c">Winloss</span>
+                                </td>
+                                <td style="">
+                                    <span class="c">Position</span>
+                                </td>
+                                <td style="">
+                                    <span class="c">Comm</span>
+                                </td>
+                                <td style="">
+                                    <span class="c">Line Total</span>
+                                </td>
+                                <td style="">
+                                    <span class="c">Turnover</span>
+                                </td>
+                                <td style="">
+                                    <span class="c">Margin</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

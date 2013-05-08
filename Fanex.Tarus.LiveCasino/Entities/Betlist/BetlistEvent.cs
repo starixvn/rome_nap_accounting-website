@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Runtime.Serialization;
+
+namespace Fanex.Tarus.LiveCasino.Entities.Betlist
+{
+    [Serializable]
+    [DataContract]
+    public class BetlistEvent
+    {
+
+        [DataMember]
+        public string GameType { get; set; }
+
+        [DataMember]
+        public string Stake { get; set; }
+
+        [DataMember]
+        public string Odds { get; set; }
+    }
+}

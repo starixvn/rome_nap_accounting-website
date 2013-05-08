@@ -1,0 +1,370 @@
+﻿
+
+
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Web;
+using DNAide.Core;
+using DNAide.Utils;
+using Fanex.Tarus.Reports.Constants;
+using Fanex.Tarus.Reports.DataAccess.MatchWinLoss;
+using Fanex.Tarus.Reports.Entities.MatchWinLoss;
+using Fanex.Tarus.Reports.Resource;
+using Sunplus.Accounting.Business.Report.Common;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
+
+namespace Fanex.Tarus.Reports.Business.MatchWinLoss
+{
+    public partial class WLSummaryByBetTypeService : IWLSummaryByBetTypeService
+    {
+        #region IFields
+
+        //
+        // GET: /MatchWinLossByBetTypeAccess/
+        private readonly IWLSummaryByBetTypeAccess _matchWinLossByBetTypeAccess;
+
+        private DateTime _lastReportDate;
+        public string WLSummaryReportByBetType = string.Empty;
+        private string _grandTotalName = Fanex.Tarus.Reports.Resource.WLSummaryByBetType.GrandTotal;
+        private RMReportUtils _barmUtils = null;
+        private RMReportUtils _eightRMUtils = null;
+        private string _notAvailableString = Language.NotAvailableString;
+
+        #endregion IFields
+        #region IConstructions
+
+        public WLSummaryByBetTypeService()
+            : this(null)
+        {
+        }
+
+        public WLSummaryByBetTypeService(IWLSummaryByBetTypeAccess matchWinLossByBetTypeAccess)
+        {
+            _matchWinLossByBetTypeAccess = matchWinLossByBetTypeAccess ?? new WLSummaryByBetTypeAccess();
+            _eightRMUtils = new RMReportUtils(RMReportUtils.ReportName.Report2a, RMReportUtils.RMType.EightRM);
+            _barmUtils = new RMReportUtils(RMReportUtils.ReportName.Report2a, RMReportUtils.RMType.BARM);
+
+            WLSummaryReportByBetType = "WLSummaryReportByBetType" + AppSession.Username;
+        }
+
+        #endregion IConstructions
+        #region IMethods
+
+        private bool IsExcludeVirtualLineTotal(int betType)
+        {
+            var result = false;
+
+            switch (betType)
+            {
+                case Fanex.Tarus.Reports.Constants.BetType._5MinOU:
+                case Fanex.Tarus.Reports.Constants.BetType._15MinOU:
+                case Fanex.Tarus.Reports.Constants.BetType._30MinOU:
+                case Fanex.Tarus.Reports.Constants.BetType._45MinOU:
+                case Fanex.Tarus.Reports.Constants.BetType._60MinOU:
+                case Fanex.Tarus.Reports.Constants.BetType.EndOfDayOU:
+
+                case Fanex.Tarus.Reports.Constants.BetType._5MinOE:
+                case Fanex.Tarus.Reports.Constants.BetType._15MinOE:
+                case Fanex.Tarus.Reports.Constants.BetType._30MinOE:
+                case Fanex.Tarus.Reports.Constants.BetType._45MinOE:
+                case Fanex.Tarus.Reports.Constants.BetType._60MinOE:
+                case Fanex.Tarus.Reports.Constants.BetType.EndOfDayOE:
+
+                case Fanex.Tarus.Reports.Constants.BetType.WinToteOdds:
+                case Fanex.Tarus.Reports.Constants.BetType.PlaceToteOdds:
+                case Fanex.Tarus.Reports.Constants.BetType.WinPlaceToteOdds:
+
+                case Fanex.Tarus.Reports.Constants.BetType.WinFixedOdds:
+                case Fanex.Tarus.Reports.Constants.BetType.PlaceFixedOdds:
+                case Fanex.Tarus.Reports.Constants.BetType.WinPlaceFixedOdds:
+
+                case Fanex.Tarus.Reports.Constants.BetType.CasinoGames:
+                case Fanex.Tarus.Reports.Constants.BetType.P2P:
+                case Fanex.Tarus.Reports.Constants.BetType.P2PGames:
+                case Fanex.Tarus.Reports.Constants.BetType.Baccarat:
+                case Fanex.Tarus.Reports.Constants.BetType.Roulette:
+                case Fanex.Tarus.Reports.Constants.BetType.HandicapVS:
+                case Fanex.Tarus.Reports.Constants.BetType.OverUnderVS:
+                case Fanex.Tarus.Reports.Constants.BetType.CorrectScoreVS:
+                case Fanex.Tarus.Reports.Constants.BetType._1x2VS:
+                case Fanex.Tarus.Reports.Constants.BetType.TotalGoalVS:
+                case Fanex.Tarus.Reports.Constants.BetType.DoubleChanceVS:
+                case Fanex.Tarus.Reports.Constants.BetType.Bingo:
+                case RowType.ThirdParty:
+                    result = true;
+                    break;
+                default:
+                    result = false;
+                    break;
+
+            }
+
+            if (1201 <= betType && betType <= 1299)
+            {
+                result = true;
+            }
+
+            return result;
+        }
+
+        private string GetBetTypeName(int betTypeId)
+        {
+            string betTypeName = string.Empty;
+
+            switch (betTypeId)
+            {
+                case RowType.ThirdParty:
+                    betTypeName = Fanex.Tarus.Reports.Resource.MatchWinLoss.ThirdPartyBetTypeName;
+                    break;
+                case RowType.EightRM:
+                    betTypeName = _eightRMUtils.DisplayName;
+                    break;
+                case RowType.BARM:
+                    betTypeName = _barmUtils.DisplayName;
+                    break;
+                case Fanex.Tarus.Reports.Constants.BetType.CasinoGames:
+                    betTypeName = Fanex.Tarus.Reports.Resource.MatchWinLoss.CasinoGamesBetTypeName;
+                    break;
+                case RowType.KickOff:
+                    betTypeName = Fanex.Tarus.Reports.Resource.MatchWinLoss.KickOffBetTypeName;
+                    break;
+                case Fanex.Tarus.Reports.Constants.BetType.P2PGames:
+                    betTypeName = Fanex.Tarus.Reports.Resource.MatchWinLoss.P2PGamesBetTypeName;
+                    break;
+                case Fanex.Tarus.Reports.Constants.BetType.SystemParlay:
+                    betTypeName = Fanex.Tarus.Reports.Resource.MatchWinLoss.SystemParlayBetTypeName;
+                    break;
+                case Fanex.Tarus.Reports.Constants.BetType.OddEven:
+                case Fanex.Tarus.Reports.Constants.BetType.OverUnder:
+                    betTypeName = CacheRef.GetBettype(betTypeId) + " " +
+                        Fanex.Tarus.Reports.Resource.MatchWinLoss.NumberGame_BetTypeSuffix;
+                    break;
+                default:
+                    betTypeName = CacheRef.GetBettype(betTypeId);
+                    break;
+            }
+          
+            return betTypeName;
+        }
+
+        public WLSummaryByBetTypeReport SelSummaryReportByBetType(DateTime reportDate)
+        {
+            WLSummaryByBetTypeReport wLSummaryByBetTypeReport = new WLSummaryByBetTypeReport
+            {
+                ReportDetails = new List<Fanex.Tarus.Reports.Entities.MatchWinLoss.WLSummaryByBetType>(),
+                Total = new Fanex.Tarus.Reports.Entities.MatchWinLoss.WLSummaryByBetType
+                {
+                    BetType = _grandTotalName,
+                    IsTotal = true
+                }
+            };
+            try
+            {
+                DataSet dbResult = _matchWinLossByBetTypeAccess.SelSummaryReportByBetType(reportDate);
+
+                if (dbResult != null)
+                {
+                    int betType = 0;
+                    DataTable dataTable = dbResult.Tables[0];
+                    Fanex.Tarus.Reports.Entities.MatchWinLoss.WLSummaryByBetType reportDetail;
+                    int mixParlayRowIndex = -1;
+                    int currentRowIndex = 0;
+
+                    #region InitTotalValue
+
+                    decimal lineTotal_Soccer_Live_Total = 0;
+                    decimal lineTotal_Soccer_Total = 0;
+                    decimal lineTotal_Others_Live_Total = 0;
+                    decimal lineTotal_Others_Total = 0;
+                    decimal variance_Total = 0;
+                    decimal turnover_Total = 0;
+
+                    decimal virtualLineTotal_Soccer_Live_Total = 0;
+                    decimal virtualLineTotal_Soccer_Total = 0;
+                    decimal virtualLineTotal_Others_Live_Total = 0;
+                    decimal virtualLineTotal_Others_Total = 0;
+
+                    #endregion InitTotalValue
+                    foreach (DataRow dataRow in dataTable.Rows)
+                    {
+                        betType = CastAide.AsInt32(dataRow["bettype"]);
+                        if ((betType == RowType.BARM && !_barmUtils.IsActive) ||
+                            (betType == RowType.EightRM && !_eightRMUtils.IsActive))
+                        {
+                            continue;
+                        }
+
+                        reportDetail = new Fanex.Tarus.Reports.Entities.MatchWinLoss.WLSummaryByBetType();
+                        reportDetail.BetTypeId = betType;
+
+                        #region LineTotal_Soccer
+
+                        var lineTotal_Soccer_Live = CastAide.AsDecimal(dataRow["LineTotal_soccer_live"]);
+                        var lineTotal_Soccer = CastAide.AsDecimal(dataRow["LineTotal_soccer"]);
+                        var lineTotal_Others_Live = CastAide.AsDecimal(dataRow["LineTotal_others_live"]);
+                        var lineTotal_Others = CastAide.AsDecimal(dataRow["LineTotal_others"]);
+                        var turnover = CastAide.AsDecimal(dataRow["IBCTurnover"]);
+
+                        reportDetail.LineTotal_Soccer_Live = NumberFormat.DecFormat(lineTotal_Soccer_Live, 2);
+                        reportDetail.LineTotal_Soccer = NumberFormat.DecFormat(lineTotal_Soccer, 2);
+                        reportDetail.LineTotal_Others_Live = NumberFormat.DecFormat(lineTotal_Others_Live, 2);
+                        reportDetail.LineTotal_Others = NumberFormat.DecFormat(lineTotal_Others, 2);
+                        reportDetail.Turnover = NumberFormat.DecFormat(turnover, 2);
+
+                        if (betType == 71 || betType == 73) // Casino && Bingo
+                        {
+                            turnover = 0;
+                            reportDetail.Turnover = _notAvailableString;
+                        }
+                        else
+                        {
+                            reportDetail.Turnover = NumberFormat.DecFormat(turnover, 2);
+                        }
+
+                        #endregion LineTotal_Soccer
+                        #region VirtualLineTotal
+
+                        if (IsExcludeVirtualLineTotal(betType))
+                        {
+                            reportDetail.VirtualLineTotal_Soccer_Live = _notAvailableString;
+                            reportDetail.VirtualLineTotal_Soccer = _notAvailableString;
+                            reportDetail.VirtualLineTotal_Others_Live = _notAvailableString;
+                            reportDetail.VirtualLineTotal_Others = _notAvailableString;
+
+                            reportDetail.LineTotalReal = NumberFormat.DecFormat(lineTotal_Soccer_Live +
+                                lineTotal_Soccer + lineTotal_Others_Live + lineTotal_Others, 2);
+                            reportDetail.LineTotalVirtual = _notAvailableString;
+                            reportDetail.Variance = _notAvailableString;
+                        }
+                        else
+                        {
+                            var virtualLineTotal_Soccer_Live = CastAide.AsDecimal(dataRow["VirtualLineTotal_soccer_live"]);
+                            var virtualLineTotal_Soccer = CastAide.AsDecimal(dataRow["VirtualLineTotal_soccer"]);
+                            var virtualLineTotal_Others_Live = CastAide.AsDecimal(dataRow["VirtualLineTotal_others_live"]);
+                            var virtualLineTotal_Others = CastAide.AsDecimal(dataRow["VirtualLineTotal_others"]);
+
+                            reportDetail.VirtualLineTotal_Soccer_Live =
+                                NumberFormat.DecFormat(virtualLineTotal_Soccer_Live, 2);
+                            reportDetail.VirtualLineTotal_Soccer =
+                                NumberFormat.DecFormat(virtualLineTotal_Soccer, 2);
+                            reportDetail.VirtualLineTotal_Others_Live =
+                                NumberFormat.DecFormat(virtualLineTotal_Others_Live, 2);
+                            reportDetail.VirtualLineTotal_Others =
+                                NumberFormat.DecFormat(virtualLineTotal_Others, 2);
+                            reportDetail.LineTotalReal = NumberFormat.DecFormat(lineTotal_Soccer_Live +
+                           lineTotal_Soccer + lineTotal_Others_Live + lineTotal_Others, 2);
+                            reportDetail.LineTotalVirtual = NumberFormat.DecFormat(
+                                virtualLineTotal_Soccer_Live + virtualLineTotal_Soccer +
+                                virtualLineTotal_Others_Live + virtualLineTotal_Others, 2);
+
+                            reportDetail.Variance = NumberFormat.DecFormat(
+                                CastAide.AsDecimal(reportDetail.LineTotalReal) -
+                                CastAide.AsDecimal(reportDetail.LineTotalVirtual), 2);
+                            virtualLineTotal_Soccer_Live_Total += virtualLineTotal_Soccer_Live;
+                            virtualLineTotal_Soccer_Total += virtualLineTotal_Soccer;
+                            virtualLineTotal_Others_Live_Total += virtualLineTotal_Others_Live;
+                            virtualLineTotal_Others_Total += virtualLineTotal_Others;
+                            variance_Total += CastAide.AsDecimal(reportDetail.LineTotalReal) -
+                                CastAide.AsDecimal(reportDetail.LineTotalVirtual);
+
+                        }
+
+                        reportDetail.Margin = this.CalculateMargin(lineTotal_Soccer_Live +
+                                         lineTotal_Soccer + lineTotal_Others_Live + lineTotal_Others,
+                                         turnover);
+
+                        lineTotal_Soccer_Live_Total += lineTotal_Soccer_Live;
+                        lineTotal_Soccer_Total += lineTotal_Soccer;
+                        lineTotal_Others_Live_Total += lineTotal_Others_Live;
+                        lineTotal_Others_Total += lineTotal_Others;
+                        turnover_Total += turnover;
+
+                        #endregion VirtualLineTotal
+                        #region ThirdParty
+
+                        string betTypeName = GetBetTypeName(betType) + (!string.IsNullOrEmpty(CastAide.AsString(dataRow["Hedge"])) ? " " + dataRow["Hedge"] : string.Empty);
+                        reportDetail.BetType = betTypeName;
+
+                        #endregion ThirdParty
+                        #region InsertReportDetail
+
+                        if (betType == Fanex.Tarus.Reports.Constants.BetType.SystemParlay && mixParlayRowIndex != -1)
+                        {
+                            wLSummaryByBetTypeReport.ReportDetails.Insert(mixParlayRowIndex, reportDetail);
+                        }
+                        else
+                        {
+                            if (betType == Fanex.Tarus.Reports.Constants.BetType.MixParlay)
+                            {
+                                mixParlayRowIndex = currentRowIndex + 1;
+                            }
+                            wLSummaryByBetTypeReport.ReportDetails.Add(reportDetail);
+                        }
+                        currentRowIndex++;
+
+                        #endregion InsertReportDetail
+                    }
+                    #region Total
+
+                    wLSummaryByBetTypeReport.Total.LineTotal_Soccer_Live =
+                        NumberFormat.DecFormat(lineTotal_Soccer_Live_Total, 2);
+                    wLSummaryByBetTypeReport.Total.LineTotal_Soccer =
+                       NumberFormat.DecFormat(lineTotal_Soccer_Total, 2);
+                    wLSummaryByBetTypeReport.Total.LineTotal_Others_Live =
+                        NumberFormat.DecFormat(lineTotal_Others_Live_Total, 2);
+                    wLSummaryByBetTypeReport.Total.LineTotal_Others =
+                        NumberFormat.DecFormat(lineTotal_Others_Total, 2);
+
+                    wLSummaryByBetTypeReport.Total.VirtualLineTotal_Soccer_Live =
+                        NumberFormat.DecFormat(virtualLineTotal_Soccer_Live_Total, 2);
+                    wLSummaryByBetTypeReport.Total.VirtualLineTotal_Soccer =
+                        NumberFormat.DecFormat(virtualLineTotal_Soccer_Total, 2);
+                    wLSummaryByBetTypeReport.Total.VirtualLineTotal_Others_Live =
+                        NumberFormat.DecFormat(virtualLineTotal_Others_Live_Total, 2);
+                    wLSummaryByBetTypeReport.Total.VirtualLineTotal_Others =
+                       NumberFormat.DecFormat(virtualLineTotal_Others_Total, 2);
+
+                    wLSummaryByBetTypeReport.Total.Turnover = NumberFormat.DecFormat(turnover_Total, 2);
+                    var lineTotalReal = lineTotal_Soccer_Live_Total + lineTotal_Soccer_Total +
+                        lineTotal_Others_Live_Total + lineTotal_Others_Total;
+                    wLSummaryByBetTypeReport.Total.LineTotalReal = NumberFormat.DecFormat(lineTotalReal, 2);
+
+                    var lineTotalVirtual = virtualLineTotal_Soccer_Live_Total + virtualLineTotal_Soccer_Total +
+                        virtualLineTotal_Others_Live_Total + virtualLineTotal_Others_Total;
+                    wLSummaryByBetTypeReport.Total.LineTotalVirtual = NumberFormat.DecFormat(lineTotalVirtual, 2);
+
+                    wLSummaryByBetTypeReport.Total.Variance = NumberFormat.DecFormat(variance_Total, 2);
+                    wLSummaryByBetTypeReport.Total.Margin = this.CalculateMargin(lineTotalReal, turnover_Total);
+
+                    #endregion Total
+                }
+
+                SessionExtension.AddSession(HttpContext.Current.Session, WLSummaryReportByBetType, wLSummaryByBetTypeReport);
+                _lastReportDate = reportDate;
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return wLSummaryByBetTypeReport;
+        }
+
+        private string CalculateMargin(decimal lineTotal, decimal turnover)
+        {
+            decimal result = 0;
+            if (turnover != 0)
+            {
+                result = (lineTotal / turnover) * 100;
+                return NumberFormat.DecFormat(result, 2);
+            }
+
+            return _notAvailableString;
+        }
+
+        #endregion IMethods
+    }
+}

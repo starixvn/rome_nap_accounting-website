@@ -1,0 +1,233 @@
+﻿using System;
+using System.Web;
+using System.Text;
+using Sunplus.Accounting.Business.Statement;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Web;
+using IBCUtils;
+using DNAide.Web;
+using DNAide.Core;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Accounting.Core.Web.Controls;
+
+public partial class Statement_CompanyStatement : PageBase
+{
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+//        Response.Cache.SetCacheability(HttpCacheability.NoCache);
+        WebUtils.SetNoCache();
+
+        int reportNo = 5;
+        //reportNo = CastAide.AsInt32(Request["repno"], 1);
+        //if (reportNo < 1 || reportNo > 5 || reportNo == 2) //combine statement 1&2
+        //    reportNo = 1;
+
+        //get datetime
+        string fdate = CastAide.AsString(Request["fdate"]);
+        string tdate = CastAide.AsString(Request["tdate"]);
+
+        DateTime fdt, tdt;
+        if (!Validator.ValidDateMMDDYYYYNotNull(fdate, out fdt).IsSuccess())
+        //if (Session["fdate"] != null)
+        //    fdt = (DateTime)Session["fdate"];
+        //else
+        // fdt = DateTime.Now.AddDays(-1);
+        {
+            fdt = DateTime.Now.AddDays(-1);
+        }
+
+        if (!Validator.ValidDateMMDDYYYYNotNull(tdate, out tdt).IsSuccess())
+        //if (Session["tdate"] != null)
+        //    tdt = (DateTime)Session["tdate"];
+        //else
+        //    tdt = DateTime.Now;
+        {
+            tdt = DateTime.Now.AddDays(-1);
+        }
+
+        //Session["fdate"] = fdt;
+        //Session["tdate"] = tdt;
+
+       // if (reportNo == 5)
+        //{
+            reportHeader.Text = "Company Statement";
+        //}
+        //else
+        //{
+        //    reportHeader.Text = "Statement";
+        //}
+
+        searchContent.Text = RenderHeader(reportNo, fdt, tdt);
+
+        ReportCache.REPORT_STATEMENT_COMPANY = string.Empty;
+        if (CastAide.AsInt32(Request["IsExport"], 0) == 1)
+        {
+            string reportContent = string.Empty;
+            //string filenameSuffix = "-" + CastAide.AsString(Session["CustUname"], string.Empty) 
+            //    + "-" + fdt.ToString("yyyyMMdd") + "-" + tdt.ToString("yyyyMMdd");
+
+            //string filenameSuffix =  "-" + fdt.ToString("yyyyMMdd") + "-" + tdt.ToString("yyyyMMdd");
+
+
+            #region rem
+            //switch (reportNo)
+            //{
+            //    case 1:
+            //        filenameSuffix = "Statement" + filenameSuffix;
+
+            //        if (!string.IsNullOrEmpty(ReportCache.REPORT_STATEMENT))
+            //        {
+            //            reportContent = ReportCache.REPORT_STATEMENT;
+            //        }
+            //        else
+            //            reportContent = StatementHTML.GetMemberStatement(fdate, tdate);
+            //        break;
+            //    case 3:
+            //        filenameSuffix = "Detail" + filenameSuffix;
+
+            //        if (!string.IsNullOrEmpty(ReportCache.REPORT_STATEMENT_DETAIL))
+            //        {
+            //            reportContent = ReportCache.REPORT_STATEMENT_DETAIL;
+            //            TemplateHandler.RemoveBlock(ref reportContent, "DelHeader");
+            //            TemplateHandler.RemoveBlock(ref reportContent, "DelCol");
+            //            TemplateHandler.ReplaceBlock(ref reportContent, "Excel-Footer", "<td colspan='7' align='center'>");
+            //        }
+            //        else
+            //            reportContent = StatementHTML.GetDetailStatement(fdate, tdate);
+            //        break;
+            //    case 4:
+            //        filenameSuffix = "Audit" + filenameSuffix;
+
+            //        if (!string.IsNullOrEmpty(ReportCache.REPORT_STATEMENT_AUDIT))
+            //        {
+            //            reportContent = ReportCache.REPORT_STATEMENT_AUDIT;
+            //        }
+            //        else
+            //            reportContent = StatementHTML.GetAuditStatement();
+            //        break;
+            //    case 5:
+            //        filenameSuffix = "CompanyStatement-" + fdt.ToString("yyyyMMdd") 
+            //            + "-" + tdt.ToString("yyyyMMdd");
+
+            //        if (!string.IsNullOrEmpty(ReportCache.REPORT_STATEMENT_COMPANY))
+            //        {
+            //            reportContent = ReportCache.REPORT_STATEMENT_COMPANY;
+            //        }
+            //        else
+            //            reportContent = StatementHTML.GetCompanyStatement(fdate, tdate);
+            //        break;
+            //} 
+            #endregion
+
+           string filenameSuffix = "CompanyStatement-" + fdt.ToString("yyyyMMdd")
+                       + "-" + tdt.ToString("yyyyMMdd");
+
+           if (!string.IsNullOrEmpty(ReportCache.REPORT_STATEMENT_COMPANY))
+           {
+               reportContent = ReportCache.REPORT_STATEMENT_COMPANY;
+           }
+           else
+           {
+               reportContent = StatementHTML.GetCompanyStatement(fdate, tdate);
+           }
+
+            ExportToExcel(reportContent, filenameSuffix);
+        }
+
+    } 
+    private string RenderHeader(int reportNo, DateTime fromdate, DateTime todate)
+    {
+        string html = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Statement/CompanyHeader.htm");
+
+        TemplateHandler.Assign(ref html, "{reportNo}", reportNo.ToString());
+
+        //if (AppSession.RoleID == 0 || AppSession.RoleID < 2)
+        //{
+        //    //remove Audit
+        //    TemplateHandler.RemoveBlock(ref tpl, "IsAgent");
+        //}
+
+        //if (reportNo == 1) //Statement 1&2
+        //{
+        //    TemplateHandler.RemoveBlock(ref tpl, "StatementLink");
+        //    TemplateHandler.RemoveBlock(ref tpl, "Detail");
+        //    TemplateHandler.RemoveBlock(ref tpl, "Audit");
+        //}
+        //else if (reportNo == 3) //Detail
+        //{
+        //    TemplateHandler.RemoveBlock(ref tpl, "Statement");
+        //    TemplateHandler.RemoveBlock(ref tpl, "DetailLink");
+        //    TemplateHandler.RemoveBlock(ref tpl, "Audit");
+        //}
+        //else if (reportNo == 4) //Audit
+        //{
+        //    TemplateHandler.RemoveBlock(ref tpl, "Statement");
+        //    TemplateHandler.RemoveBlock(ref tpl, "Detail");
+        //    TemplateHandler.RemoveBlock(ref tpl, "AuditLink");
+        //}
+        //else if (reportNo == 5) //company statement
+        //{
+        //    TemplateHandler.RemoveBlock(ref tpl, "Link");
+        //}
+
+        //Gen Datetimepicker
+
+        //TemplateHandler.Assign(ref tpl, "{FromDateCal}", Calendar.GenCalendarControl("fdate", "../", "fdateTrigger", fromdate.ToShortDateString(), false, false, 0, 0, ""));
+        //TemplateHandler.Assign(ref tpl, "{ToDateCal}", Calendar.GenCalendarControl("tdate", "../", "tdateTrigger", todate.ToShortDateString(), true, false, 0, 0, ""));
+
+        TemplateHandler.Assign(ref html, "{FromDateCal}",
+          Calendar.GenCalendarControl(
+               "01012002",
+               fromdate.AddYears(50).ToString("yyyyMMdd"),
+               "fdate",
+               "../",
+               "fdateTrigger",
+               fromdate.ToString("MM/dd/yyyyy"),
+               false,
+               false,
+               string.Empty,
+               string.Empty,
+               string.Empty));
+
+        TemplateHandler.Assign(ref html, "{ToDateCal}",
+           Calendar.GenCalendarControl(
+                "01012002",
+                todate.AddYears(50).ToString("yyyyMMdd"),
+                "tdate",
+                "../",
+                "tdateTrigger",
+                todate.ToString("MM/dd/yyyyy"),
+                true,
+                false,
+                string.Empty,
+                string.Empty,
+                string.Empty));
+
+        //tpl = tpl + "<script>GetDataReport();</script>";
+
+        return html;
+    }
+
+    private void ExportToExcel(string data, string filename)
+    {
+        Response.Clear();
+        Response.AddHeader("content-disposition", "attachment;filename=" + filename.Replace(" ", "") + ".xls");
+        Response.Charset = "utf-8";
+        Response.ContentType = "application/vnd.ms-excel";
+
+        StringBuilder content = new StringBuilder();
+        content.Append("<html>");
+        content.Append("<head>");
+        content.Append("<META http-EQUIV='Content-Type' CONTENT='text/html; charset=unicode-utf8'>");
+        content.Append(ReportHTML.CSSExcelReport());
+        content.Append("</head>");
+        content.AppendLine(data);
+        content.Append("<table><tr><td class='tdhidden'></td></tr></table>");
+        content.Append("</html>");
+
+        Response.Write(content.ToString());
+        Response.End();
+
+    }
+}

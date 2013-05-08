@@ -1,0 +1,51 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="GamingController.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Reports.Controllers.Gaming
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using Fanex.Tarus.Web.Controllers;
+using Fanex.Tarus.Reports.Business.Gaming;
+    using System.Web.Mvc;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class GamingController : BaseController
+    {
+        IGamingService _igamingService;
+        public GamingController() : this(null) { }
+        public GamingController(IGamingService igamingService)
+        {
+            _igamingService = igamingService ?? new GamingService();
+        }
+
+        public ActionResult NGMonthlyWinLoss()
+        {
+            return View("~/Views/Report/Gaming/NGMonthlyWinloss.cshtml");
+        }
+
+        public JsonResult SelNumberGameWL(string fromdate, string todate)
+        {            
+            var data = _igamingService.SelNumberGameWinlossByDate(fromdate, todate);
+            var jsonResult = Json(data);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        public ActionResult ExportExcelNumberGameWL(string fromdate, string todate)
+        {
+
+            _igamingService.ExportExcelNumberGameWinlossByDate(fromdate, todate);
+            var jsonResult = Json(1);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+    }
+}

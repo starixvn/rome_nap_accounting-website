@@ -1,0 +1,37 @@
+﻿using System.ServiceModel;
+using System.ServiceModel.Web;
+using Sunplus.Accounting.Entities.Report.DownLinceBalance;
+
+namespace Sunplus.Accounting.WcfServiceLibrary.Report.DownLineBalance
+{
+    [ServiceContract]  
+    public interface IDownLineBalanceService
+    {
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        CurrencyDTO GetCurrenciesBySystem();
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        DownLineBalanceDTO GetSuperBalance(string db, bool isYesterday, string usernameSearch, string firstletter, string currency, bool isViewTotalOnly);
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        DownLineBalanceDTO GetMasterBalance(string db, int roleid, int custid, bool isYesterday, string usernameSearch,
+                                             string firstletter, string currency);
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        DownLineBalanceDTO GetAgentBalance(string db, int roleid, int custid, bool isYesterday, string usernameSearch,
+                                             string firstletter, string currency);
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        DownLineBalanceDTO GetMemberBalance(string db, int roleid, int custid, bool isYesterday, string usernameSearch,
+                                             string firstletter, string currency);
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        DifferenceBalanceInfo GetDifferenceBalance();
+    }
+}

@@ -1,0 +1,19 @@
+﻿
+using System;
+using System.Collections.Generic;
+using ExcelUtil.Spreadsheet;
+using Fanex.Tarus.Entities.Sport;
+using Fanex.Tarus.VirtualSport.Entities.Report.Winloss;
+
+
+namespace Fanex.Tarus.VirtualSport.Business.Report
+{
+    public interface IWinlossService
+    {
+        Winloss SelDailyWinloss(DateTime fromDate, DateTime toDate, bool isExclude, int drawFilter, string sportType);
+        List<BaseModel> SelSportType();
+        WinlossByCurrency SelDailyWinlossByCurrency(DateTime date, bool isExclude, int drawFilter, string sportType, string currency);
+        ExcelFile ExportExcelWinlossDaily(DateTime fromDate, DateTime toDate, bool isExclude, int drawFilter, string sportType);
+        ExcelFile ExportExcelWinlossDetailByCurrency(DateTime reportDate, bool isExclude, int drawFilter, string sportType, string currency);
+    }
+}

@@ -1,0 +1,301 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="SpecialDeleteBase.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Business.Implement.SpecialDelete
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.IO;
+    using System.Web;
+    using DNAide.Core;
+    using DNAide.Utils;
+    using Fanex.Tarus.DataAccess.Implement;
+    using Fanex.Tarus.Infrastructure.Caching;
+    using Fanex.Tarus.Infrastructure.Common;
+    using Fanex.Tarus.Infrastructure.Extensions;
+    using Sunplus.Accounting.Core.Configurations;
+    using Sunplus.Accounting.Entities.SpecialDelete.LiveCasino;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class SpecialDeleteBase
+    {
+        protected const string VirtualSportsName = "VirtualSports";
+        protected const string NumberGameName = "NumberGame";
+
+
+
+        public static string GetBettypeName(int bettypeId, bool liveindicator)
+        {
+            string name = "";
+            return name = CacheRef.GetBettype(bettypeId);
+        }
+
+        public static string GetCurrencyName(int Currency)
+        {
+            var ds = new BaseAccess().GetExChangeBySystem(AppSession.SYSTEM);
+            if (ds == null) return string.Empty;
+            DataTable tbl = ds.Tables[0];
+            EnumerableRowCollection<DataRow> currencies = tbl.AsEnumerable();
+            foreach (DataRow dr in currencies)
+            {
+                if (DNAide.Core.CastAide.AsInt32(dr["exchangeid"]) == Currency)
+                    return DNAide.Core.CastAide.AsString(dr["currency"]);
+            }
+            return string.Empty;
+        }
+
+        private static string UppercaseFirst(string s)
+        {
+            // Check for empty string.
+            if (string.IsNullOrEmpty(s))
+            {
+                return string.Empty;
+            }
+            // Return char and concat substring.
+            if (s.Length == 1) return char.ToUpper(s[0]).ToString();
+            return char.ToUpper(s[0]) + s.Substring(1);
+        }
+
+        private static string BuildChoiceColumnForLiveCasino(decimal refNo, DataTable table1)
+        {
+            var arrChoice = new List<string>();
+            var choices = new List<Choice>();
+
+            foreach (DataRow row1 in table1.Rows)
+            {
+                if (refNo == CastAide.AsDecimal(row1["refno"]))
+                {
+                    choices.Add(new Choice
+                    {
+                        Betteam = CacheRef.GetLiveCasinoResult(CastAide.AsInt32(row1["betteam"])),
+                        Stake = NumberFormat.DecFormat(row1["stake"], 2),
+                        Odds = NumberFormat.DecFormat(row1["odds"], 2)
+                    });
+                }
+            }
+
+            foreach (Choice c in choices)
+            {
+                arrChoice.Add("<span><span style='color:red'>" + c.Betteam + "</span> " + c.Stake + " <span style='color:#4F81BD'>@" + c.Odds + "</span></span>");
+            }
+            return string.Join("<br />", arrChoice.ToArray());
+        }
+
+        #region WriteLogMail
+
+        private static void CreateDirectory(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+        }
+
+        private static void RemoveFileReadOnlyAttribute(string path)
+        {
+            if (File.Exists(path))
+            {
+                FileInfo fileInfo = new FileInfo(path);
+                fileInfo.IsReadOnly = false;
+            }
+        }
+
+        protected static void WriteLogMail(string content)
+        {
+            try
+            {
+                string path = System.Web.HttpContext.Current.Server.MapPath("Logs");
+                var toDay = DateTime.Now;
+
+                string root = path + "\\SpecialDeleteLogs";
+                var logFolderName = "Month" + string.Format("{0:MM}", toDay) + "_" + string.Format("{0:yyyy}", toDay);
+                var logName = "LogMailSpecialDelete" + string.Format("{0:MM_dd_yyyy}", toDay) + ".html";
+                var fullPath = root;
+                CreateDirectory(fullPath);
+                fullPath += "\\" + logFolderName;
+                CreateDirectory(fullPath);
+                fullPath += "\\" + logName;
+                if (Directory.Exists(fullPath))
+                {
+                    Directory.Delete(fullPath);
+                }
+
+                // Specify file, instructions, and privelegdes
+                FileStream file = null;
+                if (!File.Exists(fullPath))
+                {
+                    file = new FileStream(fullPath, FileMode.Create, FileAccess.Write);
+                    RemoveFileReadOnlyAttribute(fullPath);
+                }
+                else
+                {
+                    RemoveFileReadOnlyAttribute(fullPath);
+                    file = new FileStream(fullPath, FileMode.Append, FileAccess.Write);
+                    content = "<br/>" + content;
+                }
+
+                // Create a new stream to write to the file
+                StreamWriter sw = new StreamWriter(file);
+
+                // Write a string to the file
+                sw.WriteLine(content);
+
+                // Close StreamWriter
+                sw.Close();
+
+                // Close file
+                file.Close();
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+        }
+        #endregion
+
+        public static Dictionary<int, Dictionary<string, object>> GetDeleteBetConfig()
+        {
+            var result = new Dictionary<int, Dictionary<string, object>>();
+
+            var collections = SpecialDeleteSection.Instance.DeleteBet;
+            var index = 0;
+            foreach (SpecialDeleteElement element in collections)
+            {
+                var currentSetting = new Dictionary<string, object>();
+                currentSetting.Add("Name", element.Name);
+                currentSetting.Add("DeleteoOtionDefault", element.DeleteoOtionDefault);
+                currentSetting.Add("IsAllowOptionDelete", element.IsAllowOptionDelete);
+                result.Add(index, currentSetting);
+                index++;
+            }
+            return result;
+        }
+
+        public static Dictionary<string, string> GetNotificationRealCurrency(string filter)
+        {
+            var result = new Dictionary<string, string>();
+
+            if (filter.ToLower().Equals("username"))
+            {
+                var usernames = SpecialDeleteSection.Instance[SpecialDeleteSection.StoreCollection.NotificationRealCurrency]["usernames"];
+                foreach (SpecialDeleteElement element in usernames.Stores)
+                {
+                    var username = element.Name.ToLower();
+                    result.Add(username, username);
+                }
+            }
+            else if (filter.ToLower().Equals("email"))
+            {
+                var mailElement = SpecialDeleteSection.Instance.NotificationRealCurrency["EmailNotification"];
+                result.Add("To", mailElement.To);
+                result.Add("CC", mailElement.CC);
+                result.Add("BCC", mailElement.BCC);
+            }
+            return result;
+        }
+
+        public static Dictionary<string, string> GetEmailNotificationTestCurrency()
+        {
+            var result = new Dictionary<string, string>();
+
+            var mailElement = SpecialDeleteSection.Instance.NotificationTestCurrency["EmailNotification"];
+            result.Add("To", mailElement.To);
+            result.Add("CC", mailElement.CC);
+            result.Add("BCC", mailElement.BCC);
+
+            return result;
+        }
+
+        public static Dictionary<string, string> GetEmailForRecoverBet()
+        {
+            var result = new Dictionary<string, string>();
+
+            var mailElement = SpecialDeleteSection.Instance.RecoverBet["MailForRecoverBet"];
+            result.Add("To", mailElement.To);
+            result.Add("CC", mailElement.CC);
+            result.Add("BCC", mailElement.BCC);
+
+            return result;
+        }
+
+        //public static Dictionary<string, string> GetEmailReceivers()
+        //{
+        //    var result = new Dictionary<string, string>();
+
+        //    var mailElement = SpecialDeleteSection.Instance.CC["AlwaysReceived"];
+        //    result.Add("To", mailElement.To);
+        //    result.Add("CC", mailElement.CC);
+        //    result.Add("BCC", mailElement.BCC);
+
+        //    return result;
+        //}
+
+        protected string GetSitesAndUsers()
+        {
+            var collections = SpecialDeleteSection.Instance.DeleteBet;
+            string expression = string.Empty;
+            string sites = string.Empty;
+            string users = string.Empty;
+            foreach (SpecialDeleteElement element in collections)
+            {
+                foreach (SpecialDeleteElement store in element.Stores)
+                {
+                    if (store.Name.ToLower().Equals("site"))
+                    {
+                        sites += "'" + store.Alias + "',";
+                    }
+                    if (store.Name.ToLower().Equals("username"))
+                    {
+                        users += "'" + store.Alias + "',";
+                    }
+                }
+            }
+
+
+            if (sites.Length > 1)
+            {
+                sites = sites.Substring(0, sites.Length - 1);
+            }
+            if (users.Length > 1)
+            {
+                users = users.Substring(0, users.Length - 1);
+            }
+
+            expression = " site not in ( " + sites + " ) ";
+            expression += " and username not in ( " + users + " ) ";
+
+            return expression;
+
+        }
+        public static Dictionary<string, List<Dictionary<string, string>>> GetEmailForDeleteBet()
+        {
+            var result = new Dictionary<string, List<Dictionary<string, string>>>();
+            var collections = SpecialDeleteSection.Instance.DeleteBet;
+            foreach (SpecialDeleteElement collection in collections)
+            {
+                var group = new List<Dictionary<string, string>>();
+                foreach (SpecialDeleteElement store in collection.Stores)
+                {
+                    var emailInfo = new Dictionary<string, string>();
+                    emailInfo.Add("Name", store.Name);
+                    emailInfo.Add("To", store.To);
+                    emailInfo.Add("CC", store.CC);
+                    emailInfo.Add("BCC", store.BCC);
+                    emailInfo.Add("Alias", store.Alias);
+
+                    group.Add(emailInfo);
+                }
+
+                result.Add(collection.Name, group);
+            }
+            return result;
+        }
+
+    }
+}

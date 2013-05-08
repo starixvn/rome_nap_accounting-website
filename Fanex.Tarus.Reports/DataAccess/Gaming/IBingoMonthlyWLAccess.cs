@@ -1,0 +1,22 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="IBingoMonthlyWLAccess.cs" company="">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Reports.DataAccess.Gaming
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+using System.Data;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public interface IBingoMonthlyWLAccess
+    {
+        DataTable GetBingoReportWLByMonth(string month, string year);
+    }
+}

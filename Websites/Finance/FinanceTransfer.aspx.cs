@@ -1,0 +1,107 @@
+﻿using System;
+using System.Text;
+using System.Collections.Generic;
+using DNAide.Web;
+using DNAide.Core;
+using DNAide.Utils;
+//using Sunplus.Core.LoggingLib;
+using Sunplus.Accounting.Business;
+using Sunplus.Accounting.Business.BootStrappers;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Entities.ViewModel;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Core.LoggingLib;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web;
+
+
+public partial class Finance_FinanceTransfer : PageBase
+{
+    protected string strDate = string.Empty;
+    protected string strTotal = string.Empty;
+    protected string strAllowUpdate = string.Empty;
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        strDate = Request["date"];
+        ltrContent.Text = GetContent();
+    }
+
+    public string GetContent()
+    {        
+        StringBuilder strBuild = new StringBuilder();
+        string strTpl = string.Empty;
+        decimal total = 0;
+        bool isReset = (Request["isreset"] == "1");
+        try
+        {
+            strTpl = WebUtils.LoadTemplate("Finance/FinanceTransfer.htm");
+
+            strAllowUpdate = isReset ? "disabled" : string.Empty;
+
+            string strContent = TemplateHandler.CopyBlock(strTpl, "content");
+
+            if(isReset)
+                TemplateHandler.RemoveBlock(ref strTpl, "isreset");
+
+            IUserService userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
+            //Get Data here
+            List<FinanceTransaction> list = userService.GetResetWinning_ByDate(CastAide.AsDateTime(strDate), isReset);
+            //List<FinanceTransaction> list = null;
+
+            if (list.Count > 0)
+            {
+                int rowNum = 0;
+                foreach (FinanceTransaction r in list)
+                {
+                    rowNum ++;
+                    string strTmp = strContent;
+                    TemplateHandler.Assign(ref strTmp, "type", RemotingRef.RefData.GetBetTypeName(r.BetType.ToString(), "E"));
+
+                    if (isReset)
+                        TemplateHandler.ReplaceBlock(ref strTmp, "trandesc", r.Transdesc);
+
+                    TemplateHandler.Assign(ref strTmp, "trandesc", r.Transdesc);
+                    decimal dcAmount = CastAide.AsDecimal(r.Amount, 0);
+                    total += dcAmount;
+                    TemplateHandler.Assign(ref strTmp, "amount", NumberFormat.DecFormat(dcAmount, 2));
+                    TemplateHandler.Assign(ref strTmp, "no", rowNum);
+                    
+                    strBuild.Append(strTmp);
+                }
+            }
+            else
+            {
+                strBuild.Append(AccCommon.GenNoInformation("4"));
+            }
+            TemplateHandler.ReplaceBlock(ref strTpl, "content", strBuild.ToString());
+            
+        }
+        catch (DNAide.Utils.AccException ex)
+        {
+            strTpl = AlertMessage.GetMsg(ex.Message.ToString(), AlertMessage.MsgType.Error);
+            Logs.Write(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            LogExtensions.ExceptionHandler(ex);
+        }
+        TemplateHandler.Assign(ref strTpl, "total", NumberFormat.DecFormat(total, 2));
+        decimal dcBalance = CastAide.AsDecimal(Request["Amount"], 0);
+        TemplateHandler.Assign(ref strTpl, "currentbalance", NumberFormat.DecFormat(dcBalance, 2));
+        TemplateHandler.Assign(ref strTpl, "accumtotal", NumberFormat.DecFormat(total + dcBalance, 2));
+        
+        return strTpl;
+    }
+
+    string GetTypeName(int betType, string strDesc)
+    {
+        string strResult = string.Empty;
+        if(!string.IsNullOrEmpty(strDesc.Trim()))
+        {
+            strResult = "<br />- " + strDesc;
+        
+        }
+        return RemotingRef.RefData.GetBetTypeName(betType.ToString(), "E") + strResult;
+    }
+}

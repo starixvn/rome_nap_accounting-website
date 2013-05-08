@@ -1,0 +1,24 @@
+﻿.tree-expand { 
+    background: url("../../../../../App_Themes/images/expand.gif") no-repeat scroll 0 -12px transparent;
+    cursor: pointer;
+    display: inline-block;
+    height: 10px;
+    margin-bottom: 2px;
+    vertical-align: middle;
+    width: 16px;
+}
+
+.tree-collapse {
+    background: url("../../../../../App_Themes/images/expand.gif") no-repeat scroll 0 -1px transparent;
+    cursor: pointer;
+    display: inline-block;
+    height: 10px;
+    margin-bottom: 2px;
+    vertical-align: middle;
+    width: 16px;
+}
+
+.red
+{
+    color: Red;
+}

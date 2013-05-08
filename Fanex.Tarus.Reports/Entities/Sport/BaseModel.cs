@@ -1,0 +1,13 @@
+﻿
+using System;
+
+namespace Fanex.Tarus.Reports.Entities.Sport
+{
+    [Serializable]
+    public class BaseModel
+    {
+        public virtual int Id { get; set; }
+        public virtual string Name { get; set; }
+        public virtual string AliasName { get; set; }
+    }
+}

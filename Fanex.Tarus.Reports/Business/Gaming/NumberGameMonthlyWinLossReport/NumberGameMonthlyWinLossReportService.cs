@@ -1,0 +1,382 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="NumberGameMonthlyWinLossReportService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
+
+namespace Fanex.Tarus.Reports.Business.Gaming.NumberGameMonthlyWinLossReport
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Web;
+    using DNAide.Core;
+    using Fanex.Tarus.Infrastructure.Resource;
+    using Fanex.Tarus.Reports.Constants;
+    using Fanex.Tarus.Reports.Criteria.Gaming.NumberGameMonthlyWinLossReport;
+    using Fanex.Tarus.Reports.DataAccess.Gaming.NumberGameMonthlyWinLossReport;
+    using Fanex.Tarus.Reports.Entities.Gaming.NumberGameMonthlyWinLossReport;
+    using Sunplus.Accounting.Core.Extensions;
+    using ExcelUtil.Spreadsheet;
+    using Fanex.Tarus.Infrastructure.Helper;
+    using System.Drawing;
+
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    public class NumberGameMonthlyWinLossReportService : INumberGameMonthlyWinLossReportService
+    {
+        private INumberGameMonthlyWinLossReportDataAccess _reportRepository;
+
+        public NumberGameMonthlyWinLossReportService() :
+            this(null)
+        {
+        }
+
+        public NumberGameMonthlyWinLossReportService(INumberGameMonthlyWinLossReportDataAccess reportRepository)
+        {
+            this._reportRepository = reportRepository ?? new NumberGameMonthlyWinLossReportDataAccess();
+        }
+
+        public NumberGameWinLossInfo GetReport(GetReportCriteria criteria)
+        {
+            try
+            {
+                var rawData = this._reportRepository.GetReport(criteria);
+
+                NumberGameWinLossInfo report = new NumberGameWinLossInfo
+                {
+                    ChildsInfo = new List<NumberGameWinLossInfo>(),
+                    GrandTotal = new NumberGameWinLossInfo
+                    {
+                        Name = Labels.Total
+                    }
+                };
+
+                var monthGroups = rawData.GroupBy(data => new
+                {
+                    data.Month,
+                    data.Year
+                });
+
+                foreach (var monthGroup in monthGroups)
+                {
+                    var monthWinLoss = new NumberGameWinLossInfo
+                    {
+                        WinLossDate = CastAide.AsDateTime(monthGroup.Key),
+                        ChildsInfo = new List<NumberGameWinLossInfo>(),
+                        GrandTotal = new NumberGameWinLossInfo
+                        {
+                            WinLossDate_Str = string.Format("{0}/{1}",
+                                CastAide.AsInt16(monthGroup.Key.Month),
+                                CastAide.AsInt16(monthGroup.Key.Year))
+                        }
+                    };
+
+                    foreach (var data in monthGroup)
+                    {
+                        var info = new NumberGameWinLossInfo
+                        {
+                            MemberWinLoss = CastAide.AsDecimal(data.winlost),
+                            Position = CastAide.AsDecimal(data.position),
+                            Commission = CastAide.AsDecimal(data.commission),
+                            LineTotal = CastAide.AsDecimal(data.linetotal),
+                            Turnover = CastAide.AsDecimal(data.Turnover),
+                            Margin = CastAide.AsDecimal(data.margin)
+                        };
+
+                        monthWinLoss.GrandTotal.Add(info);
+                    }
+
+                    report.GrandTotal.Add(monthWinLoss.GrandTotal);
+                    monthWinLoss.GrandTotal.Margin = this.CalculateMargin(monthWinLoss.GrandTotal.LineTotal,
+                        monthWinLoss.GrandTotal.Turnover);
+                    monthWinLoss.GrandTotal = this.FormatNumberGameWinLossInfo(monthWinLoss.GrandTotal);
+                    report.ChildsInfo.Add(monthWinLoss);
+                }
+
+                report.GrandTotal.Margin = this.CalculateMargin(report.GrandTotal.LineTotal,
+                   report.GrandTotal.Turnover);
+                report.GrandTotal = this.FormatNumberGameWinLossInfo(report.GrandTotal);
+                SessionExtension.AddSession(HttpContext.Current.Session, GamingConstants.NUMBER_GAME_MONTHLY_WIN_LOSS_REPORT_SESSION_KEY, report);
+                return report;
+            }
+            catch (Exception ex)
+            {
+                Fanex.Tarus.Infrastructure.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+
+            SessionExtension.AddSession(HttpContext.Current.Session, GamingConstants.NUMBER_GAME_MONTHLY_WIN_LOSS_REPORT_SESSION_KEY, null);
+            return null;
+        }
+
+        private NumberGameWinLossInfo FormatNumberGameWinLossInfo(NumberGameWinLossInfo winLoss)
+        {
+            winLoss.MemberWinLoss = Math.Round(winLoss.MemberWinLoss, 2);
+            winLoss.Position = Math.Round(winLoss.Position, 2);
+            winLoss.Commission = Math.Round(winLoss.Commission, 2);
+            winLoss.LineTotal = Math.Round(winLoss.LineTotal, 2);
+            winLoss.Turnover = Math.Round(winLoss.Turnover, 2);
+            winLoss.Margin_Str = winLoss.Turnover != 0 ? string.Format("{0:n4}", winLoss.Margin) : Labels.NotAvailable;
+            return winLoss;
+        }
+
+        private decimal CalculateMargin(decimal lineTotal, decimal turnover)
+        {
+            decimal result = 0;
+            if (turnover != 0)
+            {
+                result = lineTotal / turnover;
+            }
+
+            return result;
+        }
+
+        public void ExportReport(GetReportCriteria criteria)
+        {
+            try
+            {
+                var report = (NumberGameWinLossInfo)SessionExtension.GetSession(HttpContext.Current.Session, GamingConstants.NUMBER_GAME_MONTHLY_WIN_LOSS_REPORT_SESSION_KEY);
+                if (report == null)
+                {
+                    report = this.GetReport(criteria);
+                }
+
+                #region ExcelTypes
+
+                ExcelFile excelFile = new ExcelFile();
+                ExcelWorksheetCollection worksheets = excelFile.Worksheets;
+                string sheetName = GamingResource.NumberGameMonthlyWinLossReport_SheetName;
+                ExcelWorksheet workSheet = worksheets.Add(sheetName);
+                var gembox = new ExcelGemboxUtils();
+
+                int startRow = 0;
+                int startColumn = 0;
+                var currentRow = startRow;
+
+                #endregion ExcelTypes
+                #region MakeExcelFile
+
+                var headerColor = Color.FromArgb(205, 222, 255);
+                var grandTotalColor = Color.FromArgb(205, 222, 255);
+                var backGroundColor = Color.White;
+
+                var headerText = gembox.GetStyleTitle(headerColor);
+                var textType = gembox.GetStyleText(255, 255, 255);
+                var twoDecimalNumberStyle = gembox.GetStyleIntNumber(".00", backGroundColor, false, false, false);
+                var positiveTwoDecimalNumberStyle = gembox.GetStyleIntNumber(".00", backGroundColor, false, true);
+                var positiveTwoDecimalPercentNumberStyle = gembox.GetStyleIntNumber(".00%", backGroundColor, false, true);
+
+                var textType_GrandTotal = gembox.GetStyleText(205, 222, 255, true);
+                var twoDecimalNumberStyle_GrandTotal = gembox.GetStyleIntNumber(".00", grandTotalColor, true, false, false);
+                var positiveTwoDecimalNumberStyle_GrandTotal = gembox.GetStyleIntNumber(".00", grandTotalColor, true, true);
+                var positiveTwoDecimalPercentNumberStyle_GrandTotal = gembox.GetStyleIntNumber(".00%", grandTotalColor, true, true);
+
+                var currentColumn = startColumn;
+                CellRange currentCellRange;
+                ExcelCell currentCell;
+
+                #region Header
+
+                workSheet.Columns[startColumn].Width = 120 * 40;
+                for (int colIndex = 1; colIndex <= 7; colIndex++)
+                {
+                    workSheet.Columns[startColumn + colIndex].Width = 120 * 40;
+                }
+
+                currentColumn = startColumn;
+                currentCellRange = workSheet.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 1, currentColumn + 6);
+                currentCellRange.Merged = true;
+                currentCellRange.Value = string.Format(GamingResource.NumberGameMonthlyWinLossReport_ReportTitle,
+                    criteria.Fromdate.ToString("MM/dd/yyyy"),
+                    criteria.Todate.ToString("MM/dd/yyyy"));
+                currentCellRange.Style = headerText;
+                currentRow += 2;
+
+                currentCellRange = workSheet.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn + 6);
+                currentCellRange.Merged = true;
+                currentCellRange.Style = textType;
+                currentRow++;
+
+                currentColumn = startColumn;
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = Labels.Month;
+                currentCell.Style = headerText;
+                currentColumn++;
+
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = Labels.Member_Win_Loss;
+                currentCell.Style = headerText;
+                currentColumn++;
+
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = Labels.Position;
+                currentCell.Style = headerText;
+                currentColumn++;
+
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = Labels.Commission;
+                currentCell.Style = headerText;
+                currentColumn++;
+
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = Labels.Line_Total;
+                currentCell.Style = headerText;
+                currentColumn++;
+
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = Labels.Turnover;
+                currentCell.Style = headerText;
+                currentColumn++;
+
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = Labels.Margin;
+                currentCell.Style = headerText;
+                currentColumn++;
+                currentRow++;
+
+                #endregion Header
+                #region Content
+
+                if (report != null && report.ChildsInfo.Count > 0)
+                {
+                    var length = report.ChildsInfo.Count;
+                    NumberGameWinLossInfo info;
+                    for (var i = 0; i < length; i++)
+                    {
+                        #region NormalRow
+
+                        info = report.ChildsInfo[i].GrandTotal;
+                        currentColumn = startColumn;
+                        currentCell = workSheet.Cells[currentRow, currentColumn];
+                        currentCell.Value = info.WinLossDate_Str;
+                        currentCell.Style = textType;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+                        currentColumn++;
+
+                        currentCell = workSheet.Cells[currentRow, currentColumn];
+                        currentCell.Value = info.MemberWinLoss;
+                        currentCell.Style = positiveTwoDecimalNumberStyle;
+                        currentColumn++;
+
+                        currentCell = workSheet.Cells[currentRow, currentColumn];
+                        currentCell.Value = info.Position;
+                        currentCell.Style = twoDecimalNumberStyle;
+                        currentColumn++;
+
+                        currentCell = workSheet.Cells[currentRow, currentColumn];
+                        currentCell.Value = info.Commission;
+                        currentCell.Style = twoDecimalNumberStyle;
+                        currentColumn++;
+
+                        currentCell = workSheet.Cells[currentRow, currentColumn];
+                        currentCell.Value = info.LineTotal;
+                        currentCell.Style = positiveTwoDecimalNumberStyle;
+                        currentColumn++;
+
+                        currentCell = workSheet.Cells[currentRow, currentColumn];
+                        currentCell.Value = info.Turnover;
+                        currentCell.Style = twoDecimalNumberStyle;
+                        currentColumn++;
+
+                        currentCell = workSheet.Cells[currentRow, currentColumn];
+                        if (info.Margin_Str == Labels.NotAvailable)
+                        {
+                            currentCell.Value = info.Margin_Str;
+                            currentCell.Style = textType_GrandTotal;
+                        }
+                        else
+                        {
+                            currentCell.Value = info.Margin;
+                            currentCell.Style = positiveTwoDecimalPercentNumberStyle;
+                        }
+
+                        currentColumn++;
+                        currentRow++;
+
+                        #endregion NormalRow
+                    }
+
+                    #region GrandTotalRow
+
+                    info = report.GrandTotal;
+                    currentColumn = startColumn;
+                    currentCell = workSheet.Cells[currentRow, currentColumn];
+                    currentCell.Value = info.Name;
+                    currentCell.Style = textType_GrandTotal;
+                    currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+                    currentColumn++;
+
+                    currentCell = workSheet.Cells[currentRow, currentColumn];
+                    currentCell.Value = info.MemberWinLoss;
+                    currentCell.Style = positiveTwoDecimalNumberStyle_GrandTotal;
+                    currentColumn++;
+
+                    currentCell = workSheet.Cells[currentRow, currentColumn];
+                    currentCell.Value = info.Position;
+                    currentCell.Style = twoDecimalNumberStyle_GrandTotal;
+                    currentColumn++;
+
+                    currentCell = workSheet.Cells[currentRow, currentColumn];
+                    currentCell.Value = info.Commission;
+                    currentCell.Style = twoDecimalNumberStyle_GrandTotal;
+                    currentColumn++;
+
+                    currentCell = workSheet.Cells[currentRow, currentColumn];
+                    currentCell.Value = info.LineTotal;
+                    currentCell.Style = positiveTwoDecimalNumberStyle_GrandTotal;
+                    currentColumn++;
+
+                    currentCell = workSheet.Cells[currentRow, currentColumn];
+                    currentCell.Value = info.Turnover;
+                    currentCell.Style = twoDecimalNumberStyle_GrandTotal;
+                    currentColumn++;
+
+                    currentCell = workSheet.Cells[currentRow, currentColumn];
+                    if (info.Margin_Str == Labels.NotAvailable)
+                    {
+                        currentCell.Value = info.Margin_Str;
+                        currentCell.Style = textType_GrandTotal;
+                    }
+                    else
+                    {
+                        currentCell.Value = info.Margin;
+                        currentCell.Style = positiveTwoDecimalPercentNumberStyle_GrandTotal;
+                    }
+
+                    currentColumn++;
+                    currentRow++;
+
+                    #endregion GrandTotalRow
+                }
+                else
+                {
+                    #region EmptyReport
+
+                    currentColumn = startColumn;
+                    currentCellRange = workSheet.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn + 6);
+                    currentCellRange.Merged = true;
+                    currentCellRange.Value = Fanex.Tarus.Reports.Resource.Language.EmptyReportMessage;
+                    currentCellRange.Style = textType;
+                    currentCellRange.Style.Font.Weight = ExcelFont.BoldWeight;
+                    currentCellRange.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+                    currentRow++;
+
+                    #endregion EmptyReport
+                }
+
+                #endregion Content
+                #endregion MakeExcelFile
+
+                var reportName = GamingResource.NumberGameMonthlyWinLossReport_ReportName;
+                (new Fanex.Tarus.Infrastructure.Helper.ReportHelpers()).ReponseExcelFile(excelFile, reportName);
+            }
+            catch (Exception ex)
+            {
+                Fanex.Tarus.Infrastructure.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+        }
+    }
+}

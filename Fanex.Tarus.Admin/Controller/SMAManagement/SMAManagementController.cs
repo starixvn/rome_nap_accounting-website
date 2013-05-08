@@ -1,0 +1,75 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="SMAManagementController.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Admin.Controller.SMAManagement
+{
+    using System.Web.Mvc;
+    using Fanex.Tarus.Admin.Business.SMAManagement;
+    using Fanex.Tarus.Web.Controllers;
+    using Fanex.Tarus.Web.Controllers.Filters;
+    using Fanex.Tarus.Admin.Entities.SMAManagement;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class SMAManagementController : BaseController
+    {
+        private readonly ISMAManagementService _smaManagementService;
+        
+        public SMAManagementController():this(null)
+        {
+        }
+
+        public SMAManagementController(ISMAManagementService smaManagemenentService)
+        {
+            _smaManagementService = smaManagemenentService ?? new SMAManagementService();
+        }
+
+        [AuthenticateRead]
+        public ActionResult Index()
+        {
+            return View("~/Views/Admin/SMAManagement/SMAManagement.cshtml");
+        }
+
+        public JsonResult GetAllFilterInfo() 
+        {
+            var result = _smaManagementService.SelFilterInfo();
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        public JsonResult GetSMAListByGroupHeadline(string siteId, int currency, bool isOpen,
+            bool isSusupended, bool isClosed, bool isDisabled, int roleId, string username, string groupHeadline, int pageIndex, int pageSize)
+        {
+            var result = _smaManagementService.SelSMAListByGroupHeadline(siteId, currency, isOpen, isSusupended, 
+                isClosed, isDisabled, roleId, username, groupHeadline, pageIndex, pageSize);
+
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        public JsonResult GetSMAListByGroupHeadlineFromCahe(string siteId, int currency, bool isOpen,
+            bool isSusupended, bool isClosed, bool isDisabled, int roleId, string username, string groupHeadline, int pageIndex, int pageSize)
+        {
+            var result = _smaManagementService.SelSMAListByGroupHeadlineFromCache(siteId, currency, isOpen, isSusupended,
+                isClosed, isDisabled, roleId, username, groupHeadline, pageIndex, pageSize);
+
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        public ActionResult ExportSMAListToExcelFile(string siteId, int currency, bool isOpen,
+            bool isSusupended, bool isClosed, bool isDisabled, int roleId, string username, string groupHeadline)
+        {
+            _smaManagementService.ExportSMAListToExcelFile(siteId, currency, isOpen,
+            isSusupended, isClosed, isDisabled, roleId, username, groupHeadline);
+            return new EmptyResult();
+        }                
+    }
+}

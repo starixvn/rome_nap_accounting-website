@@ -1,0 +1,76 @@
+﻿
+
+namespace Fanex.Tarus.Reports.Controllers.Gaming
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Web.Mvc;
+    using Fanex.Tarus.Web.Controllers;
+    using Fanex.Tarus.Reports.Business.Gaming.PokerWinloss;
+    using Fanex.Tarus.Web.Controllers.Filters;
+    using Fanex.Tarus.Reports.Entities.Gaming.PokerWinloss;
+    using DNAide.Core;
+    using ExcelUtil.Spreadsheet;
+
+  
+    public class PokerWinlossController: BaseController
+    {
+        public readonly IPokerWinlossService _pokerWinlossService;
+        public PokerWinlossController()
+            : this(null)
+        { }
+        public PokerWinlossController(IPokerWinlossService pokerWinlossService)
+        {
+            _pokerWinlossService = pokerWinlossService ?? new PokerWinlossService();
+        }
+
+        [AuthenticateRead]
+        public ActionResult LoadPokerWinloss()
+        {
+            return View("~/Views/Report/Gaming/PokerWinloss/PokerWinloss.cshtml");
+        }
+
+        [HttpPost]
+        public JsonResult GetPokerWinloss(string fromDate, string toDate, bool isViewWH)
+        {
+            var pokerWinloss = new PokerWinloss();
+            pokerWinloss = _pokerWinlossService.GetPokerWinloss(CastAide.AsDateTime(fromDate), CastAide.AsDateTime(toDate), isViewWH);
+            var jsonResult = Json(pokerWinloss);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+
+        }
+
+        [HttpPost]
+        public JsonResult GetPokerWinlossDetail(string date, int currency, bool isViewWH)
+        {
+            var pokerWinlossDetail = new PokerWinlossByCurrency();
+            pokerWinlossDetail = _pokerWinlossService.GetPokerWinlossDetail(CastAide.AsDateTime(date), currency, isViewWH);
+            var jsonResult = Json(pokerWinlossDetail);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public ActionResult PokerWinlossExportExcel(DateTime fromDate, DateTime toDate, bool isViewWH)
+        {
+
+            ExcelFile result = _pokerWinlossService.PokerWinlossExportExcel(fromDate, toDate, isViewWH);
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+        [HttpPost]
+        public ActionResult PokerWinlossDetailExportExcel(DateTime reportDate, int currency, bool isViewWH)
+        {
+
+            ExcelFile result = _pokerWinlossService.PokerWinlossDetailExportExcel(reportDate, currency, isViewWH);
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+    }
+}

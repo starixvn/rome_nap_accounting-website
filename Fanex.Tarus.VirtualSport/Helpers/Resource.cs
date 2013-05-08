@@ -1,0 +1,28 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="Resource.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.VirtualSport.Helpers
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Web;
+    using Fanex.Tarus.VirtualSport.App_Resources;
+    using System.Resources;
+     
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public static class Resource
+    {
+        public static string GetResourceByKey(string Key)
+        {
+            
+            return Message.ResourceManager.GetString(Key);            
+        }
+    }
+}

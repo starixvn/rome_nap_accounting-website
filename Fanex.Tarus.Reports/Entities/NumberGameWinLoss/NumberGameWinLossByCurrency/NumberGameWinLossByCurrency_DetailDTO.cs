@@ -1,0 +1,51 @@
+﻿
+namespace Fanex.Tarus.Reports.Entities.NumberGameWinLoss.NumberGameWinLossByCurrency
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    [Serializable]
+    public class NumberGameWinLossByCurrency_DetailDTO
+    {
+        public string Username { get; set; }
+
+        public string Turnover { get; set; }
+
+        public string GrossComm { get; set; }
+
+        public string MemberWinLoss { get; set; }
+
+        public string MemberComm { get; set; }
+
+        public string MemberTotal { get; set; }
+
+        public string AgentWinLoss { get; set; }
+
+        public string AgentComm { get; set; }
+
+        public string AgentTotal { get; set; }
+
+        public string MasterWinLoss { get; set; }
+
+        public string MasterComm { get; set; }
+
+        public string MasterTotal { get; set; }
+
+        public string SuperWinLoss { get; set; }
+
+        public string SuperComm { get; set; }
+
+        public string SuperTotal { get; set; }
+
+        public string Company { get; set; }
+
+        public int RoleID { get; set; }
+
+        public int CustID { get; set; }
+    }
+}

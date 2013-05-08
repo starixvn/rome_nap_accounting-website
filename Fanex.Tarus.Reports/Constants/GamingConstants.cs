@@ -1,0 +1,20 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="GamingConstants.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
+
+namespace Fanex.Tarus.Reports.Constants
+{
+    using System.Diagnostics.CodeAnalysis;
+
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    public class GamingConstants
+    {
+        public static readonly string LIVE_CASINO_GAME_FINANCIAL_REPORT_SESSION_KEY = "Fanex.AccountingReports.Gaming.LiveCasinoGames.FinancialReport";
+        public static readonly string NUMBER_GAME_MONTHLY_WIN_LOSS_REPORT_SESSION_KEY = "Fanex.AccountingReports.Gaming.NumberGame.MonthlyWinLossReport";
+    }
+}

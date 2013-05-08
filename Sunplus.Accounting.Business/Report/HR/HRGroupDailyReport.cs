@@ -1,0 +1,786 @@
+﻿using System;
+using System.Data;
+using System.Text;
+using System.Web;
+using DNAide.Core;
+using DNAide.Data;
+using DNAide.Utils;
+using DNAide.Web;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.Core.Common;
+
+/// <summary>
+/// Summary description for HRGroupDailyReport
+/// </summary>
+public partial class ReportHTML
+{
+    #region HR Group Daily Report
+
+    public static string HRGroupDaily_Deleted(HttpContext context)
+    {
+        string tpl = WebUtils.LoadTemplate("WinLost/HRGroupDaily.htm");
+
+        if (context.Request["Export"] == "1")
+            TemplateHandler.Assign(ref tpl, "border", "border='1'");
+        else
+            TemplateHandler.Assign(ref tpl, "border", "");
+
+        var rows = new StringBuilder();
+        string tplcontent = TemplateHandler.CopyBlock(tpl, "content");
+
+        DateTime fdate = CastAide.AsDateTime(context.Request["fdate"]);
+        DateTime tdate = CastAide.AsDateTime(context.Request["tdate"]);
+
+        DbResult rsGroup = null, rsGroupDaily = null;
+        var dtGroup = new DataTable();
+        if (fdate == tdate && tdate == DateTime.Today)
+        {
+            dtGroup = MatchWinLostReport.WinlostHR_Group_Daily(tdate).ResultSet.Tables[0];
+        }
+        else
+        {
+            rsGroup = MatchWinLostReport.WinlostHR_Group(fdate, tdate);
+            if (tdate >= DateTime.Today)
+            {
+                rsGroupDaily = MatchWinLostReport.WinlostHR_Group_Daily(tdate);
+            }
+
+            #region Combine group daily into group
+
+            dtGroup = rsGroup.ResultSet.Tables[0];
+            if (rsGroupDaily != null)
+            {
+                DataTable dtGroupDaily = rsGroupDaily.ResultSet.Tables[0];
+                foreach (DataRow drGroupDaily in dtGroupDaily.Rows)
+                {
+                    DataRow drGroup = dtGroup.NewRow();
+                    for (int i = 0; i < drGroupDaily.ItemArray.Length; i++)
+                    {
+                        drGroup[i] = drGroupDaily[i];
+                    }
+                    dtGroup.Rows.Add(drGroup);
+                }
+            }
+
+            #endregion
+        }
+
+        #region for each row
+
+        decimal TO_MTD = 0, IBC_MTD = 0, Incom12BET_MTD = 0, GroupTotalIncom_MTD = 0;
+        string row = "", bgcolor = "colGroup1";
+        foreach (DataRow dr in dtGroup.Rows)
+        {
+            bgcolor = (bgcolor == "colGroup1") ? "" : "colGroup1";
+            row = tplcontent;
+            TemplateHandler.Assign(ref row, "style", "class='" + bgcolor + "'");
+            TemplateHandler.Assign(ref row, "Date", CastAide.AsDateTime(dr["winlostdate"]).ToShortDateString());
+
+            TemplateHandler.Assign(ref row, "TO_Agent", NumberFormat.DecFormat(dr["turnoverAgents"], 2));
+            TemplateHandler.Assign(ref row, "TO_IBC", NumberFormat.DecFormat(dr["turnoverIBC"], 2));
+            TemplateHandler.Assign(ref row, "TO_Phu", NumberFormat.DecFormat(dr["turnover3rdParty"], 2));
+            TemplateHandler.Assign(ref row, "TO_Total", NumberFormat.DecFormat(dr["totalTurnover"], 2));
+            TO_MTD += CastAide.AsDecimal(dr["totalTurnover"]);
+            TemplateHandler.Assign(ref row, "TO_TotalMTD", NumberFormat.DecFormat(TO_MTD, 2));
+
+            TemplateHandler.Assign(ref row, "IBC_PT", NumberFormat.DecFormat(dr["incomeIBCPT"], 2));
+            TemplateHandler.Assign(ref row, "IBC_NetComm", NumberFormat.DecFormat(dr["incomeIBCNetComm"], 2));
+            TemplateHandler.Assign(ref row, "IBC_Total", NumberFormat.DecFormat(dr["totalIBCIncome"], 2));
+            IBC_MTD += CastAide.AsDecimal(dr["totalIBCIncome"]);
+            TemplateHandler.Assign(ref row, "IBC_TotalMTD", NumberFormat.DecFormat(IBC_MTD, 2));
+
+            TemplateHandler.Assign(ref row, "12BET_PT", NumberFormat.DecFormat(dr["income12BETPT"], 2));
+            TemplateHandler.Assign(ref row, "12BET_Comm", NumberFormat.DecFormat(dr["income12BETComm"], 2));
+            TemplateHandler.Assign(ref row, "12BET_Total", NumberFormat.DecFormat(dr["total12BETIncome"], 2));
+            Incom12BET_MTD += CastAide.AsDecimal(dr["total12BETIncome"]);
+            TemplateHandler.Assign(ref row, "12BET_TotalMTD", NumberFormat.DecFormat(Incom12BET_MTD, 2));
+
+            TemplateHandler.Assign(ref row, "GroupTotal", NumberFormat.DecFormat(dr["groupTotalIncome"], 2));
+            GroupTotalIncom_MTD += CastAide.AsDecimal(dr["groupTotalIncome"]);
+            TemplateHandler.Assign(ref row, "GroupTotalMTD", NumberFormat.DecFormat(GroupTotalIncom_MTD, 2));
+
+            rows.Append(row);
+        }
+
+        #endregion
+
+        #region Total
+
+        row = tplcontent;
+        /*Simon TemplateHandler.Assign(ref row, "style", "bgcolor='#8ac9db' style='font-weight:bold;'");*/
+        TemplateHandler.Assign(ref row, "style", "class='report-footer'");
+        TemplateHandler.Assign(ref row, "Date", "<b>Total<b/>");
+
+        TemplateHandler.Assign(ref row, "TO_Agent",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(turnoverAgents)", ""), 2));
+        TemplateHandler.Assign(ref row, "TO_IBC", NumberFormat.DecFormat(dtGroup.Compute("sum(turnoverIBC)", ""), 2));
+        TemplateHandler.Assign(ref row, "TO_Phu",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(turnover3rdParty)", ""), 2));
+        TemplateHandler.Assign(ref row, "TO_Total", NumberFormat.DecFormat(dtGroup.Compute("sum(totalTurnover)", ""), 2));
+        TemplateHandler.Assign(ref row, "TO_TotalMTD", NumberFormat.DecFormat(TO_MTD, 2));
+
+        TemplateHandler.Assign(ref row, "IBC_PT", NumberFormat.DecFormat(dtGroup.Compute("sum(incomeIBCPT)", ""), 2));
+        TemplateHandler.Assign(ref row, "IBC_NetComm",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(incomeIBCNetComm)", ""), 2));
+        TemplateHandler.Assign(ref row, "IBC_Total",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(totalIBCIncome)", ""), 2));
+        TemplateHandler.Assign(ref row, "IBC_TotalMTD", NumberFormat.DecFormat(IBC_MTD, 2));
+
+        TemplateHandler.Assign(ref row, "12BET_PT", NumberFormat.DecFormat(dtGroup.Compute("sum(income12BETPT)", ""), 2));
+        TemplateHandler.Assign(ref row, "12BET_Comm",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(income12BETComm)", ""), 2));
+        TemplateHandler.Assign(ref row, "12BET_Total",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(total12BETIncome)", ""), 2));
+        TemplateHandler.Assign(ref row, "12BET_TotalMTD", NumberFormat.DecFormat(Incom12BET_MTD, 2));
+
+        TemplateHandler.Assign(ref row, "GroupTotal",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(groupTotalIncome)", ""), 2));
+        TemplateHandler.Assign(ref row, "GroupTotalMTD", NumberFormat.DecFormat(GroupTotalIncom_MTD, 2));
+
+        rows.Append(row);
+
+        #endregion
+
+        TemplateHandler.ReplaceBlock(ref tpl, "content", rows.ToString());
+
+        if (context.Request["IsSendMail"] == "1")
+        {
+            TemplateHandler.Assign(ref tpl, "username", AppSession.Username);
+            TemplateHandler.Assign(ref tpl, "datetime", DateTime.Now.ToString());
+        }
+        else
+        {
+            TemplateHandler.RemoveBlock(ref tpl, "footer-send-email");
+        }
+
+        return tpl;
+    }
+
+    public static string HRGroupDaily_ToteOnly(HttpContext context)
+    {
+        string tpl = WebUtils.LoadTemplate("WinLost/HRGroupDailyFixTote.htm");
+        if (context.Request["IsSendMail"] == "1")
+        {
+            TemplateHandler.Assign(ref tpl, "styletable", "font-family:Tahoma, Verdana; font-size:8pt;");
+            TemplateHandler.Assign(ref tpl, "border", "");
+        }
+        else if (context.Request["Export"] == "1")
+        {
+            TemplateHandler.Assign(ref tpl, "styletable", "");
+            TemplateHandler.Assign(ref tpl, "border", "border='1'");
+        }
+        else
+        {
+            TemplateHandler.Assign(ref tpl, "styletable", "");
+            TemplateHandler.Assign(ref tpl, "border", "");
+        }
+        var rows = new StringBuilder();
+        string tplcontent = TemplateHandler.CopyBlock(tpl, "content");
+
+        DateTime fdate = CastAide.AsDateTime(context.Request["fdate"]);
+        DateTime tdate = CastAide.AsDateTime(context.Request["tdate"]);
+
+        DbResult rsGroup = null, rsGroupDaily = null;
+        var dtGroup = new DataTable();
+        if (fdate == tdate && tdate == DateTime.Today)
+        {
+            dtGroup = MatchWinLostReport.WinlostHR_Group_Daily(tdate).ResultSet.Tables[0];
+        }
+        else
+        {
+            rsGroup = MatchWinLostReport.WinlostHR_Group(fdate, tdate);
+            if (tdate >= DateTime.Today)
+            {
+                rsGroupDaily = MatchWinLostReport.WinlostHR_Group_Daily(tdate);
+            }
+
+            #region Combine group daily into group
+
+            dtGroup = rsGroup.ResultSet.Tables[0];
+            if (rsGroupDaily != null)
+            {
+                DataTable dtGroupDaily = rsGroupDaily.ResultSet.Tables[0];
+                foreach (DataRow drGroupDaily in dtGroupDaily.Rows)
+                {
+                    DataRow drGroup = dtGroup.NewRow();
+                    for (int i = 0; i < drGroupDaily.ItemArray.Length; i++)
+                    {
+                        drGroup[i] = drGroupDaily[i];
+                    }
+                    dtGroup.Rows.Add(drGroup);
+                }
+            }
+
+            #endregion
+        }
+
+        #region for each row
+
+        string row = "", bgcolor = "colGroup1", bgTotal = "colGroup1";
+        string strRowTotal = TemplateHandler.CopyBlock(tpl, "Total"), rowtotal = "";
+        TemplateHandler.RemoveBlock(ref tpl, "Total");
+        string bettype = "", date_p = "", date_c = "";
+        string condition = "", style = "";
+        int countdate = 0;
+        int countFixed = 0;
+
+        foreach (DataRow dr in dtGroup.Rows)
+        {
+            if (CastAide.AsInt32(dr["HRType"]) == 2) continue;
+
+            row = tplcontent;
+            if (CastAide.AsInt32(dr["HRType"]) == 1)
+                bettype = "Tote";
+            else
+            {
+                bettype = "Fixed";
+                countFixed++;
+            }
+
+            date_c = CastAide.AsDateTime(dr["winlostdate"]).ToShortDateString();
+
+            if (date_p != date_c)
+            {
+                bgTotal = bgcolor;
+                bgcolor = (bgcolor == "colGroup1") ? "" : "colGroup1";
+                if (countdate == 2)
+                {
+                    rowtotal = strRowTotal;
+                    condition = "winlostdate='" + date_p + "'";
+                    style = "class='" + bgTotal + "'";
+                    TemplateHandler.Assign(ref rowtotal, "style", style);
+
+                    TemplateHandler.Assign(ref rowtotal, "{id}", "");
+                    TemplateHandler.Assign(ref rowtotal, "TotalName", "<b>Total</b>");
+                    TemplateHandler.Assign(ref rowtotal, "TO_Agent",
+                                           NumberFormat.DecFormat(dtGroup.Compute("sum(turnoverAgents)", condition), 2));
+                    TemplateHandler.Assign(ref rowtotal, "TO_IBC",
+                                           NumberFormat.DecFormat(dtGroup.Compute("sum(turnoverIBC)", condition), 2));
+                    TemplateHandler.Assign(ref rowtotal, "TO_Phu",
+                                           NumberFormat.DecFormat(dtGroup.Compute("sum(turnover3rdParty)", condition), 2));
+                    TemplateHandler.Assign(ref rowtotal, "TO_Total",
+                                           NumberFormat.DecFormat(dtGroup.Compute("sum(totalTurnover)", condition), 2));
+
+                    TemplateHandler.Assign(ref rowtotal, "IBC_PT",
+                                           NumberFormat.DecFormat(dtGroup.Compute("sum(incomeIBCPT)", condition), 2));
+                    TemplateHandler.Assign(ref rowtotal, "IBC_NetComm",
+                                           NumberFormat.DecFormat(dtGroup.Compute("sum(incomeIBCNetComm)", condition), 2));
+                    TemplateHandler.Assign(ref rowtotal, "IBC_Total",
+                                           NumberFormat.DecFormat(dtGroup.Compute("sum(totalIBCIncome)", condition), 2));
+
+                    TemplateHandler.Assign(ref rowtotal, "12BET_PT",
+                                           NumberFormat.DecFormat(dtGroup.Compute("sum(income12BETPT)", condition), 2));
+                    TemplateHandler.Assign(ref rowtotal, "12BET_Comm",
+                                           NumberFormat.DecFormat(dtGroup.Compute("sum(income12BETComm)", condition), 2));
+                    TemplateHandler.Assign(ref rowtotal, "12BET_Total",
+                                           NumberFormat.DecFormat(dtGroup.Compute("sum(total12BETIncome)", condition), 2));
+
+                    TemplateHandler.Assign(ref rowtotal, "GroupTotal",
+                                           NumberFormat.DecFormat(dtGroup.Compute("sum(groupTotalIncome)", condition), 2));
+
+                    rows.Append(rowtotal);
+                }
+                if (countdate > 1) countdate++;
+                rows = rows.Replace("{rowspan}", (countdate).ToString());
+                date_p = date_c;
+                countdate = 0;
+            }
+            else
+            {
+                TemplateHandler.RemoveBlock(ref row, "date");
+            }
+
+
+            TemplateHandler.Assign(ref row, "style", "class='" + bgcolor + "'");
+            TemplateHandler.Assign(ref row, "Date", CastAide.AsDateTime(dr["winlostdate"]).ToShortDateString());
+            TemplateHandler.Assign(ref row, "Bettype", bettype);
+
+            TemplateHandler.Assign(ref row, "TO_Agent", NumberFormat.DecFormat(dr["turnoverAgents"], 2));
+            TemplateHandler.Assign(ref row, "TO_IBC", NumberFormat.DecFormat(dr["turnoverIBC"], 2));
+            TemplateHandler.Assign(ref row, "TO_Phu", NumberFormat.DecFormat(dr["turnover3rdParty"], 2));
+            TemplateHandler.Assign(ref row, "TO_Total", NumberFormat.DecFormat(dr["totalTurnover"], 2));
+
+            TemplateHandler.Assign(ref row, "IBC_PT", NumberFormat.DecFormat(dr["incomeIBCPT"], 2));
+            TemplateHandler.Assign(ref row, "IBC_NetComm", NumberFormat.DecFormat(dr["incomeIBCNetComm"], 2));
+            TemplateHandler.Assign(ref row, "IBC_Total", NumberFormat.DecFormat(dr["totalIBCIncome"], 2));
+
+            TemplateHandler.Assign(ref row, "12BET_PT", NumberFormat.DecFormat(dr["income12BETPT"], 2));
+            TemplateHandler.Assign(ref row, "12BET_Comm", NumberFormat.DecFormat(dr["income12BETComm"], 2));
+            TemplateHandler.Assign(ref row, "12BET_Total", NumberFormat.DecFormat(dr["total12BETIncome"], 2));
+
+            TemplateHandler.Assign(ref row, "GroupTotal", NumberFormat.DecFormat(dr["groupTotalIncome"], 2));
+
+            rows.Append(row);
+            countdate++;
+        }
+
+        #endregion
+
+        #region Sub total
+
+        if (countdate == 2)
+        {
+            rowtotal = strRowTotal;
+            condition = "winlostdate='" + date_p + "'";
+            style = "class='" + bgcolor + "'";
+            TemplateHandler.Assign(ref rowtotal, "style", style);
+
+            TemplateHandler.RemoveBlock(ref rowtotal, "date");
+            TemplateHandler.Assign(ref rowtotal, "{id}", "");
+            TemplateHandler.Assign(ref rowtotal, "{col}", string.Empty);
+            TemplateHandler.Assign(ref rowtotal, "TotalName", "<b>Total</b>");
+            TemplateHandler.Assign(ref rowtotal, "TO_Agent",
+                                   NumberFormat.DecFormat(dtGroup.Compute("sum(turnoverAgents)", condition), 2));
+            TemplateHandler.Assign(ref rowtotal, "TO_IBC",
+                                   NumberFormat.DecFormat(dtGroup.Compute("sum(turnoverIBC)", condition), 2));
+            TemplateHandler.Assign(ref rowtotal, "TO_Phu",
+                                   NumberFormat.DecFormat(dtGroup.Compute("sum(turnover3rdParty)", condition), 2));
+            TemplateHandler.Assign(ref rowtotal, "TO_Total",
+                                   NumberFormat.DecFormat(dtGroup.Compute("sum(totalTurnover)", condition), 2));
+
+            TemplateHandler.Assign(ref rowtotal, "IBC_PT",
+                                   NumberFormat.DecFormat(dtGroup.Compute("sum(incomeIBCPT)", condition), 2));
+            TemplateHandler.Assign(ref rowtotal, "IBC_NetComm",
+                                   NumberFormat.DecFormat(dtGroup.Compute("sum(incomeIBCNetComm)", condition), 2));
+            TemplateHandler.Assign(ref rowtotal, "IBC_Total",
+                                   NumberFormat.DecFormat(dtGroup.Compute("sum(totalIBCIncome)", condition), 2));
+
+            TemplateHandler.Assign(ref rowtotal, "12BET_PT",
+                                   NumberFormat.DecFormat(dtGroup.Compute("sum(income12BETPT)", condition), 2));
+            TemplateHandler.Assign(ref rowtotal, "12BET_Comm",
+                                   NumberFormat.DecFormat(dtGroup.Compute("sum(income12BETComm)", condition), 2));
+            TemplateHandler.Assign(ref rowtotal, "12BET_Total",
+                                   NumberFormat.DecFormat(dtGroup.Compute("sum(total12BETIncome)", condition), 2));
+
+            TemplateHandler.Assign(ref rowtotal, "GroupTotal",
+                                   NumberFormat.DecFormat(dtGroup.Compute("sum(groupTotalIncome)", condition), 2));
+
+            rows.Append(rowtotal);
+            if (countdate > 1) countdate++;
+            rows = rows.Replace("{rowspan}", countdate.ToString());
+        }
+
+        #endregion
+
+        rows.Append("<tr height='20' bgcolor='white'><td colspan='13'></td></tr>");
+
+        #region Sub total TOTE
+
+        rowtotal = strRowTotal;
+        condition = "HRType='1'";
+        style = "class=footer1";
+        TemplateHandler.Assign(ref rowtotal, "style", style);
+
+        TemplateHandler.Assign(ref rowtotal, "id", "");
+        TemplateHandler.Assign(ref rowtotal, "{col}", "colspan='2'");
+        TemplateHandler.Assign(ref rowtotal, "TotalName", "<b>Total TOTE</b>");
+        TemplateHandler.Assign(ref rowtotal, "TO_Agent",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(turnoverAgents)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "TO_IBC",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(turnoverIBC)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "TO_Phu",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(turnover3rdParty)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "TO_Total",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(totalTurnover)", condition), 2));
+
+        TemplateHandler.Assign(ref rowtotal, "IBC_PT",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(incomeIBCPT)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "IBC_NetComm",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(incomeIBCNetComm)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "IBC_Total",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(totalIBCIncome)", condition), 2));
+
+        TemplateHandler.Assign(ref rowtotal, "12BET_PT",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(income12BETPT)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "12BET_Comm",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(income12BETComm)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "12BET_Total",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(total12BETIncome)", condition), 2));
+
+        TemplateHandler.Assign(ref rowtotal, "GroupTotal",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(groupTotalIncome)", condition), 2));
+
+        if (context.Request["Export"] == null)
+            rows.Append("<tfoot>");
+
+
+        rows.Append(rowtotal);
+
+        #endregion
+
+        TemplateHandler.ReplaceBlock(ref tpl, "content", rows.ToString());
+
+        #region Send Email
+
+        if (context.Request["IsSendMail"] == "1")
+        {
+            TemplateHandler.Assign(ref tpl, "username", AppSession.Username);
+            TemplateHandler.Assign(ref tpl, "datetime", DateTime.Now.ToString());
+        }
+        else
+        {
+            TemplateHandler.RemoveBlock(ref tpl, "footer-send-email");
+        }
+
+        #endregion
+
+        return tpl;
+    }
+
+    public static string HRGroupDaily(HttpContext context)
+    {
+        string tpl = WebUtils.LoadTemplate("WinLost/HRGroupDailyFixTote.htm");
+        if (context.Request["IsSendMail"] == "1")
+        {
+            TemplateHandler.Assign(ref tpl, "styletable", "font-family:Tahoma, Verdana; font-size:8pt;");
+            TemplateHandler.Assign(ref tpl, "border", "");
+        }
+        else if (context.Request["Export"] == "1")
+        {
+            TemplateHandler.Assign(ref tpl, "styletable", "");
+            TemplateHandler.Assign(ref tpl, "border", "border='1'");
+        }
+        else
+        {
+            TemplateHandler.Assign(ref tpl, "styletable", "");
+            TemplateHandler.Assign(ref tpl, "border", "");
+        }
+        var rows = new StringBuilder();
+        string tplcontent = TemplateHandler.CopyBlock(tpl, "content");
+
+        DateTime fdate = CastAide.AsDateTime(context.Request["fdate"]);
+        DateTime tdate = CastAide.AsDateTime(context.Request["tdate"]);
+
+        DbResult rsGroup = null, rsGroupDaily = null;
+        var dtGroup = new DataTable();
+        if (fdate == tdate && tdate == DateTime.Today)
+        {
+            dtGroup = MatchWinLostReport.WinlostHR_Group_Daily(tdate).ResultSet.Tables[0];
+        }
+        else
+        {
+            rsGroup = MatchWinLostReport.WinlostHR_Group(fdate, tdate);
+            if (tdate >= DateTime.Today)
+            {
+                rsGroupDaily = MatchWinLostReport.WinlostHR_Group_Daily(tdate);
+            }
+
+            #region Combine group daily into group
+
+            dtGroup = rsGroup.ResultSet.Tables[0];
+            if (rsGroupDaily != null)
+            {
+                DataTable dtGroupDaily = rsGroupDaily.ResultSet.Tables[0];
+                foreach (DataRow drGroupDaily in dtGroupDaily.Rows)
+                {
+                    DataRow drGroup = dtGroup.NewRow();
+                    for (int i = 0; i < drGroupDaily.ItemArray.Length; i++)
+                    {
+                        drGroup[i] = drGroupDaily[i];
+                    }
+                    dtGroup.Rows.Add(drGroup);
+                }
+            }
+
+            #endregion
+        }
+
+        #region for each row
+
+        string row = "", bgcolor = "colGroup1", bgTotal = "colGroup1";
+        string strRowTotal = TemplateHandler.CopyBlock(tpl, "Total"), rowtotal = "";
+        TemplateHandler.RemoveBlock(ref tpl, "Total");
+        string bettype = "", date_p = "", date_c = "";
+        string condition = "", style = "";
+        int countdate = 0;
+        int countFixed = 0;
+
+        foreach (DataRow dr in dtGroup.Rows)
+        {
+            row = tplcontent;
+            if (CastAide.AsInt32(dr["HRType"]) == 1)
+                bettype = "Tote";
+            else
+            {
+                bettype = "Fixed";
+                countFixed++;
+            }
+
+            date_c = CastAide.AsDateTime(dr["winlostdate"]).ToShortDateString();
+
+            if (date_p != date_c)
+            {
+                bgTotal = bgcolor;
+                bgcolor = (bgcolor == "colGroup1") ? "" : "colGroup1";
+                if (countdate == 2)
+                {
+                    rowtotal = strRowTotal;
+                    condition = "winlostdate='" + date_p + "'";
+                    style = "class='" + bgTotal + "'";
+                    TemplateHandler.Assign(ref rowtotal, "style", style);
+
+                    TemplateHandler.Assign(ref rowtotal, "{id}", "");
+                    TemplateHandler.Assign(ref rowtotal, "TotalName", "<b>Total</b>");
+                    TemplateHandler.Assign(ref rowtotal, "TO_Agent",
+                                           NumberFormat.DecFormat(dtGroup.Compute("sum(turnoverAgents)", condition), 2));
+                    TemplateHandler.Assign(ref rowtotal, "TO_IBC",
+                                           NumberFormat.DecFormat(dtGroup.Compute("sum(turnoverIBC)", condition), 2));
+                    TemplateHandler.Assign(ref rowtotal, "TO_Phu",
+                                           NumberFormat.DecFormat(dtGroup.Compute("sum(turnover3rdParty)", condition), 2));
+                    TemplateHandler.Assign(ref rowtotal, "TO_Total",
+                                           NumberFormat.DecFormat(dtGroup.Compute("sum(totalTurnover)", condition), 2));
+
+                    TemplateHandler.Assign(ref rowtotal, "IBC_PT",
+                                           NumberFormat.DecFormat(dtGroup.Compute("sum(incomeIBCPT)", condition), 2));
+                    TemplateHandler.Assign(ref rowtotal, "IBC_NetComm",
+                                           NumberFormat.DecFormat(dtGroup.Compute("sum(incomeIBCNetComm)", condition), 2));
+                    TemplateHandler.Assign(ref rowtotal, "IBC_Total",
+                                           NumberFormat.DecFormat(dtGroup.Compute("sum(totalIBCIncome)", condition), 2));
+
+                    TemplateHandler.Assign(ref rowtotal, "12BET_PT",
+                                           NumberFormat.DecFormat(dtGroup.Compute("sum(income12BETPT)", condition), 2));
+                    TemplateHandler.Assign(ref rowtotal, "12BET_Comm",
+                                           NumberFormat.DecFormat(dtGroup.Compute("sum(income12BETComm)", condition), 2));
+                    TemplateHandler.Assign(ref rowtotal, "12BET_Total",
+                                           NumberFormat.DecFormat(dtGroup.Compute("sum(total12BETIncome)", condition), 2));
+
+                    TemplateHandler.Assign(ref rowtotal, "GroupTotal",
+                                           NumberFormat.DecFormat(dtGroup.Compute("sum(groupTotalIncome)", condition), 2));
+
+                    rows.Append(rowtotal);
+                }
+                if (countdate > 1) countdate++;
+                rows = rows.Replace("{rowspan}", (countdate).ToString());
+                date_p = date_c;
+                countdate = 0;
+            }
+            else
+            {
+                TemplateHandler.RemoveBlock(ref row, "date");
+            }
+
+
+            TemplateHandler.Assign(ref row, "style", "class='" + bgcolor + "'");
+            TemplateHandler.Assign(ref row, "Date", CastAide.AsDateTime(dr["winlostdate"]).ToShortDateString());
+            TemplateHandler.Assign(ref row, "Bettype", bettype);
+
+            TemplateHandler.Assign(ref row, "TO_Agent", NumberFormat.DecFormat(dr["turnoverAgents"], 2));
+            TemplateHandler.Assign(ref row, "TO_IBC", NumberFormat.DecFormat(dr["turnoverIBC"], 2));
+            TemplateHandler.Assign(ref row, "TO_Phu", NumberFormat.DecFormat(dr["turnover3rdParty"], 2));
+            TemplateHandler.Assign(ref row, "TO_Total", NumberFormat.DecFormat(dr["totalTurnover"], 2));
+
+            TemplateHandler.Assign(ref row, "IBC_PT", NumberFormat.DecFormat(dr["incomeIBCPT"], 2));
+            TemplateHandler.Assign(ref row, "IBC_NetComm", NumberFormat.DecFormat(dr["incomeIBCNetComm"], 2));
+            TemplateHandler.Assign(ref row, "IBC_Total", NumberFormat.DecFormat(dr["totalIBCIncome"], 2));
+
+            TemplateHandler.Assign(ref row, "12BET_PT", NumberFormat.DecFormat(dr["income12BETPT"], 2));
+            TemplateHandler.Assign(ref row, "12BET_Comm", NumberFormat.DecFormat(dr["income12BETComm"], 2));
+            TemplateHandler.Assign(ref row, "12BET_Total", NumberFormat.DecFormat(dr["total12BETIncome"], 2));
+
+            TemplateHandler.Assign(ref row, "GroupTotal", NumberFormat.DecFormat(dr["groupTotalIncome"], 2));
+
+            rows.Append(row);
+            countdate++;
+        }
+
+        #endregion
+
+        #region Sub total
+
+        if (countdate == 2)
+        {
+            rowtotal = strRowTotal;
+            condition = "winlostdate='" + date_p + "'";
+            style = "class='" + bgcolor + "'";
+            TemplateHandler.Assign(ref rowtotal, "style", style);
+
+            TemplateHandler.RemoveBlock(ref rowtotal, "date");
+            TemplateHandler.Assign(ref rowtotal, "{id}", "");
+            TemplateHandler.Assign(ref rowtotal, "{col}", string.Empty);
+            TemplateHandler.Assign(ref rowtotal, "TotalName", "<b>Total</b>");
+            TemplateHandler.Assign(ref rowtotal, "TO_Agent",
+                                   NumberFormat.DecFormat(dtGroup.Compute("sum(turnoverAgents)", condition), 2));
+            TemplateHandler.Assign(ref rowtotal, "TO_IBC",
+                                   NumberFormat.DecFormat(dtGroup.Compute("sum(turnoverIBC)", condition), 2));
+            TemplateHandler.Assign(ref rowtotal, "TO_Phu",
+                                   NumberFormat.DecFormat(dtGroup.Compute("sum(turnover3rdParty)", condition), 2));
+            TemplateHandler.Assign(ref rowtotal, "TO_Total",
+                                   NumberFormat.DecFormat(dtGroup.Compute("sum(totalTurnover)", condition), 2));
+
+            TemplateHandler.Assign(ref rowtotal, "IBC_PT",
+                                   NumberFormat.DecFormat(dtGroup.Compute("sum(incomeIBCPT)", condition), 2));
+            TemplateHandler.Assign(ref rowtotal, "IBC_NetComm",
+                                   NumberFormat.DecFormat(dtGroup.Compute("sum(incomeIBCNetComm)", condition), 2));
+            TemplateHandler.Assign(ref rowtotal, "IBC_Total",
+                                   NumberFormat.DecFormat(dtGroup.Compute("sum(totalIBCIncome)", condition), 2));
+
+            TemplateHandler.Assign(ref rowtotal, "12BET_PT",
+                                   NumberFormat.DecFormat(dtGroup.Compute("sum(income12BETPT)", condition), 2));
+            TemplateHandler.Assign(ref rowtotal, "12BET_Comm",
+                                   NumberFormat.DecFormat(dtGroup.Compute("sum(income12BETComm)", condition), 2));
+            TemplateHandler.Assign(ref rowtotal, "12BET_Total",
+                                   NumberFormat.DecFormat(dtGroup.Compute("sum(total12BETIncome)", condition), 2));
+
+            TemplateHandler.Assign(ref rowtotal, "GroupTotal",
+                                   NumberFormat.DecFormat(dtGroup.Compute("sum(groupTotalIncome)", condition), 2));
+
+            rows.Append(rowtotal);
+            if (countdate > 1) countdate++;
+            rows = rows.Replace("{rowspan}", countdate.ToString());
+        }
+
+        #endregion
+
+        rows.Append("<tr height='20' bgcolor='white'><td colspan='13'></td></tr>");
+
+        #region Sub total TOTE
+
+        rowtotal = strRowTotal;
+        condition = "HRType='1'";
+        style = "class=footer1";
+        TemplateHandler.Assign(ref rowtotal, "style", style);
+
+        TemplateHandler.Assign(ref rowtotal, "id", "");
+        TemplateHandler.Assign(ref rowtotal, "{col}", "colspan='2'");
+        TemplateHandler.Assign(ref rowtotal, "TotalName", "<b>Total TOTE</b>");
+        TemplateHandler.Assign(ref rowtotal, "TO_Agent",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(turnoverAgents)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "TO_IBC",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(turnoverIBC)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "TO_Phu",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(turnover3rdParty)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "TO_Total",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(totalTurnover)", condition), 2));
+
+        TemplateHandler.Assign(ref rowtotal, "IBC_PT",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(incomeIBCPT)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "IBC_NetComm",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(incomeIBCNetComm)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "IBC_Total",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(totalIBCIncome)", condition), 2));
+
+        TemplateHandler.Assign(ref rowtotal, "12BET_PT",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(income12BETPT)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "12BET_Comm",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(income12BETComm)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "12BET_Total",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(total12BETIncome)", condition), 2));
+
+        TemplateHandler.Assign(ref rowtotal, "GroupTotal",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(groupTotalIncome)", condition), 2));
+
+        if (context.Request["Export"] == null)
+            rows.Append("<tfoot>");
+        if (countFixed > 0)
+        {
+            rows.Append(rowtotal);
+        }
+
+        #endregion
+
+        #region Sub total FIXED
+
+        rowtotal = strRowTotal;
+        condition = "HRType='2'";
+        style = "class=footer2";
+        TemplateHandler.Assign(ref rowtotal, "style", style);
+
+        TemplateHandler.Assign(ref rowtotal, "id", "");
+        TemplateHandler.Assign(ref rowtotal, "{col}", "colspan='2'");
+        TemplateHandler.Assign(ref rowtotal, "TotalName", "<b>Total FIXED</b>");
+        TemplateHandler.Assign(ref rowtotal, "TO_Agent",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(turnoverAgents)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "TO_IBC",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(turnoverIBC)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "TO_Phu",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(turnover3rdParty)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "TO_Total",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(totalTurnover)", condition), 2));
+
+        TemplateHandler.Assign(ref rowtotal, "IBC_PT",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(incomeIBCPT)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "IBC_NetComm",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(incomeIBCNetComm)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "IBC_Total",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(totalIBCIncome)", condition), 2));
+
+        TemplateHandler.Assign(ref rowtotal, "12BET_PT",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(income12BETPT)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "12BET_Comm",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(income12BETComm)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "12BET_Total",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(total12BETIncome)", condition), 2));
+
+        TemplateHandler.Assign(ref rowtotal, "GroupTotal",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(groupTotalIncome)", condition), 2));
+
+        if (countFixed > 0)
+            rows.Append(rowtotal);
+
+        #endregion
+
+        #region Grand total
+
+        rowtotal = strRowTotal;
+        condition = "";
+        style = "class=report-footer";
+        TemplateHandler.Assign(ref rowtotal, "style", style);
+
+        TemplateHandler.Assign(ref rowtotal, "{id}", "id='trFooter'");
+        TemplateHandler.Assign(ref rowtotal, "{col}", "colspan='2'");
+        TemplateHandler.Assign(ref rowtotal, "TotalName", "<b>Grand Total</b>");
+        TemplateHandler.Assign(ref rowtotal, "TO_Agent",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(turnoverAgents)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "TO_IBC",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(turnoverIBC)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "TO_Phu",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(turnover3rdParty)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "TO_Total",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(totalTurnover)", condition), 2));
+
+        TemplateHandler.Assign(ref rowtotal, "IBC_PT",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(incomeIBCPT)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "IBC_NetComm",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(incomeIBCNetComm)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "IBC_Total",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(totalIBCIncome)", condition), 2));
+
+        TemplateHandler.Assign(ref rowtotal, "12BET_PT",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(income12BETPT)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "12BET_Comm",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(income12BETComm)", condition), 2));
+        TemplateHandler.Assign(ref rowtotal, "12BET_Total",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(total12BETIncome)", condition), 2));
+
+        TemplateHandler.Assign(ref rowtotal, "GroupTotal",
+                               NumberFormat.DecFormat(dtGroup.Compute("sum(groupTotalIncome)", condition), 2));
+
+        rows.Append(rowtotal);
+        if (context.Request["Export"] == null)
+            rows.Append("</tfoot>");
+
+        #endregion
+
+        TemplateHandler.ReplaceBlock(ref tpl, "content", rows.ToString());
+
+        #region Send Email
+
+        if (context.Request["IsSendMail"] == "1")
+        {
+            TemplateHandler.Assign(ref tpl, "username", AppSession.Username);
+            TemplateHandler.Assign(ref tpl, "datetime", DateTime.Now.ToString());
+        }
+        else
+        {
+            TemplateHandler.RemoveBlock(ref tpl, "footer-send-email");
+        }
+
+        #endregion
+
+        return tpl;
+    }
+
+    #endregion
+}

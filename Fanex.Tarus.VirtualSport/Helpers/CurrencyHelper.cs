@@ -1,0 +1,13 @@
+﻿using System.Data;
+using DNAide.Data;
+using Fanex.Tarus.Infrastructure.Common;
+
+namespace Fanex.Tarus.VirtualSport.Helpers
+{
+    public class CurrencyHelper
+    {
+        #region IMethods
+
+        #endregion
+    }
+}

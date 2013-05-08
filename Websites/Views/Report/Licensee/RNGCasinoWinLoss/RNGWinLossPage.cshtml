@@ -1,0 +1,265 @@
+﻿@model Fanex.Tarus.Reports.Entities.Licensee.RNGCasinoWinLoss.RNGCasinoWinLoss
+@if (Model != null && Model.LicenseesGroup != null && Model.LicenseesGroup.Count > 0)
+{     
+	<div id="mainreportgrid" class="freegrid">
+		<div class="grid-title">
+			<div class="grid-title-lable" id="reporttile">
+				&nbsp;</div>
+			<div class="grid-toolbox">
+				<input type="button" id="btnExport" value=" " class="btnExcel" title="Export to Excel" />
+			</div>
+		</div>
+		<div class="free-cell free-top-left">
+			<table class="grid-fixed-table free-cell-top-left">
+				<thead>
+					<tr>
+						<th>
+							<div class="table-cell" style="width: 100px; height: 39px">
+								Licensee</div>
+						</th>
+						<th>
+							<div class="table-cell" style="width: 120px; height: 39px">
+								Turnover</div>
+						</th>
+						<th>
+							<div class="table-cell" style="width: 90px; height: 39px">
+								Total Transaction</div>
+						</th>
+						<th>
+							<div class="table-cell" style="width: 90px; height: 39px">
+								Gross Win</div>
+						</th>
+						<th>
+							<div class="table-cell" style="width: 100px; height: 39px">
+								Distributor's Revenue</div>
+						</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div class="row_header_wrapper">
+			<div class="row_header row-headers-background">
+				<table class="grid-fixed-table row_header_content" id="tblContentHeader">
+					<thead>
+						<tr>
+							<th>
+								<div class="table-cell" style="width: 100px; height: 39px">
+									&nbsp;</div>
+							</th>
+							<th>
+								<div class="table-cell" style="width: 120px; height: 39px">
+									&nbsp;</div>
+							</th>
+							<th>
+								<div class="table-cell" style="width: 90px; height: 39px">
+									&nbsp;</div>
+							</th>
+							<th>
+								<div class="table-cell" style="width: 90px; height: 39px">
+									&nbsp;</div>
+							</th>
+							<th>
+								<div class="table-cell" style="width: 100px; height: 39px">
+									&nbsp;</div>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var group in Model.LicenseesGroup)
+						{                               
+							<tr>
+								<td colspan="5">
+									<div class="r" style="width: 520px; height: 17px">&nbsp;</div>
+								</td>
+							</tr>
+							foreach (var licensee in group.Licensees)
+							{ 
+								<tr>
+									<td><div class="l b" style="width: 100px; height: 17px">@licensee.Licensee</div></td>
+									<td><div class="r" style="width: 120px; height: 17px">@licensee.Turnover</div></td>
+									<td><div class="r" style="width: 90px; height: 17px">@licensee.TotalTran</div></td>
+									<td><div class="r" style="width: 90px; height: 17px">@licensee.GrossWin</div></td>
+									<td><div class="c" style="width: 100px; height: 17px">@licensee.DistributorRevenue</div></td>
+								</tr>
+							}
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col_header row-headers-background scroll-y">
+			<div class="header-container">
+				<table class="grid-fixed-table col_header_content">
+					<thead>
+						<tr>
+							<th>
+								<div class="table-cell" style="width: 100px; height: 39px">
+									&nbsp;</div>
+							</th>
+							<th>
+								<div class="table-cell" style="width: 120px; height: 39px">
+									&nbsp;</div>
+							</th>
+							<th>
+								<div class="table-cell" style="width: 90px; height: 39px">
+									&nbsp;</div>
+							</th>
+							<th>
+								<div class="table-cell" style="width: 90px; height: 39px">
+									&nbsp;</div>
+							</th>
+							<th>
+								<div class="table-cell" style="width: 100px; height: 39px">
+									&nbsp;</div>
+							</th>
+							<th>
+								<div class="table-cell" style="width: 140px; height: 39px">
+									Star Express's Revenue</div>
+							</th>
+							<th>
+								<div class="table-cell" style="width: 160px; height: 39px">
+									Amount Due To ONEWorks</div>
+							</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+		<div class="grid-container container">
+			<div class="content-container">
+				<table id="tblContent" class="grid-fixed-table col_header_content">
+					<thead>
+						<tr>
+							<th>
+								<div class="table-cell" style="width: 100px; height: 39px">
+									&nbsp;</div>
+							</th>
+							<th>
+								<div class="table-cell" style="width: 120px; height: 39px">
+									&nbsp;</div>
+							</th>
+							<th>
+								<div class="table-cell" style="width: 90px; height: 39px">
+									&nbsp;</div>
+							</th>
+							<th>
+								<div class="table-cell" style="width: 90px; height: 39px">
+									&nbsp;</div>
+							</th>
+							<th>
+								<div class="table-cell" style="width: 100px; height: 39px">
+									&nbsp;</div>
+							</th>
+							<th>
+								<div class="table-cell" style="width: 120px; height: 39px">
+									&nbsp;</div>
+							</th>
+							<th>
+								<div class="table-cell" style="width: 160px; height: 39px">
+									&nbsp;</div>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var group in Model.LicenseesGroup)
+						{                               
+							<tr class="revenueInfo">
+								<td>
+									<div class="c" style="width: 100px; height: 17px">
+										&nbsp;</div>
+								</td>
+								<td>
+									<div class="r" style="width: 120px; height: 17px">
+										&nbsp;</div>
+								</td>
+								<td>
+									<div class="r" style="width: 90px; height: 17px">
+										&nbsp;</div>
+								</td>
+								<td>
+									<div class="r" style="width: 90px; height: 17px">
+										&nbsp;</div>
+								</td>
+								<td>
+									<div class="r" style="width: 100px; height: 17px">
+										&nbsp;</div>
+								</td>
+								<td>
+									<div class="c b i" style="width: 140px; height: 17px">@group.RevenueInfo.StarExpressRevenue</div>
+								</td>
+								<td>
+									<div class="c b i" style="width: 160px; height: 17px">@group.RevenueInfo.AmontDueToOneWorks</div>
+								</td>
+							</tr>
+							foreach (var licensee in group.Licensees)
+							{ 
+								<tr>
+									<td><div class="c" style="width: 100px; height: 17px">&nbsp;</div></td>
+									<td><div class="r" style="width: 120px; height: 17px">&nbsp;</div></td>
+									<td><div class="r" style="width: 90px; height: 17px">&nbsp;n</div></td>
+									<td><div class="r" style="width: 90px; height: 17px">&nbsp;</div></td>
+									<td><div class="r" style="width: 100px; height: 17px">&nbsp;</div></td>
+									<td><div class="r b" style="width: 140px; height: 17px">@licensee.StarExpressRevenue</div></td>
+									<td><div class="r b" style="width: 160px; height: 17px">@licensee.AmontDueToOneWorks</div></td>
+								</tr>
+							}
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row_footer row-footer-background z999">
+			<table class="grid-fixed-table row_footer_content">
+				<thead>
+					<tr>
+					    <th><div class="r" style="width: 520px; height: 17px">Total</div></th>
+				    </tr>
+				</thead>
+			</table>
+		</div>
+		<div class="col_footer row-footer-background scroll-y">
+			<div class="footer-container">
+				<table class="col_footer_content grid-fixed-table">
+					<thead>
+						<tr>
+						    <th><div class="r" style="width: 100px; height: 17px">&nbsp;</div></th>
+						    <th><div class="r" style="width: 120px; height: 17px">&nbsp;</div></th>
+						    <th><div class="r" style="width: 90px; height: 17px">&nbsp;</div></th>
+						    <th><div class="r" style="width: 90px; height: 17px">&nbsp;</div></th>
+						    <th><div class="r" style="width: 100px; height: 17px">&nbsp;</div></th>
+						    <th><div class="r" style="width: 140px; height: 17px">@Model.GrandTotal.StarExpressRevenue</div></th>
+						    <th><div class="r" style="width: 160px; height: 17px">@Model.GrandTotal.AmontDueToOneWorks</div></th>                            
+					    </tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+	</div>
+
+<script type="text/javascript">
+	$('#btnExport').on('click', function () { RNGCasinoWinLoss.exportExcel(); });
+	var gridOpts = {
+		tblContentId: 'tblContent',
+		isShowPager: false,
+		manualCopyHeader: true,
+		fullWidth: true,
+		fullHeight: true,
+		gridHeight: 100,
+		freezeWidth: 520,
+		numberFreezeCol: 5
+	};
+    $('#mainreportgrid').initGrid(gridOpts).removeClass("hidden").gridScroller(gridOpts);
+    var gameGroupSelected = $('#ddlGameGroup').val() == "0" ? "All Game Group" : $("#ddlGameGroup :selected").text();
+    var gameTypeSelected = $('#ddlGameType').val() == "0" ? "All Game Type" : $("#ddlGameType :selected").text();
+	RNGCasinoWinLoss.reportTitle = 'RNG Casino Win Loss Report from ' + RNGCasinoWinLoss.fromDate + ' to ' + RNGCasinoWinLoss.toDate + " - " + gameGroupSelected + " - " + gameTypeSelected;
+	$('#reporttile').html(RNGCasinoWinLoss.reportTitle);
+</script>
+}
+else
+{
+	<script type="text/javascript">
+		$('#mainreportgrid').addClass('hidden');
+		$('#err').show();
+		$('#err .alertboxerr div').html('There is no data.');        
+	</script>
+}

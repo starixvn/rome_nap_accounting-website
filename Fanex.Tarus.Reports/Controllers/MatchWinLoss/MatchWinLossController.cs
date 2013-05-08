@@ -1,0 +1,152 @@
+﻿
+using System;
+using System.Web.Mvc;
+using DNAide.Core;
+using Fanex.Tarus.Reports.Business.MatchWinLoss;
+using Fanex.Tarus.Web.Controllers;
+using Fanex.Tarus.Web.Controllers.Filters;
+
+namespace Fanex.Tarus.Reports.Controllers.MatchWinLoss
+{
+    public class MatchWinLossController : BaseController
+    {
+        #region IFields
+
+        // GET: /MatchWinLossService/
+        private readonly IMatchWinLossService _matchWinLossService;
+
+        #endregion IFields
+        #region IConstructions
+
+        public MatchWinLossController()
+            : this(null)
+        {
+        }
+
+        public MatchWinLossController(IMatchWinLossService matchWinLossService)
+        {
+            _matchWinLossService = matchWinLossService ?? new MatchWinLossService();
+        }
+
+        #endregion IConstructions
+        #region IMethods
+
+        [HttpPost]
+        public ActionResult SelSummaryReportBySportType(string reportDate)
+        {
+            var wlSummaryBySportReport = _matchWinLossService.SelSummaryReportBySportType(CastAide.AsDateTime(reportDate));
+            var jsonResult = Json(wlSummaryBySportReport);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [AuthenticateRead]
+        public ActionResult ThirdPartyReportDetail()
+        {
+            return View("~/Views/Report/MatchWinLoss2a/ThirdPartyReportDetail.cshtml");
+        }
+
+        [AuthenticateRead]
+        public ActionResult SportTypeReportDetail()
+        {
+            return View("~/Views/Report/MatchWinLoss2a/SportTypeReportDetail.cshtml");
+        }
+
+        [AuthenticateRead]
+        public ActionResult BetTypeReportDetail()
+        {
+            return View("~/Views/Report/MatchWinLoss2a/BetTypeReportDetail.cshtml");
+        }
+
+        [HttpPost]
+        public JsonResult SelThirdPartyCasinoReport(string reportDate)
+        {
+            var result = _matchWinLossService.SelThirdPartyCasinoReport(CastAide.AsDateTime(reportDate));
+
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public JsonResult SelSportTypeReportDetail(string reportDate, string sportName)
+        {
+            var result = _matchWinLossService.SelSportTypeReportDetail(CastAide.AsDateTime(reportDate), sportName);
+
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public JsonResult SelBetTypeReportDetail(string reportDate, string sportName,
+            string betType, string liveType)
+        {
+            var result = _matchWinLossService.SelBetTypeReportDetail(CastAide.AsDateTime(reportDate), sportName,
+                CastAide.AsInt32(betType), CastAide.AsInt32(liveType));
+
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public ActionResult ExportSportTypeReportDetail(DateTime reportDate, string reportName, string sportName)
+        {
+            _matchWinLossService.ExportSportTypeReportDetail(reportDate, reportName, sportName);
+
+            int exportResult = 1;
+            var jsonResult = Json(exportResult);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public ActionResult ExportBetTypeReportDetail(DateTime reportDate, string reportName,
+            string sportName, int betType, string betTypeName, int liveType)
+        {
+            _matchWinLossService.ExportBetTypeReportDetail(reportDate, reportName,
+                 sportName, betType, betTypeName, liveType);
+
+            int exportResult = 1;
+            var jsonResult = Json(exportResult);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public ActionResult ExportWLSummaryBySportTypeReport(DateTime reportDate, string reportName)
+        {
+            _matchWinLossService.ExportWLSummaryBySportTypeReport(reportDate, reportName);
+
+            int exportResult = 1;
+            var jsonResult = Json(exportResult);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public ActionResult ExportWLAllDetails(DateTime reportDate, string reportName)
+        {
+            _matchWinLossService.ExportWLAllDetails(reportDate, reportName);
+
+            int exportResult = 1;
+            var jsonResult = Json(exportResult);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public ActionResult ExportWLSummaryMainReports(DateTime reportDate, string reportName)
+        {
+            _matchWinLossService.ExportWLSummaryMainReports(reportDate, reportName);
+
+            int exportResult = 1;
+            var jsonResult = Json(exportResult);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        #endregion IMethods
+    }
+}

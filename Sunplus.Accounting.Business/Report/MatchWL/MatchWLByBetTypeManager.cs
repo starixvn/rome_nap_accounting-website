@@ -1,0 +1,148 @@
+﻿using System;
+using System.Collections;
+using System.Data;
+using System.Text;
+using DNAide.Core;
+using DNAide.Data;
+using DNAide.Utils;
+using DNAide.Web;
+
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Accounting.Core.Web.Controls;
+using Sunplus.Accounting.DataAccess.IBCDLL.Report;
+using Sunplus.Core.LoggingLib;
+using Sunplus.Accounting.Core.Extensions;
+
+/// <summary>
+/// Summary description for MatchWinLostByBetType
+/// </summary>
+
+namespace BLL.Report.MatchWL
+{
+    public class MatchWLByBetTypeManager : ReportBase
+    {
+        private readonly string _matchWinLostByBetTypeKey = "accRptMatchWinLostByBetType." + AppSession.AccUserName;
+
+        public override string CreateHeader(Hashtable input)
+        {
+            string tpl = WebUtils.LoadTemplate("Report/MatchWL/MatchWLByBettype/MatchWinLostByBetTypeAllHeader.htm");
+            try
+            {
+                TemplateHandler.Assign(ref tpl, "{Title}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "MatchWinLostByBettype"));
+                TemplateHandler.Assign(ref tpl, "{fdate}", "<input type=\"text\" id=\"fdate\" readonly=\"readonly\" class=\"txtdate\" style=\"width: 100px; background-color: white;\" />");
+                TemplateHandler.Assign(ref tpl, "{tdate}", "<input type=\"text\" id=\"tdate\" readonly=\"readonly\" class=\"txtdate\" style=\"width: 100px; background-color: white;\" />");
+                TemplateHandler.Assign(ref tpl, "{mainContent}", RenderHTML(input));
+            }
+            catch (InvalidOperationException InvalidOEx)
+            {
+                throw InvalidOEx;
+            }
+            catch (Exception ex)
+            {
+
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+            return tpl;
+        }
+
+        public override string RenderHTML(Hashtable input)
+        {
+            string tpl = WebUtils.LoadTemplate("Report/MatchWL/MatchWLByBettype/MatchWinLostByBetTypeAllRow.htm");
+            try
+            {
+                //Get data                       
+                var rs = MatchWinLostByBetType.RptMatchWinLostByBettype(CastAide.AsDateTime(input["fdate"]),
+                                                                             CastAide.AsDateTime(input["tdate"]));
+
+                //Load Rows
+                if (rs != null && rs.Tables.Count > 0 && rs.Tables[0].Rows.Count > 0)
+                {
+                    DataRowCollection dtRow = rs.Tables[0].Rows;
+                    var html = new StringBuilder();
+                    string tpl_row = TemplateHandler.CopyBlock(tpl, "Rows");
+                    string odd_even = "";
+                    double total = 0;
+                    int index = 0;
+                    foreach (DataRow dr in dtRow)
+                    {
+                        index++;
+                        string row = tpl_row;
+                        odd_even = (odd_even == "") ? "evenrow" : "";
+                        TemplateHandler.Assign(ref row, "{odd_even}", odd_even);
+
+                        string bettype = CacheRef.GetBettype(dr["bettype"]);
+                        if (Convert.ToBoolean(dr["liveindicator"]))
+                            bettype = "<font color='red'><b>!" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Live") + " -</b></font> " + bettype;
+                        //Convert.ToString(dr["typenamee"]);
+
+                        TemplateHandler.Assign(ref row, "{Order}", NumberFormat.DecFormat(index, 0));
+                        TemplateHandler.Assign(ref row, "{bettype}", bettype);
+                        TemplateHandler.Assign(ref row, "{home}",
+                                               CacheRef.GetTeamName(dr["homeid"]) +
+                                               (CastAide.AsBoolean(dr["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : string.Empty));
+                        TemplateHandler.Assign(ref row, "{away}", CacheRef.GetTeamName(dr["awayid"]));
+                        TemplateHandler.Assign(ref row, "{base}", NumberFormat.DecFormat(dr["matchwinlost"], 2));
+                        html.Append(row);
+                        total += CastAide.AsDouble(dr["matchwinlost"]);
+                    }
+                    string totalrow =
+                        WebUtils.LoadHtml("Report/MatchWL/MatchWLByBettype/MatchWinLostByBetTypeFinalTotal.htm",
+                                          new[] { "{total}" }, new[] { NumberFormat.DecFormat(total, 2) });
+                    html.Append(totalrow);
+                    TemplateHandler.ReplaceBlock(ref tpl, "Rows", html.ToString());
+                }
+                else
+                {
+                    string norow = WebUtils.LoadTemplate("NoInformation.htm");
+                    TemplateHandler.Assign(ref norow, "{tdno}", "6");
+                    TemplateHandler.Assign(ref norow, "{nodata}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"));
+                    TemplateHandler.ReplaceBlock(ref tpl, "Rows", norow);
+                }
+            }
+            catch (InvalidOperationException invalidOEx)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(invalidOEx);
+                throw invalidOEx;
+            }
+            catch (Exception ex)
+            {
+
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+            string strTitle = "<center><b>Match Win Loss By Bet Type from " +
+                              CastAide.AsDateTime(input["fdate"]).ToShortDateString() + " to " +
+                              CastAide.AsDateTime(input["tdate"]).ToShortDateString() + "<b/><center/>";
+            SetCacheReport(_matchWinLostByBetTypeKey, strTitle + tpl, DateTime.Now.AddMinutes(30));
+            return tpl;
+        }
+
+        public override void Export2Excel(Hashtable input)
+        {
+            string data = GetCachedReport(_matchWinLostByBetTypeKey);
+            if (string.IsNullOrEmpty(data))
+            {
+                data = RenderHTML(input);
+            }
+            data = "<table><tr><td>" + data + "</td></tr></table>";
+            var content = new StringBuilder();
+            content.Append("<html>");
+            content.Append("<head>");
+            content.Append("<META http-EQUIV='Content-Type' CONTENT='text/html; charset=unicode-utf8'>");
+            content.Append("</head>");
+            content.Append(ReportHTML.CSSExcelReport());
+            content.Append(data);
+            content.Append("<table><tr><td class='tdhidden'></td></tr></table>");
+            content.Append("</html>");
+
+            ExcelContent = content.ToString();
+            base.Export2Excel(input);
+        }
+    }
+}

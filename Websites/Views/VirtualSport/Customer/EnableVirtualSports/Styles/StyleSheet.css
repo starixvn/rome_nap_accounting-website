@@ -1,0 +1,51 @@
+﻿input[type="checkbox"] {
+	cursor:pointer;
+}
+
+.bgSports {
+	background-color: #b5c4d0
+}
+
+.pleft10 {
+	padding-left: 10px;
+}
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight { 
+	border: 1px solid #b5c4d0;
+	color: #363636;
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
+	border-bottom-right-radius: 4px;
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl {
+	border-bottom-left-radius: 4px;
+}
+.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr {
+	border-top-right-radius: 4px;
+}
+.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl {
+	border-top-left-radius: 4px;
+}
+
+.ui-state-highlight .ui-icon {
+	background-image: url("../images/ui-icons.png");
+	
+}
+.ui-icon-info {
+	background-position: -16px -144px;
+}
+.ui-icon {
+	background-image: url("../images/ui-icons.png");
+	height: 16px;
+	width: 16px;
+}
+.ui-icon {
+	background-repeat: no-repeat;
+	display: block;
+	overflow: hidden;
+	text-indent: -99999px;
+}
+.info {
+	font-weight: bold;
+	color: #618e11;
+}

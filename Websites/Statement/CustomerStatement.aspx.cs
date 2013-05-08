@@ -1,0 +1,321 @@
+﻿using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+using System.Text;
+
+using Sunplus.Accounting.Business.Statement;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web;
+using IBCUtils.DAL;
+using Sunplus.Accounting.Core.Web.Controls;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using IBCUtils.Web;
+using IBCUtils;
+using DNAide.Web;
+using DNAide.Core; 
+using DNAide.Data;
+using Sunplus.Core.CachingLib;
+using Sunplus.Core.LoggingLib;
+
+public partial class Statement_CustomerStatement : PageBase
+{
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        try
+        {
+            WebUtils.SetNoCache();
+
+            int reportNo = 1;
+            reportNo = CastAide.AsInt32(Request.QueryString["repno"], 1);
+            if (reportNo < 1 || reportNo > 5 || reportNo == 2) //combine statement 1&2
+                reportNo = 1;
+
+            //get datetime
+            string fdate = WebUtils.GetQueryStringValue<string>("fdate", DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy"));
+            //CastAide.AsString(Request.QueryString["fdate"]);
+            string tdate = WebUtils.GetQueryStringValue<string>("tdate", DateTime.Now.ToString("MM/dd/yyyy"));
+            //  CastAide.AsString(Request.QueryString["tdate"]);
+
+            DateTime fdt, tdt;
+
+            if (!Validator.ValidDateMMDDYYYYNotNull(fdate, out fdt).IsSuccess())
+                fdt = DateTime.Now;
+
+            if (!Validator.ValidDateMMDDYYYYNotNull(tdate, out tdt).IsSuccess())
+                tdt = DateTime.Now;
+
+
+            //render banner search - filter
+            reportHeader.Text = "Statement";
+            RenderFilterBanner(reportNo, fdt, tdt);
+
+            //for export to excel
+            if (CastAide.AsInt32(Request.QueryString["IsExport"], 0) == 1)
+            {
+                string reportContent = string.Empty;
+                string filenameSuffix = "-" + CastAide.AsString(AppSession.CustUName, string.Empty)
+                                        + "-" + fdt.ToString("yyyyMMdd") + "-" + tdt.ToString("yyyyMMdd");
+
+
+                switch (reportNo)
+                {
+                    case 1:
+                        GenerateStatementExcelContent(fdate, tdate, ref reportContent, ref filenameSuffix);
+                        break;
+                    case 3:
+                        GenerateDetailExcelContent(fdate, tdate, ref reportContent, ref filenameSuffix);
+                        break;
+
+                    case 4:
+                        GenerateAuditExcelContent(ref reportContent, ref filenameSuffix);
+                        break;
+
+                }
+
+                ExportToExcel(reportContent, filenameSuffix);
+            }
+        }
+        catch(Exception ex)
+        {
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex); 
+        }
+
+    }
+
+    private static void GenerateAuditExcelContent(ref string reportContent, ref string filenameSuffix)
+    {
+        filenameSuffix = "Audit" + filenameSuffix;
+
+        if (!string.IsNullOrEmpty(ReportCache.REPORT_STATEMENT_AUDIT))
+        {
+            reportContent = ReportCache.REPORT_STATEMENT_AUDIT;
+        }
+        else
+        {
+            reportContent = StatementHTML.GetAuditStatement();
+        }
+    }
+
+    private static void GenerateDetailExcelContent(string fdate, string tdate, ref string reportContent, ref string filenameSuffix)
+    {
+        filenameSuffix = "Detail" + filenameSuffix;
+
+        if (!string.IsNullOrEmpty(ReportCache.REPORT_STATEMENT_DETAIL))
+        {
+            reportContent = ReportCache.REPORT_STATEMENT_DETAIL;
+        }
+        else
+        {
+            reportContent = StatementHTML.GetDetailStatement(fdate, tdate);
+        }
+
+        TemplateHandler.RemoveBlock(ref reportContent, "DelHeader");
+        TemplateHandler.RemoveBlock(ref reportContent, "DelCol");
+        TemplateHandler.ReplaceBlock(ref reportContent, "Excel-Footer", "<td colspan='7' align='center'>");
+    }
+
+    private static void GenerateStatementExcelContent(string fromDate, string toDate, ref string reportContent, ref string filenameSuffix)
+    {
+        filenameSuffix = "Statement" + filenameSuffix;
+
+
+        string key = "CustomerStatement" + AppSession.AccUserName;
+
+        var report = AppSession.GetSession(HttpContext.Current.Session, key);
+
+
+        if (report != null)
+        {
+            reportContent = report.ToString();
+        }
+        //if (!string.IsNullOrEmpty(AppCache.REPORT_STATEMENT))
+        //if (!string.IsNullOrEmpty(reportContent))
+        //{
+        //    //reportContent = AppCache.REPORT_STATEMENT;
+
+        //}
+        //else
+        //{
+        if (string.IsNullOrEmpty(reportContent))
+        {
+            reportContent = StatementHTML.GetMemberStatement(fromDate, toDate);
+            TemplateHandler.RemoveBlock(ref reportContent, "verifyheader");
+            //TemplateHandler.RemoveBlock(ref reportContent, "verifycheckbox");
+            TemplateHandler.RemoveBlock(ref reportContent, "action");
+        }
+        //}
+    }
+
+    /// <summary>
+    /// Render header report by reprort type
+    /// </summary>
+    /// <param name="reportNo"></param>
+    /// <param name="fromdate"></param>
+    /// <param name="todate"></param>
+    /// <returns></returns>
+    private void RenderFilterBanner(int reportTypeNo, DateTime fromdate, DateTime todate)
+    {
+        /*
+         * From date and todate must be less than or equal to DateTime.Now
+         * fromdate <= todate
+         */
+        if (fromdate > DateTime.Now)
+            fromdate = DateTime.Now;
+
+        if (todate > DateTime.Now)
+            todate = DateTime.Now;
+
+        if (fromdate > todate)
+            fromdate = todate;
+
+
+        string headerHtml = WebUtils.LoadTemplate("Statement/CustomerHeader.htm");
+
+        TemplateHandler.Assign(ref headerHtml, "{reportNo}", reportTypeNo.ToString());
+        TemplateHandler.Assign(ref headerHtml, "{custname}",
+            System.Web.HttpUtility.UrlDecode(WebUtils.GetQueryStringValue<string>("custname", string.Empty)));
+
+        //remove Audit tab if current user is member
+        if (Session["CustRoleId"] == null || (int)Session["CustRoleId"] < 2)
+            TemplateHandler.RemoveBlock(ref headerHtml, "IsAgent");
+
+
+        switch (reportTypeNo)
+        {
+            case 1://Statement 1&2
+                TemplateHandler.RemoveBlock(ref headerHtml, "StatementLink");
+                TemplateHandler.RemoveBlock(ref headerHtml, "Detail");
+                TemplateHandler.RemoveBlock(ref headerHtml, "Audit");
+                break;
+
+            case 3:// Detail
+                TemplateHandler.RemoveBlock(ref headerHtml, "Statement");
+                TemplateHandler.RemoveBlock(ref headerHtml, "DetailLink");
+                TemplateHandler.RemoveBlock(ref headerHtml, "Audit");
+                break;
+            case 4://Audit
+                TemplateHandler.RemoveBlock(ref headerHtml, "Statement");
+                TemplateHandler.RemoveBlock(ref headerHtml, "Detail");
+                TemplateHandler.RemoveBlock(ref headerHtml, "AuditLink");
+                break;
+
+        }
+        //if (reportTypeNo == 1) //Statement 1&2
+        //{
+        //    TemplateHandler.RemoveBlock(ref headerHtml, "StatementLink");
+        //    TemplateHandler.RemoveBlock(ref headerHtml, "Detail");
+        //    TemplateHandler.RemoveBlock(ref headerHtml, "Audit");
+        //}
+        //else if (reportTypeNo == 3) //Detail
+        //{
+        //    TemplateHandler.RemoveBlock(ref headerHtml, "Statement");
+        //    TemplateHandler.RemoveBlock(ref headerHtml, "DetailLink");
+        //    TemplateHandler.RemoveBlock(ref headerHtml, "Audit");
+        //}
+        //else if (reportTypeNo == 4) //Audit
+        //{
+        //    TemplateHandler.RemoveBlock(ref headerHtml, "Statement");
+        //    TemplateHandler.RemoveBlock(ref headerHtml, "Detail");
+        //    TemplateHandler.RemoveBlock(ref headerHtml, "AuditLink");
+        //}
+
+        #region Render from and to date calendar
+
+        if (reportTypeNo == 4)
+        {
+            //ReportType no = 4 is Audit report,
+            //this report doest not provide fileter by fromdate and to date
+            //TemplateHandler.Assign(ref headerHtml, "{FromDateCal}", string.Empty);
+            //TemplateHandler.Assign(ref headerHtml, "{ToDateCal}", string.Empty);
+            TemplateHandler.RemoveBlock(ref headerHtml, "Calendar");
+        }
+        else
+        {
+            DateTime now = DateTime.Now;
+            //Gen Datetimepicker
+            TemplateHandler.Assign(ref headerHtml, "{FromDateCal}",
+               Calendar.GenCalendarControl(
+                    "01012008",
+                    now.AddYears(50).ToString("yyyyMMdd"),
+                    "fdate",
+                    "../",
+                    "fdateTrigger",
+                    fromdate.ToString("MM/dd/yyyyy"),
+                    false,
+                    false,
+                    string.Empty,
+                    string.Empty,
+                    string.Empty));
+
+            TemplateHandler.Assign(ref headerHtml, "{ToDateCal}",
+               Calendar.GenCalendarControl(
+                    "01012008",
+                    now.AddYears(50).ToString("yyyyMMdd"),
+                    "tdate",
+                    "../",
+                    "tdateTrigger",
+                    todate.ToString("MM/dd/yyyyy"),
+                    true,
+                    false,
+                    string.Empty,
+                    string.Empty,
+                    string.Empty));
+        }
+
+        #endregion
+        //TemplateHandler.Assign(ref headerHtml, "{ToDateCal}",
+        //    Calendar.GenCalendarControl("tdate", "../", "tdateTrigger",
+        //    todate.ToShortDateString(), true, false, 0, 0, string.Empty));
+
+        //why, I really don't know
+        //what happend if a dev move the definition of this function after it is called
+        //tpl = tpl + "<script>GetDataReport();</script>";
+
+
+
+        searchContent.Text = headerHtml;
+    }
+
+
+    private void ExportToExcel(string data, string filename)
+    {
+        if (!string.IsNullOrEmpty(filename)
+            && !string.IsNullOrEmpty(data))
+        {
+
+            data = data.Replace("<br>", "");
+
+            HttpContext.Current.Response.Clear();
+            HttpContext.Current.Response.AddHeader("content-disposition", "attachment;filename="
+                + filename.Replace(" ", string.Empty) + ".xls");
+            HttpContext.Current.Response.Charset = "utf-8";
+            HttpContext.Current.Response.ContentType = "application/vnd.ms-excel";
+
+            StringBuilder content = new StringBuilder();
+            content.Append("<html>");
+            content.Append("<head>");
+            content.Append("<META http-EQUIV='Content-Type' CONTENT='text/html; charset=unicode-utf8'>");
+            content.Append(ReportHTML.CSSExcelReport());
+            content.Append("</head>");
+            content.AppendLine(data);
+            content.Append("<table><tr><td class='tdhidden'></td></tr></table>");
+            content.Append("</html>");
+            HttpContext.Current.Response.Write(content.ToString());
+            //HttpContext.Current.Response.End();
+        }
+        else
+        {
+            //response error
+            Response.Write("<script>window.alert('Cannot export excel. Please contact administrator')</script>");
+        }
+    }
+}

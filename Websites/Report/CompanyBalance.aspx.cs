@@ -1,0 +1,191 @@
+using System;
+using System.Data;
+using System.Text;
+using DNAide.Web;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Core.LoggingLib;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using IBCUtils;
+using DNAide.Data;
+
+
+public partial class Report_CompanyBalance : PageBase
+{
+
+    private DateTime fDate;
+    private string headerTpl, contentTpl, footerTpl, noDataTpl;
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (Request["fdate"] != null)
+        {
+            fDate = Convert.ToDateTime(Request["fdate"]);
+            CompanyBalanceHeaderStr.Text = Resources.Language.CompanyBalance;
+            GenCompanyBalanceContent();
+        }
+    }
+    private void GenCompanyBalanceContent()
+    {
+        headerTpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("CompBalance/CompanyBalanceHeader.tpl");
+        contentTpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("CompBalance/CompanyBalanceRow.tpl");
+        footerTpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("CompBalance/CompanyBalanceFooter.tpl");
+        noDataTpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("NoInformation.tpl"); 
+        try
+        {
+            DbResult ds = AccountReport.RptCompanyDebitCredit(fDate);
+            if (ds != null)
+            {
+                double debitRunningTotal =FormatHandler.GetDouble(ds.Outputs["totalbasedebitrunning"]);
+                double debitCompletedTotal = FormatHandler.GetDouble(ds.Outputs["totalbasedebitcomplete"]);
+                double creditTotal = FormatHandler.GetDouble(ds.Outputs["totalbasecredit"]);
+                if (ds.ResultSet.Tables[0] != null)
+                {
+                    DebitRunningHtml.Text = GenDebitRunning(ds.ResultSet.Tables[0], debitRunningTotal);
+                }
+                if (ds.ResultSet.Tables[1] != null)
+                {
+                    DebitCompletedHtml.Text = GenDebitCompleted(ds.ResultSet.Tables[1], debitCompletedTotal);
+                }
+                if (ds.ResultSet.Tables[2] != null)
+                {
+                    CreditHtml.Text = GenCredit(ds.ResultSet.Tables[2], creditTotal);
+                }
+                CompanyBalanceTotal.Text = Resources.Language.CompanyBalance + ": " + FormatHandler.FormatNumber20(ds.Outputs["totalbasecompanybalance"]);
+            }
+        }
+        catch (Exception ex)
+        {
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+        }
+    }
+    private string GenDebitRunning(DataTable tbl, double total)
+    {
+        StringBuilder htmlDR = new StringBuilder();
+        try
+        {
+            string headerStr = headerTpl;
+            TemplateHandler.Assign(ref headerStr, "{title}", Resources.Language.DebitRunning);
+            TemplateHandler.Assign(ref headerStr, "{currency}", Resources.Language.Currency);
+            TemplateHandler.Assign(ref headerStr, "{foreign}", Resources.Language.ForeignDebit);
+            TemplateHandler.Assign(ref headerStr, "{base}", Resources.Language.BaseDebit);
+            htmlDR.Append(headerStr);
+            if (tbl.Rows.Count > 0)
+            {
+                for(int i=0;i<tbl.Rows.Count;i++)
+                {                
+                    string contentStr = contentTpl;
+                    string currStr = (tbl.Rows[i]["currency"] as string) ?? string.Empty;
+                    TemplateHandler.Assign(ref contentStr, "{currency}",currStr);
+                    TemplateHandler.Assign(ref contentStr, "{foreign}", FormatHandler.FormatNumber20(tbl.Rows[i]["foreigndebit"]));
+                    TemplateHandler.Assign(ref contentStr, "{base}", FormatHandler.FormatNumber20(tbl.Rows[i]["basedebit"]));
+                    htmlDR.Append(contentStr);
+                }
+                string footerStr = footerTpl;
+                TemplateHandler.Assign(ref footerStr, "{total}", Resources.Language.GrandToTal);
+                TemplateHandler.Assign(ref footerStr, "{totalvalue}", FormatHandler.FormatNumber20(total));
+                htmlDR.Append(footerStr);
+
+            }
+            else
+            {
+                string noDataStr = noDataTpl;
+                TemplateHandler.Assign(ref noDataStr, "{tdno}", "5");
+                TemplateHandler.Assign(ref noDataStr, "{nodate}", Resources.Language.thereisnodata);
+                htmlDR.Append(noDataStr);
+            }            
+        }
+        catch(Exception ex)
+        {
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+        }
+        htmlDR.Append("</table>");
+        return htmlDR.ToString();
+    }
+
+    private string GenDebitCompleted(DataTable tbl, double total)
+    {
+        StringBuilder htmlDR = new StringBuilder();
+        try
+        {
+            string headerStr = headerTpl;
+            TemplateHandler.Assign(ref headerStr, "{title}", Resources.Language.DebitCompleted);
+            TemplateHandler.Assign(ref headerStr, "{currency}", Resources.Language.Currency);
+            TemplateHandler.Assign(ref headerStr, "{foreign}", Resources.Language.ForeignDebit);
+            TemplateHandler.Assign(ref headerStr, "{base}", Resources.Language.BaseDebit);
+            htmlDR.Append(headerStr);
+            if (tbl.Rows.Count > 0)
+            {
+                for (int i = 0; i < tbl.Rows.Count; i++)
+                {                   
+                    string contentStr = contentTpl;
+                    string currStr = (tbl.Rows[i]["currency"] as string) ?? string.Empty;
+                    TemplateHandler.Assign(ref contentStr, "{currency}",currStr);
+                    TemplateHandler.Assign(ref contentStr, "{foreign}", FormatHandler.FormatNumber20(tbl.Rows[i]["foreigndebit"]));
+                    TemplateHandler.Assign(ref contentStr, "{base}", FormatHandler.FormatNumber20(tbl.Rows[i]["basedebit"]));
+                    htmlDR.Append(contentStr);
+                }
+                string footerStr = footerTpl;
+                TemplateHandler.Assign(ref footerStr, "{total}", Resources.Language.GrandToTal);
+                TemplateHandler.Assign(ref footerStr, "{totalvalue}", FormatHandler.FormatNumber20(total));
+                htmlDR.Append(footerStr);
+
+            }
+            else
+            {
+                string noDataStr = noDataTpl;
+                TemplateHandler.Assign(ref noDataStr, "{tdno}", "5");
+                TemplateHandler.Assign(ref noDataStr, "{nodate}", Resources.Language.thereisnodata);
+                htmlDR.Append(noDataStr);
+            }
+        }
+        catch(Exception ex)
+        {
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+        }
+        htmlDR.Append("</table>");
+        return htmlDR.ToString();
+    }
+    private string GenCredit(DataTable tbl, double total)
+    {
+        StringBuilder htmlDR = new StringBuilder();
+        try
+        {
+            string headerStr = headerTpl;
+            TemplateHandler.Assign(ref headerStr, "{title}", Resources.Language.Credit);
+            TemplateHandler.Assign(ref headerStr, "{currency}", Resources.Language.Currency);
+            TemplateHandler.Assign(ref headerStr, "{foreign}", Resources.Language.ForeignCredit);
+            TemplateHandler.Assign(ref headerStr, "{base}", Resources.Language.BaseCredit);
+            htmlDR.Append(headerStr);
+            if (tbl.Rows.Count > 0)
+            {
+                for (int i = 0; i < tbl.Rows.Count; i++)
+                {
+                    string contentStr = contentTpl;
+                    string currStr = (tbl.Rows[i]["currency"] as string) ?? string.Empty;
+                    TemplateHandler.Assign(ref contentStr, "{currency}",currStr);
+                    TemplateHandler.Assign(ref contentStr, "{foreign}",FormatHandler.FormatNumber20(tbl.Rows[i]["foreigncredit"]));
+                    TemplateHandler.Assign(ref contentStr, "{base}", FormatHandler.FormatNumber20(tbl.Rows[i]["basecredit"]));
+                    htmlDR.Append(contentStr);
+                }
+                string footerStr = footerTpl;
+                TemplateHandler.Assign(ref footerStr, "{total}", Resources.Language.GrandToTal);
+                TemplateHandler.Assign(ref footerStr, "{totalvalue}", FormatHandler.FormatNumber20(total));
+                htmlDR.Append(footerStr);
+
+            }
+            else
+            {
+                string noDataStr = noDataTpl;
+                TemplateHandler.Assign(ref noDataStr, "{tdno}", "5");
+                TemplateHandler.Assign(ref noDataStr, "{nodate}", Resources.Language.thereisnodata);
+                htmlDR.Append(noDataStr);
+            }
+        }
+        catch(Exception ex)
+        {
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex); 
+        }
+        htmlDR.Append("</table>");
+        return htmlDR.ToString();
+    }
+}

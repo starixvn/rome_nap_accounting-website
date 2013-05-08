@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BettingLimit>
+  <BettingLimitItems>
+    
+    <BettingLimitItem id="1" name="Soccer">
+      <MinBet></MinBet>
+      <MaxBet></MaxBet>
+      <MaxPerMatch></MaxPerMatch>
+      <MinBetMax></MinBetMax>
+      <MaxBetMin></MaxBetMin>
+      <MaxPerMatchMin></MaxPerMatchMin>
+      <MaxPerMatchMax></MaxPerMatchMax>
+    </BettingLimitItem>
+    
+    <BettingLimitItem id="2" name="Basketball">
+      <MinBet></MinBet>
+      <MaxBet></MaxBet>
+      <MaxPerMatch></MaxPerMatch>
+      <MinBetMax></MinBetMax>
+      <MaxBetMin></MaxBetMin>
+      <MaxPerMatchMin></MaxPerMatchMin>
+      <MaxPerMatchMax></MaxPerMatchMax>
+    </BettingLimitItem>
+    
+    <BettingLimitItem id="3" name="Football">
+      <MinBet></MinBet>
+      <MaxBet></MaxBet>
+      <MaxPerMatch></MaxPerMatch>
+      <MinBetMax></MinBetMax>
+      <MaxBetMin></MaxBetMin>
+      <MaxPerMatchMin></MaxPerMatchMin>
+      <MaxPerMatchMax></MaxPerMatchMax>
+    </BettingLimitItem>
+    
+    <BettingLimitItem id="5" name="Tennis">
+      <MinBet></MinBet>
+      <MaxBet></MaxBet>
+      <MaxPerMatch></MaxPerMatch>
+      <MinBetMax></MinBetMax>
+      <MaxBetMin></MaxBetMin>
+      <MaxPerMatchMin></MaxPerMatchMin>
+      <MaxPerMatchMax></MaxPerMatchMax>
+    </BettingLimitItem>
+    
+    <BettingLimitItem id="8" name="Baseball">
+      <MinBet></MinBet>
+      <MaxBet></MaxBet>
+      <MaxPerMatch></MaxPerMatch>
+      <MinBetMax></MinBetMax>
+      <MaxBetMin></MaxBetMin>
+      <MaxPerMatchMin></MaxPerMatchMin>
+      <MaxPerMatchMax></MaxPerMatchMax>
+    </BettingLimitItem>
+    
+    <BettingLimitItem id="10" name="Golf">
+      <MinBet></MinBet>
+      <MaxBet></MaxBet>
+      <MaxPerMatch></MaxPerMatch>
+      <MinBetMax></MinBetMax>
+      <MaxBetMin></MaxBetMin>
+      <MaxPerMatchMin></MaxPerMatchMin>
+      <MaxPerMatchMax></MaxPerMatchMax>
+    </BettingLimitItem>
+    
+    <BettingLimitItem id="11" name="Moto Sports">
+      <MinBet></MinBet>
+      <MaxBet></MaxBet>
+      <MaxPerMatch></MaxPerMatch>
+      <MinBetMax></MinBetMax>
+      <MaxBetMin></MaxBetMin>
+      <MaxPerMatchMin></MaxPerMatchMin>
+      <MaxPerMatchMax></MaxPerMatchMax>
+    </BettingLimitItem>
+    
+    <BettingLimitItem id="99" name="Other Sports">
+      <MinBet></MinBet>
+      <MaxBet></MaxBet>
+      <MaxPerMatch></MaxPerMatch>
+      <MinBetMax></MinBetMax>
+      <MaxBetMin></MaxBetMin>
+      <MaxPerMatchMin></MaxPerMatchMin>
+      <MaxPerMatchMax></MaxPerMatchMax>
+    </BettingLimitItem>
+    
+    <BettingLimitItem id="99" name="Mix Sports Parlay">
+      <MinBet></MinBet>
+      <MaxBet></MaxBet>
+      <MaxPerMatch></MaxPerMatch>
+      <MinBetMax></MinBetMax>
+      <MaxBetMin></MaxBetMin>
+      <MaxPerMatchMin></MaxPerMatchMin>
+      <MaxPerMatchMax></MaxPerMatchMax>
+    </BettingLimitItem>
+    
+    <BettingLimitItem id="161" name="Number Game">
+      <MinBet></MinBet>
+      <MaxBet></MaxBet>
+      <MaxPerMatch></MaxPerMatch>
+      <MinBetMax></MinBetMax>
+      <MaxBetMin></MaxBetMin>
+      <MaxPerMatchMin></MaxPerMatchMin>
+      <MaxPerMatchMax></MaxPerMatchMax>
+      <MaxPerBallMax></MaxPerBallMax>
+      <MaxPerBallMin></MaxPerBallMin>
+    </BettingLimitItem>
+    
+  </BettingLimitItems>
+</BettingLimit>

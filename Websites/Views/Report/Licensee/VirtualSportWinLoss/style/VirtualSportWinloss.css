@@ -1,0 +1,20 @@
+﻿.revenueInfo td
+{
+    color: #E05307;
+}
+.winlossreseller td
+{
+    background-color:#FAE3BE;
+}
+.i
+{
+    font-style:italic;
+}
+.hideborderright td
+{
+    border-right:none 0px;
+}
+.grandtotal td
+{
+    background-color: #D8E4BC;
+}

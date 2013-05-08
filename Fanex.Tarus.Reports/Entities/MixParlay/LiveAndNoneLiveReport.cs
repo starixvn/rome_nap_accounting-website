@@ -1,0 +1,15 @@
+﻿
+
+
+using System;
+namespace Fanex.Tarus.Reports.Entities.MixParlay
+{
+    [Serializable]
+    public class LiveAndNoneLiveReport
+    {
+        public Report NoneLiveReport { get; set; }
+        public Report LiveReport { get; set; }
+        public Report MixLiveAndNoneLiveReport { get; set; }
+        public ReportTotal Total { get; set; }
+    }
+}

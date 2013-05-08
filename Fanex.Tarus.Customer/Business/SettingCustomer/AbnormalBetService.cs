@@ -1,0 +1,58 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="AbnormalBetService.cs" company="">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Customer.Business.SettingCustomer
+{
+    using System;
+    using System.Web;
+    using Fanex.Tarus.Customer.Entities.SettingCustomer;
+    using Fanex.Tarus.Customer.DataAccess.SettingCustomer;
+    using Sunplus.Accounting.Core.Common;
+    using Fanex.Tarus.Customer.Entities;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class AbnormalBetService: IAbnormalBetService
+    {
+       
+        public IAbnormalBetAccess _abnormalBetAccess;
+
+        public AbnormalBetService(IAbnormalBetAccess abnormalbetAccess)
+        {
+            _abnormalBetAccess = abnormalbetAccess ?? new AbnormalBetAccess();
+        }
+        public AbnormalBetService()
+            : this(null)
+        { }
+
+        public Result UpdateAbnormalCustomer(int custId, int updateDownline, int abnormalLevel)
+        {
+            var result = new Result();
+            try
+            {
+                if (custId <= 0)
+                {
+                    result = new Result { ErrorCode = 1, ErrorMessage = "Invalid Username" };
+                }
+                result = _abnormalBetAccess.UpdateLevelAbnormal(custId, updateDownline, abnormalLevel, AppSession.AccId,
+                                                           HttpContext.Current.Request.UserHostAddress);
+            }
+            catch (Exception ex)
+            {
+
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
+            }
+
+            return result;
+
+        }
+      
+
+       
+    }
+}

@@ -1,0 +1,42 @@
+﻿using System;
+using System.Collections;
+using System.Configuration;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using DNAide.Core;
+using DNAide.Web;
+using DNAide.Utils;
+using System.Collections;
+using Sunplus.Accounting.Business.BetList;
+using Sunplus.Accounting.Business.BetList.BetlistM88;
+using Sunplus.Accounting.Business.Report;
+
+public partial class BetList_BetListM88 : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        Response.Cache.SetCacheability(HttpCacheability.NoCache);
+
+        this.ReportTitle.Text = Sunplus.Accounting.Business.Report.Reports.Title;
+        BetlistBase betlist = new BetlistM88();
+
+        Hashtable hash = new Hashtable();
+        hash.Add("custid", CastAide.AsString(Request["custid"]));
+        hash.Add("username", CastAide.AsString(Request["username"]));
+        hash.Add("fdate",CastAide.AsString(Request["fdate"]));
+        hash.Add("tdate", CastAide.AsString(Request["tdate"]));
+        hash.Add("showsb", CastAide.AsString(Request["showSB"]));
+        hash.Add("showhr", CastAide.AsString(Request["showHR"]));
+        hash.Add("basecurrency", CastAide.AsString(Request["baseCurrency"]));
+
+        this.reportContent.Text = betlist.RenderHTML(hash);
+        //betlist.RenderHTML(
+
+    }
+}

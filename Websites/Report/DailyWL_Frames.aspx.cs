@@ -1,0 +1,51 @@
+using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+using System.Text;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web;
+using IBCUtils.Web;
+using IBCUtils.DAL;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using IBCUtils;
+
+/// <summary>
+/// CITS
+/// </summary>
+public partial class DailyWL_Frames : PageBase
+{
+
+    public string fdate = "", tdate = "", param = "", url = "";
+     
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        Title = Sunplus.Accounting.Business.Report.Reports.Title;
+        fdate = Request["fdate"];
+        tdate = Request["tdate"];
+        string type = Request["type"];
+        string sportname = Request["sportname"];
+        string sporttype = Request["sporttype"];
+        string path = Request["path"];
+        string db = Request["db"];
+        string mode = Request["mode"];
+        param = "?type=" + type + "&fdate=" + fdate + "&tdate=" + tdate + "&sportname=" + sportname + "&sporttype=" + sporttype + "&path=" + path + "&db=" + db;
+
+        if (!string.IsNullOrEmpty(mode))
+        {
+            param += "&mode=" + mode;
+            url = "DailyWL_Bettype.aspx" + param;
+        }
+        else
+        {
+            url = "DailyWL_Bettype.aspx" + param;
+        }
+
+    }    
+}

@@ -1,0 +1,61 @@
+﻿.countBet-Main
+{
+    width:367px;
+    float:left;            
+    height:auto;
+    border-right:1px solid #7C98A4;
+}
+.countBet-Header
+{
+    width:366px;
+    float:left;
+    background:#CDDEF3;
+    font-weight:bold;
+    border:1px solid #7C98A4;
+    height:20px;
+    text-align:center;            
+}
+.countBet-Header-left
+{
+    float:left; width:172px;padding:3px 0px 0px 0px;border-right:1px solid #7C98A4;height:18px;
+}
+.countBet-Header-right
+{
+    float:left; width:172px;
+    height:18px; padding:3px 0px 0px 0px; border-right:1px solid #7C98A4;
+}
+.countBet-content
+{
+    width:369px;
+    height:auto;
+    max-height:500px;
+    overflow:auto; 
+    overflow-x: hidden;
+    /*border-bottom:1px solid #7C98A4;*/
+}
+.countBet-content-foreachrow
+{
+    background-color:white;
+    float:left;
+    border-bottom:1px solid #7C98A4;
+    border-left:1px solid #7C98A4;
+    text-align:center;
+}
+.countBet-content-foreachrow-lastrow
+{
+    float:left;            
+    border-left:1px solid #7C98A4;
+    text-align:center;
+     background:white;
+}
+.countBet-content-left
+{
+    float:left; width:172px;padding:3px 0px 0px 0px;border-right:1px solid #7C98A4;height:18px; 
+}
+.countBet-content-right
+{
+    float:left; width:172px;
+    height:18px; padding:3px 0px 0px 0px; border-right:1px solid #7C98A4;
+    
+}
+    

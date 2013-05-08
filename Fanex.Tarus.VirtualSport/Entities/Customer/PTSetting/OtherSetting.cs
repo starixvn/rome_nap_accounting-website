@@ -1,0 +1,25 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="OtherSetting.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.VirtualSport.Entities.Customer.PTSetting
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class OtherSetting
+    {
+        public bool UpdateAllmembers { get; set; }
+
+        public decimal s1 { get; set; }
+
+        public decimal m1 { get; set; }
+    }
+}

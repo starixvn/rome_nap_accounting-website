@@ -1,0 +1,44 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="NumberGameWinLossByBettype.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Reports.Entities.NumberGameWinLoss.NumberGameWinLossByBettype
+{
+    using System;
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    [Serializable]
+    public class WinLossReport
+    {        
+        public string Name { get; set; }
+        public List<WinLossReportDetail> WinLossDetails { get; set; }
+        public WinLossReportDetail GrandTotal { get; set; }
+    }
+
+    [Serializable]
+    public class WinLossReportDetail
+    {
+        public string BettypeId { get; set; }
+        public string Bettype { get; set; }
+        public string WinLoss { get; set; }
+        public string Position { get; set; }
+        public string Comm { get; set; }
+        public string LineTotalReal { get; set; }
+        public string LineTotalVirtual { get; set; }
+        public string Turnover { get; set; }
+        public string Margin { get; set; }
+        public string Variance { get; set; }
+    }
+
+    [Serializable]
+    public class WinLossReportDetailGroupByLeague
+    {
+        public List<WinLossReport> WinLoss { get; set; }
+        public WinLossReportDetail GrandTotal { get; set; }
+    }
+}

@@ -1,0 +1,167 @@
+﻿namespace Fanex.Tarus.Customer.Credit.Controllers
+{
+    using System;
+    using System.Web.Mvc;
+    using Fanex.PTEngine.BusinessObjects;
+    using Fanex.Tarus.Customer.CreditCustomer.Business;
+    using Fanex.Tarus.Customer.CreditCustomer.Entities;
+    using Fanex.Tarus.Web.Controllers.Filters;
+    using Newtonsoft.Json;
+    using Sunplus.Accounting.Core.Common;
+
+    public class AddNewSuperController : CustomerSettingBaseController
+    {
+        public AddNewSuperController(ICustomerSettingService customerSettingService)
+            : base(customerSettingService)
+        {
+        }
+
+        public AddNewSuperController()
+            : base()
+        {
+        }
+
+        /// <summary>
+        /// This funtion will return a result binding to view
+        /// </summary>
+        /// <returns></returns>
+        [AuthenticateRead]
+        public ActionResult AddNewSuperPage()
+        {
+            ViewData["listCurrency"] = _customerSettingService.GetCurrencyList(AppSession.SYSTEM);
+            ViewData["listSite"] = _customerSettingService.GetSites(AppSession.SYSTEM);
+            // Setting insert or edit page
+            CustomerSettingView customerSettingView = new CustomerSettingView
+            {
+                TitlePage = "General Information",
+                IsInsertPage = true,
+                IsSuperSetting = true,
+                IsMasterSetting = false,
+                IsAgentSetting = false,
+                IsMemberSetting = false,
+                CanEditCredit = _customerSettingService.CheckPermissionEditCredit()
+            };
+            return View("~/Views/Customer/CreditCustomer/AddNewSuper.cshtml", customerSettingView);
+        }
+
+        /// <summary>
+        /// Get Customer
+        /// </summary>
+        /// <param name="requestContext">Constext Of Get customer</param>
+        /// <returns>Customer Object</returns>
+        public override ICustomer GetCustomerForLaterAction(IRequestContext requestContext)
+        {
+            // Add this just for workaround 
+            ICustomer customerObject = _customerService.GetCustomerForAddNewSuper();
+            customerObject.CommissionSetting = new CommissionSetting
+            {
+                RoleId = 4,
+                GroupA = (decimal)0.0025,
+                GroupB = (decimal)0.005,
+                GroupC = (decimal)0.0075,
+                GroupD = (decimal)0.01,
+                Discount1x2 = (decimal)0.0025,
+                DiscountCS = (decimal)0.01,
+                DiscountNumber = (decimal)0.0025
+            };
+            return customerObject;
+        }
+
+        /// <summary>
+        /// This function will return a current context object
+        /// </summary>
+        /// <returns>Current context object</returns>
+        [HttpPost]
+        public JsonResult GetContextObject()
+        {
+            // Init context for add new supper
+            IRequestContext currentContext = new RequestContext()
+            {
+                RoleId = 0,// role of the member do insert
+                TargetRoleId = 4,// role of the super be inserted
+                FormId = FormType.Add
+            };
+            // Format json return
+            return Json(JsonConvert.SerializeObject(currentContext, Formatting.Indented, GetJsonSerializerSetting()));
+        }
+
+        /// <summary>
+        /// This function will add new customer and redirect to update page if add successful
+        /// </summary>
+        /// <param name="stringcustomer">String will be deserialized to a customer object</param>
+        /// <param name="currentContext">Current context</param>
+        /// <returns>Return a result message</returns>
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult DoAddNewSuper(string stringcustomer, RequestContext currentContext)
+        {
+            Fanex.PTEngine.BusinessObjects.Result result;
+            try
+            {
+                ICustomer customer = GetCustomerFromDeserializeJsonString(stringcustomer);
+                // Check Permission for finace
+                result = CheckPermissionInsert(customer.IsInternal);
+                if (result.ErrorCode != "0")
+                    return Json(result);
+
+                // Save currency id
+                string currency = customer.CurrencyId.ToString();
+                // Do insert new super
+                int superId = 0;
+                currentContext.AdminId = AppSession.AccId;
+                customer.Language = "E";
+                currentContext.IP = System.Web.HttpContext.Current.Request.UserHostAddress;
+                result = _customerService.AddNewSuper(customer, currentContext, out superId);
+                // DedirectToEditPage
+                if (result.ErrorCode == "0")
+                {
+                    string strUrl = "Customer/V2/UpdatePT.aspx?custid=" + superId + "&insert=true&roleid=4&uplineid=0&exchangeId=" + currency;
+                    result.ErrorMessage = strUrl;
+                }
+            }
+            catch (Exception ex)
+            {
+                result = new Fanex.PTEngine.BusinessObjects.Result
+                {
+                    ErrorCode = "1000",
+                    ErrorMessage = ex.Message
+                };
+            }
+
+            // Return result
+            return Json(result);
+        }
+
+        /// <summary>
+        /// This function will check a customer pemission for insert function
+        /// </summary>
+        /// <returns>Result a result content error message or not</returns>
+        [NonAction]
+        public Fanex.PTEngine.BusinessObjects.Result CheckPermissionInsert(bool isInternal)
+        {
+            Result result = new Result
+            {
+                ErrorCode = "0",
+                ErrorMessage = "Success"
+            };
+
+            if (AppSession.SYSTEM.ToLower() != Enumerations.AccountingSystem.Accounting.ToString().ToLower())
+            {
+                result.ErrorCode = "1000";
+                result.ErrorMessage = "You are not authorized on this function";
+                return result;
+            }
+
+            if (isInternal)
+            {
+                if (!_customerSettingService.CheckPermissionFinance())
+                {
+                    result.ErrorCode = "1000";
+                    result.ErrorMessage = "You're not authorized to create Finance (Internal) account.";
+                }
+            }
+
+            return result;
+        }
+    }
+}

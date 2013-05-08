@@ -1,0 +1,1021 @@
+﻿
+
+
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Web;
+using DNAide.Core;
+using DNAide.Utils;
+using Fanex.Tarus.Reports.DataAccess.MatchWinLoss;
+using Fanex.Tarus.Reports.Entities.MatchWinLoss;
+using Fanex.Tarus.Reports.Entities.Sport;
+using Sunplus.Accounting.Business.Report.Common;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
+
+namespace Fanex.Tarus.Reports.Business.MatchWinLoss
+{
+    public partial class MatchWinLossService : IMatchWinLossService
+    {
+        #region IFields
+
+        //
+        // GET: /MatchWinLossAccess/
+        private readonly IMatchWinLossAccess _matchWinLossAccess;
+        private string _wlSummaryReportBySport = string.Empty;
+        private string _wlAllDetails = string.Empty;
+        private string _sportTypeReportDetail = string.Empty;
+        private string _betTypeReportDetail = string.Empty;
+
+        private string _notAvailableString = Fanex.Tarus.Reports.Resource.Language.NotAvailableString;
+        private RMReportUtils _barmUtils = null;
+        private RMReportUtils _eightRMUtils = null;
+
+        #endregion IFields
+        #region IConstructions
+
+        public MatchWinLossService()
+            : this(null)
+        {
+        }
+
+        public MatchWinLossService(IMatchWinLossAccess matchWinLossAccess)
+        {
+            _matchWinLossAccess = matchWinLossAccess ?? new MatchWinLossAccess();
+            _wlAllDetails = "WLAllDetails" + AppSession.Username;
+            _sportTypeReportDetail = "SportTypeReportDetail" + AppSession.Username;
+            _betTypeReportDetail = "BetTypeReportDetail" + AppSession.Username;
+            _wlSummaryReportBySport = "SummaryReportBySport" + AppSession.Username;
+
+            _eightRMUtils = new RMReportUtils(RMReportUtils.ReportName.Report2a, RMReportUtils.RMType.EightRM);
+            _barmUtils = new RMReportUtils(RMReportUtils.ReportName.Report2a, RMReportUtils.RMType.BARM);
+        }
+
+        #endregion IConstructions
+        #region IMethods
+
+        public WLSummaryBySportReport SelSummaryReportBySportType(DateTime reportDate)
+        {
+            WLSummaryBySportReport wlSummaryBySportReport = new WLSummaryBySportReport
+            {
+                NonThirdPartyDetails = new List<WLDetailBySportReport>(),
+                ThirdPartyDetails = new WLDetailBySportReport
+                {
+                    ReportDetails = new List<WLDetailByBetTypeModel>()
+                },
+                NonThirdPartyGrandTotal = new WLDetailByBetTypeModel(),
+                Total = new WLDetailByBetTypeModel()
+            };
+
+            try
+            {
+                Hashtable outParam = new Hashtable();
+                DataSet dbResult = _matchWinLossAccess.SelSummaryReportBySportType(reportDate, ref outParam);
+                decimal eightRMTotal = _eightRMUtils.IsActive ? CastAide.AsDecimal(outParam["winlost_8rm"]) : 0;
+                decimal barmTotal = _barmUtils.IsActive ? CastAide.AsDecimal(outParam["winlost_barm"]) : 0;
+                decimal eightRMTurnover = _eightRMUtils.IsActive ? CastAide.AsDecimal(outParam["ibcturnover_8rm"]) : 0;
+                decimal barmTurnover = _barmUtils.IsActive ? CastAide.AsDecimal(outParam["ibcturnover_barm"]) : 0;
+
+                if (dbResult != null)
+                {
+                    var totalTable = dbResult.Tables.Count;
+                    #region Entities
+
+                    WLDetailByBetType wlEntity = new WLDetailByBetType();
+                    WLDetailByBetType sportTotalEntity = new WLDetailByBetType();
+                    WLDetailByBetType nonThirdPartyGrandTotalEntity = new WLDetailByBetType();
+                    WLDetailByBetType wl3rdPartyEntity = new WLDetailByBetType();
+                    WLDetailByBetType _3rdPartyTotalEntity = new WLDetailByBetType();
+
+                    #endregion Entities
+                    #region GetNonThirdPartyData
+
+                    if (totalTable >= 1)
+                    {
+                        var nonThirdPartyData = dbResult.Tables[0];
+                        var wlDetailByBetType = new WLDetailByBetTypeModel();
+                        var nonThirdPartyReport = new WLDetailBySportReport
+                        {
+                            ReportDetails = new List<WLDetailByBetTypeModel>()
+                        };
+                        string previousSport = null;
+                        if (nonThirdPartyData.Rows.Count > 0)
+                        {
+                            previousSport = CastAide.AsString(nonThirdPartyData.Rows[0]["leaguenametc"]);
+                        }
+                        foreach (DataRow row in nonThirdPartyData.Rows)
+                        {
+                            wlEntity = new WLDetailByBetType
+                            {
+                                Commission = CastAide.AsDecimal(row["comm"]),
+                                VirtualComm = CastAide.AsDecimal(row["VirtualComm"]),
+                                LineTotal = CastAide.AsDecimal(row["LineTotal"]),
+                                VirtualLineTotal = CastAide.AsDecimal(row["VirtualLineTotal"]),
+                                Turnover = CastAide.AsDecimal(row["IBCTurnover"])
+                            };
+                            wlEntity.Variance = wlEntity.LineTotal - wlEntity.VirtualLineTotal;
+
+                            wlDetailByBetType = new WLDetailByBetTypeModel
+                            {
+                                BetType = new BaseModel
+                                {
+                                    Id = CastAide.AsInt32(row["bettype"])
+                                },
+                                SportType = new Sporttype
+                                {
+                                    Name = CastAide.AsString(row["leaguenametc"])
+                                },
+                                LiveIndicator = new BaseModel
+                                {
+                                    Id = CastAide.AsInt32(row["liveindicator"])
+                                },
+                                Commission = NumberFormat.DecFormat(wlEntity.Commission, 2),
+                                VirtualComm = NumberFormat.DecFormat(wlEntity.VirtualComm, 2),
+                                LineTotal = NumberFormat.DecFormat(wlEntity.LineTotal, 2),
+                                VirtualLineTotal = NumberFormat.DecFormat(wlEntity.VirtualLineTotal, 2),
+                                Variance = NumberFormat.DecFormat(wlEntity.Variance, 2),
+                                Turnover = NumberFormat.DecFormat(wlEntity.Turnover, 2),
+                                Margin = this.CalculateMargin(wlEntity.LineTotal, wlEntity.Turnover)
+                            };
+
+                            wlDetailByBetType.BetType.Name = GetBetTypeName(wlDetailByBetType.BetType.Id);
+                            wlDetailByBetType.Name = GetLiveTypeName(wlDetailByBetType.LiveIndicator.Id, false) +
+                                wlDetailByBetType.BetType.Name;
+
+                            if (wlDetailByBetType.SportType.Name != previousSport)
+                            {
+                                nonThirdPartyReport.Total = new WLDetailByBetTypeModel
+                                {
+                                    Name = previousSport,
+                                    Commission = NumberFormat.DecFormat(sportTotalEntity.Commission, 2),
+                                    VirtualComm = NumberFormat.DecFormat(sportTotalEntity.VirtualComm, 2),
+                                    LineTotal = NumberFormat.DecFormat(sportTotalEntity.LineTotal, 2),
+                                    VirtualLineTotal = NumberFormat.DecFormat(sportTotalEntity.VirtualLineTotal, 2),
+                                    Variance = NumberFormat.DecFormat(sportTotalEntity.Variance, 2),
+                                    Turnover = NumberFormat.DecFormat(sportTotalEntity.Turnover, 2),
+                                    Margin = this.CalculateMargin(sportTotalEntity.LineTotal, sportTotalEntity.Turnover)
+                                };
+
+                                wlSummaryBySportReport.NonThirdPartyDetails.Add(nonThirdPartyReport);
+
+                                nonThirdPartyGrandTotalEntity.Commission += sportTotalEntity.Commission;
+                                nonThirdPartyGrandTotalEntity.VirtualComm += sportTotalEntity.VirtualComm;
+                                nonThirdPartyGrandTotalEntity.LineTotal += sportTotalEntity.LineTotal;
+                                nonThirdPartyGrandTotalEntity.VirtualLineTotal += sportTotalEntity.VirtualLineTotal;
+                                nonThirdPartyGrandTotalEntity.Variance += sportTotalEntity.Variance;
+                                nonThirdPartyGrandTotalEntity.Turnover += sportTotalEntity.Turnover;
+
+                                sportTotalEntity.Commission = wlEntity.Commission;
+                                sportTotalEntity.VirtualComm = wlEntity.VirtualComm;
+                                sportTotalEntity.LineTotal = wlEntity.LineTotal;
+                                sportTotalEntity.VirtualLineTotal = wlEntity.VirtualLineTotal;
+                                sportTotalEntity.Variance = wlEntity.Variance;
+                                sportTotalEntity.Turnover = wlEntity.Turnover;
+                                nonThirdPartyReport = new WLDetailBySportReport
+                                {
+                                    ReportDetails = new List<WLDetailByBetTypeModel>(),
+                                    Total = new WLDetailByBetTypeModel()
+                                };
+
+                                previousSport = wlDetailByBetType.SportType.Name;
+                            }
+                            else
+                            {
+                                #region AddValueToTotal
+
+                                sportTotalEntity.Commission += wlEntity.Commission;
+                                sportTotalEntity.VirtualComm += wlEntity.VirtualComm;
+                                sportTotalEntity.LineTotal += wlEntity.LineTotal;
+                                sportTotalEntity.VirtualLineTotal += wlEntity.VirtualLineTotal;
+                                sportTotalEntity.Variance += wlEntity.Variance;
+                                sportTotalEntity.Turnover += wlEntity.Turnover;
+
+                                #endregion AddValueToTotal
+                            }
+                            nonThirdPartyReport.ReportDetails.Add(wlDetailByBetType);
+                        }
+
+                        // AddLastSport
+                        if (previousSport != null)
+                        {
+                            nonThirdPartyReport.Total = new WLDetailByBetTypeModel
+                            {
+                                Name = previousSport,
+                                Commission = NumberFormat.DecFormat(sportTotalEntity.Commission, 2),
+                                VirtualComm = NumberFormat.DecFormat(sportTotalEntity.VirtualComm, 2),
+                                LineTotal = NumberFormat.DecFormat(sportTotalEntity.LineTotal, 2),
+                                VirtualLineTotal = NumberFormat.DecFormat(sportTotalEntity.VirtualLineTotal, 2),
+                                Variance = NumberFormat.DecFormat(sportTotalEntity.Variance, 2),
+                                Turnover = NumberFormat.DecFormat(sportTotalEntity.Turnover, 2),
+                                Margin = this.CalculateMargin(sportTotalEntity.LineTotal, sportTotalEntity.Turnover)
+                            };
+
+                            wlSummaryBySportReport.NonThirdPartyDetails.Add(nonThirdPartyReport);
+
+                            nonThirdPartyGrandTotalEntity.Commission += sportTotalEntity.Commission;
+                            nonThirdPartyGrandTotalEntity.VirtualComm += sportTotalEntity.VirtualComm;
+                            nonThirdPartyGrandTotalEntity.LineTotal += sportTotalEntity.LineTotal;
+                            nonThirdPartyGrandTotalEntity.VirtualLineTotal += sportTotalEntity.VirtualLineTotal;
+                            nonThirdPartyGrandTotalEntity.Variance += sportTotalEntity.Variance;
+                            nonThirdPartyGrandTotalEntity.Turnover += sportTotalEntity.Turnover;
+                        }
+
+                        wlSummaryBySportReport.NonThirdPartyGrandTotal = new WLDetailByBetTypeModel
+                        {
+                            Name = Fanex.Tarus.Reports.Resource.MatchWinLoss.GrandTotal.ToUpper(),
+                            Commission = NumberFormat.DecFormat(nonThirdPartyGrandTotalEntity.Commission, 2),
+                            VirtualComm = NumberFormat.DecFormat(nonThirdPartyGrandTotalEntity.VirtualComm, 2),
+                            LineTotal = NumberFormat.DecFormat(nonThirdPartyGrandTotalEntity.LineTotal, 2),
+                            VirtualLineTotal = NumberFormat.DecFormat(nonThirdPartyGrandTotalEntity.VirtualLineTotal, 2),
+                            Variance = NumberFormat.DecFormat(nonThirdPartyGrandTotalEntity.Variance, 2),
+                            Turnover = NumberFormat.DecFormat(nonThirdPartyGrandTotalEntity.Turnover, 2),
+                            Margin = this.CalculateMargin(nonThirdPartyGrandTotalEntity.LineTotal, nonThirdPartyGrandTotalEntity.Turnover)
+                        };
+                    }
+
+                    #endregion GetNonThirdPartyData
+                    #region GetThirdPartyData
+
+                    if (totalTable >= 2)
+                    {
+                        var thirdPartyData = dbResult.Tables[1];
+                        var wl3rdPartyByBetType = new WLDetailByBetTypeModel();
+                        foreach (DataRow row in thirdPartyData.Rows)
+                        {
+                            wl3rdPartyEntity = new WLDetailByBetType
+                            {
+                                Name = CastAide.AsString(row["bettype"]),
+                                Commission = CastAide.AsDecimal(row["comm"]),
+                                VirtualComm = CastAide.AsDecimal(row["VirtualComm"]),
+                                LineTotal = CastAide.AsDecimal(row["LineTotal"]),
+                                VirtualLineTotal = CastAide.AsDecimal(row["VirtualLineTotal"]),
+                                Position = CastAide.AsDecimal(row["pos"]),
+                                WinLost = CastAide.AsDecimal(row["winlost"]),
+                                Turnover = CastAide.AsDecimal(row["IBCTurnover"])
+                            };
+
+                            wl3rdPartyByBetType = new WLDetailByBetTypeModel
+                            {
+                                Name = wl3rdPartyEntity.Name,
+                                Commission = NumberFormat.DecFormat(wl3rdPartyEntity.Commission, 2),
+                                VirtualComm = NumberFormat.DecFormat(wl3rdPartyEntity.VirtualComm, 2),
+                                LineTotal = NumberFormat.DecFormat(wl3rdPartyEntity.LineTotal, 2),
+                                VirtualLineTotal = NumberFormat.DecFormat(wl3rdPartyEntity.VirtualLineTotal, 2),
+                                Position = NumberFormat.DecFormat(wl3rdPartyEntity.Position, 2),
+                                WinLost = NumberFormat.DecFormat(wl3rdPartyEntity.WinLost, 2),
+                                Variance = NumberFormat.DecFormat(wl3rdPartyEntity.Variance, 2),
+                                Turnover = NumberFormat.DecFormat(wl3rdPartyEntity.Turnover, 2),
+                                Margin = this.CalculateMargin(wl3rdPartyEntity.LineTotal, wl3rdPartyEntity.Turnover)
+                            };
+
+                            var betTypeLowerCase = wl3rdPartyEntity.Name.ToLower();
+                            if (betTypeLowerCase.Equals(Fanex.Tarus.Reports.Resource.BetType.Casino.ToLower()))
+                            {
+                                wl3rdPartyByBetType.ThirdPartyType = RowType.DisplayLink;
+                                wl3rdPartyByBetType.VirtualComm = _notAvailableString;
+                                wl3rdPartyByBetType.VirtualLineTotal = _notAvailableString;
+                                wl3rdPartyByBetType.Variance = _notAvailableString;
+                                wl3rdPartyEntity.Variance = 0;
+                            }
+                            else if (IsExcludeVirtualLineTotal(betTypeLowerCase))
+                            {
+                                wl3rdPartyByBetType.VirtualComm = _notAvailableString;
+                                wl3rdPartyByBetType.VirtualLineTotal = _notAvailableString;
+                                wl3rdPartyByBetType.Variance = _notAvailableString;
+                                wl3rdPartyEntity.Variance = 0;
+                            }
+                            else
+                            {
+                                wl3rdPartyEntity.Variance = wl3rdPartyEntity.LineTotal - wl3rdPartyEntity.VirtualLineTotal;
+                                wl3rdPartyByBetType.Variance = NumberFormat.DecFormat(wl3rdPartyEntity.Variance, 2);
+                            }
+
+                            if (string.Equals(wl3rdPartyEntity.Name, "Casino", StringComparison.OrdinalIgnoreCase) ||
+                                string.Equals(wl3rdPartyEntity.Name, "Bingo", StringComparison.OrdinalIgnoreCase))
+                            {
+                                wl3rdPartyEntity.Turnover = 0;
+                                wl3rdPartyByBetType.Turnover = _notAvailableString;
+                                wl3rdPartyByBetType.Margin = _notAvailableString;
+                            }
+
+                            wlSummaryBySportReport.ThirdPartyDetails.ReportDetails.Add(wl3rdPartyByBetType);
+                            #region AddValueToTotal
+
+                            _3rdPartyTotalEntity.Commission += wl3rdPartyEntity.Commission;
+                            _3rdPartyTotalEntity.VirtualComm += wl3rdPartyEntity.VirtualComm;
+                            _3rdPartyTotalEntity.LineTotal += wl3rdPartyEntity.LineTotal;
+                            _3rdPartyTotalEntity.VirtualLineTotal += wl3rdPartyEntity.VirtualLineTotal;
+                            _3rdPartyTotalEntity.Variance += wl3rdPartyEntity.Variance;
+                            _3rdPartyTotalEntity.Turnover += wl3rdPartyEntity.Turnover;
+
+                            #endregion AddValueToTotal
+                        }
+                    }
+
+                    #endregion GetThirdPartyData
+
+                    wlSummaryBySportReport.IsBARMActive = _barmUtils.IsActive;
+                    wlSummaryBySportReport.BARMName = Fanex.Tarus.Reports.Resource.MatchWinLoss.Total + " " + _barmUtils.DisplayName + ":";
+                    wlSummaryBySportReport.BARMTotal = NumberFormat.DecFormat(barmTotal, 2);
+                    wlSummaryBySportReport.BARMTurnover = NumberFormat.DecFormat(barmTurnover, 2);
+                    wlSummaryBySportReport.BARMMargin = this.CalculateMargin(barmTotal, barmTurnover);
+
+                    wlSummaryBySportReport.IsEightRMActive = _eightRMUtils.IsActive;
+                    wlSummaryBySportReport.EightRMName = Fanex.Tarus.Reports.Resource.MatchWinLoss.Total + " " + _eightRMUtils.DisplayName + ":";
+                    wlSummaryBySportReport.EightRMTotal = NumberFormat.DecFormat(eightRMTotal, 2);
+                    wlSummaryBySportReport.EightRMTurnover = NumberFormat.DecFormat(eightRMTurnover, 2);
+                    wlSummaryBySportReport.EightRMMargin = this.CalculateMargin(eightRMTotal, eightRMTurnover);
+
+                    wlSummaryBySportReport.Total = new WLDetailByBetTypeModel
+                    {
+                        Name = Fanex.Tarus.Reports.Resource.MatchWinLoss.GrandTotal.ToUpper(),
+                        Commission = NumberFormat.DecFormat(nonThirdPartyGrandTotalEntity.Commission + _3rdPartyTotalEntity.Commission, 2),
+                        VirtualComm = NumberFormat.DecFormat(nonThirdPartyGrandTotalEntity.VirtualComm + _3rdPartyTotalEntity.VirtualComm, 2),
+                        LineTotal = NumberFormat.DecFormat(nonThirdPartyGrandTotalEntity.LineTotal + _3rdPartyTotalEntity.LineTotal + eightRMTotal + barmTotal, 2),
+                        VirtualLineTotal = NumberFormat.DecFormat(nonThirdPartyGrandTotalEntity.VirtualLineTotal + _3rdPartyTotalEntity.VirtualLineTotal + eightRMTotal + barmTotal, 2),
+                        Variance = NumberFormat.DecFormat(nonThirdPartyGrandTotalEntity.Variance + _3rdPartyTotalEntity.Variance, 2),
+                        Turnover = NumberFormat.DecFormat(nonThirdPartyGrandTotalEntity.Turnover + _3rdPartyTotalEntity.Turnover + eightRMTurnover + barmTurnover, 2),
+                        Margin = this.CalculateMargin(nonThirdPartyGrandTotalEntity.LineTotal + _3rdPartyTotalEntity.LineTotal + eightRMTotal + barmTotal, nonThirdPartyGrandTotalEntity.Turnover + _3rdPartyTotalEntity.Turnover + eightRMTurnover + barmTurnover)
+                    };
+                }
+
+                SessionExtension.AddSession(HttpContext.Current.Session, _wlSummaryReportBySport, wlSummaryBySportReport);
+            }
+            catch (Exception ex)
+            {
+                wlSummaryBySportReport = null;
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return wlSummaryBySportReport;
+        }
+
+        public WLThirdPartyReport SelThirdPartyCasinoReport(DateTime reportDate)
+        {
+            WLThirdPartyReport thirdPartyReport = new WLThirdPartyReport
+              {
+                  SportReportDetails = new List<WLDetailBySportReport>(),
+                  ReportByCurrency = new WLDetailBySportReport
+                  {
+                      ReportDetails = new List<WLDetailByBetTypeModel>(),
+                      Total = new WLDetailByBetTypeModel
+                      {
+                          Name = Fanex.Tarus.Reports.Resource.Language.Total
+                      }
+                  }
+              };
+
+            try
+            {
+                DataSet dbResult = _matchWinLossAccess.SelThirdPartyCasinoReport(reportDate);
+                if (dbResult.Tables.Count > 0)
+                {
+                    #region SortTable
+                    //Must remove this
+
+                    DataTable dt = dbResult.Tables[0];
+                    DataView dv = dt.DefaultView;
+                    dv.Sort = "Bettype asc, Currency asc";
+                    DataTable dtCasino = dv.ToTable();
+
+                    #endregion SortTable
+                    #region Entities
+
+                    WLDetailByBetType wlEntity = new WLDetailByBetType();
+                    WLDetailByBetType sportTotalEntity = new WLDetailByBetType();
+                    WLDetailByBetType grandTotalEntity = new WLDetailByBetType();
+
+                    #endregion Entities
+
+                    Dictionary<string, int> currencyList = new Dictionary<string, int>();
+                    var currencyIndex = 0;
+                    var wlDetailByBetType = new WLDetailByBetTypeModel();
+                    var sportReport = new WLDetailBySportReport
+                    {
+                        ReportDetails = new List<WLDetailByBetTypeModel>()
+                    };
+
+                    int previousSport = -1;
+                    if (dtCasino.Rows.Count > 0)
+                    {
+                        previousSport = CastAide.AsInt32(dtCasino.Rows[0]["Bettype"]);
+                    }
+                    foreach (DataRow dr in dtCasino.Rows)
+                    {
+                        wlEntity = new WLDetailByBetType
+                        {
+                            Turnover = CastAide.AsDecimal(dr["turnover"]),
+                            WinLost = CastAide.AsDecimal(dr["winlost"]),
+                            Position = CastAide.AsDecimal(dr["pos"]),
+                            Commission = CastAide.AsDecimal(dr["comm"]),
+                            LineTotal = CastAide.AsDecimal(dr["linetotal"])
+                        };
+
+                        wlDetailByBetType = new WLDetailByBetTypeModel
+                        {
+                            BetType = new BaseModel
+                            {
+                                Id = CastAide.AsInt32(dr["Bettype"])
+                            },
+                            Currency = CastAide.AsString(dr["CurrencyName"]),
+                            Turnover = NumberFormat.DecFormat(wlEntity.Turnover, 2),
+                            WinLost = NumberFormat.DecFormat(wlEntity.WinLost, 2),
+                            Position = NumberFormat.DecFormat(wlEntity.Position, 2),
+                            Commission = NumberFormat.DecFormat(wlEntity.Commission, 2),
+                            LineTotal = NumberFormat.DecFormat(wlEntity.LineTotal, 2),
+                            Margin = this.CalculateMargin(wlEntity.LineTotal, wlEntity.Turnover)
+                        };
+                        wlDetailByBetType.BetType.Name = GetThirdPartyBetypeName(wlDetailByBetType.BetType.Id);
+
+                        if (!currencyList.ContainsKey(wlDetailByBetType.Currency))
+                        {
+                            thirdPartyReport.ReportByCurrency.ReportDetails.Add(
+                                new WLDetailByBetTypeModel
+                                {
+                                    Currency = wlDetailByBetType.Currency,
+                                    Turnover = NumberFormat.DecFormat(wlEntity.Turnover, 2),
+                                    WinLost = NumberFormat.DecFormat(wlEntity.WinLost, 2),
+                                    Position = NumberFormat.DecFormat(wlEntity.Position, 2),
+                                    Commission = NumberFormat.DecFormat(wlEntity.Commission, 2),
+                                    LineTotal = NumberFormat.DecFormat(wlEntity.LineTotal, 2),
+                                    Margin = this.CalculateMargin(wlEntity.LineTotal, wlEntity.Turnover)
+                                });
+                            currencyIndex++;
+                        }
+                        else
+                        {
+                            var index = currencyList[wlDetailByBetType.Currency];
+                            thirdPartyReport.ReportByCurrency.ReportDetails[index].Turnover += wlEntity.Turnover;
+                            thirdPartyReport.ReportByCurrency.ReportDetails[index].WinLost += wlEntity.WinLost;
+                            thirdPartyReport.ReportByCurrency.ReportDetails[index].Position += wlEntity.Position;
+                            thirdPartyReport.ReportByCurrency.ReportDetails[index].Commission += wlEntity.Commission;
+                            thirdPartyReport.ReportByCurrency.ReportDetails[index].LineTotal += wlEntity.LineTotal;
+                        }
+
+                        if (wlDetailByBetType.BetType.Id != previousSport)
+                        {
+                            sportReport.Total = new WLDetailByBetTypeModel
+                            {
+                                BetType = new BaseModel
+                                {
+                                    Id = previousSport,
+                                    Name = GetThirdPartyBetypeName(previousSport)
+                                },
+                                Turnover = NumberFormat.DecFormat(sportTotalEntity.Turnover, 2),
+                                WinLost = NumberFormat.DecFormat(sportTotalEntity.WinLost, 2),
+                                Position = NumberFormat.DecFormat(sportTotalEntity.Position, 2),
+                                Commission = NumberFormat.DecFormat(sportTotalEntity.Commission, 2),
+                                LineTotal = NumberFormat.DecFormat(sportTotalEntity.LineTotal, 2),
+                                Margin = this.CalculateMargin(sportTotalEntity.LineTotal, sportTotalEntity.Turnover)
+                            };
+
+                            sportReport.Total.Name = sportReport.Total.BetType.Name + " " + Fanex.Tarus.Reports.Resource.Language.Total;
+                            thirdPartyReport.SportReportDetails.Add(sportReport);
+
+                            grandTotalEntity.Turnover += sportTotalEntity.Turnover;
+                            grandTotalEntity.WinLost += sportTotalEntity.WinLost;
+                            grandTotalEntity.Position += sportTotalEntity.Position;
+                            grandTotalEntity.Commission += sportTotalEntity.Commission;
+                            grandTotalEntity.LineTotal += sportTotalEntity.LineTotal;
+
+                            sportTotalEntity.Turnover = wlEntity.Turnover;
+                            sportTotalEntity.WinLost = wlEntity.WinLost;
+                            sportTotalEntity.Position = wlEntity.Position;
+                            sportTotalEntity.Commission = wlEntity.Commission;
+                            sportTotalEntity.LineTotal = wlEntity.LineTotal;
+                            sportReport.ReportDetails.Add(wlDetailByBetType);
+                        }
+                        else
+                        {
+                            sportTotalEntity.Turnover += wlEntity.Turnover;
+                            sportTotalEntity.WinLost += wlEntity.WinLost;
+                            sportTotalEntity.Position += wlEntity.Position;
+                            sportTotalEntity.Commission += wlEntity.Commission;
+                            sportTotalEntity.LineTotal += wlEntity.LineTotal;
+                            sportReport.ReportDetails.Add(wlDetailByBetType);
+                        }
+                    }
+                    #region LastSport
+
+                    if (previousSport != -1)
+                    {
+                        sportReport.Total = new WLDetailByBetTypeModel
+                        {
+                            BetType = new BaseModel
+                            {
+                                Id = previousSport,
+                                Name = GetThirdPartyBetypeName(previousSport)
+                            },
+                            Turnover = NumberFormat.DecFormat(sportTotalEntity.Turnover, 2),
+                            WinLost = NumberFormat.DecFormat(sportTotalEntity.WinLost, 2),
+                            Position = NumberFormat.DecFormat(sportTotalEntity.Position, 2),
+                            Commission = NumberFormat.DecFormat(sportTotalEntity.Commission, 2),
+                            LineTotal = NumberFormat.DecFormat(sportTotalEntity.LineTotal, 2),
+                            Margin = this.CalculateMargin(sportTotalEntity.LineTotal, sportTotalEntity.Turnover)
+                        };
+                        sportReport.Total.Name = sportReport.Total.BetType.Name + " " + Fanex.Tarus.Reports.Resource.Language.Total;
+                        thirdPartyReport.SportReportDetails.Add(sportReport);
+
+                        grandTotalEntity.Turnover += sportTotalEntity.Turnover;
+                        grandTotalEntity.WinLost += sportTotalEntity.WinLost;
+                        grandTotalEntity.Position += sportTotalEntity.Position;
+                        grandTotalEntity.Commission += sportTotalEntity.Commission;
+                        grandTotalEntity.LineTotal += sportTotalEntity.LineTotal;
+                    }
+
+                    thirdPartyReport.GrandTotal = new WLDetailByBetTypeModel
+                    {
+                        Name = Fanex.Tarus.Reports.Resource.Language.GrandTotal,
+                        Turnover = NumberFormat.DecFormat(grandTotalEntity.Turnover, 2),
+                        WinLost = NumberFormat.DecFormat(grandTotalEntity.WinLost, 2),
+                        Position = NumberFormat.DecFormat(grandTotalEntity.Position, 2),
+                        Commission = NumberFormat.DecFormat(grandTotalEntity.Commission, 2),
+                        LineTotal = NumberFormat.DecFormat(grandTotalEntity.LineTotal, 2),
+                        Margin = this.CalculateMargin(grandTotalEntity.LineTotal, grandTotalEntity.Turnover)
+                    };
+
+                    #endregion LastSport
+                }
+
+            }
+            catch (Exception ex)
+            {
+                thirdPartyReport = null;
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return thirdPartyReport;
+        }
+
+        public WLBySportsGroupByBetType SelSportTypeReportDetail(DateTime reportDate, string sportName)
+        {
+            WLBySportsGroupByBetType wlSportTypeReport = new WLBySportsGroupByBetType
+            {
+                BetTypeGroup = new List<WLDetailBySportReport>()
+            };
+
+            try
+            {
+                DataSet dbResult = _matchWinLossAccess.SelSportTypeReportDetail(reportDate, sportName);
+                Dictionary<int, string> teamNameList = new Dictionary<int, string>();
+                Dictionary<int, string> betTypeList = new Dictionary<int, string>();
+
+                if (dbResult != null)
+                {
+                    var totalTable = dbResult.Tables.Count;
+                    #region Entities
+
+                    WLDetailByBetType wlEntity = new WLDetailByBetType();
+                    WLDetailByBetType sportTotalEntity = new WLDetailByBetType();
+                    WLDetailByBetType betTypeGroupTotalEntity = new WLDetailByBetType();
+
+                    #endregion Entities
+
+                    if (totalTable >= 1)
+                    {
+                        var dtResult = dbResult.Tables[0];
+                        var wlDetailByBetType = new WLDetailByBetTypeModel();
+                        var wlgroupByBetTypeReport = new WLDetailBySportReport
+                        {
+                            ReportDetails = new List<WLDetailByBetTypeModel>()
+                        };
+
+                        string previousBetType = null;
+                        string currentBetType = null;
+                        if (dtResult.Rows.Count > 0)
+                        {
+                            var initBetTypeId = CastAide.AsInt32(dtResult.Rows[0]["bettype"]);
+                            betTypeList.Add(initBetTypeId, GetBetTypeName(initBetTypeId));
+                            previousBetType = GetLiveTypeName(CastAide.AsInt32(dtResult.Rows[0]["liveindicator"]), true) +
+                                betTypeList[initBetTypeId];
+                        }
+
+                        foreach (DataRow row in dtResult.Rows)
+                        {
+                            #region GetData
+
+                            wlEntity = new WLDetailByBetType
+                            {
+                                Commission = CastAide.AsDecimal(row["comm"]),
+                                VirtualComm = CastAide.AsDecimal(row["VirtualComm"]),
+                                LineTotal = CastAide.AsDecimal(row["LineTotal"]),
+                                VirtualLineTotal = CastAide.AsDecimal(row["VirtualLineTotal"]),
+                                HomeTeamId = CastAide.AsInt32(row["homeid"]),
+                                AwayTeamId = CastAide.AsInt32(row["awayid"]),
+                                Position = CastAide.AsDecimal(row["pos"]),
+                                WinLost = CastAide.AsDecimal(row["winlost"]),
+                                Turnover = CastAide.AsDecimal(row["IBCTurnover"])
+                            };
+                            wlEntity.Variance = wlEntity.LineTotal - wlEntity.VirtualLineTotal;
+
+                            wlDetailByBetType = new WLDetailByBetTypeModel
+                            {
+                                BetType = new BaseModel
+                                {
+                                    Id = CastAide.AsInt32(row["bettype"])
+                                },
+                                SportType = new Sporttype
+                                {
+                                    Name = sportName
+                                },
+                                LiveIndicator = new BaseModel
+                                {
+                                    Id = CastAide.AsInt32(row["liveindicator"])
+                                },
+                                Commission = NumberFormat.DecFormat(wlEntity.Commission, 2),
+                                VirtualComm = NumberFormat.DecFormat(wlEntity.VirtualComm, 2),
+                                LineTotal = NumberFormat.DecFormat(wlEntity.LineTotal, 2),
+                                VirtualLineTotal = NumberFormat.DecFormat(wlEntity.VirtualLineTotal, 2),
+                                Variance = NumberFormat.DecFormat(wlEntity.Variance, 2),
+                                Turnover = NumberFormat.DecFormat(wlEntity.Turnover, 2),
+                                Margin = this.CalculateMargin(wlEntity.LineTotal, wlEntity.Turnover),
+
+                                WinLost = NumberFormat.DecFormat(wlEntity.WinLost, 2),
+                                Position = NumberFormat.DecFormat(wlEntity.Position, 2),
+                                MatchCode = CastAide.AsString(row["matchcode"]),
+                                KickOffTime = CastAide.AsDateTime(row["kickofftime"]).ToShortTimeString(),
+                                IsNeutral = CastAide.AsBoolean(row["IsNeutral"])
+                            };
+
+                            if (!teamNameList.ContainsKey(wlEntity.HomeTeamId))
+                            {
+                                teamNameList.Add(wlEntity.HomeTeamId, CacheRef.GetTeamName(row["homeid"]));
+                            }
+                            if (!teamNameList.ContainsKey(wlEntity.AwayTeamId))
+                            {
+                                teamNameList.Add(wlEntity.AwayTeamId, CacheRef.GetTeamName(row["awayid"]));
+                            }
+                            wlDetailByBetType.HomeName = teamNameList[wlEntity.HomeTeamId];
+                            wlDetailByBetType.AwayName = teamNameList[wlEntity.AwayTeamId];
+
+                            if (!betTypeList.ContainsKey(wlDetailByBetType.BetType.Id))
+                            {
+                                betTypeList.Add(wlDetailByBetType.BetType.Id, GetBetTypeName(wlDetailByBetType.BetType.Id));
+                            }
+                            wlDetailByBetType.BetType.Name = betTypeList[wlDetailByBetType.BetType.Id];
+                            currentBetType = GetLiveTypeName(wlDetailByBetType.LiveIndicator.Id, true) + wlDetailByBetType.BetType.Name;
+
+                            #endregion GetData
+
+                            if (currentBetType != previousBetType)
+                            {
+                                #region InsertPreviousBetType
+
+                                wlgroupByBetTypeReport.Total = new WLDetailByBetTypeModel
+                                {
+                                    Name = Fanex.Tarus.Reports.Resource.MatchWinLossAllDetails.BetTypeTotal,
+                                    Commission = NumberFormat.DecFormat(betTypeGroupTotalEntity.Commission, 2),
+                                    VirtualComm = NumberFormat.DecFormat(betTypeGroupTotalEntity.VirtualComm, 2),
+                                    LineTotal = NumberFormat.DecFormat(betTypeGroupTotalEntity.LineTotal, 2),
+                                    VirtualLineTotal = NumberFormat.DecFormat(betTypeGroupTotalEntity.VirtualLineTotal, 2),
+                                    Variance = NumberFormat.DecFormat(betTypeGroupTotalEntity.Variance, 2),
+                                    Turnover = NumberFormat.DecFormat(betTypeGroupTotalEntity.Turnover, 2),
+                                    Margin = this.CalculateMargin(betTypeGroupTotalEntity.LineTotal, betTypeGroupTotalEntity.Turnover)
+                                };
+
+                                wlSportTypeReport.BetTypeGroup.Add(wlgroupByBetTypeReport);
+                                sportTotalEntity.Commission += betTypeGroupTotalEntity.Commission;
+                                sportTotalEntity.VirtualComm += betTypeGroupTotalEntity.VirtualComm;
+                                sportTotalEntity.LineTotal += betTypeGroupTotalEntity.LineTotal;
+                                sportTotalEntity.VirtualLineTotal += betTypeGroupTotalEntity.VirtualLineTotal;
+                                sportTotalEntity.Variance += betTypeGroupTotalEntity.Variance;
+                                sportTotalEntity.Turnover += betTypeGroupTotalEntity.Turnover;
+
+                                wlgroupByBetTypeReport = new WLDetailBySportReport
+                                {
+                                    ReportDetails = new List<WLDetailByBetTypeModel>()
+                                };
+
+                                betTypeGroupTotalEntity.Commission = wlEntity.Commission;
+                                betTypeGroupTotalEntity.VirtualComm = wlEntity.VirtualComm;
+                                betTypeGroupTotalEntity.LineTotal = wlEntity.LineTotal;
+                                betTypeGroupTotalEntity.VirtualLineTotal = wlEntity.VirtualLineTotal;
+                                betTypeGroupTotalEntity.Variance = wlEntity.Variance;
+                                betTypeGroupTotalEntity.Turnover = wlEntity.Turnover;
+
+                                #endregion InsertPreviousBetType
+
+                                previousBetType = currentBetType;
+                            }
+                            else
+                            {
+                                #region AddValueToTotal
+
+                                betTypeGroupTotalEntity.Commission += wlEntity.Commission;
+                                betTypeGroupTotalEntity.VirtualComm += wlEntity.VirtualComm;
+                                betTypeGroupTotalEntity.LineTotal += wlEntity.LineTotal;
+                                betTypeGroupTotalEntity.VirtualLineTotal += wlEntity.VirtualLineTotal;
+                                betTypeGroupTotalEntity.Variance += wlEntity.Variance;
+                                betTypeGroupTotalEntity.Turnover += wlEntity.Turnover;
+
+                                #endregion AddValueToTotal
+                            }
+
+                            wlDetailByBetType.Name = GetLiveTypeName(wlDetailByBetType.LiveIndicator.Id, true) +
+                                previousBetType +
+                                Fanex.Tarus.Reports.Resource.MatchWinLossAllDetails.NewLine +
+                                wlDetailByBetType.MatchCode;
+                            wlgroupByBetTypeReport.ReportDetails.Add(wlDetailByBetType);
+                        }
+
+                        // AddLastBetType   
+                        if (previousBetType != null)
+                        {
+                            wlgroupByBetTypeReport.Total = new WLDetailByBetTypeModel
+                            {
+                                Name = Fanex.Tarus.Reports.Resource.MatchWinLossAllDetails.BetTypeTotal,
+                                Commission = NumberFormat.DecFormat(betTypeGroupTotalEntity.Commission, 2),
+                                VirtualComm = NumberFormat.DecFormat(betTypeGroupTotalEntity.VirtualComm, 2),
+                                LineTotal = NumberFormat.DecFormat(betTypeGroupTotalEntity.LineTotal, 2),
+                                VirtualLineTotal = NumberFormat.DecFormat(betTypeGroupTotalEntity.VirtualLineTotal, 2),
+                                Variance = NumberFormat.DecFormat(betTypeGroupTotalEntity.Variance, 2),
+                                Turnover = NumberFormat.DecFormat(betTypeGroupTotalEntity.Turnover, 2),
+                                Margin = this.CalculateMargin(betTypeGroupTotalEntity.LineTotal, betTypeGroupTotalEntity.Turnover)
+                            };
+
+                            wlSportTypeReport.BetTypeGroup.Add(wlgroupByBetTypeReport);
+                            sportTotalEntity.Commission += betTypeGroupTotalEntity.Commission;
+                            sportTotalEntity.VirtualComm += betTypeGroupTotalEntity.VirtualComm;
+                            sportTotalEntity.LineTotal += betTypeGroupTotalEntity.LineTotal;
+                            sportTotalEntity.VirtualLineTotal += betTypeGroupTotalEntity.VirtualLineTotal;
+                            sportTotalEntity.Variance += betTypeGroupTotalEntity.Variance;
+                            sportTotalEntity.Turnover += betTypeGroupTotalEntity.Turnover;
+
+                            previousBetType = currentBetType;
+
+                        }
+
+                        wlSportTypeReport.Total = new WLDetailByBetTypeModel
+                        {
+                            Name = sportName + " " + Fanex.Tarus.Reports.Resource.MatchWinLossAllDetails.SportTotal,
+                            Commission = NumberFormat.DecFormat(sportTotalEntity.Commission, 2),
+                            VirtualComm = NumberFormat.DecFormat(sportTotalEntity.VirtualComm, 2),
+                            LineTotal = NumberFormat.DecFormat(sportTotalEntity.LineTotal, 2),
+                            VirtualLineTotal = NumberFormat.DecFormat(sportTotalEntity.VirtualLineTotal, 2),
+                            Variance = NumberFormat.DecFormat(sportTotalEntity.Variance, 2),
+                            Turnover = NumberFormat.DecFormat(sportTotalEntity.Turnover, 2),
+                            Margin = this.CalculateMargin(sportTotalEntity.LineTotal, sportTotalEntity.Turnover)
+                        };
+                    }
+                }
+
+                SessionExtension.AddSession(HttpContext.Current.Session, _sportTypeReportDetail, wlSportTypeReport);
+            }
+            catch (Exception ex)
+            {
+                wlSportTypeReport = null;
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return wlSportTypeReport;
+        }
+
+        public WLDetailBySportReport SelBetTypeReportDetail(DateTime reportDate, string sportName, int betType, int liveType)
+        {
+            WLDetailBySportReport wlBetTypeReport = new WLDetailBySportReport
+            {
+                ReportDetails = new List<WLDetailByBetTypeModel>()
+            };
+
+            try
+            {
+                DataSet dbResult = _matchWinLossAccess.SelBetTypeReportDetail(reportDate, sportName, betType, liveType);
+                Dictionary<int, string> teamNameList = new Dictionary<int, string>();
+                Dictionary<int, string> betTypeList = new Dictionary<int, string>();
+
+                if (dbResult != null)
+                {
+                    var totalTable = dbResult.Tables.Count;
+                    #region Entities
+
+                    WLDetailByBetType wlEntity = new WLDetailByBetType();
+                    WLDetailByBetType betTypeGroupTotalEntity = new WLDetailByBetType();
+
+                    #endregion Entities
+
+                    if (totalTable >= 1)
+                    {
+                        var dtResult = dbResult.Tables[0];
+                        var wlDetailByBetType = new WLDetailByBetTypeModel();
+
+                        foreach (DataRow row in dtResult.Rows)
+                        {
+                            #region GetData
+
+                            wlEntity = new WLDetailByBetType
+                            {
+                                Commission = CastAide.AsDecimal(row["comm"]),
+                                VirtualComm = CastAide.AsDecimal(row["VirtualComm"]),
+                                LineTotal = CastAide.AsDecimal(row["LineTotal"]),
+                                VirtualLineTotal = CastAide.AsDecimal(row["VirtualLineTotal"]),
+                                HomeTeamId = CastAide.AsInt32(row["homeid"]),
+                                AwayTeamId = CastAide.AsInt32(row["awayid"]),
+                                Position = CastAide.AsDecimal(row["pos"]),
+                                WinLost = CastAide.AsDecimal(row["winlost"]),
+                                Turnover = CastAide.AsDecimal(row["IBCTurnover"])
+                            };
+                            wlEntity.Variance = wlEntity.LineTotal - wlEntity.VirtualLineTotal;
+
+                            wlDetailByBetType = new WLDetailByBetTypeModel
+                            {
+                                BetType = new BaseModel
+                                {
+                                    Id = CastAide.AsInt32(row["bettype"])
+                                },
+                                SportType = new Sporttype
+                                {
+                                    Name = sportName
+                                },
+                                LiveIndicator = new BaseModel
+                                {
+                                    Id = CastAide.AsInt32(row["liveindicator"])
+                                },
+                                Commission = NumberFormat.DecFormat(wlEntity.Commission, 2),
+                                VirtualComm = NumberFormat.DecFormat(wlEntity.VirtualComm, 2),
+                                LineTotal = NumberFormat.DecFormat(wlEntity.LineTotal, 2),
+                                VirtualLineTotal = NumberFormat.DecFormat(wlEntity.VirtualLineTotal, 2),
+                                Variance = NumberFormat.DecFormat(wlEntity.Variance, 2),
+                                Turnover = NumberFormat.DecFormat(wlEntity.Turnover, 2),
+                                Margin = this.CalculateMargin(wlEntity.LineTotal, wlEntity.Turnover),
+
+                                WinLost = NumberFormat.DecFormat(wlEntity.WinLost, 2),
+                                Position = NumberFormat.DecFormat(wlEntity.Position, 2),
+                                MatchCode = CastAide.AsString(row["matchcode"]),
+                                KickOffTime = CastAide.AsDateTime(row["kickofftime"]).ToShortTimeString(),
+                                IsNeutral = CastAide.AsBoolean(row["IsNeutral"])
+                            };
+
+                            if (!teamNameList.ContainsKey(wlEntity.HomeTeamId))
+                            {
+                                teamNameList.Add(wlEntity.HomeTeamId, CacheRef.GetTeamName(row["homeid"]));
+                            }
+                            if (!teamNameList.ContainsKey(wlEntity.AwayTeamId))
+                            {
+                                teamNameList.Add(wlEntity.AwayTeamId, CacheRef.GetTeamName(row["awayid"]));
+                            }
+                            wlDetailByBetType.HomeName = teamNameList[wlEntity.HomeTeamId];
+                            wlDetailByBetType.AwayName = teamNameList[wlEntity.AwayTeamId];
+
+                            if (!betTypeList.ContainsKey(wlDetailByBetType.BetType.Id))
+                            {
+                                betTypeList.Add(wlDetailByBetType.BetType.Id, GetBetTypeName(wlDetailByBetType.BetType.Id));
+                            }
+                            wlDetailByBetType.BetType.Name = betTypeList[wlDetailByBetType.BetType.Id];
+
+                            #endregion GetData
+                            #region AddValueToTotal
+
+                            betTypeGroupTotalEntity.Commission += wlEntity.Commission;
+                            betTypeGroupTotalEntity.VirtualComm += wlEntity.VirtualComm;
+                            betTypeGroupTotalEntity.LineTotal += wlEntity.LineTotal;
+                            betTypeGroupTotalEntity.VirtualLineTotal += wlEntity.VirtualLineTotal;
+                            betTypeGroupTotalEntity.Variance += wlEntity.Variance;
+                            betTypeGroupTotalEntity.Turnover += wlEntity.Turnover;
+
+                            #endregion AddValueToTotal
+
+                            wlDetailByBetType.Name = GetLiveTypeName(wlDetailByBetType.LiveIndicator.Id, true) +
+                                wlDetailByBetType.BetType.Name +
+                                Fanex.Tarus.Reports.Resource.MatchWinLossAllDetails.NewLine +
+                                wlDetailByBetType.MatchCode;
+                            wlBetTypeReport.ReportDetails.Add(wlDetailByBetType);
+                        }
+
+                        wlBetTypeReport.Total = new WLDetailByBetTypeModel
+                        {
+                            Name = GetLiveTypeName(liveType, false).ToUpper() +
+                                   GetBetTypeName(betType).ToUpper() +
+                                   " " + Fanex.Tarus.Reports.Resource.MatchWinLossAllDetails.BetTypeTotal,
+                            Commission = NumberFormat.DecFormat(betTypeGroupTotalEntity.Commission, 2),
+                            VirtualComm = NumberFormat.DecFormat(betTypeGroupTotalEntity.VirtualComm, 2),
+                            LineTotal = NumberFormat.DecFormat(betTypeGroupTotalEntity.LineTotal, 2),
+                            VirtualLineTotal = NumberFormat.DecFormat(betTypeGroupTotalEntity.VirtualLineTotal, 2),
+                            Variance = NumberFormat.DecFormat(betTypeGroupTotalEntity.Variance, 2),
+                            Turnover = NumberFormat.DecFormat(betTypeGroupTotalEntity.Turnover, 2),
+                            Margin = this.CalculateMargin(betTypeGroupTotalEntity.LineTotal, betTypeGroupTotalEntity.Turnover)
+                        };
+                    }
+                }
+
+                SessionExtension.AddSession(HttpContext.Current.Session, _betTypeReportDetail, wlBetTypeReport);
+            }
+            catch (Exception ex)
+            {
+                wlBetTypeReport = null;
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return wlBetTypeReport;
+        }
+
+        private string GetLiveTypeName(int liveType, bool isBettypeDetail)
+        {
+            var liveTypeName = string.Empty;
+            switch (liveType)
+            {
+                case Fanex.Tarus.Reports.Constants.LiveType.Live:
+                    if (isBettypeDetail)
+                    {
+                        liveTypeName = "!" + Fanex.Tarus.Reports.Resource.MatchWinLoss.LiveIndicatorName + " - ";
+                    }
+                    else
+                    {
+                        liveTypeName = Fanex.Tarus.Reports.Resource.MatchWinLoss.LiveIndicatorName + "-";
+                    }
+                    break;
+                default:
+                    break;
+            }
+            return liveTypeName;
+        }
+
+        private string GetThirdPartyBetypeName(int betType)
+        {
+            var result = string.Empty;
+            switch (betType)
+            {
+                case Fanex.Tarus.Reports.Constants.BetType.CasinoGames:
+                    result = Fanex.Tarus.Reports.Resource.BetType.Casino;
+                    break;
+                case Fanex.Tarus.Reports.Constants.BetType.P2P:
+                    result = Fanex.Tarus.Reports.Resource.BetType.P2P;
+                    break;
+                default:
+                    result = Fanex.Tarus.Reports.Resource.BetType.UnknownSport;
+                    break;
+            }
+            return result;
+        }
+
+        private string GetBetTypeName(int betTypeId)
+        {
+            string betTypeName = string.Empty;
+
+            switch (betTypeId)
+            {
+                case RowType.ThirdParty:
+                    betTypeName = Fanex.Tarus.Reports.Resource.MatchWinLoss.ThirdPartyBetTypeName;
+                    break;
+                case RowType.EightRM:
+                    betTypeName = _eightRMUtils.DisplayName;
+                    break;
+                case RowType.BARM:
+                    betTypeName = _barmUtils.DisplayName;
+                    break;
+                case Fanex.Tarus.Reports.Constants.BetType.CasinoGames:
+                    betTypeName = Fanex.Tarus.Reports.Resource.MatchWinLoss.CasinoGamesBetTypeName;
+                    break;
+                case RowType.KickOff:
+                    betTypeName = Fanex.Tarus.Reports.Resource.MatchWinLoss.KickOffBetTypeName;
+                    break;
+                case Fanex.Tarus.Reports.Constants.BetType.P2PGames:
+                    betTypeName = Fanex.Tarus.Reports.Resource.MatchWinLoss.P2PGamesBetTypeName;
+                    break;
+                case Fanex.Tarus.Reports.Constants.BetType.SystemParlay:
+                    betTypeName = Fanex.Tarus.Reports.Resource.MatchWinLoss.SystemParlayBetTypeName;
+                    break;
+                case Fanex.Tarus.Reports.Constants.BetType.OddEven:
+                case Fanex.Tarus.Reports.Constants.BetType.OverUnder:
+                    betTypeName = CacheRef.GetBettype(betTypeId) + " " +
+                        Fanex.Tarus.Reports.Resource.MatchWinLoss.NumberGame_BetTypeSuffix;
+                    break;
+                default:
+                    betTypeName = CacheRef.GetBettype(betTypeId);
+                    break;
+            }
+
+            if (1201 <= betTypeId && betTypeId <= 1299)
+            {
+                betTypeName += " (" + Fanex.Tarus.Reports.Resource.Language.VirtualSportsName + ")";
+            }
+
+            return betTypeName;
+        }
+
+        private bool IsExcludeVirtualLineTotal(string betTypeLowerCase)
+        {
+            return !string.IsNullOrEmpty(betTypeLowerCase) &&
+                   (betTypeLowerCase.Equals(Fanex.Tarus.Reports.Resource.BetType.Racing.ToLower()) ||
+                   betTypeLowerCase.Equals(Fanex.Tarus.Reports.Resource.BetType.LiveCasino.ToLower()) ||
+                   betTypeLowerCase.Equals(Fanex.Tarus.Reports.Resource.BetType.VirtualSports.ToLower()) ||
+                   betTypeLowerCase.Equals(Fanex.Tarus.Reports.Resource.BetType.Bingo.ToLower()) ||
+                   betTypeLowerCase.Equals(Fanex.Tarus.Reports.Resource.BetType.P2P.ToLower()));
+        }
+
+        private string CalculateMargin(decimal lineTotal, decimal turnover)
+        {
+            decimal result = 0;
+            if (turnover != 0)
+            {
+                result = (lineTotal / turnover) * 100;
+                return NumberFormat.DecFormat(result, 2);
+            }
+
+            return _notAvailableString;
+        }
+
+        #endregion IMethods
+    }
+}

@@ -1,0 +1,175 @@
+﻿@using Fanex.BetList.Accounting.Models
+@using Fanex.BetList.Accounting.Core
+@using System.Globalization;
+@using Fanex.BetList.Core.Entities;
+@using Fanex.BetList.Core.TicketHelper;
+@{
+    int NumberBegining = ViewBag.NumberBegining;
+    BetListByIP_Username betListByIP_Username = new BetListByIP_Username();
+    var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+<div id="BetlistByIP_Username" class="freegrid display-none">
+    <div class="col_header row-headers-background scroll-y">
+        <div class="header-container">
+            <table class="grid-fixed-table col_header_content">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="width30 height34 table-cell">
+                                No</div>
+                        </th>
+                        <th>
+                            <div class="width200 height34 table-cell">
+                                User Name</div>
+                        </th>
+                        <th>
+                            <div class="width120 height34 table-cell">
+                                Soccer</div>
+                        </th>
+                        <th>
+                            <div class="width120 height34 table-cell">
+                                Other Sports</div>
+                        </th>
+                        <th>
+                            <div class="width120 height34 table-cell">
+                                Total</div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div class="grid-container container">
+        <div class="content-container">
+            <table id="tblContent" class="grid-fixed-table col_header_content ">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="width30 height34 table-cell">
+                                No</div>
+                        </th>
+                        <th>
+                            <div class="width200 height34 table-cell">
+                                User Name</div>
+                        </th>
+                        <th>
+                            <div class="width120 height34 table-cell">
+                                Soccer</div>
+                        </th>
+                        <th>
+                            <div class="width120 height34 table-cell">
+                                Other Sports</div>
+                        </th>
+                        <th>
+                            <div class="width120 height34 table-cell">
+                                Total</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Count > 0)
+                    {
+                        for (int i = 0; i < Model.Count - 1; i++)
+                        {
+                            betListByIP_Username = Model[i];
+                        <tr class="c">
+                            <td>
+                                <div class="c width30">
+                                    @NumberBegining
+                                </div>
+                            </td>
+                            <td class="c">
+                                <div class="width200">
+                                    <div >
+                                        @betListByIP_Username.Username
+                                    </div>
+                                </div>
+                            </td>
+                            <td class='c'>
+                                <div class="width120">
+                                   @if (betListByIP_Username.SoccerBets == 0)
+                                   {
+                                       <span> - </span>;
+                                   }
+                                   else{
+                                      <a onclick="BetListByIP_SportType.getBetListByIP_Soccer(@betListByIP_Username.CustID, '@ViewBag.FromDate', '@ViewBag.IP', true)">@betListByIP_Username.SoccerBets</a><br />;
+                                   }
+                                </div>
+                            </td>
+                            <td class='c '>
+                                <div class="width120">
+                                 @if (betListByIP_Username.OtherBets == 0)
+                                 {
+                                       <span> - </span>;
+                                 }
+                                 else
+                                 {
+                                         <a onclick="BetListByIP_SportType.getBetListByIP_Soccer(@betListByIP_Username.CustID, '@ViewBag.FromDate', '@ViewBag.IP', false)">@betListByIP_Username.OtherBets</a><br />;
+                                 }
+                                </div>
+                            </td>
+                            <td class='c '>
+                                <div class="width120">
+                                @if (betListByIP_Username.TotalBets == 0)
+                                {
+                                       <span> - </span>;
+                                }
+                                else
+                                {
+                                       @betListByIP_Username.TotalBets;
+                                }
+                                </div>
+                            </td>
+                        </tr>
+                                NumberBegining++;
+                        }
+                    }
+                    else
+                    { 
+                        <tr class="c">
+                            <td colspan="5" class='r'>
+                                <div class="c b">
+                                    There is no data.
+                                </div>
+                            </td>
+                        </tr>
+                      
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col_footer row-footer-background scroll-y">
+        <div class="footer-container">
+            <table id="GridFooterCol" class="grid-fixed-table col_footer_content">
+                <thead>
+                    <tr>
+                    @{
+                        betListByIP_Username = Model[Model.Count - 1];
+                    }
+                        <th colspan="2">
+                            <div style="width: 235px;" class=" table-cell">
+                                Total</div>
+                        </th>
+                        <th>
+                            <div class="width120 ">
+                                @betListByIP_Username.SoccerBets
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width120  table-cell">
+                                @betListByIP_Username.OtherBets</div>
+                        </th>
+                          <th>
+                            <div class=" table-cell  width120">
+                                @betListByIP_Username.TotalBets</div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+   var _length = @ViewBag.Quantity;
+</script>

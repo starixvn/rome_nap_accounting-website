@@ -1,0 +1,95 @@
+﻿@using Fanex.PTVirtualSports
+
+<link href="~/App_Themes/Public/table.css" rel="stylesheet" type="text/css" />
+<link href="~/App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
+<link rel="Stylesheet" href="@Url.Content("~/Views/VirtualSport/Customer/EnableVirtualSports/Styles/StyleSheet.css")" />
+<link rel="Stylesheet" href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTVirtualSports.UI.Core.css")" />
+@*PT Engine Script*@
+<script type="text/javascript" src="@Url.Content("~/js/jQuery/jquery-1.7.js")"></script>
+<script src="~/js/common.js" type="text/javascript"></script>
+@*End PT Engine Script*@
+<script type="text/javascript" src="@Url.Content("~/js/jQuery/json2.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/js/BlockUI.js")"></script>
+<script src="~/js/jQuery/knockout/knockout-2.0.0.js" type="text/javascript"></script>
+<script type="text/javascript" src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTVirtualSports.UI.Core.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Views/VirtualSport/Customer/EnableVirtualSports/Js/Common.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Views/VirtualSport/Customer/EnableVirtualSports/Js/EnableVirtualSports.js")"></script>
+
+<div class="maincontent">
+	<table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
+		<tr>
+			<td class="maincontent_headerL">
+			</td>
+			<td class="maincontent_headerC fixfont">
+				Enable Virtual Sports
+			</td>
+			<td class="maincontent_headerR">
+			</td>
+		</tr>
+	</table>
+	<div id="divShowInfo" class="maincontent_box" style="width: 800px;">	
+		<div id="err" class="errMsg">
+		</div>
+		<div id="errMsg" class="error-message">
+		</div>		
+	</div>
+	<div class="bg_table" style="width: 800px;">
+
+		<table class="tblcollapse" style="width: 800px; margin-top: 5px; margin-bottom: 5px;">
+		   <tr>
+				<td class="l b" style="width:150px">Username</td>
+				<td class="l" style="width:215px">
+					<input type="text" id="txtUsername" name="txtUsername" />
+					<input type="button" class="btn hand" value="Search" onclick="vsCustomer.search();" />
+				</td>
+				<td class="l b" style="width:215px">
+					<input type="checkbox" id="chkEnable" name="chkEnable" onclick="vsCustomer.enableOnlick();" /> Enable
+				</td>
+				<td class="l b" style="width:220px">
+					<span id="spApplyAllDownLines">
+						<input type="checkbox" id="chkApplyAllDownlines" name="chkApplyAllDownlines" />
+						Apply to all downlines
+					</span>
+				</td>
+		   </tr>
+		   <tbody id="tblBettingLimit">
+				<tr class="title">
+					<td></td>
+					<td>Min Bet</td>
+					<td>Max Bet</td>
+					<td>Max Per Match</td>
+				</tr>
+				<tr>
+					<td class="bgSports b l">Virtual Soccer</td>
+					<td class="l"><input maxlength="14" class="BettingLimitTextBox" type="text" id="txtMinBet" onkeyup="return Fanex.FormatNumber(event)" /> </td>
+					<td class="l"><input maxlength="14" class="BettingLimitTextBox" type="text" id="txtMaxBet" onkeyup="return Fanex.FormatNumber(event)" /> </td>
+					<td class="l"><input maxlength="14" class="BettingLimitTextBox" type="text" id="txtMaxPerMatch" onkeyup="return Fanex.FormatNumber(event)" /></td>
+				</tr>
+				<tr>
+					<td class="bgSports b l">Virtual Tennis</td>
+					<td class="l"><input maxlength="14" class="BettingLimitTextBox" type="text" id="txtMinBet" onkeyup="return Fanex.FormatNumber(event)" /> </td>
+					<td class="l"><input maxlength="14" class="BettingLimitTextBox" type="text" id="txtMaxBet" onkeyup="return Fanex.FormatNumber(event)" /> </td>
+					<td class="l"><input maxlength="14" class="BettingLimitTextBox" type="text" id="txtMaxPerMatch" onkeyup="return Fanex.FormatNumber(event)" /></td>
+				</tr>
+                <tr>
+					<td class="bgSports b l">Virtual Horse Racing</td>
+					<td class="l"><input maxlength="14" class="BettingLimitTextBox" type="text" id="txtMinBet" onkeyup="return Fanex.FormatNumber(event)" /> </td>
+					<td class="l"><input maxlength="14" class="BettingLimitTextBox" type="text" id="txtMaxBet" onkeyup="return Fanex.FormatNumber(event)" /> </td>
+					<td class="l"><input maxlength="14" class="BettingLimitTextBox" type="text" id="txtMaxPerMatch" onkeyup="return Fanex.FormatNumber(event)" /></td>
+				</tr>
+		   </tbody>
+		</table>
+		
+
+		<table cellspacing="0" cellpadding="0" border="0" style="width:750px;margin-top: 5px;">
+			<tbody>
+				<tr>
+					<td class="c">
+					   <input type="button" id="btnSubmit" name="btnSubmit" class="btn hand" value="Submit" onclick="vsCustomer.submit()" />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+

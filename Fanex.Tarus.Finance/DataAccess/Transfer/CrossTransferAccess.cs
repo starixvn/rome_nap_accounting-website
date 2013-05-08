@@ -1,0 +1,124 @@
+﻿namespace Fanex.Tarus.Finance.DataAccess.Transfer
+{
+    using Fanex.Data;
+    using System.Data;
+    
+    using System;
+
+    using Fanex.Tarus.Finance.Entities;
+    using DNAide.Core;
+
+    public class CrossTransferAccess : ICrossTransferAccess
+    {
+        public Result CustomerCrossTransferInsert(int fromCustID, int toCustID, double fromAmount, double toAmount, double fromExRate,
+            double toExRate, string forexUsername, string remark, int custid)
+        {
+            try
+            {
+                using (ObjectDb objDB = new ObjectDb("Acc_BettransInsCrossTransfer"))
+                {
+                    objDB.AddInParameter("fromcustid", DbType.Int32, fromCustID);
+                    objDB.AddInParameter("tocustid", DbType.Int32, toCustID);
+                    objDB.AddInParameter("fromamount", DbType.Double, fromAmount);
+                    objDB.AddInParameter("toamount", DbType.Double, toAmount);
+                    objDB.AddInParameter("fromexrate", DbType.Double, fromExRate);
+                    objDB.AddInParameter("toexrate", DbType.Double, toExRate);
+                    objDB.AddInParameter("forexusername", DbType.String, forexUsername);
+                    objDB.AddInParameter("remark", DbType.String, remark);
+                    objDB.AddInParameter("userid", DbType.Int32, custid);
+                    objDB.AddInParameter("ip", DbType.String, Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+
+                    objDB.AddOutParameter("errmsg", DbType.String, 500);
+                    objDB.AddOutParameter("errcode", DbType.Int32, sizeof(int));
+                    objDB.ExecuteNonQuery();
+                    var errMsg = DNAide.Core.CastAide.AsString(objDB.GetParameterValue("ErrMsg"));
+                    var errCode = DNAide.Core.CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                    return new Result { ErrorCode = errCode, ErrorMessage = errMsg };
+                }
+            }
+            catch (Exception e)
+            {
+                return new Result { ErrorCode = 1, ErrorMessage = e.Message };
+            }
+        }
+
+        public Result BettransInsertTransfer(int _accId, int _fromCustId, string _toUser, double _exRate,
+                                                      double _amount, string _remark, string _ip)
+        {
+            try
+            {
+                using (ObjectDb objDB = new ObjectDb("Acc_BettransInsTransfer"))
+                {
+                    objDB.AddInParameter("userid", DbType.Int32, _accId);
+                    objDB.AddInParameter("fromcustid", DbType.Int32, _fromCustId);
+                    objDB.AddInParameter("tousername", DbType.String, _toUser);
+                    objDB.AddInParameter("exchangerate", DbType.Double, _exRate);
+                    objDB.AddInParameter("amount", DbType.Double, _amount);
+                    objDB.AddInParameter("remark", DbType.String, _remark);
+                    objDB.AddInParameter("language", DbType.String, "E");
+                    objDB.AddInParameter("ip", DbType.String, Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+
+                    objDB.AddOutParameter("errmsg", DbType.String, 500);
+                    objDB.AddOutParameter("errcode", DbType.Int32, sizeof(int));
+                    objDB.ExecuteNonQuery();
+                    var errMsg = DNAide.Core.CastAide.AsString(objDB.GetParameterValue("ErrMsg"));
+                    var errCode = DNAide.Core.CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                    return new Result { ErrorCode = errCode, ErrorMessage = errMsg };
+                }
+
+            }
+            catch (Exception e)
+            {
+                return new Result { ErrorCode = 1, ErrorMessage = e.Message };
+            }
+        }
+
+
+        public CustomerExRate SelectCustomerExRate(string username)
+        {
+            try
+            {
+                using (ObjectDb objDB = new ObjectDb("Acc_customerSelExRate"))
+                {
+                    objDB.AddInParameter("username", DbType.String, username);
+                    var result = objDB.ExecuteDataSet();
+
+                    if (result.Tables.Count > 0 && result.Tables[0].Rows.Count > 0)
+                    {
+                        DataRow row = result.Tables[0].Rows[0];
+                        return new CustomerExRate
+                        {
+                            custid = DNAide.Core.CastAide.AsInt32(row["custid"]),
+                            username = DNAide.Core.CastAide.AsString(row["username"]),
+                            currency = DNAide.Core.CastAide.AsString(row["currency"]),
+                            actualrate = Math.Round(DNAide.Core.CastAide.AsDouble(row["actualrate"]), 4)
+                        };
+                    }
+                    return default(CustomerExRate);
+                }
+            }
+            catch
+            {
+                return default(CustomerExRate);
+            }
+        }
+
+
+        public DataSet SelectAllForexAccount()
+        {
+            using (ObjectDb objDB = new ObjectDb("Acc_CustomerSelForexAccount"))
+            {
+                return objDB.ExecuteDataSet();
+            }
+        }
+
+
+        public DataSet SelectAllExchangeRate()
+        {
+            using (ObjectDb objDB = new ObjectDb("Acc_ExchangeSelCodeforCrossTransfer"))
+            {
+                return objDB.ExecuteDataSet();
+            }
+        }
+    }
+}

@@ -1,0 +1,21 @@
+﻿namespace Fanex.Tarus.Admin.Entities
+{
+    public class Result
+    {
+        public Result()
+        {
+            ErrorCode = 0;
+            ErrorMessage = "Successful";
+        }
+
+        public Result(int errorCode, string errorMessage)
+        {
+            ErrorCode = errorCode;
+            ErrorMessage = errorMessage;
+        }
+        
+        public int ErrorCode { get; set; }
+        
+        public string ErrorMessage { get; set; }
+    }
+}

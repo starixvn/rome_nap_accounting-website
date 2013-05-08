@@ -1,0 +1,10 @@
+﻿
+using Sunplus.Accounting.Entities.Casino;
+
+namespace Sunplus.Accounting.Business.PT.Casino
+{
+    public interface ICasinoManager
+    {
+        void AutoInsertCasinoAccount(CSCustomerDetail customerInfo, int userId, string userName, string ip);
+    }
+}

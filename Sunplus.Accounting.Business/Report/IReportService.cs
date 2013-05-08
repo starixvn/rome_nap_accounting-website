@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.ServiceModel;
+using System.ServiceModel.Web;
+using System.Text;
+using Sunplus.Accounting.Entities.Report;
+using Sunplus.Accounting.Entities.Report.CheckBet;
+
+namespace Sunplus.Accounting.Business.Report
+{
+    [ServiceContract]
+    public interface IReportService
+    {
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        IEnumerable<MenuReport> GetMenuList(string system);
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        CheckBet GetCheckBet(string fromDate);
+    }
+}

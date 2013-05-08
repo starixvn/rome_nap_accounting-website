@@ -1,0 +1,46 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using DNAide.Core;
+using Sunplus.Accounting.Core.Configurations;
+
+public partial class BA_ConfigComm : PageBase
+{
+    public double MinGroupAComm, MaxGroupAComm, StepGroupAComm,MinGroupBComm,MaxGroupBComm, StepGroupBComm,MinGroupCComm,MaxGroupCComm,StepGroupCComm,MinGroupDComm, MaxGroupDComm,StepGroupDComm, Min1X2Comm, Max1X2Comm, Step1X2Comm, MinOtherComm, MaxOtherComm, StepOtherComm;
+    public string isAllowViewLog;
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        BAElement element1x2 = BASection.Instance.Commission["1x2Comm"];
+        BAElement elementOther = BASection.Instance.Commission["OtherComm"];
+        BAElement elementGroupA = BASection.Instance.Commission["GroupA"];
+        BAElement elementGroupB = BASection.Instance.Commission["GroupB"];
+        BAElement elementGroupC = BASection.Instance.Commission["GroupC"];
+        BAElement elementGroupD = BASection.Instance.Commission["GroupD"];
+        MinGroupAComm = CastAide.AsDouble(elementGroupA.Min);
+        MaxGroupAComm = CastAide.AsDouble(elementGroupA.Max);
+        StepGroupAComm = CastAide.AsDouble(elementGroupA.Step);
+        MinGroupBComm = CastAide.AsDouble(elementGroupB.Min);
+        MaxGroupBComm = CastAide.AsDouble(elementGroupB.Max);
+        StepGroupBComm = CastAide.AsDouble(elementGroupB.Step);
+        MinGroupCComm = CastAide.AsDouble(elementGroupC.Min);
+        MaxGroupCComm = CastAide.AsDouble(elementGroupC.Max);
+        StepGroupCComm = CastAide.AsDouble(elementGroupC.Step);
+        MinGroupDComm = CastAide.AsDouble(elementGroupD.Min);
+        MaxGroupDComm = CastAide.AsDouble(elementGroupD.Max);
+        StepGroupDComm = CastAide.AsDouble(elementGroupD.Step);
+        Min1X2Comm = CastAide.AsDouble(element1x2.Min);
+        Max1X2Comm = CastAide.AsDouble(element1x2.Max);
+        Step1X2Comm = CastAide.AsDouble(element1x2.Step);
+        MinOtherComm = CastAide.AsDouble(elementOther.Min);
+        MaxOtherComm = CastAide.AsDouble(elementOther.Max);
+        StepOtherComm = CastAide.AsDouble(elementOther.Step);
+        
+
+        isAllowViewLog =
+            Sunplus.Accounting.Business.Security.Permissions.HasPermission(
+                Sunplus.Accounting.Core.Common.Enumerations.Functions.BALicensee.BAViewLogComm).ToString().ToLower();
+    }
+}

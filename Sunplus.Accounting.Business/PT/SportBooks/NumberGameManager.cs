@@ -1,0 +1,2729 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Web;
+using DNAide.Core;
+using DNAide.Web;
+
+using Sunplus.Accounting.Business.Customer;
+using Sunplus.Accounting.Business.Security;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Core.LoggingLib;
+
+/// <summary>
+/// Summary description for NumberGameManager
+/// </summary>
+
+namespace Sunplus.Accounting.Business.PT.SportBooks
+{
+
+    public class NumberGameManager:SportBooksBase
+    {
+        public NumberGameManager()
+        {
+            //
+            // TODO: Add constructor logic here
+            //
+        }
+
+        #region GetHeader
+        #region GetPreGameHeader
+        private string GetPreGameHeader()
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                string tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/PreGameHeader.htm");
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+            return html.ToString();
+        }
+        #endregion
+
+        #region GetRunningGameHeader
+        private string GetRunningGameHeader()
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                string tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/RunningGameHeader.htm");                
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+            return html.ToString();
+        }
+        #endregion
+        #endregion
+
+        #region GetBetSetting
+        public override string GetBetSetting(int sporttype, DataRow data, bool IsEditMem)
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                string tpl = WebUtils.LoadTemplate("Customer/v2/BetSetting.htm");
+
+                TemplateHandler.Assign(ref tpl, "sporttype", sporttype);
+                TemplateHandler.Assign(ref tpl, "{minbet-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMinBet"));
+                TemplateHandler.Assign(ref tpl, "{maxbet-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMaxBet"));
+                TemplateHandler.Assign(ref tpl, "{maxpermatch-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMaxPerMatch"));
+                TemplateHandler.Assign(ref tpl, "{bet-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblBetSetting"));
+
+                double minbet = 0, maxbet = 0, maxpermatch = 0;
+                string _min = "";
+                string _max = "";
+                if (data != null)
+                {
+                    if (IsEditMem)
+                    {
+                        _min = "_min";
+                        _max = "_max";
+                    }
+                    minbet = CastAide.AsDouble(data["minbetv" + sporttype + _max ]);
+                    maxbet = CastAide.AsDouble(data["maxbetv" + sporttype + _min ]);
+                    maxpermatch = CastAide.AsDouble(data["maxpermatchv" + sporttype + _max ]);
+                }
+
+                TemplateHandler.Assign(ref tpl, "{minbet" + sporttype + "-val}", IBCUtils.FormatHandler.FormatNumber1(minbet));
+                TemplateHandler.Assign(ref tpl, "{maxbet" + sporttype + "-val}", IBCUtils.FormatHandler.FormatNumber1(maxbet));
+                TemplateHandler.Assign(ref tpl, "{maxpermatch" + sporttype + "-val}", IBCUtils.FormatHandler.FormatNumber1(maxpermatch));
+
+
+                GetLimitMinMaxBet(data, ref tpl, sporttype.ToString());
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+            return html.ToString();
+        }
+        #endregion
+
+        #region GetSuperPT
+        #region GetSuperPrePTSetting
+        private string GetSuperPrePTSetting(DataRow data, int sporttype, int custId)
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                #region private variables
+                string tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/SuperPrePTSetting.htm");
+
+                var Bettypes = new Hashtable();                
+                Bettypes = AssignBettypeToList(NumberGameSection.Level.Super.ToString(), 0);
+
+                TemplateHandler.Assign(ref tpl, "{super-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "SuperMaxPosition"));
+                TemplateHandler.Assign(ref tpl, "{master-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "MasterMaxPosition"));
+                TemplateHandler.Assign(ref tpl, "{agent-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "AgentMaxPosition"));
+
+                double sMinB = 0, sMaxB = 0.9, sB = 0.9;
+                double mMinB = 0, mMaxB = 0.9, mB = 0.9;
+                double aMinB = 0, aMaxB = 0.9, aB = 0.9;
+
+                var lst = Bettypes.GetEnumerator();
+                int bettype = 0;
+                string lstValue = "";
+                //var hiddenHash = new Hashtable();
+                #endregion
+
+                while (lst.MoveNext())
+                {
+                    bettype = CastAide.AsInt32( lst.Key);
+                    lstValue = CastAide.AsString(lst.Value);
+
+                    if (custId > 0 && data != null) //edit
+                    {
+                        //super
+                        sMinB = CastAide.AsDouble(data["v" + sporttype + "spositiontaking_" + bettype + "_min"]);
+                        sMaxB = CastAide.AsDouble(data["v" + sporttype + "spositiontaking_" + bettype + "_max"]);
+                        sB = CastAide.AsDouble(data["v" + sporttype + "spositiontaking_" + bettype]);
+
+                        //master
+                        mB = CastAide.AsDouble(data["v" + sporttype + "mpositiontaking_" + bettype]);
+                        mMaxB = sB;
+
+                        //agent
+                        aB = CastAide.AsDouble(data["v" + sporttype + "apositiontaking_" + bettype]);
+                        aMaxB = mB;
+                    }
+
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "S"), CustomerUtils.GetListPositionTaking(sMinB, sMaxB, sB));//Super Max Position
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "M"), CustomerUtils.GetListPositionTaking(mMinB, mMaxB, mB));//Master Max Position
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "A"), CustomerUtils.GetListPositionTaking(aMinB, aMaxB, aB));//Agent Max Position
+
+                    //hiddenHash.Add(string.Format("h-v{0}s{1}Lpositiontaking_{2}", sporttype, "", bettype), sB);
+                    //hiddenHash.Add(string.Format("h-v{0}m{1}Lpositiontaking_{2}", sporttype, "", bettype), mB);
+                    //hiddenHash.Add(string.Format("h-v{0}a{1}Lpositiontaking_{2}", sporttype, "", bettype), aB);
+                }
+
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+            return html.ToString();
+        }
+        #endregion
+
+        #region GetSuperRunningPTSetting
+        private string GetSuperRunningPTSetting(DataRow data, int sporttype, int custId)
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                string tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/SuperRunningPTSetting.htm");
+                var Bettypes = new Hashtable();
+                Bettypes = AssignBettypeToList(NumberGameSection.Level.Super.ToString(), 1);
+
+                TemplateHandler.Assign(ref tpl, "{super-live-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "SuperMaxPosition"));
+                TemplateHandler.Assign(ref tpl, "{master-live-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "MasterMaxPosition"));
+                TemplateHandler.Assign(ref tpl, "{agent-live-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "AgentMaxPosition"));
+
+                double sMinB = 0, sMaxB = 0.9, sB = 0.9;
+                double mMinB = 0, mMaxB = 0.9, mB = 0.9;
+                double aMinB = 0, aMaxB = 0.9, aB = 0.9;
+
+                var lst = Bettypes.GetEnumerator();
+                int bettype = 0;
+                string lstValue = "";
+                while (lst.MoveNext())
+                {
+                    bettype = CastAide.AsInt32(lst.Key);
+                    lstValue = CastAide.AsString(lst.Value);
+
+                    if (custId > 0 && data != null) //edit
+                    {
+                        //super
+                        sMinB = CastAide.AsDouble(data["v" + sporttype + "slivepositiontaking_" + bettype + "_min"]);
+                        sMaxB = CastAide.AsDouble(data["v" + sporttype + "slivepositiontaking_" + bettype + "_max"]);
+                        sB = CastAide.AsDouble(data["v" + sporttype + "slivepositiontaking_" + bettype]);
+
+                        //master
+                        mB = CastAide.AsDouble(data["v" + sporttype + "mlivepositiontaking_" + bettype]);
+                        mMaxB = sB;
+
+                        //agent
+                        aB = CastAide.AsDouble(data["v" + sporttype + "alivepositiontaking_" + bettype]);
+                        aMaxB = mB;
+                    }
+
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "S"), CustomerUtils.GetListPositionTaking(sMinB, sMaxB, sB));//Super Max Position
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "M"), CustomerUtils.GetListPositionTaking(mMinB, mMaxB, mB));//Master Max Position
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "A"), CustomerUtils.GetListPositionTaking(aMinB, aMaxB, aB));//Agent Max Position
+                }
+
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+            return html.ToString();
+        }
+        #endregion
+
+        #region GetSuperPtSetting
+        public override string GetSuperPtSetting(DataRow data, int custId)
+        {
+            var html = new StringBuilder();
+            try
+            {
+                #region private variables
+                var tplPtSetting = WebUtils.LoadTemplate("Customer/v2/NumberGame/SuperPTRow.htm");
+                var tplPreGameHeader = GetPreGameHeader();
+                var tplRunningGameHeader = GetRunningGameHeader();
+                var sporttype = Constants.Sport.NumberGame;
+                var tplBetSetting =  base.GetBetSetting(sporttype, data, false);
+                var tplPrePTSetting = GetSuperPrePTSetting(data, sporttype, custId);
+                var tplRunningPTSetting = GetSuperRunningPTSetting(data, sporttype, custId);
+                #endregion
+
+                #region assing template
+                TemplateHandler.Assign(ref tplPtSetting, "{super-position}", "Super Preset");
+                TemplateHandler.Assign(ref tplPtSetting, "{pregameheader}", tplPreGameHeader);
+                TemplateHandler.Assign(ref tplPtSetting, "{runningameheader}", tplRunningGameHeader);
+                TemplateHandler.Assign(ref tplPtSetting, "{preptsetting}", tplPrePTSetting);
+                TemplateHandler.Assign(ref tplPtSetting, "{runningptsetting}", tplRunningPTSetting);
+                #endregion
+
+                #region BetSetting
+                TemplateHandler.Assign(ref tplPtSetting, "betsetting", tplBetSetting);
+                #endregion
+
+                #region remove block
+                RemoveDisableBettype(ref tplPtSetting, true);
+                RemoveDisableBettype(ref tplPtSetting, false);
+                #endregion
+
+                html.Append(tplPtSetting);
+               
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+            return html.ToString();
+        }
+        #endregion
+
+        #region AddParamSuperPT
+        public void AddParamSuperPT(ref Hashtable param, HttpContext context)
+        {
+            var Bettypes = new Hashtable();
+            Bettypes = AssignEditParams(NumberGameSection.Level.Super.ToString());
+
+            var sporttype = Constants.Sport.NumberGame;
+            var bettype = 0;
+            var strValue = "";
+            var lst = Bettypes.GetEnumerator();
+            var IsLive = false;
+            var midfix1 = "";
+            var midfix2 = "";
+
+            sporttype = Constants.Sport.NumberGame;
+
+            if (!Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
+            {
+                sporttype = 1;
+                param.Add("maxperballv161", CastAide.AsDouble(context.Request["txtMaxPerMatch1"]));
+            }
+            else             
+                param.Add("maxperballv161", CastAide.AsDouble(context.Request["txtMaxPerBall"]));
+            
+
+            param.Add("minbetv161" , context.Request["txtMinbet" + sporttype]);//money  
+            param.Add("maxbetv161" , context.Request["txtMaxbet" + sporttype]);//money  
+            param.Add("maxpermatchv161" , context.Request["txtMaxPerMatch" + sporttype]);//money  
+            param.Add("discountnumber", CastAide.AsDouble(context.Request["listGameComm"]));
+            sporttype = Constants.Sport.NumberGame;
+            double s = 0, m = 0, a = 0;         
+
+            while (lst.MoveNext())
+            {
+                bettype = CastAide.AsInt32(lst.Key.ToString().Split('^')[0]);
+                strValue = CastAide.AsString(lst.Value);
+
+                IsLive = lst.Key.ToString().Split('^')[1] == "L";
+                if (IsLive)
+                {
+                    midfix1 = "live";
+                    midfix2 = "L";
+                }
+                else
+                {
+                    midfix1 = "";
+                    midfix2 = "D";
+                }
+
+                if (!IsLive && !string.IsNullOrEmpty(context.Request["chkCopy1stOUD"])) //copy from handicap Deadball
+                {
+                    s = CastAide.AsDouble(context.Request["listS1stOUD"]);
+                    m = CastAide.AsDouble(context.Request["listM1stOUD"]);
+                    a = CastAide.AsDouble(context.Request["listA1stOUD"]);
+                }
+                else if (IsLive && !string.IsNullOrEmpty(context.Request["chkCopyNBOUL"]))//Copy From Over/Under Live
+                {
+                    s = CastAide.AsDouble(context.Request["listSNBOUL"]);
+                    m = CastAide.AsDouble(context.Request["listMNBOUL"]);
+                    a = CastAide.AsDouble(context.Request["listANBOUL"]);
+                }
+                else
+                {
+                    s = CastAide.AsDouble(context.Request[strValue.Replace("{level}", "S")]);
+                    m = CastAide.AsDouble(context.Request[strValue.Replace("{level}", "M")]);
+                    a = CastAide.AsDouble(context.Request[strValue.Replace("{level}", "A")]);
+                }                
+
+                if (!Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
+                {
+                    s = CastAide.AsDouble(context.Request["listSHdpD1"]);
+                    m = CastAide.AsDouble(context.Request["listMHdpD1"]);
+                    a = CastAide.AsDouble(context.Request["listAHdpD1"]);
+                }
+
+                if (CheckBettypeStatus(bettype, IsLive))
+                {
+                    param.Add("v" + sporttype + "s" + midfix1 + "positiontaking_" + bettype, s);//super
+                    param.Add("v" + sporttype + "m" + midfix1 + "positiontaking_" + bettype, m);//master
+                    param.Add("v" + sporttype + "a" + midfix1 + "positiontaking_" + bettype, a);//agent
+                }
+                else 
+                {
+                    param.Add("v" + sporttype + "s" + midfix1 + "positiontaking_" + bettype, 0);//super
+                    param.Add("v" + sporttype + "m" + midfix1 + "positiontaking_" + bettype, 0);//master
+                    param.Add("v" + sporttype + "a" + midfix1 + "positiontaking_" + bettype, 0);//agent
+                }
+            }
+        }
+        #endregion
+        #endregion
+
+        #region GetMasterPT
+        #region GetMasterPT_Addnew
+        #region GetMasterPrePTSetting_AddNew
+        private string GetMasterPrePTSetting_AddNew(DataRow data, int sporttype, ref string strHiddenPrePT)
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                string tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/MasterPrePTSetting.htm");
+
+                TemplateHandler.Assign(ref tpl, "{super-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblSuperPresetPosition"));
+                TemplateHandler.Assign(ref tpl, "{master-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMasterPresetPosition"));
+                TemplateHandler.Assign(ref tpl, "{auto-super-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAutoSuperPresetPosition"));
+
+                double mMin = 0, mMax = 0, mMax2 = 0, msMax = 0, msMin = 0;
+                double sMin = 0, sMax = 0;
+                double sAuto = 0;
+                
+                var Bettypes = new Hashtable();
+                Bettypes = AssignBettypeToList(NumberGameSection.Level.Master.ToString(), 0);
+
+                var lst = Bettypes.GetEnumerator();
+                var bettype = 0;
+                var lstValue = "";
+                var hiddenHash = new Hashtable();
+                while (lst.MoveNext())
+                {
+                    bettype = CastAide.AsInt32(lst.Key);
+                    lstValue = CastAide.AsString(lst.Value);
+
+                    msMax = CastAide.AsDouble(data["v" + sporttype + "mspositiontaking_" + bettype + "_max"]);
+                    msMin = CastAide.AsDouble(data["v" + sporttype + "mspositiontaking_"+ bettype +"_min"]);
+                    mMax2 = CastAide.AsDouble(data["v" + sporttype + "mpositiontaking_" + bettype + "_max"]);
+                    sMax  = CastAide.AsDouble(data["v" + sporttype + "spositiontaking_" + bettype]);
+                    sAuto = CastAide.AsDouble(data["auto_v" + sporttype + "spositiontaking_" + bettype]);
+
+                    //Master Preset Position
+                    mMin = 0;
+                    mMax = msMax - sMax;
+
+                    //Super Preset Position
+                    sMin = 0;
+                    sMax = sMax;
+
+                    //Auto Super Preset Position
+                    sAuto = sAuto;
+
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "M"), CustomerUtils.GetListPositionTaking(mMin, mMax, mMax));//Master Preset Position
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "S"), CustomerUtils.GetListPositionTaking(sMin, sMax, sMax));//Super Preset Position
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "SAuto"), CustomerUtils.GetListPositionTaking(0, sAuto, 0));//Agent Max Position
+
+                    string strSub = lstValue.Substring(lstValue.IndexOf("}")+1, lstValue.IndexOf("Value") - lstValue.IndexOf("}")-1);
+
+                    TemplateHandler.Assign(ref tpl, "statuslstS" + strSub, "");
+                    TemplateHandler.Assign(ref tpl, "statuschkAuto" + strSub, "");
+                    TemplateHandler.Assign(ref tpl, "statuslstSAuto" + strSub, "disabled='disabled'");
+
+                    hiddenHash.Add("maxMS" + strSub, msMax);
+                    hiddenHash.Add("minMS" + strSub, msMin);
+                    hiddenHash.Add("maxM" + strSub, mMax2);                    
+                }
+                tpl = tpl.Replace("listSAuto", "autoS");
+                strHiddenPrePT = CustomerUtils.AssignMultipleHidden(hiddenHash);
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+            return html.ToString();
+        }
+        #endregion
+
+        #region GetMasterRunningPTSetting_AddNew
+        private string GetMasterRunningPTSetting_AddNew(DataRow data, int sporttype, ref string strHiddenPrePT)
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                string tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/MasterRunningPTSetting.htm");
+                
+                TemplateHandler.Assign(ref tpl, "{master-live-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMasterPresetPosition"));
+                TemplateHandler.Assign(ref tpl, "{super-live-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblSuperPresetPosition"));                
+                TemplateHandler.Assign(ref tpl, "{auto-super-live-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAutoSuperPresetPosition"));
+
+                double mMin = 0, mMax = 0, mMax2 = 0, msMax = 0, msMin = 0;
+                double sMin = 0, sMax = 0;
+                double sAuto = 0;
+
+                var Bettypes = new Hashtable();
+                Bettypes = AssignBettypeToList(NumberGameSection.Level.Master.ToString(), 1);
+
+                var lst = Bettypes.GetEnumerator();
+                var bettype = 0;
+                var lstValue = "";
+                var hiddenHash = new Hashtable();
+                while (lst.MoveNext())
+                {
+                    bettype = CastAide.AsInt32(lst.Key);
+                    lstValue = CastAide.AsString(lst.Value);
+
+                   
+                    msMax = CastAide.AsDouble(data["v" + sporttype + "mslivepositiontaking_" + bettype + "_max"]);
+                    msMin = CastAide.AsDouble(data["v" + sporttype + "mslivepositiontaking_" + bettype + "_min"]);
+                    mMax2 = CastAide.AsDouble(data["v" + sporttype + "mlivepositiontaking_" + bettype + "_max"]);
+                    sMax = CastAide.AsDouble(data["v" + sporttype + "slivepositiontaking_" + bettype]);
+                    sAuto = CastAide.AsDouble(data["auto_v" + sporttype + "slivepositiontaking_" + bettype]);
+
+
+                    //Master Preset Position
+                    mMin = 0;
+                    mMax = msMax - sMax;
+
+                    //Super Preset Position
+                    sMin = 0;
+                    sMax = sMax;
+
+                    //Auto Super Preset Position
+                    sAuto = sAuto;
+
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "M"), CustomerUtils.GetListPositionTaking(mMin, mMax, mMax));//Master Preset Position
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "S"), CustomerUtils.GetListPositionTaking(sMin, sMax, sMax));//Super Preset Position
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "SAuto"), CustomerUtils.GetListPositionTaking(0, sAuto, 0));//Agent Max Position
+
+                    string strSub = lstValue.Substring(lstValue.IndexOf("}") + 1, lstValue.IndexOf("Value") - lstValue.IndexOf("}")-1);
+
+                    TemplateHandler.Assign(ref tpl, "statuslstS" + strSub, "");
+                    TemplateHandler.Assign(ref tpl, "statuschkAuto" + strSub, "");
+                    TemplateHandler.Assign(ref tpl, "statuslstSAuto" + strSub, "disabled='disabled'");
+
+                    hiddenHash.Add("maxMS" + strSub, msMax);
+                    hiddenHash.Add("minMS" + strSub, msMin);
+                    hiddenHash.Add("maxM" + strSub, mMax2);
+                }
+                tpl = tpl.Replace("listSAuto", "autoS");
+                strHiddenPrePT = CustomerUtils.AssignMultipleHidden(hiddenHash);
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+            return html.ToString();
+        }
+        #endregion
+
+        #region GetMasterPtSetting_AddNew
+        public override string GetMasterPtSetting_AddNew(DataRow data, ref string strHidden)
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                string tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/MasterPTRow.htm");
+                int sporttype = Constants.Sport.NumberGame ;
+                string tplBetSetting = GetBetSetting(sporttype, data, true);
+                string tplPreGameHeader = GetPreGameHeader();
+                string tplRunningGameHeader = GetRunningGameHeader();
+                string tplHiddenPrePT = "";
+                string tplPrePTSetting = GetMasterPrePTSetting_AddNew(data, sporttype, ref tplHiddenPrePT);
+                
+                string tplHiddenLivePT = "";
+                string tplRunningPTSetting = GetMasterRunningPTSetting_AddNew(data, sporttype, ref tplHiddenLivePT);
+
+                TemplateHandler.Assign(ref tpl, "betsetting", tplBetSetting);
+                TemplateHandler.Assign(ref tpl, "pregameheader", tplPreGameHeader);
+                TemplateHandler.Assign(ref tpl, "runningameheader", tplRunningGameHeader);
+                TemplateHandler.Assign(ref tpl, "preptsetting", tplPrePTSetting);
+                TemplateHandler.Assign(ref tpl, "runningptsetting", tplRunningPTSetting);
+
+                #region remove block
+                RemoveDisableBettype(ref tpl, true);
+                RemoveDisableBettype(ref tpl, false);
+                #endregion
+
+                strHidden = tplHiddenPrePT + tplHiddenLivePT;
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+            return html.ToString();
+        }
+        #endregion
+        #endregion
+
+        #region GetMasterPT_Edit
+        #region GetMasterPrePTSetting_Edit
+        private string GetMasterPrePTSetting_Edit(DataRow data, int sporttype, ref string strHiddenPrePT)
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                string tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/MasterPrePTSetting.htm");
+
+                TemplateHandler.Assign(ref tpl, "{super-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblSuperPresetPosition"));
+                TemplateHandler.Assign(ref tpl, "{master-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMasterPresetPosition"));
+                TemplateHandler.Assign(ref tpl, "{auto-super-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAutoSuperPresetPosition"));
+
+                double mMin = 0, mMax = 0, mMax2 = 0, m = 0, msMax = 0, msMin = 0;
+                double sMin = 0, sMax = 0, s = 0;
+                double sAuto = 0, sAutoMax = 0;
+                bool isAuto = false;
+
+                var Bettypes = new Hashtable();
+                Bettypes = AssignBettypeToList(NumberGameSection.Level.Master.ToString(), 0);
+
+                var lst = Bettypes.GetEnumerator();
+                var bettype = 0;
+                var lstValue = "";
+                var disabled = "disabled='disabled'";
+                var check = "checked='checked'";
+                var hiddenHash = new Hashtable();
+
+                while (lst.MoveNext())
+                {
+                    
+                    bettype = CastAide.AsInt32(lst.Key);
+                    lstValue = CastAide.AsString(lst.Value);
+
+                    //Master Preset Position
+                    msMax = CastAide.AsDouble(data["v" + sporttype + "mspositiontaking_" + bettype + "_max"]);
+                    msMin = CastAide.AsDouble(data["v" + sporttype + "mspositiontaking_" + bettype + "_min"]);
+                    
+                    mMax2 = CastAide.AsDouble(data[ "v" + sporttype + "mpositiontaking_" + bettype + "_max"]);
+                    mMin = CastAide.AsDouble(data["v" + sporttype + "mpositiontaking_" + bettype + "_min"]);
+
+                    s = CastAide.AsDouble(data["v" + sporttype + "spositiontaking_" + bettype]);
+                    m = CastAide.AsDouble(data["v" + sporttype + "mpositiontaking_" + bettype]);
+                    isAuto = CastAide.AsBoolean(data["isauto_v" + sporttype + "spositiontaking_" + bettype]);
+                    
+                    mMax = isAuto ? msMax : msMax - s;
+                    mMax = (mMax > mMax2) ? mMax2 : mMax;
+                    
+                    //Super Preset Position
+                    sMin = 0;
+                    sMax = CastAide.AsDouble(data["v" + sporttype + "spositiontaking_" + bettype + "_max"]);
+                    sMax = sMax - mMin;
+                    //s = CastAide.AsDouble(data["v" + sporttype + "spositiontaking_" + bettype]);
+
+                    //Auto Super Preset Position
+                    sAutoMax = CastAide.AsDouble(data["auto_v" + sporttype + "spositiontaking_" + bettype + "_max"]);
+                    sAuto = CastAide.AsDouble(data["auto_v" + sporttype + "spositiontaking_" + bettype]);
+
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "M"), CustomerUtils.GetListPositionTaking(mMin, mMax, m));//Master Preset Position
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "S"), CustomerUtils.GetListPositionTaking(sMin, sMax, s));//Super Preset Position
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "SAuto"), CustomerUtils.GetListPositionTaking(0, sAutoMax, sAuto));//Auto Super Preset Position
+                    
+
+                    string strSub = lstValue.Substring(lstValue.IndexOf("}") + 1, lstValue.IndexOf("Value") - lstValue.IndexOf("}") - 1);
+
+                    if (isAuto)
+                    {
+                        TemplateHandler.Assign(ref tpl, "statuslstS" + strSub, disabled);
+                        TemplateHandler.Assign(ref tpl, "statuschkAuto" + strSub, check);
+                        TemplateHandler.Assign(ref tpl, "statuslstSAuto" + strSub, "");
+                    }
+                    else
+                    {
+                        TemplateHandler.Assign(ref tpl, "statuslstS" + strSub, "");
+                        TemplateHandler.Assign(ref tpl, "statuschkAuto" + strSub, "");
+                        TemplateHandler.Assign(ref tpl, "statuslstSAuto" + strSub, disabled);
+                    }
+
+                    hiddenHash.Add("maxMS" +  strSub, msMax);
+                    hiddenHash.Add("minMS" + strSub, msMin);
+                    hiddenHash.Add("maxM" +  strSub, mMax2);
+                    hiddenHash.Add("isAuto" + strSub, (isAuto ? 1 : 0));
+                
+                }
+
+                tpl = tpl.Replace("listSAuto", "autoS");
+                strHiddenPrePT = CustomerUtils.AssignMultipleHidden(hiddenHash);
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+            return html.ToString();
+        }
+        #endregion
+
+        #region GetMasterRunningPTSetting_Edit
+        private string GetMasterRunningPTSetting_Edit(DataRow data, string sporttype, ref string strHiddenPrePT)
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                string tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/MasterRunningPTSetting.htm");
+               
+                TemplateHandler.Assign(ref tpl, "{master-live-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMasterPresetPosition"));
+                TemplateHandler.Assign(ref tpl, "{super-live-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblSuperPresetPosition"));
+                TemplateHandler.Assign(ref tpl, "{auto-super-live-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAutoSuperPresetPosition"));
+
+                double mMin = 0, mMax = 0, mMax2 = 0, m = 0, msMax = 0, msMin = 0;
+                double sMin = 0, sMax = 0, s = 0;
+                double sAuto = 0, sAutoMax = 0;
+                bool isAuto = false;
+
+                var Bettypes = new Hashtable();
+                Bettypes = AssignBettypeToList(NumberGameSection.Level.Master.ToString(), 1);
+
+                var lst = Bettypes.GetEnumerator();
+                var bettype = 0;
+                var lstValue = "";
+                var hiddenHash = new Hashtable();
+                string prefix = "v";                
+                var disabled = "disabled='disabled'";
+                var check = "checked='checked'";
+                while (lst.MoveNext())
+                {
+                    bettype = CastAide.AsInt32(lst.Key);
+                    lstValue = CastAide.AsString(lst.Value);
+
+                    msMax = CastAide.AsDouble(data[prefix + sporttype + "mslivepositiontaking_" + bettype + "_max"]);
+                    msMin = CastAide.AsDouble(data[prefix + sporttype + "mslivepositiontaking_" + bettype + "_min"]);
+
+                    mMax2 = CastAide.AsDouble(data[prefix + sporttype + "mlivepositiontaking_" + bettype + "_max"]);
+                    mMin = CastAide.AsDouble(data[prefix + sporttype + "mlivepositiontaking_" + bettype + "_min"]);
+
+                    s = CastAide.AsDouble(data[prefix + sporttype + "slivepositiontaking_" + bettype]);
+                    m = CastAide.AsDouble(data[prefix + sporttype + "mlivepositiontaking_" + bettype]);
+                    isAuto = CastAide.AsBoolean(data["isauto_" + prefix + sporttype + "slivepositiontaking_" + bettype]);
+
+                    mMax = isAuto ? msMax : msMax - s;
+                    mMax = (mMax > mMax2) ? mMax2 : mMax;
+
+                    //Super Preset Position
+                    sMin = 0;
+                    sMax = CastAide.AsDouble(data[prefix + sporttype + "slivepositiontaking_" + bettype + "_max"]);
+                    sMax = sMax - mMin;
+                    //s = CastAide.AsDouble(data[prefix + sporttype + "slivepositiontaking_" + bettype]);
+
+                    //Auto Super Preset Position
+                    sAutoMax = CastAide.AsDouble(data["auto_" + prefix + sporttype + "slivepositiontaking_" + bettype + "_max"]);
+                    sAuto = CastAide.AsDouble(data["auto_" + prefix + sporttype + "slivepositiontaking_" + bettype]);
+
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "M"), CustomerUtils.GetListPositionTaking(mMin, mMax, m));//Master Preset Position
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "S"), CustomerUtils.GetListPositionTaking(sMin, sMax, s));//Super Preset Position
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "SAuto"), CustomerUtils.GetListPositionTaking(0, sAutoMax, sAuto));//Agent Max Position
+
+                    string strSub = lstValue.Substring(lstValue.IndexOf("}") + 1, lstValue.IndexOf("Value") - lstValue.IndexOf("}") - 1);
+
+                    if (isAuto)
+                    {
+                        TemplateHandler.Assign(ref tpl, "statuslstS" + strSub, disabled);
+                        TemplateHandler.Assign(ref tpl, "statuschkAuto" + strSub, check);
+                        TemplateHandler.Assign(ref tpl, "statuslstSAuto" + strSub, "");
+                    }
+                    else
+                    {
+                        TemplateHandler.Assign(ref tpl, "statuslstS" + strSub, "");
+                        TemplateHandler.Assign(ref tpl, "statuschkAuto" + strSub, "");
+                        TemplateHandler.Assign(ref tpl, "statuslstSAuto" + strSub, disabled);
+                    }
+
+                    hiddenHash.Add("maxMS" + strSub, msMax);
+                    hiddenHash.Add("minMS" + strSub, msMin);
+                    hiddenHash.Add("maxM" + strSub, mMax2);
+                    hiddenHash.Add("isAuto" + strSub, (isAuto ? 1 : 0));
+                }
+                tpl = tpl.Replace("listSAuto", "autoS");
+                strHiddenPrePT = CustomerUtils.AssignMultipleHidden(hiddenHash);
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+            return html.ToString();
+        }
+        #endregion
+
+        #region GetMasterPtSetting_Edit
+        public override string GetMasterPtSetting_Edit(DataRow data, ref string strHidden)
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                string tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/MasterPTRow.htm");
+                int sporttype = Constants.Sport.NumberGame;
+                string tplBetSetting = GetBetSetting(sporttype, data, false);
+                string tplPreGameHeader = GetPreGameHeader();
+                string tplRunningGameHeader = GetRunningGameHeader();
+                string tplHiddenPrePT = "";
+                string tplPrePTSetting = GetMasterPrePTSetting_Edit(data, sporttype, ref tplHiddenPrePT);
+
+                string tplHiddenLivePT = "";
+                string tplRunningPTSetting = GetMasterRunningPTSetting_Edit(data, sporttype.ToString(), ref tplHiddenLivePT);
+
+                TemplateHandler.Assign(ref tpl, "betsetting", tplBetSetting);
+                TemplateHandler.Assign(ref tpl, "pregameheader", tplPreGameHeader);
+                TemplateHandler.Assign(ref tpl, "runningameheader", tplRunningGameHeader);
+                TemplateHandler.Assign(ref tpl, "preptsetting", tplPrePTSetting);
+                TemplateHandler.Assign(ref tpl, "runningptsetting", tplRunningPTSetting);
+
+                #region remove block
+                RemoveDisableBettype(ref tpl, true);
+                RemoveDisableBettype(ref tpl, false);
+                #endregion
+
+                strHidden = tplHiddenPrePT + tplHiddenLivePT;
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+            return html.ToString();
+        }
+        #endregion
+        #endregion
+
+        #region AddParamMasterPT
+        public void AddParamMasterPT(ref Hashtable param, HttpContext context, bool isCopyAll, bool isCopyBasket, bool IsUpdate)
+        {
+            try
+            { 
+                double minb = 0, maxb = 0, maxpermatch = 0;
+                int sporttype = 0;
+                sporttype = Constants.Sport.NumberGame;
+
+                if (!Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
+                {
+                    sporttype = 1;
+                    param.Add("maxperballv161", CastAide.AsDouble(context.Request["txtMaxPerMatch1"]));
+                }
+                else
+                {
+                    param.Add("maxperballv161", CastAide.AsDouble(context.Request["txtMaxPerBall"]));
+                }
+
+                minb = CastAide.AsDouble(context.Request["txtMinbet" + sporttype]);
+                maxb = CastAide.AsDouble(context.Request["txtMaxbet" + sporttype]);
+                maxpermatch = CastAide.AsDouble(context.Request["txtMaxPerMatch" + sporttype]);
+
+                sporttype = Constants.Sport.NumberGame;
+                param.Add("minbetv" + sporttype, minb);
+                param.Add("maxbetv" + sporttype, maxb);
+                param.Add("maxpermatchv" + sporttype, maxpermatch);
+                param.Add("discountnumber", CastAide.AsDouble(context.Request["listGameComm"]));
+
+                if (IsUpdate)
+                {
+                    param.Add("updateminmaxbetv" + sporttype, 1);
+                    param.Add("updatepositiontakingv" + sporttype, 1);                    
+                }
+
+                var Bettypes = new Hashtable();
+                Bettypes = AssignEditParams(NumberGameSection.Level.Master.ToString());
+
+                var bettype = 0;
+                var strValue = "";
+                var lst = Bettypes.GetEnumerator();
+                var IsLive = false;
+                var IsAuto = false;
+                var midfix1 = "";
+                var midfix2 = "";
+                double s = 0, m = 0, auto = 0;
+
+                while (lst.MoveNext())
+                {
+                    bettype = CastAide.AsInt32(lst.Key.ToString().Split('^')[0]);
+                    strValue = CastAide.AsString(lst.Value);
+
+                    IsLive = lst.Key.ToString().Split('^')[1] == "L";
+                    if (IsLive)
+                    {
+                        midfix1 = "live";
+                        midfix2 = "L";
+                    }
+                    else
+                    {
+                        midfix1 = "";
+                        midfix2 = "D";
+                    }
+
+                    if (!IsLive && !string.IsNullOrEmpty(context.Request["chkCopy1stOUD"])) //Copy From 1st Last O/U Deadball
+                    {
+                        IsAuto = context.Request["chkAuto1stOUD"] != null;
+                        m = CastAide.AsDouble(context.Request["listM1stOUD"]);
+                        s = IsAuto ? 0 : CastAide.AsDouble(context.Request["listS1stOUD"]);
+                        auto = IsAuto ? CastAide.AsDouble(context.Request["autoS1stOUD"]) : 0;
+                    }
+                    else if (IsLive && !string.IsNullOrEmpty(context.Request["chkCopyNBOUL"]))//Copy From Over/Under Live
+                    {
+                        IsAuto = context.Request["chkAutoNBOUL"] != null;
+                        m = CastAide.AsDouble(context.Request["listMNBOUL"]);
+                        s = IsAuto ? 0 : CastAide.AsDouble(context.Request["listSNBOUL"]);
+                        auto = IsAuto ? CastAide.AsDouble(context.Request["autoSNBOUL"]) : 0;
+                    }
+                    else
+                    {
+                        //list{level}HLL
+                        string strSub = strValue.Substring(strValue.IndexOf("}") + 1, strValue.Length - strValue.IndexOf("}") - 1);
+
+                        IsAuto = context.Request["chkAuto" + strSub] != null;
+                        m = CastAide.AsDouble(context.Request[strValue.Replace("{level}", "M")]);
+                        s = IsAuto ? 0 : CastAide.AsDouble(context.Request[strValue.Replace("{level}", "S")]);
+                        auto = IsAuto ? CastAide.AsDouble(context.Request["autoS" + strSub]) : 0;
+                    }
+
+                    if (!Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
+                    {
+                        IsAuto = context.Request["chkAuto1HdpD"] != null;
+                        m = CastAide.AsDouble(context.Request["listM1HdpD"]);
+                        s = IsAuto ? 0 : CastAide.AsDouble(context.Request["listS1HdpD"]);
+                        auto = IsAuto ? CastAide.AsDouble(context.Request["autoS1HdpD"]) : 0;
+                    }
+
+                    if (CheckBettypeStatus(bettype, IsLive))
+                    {
+                        param.Add("v" + sporttype + "s" + midfix1 + "positiontaking_" + bettype, s);//Master Preset Position
+                        param.Add("v" + sporttype + "m" + midfix1 + "positiontaking_" + bettype, m);//Super Preset Position
+                        param.Add("auto_v" + sporttype + "s" + midfix1 + "positiontaking_" + bettype, auto);//Auto Super Preset Position
+                    }
+                    else 
+                    {
+                        param.Add("v" + sporttype + "s" + midfix1 + "positiontaking_" + bettype, 0);//Master Preset Position
+                        param.Add("v" + sporttype + "m" + midfix1 + "positiontaking_" + bettype, 0);//Super Preset Position
+                        param.Add("auto_v" + sporttype + "s" + midfix1 + "positiontaking_" + bettype, 0);//Auto Super Preset Position
+                    }
+                    
+                    if(IsUpdate)
+                        param.Add("isauto_v" + sporttype + "s" + midfix1 + "positiontaking_" + bettype, IsAuto);//isauto_v161spositiontaking_81
+                }
+
+       
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+        }
+        #endregion
+        #endregion
+
+        #region GetAgentPT
+        #region GetAgentPT_AddNew
+        #region GetAgentPrePTSetting_AddNew
+        private string GetAgentPrePTSetting_AddNew(DataRow data, int sporttype, ref string strHiddenPrePT)
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                string tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/AgentPrePTSetting.htm");
+
+                TemplateHandler.Assign(ref tpl, "{agent-position}",  ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAgentPosition"));
+                TemplateHandler.Assign(ref tpl, "{master-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMasterPresetPosition"));
+                TemplateHandler.Assign(ref tpl, "{auto-master-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAutoMasterResestPosition") );
+                TemplateHandler.Assign(ref tpl, "rowspan", 4);
+
+                double aMin = 0, aMax = 0, aMax2 = 0, a = 0; 
+                double mMin = 0, mMax = 0, m = 0, maMin = 0;
+
+                var Bettypes = new Hashtable();
+                Bettypes = AssignBettypeToList(NumberGameSection.Level.Agent.ToString(), 0);
+
+                var lst = Bettypes.GetEnumerator();
+                var bettype = 0;
+                var lstValue = "";
+                var hiddenHash = new Hashtable();
+                
+                while (lst.MoveNext())
+                {
+                    bettype = CastAide.AsInt32(lst.Key);
+                    lstValue = CastAide.AsString(lst.Value);
+
+                    //Master Preset Position
+                    mMin = 0;
+                    mMax = CastAide.AsDouble(data["v" + sporttype + "mpositiontaking_" + bettype]);
+                    m = mMax;
+                    maMin = CastAide.AsDouble(data["v" + sporttype + "mpositiontaking_" + bettype + "_min"]);
+
+                    //Agent Position
+                    aMin = 0;
+                    aMax2 = CastAide.AsDouble(data["v" + sporttype + "apositiontaking_" + bettype + "_max"]);
+                    aMax = (mMax - m) > aMax2 ? aMax2 : mMax - m;
+                    a = aMax;
+
+                    //Auto Master Preset
+
+                    
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "M"), CustomerUtils.GetListPositionTaking(aMin, aMax, a));//Agent Position
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "S"), CustomerUtils.GetListPositionTaking(mMin, mMax, m));//Master Preset Position
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "SAuto"), CustomerUtils.GetListPositionTaking(0, mMax, 0));//Auto Master Preset
+
+                    string strSub = lstValue.Substring(lstValue.IndexOf("}") + 1, lstValue.IndexOf("Value") - lstValue.IndexOf("}") - 1);
+
+                    TemplateHandler.Assign(ref tpl, "statuslstS" + strSub, "");
+                    TemplateHandler.Assign(ref tpl, "statuschkAuto" + strSub, "");
+                    TemplateHandler.Assign(ref tpl, "statuslstSAuto" + strSub, "disabled='disabled'");
+
+                    hiddenHash.Add("minM" + strSub, maMin);
+                    hiddenHash.Add("maxA" + strSub, ((mMax > aMax2) ? aMax2 : mMax));
+                    hiddenHash.Add("maxM" + strSub, mMax);
+                }
+
+                tpl = tpl.Replace("listSAuto", "autoS");
+
+                strHiddenPrePT = CustomerUtils.AssignMultipleHidden(hiddenHash);
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+            return html.ToString();
+        }
+        #endregion
+
+        #region GetAgentRunningPTSetting_AddNew
+        private string GetAgentRunningPTSetting_AddNew(DataRow data, string sporttype, ref string strHiddenPrePT)
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                string tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/AgentRunningPTSetting.htm");
+                TemplateHandler.Assign(ref tpl, "{agent-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAgentPosition"));
+                TemplateHandler.Assign(ref tpl, "{master-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMasterPresetPosition"));
+                TemplateHandler.Assign(ref tpl, "{auto-master-live-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAutoMasterResestPosition"));
+                TemplateHandler.Assign(ref tpl, "rowspan", 4);
+
+                double aMin = 0, aMax = 0, aMax2 = 0, a = 0;
+                double mMin = 0, mMax = 0, m = 0, maMin = 0;
+
+                var Bettypes = new Hashtable();
+                Bettypes = AssignBettypeToList(NumberGameSection.Level.Agent.ToString(), 1);
+
+                string prefix = "v";
+
+                var lst = Bettypes.GetEnumerator();
+                var bettype = 0;
+                var lstValue = "";
+                var hiddenHash = new Hashtable();
+                while (lst.MoveNext())
+                {
+                    bettype = CastAide.AsInt32(lst.Key);
+                    lstValue = CastAide.AsString(lst.Value);
+                    //Master Preset Position
+                    mMin = 0;
+                    mMax = CastAide.AsDouble(data[prefix + sporttype + "mlivepositiontaking_" + bettype]);
+                    m = mMax;
+                    maMin = CastAide.AsDouble(data[prefix + sporttype + "mlivepositiontaking_" + bettype + "_min"]);
+
+                    //Agent Position
+                    aMin = 0;
+                    aMax2 = CastAide.AsDouble(data[prefix + sporttype + "alivepositiontaking_" + bettype + "_max"]);
+                    aMax = (mMax - m) > aMax2 ? aMax2 : mMax - m;
+                    a = aMax;
+
+                    //Auto Master Preset
+
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "M"), CustomerUtils.GetListPositionTaking(aMin, aMax, a));//Agent Position
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "S"), CustomerUtils.GetListPositionTaking(mMin, mMax, m));//Master Preset Position
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "SAuto"), CustomerUtils.GetListPositionTaking(0, mMax, 0));//Auto Master Preset
+
+                    string strSub = lstValue.Substring(lstValue.IndexOf("}") + 1, lstValue.IndexOf("Value") - lstValue.IndexOf("}") - 1);
+
+                    TemplateHandler.Assign(ref tpl, "statuslstS" + strSub, "");
+                    TemplateHandler.Assign(ref tpl, "statuschkAuto" + strSub, "");
+                    TemplateHandler.Assign(ref tpl, "statuslstSAuto" + strSub, "disabled='disabled'");
+
+                    hiddenHash.Add("minM" + strSub, maMin);
+                    hiddenHash.Add("maxA" + strSub, ((mMax > aMax2) ? aMax2 : mMax));
+                    hiddenHash.Add("maxM" + strSub, mMax);
+                }
+
+                tpl = tpl.Replace("listSAuto", "autoS");
+
+                strHiddenPrePT = CustomerUtils.AssignMultipleHidden(hiddenHash);
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+            return html.ToString();
+        }
+        #endregion
+
+        #region GetAgentPtSetting_AddNew
+        public override string GetAgentPtSetting_AddNew(DataRow data, ref string strHidden)
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                string tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/AgentPTRow.htm");
+                int sporttype = Constants.Sport.NumberGame;
+                string tplBetSetting = GetBetSetting(sporttype, data, false);
+                string tplPreGameHeader = GetPreGameHeader();
+                string tplRunningGameHeader = GetRunningGameHeader();
+                string tplHiddenPrePT = "";
+                string tplPrePTSetting = GetAgentPrePTSetting_AddNew(data, sporttype, ref tplHiddenPrePT);
+
+                string tplHiddenLivePT = "";
+                string tplRunningPTSetting = GetAgentRunningPTSetting_AddNew(data, sporttype.ToString(), ref tplHiddenLivePT);
+
+                TemplateHandler.Assign(ref tpl, "betsetting", tplBetSetting);
+                TemplateHandler.Assign(ref tpl, "pregameheader", tplPreGameHeader);
+                TemplateHandler.Assign(ref tpl, "runningameheader", tplRunningGameHeader);
+                TemplateHandler.Assign(ref tpl, "preptsetting", tplPrePTSetting);
+                TemplateHandler.Assign(ref tpl, "runningptsetting", tplRunningPTSetting);
+
+                #region remove block
+                RemoveDisableBettype(ref tpl, true);
+                RemoveDisableBettype(ref tpl, false);
+                #endregion
+
+                strHidden = tplHiddenPrePT + tplHiddenLivePT;
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+            return html.ToString();
+        }
+        #endregion
+        #endregion
+
+        #region GetAgentPT_Edit
+        #region GetAgentPrePTSetting_Edit
+        private string GetAgentPrePTSetting_Edit(DataRow data, int sporttype, bool IsEnabledAutoMaster, ref string strHiddenPrePT)
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                string tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/AgentPrePTSetting.htm");
+
+                TemplateHandler.Assign(ref tpl, "{agent-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAgentPosition"));
+                TemplateHandler.Assign(ref tpl, "{master-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMasterPresetPosition"));
+                TemplateHandler.Assign(ref tpl, "{auto-master-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAutoMasterResestPosition"));
+
+                if (IsEnabledAutoMaster)
+                    TemplateHandler.Assign(ref tpl, "rowspan", 4);
+                else
+                {
+                    TemplateHandler.Assign(ref tpl, "rowspan", 2);
+                    TemplateHandler.RemoveBlock(ref tpl, "auto-master-pt1");
+                }
+
+                double aMin = 0, aMax = 0, aMax2 = 0, a = 0;
+                double mMin = 0, mMax = 0, m = 0, maMin = 0, maMax = 0;
+                double mAutoMax = 0, mAuto = 0;
+
+                var Bettypes = new Hashtable();
+                Bettypes = AssignBettypeToList(NumberGameSection.Level.Agent.ToString(), 0);
+
+                var lst = Bettypes.GetEnumerator();
+                var bettype = 0;
+                var lstValue = "";
+                var hiddenHash = new Hashtable();
+                var disabled = "disabled='disabled'";
+                var check = "checked='checked'";
+                var isAuto = false;
+                while (lst.MoveNext())
+                {
+                    bettype = CastAide.AsInt32(lst.Key);
+                    lstValue = CastAide.AsString(lst.Value);
+                    //Agent Position
+                    aMin = CastAide.AsDouble(data["v" + sporttype + "apositiontaking_" + bettype + "_min"]);
+                    maMax = CastAide.AsDouble(data["max_v" + sporttype + "mapositiontaking_" + bettype]);
+                    m = CastAide.AsDouble(data["v" + sporttype + "mpositiontaking_" + bettype]);
+                    aMax2 = CastAide.AsDouble(data["v" + sporttype + "apositiontaking_"+ bettype +"_max"]);
+                    aMax = maMax - m > aMax2 ? aMax2 : maMax - m;
+                    a = CastAide.AsDouble(data["v" + sporttype + "apositiontaking_" + bettype]);
+
+                    //Master Preset Position
+                    mMin = 0;
+                    mMax = maMax - aMin;
+                    m = CastAide.AsDouble(data["v" + sporttype + "mpositiontaking_" + bettype]);
+
+                    //Auto Master Preset
+                    mAutoMax = CastAide.AsDouble(data["auto_v" + sporttype + "mpositiontaking_"+ bettype +"_max"]);
+                    mAuto = CastAide.AsDouble(data["auto_v" + sporttype + "mpositiontaking_" + bettype]);
+                    isAuto = CastAide.AsBoolean(data["isauto_v" + sporttype + "mpositiontaking_" + bettype]);
+
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "M"), CustomerUtils.GetListPositionTaking(aMin, aMax, a));//Agent Position
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "S"), CustomerUtils.GetListPositionTaking(mMin, mMax, m));//Master Preset Position
+                    if(IsEnabledAutoMaster)
+                        TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "SAuto"), CustomerUtils.GetListPositionTaking(0, mAutoMax, mAuto));//Auto Master Preset
+
+                    string strSub = lstValue.Substring(lstValue.IndexOf("}") + 1, lstValue.IndexOf("Value") - lstValue.IndexOf("}") - 1);
+
+                    if (isAuto)
+                    {
+                        TemplateHandler.Assign(ref tpl, "statuslstS" + strSub, disabled);
+                        TemplateHandler.Assign(ref tpl, "statuschkAuto" + strSub, check);
+                        TemplateHandler.Assign(ref tpl, "statuslstSAuto" + strSub, "");
+                    }
+                    else
+                    {
+                        TemplateHandler.Assign(ref tpl, "statuslstS" + strSub, "");
+                        TemplateHandler.Assign(ref tpl, "statuschkAuto" + strSub, "");
+                        TemplateHandler.Assign(ref tpl, "statuslstSAuto" + strSub, disabled);
+                    }
+
+                    hiddenHash.Add("minM" + strSub, maMin);
+                    hiddenHash.Add("maxA" + strSub, (aMax2 > maMax) ? maMax : aMax2);
+                    hiddenHash.Add("maxM" + strSub, maMax);
+                    hiddenHash.Add("isAuto" + strSub, (isAuto ? 1 : 0));
+                }
+                tpl = tpl.Replace("listSAuto", "autoS");
+
+                strHiddenPrePT = CustomerUtils.AssignMultipleHidden(hiddenHash);
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+            return html.ToString();
+        }
+        #endregion
+
+        #region GetAgentRunningPTSetting_Edit
+        private string GetAgentRunningPTSetting_Edit(DataRow data, string sporttype, bool IsEnabledAutoMaster, ref string strHiddenPrePT)
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                string tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/AgentRunningPTSetting.htm");
+               
+                TemplateHandler.Assign(ref tpl, "{agent-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAgentPosition"));
+                TemplateHandler.Assign(ref tpl, "{master-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMasterPresetPosition"));
+                TemplateHandler.Assign(ref tpl, "{auto-master-live-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAutoMasterResestPosition"));
+
+
+                if (IsEnabledAutoMaster)
+                    TemplateHandler.Assign(ref tpl, "rowspan", 4);
+                else
+                {
+                    TemplateHandler.Assign(ref tpl, "rowspan", 2);
+                    TemplateHandler.RemoveBlock(ref tpl, "auto-master-pt1");
+                }
+
+                double aMin = 0, aMax = 0, aMax2 = 0, a = 0;
+                double mMin = 0, mMax = 0, m = 0, maMin = 0, maMax = 0;
+                double mAutoMax = 0, mAuto = 0;
+
+                var Bettypes = new Hashtable();
+                Bettypes = AssignBettypeToList(NumberGameSection.Level.Agent.ToString(), 1);
+
+                string prefix = "v";
+
+                var lst = Bettypes.GetEnumerator();
+                var bettype = 0;
+                var lstValue = "";
+                var hiddenHash = new Hashtable();
+                var disabled = "disabled='disabled'";
+                var check = "checked='checked'";
+                var isAuto = false;
+                while (lst.MoveNext())
+                {
+                    bettype = CastAide.AsInt32(lst.Key);
+                    lstValue = CastAide.AsString(lst.Value);
+                    //Agent Position
+                    aMin = CastAide.AsDouble(data[prefix + sporttype + "alivepositiontaking_" + bettype + "_min"]);
+                    maMax = CastAide.AsDouble(data["max_" + prefix + sporttype + "malivepositiontaking_" + bettype]);
+                    m = CastAide.AsDouble(data[prefix + sporttype + "mlivepositiontaking_" + bettype]);
+                    aMax2 = CastAide.AsDouble(data[prefix + sporttype + "alivepositiontaking_" + bettype + "_max"]);
+                    aMax = maMax - m > aMax2 ? aMax2 : maMax - m;
+                    a = CastAide.AsDouble(data[prefix + sporttype + "alivepositiontaking_" + bettype]);
+
+                    //Master Preset Position
+                    mMin = 0;
+                    mMax = maMax - aMin;
+                    m = CastAide.AsDouble(data[prefix + sporttype + "mlivepositiontaking_" + bettype]);
+
+                    //Auto Master Preset
+                    mAutoMax = CastAide.AsDouble(data["auto_" + prefix + sporttype + "mlivepositiontaking_" + bettype + "_max"]);
+                    mAuto = CastAide.AsDouble(data["auto_" + prefix + sporttype + "mlivepositiontaking_" + bettype]);
+                    isAuto = CastAide.AsBoolean(data["isauto_" + prefix + sporttype + "mlivepositiontaking_" + bettype]);
+
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "M"), CustomerUtils.GetListPositionTaking(aMin, aMax, a));//Agent Position
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "S"), CustomerUtils.GetListPositionTaking(mMin, mMax, m));//Master Preset Position
+                    if (IsEnabledAutoMaster)
+                        TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "SAuto"), CustomerUtils.GetListPositionTaking(0, mAutoMax, mAuto));//Auto Master Preset
+
+                    string strSub = lstValue.Substring(lstValue.IndexOf("}") + 1, lstValue.IndexOf("Value") - lstValue.IndexOf("}") - 1);
+
+                    if (isAuto)
+                    {
+                        TemplateHandler.Assign(ref tpl, "statuslstS" + strSub, disabled);
+                        TemplateHandler.Assign(ref tpl, "statuschkAuto" + strSub, check);
+                        TemplateHandler.Assign(ref tpl, "statuslstSAuto" + strSub, "");
+                    }
+                    else
+                    {
+                        TemplateHandler.Assign(ref tpl, "statuslstS" + strSub, "");
+                        TemplateHandler.Assign(ref tpl, "statuschkAuto" + strSub, "");
+                        TemplateHandler.Assign(ref tpl, "statuslstSAuto" + strSub, disabled);
+                    }
+
+                    hiddenHash.Add("minM" + strSub, maMin);
+                    hiddenHash.Add("maxA" + strSub, (aMax2 > maMax) ? maMax: aMax2);
+                    hiddenHash.Add("maxM" + strSub , maMax);
+                    hiddenHash.Add("isAuto" + strSub , (isAuto ? 1 : 0));
+                }
+
+                tpl = tpl.Replace("listSAuto", "autoS");
+
+                strHiddenPrePT = CustomerUtils.AssignMultipleHidden(hiddenHash);
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+            return html.ToString();
+        }
+        #endregion
+
+        #region GetAgentPtSetting_Edit
+        public override string GetAgentPtSetting_Edit(DataRow data, bool IsEnabledAutoMaster, ref string strHidden)
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                string tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/AgentPTRow.htm");
+                int sporttype = Constants.Sport.NumberGame;
+                string tplBetSetting = GetBetSetting(sporttype, data, false);
+                string tplPreGameHeader = GetPreGameHeader();
+                string tplRunningGameHeader = GetRunningGameHeader();
+                string tplHiddenPrePT = "";
+                string tplPrePTSetting = GetAgentPrePTSetting_Edit(data, sporttype, IsEnabledAutoMaster, ref tplHiddenPrePT);
+
+                string tplHiddenLivePT = "";
+                string tplRunningPTSetting = GetAgentRunningPTSetting_Edit(data, sporttype.ToString(), IsEnabledAutoMaster, ref tplHiddenLivePT);
+
+                TemplateHandler.Assign(ref tpl, "betsetting", tplBetSetting);
+                TemplateHandler.Assign(ref tpl, "pregameheader", tplPreGameHeader);
+                TemplateHandler.Assign(ref tpl, "runningameheader", tplRunningGameHeader);
+                TemplateHandler.Assign(ref tpl, "preptsetting", tplPrePTSetting);
+                TemplateHandler.Assign(ref tpl, "runningptsetting", tplRunningPTSetting);
+
+                #region remove block
+                RemoveDisableBettype(ref tpl, true);
+                RemoveDisableBettype(ref tpl, false);
+                #endregion
+
+                strHidden = tplHiddenPrePT + tplHiddenLivePT;
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+            return html.ToString();
+        }
+        #endregion
+        #endregion
+
+        #region AddParamAgentPT
+        public void AddParamAgentPT(ref Hashtable param, HttpContext context, bool isCopyAll, bool isCopyBasket)
+        {
+            try
+            {
+                double minb = 0, maxb = 0, maxpermatch = 0;
+                int sporttype = 0;
+                sporttype = Constants.Sport.NumberGame;
+
+                if (!Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
+                {
+                    sporttype = 1;
+                    param.Add("maxperballv161", CastAide.AsDouble(context.Request["txtMaxPerMatch1"]));
+                }
+                else
+                {
+                    param.Add("maxperballv161", CastAide.AsDouble(context.Request["txtMaxPerBall"]));
+                }
+
+                minb = CastAide.AsDouble(context.Request["txtMinbet" + sporttype]);
+                maxb = CastAide.AsDouble(context.Request["txtMaxbet" + sporttype]);
+                maxpermatch = CastAide.AsDouble(context.Request["txtMaxPerMatch" + sporttype]);
+
+                sporttype = Constants.Sport.NumberGame;
+                param.Add("minbetv" + sporttype, minb);
+                param.Add("maxbetv" + sporttype, maxb);
+                param.Add("maxpermatchv" + sporttype, maxpermatch);
+                param.Add("updateminmaxbetv" + sporttype, 1);
+                param.Add("discountnumber", CastAide.AsDouble(context.Request["listGameComm"]));
+
+                var Bettypes = new Hashtable();
+                Bettypes = AssignEditParams(NumberGameSection.Level.Agent.ToString());
+
+                var bettype = 0;
+                var strValue = "";
+                var lst = Bettypes.GetEnumerator();
+                var IsLive = false;
+                var IsAuto = false;
+                var midfix1 = "";
+                var midfix2 = "";
+                double a = 0, m = 0, auto = 0;
+
+                while (lst.MoveNext())
+                {
+                    bettype = CastAide.AsInt32(lst.Key.ToString().Split('^')[0]);
+                    strValue = CastAide.AsString(lst.Value);
+
+                    IsLive = lst.Key.ToString().Split('^')[1] == "L";
+                    if (IsLive)
+                    {
+                        midfix1 = "live";
+                        midfix2 = "L";
+                    }
+                    else
+                    {
+                        midfix1 = "";
+                        midfix2 = "D";
+                    }
+
+                    if (!IsLive && !string.IsNullOrEmpty(context.Request["chkCopy1stOUD"])) //Copy From 1st Last O/U Deadball
+                    {
+                        IsAuto = context.Request["chkAuto1stOUD"] != null;
+                        a = CastAide.AsDouble(context.Request["listM1stOUD"]);
+                        m = IsAuto ? 0 : CastAide.AsDouble(context.Request["listS1stOUD"]);
+                        auto = IsAuto ? CastAide.AsDouble(context.Request["autoS1stOUD"]) : 0;
+                    }
+                    else if (IsLive && !string.IsNullOrEmpty(context.Request["chkCopyNBOUL"]))//Copy From Over/Under Live
+                    {
+                        IsAuto = context.Request["chkAutoNBOUL"] != null;
+                        a = CastAide.AsDouble(context.Request["listMNBOUL"]);
+                        m = IsAuto ? 0 : CastAide.AsDouble(context.Request["listSNBOUL"]);
+                        auto = IsAuto ? CastAide.AsDouble(context.Request["autoSNBOUL"]) : 0;
+                    }
+                    else
+                    {
+                        //list{level}HLL
+                        string strSub = strValue.Substring(strValue.IndexOf("}") + 1, strValue.Length - strValue.IndexOf("}") - 1);
+
+                        IsAuto = context.Request["chkAuto" + strSub] != null;
+                        a = CastAide.AsDouble(context.Request[strValue.Replace("{level}", "M")]);
+                        m = IsAuto ? 0 : CastAide.AsDouble(context.Request[strValue.Replace("{level}", "S")]);
+                        auto = IsAuto ? CastAide.AsDouble(context.Request["autoS" + strSub]) : 0;
+                    }
+
+
+                    if (!Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
+                    {
+                        IsAuto = context.Request["chkAuto1HdpD"] != null;
+                        a = CastAide.AsDouble(context.Request["listM1HdpD"]);
+                        m = IsAuto ? 0 : CastAide.AsDouble(context.Request["listS1HdpD"]);
+                        auto = IsAuto ? CastAide.AsDouble(context.Request["autoS1HdpD"]) : 0;
+                    }
+
+                    if (CheckBettypeStatus(bettype, IsLive))
+                    {
+                        param.Add("v" + sporttype + "a" + midfix1 + "positiontaking_" + bettype, a);//Agent Position
+                        param.Add("v" + sporttype + "m" + midfix1 + "positiontaking_" + bettype, m);//Master Preset Position
+                        param.Add("auto_v" + sporttype + "m" + midfix1 + "positiontaking_" + bettype, auto);//Auto Master Preset
+                        param.Add("isauto_v" + sporttype + "m" + midfix1 + "positiontaking_" + bettype, IsAuto);
+                    }
+                    else 
+                    {
+                        param.Add("v" + sporttype + "a" + midfix1 + "positiontaking_" + bettype, 0);//Agent Position
+                        param.Add("v" + sporttype + "m" + midfix1 + "positiontaking_" + bettype, 0);//Master Preset Position
+                        param.Add("auto_v" + sporttype + "m" + midfix1 + "positiontaking_" + bettype, 0);//Auto Master Preset
+                        param.Add("isauto_v" + sporttype + "m" + midfix1 + "positiontaking_" + bettype, false);
+                    }
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+        }
+        #endregion
+        #endregion
+
+        #region GetMemberPT
+
+        #region GetMemberPrePTSetting
+        private string GetMemberPrePTSetting(DataRow data, int sporttype, bool IsAddNew)
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                string tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/MemberPrePTSetting.htm");
+
+                double mMin = 0, mMax = 0, m = 0;
+
+                var Bettypes = new Hashtable();
+                Bettypes = AssignBettypeToList(NumberGameSection.Level.Member.ToString(), 0);
+
+                var lst = Bettypes.GetEnumerator();
+                var bettype = 0;
+                var lstValue = "";
+                var hiddenHash = new Hashtable();
+                
+                while (lst.MoveNext())
+                {
+                    bettype = CastAide.AsInt32(lst.Key);
+                    lstValue = CastAide.AsString(lst.Value);
+                    
+                    if (IsAddNew)
+                    {
+                        //Agent Position
+                        mMin = CastAide.AsDouble(data["v" + sporttype + "apositiontaking_" + bettype + "_min"]);
+                        mMax = CastAide.AsDouble(data["v" + sporttype + "apositiontaking_" + bettype]);
+                        TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "M"), CustomerUtils.GetListPositionTaking(mMin, mMax, mMax));//Agent Position
+                    }
+                    else
+                    {
+                        mMin = CastAide.AsDouble(data["minv" + sporttype + "pos_" + bettype]);
+                        mMax = CastAide.AsDouble(data["maxv" + sporttype + "pos_" + bettype]);
+                        m = CastAide.AsDouble(data["v" + sporttype + "apositiontaking_" + bettype]);
+                        TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "M"), CustomerUtils.GetListPositionTaking(mMin, mMax, m));//Agent Position                        
+                    }
+                    
+                }
+
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+            return html.ToString();
+        }
+        #endregion
+
+        #region GetMemberRunningPTSetting
+        private string GetMemberRunningPTSetting(DataRow data, string sporttype, bool IsAddNew)
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                string tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/MemberRunningPTSetting.htm");
+                
+                double mMin = 0, mMax = 0, m = 0;
+
+                var Bettypes = new Hashtable();
+                Bettypes = AssignBettypeToList(NumberGameSection.Level.Member.ToString(), 1);
+                string prefix = "v";
+
+
+                var lst = Bettypes.GetEnumerator();
+                var bettype = 0;
+                var lstValue = "";
+                var hiddenHash = new Hashtable();
+
+                while (lst.MoveNext())
+                {
+                    bettype = CastAide.AsInt32(lst.Key);
+                    lstValue = CastAide.AsString(lst.Value);
+                    
+                    if (IsAddNew)
+                    {
+                        //Agent Position
+                        mMin = CastAide.AsDouble(data[prefix + sporttype + "alivepositiontaking_" + bettype + "_min"]);
+                        mMax = CastAide.AsDouble(data[prefix + sporttype + "alivepositiontaking_" + bettype]);
+
+                        TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "M"), CustomerUtils.GetListPositionTaking(mMin, mMax, mMax));//Agent Position
+                    }
+                    else
+                    {
+                        mMin = CastAide.AsDouble(data["min" + prefix + sporttype + "lpos_" + bettype]);
+                        mMax = CastAide.AsDouble(data["max" + prefix + sporttype + "lpos_" + bettype]);
+                        m = CastAide.AsDouble(data[prefix + sporttype + "alivepositiontaking_" + bettype]);
+                        TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "M"), CustomerUtils.GetListPositionTaking(mMin, mMax, m));//Agent Position                        
+                    }
+                }
+
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+            return html.ToString();
+        }
+        #endregion
+
+        #region GetMemberPtSetting
+        public override string GetMemberPtSetting(DataRow data, bool IsAddNew)
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                string tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/MemberPTRow.htm");
+
+                int sporttype = Constants.Sport.NumberGame;
+                string tplBetSetting = GetBetSetting(sporttype, data, IsAddNew);
+                string tplPreGameHeader = GetPreGameHeader();
+                string tplRunningGameHeader = GetRunningGameHeader();
+                string tplPrePTSetting = GetMemberPrePTSetting(data, sporttype, IsAddNew);
+
+                string tplRunningPTSetting = GetMemberRunningPTSetting(data, sporttype.ToString(), IsAddNew);
+
+                TemplateHandler.Assign(ref tpl, "betsetting", tplBetSetting);
+                TemplateHandler.Assign(ref tpl, "pregameheader", tplPreGameHeader);
+                TemplateHandler.Assign(ref tpl, "runningameheader", tplRunningGameHeader);
+                TemplateHandler.Assign(ref tpl, "preptsetting", tplPrePTSetting);
+                TemplateHandler.Assign(ref tpl, "runningptsetting", tplRunningPTSetting);
+                #region remove block
+                RemoveDisableBettype(ref tpl, true);
+                RemoveDisableBettype(ref tpl, false);
+                #endregion
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+            return html.ToString();
+        }
+        #endregion
+
+        #region AddParamMemberPT
+        public void AddParamMemberPT(ref Hashtable param, HttpContext context)
+        {
+            try
+            {
+                double minb = 0, maxb = 0, maxpermatch = 0;
+                int sporttype = 0;
+                bool isCopyAll = false, isCopyBasket = false;
+                isCopyAll = context.Request["chkCopyAll"] != null;
+                isCopyBasket = context.Request["chkCopyBasket"] != null;
+                    sporttype = Constants.Sport.NumberGame;
+
+                if (!Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
+                {
+                    sporttype = 1;
+                    param.Add("maxperballv161", CastAide.AsDouble(context.Request["txtMaxPerMatch1"]));
+                }
+                else
+                {
+                    param.Add("maxperballv161", CastAide.AsDouble(context.Request["txtMaxPerBall"]));
+                }
+
+                minb = CastAide.AsDouble(context.Request["txtMinbet" + sporttype]);
+                maxb = CastAide.AsDouble(context.Request["txtMaxbet" + sporttype]);
+                maxpermatch = CastAide.AsDouble(context.Request["txtMaxPerMatch" + sporttype]);
+
+                sporttype = Constants.Sport.NumberGame;
+                param.Add("minbetv" + sporttype, minb);
+                param.Add("maxbetv" + sporttype, maxb);
+                param.Add("maxpermatchv" + sporttype, maxpermatch);
+                param.Add("playerdiscountnumber", CastAide.AsDouble(context.Request["listGameComm"]));
+                param.Add("updateminmaxbetv" + sporttype, 1);
+                param.Add("updatepositiontakingv" + sporttype, 1);
+
+                var Bettypes = new Hashtable();
+                Bettypes = AssignEditParams(NumberGameSection.Level.Member.ToString());
+
+                var bettype = 0;
+                var strValue = "";
+                var lst = Bettypes.GetEnumerator();
+                var IsLive = false;
+                var IsAuto = false;
+                var midfix1 = "";
+                var midfix2 = "";
+                double a = 0; 
+
+                while (lst.MoveNext())
+                {
+                    bettype = CastAide.AsInt32(lst.Key.ToString().Split('^')[0]);
+                    strValue = CastAide.AsString(lst.Value);
+
+                    IsLive = lst.Key.ToString().Split('^')[1] == "L";
+                    if (IsLive)
+                    {
+                        midfix1 = "live";
+                        midfix2 = "L";
+                    }
+                    else
+                    {
+                        midfix1 = "";
+                        midfix2 = "D";
+                    }
+
+                        if (!IsLive && !string.IsNullOrEmpty(context.Request["chkCopy1stOUD"])) //Copy From 1st Last O/U Deadball
+                        {
+                            a = CastAide.AsDouble(context.Request["listM1stOUD"]);
+                        }
+                        else if (IsLive && !string.IsNullOrEmpty(context.Request["chkCopyNBOUL"]))//Copy From Over/Under Live
+                        {
+                            a = CastAide.AsDouble(context.Request["listMNBOUL"]);
+                        }
+                        else
+                        {
+                            //list{level}HLL
+                            string strSub = strValue.Substring(strValue.IndexOf("}") + 1, strValue.Length - strValue.IndexOf("}") - 1);
+                            a = CastAide.AsDouble(context.Request[strValue.Replace("{level}", "M")]);
+                        }
+
+                    if (!Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)                    
+                        a = CastAide.AsDouble(context.Request["listM1HdpD"]);
+                    
+                    if(CheckBettypeStatus(bettype, IsLive))
+                        param.Add("v" + sporttype + "a" + midfix1 + "positiontaking_" + bettype, a);//Agent Position
+                    else
+                        param.Add("v" + sporttype + "a" + midfix1 + "positiontaking_" + bettype, 0);//Agent Position
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+        }
+        #endregion
+        #endregion
+
+        #region GetMinMaxPT
+        private string MinMaxPtTemplate(string tpl, string prefix) 
+        {
+            var tplResult = tpl;
+            try
+            {
+                var tplBettypes = TemplateHandler.CopyBlock(tpl, "bettype-block");
+                var tplMainBettype = TemplateHandler.CopyBlock(tpl, "main-bettype-block");
+                var bettype = NumberGameSection.Instance[NumberGameSection.NumberGameCollectionType.Bettype];
+                var ptSetting = NumberGameSection.Instance[NumberGameSection.NumberGameCollectionType.PTSetting][NumberGameSection.Level.MinMaxPT.ToString()];
+
+                #region deadball
+                var deadball = bettype[NumberGameSection.BallCollectionType.Deadball.ToString()];
+
+                var tplDead = new StringBuilder();
+                foreach (NumberGameElement item in deadball.Settings)
+                {
+                    if (item.Active)
+                    {
+                        var tplCurrent = tplBettypes;
+                        var deadballQuery = (from q in ptSetting.Settings.Cast<NumberGameElement>().Where(q => !q.Liveball && q.Id == item.Id && q.IsSetting) select q);
+
+                        if(deadballQuery != null && deadballQuery.Cast<NumberGameElement>().Count() > 0)
+                        {
+                            if (deadballQuery.First().IsDefault)
+                                tplCurrent = tplMainBettype;
+
+                            TemplateHandler.Assign(ref tplCurrent, "{listValue}", string.Format("{0}", deadballQuery.First().TagValue));
+                            TemplateHandler.Assign(ref tplCurrent, "{sel-id}", deadballQuery.First().EditTag);
+                            TemplateHandler.Assign(ref tplCurrent, "{block-name}", string.Format("<!--{0}-->", item.BlockName));
+                            TemplateHandler.Assign(ref tplCurrent, "{end-block-name}", string.Format("<!--/{0}-->", item.BlockName));
+                            TemplateHandler.Assign(ref tplCurrent, "{ball}", "D");
+
+                            tplDead.Append(tplCurrent);
+                        }
+                    }
+                }
+                #endregion
+
+                #region liveball
+                var liveball = bettype[NumberGameSection.BallCollectionType.Liveball.ToString()];
+
+                var tplLive = new StringBuilder();
+                foreach (NumberGameElement item in liveball.Settings)
+                {
+                    if (item.Active)
+                    {
+                        var tplCurrent = tplBettypes;
+                        var liveballQuery = (from q in ptSetting.Settings.Cast<NumberGameElement>().Where(q => q.Liveball && q.Id == item.Id && q.IsSetting) select q);
+
+                        if (liveballQuery != null && liveballQuery.Cast<NumberGameElement>().Count() > 0)
+                        {
+                            if (liveballQuery.First().IsDefault)
+                                tplCurrent = tplMainBettype;
+
+                            TemplateHandler.Assign(ref tplCurrent, "{listValue}", liveballQuery.First().TagValue);
+                            TemplateHandler.Assign(ref tplCurrent, "{sel-id}", liveballQuery.First().EditTag);
+                            TemplateHandler.Assign(ref tplCurrent, "{block-name}", string.Format("<!--{0}-->", item.BlockName));
+                            TemplateHandler.Assign(ref tplCurrent, "{end-block-name}", string.Format("<!--/{0}-->", item.BlockName));
+                            TemplateHandler.Assign(ref tplCurrent, "{ball}", "L");
+
+                            tplLive.Append(tplCurrent);
+                        }
+                    }
+                }
+                #endregion
+
+                TemplateHandler.Assign(ref tplResult, "{dead-bettypes}", tplDead.ToString());
+                TemplateHandler.Assign(ref tplResult, "{live-bettypes}", tplLive.ToString());
+                TemplateHandler.Assign(ref tplResult, "{level}", prefix.ToUpper());
+                TemplateHandler.RemoveBlock(ref tplResult, "bettype-block");
+                TemplateHandler.RemoveBlock(ref tplResult, "main-bettype-block");
+            }
+            catch { }
+            return tplResult;
+        }
+        private string MasterMinMaxPtTemplate(string tpl, string prefix) 
+        {
+            var tplResult = tpl;
+            try
+            {
+                #region private variables
+                var tplBettypes = TemplateHandler.CopyBlock(tpl, "bettype-block");
+                var tplMainBettype = TemplateHandler.CopyBlock(tpl, "main-bettype-block");
+                var bettype = NumberGameSection.Instance[NumberGameSection.NumberGameCollectionType.Bettype];
+                var ptSetting = NumberGameSection.Instance[NumberGameSection.NumberGameCollectionType.PTSetting][NumberGameSection.Level.MinMaxPT.ToString()];
+                var arrLevel = prefix.Split(';');
+                #endregion
+
+                foreach (var l in arrLevel)
+                {
+                    
+                    #region deadball
+                    var deadball = bettype[NumberGameSection.BallCollectionType.Deadball.ToString()];
+
+                    var tplDead = new StringBuilder();
+                    foreach (NumberGameElement item in deadball.Settings)
+                    {
+                        if (item.Active)
+                        {
+                            var tplCurrent = tplBettypes;
+                            var deadballQuery = (from q in ptSetting.Settings.Cast<NumberGameElement>().Where(q => !q.Liveball && q.Id == item.Id && q.IsSetting) select q);
+
+                            if (deadballQuery != null && deadballQuery.Cast<NumberGameElement>().Count() > 0)
+                            {
+                                if (deadballQuery.First().IsDefault)
+                                    tplCurrent = tplMainBettype;
+
+                                TemplateHandler.Assign(ref tplCurrent, "{listValue}", string.Format("{0}", deadballQuery.First().TagValue));
+                                TemplateHandler.Assign(ref tplCurrent, "{sel-id}", deadballQuery.First().EditTag);
+                                TemplateHandler.Assign(ref tplCurrent, "{block-name}", string.Format("<!--{0}-->", item.BlockName));
+                                TemplateHandler.Assign(ref tplCurrent, "{end-block-name}", string.Format("<!--/{0}-->", item.BlockName));
+                                TemplateHandler.Assign(ref tplCurrent, "{ball}", "D");
+
+                                TemplateHandler.Assign(ref tplCurrent, "{level}", l.ToUpper());
+
+                                tplDead.Append(tplCurrent);
+                            }
+                        }
+                    }
+                    #endregion
+
+                    #region liveball
+                    var liveball = bettype[NumberGameSection.BallCollectionType.Liveball.ToString()];
+
+                    var tplLive = new StringBuilder();
+                    foreach (NumberGameElement item in liveball.Settings)
+                    {
+                        if (item.Active)
+                        {
+                            var tplCurrent = tplBettypes;
+                            var liveballQuery = (from q in ptSetting.Settings.Cast<NumberGameElement>().Where(q => q.Liveball && q.Id == item.Id && q.IsSetting) select q);
+
+                            if (liveballQuery != null && liveballQuery.Cast<NumberGameElement>().Count() > 0)
+                            {
+                                if (liveballQuery.First().IsDefault)
+                                    tplCurrent = tplMainBettype;
+
+                                TemplateHandler.Assign(ref tplCurrent, "{listValue}", liveballQuery.First().TagValue);
+                                TemplateHandler.Assign(ref tplCurrent, "{sel-id}", liveballQuery.First().EditTag);
+                                TemplateHandler.Assign(ref tplCurrent, "{block-name}", string.Format("<!--{0}-->", item.BlockName));
+                                TemplateHandler.Assign(ref tplCurrent, "{end-block-name}", string.Format("<!--/{0}-->", item.BlockName));
+                                TemplateHandler.Assign(ref tplCurrent, "{ball}", "L");
+
+                                TemplateHandler.Assign(ref tplCurrent, "{level}", l.ToUpper());
+
+                                tplLive.Append(tplCurrent);
+                            }
+                        }
+                    }
+                    #endregion
+
+                    TemplateHandler.Assign(ref tplResult, string.Format("dead-{0}-pt", l.ToUpper()), tplDead.ToString());
+                    TemplateHandler.Assign(ref tplResult, string.Format("live-{0}-pt", l.ToUpper()), tplLive.ToString());
+                    //TemplateHandler.Assign(ref tplResult, "{level}", prefix.ToUpper());
+                }                
+
+                TemplateHandler.RemoveBlock(ref tplResult, "bettype-block");
+                TemplateHandler.RemoveBlock(ref tplResult, "main-bettype-block");
+            }
+            catch { }
+            return tplResult;
+        }
+        #region GetMinPTSetting()
+        public override string GetMinPTSetting(DataRow dr, ref string strHidden, string prefix)
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                string tpl = "";
+                if (prefix == "s")
+                {
+                    tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/SuperMinMaxPTRow_New.htm");
+                    tpl = MinMaxPtTemplate(tpl, prefix);
+                }
+                else
+                {
+                    tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/MasterMinMaxPTRow_New.htm");//Master, Agent
+                    tpl = MasterMinMaxPtTemplate(tpl, "s;m");
+                }
+
+                #region assign template
+
+                TemplateHandler.Assign(ref tpl, "headerpregame", GetPreGameHeader());
+                TemplateHandler.Assign(ref tpl, "headerrunninggame", GetRunningGameHeader());
+                #endregion
+
+                #region remove block
+                RemoveDisableBettype(ref tpl, true);
+                RemoveDisableBettype(ref tpl, false);
+                #endregion
+
+                #region private variables
+                var Bettypes = new Hashtable();
+                Bettypes = AssignBettypeToList(NumberGameSection.Level.MinMaxPT.ToString(), 2);
+
+                var lst = Bettypes.GetEnumerator();
+                var bettype = 0;
+                var lstValue = "";
+                var IsLive = false;
+                var hiddenHash = new Hashtable();
+                
+                double minPTMin = 0, minPTMax = 0, minPT = 0;
+                double maxPTMin = 0, maxPTMax = 0, maxPT = 0;
+
+                var sporttype = Constants.Sport.NumberGame;
+                string live = "", subfix="";
+                var hidden = new Hashtable();
+                #endregion
+
+                #region assign data
+                while (lst.MoveNext())
+                {
+                    bettype = CastAide.AsInt32(lst.Key.ToString().Split('^')[0]);
+                    lstValue = CastAide.AsString(lst.Value);
+                   
+                    IsLive = lst.Key.ToString().Split('^')[1] == "L";
+                    subfix = lst.Key.ToString().Split('^')[1];
+                    if (IsLive)                    
+                        live = "live";                                            
+                    else                    
+                        live = "";                    
+
+                    string strSub = lstValue.Substring(lstValue.IndexOf("}") + 1, lstValue.IndexOf("Value") - lstValue.IndexOf("}") - 1);
+                    if (prefix == "s")//Super
+                    {
+                        //minPT
+                        minPTMin = 0;
+                        minPTMax = CastAide.AsDouble(dr["v" + sporttype + prefix + live + "positiontaking_" + bettype]);
+                        minPT = CastAide.AsDouble(dr["v" + sporttype + prefix + live + "positiontaking_" + bettype + "_min"]);
+                        TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "S"), CustomerUtils.GetListPositionTaking(minPTMin, minPTMax, minPT));
+                        hidden.Add("listM" + sporttype + strSub + prefix, minPTMax);
+
+                        //listS1stOUD -- listM1stOUD
+                        hidden.Add(string.Format("hlistS{0}_{1}_{2}", sporttype, bettype, subfix), minPT);
+                        hidden.Add(string.Format("hlistM{0}_{1}_{2}", sporttype, bettype, subfix), minPT);
+                        
+                    }
+                    else // Master and Agent
+                    { 
+                        //maxPT
+                        maxPTMin = CastAide.AsDouble(dr["v" + sporttype + prefix + live + "positiontaking_"+ bettype +"_min"]);
+                        maxPTMax = 0.9;
+                        maxPT = CastAide.AsDouble(dr["v" + sporttype + prefix + live + "positiontaking_"+ bettype +"_max"]);
+                        TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "S"), CustomerUtils.GetListPositionTaking(maxPTMin, maxPTMax, maxPT));
+
+                        //minPT
+                        minPTMin = 0;
+                        minPTMax = CastAide.AsDouble(dr["v" + sporttype + prefix + live + "positiontaking_" + bettype]);
+                        minPT = CastAide.AsDouble(dr["v" + sporttype + prefix + live + "positiontaking_" + bettype + "_min"]);
+                        TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "M"), CustomerUtils.GetListPositionTaking(minPTMin, minPTMax, minPT));
+                        hidden.Add("listM" + sporttype + strSub + prefix, minPTMax);
+
+                        hidden.Add(string.Format("hlistS{0}_{1}_{2}", sporttype, bettype, subfix), maxPT);
+                        hidden.Add(string.Format("hlistM{0}_{1}_{2}", sporttype, bettype, subfix), minPT);
+                    }
+                    
+                    strHidden = CustomerUtils.AssignMultipleHidden(hidden);
+                }
+                #endregion
+
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+            return html.ToString();
+        }
+        #endregion
+
+        string getPT(string pt)
+        {
+            if (pt == null) return "0";
+            return pt;
+        }
+        public void AddParamMinMaxPT(ref Hashtable param, HttpContext content, string type)
+        {
+            try
+            {
+                #region private variables
+                var Bettypes = new Hashtable();
+                Bettypes = AssignEditParams(NumberGameSection.Level.MinMaxPT.ToString());
+
+                var lst = Bettypes.GetEnumerator();
+                var bettype = 0;
+                var lstValue = "";
+                var IsLive = false;
+                var hiddenHash = new Hashtable();
+                double sMin = 0, sMax = 0, s = 0;
+                var sporttype = Constants.Sport.NumberGame;
+                string live = "", pre1 = "", pre2 = "", prefix = "s", subfix="";
+                #endregion
+
+                while (lst.MoveNext())
+                {
+                    bettype = CastAide.AsInt32(lst.Key.ToString().Split('^')[0]);
+                    lstValue = CastAide.AsString(lst.Value);
+                    IsLive = lst.Key.ToString().Split('^')[1] == "L";
+                    subfix = lst.Key.ToString().Split('^')[1];
+
+                    pre1 = "max";
+                    pre2 = "min";
+                    
+                    if (IsLive)
+                        live = "live";                        
+                    else
+                        live = "";
+
+                    if (type == "super")
+                    {
+                        pre1 = "min";
+                        pre2 = "max";
+                    }
+
+                    double minPt, maxPt, maxPt2;
+                    if (!IsLive && !string.IsNullOrEmpty(content.Request["chkCopy1stOUD"])) // Copy From 1st Last O/U
+                    {
+                        maxPt = CastAide.AsDouble(getPT(content.Request["listS1stOUD"]));
+                        minPt = CastAide.AsDouble(getPT(content.Request["listM1stOUD"]));
+                        maxPt2 = CastAide.AsDouble(getPT(content.Request["listM1611stOUDs"]));
+                    }
+                    else if (IsLive && !string.IsNullOrEmpty(content.Request["chkCopyNBOUL"]))// Copy From Over/Under
+                    {
+                        maxPt = CastAide.AsDouble(getPT(content.Request["listSNBOUL"]));
+                        minPt = CastAide.AsDouble(getPT(content.Request["listMNBOUL"]));
+                        maxPt2 = CastAide.AsDouble(getPT(content.Request["listM161NBOULs"]));
+                    }
+                    else
+                    {
+                        if (!Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
+                        {
+
+                            maxPt = CastAide.AsDouble(getPT(content.Request["listSHdpD1"]));
+                            minPt = CastAide.AsDouble(getPT(content.Request["listMHdpD1"]));
+                            maxPt2 = CastAide.AsDouble(getPT(content.Request["listMHdpD1_Max"]));
+                        }
+                        else
+                        {
+                            maxPt = CastAide.AsDouble(getPT(content.Request[lstValue.Replace("{level}", "S")]));
+                            minPt = CastAide.AsDouble(getPT(content.Request[lstValue.Replace("{level}", "M")]));
+
+                            var paramN = lstValue.Replace("{level}", "M" + sporttype) + prefix;
+                            maxPt2 = CastAide.AsDouble(getPT(content.Request[paramN]));
+                        }
+                    }
+
+                    if (!CheckBettypeStatus(bettype, IsLive) && Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
+                    {
+                        maxPt = CastAide.AsDouble(getPT(content.Request[string.Format("hlistS{0}_{1}_{2}", sporttype, bettype, subfix)]));
+                        minPt = CastAide.AsDouble(getPT(content.Request[string.Format("hlistM{0}_{1}_{2}", sporttype, bettype, subfix)]));
+                        var paramN = lstValue.Replace("{level}", "M" + sporttype) + prefix;
+                        maxPt2 = CastAide.AsDouble(getPT(content.Request[paramN]));
+                    }
+                    
+                    // Max Postion
+                    param.Add(pre1 + "v" + sporttype + live + "positiontaking_" + bettype, maxPt); // 'smallmoney  
+                    //Min Postion
+                    param.Add(pre2 + "v" + sporttype + live + "positiontaking_" + bettype, minPt); // 'smallmoney  
+                    // override max PT value
+                    if (type == "super")
+                    {
+                        param[pre2 + "v" + sporttype + live + "positiontaking_" + bettype] = maxPt2; // 'smallmoney  
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logs.Write(ex.Message);
+            }
+        }
+        #endregion
+
+        #region GetSuperOnMember
+        #region GetSuperOnMemberPtSetting
+        public override string GetSuperOnMemberPtSetting(DataRow data, ref string strHidden)
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                #region private variables
+                string tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/SuperPTOnMemberPTRow.htm");
+                TemplateHandler.Assign(ref tpl, "headerpregame", GetPreGameHeader());
+                TemplateHandler.Assign(ref tpl, "headerrunninggame", GetRunningGameHeader());
+                
+                #region remove block
+                RemoveDisableBettype(ref tpl, true);
+                RemoveDisableBettype(ref tpl, false);
+                #endregion
+
+                var Bettypes = new Hashtable();
+                Bettypes = AssignBettypeToList(NumberGameSection.Level.SuperOnMember.ToString(), 2);
+
+                var lst = Bettypes.GetEnumerator();
+                var bettype = 0;
+                var lstValue = "";
+                var IsLive = false;
+                var hiddenHash = new Hashtable();
+                var live = "";
+                var l = "";
+                double a = 0, m = 0;
+                double sMin = 0, sMax = 0, s = 0;
+                double sAutoMax = 0, sAuto = 0;
+                int sporttype = Constants.Sport.NumberGame;
+                var IsAuto_Master = false;
+                var IsAuto_Mem = false;
+                var disabled = "disabled='disabled'";
+                var strchecked = "checked='checked'";
+
+                //TemplateHandler.Assign(ref tpl, "{otherSetting}", NumberFormat.DecFormat(CastAide.AsDouble(data["maxperballv161"]), 0));
+                #endregion
+                
+                while (lst.MoveNext())
+                {
+                    bettype = CastAide.AsInt32(lst.Key.ToString().Split('^')[0]);
+                    lstValue = CastAide.AsString(lst.Value);
+                    
+                    IsLive = lst.Key.ToString().Split('^')[1] == "L";
+                    if (IsLive)
+                    {
+                        live = "live";
+                        l = "l";
+                    }
+                    else
+                    {
+                        live = "";
+                        l = "";
+                    }
+                    #region assign values and template
+                    a = CastAide.AsDouble(data["v" + sporttype + "a"+ live +"positiontaking_" + bettype]);
+                    m = CastAide.AsDouble(data["v" + sporttype + "m"+ live +"positiontaking_" + bettype]);
+                    sMin = CastAide.AsDouble(data["minv" + sporttype + l + "pos_" + bettype]);
+                    sMax = CastAide.AsDouble(data["maxv" + sporttype + l + "pos_" + bettype]);
+                    s = CastAide.AsDouble(data["v" + sporttype + "s"+ live +"positiontaking_" + bettype]);
+                    sAutoMax = CastAide.AsDouble(data["maxautov" + sporttype + l + "pos_" + bettype]);
+                    sAuto = CastAide.AsDouble(data["auto_v" + sporttype + "s" + live + "positiontaking_" + bettype]);
+                    IsAuto_Master = CastAide.AsBoolean(data["isauto_v" + sporttype + "s" + live + "positiontaking_" + bettype]);
+                    IsAuto_Mem = CastAide.AsBoolean(data["isauto_v" + sporttype + "s"+ live +"positiontaking_mem_" + bettype]);
+                    
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "A"), a);
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "M"), m);
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "S"), CustomerUtils.GetListPositionTaking(sMin, sMax, s));
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "SAuto"), CustomerUtils.GetListPositionTaking(0, sAutoMax, sAuto));
+                    
+                    #endregion
+
+                    var strSub = lstValue.Substring(lstValue.IndexOf("}") + 1, lstValue.IndexOf("Value") - lstValue.IndexOf("}") - 1);
+                    
+
+                    hiddenHash.Add("isAuto" + sporttype + strSub, (IsAuto_Mem ? 1 : 0));
+                    hiddenHash.Add("isAuto_V" + sporttype + strSub + "_Master", (IsAuto_Master ? 1 : 0));
+
+                    if (IsAuto_Master )
+                    {
+                        TemplateHandler.ReplaceBlock(ref tpl, strSub, s.ToString());
+                        if (bettype == Constants.BetType.FirstLastOU || bettype == Constants.BetType.NextOU)
+                            TemplateHandler.Assign(ref tpl, "statuscopy-" + live, (IsAuto_Mem ? "" : disabled));
+                    }                    
+                    if (IsAuto_Mem)
+                    {
+                        TemplateHandler.Assign(ref tpl, "statuslistS" + strSub, disabled);
+                        TemplateHandler.Assign(ref tpl, "statuschkAuto" + strSub, strchecked);
+                        TemplateHandler.Assign(ref tpl, "statuslstSAuto" + strSub, "");
+                    }
+                    else
+                    {
+                        TemplateHandler.Assign(ref tpl, "statuslistS" + strSub, "");
+                        TemplateHandler.Assign(ref tpl, "statuschkAuto" + strSub, "");
+                        TemplateHandler.Assign(ref tpl, "statuslstSAuto" + strSub, disabled);
+                    }
+                }
+                
+                tpl = tpl.Replace("listSAuto", "autoS");
+                strHidden = CustomerUtils.AssignMultipleHidden(hiddenHash);
+
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+                throw;
+            }
+            return html.ToString();
+        }
+        #endregion
+
+        #region GetParamSuperOnMember
+        public void GetParamSuperOnMember(ref Hashtable param, HttpContext context)
+        {
+            try
+            {
+                double minb = 0, maxb = 0, maxpermatch = 0;
+                int sporttype = Constants.Sport.NumberGame ;
+
+                var Bettypes = new Hashtable();
+                Bettypes = AssignEditParams(NumberGameSection.Level.SuperOnMember.ToString());
+
+                var bettype = 0;
+                var strValue = "";
+                var lst = Bettypes.GetEnumerator();
+                var IsLive = false;
+                var IsAuto = false;
+                var live = "";
+                double s = 0, auto = 0;
+
+                while (lst.MoveNext())
+                {
+                    bettype = CastAide.AsInt32(lst.Key.ToString().Split('^')[0]);
+                    strValue = CastAide.AsString(lst.Value);
+
+                    IsLive = lst.Key.ToString().Split('^')[1] == "L";
+
+                    if (IsLive)                    
+                        live = "live";                    
+                    else                    
+                        live = "";                    
+
+                    if (!IsLive && !string.IsNullOrEmpty(context.Request["chkCopy1stOUD"])) //Copy From 1st Last O/U Deadball
+                    {
+                        s = CastAide.AsDouble(context.Request["listS1stOUD"]);
+                        auto = CastAide.AsDouble(context.Request["autoS1stOUD"]);
+                        IsAuto = context.Request["chkAuto1stOUD"] != null;
+                    }
+                    else if (IsLive && !string.IsNullOrEmpty(context.Request["chkCopyNBOUL"]))//Copy From Over/Under Live
+                    {
+                        s = CastAide.AsDouble(context.Request["listSNBOUL"]);
+                        auto = CastAide.AsDouble(context.Request["autoSNBOUL"]);
+                        IsAuto = context.Request["chkAutoNBOUL"] != null;
+                    }
+                    else
+                    {
+                        //list{level}HLL
+                        string strSub = strValue.Substring(strValue.IndexOf("}") + 1, strValue.Length - strValue.IndexOf("}") - 1);
+                        s = CastAide.AsDouble(context.Request[strValue.Replace("{level}", "S")]);
+                        auto = CastAide.AsDouble(context.Request["autoS" + strSub]);
+                        IsAuto = context.Request["chkAuto" + strSub] != null;
+                    }                        
+
+                    if (!Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
+                    {
+                        s = CastAide.AsDouble(context.Request["listS1HdpD"]);
+                        auto = CastAide.AsDouble(context.Request["autoS1HdpD"]);
+                        IsAuto = context.Request["chkAuto1HdpD"] != null;
+                    }
+
+                    if (CheckBettypeStatus(bettype, IsLive))
+                    {
+                        param.Add("v" + sporttype + "s" + live + "positiontaking_" + bettype, s);
+                        param.Add("auto_v" + sporttype + "s" + live + "positiontaking_" + bettype, auto);
+                        param.Add("isauto_v" + sporttype + "s" + live + "positiontaking_" + bettype, IsAuto);
+                    }
+                    else 
+                    {
+                        param.Add("v" + sporttype + "s" + live + "positiontaking_" + bettype, 0);
+                        param.Add("auto_v" + sporttype + "s" + live + "positiontaking_" + bettype, 0);
+                        param.Add("isauto_v" + sporttype + "s" + live + "positiontaking_" + bettype, false);
+                    }
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+        }
+        #endregion
+
+        #region GetSuperOnMemberComm
+        public void GetSuperOnMemberComm(DataRow dr, ref string strAccInfo)
+        {
+            try 
+            {
+                string tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/SuperPTOnMemberComm.htm");
+                double adiscount = 0, discount = 0, playerdiscount = 0;
+                adiscount = CastAide.AsDouble(dr["adiscount161"]);
+                discount = CastAide.AsDouble(dr["discount161"]);
+                playerdiscount = CastAide.AsDouble(dr["playerdiscount161"]);
+
+                TemplateHandler.Assign(ref tpl, "adiscount", adiscount);
+                TemplateHandler.Assign(ref tpl, "discount", discount);
+                TemplateHandler.Assign(ref tpl, "playerdiscount", playerdiscount);
+
+                if (Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
+                {
+                    TemplateHandler.ReplaceBlock(ref strAccInfo, "game-comm", tpl);
+                    TemplateHandler.Assign(ref strAccInfo, "{otherSetting}", DNAide.Utils.NumberFormat.DecFormat(CastAide.AsDouble(dr["maxperballv161"]), 0));
+                }
+                else
+                {
+                    TemplateHandler.ReplaceBlock(ref strAccInfo, "game-comm", "");
+                    TemplateHandler.RemoveBlock(ref strAccInfo, "othersetting");
+                    TemplateHandler.RemoveBlock(ref strAccInfo, "numbergame");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+                throw;
+            }
+        }
+        #endregion
+        #endregion
+
+        #region GetMasterOnMember
+        #region GetMasterOnMemberComm
+        public void GetMasterOnMemberComm(DataRow dr, ref string strAccInfo)
+        {
+            try
+            {
+                string tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/MasterPTOnMemberComm.htm");
+                double discount = 0, playerdiscount = 0;
+                discount = CastAide.AsDouble(dr["discountnumber"]);
+                playerdiscount = CastAide.AsDouble(dr["playerdiscountnumber"]);
+
+                TemplateHandler.Assign(ref tpl, "discount", discount);
+                TemplateHandler.Assign(ref tpl, "playerdiscount", playerdiscount);
+
+                if (Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
+                {
+                    TemplateHandler.ReplaceBlock(ref strAccInfo, "game-comm", tpl);
+                    TemplateHandler.Assign(ref strAccInfo, "{otherSetting}", DNAide.Utils.NumberFormat.DecFormat(CastAide.AsDouble(dr["maxperballv161"]), 0));
+                }
+                else
+                {
+                    TemplateHandler.ReplaceBlock(ref strAccInfo, "game-comm", "");
+                    TemplateHandler.RemoveBlock(ref strAccInfo, "othersetting");
+                    TemplateHandler.RemoveBlock(ref strAccInfo, "numbergame");
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+                throw;
+            }
+        }
+        #endregion
+
+        #region GetMasterOnMemberPtSetting
+        public override string GetMasterOnMemberPtSetting(DataRow data, bool isEnabledAutoMaster, ref string strHidden)
+        {
+            StringBuilder html = new StringBuilder();
+            try
+            {
+                var tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/MasterPTOnMemberPTRow.htm");
+                TemplateHandler.Assign(ref tpl, "headerpregame", GetPreGameHeader());
+                TemplateHandler.Assign(ref tpl, "headerrunninggame", GetRunningGameHeader());
+                //TemplateHandler.Assign(ref tpl, "{otherSetting}", NumberFormat.DecFormat(CastAide.AsDouble(data["maxperballv161"]), 0));
+
+                #region remove block
+                RemoveDisableBettype(ref tpl, true);
+                RemoveDisableBettype(ref tpl, false);
+                #endregion
+
+                if (!Permissions.IsEnabledAutoMaster(isEnabledAutoMaster))
+                {
+                    TemplateHandler.RemoveBlock(ref tpl, "AutoD");
+                    TemplateHandler.RemoveBlock(ref tpl, "AutoL");
+                    TemplateHandler.Assign(ref tpl, "rowspan-title", "2");
+                    TemplateHandler.Assign(ref tpl, "rowspan-copy", "1");                    
+                }
+                else 
+                {
+                    TemplateHandler.Assign(ref tpl, "rowspan-title", "4");
+                    TemplateHandler.Assign(ref tpl, "rowspan-copy", "3");
+                    TemplateHandler.Assign(ref tpl, "rowspan-auto", "2");
+                }
+                #region private variables
+                var Bettypes = new Hashtable();
+                Bettypes = AssignBettypeToList(NumberGameSection.Level.MasterOnMember.ToString(), 2);
+
+                var lst = Bettypes.GetEnumerator();
+                var bettype = 0;
+                var lstValue = "";
+                var IsLive = false;
+                var hiddenHash = new Hashtable();
+                var live = "";
+                var l = "";
+                double a = 0;
+                double mMin = 0, mMax = 0, m = 0;                
+                double sAutoMax = 0, sAuto = 0;
+                double mAutoMax = 0, mAuto = 0;
+                int sporttype = Constants.Sport.NumberGame;
+                var IsAuto_Agent = false;
+                var IsAuto_Mem = false;
+                var disabled = "disabled='disabled'";
+                var strchecked = "checked='checked'";
+                #endregion
+                while (lst.MoveNext())
+                {
+                    bettype = CastAide.AsInt32(lst.Key.ToString().Split('^')[0]);
+                    lstValue = CastAide.AsString(lst.Value);
+                    
+                    IsLive = lst.Key.ToString().Split('^')[1] == "L";
+                    if (IsLive)
+                    {
+                        live = "live";
+                        l = "l";
+                    }
+                    else
+                    {
+                        live = "";
+                        l = "";
+                    }
+
+                    a = CastAide.AsDouble(data["v" + sporttype + "a" + live + "positiontaking_" + bettype]);
+                    
+                    mMin = CastAide.AsDouble(data["minv" + sporttype + l + "pos_" + bettype]);
+                    mMax = CastAide.AsDouble(data["maxv" + sporttype + l + "pos_" + bettype]);
+                    m = CastAide.AsDouble(data["v" + sporttype + "m" + live + "positiontaking_" + bettype]);
+
+                    mAutoMax = CastAide.AsDouble(data["maxauto_v" + sporttype + "m" + live + "positiontaking_mem_" + bettype]);
+                    mAuto = CastAide.AsDouble(data["auto_v" + sporttype + "m" + live + "positiontaking_mem_" + bettype]);
+
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "A"), a);
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "M"), CustomerUtils.GetListPositionTaking(mMin, mMax, m));
+                    TemplateHandler.Assign(ref tpl, lstValue.Replace("{level}", "MAuto"), CustomerUtils.GetListPositionTaking(0, mAutoMax, mAuto));
+
+                    if(Permissions.IsEnabledAutoMaster(isEnabledAutoMaster)) 
+                    {
+                        IsAuto_Mem = CastAide.AsBoolean(data["isauto_v" + sporttype + "m"+ live +"positiontaking_mem_" + bettype]);
+                        IsAuto_Agent = CastAide.AsBoolean(data["isauto_v" + sporttype + "m" + live + "positiontaking_" + bettype]);
+                    }
+                    else
+                    {
+                        IsAuto_Mem =false;
+                    }
+
+                    string strSub = lstValue.Substring(lstValue.IndexOf("}") + 1, lstValue.IndexOf("Value") - lstValue.IndexOf("}") - 1);
+
+                    hiddenHash.Add("isAuto_V" + sporttype + strSub, (IsAuto_Mem ? 1 : 0));
+                    hiddenHash.Add("isAuto_V" + sporttype + strSub + "_Agent", (IsAuto_Agent ? 1 : 0));
+
+                    if (IsAuto_Agent)
+                    {
+                        TemplateHandler.ReplaceBlock(ref tpl, strSub, m.ToString());
+                        if(bettype == Constants.BetType.FirstLastOU || bettype == Constants.BetType.NextOU)
+                            TemplateHandler.Assign(ref tpl, "statuscopy-" + live, (IsAuto_Mem ? "" : disabled));
+                    }
+                    
+                    if (IsAuto_Mem)
+                    {
+                        TemplateHandler.Assign(ref tpl, "statuslistM" + strSub, disabled);
+                        TemplateHandler.Assign(ref tpl, "statuschkAuto" + strSub, strchecked);
+                        TemplateHandler.Assign(ref tpl, "statuslstMAuto" + strSub, "");
+                    }
+                    else
+                    {
+                        TemplateHandler.Assign(ref tpl, "statuslistM" + strSub, "");
+                        TemplateHandler.Assign(ref tpl, "statuschkAuto" + strSub, "");
+                        TemplateHandler.Assign(ref tpl, "statuslstMAuto" + strSub, disabled);
+                    }
+                }
+
+
+
+                tpl = tpl.Replace("listMAuto", "autoM");
+                strHidden = CustomerUtils.AssignMultipleHidden(hiddenHash);
+
+                html.Append(tpl);
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+                throw;
+            }
+            return html.ToString();
+        }
+        #endregion
+
+        #region GetParamMasterOnMember
+        public void GetParamMasterOnMember(ref Hashtable param, HttpContext context)
+        {
+            try
+            {
+                double minb = 0, maxb = 0, maxpermatch = 0;
+                int sporttype = Constants.Sport.NumberGame;
+                var Bettypes = new Hashtable();
+                Bettypes = AssignEditParams(NumberGameSection.Level.MasterOnMember.ToString());
+
+                var bettype = 0;
+                var strValue = "";
+                var lst = Bettypes.GetEnumerator();
+                var IsLive = false;
+                var IsAuto = false;
+                var live = "";
+                double m = 0, auto = 0;
+
+                while (lst.MoveNext())
+                {
+                    bettype = CastAide.AsInt32(lst.Key.ToString().Split('^')[0]);
+                    strValue = CastAide.AsString(lst.Value);
+
+                    IsLive = lst.Key.ToString().Split('^')[1] == "L";
+                    if (IsLive)                    
+                        live = "live";                    
+                    else                    
+                        live = "";
+                    
+
+                    if (!IsLive && !string.IsNullOrEmpty(context.Request["chkCopy1stOUD"])) //Copy From 1st Last O/U Deadball
+                    {
+                        m = CastAide.AsDouble(context.Request["listM1stOUD"]);
+                        auto = CastAide.AsDouble(context.Request["autoM1stOUD"]);
+                        IsAuto = context.Request["chkAuto1stOUD"] != null;
+                    }
+                    else if (IsLive && !string.IsNullOrEmpty(context.Request["chkCopyNBOUL"]))//Copy From Over/Under Live
+                    {
+                        m = CastAide.AsDouble(context.Request["listMNBOUL"]);
+                        auto = CastAide.AsDouble(context.Request["autoMNBOUL"]);
+                        IsAuto = context.Request["chkAutoNBOUL"] != null;
+                    }
+                    else
+                    {
+                        //list{level}HLL
+                        string strSub = strValue.Substring(strValue.IndexOf("}") + 1, strValue.Length - strValue.IndexOf("}") - 1);
+                        m = CastAide.AsDouble(context.Request[strValue.Replace("{level}", "M")]);
+                        auto = CastAide.AsDouble(context.Request["autoM" + strSub]);
+                        IsAuto = context.Request["chkAuto" + strSub] != null;
+                    }
+
+                    if (!Sunplus.Bingo.Core.BingoSettings.NumberGame.Enabled)
+                    {
+                        m = CastAide.AsDouble(context.Request["listM1HdpD"]);
+                        auto = CastAide.AsDouble(context.Request["autoM1HdpD"]);
+                        IsAuto = context.Request["chkAuto1HdpD"] != null;
+                    }
+
+                    if (CheckBettypeStatus(bettype, IsLive))
+                    {
+                        param.Add("v" + sporttype + "m" + live + "positiontaking_" + bettype, m);
+                        param.Add("auto_v" + sporttype + "m" + live + "positiontaking_mem_" + bettype, auto);
+                        param.Add("isauto_v" + sporttype + "m" + live + "positiontaking_mem_" + bettype, IsAuto);
+                    }
+                    else
+                    { 
+                        param.Add("v" + sporttype + "m" + live + "positiontaking_" + bettype, 0);
+                        param.Add("auto_v" + sporttype + "m" + live + "positiontaking_mem_" + bettype, 0);
+                        param.Add("isauto_v" + sporttype + "m" + live + "positiontaking_mem_" + bettype, false);
+                    }
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+            }
+        }
+        #endregion
+        #endregion
+
+        #region private functions
+        private void RemoveDisableBettype(ref string tpl, bool isLive) 
+        {
+            var bettype = NumberGameSection.Instance[NumberGameSection.NumberGameCollectionType.Bettype];
+            var ball = new NumberGameElement();
+
+            if (isLive)                            
+                ball = bettype[NumberGameSection.BallCollectionType.Liveball.ToString()];            
+            else             
+                ball = bettype[NumberGameSection.BallCollectionType.Deadball.ToString()];            
+
+            if (ball != null)
+            {
+                var query = (from q in ball.Settings.Cast<NumberGameElement>().Where(q => q.IsSetting) select q).ToList();
+
+                foreach (NumberGameElement item in query)
+                {
+                    if (!item.Active)
+                        TemplateHandler.RemoveBlock(ref tpl, item.BlockName);
+                }
+            }
+        }
+
+        //bal 0: deadball; 1: liveball; 2: all
+        private Hashtable AssignBettypeToList(string level, int ball) 
+        {
+            var bettypes = new Hashtable();
+
+            var ptSetting = NumberGameSection.Instance[NumberGameSection.NumberGameCollectionType.PTSetting];
+            var query = new List<NumberGameElement>();
+            var levelSettings = ptSetting[level];
+
+            if (ball == 0)                             
+                query = (from q in levelSettings.Settings.Cast<NumberGameElement>().Where(
+                                 q => q.Liveball == false) select q).ToList();            
+            else if (ball == 1)                            
+                query = (from q in levelSettings.Settings.Cast<NumberGameElement>().Where(
+                                 q => q.Liveball == true)
+                         select q).ToList();            
+            else             
+                query = (from q in levelSettings.Settings.Cast<NumberGameElement>()
+                         select q).ToList();
+            
+            if (query != null)            
+                foreach (NumberGameElement item in query)
+                {
+                    bettypes.Add(item.Key, item.TagValue);
+                }
+            
+
+            return bettypes;
+        }        
+
+        private Hashtable AssignEditParams(string level) 
+        {
+            var bettypes = new Hashtable();
+
+            var ptSetting = NumberGameSection.Instance[NumberGameSection.NumberGameCollectionType.PTSetting];
+            var query = new List<NumberGameElement>();
+            var levelSettings = ptSetting[level];
+
+            query = (from q in levelSettings.Settings.Cast<NumberGameElement>()
+                     select q).ToList();
+
+            if (query != null)
+            {
+                foreach (NumberGameElement item in query)
+                {
+                    bettypes.Add(item.EidtKey, item.EditTag);
+                }
+            }
+
+            return bettypes;
+        }
+
+        private bool CheckBettypeStatus(int bettype, bool isLive) 
+        {
+            var status = false;
+            var bettypes = NumberGameSection.Instance[NumberGameSection.NumberGameCollectionType.Bettype];
+            var ball = new NumberGameElement();
+
+            if (isLive)
+                ball = bettypes[NumberGameSection.BallCollectionType.Liveball.ToString()];
+            else
+                ball = bettypes[NumberGameSection.BallCollectionType.Deadball.ToString()];
+            
+            if (ball != null) 
+            {
+                var query = (from q in ball.Settings.Cast<NumberGameElement>().Where(q => q.Id == bettype && q.IsSetting) select q);
+                if (query != null)
+                    status = query.First().Active;
+            }
+
+            return status;
+        }
+        #endregion
+    }
+}

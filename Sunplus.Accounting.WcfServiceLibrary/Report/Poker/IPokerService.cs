@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.ServiceModel;
+using System.ServiceModel.Web;
+using System.Text;
+using Sunplus.Accounting.Entities.Report.Poker;
+
+namespace Sunplus.Accounting.WcfServiceLibrary.Report.Poker
+{
+    [ServiceContract]  
+    public interface IPokerService
+    {
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        PokerMainBO SelWinlostP2P(string FromDate, string ToDate);
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        PokerMainBO SelWinlostP2PDetail(int currency, string wldate);
+
+    }
+}

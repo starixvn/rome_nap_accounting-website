@@ -1,0 +1,14 @@
+﻿using System.Data;
+using System.Collections.Generic;
+using Fanex.Tarus.Finance.Model;
+namespace Fanex.Tarus.Finance.DataAccess.Customer
+{
+    public interface IFinanceCustomerListAccess
+    {
+        DataTable GetSuperList(List<PostParam> postParams, out long total);
+        DataTable GetMasterList(List<PostParam> postParams, out long total);
+        DataTable GetAgentList(List<PostParam> postParams, out long total);
+        DataTable GetMemberList(List<PostParam> postParams, out long total);
+        DataTable GetCurrencyList();
+    }
+}

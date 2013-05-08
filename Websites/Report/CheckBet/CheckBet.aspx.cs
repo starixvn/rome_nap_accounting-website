@@ -1,0 +1,13 @@
+﻿using System;
+using Sunplus.Accounting.Core.Web.Controls;
+
+public partial class Report_CheckBet_CheckBet :PageBase
+{
+    protected string ReportFromDate = string.Empty;
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        var requestDate = Request["fdate"] ?? DateTime.Now.ToShortDateString();
+        ReportFromDate = Calendar.GenCalendarControl("fdate", "../../", "fdateTrigger", requestDate, false, false, 0, 0, "", "reportlist");
+    }
+}

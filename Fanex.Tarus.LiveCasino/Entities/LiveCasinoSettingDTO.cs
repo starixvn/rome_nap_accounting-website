@@ -1,0 +1,195 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
+using Fanex.Tarus.LiveCasino.Entities.Setting;
+
+namespace Fanex.Tarus.LiveCasino.Entities
+{
+    [Serializable]
+    [DataContract]
+    public class LiveCasinoSettingDTO
+    {
+        [DataMember]
+        public CustomerInfo CustomerInfo{ get; set; }
+        
+        [DataMember]
+        public PTSetting PTSetting { get; set; }
+        
+        [DataMember]
+        public List<GameType> GameSetting { get; set; }
+        
+        [DataMember]
+        public RequestContext requestContext { get; set; }
+
+        [DataMember]
+        public LimitSetting WinLimitSetting { get; set; }
+
+        [DataMember]
+        public bool isAllowUpdateGameSetting { get; set; }
+
+        [DataMember]
+        public bool isAllowUpdatePtSetting { get; set; }
+
+        [DataMember]
+        public bool isAllowUpdateWinLimit { get; set; }
+
+    }
+
+
+    [DataContract]
+    public class CustomerInfo
+    {
+        [DataMember]
+        public int CustomerId { get; set; }
+        [DataMember]
+        public string UserName { get; set; }
+        [DataMember]
+        public string LastName { get; set; }
+        [DataMember]
+        public string FirstName { get; set; }
+        [DataMember]
+        public string NickName { get; set; }
+        [DataMember]
+        public string Phone { get; set; }
+        [DataMember]
+        public string Mobile { get; set; }
+        [DataMember]
+        public string Fax { get; set; }
+        [DataMember]
+        public int RoleId { get; set; }
+        [DataMember]
+        public int ExchangeId { get; set; }
+        [DataMember]
+        public bool IsSyncLiveCasino { get; set; }
+        [DataMember]
+        public int uplineId { get; set; }
+        [DataMember]
+        public string Site{ get; set; }
+        [DataMember]
+        public bool DisableLiveCasino { get; set; }
+        [DataMember]
+        public bool UplineDisableLiveCasino { get; set; }
+
+        
+    }
+
+    [Serializable]
+    [DataContract]
+    public class StakeLevel
+    {
+        [DataMember]
+        public int Id { get; set; }
+        [DataMember]
+        public string Text { get; set; }
+        [DataMember]
+        public bool IsSelected { get; set; }
+    }
+
+    [DataContract]
+    public class PTSetting
+    {
+        [DataMember]
+        public decimal MinPT { get; set; }
+        [DataMember]
+        public decimal MaxPT { get; set; }
+        [DataMember]
+        public decimal Comm { get; set; }
+        [DataMember]
+        public decimal PresetPT { get; set; }
+        [DataMember]
+        public decimal AutoPresetPT { get; set; }
+        [DataMember]
+        public bool IsAutoPresetPT { get; set; }
+        [DataMember]
+        public bool IsDisabledAutoPresetPT { get; set; }
+        [DataMember]
+        public PTSetting Upline { get; set; }
+
+        [DataMember]
+        public bool IsUpdateAllMember { get; set; }
+
+        [DataMember]
+        public decimal NewMemberPT { get; set; }
+
+        [DataMember]
+        public decimal MaxAutoPresetPT { get; set; }
+        
+    }
+
+   
+    [DataContract]
+    public class GameType
+    {
+        [DataMember]
+        public int Id { get; set; }
+        [DataMember]
+        public int BetTypeId { get; set; }
+        [DataMember]
+        public string Name { get; set; }
+        [DataMember]
+        public List<StakeLevel> BettingLimit { get; set; }
+
+        [DataMember]
+        public bool IsUplineUnCheckAll { get; set; }
+    }
+
+    [DataContract]
+    public class RequestContext
+    {
+        /// <summary>
+        /// user perform action update
+        /// </summary>        
+
+        [DataMember]
+        public int UserId { get; set; }
+
+        /// <summary>
+        /// ip of userid
+        /// </summary>        
+        [DataMember]
+        public string Ip { get; set; }
+
+        /// <summary>
+        /// current language of system that the user has already authenticated
+        /// </summary>        
+        [DataMember]
+        public string Language { get; set; }
+
+        /// <summary>
+        /// indentity of customer who is updated
+        /// it can be memberid, agentid, masterid, or superid
+        /// </summary>        
+        [DataMember]
+        public int CustId { get; set; }
+
+        /// <summary>
+        /// Sub-account Id is > 0 if sub-account updates settings
+        /// </summary>
+        [DataMember]
+        public int SubAccId { get; set; }
+        /// <summary>
+        /// uplineid is custid of <see cref="custid"/>
+        /// </summary>        
+        [DataMember]
+        public int UplineId { get; set; }
+
+        [DataMember]
+        public bool IsAddNewSuper { get; set; }
+
+        [DataMember]
+        public int AgentId { get; set; }
+
+        [DataMember]
+        public int MasterId { get; set; }
+
+        [DataMember]
+        public int SuperId { get; set; }
+
+        [DataMember]
+        public int UplineRoleId { get; set; }
+
+    }
+
+
+
+}

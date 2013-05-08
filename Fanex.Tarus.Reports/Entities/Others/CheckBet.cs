@@ -1,0 +1,53 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="CheckBet.cs" company="">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Reports.Entities.Others
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class ChangedTicketDetail
+    {
+        public string RefNo { get; set; }
+        public string TransDate { get; set; }
+        public string Bettype { get; set; }
+        public string CurrencyName { get; set; }
+        public string Username { get; set; }
+        public string Creator { get; set; }
+        public string OldStake { get; set; }
+        public string NewStake { get; set; }
+        public string OldOdds { get; set; }
+        public string NewOdds { get; set; }
+        public string OldBetteam { get; set; }
+        public string NewBetteam { get; set; }
+        public string OldTotalPT { get; set; }
+        public string NewTotalPT { get; set; }
+        public string OldStatus { get; set; }
+        public string NewStatus { get; set; }
+    }
+
+    public class ChangedTickets
+    {
+        public List<ChangedTicketDetail> listTicket { get; set; }
+        public int TotalRefNo { get; set; }
+        public int TotalChangedStake { get; set; }
+        public int TotalChangedOdds { get; set; }
+        public int TotalChangedBetteam { get; set; }
+        public int TotalChangedPT { get; set; }
+        public int TotalChangedStatus { get; set; }
+    }
+
+    public class CheckBet
+    {
+        public int NormalTickets { get; set; }
+        public int RejectTickets { get; set; }
+    }
+}

@@ -1,0 +1,13 @@
+﻿namespace Sunplus.Accounting.Business.PositionTaking.SportBook
+{
+    /// <summary>
+    /// Summary description for MemberPT
+    /// </summary>
+    public class MemberPT : BasePT
+    {
+        public override string Select(PtManager.PtType ptType)
+        {
+            return base.Select(ptType);
+        }
+    }
+}

@@ -1,0 +1,42 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using DNAide.Web;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web;
+
+public partial class LogDisplay_LogAction : PageBase
+{
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!Page.IsPostBack)
+        {
+            string[] strListUser = AccCommon.FuncMgr.Split(';');
+            bool isMgr = false;
+            for (int i = 0; i < strListUser.Length; i++)
+                if (string.Compare(Session["Username"].ToString(), strListUser[i], true) == 0)
+                {
+                    isMgr = true;
+                    break;
+                }
+            if (!isMgr)
+            {
+                Response.Redirect("../AccessDenied.aspx");
+                return;
+            }
+
+            LoadContent();
+        }
+    }
+    private void LoadContent()
+    {
+        string template = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("LogDisplay/LogActionFilter.htm");
+        string actionTypeOptions = Sunplus.Accounting.Business.LogDisplay.LogAction.GetActionTypeOptions();
+        TemplateHandler.Assign(ref template, "{ActionTypeOptions}", actionTypeOptions);
+        this.lContent.Text = template;
+    }
+    
+}

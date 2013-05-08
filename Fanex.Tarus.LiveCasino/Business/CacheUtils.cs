@@ -1,0 +1,55 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using DNAide.Core;
+using Fanex.Tarus.LiveCasino.DataAccess;
+using SharedCache.WinServiceCommon.Provider.Cache;
+using Sunplus.Accounting.Core.Extensions;
+
+namespace Fanex.Tarus.LiveCasino.Business
+{
+    public class CacheUtils
+    {
+        public static Dictionary<int, string> Exchange
+        {
+            get
+            {
+                Dictionary<int, string> exchange;
+                try
+                {
+
+                    exchange =
+                        SessionExtension.GetSession(HttpContext.Current.Session, "exchangeratedata") as
+                        Dictionary<int, string> ??
+                        new BaseDataAccess().GetExchange();
+                }
+                catch (Exception ex)
+                {
+                    exchange = new BaseDataAccess().GetExchange();
+                    Exchange = exchange;
+                }
+
+
+                return exchange;
+            }
+            set { SessionExtension.AddSession(HttpContext.Current.Session, "exchangeratedata", value); }
+        }
+        
+        public static string GetExchangeName(int id)
+        {
+            Dictionary<int, string> exchange = Exchange;
+            string value = (from k in exchange
+                            where k.Key == id
+                            select k.Value).FirstOrDefault();
+            return CastAide.AsString(value);
+        }
+        public static string GetExchangeName(Dictionary<int, string> exchange, int id)
+        {
+            string value = (from k in exchange
+                            where k.Key == id
+                            select k.Value).FirstOrDefault();
+            return CastAide.AsString(value);
+        }
+    }
+}

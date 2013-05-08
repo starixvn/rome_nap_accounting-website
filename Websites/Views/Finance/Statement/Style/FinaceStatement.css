@@ -1,0 +1,33 @@
+﻿.ui-datepicker-week-end
+{
+    color: #FF0000 !important;
+}
+.tree-expanded{     background:url("images/expand.gif") no-repeat scroll 0px -12px transparent;  display:inline-block;  height:10px;  vertical-align:middle;  width:16px;  margin-bottom:2px;  cursor:pointer}
+.tree-expand2{     background:url("images/expand.gif") no-repeat scroll 0px -1px transparent;  display:inline-block;  height:10px;  vertical-align:middle;  width:16px;  margin-bottom:2px;  cursor:pointer}
+
+input .verified
+{
+    height: 17px;
+    padding: 0px;
+    margin: 0px;
+}
+.evenrow td {
+    background-color: #E0F8E6;
+}
+.reversal td
+{
+    background-color: #F8E0E0;
+}
+.Opening-balance
+{
+    font-weight:600;
+    font-size: 14;
+}
+.statement-accu-row td{
+    background-color: #F5F6CE;
+    color: #0000FF;
+}
+.title 
+{
+    background: #F4F7F9 !important;
+}

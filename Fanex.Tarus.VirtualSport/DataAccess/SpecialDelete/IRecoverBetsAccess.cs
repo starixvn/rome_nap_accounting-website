@@ -1,0 +1,14 @@
+﻿
+using System.Collections;
+using System.Data;
+
+namespace Fanex.Tarus.VirtualSport.DataAccess.SpecialDelete
+{
+    public interface IRecoverBetsAccess
+    {
+        DataSet SelMatchInfo(int matchId, long transid);
+        DataSet SelRecoverSpecialBets(string transid, ref Hashtable outputParam);
+        DataSet RecoverSpecialBets(string transid, int userId, string userIp, ref Hashtable outputParam);
+        DataSet RemovePrivateMsg(string transid, int userId);
+    }
+}

@@ -1,0 +1,673 @@
+﻿using System.Collections.Generic;
+using System.Data;
+using DNAide.Core;
+using DNAide.Utils;
+using Fanex.Tarus.SpecialDelete.DataAccess;
+using Fanex.Tarus.SpecialDelete.Entity.LiveCasino;
+using Fanex.Tarus.SpecialDelete.Entity;
+using Fanex.Tarus.Infrastructure.Helper.SportHelper;
+using Fanex.Data.DNAide;
+using Fanex.Tarus.Infrastructure.Helper;
+using Fanex.Tarus.Infrastructure.Caching;
+using Fanex.Tarus.Infrastructure.Extensions;
+using Fanex.Tarus.Infrastructure.Common;
+using Sunplus.Accounting.Core.Configurations;
+using Fanex.Tarus.SpecialDelete.DataAccess.LiveCasino;
+using System;
+using System.Linq;
+using Fanex.Tarus.SpecialDelete.Core;
+
+
+namespace Fanex.Tarus.SpecialDelete.Business.LiveCasino
+{
+    public class LiveCasinoService : BaseService, ILiveCasinoService
+    {
+        ILiveCasinoDataAccess _liveCasinoDataAccess;
+        IEmailService _emailService;
+        
+
+        public LiveCasinoService(): this(null, null){}
+
+        public LiveCasinoService(ILiveCasinoDataAccess liveCasinoDataAccess, IEmailService emailService)
+        {
+            _liveCasinoDataAccess = liveCasinoDataAccess ?? new LiveCasinoDataAccess();
+            _emailService = emailService ?? new EmailService();
+        }
+
+        public Tickets GetTickets(string matchid, string f_transid, string t_transid)
+        {
+            var match = GetMatch(matchid);
+            if (match == null) return null;
+
+            var ds = _liveCasinoDataAccess.GetTickets(matchid, f_transid, t_transid);
+            if (ds.Tables.Count != 6) return BuildTickets(match, null);            
+
+            return BuildTickets(match, ds);
+        }
+
+        private List<LicenseeTickets> AssignDataforLicensee(DataSet ds)
+        {
+            List<LicenseeTickets> licensees = new List<LicenseeTickets>();            
+            var collection = SpecialDeleteSection.Instance.DeleteBet;
+
+            DataTable dtChoice = ds.Tables[5];
+            int index = 0;
+            foreach (SpecialDeleteElement element in collection)
+            {
+                LicenseeTickets licensee = new LicenseeTickets();
+                licensee.DeleteOtionDefault = element.Name == "Normal" ? true : element.DeleteoOtionDefault == "1";
+                licensee.IsAllowOptionDelete = element.Name == "Normal" ? true : element.IsAllowOptionDelete == "1";
+                licensee.Name = element.Name;
+
+                DataTable dt = ds.Tables[index];
+                if (dt.Rows.Count > 0)
+                {
+                    licensee.TicketDetails = AssignTicketsDetail(dt, dtChoice);
+
+                    licensees.Add(licensee);
+                }
+                index++;
+            }
+
+            return licensees;
+        }
+
+        private List<LicenseeTickets> AssignDataforLicensee_RecoverBet(DataSet ds)
+        {
+            List<LicenseeTickets> licensees = new List<LicenseeTickets>();
+            var collection = SpecialDeleteSection.Instance.DeleteBet;
+
+            DataTable dtChoice = ds.Tables[1];
+
+            DataTable dt = ds.Tables[0];
+            if (dt.Rows.Count > 0)
+            {
+                LicenseeTickets licensee = new LicenseeTickets();
+                licensee.DeleteOtionDefault = true;
+                licensee.IsAllowOptionDelete = true;
+                licensee.Name = "Normal";
+
+                licensee.TicketDetails = AssignTicketsDetail(dt, dtChoice);
+
+                licensees.Add(licensee);
+            }
+
+            return licensees;
+        }
+
+        string GetBetteam(int bettype, int betteam)
+        {
+            string rs = "";
+            switch(bettype)
+            {
+                case 1101://Baccarat
+                    rs = CacheRef.GetLiveCasinoResult(betteam);
+                    break;
+                case 1102://Live Roulette
+                    rs = CacheRef.GetRouletteBetResult(betteam);
+                    break;
+            }
+            return rs;
+        }
+
+        private List<TicketDetail> AssignTicketsDetail(DataTable table0, DataTable table1)
+        {
+            List<TicketDetail> tickets = new List<TicketDetail>();
+
+            if (table0 == null) return tickets;
+            
+            int index = 0;
+          
+            foreach (DataRow row0 in table0.Rows)
+            {
+                var refNo = CastAide.AsDecimal(row0["refno"]);
+                var username = CastAide.AsString(row0["username"]);
+                var transTime = CastAide.AsDateTime(row0["transdate"]).ToString("MM/dd/yyyy hh:mm:ss tt");
+                var betID = CastAide.AsString(row0["transid"]);
+                var stake = NumberFormat.DecFormat(row0["stake"], 2);
+                var currencyName = SelCurrencyName(CastAide.AsString(row0["currency"]));
+                var status = UppercaseFirst(CastAide.AsString(row0["status"]));
+                var supperPT = NumberFormat.DecFormat(row0["spositiontaking"],2);
+                var masterPT = NumberFormat.DecFormat(row0["mpositiontaking"],2);
+                var agentPT = NumberFormat.DecFormat(row0["apositiontaking"],2);
+
+                var arrChoice = new List<string>();
+                var choices = new List<Choice>();
+
+                var dataByRefNo = table1.AsEnumerable().Where(s => CastAide.AsDecimal(s["refNo"]) == refNo);
+
+                int bettype = CastAide.AsInt32(row0["bettype"]);
+
+                foreach (DataRow row1 in dataByRefNo)
+                {
+                    choices.Add(new Choice
+                    {
+                        Betteam = GetBetteam(bettype, CastAide.AsInt32(row1["betteam"])),
+                        Stake =  NumberFormat.DecFormat(row1["stake"], 2),
+                        Odds = NumberFormat.DecFormat(row1["odds"], 2)
+                    });
+                }
+
+                foreach (Choice c in choices)
+                {
+                    arrChoice.Add("<div class='choice'><span style='color:red'>" + c.Betteam + "</span> " + c.Stake + " <span style='color:#4F81BD'>@" + c.Odds + "</span></div>");
+                }
+
+                tickets.Add(new TicketDetail
+                {
+                    Index = ++index,
+                    RefNo = refNo,
+                    UserName = username,
+                    TransTime = transTime,
+                    BetID = betID,
+                    BetType = CastAide.AsInt32(row0["bettype"]),
+                    BetTypeName = Bettype.GetBettype(CastAide.AsInt32(row0["bettype"])),
+                    Stake = stake,
+                    CurrencyName = currencyName,
+                    Status = status,
+                    SuperPT = supperPT,
+                    MasterPT = masterPT,
+                    AgentPT = agentPT,
+                    ChoiceStr = string.Join("", arrChoice.ToArray()),
+                    cntChoice = arrChoice.Count,
+                    WinLoss =  status.ToLower() == "running" ? "-" : NumberFormat.DecFormat(row0["Winlost"], 2),
+                    Comm = status.ToLower() == "running" ? "-" : NumberFormat.DecFormat(row0["Comm"], 2)
+                });
+            }
+            return tickets;
+        }
+
+        private Tickets BuildTickets_RecoverBet(Match match, DataSet ds)
+        {
+            var tickets = new Tickets();
+            tickets.MatchId = match.MatchID;
+            tickets.MatchCode = match.MatchCode;
+            tickets.MatchEvent = match.MatchEvent;
+            tickets.EventDate = match.EventDate;
+
+            if (ds == null) return tickets;
+
+            tickets.Licensees = AssignDataforLicensee_RecoverBet(ds);
+
+            int index = 0;
+            
+            return tickets;
+        }
+
+        private Tickets BuildTickets(Match match, DataSet ds)
+        {
+            var tickets = new Tickets();
+            tickets.MatchId = match.MatchID;
+            tickets.MatchCode = match.MatchCode;
+            tickets.MatchEvent = match.MatchEvent;
+            tickets.EventDate = match.EventDate;
+
+            if (ds == null) return tickets;
+
+            tickets.Licensees = AssignDataforLicensee(ds);
+
+            int index = 0;
+
+            return tickets;
+        }
+
+        private string UppercaseFirst(string s)
+        {
+            // Check for empty string.
+            if (string.IsNullOrEmpty(s))
+            {
+                return string.Empty;
+            }
+            // Return char and concat substring.
+            if (s.Length == 1) return char.ToUpper(s[0]).ToString();
+            return char.ToUpper(s[0]) + s.Substring(1);
+        }
+
+        public Match GetMatch(string MatchId)
+        {
+            var ds = _liveCasinoDataAccess.GetMatch(MatchId);
+
+            if (ds.Tables.Count == 0 || ds.Tables[0].Rows.Count <= 0)
+                return null;
+            DataRow row = ds.Tables[0].Rows[0];
+            var kickOffTime = CastAide.AsDateTime(row["kickofftime"]);
+            var eventDate = CastAide.AsDateTime(row["eventdate"]);
+            var eventStatus = CastAide.AsString(row["eventstatus"]);
+            return new Match
+            {
+                MatchID = CastAide.AsInt32(row["matchid"]),
+                MatchCode = CastAide.AsString(row["matchcode"]),
+                EventDate = eventDate.ToShortDateString(),
+                MatchEvent = CastAide.AsString(row["gameevent"])
+            };
+        }
+
+        public bool CheckPassword(string username, string password)
+        {
+            bool rs = Encryption.CfsEnCode(password).Equals(AppSession.AccPwd);
+            return rs;
+        }
+
+        private void ProcessDelBets(ResultModel result, string matchid, string f_transid, string t_transid, string IP,
+           string transids_n,
+           string transids_d,
+           string transids_bd,
+           string transids_12eu,
+           string transids_mhc,
+           Message message, ref bool IsSuccess, int PageIndex, bool isSendPrivateMSG)
+        {
+            try
+            {
+
+                //check max length transid
+                if (!CheckMaxLengthTransId(result, transids_n, transids_d, transids_bd, transids_12eu, transids_mhc))
+                {
+                    IsSuccess = false;
+                    return;
+                }
+
+                //check login
+                if (!CheckPassword(message.UserName, message.userPwd))
+                {
+                    result.ErrorHandler.Add(new Result()
+                    {
+                        Key = "100",
+                        Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "WrongPass")
+                    });
+
+                    IsSuccess = false;
+                    return;
+                }
+
+                string ErrMsg = string.Empty;
+                string ErrCode = "";
+                int ErrCode2 = 0;
+
+                //check tickets belong to match
+                if (PageIndex == 0)
+                {
+                    ErrMsg = CheckMatchIDwithRefno(matchid, f_transid, t_transid, Fanex.Tarus.SpecialDelete.Core.Sport.SportType.LiveCasino);//type 3:Live Casino 
+                    if (!string.IsNullOrEmpty(ErrMsg))
+                    {
+                        result.ErrorHandler.Add(new Result()
+                        {
+                            Key = "100",
+                            Value = ErrMsg
+                        });
+                        IsSuccess = false;
+                        return;
+                    }
+
+                    //update bet tickets in Live Casino DB by SPs
+                    _liveCasinoDataAccess.DeleteBetsAtLiveCasinodb(matchid, f_transid, t_transid, message.UserName, message.UserId.ToString(), out ErrMsg, out ErrCode,
+                        transids_n,
+                        transids_d,
+                        transids_bd,
+                        transids_12eu,
+                        transids_mhc);
+
+                    if (!string.IsNullOrEmpty(ErrMsg))
+                    {
+                        result.ErrorHandler.Add(new Result()
+                        {
+                            Key = "100",
+                            Value = ErrMsg
+                        });
+                        IsSuccess = false;
+                        return;
+                    }
+                }
+
+                //Update bet tickets in IBC DB
+                var dataSet = _liveCasinoDataAccess.DeleteBetsAtIBCdb(matchid, f_transid, t_transid, message.UserName, message.userPwd, message.UserId.ToString(), IP, out ErrMsg, out ErrCode2,
+                   transids_n,
+                   transids_d,
+                   transids_bd,
+                   transids_12eu,
+                   transids_mhc
+                    );
+
+                if (ErrCode2 == 0)
+                {
+                    result.ErrorHandler.Add(new Result()
+                    {
+                        Key = "-100",
+                        Value = "Bet transactions deleted!"
+                    });
+                }
+
+                System.Collections.Hashtable ht = new System.Collections.Hashtable();
+                ht.Add("ErrMsg", ErrMsg);
+                ht.Add("ErrCode", ErrCode2);
+                DbResult dbResult = new DbResult(ht, dataSet);
+                if (ErrCode2 > 0)
+                {
+                    //send mail notification to internal DBA
+                    _emailService.SendMailWhenDeleteBetToDBA(ErrMsg, ErrCode2.ToString(), matchid.ToString(), f_transid.ToString(), t_transid.ToString());
+                    //show error msg
+                    result.ErrorHandler.Add(new Result()
+                    {
+                        Key = "100",
+                        Value = ErrMsg
+                    });
+                    IsSuccess = false;
+                    return;
+                }
+                if (isSendPrivateMSG && PageIndex == 0 && ErrCode2 == 0)
+                {
+                    //send private message to customers 
+                    DataTable dtMsg = dbResult.ResultSet.Tables[3];
+                    bool isSendSuccess = SendPrivateMsgToUsers(dtMsg, CastAide.AsString(matchid), message);
+                    if (!isSendSuccess)
+                    {
+                        result.ErrorHandler.Add(new Result()
+                        {
+                            Key = "100",
+                            Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "SendMailErr")
+                        });
+                    }
+                }
+
+                if (ErrCode2 == 0)
+                {
+                    //Send email to CSD
+                    DataTable dtMatch = dbResult.ResultSet.Tables[0];
+                    DataTable dtUsers = dbResult.ResultSet.Tables[1];
+                    DataTable dtChoice = dbResult.ResultSet.Tables[2];
+                    _emailService.SendEmailWhenDeleteBetToCSD(result, dtMatch, dtUsers, dtChoice, false, true);
+
+                    //Send email cho real với test currency
+                    dtUsers = dbResult.ResultSet.Tables[4];
+                    dtChoice = dbResult.ResultSet.Tables[5];
+                    _emailService.SendEmailWhenDeleteBetToInternalGroup(result, dtMatch, dtUsers, dtChoice, false, true, true);
+                    _emailService.SendEmailWhenDeleteBetToInternalGroup(result, dtMatch, dtUsers, dtChoice, false, true, false);
+                }
+            }
+            catch (System.Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+                IsSuccess = false;
+                result.ErrorHandler.Add(new Result()
+                {
+                    Key = "100",
+                    Value = ex.Message
+                });
+            }            
+        }
+
+        public ResultModel DeleteBets(string matchid, string f_transid, string t_transid, string IP,
+           string transids_n,
+           string transids_d,
+           string transids_bd,
+           string transids_12eu,
+           string transids_mhc,
+            bool isSendPrivateMSG,
+           Message message)
+        {
+            ResultModel result = new ResultModel();
+            result.ErrorHandler = new List<Result>();
+            result.IsSuccess = true;
+
+            try
+            {
+                bool IsSucess = true;
+
+                int _MaxTransIdPerBatch = Int32.MaxValue;
+                
+
+                string[] arr_transids_n = transids_n.Split(',');
+                string[] arr_transids_d = transids_d.Split(',');
+                string[] arr_transids_bd = transids_bd.Split(',');
+                string[] arr_transids_12eu = transids_12eu.Split(',');
+                string[] arr_transids_mhc = transids_mhc.Split(',');
+
+                int pageIndex = 0;
+                int Pagesize = _MaxTransIdPerBatch;
+
+
+                List<string[]> arr_transids = new List<string[]>();
+                arr_transids.Add(arr_transids_n);
+                arr_transids.Add(arr_transids_d);
+                arr_transids.Add(arr_transids_bd);
+                arr_transids.Add(arr_transids_12eu);
+                arr_transids.Add(arr_transids_mhc);
+                
+                var maxLength = arr_transids.Max(str => str.Count());
+                var maxPage = maxLength / Pagesize + (maxLength % Pagesize > 0 ? 1 : 0);
+                for (int i = 0; i < maxPage; i++)
+                {
+                    var _transids_n = string.Join(",", arr_transids_n.Skip(pageIndex * Pagesize).Take(Pagesize).ToList());
+                    var _transids_d = string.Join(",", arr_transids_d.Skip(pageIndex * Pagesize).Take(Pagesize).ToList());
+                    var _transids_bd = string.Join(",",  arr_transids_bd.Skip(pageIndex * Pagesize).Take(Pagesize).ToList());
+                    var _transids_12eu = string.Join(",", arr_transids_12eu.Skip(pageIndex * Pagesize).Take(Pagesize).ToList());
+                    var _transids_mhc = string.Join(",", arr_transids_mhc.Skip(pageIndex * Pagesize).Take(Pagesize).ToList());                    
+
+                    ProcessDelBets(result, matchid, f_transid, t_transid, IP, _transids_n, _transids_d, _transids_bd, _transids_12eu, _transids_mhc, message, ref IsSucess, pageIndex, isSendPrivateMSG);
+                    
+                    pageIndex++;
+
+                    if (!IsSucess)
+                    {
+                        result.IsSuccess = false;
+                        break;                        
+                    }
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            ResultModel _model = new ResultModel();
+            _model.ErrorHandler = new List<Result>();
+            _model.IsSuccess = result.IsSuccess;
+
+            var _rs = result.ErrorHandler.Select(s => s.Value).Distinct().ToList();
+
+            foreach (string value in _rs)
+            {
+                _model.ErrorHandler.Add(new Result() {
+                    Key = result.ErrorHandler.Where(s=>s.Value == value).Select(s=>s.Key).Distinct().FirstOrDefault(),
+                    Value = value
+                });
+            }
+
+            return _model;
+        }
+
+        public Tickets GetTicketsForRecoverBet(string transid, out string ErrMsg, out int ErrCode)
+        {
+            var tickets = new Tickets();
+
+            var ds = _liveCasinoDataAccess.GetTicketsForRecoverBet(transid, out ErrMsg, out ErrCode);
+            if (ds.Tables.Count != 2)
+            {
+                ErrCode = 100;
+                ErrMsg = "Invalid Transid.";
+                return null;
+            }
+            var table0 = ds.Tables[0];
+            var table1 = ds.Tables[1];
+            if (table0.Rows.Count == 0)
+            {
+                ErrCode = 100;
+                ErrMsg = "Invalid Transid.";
+                return null;
+                
+            }
+            DataRow row = table0.Rows[0];
+            var matchId = CastAide.AsString(row["matchid"]);
+
+            var match = GetMatch(matchId);
+            if (match == null)
+            {
+                ErrCode = 100;
+                ErrMsg = "Invalid Transid.";                
+                return null;
+            }
+
+            return BuildTickets_RecoverBet(match, ds);
+        }
+
+        public ResultModel RecoverBet(string transid, string userid, string username, string IP)
+        {
+            ResultModel model = new ResultModel();
+            model.ErrorHandler = new List<Result>();
+            model.IsSuccess = true;
+            try
+            {          
+                //update bet tickets in Live Casino DB by Sps
+                var msg = _liveCasinoDataAccess.RecoverBetAtLivecasinoDB(transid, userid, username, "01");
+                if (!string.IsNullOrEmpty(msg)) {
+                    model.ErrorHandler.Add(new Result()
+                    {
+                        Key = "100",
+                        Value = msg
+                    });
+                    model.IsSuccess = false;
+                    return model;
+                } 
+                //update bet tickets in IBC DB
+
+                string ErrMsg = string.Empty;
+                int ErrCode = 0;
+                bool IsNegativebalance = false;
+                var dataSet = _liveCasinoDataAccess.RecoverBetAtIBCdb(transid, userid, IP, out ErrMsg, out ErrCode, out IsNegativebalance);
+
+                System.Collections.Hashtable ht = new System.Collections.Hashtable();
+                ht.Add("ErrMsg", ErrMsg);
+                ht.Add("ErrCode", ErrCode);
+                DbResult dbResult = new DbResult(ht, dataSet);
+                if (ErrCode > 0)
+                {
+                    //send mail notification to internal DBA
+                    _emailService.SendMailWhenRecoverBetToDBA(ErrMsg, ErrCode.ToString(), transid.ToString());
+                    //show error msg
+                    model.ErrorHandler.Add(new Result()
+                    {
+                        Key = "100",
+                        Value = ErrMsg
+                    });
+                    model.IsSuccess = false;
+                    return model;                    
+                }
+                //delete private message to customers
+                if (ErrCode == 0)
+                {
+                    var usernames = SpecialDeleteSection.Instance[SpecialDeleteSection.StoreCollection.NotificationRealCurrency]["usernames"];
+                    bool IsDeveloperRecovered = false;
+                    bool IsTestCurrency = false;
+
+                    if (dbResult.ResultSet.Tables.Count >= 2)
+                    {
+                        DataTable dtUsers = dbResult.ResultSet.Tables[1];
+                        if (dtUsers.Rows.Count > 0)
+                        {
+                            IsTestCurrency = CastAide.AsInt32(dtUsers.Rows[0]["currency"]) == 20;
+
+                            foreach (SpecialDeleteElement element in usernames.Stores)
+                            {
+                                IsDeveloperRecovered = AppSession.AccUserName.ToLower().Contains(element.Name.ToLower());
+                                if (IsDeveloperRecovered)
+                                    break;
+                            }
+
+                            if (!IsTestCurrency)
+                            {
+                                _emailService.SendEmailWhenRecoverBetToCSD(model, dbResult, false, true, transid, IsNegativebalance);//CSD
+                            }
+
+                            if (IsDeveloperRecovered || IsTestCurrency)
+                            {
+                                _emailService.SendEmailWhenRecoverBetToInternalGroup(model, dbResult, false, true, true, transid.ToString(), IsNegativebalance);//real currency
+                                _emailService.SendEmailWhenRecoverBetToInternalGroup(model, dbResult, false, true, false, transid.ToString(), IsNegativebalance);//test currency
+                            }
+                        }
+                    }             
+
+
+
+                    _liveCasinoDataAccess.RemoveMsgInBoDBMessage(transid.ToString(), userid);
+                }
+
+                if (model.IsSuccess)
+                {
+                    model.ErrorHandler.Add(new Result()
+                    {
+                        Key = "-100",
+                        Value = "Transaction " + transid + " was recovered."
+                    });                    
+                }
+            }
+            catch (System.Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+                model.ErrorHandler.Add(new Result()
+                {
+                    Key = "100",
+                    Value = ex.Message
+                });
+                model.IsSuccess = false;
+            }
+
+            ResultModel _model = new ResultModel();
+            _model.ErrorHandler = new List<Result>();
+            _model.IsSuccess = model.IsSuccess;
+
+            var _rs = model.ErrorHandler.Select(s => s.Value).Distinct().ToList();
+
+            foreach (string value in _rs)
+            {
+                _model.ErrorHandler.Add(new Result()
+                {
+                    Key = model.ErrorHandler.Where(s => s.Value == value).Select(s => s.Key).Distinct().FirstOrDefault(),
+                    Value = value
+                });
+            }
+
+            return _model;     
+        }
+
+
+        public string CheckMatchIDwithRefno(string matchid, string f_transid, string t_transid, Fanex.Tarus.SpecialDelete.Core.Sport.SportType sportType)
+        {
+            string rs = string.Empty;
+            try
+            {
+                rs = base.CheckMatchIDwithRefno(matchid, f_transid, t_transid, sportType);
+            }
+            catch (Exception ex)
+            {
+                //LogExtensions.ExceptionHandler(ex);
+                rs = "You have entered an invalid matchId or refno.";
+            }
+            return rs;   
+        }
+
+        public List<NegativeBalance> SelNegativeBalanceCustomer(string transid, Function.ActionType actionType, bool excludeRunning)
+        {
+            return base.SelNegativeBalanceCustomer(transid, actionType, excludeRunning);
+        }
+
+
+        public ResultModel CheckParamInput(string param, bool IsAllowNullOrEmpty)
+        {
+            ResultModel model = new ResultModel();
+            model.ErrorHandler = new List<Result>();
+            model.IsSuccess = true;
+            string numInvalid = "";
+            if (!base.isValidInt64(param, IsAllowNullOrEmpty, ",", ref numInvalid))
+            {
+                model.ErrorHandler.Add(new Result()
+                {
+                    Key = "100",
+                    Value = "\"" + numInvalid + "\": Invalid number."
+                });
+                model.IsSuccess = false;
+                return model;
+            }
+            return model;
+        }
+    }
+}

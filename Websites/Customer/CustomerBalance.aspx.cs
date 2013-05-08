@@ -1,0 +1,235 @@
+using System;
+using System.Data;
+using System.Text;
+using Sunplus.Accounting.Business;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Entities.Casino;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Core.LoggingLib;
+using IBCUtils;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using DNAide.Data;
+using DNAide.Core;
+
+
+public partial class CustomerBalance : PageBase
+{
+    private System.Globalization.CultureInfo cult = System.Globalization.CultureInfo.CurrentCulture;
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        this.sTitle.Text = "Customer Balance";
+        string _s = string.Empty;
+        try
+        {            
+            int _custid =CastAide.AsInt32(Request["agentid"]);
+            if (_custid == -1) throw new AccException(IbcError.USERNAME_UNAVAILABLE_MSG);
+            
+            string _custIdList = Request["memberIdList"] as string ?? string.Empty;
+            string errmsg="";
+            if (string.IsNullOrEmpty(_custIdList)) // select
+            {
+                _s = SelectCustomerBalance(_custid);
+            }
+            else // update
+            {
+                int _accid = Convert.ToInt32(Session["AccId"] as object ?? -1);
+                bool _checkall = (string.IsNullOrEmpty(Request.Form["_checkAll"])) ? false : true;
+                if (_accid == -1) throw new AccException(IbcError.ACCESS_DENIED_MSG);
+                if (_checkall == false)
+                {
+                    string[] _ArrCusid = _custIdList.Split('_');
+                    foreach (string custids in _ArrCusid)
+                    {
+                        _s = UpdateCustomerBalance(_accid, _custid, custids, _checkall, ref errmsg);
+                    }
+                }
+                else
+                {
+                    _s = UpdateCustomerBalance(_accid, _custid, "0", _checkall, ref errmsg);
+                }
+                if (errmsg != "")
+                {
+                    _s = AlertMessage.GetMsg(errmsg, AlertMessage.MsgType.Error);
+                }
+                else //reset casino max transfer
+                {
+                    string _syncedlist = "";
+                    string[] _arrgroupids = _custIdList.Split('_');
+                    foreach (string cids in _arrgroupids)
+                    {
+                        string[] _arrids = cids.Split(',');
+                        foreach (string cid in _arrids)
+                        {
+                            CSCustomerDetail custcs = Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider.Instance.GetBasicCustInfoIBC(int.Parse(cid));
+                            if (custcs.CasinoSync)
+                            {
+                                _syncedlist += cid + ",";
+                            }
+                        }
+                    }
+                    if (_syncedlist != "")
+                    {
+
+                        if (_syncedlist.IndexOf(",") >= 0)
+                        {
+                            _syncedlist = _syncedlist.Substring(0, _syncedlist.Length - 1);
+                        }
+                        var rngSiteName = new Sunplus.Accounting.Business.Customer.CustomerManager().GetRNGSiteNameByCustId(_custid);
+                        bool updateResult = CasinoManager.FullResetMaxTransfer(_syncedlist, Request.UserHostAddress, AppSession.AccId, AppSession.Username, 3, rngSiteName);
+                        if (updateResult)
+                        {
+                            _s += "<br />" + AlertMessage.GetMsg(Resources.Language.casinoFullResetSuccessfully, AlertMessage.MsgType.Success);
+                        }
+                        else
+                        {
+                            _s += "<br />" + AlertMessage.GetMsg(Resources.Language.casinoFullResetUnSuccessful, AlertMessage.MsgType.Error);
+
+                        }
+                    }
+                }
+            }
+            
+        }
+        catch (AccException ex)
+        {
+            _s = AlertMessage.GetMsg(ex.Message, AlertMessage.MsgType.Error);
+            string nl = Environment.NewLine;
+            _s+="<script type='text/javascript'>" + nl;
+            _s+="setTimeout(\"this.location.replace(this.location);\",3000);" + nl;
+            _s+="</script>" + nl;
+            Logs.Write(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            _s = AlertMessage.GetMsg(ex.Message, AlertMessage.MsgType.Error);
+            string nl = Environment.NewLine;
+            _s += "<script type='text/javascript'>" + nl;
+            _s += "setTimeout(\"this.location.replace(this.location);\",3000);" + nl;
+            _s += "</script>" + nl;
+            LogExtensions.ExceptionHandler(ex);
+        }
+        this.sBody.Text = _s;
+    }
+
+    private string SelectCustomerBalance(int _custid)
+    {
+        StringBuilder strcontent = new StringBuilder();
+        try
+        {            
+            Boolean isDisCheckAll = false;
+            DbResult ds = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerBalance.CustomerSelectClearBalance(_custid);
+            strcontent.Append("<script>datarows=[");
+            int cnt = 0;      
+            DataRowCollection rows=ds.ResultSet.Tables[0].Rows;
+            int cntSyncCasino = 0;
+
+            foreach (DataRow dr in rows)
+            {
+
+                if (CastAide.AsBoolean(dr["SyncCasino"]))
+                {
+                    cntSyncCasino++;
+                }
+
+                strcontent.Append("[");
+                strcontent.Append("'" + string.Format(cult, "{0:#,##0.00}", (Convert.IsDBNull(dr["credit"]) ? "0.00" : dr["credit"])) + "',");
+                double balance = (Convert.IsDBNull(dr["balance"]) ? 0.00 : Convert.ToDouble(dr["balance"]));
+                double yesterdayBalance = (Convert.IsDBNull(dr["yesterday_balance"]) ? 0.00 : Convert.ToDouble(dr["yesterday_balance"]));
+                
+                string balanceColor = (balance < 0) ? "#ff0000" : "#0000ff";
+                string yesterdayBalanceColor = (yesterdayBalance < 0) ? "#ff0000" : "#0000ff";
+                strcontent.Append("'" + balanceColor + "',");
+                strcontent.Append("'" + string.Format(cult, "{0:#,##0.00}", balance) + "',");
+                strcontent.Append("'" + yesterdayBalanceColor + "',");
+                strcontent.Append("'" + string.Format(cult, "{0:#,##0.00}", yesterdayBalance) + "',");
+                strcontent.Append("'" + string.Format(cult, "{0:#,##0.00}", (Convert.IsDBNull(dr["outstanding"]) ? "0.00" : dr["outstanding"])) + "',");
+                strcontent.Append("'" + dr["custid"].ToString() + "',");
+                strcontent.Append("'" + yesterdayBalance.ToString() + "',");
+                
+                strcontent.Append("'" + dr["username"].ToString().Replace("'","&#39;") + "',");
+
+
+                strcontent.Append("'" + StringUtils.ToHTMLString(dr["firstname"].ToString()) + "',");
+                strcontent.Append("'" + StringUtils.ToHTMLString(dr["lastname"].ToString()) + "',");
+
+                if (Convert.ToDouble(dr["yesterday_balance"]) == 0.00)
+                {
+                    strcontent.Append("'yes',");
+                }
+                else
+                {
+                    strcontent.Append("'',");
+                    isDisCheckAll = true;
+                }
+                bool isClosed = Convert.ToBoolean(dr["closed"]);
+                if (isClosed)
+                {
+                    strcontent.Append("'add-customer-bggray',");
+                }
+                else
+                {
+                    strcontent.Append("'',");
+                }
+
+                if (CastAide.AsBoolean(dr["SyncCasino"]))
+                    strcontent.Append("'1',");
+                else
+                    strcontent.Append("'0',");
+
+                if (cnt < rows.Count-1)
+                {
+                    strcontent.Append("],");
+                }
+                else
+                {
+                    strcontent.Append("]");
+                }
+
+                cnt++;
+            }
+            strcontent.Append("];");
+            strcontent.Append("total=" + rows.Count.ToString() + ";");
+            if (isDisCheckAll)
+            {
+                strcontent.Append("isDisableAll=false;"); 
+            }
+            else
+            {
+                strcontent.Append("isDisableAll=true;"); 
+            }
+
+            //strcontent.Append("var cntSyncCasino=" + cntSyncCasino + ";" );
+            strcontent.Append("var SyncCasinoMsg='" + Resources.Casino.fullSettlement + "';");
+            strcontent.Append(" RenderCustBalance(datarows, total, isDisableAll) ");
+            strcontent.Append("</script>");
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }        
+        return strcontent.ToString();
+    }
+
+    private string UpdateCustomerBalance(int _accId, int _custId, string _custIdList,bool isCheckAll,ref string errmsg)
+    {        
+        try
+        {
+            Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerBalance.CustomerInsertClearBalance(_accId, _custId, _custIdList, isCheckAll, ref errmsg, Request.UserHostAddress);
+           
+            string str = AlertMessage.GetMsg("Customer Balance Update Successfully. Please wait...", AlertMessage.MsgType.Success);
+            StringBuilder s = new StringBuilder();
+            string nl = Environment.NewLine;
+            s.Append("<script type='text/javascript'>" + nl);
+            s.Append("setTimeout(\"this.location.replace(this.location);\",3000);" + nl);
+            s.Append("</script>" + nl);
+            return str + s.ToString();                   
+        }
+        catch 
+        {
+            throw;
+        }        
+    }
+
+
+}

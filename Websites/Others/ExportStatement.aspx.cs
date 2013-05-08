@@ -1,0 +1,33 @@
+using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+using DNAide.Core;
+using DNAide.Web;
+using DNAide.Data;
+using Sunplus.Accounting.Business.Report;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web;
+
+public partial class UploadVirtualRate : PageBase
+{
+
+    public string calendar = "";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        DbResult rs = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserControl.CheckHostPermission(AppSession.AccId, "[ExportStatement]");
+        if (CastAide.AsInt32(rs.Outputs["errcode"]) != 0)
+            Response.Redirect("~/AccessDenied.aspx");
+
+        calendar = Sunplus.Accounting.Business.Report.Reports.GetHeader1(DateTime.Today.AddDays(-5).ToShortDateString(), DateTime.Today.ToShortDateString(), "", 0, "");
+        calendar = calendar.Replace("REPORT", "Review");
+        TemplateHandler.RemoveBlock(ref calendar, "export");
+        
+    }
+}

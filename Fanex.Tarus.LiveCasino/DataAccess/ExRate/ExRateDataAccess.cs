@@ -1,0 +1,49 @@
+﻿using System;
+using System.Data;
+using Fanex.Data;
+using Fanex.Tarus.LiveCasino.Entities;
+using Fanex.Tarus.LiveCasino.Entities.ExRate;
+using Sunplus.Accounting.Core.Extensions;
+
+namespace Fanex.Tarus.LiveCasino.DataAccess.ExRate
+{
+    public class ExRateDataAccess : IExRateDataAccess
+    {
+        public Result UpdateExchange(ExRateBO exChangeRate)
+        {
+            Result result = new Result();
+            try
+            {
+                using (ObjectDb objDB = new ObjectDb("TP_Admin_Exchange_UpdateExchange"))
+                {
+                    objDB.AddInParameter("CasinoNo", DbType.String, exChangeRate.CasinoNo);
+                    objDB.AddInParameter("ExchangeID", DbType.Int32, exChangeRate.ExchangeId);
+                    objDB.AddInParameter("Currency", DbType.String, exChangeRate.Currency);
+                    objDB.AddInParameter("Actualrate", DbType.String, exChangeRate.Actualrate);
+                    objDB.AddInParameter("Sysdate", DbType.DateTime, exChangeRate.Sysdate);
+                    objDB.AddInParameter("ModifyBy", DbType.Int32, exChangeRate.ModifyBy);
+                    objDB.AddInParameter("ModifyUserName", DbType.String, exChangeRate.ModifyUserName);
+                    objDB.AddInParameter("FromIP", DbType.String, exChangeRate.FromIp);
+                    objDB.AddOutParameter("ErrCode", DbType.String, 5);
+                    objDB.AddOutParameter("ErrMsg", DbType.String, 500);
+
+                    objDB.ExecuteNonQuery();
+
+                    var errorCode = objDB.GetParameterValue("ErrCode");
+                    errorCode = (errorCode is DBNull) ? string.Empty : Convert.ToString(errorCode);
+
+                    var errorMessage = objDB.GetParameterValue("ErrMsg");
+                    errorMessage = (errorMessage is DBNull) ? string.Empty : Convert.ToString(errorMessage);
+
+                    result.Key = errorCode.ToString();
+                    result.Value = errorMessage.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
+        }
+    }
+}

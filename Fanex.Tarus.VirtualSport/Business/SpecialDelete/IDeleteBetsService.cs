@@ -1,0 +1,15 @@
+﻿
+using System.Collections.Generic;
+using Fanex.Tarus.Entities.Sport;
+using Fanex.Tarus.VirtualSport.Entities;
+using Fanex.Tarus.VirtualSport.Entities.SpecialDelete;
+
+namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
+{
+    public interface IDeleteBetsService
+    {
+        List<BaseModel> GetAllBettypes(int type);
+        SpecialDeleteBetInfoList BettransSelSpecialDel(SpecialDeleteParam param);
+        Result DeleteSpecialTransaction(SpecialDeleteParam deleteParam);
+    }
+}

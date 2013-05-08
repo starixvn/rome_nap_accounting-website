@@ -1,0 +1,37 @@
+﻿<div class="box_header confirm" class="hidden" style="width: 1051px;" rel="box_list_confirm">
+    <div>
+        Confirm Information</div>
+</div>
+<div id="box_list_confirm" class="box_button delete" style="display: inline-block;">
+    <div class="box_clear">
+    </div>
+    <table border="0px" class="table">
+        <tbody>
+            <tr>
+                <td id="tdErrorMessage" colspan="2" class="hidden">
+                    <div class="error-message" id="ErrorMessageDeleteBets">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="b">
+                    USERNAME:
+                </td>
+                <td>
+                    <input type="text" id="username" name="username" disabled="disabled" style="width: 120px;" />
+                </td>
+            </tr>
+            <tr>
+                <td class="b">
+                    PASSWORD:
+                </td>
+                <td>
+                    <input type="password" id="userpwd" name="userpwd" style="width: 120px;" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <input type="button" class="btn delbet" value="&nbsp;&nbsp;Delete Bet&nbsp;&nbsp;" />
+    <input type="hidden" id="userId" name="userId" value="<%=AppSession.AccId %>" />
+</div>

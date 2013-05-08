@@ -1,0 +1,24 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="WinlossByCurrency.cs" company="">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.VirtualSport.Entities.Report.Winloss
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    /// 
+    [Serializable]
+    public class WinlossByCurrency
+    {
+        public List<WinlossDetail> WinlossDetailList { get; set; }
+        public WinlossDetail Total { get; set; }
+    }
+}

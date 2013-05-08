@@ -1,0 +1,415 @@
+﻿@model Fanex.Tarus.Reports.Entities.WinLoss.TreeWinLoss.TreeWinLoss
+@using DNAide.Utils
+
+@if (Model != null && Model.WinLoss != null && Model.WinLoss.Count > 0)
+{
+    @functions{
+        public string numberColor(string number, bool isVariance = false, string varianceValue = "0.00")
+        {
+            var numberColor = string.Empty;
+            if (!number.Contains("-") && !number.Equals("0.00")) 
+            {
+                numberColor = "red";
+                if (isVariance && varianceValue.Equals("0.00"))
+                {
+                    numberColor = string.Empty;
+                }
+            }
+
+            return numberColor;
+        }        
+    }
+<div id="mainreportgrid" class="freegrid">       
+    <div class="grid-title">
+        <div class="grid-title-lable" id="reporttile">Summary Win Loss</div>
+        <div class="grid-toolbox">                            
+            <input type="button" id="btnExport" value=" " class="btnExcel" title="Export to Excel" />
+        </div>
+    </div>                       
+    <div class="free-cell free-top-left">
+        <table class="grid-fixed-table free-cell-top-left">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="table-cell" style="width: 80px; height: 39px">Currency</div>
+                    </th>
+                    <th>
+                        <div class="table-cell" style="width: 120px; height: 39px">Turnover</div>
+                    </th>
+                    <th>
+                        <div class="table-cell" style="width: 120px; height: 39px">Win Loss</div>
+                    </th>
+                    <th>
+                        <div class="table-cell" style="width: 80px; height: 39px">Comm</div>
+                    </th>
+                    <th>
+                        <div class="table-cell" style="width: 120px; height: 39px">Total</div>
+                    </th>                                                
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="row_header_wrapper">
+        <div class="row_header row-headers-background">
+            <table class="grid-fixed-table row_header_content" id="tblContentHeader">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="table-cell" style="width: 80px; height: 39px">&nbsp;</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 120px; height: 39px">&nbsp;</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 120px; height: 39px">&nbsp;</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 80px; height: 39px">&nbsp;</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 120px; height: 39px">&nbsp;</div>
+                        </th>                                                
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var winlossDetail in Model.WinLoss)
+                    {
+                        <tr>
+                            <td>
+                                <div class="c" style="width: 80px; height: 17px">
+                                    <a href="javascript:;" onclick="treeWinLoss.goToDownLine(@winlossDetail.Id, '@winlossDetail.Title')">@winlossDetail.Title</a>
+                                </div>
+                            </td>
+                            <td><div class="r" style="width: 120px; height: 17px">@NumberFormat.DoubleFormat(winlossDetail.Turnover, 2)</div></td>
+                            <td><div class="r @numberColor(winlossDetail.WinLoss.ToString())" style="width: 120px; height: 17px">@NumberFormat.DoubleFormat(winlossDetail.WinLoss, 2)</div></td>
+                            <td><div class="r" style="width: 80px; height: 17px">@NumberFormat.DoubleFormat(winlossDetail.Comm, 2)</div></td>
+                            <td><div class="r @numberColor(winlossDetail.Total.ToString())" style="width: 120px; height: 17px">@NumberFormat.DoubleFormat(winlossDetail.Total, 2)</div></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col_header row-headers-background scroll-y">
+        <div class="header-container">
+            <table class="grid-fixed-table col_header_content">
+                <thead>
+                    <tr>
+                        <th rowspan="2">
+                            <div class="table-cell" style="width: 80px; height: 39px">&nbsp;</div>
+                        </th>
+                        <th rowspan="2">
+                            <div class="table-cell" style="width: 120px; height: 39px">&nbsp;</div>
+                        </th>
+                        <th rowspan="2">
+                            <div class="table-cell" style="width: 120px; height: 39px">&nbsp;</div>
+                        </th>
+                        <th rowspan="2">
+                            <div class="table-cell" style="width: 80px; height: 39px">&nbsp;</div>
+                        </th>
+                        <th rowspan="2">
+                            <div class="table-cell" style="width: 120px; height: 39px">&nbsp;</div>
+                        </th>
+                        <th colspan="5">
+                            <div style="height: 17px">Base RM</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class="table-cell" style="width: 110px; height: 17px">
+                                Turnover</div>
+                        </th>
+                        <th>
+                            <div class="table-cell sorter" style="width: 110px; height: 17px" id="divBaseRMTotal" onclick="treeWinLossByProduct.sorting(this, 'BaseRMTotal')">
+                                Total</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 110px; height: 17px">
+                                Virtual Total</div>
+                        </th>
+                        <th>
+                            <div class="table-cell sorter" style="width: 110px; height: 17px" id="divBaseRMVariance" onclick="treeWinLossByProduct.sorting(this,'BaseRMVariance')">
+                                Variance</div>
+                        </th>
+                         <th>
+                            <div class="table-cell sorter" style="width: 110px; height: 17px" id="divMargin" onclick="treeWinLossByProduct.sorting(this,'Margin')">
+                                Margin (%)</div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div class="grid-container container">
+        <div class="content-container">
+            <table id="tblContent" class="grid-fixed-table col_header_content">
+                <thead>
+                    <tr>
+                        <th rowspan="2">
+                            <div class="table-cell" style="width: 80px; height: 39px">&nbsp;</div>
+                        </th>
+                        <th rowspan="2">
+                            <div class="table-cell" style="width: 120px; height: 39px">&nbsp;</div>
+                        </th>
+                        <th rowspan="2">
+                            <div class="table-cell" style="width: 120px; height: 39px">&nbsp;</div>
+                        </th>
+                        <th rowspan="2">
+                            <div class="table-cell" style="width: 80px; height: 39px">&nbsp;</div>
+                        </th>
+                        <th rowspan="2">
+                            <div class="table-cell" style="width: 120px; height: 39px">&nbsp;</div>
+                        </th>
+                        <th colspan="5">
+                            <div style="height: 17px">Base RM</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class="table-cell" style="width: 110px; height: 17px">
+                                Turnover</div>
+                        </th>
+                        <th>
+                            <div class="table-cell sorter" style="width: 110px; height: 17px">
+                                Total</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 110px; height: 17px">
+                                Virtual Total</div>
+                        </th>
+                        <th>
+                            <div class="table-cell sorter" style="width: 110px; height: 17px">
+                                Variance</div>
+                        </th>
+                         <th>
+                            <div class="table-cell sorter" style="width: 110px; height: 17px">
+                                Margin (%)</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var winlossDetail in Model.WinLoss)
+                    {
+                        string turnover = string.Empty;
+                        string margin = string.Empty;
+
+                        if (ViewBag.isShowSB == true ||
+                        ViewBag.isShowNG == true ||
+                        ViewBag.isShowRB == true ||
+                        ViewBag.isShowLCS == true ||
+                        ViewBag.isShowVS == true)
+                        {
+                            turnover = NumberFormat.DoubleFormat(winlossDetail.BaseRMTurnover, 2);
+                        }
+                        else
+                        {
+                            turnover = "N/A";
+                        }
+
+                        if (turnover == "N/A" || turnover == "0.00")
+                        {
+                            margin = "N/A";
+                        }
+                        else
+                        {
+                            margin = NumberFormat.DoubleFormat(winlossDetail.Margin, 2);
+                        }
+                        <tr>
+                            <td><div class="r" style="width: 80px; height: 17px">&nbsp;</div></td>
+                            <td><div class="r" style="width: 120px; height: 17px">&nbsp;</div></td>
+                            <td><div class="r" style="width: 120px; height: 17px">&nbsp;</div></td>
+                            <td><div class="r" style="width: 80px; height: 17px">&nbsp;</div></td>
+                            <td><div class="r" style="width: 120px; height: 17px">&nbsp;</div></td>
+                            <td><div class="r" style="width: 110px; height: 17px">@turnover</div></td>
+                            <td><div class="r @numberColor(winlossDetail.BaseRMTotal.ToString())" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(winlossDetail.BaseRMTotal, 2)</div></td>
+                            <td><div class="r @numberColor(winlossDetail.BaseRMVirtualTotal.ToString())" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(winlossDetail.BaseRMVirtualTotal, 2)</div></td>
+                            <td><div class="r @numberColor(winlossDetail.BaseRMTotal.ToString(), true, winlossDetail.BaseRMVariance.ToString())" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(winlossDetail.BaseRMVariance, 2)</div></td>
+                            <td><div class="r @numberColor(winlossDetail.Margin.ToString())" style="width: 110px; height: 17px">@margin</div></td>
+                        </tr>
+                    }
+                
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row_footer row-footer-background z999">
+        <table class="grid-fixed-table row_footer_content">
+            <thead>
+                <tr>
+                    <th><div class="r" style="width: 540px; height: 17px">&nbsp;</div></th>
+                </tr>
+                <tr class="bgWhite">
+                    <th><div class="r" style="width: 540px; height: 17px">8RM</div></th>
+                </tr>
+                <tr class="bgWhite">
+                    <th><div class="r" style="width: 540px; height: 17px">BARM</div></th>
+                </tr>
+                <tr class="bgWhite">
+                    <th><div class="r" style="width: 540px; height: 17px">Total</div></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="col_footer row-footer-background scroll-y">
+        <div class="footer-container">
+            <table class="col_footer_content grid-fixed-table">
+                <thead>
+                @{
+                    string turnoverTotal = string.Empty;
+                    string marginTotal = string.Empty;
+
+                    string turnover8RM = string.Empty;
+                    string margin8RM = string.Empty;
+
+                    string turnoverBARM = string.Empty;
+                    string marginBARM = string.Empty;
+
+                    string turnoverGrandTotal = string.Empty;
+                    string marginGrandTotal = string.Empty;
+                    
+                    if (ViewBag.isShowSB == true ||
+                    ViewBag.isShowNG == true ||
+                    ViewBag.isShowRB == true ||
+                    ViewBag.isShowLCS == true ||
+                    ViewBag.isShowVS == true)
+                    {
+                        turnoverTotal = NumberFormat.DoubleFormat(Model.Total.BaseRMTurnover, 2);
+                        turnover8RM = NumberFormat.DoubleFormat(Model.Total8RM.BaseRMTurnover, 2);
+                        turnoverBARM = NumberFormat.DoubleFormat(Model.TotalBARM.BaseRMTurnover, 2);
+                        turnoverGrandTotal = NumberFormat.DoubleFormat(Model.GrandTotal.BaseRMTurnover, 2);
+                    }
+                    else
+                    {
+                        turnoverTotal = "N/A";
+                        turnover8RM = "N/A";
+                        turnoverBARM = "N/A";
+                        turnoverGrandTotal = "N/A";
+                    }
+
+                    if (turnoverTotal == "N/A" || turnoverTotal == "0.00")
+                    {
+                        marginTotal = "N/A";
+                    }
+                    else
+                    {
+                        marginTotal = NumberFormat.DoubleFormat(Model.Total.Margin, 2);
+                    }
+
+                    if (turnover8RM == "N/A" || turnover8RM == "0.00")
+                    {
+                        margin8RM = "N/A";
+                    }
+                    else
+                    {
+                        margin8RM = NumberFormat.DoubleFormat(Model.Total8RM.Margin, 2);
+                    }
+
+
+                    if (turnoverBARM == "N/A" || turnoverBARM == "0.00")
+                    {
+                        marginBARM = "N/A";
+                    }
+                    else
+                    {
+                        marginBARM = NumberFormat.DoubleFormat(Model.TotalBARM.Margin, 2);
+                    }
+
+                    if (turnoverGrandTotal == "N/A" || turnoverGrandTotal == "0.00")
+                    {
+                        marginGrandTotal = "N/A";
+                    }
+                    else
+                    {
+                        marginGrandTotal = NumberFormat.DoubleFormat(Model.GrandTotal.Margin, 2);
+                    }
+                    
+                    
+                    }
+                    <tr>
+                        <th><div class="r" style="width: 80px; height: 17px">&nbsp;</div></th>
+                        <th><div class="r" style="width: 120px; height: 17px">&nbsp;</div></th>
+                        <th><div class="r" style="width: 120px; height: 17px">&nbsp;</div></th>
+                        <th><div class="r" style="width: 80px; height: 17px">&nbsp;</div></th>
+                        <th><div class="r" style="width: 120px; height: 17px">&nbsp;</div></th>
+                        <th><div class="r" style="width: 110px; height: 17px">@turnoverTotal</div></th>
+                        <th><div class="r" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total.BaseRMTotal, 2)</div></th>
+                        <th><div class="r" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total.BaseRMVirtualTotal, 2)</div></th>
+                        <th><div class="r" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total.BaseRMVariance, 2)</div></th>
+                        <th><div class="r" style="width: 110px; height: 17px">@marginTotal</div></th>
+                    </tr>
+                    <tr class="bgWhite">
+                        <th><div class="r" style="width: 80px; height: 17px">&nbsp;</div></th>
+                        <th><div class="r" style="width: 120px; height: 17px">&nbsp;</div></th>
+                        <th><div class="r" style="width: 120px; height: 17px">&nbsp;</div></th>
+                        <th><div class="r" style="width: 80px; height: 17px">&nbsp;</div></th>
+                        <th><div class="r" style="width: 120px; height: 17px">8RM</div></th>
+                        <th><div class="r" style="width: 110px; height: 17px">@turnover8RM</div></th>
+                        <th><div class="r" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total8RM.BaseRMTotal,2)</div></th>
+                        <th><div class="r" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total8RM.BaseRMVirtualTotal, 2)</div></th>
+                        <th><div class="r" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total8RM.BaseRMVariance, 2)</div></th>
+                        <th><div class="r" style="width: 110px; height: 17px">@margin8RM</div></th>
+                    </tr>
+                    <tr class="bgWhite">
+                        <th><div class="r" style="width: 80px; height: 17px">&nbsp;</div></th>
+                        <th><div class="r" style="width: 120px; height: 17px">&nbsp;</div></th>
+                        <th><div class="r" style="width: 120px; height: 17px">&nbsp;</div></th>
+                        <th><div class="r" style="width: 80px; height: 17px">&nbsp;</div></th>
+                        <th><div class="r" style="width: 120px; height: 17px">BARM</div></th>
+                        <th><div class="r" style="width: 110px; height: 17px">@turnoverBARM</div></th>
+                        <th><div class="r" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.TotalBARM.BaseRMTotal, 2)</div></th>
+                        <th><div class="r" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.TotalBARM.BaseRMVirtualTotal, 2)</div></th>
+                        <th><div class="r" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.TotalBARM.BaseRMVariance, 2)</div></th>
+                        <th><div class="r" style="width: 110px; height: 17px">@marginBARM</div></th>
+                    </tr>
+                    <tr class="bgWhite">
+                        <th><div class="r" style="width: 80px; height: 17px">&nbsp;</div></th>
+                        <th><div class="r" style="width: 120px; height: 17px">&nbsp;</div></th>
+                        <th><div class="r" style="width: 120px; height: 17px">&nbsp;</div></th>
+                        <th><div class="r" style="width: 80px; height: 17px">&nbsp;</div></th>
+                        <th><div class="r" style="width: 120px; height: 17px">Total</div></th>
+                        <th><div class="r" style="width: 110px; height: 17px">@turnoverGrandTotal</div></th>
+                        <th><div class="r" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.GrandTotal.BaseRMTotal, 2)</div></th>
+                        <th><div class="r" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.GrandTotal.BaseRMVirtualTotal, 2)</div></th>
+                        <th><div class="r" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.GrandTotal.BaseRMVariance, 2)</div></th>
+                        <th><div class="r" style="width: 110px; height: 17px">@marginGrandTotal</div></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+     
+    <script type="text/javascript">
+           var wl = '@Json.Encode(Model)';
+       wl = wl.replace(/&quot;/g, '"');
+       var wlJson = jQuery.parseJSON(wl);
+       $('#btnExport').on('click', function () { treeWinLoss.exportExcel(); });
+        var gridOpts = {
+            tblContentId: 'tblContent',
+            isShowPager: false,
+            manualCopyHeader: true,
+            fullWidth: true,
+            fullHeight: true,
+            gridHeight: 100,
+            freezeWidth: 540,
+            numberFreezeCol: 5
+        };
+        $('#mainreportgrid').initGrid(gridOpts).removeClass("hidden").gridScroller(gridOpts);        
+        treeWinLoss.reportTitle = 'Summary Win Loss';
+
+        if (treeWinLoss.sortColId) {
+            treeWinLossByProduct.addSortingIconAfterRender(treeWinLoss.sortColId);
+        }
+    </script>
+
+}
+else
+{
+    <script type="text/javascript">
+        $('#mainreportgrid').addClass('hidden');
+        $('#err').show();
+        $('#err .alertboxerr div').html('There is no data.');
+        $('#btnExport').addClass('hidden');
+    </script>
+}
+

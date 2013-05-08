@@ -1,0 +1,10 @@
+﻿ /// <summary>
+/// Summary description for CompanyDiffBalance
+/// </summary>
+
+namespace BLL.Report
+{
+    public class CompanyDiffBalance
+    {
+    }
+}

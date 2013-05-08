@@ -1,0 +1,163 @@
+﻿using System;
+using System.Collections;
+using System.Data;
+using System.Text;
+using DNAide.Core;
+using DNAide.Web;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using IBCUtils;
+
+
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Core.LoggingLib;
+
+/// <summary>
+/// Summary description for DeleteBet
+/// </summary>
+
+namespace BLL.Report
+{
+    public class rptDeleteBet : ReportBase
+    {
+        private readonly string REPORT_DeleteBet = "accrptDeleteBet." + AppSession.Username;
+
+        public override string RenderHTML(Hashtable input)
+        {
+            var html = new StringBuilder();
+            string norow = WebUtils.LoadTemplate("NoInformation.htm");
+            TemplateHandler.Assign(ref norow, "{tdno}", "15");
+            TemplateHandler.Assign(ref norow, "{bgcolor-nodata}", "bgcolor-nodata");
+            TemplateHandler.Assign(ref norow, "{nodata}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"));
+            try
+            {
+                html.Append(WebUtils.LoadHtml("SpecialDelete/DeleteBetReportAllHeader.htm",
+                                              new[]
+                                                  {
+                                                      "{Username}", "{Transdate}", "{match}", "{Hdp}", "{Odds}",
+                                                      "{Type/BET}", "{Stake}", "{Winlost}", "{A.Winlost}", "{M.Winlost}",
+                                                      "{S.Winlost}", "{Status}"
+                                                  },
+                                              new[]
+                                                  {
+                                                      ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "UserName"), ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Transdate"), ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "events"), ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "HDP"),
+                                                      ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Odd"), ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "typebet"), ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Stake"), ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "WinLost"),
+                                                      ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "AWinLost"), ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "MWinLost"), ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "SWinLost"),
+                                                      ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Status")
+                                                  }));
+
+                DataTable dt = AccountReport.Acc_Rpt_DeleteBet(CastAide.AsDateTime(input["fdate"])).ResultSet.Tables[0];
+                string rows = WebUtils.LoadTemplate("SpecialDelete/DeleteBetReportAllRow.htm");
+                string rowsNull = WebUtils.LoadTemplate("SpecialDelete/DeleteBetReportNullAllRow.htm");
+                int bettype = 0;
+                string betteam = "";
+                if (dt.Rows.Count != 0)
+                {
+                    string odd_even = "";
+                    int index = 0;
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        index++;
+                        bettype = Convert.ToInt32(dr["bettype"]);
+                        betteam = Convert.ToString(dr["betteam"]);
+                        odd_even = (odd_even == "odd") ? "even" : "odd";
+                        string row = rows.Clone().ToString();
+                        if (bettype == 0) row = rowsNull.Clone().ToString();
+                        TemplateHandler.Assign(ref row, "{odd_even}", odd_even);
+                        TemplateHandler.Assign(ref row, "{no}", index.ToString());
+                        TemplateHandler.Assign(ref row, "{Username}", Convert.ToString(dr["username"]));
+                        TemplateHandler.Assign(ref row, "{Transdate}", Convert.ToString(dr["transdate"]));
+                        TemplateHandler.Assign(ref row, "{home}",
+                                               CacheRef.GetTeamName(dr["homeid"]) +
+                                               (CastAide.AsBoolean(dr["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : string.Empty));
+                        TemplateHandler.Assign(ref row, "{away}", CacheRef.GetTeamName(dr["awayid"]));
+                        string hdp = FormatHandler.FormatNumber2(dr["hdp1"]) + "/" +
+                                     FormatHandler.FormatNumber2(dr["hdp2"]) + "--" + dr["livehomescore"] + "/" +
+                                     dr["liveawayscore"];
+                        TemplateHandler.Assign(ref row, "{Hdp}", hdp);
+                        TemplateHandler.Assign(ref row, "{Odds}", FormatHandler.FormatNumber2(dr["odds"]));
+                        string typebet = "";
+                        if (bettype == 1)
+                        {
+                            typebet = "(" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "HDP").ToUpper() + ")";
+                            if (betteam == "h") typebet += " " + CacheRef.GetTeamName(dr["homeid"]);
+                            else typebet += " " + CacheRef.GetTeamName(dr["awayid"]);
+                        }
+                        else
+                        {
+                            typebet = "(" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "OU").ToUpper() + ")";
+                            if (betteam == "h") typebet += " " + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Over");
+                            else typebet += " " + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Under");
+                        }
+                        TemplateHandler.Assign(ref row, "{Type/BET}", typebet);
+
+                        double stake = FormatHandler.GetDouble(dr["stake"])*FormatHandler.GetDouble(dr["actualrate"]);
+                        TemplateHandler.Assign(ref row, "{Stake}", FormatHandler.FormatNumber2(stake));
+
+                        double winlost = FormatHandler.GetDouble(dr["winlost"])*
+                                         FormatHandler.GetDouble(dr["actualrate"]) -
+                                         FormatHandler.GetDouble(dr["actual_stake"])*
+                                         FormatHandler.GetDouble(dr["actualrate"]);
+                        TemplateHandler.Assign(ref row, "{Winlost}", FormatHandler.FormatNumber2(winlost));
+
+                        double awinlost = FormatHandler.GetDouble(dr["awinlost"])*
+                                          FormatHandler.GetDouble(dr["actualrate"]);
+                        TemplateHandler.Assign(ref row, "{A.Winlost}", FormatHandler.FormatNumber2(awinlost));
+
+                        double mwinlost = FormatHandler.GetDouble(dr["mwinlost"])*
+                                          FormatHandler.GetDouble(dr["actualrate"]);
+                        TemplateHandler.Assign(ref row, "{M.Winlost}", FormatHandler.FormatNumber2(mwinlost));
+
+                        double swinlost = FormatHandler.GetDouble(dr["swinlost"])*
+                                          FormatHandler.GetDouble(dr["actualrate"]);
+                        TemplateHandler.Assign(ref row, "{S.Winlost}", FormatHandler.FormatNumber2(swinlost));
+                        TemplateHandler.Assign(ref row, "{Status}", Convert.ToString(dr["Status"]));
+
+                        html.Append(row);
+                    }
+                }
+                else
+                {
+                    html.Append(norow);
+                    html.Append("</table>");
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                throw;
+            }
+            html.Append("</table>");
+
+            SetCacheReport(REPORT_DeleteBet, html.ToString(), DateTime.Now.AddMinutes(5));
+            return html.ToString();
+        }
+
+        public override void Export2Excel(Hashtable input)
+        {
+            string data = GetCachedReport(REPORT_DeleteBet);
+            if (string.IsNullOrEmpty(data))
+            {
+                RenderHTML(input);
+                data = GetCachedReport(REPORT_DeleteBet);
+            }
+            data = "<table><tr><td>" + data + "</td></tr></table>";
+            var content = new StringBuilder();
+            content.Append("<html>");
+            content.Append("<head>");
+            content.Append("<META http-EQUIV='Content-Type' CONTENT='text/html; charset=unicode-utf8'>");
+            content.Append("</head>");
+            content.Append(ReportHTML.CSSExcelReport());
+            content.Append(data);
+            content.Append("<table><tr><td class='tdhidden'></td></tr></table>");
+            content.Append("</html>");
+
+            ExcelContent = content.ToString();
+            base.Export2Excel(input);
+        }
+    }
+}

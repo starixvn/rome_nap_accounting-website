@@ -1,0 +1,103 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="DailyWinLoss2hSoccerAccess.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.10.18">Created</change>
+// </history>
+
+namespace Fanex.Tarus.Reports.DataAccess.DailyWinLoss2hSoccer
+{
+    using System;
+    using System.Collections;
+    using System.Data;
+    using System.Diagnostics.CodeAnalysis;
+    using DNAide.Core;
+    using Fanex.Data;
+    using Fanex.Tarus.Reports.Business;
+    using Fanex.Tarus.Reports.DataAccess.Constants;
+    using Fanex.Tarus.Reports.Entities.DailyWinLoss2h;
+    using Sunplus.Accounting.Core.Extensions;
+
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    public class DailyWinLoss2hSoccerAccess : Sunplus.Accounting.DataAccess.DataAccess, IDailyWinLoss2hSoccerAccess
+    {
+        public DataSet DailyWLDirect_Sporttype(DailyWinLoss2hParam param, ref Hashtable outputParam)
+        {
+            DataSet rs = null;
+            try
+            {
+                string storeSuffix = ReportService.GetStoreMappingSubfix(CastAide.AsDateTime(param.ReportDate));
+                string strMapping = "DailyWLDirect_Sporttype_Soccer" + storeSuffix;
+                using (ObjectDb objDB = new ObjectDb(strMapping))
+                {
+                    objDB.AddInParameter("winlostdate", DbType.DateTime, param.ReportDate);
+                    objDB.AddOutParameter("linetotal", DbType.Double, DbTypeSize.DoubleType);
+                    if (storeSuffix == ReportService.WARE_HOUSE_SP_SUFFIX)
+                    {
+                        objDB.AddInParameter("fi_3rdshare", DbType.Double, 0);
+                    }
+
+                    rs = objDB.ExecuteDataSet();
+                    outputParam = objDB.GetOuputParams();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return rs;
+        }
+
+        public DataSet SelSoccerReportMain(DailyWinLoss2hParam param, ref Hashtable outputParam)
+        {
+            DataSet result = null;
+            try
+            {
+                string storeSuffix = ReportService.GetStoreMappingSubfix(CastAide.AsDateTime(param.ReportDate));
+                string strMapping = "DailyWLDirect_soccer_bettype" + storeSuffix;
+                using (ObjectDb objDB = new ObjectDb(strMapping))
+                {
+                    objDB.AddInParameter("winlostdate", DbType.DateTime, param.ReportDate);
+                    result = objDB.ExecuteDataSet();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return result;
+        }
+
+        public DataSet SelDailyWLDirectDetail(DailyWinLoss2hParam param, ref Hashtable outputParam)
+        {
+            DataSet result = null;
+            try
+            {
+                string storeSuffix = ReportService.GetStoreMappingSubfix(CastAide.AsDateTime(param.ReportDate));
+                string strMapping = "DailyWLDirect_Detail" + storeSuffix;
+                using (ObjectDb objDB = new ObjectDb(strMapping))
+                {
+                    objDB.AddInParameter("winlostdate", DbType.DateTime, param.ReportDate);
+                    objDB.AddInParameter("sporttype", DbType.Int32, param.SportType);
+                    objDB.AddInParameter("liveindicator", DbType.Int32, param.IsLive);
+                    objDB.AddInParameter("bettype", DbType.Int32, param.BetType);
+                    objDB.AddInParameter("ishedge", DbType.Boolean, param.IsHedge);
+                    objDB.AddOutParameter("winlost_8rm", DbType.Double, DbTypeSize.DoubleType);
+                    objDB.AddOutParameter("winlost_barm", DbType.Double, DbTypeSize.DoubleType);
+                    result = objDB.ExecuteDataSet();
+                    outputParam = objDB.GetOuputParams();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return result;
+        }
+    }
+}

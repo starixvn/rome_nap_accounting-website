@@ -1,0 +1,37 @@
+﻿using System.Collections.Generic;
+using System.ServiceModel;
+using System.ServiceModel.Web;
+using Fanex.Tarus.LiveCasino.Entities.Report;
+using Fanex.Tarus.LiveCasino.Entities.Betlist;
+
+namespace Fanex.Tarus.LiveCasino.Distributor
+{
+    [ServiceContract]
+    public interface IReportService
+    {
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        List<BetlistResultLC> GetBetlistResultLiveCasino(string matchId, string bettype);
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        List<DailyWinlossDetail> GetDailyWinlossDetail();
+
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        ListDailyWL GetDailyWLDirect(string winlostdate);
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        GameStatisticsBO GetGameStatistic(GameStatisticsParams dbparams);
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        GameSearchBO GetGameFilterInfo();
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        List<Category> GetGameTableByGameType(int gametype);
+    }
+}

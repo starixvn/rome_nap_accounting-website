@@ -1,0 +1,102 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Sunplus.Accounting.Core.Configurations;
+
+namespace Sunplus.Accounting.Business.Report.Common
+{
+    /// <summary>
+    /// RMReportUtils
+    /// </summary>
+    /// <remarks></remarks>
+    public class RMReportUtils
+    {
+        /// <summary>
+        /// ReportName
+        /// </summary>
+        /// <remarks></remarks>
+        public enum ReportName
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+            Report2a = 0,
+            /// <summary>
+            /// 
+            /// </summary>
+            Report2h = 1,
+            /// <summary>
+            /// 
+            /// </summary>
+            ReportWLSummary = 2,
+
+            /// <summary>
+            /// 
+            /// </summary>
+            ReportTreeWL = 3,
+
+            /// <summary>
+            /// 
+            /// </summary>
+            ReportLeagueWL = 4,
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks></remarks>
+        public enum RMType
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+            EightRM = 0,
+            /// <summary>
+            /// 
+            /// </summary>
+            BARM = 1
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private RMElement _element = new RMElement();
+        /// <summary>
+        /// 
+        /// </summary>
+        private RMType _rmType;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RMReportUtils"/> class.
+        /// </summary>
+        /// <param name="reportName">Name of the report.</param>
+        /// <param name="rmType">Type of the rm.</param>
+        /// <remarks></remarks>
+        public RMReportUtils(ReportName reportName, RMType rmType)
+        {
+            var rmReports = RMSection.Instance.Report;
+            _rmType = rmType;
+            _element = rmReports[reportName.ToString()].Stores[_rmType.ToString()];
+        }
+
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is active.
+        /// </summary>
+        /// <remarks></remarks>
+        public bool IsActive
+        {
+            get { return _element.IsActive; }
+        }
+
+        /// <summary>
+        /// Gets the display name.
+        /// </summary>
+        /// <remarks></remarks>
+        public string DisplayName
+        {
+            get { return _element.DisplayName ; }
+        }
+    }
+}

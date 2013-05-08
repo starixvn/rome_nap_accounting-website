@@ -1,0 +1,51 @@
+using System.Collections.Generic;
+using System.ServiceModel;
+using System.ServiceModel.Web;
+using Sunplus.Data.DataAbstract.Entity;
+using Sunplus.Accounting.Entities.Report.Licensee;
+using Sunplus.Accounting.Entities.Customer.PT.ViewPT;
+using Sunplus.Accounting.Entities.Customer;
+
+
+namespace Sunplus.Accounting.WcfServiceLibrary.BetList
+{
+    [ServiceContract]
+    public interface IBetListService
+    {
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        LicenseeDTO GetDatetimeOption(string dateOption);
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        List<BetMonitor> GetLatestBABetList(int totalRow,int amount, System.Int64 lastTransId);
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        BABetList GetBABetList(int pagesize, int pageindex, string fromdate, string todate, string refno, string username, int currency, int bettype, int fromStake, int toStake, int excludeTest);
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        List<BetListDetail> GetMixParlayTickets(string refNo);
+
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        List<Bettype> GetBettype();
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        List<CustDetail> GetCurrency();
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        CombinationDetailMP GetCombinationDetailMPTickets(string refNo);
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        SystemParlayDetail GetBetListSystemParlayDetailByTransId(string transId, int custId);
+
+
+
+    }
+}

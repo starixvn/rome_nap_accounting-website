@@ -1,0 +1,28 @@
+﻿using System.Collections.Generic;
+using System.ServiceModel;
+using System.ServiceModel.Web;
+using Fanex.Tarus.SpecialDelete.Entity.LiveCasino;
+using Fanex.Tarus.SpecialDelete.Entity;
+
+namespace Fanex.Tarus.SpecialDelete.Services
+{
+    [ServiceContract]
+    public interface ISpecialDeleteService
+    {
+        //[OperationContract]
+        //[WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        //Tickets GetTickets(int MatchID, decimal FromRefNo, decimal ToRefNo);
+
+        //[OperationContract]
+        //[WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        //string DeleteBets(int MatchID, string TransIds, decimal FromRefNo, decimal ToRefNo, decimal FromTransID, decimal ToTransID, string UserName, string UserPwd, int UserID, Message message);
+
+        //[OperationContract]
+        //[WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        //Tickets GetTicketsForRecoverBet(decimal TransID);
+
+        //[OperationContract]
+        //[WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        //string RecoverBet(decimal TransId, int UserId, string UserName);
+    }
+}

@@ -1,0 +1,240 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="OANDAExRateManager.cs" company="">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.ExchangeRate.Business
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Drawing;
+    using System.Linq;
+    using System.Web;
+
+    using Fanex.Tarus.ExchangeRate.DataAccess;
+    using Fanex.Tarus.ExchangeRate.Entities;
+    using DNAide.Core;
+
+    using ExcelUtil.Spreadsheet;
+
+    using Sunplus.Accounting.Core.Extensions;
+    using Sunplus.Accounting.Core.Configurations;
+    using System.Configuration;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class ExchangeRateService: IExchangeRateService
+    {
+
+        private readonly IExchangeRateAccess _exchangeRateAccess;
+        private const string ExchangeRateOandaKey = "exchangeRateOanda";
+       // private static readonly string KeybaseCurr;
+
+        public ExchangeRateService():this(null)
+        {
+            
+        }
+
+        public ExchangeRateService(IExchangeRateAccess exchangeRateDataAccess)
+        {
+            
+            _exchangeRateAccess = exchangeRateDataAccess ?? new ExchangeRateAccess();
+        }
+
+        public List<ExchangeDailyDTO> GetOandaExchangeDaily(string fromDate, string toDate)
+        {
+            var result = new List<ExchangeDailyDTO>();
+            try
+            {
+              
+                var dtExchangeDaily = _exchangeRateAccess.GetOandaExchangeDaily(fromDate, toDate);
+                
+                string KeybaseCurr = ConfigurationManager.AppSettings["Fanex.Tarus.ExchangeRate.BaseCurrency"];
+                string[] listBaseCurr = KeybaseCurr.Split(new Char[] { ',' });
+
+                if (dtExchangeDaily.Rows.Count > 0)
+                {
+                    var drExchangeDate = from row in dtExchangeDaily.AsEnumerable()
+                                         group row by row.Field<DateTime>("ExchangeDate");
+
+
+                    foreach (var dt in drExchangeDate)
+                    {
+                        DateTime datetime = dt.Key;
+                        var drExchangeByDate = from getCurrency in dtExchangeDaily.AsEnumerable()
+                                               where getCurrency.Field<DateTime>("ExchangeDate") == datetime
+                                               select getCurrency;
+
+
+
+                        var listExRate = new List<ExchangeDaily>();
+                        foreach (var row in drExchangeByDate)
+                        {
+                            var baseCurr = new List<CurrencyDetail>();
+                            for(int i = 0 ; i < listBaseCurr.Length ; i++)
+                            {
+                                baseCurr.Add(new CurrencyDetail(listBaseCurr[i], Convert.ToString(row[listBaseCurr[i]])));
+                            }
+                            var exchangeDaily = new ExchangeDaily();
+                            exchangeDaily.CurrencyCode = row["CurrencyCode"].ToString();
+                            exchangeDaily.BaseCurrencies = baseCurr;
+
+                            listExRate.Add(exchangeDaily);
+
+
+                        }
+
+                        result.Add(new ExchangeDailyDTO()
+                        {
+                            ExchangeDate = String.Format("{0:MM/dd/yyyy}", datetime),
+                            ExchangeDailyList = listExRate
+                        });
+
+                    }
+                }
+              
+                SessionExtension.AddSession(HttpContext.Current.Session, ExchangeRateOandaKey, result);
+
+            }
+            catch (Exception exception)
+            {
+                
+                LogExtensions.ExceptionHandler(exception);
+            }
+
+
+            return result;
+        }
+
+      
+
+        public ExcelFile ExportExcelExDailyOanda(string fdate, string tdate)
+        {
+            var exchangeDailyListFromSession = SessionExtension.GetSession(HttpContext.Current.Session, ExchangeRateOandaKey);
+
+            List<ExchangeDailyDTO> exchangeDailyList;
+
+
+            if(exchangeDailyListFromSession != null)
+
+
+                exchangeDailyList  = (List<ExchangeDailyDTO>) exchangeDailyListFromSession;
+
+            else
+            {
+                exchangeDailyList = this.GetOandaExchangeDaily(fdate, tdate);
+            }
+
+            #region export
+            var reportName = string.Format("OANDAExRateFrom{0}To{1}", fdate.Replace("/", "_"), tdate.Replace("/", "_"));
+            var excelFile = new ExcelFile();
+            int startRowIndex = 0;
+            int startColumnIndex = 0;
+            var wsOandaExRate = excelFile.Worksheets.Add(reportName);
+            #region header
+            var bgFormat = new Sunplus.Accounting.Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
+            var titleCell = wsOandaExRate.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex, startRowIndex,
+                                                 startColumnIndex + 3);
+            titleCell.Merged = true;
+            titleCell.Style = bgFormat;
+            titleCell.Value = string.Format("OANDA Exchange Rate From: {0} - To: {1}", fdate, tdate);
+            startRowIndex += 1;
+            wsOandaExRate.Cells[startRowIndex, startColumnIndex].Value = "Date";
+            wsOandaExRate.Cells[startRowIndex, startColumnIndex].Style = bgFormat;
+            startColumnIndex += 1;
+            wsOandaExRate.Cells[startRowIndex, startColumnIndex].Value = "Currency Code";
+            wsOandaExRate.Cells[startRowIndex, startColumnIndex].Style = bgFormat;
+            startColumnIndex += 1;
+            wsOandaExRate.Cells[startRowIndex, startColumnIndex].Value = "EUR/Unit";
+            wsOandaExRate.Cells[startRowIndex, startColumnIndex].Style = bgFormat;
+            startColumnIndex += 1;
+            wsOandaExRate.Cells[startRowIndex, startColumnIndex].Value = "USD/Unit";
+            wsOandaExRate.Cells[startRowIndex, startColumnIndex].Style = bgFormat;
+            #endregion
+            #endregion
+
+            #region body
+
+            var style = new CellStyle();
+            style.VerticalAlignment = VerticalAlignmentStyle.Center;
+            style.Borders.SetBorders(MultipleBorders.Outside, Color.Gray, LineStyle.Thin);
+            style.Font.Name = "Tahoma";
+            style.Font.Size = 160;
+
+            wsOandaExRate.Columns[0].Width = 255 * 30;
+            wsOandaExRate.Columns[1].Width = 255 * 20;
+            wsOandaExRate.Columns[2].Width = 255 * 20;
+            wsOandaExRate.Columns[3].Width = 255 * 20;
+
+            int len = exchangeDailyList.Count;
+
+            
+            if (len > 0)
+            {
+                foreach (ExchangeDailyDTO row in exchangeDailyList)
+                {
+
+                    int count = row.ExchangeDailyList.Count;
+                    startRowIndex += 1;
+                    startColumnIndex = 0;
+                    wsOandaExRate.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex, startRowIndex + count - 1, startColumnIndex).Merged = true;
+                    wsOandaExRate.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex, startRowIndex + count - 1, startColumnIndex).Style = style;
+                    wsOandaExRate.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex, startRowIndex + count - 1, startColumnIndex).Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+                    wsOandaExRate.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex, startRowIndex + count - 1, startColumnIndex).Value = row.ExchangeDate;
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        startColumnIndex++;
+                        wsOandaExRate.Cells[startRowIndex, startColumnIndex].Style = style;
+                        wsOandaExRate.Cells[startRowIndex, startColumnIndex].Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+                        wsOandaExRate.Cells[startRowIndex, startColumnIndex].Value = row.ExchangeDailyList[i].CurrencyCode;
+
+                        var baseCurr = row.ExchangeDailyList[i].BaseCurrencies;
+                        for (int j = 0; j < baseCurr.Count; j++)
+                        {
+                            startColumnIndex++;
+                            wsOandaExRate.Cells[startRowIndex, startColumnIndex].Style = style;
+                            wsOandaExRate.Cells[startRowIndex, startColumnIndex].Value = CastAide.AsDecimal(baseCurr[j].Value);
+
+                        }
+
+                        startColumnIndex = 0;
+                        if (i < count - 1)
+                            startRowIndex++;
+
+                    }
+
+                }
+            }
+            else
+            {
+                startRowIndex += 1;
+                startColumnIndex = 0;
+                var groupCell = wsOandaExRate.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex, startRowIndex,
+                                                startColumnIndex + 3);
+                bgFormat = new Sunplus.Accounting.Core.Helper.ExcelGemboxUtils().GetStyleIntNumber("", Color.FromArgb(255, 255, 255), false, true);
+                groupCell.Merged = true;
+                groupCell.Style = bgFormat;
+                groupCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+                groupCell.Value = "There is no information available.";
+            }
+
+            #endregion
+
+            #region response
+            var response = HttpContext.Current.Response;
+            response.Clear();
+            response.ContentType = "application/vnd.ms-excel";
+            response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
+            excelFile.SaveXls(response.OutputStream);
+            #endregion
+            return excelFile;
+
+        }
+
+      
+    }
+}

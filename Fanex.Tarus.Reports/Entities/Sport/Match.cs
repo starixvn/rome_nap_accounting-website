@@ -1,0 +1,34 @@
+﻿
+using System;
+
+namespace Fanex.Tarus.Reports.Entities.Sport
+{
+    [Serializable]
+    public class Match : BaseModel
+    {
+        /// <summary>
+        /// Matchcode
+        /// </summary>
+        public override string Name
+        {
+            get
+            {
+                return base.Name;
+            }
+            set
+            {
+                base.Name = value;
+            }
+        }
+
+        public BaseModel HomeTeam { get; set; }
+        public BaseModel AwayTeam { get; set; }
+
+        public string ShowTime { get; set; }
+
+        public int SportTypeId { get; set; }
+        public string SportTypeName { get; set; }
+
+        public bool IsNeutral { get; set; }
+    }
+}

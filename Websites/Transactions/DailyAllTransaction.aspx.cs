@@ -1,0 +1,59 @@
+﻿using System;
+
+using Sunplus.Accounting.Business;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.Core.Web.Controls;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using Sunplus.Core.LoggingLib;
+using Sunplus.Accounting.Business.BootStrappers;
+using Sunplus.Accounting.Business.Transaction;
+using DNAide.Core;
+
+public partial class DailyAllTransaction : PageBase
+{       
+    private System.Globalization.CultureInfo cult = System.Globalization.CultureInfo.CurrentCulture;
+    public string sTitle = string.Empty;
+    public string strCalendar = string.Empty;
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+
+        string _s = string.Empty;
+        try
+        {
+            sTitle = Resources.Language.dailyTransaction;
+            DateTime fromDate = DateTime.Now;
+            fromDate = IBCUtils.FormatHandler.ResetStartDate(fromDate);
+
+            strCalendar = Calendar.GenCalendarControl(
+                "01012008",
+                fromDate.ToString("yyyyMMdd"),
+                "txndate",
+                "../",
+                "btndate",
+                string.Format(cult, "{0:MM/dd/yyyy}", fromDate.AddDays(-1)),
+                false,
+                false,
+                string.Empty,
+                string.Empty,
+                string.Empty);
+            if (Request["IsExport"] == "1")
+            {
+                var DailyAllTxn = CommonBootStrapper.Locator.GetInstance<DailyTransManager>();
+                DailyAllTxn.ExportToExcelforDailyAllTxn(CastAide.AsString(Request["transDate"]), CastAide.AsString(Request["type"]), CastAide.AsString(Request["creator"]), CastAide.AsInt32(Request["totalRows"]));
+            }
+
+        }
+        catch (AccException ex)
+        {
+            _s = AlertMessage.GetMsg(ex.Message.ToString(), AlertMessage.MsgType.Error);
+            Logs.Write(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+        }
+    }
+
+}

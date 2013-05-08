@@ -1,0 +1,95 @@
+﻿<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/Message.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/Pager/pagination.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
+    <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css" />
+    <link rel="stylesheet" type="text/css" href="~/Views/BetList/BetlistByCustInfo/Style/BetListByCustInfo.css" />
+</head>
+<body>
+    <div class="main">
+        <div class="maincontent">
+            <div id="boxheader">
+                <div class="left_tab">
+                    <ul>
+                        <li class="current" id="Li1" onclick="BetListByCustInfo.viewBetListTab();"><a href="javascript:;">
+                            <span>Bet list</span></a></li>
+                        <li class="" id="Li2" onclick="BetListByCustInfo.viewSystemParlayTab();"><a href="javascript:;">
+                            <span>System parlay</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div id="maincontent_betlist" class="maincontent_box" style="width: 100%;">
+                <div>
+                    <input onclick="BetListByCustInfo.disabledFilter();" type="radio" id="rdByRef" value="-1"
+                        name="type" />
+                    <span style="font-weight: bold">By Ref No:</span>
+                    <input id="txtRefNo" type="text" style="background-color: #fff; width: 100px;" autocomplete="off"
+                        onkeypress="return KeyPress(event);" /></div>
+                <div>
+                    <span style="font-weight: bold">
+                        <input onclick="BetListByCustInfo.disabledFilter();" type="radio" id="rdByUser" value="-2"
+                            name="type" checked="checked" />
+                        Advance (Event Date):</span> <span style="font-weight: bold">From </span><span style="padding-left: 5px">
+                            <input id="txtfromdate" class="txtdate" readonly="readonly" /></span> <span class="b"
+                                style="padding-left: 5px">To</span> <span style="padding-left: 5px">
+                                    <input id="txttodate" class="txtdate" readonly="readonly" /></span>
+                    <span id="divBettype" class="hidden" style="padding-left: 5px"><span>Bettypes </span>
+                        <select id="ddlBettype" name="FilterBy">
+                        </select></span>
+                </div>
+                <div>
+                    <input class="btn" type="button" id="btnReport" value="Submit" onclick="BetListByCustInfo.getBetListByCustInfo();" />
+                    <input class="btn" type="button" id="btnToday" value="Reset" onclick="Helper.reset_date();" />
+                </div>
+                <div id="err">
+                </div>
+            </div>
+            <div class="maincontent_box hidden" id="maincontent_systemparlay">
+                <table>
+                    <tr>
+                        <td style="font-weight: bold;">
+                            By Ref No
+                        </td>
+                        <td>
+                            <input type="text" id="txtRefNoSystemParaly" value="" />
+                        </td>
+                        <td>
+                            <input type="button" id="btnSubmit" value="Submit" class="btn" onclick="BetListByCustInfo.getBetListSystemParlay();" />
+                        </td>
+                    </tr>
+                </table>
+                <div id="errMsg2">
+                </div>
+            </div>
+            <div id="betListContent" style="margin-top: 10px;">
+            </div>
+            <div id="betListSystemParlayContent" class="hidden" style="margin-top: 10px;">
+            </div>
+            <div id="Popup" style="display: none;">
+            </div>
+        </div>
+        <script type="text/javascript">
+    window.rootUrl = '@Url.Content("~")';
+  var _today = '@DateTime.Today.ToShortDateString()';
+  var _custID = '@ViewBag.CustID';
+  var _fromDate = '@ViewBag.FromDate';
+  var _toDate = '@ViewBag.ToDate';
+    head.js("@Url.Content("~/js/jQuery/jquery.js")",
+            "@Url.Content("~/js/json2.js")", 
+            "@Url.Content("~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js?ver=1")",
+            "@Url.Content("~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js")",
+            "@Url.Content("~/js/IBCWnd/IBCWnd.js")", 
+            "@Url.Content("~/js/dialogbox.js")",
+            "@Url.Content("~/js/jQuery/Pager/jpager.js")",
+            "@Url.Content("~/js/jQuery/jquery.blockUI.1.33.js")",
+            "@Url.Content("~/js/BlockUI.js")", 
+            "@Url.Content("~/js/common.js")", 
+            "@Url.Content("~/js/BetList.js")",
+            "@Url.Content("~/Views/BetList/BetlistByCustInfo/Scripts/BetlistByCustInfo.js?ver=34")",
+             "@Url.Content("~/Views/BetList/Scripts/BetlistGlobal.js?ver=34")");
+        </script>
+</body>
+</html>

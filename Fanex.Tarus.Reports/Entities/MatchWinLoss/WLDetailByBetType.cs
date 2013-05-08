@@ -1,0 +1,25 @@
+﻿
+
+using Fanex.Tarus.Reports.Entities.Sport;
+namespace Fanex.Tarus.Reports.Entities.MatchWinLoss
+{
+    public class WLDetailByBetType : BaseModel
+    {
+        public decimal Commission { get; set; }
+        public decimal VirtualComm { get; set; }
+        public decimal LineTotal { get; set; }
+        public decimal VirtualLineTotal { get; set; }
+        public decimal Variance { get; set; }
+
+        public decimal WinLost { get; set; }
+        public decimal Position { get; set; }
+        public decimal Turnover { get; set; }
+
+        public int HomeTeamId { get; set; }
+        public int AwayTeamId { get; set; }
+
+        public int BetType { get; set; }
+        public string SportName { get; set; }
+        public int LiveIndicator { get; set; }
+    }
+}

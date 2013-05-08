@@ -1,0 +1,27 @@
+﻿using System;
+using Sunplus.Accounting.Business.BootStrappers;
+using Sunplus.Accounting.Business.ExChangeRate;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.WcfServiceLibrary;
+using System.Web.UI.WebControls;
+
+public partial class ExRate_AddNewExRate : PageBase
+{
+   
+    protected override bool HasPermission()
+    {
+        return Functions.ExchangeRate.IsAllowExchangeRate && base.HasPermission();
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        IExchangeRateService exchangeRate = CommonBootStrapper.Locator.GetInstance<IExchangeRateService>();
+        lblExrate.Text = exchangeRate.GenNewRate();
+        IHelperService helperService = new HelperService();
+        string[] arrStandardCurrency = helperService.GetStandardCurrencyList();
+        foreach(string sc in arrStandardCurrency)
+        {
+            selectStandardCurrency.Items.Add(new ListItem(sc, sc));
+        }
+    }
+}

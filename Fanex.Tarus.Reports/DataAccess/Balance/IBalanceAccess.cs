@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Fanex.Tarus.Reports.DataAccess.Balance
+{
+    using System.Data;
+
+    public interface IBalanceAccess
+    {
+        DataTable GetSuperBalanceData(string db, bool isYesterday, string usernameSearch, string firstletter, string currency);
+    }
+}

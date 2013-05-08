@@ -1,0 +1,26 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="ISMAManagement.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Admin.Business.SMAManagement
+{
+    using Fanex.Tarus.Admin.Entities.SMAManagement;
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public interface ISMAManagementService
+    {
+        FilterInfo SelFilterInfo();
+        SMAGroups SelSMAListByGroupHeadline(string siteId, int currency, bool isOpen, bool isSusupended,
+            bool isClosed, bool isDisabled, int roleId, 
+            string username, string groupHeadline, int pageIndex, int pageSize);
+        SMAGroups SelSMAListByGroupHeadlineFromCache(string siteId, int currency, bool isOpen, bool isSusupended,
+            bool isClosed, bool isDisabled, int roleId,
+            string username, string groupHeadline, int pageIndex, int pageSize);
+        void ExportSMAListToExcelFile(string siteId, int currency, bool isOpen, bool isSusupended,
+            bool isClosed, bool isDisabled, int roleId,
+            string username, string groupHeadline);
+    }
+}

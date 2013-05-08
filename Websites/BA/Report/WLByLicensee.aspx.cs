@@ -1,0 +1,57 @@
+﻿using System;
+using DNAide.Core;
+using Sunplus.Accounting.Business.BetAggregator;
+using Sunplus.Accounting.Business.BootStrappers;
+
+public partial class BA_Report_WLLicensee : PageBase 
+{
+    public string strfdate = string.Empty, strtdate = string.Empty, strSite = string.Empty;
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (Request["IsExport"] != null && Request["IsExport"] == "1")
+        {
+            var deposit = CommonBootStrapper.Locator.GetInstance<IReportWLBABySiteService>();
+            var reportTitle = Request["reportTitle"];
+            var licensseId = CastAide.AsInt32(Request["licenseeId"]);
+            var currency = CastAide.AsInt32(Request["currency"]);
+            var fromDate = Request["fromDate"];
+            var toDate = Request["toDate"];
+            var showSb = CastAide.AsInt32(Request["showSb"]);
+            var showRb = CastAide.AsInt32(Request["showRb"]);
+            var showNg = CastAide.AsInt32(Request["showNg"]);
+            var reportType = CastAide.AsInt32(Request["reportType"]);
+            var drawFilter = CastAide.AsInt32(Request["drawFilter"]);
+            var excludeTest = CastAide.AsInt32(Request["excludeTest"]);
+            var pageIndex = CastAide.AsInt32(Request["pageIndex"]);
+            var pageSize = CastAide.AsInt32(Request["pageSize"]);
+            var reportSelected = CastAide.AsInt32(Request["reportSelected"]);
+            var custId = CastAide.AsInt32(Request["custid"]);
+            var baseCurrency = CastAide.AsInt32(Request["baseCurrency"]);
+
+            //var fromCache = CastAide.AsInt32(Request["fromCache"]);
+            deposit.Export2ExcelReportByLicensee(reportTitle, licensseId, currency, baseCurrency, fromDate, toDate, showSb, showRb, showNg,
+                                             reportType, drawFilter,excludeTest, pageIndex, pageSize, reportSelected, custId);
+           
+        }
+        else
+        {
+            DateTime fdate = DateTime.Today;
+            DateTime tdate = DateTime.Today;
+
+            //int displaydays = 0;
+            //TimeSpan sp = tdate - fdate;
+            //displaydays = sp.Days;
+
+            strfdate = Sunplus.Accounting.Core.Web.Controls.Calendar.GenCalendarControl("fdate", "../../",
+                                                                                        "fdateTrigger",
+                                                                                        fdate.ToShortDateString(), false,
+                                                                                        false, 0, 0, "");
+            strtdate = Sunplus.Accounting.Core.Web.Controls.Calendar.GenCalendarControl("tdate", "../../",
+                                                                                        "tdateTrigger",
+                                                                                        tdate.ToShortDateString(), true,
+                                                                                        false, 0, 0, "");
+        }
+
+    }
+
+}

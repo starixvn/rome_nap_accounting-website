@@ -1,0 +1,11 @@
+﻿
+namespace Fanex.Tarus.Customer.DataAccess.CustomerList
+{
+    using System;
+    using System.Collections;
+    using System.Data;
+    public interface ICustomerListAccess
+    {
+        DataSet GetCustomerList(string spName, Hashtable hash, ref int totalPages, ref int totalChildren);
+    }
+}

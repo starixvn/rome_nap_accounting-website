@@ -1,0 +1,352 @@
+﻿@using Fanex.Tarus.Reports.Controllers.MixParlay;
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/common.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/table.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Report/reportgrid.css" />
+    <link href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" rel="stylesheet"
+        type="text/css" />
+    <link href="~/js/jQuery/monthPicker/monPickr-0.0.1.css" rel="stylesheet" type="text/css" />
+    <link href="~/Views/Report/MixParlay/Styles/DailyParlayWinLoss.css" rel="stylesheet"
+        type="text/css" />
+    <script src="~/js/json2.js" type="text/javascript"></script>
+    <script src="~/js/jQuery/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="~/js/jQuery/jquery.blockUI.1.33.js" type="text/javascript"></script>
+    <script src="~/js/jQuery/jquery-ui-1.8.20.custom.min.js" type="text/javascript"></script>
+    <script src="~/js/jQuery/gridscroller.js" type="text/javascript"></script>
+    <script src="~/js/jQuery/monthPicker/monPickr-0.0.1.js?ver=1" type="text/javascript"></script>
+    <script src="~/js/Datetime.js" type="text/javascript"></script>
+    <script src="~/Views/Report/MixParlay/Scripts/DailyParlayWinLoss.js?ver=1" type="text/javascript"></script>
+</head>
+<body>
+    <div class="main">
+        <div class="maincontent">
+            <table cellspacing="0px" cellpadding="0px" border="0" class="maincontent_header">
+                <tbody>
+                    <tr>
+                        <td class="maincontent_headerL">
+                        </td>
+                        <td class="maincontent_headerC">
+                            Daily Mix Parlay Win Loss
+                        </td>
+                        <td class="maincontent_headerR">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="maincontent_box">
+                <div class="boxmenu">
+                    <span class="on menu" value="Combination" id="spParlayCombinationWL" onclick="helper.changelink(this)">
+                        Parlay Combination Win Loss</span> <span>|</span> <span class="off menu" value="Product"
+                            id="spParalyWinLossByProduct" onclick="helper.changelink(this)">Parlay Win Loss
+                            by Product</span>
+                </div>
+                <table id="tblDate1">
+                    <tbody>
+                        <tr>
+                            <td>
+                                From
+                            </td>
+                            <td>
+                                <input id="txtfromdate" class="txtdate" readonly="readonly" style="width: 80px;" />
+                            </td>
+                            <td style="padding-left: 15px">
+                                To
+                            </td>
+                            <td>
+                                <input id="txttodate" class="txtdate" readonly="readonly" style="width: 80px;" />
+                            </td>
+                            <td>
+                                <input type="button" id="btnReport" name="btnReport" value="REPORT" class="btn" onclick="helper.callReport(null, false);" />
+                            </td>
+                            <td>
+                                <input type="button" id="btnReport_today" name="btnReport" value="" class="btn" onclick="helper.callReport(this, false);" />
+                            </td>
+                            <td>
+                                <input type="button" id="btnReport_yesterday" name="btnReport" value="" class="btn"
+                                    onclick="helper.callReport(this, false);" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="7">
+                                <div style="font-family: Tahoma,Arial,helvetica,sans-serif; font-size: 11px;">
+                                    <span id="txtTitle"></span><a onclick='javascript:SwitchCalendarType(1);' href='#'
+                                        style="font-weight: bold; color: #007FE1">View History Report</a></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table id="tblDate2" style="display: none">
+                    <tr>
+                        <td>
+                            View data in month
+                        </td>
+                        <td>
+                            <div id="spMonth">
+                            </div>
+                        </td>
+                        <td>
+                            From
+                        </td>
+                        <td>
+                            <div id="spFrom">
+                            </div>
+                        </td>
+                        <td>
+                            To
+                        </td>
+                        <td>
+                            <div id="spTo">
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <input type="button" class="btn" value="REPORT" onclick="helper.callReport(null, true);" /></div>
+                        </td>
+                        <td>
+                            <span><a href="#" onclick='javascript:SwitchCalendarType(2);' style="font-weight: bold">
+                                Back To Current Report</a></span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="mainreport" class="freegrid" style="margin-top: 1px; margin-left: 1px">
+            <div id="DailyParlayWL" class="content-warper hide" style="margin-top: 1px;">
+                <div id="dvheaderDailyParlayWL">
+                    <div class="content-toolbox bgtitle">
+                        <div class="gridtitle" id="gridtitleDailyParlayWL">
+                            Parlay Combination Win Loss - <span id="spDateTitleDailyParlayWL"></span>
+                        </div>
+                        <div class="btngroup">
+                            <input type="button" title="Export to Excel" class="btnExcel" id="btnExport1" value="  "
+                                onclick="dailyParlayWinLoss.exportExcel()" /></div>
+                    </div>
+                </div>
+                <div class="content-header clearfix">
+                    <div class="header-scroll">
+                        <table class="tbl-header-scroll">
+                            <tr>
+                                <td colspan="3" class="c">
+                                    <div>
+                                        &nbsp</div>
+                                </td>
+                                <td colspan="3" class="c">
+                                    <div>
+                                        Member</div>
+                                </td>
+                                <td colspan="2" class="c">
+                                    <div>
+                                        Agency</div>
+                                </td>
+                                <td colspan="3" class="c">
+                                    <div>
+                                        Company</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border-bottom: none 0px;">
+                                    <div class="col140 c">
+                                        Combination</div>
+                                </td>
+                                <td style="border-bottom: none 0px;">
+                                    <div class="col140 c">
+                                        Type</div>
+                                </td>
+                                <td style="border-bottom: none 0px;">
+                                    <div class="col100 c">
+                                        Bettype</div>
+                                </td>
+                                <td style="border-bottom: none 0px;">
+                                    <div class="col100 c">
+                                        WinLoss</div>
+                                </td>
+                                <td style="border-bottom: none 0px;">
+                                    <div class="col100 c">
+                                        Turnover</div>
+                                </td>
+                                <td style="border-bottom: none 0px;">
+                                    <div class="col100 c">
+                                        Bet Count</div>
+                                </td>
+                                <td style="border-bottom: none 0px;">
+                                    <div class="col100 c">
+                                        Position</div>
+                                </td>
+                                <td style="border-bottom: none 0px;">
+                                    <div class="col100 c">
+                                        Comm</div>
+                                </td>
+                                <td style="border-bottom: none 0px;">
+                                    <div class="col100 c">
+                                        Line Total</div>
+                                </td>
+                                <td style="border-bottom: none 0px;">
+                                    <div class="col100 c">
+                                        Turnover</div>
+                                </td>
+                                <td style="border-bottom: none 0px;">
+                                    <div class="col100 c">
+                                        Margin</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="content-body clearfix">
+                    <div class="body-scroll">
+                        <table class="tbl-body-scroll" id="tblDailyParlayWL">
+                            <tbody id="bodyDailyParlayWL">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="content-footer">
+                    <div class="footer-scroll">
+                        <table class="tbl-footer-scroll" id="footerDailyParlayWL">
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="AdvanceParlayWL" class="content-warper hide" style="margin-top: 1px;">
+                <div id="dvheaderAdvanceParlayWL">
+                    <div class="content-toolbox bgtitle">
+                        <div class="gridtitle" id="gridtitleAdvanceParlayWL">
+                            Parlay Win Loss by Product - <span id="spDateTitleAdvanceParlayWL"></span>
+                        </div>
+                        <div class="btngroup">
+                            <input type="button" title="Export to Excel" class="btnExcel" id="btnExport2" value="  "
+                                onclick="advanceParlayWL.exportExcel()" /></div>
+                    </div>
+                </div>
+                <div class="content-header clearfix">
+                    <div class="header-scroll">
+                        <table class="tbl-header-scroll">
+                            <tr>
+                                <td style="border-bottom: none 0px;">
+                                    <div class="col140 c">
+                                    </div>
+                                </td>
+                                <td style="border-bottom: none 0px;">
+                                    <div class="col140 c">
+                                        Sporttype</div>
+                                </td>
+                                <td style="border-bottom: none 0px;">
+                                    <div class="col100 c">
+                                        Bettype</div>
+                                </td>
+                                <td style="border-bottom: none 0px;">
+                                    <div class="col100 c">
+                                        WinLoss</div>
+                                </td>
+                                <td style="border-bottom: none 0px;">
+                                    <div class="col100 c">
+                                        Position</div>
+                                </td>
+                                <td style="border-bottom: none 0px;">
+                                    <div class="col100 c">
+                                        Comm</div>
+                                </td>
+                                <td style="border-bottom: none 0px;">
+                                    <div class="col100 c">
+                                        Line Total</div>
+                                </td>
+                                <td style="border-bottom: none 0px;">
+                                    <div class="col100 c">
+                                        Turnover</div>
+                                </td>
+                                <td style="border-bottom: none 0px;">
+                                    <div class="col100 c">
+                                        Margin</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="content-body clearfix">
+                    <div class="body-scroll">
+                        <table class="tbl-body-scroll" id="tblAdvanceParlayWL">
+                            <tbody id="bodyAdvanceParlayWL">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="content-footer">
+                    <div class="footer-scroll">
+                        <table class="tbl-footer-scroll" id="footerAdvanceParlayWL">
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <iframe id="frm" width="0" height="0" frameborder="0" style="display: none"></iframe>
+    <input type="hidden" id="txtCurrentReport" value="Combination" />
+    <div id="dvtest">
+    </div>
+</body>
+</html>
+@{
+    DateTime fromDate = DateTime.Today;
+    DateTime toDate = DateTime.Today;
+    int betTypeId = 0;
+    string betType = string.Empty;
+    bool isRedirect = false;
+    if (Request["IsExport"] != null && Request["IsExport"] == "1")
+    {
+        fromDate = DNAide.Core.CastAide.AsDateTime(Request["fromDate"]);
+        toDate = DNAide.Core.CastAide.AsDateTime(Request["toDate"]);
+        bool isViewDW = DNAide.Core.CastAide.AsBoolean(Request["isViewDW"]);
+        string reportType = Request["reportType"].ToString();
+
+        switch (reportType)
+        {
+            case "dailyParlayWinLoss":
+                new Fanex.Tarus.Reports.Controllers.MixParlay.MixParlayController().ExportExcelDailyParlayWinLoss(fromDate, toDate, isViewDW);
+                break;
+            case "advanceParlayWinLoss":
+                new Fanex.Tarus.Reports.Controllers.MixParlay.MixParlayController().ExportExcelAdvanceParlayWinLoss(fromDate, toDate, isViewDW);
+                break;
+        }
+
+    }
+    else
+    {
+        if (Request["IsRedirect"] != null)
+        {
+            isRedirect = DNAide.Core.CastAide.AsBoolean(Request["IsRedirect"]);
+        }
+        if (Request["reportDate"] != null)
+        {
+            fromDate = DNAide.Core.CastAide.AsDateTime(Request["reportDate"]);
+            toDate = DNAide.Core.CastAide.AsDateTime(Request["reportDate"]);
+        }
+        if (Request["BetTypeId"] != null)
+        {
+            betTypeId = DNAide.Core.CastAide.AsInt32(Request["BetTypeId"]);
+        }
+        if (Request["BetType"] != null)
+        {
+            betType = DNAide.Core.CastAide.AsString(Request["BetType"]);
+        }
+        if (!isRedirect)
+        {
+            fromDate = DateTime.Today;
+            toDate = DateTime.Today;
+        }
+    }
+        //var fromdate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).ToShortDateString();
+}
+<script type="text/javascript">
+    var movebetday = '@DNAide.Core.CastAide.AsDateTime(Fanex.Tarus.Reports.DataAccess.BaseDataAccess.BalanceUp.MoveBetDay).AddDays(1).ToShortDateString()';
+    var fromdate = '@fromDate.ToShortDateString()';
+    var today = '@toDate.ToShortDateString()';
+    var currentDay = '@DateTime.Today.ToShortDateString()';
+    var yesterday = '@DateTime.Today.AddDays(-1).ToShortDateString()';
+    var beforeyesterday = '@DateTime.Today.AddDays(-2).ToShortDateString()';
+    var isredirect = '@isRedirect';
+    var bettype = '@betType';
+    var bettypeId = '@betTypeId';
+</script>

@@ -1,0 +1,21 @@
+﻿
+namespace Fanex.Tarus.Reports.DataAccess.Licensee.RNGCasinoWinLoss
+{
+    using System.Data;
+    using Fanex.Data;
+
+    public class RNGCasinoWinLossDataAccess: IRNGCasinoWinLossDataAccess
+    {
+        public DataTable GetResellerProductCharge()
+        {
+            var dtResellers = new DataTable();            
+            using (ObjectDb objDB = new ObjectDb("OA_Get_ResellerProductCharge"))
+            {                 
+                DataSet ds = objDB.ExecuteDataSet();
+                if (ds != null)
+                    dtResellers = ds.Tables[0];
+            }
+            return dtResellers;
+        }
+    }
+}

@@ -1,0 +1,10 @@
+﻿namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
+{
+    using System.Collections.Generic;
+    using Fanex.Tarus.VirtualSport.Entities;
+
+    public interface ISpecialDeleteService
+    {      
+        List<Result> CheckRefNo(string matchid, string fromRefno, string toRefno);
+    }
+}

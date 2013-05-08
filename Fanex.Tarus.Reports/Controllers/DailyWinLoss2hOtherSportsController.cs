@@ -1,0 +1,173 @@
+﻿
+using System.Web.Mvc;
+using Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports;
+using Fanex.Tarus.Reports.Entities.DailyWinLoss2h;
+using Fanex.Tarus.Web.Controllers;
+using Fanex.Tarus.Web.Controllers.Filters;
+
+namespace Fanex.Tarus.Reports.Controllers
+{
+    public class DailyWinLoss2hOtherSportsController : BaseController
+    {
+        #region IFields
+
+        //
+        // GET: /WinLoss2hService/
+        private readonly IDailyWinLoss2hOtherSportsService _dailyWinLoss2hOtherSportsService;
+
+        #endregion IFields
+        #region IConstructions
+
+        public DailyWinLoss2hOtherSportsController()
+            : this(null)
+        {
+        }
+
+        public DailyWinLoss2hOtherSportsController(IDailyWinLoss2hOtherSportsService dailyWinLoss2hOtherSportsService)
+        {
+            _dailyWinLoss2hOtherSportsService = dailyWinLoss2hOtherSportsService ?? new DailyWinLoss2hOtherSportsService();
+        }
+
+        #endregion IConstructions
+        #region IMethods
+
+        [AuthenticateRead]
+        public ActionResult DailyWinLoss2hOtherSports()
+        {
+            return View("~/Views/Report/DailyWinLoss2hOtherSports/DailyWinLoss2hOtherSports.cshtml");
+        }
+
+        #region PostMethod
+
+        [HttpPost]
+        public JsonResult DailyWLDirect_Sporttype(DailyWinLoss2hParam param)
+        {
+            var result = _dailyWinLoss2hOtherSportsService.DailyWLDirect_Sporttype(param);
+
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public ActionResult ExportToExcel(DailyWinLoss2hParam param)
+        {
+            _dailyWinLoss2hOtherSportsService.ExportToExcel(param);
+
+            int exportResult = 1;
+            var jsonResult = Json(exportResult);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public JsonResult SelDailyWLDirectDetails(DailyWinLoss2hParam param)
+        {
+            var result = _dailyWinLoss2hOtherSportsService.SelDailyWLDirectDetails(param);
+
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public ActionResult ExportToExcel_DailyWLDirectDetails(DailyWinLoss2hParam param)
+        {
+            _dailyWinLoss2hOtherSportsService.ExportToExcel_DailyWLDirectDetails(param);
+
+            int exportResult = 1;
+            var jsonResult = Json(exportResult);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public JsonResult SelOtherSportsReport(DailyWinLoss2hParam param)
+        {
+            var result = _dailyWinLoss2hOtherSportsService.SelOtherSportsReport(param);
+
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public JsonResult SelOtherSportsReportBySport(DailyWinLoss2hParam param)
+        {
+            var result = _dailyWinLoss2hOtherSportsService.SelOtherSportsReportBySport(param);
+
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public ActionResult ExportToExcel_OtherSportsMain(DailyWinLoss2hParam param)
+        {
+            _dailyWinLoss2hOtherSportsService.ExportToExcel_OtherSportsMain(param);
+
+            int exportResult = 1;
+            var jsonResult = Json(exportResult);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public ActionResult ExportToExcel_OtherSportsMain_NoneLive(DailyWinLoss2hParam param)
+        {
+            _dailyWinLoss2hOtherSportsService.ExportToExcel_OtherSportsMain_NoneLive(param);
+
+            int exportResult = 1;
+            var jsonResult = Json(exportResult);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public ActionResult ExportToExcel_OtherSportsMain_Live(DailyWinLoss2hParam param)
+        {
+            _dailyWinLoss2hOtherSportsService.ExportToExcel_OtherSportsMain_Live(param);
+
+            int exportResult = 1;
+            var jsonResult = Json(exportResult);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public ActionResult ExportToExcel_OtherSportsBySport(DailyWinLoss2hParam param)
+        {
+            _dailyWinLoss2hOtherSportsService.ExportToExcel_OtherSportsBySport(param);
+
+            int exportResult = 1;
+            var jsonResult = Json(exportResult);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public ActionResult ExportToExcel_OtherSportsBySport_NoneLive(DailyWinLoss2hParam param)
+        {
+            _dailyWinLoss2hOtherSportsService.ExportToExcel_OtherSportsBySport_NoneLive(param);
+
+            int exportResult = 1;
+            var jsonResult = Json(exportResult);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public ActionResult ExportToExcel_OtherSportsBySport_Live(DailyWinLoss2hParam param)
+        {
+            _dailyWinLoss2hOtherSportsService.ExportToExcel_OtherSportsBySport_Live(param);
+
+            int exportResult = 1;
+            var jsonResult = Json(exportResult);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        #endregion PostMethod
+        #endregion IMethods
+    }
+}

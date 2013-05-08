@@ -1,0 +1,20 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="ISMAManagementAccess.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
+{
+    using System.Data;
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public interface ISMAManagementAccess
+    {
+        DataTable SelAllSites();
+        DataTable SelAllCurrencies();
+        DataTable SelSMAListByGoupHeadline(string siteId, int currency, bool isOpen, bool isSusupended,
+            bool isClosed, bool isDisabled, int roleId, string userName, string groupHeadline);
+    }
+}

@@ -1,0 +1,138 @@
+﻿ 
+<link href="~/App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
+<link href="~/js/jQuery/Pager/pagination.css" rel="stylesheet" type="text/css" />
+<link href="~/App_Themes/Report/reportgrid.css" rel="stylesheet" type="text/css" />
+<link href="~/js/jQuery/monthPicker/monPickr-0.0.1.css" rel="stylesheet" type="text/css"/>
+<link href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" rel="stylesheet"
+        type="text/css" />
+<link href="~/js/jQuery/GridScroller/gridscroller.css?version=2" rel="stylesheet"
+        type="text/css" />
+<link href="~/Views/Report/Gaming/PokerWinloss/Style/PokerWL.css" rel="stylesheet"
+        type="text/css" />
+<script src="~/js/jQuery/jquery-1.7.js" type="text/javascript"></script>
+<script src="~/js/jQuery/json2.js" type="text/javascript"></script>
+<script src="~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js" type="text/javascript"></script>
+<script src="~/js/jQuery/jquery.blockUI.1.33.js" type="text/javascript"></script>
+<script src="~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js?version=2" type="text/javascript"></script>
+<script src="~/js/common.js" type="text/javascript"></script>
+<script src="~/js/Datetime.js?ver=1" type="text/javascript"></script>
+<script src="~/js/Utils/jquery.stringformat.js?version=2" type="text/javascript"></script>
+<script src="~/js/jQuery/monthPicker/monPickr-0.0.1.js?ver=1" type="text/javascript"></script>
+<script src="~/Views/Report/Gaming/PokerWinloss/js/PokerWinloss.js?ver=2" type="text/javascript"></script>
+<div class="main">
+    <div class="maincontent">
+        <table cellspacing="0px" cellpadding="0px" border="0" class="maincontent_header">
+            <tbody>
+                <tr>
+                    <td class="maincontent_headerL">
+                    </td>
+                    <td class="maincontent_headerC">
+                        Poker Win/Loss Detail
+                    </td>
+                    <td class="maincontent_headerR">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="maincontent_box" style="width:1053px">
+            <table>
+                <tr>
+                    <td>
+                        <table id="tblDate1">
+                            <tr>
+                                <td>From</td>
+                                <td style="width:120px">
+                                    <input type="text" id="txtfromdate" readonly="readonly" class="txtdate" style="width:100px"/>
+                                </td>
+                                <td>To</td>
+                                <td>
+                                    <input type="text" id="txttodate" readonly="readonly" class="txtdate" style="width:100px"/>
+                                </td>
+                                <td>
+                                    <div><input type="button" id="rptCurReport" onclick="PokerWinloss.GetPokerWinloss(1, false)" class="btn" value="REPORT"/></div>
+                                </td>
+                                <td>
+                                    <div><input type="button" class="btn" value="Yesterday" onclick="PokerWinloss.GetPokerWinloss(2, false)"/></div>
+                                </td>
+                                <td>
+                                    <div><input type="button" class="btn" value="Today" onclick="PokerWinloss.GetPokerWinloss(3, false)"/></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="7">
+                                        <div style="font-family: Tahoma,Arial,helvetica,sans-serif;font-size: 11px;"><span id="txtTitle"></span><a onclick='javascript:SwitchCalendarType(1);' href='#' style="font-weight:bold; color:#007FE1">View History Report</a></div>
+                                </td>
+                            </tr>
+                        </table>
+                        <table id="tblDate2" style="display: none">
+                            <tr>
+                                <td>
+                                    Select month
+                                </td>
+                                <td>
+                                    <div id="spMonth">
+                                    </div>
+                                </td>
+                                <td>
+                                    From
+                                </td>
+                                <td>
+                                    <div id="spFrom">
+                                    </div>
+                                </td>
+                                <td>
+                                    To
+                                </td>
+                                <td>
+                                    <div id="spTo">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <input type="button" class="btn" value="REPORT" onclick="PokerWinloss.GetPokerWinloss(1, true)" /></div>
+                                </td>
+                                <td>
+                                    <span><a href="#" onclick='javascript:SwitchCalendarType(2);' style="font-weight:bold">Back To Current Report</a></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        @Html.Partial("~/Views/Report/Gaming/PokerWinLoss/PokerWinLoss_MainReport.cshtml")
+        @Html.Partial("~/Views/Report/Gaming/PokerWinLoss/PokerWinLoss_CurrencyByDate.cshtml")
+    </div>
+</div>
+<iframe id="frm" width="0" height="0" frameborder="0" style="display: none"></iframe>
+ @{  
+        if (Request["ExportType"] != null)
+        {
+            string exportType = Request["ExportType"];
+            string reportName = string.Empty;
+            switch (exportType)
+            {
+                case "MainReport":
+                    var fromDate = DNAide.Core.CastAide.AsDateTime(Request["FromDate"]);
+                    var toDate = DNAide.Core.CastAide.AsDateTime(Request["ToDate"]);
+                    var isViewWH = DNAide.Core.CastAide.AsBoolean(Request["isViewWH"]);
+                    new Fanex.Tarus.Reports.Controllers.Gaming.PokerWinlossController().PokerWinlossExportExcel(fromDate, toDate, isViewWH);
+                    break;
+                case "CurrencyByDate":
+                    var reportDate = DNAide.Core.CastAide.AsDateTime(Request["ReportDate"]);
+                    var currency = DNAide.Core.CastAide.AsInt32(Request["Currency"]);
+                    var isViewWHDetail = DNAide.Core.CastAide.AsBoolean(Request["isViewWH"]);
+                    new Fanex.Tarus.Reports.Controllers.Gaming.PokerWinlossController().PokerWinlossDetailExportExcel(reportDate, currency, isViewWHDetail);
+                    break;
+            }
+        }
+    }
+<script language="javascript" type="text/javascript">
+    var balanceupDay = '@Fanex.Tarus.Reports.DataAccess.Gaming.PokerWinloss.PokerWinlossAccess.BalanceUpDay()'
+    var currDay = '@DNAide.Core.CastAide.AsDateTime(DateTime.Now.ToShortDateString())';
+    var fromdate_opts = { minDate: balanceupDay, maxDate: currDay };
+    var beforeyesterday = '@DNAide.Core.CastAide.AsDateTime(DateTime.Now.AddDays(-2).ToShortDateString())';
+    var yesterday = '@DNAide.Core.CastAide.AsDateTime(DateTime.Now.AddDays(-1).ToShortDateString())';
+    Helper.renderCalendarFromTo("#txtfromdate, #txttodate", fromdate_opts);
+    
+</script>

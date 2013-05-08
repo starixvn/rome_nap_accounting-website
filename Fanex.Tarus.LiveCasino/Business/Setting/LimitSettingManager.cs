@@ -1,0 +1,112 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="WinLimitSetting.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.LiveCasino.Business.Setting
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using Fanex.Tarus.LiveCasino.Entities.Setting;
+    using Sunplus.Accounting.Core.Configurations;
+    using Fanex.Tarus.LiveCasino.Entities;
+    using Sunplus.Accounting.Core.Extensions;
+    using Fanex.Tarus.LiveCasino.DataAccess.Setting;
+    using System.Data;
+    using DNAide.Core;
+    using DNAide.Utils;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class LimitSettingManager:ILimitSettingManager
+    {
+        ILimitSettingDataAccess _iLimitSettingDataAccess;
+        public LimitSettingManager()
+        {
+            _iLimitSettingDataAccess = new LimitSettingDataAccess();
+        }
+
+        public List<WinLimit> SelWinLimitSetting(decimal selectedValue, decimal uplineSelectedValue)
+        {
+            List<WinLimit> limits = new List<WinLimit>();
+
+            var collection = LiveCasinoSection.Instance.Setting[0].Limits;
+
+            if (collection == null)
+                return limits;
+                        
+            foreach (LimitElement limit in collection)
+            {
+                if (limit.Active)
+                {
+                    if (uplineSelectedValue == 0 || uplineSelectedValue >= limit.Value && limit.Value>0)
+                    {
+                        limits.Add(new WinLimit()
+                        {
+                            Id = limit.Value,
+                            Text = limit.Text,
+                            IsSelected = selectedValue == limit.Value,
+
+                        });                        
+                    }                   
+                }
+            }
+
+            if (limits.Where(s => s.IsSelected == true).Count() == 0)
+            {
+                limits.Insert(0, new WinLimit()
+                {
+                    Id = -1,
+                    IsSelected = true,
+                    Text = "-------"
+                });
+            }
+
+            return limits;
+        }
+
+
+        public Result UpdateWinLimit(int custId, decimal maxWinLiveCasino, bool isAutoResetLiveCasino)
+        {
+            Result result = new Result();
+            try
+            {
+                result = _iLimitSettingDataAccess.UpdateWinLimit(custId, maxWinLiveCasino, isAutoResetLiveCasino);
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
+        }
+
+
+        public CurrentWinLimit SelCurrentWinLimit(int custId)
+        {
+            CurrentWinLimit limit = new CurrentWinLimit();
+            try
+            {
+                DataTable  dt = _iLimitSettingDataAccess.SelCurrentWinLimit(custId);
+                if(dt != null && dt.Rows.Count>0)
+                {
+                    limit.Balance = NumberFormat.DecFormat(dt.Rows[0]["Balance"],2);
+                    limit.MaxWinCredit = NumberFormat.DecFormat(dt.Rows[0]["MaxWinCredit"], 2);
+                    limit.WinPercent = NumberFormat.DecFormat(dt.Rows[0]["LCSWinPercent"],2);
+                    limit.MaxWinLCS = NumberFormat.DecFormat(dt.Rows[0]["MaxWinLiveCasino"], 2);
+                    if (CastAide.AsDecimal(dt.Rows[0]["MaxWinLiveCasino"]) == 0)
+                        limit.WinPercent = "Unlimited";
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return limit;
+        }
+    }
+}

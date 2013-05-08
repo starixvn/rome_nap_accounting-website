@@ -1,0 +1,8 @@
+﻿
+namespace Fanex.Tarus.Reports.Business.Constants
+{
+    public static class Bettype
+    {
+        public const int Outright = 10;
+    }
+}

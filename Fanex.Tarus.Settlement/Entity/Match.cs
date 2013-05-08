@@ -1,0 +1,58 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Runtime.Serialization;
+
+namespace Fanex.Tarus.Settlement.Entity
+{
+    [Serializable]
+    [DataContract]
+    public class Match
+    {
+        [DataMember]
+        public decimal Index { get; set; }
+
+        [DataMember]
+        public int MatchId { get; set; }
+
+        [DataMember]
+        public int LeagueId { get; set; }
+
+        [DataMember]
+        public string MatchCode { get; set; }
+
+        [DataMember]
+        public string EventDate { get; set; }
+
+        [DataMember]
+        public string KickOffTime { get; set; }
+
+        [DataMember]
+        public string ShowTime { get; set; }
+
+        [DataMember]
+        public string FinalHomeScore { get; set; }
+
+        [DataMember]
+        public string FinalAwayScore { get; set; }
+
+        [DataMember]
+        public string BetStatus { get; set; }
+
+        [DataMember]
+        public string EventStatus { get; set; }
+
+        [DataMember]
+        public bool EnableCalculate { get; set; }
+
+        [DataMember]
+        public bool IsSettled { get; set; }
+
+        [DataMember]
+        public string FTStatus { get; set; }
+
+        [DataMember]
+        public int BetType { get; set; }
+    }
+}

@@ -1,0 +1,69 @@
+﻿using System;
+using DNAide.Core;
+using Sunplus.Accounting.Business.Report.LeagueWL;
+using Sunplus.Accounting.Core.Web.Controls;
+using Sunplus.Accounting.DataAccess.Report;
+using Sunplus.Accounting.Business.Report.Common;
+
+public partial class Report_LeagueWL_LeagueWLSporttype_New : PageBase
+{
+    public string strDate = "";
+    public RMReportUtils utilsBARM = null;
+    protected string ToDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today);
+    protected string MinDay = "";
+    protected string FDay = "";
+    protected string MaxDay = "";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        Title = Sunplus.Accounting.Business.Report.Reports.Title;
+        var blDate = ReportUtils.BalanceUp.BalanceUpDay;
+        var displaydays = 0;
+        var sp = DateTime.Today - blDate;
+        displaydays = sp.Days;
+        ToDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today);
+        MinDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today.AddDays(-displaydays));
+        FDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today);
+        MaxDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today.AddDays(7));
+        utilsBARM = new RMReportUtils(RMReportUtils.ReportName.ReportLeagueWL, RMReportUtils.RMType.BARM);
+
+        if (Request["isexport"] != null && CastAide.AsBoolean(Request["isexport"]))
+        {
+            ExportLeagueWinLoss(CastAide.AsInt32(Request["rtype"]));
+        }
+    }
+
+    private void ExportLeagueWinLoss(int type)
+    {
+        var leagueWL = new LeagueWLService();
+        switch (type)
+        {
+            case 1:
+                leagueWL.ExportExcelLeagueWLBySports(Request["wldate"], Request["rtitle"]);
+                break;
+            case 2:
+                leagueWL.ExportExcelLeagueWLByBettypes(Request["wldate"], CastAide.AsInt32(Request["sportId"]), CastAide.AsInt32(Request["leagueId"]), Request["rtitle"]);
+                break;
+            case 3:
+                string title = string.Empty;
+                string[] arr = Request["rtitle"].ToString().Split(new char[] { '-' });
+                for (int i = 0; i < arr.Length - 1; i++)
+                    title += arr[i] + " - ";
+                if (CastAide.AsInt32(Request["bettypeId"]) == 1333)
+                    title += "Set X Games Y & Y+1 Winner";
+                else if (CastAide.AsInt32(Request["bettypeId"]) == 1334)
+                    title += "Set X Games Y & Y+1 Points";
+                else
+                    title += arr[arr.Length - 1];
+                    leagueWL.ExportExcelLeagueWLDetailByBettype(CastAide.AsInt32(Request["sportId"]),
+                                                                CastAide.AsInt32(Request["leagueId"]),
+                                                                CastAide.AsInt32(Request["bettypeId"]),
+                                                                CastAide.AsBoolean(Request["isLive"]),
+                                                                CastAide.AsBoolean(Request["isHedge"]),
+                                                                Request["wldate"],
+                                                                title);
+                break;
+            default:
+                break;
+        }
+    }
+}

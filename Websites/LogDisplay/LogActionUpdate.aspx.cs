@@ -1,0 +1,14 @@
+﻿using System;
+using DNAide.Core;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web;
+
+public partial class LogDisplay_LogActionUpdate : PageBase
+{
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        string actionID = CastAide.AsString(Request["actionid"]);
+        this.lContent.Text = Sunplus.Accounting.Business.LogDisplay.LogAction.GetActionEditForm(actionID);
+    }
+}

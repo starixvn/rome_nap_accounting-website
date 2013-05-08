@@ -1,0 +1,15 @@
+﻿
+using System;
+
+namespace Fanex.Tarus.VirtualSport.Entities.Report.DailyWL2h
+{
+    [Serializable]
+    public class ReportTotal
+    {
+        public ReportDetail NormalTotal { get; set; }
+        public ReportDetail EightRMTotal { get; set; }
+        public ReportDetail BARMTotal { get; set; }
+        public ReportDetail AllTotal { get; set; }
+        public ReportGrandTotal GrandTotal { get; set; }
+    }
+}

@@ -1,0 +1,21 @@
+﻿
+namespace Fanex.Tarus.Finance.DataAccess.Statement
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Data;
+    using Fanex.Tarus.Finance.Entities;
+
+    public interface IFinanceStatementAccess
+    {
+        DataSet GetFinanceStatementAccess(string refNoParam, string custName, string filterBy, string fromdate, string toDay, string balanceUpDay, int IncludeAccBall);
+
+        DataSet GetFinanceStatementDetailAccess(string refNo, string winLossDate, string username);
+
+        Result UpdateVerifyStatusAccess(string refNo, bool isVerify, string CheckerName, int CheckerID);
+
+        Result DeleteTransAccess(string RefNo, int CustID, int UserID);
+    }
+}

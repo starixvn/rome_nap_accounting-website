@@ -1,0 +1,92 @@
+﻿using System;
+using DNAide.Core;
+using Sunplus.Accounting.Business.Security;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web.Controls;
+using Sunplus.Accounting.DataAccess.Report;
+
+public partial class Report_TraderPerformance_TraderperformanceDetail : System.Web.UI.Page
+{
+    protected string IsSoccer = "1";
+    protected int HasTraderSoccerPermission = 0;
+    protected int HasTraderOtherSportsPermission = 0;
+    protected string PermissionFunction = "";
+    protected string ToDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today);
+    protected string MinDay = "";
+    protected string FDay = "";
+    protected string TDay = "";
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        HasTraderSoccerPermission =
+                 Permissions.HasPermission(Enumerations.Functions.Reports.ReportTraderSoccer) ? 1 : 0;
+        HasTraderOtherSportsPermission =
+            Permissions.HasPermission(Enumerations.Functions.Reports.ReportTraderOtherSports) ? 1 : 0;
+
+        var fromDate = Request["fdate"];
+        var toDate = Request["tdate"];
+        var isSoccer = CastAide.AsInt32(Request["issoccer"]);
+
+        if (Permissions.HasPermission(Enumerations.Functions.Reports.ReportTrader) == false ||
+            (isSoccer == 1 && HasTraderSoccerPermission == 0) ||
+            (isSoccer == 0 && HasTraderOtherSportsPermission == 0))
+        {
+            if (Session["AccId"] != null)
+            {
+                Response.Redirect("~/AccessDenied.aspx");
+            }
+            else
+            {
+                Response.Redirect(Constants.Page.SignIn); ;
+            }
+        }
+        else
+        {
+            this.ReportTitle.Text = Resources.Language.TraderPerformanceDetail;
+            if (Request["type"] == null)
+            {
+                IsSoccer = Request["IsSoccer"];
+                var spanDay = DateTime.Today - ReportUtils.BalanceUp.MoveBetsDay; var totalDay = spanDay.Days - 1;
+                ToDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today);
+                MinDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today.AddDays(-totalDay));
+                if (Request["fdate"] != null)
+                {
+                    FDay = string.Format("{0:MM/dd/yyyy}", CastAide.AsDateTime(Request["fdate"]));
+                }
+                else
+                {
+                    FDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today);
+                }
+
+                if (Request["tdate"] != null)
+                {
+                    TDay = string.Format("{0:MM/dd/yyyy}", CastAide.AsDateTime(Request["tdate"]));
+                }
+                else
+                {
+                    TDay = ToDay;
+                }
+
+                if (!Page.IsPostBack)
+                {
+                    if (HasTraderSoccerPermission == 1 && HasTraderOtherSportsPermission == 1)
+                    {
+                        PermissionFunction = "<div id='soccer' style='display: inline-block;'>SOCCER</div><div id='permissionSeperator' class='b' style='display: inline-block;'>|</div><div id='other' class='lnk' style='display: inline-block;'>OTHER SPORTS</div>";
+                    }
+                    else if (HasTraderSoccerPermission == 1)
+                    {
+                        PermissionFunction = "<div id='soccer' style='display: inline-block;'>SOCCER</div>";
+                    }
+                    else if (HasTraderOtherSportsPermission == 1)
+                    {
+                        PermissionFunction = "<div id='other' class='lnk' style='display: inline-block;'>OTHER SPORTS</div>";
+                    }
+                }
+
+                return;
+            }
+
+            new Sunplus.Accounting.WcfServiceLibrary.Report.TraderPerformanceService().TraderPerformanceDetailExport2Excel(fromDate, toDate, CastAide.AsInt32(isSoccer));
+        }
+    }
+}

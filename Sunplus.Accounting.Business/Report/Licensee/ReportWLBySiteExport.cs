@@ -1,0 +1,1949 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Web;
+using DNAide.Core;
+using ExcelUtil.Spreadsheet;
+using Fanex.Tarus.Infrastructure.Helper;
+using Sunplus.Accounting.Business.Criteria;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.DataAccess.Report;
+using Sunplus.Accounting.Entities.Report.Licensee;
+
+namespace Sunplus.Accounting.Business.Report.Deposit
+{
+    public partial class ReportWLBySiteService
+    {
+        private enum ReportDrilldownLevel
+        {
+            Currency = 1,
+            Super = 2,
+            Master = 3,
+            Agent = 4,
+            Member = 5
+        }
+
+        private enum ReportRowType
+        {
+            NormalRow = 1,
+            Total = 2,
+            GrandTotal = 3
+        }
+
+        #region Export 2 excel
+        #region licensee report
+        public void Export2ExcelReportByLicensee(string reportTitle, int licenseeId, int currency, int BaseCurrency, string fromDate, string toDate, int showSb, int showRb, int showNg, int reportType, int drawFilter, int excludeTest, int BAFilter, int pageIndex, int pageSize, int reportSelected, int custId)
+        {
+            #region excel format
+            const int startCol = 0;
+            const int startRow = 2;
+            var nextRow = 1;
+
+            var reportName = reportTitle.Replace(" ", "");
+            var excelFile = new ExcelFile();
+            var wsReport = excelFile.Worksheets.Add(string.Format("{0}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDepositReport")));
+
+            #endregion
+
+            #region header
+            wsReport.Cells[startRow - 2, startCol].Style.Font.Weight = ExcelFont.BoldWeight;
+            wsReport.Cells[startRow - 2, startCol].Value = reportTitle;
+            Export2ExcelReportByLicenseeAssignHeader(ref wsReport, startRow, startCol, reportType, reportSelected);
+            #endregion
+
+            #region content
+            var MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay.ToShortDateString();
+            var getReportData = new LicenseeDTO();
+
+            switch (reportSelected)
+            {
+                case 0:
+                    getReportData = (LicenseeDTO)AppSession.GetSession(System.Web.HttpContext.Current.Session,
+                                                           _keySelReportByLicensee);
+                    getReportData = getReportData ??
+                                    SelReportByLicenseeFromDB(licenseeId, currency, BaseCurrency, fromDate, toDate, showSb, showRb, showNg,
+                                                              reportType, MoveBetsDay,
+                                                              drawFilter, excludeTest, BAFilter);
+
+
+                    break;
+                case 1:
+                    getReportData = (LicenseeDTO)AppSession.GetSession(System.Web.HttpContext.Current.Session,
+                                                           _keySelReportByLicenseeDetail_Ag);
+                    getReportData = getReportData ??
+                                    SelReportByLicenseeDetail_AgFromDB(licenseeId, currency, BaseCurrency, fromDate, toDate, showSb,
+                                                                       showRb, showNg,
+                                                                       reportType, drawFilter, excludeTest, BAFilter);
+                    break;
+                case 2:
+                    getReportData = (LicenseeDTO)AppSession.GetSession(System.Web.HttpContext.Current.Session,
+                                                           _keySelReportByLicenseeDetail);
+                    getReportData = getReportData ??
+                                    SelReportByLicenseeDetailFromDB(licenseeId, currency, BaseCurrency, custId, fromDate, toDate,
+                                                                    showSb, showRb, showNg,
+                                                                    reportType, MoveBetsDay, drawFilter, excludeTest, BAFilter);
+                    break;
+                default:
+                    break;
+            }
+
+
+            if (getReportData != null && getReportData.Items != null)
+            {
+                Export2ExcelReportByLicenseeAssignContent(ref wsReport, startRow, startCol, ref nextRow, false, false,
+                                                          getReportData.Items, reportSelected);
+                Export2ExcelReportByLicenseeAssignContent(ref wsReport, startRow, startCol, ref nextRow, true, false,
+                                                          getReportData.Totals, reportSelected);
+                Export2ExcelReportByLicenseeAssignContent(ref wsReport, startRow, startCol, ref nextRow, false, true,
+                                                          getReportData.TotalsBaseCurrency, reportSelected);
+
+            }
+
+            #endregion
+
+            #region response file
+            var response = HttpContext.Current.Response;
+            response.Clear();
+            response.ContentType = "application/vnd.ms-excel";
+            response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
+            excelFile.SaveXls(response.OutputStream);
+            #endregion
+        }
+
+        public void Export2ExcelReportByLicenseeV2(string reportTitle, int licenseeId, int currency, int BaseCurrency, string fromDate, string toDate, int showSb, int showRb, int showNg, int showBa, int showLc, int reportType, int drawFilter, int excludeTest, int pageIndex, int pageSize, int reportSelected, int custId)
+        {
+
+            #region excel format
+            const int startCol = 0;
+            const int startRow = 2;
+            var nextRow = 1;
+
+            var reportName = reportTitle.Replace(" ", "");
+            var excelFile = new ExcelFile();
+            var wsReport = excelFile.Worksheets.Add(string.Format("{0}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDepositReport")));
+
+            #endregion
+
+            #region header
+            wsReport.Cells[startRow - 2, startCol].Style.Font.Weight = ExcelFont.BoldWeight;
+            wsReport.Cells[startRow - 2, startCol].Value = reportTitle;
+            Export2ExcelReportByLicenseeAssignHeaderV2(ref wsReport, startRow, startCol, reportType, reportSelected, showSb, showNg, showLc);
+            #endregion
+
+            #region content
+            var MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay.ToShortDateString();
+            var getReportDataV2 = new LicenseeCurrency();
+            switch (reportSelected)
+            {
+                case 0:
+                    getReportDataV2 = (LicenseeCurrency)AppSession.GetSession(System.Web.HttpContext.Current.Session,
+                                                           _keySelReportByLicensee);
+                    getReportDataV2 = getReportDataV2 ??
+                                    SelReportByLicenseeV2FromDB(licenseeId, currency, BaseCurrency, fromDate, toDate, showSb, showRb, showNg, showBa, showLc,
+                                                              reportType, MoveBetsDay,
+                                                              drawFilter, excludeTest);
+
+
+                    //    break;
+                    //case 1:
+                    //    getReportDataV2 = (LicenseeDTOV2)AppSession.GetSession(System.Web.HttpContext.Current.Session,
+                    //                                           _keySelReportByLicenseeDetail_Ag);
+                    //    getReportDataV2 = getReportDataV2 ??
+                    //                    SelReportByLicenseeDetail_AgV2FromDB(licenseeId, currency, BaseCurrency, fromDate, toDate, showSb,
+                    //                                                       showRb, showNg, showBa, showLc,
+                    //                                                       reportType, drawFilter, excludeTest);
+                    //    break;
+                    //case 2:
+                    //    getReportDataV2 = (LicenseeDTOV2)AppSession.GetSession(System.Web.HttpContext.Current.Session,
+                    //                                           _keySelReportByLicenseeDetail);
+                    //    getReportDataV2 = getReportDataV2 ??
+                    //                    SelReportByLicenseeDetailV2FromDB(licenseeId, currency, BaseCurrency, custId, fromDate, toDate,
+                    //                                                    showSb, showRb, showNg, showBa, showLc,
+                    //                                                    reportType, MoveBetsDay, drawFilter, excludeTest);
+                    break;
+                default:
+                    break;
+            }
+
+
+            //if (getReportDataV2 != null && getReportDataV2.Items != null)
+            //{
+            //    Export2ExcelReportByLicenseeAssignContentV2("",ref wsReport, startRow, startCol, ref nextRow, false, false,
+            //                                              getReportDataV2.Items, reportSelected);
+            //    Export2ExcelReportByLicenseeAssignContentV2("Total ",ref wsReport, startRow, startCol, ref nextRow, true, false,
+            //                                              getReportDataV2.Totals, reportSelected);
+            //    Export2ExcelReportByLicenseeAssignContentV2("Total ",ref wsReport, startRow, startCol, ref nextRow, false, true,
+            //                                              getReportDataV2.TotalsBaseCurrency, reportSelected);
+
+            //}
+
+            #endregion
+
+            #region response file
+            var response = HttpContext.Current.Response;
+            response.Clear();
+            response.ContentType = "application/vnd.ms-excel";
+            response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
+            excelFile.SaveXls(response.OutputStream);
+            #endregion
+        }
+
+        private static void Export2ExcelReportByLicenseeAssignHeader(ref ExcelWorksheet wsReport, int startRow, int startCol, int reportType, int selectedReport)
+        {
+            #region private variables
+            var bgHeaderNormalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
+            var nextCol = 0;
+            var dateTitle = selectedReport == 0 ? (reportType != 3
+                                ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Date")
+                                : ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "sport"))
+                                : ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "username");
+
+            var currencyTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Currency");
+            var turnoverTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "TurnOver");
+            var totalTransTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblTotalTrans");
+            var memberTilte = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Member");
+            var agentTilte = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Agent");
+            var companyTilte = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Company");
+            var winlossTilte = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "WinLost");
+            var commTilte = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblComm");
+            var totalTilte = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Total");
+
+            #endregion
+
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol, startRow, startCol).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol, startRow, startCol).Style = bgHeaderNormalFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol, startRow, startCol).Value = dateTitle;
+
+            nextCol++;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Style = bgHeaderNormalFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Value = currencyTitle;
+
+            nextCol++;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Style = bgHeaderNormalFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Value = turnoverTitle;
+
+            nextCol++;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Style = bgHeaderNormalFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Value = totalTransTitle;
+
+            #region member
+            nextCol++;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow - 1, startCol + (nextCol + 2)).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow - 1, startCol + (nextCol + 2)).Style = bgHeaderNormalFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow - 1, startCol + (nextCol + 2)).Value = memberTilte;
+
+            wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow, startCol + nextCol].Value = winlossTilte;
+            wsReport.Cells[startRow, startCol + (nextCol += 1)].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow, startCol + nextCol].Value = commTilte;
+            wsReport.Cells[startRow, startCol + (nextCol += 1)].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow, startCol + nextCol].Value = totalTilte;
+            #endregion
+
+            #region agent
+            nextCol++;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow - 1, startCol + (nextCol + 2)).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow - 1, startCol + (nextCol + 2)).Style = bgHeaderNormalFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow - 1, startCol + (nextCol + 2)).Value = agentTilte;
+
+            wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow, startCol + nextCol].Value = winlossTilte;
+            wsReport.Cells[startRow, startCol + (nextCol += 1)].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow, startCol + nextCol].Value = commTilte;
+            wsReport.Cells[startRow, startCol + (nextCol += 1)].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow, startCol + nextCol].Value = totalTilte;
+            #endregion
+            nextCol++;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Style = bgHeaderNormalFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Value = companyTilte;
+        }
+
+        private static void Export2ExcelReportByLicenseeAssignHeaderV2(ref ExcelWorksheet wsReport, int startRow, int startCol, int reportType, int selectedReport, int showSB, int showNG, int showLC)
+        {
+            #region private variables
+            var bgHeaderNormalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
+            var nextCol = 0;
+            var dateTitle = selectedReport == 0 ? (reportType != 3
+                                ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Date")
+                                : ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "sport"))
+                                : ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "username");
+
+            var currencyTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Currency");
+            var turnoverTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "TurnOver");
+            var totalTransTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblTotalTrans");
+            var customerTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "CustomerWL");
+            var licenseeWLTitle = "";
+            var companyTitle = "";
+            if ((showNG == 1 && showSB == 1 && showLC == 1) || (showSB == 0 && showNG == 0 && showLC == 0))
+            {
+                licenseeWLTitle = "Licensee W/L(SB+NG+LC)";
+                companyTitle = "SB+NG+LC";
+            }
+            else if (showSB == 1 && showLC == 1)
+            {
+                licenseeWLTitle = "Licensee W/L(SB+LC)";
+                companyTitle = "SB+LC";
+            }
+            else if (showNG == 1 && showLC == 1)
+            {
+                licenseeWLTitle = "Licensee W/L(NG+LC)";
+                companyTitle = "NG+LC";
+            }
+            else if (showNG == 1 && showSB == 1)
+            {
+                licenseeWLTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "LicenseeWL");
+                companyTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "SBNG");
+            }
+            else if (showSB == 1)
+            {
+                licenseeWLTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "LicenseeWLSB");
+                companyTitle = "SB";
+            }
+            else if (showNG == 1)
+            {
+                licenseeWLTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "LicenseeWLNG");
+                companyTitle = "NG";
+            }
+            else if (showLC == 1)
+            {
+                licenseeWLTitle = "Licensee W/L(LC)";
+                companyTitle = "LC";
+            }
+
+            var BACommTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "BAComm");
+            var BATitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "BA");
+            var RBTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "HR");
+            var RacingRevenueTilte = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "RacingRevenue");
+            var amountTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "AmtDueto");
+
+            #endregion
+
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol, startRow, startCol).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol, startRow, startCol).Style = bgHeaderNormalFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol, startRow, startCol).Value = dateTitle;
+
+            nextCol++;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Style = bgHeaderNormalFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Value = currencyTitle;
+
+            nextCol++;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Style = bgHeaderNormalFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Value = turnoverTitle;
+
+            nextCol++;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Style = bgHeaderNormalFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Value = totalTransTitle;
+
+            #region customer
+            nextCol++;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow - 1, startCol + (nextCol + 2)).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow - 1, startCol + (nextCol + 2)).Style = bgHeaderNormalFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow - 1, startCol + (nextCol + 2)).Value = "Customer Win Loss";
+
+            wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow, startCol + nextCol].Value = "Win Loss";
+            wsReport.Cells[startRow, startCol + (nextCol += 1)].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow, startCol + nextCol].Value = "Comm";
+            wsReport.Cells[startRow, startCol + (nextCol += 1)].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow, startCol + nextCol].Value = "Total";
+            #endregion
+
+            nextCol++;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Style = bgHeaderNormalFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Value = licenseeWLTitle;
+
+
+            #region Commission
+            nextCol++;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Style = bgHeaderNormalFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol + 1)).Value = BACommTitle;
+
+
+            #endregion
+
+            #region Racing
+            nextCol++;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow - 1, startCol + (nextCol + 2)).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow - 1, startCol + (nextCol + 2)).Style = bgHeaderNormalFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow - 1, startCol + (nextCol + 2)).Value = RacingRevenueTilte;
+
+            wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow, startCol + nextCol].Value = "Win Loss";
+            wsReport.Cells[startRow, startCol + (nextCol += 1)].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow, startCol + nextCol].Value = "Comm";
+            wsReport.Cells[startRow, startCol + (nextCol += 1)].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow, startCol + nextCol].Value = "Total";
+            #endregion
+            //nextCol++;
+            //wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Merged = true;
+            //wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Style = bgHeaderNormalFormat;
+            //wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Value = RacingRevenueTilte;
+
+            #region Amount Due to
+
+            nextCol++;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow - 1, startCol + (nextCol + 2)).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow - 1, startCol + (nextCol + 2)).Style = bgHeaderNormalFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow - 1, startCol + (nextCol + 2)).Value = amountTitle;
+
+            wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow, startCol + nextCol].Value = BATitle;
+            wsReport.Cells[startRow, startCol + (nextCol += 1)].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow, startCol + nextCol].Value = RBTitle;
+            wsReport.Cells[startRow, startCol + (nextCol += 1)].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow, startCol + nextCol].Value = companyTitle;
+
+
+            #endregion
+
+        }
+
+        private static void Export2ExcelReportByLicenseeAssignContent(ref ExcelWorksheet wsReport, int startRow, int startCol, ref int nextRow, bool isTotal, bool isTotalBaseCurr, List<LicenseeRow> licenseeRows, int reportSelected)
+        {
+
+            var bgColor = isTotal
+                              ? Color.FromArgb(255, 238, 221)
+                              : (isTotalBaseCurr ? Color.FromArgb(211, 225, 200) : Color.FromArgb(255, 255, 255));
+            var numberFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", bgColor,
+                                                                                    isTotal || isTotalBaseCurr
+                                                                                        ? true
+                                                                                        : false, false);
+            var numberNormalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber("", bgColor,
+                                                                                    isTotal || isTotalBaseCurr
+                                                                                        ? true
+                                                                                        : false, false);
+            foreach (LicenseeRow licenseeRow in licenseeRows)
+            {
+                var nextCol = 0;
+                #region current row is total or not
+                if (isTotal || isTotalBaseCurr)
+                {
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + (nextCol + 1)).
+                        Merged = true;
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + (nextCol + 1)).
+                        Style = numberNormalFormat;
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + (nextCol += 1)).
+                        Value = licenseeRow.CurrencyName;
+                }
+                else
+                {
+                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style = numberFormat;
+                    wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = reportSelected == 0 ? licenseeRow.ReportType : licenseeRow.Username;
+
+                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberNormalFormat;
+                    wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = licenseeRow.CurrencyName;
+                }
+
+
+                #endregion
+                #region betcount
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Turnover);
+                #endregion
+                #region betcount
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberNormalFormat;
+                if (isTotalBaseCurr)
+                    wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = string.Empty;
+                else
+                    wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.BetCount);
+                #endregion
+                #region member
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Winlost);
+
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Comm);
+
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Total);
+                #endregion
+                #region agent
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.AWinlost);
+
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.AComm);
+
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.ATotal);
+                #endregion
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Company);
+                nextRow++;
+            }
+        }
+        #endregion
+
+        private static void Export2ExcelReportByLicenseeAssignContentV2(string preCurrency, ref ExcelWorksheet wsReport, int startRow, int startCol, ref int nextRow, bool isTotal, bool isTotalBaseCurr, List<LicenseeRowV2> licenseeRows, int reportSelected)
+        {
+            var bgColor = isTotal
+                              ? Color.FromArgb(255, 238, 221)
+                              : (isTotalBaseCurr ? Color.FromArgb(211, 225, 200) : Color.FromArgb(255, 255, 255));
+            var numberFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", bgColor,
+                                                                                    isTotal || isTotalBaseCurr
+                                                                                        ? true
+                                                                                        : false, false);
+            var numberNormalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber("", bgColor,
+                                                                                    isTotal || isTotalBaseCurr
+                                                                                        ? true
+                                                                                        : false, false);
+            var items = 0;
+            foreach (LicenseeRowV2 licenseeRow in licenseeRows)
+            {
+                var nextCol = 0;
+                #region current row is total or not
+                if (isTotal || isTotalBaseCurr)
+                {
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + (nextCol + 1)).
+                        Merged = true;
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + (nextCol + 1)).
+                        Style = numberFormat;
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + (nextCol += 1)).
+                        Value = preCurrency + licenseeRow.CurrencyName;
+                }
+                else
+                {
+                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style = numberFormat;
+                    wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = reportSelected == 0 ? licenseeRow.ReportType : licenseeRow.Username;
+
+                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                    wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = preCurrency + licenseeRow.CurrencyName;
+                }
+
+
+                #endregion
+
+                #region Turnover
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Turnover);
+                #endregion
+
+                #region betcount
+
+                if (items == 0 && isTotalBaseCurr)
+                {
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol += 1),
+                                                       startRow + nextRow + licenseeRows.Count - 1, startCol + nextCol).
+                        Merged = true;
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol),
+                                                       startRow + nextRow + licenseeRows.Count - 1, startCol + nextCol).
+                        Style = numberNormalFormat;
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol),
+                                                       startRow + nextRow + licenseeRows.Count - 1, startCol + nextCol).
+                        Value = CastAide.AsDouble(licenseeRow.BetCount);
+
+                }
+                else if (isTotalBaseCurr && items > 0)
+                    nextCol += 1;
+                else if (!isTotalBaseCurr)
+                {
+                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberNormalFormat;
+                    wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.BetCount);
+                }
+                #endregion
+
+                #region CustomerWL
+
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.CustomerWL);
+
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.CustomerComm);
+
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.CustomerWLTotal);
+                #endregion
+
+                #region LicenseeWL
+
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.LicenseeWL);
+
+                #endregion
+
+                #region Commission
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.BA);
+
+
+
+                #endregion
+
+                #region Racing Revenue
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.WinlossRB);
+
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Racing);
+
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Total);
+
+                #endregion
+
+                #region Amount Due to
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.AmtDuetoBA);
+
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.AmtDuetoRB);
+
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Company);
+                #endregion
+                nextRow++;
+                items++;
+            }
+        }
+
+        #region total trans
+
+        
+        public void Export2ExcelTotalTransaction(string reportTitle, int resellerid, int licenseeid, string date, bool showSB, bool showNG, bool showRB, bool showLC, bool showVS)
+        {
+            #region excel format
+            const int startCol = 0;
+            const int startRow = 2;
+            var nextRow = 0;
+
+            var reportName = reportTitle.Replace(" ", "");
+            var excelFile = new ExcelFile();
+            var wsReport = excelFile.Worksheets.Add(string.Format("{0}", "TotalTransaction"));
+
+            #endregion
+
+            #region header
+            wsReport.Cells[startRow - 2, startCol].Style.Font.Weight = ExcelFont.BoldWeight;
+            wsReport.Cells[startRow - 2, startCol].Value = reportTitle;
+            Export2ExcelTotalTransactionAssignHeader(ref wsReport, startRow, startCol);
+            #endregion
+
+            #region content
+            //AppSession.AddSession(System.Web.HttpContext.Current.Session, _keySelTotalTransction, transctionDto);
+            var getSession =
+                (LicenseeTotalTransctionDTO)AppSession.GetSession(HttpContext.Current.Session, _keySelTotalTransction) ??
+                SelTotalTransction(resellerid, licenseeid, date, showSB, showNG, showRB, showLC, showVS);
+
+            if (getSession != null && getSession.Items != null && getSession.Items.Count > 0)
+            {
+                Export2ExcelTotalTransactionAssignContent(ref wsReport, startRow, startCol, ref nextRow,
+                                                          getSession.Items, false);
+
+                #region total
+                var totalRow = new List<Reseller>();
+                totalRow.Add(getSession.Total);
+
+                Export2ExcelTotalTransactionAssignContent(ref wsReport, startRow, startCol, ref nextRow,
+                                                          totalRow, true);
+
+                #endregion
+            }
+
+            #endregion
+
+            #region response file
+            var response = HttpContext.Current.Response;
+            response.Clear();
+            response.ContentType = "application/vnd.ms-excel";
+            response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
+            excelFile.SaveXls(response.OutputStream);
+            #endregion
+        }
+
+        private static void Export2ExcelTotalTransactionAssignHeader(ref ExcelWorksheet wsReport, int startRow, int startCol)
+        {
+            var bgHeaderNormalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
+
+            wsReport.Columns[0].Width = 10 * 256;
+            wsReport.Columns[1].Width = 25 * 256;
+            wsReport.Cells[startRow - 1, startCol].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow - 1, startCol].Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblLicensee");
+            wsReport.Cells[startRow - 1, startCol + 1].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow - 1, startCol + 1].Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblTotalTransaction");
+            wsReport.Cells[startRow - 1, startCol + 2].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow - 1, startCol + 2].Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblTotalTransactionEurCost");
+        }
+
+        private static void Export2ExcelTotalTransactionAssignContent(ref ExcelWorksheet wsReport, int startRow, int startCol,
+            ref int nextRow, List<Reseller> totalTransctions, bool isTotal)
+        {
+
+
+            foreach (Reseller reseller in totalTransctions)
+            {
+                var bgColor = isTotal
+                           ? Color.FromArgb(255, 238, 221)
+                           : Color.FromArgb(232, 231, 220);
+                var numberNormalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", bgColor,
+                                                                                        isTotal
+                                                                                            ? true
+                                                                                            : false, false);
+                wsReport.Cells[startRow + nextRow, startCol].Style = numberNormalFormat;
+                wsReport.Cells[startRow + nextRow, startCol].Style.Font.Weight = ExcelFont.BoldWeight;
+
+                wsReport.Cells[startRow + nextRow, startCol].Value = reseller.ResellerName;
+
+                wsReport.Cells[startRow + nextRow, startCol + 1].Style = numberNormalFormat;
+
+                wsReport.Cells[startRow + nextRow, startCol + 1].Style.Font.Weight = ExcelFont.BoldWeight;
+                wsReport.Cells[startRow + nextRow, startCol + 1].Value = CastAide.AsDouble(reseller.Total);
+
+                wsReport.Cells[startRow + nextRow, startCol + 2].Style = numberNormalFormat;
+
+                wsReport.Cells[startRow + nextRow, startCol + 2].Style.Font.Weight = ExcelFont.BoldWeight;
+                wsReport.Cells[startRow + nextRow, startCol + 2].Value = CastAide.AsDouble(reseller.EURCost);
+                nextRow++;
+                if (reseller.Licensees != null)
+                {
+                    numberNormalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", Color.FromArgb(255, 255, 255),
+                                                                                   isTotal
+                                                                                       ? true
+                                                                                       : false, false);
+                    foreach (Licensee licensee in reseller.Licensees)
+                    {
+
+                        wsReport.Cells[startRow + nextRow, startCol].Style = numberNormalFormat;
+                        wsReport.Cells[startRow + nextRow, startCol].Value = "   " + licensee.LicenseeName;
+                        wsReport.Cells[startRow + nextRow, startCol + 1].Style = numberNormalFormat;
+                        wsReport.Cells[startRow + nextRow, startCol + 1].Value = CastAide.AsDouble(licensee.Total);
+                        wsReport.Cells[startRow + nextRow, startCol + 2].Style = numberNormalFormat;
+                        wsReport.Cells[startRow + nextRow, startCol + 2].Value = CastAide.AsDouble(licensee.EURCost);
+                        nextRow++;
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region negative balance
+        public void Export2ExcelNegativeBalanceReport(string reportTitle, string site)
+        {
+            var isSendMailSuccess = true;
+            Export2ExcelNegativeBalanceReportMain(reportTitle, site, true, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, ref isSendMailSuccess);
+        }
+
+        private void Export2ExcelNegativeBalanceReportMain(string reportTitle, string site, bool isExport,
+            string sendTo, string mailCc, string mailBcc, string subject, string mailContent, ref bool isSendMailSuccess)
+        {
+            #region excel format
+            const int startCol = 0;
+            const int startRow = 2;
+            var nextRow = 0;
+
+            var reportName = reportTitle.Replace(" ", "");
+            var excelFile = new ExcelFile();
+            var wsReport = excelFile.Worksheets.Add(string.Format("{0}", reportName));
+
+            #endregion
+
+            #region header
+            wsReport.Cells[startRow - 2, startCol].Style.Font.Weight = ExcelFont.BoldWeight;
+            wsReport.Cells[startRow - 2, startCol].Value = reportTitle;
+            Export2ExcelNegativeBalanceReportAssignHeader(ref wsReport, startRow, startCol);
+            #endregion
+
+            #region content
+
+            var getData =
+                (NegativeBalanceMemberDTO)
+                SessionExtension.GetSession(HttpContext.Current.Session, sessionkeyNegativeBalance) ??
+                SelNegativeBalanceMemberFromDB(site, true);
+
+
+            if (getData != null && getData.Items != null && getData.Items.Count > 0)
+            {
+                List<NegativeBalanceMemberByLicensee> getDataBySite = null;
+
+                getDataBySite = isExport ? getData.Items :
+                    (from data in getData.Items select data).Where(
+                        t => t.Total.Name.ToLower().Contains(site.ToLower())).ToList();
+
+                if (getDataBySite.Count > 0)
+                {
+                    foreach (NegativeBalanceMemberByLicensee negativeBalance in getDataBySite)
+                    {
+                        if (string.IsNullOrEmpty(site))
+                            Export2ExcelNegativeBalanceReportAssignContent(ref wsReport, startRow, startCol, ref nextRow,
+                                                                           negativeBalance.Total, true);
+                        foreach (NegativeBalanceMemberRow negativeBalanceDetail in negativeBalance.Items)
+                        {
+                            Export2ExcelNegativeBalanceReportAssignContent(ref wsReport, startRow, startCol, ref nextRow,
+                                                                           negativeBalanceDetail, false);
+                        }
+                    }
+                }
+                else
+                {
+                    wsReport.Cells[startRow + nextRow, startCol].Value =
+                    ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblThereisnodata");
+                }
+
+            }
+            else
+            {
+                wsReport.Cells[startRow + nextRow, startCol].Value =
+                    ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblThereisnodata");
+            }
+
+            #endregion
+
+            #region response file
+            if (isExport)
+            {
+                var response = HttpContext.Current.Response;
+                response.Clear();
+                response.ContentType = "application/vnd.ms-excel";
+                response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
+                excelFile.SaveXls(response.OutputStream);
+            }
+            else
+            {
+                var memoryStream = new MemoryStream();
+                excelFile.SaveXls(memoryStream);
+                var mailAttachment = new Sunplus.Accounting.Core.Extensions.MailAttachment()
+                {
+                    Content = memoryStream,
+                    ContentType = "application/ms-excel",
+                    FileName = string.Format("{0}.xls", reportName)
+                };
+
+                isSendMailSuccess = SendMailExtension.AccSendMail(MailSection.HostName.Gmail, sendTo, mailCc, mailBcc,
+                    ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblNegativeBalanceReport"), subject,
+                                                  mailContent, mailAttachment);
+            }
+            #endregion
+        }
+
+        private static void Export2ExcelNegativeBalanceReportAssignHeader(ref ExcelWorksheet wsReport, int startRow, int startCol)
+        {
+            var bgHeaderNormalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
+
+            wsReport.Columns[0].Width = 25 * 256;
+            wsReport.Columns[1].Width = 20 * 256;
+            wsReport.Columns[2].Width = 15 * 256;
+            wsReport.Cells[startRow - 1, startCol].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow - 1, startCol].Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "username");
+            wsReport.Cells[startRow - 1, startCol + 1].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow - 1, startCol + 1].Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "balance");
+            wsReport.Cells[startRow - 1, startCol + 2].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow - 1, startCol + 2].Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "currency");
+        }
+
+        private static void Export2ExcelNegativeBalanceReportAssignContent(ref ExcelWorksheet wsReport, int startRow, int startCol,
+            ref int nextRow, NegativeBalanceMemberRow negativeRow, bool isTotal)
+        {
+            var bgColor = isTotal
+                              ? Color.FromArgb(211, 225, 200)
+                              : (nextRow % 2 > 0 ? Color.FromArgb(255, 243, 200) : Color.FromArgb(255, 255, 255));
+
+            var numberNormalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", bgColor, isTotal ? true : false, false);
+
+            wsReport.Cells[startRow + nextRow, startCol].Style = numberNormalFormat;
+            wsReport.Cells[startRow + nextRow, startCol].Value = negativeRow.Name;
+            wsReport.Cells[startRow + nextRow, startCol + 1].Style = numberNormalFormat;
+            if (!isTotal)
+            {
+                wsReport.Cells[startRow + nextRow, startCol + 1].Value = CastAide.AsDouble(negativeRow.Balance);
+            }
+            wsReport.Cells[startRow + nextRow, startCol + 2].Style = numberNormalFormat;
+            wsReport.Cells[startRow + nextRow, startCol + 2].Value = negativeRow.Currency;
+            nextRow++;
+
+        }
+        #endregion
+        #endregion
+        #region NAPExport
+
+        /// <summary>
+        /// Export win loss report, agent level
+        /// </summary>
+        /// <param name="criteria"></param>
+        public void ExportCurrencyReport(string reportTitle, int licenseeId,
+            int currency, int BaseCurrency,
+            string fromDate, string toDate,
+            int showSb, int showRb,
+            int showNg, int showBa,
+            int showLc, int reportType,
+            int drawFilter, int excludeTest,
+            int pageIndex, int pageSize,
+            int reportSelected, int custId)
+        {
+            try
+            {
+                var report = this.SelReportByLicenseeV2(licenseeId,
+                    currency, BaseCurrency,
+                    fromDate, toDate,
+                    showSb, showRb,
+                    showNg, showBa,
+                    showLc, reportSelected,
+                    drawFilter, excludeTest,
+                    pageIndex, pageSize,
+                    1);
+
+                var criteria = new WinLossByLicenseeCriteria
+                {
+                    Currency = currency,
+                    ConvertToCurrency = BaseCurrency,
+                    FromDate = fromDate,
+                    ToDate = toDate,
+                    ShowSB = showSb,
+                    ShowRB = showRb,
+                    ShowNG = showNg,
+                    ShowBA = showBa,
+                    ShowLC = showLc,
+                    ReportType = reportType,
+                    Drawfilter = drawFilter,
+                    ExcludeTest = excludeTest,
+                    CurrentPage = pageIndex,
+                    ItemsPerPage = pageSize,
+                    CustID = custId
+                };
+
+                #region ExcelTypes
+
+                ExcelFile excelFile = new ExcelFile();
+                ExcelWorksheetCollection worksheets = excelFile.Worksheets;
+                string sheetName = "Win Loss By Licensee";
+                ExcelWorksheet workSheet = worksheets.Add(sheetName);
+
+                int startRow = 0;
+                int startColumn = 0;
+                var currentRow = startRow;
+
+                #endregion ExcelTypes
+                #region MakeExcelFile
+
+                this.ExportReportHeader(ref workSheet,
+                    startRow,
+                    startColumn,
+                    ref currentRow,
+                    criteria,
+                    ReportDrilldownLevel.Currency);
+
+                this.ExportCurrencyReportContent(ref workSheet,
+                    startRow,
+                    startColumn,
+                    ref currentRow,
+                    criteria,
+                    report);
+
+                #endregion MakeExcelFile
+
+                this.ReponseStream(excelFile, string.Format("Win_Loss_By_Licensee_From_{0}_To_{1}",
+                   fromDate, toDate));
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+        }
+
+        private void ReponseStream(ExcelFile excelFile, string reportName)
+        {
+            var response = HttpContext.Current.Response;
+            response.Clear();
+            response.ContentType = "application/vnd.ms-excel";
+            response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
+            excelFile.SaveXls(response.OutputStream);
+        }
+
+        private void ExportReportHeader(ref ExcelWorksheet ws,
+          int startRow,
+          int startColumn,
+          ref int currentRow,
+          WinLossByLicenseeCriteria criteria,
+          ReportDrilldownLevel drilldownLevel)
+        {
+            #region ExcelTypes
+
+            var headerColor = Color.FromArgb(60, 94, 165);
+            var bgColor = Color.White;
+            var currentColumn = startColumn;
+            CellRange currentCellRange;
+
+            var excelGemboxUtils = new ExcelGemboxUtils();
+            var headerTextStyle = excelGemboxUtils.GetStyleTitle(headerColor.R, headerColor.G, headerColor.B);
+            headerTextStyle.Font.Color = Color.White;
+            var textStyle = excelGemboxUtils.GetStyleText(bgColor.R, bgColor.G, bgColor.B);
+
+            #endregion ExcelTypes
+            #region Filter
+
+            var title = string.Empty;
+            var fistColumnText = string.Empty;
+            switch (drilldownLevel)
+            {
+                case ReportDrilldownLevel.Currency:
+                    title = string.Format("Win Loss By Licensee from {0} to {1}",
+                                          criteria.FromDate,
+                                          criteria.ToDate);
+                    fistColumnText = "Date";
+                    break;
+
+                case ReportDrilldownLevel.Agent:
+                case ReportDrilldownLevel.Member:
+                    title = string.Format("Win Loss By Licensee from {0} to {1}",
+                                          criteria.FromDate,
+                                          criteria.ToDate);
+                    fistColumnText = "UserName";
+                    break;
+            }
+
+            currentColumn = startColumn;
+            ws.Columns[currentColumn].Width = 140 * 30;
+            currentColumn++;
+
+            ws.Columns[currentColumn].Width = 100 * 30;
+            currentColumn++;
+
+            ws.Columns[currentColumn].Width = 160 * 30;
+            currentColumn++;
+
+            ws.Columns[currentColumn].Width = 100 * 30;
+            currentColumn++;
+
+            ws.Columns[currentColumn].Width = 120 * 30;
+            currentColumn++;
+            ws.Columns[currentColumn].Width = 100 * 30;
+            currentColumn++;
+            ws.Columns[currentColumn].Width = 120 * 30;
+            currentColumn++;
+
+            ws.Columns[currentColumn].Width = 220 * 30;
+            currentColumn++;
+            ws.Columns[currentColumn].Width = 100 * 30;
+            currentColumn++;
+
+            ws.Columns[currentColumn].Width = 120 * 30;
+            currentColumn++;
+            ws.Columns[currentColumn].Width = 100 * 30;
+            currentColumn++;
+            ws.Columns[currentColumn].Width = 120 * 30;
+            currentColumn++;
+
+            ws.Columns[currentColumn].Width = 120 * 30;
+            currentColumn++;
+            ws.Columns[currentColumn].Width = 120 * 30;
+            currentColumn++;
+            ws.Columns[currentColumn].Width = 120 * 30;
+            currentColumn++;
+
+            currentColumn = startColumn;
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 1, currentColumn + 14);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = title;
+            currentCellRange.Style = headerTextStyle;
+            currentRow += 2;
+
+            #endregion Filter
+
+            currentColumn = startColumn;
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn + 14);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = string.Empty;
+            currentCellRange.Style = textStyle;
+            currentRow++;
+
+            #region Title
+
+            // First Row
+            currentColumn = startColumn;
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 1, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = fistColumnText;
+            currentCellRange.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 1, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = "Currency";
+            currentCellRange.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 1, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = "Turnover";
+            currentCellRange.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 1, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = "Total Trans";
+            currentCellRange.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn + 2);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = "Customer WinLoss";
+            currentCellRange.Style = headerTextStyle;
+            currentColumn += 3;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn + 1);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = string.Empty;
+            currentCellRange.Style = headerTextStyle;
+            currentColumn += 2;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn + 2);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = "Racing Revenue";
+            currentCellRange.Style = headerTextStyle;
+            currentColumn += 3;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn + 2);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = "Amount Due To";
+            currentCellRange.Style = headerTextStyle;
+            currentColumn += 3;
+            currentRow++;
+
+            // Second Row
+            currentColumn = startColumn + 4;
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = "Win Loss";
+            currentCellRange.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = "Comm";
+            currentCellRange.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = "Total";
+            currentCellRange.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = this.GetColLicenseeWinLossTitle(criteria.ShowSB, criteria.ShowNG, criteria.ShowLC);
+            currentCellRange.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = "BA Comm";
+            currentCellRange.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = "Win Loss";
+            currentCellRange.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = "Comm";
+            currentCellRange.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = "Total";
+            currentCellRange.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = "BA";
+            currentCellRange.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = "Racing";
+            currentCellRange.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = this.GetColLicenseeWinLossTitleSuffix(criteria.ShowSB, criteria.ShowNG, criteria.ShowLC);
+            currentCellRange.Style = headerTextStyle;
+            currentColumn++;
+            currentRow++;
+
+            #endregion Title
+        }
+
+        private void ExportCurrencyReportContent(ref ExcelWorksheet ws,
+            int startRow,
+            int startColumn,
+            ref int currentRow,
+            WinLossByLicenseeCriteria criteria,
+            LicenseeCurrency report)
+        {
+            #region ExcelTypes
+
+            var currentColumn = startColumn;
+            CellRange currentCellRange;
+            var bgColor = Color.White;
+            var excelGemboxUtils = new ExcelGemboxUtils();
+            Color evenRowColor = Color.FromArgb(255, 243, 200);
+            Color oddRowColor = Color.White;
+
+            var textStyle = excelGemboxUtils.GetStyleText(false);
+            var intStyle = excelGemboxUtils.GetStyleIntNumber(0, false, string.Empty);
+            intStyle.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+            var twoDecimalNumberStyle = excelGemboxUtils.GetStyleIntNumber(2, false, ".00");
+            twoDecimalNumberStyle.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+
+            #endregion ExcelTypes
+
+            if (report != null && report.Items != null && report.Items.Count > 0)
+            {
+                var groups = report.Items.ToList();
+                for (int i = 0; i < groups.Count; i++)
+                {
+                    textStyle.FillPattern.SetSolid(i % 2 == 0
+                        ? evenRowColor
+                        : oddRowColor);
+                    intStyle.FillPattern.SetSolid(i % 2 == 0
+                        ? evenRowColor
+                        : oddRowColor);
+                    twoDecimalNumberStyle.FillPattern.SetSolid(i % 2 == 0
+                        ? evenRowColor
+                        : oddRowColor);
+
+                    var group = groups[i];
+                    var groupLength = group.LicenseeByDateList.Count;
+                    currentColumn = startColumn;
+                    currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + groupLength - 1, currentColumn);
+                    currentCellRange.Merged = true;
+                    currentCellRange.Value = group.DateTime;
+                    currentCellRange.Style = textStyle;
+                    currentCellRange.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+
+                    foreach (var winLoss in group.LicenseeByDateList)
+                    {
+                        this.ExportWinLossRow(ref ws,
+                            startRow,
+                            startColumn,
+                            ref currentRow,
+                            winLoss,
+                            textStyle,
+                            intStyle,
+                            twoDecimalNumberStyle,
+                            ReportDrilldownLevel.Currency,
+                            ReportRowType.NormalRow);
+                    }
+                }
+
+                this.ExportReportTotal(ref ws,
+                    startRow,
+                    startColumn,
+                    ref currentRow,
+                    report.Totals,
+                    ReportDrilldownLevel.Currency);
+
+                this.ExportReportBaseCurrencyTotal(ref ws,
+                    startRow,
+                    startColumn,
+                    ref currentRow,
+                    report.TotalsBaseCurrency,
+                    ReportDrilldownLevel.Currency);
+            }
+            else
+            {
+                currentColumn = startColumn;
+                currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn + 14);
+                currentCellRange.Merged = true;
+                currentCellRange.Value = "There is no information available.";
+                currentCellRange.Style = textStyle;
+                currentCellRange.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+                currentCellRange.Style.Font.Weight = ExcelFont.BoldWeight;
+                currentRow++;
+            }
+        }
+
+        private string GetColLicenseeWinLossTitle(int showSB, int showNG, int showLC)
+        {
+            var suffix = this.GetColLicenseeWinLossTitleSuffix(showSB, showNG, showLC);
+            if (!string.IsNullOrEmpty(suffix))
+            {
+                return "LicenseeWinLoss (" + suffix + ")";
+            }
+
+            return "LicenseeWinLoss";
+        }
+
+        private string GetColLicenseeWinLossTitleSuffix(int showSB, int showNG, int showLC)
+        {
+            var products = new List<string>();
+
+            if (showSB != 0)
+            {
+                products.Add("SB");
+            }
+
+            if (showNG != 0)
+            {
+                products.Add("NG");
+            }
+
+            if (showLC != 0)
+            {
+                products.Add("LC");
+            }
+
+            if (products.Count > 0)
+            {
+                return string.Join("+", products);
+            }
+            else
+            {
+                return "SB + NG + LC";
+            }
+        }
+
+        private void ExportWinLossRow(ref ExcelWorksheet ws,
+            int startRow,
+            int startColumn,
+            ref int currentRow,
+            LicenseeRowV2 winLoss,
+            CellStyle textStyle,
+            CellStyle intStyle,
+            CellStyle twoDecimalNumberStyle,
+            ReportDrilldownLevel drilldownLevel,
+            ReportRowType rowType)
+        {
+            var currentColumn = startColumn;
+            CellRange currentCellRange;
+
+            if (rowType == ReportRowType.NormalRow)
+            {
+                switch (drilldownLevel)
+                {
+                    case ReportDrilldownLevel.Currency:
+                        break;
+                    case ReportDrilldownLevel.Super:
+                    case ReportDrilldownLevel.Master:
+                    case ReportDrilldownLevel.Agent:
+                    case ReportDrilldownLevel.Member:
+                        currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+                        currentCellRange.Merged = true;
+                        currentCellRange.Value = winLoss.Username;
+                        currentCellRange.Style = textStyle;
+                        break;
+                }
+            }
+
+            currentColumn++;
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = winLoss.CurrencyName;
+            currentCellRange.Style = textStyle;
+            currentCellRange.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = winLoss.Turnover;
+            currentCellRange.Style = twoDecimalNumberStyle;
+            currentColumn++;
+
+            if (rowType != ReportRowType.GrandTotal)
+            {
+                currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+                currentCellRange.Merged = true;
+                currentCellRange.Value = winLoss.BetCount;
+                currentCellRange.Style = intStyle;
+            }
+
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = winLoss.CustomerWL;
+            currentCellRange.Style = twoDecimalNumberStyle;
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = winLoss.CustomerComm;
+            currentCellRange.Style = twoDecimalNumberStyle;
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = winLoss.CustomerWLTotal;
+            currentCellRange.Style = twoDecimalNumberStyle;
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = winLoss.LicenseeWL;
+            currentCellRange.Style = twoDecimalNumberStyle;
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = winLoss.BA;
+            currentCellRange.Style = twoDecimalNumberStyle;
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = winLoss.WinlossRB;
+            currentCellRange.Style = twoDecimalNumberStyle;
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = winLoss.Racing;
+            currentCellRange.Style = twoDecimalNumberStyle;
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = winLoss.Total;
+            currentCellRange.Style = twoDecimalNumberStyle;
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = winLoss.AmtDuetoBA;
+            currentCellRange.Style = twoDecimalNumberStyle;
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = winLoss.AmtDuetoRB;
+            currentCellRange.Style = twoDecimalNumberStyle;
+            currentColumn++;
+
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = winLoss.Company;
+            currentCellRange.Style = twoDecimalNumberStyle;
+            currentColumn++;
+            currentRow++;
+        }
+
+        private void ExportReportTotal(ref ExcelWorksheet ws,
+            int startRow,
+            int startColumn,
+            ref int currentRow,
+            List<LicenseeRowV2> total,
+            ReportDrilldownLevel drilldownLevel)
+        {
+            var currentColumn = startColumn;
+            CellRange currentCellRange;
+
+            var totalRowColor = Color.FromArgb(255, 238, 221);
+            var excelGemboxUtils = new ExcelGemboxUtils();
+            var textStyle = excelGemboxUtils.GetStyleText(totalRowColor.R, totalRowColor.G, totalRowColor.B, true);
+            var intStyle = excelGemboxUtils.GetStyleIntNumber(string.Empty, totalRowColor, true, false, false);
+            intStyle.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+
+            var twoDecimalNumberStyle = excelGemboxUtils.GetStyleIntNumber(".00", totalRowColor, true, false, false);
+            twoDecimalNumberStyle.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+
+            var totalLength = total.Count();
+            currentColumn = startColumn;
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + totalLength - 1, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = "Total";
+            currentCellRange.Style = textStyle;
+            currentCellRange.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+
+            foreach (var winLoss in total)
+            {
+                this.ExportWinLossRow(ref ws,
+                    startRow,
+                    startColumn,
+                    ref currentRow,
+                    winLoss,
+                    textStyle,
+                    intStyle,
+                    twoDecimalNumberStyle,
+                    drilldownLevel,
+                    ReportRowType.Total);
+            }
+        }
+
+        private void ExportReportBaseCurrencyTotal(ref ExcelWorksheet ws,
+            int startRow,
+            int startColumn,
+            ref int currentRow,
+            List<LicenseeRowV2> total,
+            ReportDrilldownLevel drilldownLevel)
+        {
+            var currentColumn = startColumn;
+            CellRange currentCellRange;
+            var totalRowColor = Color.FromArgb(211, 225, 200);
+            var excelGemboxUtils = new ExcelGemboxUtils();
+
+            var textStyle = excelGemboxUtils.GetStyleText(totalRowColor.R, totalRowColor.G, totalRowColor.B, true);
+            var intStyle = excelGemboxUtils.GetStyleIntNumber(string.Empty, totalRowColor, true, false, false);
+            var twoDecimalNumberStyle = excelGemboxUtils.GetStyleIntNumber(".00", totalRowColor, true, false, false);
+
+            textStyle.Borders.SetBorders(MultipleBorders.Top, Color.FromArgb(255, 102, 0), LineStyle.Medium);
+            intStyle.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+            intStyle.Borders.SetBorders(MultipleBorders.Top, Color.FromArgb(255, 102, 0), LineStyle.Medium);
+
+            twoDecimalNumberStyle.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+            twoDecimalNumberStyle.Borders.SetBorders(MultipleBorders.Top, Color.FromArgb(255, 102, 0), LineStyle.Medium);
+
+            var totalLength = total.Count();
+            currentColumn = startColumn;
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + totalLength - 1, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = "Total";
+            currentCellRange.Style = textStyle;
+            currentCellRange.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+
+            currentColumn = startColumn + 3;
+            currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + totalLength - 1, currentColumn);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = total[0].BetCount;
+            currentCellRange.Style = intStyle;
+
+            var isFirstRow = true;
+
+            foreach (var winLoss in total)
+            {
+                this.ExportWinLossRow(ref ws,
+                  startRow,
+                  startColumn,
+                  ref currentRow,
+                  winLoss,
+                  textStyle,
+                  intStyle,
+                  twoDecimalNumberStyle,
+                  drilldownLevel,
+                  ReportRowType.GrandTotal);
+
+                if (isFirstRow)
+                {
+                    textStyle.Borders.SetBorders(MultipleBorders.Outside, Color.Gray, LineStyle.Thin);
+                    intStyle.Borders.SetBorders(MultipleBorders.Outside, Color.Gray, LineStyle.Thin);
+                    twoDecimalNumberStyle.Borders.SetBorders(MultipleBorders.Outside, Color.Gray, LineStyle.Thin);
+                    isFirstRow = false;
+                }
+            }
+        }
+
+        public void ExportSuperReport(string reportTitle, int licenseeId,
+            int currency, int BaseCurrency,
+            string fromDate, string toDate,
+            int showSb, int showRb,
+            int showNg, int showBa,
+            int showLc, int reportType,
+            int drawFilter, int excludeTest,
+            int pageIndex, int pageSize,
+            int reportSelected, int custId)
+        {
+            try
+            {
+                var report = this.SelReportByLicenseeDetail_SAgV2(licenseeId,
+                    currency, BaseCurrency,
+                    fromDate, toDate,
+                    showSb, showRb,
+                    showNg, showBa,
+                    showLc, reportSelected,
+                    drawFilter, excludeTest,
+                    pageIndex, pageSize,
+                    0);
+
+                var criteria = new WinLossByLicenseeCriteria
+                {
+                    Currency = currency,
+                    ConvertToCurrency = BaseCurrency,
+                    FromDate = fromDate,
+                    ToDate = toDate,
+                    ShowSB = showSb,
+                    ShowRB = showRb,
+                    ShowNG = showNg,
+                    ShowBA = showBa,
+                    ShowLC = showLc,
+                    ReportType = reportType,
+                    Drawfilter = drawFilter,
+                    ExcludeTest = excludeTest,
+                    CurrentPage = pageIndex,
+                    ItemsPerPage = pageSize,
+                    CustID = custId
+                };
+
+                #region ExcelTypes
+
+                ExcelFile excelFile = new ExcelFile();
+                ExcelWorksheetCollection worksheets = excelFile.Worksheets;
+                string sheetName = "Win Loss By Licensee";
+                ExcelWorksheet workSheet = worksheets.Add(sheetName);
+
+                int startRow = 0;
+                int startColumn = 0;
+                var currentRow = startRow;
+
+                #endregion ExcelTypes
+                #region MakeExcelFile
+
+                this.ExportReportHeader(ref workSheet,
+                    startRow,
+                    startColumn,
+                    ref currentRow,
+                    criteria,
+                    ReportDrilldownLevel.Agent);
+
+                this.ExportSuperReportContent(ref workSheet,
+                    startRow,
+                    startColumn,
+                    ref currentRow,
+                    criteria,
+                    report);
+
+                #endregion MakeExcelFile
+
+                this.ReponseStream(excelFile, string.Format("Win_Loss_By_Licensee_From_{0}_To_{1}",
+                    fromDate, toDate));
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+        }
+
+        private void ExportSuperReportContent(ref ExcelWorksheet ws,
+            int startRow,
+            int startColumn,
+            ref int currentRow,
+            WinLossByLicenseeCriteria criteria,
+            LicenseeDTOV2 report)
+        {
+            #region ExcelTypes
+
+            var currentColumn = startColumn;
+            CellRange currentCellRange;
+            var excelGemboxUtils = new ExcelGemboxUtils();
+            Color evenRowColor = Color.FromArgb(255, 243, 200);
+            Color oddRowColor = Color.White;
+
+            var textStyle = excelGemboxUtils.GetStyleText(false);
+            var intStyle = excelGemboxUtils.GetStyleIntNumber(0, false, string.Empty);
+            intStyle.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+            var twoDecimalNumberStyle = excelGemboxUtils.GetStyleIntNumber(2, false, ".00");
+            twoDecimalNumberStyle.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+
+            #endregion ExcelTypes
+
+            if (report != null && report.Items != null && report.Items.Count > 0)
+            {
+                for (int i = 0; i < report.Items.Count; i++)
+                {
+                    textStyle.FillPattern.SetSolid(i % 2 == 0
+                       ? evenRowColor
+                       : oddRowColor);
+                    intStyle.FillPattern.SetSolid(i % 2 == 0
+                        ? evenRowColor
+                        : oddRowColor);
+                    twoDecimalNumberStyle.FillPattern.SetSolid(i % 2 == 0
+                        ? evenRowColor
+                        : oddRowColor);
+
+                    var winLoss = report.Items[i];
+
+                    currentColumn = startColumn;
+                    currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
+                    currentCellRange.Merged = true;
+                    currentCellRange.Value = winLoss.Username;
+                    currentCellRange.Style = textStyle;
+
+                    this.ExportWinLossRow(ref ws,
+                        startRow,
+                        startColumn,
+                        ref currentRow,
+                        winLoss,
+                        textStyle,
+                        intStyle,
+                        twoDecimalNumberStyle,
+                        ReportDrilldownLevel.Agent,
+                        ReportRowType.NormalRow);
+                }
+
+                this.ExportReportTotal(ref ws,
+                    startRow,
+                    startColumn,
+                    ref currentRow,
+                    report.Totals,
+                    ReportDrilldownLevel.Agent);
+
+                this.ExportReportBaseCurrencyTotal(ref ws,
+                    startRow,
+                    startColumn,
+                    ref currentRow,
+                    report.TotalsBaseCurrency,
+                    ReportDrilldownLevel.Agent);
+            }
+            else
+            {
+                currentColumn = startColumn;
+                currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn + 14);
+                currentCellRange.Merged = true;
+                currentCellRange.Value = "There is no information available.";
+                currentCellRange.Style = textStyle;
+                currentCellRange.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+                currentCellRange.Style.Font.Weight = ExcelFont.BoldWeight;
+                currentRow++;
+            }
+        }
+
+        public void ExportMasterReport(string reportTitle, int licenseeId,
+            int currency, int BaseCurrency,
+            string fromDate, string toDate,
+            int showSb, int showRb,
+            int showNg, int showBa,
+            int showLc, int reportType,
+            int drawFilter, int excludeTest,
+            int pageIndex, int pageSize,
+            int reportSelected, int custId)
+        {
+            try
+            {
+                var report = this.SelReportByLicenseeDetail_MAgV2(licenseeId,
+                    currency, custId, BaseCurrency,
+                    fromDate, toDate,
+                    showSb, showRb,
+                    showNg, showBa,
+                    showLc, reportSelected,
+                    drawFilter, excludeTest,
+                    pageIndex, pageSize,
+                    0);
+
+                var criteria = new WinLossByLicenseeCriteria
+                {
+                    Currency = currency,
+                    ConvertToCurrency = BaseCurrency,
+                    FromDate = fromDate,
+                    ToDate = toDate,
+                    ShowSB = showSb,
+                    ShowRB = showRb,
+                    ShowNG = showNg,
+                    ShowBA = showBa,
+                    ShowLC = showLc,
+                    ReportType = reportType,
+                    Drawfilter = drawFilter,
+                    ExcludeTest = excludeTest,
+                    CurrentPage = pageIndex,
+                    ItemsPerPage = pageSize,
+                    CustID = custId
+                };
+
+                #region ExcelTypes
+
+                ExcelFile excelFile = new ExcelFile();
+                ExcelWorksheetCollection worksheets = excelFile.Worksheets;
+                string sheetName = "Win Loss By Licensee";
+                ExcelWorksheet workSheet = worksheets.Add(sheetName);
+
+                int startRow = 0;
+                int startColumn = 0;
+                var currentRow = startRow;
+
+                #endregion ExcelTypes
+                #region MakeExcelFile
+
+                this.ExportReportHeader(ref workSheet,
+                    startRow,
+                    startColumn,
+                    ref currentRow,
+                    criteria,
+                    ReportDrilldownLevel.Agent);
+
+                this.ExportSuperReportContent(ref workSheet,
+                    startRow,
+                    startColumn,
+                    ref currentRow,
+                    criteria,
+                    report);
+
+                #endregion MakeExcelFile
+
+                this.ReponseStream(excelFile, string.Format("Win_Loss_By_Licensee_From_{0}_To_{1}",
+                    fromDate, toDate));
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+        }
+
+        public void ExportAgentReport(string reportTitle, int licenseeId,
+            int currency, int BaseCurrency,
+            string fromDate, string toDate,
+            int showSb, int showRb,
+            int showNg, int showBa,
+            int showLc, int reportType,
+            int drawFilter, int excludeTest,
+            int pageIndex, int pageSize,
+            int reportSelected, int custId)
+        {
+            try
+            {
+                var report = this.SelReportByLicenseeDetail_AgV2(licenseeId,
+                    currency, custId, BaseCurrency,
+                    fromDate, toDate,
+                    showSb, showRb,
+                    showNg, showBa,
+                    showLc, reportSelected,
+                    drawFilter, excludeTest,
+                    pageIndex, pageSize,
+                    0);
+
+                var criteria = new WinLossByLicenseeCriteria
+                {
+                    Currency = currency,
+                    ConvertToCurrency = BaseCurrency,
+                    FromDate = fromDate,
+                    ToDate = toDate,
+                    ShowSB = showSb,
+                    ShowRB = showRb,
+                    ShowNG = showNg,
+                    ShowBA = showBa,
+                    ShowLC = showLc,
+                    ReportType = reportType,
+                    Drawfilter = drawFilter,
+                    ExcludeTest = excludeTest,
+                    CurrentPage = pageIndex,
+                    ItemsPerPage = pageSize,
+                    CustID = custId
+                };
+
+                #region ExcelTypes
+
+                ExcelFile excelFile = new ExcelFile();
+                ExcelWorksheetCollection worksheets = excelFile.Worksheets;
+                string sheetName = "Win Loss By Licensee";
+                ExcelWorksheet workSheet = worksheets.Add(sheetName);
+
+                int startRow = 0;
+                int startColumn = 0;
+                var currentRow = startRow;
+
+                #endregion ExcelTypes
+                #region MakeExcelFile
+
+                this.ExportReportHeader(ref workSheet,
+                    startRow,
+                    startColumn,
+                    ref currentRow,
+                    criteria,
+                    ReportDrilldownLevel.Agent);
+
+                this.ExportSuperReportContent(ref workSheet,
+                    startRow,
+                    startColumn,
+                    ref currentRow,
+                    criteria,
+                    report);
+
+                #endregion MakeExcelFile
+
+                this.ReponseStream(excelFile, string.Format("Win_Loss_By_Licensee_From_{0}_To_{1}",
+                    fromDate, toDate));
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+        }
+
+        public void ExportMemberReport(string reportTitle, int licenseeId,
+            int currency, int BaseCurrency,
+            string fromDate, string toDate,
+            int showSb, int showRb,
+            int showNg, int showBa,
+            int showLc, int reportType,
+            int drawFilter, int excludeTest,
+            int pageIndex, int pageSize,
+            int reportSelected, int custId)
+        {
+            try
+            {
+                var report = this.SelReportLicenseeDetailV2(licenseeId,
+                   currency, BaseCurrency,
+                   custId, fromDate,
+                   toDate, showSb,
+                   showRb, showNg,
+                   showBa, showLc,
+                   reportSelected, drawFilter,
+                   excludeTest, pageIndex,
+                   pageSize, 0);
+
+                var criteria = new WinLossByLicenseeCriteria
+                {
+                    Currency = currency,
+                    ConvertToCurrency = BaseCurrency,
+                    FromDate = fromDate,
+                    ToDate = toDate,
+                    ShowSB = showSb,
+                    ShowRB = showRb,
+                    ShowNG = showNg,
+                    ShowBA = showBa,
+                    ShowLC = showLc,
+                    ReportType = reportType,
+                    Drawfilter = drawFilter,
+                    ExcludeTest = excludeTest,
+                    CurrentPage = pageIndex,
+                    ItemsPerPage = pageSize,
+                    CustID = custId
+                };
+
+                #region ExcelTypes
+
+                ExcelFile excelFile = new ExcelFile();
+                ExcelWorksheetCollection worksheets = excelFile.Worksheets;
+                string sheetName = "Win Loss By Licensee";
+                ExcelWorksheet workSheet = worksheets.Add(sheetName);
+
+                int startRow = 0;
+                int startColumn = 0;
+                var currentRow = startRow;
+
+                #endregion ExcelTypes
+                #region MakeExcelFile
+
+                this.ExportReportHeader(ref workSheet,
+                     startRow,
+                     startColumn,
+                     ref currentRow,
+                     criteria,
+                     ReportDrilldownLevel.Member);
+
+                this.ExportSuperReportContent(ref workSheet,
+                    startRow,
+                    startColumn,
+                    ref currentRow,
+                    criteria,
+                    report);
+
+                #endregion MakeExcelFile
+
+                this.ReponseStream(excelFile, string.Format("Win_Loss_By_Licensee_From_{0}_To_{1}",
+                    fromDate, toDate));
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+        }
+
+        #endregion NAPExport
+    }
+}

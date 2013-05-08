@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Fanex.Tarus.Customer.Entities;
+
+namespace Fanex.Tarus.Customer.Business.SettingCustomer.CasinoComm
+{
+    public interface ICasinoCommissionService
+    {
+        Result UpdateCasinoCommForSuper(string username, decimal valueComm);
+        ResultCasinoComm CheckUsername(string username);
+    }
+}

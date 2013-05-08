@@ -1,0 +1,26 @@
+﻿
+
+
+namespace Fanex.Tarus.Reports.Business.MatchWinLoss
+{
+    public class RowType
+    {
+        public const int ThirdParty = 150;
+        public const int EightRM = 400;
+        public const int BARM = 401;
+        public const int KickOff = 18999;
+
+        /// <summary>
+        /// Value for rendering WLSummaryBySportType
+        /// ThirdParty: (colspan='3' ast home-vs-away)
+        /// ToteHR, Casino: display link
+        /// </summary>
+        public const int DisplayLink = 2;
+
+        public const int BetType = 1;
+        public const int LeagueNameTC = 1;
+        public const int SportTotal = 2;
+        public const int GrandTotal = 3;
+
+    }
+}

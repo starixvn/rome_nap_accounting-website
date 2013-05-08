@@ -1,0 +1,254 @@
+﻿using System.ServiceModel.Activation;
+
+namespace Sunplus.Accounting.Business.PT.MiniGame
+{
+    /// <summary>
+    /// Summary description for DailyTransManager
+    /// </summary>
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+    public class MiniGameManager : BaseManager, IServiceMiniGame
+    {
+        /* #region Super
+    public string GetSuperPTSetting(string username)
+    {
+        var miniGame = new SettingManager();
+        try
+        {
+            DataTable dt = miniGame.SelectSuper(username);
+            return JsonConvert.SerializeObject(dt);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public string UpdateSuper(int custid, double spt, double minpt, double comm)
+    {
+        var data = new Dictionary<string, object>
+           {
+               {"custid", custid},
+               {"roleid", 4},
+               {"modifybyid", AppSession.AccId},
+               {"modifybyuser", AppSession.AccUserName},
+               {"system", 3},
+               {"minpt", minpt},
+               {"spt", spt},
+               {"comm", comm},
+               {"ip", CurrentUserIp}
+               
+           };
+        var miniGame = new SettingManager();
+        try
+        {
+            return miniGame.UpdateSuper(data).ToString();
+        }
+        catch (Exception ex)
+            {
+                return ex.Message;
+            }
+    }
+
+    #endregion
+    #region Master
+    public string GetMasterPTSetting(string username)
+    {
+        var miniGame = new SettingManager();
+        try{
+            DataTable dt = miniGame.SelectMaster(username);
+            return JsonConvert.SerializeObject(dt);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public string UpdateMaster(int custid, double spt, bool isauto, double sautopt, double mpt, double minpt, double comm)
+    {
+        var data = new Dictionary<string, object>
+           {
+               {"custid", custid},
+               {"roleid", 3},
+               {"modifybyid", AppSession.AccId},
+               {"modifybyuser", AppSession.AccUserName},
+               {"system", 3},
+               {"spt", spt},
+               {"isautopt", isauto},
+               {"sautopt", sautopt},
+               {"mpt", mpt},
+               {"minpt", minpt},
+               {"comm", comm},
+               {"ip", CurrentUserIp}
+               
+           };
+        var miniGame = new SettingManager();
+        try
+        {
+            return miniGame.UpdateMaster(data).ToString();
+        }
+        catch (Exception ex)
+        {
+            return ex.Message;
+        }
+    }
+
+    public string GetAgentPTSetting(string username)
+    { 
+        var miniGame = new SettingManager();
+        try{
+        DataTable dt = miniGame.SelectAgent(username);
+        return JsonConvert.SerializeObject(dt);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public string UpdateAgent(int custid, double mpt, double apt, double minpt, double comm)
+    {
+        var data = new Dictionary<string, object>
+           {
+               {"custid", custid},
+               {"roleid", 2},
+               {"modifybyid", AppSession.AccId},
+               {"modifybyuser", AppSession.AccUserName},
+               {"system", 3},
+               {"mpt", mpt},
+               {"apt", apt},
+               {"minpt", minpt},
+               {"comm", comm},
+               {"ip", CurrentUserIp}
+               
+           };
+        var miniGame = new SettingManager();
+        try
+        {
+            return miniGame.UpdateAgent(data).ToString();
+        }
+        catch (Exception ex)
+        {
+            return ex.Message;
+        }
+    }
+
+    public string GetMemberPTSetting(string username)
+    {
+        var miniGame = new SettingManager();
+        try
+        {
+            DataTable dt = miniGame.SelectMember(username);
+            return JsonConvert.SerializeObject(dt);
+        }
+        catch (Exception ex)
+        {
+            return JsonConvert.SerializeObject(ex.Message);
+        }
+    }
+
+
+    public string UpdateMember(int custid, double apt, double comm)
+    {
+        var data = new Dictionary<string, object>
+           {
+               {"custid", custid},
+               {"roleid", 1},
+               {"modifybyid", AppSession.AccId},
+               {"modifybyuser", AppSession.AccUserName},
+               {"system", 3},
+               {"apt", apt},
+               {"comm", comm},
+               {"ip", CurrentUserIp}
+               
+           };
+        var miniGame = new SettingManager();
+        try
+        {
+            return miniGame.UpdateMember(data).ToString();
+        }
+        catch (Exception ex)
+        {
+            return JsonConvert.SerializeObject(ex.Message);
+        }
+    }
+
+    public string GetSuperOnMemberPTSetting(string username)
+    {
+        var miniGame = new SettingManager();
+        try{
+        DataTable dt = miniGame.SelectSuperOnMember(username);
+        return JsonConvert.SerializeObject(dt);
+        }
+        catch (Exception ex)
+        {
+            return JsonConvert.SerializeObject(ex.Message);
+        }
+    }
+
+    public string UpdateSuperOnMember(int custid, double spt, bool isautopt, double sautopt)
+    {
+        var data = new Dictionary<string, object>
+           {
+               {"custid", custid},
+               {"roleid", 4},
+               {"modifybyid", AppSession.AccId},
+               {"modifybyuser", AppSession.AccUserName},
+               {"system", 3},
+               {"spt", spt},
+               {"isautopt", isautopt},
+               {"sautopt", sautopt},
+               {"ip", CurrentUserIp}
+               
+           };
+        var miniGame = new SettingManager();
+        try
+        {
+            return miniGame.UpdateSuperOnMember(data).ToString();
+        }
+        catch (Exception ex)
+        {
+              return JsonConvert.SerializeObject(ex.Message);
+        }
+    }
+
+    public string GetMasterOnMemberPTSetting(string username)
+    {
+        var miniGame = new SettingManager();
+        try{
+        DataTable dt = miniGame.SelectMasterOnMember(username);
+        return JsonConvert.SerializeObject(dt);
+        }
+        catch (Exception ex)
+        {
+            return JsonConvert.SerializeObject(ex.Message);
+        }
+    }
+
+    public string UpdateMasterOnMember(int custid, double mpt)
+    {
+        var data = new Dictionary<string, object>
+           {
+               {"custid", custid},
+               {"roleid", 3},
+               {"modifybyid", AppSession.AccId},
+               {"modifybyuser", AppSession.AccUserName},
+               {"system", 3},
+               {"mpt", mpt},
+               {"ip", CurrentUserIp}
+               
+           };
+        var miniGame = new SettingManager();
+        try
+        {
+            return miniGame.UpdateMasterOnMember(data).ToString();
+        }
+        catch (Exception ex)
+        {
+            return ex.Message;
+        }
+    }
+    #endregion
+    * */
+    }
+}

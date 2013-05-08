@@ -1,0 +1,118 @@
+﻿@using DNAide.Core
+@model Fanex.Tarus.Customer.Entities.CustomerList.CustomerListModel
+@{
+    string[] arrAlpha = {"All", "0-9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+                                    "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Super List</title>
+    <link href="@Url.Content("~/App_Themes/Public/common.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/table.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/input.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/js/jQuery/Pager/pagination.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/js/jQuery/GridScroller/gridscroller.css?ver=4")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/js/ToolTip/Tipsy-Tooltip/tipsy.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Views/Customer/CustomerList/Style/CustomerList.css")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="main" style="margin-bottom: 6px;">
+        <div class="maincontent">
+            <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
+                <tr>
+                    <td class="maincontent_headerL">
+                    </td>
+                    <td class="maincontent_headerC">
+                        Super list
+                    </td>
+                    <td class="maincontent_headerR">
+                    </td>
+                </tr>
+            </table>
+            <div id="filter" class="maincontent_box hidden" style="width: 99%;">
+                <table>
+                    <tr>
+                        <td>
+                            <font class="b">Keyword</font>
+                        </td>
+                        <td>
+                            <input id="txtSearch" class="txt" type="text" onkeypress="return On_KeyPress(event);"
+                                onblur="on_Blur();" onfocus="On_Focus();" value="All" name="txtSearch" />
+                        </td>
+                        <td style="width: 66px;">
+                            <font class="b">First Letter:</font>
+                        </td>
+                        <td style="width: 60px;">
+                            <select id="listAlpha" class="w60" name="listAlpha">
+                                @foreach (var Alpha in arrAlpha)
+                                {
+                                    <option value="@Alpha">@Alpha</option>
+                                }
+                            </select>
+                        </td>
+                        <td style="width: 55px;">
+                            <font class="b">Currency:</font>
+                        </td>
+                        <td style="width: 60px;">
+                            @Html.DropDownList("listCurrency", new SelectList(ViewBag.Currencies.ToArray(), "Value", "Name", -1))
+                        </td>
+                        <td style="width: 40px;">
+                            <font class="b">Status:</font>
+                        </td>
+                        <td style="width: 60px;">
+                            <select id="listType" class="w60" name="listType">
+                                <option value="">All</option>
+                                <option value="0">Active</option>
+                                <option value="1">Closed</option>
+                            </select>
+                        </td>
+                        <td style="width: 85px;">
+                            <font class="b">Double Comm:</font>
+                        </td>
+                        <td style="width: 80px;">
+                            <select id="DComm" class="80px" name="DComm">
+                                <option value="">All</option>
+                                <option value="1">Allowed</option>
+                                <option value="0">Disallowed</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input class="btn" type="button" id="btnSearch" value="Search" onclick="SuperList.getSuperList(true);" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="SuperListMain" style="margin-top: 2px">
+                @Html.Partial("~/Views/Customer/CustomerList/Default/Super/_SuperListPartial.cshtml", Model)
+            </div>
+        </div>
+    </div>
+    <div id="dialogConfirm" style="display: none;">
+        <table border="0px" id="tblconfirm">
+        </table>
+    </div>
+    <iframe id="frm" width="0" height="0" frameborder="0" style="display: none"></iframe>
+</body>
+</html>
+<script language="javascript" type="text/javascript">
+    window.rootUrl = '@Url.Content("~")';
+
+    head.js("@Url.Content("~/js/json2.js")",
+            "@Url.Content("~/js/jQuery/jquery-1.7.js")",
+            "@Url.Content("~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js")",
+            "@Url.Content("~/js/common.js")", 
+            "@Url.Content("~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js?ver=10")",
+            "@Url.Content("~/js/jQuery/jquery.blockUI.1.33.js")",
+            "@Url.Content("~/js/BlockUI.js")",
+            "@Url.Content("~/js/jQuery/Pager/jpager.js")",
+            "@Url.Content("~/js/Customer.js")",
+            "@Url.Content("~/js/ViewIPInfo.js")",
+            "@Url.Content("~/js/common.js")",
+            "@Url.Content("~/js/showhidepopup.js")",
+            "@Url.Content("~/js/ToolTip/Tipsy-Tooltip/jquery.tipsy.js")",
+            "@Url.Content("~/Views/Customer/CustomerList/js/CustomerList.js?ver=2")",
+            "@Url.Content("~/Views/Customer/CustomerList/js/SuperList.js?ver=1")");
+           
+</script>

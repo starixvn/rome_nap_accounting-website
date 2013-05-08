@@ -1,0 +1,47 @@
+﻿
+
+
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Extensions;
+
+namespace Fanex.Tarus.Infrastructure.Helper.SportHelper
+{
+
+    public static class Bettype
+    {
+        private static string betTypeSuffix = ResourceExtension.GetResourceValue(ResourceExtension.Resources.VirtualSports, "BetTypeSuffix");
+
+        public static string GetBettype(int bettypeId, string betId)
+        {
+            string betypeName = string.Empty;
+            if (bettypeId >= 1301 && bettypeId <= 1334)
+            {
+                betypeName = CacheRef.GetBettypeNameSportingSolution(bettypeId, betId);
+            }
+            else
+            { 
+                betypeName = CacheRef.GetBettype(bettypeId);
+                if (1201 <= bettypeId && bettypeId < 1299)
+                {
+                    betypeName += betTypeSuffix;
+                }
+            }
+            return betypeName;
+            
+        }
+        public static string GetBettype(int bettypeId)
+        {
+            string betypeName = string.Empty;
+            betypeName = CacheRef.GetBettype(bettypeId);
+            if (1201 <= bettypeId && bettypeId < 1299)
+            {
+                betypeName += betTypeSuffix;
+            }
+            
+            return betypeName;
+
+        }
+            
+        
+    }
+}

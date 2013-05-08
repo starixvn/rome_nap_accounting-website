@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+    <link href="../../js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" rel="stylesheet"
+        type="text/css" />
+</head>
+
+<body>
+    <a href='#' onclick="openNewWindow()">open new window</a><br />
+    <a href='#' onclick="usingIbcWindow()">open ibc popup</a><br />
+    <a href='#' onclick="usingjqueryWindow()">open jquery popup</a>
+</body>
+<script src="../../js/jQuery/jquery.js" type="text/javascript"></script>
+<script src="../../js/jQuery/UI/jquery-ui-1.8.10.custom.min.js" type="text/javascript"></script>
+<script src="../../js/jQuery/jquery-jtemplates.js" type="text/javascript"></script>
+<script src="../../js/dialogbox.js" type="text/javascript"></script>
+<script src="../../js/showhidepopup.js" type="text/javascript"></script>
+<script src="../../js/IBCWnd/IBCWnd.js" type="text/javascript"></script>
+<script language="javascript" type="text/javascript">
+    var url = '../test.htm';
+    function openNewWindow() {
+        window.open(url, 'newwindow', 'width=400px; height:400px');
+    }
+    function usingIbcWindow() {
+        ibcWnd.open(url, '', 20, 20, 920, 700, 'class1', 'class2');
+    }
+    function usingjqueryWindow() {
+        OpenPopup(url, "test",400,400, true, true, window, 2000, null, null);
+    }
+</script>
+</html>

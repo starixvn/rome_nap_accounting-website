@@ -1,0 +1,853 @@
+﻿//using Sunplus.Core.LoggingLib;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using DNAide.Core;
+using DNAide.Data;
+using DNAide.Web;
+
+using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
+using Sunplus.Accounting.Entities;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.DataAccess;
+using Sunplus.Core.LoggingLib;
+using SCCACHE = SharedCache.WinServiceCommon.Provider.Cache.IndexusDistributionCache;
+using Sunplus.Accounting.Core.Web;
+using IBCUtils;
+/// <summary>
+/// Summary description for FinanceManager
+/// </summary>
+
+namespace Sunplus.Accounting.Business.PositionTaking
+{
+    public partial class HRPositionTakingManager
+    {
+        #region CONST variables
+
+        //path to template
+        public enum HRType
+        {
+            TOTE = 1,
+            FIXED = 2
+        }
+
+        public static readonly string TPL_HR_CustInfo = "Customer/v2/HR/HorseRacingCustInfo.htm";
+        public static readonly string TPL_HR_SETTING = "Customer/v2/HR/HorseRacingSetting.htm";
+        public static readonly string TPL_HR_PT = "Customer/v2/HR/HorseRacingPT.htm";
+        public static readonly string TPL_HR_PTDATA = "Customer/v2/HR/HorseRacingPTData.htm";
+        public static readonly string TPL_HR_PT_SUPER = "Customer/v2/HR/HorseRacingPTDataSuper.htm";
+        public static readonly string TPL_HR_PT_HEADER = "Customer/v2/HR/HorseRacingPTHeader.htm";
+
+        public static readonly string TPL_HR_BetSetting = "Customer/v2/HR/HorseRacingBetSetting.htm";
+        public static readonly string TPL_HR_PT_Value = "Customer/v2/HR/HorseRacingPTValue.htm";
+        public static readonly string TPL_HR_IBCPT_Value = "Customer/v2/HR/HorseRacingIBCPTValue.htm";
+        public static readonly string TPL_HR_COMM = "Customer/v2/HR/HorseRacingCommission.htm";
+        public static readonly string TPL_HR_COMM_MEMBER = "Customer/v2/HR/HorseRacingCommissionMember.htm";
+        public static readonly string TPL_HR_COMM_MEMBER_DATA = "Customer/v2/HR/HRCommissionData.htm";
+        public static readonly string TPL_HR_COMM_MEMBER_VALUE = "Customer/v2/HR/HRCommissionValue.htm";
+
+        public static readonly string TPL_HR_SUPERMASTER_BetSetting =
+            "Customer/v2/HR/HorseRacingBetSettingSuperMasterPT.htm";
+
+        public static readonly string TPL_HR_MINMAX_SETTING = "Customer/v2/HR/HorseRacingMinMaxSetting.htm";
+        public static readonly string TPL_HR_MINMAX_PT = "Customer/v2/HR/HorseRacingMinMaxPT.htm";
+
+        //Tag name on template
+        public static readonly string TAG_maxpt = "maxpt";
+        public static readonly string TAG_minpt = "minpt";
+        public static readonly string TAG_maxpt_value = "maxpt_value";
+        public static readonly string TAG_minpt_value = "minpt_value";
+
+        public static readonly string TAG_copy_preset = "copy_preset";
+
+        public static readonly string TAG_Commission = "commission";
+
+        public static readonly string TAG_ibcpt = "ibcpt";
+        public static readonly string TAG_ibcpt_value = "ibcpt_value";
+
+        public static readonly string TAG_superpt = "superpt";
+        public static readonly string TAG_superpt_value = "superpt_value";
+        public static readonly string TAG_superautopt = "superautopt";
+        public static readonly string TAG_superautopt_value = "superautopt_value";
+        public static readonly string TAG_chksauto_value = "chksauto";
+        public static readonly string TAG_masterpt = "masterpt";
+        public static readonly string TAG_masterpt_value = "masterpt_value";
+        public static readonly string TAG_agentpt = "agentpt";
+        public static readonly string TAG_agentpt_value = "agentpt_value";
+        public static readonly string TAG_PT_Data = "pt_data";
+        public static readonly string TAG_PT_HEADER = "header";
+        public static readonly string TAG_PT_HEADER_Value = "header_value";
+        public static readonly string TAG_CopyPT = "copypt";
+        public static readonly string TAG_CHK_Copy = "chkCopy";
+        public static readonly string TAG_CHK_CopyAll = "chkCopyAll";
+        public static readonly string TAG_Copy_Colspan = "copy-colspan";
+        public static readonly string TAG_Value = "value";
+        public static readonly string TAG_LBL_CopyFrom = "lblCopyFrom";
+        public static readonly string TAG_LBL_MaxPT = "lblMaxPT";
+        public static readonly string TAG_LBL_MinPT = "lblMinPT";
+        public static readonly string TAG_LBL_SuperPT = "lblSuperPT";
+
+        public static readonly string TAG_LBL_IBCPT = "lblIBCPT";
+        public static readonly string TAG_LBL_SuperAutoPT = "lblSuperAutoPT";
+        public static readonly string TAG_LBL_MasterPT = "lblMasterPT";
+        public static readonly string TAG_LBL_AgentPT = "lblAgentPT";
+        public static readonly string TAG_LBL_Commission = "lblCommission";
+        public static readonly string TAG_LBL_Tote = "{lbltote}";
+        public static readonly string TAG_Value_Tote = "{totevalue}";
+        public static readonly string TAG_LBL_Fixed = "{lblfixed}";
+        public static readonly string TAG_Value_Fixed = "{fixedvalue}";
+        public static readonly string TAG_LBL_CopyPT = "copypt";
+        public static readonly string TAG_PT_JS = "js";
+        public static readonly string TAG_CHK_CopyPreset = "chkCopyPreset";
+        public static readonly string TAG_LBL_CopyPreset = "lblCopyPreset";
+        public static string DISCOUNT = "discount";
+        //Style
+        public static string CLASS_Select_PT = "pt";
+
+        ///
+        //javascript variable
+        private static string JS_arrPTType = "arrPTType";
+
+        private static string JS_arrBetType = "arrBettype";
+        private static string JS_arrBetType151_Tote = "arrBettype151_tote";
+        private static string JS_arrBetType151_Fixed = "arrBettype151_fixed";
+        private static string JS_CustId = "custid";
+        private static string JS_RoleId = "roleid";
+        private static string JS_UplineId = "uplineid";
+        private static string JS_hPTData = "hPTData";
+        private static string JS_AssignHashtableData = "{0}.put('{1}', {2});";
+        private static string JS_Var_IsUseAuto = "isUseAuto";
+        private static string JS_Var_msPTMax = "msPTMax";
+        private static string JS_Var_mmPTMax = "mmPTMax";
+        private static string JS_Var_IsAutoMaster = "isAutoMaster";
+        private static string JS_Var_disableMinPTHR = "disableMinPTHR";
+        private static string JS_Var_bettypeMemberPTMax = "bettypeMemberPTMax";
+
+
+        //END
+        //javascript function 
+        public static readonly string FUNC_OnChangePT = "OnChangePT({0})";
+        public static readonly string PARAMS_OnChangePT = "this";
+
+        public static readonly string FUNC_ChkCopyFrom = "ChkCopyFrom({0})";
+
+        public static readonly string PARAMS_ChkCopyFrom = "this";
+
+        public static readonly string FUNC_ChkAuto = "CheckAuto({0})";
+        public static readonly string FUNC_ChkAutoForCopyBettype = "CheckAutoForCopyBettype({0})";
+        public static readonly string PARAMS_ChkAuto = "this";
+        //END
+
+        //END
+
+        private static int bettypeMemberPTMaxHR = 31;
+        private static int BETTYPE_COPY_ALL = 31;
+        private static int BetTypeInterval = 10;
+
+        private static double s4 = 0.9,
+                              s3 = 0.9,
+                              s1 = 0.9,
+                              m4 = 0.9,
+                              m3 = 0.9,
+                              m2 = 0.9,
+                              m1 = 0.9,
+                              a4 = 0.9,
+                              a2 = 0.9,
+                              a1 = 0.9;
+
+        private static double u1 = 0.9, u3 = 0.9, n4, n3, n2, l4 = 0.9, l3 = 0.9, l2 = 0.9;
+
+        private static double s4Max = 0.9,
+                              s3Max = 0.9,
+                              s1Max = 0.9,
+                              m3Max = 0.9,
+                              m2Max = 0.9,
+                              m1Max = 0.9,
+                              a2Max = 0.9,
+                              a1Max = 0.9;
+
+        private static double u1Max = 0.9,
+                              u3Max = 0.9,
+                              n4Max = 0.9,
+                              n3Max = 0.9,
+                              n2Max = 0.9,
+                              l4Max = 0.9,
+                              l3Max = 0.9,
+                              l2Max = 0.9;
+
+        private static double m3MaxAuto = 0.9, n3MaxAuto = 0.9;
+
+        private static double s4Min, s3Min, s1Min, m3Min, m2Min, m1Min, a2Min, a1Min;
+        private static double u1Min, u3Min, n4Min, n3Min, n2Min, l4Min, l3Min, l2Min;
+        private static double m3MinAuto, n3MinAuto;
+        private static double maxPTHR = 0.5, minPT, maxAutoPT = 0.5, maxIBCPT = 0.2;
+
+        //Commission
+        private static double COMM_HR_MAX = 0.01;
+        private static int COMM_HR_INTERVAL = 5;
+
+        public static readonly string Delimiter = "_";
+        public static readonly string PREFIX_SPORT = "v";
+        public static readonly string PREFIX_CHK_SAUTO = "chksauto";
+        public static readonly string PT = "positiontaking";
+
+        public static readonly string IBCPT = "IBCPositiontaking",
+                                      SPT = "spositiontaking",
+                                      MPT = "mpositiontaking",
+                                      APT = "apositiontaking",
+                                      Auto = "auto",
+                                      STR_IsAuto = "isauto",
+                                      MINPT = "min",
+                                      MAXPT = "max",
+                                      MaPT = "mapositiontaking",
+                                      SMPT = "smpositiontaking",
+                                      MEM = "mem";
+
+        public static readonly string CopyPreset = "copypreset";
+        public static readonly string MINBET = "minbet", MAXBET = "maxbet", MaxPerMatch = "maxpermatch";
+
+        public static readonly string ISUPLINEDISABLED = "DisableUplinesHR",
+                                      ISUPLINEDISABLEDOpenTote = "DisableUplinesOpenTote",
+                                      ISDISABLED = "DisableHorseracing",
+                                      ISDOWNLINEDISABLED = "DisableDownlinesHR",
+                                      ISDISABLEDOpenTote = "DisableOpenTote",
+                                      ISDOWNLINEDISABLEDOpenTote = "DisableDownlinesOpenTote";
+
+        public static readonly string ISUPLINEDISABLED_Update = "uplinedisablehr",
+                                      ISDISABLED_Update = "disablehorseracing",
+                                      ISDOWNLINEDISABLED_Update = "disabledownline",
+                                      ISDISABLEDOpenTote_Update = "disableopentote",
+                                      ISDOWNLINEDISABLEDOpenTote_Update = "disabledownlinesopentote";
+
+        public static readonly string IS_COPY_PRESET = "iscopypreset";
+
+        public static string GetHRTypeString(HRType hrType)
+        {
+            switch (hrType)
+            {
+                case HRType.TOTE:
+                    return "tote";
+                case HRType.FIXED:
+                    return "fixed";
+                default:
+                    return "";
+            }
+        }
+
+        #endregion
+
+        private static Hashtable SaToteCurrencies
+        {
+            get
+            {
+                Hashtable listHrCurrency;
+                try
+                {
+                    listHrCurrency = SCCACHE.SharedCache.Get("HRAllowCurrencyList") as Hashtable ??
+                                     GetSaToteCurrencies();
+                }
+                catch (Exception ex)
+                {
+                    listHrCurrency = GetSaToteCurrencies();
+                    SaToteCurrencies = listHrCurrency;
+                }
+
+
+                return listHrCurrency;
+            }
+            set { SCCACHE.SharedCache.Add("HRAllowCurrencyList", value, DateTime.Now.AddHours(5)); }
+        }
+
+        /// <summary>
+        /// Add pt value to javascript variable hPTData
+        /// </summary>
+        /// <returns></returns>
+        private static string AssignJSPTData(List<PositionTakingDetail> lsPTData)
+        {
+            try
+            {
+                string retValue = "";
+                string hashtableName = JS_hPTData;
+                foreach (PositionTakingDetail ptDetail in lsPTData)
+                {
+                    retValue += string.Format(JS_AssignHashtableData, hashtableName, ptDetail.PTName, ptDetail.PTValue);
+                }
+                return retValue;
+            }
+            catch (Exception ex)
+            {
+
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                return string.Empty;
+            }
+        }
+
+        private static string GenJSArrayPT(List<string> lsPT)
+        {
+            try
+            {
+                string retValue = "";
+
+                if (lsPT == null || lsPT.Count == 0)
+                    return string.Empty;
+                foreach (string ptType in lsPT)
+                {
+                    retValue += "'" + ptType + "'" + ",";
+                }
+                retValue = retValue.Substring(0, retValue.Length - 1);
+                retValue = string.Format(Globals.JS_arrayFormat, retValue);
+
+                return retValue;
+            }
+            catch (Exception ex)
+            {
+
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                return string.Empty;
+            }
+        }
+
+        private static string GenJSArray(List<string> lsData)
+        {
+            try
+            {
+                string retValue = "";
+
+                if (lsData == null || lsData.Count == 0)
+                    return string.Empty;
+                foreach (string ptType in lsData)
+                {
+                    retValue += ptType + ",";
+                }
+                retValue = retValue.Substring(0, retValue.Length - 1);
+                retValue = string.Format(Globals.JS_arrayFormat, retValue);
+
+                return retValue;
+            }
+            catch (Exception ex)
+            {
+
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                return string.Empty;
+            }
+        }
+
+
+        private static void AssignJavaScript(ref string tplPT, List<string> lsData)
+        {
+            string jsData = "<script type='text/javascript'>";
+            if (lsData != null)
+            {
+                foreach (string sData in lsData)
+                {
+                    jsData += sData;
+                }
+            }
+            jsData += "var ID_CHECKBOX_DISABLEDCASINO = '" + Globals.ID_CHECKBOX_DISABLEDCASINO + "';\r\n";
+            jsData += "var strHidUpdDownline = '" + Globals.HIDDEN_UPDDOWNLLINE + "';";
+            jsData += "var strConfirmDisableCS = '" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "strConfirmDisableCS").Replace("'", "\\'") + "';\r\n";
+            jsData += "var strConfirmEnableCS = '" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "strConfirmEnableCS").Replace("'", "\\'") + "';\r\n";
+
+            //Assign js betsetting
+            jsData += " var alertMinbet='" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "alertIncorrectMinBet") + "';\r\n";
+            jsData += " var alertMaxbet='" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "alertIncorrectMaxBet") + "';\r\n";
+            jsData += " var alertMaxpermatch='" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "alertIncorrectMaxPerMatch") + "';\r\n";
+            jsData += " var alertCompare3='" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "alertMaxLessMin") + "';\r\n";
+            jsData += " var alertCompare='" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "alertMaxLessMaxPer") + "';\r\n";
+            jsData += " var alertminbetC='" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblalertMinbetCompare") + "';\r\n";
+            jsData += " var alertMaxbetC='" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblalerMaxbetCompare") + "';\r\n";
+            jsData += " var alertMaxpermatchC='" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblalertMaxPerMatchCompare") + "';\r\n";
+            jsData += " var alertMaxpermatchCMin='" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblalertMaxPerMatchCompareMin") + "';\r\n";
+            jsData += " var alertMaxpermatchCMax='" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblalertMaxPerMatchCompareMax") + "';\r\n";
+
+            jsData += "</script>";
+
+            TemplateHandler.Assign(ref tplPT, "{jsdata}", jsData);
+        }
+
+        private static string AssignJavaScript(ref string tplPT, CustomerDetail cust)
+        {
+            string jsData = "";
+            jsData += "var ID_CHECKBOX_DISABLEDCASINO = '" + Globals.ID_CHECKBOX_DISABLEDCASINO + "';\r\n";
+            jsData += "var strHidUpdDownline = '" + Globals.HIDDEN_UPDDOWNLLINE + "';";
+            jsData += "var strConfirmDisableCS = '" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "strConfirmDisableCS").Replace("'", "\\'") + "';\r\n";
+            jsData += "var strConfirmEnableCS = '" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "strConfirmEnableCS").Replace("'", "\\'") + "';\r\n";
+
+            //Assign js betsetting
+            jsData += " var alertMinbet='" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "alertIncorrectMinBet") + "';\r\n";
+            jsData += " var alertMaxbet='" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "alertIncorrectMaxBet") + "';\r\n";
+            jsData += " var alertMaxpermatch='" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "alertIncorrectMaxPerMatch") + "';\r\n";
+            jsData += " var alertCompare3='" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "alertMaxLessMin") + "';\r\n";
+            jsData += " var alertCompare='" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "alertMaxLessMaxPer") + "';\r\n";
+            jsData += " var alertminbetC='" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblalertMinbetCompare") + "';\r\n";
+            jsData += " var alertMaxbetC='" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblalerMaxbetCompare") + "';\r\n";
+            jsData += " var alertMaxpermatchC='" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblalertMaxPerMatchCompare") + "';\r\n";
+            jsData += " var alertMaxpermatchCMin='" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblalertMaxPerMatchCompareMin") + "';\r\n";
+            jsData += " var alertMaxpermatchCMax='" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblalertMaxPerMatchCompareMax") + "';\r\n";
+            jsData += string.Format(Globals.JS_VariableFormat, JS_CustId, cust.CustID);
+            jsData += string.Format(Globals.JS_VariableFormat, JS_RoleId, cust.RoleId);
+            jsData += string.Format(Globals.JS_VariableFormat, JS_UplineId, cust.UplineId);
+
+            return jsData;
+        }
+
+        private static string AssignCustInfo(CustomerDetail custdetail, int roleid, Globals.PTType pttype)
+        {
+            string fiinfo = "";
+            fiinfo = WebUtils.LoadTemplate(TPL_HR_CustInfo);
+            TemplateHandler.Assign(ref fiinfo, "{lblFirstname}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblFirstname"));
+            TemplateHandler.Assign(ref fiinfo, "{firstname}", custdetail.FirstName);
+            TemplateHandler.Assign(ref fiinfo, "{lblLastname}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblLastname"));
+            TemplateHandler.Assign(ref fiinfo, "{lastname}", custdetail.LastName);
+            TemplateHandler.Assign(ref fiinfo, "{lblPhone}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblPhone"));
+            TemplateHandler.Assign(ref fiinfo, "{phone}", custdetail.Phone);
+            TemplateHandler.Assign(ref fiinfo, "{lblMobilePhone}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMobilePhone"));
+            TemplateHandler.Assign(ref fiinfo, "{mobile}", custdetail.MobilePhone);
+            TemplateHandler.Assign(ref fiinfo, "{lblFax}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblFax"));
+            TemplateHandler.Assign(ref fiinfo, "{fax}", custdetail.Fax);
+
+            string hiddenInfo = HtmlHelper.GenHidden(Globals.HIDDEN_CustId, CastAide.AsString(custdetail.CustID));
+            hiddenInfo += HtmlHelper.GenHidden(Globals.HIDDEN_Role, CastAide.AsString(custdetail.RoleId));
+            TemplateHandler.Assign(ref fiinfo, "hiddenInfo", hiddenInfo);
+            return fiinfo;
+        }
+
+        public static List<int> GetBetTypeList(DataTable dt, char delimiter, HRType hrType)
+        {
+            string value;
+            int ivalue;
+            int positon;
+            var listbettype = new List<int>();
+            foreach (DataColumn dtc in dt.Columns)
+            {
+                positon = dtc.ColumnName.LastIndexOf(delimiter);
+                if (positon > 0)
+                {
+                    value = dtc.ColumnName.Substring(positon + 1, dtc.ColumnName.Length - positon - 1);
+                    ivalue = CastAide.AsInt16(value, 0);
+                    if (ivalue > 0)
+                    {
+                        if (!listbettype.Contains(ivalue))
+                        {
+                            if (IsRightBettype(hrType, ivalue))
+                                listbettype.Add(ivalue);
+                        }
+                    }
+                }
+            }
+            return listbettype;
+        }
+
+        private static bool IsRightBettype(HRType hrType, int bettype)
+        {
+            switch (hrType)
+            {
+                case HRType.TOTE:
+                    if (IsToteBettype(bettype))
+                        return true;
+                    return false;
+                case HRType.FIXED:
+                    if (!IsToteBettype(bettype))
+                        return true;
+                    return false;
+                default:
+                    return false;
+            }
+        }
+
+        public static List<int> GetBetTypeList(DataTable dt, char delimiter)
+        {
+            string value;
+            int ivalue;
+            int positon;
+            var listbettype = new List<int>();
+            foreach (DataColumn dtc in dt.Columns)
+            {
+                positon = dtc.ColumnName.LastIndexOf(delimiter);
+                if (positon > 0)
+                {
+                    value = dtc.ColumnName.Substring(positon + 1, dtc.ColumnName.Length - positon - 1);
+                    ivalue = CastAide.AsInt16(value, 0);
+                    if (ivalue > 0)
+                    {
+                        if (!listbettype.Contains(ivalue))
+                        {
+                            listbettype.Add(ivalue);
+                        }
+                    }
+                }
+            }
+            return listbettype;
+        }
+
+        public static Dictionary<string, double> GetValueByBetType(DataTable dt, char delimiter, int bettype)
+        {
+            string value;
+            int ivalue;
+            int positon;
+            var dvalue = new Dictionary<string, double>();
+            foreach (DataColumn dtc in dt.Columns)
+            {
+                positon = dtc.ColumnName.LastIndexOf(delimiter);
+                if (positon > 0)
+                {
+                    //value = dtc.ColumnName.Substring(positon + 1, dtc.ColumnName.Length - positon - 1);
+                    value = dtc.ColumnName.Substring(positon + 1, dtc.ColumnName.Length - positon - 1);
+                    ivalue = CastAide.AsInt16(value, 0);
+                    if (ivalue == bettype)
+                    {
+                        dvalue.Add(dtc.ColumnName, CastAide.AsDouble(dt.Rows[0][dtc.ColumnName], 0));
+                    }
+                    else
+                    {
+                        if (ivalue == 0)
+                        {
+                            if (value.Equals("min", StringComparison.CurrentCultureIgnoreCase) ||
+                                value.Equals("max", StringComparison.CurrentCultureIgnoreCase))
+                            {
+                                value = dtc.ColumnName.Substring(positon - bettype.ToString().Length,
+                                                                 bettype.ToString().Length);
+                                ivalue = CastAide.AsInt16(value, -1);
+                                if (ivalue == bettype)
+                                {
+                                    if (dtc.ColumnName.Substring(0, positon).IndexOf(delimiter) > 0)
+                                    {
+                                        dvalue.Add(dtc.ColumnName, CastAide.AsDouble(dt.Rows[0][dtc.ColumnName], 0));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                //if (dtc.ColumnName.IndexOf(
+            }
+            return dvalue;
+        }
+
+        public static string GetRoleName(int RoleID)
+        {
+            switch (RoleID)
+            {
+                case 1:
+                    return ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Member");
+                case 2:
+                    return ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Agent");
+                case 3:
+                    return ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Master");
+                case 4:
+                    return ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Super");
+            }
+            return "";
+        }
+
+        public static void AssignData(int sporttype, ref CustomerDetail custDetail,
+                                      ref Dictionary<string, string> betsetting, ref Dictionary<string, string> custComm,
+                                      ref Dictionary<string, double> custPT, DataTable dt)
+        {
+            var bettype = new List<int>();
+            string prefix = "";
+            prefix = (sporttype > 1) ? "v" + sporttype : "";
+
+            bettype = GetBetTypeList(dt, '_');
+            //Assign PT Data
+            var _custPT = new Dictionary<string, double>();
+            foreach (int i in bettype)
+            {
+                _custPT.Clear();
+                _custPT = GetValueByBetType(dt, '_', i);
+
+                foreach (string key in _custPT.Keys)
+                {
+                    custPT.Add(key, _custPT[key]);
+                }
+            }
+
+
+            //Assign Cust Detail
+            custDetail.UserName = dt.Rows[0]["username"].ToString();
+            custDetail.Currency = int.Parse(dt.Rows[0]["currency"].ToString());
+            custDetail.FirstName = dt.Rows[0]["firstname"].ToString();
+            custDetail.LastName = dt.Rows[0]["lastname"].ToString();
+            custDetail.Phone = dt.Rows[0]["phone"].ToString();
+            custDetail.MobilePhone = dt.Rows[0]["mobilephone"].ToString();
+            custDetail.Fax = dt.Rows[0]["Fax"].ToString();
+
+            try
+            {
+                custDetail.IsDisabledHR = CastAide.AsBoolean(dt.Rows[0][ISDISABLED], false);
+                custDetail.IsDisabledHRDL = CastAide.AsBoolean(dt.Rows[0][ISDOWNLINEDISABLED], false);
+            }
+            catch
+            {
+            }
+
+
+            try
+            {
+                custDetail.IsDisabledOpenTote = CastAide.AsBoolean(dt.Rows[0][ISDISABLEDOpenTote], false);
+                custDetail.IsDisabledOpenToteDL = CastAide.AsBoolean(dt.Rows[0][ISDOWNLINEDISABLEDOpenTote], false);
+            }
+            catch
+            {
+            }
+
+            try
+            {
+                custDetail.IsDisabledHRUL = CastAide.AsBoolean(dt.Rows[0][ISUPLINEDISABLED], false);
+            }
+            catch
+            {
+            }
+
+            try
+            {
+                custDetail.IsDisabledOpenToteUL = CastAide.AsBoolean(dt.Rows[0][ISUPLINEDISABLEDOpenTote], false);
+            }
+            catch
+            {
+            }
+
+            try
+            {
+                betsetting.Add(MINBET + "_min_31",
+                               FormatHandler.FormatNumber1(CastAide.AsDouble(dt.Rows[0][MINBET + "_min_31"])));
+                betsetting.Add(MAXBET + "_max_31",
+                               FormatHandler.FormatNumber1(CastAide.AsDouble(dt.Rows[0][MAXBET + "_max_31"])));
+                betsetting.Add(MaxPerMatch + "_max_31",
+                               FormatHandler.FormatNumber1(CastAide.AsDouble(dt.Rows[0][MaxPerMatch + "_max_31"])));
+
+                betsetting.Add(MINBET + "_min_41",
+                               FormatHandler.FormatNumber1(CastAide.AsDouble(dt.Rows[0][MINBET + "_min_41"])));
+                betsetting.Add(MAXBET + "_max_41",
+                               FormatHandler.FormatNumber1(CastAide.AsDouble(dt.Rows[0][MAXBET + "_max_41"])));
+                betsetting.Add(MaxPerMatch + "_max_41",
+                               FormatHandler.FormatNumber1(CastAide.AsDouble(dt.Rows[0][MaxPerMatch + "_max_41"])));
+            }
+            catch (Exception ex)
+            {
+            }
+            try
+            {
+                betsetting.Add(MaxPerMatch + "_min_31",
+                               FormatHandler.FormatNumber1(CastAide.AsDouble(dt.Rows[0][MaxPerMatch + "_min_31"])));
+                betsetting.Add(MaxPerMatch + "_min_41",
+                               FormatHandler.FormatNumber1(CastAide.AsDouble(dt.Rows[0][MaxPerMatch + "_min_41"])));
+            }
+            catch (Exception ex)
+            {
+            }
+
+            //Assign Cust BetSetting
+            try
+            {
+                betsetting.Add(MINBET + "_31",
+                               FormatHandler.FormatNumber1(CastAide.AsDouble(dt.Rows[0][MINBET + "_31"])));
+                betsetting.Add(MAXBET + "_31",
+                               FormatHandler.FormatNumber1(CastAide.AsDouble(dt.Rows[0][MAXBET + "_31"])));
+                betsetting.Add(MaxPerMatch + "_31",
+                               FormatHandler.FormatNumber1(CastAide.AsDouble(dt.Rows[0][MaxPerMatch + "_31"])));
+
+                betsetting.Add(MINBET + "_41",
+                               FormatHandler.FormatNumber1(CastAide.AsDouble(dt.Rows[0][MINBET + "_41"])));
+                betsetting.Add(MAXBET + "_41",
+                               FormatHandler.FormatNumber1(CastAide.AsDouble(dt.Rows[0][MAXBET + "_41"])));
+                betsetting.Add(MaxPerMatch + "_41",
+                               FormatHandler.FormatNumber1(CastAide.AsDouble(dt.Rows[0][MaxPerMatch + "_41"])));
+            }
+            catch (Exception ex)
+            {
+            }
+
+
+            //Assign Cust Comm
+        }
+
+        public static DataTable GenSampleDataTablePT()
+        {
+            var dt = new DataTable();
+            var dtc1 = new DataColumn("v201spositiontaking_2", Type.GetType("System.Double"));
+            var dtc2 = new DataColumn("v201mpositiontaking_2", Type.GetType("System.Double"));
+            var dtc3 = new DataColumn("v201apositiontaking_2", Type.GetType("System.Double"));
+            var dtc4 = new DataColumn("v201spositiontaking_3", Type.GetType("System.Double"));
+            var dtc5 = new DataColumn("v201mpositiontaking_3", Type.GetType("System.Double"));
+            var dtc6 = new DataColumn("v201apositiontaking_3", Type.GetType("System.Double"));
+
+            var dtc7 = new DataColumn(MINBET + "v201", Type.GetType("System.Double"));
+            var dtc8 = new DataColumn(MAXBET + "v201", Type.GetType("System.Double"));
+            var dtc9 = new DataColumn(MaxPerMatch + "v201", Type.GetType("System.Double"));
+            var dtc10 = new DataColumn(ISUPLINEDISABLED, Type.GetType("System.Boolean"));
+            var dtc11 = new DataColumn(ISDISABLED, Type.GetType("System.Boolean"));
+            var dtc12 = new DataColumn(ISDOWNLINEDISABLED, Type.GetType("System.Boolean"));
+
+            var dtc13 = new DataColumn("firstname", Type.GetType("System.String"));
+            var dtc14 = new DataColumn("lastname", Type.GetType("System.String"));
+            var dtc15 = new DataColumn("phone", Type.GetType("System.String"));
+            var dtc16 = new DataColumn("mobilephone", Type.GetType("System.String"));
+            var dtc17 = new DataColumn("Fax", Type.GetType("System.String"));
+            var dtc18 = new DataColumn("username", Type.GetType("System.String"));
+
+            var dtc19 = new DataColumn(MINBET + "v201_max", Type.GetType("System.Double"));
+            var dtc20 = new DataColumn(MAXBET + "v201_min", Type.GetType("System.Double"));
+            var dtc21 = new DataColumn(MaxPerMatch + "v201_min", Type.GetType("System.Double"));
+            var dtc22 = new DataColumn(MaxPerMatch + "v201_max", Type.GetType("System.Double"));
+
+            dt.Columns.Add(dtc1);
+            dt.Columns.Add(dtc2);
+            dt.Columns.Add(dtc3);
+            dt.Columns.Add(dtc4);
+            dt.Columns.Add(dtc5);
+            dt.Columns.Add(dtc6);
+            dt.Columns.Add(dtc7);
+            dt.Columns.Add(dtc8);
+            dt.Columns.Add(dtc9);
+            dt.Columns.Add(dtc10);
+            dt.Columns.Add(dtc11);
+            dt.Columns.Add(dtc12);
+            dt.Columns.Add(dtc13);
+            dt.Columns.Add(dtc14);
+            dt.Columns.Add(dtc15);
+            dt.Columns.Add(dtc16);
+            dt.Columns.Add(dtc17);
+            dt.Columns.Add(dtc18);
+            dt.Columns.Add(dtc19);
+            dt.Columns.Add(dtc20);
+            dt.Columns.Add(dtc21);
+            dt.Columns.Add(dtc22);
+
+            DataRow row;
+            row = dt.NewRow();
+            row["v201spositiontaking_2"] = "0.9";
+            row["v201mpositiontaking_2"] = "0.9";
+            row["v201apositiontaking_2"] = "0.9";
+            row["v201spositiontaking_3"] = "0.85";
+            row["v201mpositiontaking_3"] = "0.85";
+            row["v201apositiontaking_3"] = "0.85";
+
+            row[MINBET + "v201"] = "0";
+            row[MAXBET + "v201"] = "0";
+            row[MaxPerMatch + "v201"] = "0";
+            row[MINBET + "v201_max"] = "12";
+            row[MAXBET + "v201_min"] = "60";
+            row[MaxPerMatch + "v201_min"] = "12";
+            row[MaxPerMatch + "v201_max"] = "1000";
+
+            row[ISUPLINEDISABLED] = "false";
+            row[ISDISABLED] = "true";
+            row[ISDOWNLINEDISABLED] = "true";
+
+            row["username"] = "phuongnguyen";
+            row["firstname"] = "Phuong";
+            row["lastname"] = "nguyen";
+            row["phone"] = "123456789";
+            row["mobilephone"] = "123456789";
+            row["Fax"] = "123456789";
+
+            dt.Rows.Add(row);
+            return dt;
+        }
+
+        private static bool IsToteBettype(int bettype)
+        {
+            switch (bettype)
+            {
+                case 31:
+                case 32:
+                case 33:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        private static bool IsIBCPTBettype(int bettype)
+        {
+            switch (bettype)
+            {
+                case 31:
+                case 41:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        public static string GetBettypeName(int bettype)
+        {
+            switch (bettype)
+            {
+                case 31:
+                case 41:
+                case 51:
+                    return ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblWin");
+                case 32:
+                case 42:
+                case 52:
+                    return ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblPlace");
+                case 33:
+                case 43:
+                case 53:
+                    return ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblWinPlace");
+                default:
+                    return string.Empty;
+            }
+        }
+
+        public static string GetHRResource(HRType type)
+        {
+            switch (type)
+            {
+                case HRType.TOTE:
+                    return ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblTote");
+                case HRType.FIXED:
+                    return ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblOpenTote");
+                default:
+                    return string.Empty;
+            }
+        }
+
+        public static int GetCopyPresetBettype(HRType type)
+        {
+            switch (type)
+            {
+                case HRType.TOTE:
+                    return 31;
+                case HRType.FIXED:
+                    return 41;
+                default:
+                    return 0;
+            }
+        }
+
+        public static bool AllowSaTote(string currencyName)
+        {
+            Hashtable hValidCurrency = SaToteCurrencies;
+
+            if (!hValidCurrency.ContainsKey(currencyName) && !hValidCurrency.ContainsValue(currencyName))
+                return false;
+            return true;
+        }
+
+        private static Hashtable GetSaToteCurrencies()
+        {
+
+            var sps = HelperSession.Instance[Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.HelperSession.StoreCollection.HelperControl];
+            var spElement = sps != null ? sps["SelHRAllowedCurrency"] : null;
+
+            DbResult ds = DbHelper.Execute(spElement.Name, spElement.DbName);
+            var currencies = new Hashtable();
+            if (ds.ResultSet.Tables.Count > 0)
+            {
+                DataTable dt = ds.ResultSet.Tables[0];
+
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    DataRow row1 = dt.Rows[i];
+                    currencies.Add(row1["currency"].ToString(), row1["currencyName"].ToString());
+                }
+            }
+            return currencies;
+        }
+    }
+}

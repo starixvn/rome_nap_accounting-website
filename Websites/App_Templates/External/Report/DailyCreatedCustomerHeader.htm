@@ -1,0 +1,57 @@
+﻿<div class="main">
+    <table style="width: 100%" border="0" cellpadding="0px" cellspacing="0px">
+        <tr>
+            <td>
+                <div id="divMainHeader" class="">
+                    <div id="left_tab1">
+                        <ul>
+                            <li class="lefticon"></li>
+                            <li class="current"><span>{Title}</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="maincontent">
+                    <div class="filterBox">
+                        <div class="filterContent">
+                            <table width="405px">
+                                <tr class="b">
+                                    <td>
+                                        From:
+                                    </td>
+                                    <td>
+                                        {fdate}
+                                    </td>
+                                    <td>
+                                        To:
+                                    </td>
+                                    <td>
+                                        {tdate}
+                                    </td>
+                                    <td>
+                                        <input type="button" onclick="GetCreatedCustomer()" value="REPORT" class="btn" id="btnSearch">
+                                        <input type="button" title="Export to Excel" onclick="ExportToExcel();" value="   "
+                                            name="btnExport" id="btnExport" class="btnExcel" style="">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="contentBox">
+                        <table>
+                            <tr>
+                                <td valign="top" colspan="5" width="380px" style="border-style: none;">
+                                    <div id="parentContent">
+                                        {mainContent}</div>
+                                </td>
+                                <td valign="top" style="padding-left: 10px; border-style: none;" width="380px">
+                                    <div id="childContent">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

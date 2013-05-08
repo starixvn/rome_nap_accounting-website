@@ -1,0 +1,11 @@
+﻿namespace Sunplus.Accounting.Business.PT.ViewPT
+{
+    /// <summary>
+    /// Summary description for IBingoViewPT
+    /// </summary>
+    public interface IBingoViewPT
+    {
+        string GetListBingoGameKindGameType();
+        string GetPTBingo(string username, int gameType);
+    }
+}

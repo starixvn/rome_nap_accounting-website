@@ -1,0 +1,248 @@
+﻿using System;
+using System.Data;
+using DNAide.Core;
+using Fanex.Data;
+using Fanex.Tarus.LiveCasino.Entities;
+using Fanex.Tarus.LiveCasino.Entities.MoveAccount;
+
+namespace Fanex.Tarus.LiveCasino.DataAccess.MoveAccount
+{
+    public class MoveAccountDataAccess : IMoveAccountDataAccess
+    {
+
+        public Result MoveMaster(MoveAccountInfo moveAccountInfo)
+        {
+            Result result = new Result();
+            try
+            {
+                using (ObjectDb objDB = new ObjectDb("TP_User_Customer_MoveMaster_Update", 300))
+                {
+                    objDB.AddInParameter("MasterCustID", DbType.Int32, moveAccountInfo.MovedCustId);
+                    objDB.AddInParameter("NewSAgentID", DbType.Int32, moveAccountInfo.NewSAgentId);
+                    objDB.AddInParameter("SignupIP", DbType.String, moveAccountInfo.SignupIp);
+                    objDB.AddInParameter("SignupBy", DbType.Int32, moveAccountInfo.SignupBy);
+                    objDB.AddInParameter("SignupFrom", DbType.Int32, moveAccountInfo.SignupFrom);
+                    objDB.AddInParameter("ModifyUserName", DbType.String, moveAccountInfo.ModifyUserName);
+
+                    objDB.AddOutParameter("ErrCode", DbType.String, 5);
+                    objDB.AddOutParameter("ErrMsg", DbType.String, 500);
+
+                    objDB.ExecuteNonQuery();
+
+                    result.Key = CastAide.AsString(objDB.GetParameterValue("ErrCode"));
+                    result.Value = CastAide.AsString(objDB.GetParameterValue("ErrMsg"));
+
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Key = "100";
+                result.Value = ex.Message;
+            }
+            return result;
+        }
+
+
+        public Result MoveAgent(MoveAccountInfo moveAccountInfo)
+        {
+            Result result = new Result();
+
+            try
+            {
+                using (ObjectDb objDB = new ObjectDb("TP_User_Customer_MoveAgent_Update"))
+                {
+                    objDB.AddInParameter("AgentCustID", DbType.Int32, moveAccountInfo.MovedCustId);
+                    objDB.AddInParameter("NewMAgentID", DbType.Int32, moveAccountInfo.NewMAgentId);
+                    objDB.AddInParameter("SignupIP", DbType.String, moveAccountInfo.SignupIp);
+                    objDB.AddInParameter("SignupBy", DbType.Int32, moveAccountInfo.SignupBy);
+                    objDB.AddInParameter("SignupFrom", DbType.Int32, moveAccountInfo.SignupFrom);
+                    objDB.AddInParameter("ModifyUserName", DbType.String, moveAccountInfo.ModifyUserName);
+
+                    objDB.AddOutParameter("ErrCode", DbType.String, 5);
+                    objDB.AddOutParameter("ErrMsg", DbType.String, 500);
+
+                    objDB.ExecuteNonQuery();
+
+                    result.Key = CastAide.AsString(objDB.GetParameterValue("ErrCode"));
+                    result.Value = CastAide.AsString(objDB.GetParameterValue("ErrMsg"));
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Key = "100";
+                result.Value = ex.Message;
+            }
+           
+            return result;
+        }
+
+
+        public Result RollbackMoveMaster(MoveAccountInfo moveAccountInfo)
+        {
+            Result result = new Result();
+
+            try
+            {
+                using (ObjectDb objDB = new ObjectDb("TP_User_Customer_MoveMaster_Rollback"))
+                {
+                    objDB.AddInParameter("MasterCustID", DbType.Int32, moveAccountInfo.RollbackCustId);
+                    objDB.AddInParameter("RollbackFlag", DbType.Boolean, true);
+
+                    objDB.AddInParameter("SignupIP", DbType.String, moveAccountInfo.SignupIp);
+                    objDB.AddInParameter("SignupBy", DbType.Int32, moveAccountInfo.SignupBy);
+                    objDB.AddInParameter("SignupFrom", DbType.Int32, moveAccountInfo.SignupFrom);
+                    objDB.AddInParameter("ModifyUserName", DbType.String, moveAccountInfo.ModifyUserName);
+                    objDB.AddInParameter("NewSAgentID", DbType.Int32, moveAccountInfo.NewSAgentId);
+                    objDB.AddInParameter("OldSAgentID", DbType.Int32, moveAccountInfo.OldSAgentId);
+
+                    objDB.AddOutParameter("ErrCode", DbType.String, 5);
+                    objDB.AddOutParameter("ErrMsg", DbType.String, 500);
+
+                    objDB.ExecuteNonQuery();
+
+                    result.Key = CastAide.AsString(objDB.GetParameterValue("ErrCode"));
+                    result.Value = CastAide.AsString(objDB.GetParameterValue("ErrMsg"));
+
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Key = "100";
+                result.Value = ex.Message;
+            }
+           
+            return result;
+        }
+
+
+        public Result RollbackMoveAgent(MoveAccountInfo moveAccountInfo)
+        {
+            Result result = new Result();
+            try
+            {
+                using (ObjectDb objDB = new ObjectDb("TP_User_Customer_MoveAgent_Rollback"))
+                {
+                    objDB.AddInParameter("AgentCustID", DbType.Int32, moveAccountInfo.RollbackCustId);
+                    objDB.AddInParameter("RollbackFlag", DbType.Boolean, true);
+
+                    objDB.AddInParameter("SignupIP", DbType.String, moveAccountInfo.SignupIp);
+                    objDB.AddInParameter("SignupBy", DbType.Int32, moveAccountInfo.SignupBy);
+                    objDB.AddInParameter("SignupFrom", DbType.Int32, moveAccountInfo.SignupFrom);
+                    objDB.AddInParameter("ModifyUserName", DbType.String, moveAccountInfo.ModifyUserName);
+                    objDB.AddInParameter("NewSAgentID", DbType.Int32, moveAccountInfo.NewSAgentId);
+                    objDB.AddInParameter("OldSAgentID", DbType.Int32, moveAccountInfo.OldSAgentId);
+                    objDB.AddInParameter("NewMAgentID", DbType.Int32, moveAccountInfo.NewMAgentId);
+                    objDB.AddInParameter("OldMAgentID", DbType.Int32, moveAccountInfo.OldMAgentId);
+
+                    objDB.AddOutParameter("ErrCode", DbType.String, 5);
+                    objDB.AddOutParameter("ErrMsg", DbType.String, 500);
+
+                    objDB.ExecuteNonQuery();
+
+                    result.Key = CastAide.AsString(objDB.GetParameterValue("ErrCode"));
+                    result.Value = CastAide.AsString(objDB.GetParameterValue("ErrMsg"));
+
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Key = "100";
+                result.Value = ex.Message;
+            }
+           
+            return result;
+        }
+
+
+        public void WriteLog(LogMoveAccountInfo logData)
+        {
+            try
+            {
+                using (ObjectDb objDb = new ObjectDb("WriteLog_UserLog_RunSP"))
+                {
+                    objDb.AddInParameter("UserId", DbType.Int32, logData.UserId);
+                    objDb.AddInParameter("CustId", DbType.Int32, logData.CustId);
+                    objDb.AddInParameter("SpName", DbType.String, logData.SpNameTag);
+                    objDb.AddInParameter("Doing", DbType.String);
+                    objDb.AddInParameter("ActionId", DbType.Int32, logData.ActionId);
+                    objDb.AddInParameter("TrackingValue", DbType.String, logData.NewValue);
+                    objDb.AddInParameter("TrackingValue2", DbType.String, logData.OldValue);
+                    objDb.AddInParameter("Duration", DbType.Int32);
+
+                    objDb.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+          
+        }
+
+
+        public Result CheckMoveMaster(MoveAccountInfo moveInfo)
+        {
+            Result result = new Result();
+
+            try
+            {
+                using (ObjectDb objDB = new ObjectDb("Acc_CustomerCheckMoveMaster"))
+                {
+                    objDB.AddInParameter("supername", DbType.String, moveInfo.UplineUsername);
+                    objDB.AddInParameter("mastername", DbType.String, moveInfo.MovedUserName);
+                    objDB.AddInParameter("userid", DbType.String, moveInfo.SignupBy);
+
+                    objDB.AddOutParameter("ErrCode", DbType.Int32, 0);
+                    objDB.AddOutParameter("ErrMsg", DbType.String, 200);
+
+                    objDB.ExecuteNonQuery();
+
+                    result.Key = CastAide.AsString(objDB.GetParameterValue("ErrCode"));
+                    result.Value = CastAide.AsString(objDB.GetParameterValue("ErrMsg"));
+                }
+            }
+            catch (Exception ex)
+            {
+
+                result.Key = "100";
+                result.Value = ex.Message;
+            }
+          
+            return result;
+        }
+
+
+        public Result CheckMoveAgent(MoveAccountInfo moveInfo)
+        {
+            Result result = new Result();
+
+            try
+            {
+                using (ObjectDb objDB = new ObjectDb("Acc_CustomerCheckMoveAgent"))
+                {
+                    objDB.AddInParameter("mastername", DbType.String, moveInfo.UplineUsername);
+                    objDB.AddInParameter("agentname", DbType.String, moveInfo.MovedUserName);
+                    objDB.AddInParameter("userid", DbType.String, moveInfo.SignupBy);
+
+                    objDB.AddOutParameter("ErrCode", DbType.Int32, 0);
+                    objDB.AddOutParameter("ErrMsg", DbType.String, 200);
+
+                    objDB.ExecuteNonQuery();
+
+                    result.Key = CastAide.AsString(objDB.GetParameterValue("ErrCode"));
+                    result.Value = CastAide.AsString(objDB.GetParameterValue("ErrMsg"));
+                }
+            }
+            catch (Exception ex)
+            {
+
+                result.Key = "100";
+                result.Value = ex.Message;
+            }
+           
+            return result;
+        }
+    }
+
+}

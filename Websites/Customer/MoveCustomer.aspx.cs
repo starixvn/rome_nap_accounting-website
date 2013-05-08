@@ -1,0 +1,28 @@
+using System;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web;
+
+public partial class Customer_MoveCustomer : PageBase
+{
+
+    public string TableTitle;
+    public string LblDownline;
+    public string LblUpline;
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (Request["agent"] != null)
+        {
+            Title = @"Move Agent";
+            TableTitle = "Move Agent to New Master";
+            LblDownline = "Agent UserName";
+            LblUpline = "New Master UserName";
+        }
+        else
+        {
+            Title = @"Move Master";
+            TableTitle = "Move Master to New Super";
+            LblDownline = "Master UserName";
+            LblUpline = "New Super UserName";
+        }
+    }
+}

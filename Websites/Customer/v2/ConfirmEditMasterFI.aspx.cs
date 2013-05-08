@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections;
+using System.Configuration;
+using System.Data;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web;
+using DNAide.Core;
+
+
+public partial class Customer_V2_ConfirmEditMasterFI : PageBase
+{
+
+    public string strMsg = "";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        var roleid = CastAide.AsInt32(Request["roleid"], 0);
+        strMsg = string.Format(Resources.Language.lblConfirmEditMaster, roleid == 2 ? Resources.Language.Agent : Resources.Language.Master);
+    }
+}

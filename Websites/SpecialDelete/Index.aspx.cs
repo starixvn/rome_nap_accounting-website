@@ -1,0 +1,106 @@
+﻿using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Core.LoggingLib;
+using IBCUtils.Web;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using DNAide.Core;
+using IBCUtils.DAL;
+using DNAide.Data;
+using DNAide.Web;
+using System.Text;
+
+
+public partial class SpecialDelete_Index : PageBase
+{
+
+    public string html = "";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        try
+        {
+
+
+            html = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("SpecialDelete/FillterFormSepecial.htm");
+            string tplCS = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("SpecialDelete/FillteFormCS.htm");
+            TemplateHandler.Assign(ref html, "CS-Betteam", tplCS);
+
+            #region DNAide lib
+            DbResult rs = AccountTransaction.GetAllBetType();
+            DataTable dt = rs.ResultSet.Tables[0];
+            #endregion
+
+            string op = "";
+            foreach (DataRow dr in dt.Rows) 
+            {
+                op += "<option value='" + dr["TypeID"] + "^" + CacheRef.GetBettype(dr["TypeID"]) + "'>" + CacheRef.GetBettype(dr["TypeID"]) + "</option>";
+            }
+            
+            TemplateHandler.Assign(ref html, "{bettype}", op);
+            TemplateHandler.Assign(ref html, "{newbt}", GenerateBettype(dt));
+
+            if (CastAide.AsString(Session["Username"]).ToLower() != "joe" && CastAide.AsString(Session["Username"]).ToLower() != "steven")
+            {
+                TemplateHandler.Assign(ref html, "{confirm-msg}", AlertMessage.GetMsg(Resources.Language.specialDelConfirm, AlertMessage.MsgType.Warning));
+            }
+            else
+            {
+                TemplateHandler.RemoveBlock(ref html, "confirm");
+            }
+
+            //HtmlHolder.Text = html;
+        }
+        catch (Exception ex)
+        {
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex); 
+        }
+    }
+
+    string GenerateBettype(DataTable dt)
+    {
+        string tpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("SpecialDelete/DynamicBettype.htm");
+        string tplcontent = TemplateHandler.CopyBlock(tpl, "content");
+        StringBuilder rows = new StringBuilder();
+        int index = 0;
+        string row = tplcontent;
+
+        foreach (DataRow dr in dt.Rows)
+        {
+            index++;
+            if (index == 4)
+            {
+                TemplateHandler.RemoveComment(row);
+                rows.Append(row);
+                row = tplcontent;
+                index = 1;
+            }
+            TemplateHandler.Assign(ref row, "Bettype" + index, dr["TypeID"]);
+            TemplateHandler.Assign(ref row, "BettypeName" + index, CacheRef.GetBettype(dr["TypeID"]));
+        }
+        if (index == 1)
+        {
+            TemplateHandler.RemoveBlock(ref row, "bt2");
+            TemplateHandler.RemoveBlock(ref row, "bt3");
+        }
+        if (index == 2)
+        {
+            TemplateHandler.RemoveBlock(ref row, "bt3");
+        }
+      
+        TemplateHandler.RemoveComment(row);        
+        rows.Append(row);
+        TemplateHandler.ReplaceBlock(ref tpl, "content", rows.ToString());
+        return tpl;
+    }
+}

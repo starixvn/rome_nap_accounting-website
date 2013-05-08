@@ -1,0 +1,10 @@
+﻿using Fanex.Tarus.LiveCasino.Entities;
+using Fanex.Tarus.LiveCasino.Entities.ExRate;
+
+namespace Fanex.Tarus.LiveCasino.DataAccess.ExRate
+{
+    public interface IExRateDataAccess
+    {
+        Result UpdateExchange(ExRateBO exChangeRate);
+    }
+}

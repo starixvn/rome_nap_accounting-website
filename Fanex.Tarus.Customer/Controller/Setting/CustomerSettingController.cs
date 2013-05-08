@@ -1,0 +1,41 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="AbnormalBetController.cs" company="">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Customer.Controller.Setting
+{
+    using Fanex.Tarus.Web.Controllers;
+    using System.Web.Mvc;
+    using Fanex.Tarus.Customer.Entities;
+    using Fanex.Tarus.Customer.CreditCustomer.Business;
+    using Sunplus.Accounting.Core.Common;
+    using Fanex.Tarus.Web.Controllers.Filters;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class CustomerSettingController: BaseController
+    {
+        private ICustomerSettingService _customerSetting;
+
+        public CustomerSettingController(): this(null){ }
+
+        public CustomerSettingController(ICustomerSettingService customerSetting)
+        {
+            _customerSetting = customerSetting ?? new CustomerSettingService();
+        }
+
+        
+        public JsonResult UpdateDoubleComm(int custId, bool isDoubleComm)
+        {
+            var result = new Result();
+            result = _customerSetting.UpdateDoubleComm(AppSession.AccId, custId, isDoubleComm);
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+
+        }
+    }
+}

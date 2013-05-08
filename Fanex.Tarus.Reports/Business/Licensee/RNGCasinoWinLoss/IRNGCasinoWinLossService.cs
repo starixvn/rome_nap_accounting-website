@@ -1,0 +1,17 @@
+﻿
+namespace Fanex.Tarus.Reports.Business.Licensee.RNGCasinoWinLoss
+{
+    using System.Collections.Generic;
+    using Fanex.Tarus.Reports.Entities.Licensee.RNGCasinoWinLoss;
+
+    public interface IRNGCasinoWinLossService
+    {
+        IList<Licensee> GetResellerProductCharge();
+        IList<OptionDetail> SelTSTGameGroups();
+        IList<OptionDetail> SelTSTGameTypesByGroup(string gameGroupIds);
+                                                                 
+        RNGCasinoWinLoss SelRNGCasinoWinLossReport(List<Licensee> licensees, string fromDate, string toDate, string gameTypes);
+        void ExportWinLossReportToExcelFile(List<Licensee> licensees, string fromDate, string toDate, string gameTypes, string reportTitle);
+                                                  
+    }
+}

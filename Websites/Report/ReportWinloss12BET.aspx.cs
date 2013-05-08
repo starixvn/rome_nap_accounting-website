@@ -1,0 +1,123 @@
+﻿using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+using System.Text;
+using DNAide.Core;
+using DNAide.Web;
+using DNAide.Utils;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web;
+using IBCUtils;
+using BLL.Report;
+
+public partial class Report_ReportWinloss12BET : PageBase
+{
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        string fdate = CastAide.AsString(Request["fdate"]);
+        string tdate = CastAide.AsString(Request["tdate"]);
+        ReportBase report = new ReportWinloss12Bet();
+        if (CastAide.AsInt32(Request["IsExport"]) == 1)
+        {
+            string reportContent = string.Empty;
+            string reportBy = CastAide.AsString(Request["reportby"]);
+            string reportType = CastAide.AsString(Request["reporttype"]);
+            string sportOption = CastAide.AsString(Request["sport"]);
+            string fileName = "Winloss12BET_";
+            Hashtable reportInput = new Hashtable();
+
+            if (reportType == "1")
+            {
+                reportInput.Add("date", CastAide.AsString(Request["date"]));
+                reportInput.Add("sport", sportOption);
+                reportInput.Add("fdate", fdate);
+                reportInput.Add("tdate", tdate);
+                reportInput.Add("currency", CastAide.AsString(Request["currency"]));
+                reportInput.Add("reportby", reportBy);
+                reportInput.Add("reporttype", "1");
+
+                switch (reportBy)
+                {
+                    case "1": //daily
+                        fileName = fileName + "Daily_" + fdate + "-" + tdate;
+                        break;
+                    case "2": //monthly
+                        fileName = fileName + "Monthly_" + fdate + "-" + tdate;
+                        break;
+                    case "3": //Sport
+                        fileName = fileName + "Sport_" + fdate + "-" + tdate;
+                        break;
+                }
+                reportInput.Add("FileName", fileName);
+            }
+            else if (reportType == "2") //agent list
+            {
+                if (sportOption == "0") //sport book
+                {
+                    fileName = fileName + "Agent_SportBook_" + CastAide.AsString(Request["currencyname"]) + "_" + fdate + "-" + tdate;
+                }
+                else if (sportOption == "151")//HorseRacing
+                {
+                    fileName = fileName + "Agent_HorseRacing_" + CastAide.AsString(Request["currencyname"]) + "_" + fdate + "-" + tdate;
+                }
+                else
+                {
+                    fileName = fileName + "Agent_" + CastAide.AsString(Request["currencyname"]) + "_" + fdate + "-" + tdate;
+                }
+
+
+                reportInput.Add("sport", sportOption);
+                reportInput.Add("fdate", fdate);
+                reportInput.Add("tdate", tdate);
+                reportInput.Add("currency", CastAide.AsString(Request["currency"]));
+                reportInput.Add("currencyname", CastAide.AsString(Request["currencyname"]));
+                reportInput.Add("reporttype", "2");
+                reportInput.Add("FileName", fileName);
+            }
+            else if (reportType == "3") //member list
+            {
+                if (sportOption == "0") //sport book
+                {
+                    fileName = fileName + "Member_SportBook_" + CastAide.AsString(Request["currencyname"]) + "_" + fdate + "-" + tdate;
+                }
+                else if (sportOption == "151")//HorseRacing
+                {
+                    fileName = fileName + "Member_HorseRacing_" + CastAide.AsString(Request["currencyname"]) + "_" + fdate + "-" + tdate;
+                }
+                else
+                {
+                    fileName = fileName + "Member_" + CastAide.AsString(Request["currencyname"]) + "_" + fdate + "-" + tdate;
+                }
+                reportInput.Add("sport", sportOption);
+                reportInput.Add("fdate", fdate);
+                reportInput.Add("tdate", tdate);
+                reportInput.Add("currency", CastAide.AsString(Request["currency"]));
+                reportInput.Add("currencyname", CastAide.AsString(Request["currencyname"]));
+                reportInput.Add("reporttype", "3");
+                reportInput.Add("recommend", CastAide.AsString(Request["recommend"]));
+                reportInput.Add("FileName", fileName);
+
+            }
+
+            report.Export2Excel(reportInput);
+
+        }
+        else
+        {
+            this.ReportTitle.Text = Sunplus.Accounting.Business.Report.Reports.Title;
+
+            Hashtable headerHash = new Hashtable();
+            headerHash.Add("fdate", fdate);
+            headerHash.Add("tdate", tdate);
+            reportHeader.Text = report.CreateHeader(headerHash);
+        }
+    }
+}

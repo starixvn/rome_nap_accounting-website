@@ -1,0 +1,39 @@
+﻿
+namespace Fanex.Tarus.Finance.Entities.Statement
+{
+    using System;
+    using System.Collections.Generic;
+
+    public class FinanceStatementDTO
+    {
+        public DateTime  WinLossDate { get; set; } // WinlostDate - Description on DB
+
+        public string Remark { get; set; } // TransDesc
+
+        public Double Total { get; set; } // TotalAmt
+
+        public Double AccumTotal { get; set; }
+
+        public string StrAccumTotal { get; set; }
+
+        public DateTime TransDate { get; set; } //TransDate
+
+        public string TransType { get; set; } // TransType
+
+        public Double RefNo { get; set; } // RefNo
+
+        public int Creator { get; set; } // Creator
+
+        public string CheckerName { get; set; } // CheckerName -  Verify field on Web
+
+        public int CheckerID { get; set; } // CheckerID
+
+        public DateTime CheckedTime { get; set; } // CheckTime
+
+        public bool IsAllowVerify { get; set; } // IsAllowVerify
+
+        public bool IsReversal { get; set; } // IsReversal
+
+        public bool IsExpand { get; set; } // IsExpand 
+    }
+}

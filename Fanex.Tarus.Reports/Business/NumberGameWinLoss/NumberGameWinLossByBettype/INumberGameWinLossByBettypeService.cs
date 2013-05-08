@@ -1,0 +1,20 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="INumberGameWinLossByBettypeService.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Reports.Business.NumberGameWinLoss.NumberGameWinLossByBettype
+{
+    using Fanex.Tarus.Reports.Entities.NumberGameWinLoss.NumberGameWinLossByBettype;
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public interface INumberGameWinLossByBettypeService
+    {
+        WinLossReport SelNumberGameWinLosByBettype(string wlDate, string currencies, string companies, int liveStatus);
+        void ExportExcelNumberGameWinLossByBettype(string wlDate, string currencies, string companies, int liveStatus, string title);
+        WinLossReportDetailGroupByLeague SelNumberGameWinLosByBettypeDetail(string wlDate, string currencies, string companies, int liveStatus, int bettype);
+        void ExportExcelNumberGameWinLossByBettypeDetail(string wlDate, int liveStatus, int bettype, string bettypeName, string companies, string currencies, string title);
+    }
+}

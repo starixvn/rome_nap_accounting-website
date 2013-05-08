@@ -1,0 +1,24 @@
+﻿
+
+using System;
+
+namespace Fanex.Tarus.VirtualSport.Entities.Report.DailyWL2h
+{
+    public class DailyWinLoss2hParam
+    {
+        public string ReportFileName { get; set; }
+        public string ReportTitle { get; set; }
+        public string DefaultSheetName { get; set; }
+        public string EmptyReportMessage { get; set; }
+
+        public string ReportContent { get; set; }
+        public int BetType { get; set; }
+        public DateTime ReportDate { get; set; }
+        public string LiveIndicator { get; set; }
+
+        public int SportType { get; set; }
+        public string SportTypeName { get; set; }
+        public bool IsHedge { get; set; }
+        public int IsLive { get; set; }
+    }
+}

@@ -1,0 +1,472 @@
+﻿// David: 08/27/2012
+namespace Fanex.Tarus.Reports.Business.ParlayWon
+{
+    using System;
+    using System.Web;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Data;
+    using DNAide.Core;
+    using DNAide.Utils;
+    using System.Drawing;
+
+    using Sunplus.Accounting.Core.Extensions;
+    using ExcelUtil.Spreadsheet;
+
+    using Fanex.Tarus.Reports.DataAccess.ParlayWon;
+    using Fanex.Tarus.Reports.Entities.ParlayWon;
+    using Fanex.Tarus.Reports.Resource;
+
+    public class ParlayWonService : IParlayWonService
+    {
+        IParlayWonAccess _ParlayWonAccess = null;
+        private const string parlayWonSessionKey = "parlayWon";
+        public ParlayWonService() : this(null) { }
+
+        public enum SortDirection { Ascending, Decending }
+
+        public ParlayWonService(IParlayWonAccess ParlayWonAccess)
+        {
+            _ParlayWonAccess = ParlayWonAccess ?? new ParlayWonAccess();
+        }
+
+        public ParlayWonModel GetParlayBusiness(string winlostDate, int betType, bool isSoccer, string moveBetsDay, string balanceUpDay, bool fromCache, string sortDirection, int pageIndex, int pageSize, int sortBy)
+        {
+            try
+            {
+
+                var Model = new ParlayWonModel();
+                if (fromCache)
+                {
+                    var getDataFromCache = SessionExtension.GetSession(HttpContext.Current.Session, parlayWonSessionKey);
+                    if (getDataFromCache != null)
+                    {
+                        Model = (ParlayWonModel)getDataFromCache;
+                    }
+                    else
+                    {
+                        Model = GetParlayBusiness(winlostDate, betType, isSoccer, moveBetsDay, balanceUpDay, false, string.Empty, pageIndex, pageSize, sortBy);
+                        SessionExtension.AddSession(HttpContext.Current.Session, parlayWonSessionKey, Model);
+                    }
+
+                    if (sortDirection != string.Empty)
+                    {
+                        Sorting(ref Model, sortDirection, sortBy);
+                    }
+                }
+                else
+                {
+                    var dtParlayWon = _ParlayWonAccess.GetParlayWonAccess(winlostDate, betType, isSoccer, moveBetsDay, balanceUpDay);
+                    if (dtParlayWon.Tables.Count > 0)
+                    {
+                        var tableParlayWon = dtParlayWon.Tables[0];
+
+                        double baseWinlostTotalTmp = 0;
+                        double baseStakeTotalTmp = 0;
+
+                        double companyWinlostTotalTmp = 0;
+                        double companyStakeTotalTmp = 0;
+
+                        if (betType == 9)
+                        {
+                            foreach (DataRow row in tableParlayWon.Rows)
+                            {
+                                var parlayWonDTO = new ParlayWon();
+
+                                parlayWonDTO.RefNo = row["transid"].ToString();
+                                parlayWonDTO.UserName = row["username"].ToString();
+                                parlayWonDTO.Currency = row["Currency"].ToString();
+                                parlayWonDTO.Exchange = row["exchange"].ToString();
+
+                                parlayWonDTO.OriginalStake = IBCUtils.FormatHandler.FormatNumber20(CastAide.AsDouble(row["stake"]));
+
+                                double baseStakeTmp = CastAide.AsDouble(row["stake_RM"], 2);
+                                baseStakeTotalTmp += baseStakeTmp;
+                                parlayWonDTO.BaseStake = IBCUtils.FormatHandler.FormatNumber20(baseStakeTmp);
+
+                                double companyStakeTmp = CastAide.AsDouble(row["CompanyStake_RM"], 2);
+                                companyStakeTotalTmp += companyStakeTmp;
+                                parlayWonDTO.CompanyStake = IBCUtils.FormatHandler.FormatNumber20(companyStakeTmp);
+
+
+                                parlayWonDTO.OriginalWinlost = IBCUtils.FormatHandler.FormatNumber20(CastAide.AsDouble(row["Winlost"]));
+
+                                double baseWinLostTmp = CastAide.AsDouble(row["Winlost_RM"], 2);
+                                baseWinlostTotalTmp += baseWinLostTmp;
+                                parlayWonDTO.BaseWinlost = IBCUtils.FormatHandler.FormatNumber20(baseWinLostTmp);
+
+                                double companyWinLostTmp = CastAide.AsDouble(row["CompanyWinlost_RM"], 2);
+                                companyWinlostTotalTmp += companyWinLostTmp;
+                                parlayWonDTO.CompanyWinlost = IBCUtils.FormatHandler.FormatNumber20(companyWinLostTmp);
+
+                                parlayWonDTO.Selection = row["selection"].ToString();
+                                parlayWonDTO.WinOdds = row["modds"].ToString();
+
+                                Model.ListParlayWon.Add(parlayWonDTO);
+                            }
+                        }
+                        else
+                        {
+                            foreach (DataRow row in tableParlayWon.Rows)
+                            {
+                                var parlayWonDTO = new ParlayWon();
+
+                                parlayWonDTO.RefNo = row["transid"].ToString();
+                                parlayWonDTO.UserName = row["username"].ToString();
+                                parlayWonDTO.Currency = row["Currency"].ToString();
+                                parlayWonDTO.Exchange = row["exchange"].ToString();
+
+                                parlayWonDTO.OriginalStake = IBCUtils.FormatHandler.FormatNumber20(CastAide.AsDouble(row["actual_stake"]));
+
+                                double baseStakeTmp = CastAide.AsDouble(row["actual_stake_RM"], 2);
+                                baseStakeTotalTmp += baseStakeTmp;
+                                parlayWonDTO.BaseStake = IBCUtils.FormatHandler.FormatNumber20(baseStakeTmp);
+
+                                double companyStakeTmp = CastAide.AsDouble(row["CompanyActual_stake_RM"], 2);
+                                companyStakeTotalTmp += companyStakeTmp;
+                                parlayWonDTO.CompanyStake = IBCUtils.FormatHandler.FormatNumber20(companyStakeTmp);
+
+
+                                parlayWonDTO.OriginalWinlost = IBCUtils.FormatHandler.FormatNumber20(CastAide.AsDouble(row["Winlost"]));
+
+                                double baseWinLostTmp = CastAide.AsDouble(row["Winlost_RM"], 2);
+                                baseWinlostTotalTmp += baseWinLostTmp;
+                                parlayWonDTO.BaseWinlost = IBCUtils.FormatHandler.FormatNumber20(baseWinLostTmp);
+
+                                double companyWinLostTmp = CastAide.AsDouble(row["CompanyWinlost_RM"], 2);
+                                companyWinlostTotalTmp += companyWinLostTmp;
+                                parlayWonDTO.CompanyWinlost = IBCUtils.FormatHandler.FormatNumber20(companyWinLostTmp);
+
+                                parlayWonDTO.Selection = row["selection"].ToString();
+                                parlayWonDTO.WinOdds = row["modds"].ToString();
+
+                                Model.ListParlayWon.Add(parlayWonDTO);
+                            }
+                        }
+
+                        Model.BaseStakeTotal = IBCUtils.FormatHandler.FormatNumber20(baseStakeTotalTmp);
+                        Model.BaseWinlostTotal = IBCUtils.FormatHandler.FormatNumber20(baseWinlostTotalTmp);
+
+                        Model.CompanyStakeTotal = IBCUtils.FormatHandler.FormatNumber20(companyStakeTotalTmp);
+                        Model.CompanyWinlostTotal = IBCUtils.FormatHandler.FormatNumber20(companyWinlostTotalTmp);
+                        Model.Count = Model.ListParlayWon.Count;
+
+                        SessionExtension.AddSession(HttpContext.Current.Session, parlayWonSessionKey, Model);
+                    }
+                }
+
+                if (pageSize == 0)
+                {
+                    return Model;
+                }
+                var pagingItems = Model.ListParlayWon.Select(c => c).Skip(pageSize * (pageIndex - 1)).Take(pageSize).ToList();
+
+                var ModelPaging = new ParlayWonModel();
+
+                ModelPaging.ListParlayWon = pagingItems;
+                ModelPaging.BaseWinlostTotal = Model.BaseWinlostTotal;
+                ModelPaging.BaseStakeTotal = Model.BaseStakeTotal;
+                ModelPaging.CompanyWinlostTotal = Model.CompanyWinlostTotal;
+                ModelPaging.CompanyStakeTotal = Model.CompanyStakeTotal;
+                ModelPaging.Count = Model.Count;
+
+                return ModelPaging;
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return new ParlayWonModel();
+        }
+
+        private void Sorting(ref ParlayWonModel parlayWonBO, string sortDirection, int sortBy)
+        {
+            try
+            {
+
+                if (sortDirection == "DESC")
+                {
+                    parlayWonBO.ListParlayWon = parlayWonBO.ListParlayWon.OrderBy(x =>
+                    {
+                        if (sortBy == 0)
+                        {
+                            return CastAide.AsDouble(x.BaseWinlost);
+                        }
+                        else
+                        {
+                            return CastAide.AsDouble(x.CompanyWinlost);
+                        }
+                    }).ToList();
+                }
+                else
+                {
+                    parlayWonBO.ListParlayWon = parlayWonBO.ListParlayWon.OrderByDescending(x =>
+                    {
+                        if (sortBy == 0)
+                        {
+                            return CastAide.AsDouble(x.BaseWinlost);
+                        }
+                        else
+                        {
+                            return CastAide.AsDouble(x.CompanyWinlost);
+                        }
+                    }).ToList();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+        }
+
+        #region Export excel
+        public void ExportExcelParlayWon(string winlostDate, int betType, bool isSoccer, string moveBetsDay, string balanceUpDay, bool fromCache)
+        {
+            ParlayWonModel Report = new ParlayWonModel();
+
+            Report = GetParlayBusiness(winlostDate, betType, isSoccer, moveBetsDay, balanceUpDay, fromCache, string.Empty, 0, 0, 0);
+
+            var StarCols = 0;
+            var StarRows = 3;
+
+            var ReportName = "ParLayWon";
+            var ExcelFile = new ExcelFile();
+
+            var MaxItemsInSheet = 3000;
+
+            if (Report.Count > 0)
+            {
+                ExportExcelAssignBody(StarRows, StarCols, MaxItemsInSheet, ref ExcelFile, Report, winlostDate,betType);
+            }
+            else
+            {
+                var errorMsg = Report.Count == -1 ?
+                    ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "TimeOutError") :
+                    ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblThereisnodata");
+                var wsReport = ExcelFile.Worksheets.Add(ReportName);
+                wsReport.Cells[StarRows - 1, StarCols].Value = errorMsg;
+            }
+
+            var response = HttpContext.Current.Response;
+            response.Clear();
+            response.ContentType = "application/vnd.ms-excel";
+            response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", ReportName));
+            ExcelFile.SaveXls(response.OutputStream);
+
+        }
+
+        private void ExportExcelAssignHeader(int startRow, int startCol, ref ExcelWorksheet wsReport, string winlostDate, int betType)
+        {
+            var bgHeaderFormat = new Sunplus.Accounting.Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
+            var nextCol = 0;
+
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol), startRow - 1, startCol + nextCol).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol), startRow - 1, startCol + nextCol).Style = bgHeaderFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol), startRow - 1, startCol + nextCol).Value = Language.RefNo;
+
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol += 1), startRow - 1, startCol + nextCol).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol), startRow - 1, startCol + nextCol).Style = bgHeaderFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol), startRow - 1, startCol + nextCol).Value = Language.Username;
+
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol += 1), startRow - 1, startCol + nextCol).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol), startRow - 1, startCol + nextCol).Style = bgHeaderFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol), startRow - 1, startCol + nextCol).Value = Language.Currency;
+
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol += 1), startRow - 1, startCol + nextCol).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol), startRow - 1, startCol + nextCol).Style = bgHeaderFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol), startRow - 1, startCol + nextCol).Value = Language.Exchange;
+
+            #region Original Currency
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol + 1), startRow - 2, startCol + nextCol + 2).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol + 1), startRow - 2, startCol + nextCol + 2).Style = bgHeaderFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol + 1), startRow - 2, startCol + nextCol + 2).Value = Language.OriginalCurrency;
+
+            wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeaderFormat;
+            wsReport.Cells[startRow - 1, startCol + nextCol].Value = Language.Stake;
+
+            wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeaderFormat;
+            wsReport.Cells[startRow - 1, startCol + nextCol].Value = Language.WinLost;
+
+            #endregion
+
+            #region  Base Currency
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol + 1), startRow - 2, startCol + nextCol + 4).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol + 1), startRow - 2, startCol + nextCol + 4).Style = bgHeaderFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol + 1), startRow - 2, startCol + nextCol + 4).Value = Language.BaseCurrency;
+
+            wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeaderFormat;
+            wsReport.Cells[startRow - 1, startCol + nextCol].Value = Language.Stake;
+
+            wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeaderFormat;
+            wsReport.Cells[startRow - 1, startCol + nextCol].Value = Language.WinLost;
+
+            wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeaderFormat;
+            wsReport.Cells[startRow - 1, startCol + nextCol].Value = Language.CompanyStake;
+            wsReport.Columns[nextCol + startCol].Width = 255 * 17;
+
+            wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeaderFormat;
+            wsReport.Cells[startRow - 1, startCol + nextCol].Value = Language.CompanyWinLost;
+            wsReport.Columns[nextCol + startCol].Width = 255 * 17;
+            #endregion
+
+
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol += 1), startRow - 1, startCol + nextCol).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol), startRow - 1, startCol + nextCol).Style = bgHeaderFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol), startRow - 1, startCol + nextCol).Value = Language.Selection;
+
+
+
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol += 1), startRow - 1, startCol + nextCol).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol), startRow - 1, startCol + nextCol).Style = bgHeaderFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol), startRow - 1, startCol + nextCol).Value = Language.WinOdds;
+
+            #region report title
+            var title = "";
+            if (betType == 9)
+            {
+                  title = Language.MixParlayWon;
+            }
+            else
+            {
+                title = "System Parlay Won";
+            }
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 3, startCol, startRow - 3, nextCol).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 3, startCol, startRow - 3, nextCol).Style = bgHeaderFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 3, startCol, startRow - 3, nextCol).Value = string.Format("{0} - {1:MM/dd/yyyy} ", title, CastAide.AsDateTime(winlostDate));
+            #endregion
+        }
+
+        private void ExportExcelAssignBody(int startRow, int startCol, int maxItemsInSheet, ref ExcelFile ExcelFile, ParlayWonModel report, string winlostDate, int betType)
+        {
+            try
+            {
+                var totalSheet = (report.Count % maxItemsInSheet > 0 ? 1 : 0) + report.Count / maxItemsInSheet;
+                var numberFormatBase = new Sunplus.Accounting.Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", Color.FromArgb(185, 255, 185), false, false, true);
+                var numberFormatCompany = new Sunplus.Accounting.Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", Color.FromArgb(255, 198, 198), false, false, true);
+                var nextRow = 0;
+                var itemIndex = 0;
+
+                for (int i = 0; i < totalSheet; i++)
+                {
+                    var wsReport = ExcelFile.Worksheets.Add(string.Format("ParlayWon_{0}", i + 1));
+                    nextRow = 0;
+                    ExportExcelAssignHeader(startRow, startCol, ref wsReport, winlostDate, betType);
+
+                    var totalItemsInCurrentSheet = i < totalSheet - 1 ? maxItemsInSheet : (report.Count - (i * maxItemsInSheet));
+                    for (int j = 0; j < totalItemsInCurrentSheet; j++)
+                    {
+                        var item = report.ListParlayWon[itemIndex];
+                        var nextCol = 0;
+                        var numberDefaultFormat = new Sunplus.Accounting.Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", Color.FromArgb(253, 252, 252), false, false, true);
+                        var numberFormat = new Sunplus.Accounting.Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", Color.FromArgb(253, 252, 252), false, false, true);
+                        if (j % 2 == 1)
+                        {
+                            numberDefaultFormat = new Sunplus.Accounting.Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", Color.FromArgb(255, 255, 191), false, false, true);
+                            numberFormat = new Sunplus.Accounting.Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", Color.FromArgb(255, 255, 191), false, false, true);
+                        }
+
+
+
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style = numberDefaultFormat;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = item.RefNo;
+
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberDefaultFormat;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Left;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = item.UserName;
+                        wsReport.Columns[nextCol + startCol].Width = 255 * 20;
+
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberDefaultFormat;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = item.Currency;
+
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberDefaultFormat;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = item.Exchange;
+
+
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(item.OriginalStake);
+
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberDefaultFormat;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(item.OriginalWinlost);
+
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormatBase;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(item.BaseStake);
+
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormatBase;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(item.BaseWinlost);
+
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormatCompany;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(item.CompanyStake);
+
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormatCompany;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(item.CompanyWinlost);
+
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.Font.Size = 160;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.Borders.SetBorders(MultipleBorders.Outside, Color.Gray, LineStyle.Thin);
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(item.Selection);
+
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.NumberFormat = "#,##0.0000";
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(item.WinOdds);
+
+                        nextRow++;
+                        itemIndex++;
+                    }
+
+                    var bgTotalFormat = new Sunplus.Accounting.Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", Color.FromArgb(205, 222, 255), true, false, true);
+
+                    var next = 0;
+                    wsReport.Cells[startRow + nextRow, startCol + (next)].Style = bgTotalFormat;
+                    wsReport.Cells[startRow + nextRow, startCol + (next)].Value = string.Empty;
+
+                    wsReport.Cells[startRow + nextRow, startCol + (next += 1)].Style = bgTotalFormat;
+                    wsReport.Cells[startRow + nextRow, startCol + (next)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+                    wsReport.Cells[startRow + nextRow, startCol + (next)].Style.Font.Weight = ExcelFont.BoldWeight;
+                    wsReport.Cells[startRow + nextRow, startCol + (next)].Value = Language.Total;
+
+                    wsReport.Cells[startRow + nextRow, startCol + (next += 1)].Style = bgTotalFormat;
+                    wsReport.Cells[startRow + nextRow, startCol + (next)].Value = string.Empty;
+
+                    wsReport.Cells[startRow + nextRow, startCol + (next += 1)].Style = bgTotalFormat;
+                    wsReport.Cells[startRow + nextRow, startCol + (next)].Value = string.Empty;
+
+
+                    wsReport.Cells[startRow + nextRow, startCol + (next += 1)].Style = bgTotalFormat;
+                    wsReport.Cells[startRow + nextRow, startCol + (next)].Value = string.Empty;
+
+                    wsReport.Cells[startRow + nextRow, startCol + (next += 1)].Style = bgTotalFormat;
+                    wsReport.Cells[startRow + nextRow, startCol + (next)].Value = string.Empty;
+
+                    wsReport.Cells[startRow + nextRow, startCol + (next += 1)].Style = bgTotalFormat;
+                    wsReport.Cells[startRow + nextRow, startCol + (next)].Value = CastAide.AsDouble(report.BaseStakeTotal);
+
+                    wsReport.Cells[startRow + nextRow, startCol + (next += 1)].Style = bgTotalFormat;
+                    wsReport.Cells[startRow + nextRow, startCol + (next)].Value = CastAide.AsDouble(report.BaseWinlostTotal);
+
+                    wsReport.Cells[startRow + nextRow, startCol + (next += 1)].Style = bgTotalFormat;
+                    wsReport.Cells[startRow + nextRow, startCol + (next)].Value = CastAide.AsDouble(report.CompanyStakeTotal);
+
+                    wsReport.Cells[startRow + nextRow, startCol + (next += 1)].Style = bgTotalFormat;
+                    wsReport.Cells[startRow + nextRow, startCol + (next)].Value = CastAide.AsDouble(report.CompanyWinlostTotal);
+
+                    wsReport.Cells[startRow + nextRow, startCol + (next += 1)].Style = bgTotalFormat;
+                    wsReport.Cells[startRow + nextRow, startCol + (next)].Value = string.Empty;
+
+                    wsReport.Cells[startRow + nextRow, startCol + (next += 1)].Style = bgTotalFormat;
+                    wsReport.Cells[startRow + nextRow, startCol + (next)].Value = string.Empty;
+                }
+            }
+
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+        }
+        #endregion
+    }
+}

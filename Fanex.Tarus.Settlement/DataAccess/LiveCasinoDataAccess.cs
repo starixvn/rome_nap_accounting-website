@@ -1,0 +1,104 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Collections;
+using DNAide.Data;
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
+using Fanex.Data;
+using System.Data;
+
+namespace Fanex.Tarus.Settlement.DataAccess
+{
+    public class LiveCasinoDataAccess : BaseDataAccess, ILiveCasinoDataAccess
+    {
+        
+        public DataSet GetMatches(string fdate, string tdate, int LeagueId, int iscompleted)
+        {
+            using (ObjectDb objDB = new ObjectDb("Acc_Set_GameSel"))
+            {
+                objDB.AddInParameter("fromdate", DbType.DateTime, fdate);
+                objDB.AddInParameter("todate", DbType.DateTime, tdate);
+                objDB.AddInParameter("leagueid", DbType.Int32, LeagueId);
+                objDB.AddInParameter("iscompleted", DbType.Int32, iscompleted);
+                var ds = objDB.ExecuteDataSet();
+                return ds;
+            }
+        }
+
+        public DataSet GetLiveCasinoScore(int MatchId)
+        {
+            using (ObjectDb objDB = new ObjectDb("TP_Game_GameDetail_ByMatchId"))
+            {
+                objDB.AddInParameter("matchid", DbType.Int32, MatchId);
+                return objDB.ExecuteDataSet();
+            }
+        }
+
+        public override DataSet GetMatch(int MatchId)
+        {
+            using (ObjectDb objDB = new ObjectDb("Acc_Set_LiveCSGameSelScore"))
+            {
+                objDB.AddInParameter("matchid", DbType.Int32, MatchId);
+                var ds = objDB.ExecuteDataSet();
+                return ds;
+            }
+        }
+
+
+        public string RefundAtLiveCasioDB(int MatchID, int AdminID, string AdminName)
+        {
+            using (ObjectDb objDB = new ObjectDb("TP_Controller_MiniBac_VoidFromAct"))
+            {
+                objDB.AddInParameter("matchid", DbType.Int32, MatchID);
+                objDB.AddInParameter("sysdate", DbType.DateTime, DateTime.Now);
+                objDB.AddInParameter("adminid", DbType.Int32, AdminID);
+                objDB.AddInParameter("adminname", DbType.String, AdminName);
+                objDB.AddInParameter("casinono", DbType.String, "01");
+                objDB.AddOutParameter("ErrMsg", DbType.String, 500);
+                objDB.AddOutParameter("ErrCode", DbType.String, 5);
+                var result = objDB.ExecuteNonQuery();
+                return DNAide.Core.CastAide.AsString(objDB.GetParameterValue("ErrMsg"));
+            }
+        }
+
+        public string RefundAtIBCDB(int MatchID, string Action, int AdminID, string betstatus, decimal CasinoCommRate, string IP, string CardsResult)
+        {
+            try
+            {
+                using (ObjectDb objDB = new ObjectDb("Admin_Settlement_s162"))
+                {
+                    objDB.AddInParameter("matchid", DbType.Int32, MatchID);
+                    objDB.AddInParameter("action", DbType.String, Action);
+                    objDB.AddInParameter("adminid", DbType.Int32, AdminID);
+                    objDB.AddInParameter("betstatus", DbType.String, betstatus);
+                    objDB.AddInParameter("cardsresult", DbType.String, CardsResult);
+                    objDB.AddInParameter("ip", DbType.String, IP);
+                    objDB.AddInParameter("commrate", DbType.Decimal, CasinoCommRate);
+                    objDB.ExecuteNonQuery();
+                    return string.Empty;
+                }
+            }
+            catch
+            {
+                return "Error";
+            }
+        }
+
+        public bool UpdateStatus(int MatchID, int Banker, int Player, string ResultData)
+        {
+            using (ObjectDb objDB = new ObjectDb("Dot_Member_LiveCasino_UpdResult"))
+            {
+                objDB.AddInParameter("matchid", DbType.Int32, MatchID);
+                objDB.AddInParameter("banker", DbType.Int32, Banker);
+                objDB.AddInParameter("player", DbType.Int32, Player);
+                objDB.AddInParameter("resultdata", DbType.String, ResultData);
+                objDB.AddOutParameter("Updresult", DbType.Boolean, 1); 
+                objDB.ExecuteNonQuery();
+                if (objDB.GetParameterValue("Updresult") is System.DBNull) return true;
+                return DNAide.Core.CastAide.AsBoolean(objDB.GetParameterValue("Updresult"));
+            }
+        }
+    }
+}

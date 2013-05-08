@@ -1,0 +1,106 @@
+﻿using System;
+using System.Collections;
+using BLL.Report;
+using DNAide.Core;
+
+public partial class Report_OtherWinLostReports_WinLostReportMain : System.Web.UI.Page
+{
+    #region private varables
+    protected readonly string _defaultSite = Resources.Language.Site;
+    protected readonly string _defaultTitle = Resources.Language.lblWinLostSponDemoTitle;
+    #endregion
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        var fDate = Request["fdate"];
+        var tDate = Request["tdate"];
+        var site = Request["site"] != null ? Request["site"] : _defaultSite;
+
+        ReportBase report = new OtherWinLossReport();
+
+        if (CastAide.AsInt32(Request["IsExport"]) == 1)
+        {
+            #region export to excel
+            var reportContent = string.Empty;
+            var reportBy = CastAide.AsString(Request["reportby"]);
+            var reportDetail = CastAide.AsString(Request["reportdetail"]);
+            var sportOption = CastAide.AsString(Request["sport"]);
+            var fileName = string.Format("{0}Winloss_", site.ToLower());
+            var reportInput = new Hashtable();
+
+            if (reportDetail == "0")
+            {
+                reportInput.Add("date", CastAide.AsString(Request["date"]));
+                reportInput.Add("reportby", reportBy);                
+                
+                
+                switch (reportBy)
+                {
+                    case "1": //daily
+                        fileName = fileName + "Daily_" + fDate + "-" + tDate;
+                        break;
+                    case "2": //monthly
+                        fileName = fileName + "Monthly_" + fDate + "-" + tDate;
+                        break;
+                    case "3": //Sport
+                        fileName = fileName + "Sport_" + fDate + "-" + tDate;
+                        break;
+                }
+                
+            }
+            else if (reportDetail == "1")
+            {
+                if (sportOption.Equals("0")) //sport book                
+                    fileName = fileName + "SportBook_" + CastAide.AsString(Request["currencyname"]) + "_" + fDate + "-" + tDate;                
+                else if (sportOption.Equals("151"))//HorseRacing                
+                    fileName = fileName + "HorseRacing_" + CastAide.AsString(Request["currencyname"]) + "_" + fDate + "-" + tDate;                
+                else                
+                    fileName = fileName + CastAide.AsString(Request["currencyname"]) + "_" + fDate + "-" + tDate;
+                
+                //reportInput.Add("sport", sportOption);
+                //reportInput.Add("fdate", fDate);
+                //reportInput.Add("tdate", tDate);
+                //reportInput.Add("currency", CastAide.AsString(Request["currency"]));
+                reportInput.Add("currencyname", CastAide.AsString(Request["currencyname"]));
+                //reportInput.Add("reportdetail", "1");
+                //reportInput.Add("FileName", fileName);
+                //reportInput.Add("site", site);
+
+            }
+
+            reportInput.Add("reportdetail", reportDetail);
+            reportInput.Add("sport", sportOption);
+            reportInput.Add("fdate", fDate);
+            reportInput.Add("tdate", tDate);
+            reportInput.Add("currency", CastAide.AsString(Request["currency"]));
+            reportInput.Add("FileName", fileName);
+            reportInput.Add("site", site);
+
+            report.Export2Excel(reportInput);
+            #endregion
+        }
+        else
+        {
+            #region gen Header
+            this.ReportTitle.Text = Sunplus.Accounting.Business.Report.Reports.Title;
+            var headerHash = new Hashtable();
+            headerHash.Add("fdate", fDate);
+            headerHash.Add("tdate", tDate);
+            headerHash.Add("site", site);
+            reportHeader.Text = report.CreateHeader(headerHash);
+            #endregion
+        }
+    }
+
+    protected string GetReportTitle(string site) 
+    {
+        var reportTilte = _defaultTitle;
+        if(site.ToLower().Equals(Resources.Language.Spondemo.ToLower()))
+            reportTilte = Resources.Language.lblWinLostSponDemoTitle;
+        else if (site.ToLower().Equals(Resources.Language.MS88.ToLower()))
+            reportTilte = Resources.Language.lblWinLostMS88Title;
+        else if (site.ToLower().Equals(Resources.Language.Dela.ToLower()))
+            reportTilte = Resources.Language.lblWinLostDelaTitle;
+        return reportTilte;
+    }
+}

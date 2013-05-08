@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5775926B-FF15-4333-96EA-898D184DACBF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Fanex.Tarus.VirtualSport</RootNamespace>
+    <AssemblyName>Fanex.Tarus.VirtualSport</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Couchbase, Version=1.0.0.0, Culture=neutral, PublicKeyToken=81137140da4e57ef, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Dependency\Fanex\Couchbase.dll</HintPath>
+    </Reference>
+    <Reference Include="DNAide">
+      <HintPath>..\Dependency\DNAide.dll</HintPath>
+    </Reference>
+    <Reference Include="Enyim.Caching, Version=2.12.0.0, Culture=neutral, PublicKeyToken=81137140da4e57ef, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Dependency\Fanex\Enyim.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelUtil, Version=29.3.0.1000, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\ExcelUtil.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Common, Version=1.0.404.96, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Fanex\Fanex.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Data, Version=1.0.111.9, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.PTEngine">
+      <HintPath>..\Dependency\Fanex\Fanex.PTEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.PTVirtualSports, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Dependency\VirtualSports\Fanex.PTVirtualSports.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\IBCUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching">
+      <HintPath>..\Dependency\Fanex\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=4.1.0.0, Culture=neutral, PublicKeyToken=e44a2bc38ed2c13c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Fanex\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Fanex\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\Dependency\Fanex\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\System.Net.Http.2.0.20126.16343\lib\net40\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\System.Net.Http.Formatting.4.0.20126.16343\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\System.Net.Http.2.0.20126.16343\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\AspNetWebApi.Core.4.0.20126.16343\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\AspNetWebApi.4.0.20126.16343\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Resources\SpecialDelete.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SpecialDelete.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Business\Customer\DepositCustomer\CustomerService.cs" />
+    <Compile Include="Business\Customer\DepositCustomer\ICustomerService.cs" />
+    <Compile Include="Business\Customer\EnableVirtualSports\EnableService.cs" />
+    <Compile Include="Business\Customer\EnableVirtualSports\IEnableService.cs" />
+    <Compile Include="Business\Report\DailyWL2h\IVirtualSport2hReportService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Business\Report\DailyWL2h\RowType.cs" />
+    <Compile Include="Business\Report\DailyWL2h\VirtualSport2hReportService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Business\Report\WinLoss\IWinlossService.cs" />
+    <Compile Include="Business\Report\WinLoss\WinlossService.cs" />
+    <Compile Include="Business\SpecialDelete\IDeleteBetsService.cs" />
+    <Compile Include="Business\SpecialDelete\IRecoverBetsService.cs" />
+    <Compile Include="Business\SpecialDelete\ISpecialDeleteService.cs" />
+    <Compile Include="Controllers\Customer\DepositCustomer\DepositCustomerController.cs" />
+    <Compile Include="Controllers\Customer\EnableVirtualSports\EnableController.cs" />
+    <Compile Include="Controllers\Report\VirtualSport2hReportController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Report\VirtualSportReportController.cs" />
+    <Compile Include="Controllers\SpecialDelete\SpecialDeleteController.cs" />
+    <Compile Include="Core\Configurations\VirtualSportsSection.cs" />
+    <Compile Include="DataAccess\Customer\DepositCustomer\CustomerAccess.cs" />
+    <Compile Include="DataAccess\Customer\DepositCustomer\ICustomerAccess.cs" />
+    <Compile Include="DataAccess\Customer\EnableVirtualSports\EnableAccess.cs" />
+    <Compile Include="DataAccess\Customer\EnableVirtualSports\IEnableAccess.cs" />
+    <Compile Include="DataAccess\DataAccess.cs" />
+    <Compile Include="DataAccess\Report\DailyWL2h\IVirtualSport2hReportAccess.cs" />
+    <Compile Include="DataAccess\Report\DailyWL2h\VirtualSport2hReportAccess.cs" />
+    <Compile Include="DataAccess\Report\Winloss\IWinlossAccess.cs" />
+    <Compile Include="DataAccess\Report\Winloss\WinlossAccess.cs" />
+    <Compile Include="DataAccess\SpecialDelete\IMessengerAccess.cs" />
+    <Compile Include="DataAccess\SpecialDelete\ISpecialDeleteAccess.cs" />
+    <Compile Include="DataAccess\SpecialDelete\MessengerAccess.cs" />
+    <Compile Include="DataAccess\SpecialDelete\SpecialDeleteAccess.cs" />
+    <Compile Include="Business\SpecialDelete\Messenger.cs" />
+    <Compile Include="Constants\ErrorCode.cs" />
+    <Compile Include="Business\SpecialDelete\BaseSpecialDelete.cs" />
+    <Compile Include="Business\SpecialDelete\DeleteBetsService.cs" />
+    <Compile Include="Business\SpecialDelete\RecoverBetsService.cs" />
+    <Compile Include="Controllers\Customer\PTSetting\AgentController.cs" />
+    <Compile Include="Controllers\Customer\PTSetting\MemberController.cs" />
+    <Compile Include="Controllers\Customer\PTSetting\MasterController.cs" />
+    <Compile Include="Controllers\Customer\PTSetting\SuperController.cs" />
+    <Compile Include="Controllers\Customer\PTSetting\PTSettingBaseController.cs" />
+    <Compile Include="Controllers\SpecialDelete\DeleteBetsController.cs" />
+    <Compile Include="Controllers\SpecialDelete\RecoverBetsController.cs" />
+    <Compile Include="DataAccess\SpecialDelete\IDeleteBetsAccess.cs" />
+    <Compile Include="DataAccess\SpecialDelete\IRecoverBetsAccess.cs" />
+    <Compile Include="DataAccess\SpecialDelete\DeleteBetsAccess.cs" />
+    <Compile Include="DataAccess\SpecialDelete\RecoverBetsAccess.cs" />
+    <Compile Include="Entities\Customer\DepositCustomer\CustomerSettings.cs" />
+    <Compile Include="Entities\Customer\DepositCustomer\PostParam.cs" />
+    <Compile Include="Entities\Customer\EnableVirtualSports\CustomerSettings.cs" />
+    <Compile Include="Entities\Customer\PTSetting\OtherSetting.cs" />
+    <Compile Include="Entities\Report\DailyWL2h\DailyWinLoss2hParam.cs" />
+    <Compile Include="Entities\Report\DailyWL2h\LiveAndNoneLiveReport.cs" />
+    <Compile Include="Entities\Report\DailyWL2h\Report.cs" />
+    <Compile Include="Entities\Report\DailyWL2h\ReportDetail.cs" />
+    <Compile Include="Entities\Report\DailyWL2h\ReportGrandTotal.cs" />
+    <Compile Include="Entities\Report\DailyWL2h\ReportTotal.cs" />
+    <Compile Include="Entities\Report\Winloss\Winloss.cs" />
+    <Compile Include="Entities\Report\Winloss\WinlossByCurrency.cs" />
+    <Compile Include="Entities\Report\Winloss\WinlossByDate.cs" />
+    <Compile Include="Entities\Report\Winloss\WinlossDetail.cs" />
+    <Compile Include="Entities\Result.cs" />
+    <Compile Include="Entities\SpecialDelete\Bettype.cs" />
+    <Compile Include="Entities\SpecialDelete\Message.cs" />
+    <Compile Include="Entities\SpecialDelete\SpecialDeleteBetEarlyKO.cs" />
+    <Compile Include="Entities\SpecialDelete\BetTransactionInfomation.cs" />
+    <Compile Include="Entities\SpecialDelete\SpecialDeleteByType.cs" />
+    <Compile Include="Entities\SpecialDelete\SpecialDeleteDataforMailing.cs" />
+    <Compile Include="Entities\SpecialDelete\SpecialDeleteBetInfoList.cs" />
+    <Compile Include="Entities\SpecialDelete\SpecialDeleteParam.cs" />
+    <Compile Include="Entities\SpecialDelete\SpecialDeleteParamPager.cs" />
+    <Compile Include="Helpers\CurrencyHelper.cs" />
+    <Compile Include="Helpers\ReportUtils.cs" />
+    <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="App_Resources\Message.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Message.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Helpers\Resource.cs" />
+    <Compile Include="Resources\DailyWinLoss2h.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DailyWinLoss2h.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Report.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Report.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Business\Customer\PTSetting\" />
+    <Folder Include="DataAccess\PTSetting\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="App_Resources\Message.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Message.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Resources\SpecialDelete.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SpecialDelete.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DailyWinLoss2h.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DailyWinLoss2h.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Report.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Report.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.Tarus.Admin\Fanex.Tarus.Admin.csproj">
+      <Project>{B7FD958B-43DB-45EE-895E-2105971893E3}</Project>
+      <Name>Fanex.Tarus.Admin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.Tarus.Business.Implement\Fanex.Tarus.Business.Implement.csproj">
+      <Project>{BE4A5642-A3B6-4329-BB8F-4973446E7FA9}</Project>
+      <Name>Fanex.Tarus.Business.Implement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.Tarus.Business.Interface\Fanex.Tarus.Business.Interface.csproj">
+      <Project>{98993382-DB96-4EF7-932B-0C384A31199F}</Project>
+      <Name>Fanex.Tarus.Business.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.Tarus.DataAccess.Implement\Fanex.Tarus.DataAccess.Implement.csproj">
+      <Project>{9780010A-7EEC-4726-959B-D2CFFB1875EE}</Project>
+      <Name>Fanex.Tarus.DataAccess.Implement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.Tarus.Entities\Fanex.Tarus.Entities.csproj">
+      <Project>{0D0F3C0D-F85C-4B0D-B033-16424E1AE5E0}</Project>
+      <Name>Fanex.Tarus.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.Tarus.Infrastructure\Fanex.Tarus.Infrastructure.csproj">
+      <Project>{CCC0446A-42E7-4850-B09C-4DAC278F23B3}</Project>
+      <Name>Fanex.Tarus.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.Tarus.Web.Controller\Fanex.Tarus.Web.Controllers.csproj">
+      <Project>{F3FE623F-A32F-4DB4-8306-64C166FC4488}</Project>
+      <Name>Fanex.Tarus.Web.Controllers</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

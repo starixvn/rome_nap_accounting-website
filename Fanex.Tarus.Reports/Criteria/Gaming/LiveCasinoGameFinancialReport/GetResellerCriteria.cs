@@ -1,0 +1,35 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="GetResellerCriteria.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
+
+namespace Fanex.Tarus.Reports.Criteria.Gaming.LiveCasinoGameFinancialReport
+{
+    using System.Diagnostics.CodeAnalysis;
+
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    public class GetResellerCriteria
+    {
+        public int ResellerID { get; set; }
+
+        public string ProductCode { get; set; }
+
+        public bool ExcludeBA { get; set; }
+
+        public bool ExcludeTest { get; set; }
+
+        public string GetSettingKey()
+        {
+            return "GetLicenseesByResellers";
+        }
+
+        public bool IsValid()
+        {
+            return true;
+        }
+    }
+}

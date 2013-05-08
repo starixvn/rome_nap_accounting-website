@@ -1,0 +1,12 @@
+﻿using System;
+using System.Web.UI;
+
+public partial class BA_BABetList :Page//PageBase 
+{
+    
+    protected void Page_Load(object sender, EventArgs e)
+    {
+       
+    }
+
+}

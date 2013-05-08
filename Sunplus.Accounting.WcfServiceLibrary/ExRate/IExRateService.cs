@@ -1,0 +1,27 @@
+﻿using System.Collections.Generic;
+using System.ServiceModel;
+using System.ServiceModel.Web;
+using ExcelUtil.Spreadsheet;
+using Sunplus.Accounting.Entities;
+
+// NOTE: If you change the interface name "IServiceDailyTran" here, you must also update the reference to "IServiceDailyTran" in Web.config.
+namespace Sunplus.Accounting.WcfServiceLibrary.ExRate
+{
+    [ServiceContract]
+    public interface IExRateService
+    {
+        ResultBO ReadExRateFromExcel();
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        List<ExchangeRate> LoadExchangeRateOpenTote();
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        ResultBO UpdateExRateOpenTote(List<ExchangeRate> ExRateList);
+
+        string GenHeader();
+        string GenNewRate();
+        ExcelFile ExportExRate();
+    }
+}

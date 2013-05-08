@@ -1,0 +1,529 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="CombinationMixParlayReport_DWL2hService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
+
+namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Drawing;
+    using DNAide.Core;
+    using ExcelUtil.Spreadsheet;
+    using Fanex.Tarus.Infrastructure.Resource;
+    using Fanex.Tarus.Reports.Business.Constants;
+    using Fanex.Tarus.Reports.Constants;
+    using Fanex.Tarus.Reports.Entities.DailyWinLoss2h;
+    using Fanex.Tarus.Reports.Entities.Sport;
+    using RemotingRef;
+    using Sunplus.Accounting.Core.Cache;
+    using Sunplus.Accounting.Core.Extensions;
+    using Sunplus.Accounting.Core.Helper;
+
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    public partial class DailyWinLoss2hService : IDailyWinLoss2hService
+    {
+        #region CombinationMixParlayReport
+
+        public DailyWinLoss2hReport DailyWLDirect_MixParlay(DailyWinLoss2hParam param)
+        {
+            var result = new DailyWinLoss2hReport
+            {
+                ReportDetails = new List<DailyWinLoss2hItem>(),
+                ReportTotal = new DailyWinLoss2hReportTotal
+                {
+                    NormalTotal = new DailyWinLoss2hItem
+                    {
+                        Name = Labels.All_Total + ":"
+                    },
+                    EightRMTotal = new DailyWinLoss2hItem(),
+                    BARMTotal = new DailyWinLoss2hItem(),
+                    AllTotal = new DailyWinLoss2hItem(),
+                    GrandTotal = new DailyWinLoss2hGrandTotal()
+                }
+            };
+            try
+            {
+                #region Declaration
+
+                DataTable dataTable = _dailyWinLoss2hAccess.DailyWLDirect_MixParlay(param);
+                //dataTable.DefaultView.Sort = "SportType ASC, Bettype ASC";
+
+                int currentSporttype = 0;
+                int sportIndex = 0;
+                DailyWinLoss2hItem sportTotal = new DailyWinLoss2hItem
+                {
+                    RowTypeDWL2h = new Entities.Sport.BaseModel
+                    {
+                        Id = RowTypeConstants.SportTotal
+                    }
+                };
+
+                var emptyRow = new DailyWinLoss2hItem
+                {
+                    RowTypeDWL2h = new Entities.Sport.BaseModel
+                    {
+                        Id = RowTypeConstants.EmptyRow
+                    }
+                };
+
+                #endregion Declaration
+
+                if (dataTable != null && dataTable.Rows.Count > 0)
+                {
+                    #region ForEach
+
+                    var dailyWinLoss2hItemX = new DailyWinLoss2hItem();
+                    var rows = dataTable.Select(null, "SportType ASC, Bettype ASC");
+                    if (rows.Length > 0)
+                    {
+                        currentSporttype = CastAide.AsInt32(rows[0]["SportType"]);
+                    }
+
+                    foreach (DataRow row in rows)
+                    {
+                        dailyWinLoss2hItemX = new DailyWinLoss2hItem
+                        {
+                            Status = CastAide.AsString(row["Status"]),
+                            WinLoss = CastAide.AsDouble(row["WinLost"]),
+                            Position = CastAide.AsDouble(row["Position"]),
+                            Commission = CastAide.AsDouble(row["Commission"]),
+                            LineTotal = CastAide.AsDouble(row["LineTotal"]),
+                            Turnover = CastAide.AsDouble(row["Turnover"]),
+
+                            Sporttype = new Sporttype
+                            {
+                                Id = CastAide.AsInt32(row["SportType"])
+                            },
+
+                            Bettype = new Fanex.Tarus.Reports.Entities.Sport.BaseModel
+                            {
+                                Id = CastAide.AsInt32(row["BetType"])
+                            },
+
+                            RowTypeDWL2h = new Entities.Sport.BaseModel
+                            {
+                                Id = RowTypeConstants.Normal
+                            }
+                        };
+
+                        dailyWinLoss2hItemX.Name = RefData.GetBetTypeName(dailyWinLoss2hItemX.Bettype.Id.ToString(), "EN") + "(" + dailyWinLoss2hItemX.Status + ")";
+                        dailyWinLoss2hItemX.Margin = ReportService.CalculateMargin(dailyWinLoss2hItemX.LineTotal,
+                            dailyWinLoss2hItemX.Turnover) * 100;
+                        result.ReportTotal.NormalTotal.Add(dailyWinLoss2hItemX);
+
+                        #region SportTypeChangeProccess
+
+                        if (dailyWinLoss2hItemX.Sporttype.Id != currentSporttype)
+                        {
+                            sportIndex++;
+                            sportTotal.Id = currentSporttype;
+                            sportTotal.Name = GetSportTotalName(currentSporttype);
+                            sportTotal.Margin = ReportService.CalculateMargin(sportTotal.LineTotal,
+                                sportTotal.Turnover) * 100;
+                            sportTotal.Round();
+                            result.ReportDetails.Add(sportTotal);
+                            result.ReportDetails.Add(emptyRow);
+
+                            sportTotal = new DailyWinLoss2hItem
+                            {
+                                RowTypeDWL2h = new Entities.Sport.BaseModel
+                                {
+                                    Id = RowTypeConstants.SportTotal
+                                }
+                            };
+
+                            sportTotal.Clone(dailyWinLoss2hItemX);
+                            currentSporttype = dailyWinLoss2hItemX.Sporttype.Id;
+                        }
+                        else
+                        {
+                            sportTotal.Add(dailyWinLoss2hItemX);
+                        }
+
+                        dailyWinLoss2hItemX.RowIndex = sportIndex;
+                        dailyWinLoss2hItemX.Round();
+                        result.ReportDetails.Add(dailyWinLoss2hItemX);
+
+                        #endregion SportTypeChangeProccess
+                    }
+
+                    #endregion ForEach
+                    #region TotalOfLastSport
+
+                    sportIndex++;
+                    sportTotal.Name = GetSportTotalName(currentSporttype);
+                    sportTotal.Margin = ReportService.CalculateMargin(sportTotal.LineTotal,
+                        sportTotal.Turnover) * 100;
+                    sportTotal.Round();
+                    result.ReportDetails.Add(sportTotal);
+                    result.ReportDetails.Add(emptyRow);
+                    currentSporttype = dailyWinLoss2hItemX.Sporttype.Id;
+
+                    #endregion TotalOfLastSport
+
+                    result.ReportTotal.NormalTotal.Margin = ReportService.CalculateMargin(result.ReportTotal.NormalTotal.LineTotal,
+                         result.ReportTotal.NormalTotal.Turnover) * 100;
+                    result.ReportTotal.NormalTotal.Round();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return result;
+        }
+
+        public void ExportToExcel_DailyWLDirect_MixParlay(DailyWinLoss2hParam param)
+        {
+            var excelFile = new ExcelFile();
+            var wsReport = excelFile.Worksheets.Add(param.DefaultSheetName.Replace("/", "_"));
+            int currentRow = 0;
+            const int startCol = 0;
+
+            DailyWinLoss2hReport report = DailyWLDirect_MixParlay(param);
+            ExportLiveOrNoneLive(ref wsReport, startCol, ref currentRow, report, param);
+            ReportService.RespondStream(excelFile, param.ReportFileName);
+        }
+
+        private void ExportLiveOrNoneLive(ref ExcelWorksheet wsReport,
+            int startCol,
+            ref int currentRow,
+            DailyWinLoss2hReport report,
+            DailyWinLoss2hParam param)
+        {
+            var excelGemboxUtils = new ExcelGemboxUtils();
+            var bgColor = Color.FromArgb(255, 255, 255);
+            var commonStyle = excelGemboxUtils.GetStyleText(255, 255, 255);
+            var bgFormat = excelGemboxUtils.GetStyleIntNumber(".00", bgColor, false, true);
+            var numberDefaultFormat = GetStyleIntNumberLiveCasino(".00", Color.FromArgb(253, 252, 252), false, false);
+            var bgFormatPercent = excelGemboxUtils.GetStyleIntNumber(".00%", bgColor, false, true);
+
+            var totalSportTypeCellStyle = excelGemboxUtils.GetStyleText(Color.Black, 211, 225, 200, HorizontalAlignmentStyle.Center);
+            var totalSportNumberFormat = excelGemboxUtils.GetStyleIntNumber(".00", Color.FromArgb(211, 225, 200), false, true);
+            var totalSportNumberDefaultFormat = GetStyleIntNumberLiveCasino(".00", Color.FromArgb(211, 225, 200), false, true);
+            var totalSportPercentFormat = excelGemboxUtils.GetStyleIntNumber(".00%", Color.FromArgb(211, 225, 200), false, true);
+
+            var reportTitle = CacheRef.GetBettype(param.BetType).ToUpper() + " PRODUCT WIN/LOSS REPORT";
+            ExcelCell currentCell;
+            CellRange currentCellRange;
+            var currentCol = startCol;
+
+            AssignHeaderExportExcel(ref wsReport, startCol, ref currentRow, reportTitle);
+            #region ReportBody
+
+            if (report.ReportDetails.Count <= 0)
+            {
+                currentCol = startCol;
+                currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, startCol, currentRow, startCol + 6);
+                currentCellRange.Style = commonStyle;
+                currentCellRange.Merged = true;
+                currentCellRange.Value = param.EmptyReportMessage;
+                currentCellRange.Style.Font.Weight = ExcelFont.BoldWeight;
+                currentCellRange.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+                return;
+            }
+
+            foreach (var detail in report.ReportDetails)
+            {
+                switch (detail.RowTypeDWL2h.Id)
+                {
+                    case RowTypeConstants.Normal:
+                        #region NormalRow
+
+                        currentCol = startCol;
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style = commonStyle;
+                        currentCell.Value = detail.Name;
+                        currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+                        currentCol++;
+
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style = bgFormat;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                        currentCell.Value = CastAide.AsDecimal(detail.WinLoss);
+                        currentCol++;
+
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style = numberDefaultFormat;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                        currentCell.Value = CastAide.AsDecimal(detail.Position);
+                        currentCol++;
+
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style = numberDefaultFormat;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                        currentCell.Value = CastAide.AsDecimal(detail.Commission);
+                        currentCol++;
+
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style = bgFormat;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                        currentCell.Value = CastAide.AsDecimal(detail.LineTotal);
+                        currentCol++;
+
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style = numberDefaultFormat;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                        currentCell.Value = CastAide.AsDecimal(detail.Turnover);
+                        currentCol++;
+
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style = bgFormatPercent;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                        if (CastAide.AsDouble(detail.Turnover) != 0)
+                        {
+                            currentCell.Value = CastAide.AsDouble(detail.Margin) / 100;
+                        }
+                        else
+                        {
+                            currentCell.Value = "N/A";
+                        }
+
+                        currentCol++;
+                        currentRow++;
+                        break;
+
+                        #endregion NormalRow
+                    case RowTypeConstants.SportTotal:
+                        #region SportTotal
+
+                        //Total Sporttype           
+                        currentCol = startCol;
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style = totalSportTypeCellStyle;
+                        currentCell.Value = detail.Name;
+
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Left;
+                        currentCol++;
+
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style = totalSportNumberFormat;
+                        currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                        currentCell.Value = CastAide.AsDecimal(detail.WinLoss);
+                        currentCol++;
+
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style = totalSportNumberDefaultFormat;
+                        currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                        currentCell.Value = CastAide.AsDecimal(detail.Position);
+                        currentCol++;
+
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style = totalSportNumberDefaultFormat;
+                        currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                        currentCell.Value = CastAide.AsDecimal(detail.Commission);
+                        currentCol++;
+
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style = totalSportNumberFormat;
+                        currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                        currentCell.Value = CastAide.AsDecimal(detail.LineTotal);
+                        currentCol++;
+
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style = totalSportNumberDefaultFormat;
+                        currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                        currentCell.Value = CastAide.AsDecimal(detail.Turnover);
+                        currentCol++;
+
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style = totalSportPercentFormat;
+                        currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                        if (CastAide.AsDouble(detail.Turnover) != 0)
+                        {
+                            currentCell.Value = CastAide.AsDouble(detail.Margin) / 100;
+                        }
+                        else
+                        {
+                            currentCell.Value = "N/A";
+                        }
+
+                        currentCol++;
+                        currentRow++;
+                        break;
+
+                        #endregion SportTotal
+                    case RowTypeConstants.EmptyRow:
+                        this.ExportEmptyRow(ref wsReport, ref currentRow, startCol, startCol + 6);
+                        break;
+                }
+            }
+
+            #region AllTotal
+
+            var normalTotal = report.ReportTotal.NormalTotal;
+            currentCol = startCol;
+            currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Style = commonStyle;
+            currentCell.Value = normalTotal.Name;
+            currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+            currentCol++;
+
+            currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Style = bgFormat;
+            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+            currentCell.Value = CastAide.AsDecimal(normalTotal.WinLoss);
+            currentCol++;
+
+            currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Style = numberDefaultFormat;
+            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+            currentCell.Value = CastAide.AsDecimal(normalTotal.Position);
+            currentCol++;
+
+            currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Style = numberDefaultFormat;
+            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+            currentCell.Value = CastAide.AsDecimal(normalTotal.Commission);
+            currentCol++;
+
+            currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Style = bgFormat;
+            currentCell.Style.FillPattern.SetSolid(Color.FromArgb(181, 196, 208));
+            currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+            currentCell.Value = CastAide.AsDecimal(normalTotal.LineTotal);
+            currentCol++;
+
+            currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Style = numberDefaultFormat;
+            currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+            currentCell.Value = CastAide.AsDecimal(normalTotal.Turnover);
+            currentCol++;
+
+            currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Style = bgFormatPercent;
+            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+            if (CastAide.AsDouble(normalTotal.Turnover) != 0)
+            {
+                currentCell.Value = CastAide.AsDouble(normalTotal.Margin) / 100;
+            }
+            else
+            {
+                currentCell.Value = "N/A";
+            }
+
+            currentCol++;
+            currentRow++;
+
+            #endregion AllTotal
+            #endregion ReportBody
+        }
+
+        private void AssignHeaderExportExcel(ref ExcelWorksheet wsReport, int startCol,
+            ref int currentRow, string reportTitle)
+        {
+            var excelGemboxUtils = new ExcelGemboxUtils();
+            var cellStyle = excelGemboxUtils.GetStyleText(Color.Black, 181, 196, 208, HorizontalAlignmentStyle.Center);
+            var commonStyle = excelGemboxUtils.GetStyleText(255, 255, 255);
+            ExcelCell currentCell;
+            CellRange currentCellRange;
+            var currentCol = startCol;
+
+            currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, startCol, currentRow, startCol + 6);
+            currentCellRange.Style = commonStyle;
+            currentCellRange.Merged = true;
+            currentCellRange.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+            currentCellRange.Style.Font.Weight = ExcelFont.BoldWeight;
+            currentCellRange.Value = reportTitle;
+            currentRow++;
+
+            //header
+            currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Value = "Bettype";
+            currentCell.Style = cellStyle;
+            currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+            wsReport.Columns[currentCol].Width = 6000;
+            currentCol++;
+
+            currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Value = "WinLoss";
+            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+            currentCell.Style = cellStyle;
+            currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+            wsReport.Columns[currentCol].Width = 4000;
+            currentCol++;
+
+            currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Value = "Position";
+            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+            currentCell.Style = cellStyle;
+            currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+            wsReport.Columns[currentCol].Width = 4000;
+            currentCol++;
+
+            currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Value = "Comm";
+            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+            currentCell.Style = cellStyle;
+            currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+            wsReport.Columns[currentCol].Width = 4000;
+            currentCol++;
+
+            currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Value = "Line Total";
+            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+            currentCell.Style = cellStyle;
+            currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+            wsReport.Columns[currentCol].Width = 4000;
+            currentCol++;
+
+            currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Value = "Turnover";
+            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+            currentCell.Style = cellStyle;
+            currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+            wsReport.Columns[currentCol].Width = 4000;
+            currentCol++;
+
+            currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Value = "Margin";
+            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+            currentCell.Style = cellStyle;
+            currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+            wsReport.Columns[currentCol].Width = 4000;
+            currentCol++;
+            currentRow++;
+        }
+
+        private string GetSportTotalName(int sporttype)
+        {
+            var sportTotalName = "";
+            switch (sporttype)
+            {
+                case Sports.Soccer:
+                    sportTotalName = "Soccer Sport";
+                    break;
+                case Sports.CombinationMixParlay:
+                    sportTotalName = "Multi-Sport";
+                    break;
+                default:
+                    sportTotalName = "Others Sport";
+                    break;
+            }
+
+            sportTotalName += " " + Labels.Total;
+            return sportTotalName;
+        }
+
+        #endregion CombinationMixParlayReport
+    }
+}

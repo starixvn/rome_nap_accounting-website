@@ -1,0 +1,21 @@
+﻿
+
+using System;
+using System.Collections.Generic;
+
+namespace Fanex.Tarus.VirtualSport.Entities.SpecialDelete
+{
+    [Serializable]
+    public class SpecialDeleteByType
+    {
+        #region IFields
+
+        public string Type { get; set; }
+        public string OptionType { get; set; }
+        public bool IsAllowOptionDelete { get; set; }
+        public List<BetTransactionInfomation> TransactionInfo { get; set; }
+        public List<SpecialDeleteBetEarlyKO> KoItems { get; set; }
+
+        #endregion IFields
+    }
+}

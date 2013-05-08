@@ -1,0 +1,19 @@
+using System;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web;
+
+/// <summary>
+/// CITS
+/// </summary>
+public partial class Report_WinLostSummary : PageBase
+{
+
+    public string fdate = "", tdate = "", param = "";
+    protected void Page_Load(object sender, EventArgs e)
+    {        
+        fdate = Request["fdate"];
+        tdate = Request["tdate"];
+        param = "?fdate=" + fdate + "&tdate=" + tdate;
+
+    }    
+}

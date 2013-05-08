@@ -1,0 +1,32 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="Utils.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Infrastructure.Helper
+{
+    using System;
+    using System.Web;
+    using DNAide.Core;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class Utils
+    {
+        public static string GetClientIP()
+        {
+            try
+            {
+                if (HttpContext.Current.Request.IsLocal)
+                    return "127.0.0.1";
+                return CastAide.AsString(HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"], "");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+    }
+}

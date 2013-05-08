@@ -1,0 +1,124 @@
+﻿namespace Fanex.Tarus.Customer.Credit.Controllers
+{
+    using System;
+    using System.Web.Mvc;
+    using Fanex.PTEngine.BusinessObjects;
+    using Fanex.Tarus.Customer.CreditCustomer.Business;
+    using Fanex.Tarus.Customer.CreditCustomer.Entities;
+    using Fanex.Tarus.Web.Controllers.Filters;
+    using Newtonsoft.Json;
+    using Sunplus.Accounting.Core.Common;
+
+    public class AddNewAgentController : CustomerSettingBaseController
+    {
+        public AddNewAgentController(ICustomerSettingService customerSettingService)
+            : base(customerSettingService)
+        {
+        }
+
+        public AddNewAgentController()
+            : base()
+        {
+        }
+
+        /// <summary>
+        /// This is index page for insert new agent
+        /// </summary>
+        /// <param name="masterId">Id of Master</param>
+        /// <param name="userName">Name of Master</param>
+        /// <returns></returns>
+        [AuthenticateRead]
+        public ActionResult AddNewAgentPage(int masterId, string userName)
+        {
+            if (userName == null || userName == string.Empty)
+            {
+                userName = AppSession.CustUName;
+            }
+            //// Setting for customer information section
+            CustomerSettingView customerSettingView = new CustomerSettingView
+            {
+                TitlePage = "General Information",
+                IsInsertPage = true,
+                IsSuperSetting = false,
+                IsMasterSetting = false,
+                IsMemberSetting = false,
+                IsAgentSetting = true,
+                CustId = masterId,
+                CustUserName = userName,
+                CanEditCredit = _customerSettingService.CheckPermissionEditCredit()
+            };
+            return View("~/Views/Customer/CreditCustomer/AddNewAgent.cshtml", customerSettingView);
+        }
+
+        /// <summary>
+        /// Get Customer
+        /// </summary>
+        /// <param name="requestContext">Constext Of Get customer</param>
+        /// <returns>Customer Object</returns>
+        public override ICustomer GetCustomerForLaterAction(IRequestContext requestContext)
+        {
+            return _customerService.GetCustomerForAddNewAgent(requestContext);
+        }
+
+        /// <summary>
+        /// This function will return a current context object
+        /// </summary>
+        /// <returns>Current context object</returns>
+        [HttpPost]
+        public JsonResult GetContextObject(int masterId)
+        {
+            // Init context for add new supper
+            IRequestContext currentContext = new RequestContext()
+            {
+                CustId = masterId,
+                TargetCustId = 0,
+                RoleId = 3,
+                TargetRoleId = 2,
+                FormId = FormType.Add,
+                SubAccId = 0,
+                AdminId = AppSession.AccId
+            };
+            return Json(JsonConvert.SerializeObject(currentContext, Formatting.Indented, GetJsonSerializerSetting()));
+        }
+
+        /// <summary>
+        /// This function will add new customer and redirect to update page if add successful
+        /// </summary>
+        /// <param name="stringcustomer">String will be deserialized to a customer object</param>
+        /// <param name="currentContext">Current context</param>
+        /// <returns>Return a result message</returns>
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult DoAddNewAgent(string stringcustomer, RequestContext currentContext)
+        {
+            Fanex.PTEngine.BusinessObjects.Result result;
+            try
+            {
+                ICustomer customer = GetCustomerFromDeserializeJsonString(stringcustomer);
+                // Do insert new agent
+                int agentId = 0;
+                currentContext.AdminId = AppSession.AccId;
+                customer.Language = "E";
+                currentContext.IP = System.Web.HttpContext.Current.Request.UserHostAddress;
+                result = _customerService.AddNewAgent(customer, currentContext, out agentId);
+                // Redirect To Edit Page
+                if (result.ErrorCode == "0")
+                {
+                    result.ErrorMessage = "Customer/V2/UpdatePT.aspx?custid=" + agentId + "&insert=" + "true" + "&roleid=2" + "&uplineid=" + currentContext.CustId.ToString();
+                    _customerSettingService.UpdateStatusThirdPartyAccountAfterInsertCustomer(agentId, customer, currentContext);
+                }
+            }
+            catch (Exception ex)
+            {
+                result = new Fanex.PTEngine.BusinessObjects.Result
+                {
+                    ErrorCode = "1000",
+                    ErrorMessage = ex.Message
+                };
+            }
+
+            // Return result
+            return Json(result);
+        }
+    }
+}

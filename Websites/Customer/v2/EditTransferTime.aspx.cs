@@ -1,0 +1,100 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using Sunplus.Accounting.Business.Customer;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Core.LoggingLib;
+using IBCUtils.DAL;
+using DNAide.Data;
+using DNAide.Web;
+
+
+
+public partial class Customer_v2_EditTransferTime : RequiredAuthorizationPage
+{
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        try
+        {
+            htmlTransferTime.Text = LoadData();
+        }
+        catch (Exception ex)
+        {
+
+            LogExtensions.ExceptionHandler(ex);
+
+            Response.Write("<script type=\"text/javascript\">alert_err(" + AlertMessage.GetMsg(ex.Message, AlertMessage.MsgType.Error) + ",'errTransfer');</script>");
+
+
+        }
+    }
+    public string GetLanguage()
+    {
+        string script = "";
+        script += "<script type=\"text/javascript\">";
+        script += " var lblChooseDaily='" + Resources.Language.lblConfirmChooseDaily + "';" + Environment.NewLine;
+        script += " var lblChooseOneDay='" + Resources.Language.lblChooseOneDay + "';" + Environment.NewLine;
+        if (Request.QueryString["rid"] != null && Request.QueryString["rid"] == "2")
+        {
+            script += " var lblConfirm='Are you sure that you want to update this transfer condition?';" + Environment.NewLine;
+        }
+        else
+        {
+            script += " var lblConfirm='Are you sure that you want to update this transfer condition for all of its downlines?';" + Environment.NewLine;
+        }
+        script += "</script>";
+        return script;
+    }
+    public string LoadData()
+    {
+        string strHtml = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Customer/agent/EditTranferTime.htm");
+        try
+        {
+            custId.Value = Request["custid"];
+            string[] strText = { "{sun-chk}", "{mon-chk}", "{tue-chk}", "{wed-chk}", "{thurs-chk}", "{fri-chk}", "{sat-chk}", };
+            DbResult rs;
+            rs = Sunplus.Accounting.DataAccess.IBCDLL.Customer.Select4Edit.TransferOptionSel(Request["custid"]);
+            if (rs != null)
+            {
+                if (rs.Outputs["transferoption"] != null && rs.Outputs["transferoption"] != "")
+                {
+                    Char[] arrChar = rs.Outputs["transferoption"].ToString().ToCharArray();
+                    for (int i = 0; i <= arrChar.Length - 2; i++)
+                    {
+                        if (arrChar[i].ToString().Equals("1"))
+                        {
+                            TemplateHandler.Assign(ref strHtml, strText[i], "checked");
+                        }
+                        else
+                        {
+                            TemplateHandler.Assign(ref strHtml, strText[i], "");
+                        }
+                    }
+                    if (arrChar[7].ToString().Equals("1"))
+                    {
+                        TemplateHandler.Assign(ref strHtml, "{weekly-chk}", "checked");
+                        TemplateHandler.Assign(ref strHtml, "{daily-chk}", "");
+                    }
+                    else
+                    {
+                        TemplateHandler.Assign(ref strHtml, "{weekly-chk}", "");
+                        TemplateHandler.Assign(ref strHtml, "{daily-chk}", "checked");
+                    }
+                }
+            }
+            CustomerUtils.GetTranferTime(ref strHtml, true);
+            return strHtml;
+        }
+        catch (Exception ex)
+        {
+            LogExtensions.ExceptionHandler(ex);
+            return string.Empty;
+        }
+    }
+}

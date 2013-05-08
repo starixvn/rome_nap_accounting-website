@@ -1,0 +1,69 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="MailListController.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.SpecialDelete.Controller.MailList
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Web.Mvc;
+    using Fanex.Tarus.Web.Controllers;
+    using Fanex.Tarus.Admin.Entities;
+    using Fanex.Tarus.Admin.Business.MailingList;
+    using Fanex.Tarus.Admin.Entities.MailingList;
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class SpecialDeleteMailingController : BaseController
+    {
+        private readonly ISpecialDeleteService _specialDeleteService;
+
+        public SpecialDeleteMailingController()
+            : this(null)
+        { }
+
+        public SpecialDeleteMailingController(ISpecialDeleteService specialDeleteService)
+        {
+            _specialDeleteService = specialDeleteService ?? new SpecialDeleteService();
+        }
+
+        [HttpGet]
+        public ActionResult Index(int? selectID)
+        {
+            var model = _specialDeleteService.GetMailing();
+            int tempID;
+            if (selectID.HasValue)
+            {
+                tempID = selectID.Value;
+                ViewBag.Reload = true;
+            }
+            else
+            {
+                tempID = -1;
+                ViewBag.Reload = false;
+            }
+
+            foreach (var mailing in model.LicenseeList)
+            {
+                if (tempID == mailing.SiteID)
+                {
+                    break;
+                }
+            }
+            ViewBag.LicensseSiteList = new SelectList(model.LicenseeList, "SiteID", "SiteName", tempID);
+            return View("~/Views/Admin/MailingList/MailingList.cshtml", model);
+        }
+
+        [HttpPost]
+        public JsonResult UpdateInsertMailingList(MailLicensee mailLicensee, bool isUpdate)
+        {
+            Result result;
+            result = _specialDeleteService.UpdateInsertMailing(mailLicensee, isUpdate);
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+    }
+}

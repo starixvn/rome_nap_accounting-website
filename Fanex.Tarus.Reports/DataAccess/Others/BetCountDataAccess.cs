@@ -1,0 +1,40 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="BetCountDataAccess.cs" company="">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Reports.DataAccess.Others
+{
+    using System.Collections;
+    using System.Data;
+    using Fanex.Data;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class BetCountDataAccess : IBetCountDataAccess
+    {
+        public DataTable GetBetCountWithDateRange(string fromDate, string toDate, string products)
+        {
+            using (ObjectDb objdb = new ObjectDb("BetCountReport", 300))
+            {
+                var param = new Hashtable();
+                param.Add("datestart", fromDate);
+                param.Add("dateend", toDate);
+                if(!products.Equals("0"))
+                    param.Add("product", products);
+                objdb.AssignParamValues(param);
+                return objdb.ExecuteDataSet().Tables[0];
+            }
+        }
+
+        public DataTable GetAllProducts()
+        {
+            using (ObjectDb objdb = new ObjectDb("Acc_BetCountSelSports"))
+            {
+                return objdb.ExecuteDataSet().Tables[0];
+            }
+        }
+    }
+}

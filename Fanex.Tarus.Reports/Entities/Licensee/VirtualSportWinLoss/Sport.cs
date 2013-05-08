@@ -1,0 +1,20 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="Sport.cs" company="">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Reports.Entities.Licensee.VirtualSportWinLoss
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+
+    public class Sport
+    {
+        public string SportId { get; set; }
+        public string SportName { get; set; }
+    }
+}

@@ -1,0 +1,25 @@
+using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+using DNAide.Core;
+using DNAide.Data;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web;
+
+public partial class UploadVirtualRate : PageBase
+{
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        DbResult rs = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserControl.CheckHostPermission(AppSession.AccId, "[UploadVR]");
+        if (CastAide.AsInt32(rs.Outputs["errcode"]) != 0)
+            Response.Redirect("~/AccessDenied.aspx");
+    }
+}

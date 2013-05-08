@@ -1,0 +1,61 @@
+﻿
+namespace Fanex.Tarus.Customer.Entities.CustomerList
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using Fanex.Tarus.Customer.Entities.SettingCustomer;
+
+    public class CustomerListModel
+    {
+        public List<CustomerList> ListChildren { get; set; }
+        public int TotalPages { get; set; }
+        public int TotalChildren { get; set; }
+        public int ParentId { get; set; }
+        public bool ParentDoubleComm { get; set; }
+        public CustomerListModel()
+        {
+            this.ListChildren = new List<CustomerList>();
+        }
+    }
+    
+    public class CustomerList
+    {
+        public int No { get; set; }
+        public int ChildID { get; set; }
+        public string Status { get; set; }
+        public string UserName { get; set; }
+        public string NickName { get; set; }
+        public bool isDoubleComm { get; set; }
+        public double MaxExposure { get; set; }
+        public string VirtualRate { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Group { get; set; }
+        public double GroupA{ get; set; }
+        public double GroupB { get; set; }
+        public double GroupC { get; set; }
+        public double GroupD { get; set; }
+        public double _1x2 { get; set; }
+        public double Others { get; set; }
+        public double NumberGame { get; set; }
+        public string LastLoginIP { get; set; }
+        public bool IsSynCasinoUpline { get; set; }
+        public int ParentMasterDirect { get; set; } // just for Direct Master
+        public bool DoubleCommLosingUpline { get; set; } // just for Direct Master
+    }
+
+    public class Currency
+    {
+        public int Value { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class ResultCustomerlist
+    {
+        public string UserName { get; set; }
+
+        public Result Result { get; set; }
+    }
+}

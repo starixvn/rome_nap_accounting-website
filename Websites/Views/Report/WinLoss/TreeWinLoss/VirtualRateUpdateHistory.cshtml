@@ -1,0 +1,63 @@
+﻿@model IList<Fanex.Tarus.Reports.Entities.WinLoss.TreeWinLoss.HistoryDetail>
+
+
+@if(Model != null && Model.Count > 0){
+    
+    <style>
+        .tbllayout {
+            border-collapse: collapse;
+            border-spacing: 0;
+            border-style: none;
+            cursor: default;
+        }
+        .tbllayout td
+        {
+            border: 1px solid #7C98A4;           
+            color: #000000;
+            overflow: hidden;
+            padding: 2px;
+            text-align: center;
+            vertical-align: middle;
+            font-size:8pt;
+        }
+        .title 
+        {            
+            background-color: #CDDEF3 !important;            
+            font-weight: bold;
+        }
+        .right
+        {
+            text-align:right !important;
+        }
+    </style>
+    
+    <table style="width:425px;" class="tbllayout c">
+        <tr class="title">
+            <td width="20px">No</td>
+            <td width="130px">Date</td>
+            <td width="60px">Value (%)</td>
+            <td width="90px">Changed By</td>
+        </tr>
+        @{
+            int index = 0;
+            foreach (var history in Model)
+            {
+                index++;   
+                        <tr>
+                            <td>@index</td>
+                            <td>@history.UpdatedDate</td>
+                            <td class="right">@history.Value</td>
+                            <td>@history.ChangedBy</td>
+                        </tr>
+            }
+        }
+    </table>    
+}
+else
+{
+    <div>There is no data.</div>    
+}
+
+<script language="javascript" type="text/javascript">
+    try { parent.parent.jQuery.unblockUI(); } catch (e) { parent.jQuery.unblockUI(); }
+</script>  

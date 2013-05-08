@@ -1,0 +1,85 @@
+﻿<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/table.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/commonIOM.css" />
+<link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
+<link href="~/js/MultipleSelect/jquery.multiselect.css" rel="stylesheet" type="text/css" />
+<link href="~/js/jQuery/GridScroller/gridscroller.css?ver=1" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="~/Views/Report/Licensee/RNGCasinoWinLoss/style/RNGCasinoWinLoss.css?ver=3" />
+
+<div class="main">
+    <table style="width: 100%" border="0" cellpadding="0px" cellspacing="0px">
+        <tr>
+            <td>
+                <div id="divMainHeader" class="">
+                    <div id="left_tab1">
+                        <ul>
+                            <li class="lefticon"></li>
+                            <li class="current"><span>RNG Casino Win Loss Report</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="maincontent" style="margin-bottom: 10px;">
+                    <div class="filterBox" id="divFilterBox" style="width: 852px;">
+                        <div class="filterContent">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td><div id="ddlLicenseese" class="multiselect" multiple="multiple" style="padding-top: 2px;"></div></td>
+                                        <td style="text-align:right;">From</td>
+                                        <td><input type="text" id="txtFDate" readonly="readonly" class="txtdate" style="width: 144px;" /></td>
+                                        <td style="text-align:right;">To</td>
+                                        <td><input type="text" id="txtTDate" readonly="readonly" class="txtdate" style="width: 144px;" /></td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td style="text-align:right;">Game group</td>
+                                        <td>
+                                            <select id="ddlGameGroup" style="padding-top: 2px; width: 150px;"></select>
+                                        </td>
+                                        <td style="text-align:right;">Game type</td>
+                                        <td><select id="ddlGameType" style="padding-top: 2px; width: 150px;"></select></td>
+                                        <td><input type="button" id="btnSubmit" value="Submit" class="btn"/></td>
+                                    </tr>                                     
+                                    <tr>
+                                        <td colspan="6" style="color: #D64937">
+                                            * All figures are displayed in EUR<br />
+                                            * For data accuracy, generate the billing report 5 days after month-end.
+                                        </td>
+                                    </tr>                       
+                                </tbody>
+                            </table> 
+                                                   
+                            <div id="err" style="display: none">
+                                <div class="alertboxerr">
+                                    <div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="mainreport" class="contentBox"> 
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>    
+</div>
+<iframe id="frameExportExcel" style="display: none"></iframe>
+
+<script type="text/javascript" src="~/js/jQuery/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="~/js/jQuery/jquery-ui-1.8.20.custom.min.js"></script>
+<script type="text/javascript" src="~/js/json2.js"></script>
+<script src="~/js/jQuery/Jlinq/jlinq.js" type="text/javascript"></script>
+<script type="text/javascript" src="~/js/jQuery/jquery.blockUI.1.33.js"></script>
+<script type="text/javascript" src="~/js/BlockUI.js?version=2"></script>
+<script type="text/javascript" src="~/js/common.js"></script>
+<script src="~/js/MultipleSelect/jquery.multiselect.js" type="text/javascript"></script>
+<script src="~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js?ver=1" type="text/javascript"></script>
+
+<script type="text/javascript" src="~/Views/Report/Licensee/RNGCasinoWinLoss/scripts/RNGCasinoWinLoss.js?ver=5"></script>
+<script type="text/javascript">
+    window.rootUrl = '@Url.Content("~")';
+    var maxDate = new Date('@DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy")');
+    var linkExportExcel = '@Url.Action("ExportWinLossReportToExcelFile", "RNGCasinoWinLoss")';    
+</script>

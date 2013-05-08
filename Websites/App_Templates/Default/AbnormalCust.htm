@@ -1,0 +1,42 @@
+﻿<div style="color:#000;cursor: pointer; white-space: nowrap; border: solid 1px #BBC7CE; text-align: left; left:10px 
+    " id="td" onclick="{onclick}">
+    <table cellspacing="0px" cellpadding="0px" border="0" width="55px" style="line-height:16px; border: solid 1px #ffffff;">
+        <tr>
+            <td style="border: none 0px; width: 35px; text-align: center;background-color: {dangerColor};" id="tdvalue">
+                <span id="spanAbnormal">{value}</span>
+            </td>
+            <td style=" cursor: pointer; border: none 0px; width: 20px; text-align: center;">
+                <!--ImgDropdownLevel-->
+                <img title="Detail" border="0" src="App_themes/images/menu_open_right.gif" style=" text-align:center; vertical-align: middle;" />
+                <!--/ImgDropdownLevel-->
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="divLevel" style="display:none" class="divLevel">
+    <table id="popupMenu1" class="tbllayout" border="0" style="line-height:16px; width:100%;color:#000;" cellspacing="1px">
+        <!--LevelItem-->
+        <tr>
+            <td id="dangertd" style="text-align:center; background-color: {level_color}; cursor: pointer;width:50px;" onclick="{level_onclick}">
+                {LevelName}
+             
+            </td>
+        </tr>
+           <div id="AbnormalAgentpopup{LevelID}" class="Popupsetting" style="top: -40px; left: -40px;
+                    width: 170px">
+                    <b>Update Level Abnormal</b><br/>
+                    <input type="checkbox" name="chkDisabledHRL" onclick="changeDisableAbnormalAgent('{LevelID}')" id="disabledAbnormalchk{LevelID}" value="yes" />&nbsp;Agent<!--chkdownlineL-->
+                    <span style="font-weight: normal;" id="disabledCSboxDL">
+                        <input type="checkbox" name="disabledCSchkDL" disabled="disabled" id="disableAbnormalchkDL{LevelID}">Agent's downlines<!--/chkdownlineL--></span><br/>
+                    <input id="UpdateAbnormal{LevelID}" type="button" class="btn" value="Update" disabled="disabled" onclick="UpdateAbnormalCustomer('{LevelID}')" />&nbsp;<input
+                        type="button" class="btn" onclick="ClosePopUpAbnormal('AbnormalAgentpopup{LevelID}');" value="Cancel" /></div>
+        <!--/LevelItem-->
+        
+        {content}
+</table>
+</div>
+ 
+
+ <div class="overlay" id="AbnormalAgentoverlay" style="display: none;"></div>  
+
+<input type="hidden" id="currentLevel" value="{currentLevel}"/>

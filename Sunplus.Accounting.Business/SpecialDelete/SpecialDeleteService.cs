@@ -1,0 +1,803 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using DNAide.Data;
+using DNAide.Utils;
+using DNAide.Web;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.Business.Security;
+using Sunplus.Accounting.DataAccess.SpecialDelete;
+using Sunplus.Accounting.Entities;
+using Sunplus.Accounting.Entities.SpecialDelete;
+using System.Data;
+using DNAide.Core;
+using Sunplus.Accounting.Entities.SpecialDelete.EarlyKO;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using System.Linq;
+using Sunplus.Accounting.Entities.SpecialDelete.Mixparlay;
+using Sunplus.Accounting.Business.CacheManager;
+using Sunplus.Accounting.Core.Cache.Extension;
+
+namespace Sunplus.Accounting.Business.SpecialDelete
+{
+    public class SpecialDeleteService : SpecialDeleteBase, ISpecialDeleteService
+    {
+        protected readonly ISpecialDeleteDAO _specialDeleteDao;
+
+
+        public SpecialDeleteService(ISpecialDeleteDAO specialDeleteDao)
+        {
+            _specialDeleteDao = specialDeleteDao;
+        }
+
+        #region DeleteSpecialTransaction
+        public Result DeleteSpecialTransaction(string matchId, string frefno, string trefno, string bettype,
+                                          string betteam1378, string betteam515, string hdp, string uname,
+                                          string userId, string pass, string DelOption, string transids,
+                                          string liveindicator, string DelOption_BD, string transids_BD,
+                                          string DelOption_12EU, string transids_12EU,
+                                          string DelOption_MHC, string transids_MHC, string betteam430,
+                                          string betteam6, string betteam14, string betteam16, Message message, string homescore, string awayscore, string fromtransdate, string totransdate, int SAFilter)
+        {
+            Result result = new Result(0, string.Empty);
+            if (!Permissions.GetHostPermission(Enumerations.Functions.SpecialDelete.SpecialDeleteSportBook))
+            {
+                result.ErrorCode = 500; //AlertMessage.GetMsg(errmsg, AlertMessage.MsgType.Error);
+                result.ErrorMessage = AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "_500"), AlertMessage.MsgType.Error);
+                return result;
+            }
+            string ip = Utils.GetClientIP();
+
+            var delResult = _specialDeleteDao.DeleteSpecialTransaction(matchId, frefno, trefno, bettype,
+                                          CastAide.AsString(betteam1378), CastAide.AsString(betteam515), hdp, uname,
+                                          userId, pass, DelOption, transids,
+                                          liveindicator, DelOption_BD, transids_BD,
+                                          DelOption_12EU, transids_12EU,
+                                          DelOption_MHC, transids_MHC, betteam430, betteam6, betteam14, betteam16, homescore, awayscore, fromtransdate, totransdate, SAFilter);
+
+
+            if (delResult.Error.ErrorCode > 0)
+            {
+                result.ErrorCode = delResult.Error.ErrorCode;
+                result.ErrorMessage = AlertMessage.GetMsg(delResult.Error.ErrorMessage, AlertMessage.MsgType.Error);
+            }
+            else
+            {
+                //send private message to users
+                bool send = SendPrivateMsgToUsers(delResult.PrivateMessage, CastAide.AsInt32(matchId), message);
+                if (!send)
+                {
+                    result.ErrorMessage += AlertMessage.GetMsg("Have a problem when sending private message to users. Please infom to IT about this.", AlertMessage.MsgType.Error);
+                }
+                result.ErrorMessage += SendEmailToCSD(delResult.Error.ErrorCode, delResult.Error.ErrorMessage, delResult.PrivateMessage, false);
+
+                SendEmailWhenDeleteBetToInternalGroup(delResult.Error.ErrorCode, delResult.Error.ErrorMessage, delResult.PrivateMessage, false, false, true); // for real currency
+                SendEmailWhenDeleteBetToInternalGroup(delResult.Error.ErrorCode, delResult.Error.ErrorMessage, delResult.PrivateMessage, false, false, false); // for test currency
+                
+            }
+            return result;
+        }
+        #endregion
+
+        #region SelRecoverBets
+        public SpecialDeleteDTO SelRecoverBets(string transid)
+        {
+            SpecialDeleteDTO specialDeleteDto = new SpecialDeleteDTO();
+
+            DbResult dbResult = _specialDeleteDao.SelMatchInfo(0, CastAide.AsInt64(transid));
+            DataTable dataTable = dbResult.ResultSet.Tables[0];
+
+            specialDeleteDto.EventDate = DateTime.Today.ToShortDateString();
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                specialDeleteDto.MatchCode = CastAide.AsString(dataRow["matchcode"]);
+                specialDeleteDto.HomeName = CacheRef.GetTeamName(dataRow["homeid"]);
+                specialDeleteDto.AwayName = CacheRef.GetTeamName(dataRow["awayid"]);
+                specialDeleteDto.EventDate = CastAide.AsDateTime(dataRow["eventdate"]).ToShortDateString();
+
+                if (specialDeleteDto.HomeName.Length == 0 && specialDeleteDto.AwayName.Length == 0)
+                    specialDeleteDto.HomeName = "Number Game No " + specialDeleteDto.MatchCode;
+            }
+
+            List<SpecialDeleteBO> bets = new List<SpecialDeleteBO>();
+            dbResult = _specialDeleteDao.SelRecoverSpecialBets(transid);
+
+            specialDeleteDto.ErrorCode = CastAide.AsInt32(dbResult.Outputs["errcode"]);
+            if(specialDeleteDto.ErrorCode == 0) {
+                dataTable = dbResult.ResultSet.Tables[0];
+                AssignData(dataTable, "RecoverBets", ref bets);
+                specialDeleteDto.rows = bets;
+            }
+            else {
+                specialDeleteDto.ErrorMessage = CastAide.AsString(dbResult.Outputs["errmsg"]);
+            }
+            return specialDeleteDto;
+        }
+        #endregion
+
+        #region RecoverBets
+        public Result RecoverBets(string transid, int UserID)
+        {
+            Result result = new Result(0, string.Empty);
+            if (!Permissions.GetHostPermission(Enumerations.Functions.SpecialDelete.RecoverBets))
+            {
+                result.ErrorCode = 500;
+                result.ErrorMessage = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "_500");
+                return result;
+            }
+
+            var dbResult = _specialDeleteDao.RecoverSpecialBets(transid);
+            if (result.ErrorCode == 0)
+            {
+                result.ErrorMessage = SendEmailWhenRecoverBet(dbResult.Error.ErrorCode, dbResult.Error.ErrorMessage, dbResult.PrivateMessage, false, false, true, transid); // real currency
+                SendEmailWhenRecoverBet(dbResult.Error.ErrorCode, dbResult.Error.ErrorMessage, dbResult.PrivateMessage, false, false, false, transid); //  test currency
+                _specialDeleteDao.RemovePrivateMsg(transid, UserID);
+            }
+
+            return result;
+        }
+        #endregion
+
+        #region EarlyKOBet
+        /// <summary>
+        /// SelectEarlyKOBet
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public SpecialDeleteDTO SelectEarlyKOBet(SpecialDeleteParamEarlyKO param)
+        {
+            SpecialDeleteDTO specialDeleteDto = new SpecialDeleteDTO();
+            specialDeleteDto.Items = new List<SpecialDeleteByType>();
+
+            specialDeleteDto.ErrorCode = 0;
+            specialDeleteDto.ErrorMessage = string.Empty;
+
+            try
+            {
+                DbResult dbResult = _specialDeleteDao.SelectEarlyKOBet(param);
+                if (dbResult != null && dbResult.ResultSet.Tables.Count > 0)
+                {
+                    DataSet dataSet = dbResult.ResultSet;
+                    var collections = SpecialDeleteSection.Instance.DeleteBet;
+                    int index = 0;
+                    foreach (SpecialDeleteElement element in collections)
+                    {
+                        int mergeIndex = 1;
+                        DataTable dataTable = dataSet.Tables[index];
+                        dataTable.Merge(dataSet.Tables[index + 5]);
+
+                        SpecialDeleteByType deleteByType = new SpecialDeleteByType();
+                        List<SpecialDeleteBetEarlyKO> lstByType = new List<SpecialDeleteBetEarlyKO>();
+
+                        string isMP = "0";
+                        string type = element.Name;
+
+                        AssignDataEarlyKO(dataTable.Rows.Cast<DataRow>(), type, ref lstByType, isMP, ref mergeIndex);
+
+                        deleteByType.Type = type;
+                        deleteByType.KoItems = lstByType;
+                        deleteByType.IsAllowOptionDelete = element.IsAllowOptionDelete == "1";
+                        deleteByType.OptionType = element.DeleteoOtionDefault;
+
+                        specialDeleteDto.Items.Add(deleteByType);
+                        index++;
+                    }
+                }
+                else
+                {
+                    specialDeleteDto.ErrorCode = 101;
+                    specialDeleteDto.ErrorMessage = "There is no information available.";
+                }
+
+                bool IsHasData = false;
+                DbResult dbResultM = _specialDeleteDao.SelMatchInfo(CastAide.AsInt32(param.MatchId), CastAide.AsInt64(0));
+                if (dbResultM != null && dbResultM.ResultSet.Tables.Count > 0)
+                {
+                    DataRow[] rows = dbResultM.ResultSet.Tables[0].Select();
+                    foreach (DataRow dataRow in rows)
+                    {
+                        string eventDate = CastAide.AsDateTime(dataRow["eventdate"]).ToShortDateString();
+                        IsHasData = true;
+                        specialDeleteDto.AwayName = CacheRef.GetTeamName(dataRow["awayid"]);
+                        specialDeleteDto.HomeName = CacheRef.GetTeamName(dataRow["homeid"]);
+                        specialDeleteDto.EventDate = eventDate;
+                        specialDeleteDto.MatchCode = CastAide.AsString(dataRow["MatchCode"]);
+                    }
+                }
+
+
+                if (!IsHasData)
+                {
+                    specialDeleteDto.ErrorCode = 100;
+                    specialDeleteDto.ErrorMessage = "NO MATCH WITH SUCH MATCH ID";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return specialDeleteDto;
+
+        }
+        /// <summary>
+        /// SelectEarlyKOMixparlay
+        /// </summary>
+        /// <param name="refno"></param>
+        /// <param name="transid"></param>
+        /// <param name="curency"></param>
+        /// <returns></returns>
+        public MixparlayChoice SelectEarlyKOMixparlay(string refno, string transid, string currency, string subtransid)
+        {
+            MixparlayChoice choice = new MixparlayChoice();
+            try
+            {
+                if (!string.IsNullOrEmpty(refno))
+                {
+                    choice.Refno = refno;
+                    choice.TransId = transid;
+                    choice.SubTransId = subtransid;
+                    choice.Choice = GenMPRow(refno, subtransid);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return choice;
+        }
+        /// <summary>
+        /// DeleteSpecialEarlyKO
+        /// </summary>
+        /// <param name="matchId"></param>
+        /// <param name="frefno"></param>
+        /// <param name="trefno"></param>
+        /// <param name="bettype"></param>
+        /// <param name="betteam1378"></param>
+        /// <param name="betteam515"></param>
+        /// <param name="hdp"></param>
+        /// <param name="uname"></param>
+        /// <param name="userId"></param>
+        /// <param name="pass"></param>
+        /// <param name="DelOption"></param>
+        /// <param name="transids"></param>
+        /// <param name="liveindicator"></param>
+        /// <param name="DelOption_BD"></param>
+        /// <param name="transids_BD"></param>
+        /// <param name="DelOption_12EU"></param>
+        /// <param name="transids_12EU"></param>
+        /// <param name="DelOption_MHC"></param>
+        /// <param name="transids_MHC"></param>
+        /// <param name="betteam430"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public Result DeleteSpecialEarlyKO(string matchId, string bettype,
+                                          string betteam1378, string betteam515, string hdp, string uname,
+                                          string userId, string pass, string DelOption, string transids,
+                                          string kickoffdate, string DelOption_BD, string transids_BD,
+                                          string DelOption_12EU, string transids_12EU,
+                                          string DelOption_MHC, string transids_MHC, string betteam430,
+                                          string betteam6, string betteam14, string betteam16, Message message, int SAFilter)
+        {
+            Result result = new Result(0, string.Empty);
+            if (!Permissions.GetHostPermission(Enumerations.Functions.SpecialDelete.SpecialDeleteSportBook))
+            {
+                result.ErrorCode = 500;
+                result.ErrorMessage = AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "_500"), AlertMessage.MsgType.Error);
+                return result;
+            }
+            try
+            {
+                var delResult = _specialDeleteDao.DeleteSpecialEarlyKO(matchId, bettype,
+                                              CastAide.AsString(betteam1378), CastAide.AsString(betteam515), hdp, uname,
+                                              userId, pass, DelOption, transids,
+                                              kickoffdate, DelOption_BD, transids_BD,
+                                              DelOption_12EU, transids_12EU,
+                                              DelOption_MHC, transids_MHC, betteam430, betteam6, betteam14, betteam16, SAFilter);
+
+
+                if (delResult.Error.ErrorCode > 0)
+                {
+                    result.ErrorCode = delResult.Error.ErrorCode;
+                    result.ErrorMessage = delResult.Error.ErrorMessage;
+                }
+                else
+                {
+                    result.ErrorMessage = AlertMessage.GetMsg("Bet transactions deleted!", AlertMessage.MsgType.Success);
+                    //send private message to users
+                    bool send = SendPrivateMsgEarlyKO(delResult.PrivateMessage, CastAide.AsInt32(matchId), message);
+                    if (!send)
+                    {
+                        result.ErrorMessage += AlertMessage.GetMsg("Have a problem when sending private message to users. Please infom to IT about this.", AlertMessage.MsgType.Error);
+                    }
+                    result.ErrorMessage += SendEmailToCSDEarlyKO(delResult.PrivateMessage, string.Empty);
+
+                    SendEmailWhenDeleteBetToInternalGroupEarlyKO(delResult.PrivateMessage, string.Empty, true); // real currency
+                    SendEmailWhenDeleteBetToInternalGroupEarlyKO(delResult.PrivateMessage, string.Empty, false); // test currency
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+
+                result.ErrorCode = 100;
+                result.ErrorMessage = ex.Message;
+            }
+            return result;
+        }
+
+
+        public Dictionary<int, string> GetAllBettype(int type)
+        {
+            Dictionary<int, string> bettypes = new Dictionary<int, string>();
+            DbResult rs = _specialDeleteDao.SelBettype(type);
+            DataTable dt = rs.ResultSet.Tables[0];
+            switch (type)
+            {
+                case 7:
+                    DataRow newRow = dt.NewRow();
+                    newRow["TypeID"] = 9;
+                    dt.Rows.Add(newRow);
+                    break;
+
+                default:
+                    break;
+            }
+
+            int TypeID = 0;
+            string Name = string.Empty;
+            foreach (DataRow dr in dt.Rows)
+            {
+                TypeID = CastAide.AsInt32(dr["TypeID"]);
+                Name = GetBettypeName(TypeID, false);
+                bettypes.Add(TypeID, Name);
+            }
+
+            return bettypes;
+        }
+        #endregion
+
+
+        private string GetBettypeName(int bettype, bool liveIndicator)
+        {
+            var bettypeName = Fanex.Tarus.Infrastructure.Helper.SportHelper.Bettype.GetBettype(bettype);
+            if (bettype == 86)
+            {
+                bettypeName = liveIndicator ? "Next Odd/Even" : "FT. Odd/Even";
+            }
+            else if (bettype == 85)
+            {
+                bettypeName = "Next Over/Under";
+            }
+            return bettypeName;
+        }
+
+        #region Mixparlay
+        private static readonly string _keyMatchCache = "MatchTable_{0}";
+        public MixParlayBO GetMPList(SpecialDeleteParam param)
+        {
+            MixParlayBO mixParlayBO = new MixParlayBO();
+            try
+            {
+                DbResult dbResult = _specialDeleteDao.GetMPList(param);
+                if (dbResult != null && dbResult.ResultSet.Tables.Count > 0)
+                {
+                    mixParlayBO.BetTypes = new List<MixParlayBettype>();
+                    DataSet dataSet = dbResult.ResultSet;
+                    SpecialDeleteMixparlay sdMixparlay = new SpecialDeleteMixparlay();
+                    var collections = SpecialDeleteSection.Instance.DeleteBet;
+                    int index = 0;
+                    foreach (SpecialDeleteElement element in collections)
+                    {
+                        DataTable dataTable = dataSet.Tables[index];
+                        MixParlayBettype betType = new MixParlayBettype();
+                        betType.Type = element.Name;
+                        betType.IsAllowOptionDelete = element.IsAllowOptionDelete == "1";
+                        betType.OptionType = element.DeleteoOtionDefault;
+
+                        // fetch data
+                        List<MixParlayDTO> rows = sdMixparlay.FetchData(dataTable, betType.Type);
+                        betType.Rows = rows;
+                        mixParlayBO.BetTypes.Add(betType);
+
+                        index++;
+                    }
+
+                    DbResult dbResultM = _specialDeleteDao.SelMatchInfo(CastAide.AsInt32(param.MatchId), CastAide.AsInt64(0));
+                    if (dbResultM != null && dbResultM.ResultSet.Tables.Count > 0)
+                    {
+                        mixParlayBO.MatchInfo = new MatchDTO();
+                        DataRow[] rows = dbResultM.ResultSet.Tables[0].Select();
+                        foreach (DataRow dataRow in rows)
+                        {
+                            mixParlayBO.MatchInfo.AwayName = CacheRef.GetTeamName(dataRow["awayid"]);
+                            mixParlayBO.MatchInfo.HomeName = CacheRef.GetTeamName(dataRow["homeid"]);
+                            mixParlayBO.MatchInfo.EventDate = CastAide.AsDateTime(dataRow["eventdate"]).ToShortDateString();
+                            mixParlayBO.MatchInfo.MatchCode = CastAide.AsString(dataRow["MatchCode"]);
+                        }
+                    }
+                }
+                else
+                {
+                    mixParlayBO.ErrorCode = 101;
+                    mixParlayBO.ErrorMessage = "There is no information available.";
+                }
+            }
+            catch (Exception ex)
+            {
+                mixParlayBO.ErrorCode = 100;
+                mixParlayBO.ErrorMessage = ex.Message;
+
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return mixParlayBO;
+        }
+        /// <summary>
+        /// GetMPTicket
+        /// </summary>
+        /// <param name="lsRefno"></param>
+        /// <param name="match"></param>
+        /// <returns></returns>
+        public Dictionary<string, string> GetMPTicket(string lsRefno, string match)
+        {
+            SpecialDeleteMixparlay spMixparlay = new SpecialDeleteMixparlay();
+            Dictionary<string, string> mpTickets = new Dictionary<string, string>();
+            foreach (string refno in lsRefno.Split('|'))
+            {
+                mpTickets.Add(refno, spMixparlay.GenMPRowClient(refno, match));
+            }
+            return mpTickets;
+        }
+        public Result DeleteMPTicket(string matchId, int Type, string HomeScore, string AwayScore, string bettypes,
+                                          string betteam1378, string betteam515, string hdp, string uname,
+                                          string userId, string pass,
+                                          string DelOption, string transids,
+                                          string DelOption_D, string transids_D,
+                                          string DelOption_BD, string transids_BD, string DelOption_12EU,
+                                          string transids_12EU, string DelOption_MHC, string transids_MHC, string betteam430,
+                                          string betteam6, string betteam14, string betteam16, MessageMP message, string Fromtransdate, string Totransdate, string ParlayType)
+        {
+            var result = new Result(0, string.Empty);
+
+            if (!Permissions.GetHostPermission(Enumerations.Functions.SpecialDelete.SpecialDeleteMixParlay))
+            {
+                result.ErrorCode = 500;
+                result.ErrorMessage = AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "_500"), AlertMessage.MsgType.Error);
+                return result;
+            }
+            try
+            {
+
+                var transLength = WebSettings.MaxTransLength;
+                Result deleteResult = null;
+
+                var lengths = new Hashtable();
+                lengths.Add("transids", transids);
+                lengths.Add("transids_D", transids_D);
+                lengths.Add("transids_BD", transids_BD);
+                lengths.Add("transids_12EU", transids_12EU);
+                lengths.Add("transids_MHC", transids_MHC);
+                var qAllTransToLarge = lengths.Cast<DictionaryEntry>().OrderByDescending(i => i.Value.ToString().Length).Where(i => i.Value.ToString().Length > transLength).Select(i => i).ToList();
+
+                if (qAllTransToLarge != null && qAllTransToLarge.Count > 0)
+                {
+                    var maxTransLength = qAllTransToLarge.First();
+                    var splitCount = (maxTransLength.Value.ToString().Length % transLength) > 0
+                                         ? (maxTransLength.Value.ToString().Length / transLength) + 1
+                                         : (maxTransLength.Value.ToString().Length / transLength);
+
+                    var transidsLastIndex = 0;
+                    var transids_DLastIndex = 0;
+                    var transids_BDLastIndex = 0;
+                    var transids_12EULastIndex = 0;
+                    var transids_MHCLastIndex = 0;
+                    var transidsLength = lengths["transids"].ToString().Length;
+                    var transids_DLength = lengths["transids_D"].ToString().Length;
+                    var transids_BDLength = lengths["transids_BD"].ToString().Length;
+                    var transids_12EULength = lengths["transids_12EU"].ToString().Length;
+                    var transids_MHCLength = lengths["transids_MHC"].ToString().Length;
+
+                    for (var i = 0; i < splitCount; i++)
+                    {
+                        var del_transids = (transidsLength > transLength && transidsLength > transidsLastIndex)
+                                               ? GetListTransNeedToDel(lengths["transids"].ToString(), ref transidsLastIndex, transLength)
+                                               : lengths["transids"].ToString();
+
+                        var del_transids_D = (transids_DLength > transLength && transids_DLength > transids_DLastIndex)
+                                                 ? GetListTransNeedToDel(lengths["transids_D"].ToString(), ref transids_DLastIndex, transLength)
+                                                 : lengths["transids_D"].ToString();
+
+                        var del_transids_BD = (transids_BDLength > transLength && transids_BDLength > transids_BDLastIndex)
+                                                  ? GetListTransNeedToDel(lengths["transids_BD"].ToString(), ref transids_BDLastIndex, transLength)
+                                                  : lengths["transids_BD"].ToString();
+
+                        var del_transids_12EU = (transids_12EULength > transLength && transids_12EULength > transids_12EULastIndex)
+                                                    ? GetListTransNeedToDel(lengths["transids_12EU"].ToString(), ref transids_12EULastIndex, transLength)
+                                                    : lengths["transids_12EU"].ToString();
+
+                        var del_transids_MHC = (transids_MHCLength > transLength && transids_MHCLength > transids_MHCLastIndex)
+                                                   ? GetListTransNeedToDel(lengths["transids_MHC"].ToString(), ref transids_MHCLastIndex, transLength)
+                                                   : lengths["transids_MHC"].ToString();
+
+
+                        deleteResult = DeleteMixPalayTickets(matchId, Type, HomeScore, AwayScore, bettypes,
+                                           betteam1378, betteam515, hdp, uname,
+                                           userId, pass,
+                                           DelOption, del_transids,
+                                           DelOption_D, del_transids_D,
+                                           DelOption_BD, del_transids_BD, DelOption_12EU,
+                                           del_transids_12EU, DelOption_MHC, del_transids_MHC, betteam430,
+                                           betteam6, betteam14, betteam16, message, Fromtransdate, Totransdate, ParlayType);
+
+                        result.ErrorCode += CastAide.AsInt32(deleteResult.ErrorCode);
+                        result.ErrorMessage += string.Format("{0}<br>", deleteResult.ErrorMessage);
+                    }
+
+                }
+                else
+                {
+                    deleteResult = DeleteMixPalayTickets(matchId, Type, HomeScore, AwayScore, bettypes,
+                                           betteam1378, betteam515, hdp, uname,
+                                           userId, pass,
+                                           DelOption, transids,
+                                           DelOption_D, transids_D,
+                                           DelOption_BD, transids_BD, DelOption_12EU,
+                                           transids_12EU, DelOption_MHC, transids_MHC, betteam430,
+                                           betteam6, betteam14, betteam16, message, Fromtransdate, Totransdate, ParlayType);
+
+                    result.ErrorCode += CastAide.AsInt32(deleteResult.ErrorCode);
+                    result.ErrorMessage += string.Format("{0}<br>", deleteResult.ErrorMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+                result.ErrorCode = 100;
+                result.ErrorMessage = AlertMessage.GetMsg(ex.Message, AlertMessage.MsgType.Error);
+            }
+            return result;
+        }
+
+        private static string GetListTransNeedToDel(string trans, ref int lastIndex, int maxLengthAllow)
+        {
+            var result = string.Empty;
+            if (trans.Length > lastIndex)
+            {
+                var selTrans = trans.Substring(lastIndex, maxLengthAllow);
+                selTrans = selTrans.Substring(0, 1) == "," ? selTrans.Substring(1, selTrans.Length) : selTrans;
+                if (selTrans.Substring(selTrans.Length - 1, 1) != ",")
+                {
+                    for (var i = 2; i < 15; i++)
+                    {
+                        if (selTrans.Substring(selTrans.Length - i, 1) == ",")
+                        {
+                            result = selTrans.Substring(0, selTrans.Length - (i + 1));
+                            lastIndex = (lastIndex + selTrans.Length - (i + 1));
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    lastIndex += selTrans.Length;
+                    result = selTrans;
+                }
+            }
+            else
+            {
+                result = "";
+            }
+
+            result = result.Substring(result.Length - 1, 1) == "," ? result.Substring(0, result.Length - 1) : result;
+            return result;
+        }
+
+        private Result DeleteMixPalayTickets(string matchId, int Type, string HomeScore, string AwayScore, string bettypes,
+                                          string betteam1378, string betteam515, string hdp, string uname,
+                                          string userId, string pass,
+                                          string DelOption, string transids,
+                                          string DelOption_D, string transids_D,
+                                          string DelOption_BD, string transids_BD, string DelOption_12EU,
+                                          string transids_12EU, string DelOption_MHC, string transids_MHC, string betteam430,
+                                          string betteam6, string betteam14, string betteam16, MessageMP message, string Fromtransdate, string Totransdate, string ParlayType)
+        {
+            var result = new Result(0, string.Empty);
+            var delResult = _specialDeleteDao.DeleteSpecialMixparlay(matchId, Type, HomeScore, AwayScore, bettypes,
+                                              betteam1378, betteam515, hdp,
+                                              uname, userId, pass,
+                                              DelOption, transids,
+                                              DelOption_D, transids_D,
+                                              DelOption_BD, transids_BD,
+                                              DelOption_12EU, transids_12EU,
+                                              DelOption_MHC, transids_MHC, betteam430, betteam6, betteam14, betteam16, Fromtransdate, Totransdate, ParlayType);
+
+            var errcode = delResult.Error.ErrorCode;
+            var errmsg = delResult.Error.ErrorMessage;
+
+            if (errcode > 0)
+            {
+                result.ErrorCode = errcode;
+                result.ErrorMessage = AlertMessage.GetMsg(errmsg, AlertMessage.MsgType.Error);
+            }
+            else
+            {
+                // remove cache paging
+                var keyCache = string.Format(_keyMatchCache, matchId);
+                CacheExtension.Delete(keyCache);
+
+                //send private message to users
+                if (message.IsSend == 1)
+                {
+                    var msg = new Message()
+                    {
+                        Content_en = message.Content_en,
+                        Content_ch = message.Content_ch,
+                        Content_cs = message.Content_cs,
+                        Content_it = message.Content_it,
+                        Content_jp = message.Content_jp,
+                        Content_ko = message.Content_ko,
+                        Content_th = message.Content_th,
+                        Content_es = message.Content_es,
+
+                        CreatorId = message.CreatorId,
+                        CreatorName = message.CreatorName,
+                        UserId = message.UserId,
+                        UserName = message.UserName,
+                        userPwd = message.userPwd
+                    };
+
+                    var f = SendPrivateMsgToUsers(delResult.PrivateMessage, CastAide.AsInt32(matchId), msg);
+                    if (!f)
+                    {
+                        result.ErrorCode = 100;
+                        result.ErrorMessage = AlertMessage.GetMsg("Have a problem when sending private message to users. Please infom to IT about this.", AlertMessage.MsgType.Error);
+                    }
+                }
+                // send mail to CSD
+                var mixparlay = new SpecialDeleteMixparlay();
+                result.ErrorMessage += mixparlay.SendEmailToCSD(errcode, errmsg, delResult.PrivateMessage);
+
+                mixparlay.SendEmailWhenDeleteBetToInternalGroup(errcode, errmsg, delResult.PrivateMessage, true); // real currency
+                mixparlay.SendEmailWhenDeleteBetToInternalGroup(errcode, errmsg, delResult.PrivateMessage, false); // test currency
+            }
+
+            return result;
+        }
+
+        public MixParlayBOPager GetMPListPager(SpecialDeleteParamPager param)
+        {
+            MixParlayBOPager mixParlayBO = new MixParlayBOPager();
+            try
+            {
+                string keyCache = string.Format(_keyMatchCache, param.MatchId);
+                DataTable tableAll = new DataTable("TableAll");
+                var cacheData = false.Equals(param.Refresh) ? CacheExtension.Get<DataTable>(keyCache) : null;
+                if (cacheData == null)
+                {
+                    DbResult dbResult = _specialDeleteDao.GetMPList(param);
+                    if (dbResult != null && dbResult.ResultSet.Tables.Count > 0)
+                    {
+                        DataSet dataSet = dbResult.ResultSet;
+                        foreach (DataTable table in dataSet.Tables)
+                        {
+                            tableAll.Merge(table);
+                        }
+                        if (tableAll.Rows.Count > 0)
+                        {
+                            mixParlayBO.Total = tableAll.Rows.Count;
+                            CacheExtension.Set(keyCache, tableAll, DateTime.Now.AddMinutes(10));
+                        }
+                    }
+                }
+                else
+                {
+                    tableAll = (DataTable)cacheData;
+                    mixParlayBO.Total = tableAll.Rows.Count;
+                }
+                if (mixParlayBO.Total > 0)
+                {
+                    SpecialDeleteMixparlay sdMixparlay = new SpecialDeleteMixparlay();
+                    int counter = param.Counter;
+                    int offset = (param.Page - 1) * counter;
+                    counter = ((offset + counter) >= mixParlayBO.Total) ? (mixParlayBO.Total - offset) : counter;
+                    mixParlayBO.Page = param.Page;
+                    mixParlayBO.Counter = param.Counter;
+
+                    var rowsBet = tableAll.Rows.Cast<DataRow>().Skip(offset).Take(counter).ToList<DataRow>();
+                    mixParlayBO.Rows = sdMixparlay.FetchDataPager(rowsBet);
+
+                    DbResult dbResultM = _specialDeleteDao.SelMatchInfo(CastAide.AsInt32(param.MatchId), CastAide.AsInt64(0));
+                    if (dbResultM != null && dbResultM.ResultSet.Tables.Count > 0)
+                    {
+                        mixParlayBO.MatchInfo = new MatchDTO();
+                        DataRow[] rows = dbResultM.ResultSet.Tables[0].Select();
+                        foreach (DataRow dataRow in rows)
+                        {
+                            mixParlayBO.MatchInfo.AwayName = CacheRef.GetTeamName(dataRow["awayid"]);
+                            mixParlayBO.MatchInfo.HomeName = CacheRef.GetTeamName(dataRow["homeid"]);
+                            mixParlayBO.MatchInfo.EventDate = CastAide.AsDateTime(dataRow["eventdate"]).ToShortDateString();
+                            mixParlayBO.MatchInfo.MatchCode = CastAide.AsString(dataRow["MatchCode"]);
+                        }
+                    }
+                }
+                else
+                {
+                    mixParlayBO.ErrorCode = 101;
+                    mixParlayBO.ErrorMessage = "There is no information available.";
+                }
+            }
+            catch (Exception ex)
+            {
+                mixParlayBO.ErrorCode = 100;
+                mixParlayBO.ErrorMessage = ex.Message;
+
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return mixParlayBO;
+        }
+        #endregion
+
+        public Dictionary<int, string> CheckRefno(string matchid, string fromRefno, string toRefno, string type)
+        {
+            Dictionary<int, string> listMessage = new Dictionary<int, string>();
+
+            try
+            {
+                DbResult dbResult = _specialDeleteDao.CheckRefno(matchid, fromRefno, toRefno, type);
+                int errcode = CastAide.AsInt32(dbResult.Outputs["errcode"]);
+                string errmsg = CastAide.AsString(dbResult.Outputs["errmsg"]);
+
+                if (errcode > 0)
+                {
+                    listMessage.Add(errcode, AlertMessage.GetMsg(errmsg, AlertMessage.MsgType.Error));
+                }
+            }
+            catch (Exception ex)
+            {
+                listMessage.Add(101, AlertMessage.GetMsg(ex.Message, AlertMessage.MsgType.Error));
+            }
+
+
+            return listMessage;
+        }
+
+
+        public List<Bettype> SelAllBettype(int type)
+        {
+            List<Bettype> list = new List<Bettype>();
+
+            DbResult rs = _specialDeleteDao.SelBettype(type);
+            DataTable dt = rs.ResultSet.Tables[0];
+
+            foreach (DataRow row in dt.Rows)
+            {
+                Bettype b = new Bettype();
+                b.Id = CastAide.AsInt32(row["typeid"]);
+                b.Name = Fanex.Tarus.Infrastructure.Helper.SportHelper.Bettype.GetBettype(CastAide.AsInt32(row["typeid"]));
+                b.Liveindicator = CastAide.AsBoolean(row["liveindicator"]);
+
+                if (b.Id == 86 && !b.Liveindicator)
+                {
+                    b.Name = "FT. Odd/ Even";
+                }
+                else if (b.Id == 86 && b.Liveindicator)
+                {
+                    b.Name = "Next Odd/ Even";
+                }
+                else if (b.Id == 85 && b.Liveindicator)
+                {
+                    b.Name = "Next Over/ Under";
+                }
+
+                list.Add(b);
+            }
+
+            return list;
+        }
+    }
+
+}

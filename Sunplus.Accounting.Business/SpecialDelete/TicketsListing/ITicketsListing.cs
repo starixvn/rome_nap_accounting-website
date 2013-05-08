@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Sunplus.Accounting.Entities.SpecialDelete.TicketsListing;
+using Sunplus.Data.DataAbstract.Entity;
+
+namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
+{
+    public interface ITicketsListing
+    {
+        LicenseeDTO SelAllLicensee();
+
+        BettypeDTO SelBettype();
+
+        ProductListingDTO SelTicketsListing(int matchID, int licenseeID, string betTypes, string betTypesLive, int Type, int GroupBy, string LiveType, string HomeScore, string AwayScore, string FromTransDate, string ToTransDate, int SAFilter);
+
+        TicketsListingBetlistDTO GetTicketsListingBetlist(bool fromCache, int pageSize, int pageIndex, bool isMain, int Type, int matchID, string Licensees, string bettypes, string bettypesLive, int groupBy, string LiveType, string HomeScore, string AwayScore, string FromTransDate, string ToTransDate, int SAFilter);
+
+        void ExportExcelTicketListing(bool isMain, int _type, int groupBy, int matchID, string Licensees, string bettypes,
+            int Language, string bettypesLive, string matchCode, string eventDate, string title, string home, string away, string LiveType, string HomeScore, string AwayScore, string FromTransDate, string ToTransDate, int SAFilter);
+    }
+}

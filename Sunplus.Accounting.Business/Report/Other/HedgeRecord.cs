@@ -1,0 +1,173 @@
+﻿using System;
+using System.Collections;
+using System.Data;
+using System.Text;
+using DNAide.Core;
+using DNAide.Data;
+using DNAide.Utils;
+using DNAide.Web;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Accounting.Core.Web.Controls;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+
+
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Core.LoggingLib;
+using FormatHandler = IBCUtils.FormatHandler;
+
+/// <summary>
+/// Summary description for HedgeRecord
+/// </summary>
+
+namespace BLL.Report
+{
+    public class rptHedgeRecord : ReportBase
+    {
+        private readonly string REPORT_HedgeRecord = "accrptHedgeRecord." + AppSession.Username;
+
+        public override string CreateHeader(Hashtable input)
+        {
+            string tpl = WebUtils.LoadTemplate("Report/CommonFilter.htm");
+            try
+            {
+                TemplateHandler.Assign(ref tpl, "{fdate}", "<input type=\"text\" id=\"fdate\" readonly=\"readonly\" class=\"txtdate\" style=\"width: 100px; background-color: white;\" />");
+                TemplateHandler.Assign(ref tpl, "{tdate}", "<input type=\"text\" id=\"tdate\" readonly=\"readonly\" class=\"txtdate\" style=\"width: 100px; background-color: white;\" />");
+            }
+            catch (Exception ex)
+            {
+
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return tpl;
+        }
+
+        public override string RenderHTML(Hashtable input)
+        {
+            var html = new StringBuilder();
+            try
+            {
+                string tplTable = WebUtils.LoadTemplate("WinLost/HedgeRecordHeaderTable.htm");
+                string tplHeader = WebUtils.LoadTemplate("WinLost/HedgeRecordHeader.htm");
+                string tplContent = WebUtils.LoadTemplate("WinLost/HedgeRecordContent.htm");
+                string norow = WebUtils.LoadTemplate("NoInformation.htm");
+
+                DbResult rs = AccountReport.Acc_Rpt_HedgeRecord(CastAide.AsDateTime(input["fdate"]),
+                                                                CastAide.AsDateTime(input["tdate"]),
+                                                                CastAide.AsInt32(AppSession.AccId));
+                DataTable dt = rs.ResultSet.Tables[0];
+                html.Append(tplTable);
+                if (dt.Rows.Count == 0)
+                {
+                    TemplateHandler.Assign(ref norow, "{nodata}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"));
+                    html.Append(norow + "</table>");
+                    return html.ToString();
+                    ;
+                }
+
+                string odd_even = "odd", pusername = "", username = "";
+                int index = 0;
+                foreach (DataRow dr in dt.Rows)
+                {
+                    username = dr["username"].ToString();
+                    if (index > 0)
+                    {
+                        if (pusername != username)
+                        {
+                            pusername = username;
+                            html.Append("<tr><td colspan='13'><br><br><b>A/C : " + pusername + "</b></td></tr>");
+                            html.Append(tplHeader);
+                        }
+                    }
+                    else
+                    {
+                        pusername = username;
+                        html.Append("<tr><td colspan='13'><b>A/C : " + pusername + "</b></td></tr>");
+                        html.Append(tplHeader);
+                    }
+
+                    odd_even = (odd_even == "") ? "evenrow" : "";
+                    string row = tplContent.Clone().ToString();
+                    TemplateHandler.Assign(ref row, "{odd_even}", odd_even);
+                    TemplateHandler.Assign(ref row, "{showtime}", dr["showtime"].ToString());
+                    TemplateHandler.Assign(ref row, "{home}",
+                                           CacheRef.GetTeamName(dr["HomeId"]) +
+                                           (CastAide.AsBoolean(dr["IsNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : string.Empty));
+                    TemplateHandler.Assign(ref row, "{away}", CacheRef.GetTeamName(dr["AwayId"]));
+                    string strChoice = CacheRef.GetTeamName(dr["HomeId"]);
+                    int BetType = CastAide.AsInt32(dr["bettype"]);
+                    switch (BetType)
+                    {
+                        case 1:
+                        case 7:
+                            if (string.Compare(dr["betteam"].ToString(), "a", true) == 0)
+                                strChoice = CacheRef.GetTeamName(dr["AwayId"]);
+                            break;
+                        case 3:
+                        case 8:
+                            if (string.Compare(dr["betteam"].ToString(), "a", true) == 0)
+                                strChoice = "Under";
+                            else
+                                strChoice = "Over";
+                            break;
+                    }
+                    TemplateHandler.Assign(ref row, "{Team}", strChoice);
+                    TemplateHandler.Assign(ref row, "{hdp}", FormatHandler.FormatNumber20(dr["hdp"]));
+                    string score = "";
+                    if (CastAide.AsBoolean(dr["LiveIndicator"]))
+                    {
+                        score = dr["LiveHomeScore"] + "-" + dr["LiveAwayScore"];
+                    }
+                    TemplateHandler.Assign(ref row, "{Score}", score);
+                    TemplateHandler.Assign(ref row, "{Price}", NumberFormat.DecFormat(dr["odds"], 3));
+                    TemplateHandler.Assign(ref row, "{Amount}", NumberFormat.DecFormat(dr["stake"], 3));
+                    TemplateHandler.Assign(ref row, "{Remark}", dr["Remark"].ToString());
+                    TemplateHandler.Assign(ref row, "{By}", dr["creator"].ToString());
+                    TemplateHandler.Assign(ref row, "{ThemePath}", "../" + WebSettings.ThemePath);
+                    TemplateHandler.Assign(ref row, "{TransId}", dr["TransId"].ToString());
+                    TemplateHandler.Assign(ref row, "{UserName}", username);
+
+                    html.Append(row);
+                    index++;
+                }
+
+                html.Append("</table>");
+            }
+            catch (Exception ex)
+            {
+
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                throw;
+            }
+
+            SetCacheReport(REPORT_HedgeRecord, html.ToString(), DateTime.Now.AddMinutes(5));
+            return html.ToString();
+        }
+
+        public override void Export2Excel(Hashtable input)
+        {
+            string data = GetCachedReport(REPORT_HedgeRecord);
+            if (string.IsNullOrEmpty(data))
+            {
+                RenderHTML(input);
+                data = GetCachedReport(REPORT_HedgeRecord);
+            }
+            data = "<table><tr><td>" + data + "</td></tr></table>";
+            var content = new StringBuilder();
+            content.Append("<html>");
+            content.Append("<head>");
+            content.Append("<META http-EQUIV='Content-Type' CONTENT='text/html; charset=unicode-utf8'>");
+            content.Append("</head>");
+            content.Append(ReportHTML.CSSExcelReport());
+            content.Append(data);
+            content.Append("<table><tr><td class='tdhidden'></td></tr></table>");
+            content.Append("</html>");
+
+            ExcelContent = content.ToString();
+            base.Export2Excel(input);
+        }
+    }
+}

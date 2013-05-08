@@ -1,0 +1,292 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="CustomerSettingService.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Customer.CreditCustomer.Business
+{
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using Fanex.PTEngine.BusinessObjects;
+    using Sunplus.Accounting.Business.Security;
+    using Sunplus.Accounting.Core.Common;
+    using Sunplus.Accounting.Core.Configurations;
+    using Sunplus.Accounting.Core.Extensions;
+    using Sunplus.Accounting.DataAccess;
+    using Fanex.Tarus.Customer.CreditCustomer.DataAccess;
+    using Fanex.Tarus.Customer.CreditCustomer.Entities;
+    using Sunplus.Accounting.Entities.Casino;
+    using Sunplus.Accounting.Entities.Customer;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class CustomerSettingService : ICustomerSettingService
+    {
+        private ICustomerSettingDataAccess _customerSettingDataAccess;
+
+
+        public CustomerSettingService()
+            : this(null)
+        {
+        }
+
+        public CustomerSettingService(ICustomerSettingDataAccess customerSettingDataAccess)
+        {
+            _customerSettingDataAccess = customerSettingDataAccess ?? new CustomerSettingDataAccess();
+        }
+
+        /// <summary>
+        /// Get CurrencyList
+        /// </summary>
+        /// <param name="system">Name of system</param>
+        /// <returns>List of currency (name and id)</returns>
+        public List<Currency> GetCurrencyList(string system)
+        {
+            return _customerSettingDataAccess.GetCurrencyList(system);
+        }
+
+        /// <summary>
+        /// Get Site for add new super
+        /// </summary>
+        /// <param name="system">system name</param>
+        /// <returns>Return list of Site Name</returns>
+        public List<Sites> GetSites(string system)
+        {
+            return _customerSettingDataAccess.GetSites(system);
+        }
+
+        /// <summary>
+        /// Get Cutomer Info for Member Group
+        /// </summary>
+        /// <param name="paramerters">Paramerter contains agent id</param>
+        /// <returns>List Of Group</returns>
+        public List<MemberGroup> GetListMemberGroup(int agentId)
+        {
+            List<MemberGroup> listMemberGroup = new List<MemberGroup>();
+            try
+            {
+                var ht = new Hashtable();
+                ht.Add("custid", agentId);
+                DataTable dt = _customerSettingDataAccess.GetCustomerInfoForMemberGroup(ht);
+                var currenciesGroup = CustomerSection.Instance[CustomerSection.CustomerCollections.Currencies];
+
+                var currencies = "a,b,c,d";
+                if (dt.Rows.Count > 0)
+                {
+                    var sitesGroup = CustomerSection.Instance[CustomerSection.CustomerCollections.Sites];
+
+                    if (dt.Rows[0]["site"].ToString().ToLower() == "ibsbet")
+                    {
+                        foreach (CustomerElement currency in sitesGroup)
+                        {
+                            if (currency.Name == "ibsbet")
+                            {
+                                currencies = currency.Group;
+                                break;
+                            }
+                        }
+                    }
+                    else if (dt.Rows[0]["currency"].ToString().ToLower() == "won")
+                    {
+                        foreach (CustomerElement currency in currenciesGroup)
+                        {
+                            if (currency.Name == "won")
+                            {
+                                currencies = currency.Group;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (CustomerElement currency in currenciesGroup)
+                        {
+                            if (currency.Name == "other")
+                            {
+                                currencies = currency.Group;
+                                break;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (CustomerElement currency in currenciesGroup)
+                    {
+                        if (currency.Name == "default")
+                        {
+                            currencies = currency.Group;
+                            break;
+                        }
+                    }
+                }
+                var arr = currencies.Split(',');
+                foreach (string groupName in arr)
+                {
+                    listMemberGroup.Add(new MemberGroup
+                    {
+                        GroupName = groupName,
+                        GroupValue = groupName
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return listMemberGroup;
+        }
+
+        /// <summary>
+        /// This function will update status after insert customer success
+        /// </summary>
+        /// <param name="custId">Id of customer've just inserted</param>
+        /// <param name="customer">Information of up-line customer</param>
+        /// <param name="currentContext">context of request</param>
+        /// <returns></returns>
+        public void UpdateStatusThirdPartyAccountAfterInsertCustomer(int custId, ICustomer customer, IRequestContext currentContext)
+        {
+            try
+            {
+                int uplineId = currentContext.CustId;
+                CustDetail custDetail = GetUplineStatusCusdetail(uplineId);
+                CSCustomerDetail csCustomerInfo = new CSCustomerDetail();
+
+                switch (currentContext.TargetRoleId)
+                {
+                    case (int)Globals.AccountType.Master:
+                        custDetail.MasterId = custId;
+                        csCustomerInfo.RoleId = (int)Globals.AccountType.Master;
+                        break;
+                    case (int)Globals.AccountType.Agent:
+                        custDetail.AgentId = custId;
+                        csCustomerInfo.RoleId = (int)Globals.AccountType.Agent;
+                        break;
+                    case (int)Globals.AccountType.Member:
+                        csCustomerInfo.RoleId = (int)Globals.AccountType.Member;
+                        break;
+                    default:
+                        break;
+                }
+
+                csCustomerInfo.CasinoNo = Globals.CASINO_GROUP1;
+                csCustomerInfo.IBCCustID = custId;
+                csCustomerInfo.UserName = customer.UserName;
+                csCustomerInfo.UserName2 = customer.UserName;
+                csCustomerInfo.FirstName = customer.FirstName;
+                csCustomerInfo.LastName = customer.LastName;
+                csCustomerInfo.UserPwd = customer.Password;
+                csCustomerInfo.Phone = customer.Phone;
+                csCustomerInfo.MobilePhone = customer.MobilePhone;
+                csCustomerInfo.ExchangeID = custDetail.CurrencyId;
+                csCustomerInfo.Currency = custDetail.CurrencyId;
+                csCustomerInfo.CurrencyName = custDetail.CurrencyName;
+                csCustomerInfo.Fax = customer.Fax;
+                csCustomerInfo.Suspend = customer.StatusSetting.Suspended;
+                csCustomerInfo.Closed = customer.StatusSetting.Closed;
+                csCustomerInfo.IsEnablePT = true;
+                csCustomerInfo.SIBCCustID = custDetail.SuperId;
+                csCustomerInfo.MIBCCustID = custDetail.MasterId;
+                csCustomerInfo.AIBCCustID = custDetail.AgentId;
+                csCustomerInfo.CasinoDisabled = custDetail.IsUplineDisableCasino;
+
+                var custManager = new Sunplus.Accounting.Business.Customer.CustomerManager();
+                custManager.AutoInsertThridPartyAccount(csCustomerInfo, custDetail, AppSession.AccId, AppSession.Username, currentContext.IP);
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+        }
+
+        public CustDetail GetUplineStatusCusdetail(int uplineId)
+        {
+            var uplineDetail = new CSCustomerDetail();
+            uplineDetail = IBCProvider.IBCCustomer.GetBasicCustInfoIBC(uplineId);
+
+            var customer = new CustDetail();
+            customer.SuperId = uplineDetail.SIBCCustID;
+            customer.MasterId = uplineDetail.MIBCCustID;
+            customer.AgentId = uplineDetail.AIBCCustID;
+            customer.Closed = uplineDetail.Closed;
+            customer.Suspend = uplineDetail.Suspend;
+            customer.IsUplineSyncCasino = uplineDetail.CasinoSync;
+            customer.IsUplineDisableCasino = uplineDetail.CasinoDisabled;
+            customer.IsUplineSyncBingo = uplineDetail.SyncBingo;
+            customer.IsUplineSyncLiveCasino = uplineDetail.LiveCasinoSync;
+            customer.IsUplineDisableLiveCasino = uplineDetail.LiveCasinoDisabled;
+            customer.CurrencyId = uplineDetail.Currency;
+            customer.CurrencyName = uplineDetail.CurrencyName;
+
+            return customer;
+        }
+
+        /// <summary>
+        /// This funtion will return a boolean variable, let us know the current admin can edit credit or not
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckPermissionEditCredit()
+        {
+            return Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit);
+        }
+
+        /// <summary>
+        /// This funtion will return a boolean variable, let us know the current admin create internal user
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckPermissionFinance()
+        {
+            return Permissions.GetHostPermission(Enumerations.Functions.FinancialManagement.CreateFinanceAccount);
+        }
+
+        /// <summary>
+        /// Update syncCasino Data
+        /// </summary>
+        /// <param name="customer">Information of Customer</param>
+        /// <param name="currentContext">Current Context</param>
+        /// <returns></returns>
+        public bool UpdateSyncCasinoAfterEditCustomer(ICustomer customer, IRequestContext currentContext)
+        {
+            bool success = true;
+            if (Permissions.IsAllowCasino() && customer.StatusSetting.SyncCasino == true)
+            {
+                try
+                {
+                    // Sync data to Casino
+                    CasinoLibrary.SBAgent.Customer csCustomer = new CasinoLibrary.SBAgent.Customer();
+                    csCustomer.SiteName = customer.SiteName;
+                    success = csCustomer.UpdateCustInfo(currentContext.TargetCustId, customer.FirstName, customer.LastName, customer.Phone, customer.MobilePhone, customer.Fax, customer.StatusSetting.Closed, customer.StatusSetting.Suspended, currentContext.IP, AppSession.CustID, AppSession.Username, 3);
+                }
+                catch (Exception ex)
+                {
+                    LogExtensions.ExceptionHandler(ex);
+                    success = false;
+                }
+            }
+            return success;
+        }
+
+
+        public Fanex.Tarus.Customer.Entities.Result UpdateDoubleComm(int userId, int custId, bool isDoubleComm)
+        {
+            return _customerSettingDataAccess.UpdateDoubleComm(userId, custId, isDoubleComm);
+        }
+
+        public string GetRNGSiteNameByCustId(int custId) 
+        {
+            try
+            {
+                return _customerSettingDataAccess.GetRNGSiteNameByCustId(custId);
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+                return null;
+            }
+        }
+    }
+}

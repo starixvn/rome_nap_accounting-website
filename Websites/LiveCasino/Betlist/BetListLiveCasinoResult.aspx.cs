@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using DNAide.Core;
+
+public partial class LiveCasino_Betlist_ViewResultLiveCasino : System.Web.UI.Page
+{
+    public string matchId = "";
+    public int bettype = 0;
+    public string league = "";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        matchId = CastAide.AsString(Request["matchId"]);
+        bettype = CastAide.AsInt32(Request["bettype"]);
+        league = CastAide.AsString(Request["league"]);
+    }
+}

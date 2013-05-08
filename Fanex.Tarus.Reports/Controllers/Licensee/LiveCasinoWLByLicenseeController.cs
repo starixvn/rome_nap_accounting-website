@@ -1,0 +1,57 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="LiveCasinoWLByLicenseeController.cs" company="">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Reports.Controllers.Licensee
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using Fanex.Tarus.Reports.Business.Licensee.LiveCasinoWinLoss;
+using Fanex.Tarus.Web.Controllers.Filters;
+using Fanex.Tarus.Web.Controllers;
+using System.Web.Mvc;
+    using DNAide.Core;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class LiveCasinoWLByLicenseeController: BaseController
+    {
+        public ILiveCasinoWLByLicenseeService _liveCasinoWinlossService;
+
+        public LiveCasinoWLByLicenseeController()
+            : this(null)
+        { }
+
+        public LiveCasinoWLByLicenseeController(ILiveCasinoWLByLicenseeService liveCasinoWinlossService)
+        {
+            _liveCasinoWinlossService = liveCasinoWinlossService ?? new LiveCasinoWLByLicenseeService();
+        }
+
+        [AuthenticateRead]
+        public ActionResult LiveCasinoWinloss()
+        {
+            return View("~/Views/Report/Licensee/LiveCasinoWinLoss/LiveCasinoWinLoss.cshtml");
+        }
+
+        public JsonResult SelAllLicensees(string productCode)
+        {
+            var result = _liveCasinoWinlossService.SelAllLicensees(productCode);
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        public JsonResult SelLiveCasinoWinLoss(string normalLicensee, string operators, string fromDate, string toDate)
+        {
+            var result = _liveCasinoWinlossService.SelLiveCasinoWinLoss(normalLicensee, operators, CastAide.AsDateTime(fromDate), CastAide.AsDateTime(toDate));
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+    }
+}

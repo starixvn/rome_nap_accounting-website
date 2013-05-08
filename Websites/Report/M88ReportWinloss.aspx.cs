@@ -1,0 +1,98 @@
+﻿using System;
+using System.Collections;
+using DNAide.Core;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web;
+using BLL.Report;
+
+public partial class Report_M88ReportWinloss : PageBase
+{
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        string fdate = CastAide.AsString(Request["fdate"]);
+        string tdate = CastAide.AsString(Request["tdate"]);
+        ReportBase report = new ReportM88WinLoss();
+        if (CastAide.AsInt32(Request["IsExport"]) == 1)
+        {
+            string reportContent = string.Empty;
+            string reportBy = CastAide.AsString(Request["reportby"]);
+            string reportDetail = CastAide.AsString(Request["reportdetail"]);
+            string sportOption = CastAide.AsString(Request["sport"]);
+            string fileName = "M88Winloss_";
+            Hashtable reportInput = new Hashtable();
+
+            if (reportDetail == "0")
+            {
+                reportInput.Add("date", CastAide.AsString(Request["date"]));
+                reportInput.Add("sport", sportOption);
+                reportInput.Add("fdate", fdate);
+                reportInput.Add("tdate", tdate);
+                reportInput.Add("currency", CastAide.AsString(Request["currency"]));
+                reportInput.Add("reportby", reportBy);
+                reportInput.Add("reportdetail", "0");
+
+
+                switch (reportBy)
+                {
+                    case "1": //daily
+                        fileName = fileName + "Daily_" + fdate + "-" + tdate;
+                        break;
+                    case "2": //monthly
+                        fileName = fileName + "Monthly_" + fdate + "-" + tdate;
+                        break;
+                    case "3": //Sport
+                        fileName = fileName + "Sport_" + fdate + "-" + tdate;
+                        break;
+                }
+                reportInput.Add("FileName", fileName);
+            }
+            else if (reportDetail == "1")
+            {
+                if (sportOption == "0") //sport book
+                {
+                    fileName = fileName + "SportBook_" + CastAide.AsString(Request["currencyname"]) + "_" + fdate + "-" + tdate;
+                }
+                else if (sportOption == "151")//HorseRacing
+                {
+                    fileName = fileName + "HorseRacing_" + CastAide.AsString(Request["currencyname"]) + "_" + fdate + "-" + tdate;
+                }
+                else
+                {
+                    fileName = fileName + CastAide.AsString(Request["currencyname"]) + "_" + fdate + "-" + tdate;
+                }
+
+
+                reportInput.Add("sport", sportOption);
+                reportInput.Add("fdate", fdate);
+                reportInput.Add("tdate", tdate);
+                reportInput.Add("currency", CastAide.AsString(Request["currency"]));
+                reportInput.Add("currencyname", CastAide.AsString(Request["currencyname"]));
+                reportInput.Add("reportdetail", "1");
+                reportInput.Add("FileName", fileName);
+
+            }
+
+
+            report.Export2Excel(reportInput);
+
+        }
+        else
+        {
+            this.ReportTitle.Text = Sunplus.Accounting.Business.Report.Reports.Title;
+
+            Hashtable headerHash = new Hashtable();
+            headerHash.Add("fdate", fdate);
+            headerHash.Add("tdate", tdate);
+            reportHeader.Text = report.CreateHeader(headerHash);
+        }
+
+
+        
+
+        
+
+
+    }
+    
+}

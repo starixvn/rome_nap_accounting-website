@@ -1,0 +1,52 @@
+using System.Collections.Generic;
+using System.ServiceModel.Activation;
+using Sunplus.Accounting.Business.BootStrappers;
+using Sunplus.Accounting.Entities.Report.Monitor;
+
+namespace Sunplus.Accounting.WcfServiceLibrary.Report
+{
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]    
+    public class MonitorService:IMonitorService
+    {
+
+        public Filter LoadFilterReport()
+        {
+            var filter = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.Monitor.IMonitorService>();
+            return filter.LoadFilterReport(); 
+        }
+
+
+        public List<Items> GetBettypes(List<Items> option, int sporttype)
+        {
+            var filter = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.Monitor.IMonitorService>();
+            return filter.GetBettypes(option, sporttype);
+        }
+
+
+        public List<Items> GetLeague(List<Items> option, int sportId, string fromdate, string todate, int currency, int bettype,int live)
+        {
+            var filter = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.Monitor.IMonitorService>();
+            return filter.GetSelectLeagues(option, sportId, fromdate, todate, currency, bettype, live);
+        }
+
+
+        public MAMonitorDTO GetMAMonitorReport(Param param, bool fromcache)
+        {
+            var filter = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.Monitor.IMonitorService>();
+            return filter.GetMAMonitorReport(param, fromcache);
+        }
+
+        public void ExportToExcelMAMonitorReport(int reportBy, string reportTitle)
+        {
+            var export = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.Monitor.IMonitorService>();
+            export.ExportToExcelMAMonitorReport(reportBy, reportTitle);
+        }
+
+        public bool CheckMAMonitorReportFromSession(Param param)
+        {
+            var export = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.Monitor.IMonitorService>();
+            return export.CheckMAMonitorReportFromSession(param);
+        }
+    }
+
+}

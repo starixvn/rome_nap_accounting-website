@@ -1,0 +1,1165 @@
+﻿using System;
+using System.Collections;
+using System.Data.SqlClient;
+using System.Globalization;
+using System.Web;
+using DNAide.Data;
+using IBCUtils;
+
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Core.LoggingLib;
+using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
+using DNAide.Core;
+using Fanex.Data;
+using Sunplus.Accounting.Entities;
+
+namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
+{
+    public class UpdateCustomer : DataAccess
+    {
+        /// <summary>
+        /// call Store CustomerInsMember_Com to Insert data
+        /// writer: Vu Hanh
+        /// Phuong.Nguyen updated
+        /// </summary>
+        /// <param name="hash">hash</param>
+        /// <returns>Boolean</returns>
+        public static Hashtable CustomerInsMemberComRpt(Hashtable hash)
+        {
+            var hashUpdated = new Hashtable();
+            try
+            {                
+                using (ObjectDb objDb = new ObjectDb("Acc_CustomerInsMember_Com", 600))
+                {
+                    objDb.AssignParamValues(hash);
+
+                    objDb.ExecuteNonQuery();
+                    
+                    hashUpdated = objDb.GetOuputParams();
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            return hashUpdated;
+        }
+
+        /// <summary>
+        /// The fuction is using for add new Super
+        /// Using DNAide's Library
+        /// Tho Nguyen updated : 11/26/2008
+        /// </summary>
+        /// <param name="hash"></param>
+        /// <returns></returns>
+        public static Hashtable Acc_CustomerInsMember_Com(Hashtable hash)
+        {
+            var hashUpdated = new Hashtable();
+            try
+            {                
+                using (ObjectDb objDb = new ObjectDb("Acc_CustomerInsMember_Com", 600))
+                {
+                    objDb.AssignParamValues(hash);
+
+                    objDb.ExecuteNonQuery();
+
+                    hashUpdated = objDb.GetOuputParams();
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            return hashUpdated;
+        }
+
+        /// <summary>
+        /// CITS
+        /// Using DNAide's library
+        /// Tho.Nguyen updated: 11/29/2008
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public static IbcError Acc_CustomerPwdUpd(int CustId, string UserPwd, int UserId, string language)
+        {
+            IbcError error = IbcError.SuccessResult;
+            try
+            {                
+                using (ObjectDb objdb = new ObjectDb("Acc_CustomerUpdPwdReset", 600))
+                {
+                    var p = new Hashtable();
+                    p.Add("custid", CustId);
+                    p.Add("userpwd", UserPwd);
+                    p.Add("userid", UserId);
+                    p.Add("langguage", language);
+                    p.Add("loginip", HttpContext.Current.Request.UserHostAddress);
+
+                    objdb.AssignParamValues(p);
+                    objdb.ExecuteNonQuery();
+
+                    var errCode = CastAide.AsInt32(objdb.GetParameterValue("errcode"));
+                    if (errCode > 0)
+                    {
+                        error.ErrorCode = errCode;
+                        error.ErrorMsg = string.Format("{0}", objdb.GetParameterValue("errmsg"));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {                
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                throw ex;
+            }
+            return error;
+        }
+
+        /// <summary>
+        /// Insert new agent
+        /// @PhuongDN
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns>string:error message;empty: successfully</returns>
+        public static Hashtable AddNewAgent(Hashtable param)
+        {
+            var hashUpdated = new Hashtable();
+            try
+            {                
+                using (ObjectDb objDb = new ObjectDb("Acc_CustomerInsMember_MAg", 600))
+                {
+                    objDb.AssignParamValues(param);
+
+                    objDb.ExecuteNonQuery();
+
+                    hashUpdated = objDb.GetOuputParams();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            return hashUpdated;
+        }
+
+        /// <summary>
+        /// call SP CustomerInsMember_SAg
+        /// writer: Vu Hanh
+        /// Using DNAide's Library
+        /// Tho Nguyen update: 26/11/2008
+        /// </summary>
+        /// <param name="hash">hash</param>
+        /// <returns>Boolean</returns>
+        public static Hashtable CustomerInsMemberSAgRpt(Hashtable param)
+        {
+            var hashUpdated = new Hashtable();
+            try
+            {               
+                using (ObjectDb objDb = new ObjectDb("Acc_CustomerInsMember_SAg", 600))
+                {
+                    objDb.AssignParamValues(param);
+
+                    objDb.ExecuteNonQuery();
+
+                    hashUpdated = objDb.GetOuputParams();
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            return hashUpdated;
+        }
+
+        /// <summary>
+        /// Nguyen Thi Minh Thu 
+        /// 05/12/2006
+        /// insert new member
+        /// Phuong.Nguyen updated
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public static Hashtable InsertMember(Hashtable param)
+        {
+            var hashUpdated = new Hashtable();
+            try
+            {                
+                using (ObjectDb objDb = new ObjectDb("Acc_CustomerInsMember_Ag", 600))
+                {
+                    objDb.AssignParamValues(param);
+
+                    objDb.ExecuteNonQuery();
+
+                    hashUpdated = objDb.GetOuputParams();
+                }
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            return hashUpdated;
+        }
+
+        /// <summary>
+        /// call SP CustomerInsOperator to Insert data into database
+        /// writer: Vu Hanh
+        /// </summary>
+        /// <param name="hash">hash</param>
+        /// <returns>Boolean</returns>
+        public static Hashtable CustomerInsOperatorRpt(Hashtable hash)
+        {
+            var hashUpdated = new Hashtable();
+            try
+            {
+                
+                using (ObjectDb objDb = new ObjectDb("Acc_OperatorIns"))
+                {
+                    objDb.AssignParamValues(hash);
+                    objDb.ExecuteNonQuery();
+
+                    hashUpdated.Add("superId", objDb.GetParameterValue("custid"));
+                    hashUpdated.Add("errCode", objDb.GetParameterValue("errcode"));
+                    hashUpdated.Add("errMsg", objDb.GetParameterValue("errmsg"));
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                throw;
+            }
+            return hashUpdated;
+        }
+
+        /// <summary>
+        /// call SP CustomerUpdOperator to Update data into database
+        /// writer: Vu Hanh
+        /// </summary>
+        /// <param name="hash">hash</param>
+        /// <returns>Boolean</returns>
+        public static Hashtable CustomerUpdOperatorRpt(Hashtable hash)
+        {
+            var hashUpdated = new Hashtable();
+            try
+            {
+                using (ObjectDb objDb = new ObjectDb("Acc_OperatorUpd"))
+                {
+                    objDb.AssignParamValues(hash);
+                    objDb.ExecuteNonQuery();
+
+                    hashUpdated.Add("superId", objDb.GetParameterValue("custid"));
+                    hashUpdated.Add("errCode", objDb.GetParameterValue("errcode"));
+                    hashUpdated.Add("errMsg", objDb.GetParameterValue("errmsg"));
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                throw;
+            }
+            return hashUpdated;
+        }
+
+        /// <summary>
+        /// call SP CustomerDelOperator to Delete data from database
+        /// writer: Vu Hanh
+        /// </summary>
+        /// <param name="custId">custId</param>
+        /// <param name="language">language</param>
+        /// <param name="userId">userId</param>
+        /// <returns>Boolean</returns>
+        public static Hashtable CustomerDelOperatorRpt(int custId, string language, int userId)
+        {
+            var hashUpdated = new Hashtable();
+            try
+            {
+
+                using (ObjectDb objDB = new ObjectDb("Acc_OperatorDel"))
+                {
+                    var hash = new Hashtable();
+                    hash.Add("custid", custId); //int
+                    hash.Add("language", language); //varchar
+                    hash.Add("userid", userId); //int
+
+                    objDB.AssignParamValues(hash);
+                    objDB.ExecuteNonQuery();
+
+                    hashUpdated.Add("errCode", objDB.GetParameterValue("errcode"));
+                    hashUpdated.Add("errMsg", objDB.GetParameterValue("errmsg"));
+
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            return hashUpdated;
+        }
+
+        /// <summary>
+        /// Update super agent
+        /// </summary>
+        /// <param name="hash"></param>
+        /// <returns></returns>
+        public static IbcError CustomerUpdEditCustomerCom(Hashtable hash)
+        {
+            IbcError error = IbcError.SuccessResult;
+            try
+            {
+                using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdSuper_All", 600))
+                {
+                    hash["returnerrcode"] = true;
+                    hash["errcode"] = 0;
+                    hash["errmsg"] = string.Empty;
+
+                    objDb.AssignParamValues(hash);
+
+                    objDb.ExecuteNonQuery();
+
+                    var errCode = CastAide.AsInt32(objDb.GetParameterValue("errcode"));
+                    if (errCode > 0)
+                    {
+                        error.ErrorCode = errCode;
+                        error.ErrorMsg = string.Format("{0}", objDb.GetParameterValue("errmsg"));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                error.ErrorCode = 100;
+                error.ErrorMsg = ex.Message;
+            }
+            return error;
+        }
+
+        /// <summary>
+        /// The Fuction is using update super
+        /// Using DNAide's Library
+        /// Tho Nguyen updated : 11/26/2008
+        /// </summary>
+        /// <param name="hash"></param>
+        /// <returns></returns>
+        public static IbcError CustomerUpdEditCustomerCom_acc(Hashtable hash)
+        {
+            IbcError error = IbcError.SuccessResult;
+            try
+            {                                
+                using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdSuper_All", 600))
+                {                    
+                    objDb.AssignParamValues(hash);
+
+                    objDb.ExecuteNonQuery();
+
+                    var errCode = CastAide.AsString(objDb.GetParameterValue("errcode"));
+                    var errMsg = CastAide.AsString(objDb.GetParameterValue("errmsg"));
+                    error.ErrorMsg = "";
+                    AlertMessage.ParseError(ref error.ErrorCode, ref error.ErrorMsg, errCode, errMsg);
+                }
+            }
+            catch (Exception ex)
+            {
+                error = IbcError.InternalError;
+                error.ErrorMsg = ex.Message.Replace("'", "");
+
+                
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            return error;
+        }
+
+        //Writer: Hanh
+        /// <summary>
+        /// call SP CustomerUpdMatchLimit to update MatchLimit  
+        /// Using DNAide's Library
+        /// Tho.Nguyen updated: 11/29/2008
+        /// </summary>
+        /// <param name="custid"></param>
+        /// <param name="maxExp"></param>
+        /// <returns></returns>
+        public static IbcError UpdateMaxExposure(string custid, string maxExp, object updator)
+        {
+            IbcError error = IbcError.SuccessResult;
+            try
+            {
+                using (ObjectDb objdb = new ObjectDb("Acc_CustomerUpdMatchLimit", 600))
+                {
+                    var hash = new Hashtable();
+                    hash.Add("custid", custid);
+                    hash.Add("userid", updator);
+                    hash.Add("matchlimit", maxExp);
+                    hash.Add("returnerrcode", 1);
+                    hash.Add("errcode", 0);
+                    hash.Add("errmsg", string.Empty);
+
+                    objdb.AssignParamValues(hash);
+                    objdb.ExecuteNonQuery();
+
+                    var errCode = CastAide.AsInt32(objdb.GetParameterValue("errcode"));
+                    if (errCode != 0)
+                    {
+                        error.ErrorCode = errCode;
+                        error.ErrorMsg = string.Format("{0}", objdb.GetParameterValue("errmsg"));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                throw ex;
+            }
+            return error;
+        }
+
+        //Writer: Hanh
+        /// <summary>        
+        /// execute sp Acc_CustomerUpdUserInfo to update Customer Information       
+        /// Using DNAide's library
+        /// Tho.Nguyen updated: 11/29/2008
+        /// </summary>
+        /// <param name="ht"></param>
+        public static IbcError CustomerUpdUserInfoRpt(Hashtable hash)
+        {
+            IbcError error = IbcError.SuccessResult;
+            try
+            {               
+                using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdUserInfo"))
+                {
+                    objDb.AssignParamValues(hash);
+                    objDb.ExecuteNonQuery();
+
+                    var errCode = CastAide.AsInt32(objDb.GetParameterValue("errcode"));
+                    if (errCode != 0)
+                    {
+                        error.ErrorCode = errCode;
+                        error.ErrorMsg = string.Format("{0}", objDb.GetParameterValue("errmsg"));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                error.ErrorCode = 100;
+                error.ErrorMsg = ex.Message;
+            }
+            return error;
+        }
+
+        /// <summary>
+        /// Execute SP CustOverrideUpd to update Max, Min, Mid position taking of Dead ball soccer, Live soccer, Basket ball
+        /// @PhuongDN
+        /// </summary>
+        /// <param name="p">Hashtable contain all parameter for Sp CustOverrideUpd</param>
+        /// <returns>error_message: ==""--> successfull, else error</returns>
+        public static IbcError UpdMaxMinPT(Hashtable p)
+        {
+            IbcError error = IbcError.SuccessResult;
+            try
+            {
+                DbResult ds = null;
+
+                //var spElement = new UpdateCustomer().GetStoreProcedure(StoreProcedureSection.StoreCollection.SportBooksPt, "UpdateMinMaxPT");
+                var spElement = new UpdateCustomer().GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SportbookPtSession.StoreCollection.SportBooksPtControl, "UpdateMinMaxPT");
+                ds = DbHelper.ExecuteCmd(spElement.Name, p, spElement.DbName, 600);
+                //ds = DbHelper.ExecuteCmd("Acc_CustOverrideUpd", p, DBType.MAIN, 600);
+                if (Convert.ToInt32(ds.Outputs["errcode"]) != 0)
+                {
+                    error.ErrorCode = Convert.ToInt32(ds.Outputs["errcode"]);
+                    error.ErrorMsg = ds.Outputs["errmsg"] + "";
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            return error;
+        }
+
+        /// <summary>
+        /// The fuction is using update min and max of PT
+        /// Using DNAide's Library
+        /// Tho Nguyen updated: 26/11/2008
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public static IbcError UpdMaxMinPT_acc(Hashtable p)
+        {
+            IbcError error = IbcError.SuccessResult;
+            try
+            {
+                DbResult ds = null;
+                //var spElement = new UpdateCustomer().GetStoreProcedure(StoreProcedureSection.StoreCollection.SportBooksPt, "UpdateMinMaxPT");
+                var spElement = new UpdateCustomer().GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SportbookPtSession.StoreCollection.SportBooksPtControl, "UpdateMinMaxPT");
+                ds = DbHelper.ExecuteCmd(spElement.Name, p, spElement.DbName, 600);
+                //ds = DbHelper.ExecuteCmd("Acc_CustOverrideUpd", p, DBType.MAIN, 600);
+                if (Convert.ToInt32(ds.Outputs["errcode"]) != 0)
+                {
+                    error.ErrorCode = Convert.ToInt32(ds.Outputs["errcode"]);
+                    error.ErrorMsg = ds.Outputs["errmsg"] + "";
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            return error;
+        }
+
+        /// <summary>
+        /// Execute Sp CustomerUpdEditCustomer_MAg to update agent
+        /// @PhuongDN
+        /// Using DNAide's Library
+        /// Tho.Nguyen updated: 12/3/2008
+        /// </summary>
+        /// <param name="hash"></param>
+        /// <returns>string:error message;empty: successfully</returns>
+        public static IbcError UpdateAgent(Hashtable param)
+        {
+            IbcError error = IbcError.SuccessResult;
+            if (param == null)
+            {
+                throw new Exception();
+            }
+            try
+            {                
+                using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdAgent_All", 600))
+                {
+                    objDb.AssignParamValues(param);
+
+                    objDb.ExecuteNonQuery();
+
+                    error.ErrorMsg = "";
+                    AlertMessage.ParseError(ref error.ErrorCode, ref error.ErrorMsg, CastAide.AsString(objDb.GetParameterValue("errcode")),
+                                            CastAide.AsString(objDb.GetParameterValue("errmsg")));
+                }
+            }
+            catch (SqlException e)
+            {
+                if (e.Class == 16)
+                {
+                    error.ErrorMsg = e.Message;
+                    error.ErrorCode = IbcError.INTERNAL_ERROR;
+                    return error;
+                }
+            }
+            catch (Exception ex)
+            {
+                error.ErrorMsg = ex.Message;
+                error.ErrorCode = IbcError.INTERNAL_ERROR;
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            return error;
+        }
+
+        /// <summary>
+        /// call SP CustomerUpdEditCustomer_SAg
+        /// writer: Vu Hanh
+        /// Using DNAide's Library
+        /// Tho Nguyen updated: 11/26/2008
+        /// </summary>
+        /// <param name="hash">hash</param>
+        /// <returns>Boolean</returns>
+        public static IbcError CustomerUpdEditCustomerSAgRpt(Hashtable hash)
+        {
+            IbcError error = IbcError.SuccessResult;
+            try
+            {                
+                using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdMaster_All", 600))
+                {
+                    hash.Add("errcode", string.Empty);
+                    hash.Add("errmsg", string.Empty);
+
+                    objDb.AssignParamValues(hash);
+
+                    objDb.ExecuteNonQuery();
+
+                    AlertMessage.ParseError(ref error.ErrorCode, ref error.ErrorMsg, CastAide.AsString(objDb.GetParameterValue("errcode")),
+                                             CastAide.AsString(objDb.GetParameterValue("errmsg")));
+                }
+            }
+            catch (Exception ex)
+            {
+                error.ErrorCode = IbcError.INTERNAL_ERROR;
+                error.ErrorMsg = IbcError.INTERNAL_ERROR_MSG;
+                
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            return error;
+        }
+
+        /// <summary>
+        /// Nguyen Thi Minh Thu 07/12/2006
+        /// execute sp CustomerUpdEditCustomer_Ag
+        /// update data for singer member
+        /// Phuong.Nguyen updated
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public static Hashtable CustomerUpdEditCustomerAgRpt(Hashtable param)
+        {
+           
+            try
+            {
+                
+                using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdMember_All", 600))
+                {
+                    objDb.AssignParamValues(param);
+
+                    objDb.ExecuteNonQuery();
+
+                    return objDb.GetOuputParams();
+                }
+            }
+            catch (Exception ex)
+            {                
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Nguyen Thi Minh Thu 12/12/2006
+        /// call sp CustomerUpdUserName for change userName
+        /// Using DNAide's library
+        /// Tho.Nguyen updated: 12/1/2008
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public static IbcError CustomerUpdUserNameRpt(string oldUname, string newUname, string accId)
+        {
+            IbcError error = IbcError.SuccessResult;
+            try
+            {                
+                using (ObjectDb objdb = new ObjectDb("Acc_CustomerUpdUserName", 600))
+                {
+                    var hash = new Hashtable();
+                    hash.Add("oldname", oldUname);
+                    hash.Add("newname", newUname);
+                    hash.Add("userid", accId);
+                    hash.Add("returnerrcode", 1);
+                    hash.Add("errcode", 0);
+                    hash.Add("errmsg", "");
+
+                    objdb.AssignParamValues(hash);
+                    objdb.ExecuteNonQuery();
+
+                    var errCode = CastAide.AsInt32(objdb.GetParameterValue("errcode"));
+                    if (errCode != 0)
+                    {
+                        error.ErrorCode = errCode;
+                        error.ErrorMsg = string.Format("{0}", objdb.GetParameterValue("errmsg"));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                error.ErrorCode = IbcError.INTERNAL_ERROR;
+                error.ErrorMsg = IbcError.INTERNAL_ERROR_MSG;
+
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            return error;
+        }
+
+        public static IbcError CustomerUpdUserNameRpt(string oldUname, string newUname, string accId, out int custid)
+        {
+            IbcError error = IbcError.SuccessResult;
+            custid = 0;
+            try
+            {
+                using (ObjectDb objdb = new ObjectDb("Acc_CustomerUpdUserName", 600))
+                {
+                    var hash = new Hashtable();
+                    hash.Add("oldname", oldUname);
+                    hash.Add("newname", newUname);
+                    hash.Add("userid", accId);
+                    hash.Add("returnerrcode", 1);
+                    hash.Add("errcode", 0);
+                    hash.Add("errmsg", "");
+                    hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
+
+                    objdb.AssignParamValues(hash);
+                    objdb.ExecuteNonQuery();
+
+                    custid = Convert.ToInt32(objdb.GetParameterValue("returncustid"));
+                    var errCode = CastAide.AsInt32(objdb.GetParameterValue("errcode"));
+                    if (errCode != 0)
+                    {
+                        error.ErrorCode = errCode;
+                        error.ErrorMsg = string.Format("{0}", objdb.GetParameterValue("errmsg"));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                error.ErrorCode = IbcError.INTERNAL_ERROR;
+                error.ErrorMsg = IbcError.INTERNAL_ERROR_MSG;
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+            }
+            return error;
+        }
+
+        /// <summary>
+        /// Nguyen Thi Minh Thu 13/12/2006
+        /// call sp CustomerUpdClearCredit for clear credit
+        /// Using DNAide's library
+        /// Tho.Nguyen updated: 12/1/2008
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public static IbcError CustomerUpdClearCreditRpt(string username, string accId)
+        {
+            IbcError error = IbcError.SuccessResult;
+            try
+            {
+                using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdClearCredit", 600))
+                {
+                    var hash = new Hashtable();
+                    hash.Add("username", username);
+                    hash.Add("userid", accId);
+                    hash.Add("returnerrcode", 1);
+                    hash.Add("errcode", 0);
+                    hash.Add("errmsg", "");
+                    hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
+
+                    objDb.AssignParamValues(hash);
+
+                    objDb.ExecuteNonQuery();
+                    error.ErrorCode = CastAide.AsInt32(objDb.GetParameterValue("errcode"));
+                    error.ErrorMsg = string.Format("{0}", objDb.GetParameterValue("errmsg"));
+                }
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                error.ErrorCode = 100;
+                error.ErrorMsg = ex.Message;                
+            }
+            return error;
+        }
+
+        /// <summary>
+        /// Nguyen Thi Minh Thu 13/12/2006
+        /// call sp CustomerUpdMoveMaster for move master to new super
+        /// call sp CustomerUpdMoveAgent for move agent to new master
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="type">type = master move master to new super
+        /// type = agent move agent to new master
+        /// </param>
+        /// Using DNAide's library
+        /// Tho.Nguyen updated: 12/1/2008
+        /// <returns></returns>
+        public static IbcError CustomerUpdMoveCustRpt(string custId, string recommendId, string accId, string type)
+        {
+            string ip = HttpContext.Current.Request.UserHostAddress;
+            IbcError error = IbcError.SuccessResult;
+            try
+            {
+                var spName = "Acc_CustomerUpdMoveAgent";
+                var hash = new Hashtable();
+                hash.Add("userid", accId);
+                hash.Add("ip", ip);
+                hash.Add("errcode", 0);
+                hash.Add("errmsg", "");
+                
+                if (type == "master") {
+                    spName = "Acc_CustomerUpdMoveMaster";
+                    hash.Add("supername", recommendId);
+                    hash.Add("mastername", custId);
+                }
+                else {
+                    spName = "Acc_CustomerUpdMoveAgent";
+                    hash.Add("agentname", custId);
+                    hash.Add("mastername", recommendId);
+                }
+
+                using (ObjectDb objDb = new ObjectDb(spName, 600))
+                {
+                    objDb.AssignParamValues(hash);
+                    objDb.ExecuteNonQuery();
+
+                    error.ErrorCode = CastAide.AsInt32(objDb.GetParameterValue("errcode"));
+                    error.ErrorMsg = string.Format("{0}", objDb.GetParameterValue("errmsg"));
+                }
+            }
+            catch (Exception ex)
+            {
+                error.ErrorCode = 100;
+                error.ErrorMsg = ex.Message;
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            return error;
+        }
+
+        public static string MoveMasterDepositCustomer(string custId, string recommendId, int accId)
+        {
+            var hashParam = new Hashtable();
+
+            hashParam.Add("supername", recommendId);
+            hashParam.Add("mastername", custId);
+
+            hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+            hashParam.Add("userid", accId);
+            hashParam.Add("errcode", 0);
+            hashParam.Add("errmsg", string.Empty);
+            using (var objDb = new Fanex.Data.ObjectDb("CustomerUpdMoveDepositMaster"))
+            {
+                objDb.AssignParamValues(hashParam);
+
+                objDb.ExecuteNonQuery();
+                if (CastAide.AsInt32(objDb.GetParameterValue("ErrCode")) != 0)
+                    return CastAide.AsString(objDb.GetParameterValue("ErrMsg"));
+                return "Move master " + custId + " to super " + recommendId + " successfully!";
+            }
+        }
+
+        public static string MoveAgentDepositCustomer(string custId, string recommendId, int accId)
+        {
+            var hashParam = new Hashtable();
+
+            hashParam.Add("mastername", recommendId);
+            hashParam.Add("agentname", custId);
+
+            hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+            hashParam.Add("userid", accId);
+            hashParam.Add("errcode", 0);
+            hashParam.Add("errmsg", string.Empty);
+            using (var objDb = new Fanex.Data.ObjectDb("CustomerUpdMoveDepositAgent"))
+            {
+                objDb.AssignParamValues(hashParam);
+
+                objDb.ExecuteNonQuery();
+                if (CastAide.AsInt32(objDb.GetParameterValue("ErrCode")) != 0)
+                    return CastAide.AsString(objDb.GetParameterValue("ErrMsg"));
+                return "Move agent " + custId + " to master " + recommendId + " successfully!";
+            }
+        }
+
+        /// <summary>
+        /// Nguyen Thi Minh Thu 14/12/2006
+        /// call sp CustomerUpdUserGroup for update user group
+        /// Using DNAide's library
+        /// Tho.Nguyen updated: 12/1/2008
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public static IbcError CustomerUpdUserGroupRpt(string username, string ugroup, string accId)
+        {
+            IbcError error = IbcError.SuccessResult;
+            try
+            {                
+                using (var objDb = new Fanex.Data.ObjectDb("Acc_CustomerUpdUserGroup", 600))
+                {
+                    var hash = new Hashtable();
+                    hash.Add("username", username);
+                    hash.Add("ugroup", ugroup);
+                    hash.Add("userid", accId);
+                    hash.Add("returnerrcode", 1);
+                    hash.Add("errcode", 0);
+                    hash.Add("errmsg", "");
+                    hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
+
+                    objDb.AssignParamValues(hash);
+
+                    objDb.ExecuteNonQuery();
+                    var errCode = Convert.ToInt32(objDb.GetParameterValue("errcode"));
+                    if (errCode > 0)
+                    {
+                        error.ErrorCode = errCode;
+                        error.ErrorMsg = Convert.ToString(objDb.GetParameterValue("errmsg"));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                throw ex;
+            }
+            return error;
+        }
+
+        /// <summary>
+        /// call SP CustomerUpdAutoSuspend to update Suspend
+        /// writer:Vu Hanh
+        /// </summary>
+        /// <param name="custId">custId</param>
+        /// <param name="autoSuspend">autoSuspend</param>
+        /// <param name="userId">userId</param>
+        /// <returns>Boolean</returns>
+        /// Using DNAide's library
+        /// Tho.Nguyen updated: 12/1/2008
+        public static IbcError CustomerUpdAutoSuspendRpt(int custId, int autoSuspend, int userId)
+        {
+            var error = IbcError.SuccessResult;
+            try
+            {
+                using (var objDb = new Fanex.Data.ObjectDb("Acc_CustomerUpdAutoSuspend", 600))
+                {
+                    var hash = new Hashtable();
+                    hash.Add("custid", custId); //int
+                    hash.Add("autosuspend", autoSuspend); //bit
+                    hash.Add("userid", userId); //int
+                    hash.Add("returnerrcode", 1);
+                    hash.Add("errcode", 0);
+                    hash.Add("errmsg", "");
+                    hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
+
+                    objDb.AssignParamValues(hash);
+
+                    objDb.ExecuteNonQuery();
+                    var errCode = Convert.ToInt32(objDb.GetParameterValue("errcode"));
+                    if (errCode > 0)
+                    {
+                        error.ErrorCode = errCode;
+                        error.ErrorMsg = Convert.ToString(objDb.GetParameterValue("errmsg"));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {                
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                throw ex;
+            }
+            return error;
+        }
+
+        /// <summary>
+        /// This function is using add/update member
+        /// Using DNAide's Library
+        /// Tho Nguyen updated: 11/26/2008
+        /// </summary>
+        /// <param name="hash"></param>
+        /// <param name="IsInsert">IsInsert = true : insert , IsInsert = false: update</param>
+        /// <returns></returns>
+        public static IbcError AgentInsUdpMember(Hashtable hash, bool IsInsert, ref string custid)
+        {
+            IbcError error = IbcError.SuccessResult;            
+            try
+            {  
+                var spName = IsInsert ? "Acc_CustomerInsMember_Ag" : "Acc_CustomerUpdMember_All";
+                using (ObjectDb objDb = new ObjectDb(spName, 600))
+                {
+                    objDb.AssignParamValues(hash);
+
+                    objDb.ExecuteNonQuery();
+
+                    var errCode = CastAide.AsInt32(objDb.GetParameterValue("errcode"));
+                    var errMsg = CastAide.AsString(objDb.GetParameterValue("errmsg"));
+                    if (IsInsert && objDb.GetParameterValue("custid") != null)
+                    {
+                        custid = objDb.GetParameterValue("custid").ToString();
+                        error.ErrorCode = errCode;
+                        error.ErrorMsg = errMsg;
+                    }
+                    else
+                    {
+                        error.ErrorMsg = "";
+                        AlertMessage.ParseError(ref error.ErrorCode, ref error.ErrorMsg,
+                                                errMsg.ToString(), errMsg);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                error = IbcError.InternalError;
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            return error;
+        }
+
+        /// <summary>
+        /// Using DNAide's Lib
+        /// Tho.Nguyen updated: 12/3/2008
+        /// </summary>
+        /// <param name="hash"></param>
+        /// <returns></returns>
+        public static DbResult CustomerSelEditCustomer(Hashtable hash)
+        {
+            DbResult ds = null;
+            try
+            {
+                //var spElement = new UpdateCustomer().GetStoreProcedure(StoreProcedureSection.StoreCollection.SportBooksPt, "SelEditCustomer");
+                var spElement = new UpdateCustomer().GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SportbookPtSession.StoreCollection.SportBooksPtControl, "SelEditCustomer");
+                ds = DbHelper.Execute(spElement.Name, hash, spElement.DbName, 600);
+                //ds = DbHelper.Execute("acc_CustomerSelEditCustomer", hash, DBType.ARCHIVE, 600);
+            }
+            catch (Exception ex)
+            {
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            return ds;
+        }
+
+        /// <summary>
+        /// Using DNAide's library
+        /// Tho.Nguyen updated: 11/29/2008
+        /// </summary>
+        /// <param name="hash"></param>
+        /// <returns></returns>
+        public static Result UpdTransferOption(Hashtable hash)
+        {
+            try
+            {
+                using (ObjectDb db = new ObjectDb("Acc_CustomerUpdTransferOption", 600))
+                {
+
+                    db.AssignParamValues(hash);
+                    db.ExecuteNonQuery();
+
+                    return new Result()
+                    {
+                        ErrorCode = CastAide.AsInt32(db.GetParameterValue("errcode")),
+                        ErrorMessage = string.Format("{0}", db.GetParameterValue("errmsg"))
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hash"></param>
+        /// <returns></returns>
+        public static IbcError UpdVirtualRate(string custId, decimal virtualRate, string userId)
+        {
+            IbcError error = IbcError.SuccessResult;
+            try
+            {   
+                using (ObjectDb objdb = new ObjectDb("Acc_CustomerUpdVirtualMultiplier", 600))
+                {
+                    var hash = new Hashtable();
+                    hash.Add("custid", custId); //int
+                    hash.Add("virtualmultiplier", virtualRate); //bit
+                    hash.Add("userid", userId); //int                
+                    hash.Add("errcode", 0);
+                    hash.Add("errmsg", "");
+                    hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
+
+                    objdb.AssignParamValues(hash);
+                    objdb.ExecuteNonQuery();
+
+                    var errCode = CastAide.AsInt32(objdb.GetParameterValue("errcode"));
+                    if (errCode > 0)
+                    {
+                        error.ErrorCode = errCode;
+                        error.ErrorMsg = Convert.ToString(objdb.GetParameterValue("errmsg"));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                throw ex;
+            }
+            return error;
+        }
+
+        /// <summary>
+        /// The function is using Super edit member
+        /// Using DNAide's Library
+        /// Tho Nguyen updated: 11/27/2008
+        /// </summary>
+        /// <param name="hash"></param>
+        /// <returns></returns>
+        public static IbcError UpdSuperOnMember(Hashtable hash)
+        {
+            IbcError error = IbcError.SuccessResult;
+            try
+            {                
+                using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdMember_Super", 600))
+                {
+                    objDb.AssignParamValues(hash);
+
+                    objDb.ExecuteNonQuery();
+
+                    var errCode = CastAide.AsInt32(objDb.GetParameterValue("errcode"));
+                    var errMsg = CastAide.AsString(objDb.GetParameterValue("errmsg"));
+                    error.ErrorMsg = "";
+                    AlertMessage.ParseError(ref error.ErrorCode, ref error.ErrorMsg,
+                                            errMsg.ToString(), errMsg);
+                }
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                error = IbcError.InternalError;
+            }
+            return error;
+        }
+
+        /// <summary>
+        /// The function is using Master edit member
+        /// Using DNAide's Library
+        /// Tho Nguyen updated: 11/27/2008
+        /// </summary>
+        /// <param name="hash"></param>
+        /// <returns></returns>
+        public static IbcError UpdMasterOnMember(Hashtable hash)
+        {
+            IbcError error = IbcError.SuccessResult;
+            try
+            {
+                using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdMember_Master", 600))
+                {
+                    objDb.AssignParamValues(hash);
+
+                    objDb.ExecuteNonQuery();
+
+                    var errCode = CastAide.AsInt32(objDb.GetParameterValue("errcode"));
+                    var errMsg = CastAide.AsString(objDb.GetParameterValue("errmsg"));
+                    error.ErrorMsg = "";
+                    AlertMessage.ParseError(ref error.ErrorCode, ref error.ErrorMsg,
+                                            errMsg.ToString(), errMsg);
+                }
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                error.ErrorCode = IbcError.INTERNAL_ERROR;
+                error.ErrorMsg = IbcError.INTERNAL_ERROR_MSG;
+            }
+            return error;
+        }
+
+        public static void CustomerUpdUserSearch(int userid, string search, string firstname, string lastname)
+        {
+            IbcError error = IbcError.SuccessResult;
+            try
+            {
+                var param = new Hashtable();
+                param.Add("userid", userid);
+                param.Add("search", search);
+                param.Add("firstname", firstname);
+                param.Add("lastname", lastname);
+
+                //var spElement = new UpdateCustomer().GetStoreProcedure(StoreProcedureSection.StoreCollection.SportBooksPt, "UpdateUserSearch");
+                var spElement = new UpdateCustomer().GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SportbookPtSession.StoreCollection.SportBooksPtControl, "UpdateUserSearch");
+                var ds = DbHelper.ExecuteCmd(spElement.Name, param, spElement.DbName, 600);
+                //DbResult ds = DbHelper.ExecuteCmd("Acc_CustomerUpdUserSearch", param, DBType.ARCHIVE);
+            }
+            catch (Exception ex)
+            {
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+        }
+    }
+}

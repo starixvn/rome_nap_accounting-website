@@ -1,0 +1,20 @@
+﻿.red{   color:Red}
+.clearfix{   clear:both}
+/*Global Style for Grid */
+
+#mainreport{margin-top:5px;}
+
+.bgeven td{background-color:#fff3c8;}
+.total td{background-color:#FFEEDD;}
+.grandtotal td{background-color:#D3E1C8;}
+.content-pagination{border-top:solid 1px #7C98A4;}
+.link {color:Blue; cursor:pointer;}
+
+.grid-pager-content 
+{
+    width: 99%;
+}
+
+.grid-fixed-table {
+    border-collapse: inherit;
+}

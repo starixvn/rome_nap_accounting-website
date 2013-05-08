@@ -1,0 +1,65 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="IDailyWinLoss2hService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
+
+namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
+{
+    using System.Diagnostics.CodeAnalysis;
+    using Fanex.Tarus.Reports.Entities.DailyWinLoss2h;
+
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    public interface IDailyWinLoss2hService
+    {
+        DailyWinLoss2hReport DailyWLDirect_Sporttype(DailyWinLoss2hParam param);
+        void SaveReportContent(DailyWinLoss2hParam param);
+        void ExportToExcel(DailyWinLoss2hParam param);
+
+        DailyWinLoss2hReport DailyWLDirect_MixParlay(DailyWinLoss2hParam param);
+        void ExportToExcel_DailyWLDirect_MixParlay(DailyWinLoss2hParam param);
+
+        DailyWinLoss2hReport DailyWLDirectRacing(DailyWinLoss2hParam param);
+        DailyWinLoss2hReport DailyWLDirectRacingBySport(DailyWinLoss2hParam param);
+        DailyWinLoss2hReport DailyWLDirectRacingBySportDetails(DailyWinLoss2hParam param);
+        void Export2ExcelDailyWLDirectRacing(DailyWinLoss2hParam param);
+        void Export2ExcelDailyWLDirectRacingBySport(DailyWinLoss2hParam param);
+        void Export2ExcelDailyWLDirectRacingBySportDetails(DailyWinLoss2hParam param);
+
+        LiveAndNoneLiveReportDWL2h SelSoccerReportMain(DailyWinLoss2hParam param);
+        DailyWinLoss2hReport SelDailyWLDirectDetails(DailyWinLoss2hParam param);
+
+        void ExportToExcel_SoccerMain(DailyWinLoss2hParam param);
+        void ExportToExcel_DailyWLDirectDetails(DailyWinLoss2hParam param);
+
+        LiveAndNoneLiveReportDWL2h DailyWLDirect_NumberGame(DailyWinLoss2hParam param);
+        void ExportToExcel_NumberGameMain(DailyWinLoss2hParam param);
+        void ExportToExcel_NumberGameDetails(DailyWinLoss2hParam param);
+
+        LiveAndNoneLiveReportDWL2h SelCasinoReport(DailyWinLoss2hParam param);
+        void ExportToExcel_CasinoMain(DailyWinLoss2hParam param);
+
+        LiveAndNoneLiveReportDWL2h SelBingoReport(DailyWinLoss2hParam param);
+        void ExportToExcel_BingoMain(DailyWinLoss2hParam param);
+
+        LiveAndNoneLiveReportDWL2h SelFinanceReport(DailyWinLoss2hParam param);
+        DailyWinLoss2hReport SelLiveCasinoReport(DailyWinLoss2hParam param);
+        void ExportExcel_LiveCasinoMain(DailyWinLoss2hParam param);
+
+        LiveAndNoneLiveReportDWL2h SelAdvanceMixParlayReport(DailyWinLoss2hParam param);
+        void Export2Excel_MixParlayAdvanceMain(DailyWinLoss2hParam param);
+
+        LiveAndNoneLiveReportDWL2h SelOtherSportsReport(DailyWinLoss2hParam param);
+        LiveAndNoneLiveReportDWL2h SelOtherSportsReportBySport(DailyWinLoss2hParam param);
+
+        void ExportToExcel_OtherSportsMain(DailyWinLoss2hParam param);
+        void ExportToExcel_OtherSportsMain_NoneLive(DailyWinLoss2hParam param);
+        void ExportToExcel_OtherSportsMain_Live(DailyWinLoss2hParam param);
+        void ExportToExcel_OtherSportsBySport(DailyWinLoss2hParam param);
+        void ExportToExcel_OtherSportsBySport_NoneLive(DailyWinLoss2hParam param);
+        void ExportToExcel_OtherSportsBySport_Live(DailyWinLoss2hParam param);
+    }
+}

@@ -1,0 +1,21 @@
+﻿
+namespace Fanex.Tarus.Reports.DataAccess.NumberGameWinLoss
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Data;
+    using Fanex.Tarus.Reports.Entities.NumberGameWinLoss;
+    /// <summary>
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public interface INumberGameWinLossAccess
+    {
+        DataTable GetCurrencyList();
+        DataTable GetBettypeList();
+        DataTable GetLicensees();
+    }
+}

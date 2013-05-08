@@ -1,0 +1,19 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="ILicenseeNumberGameService.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Reports.Business.Licensee
+{
+    using Entities.Licensee.NumberGameWinLoss;
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public interface INumberGameWinLossService
+    {
+        Licensees SelAllLicensees();
+        NumberGameWinLoss SelNumberGameWinLoss(string normalLicensee, string operators, string fromDate, string toDate);
+        void ExportExcelNumberGameWinLossReport(string normalLicensee, string operators, string fromDate, string toDate, string reportTitle);
+    }
+}

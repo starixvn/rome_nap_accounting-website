@@ -1,0 +1,17 @@
+﻿using System.Collections.Generic;
+using Fanex.Tarus.LiveCasino.Entities.Report;
+using Fanex.Tarus.LiveCasino.Entities;
+using Fanex.Tarus.LiveCasino.Entities.Betlist;
+
+namespace Fanex.Tarus.LiveCasino.Business
+{
+    public interface IReportManager
+    {
+        List<BetlistResultLC> GetBetlistResultLC(string matchid, string bettype);
+        List<DailyWinlossDetail> GetDailyWinlossDetail();
+        GameStatisticsBO GetGameStatistic(GameStatisticsParams dbparams);
+        ListDailyWL GetDailyWLDirectLC(string winlossdate);
+        GameSearchBO GetGameFilterInfo();
+        List<Category> GetGameTableByGameType(int gameType);
+    }
+}

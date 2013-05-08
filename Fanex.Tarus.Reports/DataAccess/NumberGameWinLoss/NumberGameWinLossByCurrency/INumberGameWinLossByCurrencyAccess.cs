@@ -1,0 +1,20 @@
+﻿
+namespace Fanex.Tarus.Reports.DataAccess.NumberGameWinLoss.ByCurrency
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Data;
+    using Fanex.Tarus.Reports.Entities.NumberGameWinLoss;
+    using Fanex.Tarus.Reports.Entities.NumberGameWinLoss.NumberGameWinLossByCurrency;
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public interface IByCurrencyAccess
+    {
+        DataSet GetNumberGameWinLossByCurAccess(NumberGameWinLossByCurrency_MainParams MaiParams);
+
+        DataSet GetNumberGameWinLossByCurDetailAccess(NumberGameWinLossByCurrency_DetailParams DetailParams);
+    }
+}

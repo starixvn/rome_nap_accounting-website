@@ -1,0 +1,79 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+using System.Collections;
+using BLL.Report.Punter;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web;
+
+public partial class Report_Punter_PunterAnalysis : PageBase
+{
+
+    public string html = "";
+    public string fullname = "", script="";
+    
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        string type = DNAide.Core.CastAide.AsString(Request["type"]);
+        
+        string username = "", fromdate = "", todate = "", toprow = "", orderby = "", ordertype = "";
+        string custid = "", sporttype = "", leagueid = "", leaguename="", bettpe = "";
+        IServicePunterAnalysis objPunter;
+
+        username = Request["username"];
+        custid = Request["custid"];
+        fromdate = Request["fromdate"];
+        todate = Request["todate"];
+        toprow = Request["toprow"];
+        orderby = Request["orderby"];
+        ordertype = Request["ordertype"];
+        sporttype = Request["sporttype"];
+        bettpe = Request["bettype"];
+        leagueid = Request["leagueid"];
+        leaguename = Request["leaguename"];
+
+        switch (type)
+        {
+            case "SelTopPunterSummary":
+                objPunter = new ServicePunterAnalysis();
+                objPunter.SelTopPunterSummaryExportOnly(username, fromdate, todate, toprow, orderby, ordertype);
+                break;
+            case "SelTopPunterByCustId":
+                objPunter = new ServicePunterAnalysis();
+                objPunter.SelTopPunterByCustIdExport(custid, username, fromdate, todate, orderby, ordertype);
+                break;
+            case "SelTopPunterBySporttype":
+                objPunter = new ServicePunterAnalysis();
+                objPunter.SelTopPunterBySporttypeExport(custid, username, sporttype, fromdate, todate, orderby, ordertype);
+                break;
+            case "SelTopPunterByBettype":
+                objPunter = new ServicePunterAnalysis();
+                objPunter.SelTopPunterByBettypeExport(custid, username, sporttype, bettpe, fromdate, todate, orderby, ordertype);
+                break;
+            case "SelIPByCustomer":
+                objPunter = new ServicePunterAnalysis();
+                objPunter.SelIpByCustomerExport(custid, username, fromdate, todate);
+                break;
+            case "SelBetCountByCustomer":
+                objPunter = new ServicePunterAnalysis();
+                objPunter.SelBetCountByCustomerExport(custid, username, fromdate, todate, leagueid);
+                break;
+            case "SelTopPunterSummaryByLeagues":
+                objPunter = new ServicePunterAnalysis();
+                objPunter.SelTopPunterSummaryByLeagueExport(leagueid, leaguename, fromdate, todate, toprow, orderby, ordertype);
+                break;
+            case "SelTopPunterByLeagueCustId":
+                objPunter = new ServicePunterAnalysis();
+                objPunter.SelTopPunterByLeagueCustIdExport(custid, leagueid, username, sporttype, fromdate, todate, orderby, ordertype);
+                break;
+            default:                
+                PunterAnalysisManager punter = new PunterAnalysisManager();
+                html = punter.LoadHeader();
+                break;
+        }
+    }
+}

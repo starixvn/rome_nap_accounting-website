@@ -1,0 +1,72 @@
+using System;
+using System.Collections.Generic;
+using System.Web.UI.WebControls;
+using Sunplus.Accounting.Business.BootStrappers;
+using Sunplus.Accounting.Business.ExChangeRate;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.WcfServiceLibrary;
+using Sunplus.Accounting.Business.Security;
+
+public partial class EditRate : PageBase
+{
+    protected override bool HasPermission()
+    {
+        return Functions.ExchangeRate.IsAllowExchangeRate && Permissions.GetHostPermission(Enumerations.Functions.ExRates.ExchangeRate);
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        try
+        {
+            Page.Title = "Edit Exchange Rate";
+            exrateEditHeader.Text = Resources.Language.editExchangeRate;
+            ExChangeRate ex = new ExChangeRate();
+            int exRateId = Convert.ToInt32(Request["exrateId"]);
+            List<string> list = ex.EditExchangeRate1(exRateId);
+            IExchangeRateService exchangeRate = CommonBootStrapper.Locator.GetInstance<IExchangeRateService>();
+            exrateEditContent.Text = exchangeRate.GenNewRate4Update();
+            exrateEditContent.Text = exrateEditContent.Text.Replace("{Currency}", list[0]);
+            exrateEditContent.Text = exrateEditContent.Text.Replace("{BaseRate}", list[1]);
+            exrateEditContent.Text = exrateEditContent.Text.Replace("{Minbet}", list[2]);
+            exrateEditContent.Text = exrateEditContent.Text.Replace("{MinbetLive}", list[3]);
+            exrateEditContent.Text = exrateEditContent.Text.Replace("{GBPRate}", list[4]);
+            exrateEditContent.Text = exrateEditContent.Text.Replace("{AUDRate}", list[5]);
+            exrateEditContent.Text = exrateEditContent.Text.Replace("{ZARRate}", list[6]);
+            exrateEditContent.Text = exrateEditContent.Text.Replace("{EURORate}", list[7]);
+            exrateEditContent.Text = exrateEditContent.Text.Replace("{USDRate}", list[8]);
+            tbxStandardCurrency.Value = list[9];
+            exrateEditContent.Text = exrateEditContent.Text.Replace("{Description}", list[10]);
+            exrateEditContent.Text = exrateEditContent.Text.Replace("{MultipliedBy}", list[11]);
+
+            exrateEditContent.Text = exrateEditContent.Text.Replace("{submit}", "Submit");
+            exrateEditContent.Text = exrateEditContent.Text.Replace("{reset}", "Reset");
+
+            exrateEditContent.Text = exrateEditContent.Text.Replace("{function}", "javascript:UpdateEditExChangeRate();");
+            exrateEditContent.Text = exrateEditContent.Text.Replace("{Function_Reset}", "javascript:ResetValueWhenEdit();");
+
+            IHelperService helperService = new HelperService();
+            string[] arrStandardCurrency = helperService.GetStandardCurrencyList();
+            selectStandardCurrency.Items.Add(new ListItem("Select", ""));
+            foreach (string sc in arrStandardCurrency)
+            {
+                selectStandardCurrency.Items.Add(new ListItem(sc, sc));
+            }
+
+            for (int i = 0; i < selectStandardCurrency.Items.Count; ++i )
+            {
+                if (selectStandardCurrency.Items[i].Value == list[9])
+                {
+                    selectStandardCurrency.SelectedIndex = i;
+                    break;
+                }
+            }
+            selectStandardCurrency.Disabled = true;
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+        
+    }
+}

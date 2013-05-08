@@ -1,0 +1,54 @@
+﻿using System;
+using DNAide.Core;
+using Sunplus.Accounting.Business.BootStrappers;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web.Controls;
+using Sunplus.Accounting.DataAccess.Report;
+
+public partial class Report_Racing_HorseRacingDailyReportforUK : PageBase
+{
+    protected string ToDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today);
+    protected string MinDay = "";
+    protected string FDay = "";
+    protected string MaxDay = "";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        DateTime bl = ReportUtils.BalanceUp.BalanceUpDay;
+        int displaydays = 0;
+        TimeSpan sp = DateTime.Today - bl;
+        displaydays = sp.Days;
+        ToDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today);
+        MinDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today.AddDays(-displaydays));
+        FDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today);
+        MaxDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today.AddDays(7));
+        if (Request["type"] != null && Request["type"].Equals("export"))
+        {
+            var winlossDate = Request["date"] ?? DateTime.Now.ToShortDateString();
+            var reportType = Request["reporttype"] != null ? CastAide.AsInt32(Request["reporttype"]) : 1;
+
+            if (Request["getdetail"] != null && Request["getdetail"].Equals("1"))
+            {
+                var poolCurrId = Request["poolCurr"] != null ? Request["poolCurr"].ToString() : "1";
+                var parnerId = Request["partnerid"] != null ? Request["partnerid"].ToString() : "1";
+                var meetingName = Request["meeting"] != null ? Request["meeting"].ToString() : "";
+                Export2ExcelDailyReportDetail(winlossDate, poolCurrId, parnerId, meetingName, reportType);
+            }
+            else
+            {
+                Export2ExcelDailyReport(winlossDate, reportType);
+            }
+        }
+    }
+
+    private static void Export2ExcelDailyReport(string date, int reportType)
+    {
+        var racingReport = new Sunplus.Accounting.WcfServiceLibrary.Report.ReportRacing();
+        racingReport.WinLossRacingReportExportToExcel(date, reportType);
+    }
+
+    private static void Export2ExcelDailyReportDetail(string date, string poolCurId, string parnerId, string meetingName, int reportType)
+    {
+        var racingReport = new Sunplus.Accounting.WcfServiceLibrary.Report.ReportRacing();
+        racingReport.WinLossRacingReportDetailExportToExcel(date, poolCurId, parnerId, meetingName, reportType);
+    }
+}

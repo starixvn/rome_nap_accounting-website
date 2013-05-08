@@ -1,0 +1,125 @@
+﻿
+
+
+using System;
+using System.Collections;
+using System.Data;
+using Fanex.Data;
+using Fanex.Tarus.Reports.DataAccess.Constants;
+using Fanex.Tarus.Reports.Helpers;
+namespace Fanex.Tarus.Reports.DataAccess.MatchWinLoss
+{
+    public class MatchWinLossAccess : IMatchWinLossAccess
+    {
+        #region IMethods
+
+        public DataSet SelSummaryReportBySportType(DateTime reportDate, ref Hashtable outputParam)
+        {
+            DataSet result = null;
+            var rpHelper = new ReportHelpers();
+            string subfix = rpHelper.GetStoreMappingSubfix(reportDate);
+            string spName = "MatchWinLoss2a" + subfix;
+
+            using (ObjectDb objDB = new ObjectDb(spName))
+            {
+                if (subfix.Contains(rpHelper.WareHouseSPSuffix))
+                {
+                    objDB.AddInParameter("fromdate", DbType.DateTime, reportDate);
+                    objDB.AddInParameter("todate", DbType.DateTime, reportDate);
+                }
+                else
+                {
+                    objDB.AddInParameter("winlostdate", DbType.DateTime, reportDate);
+                }
+                objDB.AddOutParameter("winlost_8rm", DbType.Double, DbTypeSize.DoubleType);
+                objDB.AddOutParameter("winlost_barm", DbType.Double, DbTypeSize.DoubleType);
+                objDB.AddOutParameter("IBCTurnover_8RM", DbType.Double, DbTypeSize.DoubleType);
+                objDB.AddOutParameter("IBCTurnover_BARM", DbType.Double, DbTypeSize.DoubleType);
+                result = objDB.ExecuteDataSet();
+                outputParam = objDB.GetOuputParams();
+            }
+            return result;
+        }
+
+        public DataSet SelThirdPartyCasinoReport(DateTime reportDate)
+        {
+            DataSet result = null;
+            var rpHelper = new ReportHelpers();
+            string subfix = rpHelper.GetStoreMappingSubfix(reportDate);
+            string spName = "ThirdPartyCasinoReport" + subfix;
+            using (ObjectDb objDB = new ObjectDb(spName))
+            {
+                if (subfix.Contains(rpHelper.WareHouseSPSuffix))
+                {
+                    objDB.AddInParameter("fromdate", DbType.DateTime, reportDate);
+                    objDB.AddInParameter("todate", DbType.DateTime, reportDate);
+                }
+                else
+                {
+                    objDB.AddInParameter("winlostdate", DbType.DateTime, reportDate);
+                }
+                result = objDB.ExecuteDataSet();
+            }
+
+            return result;
+        }
+
+        public DataSet SelBetTypeReportDetail(DateTime reportDate, string sportName, int betType, int liveType)
+        {
+            DataSet result = null;
+            var rpHelper = new ReportHelpers();
+            string subfix = rpHelper.GetStoreMappingSubfix(reportDate);
+            string spName = "SelWLBySportTypeDetail" + subfix;
+            using (ObjectDb objDB = new ObjectDb(spName))
+            {
+
+                objDB.AddInParameter("winlostdate", DbType.DateTime, reportDate);
+                objDB.AddInParameter("sporttype", DbType.String, sportName);
+                objDB.AddInParameter("bettype", DbType.Int32, betType);
+                if (liveType != -1)
+                {
+                    objDB.AddInParameter("LiveIndicator", DbType.Int32, liveType);
+                }
+                result = objDB.ExecuteDataSet();
+            }
+
+            return result;
+        }
+
+        public DataSet SelSportTypeReportDetail(DateTime reportDate, string sportName)
+        {
+            return SelBetTypeReportDetail(reportDate, sportName, 0, -1);
+        }
+
+        public DataSet SelMatchWinLossReportAllDetail(DateTime reportDate, ref Hashtable outputParam)
+        {
+            DataSet result = null;
+            var rpHelper = new ReportHelpers();
+            string subfix = rpHelper.GetStoreMappingSubfix(reportDate);
+            string spName = "MatchWinLoss2a_Old" + subfix;
+
+            using (ObjectDb objDB = new ObjectDb(spName))
+            {
+                if (subfix.Contains(rpHelper.WareHouseSPSuffix))
+                {
+                    objDB.AddInParameter("fromdate", DbType.DateTime, reportDate);
+                    objDB.AddInParameter("todate", DbType.DateTime, reportDate);
+                }
+                else
+                {
+                    objDB.AddInParameter("winlostdate", DbType.DateTime, reportDate);
+                }
+                objDB.AddOutParameter("winlost_8rm", DbType.Double, DbTypeSize.DoubleType);
+                objDB.AddOutParameter("winlost_barm", DbType.Double, DbTypeSize.DoubleType);
+                objDB.AddOutParameter("IBCTurnover_8RM", DbType.Double, DbTypeSize.DoubleType);
+                objDB.AddOutParameter("IBCTurnover_BARM", DbType.Double, DbTypeSize.DoubleType);
+                result = objDB.ExecuteDataSet();
+                outputParam = objDB.GetOuputParams();
+            }
+            return result;
+        }
+
+        #endregion IMethods
+
+    }
+}

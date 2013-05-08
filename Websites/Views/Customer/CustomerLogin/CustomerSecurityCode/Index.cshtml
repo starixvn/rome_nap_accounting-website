@@ -1,0 +1,110 @@
+﻿@using DNAide.Core;
+@using Sunplus.Accounting.Core.Configurations;
+@using Sunplus.Accounting.Business.Report;
+@using Sunplus.Accounting.Business.Report.Common;
+@using Fanex.Tarus.Infrastructure.Resource;
+@using Fanex.Tarus.Infrastructure.Configurations;
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>@Reports.Title</title>
+    <link href="~/App_Themes/Public/table.css" rel="stylesheet" type="text/css" />
+    <link href="~/Views/Customer/CustomerLogin/CustomerSecurityCode/Styles/CustomerSecurityCode.css?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="~/js/common.js"></script>
+    <script src="~/Views/Customer/CustomerLogin/CustomerSecurityCode/Scripts/CustomerSecurityCode.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
+</head>
+<body>
+    <div class="main">
+        <div class="maincontent">
+            <div class="maincontent_box ">
+                <table class="tbllayout" cellspacing="1">
+                    <tr class="title">
+                        <td colspan="2">
+                            Reset Security Code: <span class="customerName"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l b">
+                            Security Code:
+                        </td>
+                        <td class="l">
+                            <input id="txtSecurityCode" class="txt" type="text" maxlength="6" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="l b">
+                            Confirm Security Code:
+                        </td>
+                        <td class="l">
+                            <input id="txtConfirmSecurityCode" class="txt" type="text" maxlength="6" />
+                        </td>
+                    </tr>
+                    <tr class="tdForceChange hidden">
+                        <td class="c b" colspan="2">
+                            <span>
+                                <input id="chbForceChange" type="checkbox" checked="checked" />
+                                <label for="chbForceChange">
+                                    Force change</label>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="c" colspan="2">
+                            <input id="btnSubmit" class="btn" type="submit" value="Submit" />
+                            <input id="btnReset" class="btn" type="reset" value="Reset" />
+                        </td>
+                    </tr>
+                </table>
+                <div id="reportNote" class="warning l">
+                    <ul>
+                        <li>Security Code (SC) must be:
+                            <ul>
+                                <li>* Numeric digits only.</li>
+                                <li>* 6 digits from 0-9.</li>
+                                <li>* At least 2 different digits in the SC.</li>
+                                <li>* Not a forward run AND not a backward run number:
+                                    <ul>
+                                        <li>+ A "Forward Run" number is an integer whose digits are all in consecutive, ascending
+                                            order, left to right. </li>
+                                        <li>+ A "Backward Run" number is an integer whose digits are all in consecutive, descending
+                                            order, left to right.</li>
+                                        <li>+ For example: 123456, 456789, 765432, etc. are not allowed.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div id="errorMessage" class="hidden">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+@{
+    string customerName = string.Empty;
+    int customerId = 0;
+    int roleId = -1;
+    if (Request["CustomerName"] != null)
+    {
+        customerName = CastAide.AsString(Request["CustomerName"]);
+    }
+
+    if (Request["CustomerId"] != null)
+    {
+        customerId = CastAide.AsInt32(Request["CustomerId"]);
+    }
+
+    if (Request["RoleId"] != null)
+    {
+        roleId = CastAide.AsInt32(Request["RoleId"]);
+    }
+    
+}
+<script type="text/javascript">
+    window.rootUrl = '@Url.Content("~")';
+    var customerName = '@customerName';
+    var customerId = '@customerId';
+    var roleId = '@roleId';
+</script>
+</html>

@@ -1,0 +1,112 @@
+﻿
+
+
+using System;
+using DNAide.Core;
+using Fanex.Tarus.Infrastructure.Extensions;
+using Fanex.Tarus.VirtualSport.DataAccess.SpecialDelete;
+using Fanex.Tarus.VirtualSport.Entities.SpecialDelete;
+
+namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
+{
+    public sealed class Messenger
+    {
+        /// <summary>
+        /// Insert message into table Msg, with IsPublic = 0 (private), MsgType = 1 (message to customer), IsSticky = 0 (default no announcement)
+        /// </summary>
+        /// <param name="Msg"></param>
+        /// <param name="TargetId"></param>
+        /// <param name="TargetName"></param>
+        /// <returns></returns>
+        public static int SetMessage(Message msg, int[] targetId, string[] targetName, int matchId, string[] transId)
+        {
+            try
+            {
+                // for insert check
+                if ((msg.MessageId == 0) && (targetId.Length < 1))
+                {
+                    return 0;
+                }
+
+                msg.Content_en = CorrectSpace(msg.Content_en);
+                msg.Content_ch = CorrectSpace(msg.Content_ch);
+                msg.Content_cs = CorrectSpace(msg.Content_cs);
+                msg.Content_it = CorrectSpace(msg.Content_it);
+                msg.Content_jp = CorrectSpace(msg.Content_jp);
+                msg.Content_th = CorrectSpace(msg.Content_th);
+                msg.Content_ko = CorrectSpace(msg.Content_ko);
+                msg.Content_es = CorrectSpace(msg.Content_es);
+
+                var rs = (new MessengerAccess()).SetMessage(msg, matchId);
+                msg.MessageId = CastAide.AsInt32(rs.Tables[0].Rows[0]["MessageId"]);
+                if (msg.MessageId > 0)
+                {
+                    AddTargt2Message(msg.MessageId, targetId, targetName, transId, msg.CreatorId);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return msg.MessageId;
+        }
+
+        /// <summary>
+        /// Insert target information of the message inserted into table MsgTarget with TargetID = customerID (member,agent,master,super), TargetName = customer's username, MessageType = 1
+        /// </summary>
+        /// <param name="MessageId"></param>
+        /// <param name="TargetId"></param>
+        /// <param name="TargetName"></param>
+        /// <returns></returns>
+        public static void AddTargt2Message(int messageId, int[] targetId, string[] targetName, string[] transId, int creatorId)
+        {
+            try
+            {
+                for (int i = 0; i < targetId.Length; i++)
+                {                                    
+                    // set user or role via SP
+                    if (targetId[i] != 0)
+                    {
+                        (new MessengerAccess()).AddTargt2Message(messageId, targetId[i], targetName[i], transId[i], creatorId);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+        }
+
+        public static string CorrectSpace(string scontent)
+        {
+            if (string.IsNullOrEmpty(scontent))
+            {
+                return string.Empty;
+            }
+            int index = scontent.IndexOf("@@");
+
+            if (index == -1)
+            {
+                return scontent;
+            }
+
+            if (index == 0)
+            {
+                if (scontent.Substring(0, 1).Trim().Length > 0)
+                {
+                    scontent = scontent.Replace("@@", "@@ ");
+                }
+            }
+            else
+            {
+                if (scontent.Substring(index - 1, 1).Trim().Length > 0)
+                {
+                    scontent = scontent.Replace("@@", " @@");
+                }
+
+            }
+            return scontent;
+        }
+    }
+}

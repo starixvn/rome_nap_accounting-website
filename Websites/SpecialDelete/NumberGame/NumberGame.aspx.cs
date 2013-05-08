@@ -1,0 +1,129 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using DNAide.Core;
+using DNAide.Data;
+using DNAide.Web;
+
+using Sunplus.Accounting.Business.BootStrappers;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using Sunplus.Accounting.Entities.SpecialDelete;
+using Sunplus.Core.LoggingLib;
+
+public partial class SpecialDelete_NumberGame : PageBase
+{
+    public string html = "";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        try
+        {
+
+
+            html = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("SpecialDelete/NumberGame/FillterFormSepecial.htm");
+
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add("TypeId", typeof (int));
+            dataTable.Columns.Add("typename", typeof(string));
+            dataTable.Columns.Add("IsLive", typeof(bool));
+
+            var specialDelete = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.SpecialDelete.ISpecialDeleteService>();
+            var btypes = specialDelete.SelAllBettype(1);
+
+            foreach (Bettype bettype in btypes)
+            {
+                DataRow dataRow = dataTable.NewRow();
+                dataRow["TypeId"] = bettype.Id;
+                dataRow["IsLive"] = bettype.Liveindicator;
+                dataRow["typename"] = bettype.Name;
+                dataTable.Rows.Add(dataRow);
+            }
+
+            string bettypes = GenerateBettype(dataTable, false) + GenerateBettype(dataTable, true);
+            TemplateHandler.Assign(ref html, "{newbt}", bettypes);
+
+            if (CastAide.AsString(Session["Username"]).ToLower() != "joe" && CastAide.AsString(Session["Username"]).ToLower() != "steven")
+            {
+                TemplateHandler.Assign(ref html, "{confirm-msg}", AlertMessage.GetMsg(Resources.Language.specialDelConfirm, AlertMessage.MsgType.Warning));
+            }
+            else
+            {
+                TemplateHandler.RemoveBlock(ref html, "confirm");
+            }
+
+            //HtmlHolder.Text = html;
+        }
+        catch (Exception ex)
+        {
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+        }
+    }
+
+    string GenerateBettype(DataTable dt, bool IsLive)
+    {
+        string tpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("SpecialDelete/NumberGame/DynamicBettype.htm");
+        
+        string tplcontent = TemplateHandler.CopyBlock(tpl, "content");
+        string liveindicator = "live";
+        if(IsLive)
+        {
+            TemplateHandler.Assign(ref tpl, "title", "Live bet types");
+            liveindicator = "live";
+        }
+        else
+        {
+            TemplateHandler.Assign(ref tpl, "title", "Dead ball bet types");
+            liveindicator = "none-live";
+            TemplateHandler.RemoveBlock(ref tpl, "AllBetTypes");
+        }
+        
+        StringBuilder rows = new StringBuilder();
+        int index = 0;
+        string row = tplcontent;
+
+        DataRow [] dataRows = dt.Select("IsLive=" + IsLive);
+        foreach (DataRow dr in dataRows)
+        {
+            
+            index++;
+            if (index == 4)
+            {
+                TemplateHandler.RemoveComment(row);
+                rows.Append(row);
+                row = tplcontent;
+                index = 1;
+            }
+            string bettypeName = dr["typename"].ToString();
+            if (CastAide.AsInt32(dr["TypeID"]) == 90)
+                bettypeName += IsLive ? " (Live Game)" : " (Pre Game)";
+            TemplateHandler.Assign(ref row, "Bettype" + index, dr["TypeID"] + "^" + liveindicator);
+            TemplateHandler.Assign(ref row, "BettypeName" + index, bettypeName);
+            TemplateHandler.Assign(ref row, "type", liveindicator);
+        }
+        if (index == 1)
+        {
+            TemplateHandler.RemoveBlock(ref row, "bt2");
+            TemplateHandler.RemoveBlock(ref row, "bt3");
+           
+        }
+        if (index == 2)
+        {
+            TemplateHandler.RemoveBlock(ref row, "bt3");
+           
+        }
+   
+
+        TemplateHandler.RemoveComment(row);
+        rows.Append(row);
+        TemplateHandler.ReplaceBlock(ref tpl, "content", rows.ToString());
+        return tpl;
+    }
+}

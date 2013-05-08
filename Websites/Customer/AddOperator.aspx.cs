@@ -1,0 +1,33 @@
+using System;
+using DNAide.Web;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web;
+
+
+public partial class NewCustomer_AddOperator : PageBase
+{
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (Session["AccId"] != null)
+        {
+            string contentTpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Customer/AddOperator.htm");
+            TemplateHandler.Assign(ref contentTpl, "{title}", "Add New Operator");
+            TemplateHandler.Assign(ref contentTpl, "{vUsername}","");
+            TemplateHandler.Assign(ref contentTpl, "{vFirstname}","");
+            TemplateHandler.Assign(ref contentTpl, "{vLastname}","");
+            TemplateHandler.Assign(ref contentTpl, "{vAddress}","");
+            TemplateHandler.Assign(ref contentTpl, "{vCity}","");
+            TemplateHandler.Assign(ref contentTpl, "{vState}","");
+            TemplateHandler.Assign(ref contentTpl, "{vCode}","");
+            TemplateHandler.Assign(ref contentTpl, "{vPhone}","");
+            TemplateHandler.Assign(ref contentTpl, "{vMobile}","");
+            TemplateHandler.Assign(ref contentTpl, "{vEmail}","");
+            TemplateHandler.Assign(ref contentTpl, "{vFax}", "");
+            TemplateHandler.Assign(ref contentTpl, "{vRole}", "Select");
+            TemplateHandler.Assign(ref contentTpl, "{vCountry}", "-");
+            TemplateHandler.Assign(ref contentTpl, "{checkinput}", "return CheckInputValid();");
+            AddNewOperatorContentHtml.Text = contentTpl;
+        }
+    }    
+}

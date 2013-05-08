@@ -1,0 +1,34 @@
+﻿using System;
+using DNAide.Core;
+using Sunplus.Accounting.Business.BootStrappers;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web.Controls;
+using Sunplus.Accounting.DataAccess.Report;
+
+public partial class Report_Racing_RacingDailyReportforTote : PageBase
+{
+    protected string ToDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today);
+    protected string MinDay = "";
+    protected string FDay = "";
+    protected string MaxDay = "";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+
+
+        DateTime bl = new DateTime(2006, 01, 01);
+        int displaydays = 0;
+        TimeSpan sp = DateTime.Today - bl;
+        displaydays = sp.Days;
+        ToDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today);
+        MinDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today.AddDays(-displaydays));
+        FDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today);
+        MaxDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today.AddDays(7));
+
+        if (Request["type"] != null && Request["type"].Equals("export"))
+        {
+            var winlossDate = Request["date"] ?? DateTime.Now.ToShortDateString();
+
+        }
+    }
+
+}

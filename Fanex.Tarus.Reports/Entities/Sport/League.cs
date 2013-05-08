@@ -1,0 +1,12 @@
+﻿
+using System;
+using System.Collections.Generic;
+
+namespace Fanex.Tarus.Reports.Entities.Sport
+{
+    [Serializable]
+    public class League : BaseModel
+    {
+        public List<Match> Matches { get; set; }
+    }
+}

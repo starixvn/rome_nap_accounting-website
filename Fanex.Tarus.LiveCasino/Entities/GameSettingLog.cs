@@ -1,0 +1,13 @@
+﻿using System.Collections.Generic;
+
+
+namespace Fanex.Tarus.LiveCasino.Entities
+{
+    public class GameSettingLogDTO
+    {
+        //public WriteLogRequest LogRequest { get; set; }
+        public List<LiveCasinoSetting.Model.GameType> OldValues { get; set; }
+        public List<LiveCasinoSetting.Model.GameType> NewValues { get; set; }
+        public Dictionary<int, LiveCasinoSetting.Model.Result> Results { get; set; }
+    }
+}

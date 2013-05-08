@@ -1,0 +1,105 @@
+﻿using System.Collections.Generic;
+using System.Web.UI.WebControls;
+using System.Web.UI.HtmlControls;
+
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Services.ReportServices;
+using System.Text;
+using ExcelUtil.Spreadsheet;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Accounting.Entities.Report;
+
+public partial class Report_WinLoss_AgentWinLossDetail : WinLossReporPageBase
+{
+
+    public override string CurrentUrl
+    {
+        get
+        {
+            return "AgentWinLossDetail.aspx"; 
+        }
+    }
+
+    public override string DownlineUrl
+    {
+        get
+        {
+            return "AgentWinLossDetail.aspx";
+        }
+    }
+
+    public override string ReportTitle
+    {
+        get
+        {
+            return "Member Win/Loss Detail";
+        }
+    }
+    
+    //private const string HyperLinkTemplate = "<td><a target='blank' href='/BetList/BetList.aspx?custid={1}&fdate={2}&tdate={3}&bettype=0&requesttype=1&fromReport=1' >{0}</a></td>";
+    protected override string RenderColumnUserHyperlink(IWinLoss item)
+    {
+        StringBuilder html = new StringBuilder();
+        html.AppendFormat("<td align='center'>{0}</td>", item.Username);
+        return html.ToString();
+    }
+
+    public override string ExportFileName
+    {
+        get
+        {
+            return string.Format(WinLossService.ReportNameMemberWinLossDetail, FromDate.ToString("yyyyMMdd") + "_" + ToDate.ToString("yyyyMMdd"));
+        }
+    }
+
+    public override ExcelFile CreateExcelFile()
+    {
+        return (new WinLossService()).CreateExcelFileMemberWinloss(UplineId, FromDate, ToDate, Option);
+    }
+
+
+    public override Repeater ReportControl
+    {
+        get
+        {
+            return rptWinLoss;
+        }
+    }
+
+    public override HtmlGenericControl NoInfoPanel
+    {
+        get
+        {
+            return noInfoPanel;
+        }
+    }
+
+    public override System.Collections.IList GetReportData()
+    {
+        List<MemberWinLoss> entityList = new List<MemberWinLoss>();
+        WinLossService winlossService = new WinLossService();
+        int uplineId = UplineId;
+
+        entityList = winlossService.GetMemberReportData(uplineId, FromDate, ToDate, Option);
+
+
+        if (entityList.Count > 0)
+        {
+            lastItem = winlossService.CreateTotalLastItem(entityList);
+        }
+
+        return entityList;
+    }
+
+
+    protected override string RenderWinLossCommTotalByReport(IWinLoss winloss)
+    {
+        StringBuilder itemHtml = new StringBuilder();
+
+        //render winloss comm and total
+        itemHtml.Append(RenderWinLossCommTotal((winloss as MemberWinLoss).Member));
+        itemHtml.Append(RenderWinLossCommTotal((winloss as MemberWinLoss).Agent));        
+
+        return itemHtml.ToString();
+    }
+}

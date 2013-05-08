@@ -1,0 +1,146 @@
+﻿@using DNAide.Core;
+@using Fanex.Tarus.VirtualSport.Controllers.Report.Controllers;
+@using Fanex.Tarus.Infrastructure.Configurations;
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Virtual Sports</title>
+    <link href="~/App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
+    <link href="~/App_Themes/Report/reportgrid.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/commonIOM.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/table.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+    <link href="~/js/jQuery/GridScroller/gridscroller.css?version=2" rel="stylesheet"
+        type="text/css" />
+    <link href="~/js/jQuery/monthPicker/monPickr-0.0.1.css" rel="stylesheet" type="text/css" />
+    <link href="~/js/MultipleSelect/jquery.multiselect.css" rel="stylesheet" type="text/css" />
+    <link href="~/Views/VirtualSport/Report/WinLoss/Styles/WinLoss.css?version=1" rel="stylesheet"
+        type="text/css" />
+    <script src="~/js/jQuery/jquery-1.7.js" type="text/javascript"></script>
+    <script src="~/js/json2.js" type="text/javascript"></script>
+    <script src="~/js/jQuery/jquery.blockUI.1.33.js" type="text/javascript"></script>
+    <script src="~/js/jQuery/monthPicker/monPickr-0.0.1.js" type="text/javascript"></script>
+    <script src="~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js?version=2" type="text/javascript"></script>
+    <script src="~/js/BlockUI.js" type="text/javascript"></script>
+    <script src="~/js/Message/message.js" type="text/javascript"></script>
+    <script src="~/js/MultipleSelect/jquery.multiselect.js" type="text/javascript"></script>
+    <script src="~/js/Utils/jquery.stringformat.js?version=2" type="text/javascript"></script>
+    <script src="~/Views/VirtualSport/Report/WinLoss/Scripts/WinLoss.js?version=1" type="text/javascript"></script>
+    <script src="~/Views/VirtualSport/Report/WinLoss/Scripts/WinLossByCurrency.js?version=1"
+        type="text/javascript"></script>
+</head>
+<body>
+    <div id="fullHeight" style="height: 100%; position: absolute; z-index: -999; margin-left: -9999">
+        &nbsp;
+    </div>
+    <div class="main" style="margin-bottom: 6px;">
+        <table style="width: 900px" border="0" cellpadding="0px" cellspacing="0px">
+            <tr>
+                <td>
+                    <div id="divMainHeader" class="">
+                        <div id="left_tab1">
+                            <ul>
+                                <li class="lefticon"></li>
+                                <li class="current"><span>Virtual Sports - Win Loss Report</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="maincontent">
+                        <div class="filterBox">
+                            <div class="filterContent">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <span class="b">Month</span>
+                                        </td>
+                                        <td style="padding-left: 30px;">
+                                            <div id="spMonth">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="b pleft20">
+                                                From</div>
+                                        </td>
+                                        <td>
+                                            <div id="spFrom">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="b pleft20">
+                                                To</div>
+                                        </td>
+                                        <td>
+                                            <div id="spTo">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="space10" style="height: 20px; padding-bottom: 5px;">
+                                    <span><span class="b">Draw filter</span> <span class="pleft10">
+                                        <select id="ddlFilter">
+                                            <option value="1">Normal</option>
+                                            <option value="2">No Draw</option>
+                                            <option value="3">No Draw for Turnover Only</option>
+                                        </select>
+                                    </span><span class="b pleft20">Sports Type</span> <span class="pleft10">
+                                        <select id="ddlSportType">
+                                        </select></span>
+                                        <input type="checkbox" checked="checked" id="chbExclude" /></span> <span>Exclude test
+                                            data</span> <span class="pleft20">
+                                                <input type="button" class="btn" value="REPORT" onclick="VirtualSportWinloss.getDailyWinloss()" /></span>
+                                </div>
+                                <div id="errMsg">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contentBox">
+                            @Html.Partial("~/Views/VirtualSport/Report/WinLoss/WinLoss_MainReport.cshtml")
+                            @Html.Partial("~/Views/VirtualSport/Report/WinLoss/WinLoss_CurrencyByDate.cshtml")
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <iframe id="frm" width="0" height="0" frameborder="0" style="display: none"></iframe>
+    @{  
+        if (Request["ExportType"] != null)
+        {
+            string exportType = Request["ExportType"];
+            string reportName = string.Empty;
+            bool isExcludeTest = false;
+            int drawFilter = 0;
+            string sportType = string.Empty;
+            switch (exportType)
+            {
+                case "MainReport":
+                    var fromDate = CastAide.AsDateTime(Request["FromDate"]);
+                    var toDate = CastAide.AsDateTime(Request["ToDate"]);
+                    isExcludeTest = CastAide.AsBoolean(Request["IsExcludeTest"]);
+                    drawFilter = CastAide.AsInt32(Request["DrawFilter"]);
+                    sportType = CastAide.AsString(Request["SportType"]);
+                    new VirtualSportReportController().ExportExcelWinlossDaily(fromDate, toDate,
+                        isExcludeTest, drawFilter, sportType);
+                    break;
+                case "CurrencyByDate":
+                    var reportDate = CastAide.AsDateTime(Request["ReportDate"]);
+                    isExcludeTest = CastAide.AsBoolean(Request["IsExcludeTest"]);
+                    drawFilter = CastAide.AsInt32(Request["DrawFilter"]);
+                    sportType = CastAide.AsString(Request["SportType"]);
+                    var currency = CastAide.AsString(Request["Currency"]);
+                    new VirtualSportReportController().ExportExcelWinlossDetailByCurr(reportDate,
+                        isExcludeTest, drawFilter, sportType, currency);
+                    break;
+            }
+        }
+    }
+    <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")';
+        dateVS = '@CastAide.AsDateTime(WebSettings.getDateVirtualSport)';
+        lastDay = '@DateTime.DaysInMonth(DateTime.Now.AddMonths(-1).Year,DateTime.Now.AddMonths(-1).Month)';
+        lastMonth = '@DateTime.Now.AddMonths(-1).Month';
+        lastYear = '@DateTime.Now.AddMonths(-1).Year';
+        currDate = '@DateTime.Now.ToShortDateString()';
+    </script>
+</body>
+</html>

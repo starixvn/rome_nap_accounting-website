@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C7489BA0-A2D2-4414-997F-FD0EFF4C2835}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Fanex.Tarus.LiveCasino</RootNamespace>
+    <AssemblyName>Fanex.Tarus.LiveCasino</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DNAide, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\DNAide.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelUtil">
+      <HintPath>..\Dependency\ExcelUtil.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Caching">
+      <HintPath>..\Dependency\Fanex\Fanex.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Data">
+      <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.LiveCasinoSetting">
+      <HintPath>..\Dependency\LiveCasino\Fanex.LiveCasinoSetting.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation">
+      <HintPath>..\Dependency\Fanex\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation.resources">
+      <HintPath>..\Dependency\Fanex\FluentValidation.resources.dll</HintPath>
+    </Reference>
+    <Reference Include="NotifyPropertyChanged">
+      <HintPath>..\Dependency\Fanex\NotifyPropertyChanged.dll</HintPath>
+    </Reference>
+    <Reference Include="RemotingRef">
+      <HintPath>..\Dependency\RemotingRef.dll</HintPath>
+    </Reference>
+    <Reference Include="SharedCache.WinServiceCommon, Version=3.0.5.1, Culture=neutral, PublicKeyToken=19f944f08f2af8b7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\SharedCache.WinServiceCommon.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Business\CacheUtils.cs" />
+    <Compile Include="Business\ExRate\ExRateManager.cs" />
+    <Compile Include="Business\ExRate\IExRateManager.cs" />
+    <Compile Include="Business\MoveAccount\IMoverAccountManager.cs" />
+    <Compile Include="Business\MoveAccount\MoveAccountManager.cs" />
+    <Compile Include="Business\Report\BaseReport.cs" />
+    <Compile Include="Business\Report\ExportExcelReport.cs" />
+    <Compile Include="Business\Report\IExportExcelReport.cs" />
+    <Compile Include="Business\Report\ReportManager.cs" />
+    <Compile Include="Business\Report\IReportManager.cs" />
+    <Compile Include="Business\BaseManager.cs" />
+    <Compile Include="Business\Setting\BaseSetting.cs" />
+    <Compile Include="Business\Setting\ISettingManager.cs" />
+    <Compile Include="Business\Setting\ILimitSettingManager.cs" />
+    <Compile Include="Business\Setting\SettingManager.cs" />
+    <Compile Include="Business\Setting\LimitSettingManager.cs" />
+    <Compile Include="DataAccess\BaseDataAccess.cs" />
+    <Compile Include="DataAccess\ExRate\IExRateDataAccess.cs" />
+    <Compile Include="DataAccess\ExRate\ExRateDataAccess.cs" />
+    <Compile Include="DataAccess\MoveAccount\IMoveAccountDataAccess.cs" />
+    <Compile Include="DataAccess\MoveAccount\MoveAccountDataAccess.cs" />
+    <Compile Include="DataAccess\Report\IReportDataAccess.cs" />
+    <Compile Include="DataAccess\Report\ReportDataAccess.cs" />
+    <Compile Include="DataAccess\Setting\ILimitSettingDataAccess.cs" />
+    <Compile Include="DataAccess\Setting\LimitSettingDataAccess.cs" />
+    <Compile Include="Distributor\ILiveCasinoDistributor.cs" />
+    <Compile Include="Distributor\IReportService.cs" />
+    <Compile Include="Distributor\LiveCasinoDistributor.cs" />
+    <Compile Include="Distributor\ReportService.cs" />
+    <Compile Include="Entities\Betlist\BetlistEvent.cs" />
+    <Compile Include="Entities\Betlist\BetlistResultLC.cs" />
+    <Compile Include="Entities\CustomerInfo.cs" />
+    <Compile Include="Entities\ExRate\ExRate.cs" />
+    <Compile Include="Entities\GameSettingLog.cs" />
+    <Compile Include="Entities\LiveCasinoSettingDTO.cs" />
+    <Compile Include="Entities\MoveAccount\LogMoveAccountInfo.cs" />
+    <Compile Include="Entities\MoveAccount\MoveAccountInfo.cs" />
+    <Compile Include="Entities\Report\DailyWinloss.cs" />
+    <Compile Include="Entities\Report\FilterCommon.cs" />
+    <Compile Include="Entities\Report\GameStatisticsDTO.cs" />
+    <Compile Include="Entities\Report\DailyWinlossDetail.cs" />
+    <Compile Include="Entities\Report\GameStatisticsBO.cs" />
+    <Compile Include="Entities\Result.cs" />
+    <Compile Include="Entities\Setting\LimitSetting.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sunplus.Accounting.Core\Sunplus.Accounting.Core.csproj">
+      <Project>{09B74F02-6C21-4C5E-A52C-B6D56595A262}</Project>
+      <Name>Sunplus.Accounting.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sunplus.Accounting.DataAccess\Sunplus.Accounting.DataAccess.csproj">
+      <Project>{27984FEE-40DC-40DC-B3B9-3A8776C5511D}</Project>
+      <Name>Sunplus.Accounting.DataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

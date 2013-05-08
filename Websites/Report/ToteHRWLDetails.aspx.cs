@@ -1,0 +1,63 @@
+﻿using System;
+using System.Collections;
+using System.Configuration;
+using System.Data;
+using System.Linq;
+using System.Web; 
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using DNAide.Web;
+using DNAide.Core;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Accounting.DataAccess.Report;
+
+
+public partial class Report_HRWLDetails : PageBase
+{
+
+    public string display = "";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        Title = Sunplus.Accounting.Business.Report.Reports.Title;
+        string fdate = Request["fdate"];
+        if (fdate == null) fdate = Request["wldate"];
+        //fdate = ReportHTML.ValidDate(fdate);
+
+        #region Header
+        int displaydays = 0;
+        TimeSpan sp = DateTime.Today - new DateTime(2006,01,01);
+        displaydays = sp.Days;
+        string evt = "SetEvtGetdate()";
+        string strDateTimeSingle = Sunplus.Accounting.Business.Report.Reports.GetDateTimeSingle(fdate, "Date", string.Empty, displaydays, "../", string.Empty, evt);
+
+        if (Request["type"] == "Direct")
+            TemplateHandler.Assign(ref strDateTimeSingle, "strDispday", "");
+        else
+            TemplateHandler.Assign(ref strDateTimeSingle, "strDispday", "none");
+
+        string db = Request["db"];
+        if (db == null) db = "Rep";
+        if (db == "Rep")
+        {
+            TemplateHandler.Assign(ref strDateTimeSingle, "status-Rep", "checked=checked");
+            TemplateHandler.Assign(ref strDateTimeSingle, "status-Main", "");
+        }
+        else
+        {
+            TemplateHandler.Assign(ref strDateTimeSingle, "status-Rep", "");
+            TemplateHandler.Assign(ref strDateTimeSingle, "status-Main", "checked=checked");
+        }
+        TemplateHandler.Assign(ref strDateTimeSingle, "db", db);
+        TemplateHandler.RemoveBlock(ref strDateTimeSingle, "path");
+
+        headerDatetime.Text = strDateTimeSingle;
+
+        #endregion
+
+        if (Request["IsExport"] == "1") Sunplus.Accounting.Business.Report.Reports.ExportToExcel(ReportHTML.ToteHRWLReport(HttpContext.Current), "Horse-Racing-Daily-Report-(for-Tote)-" + Request["wldate"]);
+    }
+}

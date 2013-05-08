@@ -1,0 +1,66 @@
+﻿using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+using System.Text;
+using IBCUtils.Web;
+using IBCUtils.DAL;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using IBCUtils;
+using DNAide.Web;
+using DNAide.Core;
+using Sunplus.Accounting.DataAccess.Report;
+
+public partial class Report_MiniGamesWLDetails : System.Web.UI.Page
+{
+    public string param = "";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        Title = Sunplus.Accounting.Business.Report.Reports.Title;
+
+        string fdate = Request["fdate"];
+        if (fdate == null) fdate = Request["wldate"];
+        fdate = ReportHTML.ValidDate(fdate);
+
+        param = "wldate=" + fdate + "&WL=WL" + "&type=Direct";
+        
+        //headerDatetime.Text = Sunplus.Accounting.Business.Report.Reports.GetDateTimeSingle(fdate, "Winloss Date", string.Empty);       
+
+        #region Header
+        int displaydays = 0;
+        TimeSpan sp = DateTime.Today - ReportUtils.BalanceUp.BalanceUpDay;
+        displaydays = sp.Days;
+        string evt = "SetEvtGetdate()";
+        string strDateTimeSingle = Sunplus.Accounting.Business.Report.Reports.GetDateTimeSingle(fdate, "Date", string.Empty, displaydays, "../", string.Empty, evt);
+
+        if (Request["type"] == "Direct")
+            TemplateHandler.Assign(ref strDateTimeSingle, "strDispday", "");
+        else
+            TemplateHandler.Assign(ref strDateTimeSingle, "strDispday", "none");
+
+        string db = Request["db"];
+        if (db == null) db = "Rep";
+        if (db == "Rep")
+        {
+            TemplateHandler.Assign(ref strDateTimeSingle, "status-Rep", "checked=checked");
+            TemplateHandler.Assign(ref strDateTimeSingle, "status-Main", "");
+        }
+        else
+        {
+            TemplateHandler.Assign(ref strDateTimeSingle, "status-Rep", "");
+            TemplateHandler.Assign(ref strDateTimeSingle, "status-Main", "checked=checked");
+        }
+        TemplateHandler.Assign(ref strDateTimeSingle, "db", db);
+        TemplateHandler.RemoveBlock(ref strDateTimeSingle, "path");
+
+        headerDatetime.Text = strDateTimeSingle;
+
+        #endregion
+    }
+}

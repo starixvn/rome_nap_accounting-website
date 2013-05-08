@@ -1,0 +1,63 @@
+using System;
+using System.Collections;
+using DNAide.Web;
+using Sunplus.Accounting.Business.Customer;
+using Sunplus.Accounting.Core.Common;
+
+using DNAide.Core;
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Web;
+public partial class Customer_MasterAgentList : RequiredAuthorizationPage
+{
+    public string strsearchbox = "";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (Session["AccId"] != null)
+        {
+            strsearchbox = GenSearchBox();            
+        }
+    }
+
+    protected override int CustId
+    {
+        get
+        {
+            return CastAide.AsInt32(Request.QueryString[Constants.QueryStringKey.SuperId]);
+        }
+    }
+
+
+    public string GenSearchBox()
+    {
+        string strHtml = "";
+
+        strHtml = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Customer/Search.htm");
+        TemplateHandler.Assign(ref strHtml, "{rowspan}", "4");
+        TemplateHandler.Assign(ref strHtml, "{functionName}", "On_Submit");
+        TemplateHandler.Assign(ref strHtml, "{Keyword}", "Keyword");
+
+        TemplateHandler.Assign(ref strHtml, "{search-Val}", "All");
+        TemplateHandler.Assign(ref strHtml, "{listAlphaValue}", AccCommon.GetListAlPhabet(""));
+
+        TemplateHandler.Assign(ref strHtml, "{lfrom}", "");
+        TemplateHandler.Assign(ref strHtml, "{tblData}", "");
+        TemplateHandler.Assign(ref strHtml, "{listCurrencyValue}", CustomerUtils.GetListCurrencyBySystem(AppSession.SYSTEM, false, true, false));
+        TemplateHandler.Assign(ref strHtml, "{listStatus-Val}", AccCommon.GenListStatus(""));
+        if (WebSettings.DisableInternal || !Functions.Settings.IsVisibleInternal)
+        {
+            TemplateHandler.RemoveBlock(ref strHtml, "type");
+        }
+        else
+        {
+            Hashtable types = new Hashtable();
+            types.Add("All", "");
+            types.Add(Resources.Language.userBetting, (int)Globals.UserType.Betting);
+            types.Add(Resources.Language.userInternal, (int)Globals.UserType.Internal);
+
+            TemplateHandler.Assign(ref strHtml, "{listType-Val}", AccCommon.GetListUserType((Globals.UserType)0));
+        }
+
+        return strHtml;
+    }
+    
+}

@@ -1,0 +1,267 @@
+﻿var BetListByIP = {
+    gridOpts_Username: {
+        tblContentId: 'tblContent',
+        isShowPager: true,
+        manualCopyHeader: true,
+        fullWidth: true,
+        fullHeight: true,
+        gridWidth: 610, //=totalColumnWidth + totalColumn*4 +totalColumn
+        gridHeight: 60,
+        freezeWidth: 0, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
+        numberFreezeCol: 0
+    },
+    pagerOpts: {
+        callback: null,
+        start_per_page: 100,
+        step_per_page: 100,
+        max_items_per_page: 500,
+        items_per_page: 100,
+        current_page: 1
+    },
+    params_UsernameBetlist: {
+        ip: '',
+        fromDate: null,
+        PageIndex: 1,
+        PageSize: 100,
+        IsCache: false
+    },
+    getBetListByIP_Username: function () {
+        var ipTmp = $("#txtIP").val();
+        var fromDateTmp = $("#txtfromdate").val();
+
+        if (BetListByIP.params_UsernameBetlist.ip == ipTmp && BetListByIP.params_UsernameBetlist.fromDate == fromDateTmp) {
+            BetListByIP.params_UsernameBetlist.IsCache = true;
+        }
+        else {
+            BetListByIP.params_UsernameBetlist.ip = ipTmp;
+            BetListByIP.params_UsernameBetlist.fromDate = fromDateTmp;
+            BetListByIP.params_UsernameBetlist.IsCache = false;
+            BetListByIP.params_UsernameBetlist.PageIndex = 1;
+            BetListByIP.params_UsernameBetlist.PageSize = 100;
+        }
+        try { parent.BlockUI(); } catch (e) { }
+        $.ajax({
+            type: "POST",
+            url: window.rootUrl + "BetList/GetBetListByIP_Username",
+            data: BetListByIP.params_UsernameBetlist,
+            success: function (result) {
+                $("#betListContent_Soccer").remove();
+                $("#betListContent").html(result);
+                $("#BetlistByIP_Username").initGrid(BetListByIP.gridOpts_Username);
+                $('#BetlistByIP_Username').removeClass("display-none").gridScroller(BetListByIP.gridOpts_Username);
+
+                BetListByIP.initPager(_length, BetListByIP.params_UsernameBetlist.PageSize, BetListByIP.params_UsernameBetlist.PageIndex - 1);
+            },
+            error: function () {
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            },
+            complete: function () {
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            }
+        });
+    },
+    trim: function (str) {
+        return str.replace(/(^\s*)|(\s*$)/g, "");
+    },
+
+    initPager: function (total_items, items_per_page, current_page) {
+        BetListByIP.pagerOpts.callback = BetListByIP.pageSelectCallback;
+        BetListByIP.pagerOpts.items_per_page = items_per_page;
+        BetListByIP.pagerOpts.current_page = current_page;
+
+        $("#pagination").pagination(total_items, BetListByIP.pagerOpts);
+    },
+    pageSelectCallback: function (page_index, _items_per_page, jq) {
+        var max_page = Math.ceil(_length / _items_per_page);
+        page_index = page_index < max_page ? page_index : max_page - 1;
+
+        BetListByIP.params_UsernameBetlist.PageIndex = page_index + 1;
+        BetListByIP.params_UsernameBetlist.PageSize = _items_per_page;
+        BetListByIP.getBetListByIP_Username();
+        return false;
+    }
+};
+
+var BetListByIP_SportType = {
+    gridOpts_Soccer: {
+        tblContentId: 'tblContent',
+        manualCopyHeader: true,
+        isShowPager: true,
+        fullWidth: true,
+        fullHeight: true,
+        gridWidth: 980, //=totalColumnWidth + totalColumn*4 +totalColumn
+        gridHeight: 60,
+        freezeWidth: 510, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
+        numberFreezeCol: 3
+    },
+    pagerOpts: {
+        callback: null,
+        start_per_page: 50,
+        step_per_page: 50,
+        max_items_per_page: 200,
+        items_per_page: 50,
+        current_page: 1
+    },
+    params_SportType:
+    {
+        CustID: '',
+        IP: '',
+        FromDate: null,
+        IsSoccer: null,
+        PageIndex: 1,
+        PageSize: 50,
+        IsCache: false
+    },
+
+    getBetListByIP_Soccer: function (custID, fromdate, ip, isSoccer) {
+        if (BetListByIP_SportType.params_SportType.IP == ip && BetListByIP_SportType.params_SportType.FromDate == fromdate && BetListByIP_SportType.params_SportType.CustID == custID && BetListByIP_SportType.params_SportType.IsSoccer == isSoccer) {
+            BetListByIP_SportType.params_SportType.IsCache = true;
+        }
+        else {
+            BetListByIP_SportType.params_SportType.CustID = custID;
+            BetListByIP_SportType.params_SportType.IP = ip;
+            BetListByIP_SportType.params_SportType.FromDate = fromdate
+            BetListByIP_SportType.params_SportType.IsSoccer = isSoccer;
+            BetListByIP_SportType.params_SportType.IsCache = false;
+            BetListByIP_SportType.params_SportType.PageIndex = 1;
+            BetListByIP_SportType.params_SportType.PageSize = 50;
+        }
+
+        try { parent.BlockUI(); } catch (e) { }
+        $.ajax({
+            type: "POST",
+            url: window.rootUrl + "BetList/GetBetListByIP_Soccer",
+            data: BetListByIP_SportType.params_SportType,
+            success: function (result) {
+                $("#BetlistByIP_Username").remove();
+                $("#betListContent").html(result);
+
+                $("#BetlistByIP_Soccer").initGrid(BetListByIP_SportType.gridOpts_Soccer);
+                $('#BetlistByIP_Soccer').removeClass("display-none").gridScroller(BetListByIP_SportType.gridOpts_Soccer);
+                BetListByIP_SportType.initPager(_lengthSprortype, BetListByIP_SportType.params_SportType.PageSize, BetListByIP_SportType.params_SportType.PageIndex - 1);
+
+                for (var i = 0; i < _arrayTransID.length; i++) {
+                    var heightChoice = $("#choice_left_" + _arrayTransID[i]).height();
+                    var heightStatus = $("#stautus_" + _arrayTransID[i]).height();
+                    if (heightStatus > heightChoice) {
+                        $("#choice_left_" + _arrayTransID[i]).attr('style', 'height:' + heightStatus + 'px');
+                    }
+                }
+            },
+            error: function () {
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            },
+            complete: function () {
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            }
+        });
+    },
+
+
+    initPager: function (total_items, items_per_page, current_page) {
+        BetListByIP_SportType.pagerOpts.callback = BetListByIP_SportType.pageSelectCallback;
+        BetListByIP_SportType.pagerOpts.items_per_page = items_per_page;
+        BetListByIP_SportType.pagerOpts.current_page = current_page;
+
+        $("#pagination").pagination(total_items, BetListByIP_SportType.pagerOpts);
+    },
+    pageSelectCallback: function (page_index, _items_per_page, jq) {
+        var max_page = Math.ceil(_length / _items_per_page);
+        page_index = page_index < max_page ? page_index : max_page - 1;
+
+        BetListByIP_SportType.params_SportType.PageIndex = page_index + 1;
+        BetListByIP_SportType.params_SportType.PageSize = _items_per_page;
+        BetListByIP_SportType.getBetListByIP_Soccer(BetListByIP_SportType.params_SportType.CustID, BetListByIP_SportType.params_SportType.FromDate, BetListByIP_SportType.params_SportType.IP, BetListByIP_SportType.params_SportType.IsSoccer);
+        return false;
+    }
+};
+
+var Helper = {
+    renderCalendar: function () {
+        var defaults = {
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            onSelect: function (selectedDate) {
+                var option = this.id == "txtfromdate" ? "minDate" : "maxDate",
+                     instance = $(this).data("datepicker"),
+                     date = $.datepicker.parseDate(
+                         instance.settings.dateFormat ||
+                             $.datepicker._defaults.dateFormat,
+                         selectedDate, instance.settings);
+                dates.not(this).datepicker("option", option, date);
+            }
+        };
+        var dates = $("#txtfromdate").datepicker(defaults);
+        $("#txtfromdate").datepicker("setDate", _today);
+
+    }
+};
+
+function showCombMPDetail(tranid, date, refno, betid, matchid) {
+    var username = $(".combinationLink span:last").html();
+    showDetailsCMP(tranid, "System Parlay - " + username, parseFloat(refno), parseInt(betid), _custid)
+}
+
+function showMP(transid, refno) {
+    if ($("#td_right_" + transid).hasClass("isClient")) {
+        if (!$("#td_right_" + transid).hasClass("isShow")) {
+            $(".parlay_" + transid).each(function () {
+                $(this).hide();
+                var idTdParent = $(this).parent().parent().attr('id');
+                $("#" + idTdParent).addClass("isShow");
+                $("#BetlistByIP_Soccer").gridScroller(BetListByIP_SportType.gridOpts_Soccer);
+
+                var heightChoice = $("#choice_left_" + transid).height();
+                var heightStatus = $("#stautus_" + transid).height();
+                var heightComm = $("#comm_" + transid).height();
+                var heightRight = heightStatus > heightComm ? heightStatus : heightComm;
+                if (heightRight > heightChoice) {
+                    $("#choice_left_" + transid).attr('style', 'height:' + heightRight + 'px');
+                }
+            });
+        }
+        else {
+            $(".parlay_" + transid).each(function () {
+                $(this).show();
+                $("#choice_left_" + transid).css("height", "");
+                var idTdParent = $(this).parent().parent().attr('id');
+                $("#" + idTdParent).removeClass("isShow");
+                $("#BetlistByIP_Soccer").gridScroller(BetListByIP_SportType.gridOpts_Soccer);
+            });
+        }
+    }
+    else {
+        try { parent.BlockUI(); } catch (e) { }
+        $.ajax({
+            type: "POST",
+            url: window.rootUrl + "BetList/GetMixParlayDetail",
+            data: "refno=" + refno,
+            success: function (result) {
+                $(".parlay_" + transid).each(function () {
+                    $(this).html(result);
+                    var id = $(this).parent().attr('id');
+                    $("#" + id).css("height", "");
+
+                    var idTdParent = $(this).parent().parent().attr('id');
+                    $("#" + idTdParent).addClass("isClient");
+                });
+                $("#BetlistByIP_Soccer").gridScroller(BetListByIP_SportType.gridOpts_Soccer);
+            },
+            error: function () {
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            },
+            complete: function () {
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            }
+        });
+    }
+}
+
+function showCombMP(transid, custid, refno) {
+    showMP(transid, refno);
+}
+
+head.ready(function (event) {
+    Helper.renderCalendar();
+});
+

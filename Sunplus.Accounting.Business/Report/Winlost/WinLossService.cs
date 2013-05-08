@@ -1,0 +1,1066 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text.RegularExpressions;
+using System.Web;
+using ExcelUtil.Spreadsheet;
+
+using Sunplus.Accounting.Entities.Report;
+
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.DataAccess.Report;
+using Sunplus.Accounting.DataAccess.Report.WinLoss;
+using Sunplus.Core.CachingLib;
+using Sunplus.Core.LoggingLib;
+
+namespace Sunplus.Accounting.Services.ReportServices
+{
+    //using Sunplus.Core.CachingLib;
+        //using Sunplus.Core.LoggingLib;
+
+    /// <summary>
+    /// Summary description for WinLossService
+    /// </summary>
+    public class WinLossService
+    {
+        private const string ReportWinLossDailyTemplateName = "~/Report/External/WinLoss/WebResources/Templates/WinLossDaily.xls";
+        private const string ReportSuperWinLossTemplateName = "~/Report/External/WinLoss/WebResources/Templates/SuperWinLoss.xls";
+
+        private const string ReportMasterWinLossTemplateName =
+            "~/Report/External/WinLoss/WebResources/Templates/MasterWinLoss.xls";
+
+        private const string ReportAgentWinLossTemplateName = "~/Report/External/WinLoss/WebResources/Templates/AgentWinLoss.xls";
+
+        private const string ReportMemberWinLossTemplateName =
+            "~/Report/External/WinLoss/WebResources/Templates/MemberWinLoss.xls";
+
+        private const string DateFormat = "MM/dd/yyyy";
+
+        #region Report Name
+
+        public const string ReportNameSuperWinLossDetail = "Report_SuperWinLossDetail_{0}";
+        public const string ReportNameMasterWinLossDetail = "Report_MasterWinLossDetail_{0}";
+        public const string ReportNameAgentWinLossDetail = "Report_AgentWinLossDetail_{0}";
+        public const string ReportNameMemberWinLossDetail = "Report_MemberWinLossDetail_{0}";
+        public const string ReportNameWinLossDaily = "Report_WinLossDaily_{0}";
+
+        #endregion
+
+        private readonly ICache _cache;
+        private readonly IWinLossDataAccess _winLossDao;
+
+        public WinLossService(IWinLossDataAccess winLossDao)
+        {
+            _winLossDao = winLossDao;
+        }
+
+        public WinLossService()
+        {
+            _winLossDao = new WinLossDataAccess();
+            _cache = CacheService.CreateInstance(CacheType.ShareCached);
+        }
+
+        #region Get Data
+
+        /// <summary>
+        /// Get Super winloss
+        /// </summary>
+        /// <param name="currency"></param>
+        /// <param name="fromDate"></param>
+        /// <param name="toDate"></param>
+        /// <param name="option">5 digits binary [0-1]{5}</param>
+        /// <returns><![CDATA[List<MasterWinLoss>]]></returns>
+        public List<MasterWinLoss> GetSuperReportData(int currency, DateTime fromDate, DateTime toDate, string option)
+        {
+            //master winloss the same structure with superwinloss object
+            var entityList = new List<MasterWinLoss>();
+            try
+            {
+                Hashtable param = CreateParams(fromDate, toDate, option);
+                param.Add("system", AppSession.SYSTEM);
+
+                entityList = _winLossDao.GetSuperWinLossData(param);
+            }
+            catch (Exception ex)
+            {
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            //add to cache for export to excel file later
+            _cache.Add(string.Format(ReportNameSuperWinLossDetail, AppSession.AccUserName), entityList, 10*60*1000);
+            return entityList;
+        }
+
+        /// <summary>
+        /// GeMastertReportData
+        /// </summary>
+        /// <param name="custId"></param>
+        /// <param name="fromDate"></param>
+        /// <param name="toDate"></param>
+        /// <param name="option"><seealso cref="GetSuperReportData"/></param>
+        /// <returns><![CDATA[List<MasterWinLoss>]]></returns>
+        public List<MasterWinLoss> GetMastertReportData(int custId, DateTime fromDate, DateTime toDate, string option)
+        {
+            var entityList = new List<MasterWinLoss>();
+            try
+            {
+                Hashtable param = CreateParams(fromDate, toDate, option);
+                if (param != null)
+                {
+                    param.Add("custid", custId);
+                    entityList = _winLossDao.GetMasterWinLossData(param);
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+
+            _cache.Add(string.Format(ReportNameMasterWinLossDetail, AppSession.AccUserName), entityList);
+            return entityList;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="custId"></param>
+        /// <param name="fromDate"></param>
+        /// <param name="toDate"></param>
+        /// <param name="option">[0-1]{5}</param>
+        /// <returns><![CDATA[List<AgentWinLoss>]]></returns>
+        public List<AgentWinLoss> GetAgentReportData(int custId, DateTime fromDate, DateTime toDate, string option)
+        {
+            var entityList = new List<AgentWinLoss>();
+            try
+            {
+                Hashtable param = CreateParams(fromDate, toDate, option);
+                if (param != null)
+                {
+                    param.Add("custid", custId);
+                    entityList = _winLossDao.GetAgentWinLossData(param);
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            _cache.Add(string.Format(ReportNameAgentWinLossDetail, AppSession.AccUserName), entityList);
+            return entityList;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="custId"></param>
+        /// <param name="fromDate"></param>
+        /// <param name="toDate"></param>
+        /// <param name="option"></param>
+        /// <returns><![CDATA[List<MemberWinLoss>]]></returns>
+        public List<MemberWinLoss> GetMemberReportData(int custId, DateTime fromDate, DateTime toDate, string option)
+        {
+            var entityList = new List<MemberWinLoss>();
+            try
+            {
+                Hashtable param = CreateParams(fromDate, toDate, option);
+                if (param != null)
+                {
+                    param.Add("custid", custId);
+                    entityList = _winLossDao.GetMemberWinLossData(param);
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            _cache.Add(string.Format(ReportNameMemberWinLossDetail, AppSession.AccUserName), entityList);
+            return entityList;
+        }
+
+        #endregion
+
+        #region Export Excel
+
+        #region Create ExcelFile
+
+        public ExcelFile CreateExcelFileSuperWinloss(int currency, DateTime fromDate, DateTime toDate, string option)
+        {
+            //cell data from 7
+            int startIndex = 6;
+            int i = startIndex;
+            var excelFile = new ExcelFile();
+
+            excelFile.LoadXls(HttpContext.Current.Server.MapPath(ReportSuperWinLossTemplateName));
+            ExcelWorksheet ws = excelFile.Worksheets[0];
+
+            var entityList =
+                _cache.Get(string.Format(ReportNameSuperWinLossDetail, AppSession.AccUserName)) as List<MasterWinLoss>;
+            if (entityList == null || entityList.Count <= 0)
+            {
+                entityList = GetSuperReportData(currency, fromDate, toDate, option);
+            }
+
+            //create header
+            RenderExcelReportHeader(ws, fromDate, toDate);
+            //create item
+
+            #region Add value to cell
+
+            if (entityList != null && entityList.Count > 0)
+            {
+                entityList.ForEach(entity =>
+                                       {
+                                           //base info
+                                           ExcelRenderBaseInfo(ws, i, entity);
+                                           //Member
+                                           ExcelRenderMemberSection(ws, i, entity);
+                                           //Agent
+                                           ExcelRenderAgentSection(ws, i, entity);
+                                           //Master
+                                           ExcelRenderMasterSection(ws, i, entity);
+                                           //Super
+                                           ExcelRenderSuperSection(ws, i, entity);
+                                           //Company total
+                                           ws.Columns[WinLossDetailColumns.TotalCompanyMaster].Cells[i].Value =
+                                               entity.UplineTotal;
+                                           i++;
+                                       });
+            }
+
+            #endregion
+
+            //create total row
+            MasterWinLoss totalItem = (new MasterWinLossService()).CreateTotalItem(entityList);
+            CreateTotalRows(totalItem, ws, i);
+            ws.Columns[0].Style.Indent = 1;
+
+            return excelFile;
+        }
+
+        public ExcelFile CreateExcelFileMasterWinloss(int custId, DateTime fromDate, DateTime toDate, string option)
+        {
+            int startIndex = 6;
+            int i = startIndex;
+            var excelFile = new ExcelFile();
+
+            excelFile.LoadXls(HttpContext.Current.Server.MapPath(ReportMasterWinLossTemplateName));
+            ExcelWorksheet ws = excelFile.Worksheets[0];
+
+            var entityList =
+                _cache.Get(string.Format(ReportNameMasterWinLossDetail, AppSession.AccUserName)) as List<MasterWinLoss>;
+            if (entityList == null || entityList.Count <= 0)
+            {
+                entityList = GetMastertReportData(custId, fromDate, toDate, option);
+            }
+
+            if (entityList != null)
+            {
+                RenderExcelReportHeader(ws, fromDate, toDate);
+
+                #region Add value to cell
+
+                if (entityList.Count > 0)
+                {
+                    entityList.ForEach(entity =>
+                                           {
+                                               //base info                    
+                                               ExcelRenderBaseInfo(ws, i, entity);
+                                               //Member
+                                               ExcelRenderMemberSection(ws, i, entity);
+                                               //Agent
+                                               ExcelRenderAgentSection(ws, i, entity);
+                                               //Master
+                                               ExcelRenderMasterSection(ws, i, entity);
+                                               //Super
+                                               ExcelRenderSuperSection(ws, i, entity);
+                                               //Company total
+                                               ws.Columns[WinLossDetailColumns.TotalCompanyMaster].Cells[i].Value =
+                                                   entity.UplineTotal;
+                                               i++;
+                                           });
+                }
+
+                #endregion
+
+                //add value to lasted row
+                //create total row
+                MasterWinLoss totalItem = (new MasterWinLossService()).CreateTotalItem(entityList);
+                CreateTotalRows(totalItem, ws, i);
+                ws.Columns[0].Style.Indent = 1;
+            }
+
+            return excelFile;
+        }
+
+        /// <summary>
+        /// Generate report info eg: FromDate Todate
+        /// </summary>
+        /// <param name="ws"></param>
+        /// <param name="fromDate"></param>
+        /// <param name="toDate"></param>
+        private void RenderExcelReportHeader(ExcelWorksheet ws, DateTime fromDate, DateTime toDate)
+        {
+            ws.Cells[WinLossDetailColumns.FromDate].Value = fromDate.ToString(DateFormat);
+            ws.Cells[WinLossDetailColumns.ToDate].Value = toDate.ToString(DateFormat);
+        }
+
+        public ExcelFile CreateExcelFileAgentWinloss(int custId, DateTime fromDate, DateTime toDate, string option)
+        {
+            int startIndex = 6;
+            int i = startIndex;
+            var excelFile = new ExcelFile();
+
+            excelFile.LoadXls(HttpContext.Current.Server.MapPath(ReportAgentWinLossTemplateName));
+            ExcelWorksheet ws = excelFile.Worksheets[0];
+
+            var entityList =
+                _cache.Get(string.Format(ReportNameAgentWinLossDetail, AppSession.AccUserName)) as List<AgentWinLoss>;
+            if (entityList == null || entityList.Count <= 0)
+            {
+                entityList = GetAgentReportData(custId, fromDate, toDate, option);
+            }
+
+            if (entityList != null)
+            {
+                RenderExcelReportHeader(ws, fromDate, toDate);
+
+                #region Add value to cell
+
+                if (entityList.Count > 0)
+                {
+                    entityList.ForEach(entity =>
+                                           {
+                                               //base info
+                                               ExcelRenderBaseInfo(ws, i, entity);
+                                               //Member
+                                               ExcelRenderMemberSection(ws, i, entity);
+                                               //Agent
+                                               ExcelRenderAgentSection(ws, i, entity);
+                                               //Master
+                                               ExcelRenderMasterSection(ws, i, entity);
+                                               //Company total
+                                               ws.Columns[WinLossDetailColumns.TotalCompanyAgent].Cells[i].Value =
+                                                   entity.UplineTotal;
+                                               i++;
+                                           });
+                }
+
+                #endregion
+
+                //add value to lasted row
+                AgentWinLoss totalItem = AgentWinLossService.CreateTotalItem(entityList);
+                CreateTotalRows(totalItem, ws, startIndex, i);
+                ws.Columns[0].Style.Indent = 1;
+            }
+
+            return excelFile;
+        }
+
+        public ExcelFile CreateExcelFileMemberWinloss(int custId, DateTime fromDate, DateTime toDate, string option)
+        {
+            int startIndex = 6;
+            int i = startIndex;
+            var excelFile = new ExcelFile();
+
+            excelFile.LoadXls(HttpContext.Current.Server.MapPath(ReportMemberWinLossTemplateName));
+            ExcelWorksheet ws = excelFile.Worksheets[0];
+
+            var entityList =
+                _cache.Get(string.Format(ReportNameAgentWinLossDetail, AppSession.AccUserName)) as List<MemberWinLoss>;
+            if (entityList == null || entityList.Count <= 0)
+            {
+                entityList = GetMemberReportData(custId, fromDate, toDate, option);
+            }
+
+            if (entityList != null)
+            {
+                RenderExcelReportHeader(ws, fromDate, toDate);
+
+                #region Add value to cell
+
+                if (entityList.Count > 0)
+                {
+                    entityList.ForEach(entity =>
+                                           {
+                                               //base info
+                                               ExcelRenderBaseInfo(ws, i, entity);
+                                               //Member
+                                               ExcelRenderMemberSection(ws, i, entity);
+                                               //Agent
+                                               ExcelRenderAgentSection(ws, i, entity);
+                                               //Company total
+                                               ws.Columns[WinLossDetailColumns.TotalCompanyMember].Cells[i].Value =
+                                                   entity.UplineTotal;
+                                               i++;
+                                           });
+                }
+
+                #endregion
+
+                //add value to lasted row            
+                //CreateTotalRows("ABCDEFGHIJ", ws, startIndex, i);
+                //add more format
+                MemberWinLoss totalItem = MemberWinLossReportService.CreateTotalRow(entityList);
+                CreateTotalRows(totalItem, ws, startIndex, i);
+                ws.Columns[0].Style.Indent = 1;
+            }
+
+            return excelFile;
+        }
+
+        #endregion
+
+        private readonly Color _titleColor = Color.FromArgb(153, 204, 255);
+
+        #region Render excel
+
+        private void CreateTotalRows(MasterWinLoss totalItem, ExcelWorksheet ws, int lastRowDataIndex)
+        {
+            //create total row style
+            var cellStyle = new CellStyle
+                                {
+                                    HorizontalAlignment = HorizontalAlignmentStyle.Right,
+                                    Font = {Weight = ExcelFont.BoldWeight}
+                                };
+            cellStyle.FillPattern.SetSolid(_titleColor);
+
+            ExcelCell totalCellRange = ws.Columns[WinLossDetailColumns.UserName].Cells[lastRowDataIndex];
+            totalCellRange.Value = "Total";
+            totalCellRange.Style.Indent = 1;
+            //totalCellRange.Style.FillPattern.SetSolid(_titleColor);
+
+            //for (var i = 1; i < cellList.Length; i++)
+            //{
+            //    ws.Cells[cellList[i].ToString() + lastRowDataIndex.ToString()].Formula = string.Format("=SUM({0}{1}:{0}{2}", cellList[i].ToString(), firstRowDataIndex, lastRowDataIndex - 1);
+            //    ws.Cells[cellList[i].ToString() + lastRowDataIndex.ToString()].Style.FillPattern.SetSolid(_titleColor);
+            //}
+
+            if (totalItem != null)
+            {
+                ws.Columns[WinLossDetailColumns.TurnOver].Cells[lastRowDataIndex].Value = totalItem.Turnover;
+                ws.Columns[WinLossDetailColumns.GrossComm].Cells[lastRowDataIndex].Value = totalItem.GrossComm;
+                //total row member section
+                ws.Columns[WinLossDetailColumns.MemberWinLoss].Cells[lastRowDataIndex].Value = totalItem.Member.WinLoss;
+                ws.Columns[WinLossDetailColumns.MemberComm].Cells[lastRowDataIndex].Value = totalItem.Member.Comm;
+                ws.Columns[WinLossDetailColumns.MemberTotal].Cells[lastRowDataIndex].Value = totalItem.Member.Total;
+                //total row agent section
+                ws.Columns[WinLossDetailColumns.AgentWinLoss].Cells[lastRowDataIndex].Value = totalItem.Agent.WinLoss;
+                ws.Columns[WinLossDetailColumns.AgentComm].Cells[lastRowDataIndex].Value = totalItem.Agent.Comm;
+                ws.Columns[WinLossDetailColumns.AgentTotal].Cells[lastRowDataIndex].Value = totalItem.Agent.Total;
+                //total row master section
+                ws.Columns[WinLossDetailColumns.MasterWinLoss].Cells[lastRowDataIndex].Value = totalItem.Master.WinLoss;
+                ws.Columns[WinLossDetailColumns.MasterComm].Cells[lastRowDataIndex].Value = totalItem.Master.Comm;
+                ws.Columns[WinLossDetailColumns.MasterTotal].Cells[lastRowDataIndex].Value = totalItem.Master.Total;
+                //total row super section
+                ws.Columns[WinLossDetailColumns.SuperWinLoss].Cells[lastRowDataIndex].Value = totalItem.Super.WinLoss;
+                ws.Columns[WinLossDetailColumns.SuperComm].Cells[lastRowDataIndex].Value = totalItem.Super.Comm;
+                ws.Columns[WinLossDetailColumns.SuperTotal].Cells[lastRowDataIndex].Value = totalItem.Super.Total;
+                //company
+                ws.Columns[WinLossDetailColumns.TotalCompanyMaster].Cells[lastRowDataIndex].Value =
+                    totalItem.UplineTotal;
+            }
+
+            ws.Cells.GetSubrangeAbsolute(lastRowDataIndex, 0, lastRowDataIndex, 15).Style = cellStyle;
+        }
+
+        private void CreateTotalRows(AgentWinLoss totalItem, ExcelWorksheet ws, int firstRowDataIndex,
+                                     int lastRowDataIndex)
+        {
+            //create total row style
+            var cellStyle = new CellStyle
+                                {
+                                    HorizontalAlignment = HorizontalAlignmentStyle.Right,
+                                    Font = {Weight = ExcelFont.BoldWeight}
+                                };
+            cellStyle.FillPattern.SetSolid(_titleColor);
+
+            ExcelCell totalCellRange = ws.Columns[WinLossDetailColumns.UserName].Cells[lastRowDataIndex];
+            totalCellRange.Value = "Total";
+            totalCellRange.Style.Indent = 1;
+            //totalCellRange.Style.FillPattern.SetSolid(_titleColor);
+
+            //for (var i = 1; i < cellList.Length; i++)
+            //{
+            //    ws.Cells[cellList[i].ToString() + lastRowDataIndex.ToString()].Formula = string.Format("=SUM({0}{1}:{0}{2}", cellList[i].ToString(), firstRowDataIndex, lastRowDataIndex - 1);
+            //    ws.Cells[cellList[i].ToString() + lastRowDataIndex.ToString()].Style.FillPattern.SetSolid(_titleColor);
+            //}
+
+            if (totalItem != null)
+            {
+                ws.Columns[WinLossDetailColumns.TurnOver].Cells[lastRowDataIndex].Value = totalItem.Turnover;
+                ws.Columns[WinLossDetailColumns.GrossComm].Cells[lastRowDataIndex].Value = totalItem.GrossComm;
+                //total row member section
+                ws.Columns[WinLossDetailColumns.MemberWinLoss].Cells[lastRowDataIndex].Value = totalItem.Member.WinLoss;
+                ws.Columns[WinLossDetailColumns.MemberComm].Cells[lastRowDataIndex].Value = totalItem.Member.Comm;
+                ws.Columns[WinLossDetailColumns.MemberTotal].Cells[lastRowDataIndex].Value = totalItem.Member.Total;
+                //total row agent section
+                ws.Columns[WinLossDetailColumns.AgentWinLoss].Cells[lastRowDataIndex].Value = totalItem.Agent.WinLoss;
+                ws.Columns[WinLossDetailColumns.AgentComm].Cells[lastRowDataIndex].Value = totalItem.Agent.Comm;
+                ws.Columns[WinLossDetailColumns.AgentTotal].Cells[lastRowDataIndex].Value = totalItem.Agent.Total;
+                //total row master section
+                ws.Columns[WinLossDetailColumns.MasterWinLoss].Cells[lastRowDataIndex].Value = totalItem.Master.WinLoss;
+                ws.Columns[WinLossDetailColumns.MasterComm].Cells[lastRowDataIndex].Value = totalItem.Master.Comm;
+                ws.Columns[WinLossDetailColumns.MasterTotal].Cells[lastRowDataIndex].Value = totalItem.Master.Total;
+
+                //company
+                ws.Columns[WinLossDetailColumns.TotalCompanyAgent].Cells[lastRowDataIndex].Value = totalItem.UplineTotal;
+            }
+
+            ws.Cells.GetSubrangeAbsolute(lastRowDataIndex, 0, lastRowDataIndex, 12).Style = cellStyle;
+        }
+
+
+        private void CreateTotalRows(MemberWinLoss totalItem, ExcelWorksheet ws, int firstRowDataIndex,
+                                     int lastRowDataIndex)
+        {
+            //create total row style
+            var cellStyle = new CellStyle
+                                {
+                                    HorizontalAlignment = HorizontalAlignmentStyle.Right,
+                                    Font = {Weight = ExcelFont.BoldWeight}
+                                };
+            cellStyle.FillPattern.SetSolid(_titleColor);
+
+            ExcelCell totalCellRange = ws.Columns[WinLossDetailColumns.UserName].Cells[lastRowDataIndex];
+            totalCellRange.Value = "Total";
+            totalCellRange.Style.Indent = 1;
+            //totalCellRange.Style.FillPattern.SetSolid(_titleColor);
+
+            //for (var i = 1; i < cellList.Length; i++)
+            //{
+            //    ws.Cells[cellList[i].ToString() + lastRowDataIndex.ToString()].Formula = string.Format("=SUM({0}{1}:{0}{2}", cellList[i].ToString(), firstRowDataIndex, lastRowDataIndex - 1);
+            //    ws.Cells[cellList[i].ToString() + lastRowDataIndex.ToString()].Style.FillPattern.SetSolid(_titleColor);
+            //}
+
+            if (totalItem != null)
+            {
+                ws.Columns[WinLossDetailColumns.TurnOver].Cells[lastRowDataIndex].Value = totalItem.Turnover;
+                ws.Columns[WinLossDetailColumns.GrossComm].Cells[lastRowDataIndex].Value = totalItem.GrossComm;
+                //total row member section
+                ws.Columns[WinLossDetailColumns.MemberWinLoss].Cells[lastRowDataIndex].Value = totalItem.Member.WinLoss;
+                ws.Columns[WinLossDetailColumns.MemberComm].Cells[lastRowDataIndex].Value = totalItem.Member.Comm;
+                ws.Columns[WinLossDetailColumns.MemberTotal].Cells[lastRowDataIndex].Value = totalItem.Member.Total;
+                //total row agent section
+                ws.Columns[WinLossDetailColumns.AgentWinLoss].Cells[lastRowDataIndex].Value = totalItem.Agent.WinLoss;
+                ws.Columns[WinLossDetailColumns.AgentComm].Cells[lastRowDataIndex].Value = totalItem.Agent.Comm;
+                ws.Columns[WinLossDetailColumns.AgentTotal].Cells[lastRowDataIndex].Value = totalItem.Agent.Total;
+
+                //company
+                ws.Columns[WinLossDetailColumns.TotalCompanyMember].Cells[lastRowDataIndex].Value =
+                    totalItem.UplineTotal;
+            }
+
+            ws.Cells.GetSubrangeAbsolute(lastRowDataIndex, 0, lastRowDataIndex, 9).Style = cellStyle;
+        }
+
+
+        private static void ExcelRenderSuperSection(ExcelWorksheet ws, int i, MasterWinLoss entity)
+        {
+            //ws.Cells["M" + i.ToString()].Value = entity.Super.WinLoss;
+            //ws.Cells["N" + i.ToString()].Value = entity.Super.Comm;
+            //ws.Cells["O" + i.ToString()].Value = entity.Super.Total;
+
+
+            ws.Columns[WinLossDetailColumns.SuperWinLoss].Cells[i].Value = entity.Super.WinLoss;
+            ws.Columns[WinLossDetailColumns.SuperComm].Cells[i].Value = entity.Super.Comm;
+            ws.Columns[WinLossDetailColumns.SuperTotal].Cells[i].Value = entity.Super.Total;
+        }
+
+        private static void ExcelRenderMasterSection(ExcelWorksheet ws, int i, AgentWinLoss entity)
+        {
+            //ws.Cells["J" + i.ToString()].Value = entity.Master.WinLoss;
+            //ws.Cells["K" + i.ToString()].Value = entity.Master.Comm;
+            //ws.Cells["L" + i.ToString()].Value = entity.Master.Total;
+            ws.Columns[WinLossDetailColumns.MasterWinLoss].Cells[i].Value = entity.Master.WinLoss;
+            ws.Columns[WinLossDetailColumns.MasterComm].Cells[i].Value = entity.Master.Comm;
+            ws.Columns[WinLossDetailColumns.MasterTotal].Cells[i].Value = entity.Master.Total;
+        }
+
+        private static void ExcelRenderAgentSection(ExcelWorksheet ws, int i, MemberWinLoss entity)
+        {
+            //ws.Cells["G" + i.ToString()].Value = entity.Agent.WinLoss;
+            //ws.Cells["H" + i.ToString()].Value = entity.Agent.Comm;
+            //ws.Cells["I" + i.ToString()].Value = entity.Agent.Total;
+
+            ws.Columns[WinLossDetailColumns.AgentWinLoss].Cells[i].Value = entity.Agent.WinLoss;
+            ws.Columns[WinLossDetailColumns.AgentComm].Cells[i].Value = entity.Agent.Comm;
+            ws.Columns[WinLossDetailColumns.AgentTotal].Cells[i].Value = entity.Agent.Total;
+        }
+
+        private static void ExcelRenderMemberSection(ExcelWorksheet ws, int i, MemberWinLoss entity)
+        {
+            //ws.Cells["D" + i.ToString()].Value = entity.Member.WinLoss;
+            //ws.Cells["E" + i.ToString()].Value = entity.Member.Comm;
+            //ws.Cells["F" + i.ToString()].Value = entity.Member.Total;
+            ws.Columns[WinLossDetailColumns.MemberWinLoss].Cells[i].Value = entity.Member.WinLoss;
+            ws.Columns[WinLossDetailColumns.MemberComm].Cells[i].Value = entity.Member.Comm;
+            ws.Columns[WinLossDetailColumns.MemberTotal].Cells[i].Value = entity.Member.Total;
+        }
+
+        private static void ExcelRenderBaseInfo(ExcelWorksheet ws, int i, IWinLoss entity)
+        {
+            //ws.Cells["A" + i.ToString()].Value = entity.Username;
+            //ws.Cells["B" + i.ToString()].Value = entity.Turnover;
+            //ws.Cells["C" + i.ToString()].Value = entity.GrossComm;
+
+            ws.Columns[WinLossDetailColumns.UserName].Cells[i].Value = entity.Username;
+            ws.Columns[WinLossDetailColumns.TurnOver].Cells[i].Value = entity.Turnover;
+            ws.Columns[WinLossDetailColumns.GrossComm].Cells[i].Value = entity.GrossComm;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Utilities
+
+        /// <summary>
+        /// Create hashtable param
+        /// also add param name="BalanceUpDay" <see cref="ReportUtils.BalanceUp.BalanceUpDay"/>
+        /// </summary>
+        /// <param name="fromDate"></param>
+        /// <param name="toDate"></param>
+        /// <param name="option">5 digits binary [0-1]{5}</param>        
+        /// <returns>Hashtable</returns>
+        private static Hashtable CreateParams(DateTime fromDate, DateTime toDate, string option)
+        {
+            var param = new Hashtable
+                {               
+                    {"fromdate", fromDate},
+                    {"todate", toDate},
+                    {"showsb", option[1] == '1'},
+                    {"showcasino", option[2] == '1'},
+                    {"showrb", option[3] == '1'},
+                    {"showfi", option[4] == '1'},
+                    {"showng", option[6] == '1'},
+                    {"showbi", option[5] == '1'},
+                    {"balanceupday", ReportUtils.BalanceUp.BalanceUpDay},
+                     
+                };
+            return param;
+        }
+
+        /// <summary>
+        /// Check input fromdate, todata, and option
+        /// </summary>
+        /// <param name="fromDate"></param>
+        /// <param name="toDate"></param>
+        /// <param name="option"></param>
+        /// <returns></returns>
+        private bool CheckValidInputParam(DateTime fromDate, DateTime toDate, string option)
+        {
+            bool IsValid = false;
+
+            var regx = new Regex("[0-1]{5}");
+            if (option != null) IsValid = string.IsNullOrEmpty(option) & regx.IsMatch(option);
+
+            //todate must be greater or equal to fromDate
+            IsValid &= (toDate.CompareTo(fromDate) >= 0);
+
+            return IsValid;
+        }
+
+        #endregion
+
+        #region MemberWinLoss
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="list"></param>
+        public MemberWinLoss CreateTotalLastItem(List<MemberWinLoss> list)
+        {
+            var lastItem = new MemberWinLoss
+                               {
+                                   Username = "Total",
+                                   CustId = -1,
+                                   Member = new WinLossComm(),
+                                   Agent = new WinLossComm()
+                               };
+
+            if (list != null)
+                list.ForEach(item =>
+                                 {
+                                     lastItem.Turnover += item.Turnover;
+                                     lastItem.GrossComm += item.GrossComm;
+                                     //member
+                                     lastItem.Member.Comm += item.Member.Comm;
+                                     lastItem.Member.WinLoss += item.Member.WinLoss;
+                                     lastItem.Member.Total += item.Member.Total;
+
+                                     //agent
+                                     lastItem.Agent.Comm += item.Agent.Comm;
+                                     lastItem.Agent.WinLoss += item.Agent.WinLoss;
+                                     lastItem.Agent.Total += item.Agent.Total;
+
+                                     //upline
+                                     lastItem.UplineTotal += item.UplineTotal;
+                                 });
+
+            return lastItem;
+        }
+
+        #endregion
+
+        #region AgentWinLoss
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="list"></param>
+        public AgentWinLoss CreateTotalLastItem(List<AgentWinLoss> list)
+        {
+            var lastItem = new AgentWinLoss();
+
+            lastItem.Username = "Total";
+            lastItem.CustId = -1;
+            lastItem.Member = new WinLossComm();
+            lastItem.Agent = new WinLossComm();
+            lastItem.Master = new WinLossComm();
+
+
+            if (list != null)
+                list.ForEach(item =>
+                                 {
+                                     lastItem.Turnover += item.Turnover;
+                                     lastItem.GrossComm += item.GrossComm;
+                                     //member
+                                     lastItem.Member.Comm += item.Member.Comm;
+                                     lastItem.Member.WinLoss += item.Member.WinLoss;
+                                     lastItem.Member.Total += item.Member.Total;
+
+                                     //agent
+                                     lastItem.Agent.Comm += item.Agent.Comm;
+                                     lastItem.Agent.WinLoss += item.Agent.WinLoss;
+                                     lastItem.Agent.Total += item.Agent.Total;
+
+                                     //master
+                                     lastItem.Master.Comm += item.Master.Comm;
+                                     lastItem.Master.WinLoss += item.Master.WinLoss;
+                                     lastItem.Master.Total += item.Master.Total;
+
+                                     //upline
+                                     lastItem.UplineTotal += item.UplineTotal;
+                                 });
+
+            return lastItem;
+        }
+
+        #endregion
+
+        #region MasterWinLoss
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="list"></param>
+        public MasterWinLoss CreateTotalLastItem(List<MasterWinLoss> list)
+        {
+            var lastItem = new MasterWinLoss();
+
+            lastItem.Username = "Total";
+            lastItem.CustId = -1;
+
+            lastItem.Member = new WinLossComm();
+            lastItem.Agent = new WinLossComm();
+            lastItem.Master = new WinLossComm();
+            lastItem.Super = new WinLossComm();
+
+            if (list != null)
+                list.ForEach(item =>
+                                 {
+                                     lastItem.Turnover += item.Turnover;
+                                     lastItem.GrossComm += item.GrossComm;
+                                     //member
+                                     lastItem.Member.Comm += item.Member.Comm;
+                                     lastItem.Member.WinLoss += item.Member.WinLoss;
+                                     lastItem.Member.Total += item.Member.Total;
+
+                                     //agent
+                                     lastItem.Agent.Comm += item.Agent.Comm;
+                                     lastItem.Agent.WinLoss += item.Agent.WinLoss;
+                                     lastItem.Agent.Total += item.Agent.Total;
+
+                                     //master
+                                     lastItem.Master.Comm += item.Master.Comm;
+                                     lastItem.Master.WinLoss += item.Master.WinLoss;
+                                     lastItem.Master.Total += item.Master.Total;
+
+                                     //super
+                                     lastItem.Super.Comm += item.Super.Comm;
+                                     lastItem.Super.WinLoss += item.Super.WinLoss;
+                                     lastItem.Super.Total += item.Super.Total;
+
+                                     //upline
+                                     lastItem.UplineTotal += item.UplineTotal;
+                                 });
+
+            return lastItem;
+        }
+
+        #endregion
+
+        #region Daily report
+
+        /// <summary>
+        /// Get daily winloss report
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="reportLevel"></param>
+        /// <param name="uplineId"></param>
+        /// <returns></returns>
+        public List<WinLossDailyView> GetDailyWinlossReport(DateTime date, int reportLevel, int uplineId)
+        {
+            var entityList = new List<WinLossDailyView>();
+            string key = string.Format(ReportNameWinLossDaily, reportLevel + AppSession.Username);
+
+            if (IsValidRequestDailyReport(date))
+            {
+                bool hasGetFromBestTrans14 = (date <= ReportUtils.BalanceUp.MoveBetsDay);
+                var param = new Hashtable();
+                if (reportLevel != 0)
+                {
+                    param.Add("custid", uplineId);
+                }
+                else
+                {
+                    //company level
+                    param.Add("system", AppSession.SYSTEM.ToString());
+                }
+
+                param.Add("winlostdate", date);
+                entityList = _winLossDao.GetCompanyWinLossDaily(param, hasGetFromBestTrans14, reportLevel);
+            }
+
+            _cache.Add(key, entityList);
+            return entityList;
+        }
+
+        public ExcelFile CreateDailyWinlossReportExcelFile(DateTime date, int reportLevel, int uplineId)
+        {
+            var excelFile = new ExcelFile();
+
+            excelFile.LoadXls(HttpContext.Current.Server.MapPath(ReportWinLossDailyTemplateName));
+            ExcelWorksheet ws = excelFile.Worksheets[0];
+
+            //set report title
+            string reportTitle = GetDailyReportTitle(reportLevel);
+            ws.Cells[WinLossDailyColumns.ReportTilte].Value = reportTitle;
+            ws.Cells[WinLossDailyColumns.ReportDate].Value = date.ToString(DateFormat);
+
+            //set total member online
+            //int totalMemberOnline = GetTotalOnlineMember(AppSession.CurrentSystem);
+            //ws.Cells[WinLossDailyColumns.TotalOnlineMember].Value = totalMemberOnline;
+
+            //first index to fill report data
+            int rowIndex = 8;
+            int i = 0;
+
+            //get data from cache and perform double check
+            var entityList =
+                _cache.Get(string.Format(ReportNameWinLossDaily, reportLevel + AppSession.Username)) as
+                List<WinLossDailyView>;
+
+            if (entityList == null || entityList.Count <= 0)
+            {
+                entityList = GetDailyWinlossReport(date, reportLevel, uplineId);
+            }
+
+            //double check
+            if (entityList != null && entityList.Count > 0)
+            {
+                RenderDailyWinlossReport(ws, entityList, i, rowIndex);
+            }
+
+            return excelFile;
+        }
+
+        private void RenderDailyWinlossReport(ExcelWorksheet ws, List<WinLossDailyView> entityList, int i, int rowIndex)
+        {
+            var totalItem = new WinLossDailyView();
+            entityList.ForEach(entity =>
+                                   {
+                                       i++;
+                                       ws.Cells[rowIndex, 0].Value = i;
+                                       ws.Cells[rowIndex, 1].Value = entity.Username;
+                                       FillWinLossDailyCellValue(ws, rowIndex, entity);
+                                       rowIndex++;
+                                       AppendValueToTotalItem(totalItem, entity);
+                                   });
+
+            //render the last total row
+            var cellStyle = new CellStyle
+                                {
+                                    HorizontalAlignment = HorizontalAlignmentStyle.Right,
+                                    Font = {Weight = ExcelFont.BoldWeight}
+                                };
+            cellStyle.FillPattern.SetSolid(_titleColor);
+
+            //setbackground color for lasted row            
+            ws.Cells[rowIndex, 0].Value = "Grand Total";
+
+            FillWinLossDailyCellValue(ws, rowIndex, totalItem);
+            //set style for total rows
+            ws.Cells.GetSubrangeAbsolute(rowIndex, 0, rowIndex, 18).Style = cellStyle;
+
+            //turnover & position taking
+            //ws.Columns[WinLossDailyColumns.CompanyPositionTaking].Cells[rowIndex].Value = totalItem.Company.GetPositionTaking(totalItem.TotalTO);
+            //ws.Columns[WinLossDailyColumns.SuperPositionTaking].Cells[rowIndex].Value = totalItem.SA.GetPositionTaking(totalItem.TotalTO);
+            //ws.Columns[WinLossDailyColumns.MasterPositionTaking].Cells[rowIndex].Value = totalItem.MA.GetPositionTaking(totalItem.TotalTO); ;
+            //ws.Columns[WinLossDailyColumns.AgentPositionTaking].Cells[rowIndex].Value = totalItem.Agent.GetPositionTaking(totalItem.TotalTO);
+
+
+            //Create style for Grand Total cell
+            ws.Cells.GetSubrangeAbsolute(rowIndex, 0, rowIndex, 1).Merged = true;
+            ws.Cells[rowIndex, 0].Style = cellStyle;
+            ws.Cells[rowIndex, 0].Style.Indent = 1;
+            ws.Cells[rowIndex, 0].Style.Borders.SetBorders(MultipleBorders.Right, Color.Black, LineStyle.Thin);
+            ws.Cells[rowIndex, 0].Style.FillPattern.SetSolid(_titleColor);
+            ws.Cells[rowIndex, 0].Style.Font.Name = "Times New Roman";
+
+            //winloss & margin 
+            cellStyle.FillPattern.SetSolid(Color.FromArgb(153, 204, 255));
+            //ws.Columns[WinLossDailyColumns.CompanyMargin].Cells[rowIndex].Value = totalItem.Company.Margin;
+            //ws.Columns[WinLossDailyColumns.SuperMargin].Cells[rowIndex].Value = totalItem.SA.Margin;
+            //ws.Columns[WinLossDailyColumns.MasterMargin].Cells[rowIndex].Value = totalItem.MA.Margin;
+            //ws.Columns[WinLossDailyColumns.AgentMargin].Cells[rowIndex].Value = totalItem.Agent.Margin;
+        }
+
+        //private static void CreatePercenCell(ExcelWorksheet ws, CellStyle cellStyle, int rowIndex, string cellResult, string cellUp, string cellDown)
+        //{
+        //    ws.Cells[cellResult + rowIndex.ToString()].Formula = string.Format("=IF({0}=0,0,({1}/{0})*100)",
+        //        cellDown + rowIndex.ToString(), cellUp + rowIndex.ToString());
+        //    ws.Cells[cellResult + rowIndex.ToString()].Style = cellStyle;
+        //}
+
+
+        private static void FillWinLossDailyCellValue(ExcelWorksheet ws, int rowIndex, WinLossDailyView entity)
+        {
+            int columnIndex = 1;
+            ws.Columns[WinLossDailyColumns.TotalTurnover].Cells[rowIndex].Value = entity.TotalTO;
+            //#region Turnovers and Position Taking
+            //company
+            ws.Columns[WinLossDailyColumns.CompanyTurnover].Cells[rowIndex].Value = entity.Company.Turnover;
+            ws.Columns[WinLossDailyColumns.CompanyPositionTaking].Cells[rowIndex].Value =
+                entity.Company.GetPositionTaking(entity.TotalTO);
+            //SA
+            ws.Columns[WinLossDailyColumns.SuperTurnover].Cells[rowIndex].Value = entity.SA.Turnover;
+            ws.Columns[WinLossDailyColumns.SuperPositionTaking].Cells[rowIndex].Value =
+                entity.SA.GetPositionTaking(entity.TotalTO);
+            //MA
+            ws.Columns[WinLossDailyColumns.MasterTurnover].Cells[rowIndex].Value = entity.MA.Turnover;
+            ws.Columns[WinLossDailyColumns.MasterPositionTaking].Cells[rowIndex].Value =
+                entity.MA.GetPositionTaking(entity.TotalTO);
+            //Agent
+            ws.Columns[WinLossDailyColumns.AgentTurnover].Cells[rowIndex].Value = entity.Agent.Turnover;
+            ws.Columns[WinLossDailyColumns.AgentPositionTaking].Cells[rowIndex].Value =
+                entity.Agent.GetPositionTaking(entity.TotalTO);
+            //#endregion
+
+            //#region Win/Loss and Margin
+            //company
+            ws.Columns[WinLossDailyColumns.CompanyWinLoss].Cells[rowIndex].Value = entity.Company.Winloss;
+            ws.Columns[WinLossDailyColumns.CompanyMargin].Cells[rowIndex].Value = entity.Company.Margin;
+            //SA
+            ws.Columns[WinLossDailyColumns.SuperWinLoss].Cells[rowIndex].Value = entity.SA.Winloss;
+            ws.Columns[WinLossDailyColumns.SuperMargin].Cells[rowIndex].Value = entity.SA.Margin;
+            //MA
+            ws.Columns[WinLossDailyColumns.MasterWinLoss].Cells[rowIndex].Value = entity.MA.Winloss;
+            ws.Columns[WinLossDailyColumns.MasterMargin].Cells[rowIndex].Value = entity.MA.Margin;
+            //Agent
+            ws.Columns[WinLossDailyColumns.AgentWinLoss].Cells[rowIndex].Value = entity.Agent.Winloss;
+            ws.Columns[WinLossDailyColumns.AgentMargin].Cells[rowIndex].Value = entity.Agent.Margin;
+            //#endregion
+        }
+
+
+        /// <summary>
+        /// Validate requested date show report daily
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public bool IsValidRequestDailyReport(DateTime date)
+        {
+            bool isValid = false;
+            isValid = date >= ReportUtils.BalanceUp.BalanceUpDay && date <= DateTime.Now;
+            //other business rules here
+            return isValid;
+        }
+
+        public WinLossDailyView CreateDailyWinLossTotalItem(List<WinLossDailyView> entityList)
+        {
+            if (entityList == null)
+                throw new Exception("collection cannot be null");
+
+            var totalItem = new WinLossDailyView();
+            entityList.ForEach(entity => AppendValueToTotalItem(totalItem, entity));
+
+            return totalItem;
+        }
+
+        public void AppendValueToTotalItem(WinLossDailyView totalItem, WinLossDailyView entity)
+        {
+            totalItem.TotalTO += entity.TotalTO;
+            //turnover
+            totalItem.Company.Turnover += entity.Company.Turnover;
+            totalItem.SA.Turnover += entity.SA.Turnover;
+            totalItem.MA.Turnover += entity.MA.Turnover;
+            totalItem.Agent.Turnover += entity.Agent.Turnover;
+            //win/loss
+            totalItem.Company.Winloss += entity.Company.Winloss;
+            totalItem.SA.Winloss += entity.SA.Winloss;
+            totalItem.MA.Winloss += entity.MA.Winloss;
+            totalItem.Agent.Winloss += entity.Agent.Winloss;
+        }
+
+        /// <summary>
+        /// add total item to list
+        /// </summary>
+        /// <param name="entityList"></param>
+        public void AddDailyWinLossTotalItem(ref List<WinLossDailyView> entityList)
+        {
+            WinLossDailyView totalItem = CreateDailyWinLossTotalItem(entityList);
+            if (totalItem != null)
+            {
+                entityList.Add(totalItem);
+            }
+        }
+
+        public int GetTotalOnlineMember(Enumerations.AccountingSystem system)
+        {
+            try
+            {
+                return _winLossDao.GetTotalOnlineMember(system);
+            }
+            catch (Exception ex)
+            {
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+
+            return 0;
+        }
+
+        public string GetDailyReportTitle(int reportLevel)
+        {
+            switch (reportLevel)
+            {
+                case 0:
+                    return "Super Win/Loss Daily";
+                case 1:
+                    return "Master Win/Loss Daily";
+                case 2:
+                    return "Agent Win/Loss Daily";
+                case 3:
+                    return "Member Win/Loss Daily";
+            }
+
+            return "Super Win/Loss Daily";
+        }
+
+        #endregion
+    }
+}

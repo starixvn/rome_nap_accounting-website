@@ -1,0 +1,776 @@
+﻿using System;
+using System.Collections;
+using System.Data;
+using System.Drawing;
+using System.Text;
+
+using DNAide.Core;
+using DNAide.Data;
+using DNAide.Utils;
+using DNAide.Web;
+using ExcelUtil.Spreadsheet;
+
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Accounting.Core.Web.TplCore.App_Templates.Report.Punter.App_Templates.Report.Punter;
+using Sunplus.Accounting.DataAccess;
+using Sunplus.Core.LoggingLib;
+
+namespace BLL.Report.Punter
+{
+    public class AgencyAnalysisManager : ReportBase
+    {
+        private readonly string keyDirectCustomerReport = "directcustomerreport." + AppSession.Username;
+        private string FileName = "Agency-Analysis-" + DateTime.Today.ToShortDateString().Replace("/", "-");
+
+        private bool hashError;
+        private string msg = "<span class='error-message'>{content}</span>";
+        private string user = "[" + AppSession.Username + "]";
+
+        #region LoadHeader
+
+        public string LoadHeader()
+        {
+            string tpl = WebUtils.LoadTemplate("Report/Punter/AgencyHeaderForm.htm");
+
+            string evt = "\"onchange='ChangeYear(this);'\"";
+
+            string fmonth = (DateTime.Today.Month - 1).ToString();
+            string fyear = DateTime.Today.Year.ToString();
+            string tmonth = DateTime.Today.Month.ToString();
+            string tyear = DateTime.Today.Year.ToString();
+
+            string strfdate = GenMonthCalendar("ddfMonth", fmonth) + "&nbsp;&nbsp;" +
+                              GenYearCalendar("ddfYear", fyear, evt);
+            string strtdate = GenMonthCalendar("ddtMonth", tmonth) + "&nbsp;&nbsp;" + GenYearCalendar("ddtYear", tyear);
+
+            TemplateHandler.Assign(ref tpl, "fdate", strfdate);
+            TemplateHandler.Assign(ref tpl, "tdate", strtdate);
+
+            return tpl;
+        }
+
+        #endregion
+
+        #region GenMonthCalendar
+
+        public string GenMonthCalendar(string name, string currvalue)
+        {
+            string[] arr = {
+                               "January", "February", "March", "April", "May", "June", "July", "August", "September",
+                               "October", "November", "December"
+                           };
+            var html = new StringBuilder();
+            html.Append("<select id='" + name + "' name='" + name + "'>");
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (currvalue == (i + 1).ToString())
+                    html.Append("<option selected='selected' value='" + (i + 1) + "'>" + arr[i] + "</option>");
+                else
+                    html.Append("<option value='" + (i + 1) + "'>" + arr[i] + "</option>");
+            }
+            html.Append("</select>");
+            return html.ToString();
+        }
+
+        #endregion
+
+        #region GenYearCalendar
+
+        public string GenYearCalendar(string name, string currvalue, string evt)
+        {
+            int start = 2007;
+            int end = DateTime.Today.Year;
+            var html = new StringBuilder();
+            html.Append("<select " + evt + " id='" + name + "' name='" + name + "'>");
+            for (int i = start; i <= end; i++)
+            {
+                if (currvalue == i.ToString())
+                    html.Append("<option selected='selected' value='" + i + "'>" + i + "</option>");
+                else
+                    html.Append("<option value='" + i + "'>" + i + "</option>");
+            }
+            html.Append("</select>");
+            return html.ToString();
+        }
+
+        public string GenYearCalendar(string name, string currvalue)
+        {
+            int start = DateTime.Today.Year - 1;
+            int end = DateTime.Today.Year;
+            //DateTime.Today.Year;
+            var html = new StringBuilder();
+            html.Append("<select id='" + name + "' name='" + name + "'>");
+            for (int i = start; i <= end; i++)
+            {
+                if (currvalue == i.ToString())
+                    html.Append("<option selected='selected' value='" + i + "'>" + i + "</option>");
+                else
+                    html.Append("<option value='" + i + "'>" + i + "</option>");
+            }
+            html.Append("</select>");
+            return html.ToString();
+        }
+
+        #endregion
+
+        #region negativenumber
+
+        private string negativenumber(object num, string spec)
+        {
+            if (CastAide.AsString(num).Length == 0)
+                return "";
+            decimal n = CastAide.AsDecimal(num);
+
+            if (spec == "%")
+                n = n*100;
+
+            string str = "";
+            if (n >= 0)
+                str = NumberFormat.DecFormat(n, 2) + spec;
+            else
+            {
+                n = n*(-1);
+                str = "<span class='negnum'>(" + NumberFormat.DecFormat(n, 2) + ")" + spec + "</span>";
+            }
+            return str;
+        }
+
+        private string negativenumber(object num)
+        {
+            if (CastAide.AsString(num).Length == 0)
+                return "";
+            decimal n = CastAide.AsDecimal(num);
+            string str = "";
+            if (n >= 0)
+                str = NumberFormat.DecFormat(n, 2);
+            else
+            {
+                n = n*(-1);
+                str = "<span class='negnum'>(" + NumberFormat.DecFormat(n, 2) + ")</span>";
+            }
+            return str;
+        }
+
+        #endregion
+
+        #region GeneratePeriodLongRange
+
+        public string GeneratePeriodLongRange(string currfMonthValue, string currtMonthValue, string currfYearValue,
+                                              string currtYearValue)
+        {
+            string eventfunction = "";
+            var longrange = new PeriodLongRange_Template();
+
+            string strfdate = GenMonthCalendar("ddfMonth", currfMonthValue) + "&nbsp;&nbsp;" +
+                              GenYearCalendar("ddfYear", currfYearValue);
+            string strtdate = GenMonthCalendar("ddtMonth", currtMonthValue) + "&nbsp;&nbsp;" +
+                              GenYearCalendar("ddtYear", currtYearValue);
+
+            longrange.fdate = strfdate;
+            longrange.tdate = strtdate;
+
+            var hash = new Hashtable();
+            hash.Add("data", longrange.ToString());
+            return JsonUtil.ToJson(hash);
+        }
+
+        public string GeneratePeriodLongRange()
+        {
+            string eventfunction = "";
+            var longrange = new PeriodLongRange_Template();
+
+            string evt = "\"onchange='ChangeYear(this);'\"";
+            string strfdate = GenMonthCalendar("ddfMonth", "") + "&nbsp;&nbsp;" + GenYearCalendar("ddfYear", "", evt);
+            string strtdate = GenMonthCalendar("ddtMonth", "") + "&nbsp;&nbsp;" + GenYearCalendar("ddtYear", "");
+
+            longrange.fdate = strfdate;
+            longrange.tdate = strtdate;
+
+            return longrange.ToString();
+        }
+
+        #endregion
+
+        #region GetMaxDayByMonth
+
+        private int GetMaxDayByMonth(string month)
+        {
+            int day = 0;
+            switch (CastAide.AsInt32(month))
+            {
+                case 1:
+                case 3:
+                case 5:
+                case 7:
+                case 8:
+                case 10:
+                case 12:
+                    day = 31;
+                    break;
+                case 2:
+                    day = 28;
+                    break;
+                case 4:
+                case 6:
+                case 9:
+                case 11:
+                    day = 30;
+                    break;
+            }
+            return day;
+        }
+
+        #endregion
+
+        #region DirectCustomerReport
+
+        private DbResult GetDirectCustomerReport(string fMonth, string fYear, string tMonth, string tYear,
+                                                 string statistic, string username)
+        {
+            DbResult rs = null;
+            string fromdate = fMonth + "/01/" + fYear;
+            string todate = tMonth + "/" + GetMaxDayByMonth(tMonth) + "/" + tYear;
+
+            string fullpath = "";
+
+            var hash = new Hashtable();
+            hash.Add("fromdate", fromdate);
+            hash.Add("todate", todate);
+            hash.Add("statistic", statistic);
+            if (username.Length > 0)
+                hash.Add("username", username);
+
+
+            DataRow[] dataRows = {};
+            int totalColumn = 0;
+            try
+            {
+                rs = IBCProvider.ReportProvider.PunterAnalysis().DirectCustomerReport(hash);
+            }
+            catch (Exception ex)
+            {
+                if (rs.ResultSet.Tables.Count == 0)
+                    TemplateHandler.Assign(ref msg, "content", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"));
+                else
+                    TemplateHandler.Assign(ref msg, "content", ex.Message);
+                hashError = true;
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            return rs;
+        }
+
+        public string DirectCustomerReport(string fMonth, string fYear, string tMonth, string tYear, string statistic,
+                                           string username)
+        {
+            var dataTable = new DataTable();
+            var dtTotal = new DataTable();
+            int rowspan = 0;
+            string title = "";
+            DbResult rs = GetDirectCustomerReport(fMonth, fYear, tMonth, tYear, statistic, username);
+
+            dataTable = rs.ResultSet.Tables[0];
+            if (username.Length == 0)
+                dtTotal = rs.ResultSet.Tables[1];
+
+            DataRow[] dataRows = dataTable.Select();
+
+            string fromdate = fMonth + "/01/" + fYear;
+            string todate = tMonth + "/" + GetMaxDayByMonth(tMonth) + "/" + tYear;
+
+            title = " Analysis from " + fromdate + " to " + todate;
+            var hashCache = new Hashtable();
+            hashCache.Add("mainTbl", dataTable);
+            hashCache.Add("totalTbl", dtTotal);
+            hashCache.Add("title", title);
+            hashCache.Add("rowspan", rowspan);
+            CacheData(keyDirectCustomerReport, hashCache, WebSettings.CacheExpire);
+
+            switch (statistic)
+            {
+                case "7":
+                    rowspan = 3;
+                    break;
+                case "4":
+                case "2":
+                case "1":
+                    rowspan = 1;
+                    break;
+                default:
+                    rowspan = 2;
+                    break;
+            }
+
+            return GenerateData(dataTable, dtTotal, rowspan);
+        }
+
+        private string GenerateData(DataTable dataTable, DataTable dtTotal, int rowspan)
+        {
+            #region generate data
+
+            string tpl = WebUtils.LoadTemplate("Report/Punter/DirectCustomerReport.htm");
+
+            string tplheader = "";
+            string tplContent = TemplateHandler.CopyBlock(tpl, "Content");
+            TemplateHandler.Assign(ref tplContent, "rowspan", rowspan);
+
+            int totalColumn = dataTable.Columns.Count;
+            DataRow[] dataRows = dataTable.Select();
+
+
+            for (int i = 5; i < totalColumn; i++)
+            {
+                tplheader += "<th class='title' style='width:100px'>" + dataTable.Columns[i].ColumnName + "</th>";
+            }
+            TemplateHandler.Assign(ref tpl, "HeaderColumn", tplheader);
+
+            int custtid_p = 0, custid = 0, count = 0, index = 0;
+            string tplColumn = "<td class='{class}'>{value}</td>";
+            var builderColumn = new StringBuilder();
+            var strRows = new StringBuilder();
+            string row = "", oddeven = "report-row-odd";
+            bool IsMarginRow = false;
+
+            #region foreach
+
+            foreach (DataRow dr in dataRows)
+            {
+                IsMarginRow = dr["Name"].ToString() == "Margin";
+
+                custtid_p = CastAide.AsInt32(dr["custid"]);
+
+                if (custid != custtid_p)
+                {
+                    index++;
+                    strRows.Append(row);
+                    strRows.Append(builderColumn.ToString());
+                    oddeven = (oddeven == "report-row-even") ? "report-row-odd" : "report-row-even";
+
+                    row = tplContent;
+                    builderColumn = new StringBuilder();
+                    TemplateHandler.Assign(ref row, "Role", dr["Role"]);
+                    TemplateHandler.Assign(ref row, "Order", NumberFormat.DecFormat(index, 0));
+                    TemplateHandler.Assign(ref row, "UserName", dr["Username"]);
+                    TemplateHandler.Assign(ref row, "Currency", dr["Currency"]);
+                    TemplateHandler.Assign(ref row, "custid", dr["custid"]);
+                    TemplateHandler.Assign(ref row, "class", oddeven);
+                    custid = custtid_p;
+                    count = 0;
+                }
+
+                count++;
+
+                if (count != 1)
+                    builderColumn.Append("<tr class='" + oddeven + "'>");
+                for (int i = 4; i < totalColumn; i++)
+                {
+                    string strC = tplColumn;
+
+                    if (i == 4)
+                    {
+                        TemplateHandler.Assign(ref strC, "class", "l");
+                        TemplateHandler.Assign(ref strC, "value", dr[i]);
+                    }
+                    else
+                    {
+                        if (i == (totalColumn - 1))
+                            TemplateHandler.Assign(ref strC, "class", "r rspace");
+                        else
+                            TemplateHandler.Assign(ref strC, "class", "r");
+
+                        if (IsMarginRow) // margin row
+                            TemplateHandler.Assign(ref strC, "value", negativenumber(dr[i], "%"));
+                        else
+                            TemplateHandler.Assign(ref strC, "value", negativenumber(dr[i], ""));
+                    }
+
+                    builderColumn.Append(strC);
+                }
+                if (count != 1)
+                    builderColumn.Append("</tr>");
+                else
+                {
+                    TemplateHandler.Assign(ref row, "ContentColumn", builderColumn.ToString());
+                    builderColumn = new StringBuilder();
+                }
+            }
+
+            #endregion
+
+            strRows.Append(row);
+            strRows.Append(builderColumn.ToString());
+
+            #region Nodata
+
+            int colspan = 6;
+            if (dataTable.Columns.Count >= colspan)
+                colspan = dataTable.Columns.Count + 1;
+            if (dataTable.Rows.Count == 0 || hashError)
+            {
+                string str = "";
+                if (hashError)
+                    str = "<td colspan='" + colspan + "' bgcolor='white' class='c'>" + msg + "</td>";
+                else
+                    str = "<td colspan='" + colspan + "' bgcolor='white' class='c'>" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata") + "</td>";
+                TemplateHandler.ReplaceBlock(ref tpl, "Content", str);
+            }
+            else
+            {
+                #region Total
+
+                bool IsSetTDFooter = false;
+                dataRows = dtTotal.Select();
+                totalColumn = dtTotal.Columns.Count;
+                strRows.Append("<tfoot>");
+
+                count = 0;
+                string symbol = "";
+                foreach (DataRow dr in dataRows)
+                {
+                    count++;
+
+                    if (dr["name"].ToString() == "Margin")
+                        symbol = "%";
+                    else
+                        symbol = "";
+
+                    if (count - rowspan == 0)
+                    {
+                        strRows.Append("<tr class='rpt-bold report-footer' id='trFooter'>");
+
+                        if (rowspan != 3)
+                        {
+                            IsSetTDFooter = true;
+                            string evt = "onclick=\"GenerateChartByCusId('', 'GRAND-TOTAL');\"";
+                            strRows.Append("<td colspan='3' class='c rpt-bold'>GRAND TOTAL</td>");
+                            strRows.Append("<td class='c rpt-bold hand' " + evt +
+                                           "><img title='View Chart' src='../../App_Themes/Report/Images/chart1.png' /></td>");
+                            strRows.Append("<td class='c rpt-bold'></td>");
+                        }
+                    }
+                    else
+                        strRows.Append("<tr class='rpt-bold report-footer'>");
+                    if (rowspan == 3 && count == 2)
+                    {
+                        string evt = "onclick=\"GenerateChartByCusId('', 'GRAND-TOTAL');\"";
+                        strRows.Append("<td colspan='3' class='c rpt-bold'>GRAND TOTAL</td>");
+                        strRows.Append("<td class='c rpt-bold hand' " + evt +
+                                       "><img title='View Chart' src='../../App_Themes/Report/Images/chart1.png' /></td>");
+                        strRows.Append("<td class='c rpt-bold'></td>");
+                    }
+                    else if (!IsSetTDFooter)
+                        strRows.Append("<td colspan='5' class='c rpt-bold'></td>");
+
+                    for (int i = 0; i < totalColumn; i++)
+                    {
+                        row = tplColumn;
+
+                        if (i == 0)
+                        {
+                            TemplateHandler.Assign(ref row, "class", "l");
+                            TemplateHandler.Assign(ref row, "value", dr[i]);
+                        }
+                        else
+                        {
+                            TemplateHandler.Assign(ref row, "class", "r");
+                            TemplateHandler.Assign(ref row, "value", negativenumber(dr[i], symbol));
+                        }
+                        strRows.Append(row);
+                    }
+
+                    strRows.Append("</tr>");
+                }
+                strRows.Append("</tfoot>");
+
+                #endregion
+
+                TemplateHandler.ReplaceBlock(ref tpl, "Content", strRows.ToString());
+            }
+
+            #endregion
+
+            var h = new Hashtable();
+            h.Add("data", tpl);
+            h.Add("TotalColumn", totalColumn + 2);
+
+            return JsonUtil.ToJson(h);
+
+            #endregion
+
+            return tpl;
+        }
+
+        #endregion
+
+        #region DirectCustomerReportExport
+
+        public void DirectCustomerReportExport(string fMonth, string fYear, string tMonth, string tYear,
+                                               string statistic, string username)
+        {
+            var excelFile = new ExcelFile();
+            var gem = new ExcelGemboxUtils();
+
+            DataTable dataTable = new DataTable(), dtTotal = new DataTable();
+            DataRow[] dataRows = {};
+            string title = "";
+            int rowspan = 0;
+
+            var hashCache = (Hashtable) GetCachedObjData(keyDirectCustomerReport);
+
+            if (hashCache != null)
+            {
+                dataTable = (DataTable) hashCache["mainTbl"];
+                dtTotal = (DataTable) hashCache["totalTbl"];
+                title = (string) hashCache["title"];
+                rowspan = (int) hashCache["rowspan"];
+            }
+            else
+            {
+                DbResult rs = GetDirectCustomerReport(fMonth, fYear, tMonth, tYear, statistic, username);
+                dataTable = rs.ResultSet.Tables[0];
+                if (username.Length == 0)
+                    dtTotal = rs.ResultSet.Tables[1];
+
+                string fromdate = fMonth + "/01/" + fYear;
+                string todate = tMonth + "/" + GetMaxDayByMonth(tMonth) + "/" + tYear;
+
+                title = " Analysis from " + fromdate + " to " + todate;
+            }
+
+            dataRows = dataTable.Select();
+
+            switch (statistic)
+            {
+                case "7":
+                    rowspan = 3;
+                    break;
+                case "4":
+                case "2":
+                case "1":
+                    rowspan = 1;
+                    break;
+                default:
+                    rowspan = 2;
+                    break;
+            }
+
+            rowspan = rowspan - 1;
+            try
+            {
+                ExcelWorksheetCollection worksheets = excelFile.Worksheets;
+                string strTitle = "";
+                string[] ROLES = {"Super", "Master", "Agent"};
+
+                foreach (string role in ROLES)
+                {
+                    string exp = "role ='" + role + "'";
+                    DataRow[] Rows = dataTable.Select(exp);
+                    int TotalColumn = dataTable.Columns.Count;
+                    ExcelWorksheet ws = null;
+                    strTitle = role + title;
+
+                    if (Rows.Length == 0) continue;
+                    if (Rows.Length <= 3)
+                    {
+                        string tag = role + " " + Rows[0]["username"];
+                        ws = worksheets.Add(tag);
+                    }
+                    else
+                    {
+                        ws = worksheets.Add(role);
+                    }
+
+                    #region declare format cell
+
+                    var celltitle = new CellStyle();
+                    celltitle.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+                    celltitle.VerticalAlignment = VerticalAlignmentStyle.Center;
+                    celltitle.FillPattern.SetSolid(Color.FromArgb(82, 106, 128));
+                    celltitle.Borders.SetBorders(MultipleBorders.Outside, Color.Gray, LineStyle.Thin);
+                    celltitle.Font.Weight = ExcelFont.BoldWeight;
+                    celltitle.Font.Color = Color.White;
+                    celltitle.WrapText = true;
+
+                    #endregion
+
+                    #region columnwidth
+
+                    ws.Columns[0].Width = 8*256;
+                    ws.Columns[1].Width = 12*256;
+                    ws.Columns[2].Width = 15*256;
+                    ws.Columns[3].Width = 15*256;
+                    ws.Columns[4].Width = 15*256;
+
+                    for (int j = 5; j < TotalColumn; j++)
+                    {
+                        ws.Columns[j].Width = 18*256;
+                    }
+
+                    #endregion
+
+                    #region Header
+
+                    ws.Cells[0, TotalColumn - 1].Value = strTitle;
+                    ws.Cells.GetSubrangeAbsolute(0, 0, 0, TotalColumn - 1).Merged = true;
+                    ws.Cells.GetSubrangeAbsolute(0, 0, 0, TotalColumn - 1).Style = celltitle;
+
+                    ws.Cells[1, 0].Value = "#";
+                    ws.Cells[1, 1].Value = "Role";
+                    ws.Cells[1, 2].Value = "Customer";
+                    ws.Cells[1, 3].Value = "Currency";
+                    ws.Cells[1, 4].Value = "Values";
+
+                    for (int j = 5; j < TotalColumn; j++)
+                    {
+                        ws.Cells[1, j].Value = dataTable.Columns[j].ColumnName;
+                    }
+
+                    ws.Cells.GetSubrangeAbsolute(1, 0, 1, TotalColumn - 1).Style = celltitle;
+
+                    #endregion
+
+                    #region Content
+
+                    int i = 2;
+                    int count = 0, countmember = 0;
+                    bool IsEvenRow = false;
+                    decimal num = 0;
+                    string symbol = "%";
+                    string ColumnName = "";
+                    bool IsMarginRow = false;
+                    int custid_p = 0, custid = 0;
+                    foreach (DataRow dr in Rows)
+                    {
+                        count++;
+
+                        IsMarginRow = dr["name"].ToString().ToLower() == "margin";
+
+                        custid_p = CastAide.AsInt32(dr["custid"]);
+                        if (custid != custid_p)
+                        {
+                            countmember++;
+                            IsEvenRow = countmember%2 == 0;
+
+                            ws.Cells.GetSubrangeAbsolute(i, 0, i + rowspan, 0).Value = countmember;
+                            ws.Cells.GetSubrangeAbsolute(i, 0, i + rowspan, 0).Style = gem.GetStyleText(IsEvenRow);
+                            ws.Cells.GetSubrangeAbsolute(i, 0, i + rowspan, 0).Merged = true;
+
+                            ws.Cells.GetSubrangeAbsolute(i, 1, i + rowspan, 1).Value = dr["role"];
+                            ws.Cells.GetSubrangeAbsolute(i, 1, i + rowspan, 1).Style = gem.GetStyleText(IsEvenRow);
+                            ws.Cells.GetSubrangeAbsolute(i, 1, i + rowspan, 1).Merged = true;
+
+                            ws.Cells.GetSubrangeAbsolute(i, 2, i + rowspan, 2).Value = dr["username"];
+                            ws.Cells.GetSubrangeAbsolute(i, 2, i + rowspan, 2).Style = gem.GetStyleText(IsEvenRow);
+                            ws.Cells.GetSubrangeAbsolute(i, 2, i + rowspan, 2).Merged = true;
+
+                            ws.Cells.GetSubrangeAbsolute(i, 3, i + rowspan, 3).Value = dr["currency"];
+                            ws.Cells.GetSubrangeAbsolute(i, 3, i + rowspan, 3).Style = gem.GetStyleText(IsEvenRow);
+                            ws.Cells.GetSubrangeAbsolute(i, 3, i + rowspan, 3).Merged = true;
+
+                            ws.Cells.GetSubrangeAbsolute(i, 4, i + rowspan, 4).Style = gem.GetStyleText(IsEvenRow);
+
+                            custid = custid_p;
+                        }
+
+                        if (IsMarginRow) symbol = "%";
+                        else symbol = "";
+
+
+                        for (int j = 4; j < TotalColumn; j++)
+                        {
+                            num = CastAide.AsDecimal(dr[j]);
+                            ws.Cells[i, j].Value = dr[j];
+                            ws.Cells[i, j].Style = gem.GetStyleNumber(num, IsEvenRow, symbol);
+                        }
+
+                        i++;
+                        if (count == rowspan) count = 0;
+                    }
+
+                    #endregion
+
+                    #region Total
+
+                    if (Rows.Length > 3)
+                    {
+                        i++;
+                        ws.Cells[i, 0].Value = "GRAND TOTAL";
+                        ws.Cells.GetSubrangeAbsolute(i, 0, i + rowspan, 3).Merged = true;
+                        ws.Cells.GetSubrangeAbsolute(i, 0, i + rowspan, 3).Style = gem.GetStyleTextTotal();
+                        decimal totalTO = 0, totalWL = 0;
+                        foreach (DataRow dr in dtTotal.Rows)
+                        {
+                            ColumnName = dr["name"].ToString();
+                            for (int j = 4; j < dataTable.Columns.Count; j++)
+                            {
+                                if (j == 4)
+                                {
+                                    ws.Cells[i, j].Value = dr["name"];
+                                    ws.Cells[i, j].Style = gem.GetStyleTextTotal();
+                                }
+                                else
+                                {
+                                    string strExp = "sum([" + dataTable.Columns[j] + "])";
+                                    string strFillter = exp + " and name='" + ColumnName + "'";
+                                    ws.Cells[i, j].Value = dataTable.Compute(strExp, strFillter);
+                                    num = CastAide.AsDecimal(dataTable.Compute(strExp, strFillter));
+
+                                    if (ColumnName == "Margin")
+                                    {
+                                        symbol = "%";
+
+                                        strExp = "sum([" + dataTable.Columns[j] + "])";
+                                        strFillter = exp + " and name='Winlost'";
+                                        totalWL = CastAide.AsDecimal(dataTable.Compute(strExp, strFillter));
+
+                                        strFillter = exp + " and name='Turnover'";
+                                        totalTO = CastAide.AsDecimal(dataTable.Compute(strExp, strFillter));
+
+                                        if (totalTO != 0)
+                                        {
+                                            num = totalWL/totalTO;
+                                            ws.Cells[i, j].Value = num;
+                                        }
+                                        else
+                                        {
+                                            ws.Cells[i, j].Value = "";
+                                            num = 1;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        symbol = "";
+                                    }
+
+                                    ws.Cells[i, j].Style = gem.GetStyleNumberTotal(num, symbol);
+                                }
+                            }
+                            i++;
+                        }
+                    }
+
+                    #endregion
+                }
+
+                base.excelFile = excelFile;
+                ExportExcelFile(FileName);
+            }
+            catch (Exception ex)
+            {
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+        }
+
+        #endregion
+
+        public override string RenderHTML(Hashtable input)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

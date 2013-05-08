@@ -1,0 +1,37 @@
+﻿using System;
+using System.Collections;
+using DNAide.Core;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web;
+using BLL.Report;
+using Sunplus.Accounting.Business.Report;
+using Sunplus.Accounting.Core.Web.Controls;
+using System.Data;
+using Sunplus.Accounting.Entities.ViewModel;
+
+public partial class Report_DateWinloss : PageBase
+{
+    public string strFromDate = "";
+    public string strToDate = "";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        strFromDate = Calendar.GenCalendarControl("fdate", "../../", "fdateTrigger", 
+            DateTime.Now.AddDays(-1).ToShortDateString(), false, false, 0, 0, "");
+        strToDate = Calendar.GenCalendarControl("tdate", "../../", "tdateTrigger",
+            DateTime.Now.AddDays(-1).ToShortDateString(), true, false, 0, 0, "");
+        NumberGameReport wl = new NumberGameReport();
+        //NumberGameTreeGridBO dt = null;
+
+        if (Request["type"] != null)
+        {
+            string fdate = Request["fdate"].ToString();
+            string tdate = Request["tdate"].ToString();
+            string type = Request["type"].ToString();
+            if (type != null && type != "")
+            {
+                wl.ExportToExcel_WinLoss_ByDate_NumberGame(fdate, tdate);
+            }
+        }
+    }
+    
+}

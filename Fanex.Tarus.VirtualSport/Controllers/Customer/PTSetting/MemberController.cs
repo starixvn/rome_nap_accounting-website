@@ -1,0 +1,106 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="EditMemberController.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.VirtualSport.Controllers.Customer.PTSetting
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Web.Mvc;
+    using Fanex.PTEngine.BusinessObjects;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using Fanex.Tarus.Infrastructure.Common;
+    using Fanex.Tarus.Web.Controllers.Filters;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class VirtualSportMemberPTController: PTSettingBaseController
+    {
+        public VirtualSportMemberPTController() { }
+
+        [AuthenticateRead]
+        public ActionResult EditMember()
+        {
+            return View("~/Views/VirtualSport/Customer/PTSetting/EditMember.cshtml");
+        }
+
+        [AuthenticateRead]
+        public ActionResult SuperEditMember()
+        {
+            return View("~/Views/VirtualSport/Customer/PTSetting/SuperEditMember.cshtml");
+        }
+
+        [AuthenticateRead]
+        public ActionResult MasterEditMember()
+        {
+            return View("~/Views/VirtualSport/Customer/PTSetting/MasterEditMember.cshtml");
+        }
+
+        #region post methods
+        [HttpPost]
+        public JsonResult GetContextObject(int custId, int targetCustId, int roleId, int targetRoleId)
+        {
+            //init context for edit member
+            IRequestContext currentContext = new RequestContext()
+            {
+                CustId = custId,//AgentId
+                AgentId = 0,
+                UserName = string.Empty,
+                TargetCustId = targetCustId, //MemberId
+                AdminId = AppSession.AccId,
+                SubAccId = 0,
+                RoleId = roleId,
+                CurrencyId = 0,
+                TargetRoleId = targetRoleId,
+                IsNeutralSite = false,
+                FormId = FormType.EditPT   ,
+                IP = System.Web.HttpContext.Current.Request.UserHostAddress
+                
+            };
+
+            return Json(JsonConvert.SerializeObject(currentContext, Formatting.Indented, GetJsonSerializerSetting()));
+        }
+
+        [HttpPost]
+        public JsonResult GetCustomerInfo(RequestContext requestContext)
+        {
+            var result = _customerService.GetCustomer(requestContext);
+
+            return Json(JsonConvert.SerializeObject(result, Formatting.Indented, GetJsonSerializerSetting()));
+
+        }
+
+        
+        [HttpPost, AuthenticateHost]
+        public JsonResult UpdateMemberSettings(string oldCustomerSettings, string newCustomerSettings, RequestContext currentContext )
+        {
+            IList<Result> Results = new List<Result>();
+            try
+            {
+                ICustomer oldSettings =  DeserializeJsonString(oldCustomerSettings);
+                ICustomer newSettings =  DeserializeJsonString(newCustomerSettings);
+
+                Hashtable parameters = new Hashtable();
+                var results = _customerService.SaveCustomer(oldSettings, newSettings, currentContext, parameters);
+                Results = ParseResult(results);                
+
+            }
+            catch (Exception ex)
+            {
+                Results.Add(new Result()
+                {                    
+                    ErrorCode = "1000",
+                    ErrorMessage = ex.Message
+                });
+            }
+
+            // Return result
+            return Json(Results);
+        }
+        #endregion
+    }
+}

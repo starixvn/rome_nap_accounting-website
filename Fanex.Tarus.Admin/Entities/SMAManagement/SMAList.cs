@@ -1,0 +1,41 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="SMAList.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Admin.Entities.SMAManagement
+{
+    using System;
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+
+    [Serializable]
+    public class SMAGroups
+    {
+        public int TotalGroups { get; set; }
+        public int TotalMemberNotAssignedToGroup { get; set; }
+        public List<SMAListByGroupHeadline> SMAGroupsInfo { get; set; }
+    }
+    
+    [Serializable]
+    public class SMAListByGroupHeadline
+    {
+        public int GroupId { get; set; }
+        public string GroupName { get; set; }
+        public List<SMADetail> SMAList { get; set; }
+    }
+
+    [Serializable]
+    public class SMADetail
+    {
+        public string Username { get; set; }
+        public string Status { get; set; }
+        public string Site { get; set; }
+        public string Currency { get; set; }
+        public string Position { get; set; }
+    }
+}

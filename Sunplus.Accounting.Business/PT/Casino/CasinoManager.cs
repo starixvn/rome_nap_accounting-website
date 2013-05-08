@@ -1,0 +1,56 @@
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.DataAccess;
+using Sunplus.Accounting.Entities.Casino;
+
+namespace Sunplus.Accounting.Business.PT.Casino
+{
+    public class CasinoManager:ICasinoManager
+    {
+        public CasinoManager()
+        {
+        }
+      
+        public void AutoInsertCasinoAccount(CSCustomerDetail customerInfo, int userId, string userName, string ip)
+        {
+            var casinoLibray = new CasinoLibrary.SBAgent.Customer();
+            //casinoLibray.SiteName = customerInfo.SiteName;                  
+            try
+            {
+                Task.Factory.StartNew(() =>
+                {
+                      
+                    var isSuccess = casinoLibray.AutoInsertAccount(customerInfo.CasinoNo, customerInfo.IBCCustID,
+                                                                    customerInfo.UserName, customerInfo.UserName2,
+                                                                    customerInfo.FirstName, customerInfo.LastName,
+                                                                    customerInfo.UserPwd, customerInfo.Phone,
+                                                                    customerInfo.MobilePhone, customerInfo.ExchangeID,
+                                                                    customerInfo.Fax, customerInfo.Closed,
+                                                                    customerInfo.Suspend, customerInfo.IsEnablePT,
+                                                                    customerInfo.SIBCCustID, customerInfo.MIBCCustID,
+                                                                    customerInfo.AIBCCustID, customerInfo.RoleId.ToString(),
+                                                                    DateTime.Today,
+                                                                    ip, userId, userName, 3);
+                    Thread.Sleep(1000);
+                    if (isSuccess)
+                    {
+                        var isUpdIbc = CasinoProvider.Instance.UpdateCSStatusAfterSync(customerInfo.IBCCustID, true, customerInfo.CasinoDisabled, userId, ip);
+                    }
+                    else
+                    {
+                        casinoLibray.RemoveAccount(customerInfo.UserName, ip, userId, userName, 3);
+                    }
+                });
+
+                
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);                
+                casinoLibray.RemoveAccount(customerInfo.UserName, ip, userId, userName, 3);
+            }
+        }
+    }
+}

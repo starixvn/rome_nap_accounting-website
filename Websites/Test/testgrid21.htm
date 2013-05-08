@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../js/jQuery/GridScroller/gridscroller.css?ver=2" rel="stylesheet" type="text/css" />
+    <script src="../js/jQuery/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="../js/jQuery/GridScroller/jquery.gridscrollerlite.1.1.js?ver=13" type="text/javascript"></script>
+    <script>
+        var gridControl = {
+            renderContent: function () {
+                var tpl = '';
+                for (i = 0; i < 80; i++) {
+                    tpl += '<tr>\
+                        <td style="width: 120px;">\
+                            <div >\
+                                Col 1</div>\
+                        </td>\
+                        <td style="width: 120px;">\
+                            <div>\
+                                Col 2</div>\
+                        </td>\
+                        <td>\
+                            <div>\
+                                Col 3 sda asd fasd asdf asdf adf a adfadfasdf adf af</div>\
+                        </td>\
+                        <td style="width: 120px;">\
+                            <div>\
+                                Col 4</div>\
+                        </td>\
+                        <td style="width: 120px;">\
+                            <div>\
+                                Col 5</div>\
+                        </td>\
+                         <td>\
+                            <div>\
+                                Col 6</div>\
+                        </td>\
+                    </tr>';
+                }
+                return tpl;
+            },
+            options: {}
+        };
+        $(document).ready(function () {
+            var grid = $("#CheckBet");
+            //            var opts = {
+            //                isShowPager: false,
+            //                fullWidth: false,
+            //                gridWidth: 800,
+            //                paddingHeight:72,
+            //                tblContentId: 'gridDetail'
+            //            };
+            var opts = {
+                isShowPager: false,
+                paddingHeight: 72,
+                tblContentId: 'gridDetail'
+            };
+            grid.initGridLite(opts);
+            grid.find("#gridDetail tbody").empty().append(gridControl.renderContent());
+            grid.removeClass('hidden').gridScrollerLite(opts);
+        });
+    </script>
+</head>
+<body>
+    <div id="fitler" style="height: 60px; border: solid 1px; margin-bottom: 6px;">
+        Filter
+    </div>
+    <div id="CheckBet" class="freegrid hidden">
+        <div class="grid-title">
+            <div class="grid-title-lable" id="gridtitleCheckBet">
+            </div>
+        </div>
+        <div class="col_header row-headers-background">
+            <table class="grid-fixed-table col_header_content">
+                <thead></thead>
+            </table>
+        </div>
+        <div class="grid-container-lite  container scrolly">
+            <table id="gridDetail" class="grid-fixed-table col_header_content">
+                <thead>
+                    <tr>
+                        <th style="width: 120px;">
+                            <div>
+                                Col 1</div>
+                        </th>
+                        <th style="width: 120px;">
+                            <div>
+                                Col 2</div>
+                        </th>
+                        <th>
+                            <div>
+                                Col 3</div>
+                        </th>
+                        <th style="width: 120px;">
+                            <div>
+                                Col 4</div>
+                        </th>
+                        <th style="width: 120px;">
+                            <div>
+                                Col 5</div>
+                        </th>
+                        <th>
+                            <div>
+                                Col 6</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th style="width: 120px;">
+                            <div>
+                                Col 1</div>
+                        </th>
+                        <th style="width: 120px;">
+                            <div>
+                                Col 2</div>
+                        </th>
+                        <th>
+                            <div>
+                                Col 3</div>
+                        </th>
+                        <th style="width: 120px;">
+                            <div>
+                                Col 4</div>
+                        </th>
+                        <th style="width: 120px;">
+                            <div>
+                                Col 5</div>
+                        </th>
+                        <th>
+                            <div>
+                                Col 6</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th style="width: 120px;">
+                            <div>
+                                Col 1</div>
+                        </th>
+                        <th style="width: 120px;">
+                            <div>
+                                Col 2</div>
+                        </th>
+                        <th>
+                            <div>
+                                Col 3</div>
+                        </th>
+                        <th style="width: 120px;">
+                            <div>
+                                Col 4</div>
+                        </th>
+                        <th style="width: 120px;">
+                            <div>
+                                Col 5</div>
+                        </th>
+                        <th>
+                            <div>
+                                Col 6</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th style="width: 120px;">
+                            <div>
+                                Col 1</div>
+                        </th>
+                        <th style="width: 120px;">
+                            <div>
+                                Col 2</div>
+                        </th>
+                        <th>
+                            <div>
+                                Col 3</div>
+                        </th>
+                        <th style="width: 120px;">
+                            <div>
+                                Col 4</div>
+                        </th>
+                        <th style="width: 120px;">
+                            <div>
+                                Col 5</div>
+                        </th>
+                        <th>
+                            <div>
+                                Col 6</div>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="col_footer row-footer-background">
+            <table class="grid-fixed-table col_footer_content">
+                <thead></thead>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

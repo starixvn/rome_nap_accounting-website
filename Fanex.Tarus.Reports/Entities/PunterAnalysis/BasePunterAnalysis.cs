@@ -1,0 +1,33 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="BasePunterAnalysis.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Reports.Entities.PunterAnalysis
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;    
+    using Fanex.Tarus.Reports.Entities.Sport;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    [Serializable]
+    public class BasePunterAnalysisBO
+    {
+        public string Winlost { get; set; }
+
+        public string Turnover { get; set; }
+
+        public string Margin { get; set; }
+
+        public string Betcount { get; set; }
+
+        public string HasData { get; set; }
+
+        
+    }
+}

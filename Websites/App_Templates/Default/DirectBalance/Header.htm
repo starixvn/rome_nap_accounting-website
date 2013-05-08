@@ -1,0 +1,50 @@
+﻿<div class="main" style="">
+    <table style="width: 100%" border="0" cellpadding="0px" cellspacing="0px">
+        <tbody>
+            <tr>
+                <td>
+                    <div id="divMainHeader" class="" style="">
+                        <div id="left_tab1" style="">
+                            <ul>
+                                <li class="lefticon"></li>
+                                <li class="current"><span>{DirectBalance}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="maincontent" style="">
+                        <div class="filterBox" style="">
+                            <div class="filterContent">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding-bottom: 4px; padding-top: 4px;">
+                                                <span id='titleDirectMaster' style="display: none"><b>{DirectMaster}</b></span><a
+                                                    id='lkDirectMaster' href='#' onclick='ViewBalance("master")'>{DirectMaster}</a>
+                                                | <span id='titleDirectAgent' style="display: none"><b>{DirectAgent}</b></span><a
+                                                    id='lkDirectAgent' href="#" onclick='ViewBalance("agent")'>{DirectAgent}</a>
+                                                | <span id='titleDirectMember' style="display: none"><b>{DirectMember}</b></span><a
+                                                    id='lkDirectMember' href="#" onclick='ViewBalance("member")'>{DirectMember}</a>
+                                                &nbsp;
+                                                <input id="btnRefresh" style="display: none;" class="btn" type="button" value="{Refresh}"
+                                                    onclick="Refresh()">
+                                                <input style="display: none" class="btnExcel" type="button" id="btnExport" name="btnExport"
+                                                    value="   " onclick="ExportToExcel();" title="Export to Excel" />
+                                                <input type="hidden" id="directType" value="" />
+                                                <img id='inProgressBar' name='inProgressBar' width="16px" height="16px" style="display: none"
+                                                    src="../../App_Themes/Images/ajax-loader.gif" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="contentBox">
+                            <div id="sData">
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

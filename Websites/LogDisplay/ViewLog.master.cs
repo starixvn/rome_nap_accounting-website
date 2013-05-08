@@ -1,0 +1,46 @@
+﻿using System;
+using DNAide.Core;
+using System.Collections.Generic;
+using Sunplus.Shared.ViewLogLib.Model;
+using Sunplus.Shared.ViewLogLib.ServiceLayger;
+using Sunplus.Shared.ViewLogLib;
+using System.Web.UI.WebControls;
+public partial class _ViewLog_ViewLog : System.Web.UI.MasterPage
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!Page.IsPostBack)
+        {
+            if (Request.QueryString["tabid"] != null
+                && Request.QueryString["tabid"].ToString().Equals("CustomerSetting", StringComparison.OrdinalIgnoreCase))
+            {
+                LoadActionType();
+            }
+        }
+    }
+
+    protected string GetStringFromGlobalResource(string resourceKey)
+    {
+        ViewLogPageBase viewLogPageBase = (this.Page as ViewLogPageBase);
+        if (viewLogPageBase != null)
+            return viewLogPageBase.GetStringFromGlobalResource(resourceKey);
+
+        return string.Empty;
+    }
+    protected void LoadActionType()
+    {
+        List<LogActionType> list = (new LogActionTypeService()).GetAll();
+
+        if (!ReferenceEquals(list, null))
+        {
+            ddlActionType.DataValueField = "ActionTypeID";
+            ddlActionType.DataTextField = "ActionTypeName" + "EN";
+            ddlActionType.DataSource = list;
+            ddlActionType.DataBind();
+
+            //add first dropdownlist item (all)
+            var listItem = new ListItem { Text = Resources.Viewlog.All, Value = "-1" };
+            ddlActionType.Items.Insert(0, listItem);
+        }
+    }
+}

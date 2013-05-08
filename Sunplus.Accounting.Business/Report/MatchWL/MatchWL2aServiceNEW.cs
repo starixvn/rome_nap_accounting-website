@@ -1,0 +1,1162 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Web.SessionState;
+using DNAide.Core;
+using DNAide.Data;
+using DNAide.Utils;
+using ExcelUtil.Spreadsheet;
+using Sunplus.Accounting.Business.Report.Common;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.DataAccess;
+using Sunplus.Accounting.DataAccess.Report;
+using Sunplus.Accounting.DataAccess.Report.MatchWL;
+using Sunplus.Accounting.Entities.Report.MatchWL;
+using System.Data;
+using Sunplus.Core.LoggingLib;
+
+namespace Sunplus.Accounting.Business.Report.MatchWL
+{
+    public class MatchWL2aServiceNEW : IMatchWL2aServiceNEW
+    {
+        private readonly IMatchWL2aDAO _matchWl2aDao;
+
+        private string keySelDataMatchWLBySport = string.Empty;
+        private string keySelDataMatchWL3rd_Footer = string.Empty;
+        private string keySelObjMatchWLBySport = string.Empty;
+        private string keySelObjMatchWLByBettype = string.Empty;
+        private string keySelObjMatchWl3RdFooter = string.Empty;
+        private string keySelMatchWL8RM = string.Empty;
+        private string keySelMatchWLBARM = string.Empty;
+        private RMReportUtils utilsBARM = null;
+        public MatchWL2aServiceNEW(IMatchWL2aDAO imaMatchWl2aDao)
+        {
+            _matchWl2aDao = imaMatchWl2aDao;
+            keySelDataMatchWLBySport = "keySelMatchWLBySport." + AppSession.Username;
+            keySelDataMatchWL3rd_Footer = "keySelMatchWL3rd_Footer." + AppSession.Username;
+            keySelObjMatchWLBySport = "keySelObjMatchWLBySport." + AppSession.Username;
+            keySelObjMatchWLByBettype = "keySelObjMatchWLByBettype." + AppSession.Username;
+            keySelObjMatchWl3RdFooter = "keySelObjMatchWl3RdFooter." + AppSession.Username;
+            keySelMatchWL8RM = "keySelMatchWL8RM." + AppSession.Username;
+            keySelMatchWLBARM = "keySelMatchWLBARM." + AppSession.Username;
+
+            utilsBARM = new RMReportUtils(RMReportUtils.ReportName.Report2a, RMReportUtils.RMType.BARM);
+        }
+
+
+        #region SelWLbyBettype
+        public WLbyBettypeDTO SelWLbyBettype(DateTime wldate)
+        {
+            WLbyBettypeDTO wLbyBettype = new WLbyBettypeDTO();
+            wLbyBettype.Items = new List<WLbyBettype>();
+            wLbyBettype.Total = new WLbyBettype();
+            double LineTotal_soccer_live_Total = 0, LineTotal_soccer_Total = 0, LineTotal_others_live_Total = 0, LineTotal_others_Total = 0, VirtualLineTotal_soccer_live_Total = 0, VirtualLineTotal_soccer_Total = 0, VirtualLineTotal_others_live_Total = 0, VirtualLineTotal_others_Total = 0, LineTotalReal_Total = 0, LineTotalVirtual_Total = 0;
+            try
+            {
+                DbResult dbResult = _matchWl2aDao.WinLossByBettypeNEW(wldate);
+                if (dbResult == null)
+                    return wLbyBettype;
+
+                
+                string typename = "";
+
+                DataTable dataTable = dbResult.ResultSet.Tables[0];
+
+                dataTable.Columns.Add("index", typeof(float));
+                int bettype = 0;
+                foreach (DataRow dataRow in dataTable.Rows)
+                {
+                    bettype = CastAide.AsInt32(dataRow["bettype"]);
+
+                    dataRow["index"] = dataRow["bettype"];
+                    if (CastAide.AsInt32(dataRow["bettype"]) == 29)
+                        dataRow["index"] = 9.5;
+                    
+                }
+
+                DataView dv = dataTable.DefaultView;
+                dv.Sort = "index asc";
+                dataTable = dv.ToTable();
+
+                DataRow[] rows = dataTable.Select();
+                
+                WLbyBettype data = new WLbyBettype();
+
+                foreach (DataRow dataRow in rows)
+                {
+                    bettype = CastAide.AsInt32(dataRow["bettype"]);
+                    data = new WLbyBettype();
+                    
+                    if(bettype == 401 && !utilsBARM.IsActive)
+                        continue;
+                                       
+                    #region LineTotal_soccer
+                    data.LineTotal_soccer_live = NumberFormat.DecFormat(dataRow["LineTotal_soccer_live"], 2);
+                    data.LineTotal_soccer = NumberFormat.DecFormat(dataRow["LineTotal_soccer"], 2);
+                    data.LineTotal_others_live = NumberFormat.DecFormat(dataRow["LineTotal_others_live"], 2);
+                    data.LineTotal_others = NumberFormat.DecFormat(dataRow["LineTotal_others"], 2);
+                    #endregion
+
+                    #region VirtualLineTotal
+                    switch (CastAide.AsInt32(dataRow["bettype"]))
+                    {
+                        case 51: //5 min
+                        case 52: //15 min O/U
+                        case 53: //30 min O/U
+                        case 54: //45 min O/U
+                        case 55: //60 min O/U
+                        case 56: //End of day O/U
+
+                        case 61: //5 min OE
+                        case 62: //15 min OE
+                        case 63: //30 min OE
+                        case 64: //45 min OE
+                        case 65: //60 min OE
+                        case 66: //End of day OE  
+
+                        case 31: //win Tote Odds
+                        case 32: //place Tote Odds
+                        case 33: //win-place Tote Odds                       
+                        case 41: //win Fixed Odds
+                        case 42: //place Fixed Odds
+                        case 43: //win-place Fixed Odds                        
+                        case 150: //3rdparty 
+                        case 71: //casino
+                        case 72: //p2p
+                        case 1000:
+                        case 1101:
+                        case 1102:
+                            data.VirtualLineTotal_soccer_live = "N/A";
+                            data.VirtualLineTotal_soccer = "N/A";
+                            data.VirtualLineTotal_others_live = "N/A";
+                            data.VirtualLineTotal_others = "N/A";
+
+                            data.LineTotalReal =
+                                NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["LineTotal_soccer_live"])
+                                                       + CastAide.AsDecimal(dataRow["LineTotal_soccer"])
+                                                       + CastAide.AsDecimal(dataRow["LineTotal_others_live"])
+                                                       + CastAide.AsDecimal(dataRow["LineTotal_others"]), 2);
+                            data.LineTotalVirtual = "N/A";
+                            data.Variance = "N/A";
+                            break;
+                        case 1201:
+                        case 1203:
+                        case 1204:
+                        case 1205:
+                        case 1206:
+                        case 1224:
+                            data.VirtualLineTotal_soccer = "N/A";
+                            data.VirtualLineTotal_soccer_live = "N/A";
+                            data.LineTotal_soccer = "0.00";
+                            data.LineTotal_soccer_live = "0.00";
+                            data.VirtualLineTotal_others = "N/A";
+                            data.VirtualLineTotal_others_live = "N/A";
+                            data.Variance = "N/A";
+                            data.LineTotalVirtual = "N/A";
+                            data.LineTotalReal = NumberFormat.DecFormat( CastAide.AsDecimal(dataRow["LineTotal_others_live"])
+                                                       + CastAide.AsDecimal(dataRow["LineTotal_others"]), 2);
+
+                            break;
+
+                        default:
+                            data.VirtualLineTotal_soccer_live =
+                                NumberFormat.DecFormat(dataRow["VirtualLineTotal_soccer_live"], 2);
+                            data.VirtualLineTotal_soccer = NumberFormat.DecFormat(dataRow["VirtualLineTotal_soccer"], 2);
+                            data.VirtualLineTotal_others_live =
+                                NumberFormat.DecFormat(dataRow["VirtualLineTotal_others_live"], 2);
+                            data.VirtualLineTotal_others = NumberFormat.DecFormat(dataRow["VirtualLineTotal_others"], 2);
+
+                            data.LineTotalReal =
+                                NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["LineTotal_soccer_live"])
+                                                       + CastAide.AsDecimal(dataRow["LineTotal_soccer"])
+                                                       + CastAide.AsDecimal(dataRow["LineTotal_others_live"])
+                                                       + CastAide.AsDecimal(dataRow["LineTotal_others"]), 2);
+
+                            data.LineTotalVirtual =
+                                NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["VirtualLineTotal_soccer_live"])
+                                                       + CastAide.AsDecimal(dataRow["VirtualLineTotal_soccer"])
+                                                       + CastAide.AsDecimal(dataRow["VirtualLineTotal_others_live"])
+                                                       + CastAide.AsDecimal(dataRow["VirtualLineTotal_others"]), 2);
+                            data.Variance =
+                                NumberFormat.DecFormat(
+                                    CastAide.AsDecimal(data.LineTotalReal) - CastAide.AsDecimal(data.LineTotalVirtual),
+                                    2);
+                            break;
+
+                    }
+                    #endregion
+
+                    #region 3rd
+                    switch (bettype)
+                    {
+                        case 150:
+                            typename = "FI 3rd-Party";
+                            break;
+                        case 400:
+                            typename = "8RM";
+                            break;
+                        case 401:
+                            typename = utilsBARM.DisplayName;
+                            break;
+                        case 71:
+                            typename = "CASINO";
+                            break; //CASINO- 71 
+                        case 18999:
+                            typename = "Kick Off";
+                            break;
+                        case 1000:
+                            typename = "P2P";
+                            break;
+                        case 29:
+                            typename = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "systemParlay");
+                            break;
+                        default:
+                            if (CastAide.AsInt32(dataRow["bettype"]) == 85 || CastAide.AsInt32(dataRow["bettype"]) == 86)
+                                typename = CacheRef.GetBettype(dataRow["bettype"]) + " (NumberGame)";
+                            //else if (CastAide.AsInt32(dataRow["bettype"]) >= 1201 && CastAide.AsInt32(dataRow["bettype"]) <= 1224)
+                            //    typename = CacheRef.GetBettype(dataRow["bettype"]) + " (Virtual Sports)";
+                            else
+                                typename = CacheRef.GetBettype(dataRow["bettype"]);
+                            break;
+                    }
+                    data.bettypeId = dataRow["bettype"].ToString();
+                    typename += " " + dataRow["Hedge"];
+                    data.bettype = typename;
+                    #endregion
+
+                    wLbyBettype.Items.Add(data);
+                }
+
+                #region Total
+                data = new WLbyBettype();
+                data.bettype = "Grand Total";
+
+                data.LineTotal_soccer_live =
+                    NumberFormat.DecFormat(dataTable.Compute("sum(LineTotal_soccer_live)", ""), 2);
+                data.LineTotal_soccer =
+                    NumberFormat.DecFormat(dataTable.Compute("sum(LineTotal_soccer)", ""), 2);
+                data.LineTotal_others_live =
+                    NumberFormat.DecFormat(dataTable.Compute("sum(LineTotal_others_live)", ""), 2);
+                data.LineTotal_others =
+                    NumberFormat.DecFormat(dataTable.Compute("sum(LineTotal_others)", ""), 2);
+
+                data.VirtualLineTotal_soccer_live = NumberFormat.DecFormat(wLbyBettype.Items.Where(s => s.VirtualLineTotal_soccer_live != "N/A").Sum(
+                           s => CastAide.AsDecimal(s.VirtualLineTotal_soccer_live)), 2);
+                data.VirtualLineTotal_soccer = NumberFormat.DecFormat(wLbyBettype.Items.Where(s => s.VirtualLineTotal_soccer != "N/A").Sum(
+                           s => CastAide.AsDecimal(s.VirtualLineTotal_soccer)), 2);
+                data.VirtualLineTotal_others_live = NumberFormat.DecFormat(wLbyBettype.Items.Where(s => s.VirtualLineTotal_others_live != "N/A").Sum(
+                           s => CastAide.AsDecimal(s.VirtualLineTotal_others_live)), 2);
+                data.VirtualLineTotal_others = NumberFormat.DecFormat(wLbyBettype.Items.Where(s => s.VirtualLineTotal_others != "N/A").Sum(
+                            s => CastAide.AsDecimal(s.VirtualLineTotal_others)), 2);
+                data.LineTotalReal = NumberFormat.DecFormat(
+                    CastAide.AsDecimal(dataTable.Compute("sum(LineTotal_soccer_live)", "")) +
+                    CastAide.AsDecimal(dataTable.Compute("sum(LineTotal_soccer)", "")) +
+                    CastAide.AsDecimal(dataTable.Compute("sum(LineTotal_others_live)", "")) +
+                    CastAide.AsDecimal(dataTable.Compute("sum(LineTotal_others)", ""))
+                    , 2);
+                data.LineTotalVirtual = NumberFormat.DecFormat(
+                    CastAide.AsDecimal(data.VirtualLineTotal_soccer_live) +
+                    CastAide.AsDecimal(data.VirtualLineTotal_soccer) +
+                    CastAide.AsDecimal(data.VirtualLineTotal_others_live) +
+                    CastAide.AsDecimal(data.VirtualLineTotal_others)
+                    , 2);
+                data.Variance =
+                    NumberFormat.DecFormat(
+                        wLbyBettype.Items.Where(s => s.LineTotalVirtual != "N/A").Sum(
+                            s => CastAide.AsDecimal(s.LineTotalReal))
+                        -
+                        wLbyBettype.Items.Where(s => s.LineTotalVirtual != "N/A").Sum(
+                            s => CastAide.AsDecimal(s.LineTotalVirtual)), 2);
+
+                data.IsTotal = true;
+                wLbyBettype.Total = data;
+                #endregion
+
+            }
+            catch (Exception)
+            {
+            
+            }
+
+            AppSession.AddSession(System.Web.HttpContext.Current.Session, keySelObjMatchWLByBettype, wLbyBettype);
+            return wLbyBettype;
+        }
+        #endregion
+
+        #region SelDataFromDB
+        private void SelDataFromDB(DateTime wldate, ref DataTable dataTable1, ref DataTable dataTable2)
+        {
+            DbResult result = _matchWl2aDao.MatchWLNEW(wldate);
+            if (result != null)
+            {
+
+                dataTable1 = result.ResultSet.Tables[0];
+                dataTable2 = result.ResultSet.Tables[1];
+                string _8rm = NumberFormat.DecFormat(result.Outputs["winlost_8rm"], 2);
+                string _barm = utilsBARM.IsActive ? NumberFormat.DecFormat(result.Outputs["winlost_barm"], 2) : "0.00";
+
+                AppSession.AddSession(System.Web.HttpContext.Current.Session, keySelDataMatchWLBySport, dataTable1);
+                AppSession.AddSession(System.Web.HttpContext.Current.Session, keySelDataMatchWL3rd_Footer, dataTable2);
+                AppSession.AddSession(System.Web.HttpContext.Current.Session, keySelMatchWL8RM, _8rm);
+                AppSession.AddSession(System.Web.HttpContext.Current.Session, keySelMatchWLBARM, _barm);
+            }
+        }
+        #endregion
+
+        #region SelDataMatchWLBySportAndFooter
+        private void SelDataMatchWLBySportAndFooter(DateTime wldate, bool IsFromCache, ref DataTable dataTable1, ref DataTable dataTable2)
+        {
+            if(!IsFromCache)
+            {
+                SelDataFromDB(wldate, ref dataTable1, ref dataTable2);
+            }
+            else
+            {
+                dataTable1 = AppSession.GetSession(System.Web.HttpContext.Current.Session, keySelDataMatchWLBySport) as DataTable;
+                dataTable2 = AppSession.GetSession(System.Web.HttpContext.Current.Session, keySelDataMatchWL3rd_Footer) as DataTable;
+
+                if(dataTable1 == null || dataTable2 == null)
+                {
+                    SelDataFromDB(wldate, ref dataTable1, ref dataTable2); 
+                }
+            }
+        }
+        #endregion
+
+        #region SelObjMatchWLBySport
+        private MatchWLBySportDTO SelObjMatchWLBySport(DateTime wldate, bool IsFromCache)
+        {
+            MatchWLBySportDTO wlBySport = new MatchWLBySportDTO();
+            wlBySport.Items = new List<MatchWL2aBySport>();
+            try
+            {
+                DataTable dataTable1 = new DataTable();
+                DataTable dataTable2 = new DataTable();
+
+                SelDataMatchWLBySportAndFooter(wldate, IsFromCache, ref dataTable1, ref  dataTable2);
+
+                List<string> sports =
+                    dataTable1.AsEnumerable().Select(s => CastAide.AsString(s["leaguenametc"])).Distinct().ToList();
+
+
+                foreach (string sport in sports)
+                {
+                    MatchWL2aBySport matchWl2ABySport = new MatchWL2aBySport();
+
+                    //List<MatchWL2aBONEW> TotalBySport = new List<MatchWL2aBONEW>();
+                    MatchWL2aBONEWCalc TotalBySport = new MatchWL2aBONEWCalc();
+
+                    #region each sport
+                    matchWl2ABySport.Items = new List<MatchWL2aByBettype>();
+                    matchWl2ABySport.Total = new MatchWL2aBONEW();
+
+                    List<int> bettypes =
+                        dataTable1.AsEnumerable().Where(s => CastAide.AsString(s["leaguenametc"]) == sport).Select(
+                            s => CastAide.AsInt32(s["bettype"])).Distinct().ToList();
+
+
+                    foreach (int bettype in bettypes)
+                    {
+                        MatchWL2aByBettype matchWl2AByBettype = new MatchWL2aByBettype();
+
+                        #region each bettype
+                        matchWl2AByBettype.Items = new List<MatchWL2aByLiveIndicator>();
+                        matchWl2AByBettype.TotalRow = dataTable1.AsEnumerable().Where(
+                            s =>
+                            CastAide.AsString(s["leaguenametc"]) == sport &&
+                            CastAide.AsInt32(s["bettype"]) == bettype).Count();
+                                    
+
+                        List<int> liveindicators = new List<int>(new int[] { 1, 0 });
+                        
+                        foreach (int liveindicator in liveindicators)
+                        {
+                            MatchWL2aByLiveIndicator matchWl2AByLiveIndicator = new MatchWL2aByLiveIndicator();
+                            MatchWL2aBONEWCalc TotalByLiveindicator = new MatchWL2aBONEWCalc();
+
+                            #region each liveindicator
+                            matchWl2AByLiveIndicator.Items = new List<MatchWL2aBONEW>();
+
+                            var rows =
+                                dataTable1.AsEnumerable().Where(
+                                    s =>
+                                    CastAide.AsString(s["leaguenametc"]) == sport &&
+                                    CastAide.AsInt32(s["bettype"]) == bettype &&
+                                    CastAide.AsInt32(s["liveindicator"]) == liveindicator).Select(s => s);
+                            
+                            foreach (DataRow dataRow in rows)
+                            {
+                                
+                                #region earch row
+                                MatchWL2aBONEW data = new MatchWL2aBONEW();
+                                data.matchcode = CastAide.AsString(dataRow["matchcode"]);
+                                data.eventdate = CastAide.AsDateTime(dataRow["eventdate"]).ToShortDateString();
+                                data.kickofftime = CastAide.AsDateTime(dataRow["kickofftime"]).ToShortTimeString();
+                                data.liveindicator = CastAide.AsBoolean(dataRow["liveindicator"]);
+                                data.bettype = CacheRef.GetBettype(dataRow["bettype"]);
+                                data.homename = CacheRef.GetTeamName(dataRow["homeid"]);
+                                data.awayname = CacheRef.GetTeamName(dataRow["awayid"]);
+                                data.winlost = NumberFormat.DecFormat(dataRow["winlost"], 2);
+                                data.pos = NumberFormat.DecFormat(dataRow["pos"], 2);
+                                data.comm = NumberFormat.DecFormat(dataRow["comm"], 2);
+                                data.VirtualComm = NumberFormat.DecFormat(dataRow["virtualcomm"], 2);
+                                data.LineTotal = NumberFormat.DecFormat(dataRow["linetotal"], 2);
+                                data.VirtualLineTotal = NumberFormat.DecFormat(dataRow["VirtualLineTotal"], 2);
+                                data.leaguenametc = CastAide.AsString(dataRow["leaguenametc"]);
+                                data.IsNeutral = CastAide.AsBoolean(dataRow["IsNeutral"]);
+                                data.variance = NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["linetotal"]) - CastAide.AsDecimal(dataRow["VirtualLineTotal"]), 2);
+
+                                matchWl2AByLiveIndicator.Items.Add(data);
+
+                                TotalByLiveindicator.comm += CastAide.AsDecimal(data.comm);
+                                TotalByLiveindicator.VirtualComm += CastAide.AsDecimal(data.VirtualComm);
+                                TotalByLiveindicator.LineTotal += CastAide.AsDecimal(data.LineTotal);
+                                TotalByLiveindicator.VirtualLineTotal += CastAide.AsDecimal(data.VirtualLineTotal);
+
+                                TotalBySport.comm += CastAide.AsDecimal(data.comm);
+                                TotalBySport.VirtualComm += CastAide.AsDecimal(data.VirtualComm);
+                                TotalBySport.LineTotal += CastAide.AsDecimal(data.LineTotal);
+                                TotalBySport.VirtualLineTotal += CastAide.AsDecimal(data.VirtualLineTotal);
+                                
+
+                                #endregion
+                            }
+                            
+                            #endregion
+                            if (rows.Count() > 0)
+                            {
+                                #region Total matchWl2AByLiveIndicator
+
+                                matchWl2AByLiveIndicator.Total = new MatchWL2aBONEW()
+                                {
+                                    homename = "TOTAL",
+                                    comm = NumberFormat.DecFormat(TotalByLiveindicator.comm, 2),
+                                    VirtualComm = NumberFormat.DecFormat(TotalByLiveindicator.VirtualComm, 2),
+                                    LineTotal = NumberFormat.DecFormat(TotalByLiveindicator.LineTotal, 2),
+                                    VirtualLineTotal = NumberFormat.DecFormat(TotalByLiveindicator.VirtualLineTotal, 2),
+                                    variance = NumberFormat.DecFormat(CastAide.AsDecimal(TotalByLiveindicator.LineTotal) - CastAide.AsDecimal(TotalByLiveindicator.VirtualLineTotal), 2)
+                                };
+                                #endregion
+                                matchWl2AByBettype.Items.Add(matchWl2AByLiveIndicator);
+                            }
+                        }
+                        #endregion
+
+                        matchWl2ABySport.Items.Add(matchWl2AByBettype);
+
+                    }
+                    #endregion
+
+                    #region Total on each Sport
+                    matchWl2ABySport.Total = new MatchWL2aBONEW()
+                    {
+                        homename = sport + " TOTAL",
+                        comm = NumberFormat.DecFormat(TotalBySport.comm, 2),
+                        VirtualComm = NumberFormat.DecFormat(TotalBySport.VirtualComm, 2),
+                        LineTotal = NumberFormat.DecFormat(TotalBySport.LineTotal, 2),
+                        VirtualLineTotal = NumberFormat.DecFormat(TotalBySport.VirtualLineTotal, 2),
+                        variance = NumberFormat.DecFormat(TotalBySport.LineTotal - TotalBySport.VirtualLineTotal, 2)
+                    };
+                    #endregion
+
+                    wlBySport.Items.Add(matchWl2ABySport);
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            AppSession.AddSession(System.Web.HttpContext.Current.Session, keySelObjMatchWLBySport, wlBySport);
+            return wlBySport;
+        }
+        #endregion
+
+        #region SelMatchWLBySport
+        public MatchWLBySportDTO SelMatchWLBySport(DateTime wldate, int currIndex, int currIndexBtype)
+        {
+            MatchWLBySportDTO objReturn = new MatchWLBySportDTO();
+            objReturn.Items = new List<MatchWL2aBySport>();
+            bool IsFromCache = true;
+            if (currIndex == 0 && currIndexBtype == 0)
+                IsFromCache = false;
+            int maxRows = CastAide.AsInt32( System.Configuration.ConfigurationManager.AppSettings["MaxRowPerRequest"],1000);
+            
+            
+            MatchWLBySportDTO wlBySport = new MatchWLBySportDTO();
+            var obj =
+                AppSession.GetSession(System.Web.HttpContext.Current.Session, keySelObjMatchWLBySport);
+            if (obj == null || !IsFromCache)
+            {
+                wlBySport = SelObjMatchWLBySport(wldate, IsFromCache);
+            }
+            else
+            {
+                wlBySport = obj as MatchWLBySportDTO;
+            }
+            if ( currIndex < 0 || currIndex >= wlBySport.Items.Count)
+            {
+                objReturn.NextIndex = -1;// if NextIndex < 0 then stop calling this service
+            }
+            else
+            {
+                var sport = wlBySport.Items[currIndex];
+                
+                List<MatchWL2aByBettype> bettypes = new List<MatchWL2aByBettype>();
+                MatchWL2aBySport _sport = new MatchWL2aBySport();
+                _sport.Items = new List<MatchWL2aByBettype>();
+                
+
+                int totalRow = 0;
+                
+                for (int i = currIndexBtype; i < sport.Items.Count;i++ )
+                {
+                    MatchWL2aByBettype bettype = sport.Items[i];
+                    totalRow += bettype.TotalRow;
+
+                    if (totalRow <= ((i == currIndexBtype && totalRow > maxRows) ? totalRow : maxRows))
+                    {
+                        _sport.Items.Add(bettype);
+
+                        if (i == sport.Items.Count - 1) // finished bettype in a sport
+                        {
+                            objReturn.NextBtypeIndex = 0;// if NextBtypeIndex = 0 then stop calling this service
+                            objReturn.NextIndex = currIndex + 1;
+
+                            _sport.Total = new MatchWL2aBONEW();
+                            _sport.Total = sport.Total;
+
+                            if(currIndex == wlBySport.Items.Count -1)
+                            {
+                                objReturn.NextIndex = -1;// if NextIndex < 0 then stop calling this service
+                            }
+                        }
+                    }
+                    else// remain bettype in a sport
+                    {
+                        objReturn.NextBtypeIndex = i;
+                        objReturn.NextIndex = currIndex;
+                        break;
+                    }
+                }
+                
+                objReturn.Item = _sport;
+            }
+
+
+            return objReturn;
+        }
+        #endregion
+
+
+        #region SelMatchWl3RdFooter Members
+
+
+        public MatchWLFooterDTO SelMatchWl3RdFooter(DateTime wldate)
+        {
+            MatchWLFooterDTO matchWl3RdFooter = new MatchWLFooterDTO();
+            matchWl3RdFooter.GrandTotal1 = new MatchWL2aBONEW();
+            matchWl3RdFooter.GrandTotal2 = new MatchWL2aBONEW();
+            matchWl3RdFooter.Items = new List<MatchWL2aBONEW>();
+            
+            try
+            {
+                DataTable dataTable1 = new DataTable();
+                DataTable dataTable2 = new DataTable();
+                var obj1 = AppSession.GetSession(System.Web.HttpContext.Current.Session, keySelDataMatchWLBySport);
+                var obj2 = AppSession.GetSession(System.Web.HttpContext.Current.Session, keySelDataMatchWL3rd_Footer);
+
+                if(obj1 == null || obj2 == null)
+                {
+                    SelDataMatchWLBySportAndFooter(wldate, true, ref dataTable1, ref dataTable2);
+                }
+                else
+                {
+                    dataTable1 = obj1 as DataTable;
+                    dataTable2 = obj2 as DataTable;
+                }
+
+                #region Comm	Virtual Comm	Line Total	Virtual Line Total	Variance
+                matchWl3RdFooter.GrandTotal1 = new MatchWL2aBONEW()
+                                                   {
+                                                       homename = "GRAND TOTAL:",
+                                                       comm = NumberFormat.DecFormat( dataTable1.AsEnumerable().Sum(s => CastAide.AsDecimal( s["comm"])),2),
+                                                       VirtualComm = NumberFormat.DecFormat(dataTable1.AsEnumerable().Sum(s => CastAide.AsDecimal(s["virtualcomm"])), 2),
+                                                       LineTotal = NumberFormat.DecFormat(dataTable1.AsEnumerable().Sum(s => CastAide.AsDecimal(s["linetotal"])), 2),
+                                                       VirtualLineTotal = NumberFormat.DecFormat(dataTable1.AsEnumerable().Sum(s => CastAide.AsDecimal(s["VirtualLineTotal"])), 2),
+                                                       variance = NumberFormat.DecFormat(dataTable1.AsEnumerable().Sum(s => CastAide.AsDecimal(s["linetotal"])) - dataTable1.AsEnumerable().Sum(s => CastAide.AsDecimal(s["VirtualLineTotal"])), 2),
+                                                   };
+                #endregion
+
+                #region 8rm
+                matchWl3RdFooter.wl8rm = AppSession.GetSession(System.Web.HttpContext.Current.Session, keySelMatchWL8RM) as string;
+                matchWl3RdFooter.wlBARM = AppSession.GetSession(System.Web.HttpContext.Current.Session, keySelMatchWLBARM) as string;
+                #endregion
+
+                #region list 3rd
+                foreach (DataRow dataRow in dataTable2.Rows)
+                {
+                    MatchWL2aBONEW data = new MatchWL2aBONEW();
+
+                    data = new MatchWL2aBONEW();
+                    data.eventdate = CastAide.AsDateTime(dataRow["winlostdate"]).ToShortDateString();
+                    data.bettype = CastAide.AsString(dataRow["bettype"]);
+                    data.winlost = NumberFormat.DecFormat(dataRow["winlost"], 2);
+                    data.pos = NumberFormat.DecFormat(dataRow["pos"], 2);
+                    data.comm = NumberFormat.DecFormat(dataRow["comm"], 2);
+                    data.VirtualComm = NumberFormat.DecFormat(dataRow["VirtualComm"], 2);
+                    data.LineTotal = NumberFormat.DecFormat(dataRow["LineTotal"], 2);
+                    data.VirtualLineTotal = NumberFormat.DecFormat(dataRow["VirtualLineTotal"], 2);
+                    data.variance = NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["linetotal"]) - CastAide.AsDecimal(dataRow["VirtualLineTotal"]), 2);
+                    data.type3rd = 1;//don't display link, just colspan column home-vs-away
+
+                    if (data.bettype.ToLower().Equals("casino") || data.bettype.ToLower().Equals("p2p"))
+                    {
+                        data.type3rd = 2;//display link
+                        data.VirtualComm = "N/A";
+                        data.VirtualLineTotal = "N/A";
+                        data.variance = "N/A";
+                    }
+                    if (data.bettype.ToLower().Equals("racing") || data.bettype.ToLower().Equals("live casino") || data.bettype.ToLower().Equals("virtual sports") || data.bettype.ToLower().Equals("bingo"))
+                    {
+                        data.type3rd = 1;//don't display link, just colspan column home-vs-away
+                        data.VirtualComm = "N/A";
+                        data.VirtualLineTotal = "N/A";
+                        data.variance = "N/A";
+                    }
+                    matchWl3RdFooter.Items.Add(data);
+                }
+                #endregion
+
+                #region grand Total
+                matchWl3RdFooter.GrandTotal2 = new MatchWL2aBONEW()
+                                                   {
+                                                       homename = "GRAND TOTAL:",
+                                                       comm = NumberFormat.DecFormat( CastAide.AsDecimal(matchWl3RdFooter.GrandTotal1.comm) + matchWl3RdFooter.Items.Sum(s=>CastAide.AsDecimal( s.comm)),2),
+                                                       VirtualComm = NumberFormat.DecFormat(CastAide.AsDecimal(matchWl3RdFooter.GrandTotal1.VirtualComm) + matchWl3RdFooter.Items.Sum(s => CastAide.AsDecimal(s.VirtualComm)), 2),
+                                                       LineTotal = NumberFormat.DecFormat(CastAide.AsDecimal(matchWl3RdFooter.GrandTotal1.LineTotal) + matchWl3RdFooter.Items.Sum(s => CastAide.AsDecimal(s.LineTotal)) + (utilsBARM.IsActive ? CastAide.AsDecimal(matchWl3RdFooter.wlBARM) : 0) + CastAide.AsDecimal(matchWl3RdFooter.wl8rm), 2),
+                                                       VirtualLineTotal = NumberFormat.DecFormat(CastAide.AsDecimal(matchWl3RdFooter.GrandTotal1.VirtualLineTotal) + matchWl3RdFooter.Items.Sum(s => CastAide.AsDecimal(s.VirtualLineTotal)) + (utilsBARM.IsActive ? CastAide.AsDecimal(matchWl3RdFooter.wlBARM) : 0) + CastAide.AsDecimal(matchWl3RdFooter.wl8rm), 2),
+                                                       variance = NumberFormat.DecFormat(CastAide.AsDecimal(matchWl3RdFooter.GrandTotal1.variance) + matchWl3RdFooter.Items.Sum(s=>CastAide.AsDecimal( s.variance)), 2),
+  
+                                                   };
+                #endregion
+            }
+            catch (Exception exception)
+            {
+                
+            }
+
+            AppSession.AddSession(System.Web.HttpContext.Current.Session, keySelObjMatchWl3RdFooter, matchWl3RdFooter);
+            return matchWl3RdFooter;
+        }
+
+        #endregion
+
+        #region ExportMatchWL Members
+
+        private void AssignWLbyBettypeExport(ref ExcelWorksheet ws, ref int indexRow, List<WLbyBettype> list, bool IsTotal, int r, int g, int b)
+        {
+            var gembox = new ExcelGemboxUtils();
+            foreach (WLbyBettype data in list)
+            {
+                if (CastAide.AsInt32(data.bettypeId) == 1201 || CastAide.AsInt32(data.bettypeId) == 1203 || CastAide.AsInt32(data.bettypeId) == 1204 || CastAide.AsInt32(data.bettypeId) == 1205 || CastAide.AsInt32(data.bettypeId) == 1206 || CastAide.AsInt32(data.bettypeId) == 1224)
+                {
+                    ws.Cells[indexRow, 0].Value = data.bettype +" (Virtual Sports)";
+                }
+                else
+                    ws.Cells[indexRow, 0].Value = data.bettype;
+                ws.Cells[indexRow, 0].Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Center, IsTotal);
+
+                ws.Cells[indexRow, 1].Value = CastAide.AsDecimal(data.LineTotal_soccer_live);
+                ws.Cells[indexRow, 1].Style = gembox.GetStyleNumber(0, "", r, g, b, IsTotal);
+                if (data.VirtualLineTotal_soccer_live == "N/A")
+                {
+                    ws.Cells[indexRow, 2].Value = "N/A";
+                    ws.Cells[indexRow, 2].Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Right, IsTotal);
+                }
+                else
+                {
+                    ws.Cells[indexRow, 2].Value = CastAide.AsDecimal(data.VirtualLineTotal_soccer_live);
+                    ws.Cells[indexRow, 2].Style = gembox.GetStyleNumber(0, "", r, g, b, IsTotal);
+                }
+
+                ws.Cells[indexRow, 3].Value = CastAide.AsDecimal(data.LineTotal_soccer);
+                ws.Cells[indexRow, 3].Style = gembox.GetStyleNumber(0, "", r, g, b, IsTotal);
+                if (data.VirtualLineTotal_soccer == "N/A")
+                {
+                    ws.Cells[indexRow, 4].Value = "N/A";
+                    ws.Cells[indexRow, 4].Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Right, IsTotal);
+                }
+                else
+                {
+                    ws.Cells[indexRow, 4].Value = CastAide.AsDecimal(data.VirtualLineTotal_soccer);
+                    ws.Cells[indexRow, 4].Style = gembox.GetStyleNumber(0, "", r, g, b, IsTotal);
+                }
+
+                ws.Cells[indexRow, 5].Value = CastAide.AsDecimal(data.LineTotal_others_live);
+                ws.Cells[indexRow, 5].Style = gembox.GetStyleNumber(0, "", r, g, b, IsTotal);
+                if (data.VirtualLineTotal_others_live == "N/A")
+                {
+                    ws.Cells[indexRow, 6].Value = "N/A";
+                    ws.Cells[indexRow, 6].Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Right, IsTotal);
+                }
+                else
+                {
+                    ws.Cells[indexRow, 6].Value = CastAide.AsDecimal(data.VirtualLineTotal_others_live);
+                    ws.Cells[indexRow, 6].Style = gembox.GetStyleNumber(0, "", r, g, b, IsTotal);
+                }
+
+                ws.Cells[indexRow, 7].Value = CastAide.AsDecimal(data.LineTotal_others);
+                ws.Cells[indexRow, 7].Style = gembox.GetStyleNumber(0, "", r, g, b, IsTotal);
+                if (data.VirtualLineTotal_others == "N/A")
+                {
+                    ws.Cells[indexRow, 8].Value = "N/A";
+                    ws.Cells[indexRow, 8].Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Right, IsTotal);
+                }
+                else
+                {
+                    ws.Cells[indexRow, 8].Value = CastAide.AsDecimal(data.VirtualLineTotal_others);
+                    ws.Cells[indexRow, 8].Style = gembox.GetStyleNumber(0, "", r, g, b, IsTotal);
+                }
+
+                ws.Cells[indexRow, 9].Value = CastAide.AsDecimal(data.LineTotalReal);
+                ws.Cells[indexRow, 9].Style = gembox.GetStyleNumber(0, "", r, g, b, IsTotal);
+                if (data.LineTotalVirtual == "N/A")
+                {
+                    ws.Cells[indexRow, 10].Value = "N/A";
+                    ws.Cells[indexRow, 10].Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Right, IsTotal);
+                }
+                else
+                {
+                    ws.Cells[indexRow, 10].Value = CastAide.AsDecimal(data.LineTotalVirtual);
+                    ws.Cells[indexRow, 10].Style = gembox.GetStyleNumber(0, "", r, g, b, IsTotal);
+                }
+
+                if (data.Variance == "N/A")
+                {
+                    ws.Cells[indexRow, 11].Value = "N/A";
+                    ws.Cells[indexRow, 11].Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Right, IsTotal);
+                }
+                else
+                {
+                    ws.Cells[indexRow, 11].Value = CastAide.AsDecimal(data.Variance);
+                    ws.Cells[indexRow, 11].Style = gembox.GetStyleNumber(0, "", r, g, b, IsTotal);
+                }
+
+                indexRow++;
+            }
+        }
+        public ExcelFile ExportMatchWL(ref bool hasData)
+        {
+            ExcelFile excelFile = new ExcelFile();
+            try
+            {
+                var gembox = new ExcelGemboxUtils();
+
+                ExcelWorksheetCollection worksheets = excelFile.Worksheets;
+                ExcelWorksheet ws = null;
+                string tag = "Match Winlost 2a";
+                ws = worksheets.Add(tag);
+                int indexRow = 0;
+
+                #region WLbyBettype
+                #region header
+                ws.Cells.GetSubrangeAbsolute(0, 0, 1, 0).Value = "Bet Type";
+                ws.Cells.GetSubrangeAbsolute(0, 0, 1, 0).Style = gembox.GetStyleTitle(181, 196, 208);
+                ws.Cells.GetSubrangeAbsolute(0, 0, 1, 0).Merged = true;
+
+                ws.Cells.GetSubrangeAbsolute(0, 1, 0, 2).Value = "Soccer Live";
+                ws.Cells.GetSubrangeAbsolute(0, 1, 0, 2).Style = gembox.GetStyleTitle(181, 196, 208);
+                ws.Cells.GetSubrangeAbsolute(0, 1, 0, 2).Merged = true;
+                ws.Cells[1, 1].Value = "Real";
+                ws.Cells[1, 1].Style = gembox.GetStyleTitle(181, 196, 208);
+                ws.Cells[1, 2].Value = "Virtual";
+                ws.Cells[1, 2].Style = gembox.GetStyleTitle(181, 196, 208);
+
+                ws.Cells.GetSubrangeAbsolute(0, 3, 0, 4).Value = "Soccer Non-Live";
+                ws.Cells.GetSubrangeAbsolute(0, 3, 0, 4).Style = gembox.GetStyleTitle(181, 196, 208);
+                ws.Cells.GetSubrangeAbsolute(0, 3, 0, 4).Merged = true;
+                ws.Cells[1, 3].Value = "Real";
+                ws.Cells[1, 3].Style = gembox.GetStyleTitle(181, 196, 208);
+                ws.Cells[1, 4].Value = "Virtual";
+                ws.Cells[1, 4].Style = gembox.GetStyleTitle(181, 196, 208);
+
+                ws.Cells.GetSubrangeAbsolute(0, 5, 0, 6).Value = "Other Live";
+                ws.Cells.GetSubrangeAbsolute(0, 5, 0, 6).Style = gembox.GetStyleTitle(181, 196, 208);
+                ws.Cells.GetSubrangeAbsolute(0, 5, 0, 6).Merged = true;
+                ws.Cells[1, 5].Value = "Real";
+                ws.Cells[1, 5].Style = gembox.GetStyleTitle(181, 196, 208);
+                ws.Cells[1, 6].Value = "Virtual";
+                ws.Cells[1, 6].Style = gembox.GetStyleTitle(181, 196, 208);
+
+                ws.Cells.GetSubrangeAbsolute(0, 7, 0, 8).Value = "Other Non-Live";
+                ws.Cells.GetSubrangeAbsolute(0, 7, 0, 8).Style = gembox.GetStyleTitle(181, 196, 208);
+                ws.Cells.GetSubrangeAbsolute(0, 7, 0, 8).Merged = true;
+                ws.Cells[1, 7].Value = "Real";
+                ws.Cells[1, 7].Style = gembox.GetStyleTitle(181, 196, 208);
+                ws.Cells[1, 8].Value = "Virtual";
+                ws.Cells[1, 8].Style = gembox.GetStyleTitle(181, 196, 208);
+
+                ws.Cells.GetSubrangeAbsolute(0, 9, 0, 10).Value = "Line Total";
+                ws.Cells.GetSubrangeAbsolute(0, 9, 0, 10).Style = gembox.GetStyleTitle(181, 196, 208);
+                ws.Cells.GetSubrangeAbsolute(0, 9, 0, 10).Merged = true;
+                ws.Cells[1, 9].Value = "Real";
+                ws.Cells[1, 9].Style = gembox.GetStyleTitle(181, 196, 208);
+                ws.Cells[1, 10].Value = "Virtual";
+                ws.Cells[1, 10].Style = gembox.GetStyleTitle(181, 196, 208);
+
+                ws.Cells.GetSubrangeAbsolute(0, 11, 1, 11).Value = "Variance";
+                ws.Cells.GetSubrangeAbsolute(0, 11, 1, 11).Style = gembox.GetStyleTitle(181, 196, 208);
+                ws.Cells.GetSubrangeAbsolute(0, 11, 1, 11).Merged = true;
+                #endregion
+
+                #region content
+                indexRow = 2;
+                WLbyBettypeDTO wLbyBettypeDto =
+                    AppSession.GetSession(System.Web.HttpContext.Current.Session, keySelObjMatchWLByBettype) as
+                    WLbyBettypeDTO;
+                
+                int r = 230, g = 233, b = 240;
+                AssignWLbyBettypeExport(ref ws, ref indexRow, wLbyBettypeDto.Items, false, r, g, b);
+
+                List<WLbyBettype> listWLbyBettypeTotal = new List<WLbyBettype>();
+                listWLbyBettypeTotal.Add(wLbyBettypeDto.Total);
+                r = 136; g = 170; b = 255;
+                AssignWLbyBettypeExport(ref ws, ref indexRow, listWLbyBettypeTotal, true, r, g, b);
+
+
+                #endregion
+                #endregion
+
+                indexRow = indexRow + 2;
+
+                #region MatchWL
+                #region header
+                ws.Cells[indexRow, 0].Value = "Bet Type";
+                ws.Cells[indexRow, 0].Style = gembox.GetStyleTitle(181, 196, 208);
+
+                ws.Cells[indexRow, 1].Value = "Date";
+                ws.Cells[indexRow, 1].Style = gembox.GetStyleTitle(181, 196, 208);
+
+                ws.Cells.GetSubrangeAbsolute(indexRow, 2, indexRow, 4).Value = "Match";
+                ws.Cells.GetSubrangeAbsolute(indexRow, 2, indexRow, 4).Style = gembox.GetStyleTextTotal(181, 196, 208);
+                ws.Cells.GetSubrangeAbsolute(indexRow, 2, indexRow, 4).Merged = true;
+
+                ws.Cells[indexRow, 5].Value = "Winloss";
+                ws.Cells[indexRow, 5].Style = gembox.GetStyleTitle(181, 196, 208);
+
+                ws.Cells[indexRow, 6].Value = "Position";
+                ws.Cells[indexRow, 6].Style = gembox.GetStyleTitle(181, 196, 208);
+
+                ws.Cells[indexRow, 7].Value = "Comm";
+                ws.Cells[indexRow, 7].Style = gembox.GetStyleTitle(181, 196, 208);
+
+                ws.Cells[indexRow, 8].Value = "Virtual Comm";
+                ws.Cells[indexRow, 8].Style = gembox.GetStyleTitle(181, 196, 208);
+
+                ws.Cells[indexRow, 9].Value = "Line Total";
+                ws.Cells[indexRow, 9].Style = gembox.GetStyleTitle(181, 196, 208);
+
+                ws.Cells[indexRow, 10].Value = "Virtual Line Total";
+                ws.Cells[indexRow, 10].Style = gembox.GetStyleTitle(181, 196, 208);
+
+                ws.Cells[indexRow, 11].Value = "Variance";
+                ws.Cells[indexRow, 11].Style = gembox.GetStyleTitle(181, 196, 208);
+                indexRow++;
+                #endregion
+
+                #region content
+
+                MatchWLBySportDTO listMatchWL = AppSession.GetSession(System.Web.HttpContext.Current.Session, keySelObjMatchWLBySport) as MatchWLBySportDTO;
+                r = 230; g = 233; b = 240;
+                foreach (MatchWL2aBySport matchWl2aBos in listMatchWL.Items)
+                {
+                    foreach (MatchWL2aByBettype matchWl2AByBettype in matchWl2aBos.Items)
+                    {
+                        foreach (MatchWL2aByLiveIndicator matchWl2AByLiveIndicator in matchWl2AByBettype.Items)
+                        {
+                            foreach (MatchWL2aBONEW item in matchWl2AByLiveIndicator.Items)
+                            {
+                                #region each iteam
+                                r = 230; g = 233; b = 240;
+                                if (item.liveindicator)
+                                {
+                                    ws.Cells[indexRow, 0].Value = "!Live -";
+                                }
+                                ws.Cells[indexRow, 0].Value += item.bettype + " " + item.matchcode;
+                                ws.Cells[indexRow, 0].Style = gembox.GetStyleText(r, g, b);
+
+                                ws.Cells[indexRow, 1].Value = item.eventdate + " " + item.kickofftime;
+                                ws.Cells[indexRow, 1].Style = gembox.GetStyleText(r, g, b);
+
+                                ws.Cells.GetSubrangeAbsolute(indexRow, 2, indexRow, 4).Value = item.homename + "-vs-" + item.awayname;
+                                ws.Cells.GetSubrangeAbsolute(indexRow, 2, indexRow, 4).Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
+                                ws.Cells.GetSubrangeAbsolute(indexRow, 2, indexRow, 4).Merged = true;
+
+                                ws.Cells[indexRow, 5].Value = CastAide.AsDecimal(item.winlost);
+                                ws.Cells[indexRow, 5].Style = gembox.GetStyleNumber(0, "", r, g, b);
+
+                                ws.Cells[indexRow, 6].Value = CastAide.AsDecimal(item.pos);
+                                ws.Cells[indexRow, 6].Style = gembox.GetStyleNumber(0, "", r, g, b);
+
+                                ws.Cells[indexRow, 7].Value = CastAide.AsDecimal(item.comm);
+                                ws.Cells[indexRow, 7].Style = gembox.GetStyleNumber(0, "", r, g, b);
+
+                                ws.Cells[indexRow, 8].Value = CastAide.AsDecimal(item.VirtualComm);
+                                ws.Cells[indexRow, 8].Style = gembox.GetStyleNumber(0, "", r, g, b);
+
+                                ws.Cells[indexRow, 9].Value = CastAide.AsDecimal(item.LineTotal);
+                                ws.Cells[indexRow, 9].Style = gembox.GetStyleNumber(0, "", r, g, b);
+
+                                ws.Cells[indexRow, 10].Value = CastAide.AsDecimal(item.VirtualLineTotal);
+                                ws.Cells[indexRow, 10].Style = gembox.GetStyleNumber(0, "", r, g, b);
+
+                                ws.Cells[indexRow, 11].Value = CastAide.AsDecimal(item.variance);
+                                ws.Cells[indexRow, 11].Style = gembox.GetStyleNumber(0, "", r, g, b);
+                                #endregion
+
+                                indexRow++;
+                            }
+
+                            #region Total of each bettype - liveindicator
+                            r = 255; g = 238; b = 211;
+                            ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 6).Value = "TOTAL:";
+                            ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 6).Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Right, true);
+                            ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 6).Merged = true;
+
+                            ws.Cells[indexRow, 7].Value = CastAide.AsDecimal(matchWl2AByLiveIndicator.Total.comm);
+                            ws.Cells[indexRow, 7].Style = gembox.GetStyleNumber(0, "", r, g, b, true);
+
+                            ws.Cells[indexRow, 8].Value = CastAide.AsDecimal(matchWl2AByLiveIndicator.Total.VirtualComm);
+                            ws.Cells[indexRow, 8].Style = gembox.GetStyleNumber(0, "", r, g, b, true);
+
+                            ws.Cells[indexRow, 9].Value = CastAide.AsDecimal(matchWl2AByLiveIndicator.Total.LineTotal);
+                            ws.Cells[indexRow, 9].Style = gembox.GetStyleNumber(0, "", r, g, b, true);
+
+                            ws.Cells[indexRow, 10].Value = CastAide.AsDecimal(matchWl2AByLiveIndicator.Total.VirtualLineTotal);
+                            ws.Cells[indexRow, 10].Style = gembox.GetStyleNumber(0, "", r, g, b, true);
+
+                            ws.Cells[indexRow, 11].Value = CastAide.AsDecimal(matchWl2AByLiveIndicator.Total.variance);
+                            ws.Cells[indexRow, 11].Style = gembox.GetStyleNumber(0, "", r, g, b, true);
+
+                            indexRow++;
+
+                            #endregion
+                        }
+                    }
+
+                    #region Total of each sport
+                    r = 211; g = 255; b = 200;
+                    ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 6).Value = matchWl2aBos.Total.homename + ":";
+                    ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 6).Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Right, true);
+                    ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 6).Merged = true;
+
+                    ws.Cells[indexRow, 7].Value = CastAide.AsDecimal(matchWl2aBos.Total.comm);
+                    ws.Cells[indexRow, 7].Style = gembox.GetStyleNumber(0, "", r, g, b, true);
+
+                    ws.Cells[indexRow, 8].Value = CastAide.AsDecimal(matchWl2aBos.Total.VirtualComm);
+                    ws.Cells[indexRow, 8].Style = gembox.GetStyleNumber(0, "", r, g, b, true);
+
+                    ws.Cells[indexRow, 9].Value = CastAide.AsDecimal(matchWl2aBos.Total.LineTotal);
+                    ws.Cells[indexRow, 9].Style = gembox.GetStyleNumber(0, "", r, g, b, true);
+
+                    ws.Cells[indexRow, 10].Value = CastAide.AsDecimal(matchWl2aBos.Total.VirtualLineTotal);
+                    ws.Cells[indexRow, 10].Style = gembox.GetStyleNumber(0, "", r, g, b, true);
+
+                    ws.Cells[indexRow, 11].Value = CastAide.AsDecimal(matchWl2aBos.Total.variance);
+                    ws.Cells[indexRow, 11].Style = gembox.GetStyleNumber(0, "", r, g, b, true);
+
+                    indexRow++;
+
+                    #endregion
+                }
+
+                MatchWLFooterDTO matchWlFooterDto = AppSession.GetSession(System.Web.HttpContext.Current.Session, keySelObjMatchWl3RdFooter) as MatchWLFooterDTO;
+                
+                #region grand total1
+                r = 136; g = 170; b = 255;
+                ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 6).Value = "GRAND TOTAL:";
+                ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 6).Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Right, true);
+                ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 6).Merged = true;
+
+                ws.Cells[indexRow, 7].Value = CastAide.AsDecimal(matchWlFooterDto.GrandTotal1.comm);
+                ws.Cells[indexRow, 7].Style = gembox.GetStyleNumber(0, "", r, g, b, true);
+
+                ws.Cells[indexRow, 8].Value = CastAide.AsDecimal(matchWlFooterDto.GrandTotal1.VirtualComm);
+                ws.Cells[indexRow, 8].Style = gembox.GetStyleNumber(0, "", r, g, b, true);
+
+                ws.Cells[indexRow, 9].Value = CastAide.AsDecimal(matchWlFooterDto.GrandTotal1.LineTotal);
+                ws.Cells[indexRow, 9].Style = gembox.GetStyleNumber(0, "", r, g, b, true);
+
+                ws.Cells[indexRow, 10].Value = CastAide.AsDecimal(matchWlFooterDto.GrandTotal1.VirtualLineTotal);
+                ws.Cells[indexRow, 10].Style = gembox.GetStyleNumber(0, "", r, g, b, true);
+
+                ws.Cells[indexRow, 11].Value = CastAide.AsDecimal(matchWlFooterDto.GrandTotal1.variance);
+                ws.Cells[indexRow, 11].Style = gembox.GetStyleNumber(0, "", r, g, b, true);
+
+                indexRow++;
+
+                
+
+                #endregion
+
+                #region 8rm
+                r = 124; g = 152; b = 164;
+                ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 8).Value = "Total 8RM:";
+                ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 8).Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Right, true);
+                ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 8).Merged = true;
+
+                ws.Cells[indexRow, 9].Value = CastAide.AsDecimal(matchWlFooterDto.wl8rm);
+                ws.Cells[indexRow, 9].Style = gembox.GetStyleNumber(0, "", r, g, b, true);
+
+                ws.Cells[indexRow, 10].Value = CastAide.AsDecimal(matchWlFooterDto.wl8rm);
+                ws.Cells[indexRow, 10].Style = gembox.GetStyleNumber(0, "", r, g, b, true);
+
+                ws.Cells[indexRow, 11].Value = 0;
+                ws.Cells[indexRow, 11].Style = gembox.GetStyleNumber(0, "", r, g, b, false);
+                
+                indexRow++;
+
+                #endregion
+
+                #region BARM
+                if (utilsBARM.IsActive)
+                {
+                    r = 124;
+                    g = 152;
+                    b = 164;
+                    ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 8).Value = "Total " + utilsBARM.DisplayName + ":";
+                    ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 8).Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Right, true);
+                    ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 8).Merged = true;
+
+                    ws.Cells[indexRow, 9].Value = CastAide.AsDecimal(matchWlFooterDto.wlBARM);
+                    ws.Cells[indexRow, 9].Style = gembox.GetStyleNumber(0, "", r, g, b, true);
+
+                    ws.Cells[indexRow, 10].Value = CastAide.AsDecimal(matchWlFooterDto.wlBARM);
+                    ws.Cells[indexRow, 10].Style = gembox.GetStyleNumber(0, "", r, g, b, true);
+
+                    ws.Cells[indexRow, 11].Value = 0;
+                    ws.Cells[indexRow, 11].Style = gembox.GetStyleNumber(0, "", r, g, b, false);
+
+                    indexRow++;
+                }
+
+                #endregion
+
+                #region 3rd
+                foreach (MatchWL2aBONEW item in matchWlFooterDto.Items)
+                {
+                    r = 230; g = 233; b = 240;
+
+                    ws.Cells[indexRow, 0].Value = item.bettype;
+                    ws.Cells[indexRow, 0].Style = gembox.GetStyleText(r, g, b);
+
+                    ws.Cells[indexRow, 1].Value = item.eventdate;
+                    ws.Cells[indexRow, 1].Style = gembox.GetStyleText(r, g, b);
+
+                    ws.Cells.GetSubrangeAbsolute(indexRow, 2, indexRow, 4).Value = "";
+                    ws.Cells.GetSubrangeAbsolute(indexRow, 2, indexRow, 4).Style = gembox.GetStyleText(r, g, b);
+                    ws.Cells.GetSubrangeAbsolute(indexRow, 2, indexRow, 4).Merged = true;
+
+                    ws.Cells[indexRow, 5].Value = CastAide.AsDecimal(item.winlost);
+                    ws.Cells[indexRow, 5].Style = gembox.GetStyleNumber(0, "", r, g, b);
+
+                    ws.Cells[indexRow, 6].Value = CastAide.AsDecimal(item.pos);
+                    ws.Cells[indexRow, 6].Style = gembox.GetStyleNumber(0, "", r, g, b);
+
+                    ws.Cells[indexRow, 7].Value = CastAide.AsDecimal(item.comm);
+                    ws.Cells[indexRow, 7].Style = gembox.GetStyleNumber(0, "", r, g, b);
+
+                    if (item.bettype.ToLower().Equals("casino") || item.bettype.ToLower().Equals("p2p") || item.bettype.ToLower().Equals("racing") || item.bettype.ToLower().Equals("live casino"))
+                    {
+                        ws.Cells[indexRow, 8].Value = "N/A";
+                        ws.Cells[indexRow, 8].Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Right);
+
+                        ws.Cells[indexRow, 10].Value = "N/A";
+                        ws.Cells[indexRow, 10].Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Right);
+
+                        ws.Cells[indexRow, 11].Value = "N/A";
+                        ws.Cells[indexRow, 11].Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Right);
+                    }
+                    else
+                    {
+                        ws.Cells[indexRow, 8].Value = CastAide.AsDecimal(item.VirtualComm);
+                        ws.Cells[indexRow, 8].Style = gembox.GetStyleNumber(0, "", r, g, b);
+
+                        ws.Cells[indexRow, 10].Value = CastAide.AsDecimal(item.VirtualLineTotal);
+                        ws.Cells[indexRow, 10].Style = gembox.GetStyleNumber(0, "", r, g, b);
+
+                        ws.Cells[indexRow, 11].Value = CastAide.AsDecimal(item.variance);
+                        ws.Cells[indexRow, 11].Style = gembox.GetStyleNumber(0, "", r, g, b);
+                    }
+
+
+                    ws.Cells[indexRow, 9].Value = CastAide.AsDecimal(item.LineTotal);
+                    ws.Cells[indexRow, 9].Style = gembox.GetStyleNumber(0, "", r, g, b);
+
+
+
+                    indexRow++;
+                }
+                #endregion
+
+                #region grand total2
+                r = 136; g = 170; b = 255;
+                ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 6).Value = "GRAND TOTAL:";
+                ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 6).Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Right, true);
+                ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 6).Merged = true;
+
+                ws.Cells[indexRow, 7].Value = CastAide.AsDecimal(matchWlFooterDto.GrandTotal2.comm);
+                ws.Cells[indexRow, 7].Style = gembox.GetStyleNumber(0, "", r, g, b, true);
+
+                ws.Cells[indexRow, 8].Value = CastAide.AsDecimal(matchWlFooterDto.GrandTotal2.VirtualComm);
+                ws.Cells[indexRow, 8].Style = gembox.GetStyleNumber(0, "", r, g, b, true);
+
+                ws.Cells[indexRow, 9].Value = CastAide.AsDecimal(matchWlFooterDto.GrandTotal2.LineTotal);
+                ws.Cells[indexRow, 9].Style = gembox.GetStyleNumber(0, "", r, g, b, true);
+
+                ws.Cells[indexRow, 10].Value = CastAide.AsDecimal(matchWlFooterDto.GrandTotal2.VirtualLineTotal);
+                ws.Cells[indexRow, 10].Style = gembox.GetStyleNumber(0, "", r, g, b, true);
+
+                ws.Cells[indexRow, 11].Value = CastAide.AsDecimal(matchWlFooterDto.GrandTotal2.variance);
+                ws.Cells[indexRow, 11].Style = gembox.GetStyleNumber(0, "", r, g, b, true);
+
+                indexRow++;
+
+
+
+                #endregion
+                #endregion
+
+
+                #endregion
+
+                for (int i = 0; i <= 11; i++)
+                {
+                    if (i == 0)
+                        ws.Columns[i].Width = 120 * 50;
+                    else
+                        ws.Columns[i].Width = 120 * 30;
+                }
+            }
+            catch (Exception ex)
+            {
+                
+            }
+            return excelFile;
+        }
+
+        #endregion
+    }
+}

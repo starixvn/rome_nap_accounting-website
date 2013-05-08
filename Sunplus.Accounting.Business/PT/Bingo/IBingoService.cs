@@ -1,0 +1,26 @@
+﻿using System.Collections.Generic;
+using System.ServiceModel;
+using System.ServiceModel.Web;
+using Sunplus.Accounting.Entities.Casino;
+using Sunplus.Bingo.Entities;
+
+namespace Sunplus.Accounting.Business.PT.Bingo
+{
+    [ServiceContract]
+    public interface IBingoService
+    {
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        Sunplus.Bingo.Entities.Customer GetCustomerSetting(int custID, int updatedByRoleID);
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        Result UpdateCustomerSetting(Sunplus.Bingo.Entities.Customer customer, int updatedByRoleID);
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        Result ResetMaxTransfer(int custId);
+
+        void AutoInsertBingoAccount(CSCustomerDetail customerInfo, int userId, string userName, string ip, bool enabledBingo);
+    }
+}

@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Sunplus.Accounting.Entities.Customer.ConsolidatedGroup;
+
+namespace Sunplus.Accounting.Business.Customer.ConsolidatedGroup
+{
+    public interface IConsolidatedGroupManager
+    {
+        List<ConsolidatedGroupTable> GetAllGroup();
+
+        Sunplus.Accounting.Entities.Result UpdateGroup(string GroupID, string UserName, bool isHeader, string Remark);
+
+        List<ConsolidatedMemberTable> GetMemberByGroupID(int GroupID);
+
+        Sunplus.Accounting.Entities.Result AddUserToGroup(int GroupID, string UserName);
+
+        Sunplus.Accounting.Entities.Result RemoveUsers(int GroupID, string CustIDList, string IP);
+
+        Sunplus.Accounting.Entities.Result ChangeHeadline(int GroupID, int CustID, string CustName, string IP);
+    }
+}

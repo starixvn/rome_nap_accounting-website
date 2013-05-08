@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Fanex.Tarus.Balance.DataAccess
+{
+    using Fanex.Tarus.Balance.Entities;
+
+    public interface IResetWinningAccess
+    {
+        ResetWinningDTO GetDataResetWinning(string date, int data);
+    }
+}

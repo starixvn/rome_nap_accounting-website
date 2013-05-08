@@ -1,0 +1,63 @@
+﻿<table class="tblcollapse" style="width: 844px; margin-bottom: 10px;">
+
+    <tr class="title">
+        <td colspan="4">
+            <span style="padding-left:330px">General Information</span>
+            <span style="padding-left:350px">  
+                <!-- ko if: (context.targetRoleId != 1 || (context.targetRoleId == 1 &&  context.roleId == 2 ))  -->
+                <input type="button" class="btnUpdate" title="Save" onclick="vsCustomer.updateStatusSetting()"/>
+                <!--/ko-->
+            </span>
+        </td>        
+    </tr>
+    
+    <tr>
+        <td style="width: 15%" class="l">@Resources.Language.lblUsername</td>
+        <td style="width: 35%"  class="l"><span data-bind="text: custSetting.userName"></span></td>
+        <td style="width: 15%"  class="l">Nickname</td>
+        <td style="width: 35%"  class="l"><span ></span></td>
+    </tr>
+    <tr>
+        <td class="l">@Resources.Language.lblFirstname</td>
+        <td class="l"><span data-bind="text: custSetting.firstName"></span></td>
+        <td class="l">@Resources.Language.Phone</td>
+        <td class="l"><span data-bind="text: custSetting.phone"></span></td>
+    </tr>
+    <tr>
+        <td class="l">@Resources.Language.lblLastname</td>
+        <td class="l"><span data-bind="text: custSetting.lastName"></span></td>
+        <td class="l">@Resources.Language.lblMobilePhone</td>
+        <td class="l"><span data-bind="text: custSetting.mobilePhone"></span></td>
+    </tr>
+    <!-- ko if: ((context.roleId === 4 || context.roleId === 3)  && context.targetRoleId === 1) -->
+    <tr>
+        <td class="l">@Resources.Language.lblFax</td>
+        <td class="l"><span data-bind="text: custSetting.fax"></span></td>
+        <td class="l">&nbsp;</td>
+        <td class="l">&nbsp;</td>
+    </tr>
+    <!--/ko-->
+    <!-- ko if: ((context.roleId != 4 && context.roleId != 3)  && context.targetRoleId === 1) -->
+    <tr>
+        <td class="l">@Resources.Language.lblFax</td>
+        <td class="l"><span data-bind="text: custSetting.fax"></span></td>
+        <td class="l">Enable</td>
+        <td class="l">
+            <input id="chkEnabled" type="checkbox" value="!disableVirtualSports" data-bind="checked: isChecked, enable: isEnable" />
+            <span>&nbsp;&nbsp; </span>
+        </td>
+    </tr>
+    <!--/ko-->
+    <!-- ko if: context.targetRoleId != 1 -->
+    <tr>
+        <td class="l">@Resources.Language.lblFax</td>
+        <td class="l"><span data-bind="text: custSetting.fax"></span></td>
+        <td class="l">Enable</td>
+        <td class="l">
+            <input id="chkEnabled" type="checkbox" data-bind="checked: isChecked, enable: isEnable, value: isChecked" />
+            <span>&nbsp;&nbsp; </span>
+            <input id="chkDownline" type="checkbox" data-bind="checked: isCheckedDownlines, enable: isEnableDownline, value: isCheckedDownlines"/>Downline
+        </td>
+    </tr>
+    <!--/ko-->
+</table>

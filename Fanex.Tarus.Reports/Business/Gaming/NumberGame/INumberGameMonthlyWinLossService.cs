@@ -1,0 +1,9 @@
+﻿
+namespace Fanex.Tarus.Reports.Business.Gaming.NumberGame
+{
+    public interface INumberGameMonthlyWinLossService
+    {
+        Fanex.Tarus.Reports.Entities.Gaming.NumberGame.NumberGameMonthlyWinLoss GetNumberGameMonthlyWinLossReport(string fromDate, string toDate);
+        void ExportToExcelNumberGameMonthlyWinLossReport(string fromDate, string toDate, string reportTitle);
+    }
+}

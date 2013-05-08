@@ -1,0 +1,42 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="DailyWinLoss2hReport.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.10.18">Created</change>
+// </history>
+
+namespace Fanex.Tarus.Reports.Entities.DailyWinLoss2h
+{
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using Fanex.Tarus.Reports.Entities.Sport;
+
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    public class DailyWinLoss2hReport
+    {
+        public List<DailyWinLoss2hItem> ReportDetails { get; set; }
+        public DailyWinLoss2hReportTotal ReportTotal { get; set; }
+        public BaseModel ReportType { get; set; }
+        public int TotalItems { get; set; }
+        public string ReportDate { get; set; }
+        public bool IsHavingIBC { get; set; }
+
+        public BaseModel Livetype { get; set; }
+        public bool IsBARMActive { get; set; }
+        public string ReportDescription { get; set; }
+    }
+
+    #region CustomReport
+
+    public class LiveAndNoneLiveReportDWL2h
+    {
+        public DailyWinLoss2hReport NoneLiveReport { get; set; }
+        public DailyWinLoss2hReport LiveReport { get; set; }
+        public DailyWinLoss2hReport MixLiveAndNoneLiveReport { get; set; }
+        public DailyWinLoss2hReportTotal ReportTotal { get; set; }
+    }
+
+    #endregion CustomReport
+}

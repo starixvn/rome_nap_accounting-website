@@ -1,0 +1,55 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="NumberGameWinLossAccess.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Reports.DataAccess.Licensee
+{
+    using System;
+    using System.Data;
+    using Fanex.Data;
+    using System.Collections;
+    using DNAide.Core;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class NumberGameWinLossAccess: INumberGameWinLossAccess
+    {
+        public DataSet SelAllLicensees()
+        {
+            var dsResult = new DataSet();
+            using (ObjectDb objDB = new ObjectDb("GetLicenseesByResellers"))
+            {
+                var param = new Hashtable();
+                param.Add("resellerid", 0);
+                param.Add("productcode", "NG");
+
+                objDB.AssignParamValues(param);
+                dsResult = objDB.ExecuteDataSet();
+            }
+
+            return dsResult;
+
+        }
+
+        public DataSet SelNumberGameWinLoss(string normalLicensee, string operators, string fromDate, string toDate)
+        {
+            var dsResult = new DataSet();
+            using (ObjectDb objDB = new ObjectDb("NumberGameWinlossByLicensee"))
+            {
+                var param = new Hashtable();
+                param.Add("normallicensee", normalLicensee);
+                param.Add("operator", operators);
+                param.Add("fromdate", CastAide.AsDateTime(fromDate));
+                param.Add("todate", CastAide.AsDateTime(toDate));
+
+                objDB.AssignParamValues(param);
+                dsResult = objDB.ExecuteDataSet();
+            }
+
+            return dsResult;
+        }
+    }
+}

@@ -1,0 +1,10 @@
+﻿using System;
+
+public partial class Customer_PT_Poker_DefaultSetting: PageBase
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+      
+       
+    }
+}

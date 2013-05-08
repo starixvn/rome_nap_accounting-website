@@ -1,0 +1,24 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="OptionItem.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Reports.Entities.NumberGameWinLoss
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    [Serializable]
+    public class OptionItem
+    {
+        public string Id { get; set; }
+
+        public string Name { get; set; }
+    }
+}

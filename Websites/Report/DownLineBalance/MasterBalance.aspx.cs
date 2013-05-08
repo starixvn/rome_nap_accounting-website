@@ -1,0 +1,120 @@
+using System;
+using DNAide.Web;
+using DNAide.Core;
+using Sunplus.Accounting.Business.Customer;
+using Sunplus.Accounting.Business.Report;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web;
+
+/// <summary>
+/// CITS
+/// </summary>
+public partial class MasterBalance : PageBase
+{
+
+    protected void Page_Load(object sender, EventArgs e) 
+    {
+
+        int roleid =(!string.IsNullOrEmpty(Request["roleid"]))?Convert.ToInt32(Request["roleid"]):3;
+        int custid =(!string.IsNullOrEmpty(Request["custid"]))?Convert.ToInt32(Request["custid"]):0;
+        string isYesterday = (string.IsNullOrEmpty(Request["isYesterday"])) ? "1" : Request["isYesterday"];
+        string IsRep = (string.IsNullOrEmpty(Request["IsRep"])) ? "1" : Request["IsRep"];                 
+        string label = "";
+        if (roleid == 3) //master
+        {
+            if (string.IsNullOrEmpty(Request["fdate"]))
+                label = "Master";
+            else
+                label = "";
+        }
+        else 
+        {
+            if (roleid == 2) label = "Agent"; //agnet
+            else if (roleid == 1) label = "Member";//member
+        }
+
+        string tplDB = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Balance/BalanceForm.htm");
+        //remove link to view Company Balance difference
+        TemplateHandler.RemoveBlock(ref tplDB, "BalanceDiff");
+
+        if (isYesterday == "1")
+        {
+            TemplateHandler.Assign(ref tplDB, "{status-yestrans}", "checked='checked'");
+            TemplateHandler.Assign(ref tplDB, "{status-alltrans}", "");
+        }
+        else
+        {
+            TemplateHandler.Assign(ref tplDB, "{status-yestrans}", "");
+            TemplateHandler.Assign(ref tplDB, "{status-alltrans}", "checked='checked'");
+        }
+
+        if (IsRep == "1")
+        {
+            TemplateHandler.Assign(ref tplDB, "{status-rep}", "checked='checked'");
+            TemplateHandler.Assign(ref tplDB, "{status-main}", "");
+        }
+        else
+        {
+            TemplateHandler.Assign(ref tplDB, "{status-rep}", "");
+            TemplateHandler.Assign(ref tplDB, "{status-main}", "checked='checked'");
+        }
+
+        if (Request["IsExport"] == "1")
+        {
+            string db = (CastAide.AsString(Request["IsRep"], "0").Equals("1")) ? "rep" : "main";
+            bool IsYes = CastAide.AsString(Request["IsYesterDay"], "0").Equals("1");
+            string username = Request["username"];
+            string firstletter = Request["letter"];
+            string currency = Request["currency"];
+            IServiceDownLineBalance balance = new ServiceDownLineBalance();
+            string strData = balance.MasterBalance(db, roleid, custid, IsYes, username, firstletter, currency);
+
+            Sunplus.Accounting.Business.Report.Reports.ExportToExcel(strData, label);
+
+            return;
+        }
+
+        if (string.IsNullOrEmpty(Request["fdate"]))
+        {
+            if (isYesterday == "1")
+                label += " Yesterday Balance";
+            else
+                label += " Total Balance";
+            TemplateHandler.RemoveBlock(ref tplDB, "ReportType");
+            TemplateHandler.RemoveBlock(ref tplDB, "db");
+
+        }
+        else
+        {
+            string strSearch = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Customer/SearchReport.htm");
+            TemplateHandler.RemoveBlock(ref strSearch, "status");
+            TemplateHandler.Assign(ref strSearch, "{Keyword}", "CustId");
+            TemplateHandler.Assign(ref strSearch, "{rowspan}", "3");
+            TemplateHandler.Assign(ref strSearch, "{search-Val}", "All");
+            TemplateHandler.Assign(ref strSearch, "{listAlphaValue}", AccCommon.GetListAlPhabet(""));
+            TemplateHandler.Assign(ref strSearch, "{listCurrencyValue}", CustomerUtils.GetListCurrencyBySystem(AppSession.SYSTEM, false, true, false));
+            TemplateHandler.Assign(ref strSearch, "{functionName}", "GetData");
+            contentmasterbalance.Text += strSearch;
+        }
+        
+        header.Text += label ;
+        if (roleid <= 3 && custid > 0)
+        {
+            header.Text += "&nbsp;&nbsp;&nbsp;<input type='button' onclick='ExportToExcel();' value='   ' name='btnExport' id='btnExport' class='btnExcel'/>";
+        }
+        header.Text += tplDB;
+   
+        string script = "<script type='text/javascript'>";
+        script += "var custid=" + custid + ";";
+        script += "var roleid =" + roleid + ";";
+        script += "var isYesterday =" + isYesterday + ";";
+        script += "var IsRep =" + IsRep + ";";
+
+        if (custid > 0)
+            script += "GetData();";
+        script += "</script>";
+
+        contentmasterbalance.Text += script;
+    }
+    
+}

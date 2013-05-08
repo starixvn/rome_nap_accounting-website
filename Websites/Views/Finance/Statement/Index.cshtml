@@ -1,0 +1,357 @@
+﻿@using DNAide.Core
+@using Fanex.Tarus.Web.Controllers.Report;
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Statement</title>
+    <link href="@Url.Content("~/App_Themes/Public/common.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/table.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/App_Themes/Public/input.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/js/jQuery/GridScroller/gridscroller.css?ver=4")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Views/Finance/Statement/Style/FinaceStatement.css?ver=1")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/js/Calendar2/css/jscal2.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/js/Calendar2/css/border-radius.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/js/Calendar2/css/blue/blue.css")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="main" style="margin-bottom: 6px;">
+        <div class="maincontent">
+            <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
+                <tr>
+                    <td class="maincontent_headerL">
+                    </td>
+                    <td class="maincontent_headerC">
+                        Statement
+                    </td>
+                    <td class="maincontent_headerR">
+                    </td>
+                </tr>
+            </table>
+            <div id="filter" class="maincontent_box" style="border: none !important; width: 100%;">
+                <table style="width: 100%">
+                    <tr>
+                        <td style="width: 85px;">
+                            <div style="width: 85px;">
+                                <input onclick="financeStatement.disabledFilter();" type="radio" id="rdByRef" value="-1"
+                                    name="type" />
+                                <span style="font-weight: bold">By Ref No:</span></div>
+                        </td>
+                        <td>
+                            <div>
+                                <input id="txtRefNo" type="text" style="background-color: #fff; width: 100px;" autocomplete="off"
+                                    onkeypress="return KeyPress(event);" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>
+                                <input onclick="financeStatement.disabledFilter();" type="radio" id="rdByUser" value="-2"
+                                    name="type" checked="checked" /><span style="font-weight: bold"> Username:</span></div>
+                        </td>
+                        <td style="width: 100px;">
+                            <div>
+                                <input id="txtCustName" value="@ViewBag.CustName" type="text" style="background-color:#fff; width: 100px;" autocomplete="off" onkeypress="return KeyPress(event);"/>
+                            </div>
+                        </td>
+                        <td style="width: 45px;">
+                            Filter by:
+                        </td>
+                        <td style="width: 110px;">
+                            <select style="width: 110px;" id="FilterBy" name="FilterBy">
+                                <option value="1">WinLoss Date</option>
+                                <option value="2">Transaction Date</option>
+                            </select>
+                        </td>
+                        <td style="width: 54px;">
+                            From Date:
+                        </td>
+                        <td style="width: 110px;">
+                            <input id="txtfromdate" class="txt" value="@DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy")" type="text" size="13" readonlyname="fdate" style="width: 80px;" />
+                            <input onclick="return false;" alt="" id="fdateTrigger" title="Date selector" class="img-date-selector"
+                                height="17" src="../App_Themes/Images/calendar.gif" width="18" type="image" />
+                        </td>
+                        <td style="width: 43px;">
+                            To Date:
+                        </td>
+                        <td style="width: 110px;">
+                            <input id="txttodate" class="txt" value="@DateTime.Now.ToString("MM/dd/yyyy")" type="text" size="13" readonlyname="tdate" style="width: 80px;" />
+                            <input onclick="return false;" alt="" id="tdateTrigger" title="Date selector" class="img-date-selector"
+                                height="17" src="../App_Themes/Images/calendar.gif" width="18" type="image" />
+                        </td>
+                        <td>
+                            <input class="btn" type="button" id="btnReport" value="Submit" onclick="financeStatement.getFinanceStatement();" />
+                            <input class="btn" type="button" id="btnToday" value="Reset" onclick="Helper.reset_date();" />
+                            <input type="button" title="Export to Excel" disabled="disabled" onclick="financeStatement.exportExcel();"
+                                value="  " id="btnExportNew" class="btnExcel" title="Export to Excel" />
+                        </td>
+                    </tr>
+                </table>
+                <div id="err">
+                </div>
+            </div>
+            <div id="mainreport" style="margin-top: 2px">
+                <div id="statementgrid" class="freegrid hidden">
+                    <div class="free-cell free-top-left">
+                        <table class="grid-fixed-table free-cell-top-left">
+                            <thead>
+                                <tr class="title">
+                                    <th colspan="3">
+                                        <div class="table-cell" style="height: 17px;">
+                                            &nbsp;</div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <div class="table-cell" style="width: 80px; height: 34px;">
+                                            WinLoss Date</div>
+                                    </th>
+                                    <th colspan="2">
+                                        <div class="table-cell" style="width: 350px; height: 34px;">
+                                            Remark</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="row_header_wrapper">
+                        <div class="row_header row-headers-background">
+                            <table id="tbstatementrowheader" class="grid-fixed-table row_header_content">
+                                <thead>
+                                    <tr class="title">
+                                        <th colspan="3">
+                                            <div class="table-cell" style="height: 17px;">
+                                                &nbsp;</div>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <div class="table-cell" style="width: 80px; height: 34px;">
+                                                WinLoss Date</div>
+                                        </th>
+                                        <th colspan="2">
+                                            <div class="table-cell" style="width: 350px; height: 34px;">
+                                                Remark</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col_header row-headers-background scroll-y">
+                        <div class="header-container">
+                            <table class="grid-fixed-table col_header_content">
+                                <thead>
+                                    <tr class="title">
+                                        <th colspan="3">
+                                            <div class="table-cell" style="height: 17px;">
+                                                &nbsp;</div>
+                                        </th>
+                                        <th colspan="7">
+                                            <div class="table-cell" style="height: 17px;">
+                                                &nbsp;</div>
+                                        </th>
+                                        <th>
+                                            <div style="height: 17px;">
+                                                <input type="button" value="Verify" class="verified" onclick="financeStatement.VerifyTrans('btnVerify');"
+                                                    id="btnVerify">
+                                            </div>
+                                        </th>
+                                        <th colspan="2">
+                                            <div class="table-cell" style="height: 17px;">
+                                                &nbsp;</div>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <div class="table-cell" style="width: 80px; height: 34px;">
+                                                WinLoss Date</div>
+                                        </th>
+                                        <th colspan="2">
+                                            <div class="table-cell" style="width: 350px; height: 34px;">
+                                                Remark</div>
+                                        </th>
+                                        <th>
+                                            <div class="table-cell" style="width: 110px; height: 34px;">
+                                                Total</div>
+                                        </th>
+                                        <th>
+                                            <div class="table-cell" style="width: 110px; height: 34px;">
+                                                Accumulated
+                                                <br>
+                                                Total</div>
+                                        </th>
+                                        <th>
+                                            <div class="table-cell" style="width: 70px; height: 34px;">
+                                                Transaction
+                                                <br>
+                                                Date</div>
+                                        </th>
+                                        <th>
+                                            <div class="table-cell" style="width: 100px; height: 34px;">
+                                                Ref No</div>
+                                        </th>
+                                        <th>
+                                            <div class="table-cell" style="width: 80px; height: 34px;">
+                                                Creator</div>
+                                        </th>
+                                        <th>
+                                            <div class="table-cell" style="width: 80px; height: 34px;">
+                                                Verified by
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="table-cell" style="width: 80px; height: 34px;">
+                                                Checked time</div>
+                                        </th>
+                                        <th>
+                                            <div class="table-cell" style="width: 55px; height: 34px;">
+                                                <input type="checkbox" onclick="financeStatement.itemAllClicked()" id="chkAll">
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="table-cell" style="width: 55px; height: 34px;">
+                                                Action</div>
+                                        </th>
+                                        <th>
+                                            <div class="table-cell" style="width: 55px; height: 34px;">
+                                                Reverse</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="grid-container container">
+                        <div class="content-container">
+                            <table id="tbstatement" class="grid-fixed-table col_header_content">
+                                <thead>
+                                    <tr>
+                                        <th colspan="3">
+                                            <div class="table-cell" style="height: 17px;">
+                                                &nbsp;</div>
+                                        </th>
+                                        <th colspan="7">
+                                            <div class="table-cell" style="height: 17px;">
+                                                &nbsp;</div>
+                                        </th>
+                                        <th>
+                                            <div class="table-cell" style="height: 17px;">
+                                                &nbsp;</div>
+                                        </th>
+                                        <th>
+                                            <div class="table-cell" style="height: 17px;">
+                                                &nbsp;</div>
+                                        </th>
+                                        <th>
+                                            <div class="table-cell" style="height: 17px;">
+                                                &nbsp;</div>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <div class="table-cell" style="width: 80px; height: 34px;">
+                                                &nbsp;</div>
+                                        </th>
+                                        <th>
+                                            <div class="table-cell" style="width: 245px; height: 34px;">
+                                                &nbsp;</div>
+                                        </th>
+                                        <th>
+                                            <div class="table-cell" style="width: 100px; height: 34px;">
+                                                &nbsp;</div>
+                                        </th>
+                                        <th>
+                                            <div class="table-cell" style="width: 110px; height: 34px;">
+                                                &nbsp;</div>
+                                        </th>
+                                        <th>
+                                            <div class="table-cell" style="width: 110px; height: 34px;">
+                                                &nbsp;</div>
+                                        </th>
+                                        <th>
+                                            <div class="table-cell" style="width: 70px; height: 34px;">
+                                                &nbsp;</div>
+                                        </th>
+                                        <th>
+                                            <div class="table-cell" style="width: 100px; height: 34px;">
+                                                &nbsp;</div>
+                                        </th>
+                                        <th>
+                                            <div class="table-cell" style="width: 80px; height: 34px;">
+                                                &nbsp;</div>
+                                        </th>
+                                        <th rowspan="2">
+                                            <div class="table-cell" style="width: 80px; height: 34px;">
+                                                &nbsp;
+                                            </div>
+                                        </th>
+                                        <th rowspan="2">
+                                            <div class="table-cell" style="width: 80px; height: 34px;">
+                                                &nbsp;</div>
+                                        </th>
+                                        <th>
+                                            <div class="table-cell" style="width: 55px; height: 34px;">
+                                                &nbsp;</div>
+                                        </th>
+                                        <th>
+                                            <div class="table-cell" style="width: 55px; height: 34px;">
+                                                &nbsp;</div>
+                                        </th>
+                                        <th>
+                                            <div class="table-cell" style="width: 55px; height: 34px;">
+                                                &nbsp;</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <iframe id="frm" width="0" height="0" frameborder="0" style="display: none"></iframe>
+</body>
+</html>
+@{
+    var isExport = CastAide.AsBoolean(Request["isExport"]);
+    if (isExport)
+    {
+
+        var BalanceUpDay = CastAide.AsString(Request["balupday"]);
+        var CustName = CastAide.AsString(Request["custName"]);
+        var FilterBy = CastAide.AsString(Request["filterby"]);
+        var FromDate = CastAide.AsString(Request["fdate"]);
+        var IncludeAccBal = CastAide.AsInt32(Request["includeaccbal"]);
+        var RefNo = CastAide.AsString(Request["refno"]);
+        var ToDate = CastAide.AsString(Request["tdate"]);
+
+        var reportTitle = CastAide.AsString(Request["title"]);
+
+        Fanex.Tarus.Finance.Business.Statement.IFinanceStatementBusiness financeStatement = new Fanex.Tarus.Finance.Business.Statement.FinanceStatementBusiness();
+        financeStatement.ExportExcelFinanceStatement(RefNo, CustName, FilterBy, FromDate, ToDate, BalanceUpDay, IncludeAccBal, reportTitle);
+
+    }
+}
+<script language="javascript" type="text/javascript">
+    var _selectFromDate = '@DateTime.Now.AddDays(-1).ToString("yyyyMMdd")';
+    var _selectToDate = '@DateTime.Now.ToString("yyyyMMdd")';
+    var _balanceUpDay = '@ViewBag.Banlance.ToShortDateString()';
+    var _custID = '@ViewBag.CustID';
+    var _maxDate = '@DateTime.Now.AddYears(50).ToString()'
+    window.rootUrl = '@Url.Content("~")';
+    head.js("@Url.Content("~/js/jQuery/jquery-1.7.js")",
+            "@Url.Content("~/js/json2.js")", 
+            "@Url.Content("~/js/common.js")", 
+            "@Url.Content("~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js?ver=1")",
+            "@Url.Content("~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js")",
+             "@Url.Content("~/js/Calendar2/js/jscal2.js")",
+             "@Url.Content("~/js/Calendar2/js/lang/en.js")",
+            "@Url.Content("~/Views/Finance/Statement/js/FinaceStatement.js?ver=34")");
+</script>

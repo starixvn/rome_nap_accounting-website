@@ -1,0 +1,97 @@
+﻿<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/table.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/commonIOM.css" />
+<link rel="stylesheet" type="text/css" href="~/js/jQuery/Pager/pagination.css" />
+<link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
+<link href="~/js/MultipleSelect/jquery.multiselect.css" rel="stylesheet" type="text/css" />
+<link href="~/js/jQuery/GridScroller/gridscroller.css?ver=2" rel="stylesheet" type="text/css" />
+<link href="~/Views/Report/WinLoss/TreeWinLoss/style/treewinloss.css?ver=3" rel="stylesheet" type="text/css" />
+
+<div class="main">
+    <table style="width: 100%" border="0" cellpadding="0px" cellspacing="0px">
+        <tr>
+            <td>
+                <div id="divMainHeader" class="">
+                    <div id="left_tab1">
+                        <ul>
+                            <li class="lefticon"></li>
+                            <li class="current"><span>Tree Win Loss</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="maincontent" style="margin-bottom: 10px;">
+                    <div class="filterBox" id="divFilterBox">
+                        <div class="filterContent">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                         <td style="width:30px; text-align: right"><b>Date</b></td>
+                                            <td>
+                                                <select id="ddlDateSelection" style="width: 110px;">
+                                                    <option value="0" selected="selected">Today</option>
+                                                    <option value="1">Yesterday</option>
+                                                    <option value="2">Current week</option>
+                                                    <option value="3">Last week</option>
+                                                    <option value="4">Current month</option>
+                                                    <option value="5">Last month</option>
+                                                    <option value="6">Since last month</option>
+                                                    <option value="7">Specific date</option>
+                                                </select>
+                                            </td>
+                                            <td style="width:40px; text-align: right"><b>From</b></td>
+                                            <td><input type="text" id="txtfromdate" readonly="readonly" class="txtdate" style="width: 100px;" /></td>
+                                            <td style="width:30px; text-align: right"><b>To</b></td>
+                                            <td><input type="text" id="txttodate" readonly="readonly" class="txtdate" style="width: 100px;" /></td>
+                                        <td>Products</td>
+                                        <td><div id="ddlProduct" class="multiselect" multiple="multiple" style="padding-top: 2px;"></div></td>
+                                        <td>
+                                            <input type="button" id="btnSubmit" value="Submit" class="btn"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5">* Data is available from <span style="font-weight: bold">@DateTime.Now.AddMonths(-3).ToString("MM/dd/yyyy")</span> onward.</td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table> 
+                            <table>
+                                <tr>
+                                    <td>* The Virtual Currency is applied for Sportsbook and Number Game products. Other products are based on Actual Currency.</td>
+                                </tr>
+                            </table>                           
+                            <div id="err" style="display: none">
+                                <div class="alertboxerr">
+                                    <div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="mainreport" class="contentBox">                        
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>    
+</div>
+<iframe id="frameExportExcel" style="display: none"></iframe>
+
+<script type="text/javascript" src="~/js/jQuery/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="~/js/jQuery/jquery-ui-1.8.20.custom.min.js"></script>
+<script src="~/js/jQuery/Jlinq/jlinq.js" type="text/javascript"></script>
+<script type="text/javascript" src="~/js/jQuery/jquery.blockUI.1.33.js"></script>
+<script type="text/javascript" src="~/js/BlockUI.js?version=2"></script>
+<script type="text/javascript" src="~/js/common.js"></script>
+<script src="~/js/MultipleSelect/jquery.multiselect.js" type="text/javascript"></script>
+<script src="~/js/jQuery/Pager/jpager.js" type="text/javascript"></script>
+<script src="~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js?ver=4" type="text/javascript"></script>
+<script src="~/js/dialogbox.js" type="text/javascript"></script>
+<script src="~/js/Utils/FormatLibs/NumberFormat/numeral.js" type="text/javascript"></script>
+<script type="text/javascript" src="~/Views/Report/WinLoss/TreeWinLoss/js/treewinloss.js?ver=6"></script>
+<script type="text/javascript">
+    var mindate = new Date('@DateTime.Now.AddMonths(-3).ToString("MM/dd/yyyy")');
+    var maxdate = new Date('@DateTime.Now.ToString("MM/dd/yyyy")');
+    var _today = '@DateTime.Today.ToShortDateString()';
+    var _yesterday = '@DateTime.Today.AddDays(-1).ToShortDateString()';
+    var linkExportExcel = '@Url.Action("ExportTreeWinLossReportToExcelFile", "TreeWinLoss")';    
+</script>

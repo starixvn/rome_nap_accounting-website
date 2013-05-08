@@ -1,0 +1,53 @@
+using System;
+using DNAide.Web;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web.Controls;
+using Sunplus.Core.LoggingLib;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using System.Text;
+
+using Sunplus.Accounting.Core.Web;
+
+public partial class AddTransaction : PageBase
+{
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        AddTxnHeaderStr.Text =  Resources.Language.AddTrans;
+        AddTxnContentHtml.Text = GenAddTransaction();
+    }
+    private string GenAddTransaction()
+    {
+        StringBuilder html = new StringBuilder();
+        try
+        {
+            string loadDate = Calendar.GenCalendarControl("txtDate", "../", "trigger_from", DateTime.Now.ToString("MM/dd/yyyy"), false, false, 0, 0, "");//Phuong.Nguyen, show others day of next month
+            string content = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("AddTransaction.htm");
+            TemplateHandler.Assign(ref content, "{addtxn}", AppSession.CustUName);
+            TemplateHandler.Assign(ref content, "{date}", Resources.Language.Date);
+            TemplateHandler.Assign(ref content, "{btnDate}", loadDate);
+            TemplateHandler.Assign(ref content, "{amount}", "Amount");
+            TemplateHandler.Assign(ref content, "{desc}", Resources.Language.Desc);
+            TemplateHandler.Assign(ref content, "{add}", Resources.Language.Add);
+            //string typeValues = "<option>" + Resources.Language.DEP + "</option><option>" + Resources.Language.WIT + "</option>";
+            //TemplateHandler.Assign(ref content, "{typeValues}", typeValues);
+
+            //why don't add directly in html code 
+            //html.Append("<form style=\"margin:0px;padding:0px;\" name=\"fAddTxn\" method=\"post\" action=\"Handlers/AddTransaction.ashx\" target=\"frameUpdate\">");
+            html.Append(content);
+            //html.Append("</form>");
+        }
+        catch (AccException ex)
+        {
+            Response.Write("<script type='text/javascript'>alert('" + ex.Message.ToString() + "');</script>");
+        }
+        catch (Exception ex)
+        {
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex); 
+           
+        }        
+        return html.ToString();
+    }
+
+    
+}

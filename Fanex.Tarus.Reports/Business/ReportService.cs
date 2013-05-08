@@ -1,0 +1,119 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="ReportService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.10.18">Created</change>
+// </history>
+
+namespace Fanex.Tarus.Reports.Business
+{
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Web;
+    using ExcelUtil.Spreadsheet;
+    using Fanex.Tarus.Reports.Business.Constants;
+    using Fanex.Tarus.Reports.DataAccess;
+
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    public static class ReportService
+    {
+        #region StaticFields
+
+        public const string BET_TRANS14_SP_SUFFIX = "_14";
+        public const string WARE_HOUSE_SP_SUFFIX = "_WH";
+
+        #endregion StaticFields
+        #region StaticProperties
+        #endregion StaticProperties
+
+        #region StaticMethods
+
+        public static string GetStoreMappingSubfix(DateTime reportDate)
+        {
+            if (reportDate > BaseDataAccess.BalanceUp.MoveBetDay)
+            {
+                return string.Empty;
+            }
+            else if (reportDate >= BaseDataAccess.BalanceUp.BalanceUpDay)
+            {
+                return BET_TRANS14_SP_SUFFIX;
+            }
+            else
+            {
+                return WARE_HOUSE_SP_SUFFIX;
+            }
+        }
+
+        public static decimal CalculateMargin(decimal lineTotal, decimal turnover)
+        {
+            decimal result = 0;
+            if (turnover != 0)
+            {
+                result = lineTotal / turnover;
+            }
+
+            return result;
+        }
+
+        public static double CalculateVariance(double lineTotalReal, double lineTotalVirtual)
+        {
+            return lineTotalReal - lineTotalVirtual;
+        }
+
+        public static double CalculateMargin(double lineTotal, double turnover)
+        {
+            double result = 0;
+            if (turnover != 0)
+            {
+                result = lineTotal / turnover;
+            }
+
+            return result;
+        }
+
+        public static bool IsApplyVirtualRate(int sportType)
+        {
+            var result = false;
+
+            switch (sportType)
+            {
+                case Sports.Soccer:
+                case Sports.OtherSports_2h:
+                case Sports.NumberGame:
+                case Sports.SystemParlay_2h:
+                case Sports.MixParlay_2h:
+                case Sports.Financials:
+                    result = true;
+                    break;
+                default:
+                    result = false;
+                    break;
+            }
+
+            return result;
+        }
+
+        public static bool IsSportBookSport(int sportType)
+        {
+            return sportType == Constants.Sports.Soccer ||
+                   sportType == Constants.Sports.Financials ||
+                   sportType == Constants.Sports.Motorsports ||
+                   sportType == Constants.Sports.CombinationMixParlay ||
+                   sportType == Constants.Sports.OtherSports_2h ||
+                   sportType == Constants.Sports.NumberGame;
+        }
+
+        public static void RespondStream(ExcelFile excelFile, string reportName)
+        {
+            var response = HttpContext.Current.Response;
+            response.Clear();
+            response.ContentType = "application/vnd.ms-excel";
+            response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
+            excelFile.SaveXls(response.OutputStream);
+        }
+
+        #endregion StaticMethods
+    }
+}

@@ -1,0 +1,63 @@
+using System;
+using DNAide.Web;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Core.LoggingLib;
+
+using Sunplus.Accounting.Core.Configurations;
+using System.Linq;
+
+public partial class Customer_ChangeUserGroup : PageBase
+{
+    protected override bool HasPermission()
+    {
+        return Functions.Customer.AllowChangeUserGroup && base.HasPermission();
+    }
+
+    protected string strClear = "";
+    public string script = "";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        try
+        {
+            strClear = Request["clear"] as string ?? string.Empty;            
+            string strHtml = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Customer/EditUserName.htm");
+            if (strClear == "1")
+            {
+                ChangeUGroupHeaderStr.Text = "Clear Credit";
+                TemplateHandler.Assign(ref strHtml, "{txtName1}", "txtUname");
+                TemplateHandler.Assign(ref strHtml, "{oldUname}", "Username");
+                TemplateHandler.RemoveBlock(ref strHtml, "hidden-clear");                
+            }
+            else
+            {
+                var groupSection = CustomerSection.Instance[CustomerSection.CustomerCollections.Currencies];
+                var groups = (from g in groupSection.Cast<CustomerElement>().Where(s => s.Name == "all") select g);
+                var options = string.Empty;
+                if (groups != null)
+                {
+                    foreach (var group in groups.First().Group.ToString().Split(','))
+                    {
+                        options += ("<option value=\"" + group + "\">" + group + "</option>");    
+                    }
+                    
+                }
+                
+                ChangeUGroupHeaderStr.Text = "Change User Group";
+                TemplateHandler.Assign(ref strHtml, "{txtName1}", "txtUname");
+                TemplateHandler.Assign(ref strHtml, "{oldUname}", "Username");
+                TemplateHandler.Assign(ref strHtml, "{currencies}", options);
+                TemplateHandler.Assign(ref strHtml, "{newUname}", "New User Group");
+                TemplateHandler.Assign(ref strHtml, "{txtName2}", "");
+                TemplateHandler.Assign(ref strHtml, "{hidden}", "hidden");
+            }
+            TemplateHandler.RemoveBlock(ref strHtml, "PageTitle");
+            ChangeUGroupContentHtml.Text = strHtml;
+        }
+        catch (Exception ex)
+        {
+            LogExtensions.ExceptionHandler(ex);
+        }
+    }
+}

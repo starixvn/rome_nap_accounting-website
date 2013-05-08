@@ -1,0 +1,172 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="LiveCasinoController.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.SpecialDelete.Controllers.NumberGame
+{
+    using System.Web.Mvc;
+    using Fanex.Tarus.SpecialDelete.Business.NumberGame;
+    using Fanex.Tarus.Web.Controllers;
+    using Fanex.Tarus.Web.Controllers.Filters;
+    using Fanex.Tarus.SpecialDelete.Core;
+    using Fanex.Tarus.SpecialDelete.Entity;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class NumberGameController : BaseController
+    {
+        INumberGameService _numberGameService;
+
+        public NumberGameController() : this(null) { }
+
+        public NumberGameController(INumberGameService numberGameService)
+        {
+            _numberGameService = numberGameService ?? new NumberGameService();
+        }
+
+        [AuthenticateRead]
+        public ActionResult SpecialDelete()
+        {
+            return View("~/Views/SpecialDelete/NumberGame/SpecialDelete.cshtml");
+        }
+
+        [AuthenticateRead]
+        public ActionResult RecoverBet()
+        {
+            return View("~/Views/SpecialDelete/NumberGame/RecoverBet.cshtml");
+        }
+
+        public JsonResult SelBettype()
+        {
+            var result = _numberGameService.SelBettype(Product.ProductType.NumberGame);
+
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        public JsonResult CheckRefno(string matchid, string fromRefno, string toRefno)
+        {
+            string param = matchid + "," + fromRefno + "," + toRefno;
+            var checkParamResult = _numberGameService.CheckParamInput(param, false);
+
+            if (checkParamResult.IsSuccess)
+            {
+                var rs = _numberGameService.CheckMatchIDwithRefno(matchid, fromRefno, toRefno, Core.Sport.SportType.NumberGame);
+                var jsonResult = Json(rs);
+                jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+                return jsonResult;
+            }
+            
+            var jsonResultParam = Json(checkParamResult);
+            jsonResultParam.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResultParam;
+        } 
+
+        public JsonResult GetTickets(string MatchID, string FromRefNo, string ToRefNo, string live, string dead)
+        {
+            string param = MatchID + "," + FromRefNo + "," + ToRefNo;
+            if (!string.IsNullOrEmpty(live)) {
+                param += "," + live;
+            }
+            if (!string.IsNullOrEmpty(dead)) {
+                param += "," + dead;
+            }
+
+            param = param.Replace("^", ",");
+            var checkParamResult = _numberGameService.CheckParamInput(param, false);
+            if (checkParamResult.IsSuccess)
+            {
+                var result = _numberGameService.GetTickets(MatchID, FromRefNo, ToRefNo, live, dead);
+                var jsonResult = Json(result);
+                jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+                return jsonResult;
+            }
+
+            var jsonResultParam = Json(checkParamResult);
+            jsonResultParam.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResultParam;
+        }
+
+        public JsonResult SelNegativeBalanceCustomer(string transid, string actionType)
+        {
+            Function.ActionType _actionType = Function.ActionType.RecoverBet;
+            switch (actionType)
+            {
+                case "0":
+                    _actionType = Function.ActionType.DeleteBet;
+                    break;
+                case "1":
+                    _actionType = Function.ActionType.RecoverBet;
+                    break;
+            }
+
+            var result = _numberGameService.SelNegativeBalanceCustomer(transid, _actionType);
+
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+
+        public JsonResult DeleteBets(string matchid, string f_transid, string t_transid, string dead, string live,
+
+            string transids_n,
+            string transids_d,
+            string transids_bd,
+            string transids_12eu,
+            string transids_mhc, bool isSendPrivateMSG,
+            Message message
+            )
+        {
+            var ip = Infrastructure.Helper.Utils.GetClientIP();
+            var result = _numberGameService.DeleteBets(matchid, f_transid, t_transid, dead, live,
+                transids_n,
+                transids_d,
+                transids_bd,
+                transids_12eu,
+                transids_mhc,
+                ip, isSendPrivateMSG, message
+                );
+
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+
+        public JsonResult GetTicket_RecoverBet(string transid)
+        {
+            ResultModel resultModel = new ResultModel();
+            resultModel.ErrorHandler = new System.Collections.Generic.List<Result>();
+
+            var result = _numberGameService.GetTicketsForRecoverBet(transid, resultModel);            
+            if (resultModel.ErrorHandler.Count == 0)
+            {
+                var jsonResult = Json(result);
+                jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+                return jsonResult;
+            }
+            else
+            {
+                var jsonResult = Json(resultModel);  
+                jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+                return jsonResult;
+            }           
+        }
+
+        [HttpPost]
+        public JsonResult RecoverBet(string transid, string userid, string username)
+        {
+            var ip = Infrastructure.Helper.Utils.GetClientIP();
+            var result = _numberGameService.RecoverBet(transid, userid, username, ip);
+
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+    }
+}

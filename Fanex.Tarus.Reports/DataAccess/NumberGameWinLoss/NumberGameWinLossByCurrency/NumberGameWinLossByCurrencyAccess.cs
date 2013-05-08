@@ -1,0 +1,58 @@
+﻿
+namespace Fanex.Tarus.Reports.DataAccess.NumberGameWinLoss.ByCurrency
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Data;
+    using Fanex.Data;
+    using Fanex.Tarus.Reports.Entities.NumberGameWinLoss;
+    using Sunplus.Accounting.Core.Common;
+    using DNAide.Core;
+    using Sunplus.Accounting.Core.Extensions;
+    using Fanex.Tarus.Reports.Entities.NumberGameWinLoss.NumberGameWinLossByCurrency;
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class ByCurrencyAccess : IByCurrencyAccess
+    {
+        public DataSet GetNumberGameWinLossByCurAccess(NumberGameWinLossByCurrency_MainParams MainParams)
+        {
+            using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameWinlossByCurrency", 1200))
+            {
+                db.AddInParameter("FromDate", DbType.DateTime, CastAide.AsDateTime(MainParams.FromDate));
+                db.AddInParameter("ToDate", DbType.DateTime, CastAide.AsDateTime(MainParams.ToDate));
+                db.AddInParameter("SiteID", DbType.String, MainParams.Companies);
+                db.AddInParameter("isLive", DbType.String, MainParams.LiveStatus);
+                db.AddInParameter("Currency", DbType.String, MainParams.Currencies);
+                db.AddInParameter("Bettype", DbType.String, MainParams.Bettypes);
+
+                var result = db.ExecuteDataSet();
+                return result;
+            }
+
+        }
+
+        public DataSet GetNumberGameWinLossByCurDetailAccess(NumberGameWinLossByCurrency_DetailParams DetailParams)
+        {
+
+            using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameWinlossByCurrency_detail", 1200))
+            {
+                db.AddInParameter("FromDate", DbType.DateTime, CastAide.AsDateTime(DetailParams.FromDate));
+                db.AddInParameter("ToDate", DbType.DateTime, CastAide.AsDateTime(DetailParams.ToDate));
+                db.AddInParameter("SiteID", DbType.String, DetailParams.Companies);
+                db.AddInParameter("isLive", DbType.String, DetailParams.LiveStatus);
+                db.AddInParameter("Currency", DbType.String, DetailParams.Currencies);
+                db.AddInParameter("Bettype", DbType.String, DetailParams.Bettypes);
+                db.AddInParameter("CustID", DbType.Int32, DetailParams.CustID);
+                db.AddInParameter("RoleID", DbType.Int32, DetailParams.RoleID);
+
+                var result = db.ExecuteDataSet();
+
+                return result;
+            }
+
+        }
+    }
+}

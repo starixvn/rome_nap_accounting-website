@@ -1,0 +1,22 @@
+@charset "utf-8";
+/* CSS Document */
+html,body {margin:0;padding:0;height:auto !important; height:100%;min-height:100%;font-size:14px;color:#d8ecff; background:transparent; }
+body{background: url(layout/main-bg.png) repeat-x top transparent;}
+
+form, input,ul, li,p {margin:0; padding:0;}
+input {border:none;background:none;}
+ul, li{list-style:none;}
+
+
+a{text-decoration:none; color:#268ab9;}
+a:hover{text-decoration:underline;}
+
+#container {margin:0 auto;width:100%;height:auto !important; height:100%;min-height:100%; }
+.content_all{ width:100%; margin:0 auto; height:auto;  padding-left:37px;}
+
+
+#menu_row{float:left;height:49px; width:100%; background:url(layout/menu-bg.gif) repeat-x top; position:relative;z-index:2; }
+#menu_row .content_all {height:49px;}
+
+#content {padding-left:2px;}
+

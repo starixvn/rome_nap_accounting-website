@@ -1,0 +1,612 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Web.SessionState;
+using DNAide.Core;
+using DNAide.Utils;
+using Sunplus.Accounting.Business.CacheManager;
+using Sunplus.Accounting.Business.Security;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Entities.Report.Racebook;
+using ExcelUtil.Spreadsheet;
+using System.Web;
+
+namespace Sunplus.Accounting.Business.Report.Racing
+{
+    public partial class ReportRacing 
+    {
+        private string _winLossRacingReportLicensseSessionKey = "winlossracingreportlicenseesessionkey{0}";
+        #region RacingDailyBySite
+        #region WinlostRacingLicensee_Details
+        #region WinlostRacingLicensee_SiteSel
+        public RacingDailyBySiteBO WinlostRacingLicensee_SiteSel()
+        {
+            RacingDailyBySiteBO racingDailyBySiteBo = new RacingDailyBySiteBO();
+            racingDailyBySiteBo.SiteItems = new List<RacingDailyBySiteItem>();
+            try
+            {
+                DataTable dataTable = _reportRacingDao.WinlostRacingLicensee_SiteSel();
+                if (dataTable == null)
+                    return racingDailyBySiteBo;
+                DataRow[] rows = dataTable.Select();
+
+                UserControlCollection collection = UserControlSection.Instance.Report[UserControlSection.StoreCollection.Racing.ToString()].Stores;
+
+                ArrayList arrayList = new ArrayList();
+                
+                
+                foreach (UserControlElement element in collection)
+                {
+                    bool HasPermission = Permissions.HasPermission(element.Function.ToLower());
+                    if (HasPermission)
+                    {
+                        arrayList.Add(element.Site.ToLower());
+                    }
+                }
+
+                var ptSites = RacingSection.Instance.PtSites.Split(',');
+
+                foreach (DataRow row in rows)
+                {
+                    var site = row["LicenseeName"].ToString().ToLower();
+                    bool HasPermission = arrayList.Contains(site);
+                    if (HasPermission)
+                    {
+                        var racingItem = new RacingDailyBySiteItem();
+                        racingItem.Id = CastAide.AsInt32(row["LicenseeId"]);
+                        racingItem.Name = CastAide.AsString(row["LicenseeName"]);
+                        racingItem.HasPt = ptSites.Contains(site);
+
+                        racingDailyBySiteBo.SiteItems.Add(racingItem);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return racingDailyBySiteBo;
+        }
+        #endregion
+
+        #region WinlostRacingLicensee_Details
+        public RacingDailyBySiteBO WinlostRacingLicensee_Details(string winlossdate, string site)
+        {
+            RacingDailyBySiteBO wl = new RacingDailyBySiteBO();
+            wl.Items = new List<RacingDailyBySiteCurrency>();
+            wl.Total = new RacingDailyBySiteRow();
+
+            var sites = WinlostRacingLicensee_SiteSel();
+            int count = sites.SiteItems.Where(s => s.Name == site).Count();
+
+            if(count == 0)
+            {
+                return wl;
+            }
+            
+            try
+            {
+                DataTable dataTable = _reportRacingDao.WinlostRacingLicensee_Details(winlossdate, site);
+                if (dataTable == null)
+                    return wl;
+
+                List<int> currencies = dataTable.AsEnumerable().Select(s => CastAide.AsInt32(s["currency"])).Distinct().ToList();
+
+                List<RacingDailyBySiteRow> allRowsByBaseCurr = new List<RacingDailyBySiteRow>();
+
+                foreach (int c in currencies)
+                {
+
+                    RacingDailyBySiteCurrency Currency = new RacingDailyBySiteCurrency();
+                    Currency.Items = new List<RacingDailyBySiteMeeting>();
+                    Currency.Totals = new List<RacingDailyBySiteRow>();
+
+
+                    List<int> MeetingIds =
+                        dataTable.AsEnumerable().Where(s => CastAide.AsInt32(s["currency"]) == c).Select(
+                            s => CastAide.AsInt32(s["leagueid"])).Distinct().ToList();
+
+                    foreach (int MeetingId in MeetingIds)
+                    {
+                        RacingDailyBySiteMeeting meeting = new RacingDailyBySiteMeeting();
+                        meeting.Items = new List<RacingDailyBySiteRow>();
+                        meeting.Total = new RacingDailyBySiteRow();
+
+                        DataRow[] rows = dataTable.Select("currency = " + c + " and leagueid = " + MeetingId);
+
+                        foreach (DataRow row in rows)
+                        {
+                            #region AssignRow
+                            meeting.Items.Add(new RacingDailyBySiteRow()
+                            {
+                                CurrencyName = CastAide.AsString(row["currencyName"]),
+                                CurrencyId = CastAide.AsInt32(row["currency"]),
+
+                                Name = CacheRef.GetLeagueName(row["leagueid"]),
+                                Id = CastAide.AsInt32(row["leagueid"]),
+
+                                Race = CastAide.AsString(row["groupmatch"]),
+
+                                WinTO = NumberFormat.DecFormat(row["winTOMem_Origin"], 2),
+                                PlaceTO = NumberFormat.DecFormat(row["placeTOMem_Origin"], 2),
+                                WinPlaceTO = NumberFormat.DecFormat(row["winplaceTOMem_Origin"], 2),
+                                TotalTO = NumberFormat.DecFormat(row["totalTOMem_Origin"], 2),
+
+                                DividendWon = NumberFormat.DecFormat(row["DividendWonMem_Origin"], 2),
+                                CommIncome = NumberFormat.DecFormat(row["commIncomeLicensee_Origin"], 2),
+                                Amountdueto = NumberFormat.DecFormat(row["AmountDue2IBC_Origin"], 2),
+                            });
+
+                            #endregion
+
+                            #region Get All Rows by Base Currency
+                            allRowsByBaseCurr.Add(new RacingDailyBySiteRow()
+                            {
+                                CurrencyName = CastAide.AsString(row["currencyName"]),
+                                CurrencyId = CastAide.AsInt32(row["currency"]),
+
+                                Name = CacheRef.GetLeagueName(row["leagueid"]),
+                                Id = CastAide.AsInt32(row["leagueid"]),
+
+                                WinTO = NumberFormat.DecFormat(row["winTOMem"], 2),
+                                PlaceTO = NumberFormat.DecFormat(row["placeTOMem"], 2),
+                                WinPlaceTO = NumberFormat.DecFormat(row["winplaceTOMem"], 2),
+                                TotalTO = NumberFormat.DecFormat(row["totalTOMem"], 2),
+
+                                DividendWon = NumberFormat.DecFormat(row["DividendWonMem"], 2),
+                                CommIncome = NumberFormat.DecFormat(row["commIncomeLicensee"], 2),
+                                Amountdueto = NumberFormat.DecFormat(row["AmountDue2IBC"], 2),
+                            });
+                            #endregion
+                        }
+
+                        #region Total Meeting
+                        meeting.Total = new RacingDailyBySiteRow()
+                        {
+                            Name = CacheRef.GetLeagueName(MeetingId) + " - " + CacheUtils.GetExchangeName(c),
+
+                            WinTO = NumberFormat.DecFormat(meeting.Items.Sum(s => CastAide.AsDecimal(s.WinTO)), 2),
+                            PlaceTO = NumberFormat.DecFormat(meeting.Items.Sum(s => CastAide.AsDecimal(s.PlaceTO)), 2),
+                            WinPlaceTO = NumberFormat.DecFormat(meeting.Items.Sum(s => CastAide.AsDecimal(s.WinPlaceTO)), 2),
+                            TotalTO = NumberFormat.DecFormat(meeting.Items.Sum(s => CastAide.AsDecimal(s.TotalTO)), 2),
+
+                            DividendWon = NumberFormat.DecFormat(meeting.Items.Sum(s => CastAide.AsDecimal(s.DividendWon)), 2),
+                            CommIncome = NumberFormat.DecFormat(meeting.Items.Sum(s => CastAide.AsDecimal(s.CommIncome)), 2),
+                            Amountdueto = NumberFormat.DecFormat(meeting.Items.Sum(s => CastAide.AsDecimal(s.Amountdueto)), 2),
+                        };
+                        #endregion
+
+                        Currency.Items.Add(meeting);
+                    }
+
+
+                    #region Total Currency
+                    #region//Origin
+                    Currency.Totals.Add(new RacingDailyBySiteRow()
+                    {
+                        Name = CacheUtils.GetExchangeName(c) + " Total",
+                        CurrencyId = c,
+                        CurrencyName = CacheUtils.GetExchangeName(c),
+
+                        WinTO = NumberFormat.DecFormat(Currency.Items.Sum(s => CastAide.AsDecimal(s.Items.Sum(t => CastAide.AsDecimal(t.WinTO)))), 2),
+                        PlaceTO = NumberFormat.DecFormat(Currency.Items.Sum(s => CastAide.AsDecimal(s.Items.Sum(t => CastAide.AsDecimal(t.PlaceTO)))), 2),
+                        WinPlaceTO = NumberFormat.DecFormat(Currency.Items.Sum(s => CastAide.AsDecimal(s.Items.Sum(t => CastAide.AsDecimal(t.WinPlaceTO)))), 2),
+                        TotalTO = NumberFormat.DecFormat(Currency.Items.Sum(s => CastAide.AsDecimal(s.Items.Sum(t => CastAide.AsDecimal(t.TotalTO)))), 2),
+
+                        DividendWon = NumberFormat.DecFormat(Currency.Items.Sum(s => CastAide.AsDecimal(s.Items.Sum(t => CastAide.AsDecimal(t.DividendWon)))), 2),
+                        CommIncome = NumberFormat.DecFormat(Currency.Items.Sum(s => CastAide.AsDecimal(s.Items.Sum(t => CastAide.AsDecimal(t.CommIncome)))), 2),
+                        Amountdueto = NumberFormat.DecFormat(Currency.Items.Sum(s => CastAide.AsDecimal(s.Items.Sum(t => CastAide.AsDecimal(t.Amountdueto)))), 2),
+                    });
+                    #endregion
+
+                    #region// Rows by Base Currency
+                    if (c != 2)
+                    {
+                        Currency.Totals.Add(new RacingDailyBySiteRow()
+                        {
+                            Name = CacheUtils.GetExchangeName(c) + " Total",
+                            CurrencyId = c,
+                            CurrencyName = "Base (RM)",
+
+                            WinTO = NumberFormat.DecFormat(allRowsByBaseCurr.Where(s => s.CurrencyId == c).Sum(s => CastAide.AsDecimal(s.WinTO)), 2),
+                            PlaceTO = NumberFormat.DecFormat(allRowsByBaseCurr.Where(s => s.CurrencyId == c).Sum(s => CastAide.AsDecimal(s.PlaceTO)), 2),
+                            WinPlaceTO = NumberFormat.DecFormat(allRowsByBaseCurr.Where(s => s.CurrencyId == c).Sum(s => CastAide.AsDecimal(s.WinPlaceTO)), 2),
+                            TotalTO = NumberFormat.DecFormat(allRowsByBaseCurr.Where(s => s.CurrencyId == c).Sum(s => CastAide.AsDecimal(s.TotalTO)), 2),
+
+                            DividendWon = NumberFormat.DecFormat(allRowsByBaseCurr.Where(s => s.CurrencyId == c).Sum(s => CastAide.AsDecimal(s.DividendWon)), 2),
+                            CommIncome = NumberFormat.DecFormat(allRowsByBaseCurr.Where(s => s.CurrencyId == c).Sum(s => CastAide.AsDecimal(s.CommIncome)), 2),
+                            Amountdueto = NumberFormat.DecFormat(allRowsByBaseCurr.Where(s => s.CurrencyId == c).Sum(s => CastAide.AsDecimal(s.Amountdueto)), 2),
+                        });
+                    }
+
+                    #endregion
+
+                    #endregion
+
+                    wl.Items.Add(Currency);
+
+                }
+
+                #region Grand Total by Base currency
+                wl.Total = new RacingDailyBySiteRow()
+                {
+                    Name = "Grand Total",
+                    CurrencyName = "Base (RM)",
+
+                    WinTO = NumberFormat.DecFormat(allRowsByBaseCurr.Sum(s => CastAide.AsDecimal(s.WinTO)), 2),
+                    PlaceTO = NumberFormat.DecFormat(allRowsByBaseCurr.Sum(s => CastAide.AsDecimal(s.PlaceTO)), 2),
+                    WinPlaceTO = NumberFormat.DecFormat(allRowsByBaseCurr.Sum(s => CastAide.AsDecimal(s.WinPlaceTO)), 2),
+                    TotalTO = NumberFormat.DecFormat(allRowsByBaseCurr.Sum(s => CastAide.AsDecimal(s.TotalTO)), 2),
+
+                    DividendWon = NumberFormat.DecFormat(allRowsByBaseCurr.Sum(s => CastAide.AsDecimal(s.DividendWon)), 2),
+                    CommIncome = NumberFormat.DecFormat(allRowsByBaseCurr.Sum(s => CastAide.AsDecimal(s.CommIncome)), 2),
+                    Amountdueto = NumberFormat.DecFormat(allRowsByBaseCurr.Sum(s => CastAide.AsDecimal(s.Amountdueto)), 2),
+                };
+                #endregion
+
+                SessionExtension.AddSession(HttpContext.Current.Session,
+                                            string.Format(_winLossRacingReportLicensseSessionKey, site), wl);
+
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return wl;
+        }
+
+
+        
+
+
+        #endregion
+        #endregion
+
+        #region WinlostRacingLicensee_BetList_Details
+        public RacingDailyBySiteBetlistBO WinlostRacingLicensee_BetList_Details(string leagueid, string raceNo, string currency, DateTime winlostdate, string site)
+        {
+            RacingDailyBySiteBetlistBO betlistBo = new RacingDailyBySiteBetlistBO();
+            betlistBo.Items = new List<RacingDailyBySiteBetlistRow>();
+            betlistBo.Total = new RacingDailyBySiteBetlistRow();
+
+            try
+            {
+                DataTable dataTable = _reportRacingDao.WinlostRacingLicensee_BetList_Details(leagueid, raceNo, currency,
+                                                                                             winlostdate, site);
+                if(dataTable == null)
+                    return betlistBo;
+
+                DataRow[] rows = dataTable.Select();
+                int index = 0;
+                foreach (DataRow row in rows)
+                {
+                    #region Assign Data
+                    index++;
+                    RacingDailyBySiteBetlistRow r = new RacingDailyBySiteBetlistRow();
+
+
+                    r.Index = index;
+
+                    r.Member = CastAide.AsString(row["username"]);
+                    r.UserName2 = CastAide.AsString(row["username2"]);
+                    r.TranTime = CastAide.AsString(row["transdate"]).ToString();
+                    r.TransId = CastAide.AsString(row["transid"]);
+
+                    r.HorseBettype = CastAide.AsString(row["matchcode"]) + " - " + CacheRef.GetHorseTeamName(row["teamid"]);
+                    r.Bettype = CacheRef.GetBettype(row["bettype"]);
+                    r.IsShowOtExRate = CastAide.AsBoolean(row["isShowOTExRate"]);
+
+                    r.Stake = NumberFormat.DecFormat(row["Stake"], 2);
+                    r.Winloss = NumberFormat.DecFormat(row["winlost"], 2);
+                    r.Comm = NumberFormat.DecFormat(row["PlayerComm"], 2);
+
+                    r.AWinloss = string.Empty;// NumberFormat.DecFormat(row["WLPTAgency"], 2);
+                    r.AComm = NumberFormat.DecFormat(row["CommIncomeLicensee"], 2);
+                    r.PTWLLicensee = NumberFormat.DecFormat(row["WLPTLicensee"], 2);
+                    r.Dividend = NumberFormat.DecFormat(row["Dividend"], 2);
+
+                    r.IBCPTWL = NumberFormat.DecFormat(row["WLPTIBC"], 2);
+                    r.IBCCommIncomm = NumberFormat.DecFormat(row["CommIncomeIBC"], 2);
+
+                    if(r.IsShowOtExRate)
+                    {
+                        r.ExRate2 = "(Ex.Rate 2)";
+                        r.ActualRate = NumberFormat.DecFormat(row["virtualrate"], 2);
+                    }
+                    else
+                    {
+                        r.ExRate2 = string.Empty;
+                        r.ActualRate = string.Empty;
+                    }
+                    switch (CastAide.AsInt32(row["bettype"]))
+                    {
+                        case 31:
+                        case 32:
+                            r.Status = CastAide.AsString(row["status"]);
+                            r.WinStatus = string.Empty;
+                            r.PlaceStatus = string.Empty;
+                            r.WinOdds = string.Empty;
+                            r.PlaceOdds = string.Empty;
+                            r.IsCombineBettype = false;
+
+                            if (r.Status.Equals(Status.WIN) || r.Status.Equals(Status.Refund))
+                                r.Odds = NumberFormat.DecFormat(row["Odds"], 2);
+                            else
+                                r.Odds = "-";
+
+                            break;
+                        default:
+                            r.Status = string.Empty;
+                            r.WinStatus = CastAide.AsString(row["winStatus"]);
+                            r.PlaceStatus = CastAide.AsString(row["placeStatus"]);
+                            r.WinOdds = r.WinStatus.Equals(Status.WIN) 
+                                ? NumberFormat.DecFormat(row["WinOdds"], 2)
+                                : "0.00";
+
+                            r.PlaceOdds = r.PlaceStatus.Equals(Status.LOSE) || r.PlaceStatus.Equals(Status.Refund)
+                                ? "0.00"
+                                : NumberFormat.DecFormat(row["PlaceOdds"], 2); 
+                            
+                            r.Odds = string.Empty;
+                            r.IsCombineBettype = true;
+                            break;
+                    }
+                    betlistBo.Items.Add(r);
+                    #endregion
+                }
+
+                #region Total
+                betlistBo.Total = new RacingDailyBySiteBetlistRow()
+                                      {
+                                          Stake = NumberFormat.DecFormat( betlistBo.Items.Sum(s=> CastAide.AsDecimal( s.Stake)) ,2),
+                                          Winloss = NumberFormat.DecFormat(betlistBo.Items.Sum(s => CastAide.AsDecimal(s.Winloss)), 2),
+                                          Comm = NumberFormat.DecFormat(betlistBo.Items.Sum(s => CastAide.AsDecimal(s.Comm)), 2),
+                                          AWinloss = NumberFormat.DecFormat(betlistBo.Items.Sum(s => CastAide.AsDecimal(s.AWinloss)), 2),
+                                          AComm = NumberFormat.DecFormat(betlistBo.Items.Sum(s => CastAide.AsDecimal(s.AComm)), 2),
+                                          PTWLLicensee = NumberFormat.DecFormat(betlistBo.Items.Sum(s => CastAide.AsDecimal(s.PTWLLicensee)), 2),
+                                          Dividend = NumberFormat.DecFormat(betlistBo.Items.Sum(s => CastAide.AsDecimal(s.Dividend)), 2),
+
+                                          IBCPTWL = NumberFormat.DecFormat(betlistBo.Items.Sum(s => CastAide.AsDecimal(s.IBCPTWL)), 2),
+                                          IBCCommIncomm = NumberFormat.DecFormat(betlistBo.Items.Sum(s => CastAide.AsDecimal(s.IBCCommIncomm)), 2),
+                                      };
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return betlistBo;
+        }
+        #endregion
+
+        #region export excel
+        public void ExportToExcelWinlossRacingLicenseeDetails(string winlossDate, string site, string reportTitle)
+        {
+            #region excel format
+            const int startCol = 0;
+            const int startRow = 2;
+            var nextRow = 0;
+            var nextCol = 0;
+
+            var reportName = reportTitle.Replace(" ", "");
+            var excelFile = new ExcelFile();
+            var wsReport = excelFile.Worksheets.Add(string.Format("{0}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language,
+                                                                                "lblRacingWinlossBySite").Replace(" ", "")));
+            #endregion
+
+            #region header
+            wsReport.Cells[startRow - 2, startCol].Style.Font.Weight = ExcelFont.BoldWeight;
+            wsReport.Cells[startRow - 2, startCol].Value = reportTitle;
+            ExportToExcelHeaderWinlossRacingLicenseeDetails(ref wsReport, startRow, startCol);
+            #endregion
+            
+            #region content
+
+            var getReportData = SessionExtension.GetSession(HttpContext.Current.Session,
+                                                                            string.Format(
+                                                                                _winLossRacingReportLicensseSessionKey,
+                                                                                site)) != null
+                                                    ? (RacingDailyBySiteBO)
+                                                      SessionExtension.GetSession(HttpContext.Current.Session,
+                                                                                  string.Format(
+                                                                                      _winLossRacingReportLicensseSessionKey,
+                                                                                      site))
+                                                    : WinlostRacingLicensee_Details(winlossDate, site);
+
+            if(getReportData != null && getReportData.Items!= null && getReportData.Items.Count > 0)
+            {
+                //all pool currencies
+                foreach (RacingDailyBySiteCurrency poolCurrencyGroup in getReportData.Items)
+                {
+                    //all meeting for each pool currency
+                    foreach (RacingDailyBySiteMeeting meetingGroup in poolCurrencyGroup.Items)
+                    {
+                        //all of race - detail
+                        ExportToExcelContentWinlossRacingLicenseeDetails(ref wsReport, startRow, startCol, ref nextRow,
+                                                                         false, false, false,
+                                                                         meetingGroup.Items);
+                        //all of race - total
+                        var listTotalForEachMeeting = new List<RacingDailyBySiteRow>();
+                        listTotalForEachMeeting.Add(meetingGroup.Total);
+                        ExportToExcelContentWinlossRacingLicenseeDetails(ref wsReport, startRow, startCol, ref nextRow,
+                                                                         true, false, false,
+                                                                         listTotalForEachMeeting);
+                    }
+                    //all metting - total
+                    ExportToExcelContentWinlossRacingLicenseeDetails(ref wsReport, startRow, startCol, ref nextRow,
+                                                                         false, true, false,
+                                                                         poolCurrencyGroup.Totals);
+                    nextRow++;
+                }
+                //footer
+                
+                var listFooter = new List<RacingDailyBySiteRow>();
+                listFooter.Add(getReportData.Total);
+                ExportToExcelContentWinlossRacingLicenseeDetails(ref wsReport, startRow, startCol, ref nextRow,
+                                                                         false, false, true,
+                                                                         listFooter);
+            }
+
+            #endregion
+
+            #region response file
+            var response = HttpContext.Current.Response;
+            response.Clear();
+            response.ContentType = "application/vnd.ms-excel";
+            response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
+            excelFile.SaveXls(response.OutputStream);
+            #endregion
+        }
+
+        private static void ExportToExcelHeaderWinlossRacingLicenseeDetails(ref ExcelWorksheet wsReport, int startRow, int startCol)
+        {
+            var bgHeaderNormalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
+            var bgHeaderIbcFormat = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(130, 199, 255));
+            var nextCol = 0;
+            #region width of cols
+
+            wsReport.Columns[0].Width = 25 * 256;
+            wsReport.Columns[1].Width = 10 * 256;
+            wsReport.Columns[2].Width = 10 * 256;
+            wsReport.Columns[3].Width = 10 * 256;
+            wsReport.Columns[4].Width = 10 * 256;
+            wsReport.Columns[5].Width = 10 * 256;
+            wsReport.Columns[6].Width = 15 * 256;
+            wsReport.Columns[7].Width = 15 * 256;
+            wsReport.Columns[8].Width = 15 * 256;
+            #endregion
+            #region Assign header
+            wsReport.Cells[startRow - 1, startCol].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow - 1, startCol].Value =
+                ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMeetingCurrency");
+
+            wsReport.Cells[startRow - 1, startCol + (nextCol+1)].Style = bgHeaderIbcFormat;
+            wsReport.Cells[startRow - 1, startCol + (nextCol+=1)].Value =
+                ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Race");
+
+            wsReport.Cells[startRow - 1, startCol + (nextCol+1)].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow - 1, startCol + (nextCol+=1)].Value =
+                ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblWinTO");
+
+            wsReport.Cells[startRow - 1, startCol + (nextCol+1)].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow - 1, startCol + (nextCol+=1)].Value =
+                ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblPlaceTO");
+
+            wsReport.Cells[startRow - 1, startCol + (nextCol+1)].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow - 1, startCol + (nextCol+=1)].Value =
+                ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblWPTO");
+
+            wsReport.Cells[startRow - 1, startCol + (nextCol+1)].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Value =
+                ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblTotalTO");
+
+            wsReport.Cells[startRow - 1, startCol + (nextCol+1)].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Value =
+                ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDividendWon");
+
+            wsReport.Cells[startRow - 1, startCol + (nextCol+1)].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Value =
+                ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblCommIncome");
+
+            wsReport.Cells[startRow - 1, startCol + (nextCol+1)].Style = bgHeaderIbcFormat;
+            wsReport.Cells[startRow - 1, startCol + (nextCol + 1)].Value =
+                ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAmountduetoIBC");
+            #endregion
+        }
+
+        private void ExportToExcelContentWinlossRacingLicenseeDetails(ref ExcelWorksheet wsReport, int startRow, int startCol, 
+            ref int nextRow, bool isMeetingTotal, bool isPoolCurrencyTotal, bool  isFooter, List<RacingDailyBySiteRow> racingDailyBySiteRows)
+        {
+            var bgColor = isFooter ? Color.FromArgb(205, 222, 255) : (isMeetingTotal ? Color.FromArgb(255, 238, 221) : (isPoolCurrencyTotal ? Color.FromArgb(211, 225, 200) : Color.FromArgb(255, 255, 255)));
+            var bgFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", bgColor, isFooter || isMeetingTotal || isPoolCurrencyTotal ? true: false, false);
+            var normalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber("", bgColor, isFooter || isMeetingTotal || isPoolCurrencyTotal ? true : false, false);
+
+            var currentRow = 0;
+
+            foreach (RacingDailyBySiteRow item in racingDailyBySiteRows)
+            {
+                var nextCol = 0;
+                #region left cols
+                if (isMeetingTotal || isFooter)
+                {
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow,
+                                                       startCol + (nextCol + 1)).Merged = true;
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow,
+                                                       startCol + (nextCol + 1)).Style = bgFormat;
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow,
+                                                       startCol + (nextCol + 1)).Style.HorizontalAlignment =
+                        HorizontalAlignmentStyle.Center;
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow,
+                                                       startCol + (nextCol += 1)).Value = string.Format("{0} {1}",
+                                                                                                        item.Name,
+                                                                                                        isMeetingTotal
+                                                                                                            ? "Total"
+                                                                                                            : string.
+                                                                                                                  Empty);
+                }
+                else
+                {
+                    if (currentRow == 0)
+                    {
+                        wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol,
+                                                           startRow + nextRow + racingDailyBySiteRows.Count -1, startCol).
+                            Merged = true;
+                        wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol,
+                                                           startRow + nextRow + racingDailyBySiteRows.Count -1, startCol).
+                            Style
+                            = bgFormat;
+                        wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol,
+                                                           startRow + nextRow + racingDailyBySiteRows.Count - 1,
+                                                           startCol).
+                            Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+                        wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol,
+                                                           startRow + nextRow + racingDailyBySiteRows.Count - 1,
+                                                           startCol).
+                            Value
+                            = item.Name + (!isPoolCurrencyTotal ? string.Format(" - {0}", item.CurrencyName) : string.Empty);
+                    }
+
+                    wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = normalFormat;
+                    wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style.HorizontalAlignment =
+                        HorizontalAlignmentStyle.Center;
+                    if(isPoolCurrencyTotal)
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = item.CurrencyName;
+                    else
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsInt32(item.Race);
+
+                    
+                }
+                #endregion
+                #region right cols
+
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgFormat;
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsDouble(item.WinTO);
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgFormat;
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsDouble(item.PlaceTO);
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgFormat;
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsDouble(item.WinPlaceTO);
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgFormat;
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsDouble(item.TotalTO);
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgFormat;
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsDouble(item.DividendWon);
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgFormat;
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsDouble(item.CommIncome);
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgFormat;
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsDouble(item.Amountdueto);
+                #endregion
+                currentRow++;
+                nextRow++;
+            }
+        }
+
+        #endregion
+        #endregion
+    }
+}

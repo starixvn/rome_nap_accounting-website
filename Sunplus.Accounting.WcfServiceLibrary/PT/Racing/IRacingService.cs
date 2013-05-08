@@ -1,0 +1,36 @@
+using System.Collections.Generic;
+using System.ServiceModel;
+using System.ServiceModel.Web;
+using Sunplus.Accounting.Entities;
+using Sunplus.Accounting.Entities.PositionTaking.Racing;
+
+namespace Sunplus.Accounting.WcfServiceLibrary.PT.Racing
+{
+    [ServiceContract]
+    public interface IRacingService
+    {
+        [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        Setting GetCustomerStatus(int custId);
+
+        [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        Setting GetCustomerSetting(int custId, int roleId);
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        Result UpdateCustomerSetting(Setting setting);
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        Result UpdateCustomerStatus(Setting setting);
+
+        [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        List<Partner> GetPartnerList();
+
+        [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        List<PartnerItem> GetPartnerDetail(int partnerId);
+    }
+}

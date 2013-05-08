@@ -1,0 +1,28 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="LiveCasinoGameFinancialReport.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
+
+namespace Fanex.Tarus.Reports.Business.Gaming.LiveCasinoGameFinancialReport
+{
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using Fanex.Tarus.Reports.Criteria.Gaming.LiveCasinoGameFinancialReport;
+    using Fanex.Tarus.Reports.Entities.Gaming.LiveCasinoGameFinancialReport;
+    using Fanex.Tarus.Reports.Entities.Sport;
+
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    public interface ILiveCasinoGameFinancialReportService
+    {
+        List<BaseModel> GetLicensees();
+        List<BaseModel> GetCurrencies();
+        List<BaseModel> GetGameTypes();
+        List<BaseModel> GetGameTables(GetGameTableCriteria criteria);
+        FinancialReport GetFinancialReport(GetFinancialReportCriteria criteria);
+        void ExportFinancialReport(GetFinancialReportCriteria criteria);
+    }
+}

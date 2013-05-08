@@ -1,0 +1,23 @@
+﻿namespace Fanex.Tarus.ExchangeRate.Entities
+{
+    using System;
+
+    [Serializable]
+    public class CurrencyDetail
+    {
+       
+        public CurrencyDetail(string name, string value)
+        {
+            this.Name = name;
+            this.Value = value;
+        }
+
+        public string Name { get; set; }
+
+        public string Value { get; set; }
+
+        
+        public int Id { get; set; }
+    }
+
+}

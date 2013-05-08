@@ -1,0 +1,100 @@
+﻿
+namespace Fanex.Tarus.Finance.DataAccess.Statement
+{
+    using System;
+    using System.Data;
+    using Fanex.Data;
+    using DNAide.Core;
+    using Fanex.Tarus.Finance.Model.Statement;
+    using Fanex.Tarus.Finance.Entities;
+
+    public class FinanceStatementAccess : IFinanceStatementAccess
+    {
+        public DataSet GetFinanceStatementAccess(string refNoParam, string custName, string filterBy, string fromdate, string toDay, string balanceUpDay, int IncludeAccBall)
+        {
+            using (ObjectDb db = new ObjectDb("Acc_StatementFinance", 1200))
+            {
+                db.AddInParameter("RefNo", DbType.Int64, CastAide.AsInt64(refNoParam));
+                db.AddInParameter("Username", DbType.String,custName);
+                db.AddInParameter("FilterBy", DbType.String, filterBy);
+                db.AddInParameter("FromDate", DbType.DateTime, CastAide.AsDateTime(fromdate));
+                db.AddInParameter("ToDate", DbType.DateTime, CastAide.AsDateTime(toDay));
+                db.AddInParameter("BalanceUpDay", DbType.DateTime, CastAide.AsDateTime(balanceUpDay));
+                db.AddInParameter("IncludeAccBal", DbType.Boolean, CastAide.AsBoolean(IncludeAccBall));
+
+                var result = db.ExecuteDataSet();
+                return result;
+            }
+        }
+
+        public DataSet GetFinanceStatementDetailAccess(string refNo, string winLossDate, string userName)
+        {
+            using (ObjectDb db = new ObjectDb("Acc_StatementFinanceByRefno", 1200))
+            {
+                db.AddInParameter("RefNo", DbType.Int64, CastAide.AsInt64(refNo));
+                db.AddInParameter("Username", DbType.String, userName);
+                db.AddInParameter("FromDate", DbType.DateTime,  CastAide.AsDateTime(winLossDate));
+                db.AddInParameter("ToDate", DbType.DateTime,  CastAide.AsDateTime(winLossDate));
+
+                var result = db.ExecuteDataSet();
+                return result;
+            }
+        }
+
+        public Result UpdateVerifyStatusAccess(string refNo, bool isVerify, string CheckerName, int CheckerID)
+        {
+            try
+            {
+                using (ObjectDb db = new ObjectDb("Acc_DailyTxn_UpdChecker", 1200))
+                {
+                    db.AddInParameter("checkerid", DbType.Int32, CheckerID);
+                    db.AddInParameter("checkername", DbType.String, CheckerName);
+                    db.AddInParameter("refnos", DbType.String, refNo);
+                    db.AddInParameter("ip", DbType.String, Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+                    db.AddInParameter("isverified", DbType.Boolean, isVerify);
+
+                    db.AddOutParameter("errmsg", DbType.String, 500);
+                    db.AddOutParameter("errcode", DbType.Int32, sizeof(int));
+
+                    db.ExecuteNonQuery();
+
+                    var errMsg = DNAide.Core.CastAide.AsString(db.GetParameterValue("ErrMsg"));
+                    var errCode = DNAide.Core.CastAide.AsInt32(db.GetParameterValue("errcode"));
+                    return new Result { ErrorCode = errCode, ErrorMessage = errMsg };
+                }
+            }
+            catch (Exception e)
+            {
+                return new Result { ErrorCode = 1, ErrorMessage = e.Message };
+            }
+           
+       }
+
+        public Result DeleteTransAccess(string RefNo, int CustID, int UserID)
+        {
+            try
+            {
+                using (ObjectDb db = new ObjectDb("Acc_BettransDelTransaction", 1200))
+                {
+                    db.AddInParameter("custid", DbType.Int32, CustID);
+                    db.AddInParameter("userid", DbType.Int32, UserID);
+                    db.AddInParameter("refno", DbType.String, RefNo);
+  
+                    db.AddOutParameter("errmsg", DbType.String, 500);
+                    db.AddOutParameter("errcode", DbType.Int32, sizeof(int));
+
+                    db.ExecuteNonQuery();
+
+                    var errMsg = DNAide.Core.CastAide.AsString(db.GetParameterValue("ErrMsg"));
+                    var errCode = DNAide.Core.CastAide.AsInt32(db.GetParameterValue("errcode"));
+                    return new Result { ErrorCode = errCode, ErrorMessage = errMsg };
+                }
+            }
+            catch (Exception e)
+            {
+                return new Result { ErrorCode = 1, ErrorMessage = e.Message };
+            }
+           
+        }
+    }
+}

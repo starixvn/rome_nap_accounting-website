@@ -1,0 +1,349 @@
+﻿using System;
+using System.Data;
+using System.Web;
+using System.Text;
+using System.Collections;
+using Sunplus.Accounting.Business;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Accounting.DataAccess;
+using Sunplus.Core.LoggingLib;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using DNAide.Data;
+using DNAide.Core;
+using DNAide.Web;
+using DNAide.Utils;
+
+using ExcelUtil.Spreadsheet;
+
+
+/// <summary>
+/// Summary description for HRGroupDailyReport
+/// </summary>
+namespace BLL.Report.HR.GroupDaily
+{
+    public class HRGroupDailyOpenToteManager:ReportBase
+    {
+        #region AssignValueTotal
+        void AssignValueTotal(ref string row, DataTable dtGroup, string condition)
+        {
+            TemplateHandler.Assign(ref row, "TO_Agent", NumberFormat.DecFormat(dtGroup.Compute("sum(turnoverAgents)", condition), 2));
+            TemplateHandler.Assign(ref row, "TO_IBC", NumberFormat.DecFormat(dtGroup.Compute("sum(turnoverIBC)", condition), 2));
+            TemplateHandler.Assign(ref row, "TO_Phu", NumberFormat.DecFormat(dtGroup.Compute("sum(turnover3rd)", condition), 2));
+            TemplateHandler.Assign(ref row, "TO_Total", NumberFormat.DecFormat(dtGroup.Compute("sum(totalTurnover)", condition), 2));
+
+            TemplateHandler.Assign(ref row, "IBC_PT", NumberFormat.DecFormat(dtGroup.Compute("sum(incomeIBCPT)", condition), 2));
+            TemplateHandler.Assign(ref row, "IBC_NetComm", NumberFormat.DecFormat(dtGroup.Compute("sum(incomeIBCNetComm)", condition), 2));
+            TemplateHandler.Assign(ref row, "IBC_Total", NumberFormat.DecFormat(dtGroup.Compute("sum(totalIBCIncome)", condition), 2));
+
+            TemplateHandler.Assign(ref row, "12BET_PT", NumberFormat.DecFormat(dtGroup.Compute("sum(income12BETPT)", condition), 2));
+            TemplateHandler.Assign(ref row, "12BET_Comm", NumberFormat.DecFormat(dtGroup.Compute("sum(income12BETComm)", condition), 2));
+            TemplateHandler.Assign(ref row, "12BET_Total", NumberFormat.DecFormat(dtGroup.Compute("sum(total12BETIncome)", condition), 2));
+
+            TemplateHandler.Assign(ref row, "GroupTotal", NumberFormat.DecFormat(dtGroup.Compute("sum(groupTotalIncome)", condition), 2));
+
+            decimal turnover3rd = CastAide.AsDecimal( dtGroup.Compute("sum(turnover3rd)", condition));
+            decimal DividendWon3rd = CastAide.AsDecimal(dtGroup.Compute("sum(DividendWon3rd)", condition));
+            decimal ExpComm3rd = CastAide.AsDecimal(dtGroup.Compute("sum(ExpComm3rd)", condition));
+            decimal Fees3rd = CastAide.AsDecimal(dtGroup.Compute("sum(Fees3rd)", condition));
+            decimal AmountDueto3rd = CastAide.AsDecimal(dtGroup.Compute("sum(AmountDue23rd)", condition));
+
+            TemplateHandler.Assign(ref row, "TO_3rd", NumberFormat.DecFormat(turnover3rd, 2));
+            TemplateHandler.Assign(ref row, "DividendWon_3rd", NumberFormat.DecFormat(DividendWon3rd, 2));
+            TemplateHandler.Assign(ref row, "CommExpense_3rd", NumberFormat.DecFormat(ExpComm3rd, 2));
+            TemplateHandler.Assign(ref row, "Fees_3rd", NumberFormat.DecFormat(Fees3rd, 2));
+            TemplateHandler.Assign(ref row, "AmountDueto_3rd", NumberFormat.DecFormat(AmountDueto3rd, 2));
+        }
+        #endregion
+
+        #region AssignValueRow
+        void AssignValueRow(ref string row, DataRow dr)
+        {
+            TemplateHandler.Assign(ref row, "TO_Agent", NumberFormat.DecFormat(dr["turnoverAgents"], 2));
+            TemplateHandler.Assign(ref row, "TO_IBC", NumberFormat.DecFormat(dr["turnoverIBC"], 2));
+            TemplateHandler.Assign(ref row, "TO_Phu", NumberFormat.DecFormat(dr["turnover3rd"], 2));
+            TemplateHandler.Assign(ref row, "TO_Total", NumberFormat.DecFormat(dr["totalTurnover"], 2));
+
+            TemplateHandler.Assign(ref row, "IBC_PT", NumberFormat.DecFormat(dr["incomeIBCPT"], 2));
+            TemplateHandler.Assign(ref row, "IBC_NetComm", NumberFormat.DecFormat(dr["incomeIBCNetComm"], 2));
+            TemplateHandler.Assign(ref row, "IBC_Total", NumberFormat.DecFormat(dr["totalIBCIncome"], 2));
+
+            TemplateHandler.Assign(ref row, "12BET_PT", NumberFormat.DecFormat(dr["income12BETPT"], 2));
+            TemplateHandler.Assign(ref row, "12BET_Comm", NumberFormat.DecFormat(dr["income12BETComm"], 2));
+            TemplateHandler.Assign(ref row, "12BET_Total", NumberFormat.DecFormat(dr["total12BETIncome"], 2));
+
+            TemplateHandler.Assign(ref row, "GroupTotal", NumberFormat.DecFormat(dr["groupTotalIncome"], 2));
+
+            decimal turnover3rd = CastAide.AsDecimal(dr["turnover3rd"]);
+            decimal DividendWon3rd = CastAide.AsDecimal(dr["DividendWon3rd"]);
+            decimal ExpComm3rd = CastAide.AsDecimal(dr["ExpComm3rd"]);
+            decimal Fees3rd = CastAide.AsDecimal(dr["Fees3rd"]);
+            decimal AmountDueto3rd = CastAide.AsDecimal(dr["AmountDue23rd"]);
+
+            TemplateHandler.Assign(ref row, "TO_3rd", NumberFormat.DecFormat(turnover3rd, 2));
+            TemplateHandler.Assign(ref row, "DividendWon_3rd", NumberFormat.DecFormat(DividendWon3rd, 2));
+            TemplateHandler.Assign(ref row, "CommExpense_3rd", NumberFormat.DecFormat(ExpComm3rd, 2));
+            TemplateHandler.Assign(ref row, "Fees_3rd", NumberFormat.DecFormat(Fees3rd, 2));
+            TemplateHandler.Assign(ref row, "AmountDueto_3rd", NumberFormat.DecFormat(AmountDueto3rd, 2));
+
+        }
+        #endregion
+
+        #region HRGroupDaily
+        public string HRGroupDaily(string fromdate, string todate, bool IsSendMail)
+        {
+            string tpl = WebUtils.LoadTemplate("Report/HRGroupDaily/HRGroupDailyOpenTote.htm");
+            Hashtable hashtable = new Hashtable();
+            Hashtable hashPartner = new Hashtable();
+            try
+            {
+                TemplateHandler.Assign(ref tpl, "typename", "Partner Type");
+                TemplateHandler.Assign(ref tpl, "parnter", "Partner");
+                if (IsSendMail)
+                {
+                    TemplateHandler.Assign(ref tpl, "styletable", "font-family:Tahoma, Verdana; font-size:8pt;");
+                    TemplateHandler.Assign(ref tpl, "border", "");
+                }
+                else
+                {
+                    TemplateHandler.Assign(ref tpl, "styletable", "");
+                    TemplateHandler.Assign(ref tpl, "border", "");
+                }
+
+                StringBuilder rows = new StringBuilder();
+                string tplcontent = TemplateHandler.CopyBlock(tpl, "content");
+
+                DateTime fdate = CastAide.AsDateTime(fromdate);
+                DateTime tdate = CastAide.AsDateTime(todate);
+
+                DbResult rsGroup = null, rsGroupDaily = null;
+                DataTable dtGroup = new DataTable();
+                Hashtable param = new Hashtable();
+                if (fdate == tdate && tdate == DateTime.Today)
+                {
+                    param = new Hashtable();
+                    param.Add("winlostdate", tdate);
+                    dtGroup = IBCProvider.ReportProvider.HRGroupDaily().WinlostHR_Group_Daily(param).ResultSet.Tables[0];
+                }
+                else
+                {
+                    param = new Hashtable();
+                    param.Add("fromdate", fdate);
+                    param.Add("todate", tdate);
+                    rsGroup = IBCProvider.ReportProvider.HRGroupDaily().WinlostHR_Group(param);
+                    if (tdate >= DateTime.Today)
+                    {
+                        param = new Hashtable();
+                        param.Add("winlostdate", tdate);
+                        rsGroupDaily = IBCProvider.ReportProvider.HRGroupDaily().WinlostHR_Group_Daily(param);
+                    }
+
+                    #region Combine group daily into group
+                    dtGroup = rsGroup.ResultSet.Tables[0];
+                    if (rsGroupDaily != null)
+                    {
+                        DataTable dtGroupDaily = rsGroupDaily.ResultSet.Tables[0];
+                        foreach (DataRow drGroupDaily in dtGroupDaily.Rows)
+                        {
+                            DataRow drGroup = dtGroup.NewRow();
+                            for (int i = 0; i < drGroupDaily.ItemArray.Length; i++)
+                            {
+                                drGroup[i] = drGroupDaily[i];
+                            }
+                            dtGroup.Rows.Add(drGroup);
+                        }
+                    }
+                    #endregion
+                }
+
+                #region Cache
+                CacheData(HRGroupDailyCommon.keyCacheHRGroupDaily, dtGroup, DateTime.Now.AddHours(1));
+                #endregion
+
+                #region for each row
+                string row = "", bgcolor = "#f7f0f7", bgTotal = "#f7f0f7";
+                string strRowTotal = TemplateHandler.CopyBlock(tpl, "Total"), rowtotal = "";                
+                string hrTypeName = "", date_p = "", date_c = "";
+                string condition = "", style = "";
+                int countdate = 0;
+                int countFixed = 0, hrType = 0;
+
+                foreach (DataRow dr in dtGroup.Rows)
+                {
+
+                    row = tplcontent;
+                    //hrType = CastAide.AsInt32(dr["HRType"]);
+                    hrTypeName = CastAide.AsString(dr["Partner"]);//HRGroupDailyCommon.getHRType(hrType);
+
+                    if (!hashPartner.ContainsKey(hrTypeName))
+                        hashPartner.Add(hrTypeName, hrTypeName);
+
+                    date_c = CastAide.AsDateTime(dr["winlostdate"]).ToShortDateString();
+
+                    if (date_p != date_c)
+                    {
+                        bgTotal = bgcolor;
+                        bgcolor = (bgcolor == "#f7f0f7") ? "#fafaf3" : "#f7f0f7";
+                        condition = "winlostdate='" + date_p + "'";
+
+                        if (date_p.Length > 0)
+                        {
+                            rowtotal = strRowTotal;
+                            countdate = CastAide.AsInt32(dtGroup.Compute("count(winlostdate)", condition));
+                            if (countdate > 1)
+                            {
+                                style = "bgcolor='" + bgTotal + "' style='font-weight:bold; line-height:18px'";
+                                TemplateHandler.Assign(ref rowtotal, "style", style);
+
+                                TemplateHandler.Assign(ref rowtotal, "{id}", "");
+                                TemplateHandler.Assign(ref rowtotal, "{col}", "colspan='2'");
+                                TemplateHandler.Assign(ref rowtotal, "TotalName", "<b>Total</b>");
+
+                                AssignValueTotal(ref rowtotal, dtGroup, condition);
+                                rows.Append(rowtotal);
+                            }
+                        }
+
+                        rows = rows.Replace("{rowspan}", (countdate).ToString());
+                        date_p = date_c;
+                        countdate++;
+                    }
+                    else
+                    {
+                        TemplateHandler.RemoveBlock(ref row, "date");
+                    }
+
+
+
+                    TemplateHandler.Assign(ref row, "style", "bgcolor=" + bgcolor + "");
+                    TemplateHandler.Assign(ref row, "Date", CastAide.AsDateTime(dr["winlostdate"]).ToShortDateString());
+                    TemplateHandler.Assign(ref row, "Bettype", hrTypeName);
+
+                    AssignValueRow(ref row, dr);
+                    rows.Append(row);
+                    countdate++;
+                }
+                #endregion
+
+                #region Sub total
+                condition = "winlostdate='" + date_p + "'";
+                countdate = CastAide.AsInt32(dtGroup.Compute("count(winlostdate)", condition));
+                if (countdate > 1)
+                {
+                    rowtotal = strRowTotal;
+                    style = "bgcolor='" + bgcolor + "' style='font-weight:bold;'";
+                    TemplateHandler.Assign(ref rowtotal, "style", style);
+                    TemplateHandler.RemoveBlock(ref rowtotal, "date");
+                    TemplateHandler.Assign(ref rowtotal, "{id}", "");
+                    TemplateHandler.Assign(ref rowtotal, "{col}", "colspan='2'");
+                    TemplateHandler.Assign(ref rowtotal, "TotalName", "<b>Total</b>");
+
+                    AssignValueTotal(ref rowtotal, dtGroup, condition);
+                    rows.Append(rowtotal);
+                    rows = rows.Replace("{rowspan}", countdate.ToString());
+                }
+                #endregion
+
+                rows.Append("<tr height='20' bgcolor='white'><td colspan='18'></td></tr>");
+
+                #region Grand total's partner
+
+                IEnumerator partners = hashPartner.GetEnumerator();
+
+                StringBuilder strTotal = new StringBuilder();
+                while (partners.MoveNext())
+                {
+                    var partner = CastAide.AsString(((System.Collections.DictionaryEntry)(partners.Current)).Key);
+
+                    rowtotal = strRowTotal;
+                    condition = "Partner='" + partner + "'";
+                    style = "bgcolor='#d3e1c8' style='font-weight:bold;'";
+                    TemplateHandler.Assign(ref rowtotal, "style", style);
+
+                    TemplateHandler.Assign(ref rowtotal, "{id}", "");
+                    TemplateHandler.Assign(ref rowtotal, "{col}", "colspan='2'");
+                    TemplateHandler.Assign(ref rowtotal, "TotalName", "<b>" + partner + " Total</b>");
+
+                    AssignValueTotal(ref rowtotal, dtGroup, condition);
+                    strTotal.Append(rowtotal);
+
+                }
+
+                #endregion
+
+                #region Grand Total
+                rowtotal = strRowTotal;
+                condition = "";
+                style = "bgcolor='#c4d0d7' style='font-weight:bold;'";
+                TemplateHandler.Assign(ref rowtotal, "style", style);
+
+                TemplateHandler.Assign(ref rowtotal, "{id}", "trFooter");
+                TemplateHandler.Assign(ref rowtotal, "{col}", "colspan='2'");
+                TemplateHandler.Assign(ref rowtotal, "TotalName", "<b> Grand Total</b>");
+
+                AssignValueTotal(ref rowtotal, dtGroup, condition);
+                strTotal.Append(rowtotal);
+                TemplateHandler.ReplaceBlock(ref tpl, "Total", strTotal.ToString());
+                #endregion
+
+                TemplateHandler.ReplaceBlock(ref tpl, "content", rows.ToString());
+
+                #region Send Email
+
+                string strErrMsg = "";
+                bool result = false;
+                if (IsSendMail)
+                {
+                    TemplateHandler.Assign(ref tpl, "username", AppSession.Username);
+                    TemplateHandler.Assign(ref tpl, "datetime", DateTime.Now.ToString());
+
+                    string strSubject = "Group Horse Racing report from " + fromdate + " to " + todate;
+
+                    try
+                    {
+                        result = SendMailService.SendMail2(MailSection.MailServer, MailSection.ToMailHRGroup, MailSection.FromMail, MailSection.CCMailHRGroup, MailSection.BCCMailHRGroup, "Group Horse Racing report from " + fdate.ToShortDateString() + " to " + tdate.ToShortDateString(), tpl, MailSection.MailPwd);
+                    }
+                    catch (Exception ex)
+                    {
+                        
+                            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                        strErrMsg = "<span style='font-weight:bold; color:red'>" + ex.Message + "</span>"; Logs.Write(ex.Message);
+                    }
+
+                    if (result) { strErrMsg = "<span style='font-weight:bold; color:blue'>Sent email successfully. </span>"; }
+                }
+                else
+                {
+                    TemplateHandler.RemoveBlock(ref tpl, "footer-send-email");
+                }
+                #endregion
+
+
+                hashtable.Add("data", tpl);
+                hashtable.Add("msg", strErrMsg);
+            }
+            catch (Exception exception)
+            {
+                TemplateHandler.RemoveBlock(ref tpl, "Total");
+                TemplateHandler.RemoveBlock(ref tpl, "footer-send-email");
+                TemplateHandler.ReplaceBlock(ref tpl, "content", "<tr bgcolor='white'><td colspan='18' class='c error-message'>" + exception.Message + "</td></tr>");
+                hashtable.Add("data", tpl);
+                hashtable.Add("msg", "");
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+
+            }
+
+
+            return JsonUtil.ToJson(hashtable);
+        }
+        #endregion
+
+        public override string RenderHTML(Hashtable input)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

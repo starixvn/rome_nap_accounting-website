@@ -1,0 +1,66 @@
+﻿using System;
+using Sunplus.Accounting.Core.Web.Controls;
+using Sunplus.Accounting.DataAccess.Report;
+
+public partial class Report_DailyWL_DailyWL : System.Web.UI.Page
+{
+    public string strDate = "";
+    public string currdate = "";
+    public string today = DateTime.Today.ToShortDateString();
+    public string yesterday = DateTime.Today.AddDays(-1).ToShortDateString();
+    public string isExpExcel = "";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        int displaydays = 0;
+        TimeSpan sp = DateTime.Today - new DateTime(2011, 01, 01);
+        displaydays = sp.Days;
+        currdate = DateTime.Now.ToShortDateString();
+        isExpExcel = Request["isExpExcel"].ToString();
+        if (Request["fdate"]!=null)
+        {
+            currdate = Request["fdate"].ToString();
+        }
+        // strDate = Calendar.GenCalendarControl("date", "../../", "fdateTrigger", currdate + 7, false, false, 0, displaydays, "", "reportlist");
+        strDate = Calendar.GenCalendarControlMaxDays("date", "../../", "fdateTrigger", currdate, false, false, 0, displaydays, 7, "", "reportlist", "");
+
+        if (Request["reporttype"] != null)
+        {
+            var type = Request["reporttype"] != null ? Request["reporttype"].ToString() : "1";
+            var reportDate = Request["date"] != null ? Request["date"].ToString() : DateTime.Now.ToShortDateString();
+            var sporttype = Request["sporttype"] != null ? Request["sporttype"].ToString() : "151";
+
+            switch (type)
+            {
+                case "1":
+                    Export2ExcelDailyWlDirectRacing(reportDate);
+                    break;
+                case "2":
+                    
+                    Export2ExcelDailyWlDirectRacingBySport(sporttype, reportDate);
+                    break;
+                case "3":
+                    var bettype = Request["bettype"] != null ? Request["bettype"].ToString() : "31";
+                    Export2ExcelDailyWlDirectRacingBySportDetails(sporttype, bettype, reportDate);
+                    break;
+                default:
+                    //Response.Write("no thing");
+                    break;
+            }
+        }
+    }
+
+    private static void Export2ExcelDailyWlDirectRacing(string winlossDate)
+    {
+        new Sunplus.Accounting.WcfServiceLibrary.Report.DailyWL.ReportDailyWL().Export2ExcelDailyWLDirectRacing(winlossDate);
+    }
+
+    private static void Export2ExcelDailyWlDirectRacingBySport(string sporttype, string winlossDate)
+    {
+        new Sunplus.Accounting.WcfServiceLibrary.Report.DailyWL.ReportDailyWL().Export2ExcelDailyWLDirectRacingBySport(sporttype, winlossDate);
+    }
+
+    private static void Export2ExcelDailyWlDirectRacingBySportDetails(string sporttype, string bettype, string winlossDate)
+    {
+        new Sunplus.Accounting.WcfServiceLibrary.Report.DailyWL.ReportDailyWL().Export2ExcelDailyWLDirectRacingBySportDetails(sporttype, bettype, winlossDate);
+    }
+}

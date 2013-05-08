@@ -1,0 +1,751 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Web;
+using DNAide.Core;
+using DNAide.Utils;
+
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.DataAccess.IReportDAO;
+using Sunplus.Accounting.DataAccess.Report;
+using Sunplus.Accounting.Entities.Report.Monitor;
+using Sunplus.Core.LoggingLib;
+using Sunplus.Accounting.Core.Cache;
+using ExcelUtil.Spreadsheet;
+
+namespace Sunplus.Accounting.Business.Report.Monitor
+{
+    public class MonitorService : IMonitorService
+    {
+        private IMonitorDAO _IMonitorDAO;
+        private static string Monitor_SessionKey = "DAMonitor";
+
+        public MonitorService(IMonitorDAO monitorDao)
+        {
+            _IMonitorDAO = monitorDao;
+        }
+
+
+
+        #region getCurrencies
+        List<Items> getCurrencies()
+        {
+            List<Items> itemses = new List<Items>();
+            DataTable dataTable = _IMonitorDAO.GetCurrency();
+            if (dataTable == null)
+                return itemses;
+
+            itemses.Add(new Items()
+            {
+                Id = 0,
+                Name = "All (RM)"
+            });
+            DataRow[] rows = dataTable.Select();
+            foreach (DataRow row in rows)
+            {
+                itemses.Add(new Items()
+                {
+                    Id = CastAide.AsInt32(row["ExchangeID"]),
+                    Name = CastAide.AsString(row["Currency"])
+                });
+            }
+
+            return itemses;
+        }
+        #endregion
+
+        #region getProduct
+        List<Items> getProduct()
+        {
+            List<Items> product = new List<Items>();
+            MonitorCollection collection = MonitorSection.Instance.Product;
+            foreach (MonitorElement element in collection)
+            {
+                if (element.Active)
+                {
+                    product.Add(new Items()
+                    {
+                        Id = CastAide.AsInt32(element.Id),
+                        Name = element.Name,
+                        Key = element.Key
+                    });
+                }
+
+            }
+            return product;
+        }
+        #endregion
+
+        #region getSport
+        List<Items> getSport()
+        {
+            List<Items> product = new List<Items>();
+            DataTable dataTable = _IMonitorDAO.GetSports();
+            DataRow[] rows = dataTable.Select();
+            product.Add(new Items()
+            {
+                Id = 0,
+                Name = "All"
+            });
+            foreach (DataRow row in rows)
+            {
+                product.Add(new Items()
+                {
+                    Id = CastAide.AsInt32(row["sporttype"]),
+                    Name = CastAide.AsString(row["sportname"])
+                });
+            }
+            return product;
+        }
+        #endregion
+
+        #region GetBettypes
+        public List<Items> GetBettypes(List<Items> option, int sporttype)
+        {
+            List<Items> bettype = new List<Items>();
+            try
+            {
+                DataTable dataTable = _IMonitorDAO.GetBettypes(option, sporttype);
+                DataRow[] rows = dataTable.Select();
+                bettype.Add(new Items()
+                {
+                    Id = 0,
+                    Name = "All"
+                });
+                foreach (DataRow row in rows)
+                {
+                    bettype.Add(new Items()
+                    {
+                        Id = CastAide.AsInt32(row["typeid"]),
+                        Name = CastAide.AsString(row["typenamee"])
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+               LogExtensions.ExceptionHandler(ex);
+            }
+
+            return bettype;
+        }
+        #endregion
+
+        #region getLeague
+        List<Items> getLeague()
+        {
+            List<Items> list = new List<Items>();
+            try
+            {
+                MonitorCollection collection = MonitorSection.Instance.LeaguesType;
+                foreach (MonitorElement element in collection)
+                {
+                    list.Add(new Items()
+                    {
+                        Id = CastAide.AsInt32(element.Id),
+                        Name = element.Name,
+                        Key = element.Key
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return list;
+        }
+        #endregion
+
+        #region getReportBy
+        List<Items> getReportBy()
+        {
+            List<Items> itemses = new List<Items>();
+            try
+            {
+                MonitorCollection collection = MonitorSection.Instance.ReportBy;
+                foreach (MonitorElement element in collection)
+                {
+                    if (!element.Active) continue;
+
+                    itemses.Add(new Items()
+                    {
+                        Id = CastAide.AsInt32(element.Id),
+                        Name = CastAide.AsString(element.Name)
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return itemses;
+        }
+        #endregion
+
+
+        #region LoadFilterReport
+        public Filter LoadFilterReport()
+        {
+            Filter filter = new Filter();
+
+            try
+            {
+                filter.FromDate = ReportUtils.BalanceUp.BalanceUpDay.ToShortDateString();
+                filter.ToDate = DateTime.Today.AddDays(-1).ToShortDateString();
+                filter.InMonth = ReportUtils.BalanceUp.BalanceUpDay.Month;
+                filter.BeforeBalanceUpDay = ReportUtils.BalanceUp.BalanceUpDay.AddDays(-1).Day.ToString();
+                filter.InYears = new List<string>();
+
+                int begin = 2006;
+                int end = ReportUtils.BalanceUp.BalanceUpDay.Year;
+
+                for (int i = begin; i <= end; i++)
+                {
+                    filter.InYears.Add(i.ToString());
+                }
+
+
+                filter.Currency = new List<Items>();
+                filter.Currency = getCurrencies();
+
+                filter.Product = new List<Items>();
+                filter.Product = getProduct();
+
+                filter.Sport = new List<Items>();
+                filter.Sport = getSport();
+
+                filter.BetType = new List<Items>();
+                MonitorCollection collection = MonitorSection.Instance.Product;
+
+
+
+                List<Items> itemses = new List<Items>();
+
+                foreach (MonitorElement element in collection)
+                {
+                    if (element.Key.Length == 0) continue;
+                    itemses.Add(new Items()
+                    {
+                        Key = element.Key,
+                        Value = "1"
+                    });
+                }
+                filter.BetType = GetBettypes(itemses, 0);
+
+                filter.Leagues = new List<Items>();
+                filter.Leagues = getLeague();
+
+                filter.ReportBy = new List<Items>();
+                filter.ReportBy = getReportBy();
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return filter;
+        }
+        #endregion
+
+        #region Get Select Leagues
+        public List<Items> GetSelectLeagues(List<Items> option, int sportId, string fromdate, string todate, int currency, int bettype, int live)
+        {
+            List<Items> list = new List<Items>();
+            try
+            {
+                DataTable dataTable = _IMonitorDAO.GetLeague(option, sportId, fromdate, todate, currency, bettype, live);
+                if (dataTable != null)
+                {
+                    DataRow[] rows = dataTable.Select();
+
+                    foreach (DataRow row in rows)
+                    {
+                        list.Add(new Items()
+                        {
+                            Id = CastAide.AsInt32(row["leagueid"]),
+                            Name = CacheRef.GetLeagueName(row["leagueid"])
+
+                        });
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return list;
+        }
+        #endregion
+
+        #region GetMAMonitorReport
+        public MAMonitorDTO GetMAMonitorReport(Param param, bool fromcache)
+        {
+
+            MAMonitorDTO monitorPaging = new MAMonitorDTO();
+            MAMonitorDTO monitorDto = GetObjectData(param, fromcache);
+
+            monitorPaging.Item = monitorDto.Item.Select(c => c).Skip(param.pageSize * (param.pageIndex - 1)).Take(param.pageSize).ToList();
+            monitorPaging.Total = monitorDto.Total;
+            monitorPaging.TotalRows = monitorDto.TotalRows;
+
+            return monitorPaging;
+        }
+
+        MAMonitorDTO GetObjectData(Param param, bool fromcache)
+        {
+            MAMonitorDTO monitorDto = new MAMonitorDTO();
+            monitorDto.Item = new List<MAMonitorRow>();
+            monitorDto.Total = new MAMonitorRow();
+            try
+            {
+                var monitor_session = SessionExtension.GetSession(HttpContext.Current.Session, Monitor_SessionKey);
+                if (monitor_session == null || fromcache == false)
+                {
+                    DataTable dataTable = _IMonitorDAO.GetMAMonitorReport(param);
+                    if (dataTable == null)
+                        return monitorDto;
+
+                    var list = dataTable.AsEnumerable().ToList();
+
+                    if (param.Turnover1.Length > 0 && param.Turnover2.Length > 0)
+                    {
+
+
+                        list = dataTable.AsEnumerable().Where(
+                            s =>
+                            CastAide.AsDecimal(NumberFormat.DecFormat(s["Mem_Turnover"], 2)) >= CastAide.AsDecimal(param.Turnover1) &&
+                            CastAide.AsDecimal(NumberFormat.DecFormat(s["Mem_Turnover"], 2)) <= CastAide.AsDecimal(param.Turnover2)).Select(
+                                s => s).ToList();
+
+                    }
+
+                    if (param.Winloss1.Length > 0 && param.Winloss2.Length > 0)
+                    {
+                        list = list.Where(
+                            s =>
+                            CastAide.AsDecimal(NumberFormat.DecFormat(s["Mem_Winloss"], 2)) >= CastAide.AsDecimal(param.Winloss1) &&
+                            CastAide.AsDecimal(NumberFormat.DecFormat(s["Mem_Winloss"], 2)) <= CastAide.AsDecimal(param.Winloss2)).Select(
+                                              s => s).ToList();
+
+                    }
+
+                    int total = list.Count;
+
+                    monitorDto.TotalRows = total;
+
+                    for (int i = 0; i < total; i++)
+                    {
+                        #region AssignRow
+
+                        DataRow row = list[i];
+                        MAMonitorRow r = new MAMonitorRow();
+
+                        switch (param.reportby)
+                        {
+                            case 0:
+                                r.Name = CastAide.AsDateTime(row["rptdate"]).ToShortDateString();
+                                break;
+                            case 1:
+                                string month = "0" + CastAide.AsString(row["month"]);
+                                r.Name = month.Substring(month.Length - 2, 2) + "/" + CastAide.AsString(row["year"]);
+                                break;
+                            case 2:
+                                r.Name = CastAide.AsString(row["username"]);
+                                break;
+                            case 3:
+                                if (CastAide.AsInt32(row["bettype"]) == 18999)
+                                    r.Name = "Kick-Off";
+                                else if (CastAide.AsInt32(row["bettype"]) == 1000)
+                                    r.Name = "P2P";
+                                else
+                                    r.Name = CacheRef.GetBettype(row["bettype"]);
+                                break;
+                            case 4:
+                                r.Name = CacheRef.GetLeagueName(row["leagueid"]);
+                                break;
+                            case 5:
+                                r.index = CastAide.AsString(row["matchid"]);
+                                switch (CastAide.AsString(row["matchid"]))
+                                {
+                                    case "151"://Racing
+                                        r.Name = "Racing";
+                                        r.Home = CacheRef.GetLeagueName(row["homeid"]);
+                                        r.Away = CastAide.AsString(row["awayid"]);
+                                        break;
+                                    case "161"://Number Game
+                                        r.Name = "Number Game";
+                                        r.Home = string.Empty;
+                                        r.Away = CastAide.AsString(row["awayid"]);
+                                        break;
+                                    case "162"://Live Casino
+                                        r.Name = CastAide.AsString(row["matchcode"]);
+                                        r.Home = string.Empty;
+                                        r.Away = CacheRef.GetLeagueName(row["homeid"]);
+                                        break;
+                                    case "1000"://P2P
+                                        r.Name = CastAide.AsString(row["matchcode"]);
+                                        r.Home = string.Empty;
+                                        r.Away = string.Empty;
+                                        break;
+                                    case "10"://Outright
+                                        r.Name = "Outright";
+                                        r.Home = string.Empty;
+                                        r.Away = string.Empty;
+                                        break;
+                                    case "9"://Mixparlay
+                                        r.Name = "Mix Parlay";
+                                        r.Home = string.Empty;
+                                        r.Away = string.Empty;
+                                        break;
+                                    case "29"://System parlay
+                                        r.Name = "System parlay";
+                                        r.Home = string.Empty;
+                                        r.Away = string.Empty;
+                                        break;
+                                    default:
+                                        r.Name = CastAide.AsString(row["matchcode"]);
+                                        r.Home = CacheRef.GetTeamName(row["homeid"]);
+                                        r.Away = CacheRef.GetTeamName(row["awayid"]);
+                                        break;
+                                }
+                                break;
+                            case 6:
+                                r.Name = CastAide.AsString(row["currencyname"]);
+                                r.Home = string.Empty;
+                                r.Away = string.Empty;
+                                break;
+                            case 7:
+                                r.Name = CastAide.AsString(row["sport"]);
+                                r.Home = string.Empty;
+                                r.Away = string.Empty;
+                                break;
+                                break;
+                        }
+
+                        r.Turnover = NumberFormat.DecFormat(row["Mem_Turnover"], 2);
+                        r.Winloss = NumberFormat.DecFormat(row["Mem_Winloss"], 2);
+                        r.Betcount = NumberFormat.DecFormat(row["betcount"], 0);
+
+                        r.ATurnover = NumberFormat.DecFormat(row["Ag_Turnover"], 2);
+                        r.AWinloss = NumberFormat.DecFormat(row["Ag_Winloss"], 2);
+
+                        r.MTurnover = NumberFormat.DecFormat(row["MAg_Turnover"], 2);
+                        r.MWinloss = NumberFormat.DecFormat(row["MAg_Winloss"], 2);
+
+                        r.STurnover = NumberFormat.DecFormat(row["SAg_Turnover"], 2);
+                        r.SWinloss = NumberFormat.DecFormat(row["SAg_Winloss"], 2);
+
+                        monitorDto.Item.Add(r);
+                        #endregion
+                    }
+
+                    #region Total
+                    monitorDto.Total = new MAMonitorRow()
+                    {
+                        Name = "Total",
+
+                        Turnover = NumberFormat.DecFormat(list.Sum(s => CastAide.AsDecimal(s["Mem_Turnover"])), 2),
+                        Winloss = NumberFormat.DecFormat(list.Sum(s => CastAide.AsDecimal(s["Mem_Winloss"])), 2),
+
+                        Betcount = NumberFormat.DecFormat(list.Sum(s => CastAide.AsDecimal(s["betcount"])), 0),
+
+                        ATurnover = NumberFormat.DecFormat(list.Sum(s => CastAide.AsDecimal(s["Ag_Turnover"])), 2),
+                        AWinloss = NumberFormat.DecFormat(list.Sum(s => CastAide.AsDecimal(s["Ag_Winloss"])), 2),
+
+                        MTurnover = NumberFormat.DecFormat(list.Sum(s => CastAide.AsDecimal(s["MAg_Turnover"])), 2),
+                        MWinloss = NumberFormat.DecFormat(list.Sum(s => CastAide.AsDecimal(s["MAg_Winloss"])), 2),
+
+                        STurnover = NumberFormat.DecFormat(list.Sum(s => CastAide.AsDecimal(s["SAg_Turnover"])), 2),
+                        SWinloss = NumberFormat.DecFormat(list.Sum(s => CastAide.AsDecimal(s["SAg_Winloss"])), 2),
+                    };
+                    #endregion
+                    SessionExtension.AddSession(HttpContext.Current.Session, Monitor_SessionKey, monitorDto);
+                }
+                else
+                {
+                    monitorDto = (MAMonitorDTO)monitor_session;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return monitorDto;
+        }
+        #endregion
+
+        #region export 2 excel
+        public bool CheckMAMonitorReportFromSession(Param param)
+        {
+            try
+            {
+                //HttpContext.Current.Session.Remove(Monitor_SessionKey);
+                GetObjectData(param, true);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public void ExportToExcelMAMonitorReport(int reportBy, string reportTitle)
+        {
+            #region excel format
+
+            var startCol = 0;
+            var startRow = 3;
+            var nextRow = 0;
+            var reportName = reportTitle.Replace(" ", "");
+            var excelFile = new ExcelFile();
+
+            var limitMaxRows = 65000;
+            #endregion
+
+
+            var getReportData = GetObjectData(new Param(), true);
+
+            if (getReportData != null && getReportData.Item != null && getReportData.Item.Count > 0)
+            {
+                var sheets = new ExcelWorksheet[(getReportData.Item.Count / limitMaxRows) + (getReportData.Item.Count % limitMaxRows > 0 ? 1 : 0)];
+                for (int i = 0; i < sheets.Count(); i++)
+                {
+                    nextRow = 0;
+                    sheets[i] = excelFile.Worksheets.Add(string.Format("{0}-page{1}", reportTitle.Replace(" ", ""), i + 1));
+                    Export2ExcelMaMonitorReportHeader(ref sheets[i], startCol, startRow, reportTitle, reportBy);
+                    var query = getReportData.Item.Select(c => c).Skip(limitMaxRows * i).Take(limitMaxRows).ToList();
+
+                    foreach (var item in query)
+                    {
+                        if (nextRow == limitMaxRows)
+                            break;
+
+                        Export2ExcelMaMonitorReportContent(ref sheets[i], startCol,
+                                                           startRow, nextRow,
+                                                           false, item, reportBy);
+                        nextRow++;
+                    }
+                }
+                Export2ExcelMaMonitorReportContent(ref sheets[sheets.Count() - 1], startCol,
+                                                   startRow, nextRow,
+                                                   true, getReportData.Total, 0);
+            }
+            else
+            {
+                var wsReport = excelFile.Worksheets.Add(string.Format("{0}", reportTitle.Replace(" ", "")));
+                Export2ExcelMaMonitorReportHeader(ref wsReport, startCol, startRow, reportTitle, reportBy);
+            }
+
+            #region  reponse file
+            var response = HttpContext.Current.Response;
+            response.Clear();
+            response.ContentType = "application/vnd.ms-excel";
+            response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
+            excelFile.SaveXls(response.OutputStream);
+            #endregion
+        }
+
+        private static void Export2ExcelMaMonitorReportHeader(ref ExcelWorksheet wsReport, int startCol, int startRow, string reportTitle, int reportBy)
+        {
+            #region local variables
+            var reportByTitle = GetReportTypeName(reportBy);
+            var turnOverTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "TurnOver");
+            var winlossTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "WinLost");
+            var betCountTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblBetCount");
+            var memberTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Member");
+            var agentTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Agent");
+            var masterTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Master");
+            var superTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Super");
+
+            var bgHeader = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
+            var nextCol = 1;
+            var totalGroupCols = 2;
+            #endregion
+
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 3, startCol, startRow - 3, startCol + 9).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 3, startCol, startRow - 3, startCol + 9).Value = reportTitle;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 3, startCol, startRow - 3, startCol + 9).Style.Font.Weight = ExcelFont.BoldWeight;
+            wsReport.Columns[0].Width = 35 * 256;
+
+            #region first row
+
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 1, startCol).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 1, startCol).Style = bgHeader;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 1, startCol).Value = reportByTitle;
+            //Member
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol, startRow - 2,
+                                               startCol + (nextCol + totalGroupCols)).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol, startRow - 2, startCol + (nextCol + totalGroupCols)).
+                Style = bgHeader;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol, startRow - 2,
+                                               startCol + (nextCol += totalGroupCols)).Value = memberTitle;
+            //Agent
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol + 1, startRow - 2,
+                                               startCol + (nextCol + totalGroupCols)).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol + 1, startRow - 2, startCol + (nextCol + totalGroupCols)).
+                Style = bgHeader;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol + 1, startRow - 2,
+                                               startCol + (nextCol += totalGroupCols)).Value = agentTitle;
+            //Master
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol + 1, startRow - 2,
+                                               startCol + (nextCol + totalGroupCols)).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol + 1, startRow - 2, startCol + (nextCol + totalGroupCols)).
+                Style = bgHeader;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol + 1, startRow - 2,
+                                               startCol + (nextCol += totalGroupCols)).Value = masterTitle;
+            //Super
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol + 1, startRow - 2,
+                                               startCol + (nextCol + totalGroupCols)).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol + 1, startRow - 2, startCol + (nextCol + totalGroupCols)).
+                Style = bgHeader;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol + 1, startRow - 2,
+                                               startCol + (nextCol + totalGroupCols)).Value = superTitle;
+            #endregion
+
+            #region second row
+            nextCol = 1;
+            //Member
+            wsReport.Cells[startRow - 1, startCol + nextCol].Style = bgHeader;
+            wsReport.Cells[startRow - 1, startCol + nextCol].Value = turnOverTitle;
+            wsReport.Cells[startRow - 1, startCol + nextCol++].Style = bgHeader;
+            wsReport.Cells[startRow - 1, startCol + nextCol].Value = winlossTitle;
+            wsReport.Cells[startRow - 1, startCol + nextCol++].Style = bgHeader;
+            wsReport.Cells[startRow - 1, startCol + nextCol].Value = betCountTitle;
+            //Agent
+            wsReport.Cells[startRow - 1, startCol + nextCol++].Style = bgHeader;
+            wsReport.Cells[startRow - 1, startCol + nextCol].Value = turnOverTitle;
+            wsReport.Cells[startRow - 1, startCol + nextCol++].Style = bgHeader;
+            wsReport.Cells[startRow - 1, startCol + nextCol].Value = winlossTitle;
+            //Master
+            wsReport.Cells[startRow - 1, startCol + nextCol++].Style = bgHeader;
+            wsReport.Cells[startRow - 1, startCol + nextCol].Value = turnOverTitle;
+            wsReport.Cells[startRow - 1, startCol + nextCol++].Style = bgHeader;
+            wsReport.Cells[startRow - 1, startCol + nextCol].Value = winlossTitle;
+            //Super
+            wsReport.Cells[startRow - 1, startCol + nextCol++].Style = bgHeader;
+            wsReport.Cells[startRow - 1, startCol + nextCol].Value = turnOverTitle;
+            wsReport.Cells[startRow - 1, startCol + nextCol++].Style = bgHeader;
+            wsReport.Cells[startRow - 1, startCol + nextCol].Value = winlossTitle;
+            wsReport.Cells[startRow - 1, startCol + nextCol].Style = bgHeader;
+            #endregion
+        }
+
+        private static void Export2ExcelMaMonitorReportContent(ref ExcelWorksheet wsReport, int startCol, int startRow, int nextRow, bool isFooter, MAMonitorRow maMonitorRow, int reportBy)
+        {
+            #region local variables
+
+            var bgColor = isFooter
+                              ? Color.FromArgb(205, 222, 255)
+                              : (nextRow % 2 > 0 ? Color.FromArgb(255, 255, 255) : Color.FromArgb(223, 234, 255));
+            var bgFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", bgColor, isFooter ? true : false,
+                                                                                false, true);
+            var nextCol = 0;
+
+            #endregion
+
+            if (maMonitorRow != null)
+            {
+                wsReport.Cells[startRow + nextRow, startCol].Style = bgFormat;
+
+                wsReport.Cells[startRow + nextRow, startCol].Value = reportBy != 5 ? maMonitorRow.Name :
+                    GetGameInfo(CastAide.AsInt32(maMonitorRow.index), maMonitorRow.Home, maMonitorRow.Away, maMonitorRow.Name);
+                //member
+                wsReport.Cells[startRow + nextRow, startCol + nextCol++].Style = bgFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDecimal(maMonitorRow.Turnover);
+                wsReport.Cells[startRow + nextRow, startCol + nextCol++].Style = bgFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDecimal(maMonitorRow.Winloss);
+                wsReport.Cells[startRow + nextRow, startCol + nextCol++].Style = bgFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDecimal(maMonitorRow.Betcount);
+                //agent
+                wsReport.Cells[startRow + nextRow, startCol + nextCol++].Style = bgFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDecimal(maMonitorRow.ATurnover);
+                wsReport.Cells[startRow + nextRow, startCol + nextCol++].Style = bgFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDecimal(maMonitorRow.AWinloss);
+                //master
+                wsReport.Cells[startRow + nextRow, startCol + nextCol++].Style = bgFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDecimal(maMonitorRow.MTurnover);
+                wsReport.Cells[startRow + nextRow, startCol + nextCol++].Style = bgFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDecimal(maMonitorRow.MWinloss);
+                //super
+                wsReport.Cells[startRow + nextRow, startCol + nextCol++].Style = bgFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDecimal(maMonitorRow.STurnover);
+                wsReport.Cells[startRow + nextRow, startCol + nextCol++].Style = bgFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDecimal(maMonitorRow.SWinloss);
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Style = bgFormat;
+            }
+        }
+
+        private static string GetReportTypeName(int reportById)
+        {
+            var reportType = string.Empty;
+            switch (reportById)
+            {
+                case 0:
+                    reportType = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Date");
+                    break;
+                case 1:
+                    reportType = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMonth");
+                    break;
+                case 2:
+                    reportType = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblUsername");
+                    break;
+                case 3:
+                    reportType = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Bettype");
+                    break;
+                case 4:
+                    reportType = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "league");
+                    break;
+                case 5:
+                    reportType = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblGame");
+                    break;
+                default:
+                    break;
+            }
+            return reportType;
+        }
+
+        private static string GetGameInfo(int sportId, string homeName, string awayName, string matchId)
+        {
+            string gameInfo;
+
+            switch (sportId)
+            {
+                case Constants.Sport.HorseRacing:
+                    gameInfo = string.Format("{0} - {1} - {2} {3}", matchId, homeName, ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Race"), awayName);
+                    break;
+                case Constants.Sport.NumberGame:
+                    gameInfo = string.Format("{0} - Game No {1}", matchId, awayName);
+                    break;
+                case Constants.Sport.Badminton:
+                case Constants.Sport.Golf:
+                    gameInfo = string.Format("{0}", matchId);
+                    break;
+                case Constants.Sport.LiveCasino:
+                    gameInfo = string.Format("{0} - Game Table - {1}", matchId, awayName);
+                    break;
+                case 1000://p2p
+                    gameInfo = string.Format("{0}", matchId);
+                    break;
+                case 29://system parlay
+                    gameInfo = matchId;
+                    break;
+                default:
+                    gameInfo = string.Format("{0}        {1} -vs- {2}", matchId, homeName, awayName);
+                    break;
+
+            }
+
+            return gameInfo;
+        }
+
+        #endregion
+    } 
+}

@@ -1,0 +1,851 @@
+﻿using System;
+using System.Collections;
+using System.Data;
+using System.Text;   
+using DNAide.Core;
+using DNAide.Data;
+using DNAide.Utils;
+using DNAide.Web;
+
+using Sunplus.Accounting.Business.CacheManager;
+using Sunplus.Accounting.Business.Report;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Accounting.DataAccess;
+using Sunplus.Accounting.DataAccess.Report;
+using Sunplus.Core.LoggingLib;
+using System.Collections.Generic;
+
+namespace BLL.Report.OpenToteSettlement
+{
+    public class OpenToteSettlementManager : ReportBase
+    {
+        private bool hasError;
+        private string msg = "<span class='error-message'>{content}</span>";
+        private string user = "[" + AppSession.Username + "]";
+
+        #region LoadHeader
+
+        public string LoadHeader(string fdate, string db)
+        {
+            fdate = ReportHTML.ValidDate(fdate);
+
+            int displaydays = 0;
+            TimeSpan sp = DateTime.Today - ReportUtils.BalanceUp.BalanceUpDay;
+            displaydays = sp.Days;
+            string evt = "SetEvtGetdate()";
+           // string strDateTimeSingle = Reports.GetDateTimeSingle(fdate, "Date", string.Empty, displaydays, "../../",
+                                                                 //string.Empty, evt);
+            string strDateTimeSingle = Reports.GetDateTimeSingleMaxDays(fdate, "Date", string.Empty, displaydays, 7, "../../",
+                                                                 string.Empty, evt);
+
+            TemplateHandler.Assign(ref strDateTimeSingle, "strDispday", "");
+
+            if (db == null) db = "Rep";
+            if (db == "Rep")
+            {
+                TemplateHandler.Assign(ref strDateTimeSingle, "status-Rep", "checked=checked");
+                TemplateHandler.Assign(ref strDateTimeSingle, "status-Main", "");
+            }
+            else
+            {
+                TemplateHandler.Assign(ref strDateTimeSingle, "status-Rep", "");
+                TemplateHandler.Assign(ref strDateTimeSingle, "status-Main", "checked=checked");
+            }
+            TemplateHandler.Assign(ref strDateTimeSingle, "db", db);
+            TemplateHandler.RemoveBlock(ref strDateTimeSingle, "path");
+            return strDateTimeSingle;
+        }
+
+        #endregion
+
+        #region WinlostHR_OpenTote
+
+        #region WinlostHR_OpenTote
+
+        public string WinlostHR_OpenTote(string winlostdate, string db, bool IsTest)
+        {
+            #region local variables
+            var tpl = WebUtils.LoadTemplate("Report/OpenToteSettlement/OpenToteSettlementReport.htm");
+            TemplateHandler.Assign(ref tpl, "bettype", "Horse Racing Open Tote Daily Report");
+            //28 columns
+            var tplContent = TemplateHandler.CopyBlock(tpl, "content");
+            var tplFooter = TemplateHandler.CopyBlock(tpl, "footer");
+            var tplComparision = TemplateHandler.CopyBlock(tpl, "Comparision");
+            string strColspan = "<tr bgcolor='white'><td colspan='30' class='c b'>{msg}</td></tr>", str = "";
+            var rows = new StringBuilder();
+            DataRow[] dataRows = {};
+            var dataTable = new DataTable();
+            #endregion
+
+            try
+            {
+                #region get data
+                var hashtable = new Hashtable();
+                hashtable.Add("winlostdate", winlostdate);
+                hashtable.Add("db", db);
+
+                DbResult rs;
+                DateTime movebetsday = ReportUtils.BalanceUp.MoveBetsDay;
+                if (IsTest)
+                {
+                    if (CastAide.AsDateTime(winlostdate) <= movebetsday)
+                        rs = IBCProvider.ReportProvider.OpenToteSettlement().WinlostHR_OpenTote14_Test(hashtable);
+                    else
+                        rs = IBCProvider.ReportProvider.OpenToteSettlement().WinlostHR_OpenTote_Test(hashtable);
+                }
+                else
+                {
+                    if (CastAide.AsDateTime(winlostdate) <= movebetsday)
+                        rs = IBCProvider.ReportProvider.OpenToteSettlement().WinlostHR_OpenTote14(hashtable);
+                    else
+                        rs = IBCProvider.ReportProvider.OpenToteSettlement().WinlostHR_OpenTote(hashtable);
+                }
+
+                dataTable = rs.ResultSet.Tables[0];
+                //--------------------------------------
+                //--------------------------------------
+                //dataTable.DefaultView.Sort = dataTable.Columns["PoolCurrency"] + " asc";
+                dataRows = dataTable.Select("");
+                #endregion
+
+                #region cache   
+                CacheData(OpenToteSettlementCommon.cachekeyreport, dataTable, DateTime.Now.AddHours(1));
+                #endregion
+            }
+            catch (Exception exception)
+            {
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+                hasError = true;
+                TemplateHandler.Assign(ref msg, "content", exception.Message);
+            }
+
+            #region nodata or error   
+            if (hasError || dataRows.Length == 0)
+            {
+                str = "";
+                str = strColspan;
+                if (dataRows.Length == 0)
+                    TemplateHandler.Assign(ref str, "msg", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"));
+                else
+                    TemplateHandler.Assign(ref str, "msg", msg);
+                TemplateHandler.ReplaceBlock(ref tpl, "content", str);
+                TemplateHandler.RemoveBlock(ref tpl, "footer");
+                TemplateHandler.RemoveBlock(ref tpl, "Comparision");
+            }
+            #endregion                
+
+            #region generate data              
+            else
+            {
+                string partnertype_p = "", partnertype = "", report_row = "bgodd", strPoolBase = "";
+                int poolcurrency = 0, poolcurrency_p = 0;
+                string poolCurrencyArr = string.Empty;
+                
+                foreach (DataRow dataRow in dataRows)
+                {
+                    string row = tplContent;
+                    TemplateHandler.Assign(ref row, "id", "");
+                    partnertype_p = dataRow["partnertype"].ToString();
+                    poolcurrency_p = CastAide.AsInt32(dataRow["poolcurrency"]);
+                    if (partnertype != partnertype_p)
+                    {
+                        string exp = "partnertype='" + partnertype_p + "'";
+                        int countPartnerType = CastAide.AsInt32(dataTable.Compute("count(partnertype)", exp));
+
+                        TemplateHandler.Assign(ref row, "rowspan", countPartnerType);
+                        TemplateHandler.Assign(ref row, "Pool_Currency", partnertype_p);
+
+                        if (partnertype.Length > 0)
+                        {
+                            //PoolCurr
+                            strPoolBase = tplContent;
+                            TemplateHandler.Assign(ref strPoolBase, "id", "");
+                            TotalPoolOrBaseCurrency_OpenTote(ref strPoolBase, "total2", dataTable, "_PoolCurr",
+                                                             winlostdate, poolcurrency, partnertype, db);
+
+                            if (poolcurrency == 2) //If currency is RM then no need to show the row Base (RM)
+                            {
+                                TemplateHandler.Assign(ref strPoolBase, "rowspan", 1);
+                                rows.Append(strPoolBase);
+                            }
+                            else
+                            {
+                                TemplateHandler.Assign(ref strPoolBase, "rowspan", 2);
+                                rows.Append(strPoolBase);
+
+                                //Base (RM)
+                                strPoolBase = tplContent;
+                                TemplateHandler.Assign(ref strPoolBase, "id", "");
+                                TemplateHandler.RemoveBlock(ref strPoolBase, "Blank");
+                                TemplateHandler.RemoveBlock(ref strPoolBase, "Blank2");
+                                TotalPoolOrBaseCurrency_OpenTote(ref strPoolBase, "total2", dataTable, "", winlostdate,
+                                                                 poolcurrency, partnertype, db);
+                                rows.Append(strPoolBase);
+                            }
+
+                            str = strColspan;
+                            TemplateHandler.Assign(ref str, "msg", "");
+                            rows.Append(str);
+                        }
+
+                        if (poolcurrency_p != poolcurrency && poolCurrencyArr.Contains(poolcurrency_p.ToString()) == false)
+                        {
+                            poolCurrencyArr += (poolcurrency_p + ";");
+                        }
+
+                        #region assign data
+                        report_row = (report_row == "bgodd") ? "bgeven" : "bgodd";
+                        partnertype = partnertype_p;
+                        poolcurrency = poolcurrency_p;
+                        #endregion
+                    }
+                    else
+                    {
+                        TemplateHandler.RemoveBlock(ref row, "Blank");
+                        TemplateHandler.RemoveBlock(ref row, "Blank2");
+                    }
+
+                    AssignDataForRow_OpenTote(ref row, report_row, dataRow, "_Origin");
+                    rows.Append(row);
+                }
+
+                #region Lastest 
+
+                //PoolCurr
+                strPoolBase = tplContent;
+                TotalPoolOrBaseCurrency_OpenTote(ref strPoolBase, "total2", dataTable, "_PoolCurr", winlostdate,
+                                                 poolcurrency, partnertype, db);
+
+
+                if (poolcurrency == 2) //If currency is RM then no need to show the row Base (RM)
+                {
+                    TemplateHandler.Assign(ref strPoolBase, "rowspan", 1);
+                    rows.Append(strPoolBase);
+                }
+                else
+                {
+                    TemplateHandler.Assign(ref strPoolBase, "rowspan", 2);
+                    rows.Append(strPoolBase);
+
+                    //Base (RM)
+                    strPoolBase = tplContent;
+                    TemplateHandler.Assign(ref strPoolBase, "id", "");
+                    TemplateHandler.RemoveBlock(ref strPoolBase, "Blank");
+                    TemplateHandler.RemoveBlock(ref strPoolBase, "Blank2");
+                    TotalPoolOrBaseCurrency_OpenTote(ref strPoolBase, "total2", dataTable, "", winlostdate, poolcurrency,
+                                                     partnertype, db);
+                    rows.Append(strPoolBase);
+                }
+
+                #endregion
+
+                #region Grand Total
+                //List<IBCOpenTote> ibcOpenTote = new List<IBCOpenTote>();
+                #region add columns
+                DataColumn dcCurrency = new DataColumn("currencyName");                                
+                DataColumn dcIbcTO = new DataColumn("IBCTO");                
+                DataColumn dcIBCDividend = new DataColumn("IBCDividen");                    
+                DataTable dtIBCOpenTote = new DataTable();
+                dcIbcTO.DataType = System.Type.GetType("System.Decimal");
+                dcIBCDividend.DataType = System.Type.GetType("System.Decimal");
+                dtIBCOpenTote.Columns.Add(dcCurrency);
+                dtIBCOpenTote.Columns.Add(dcIbcTO);
+                dtIBCOpenTote.Columns.Add(dcIBCDividend);
+                #endregion
+                str = strColspan;
+                TemplateHandler.Assign(ref str, "msg", "");
+                rows.Append(str);  
+                //TotalPoolOrBaseCurrency_OpenTote(ref tplFooter, "total2", dataTable, "", "", 0, "", "");
+                GrandTotalPoolOrBaseCurrency_OpenToteNew(ref tplFooter, dataTable, poolCurrencyArr, ref dtIBCOpenTote);
+                TemplateHandler.ReplaceBlock(ref tpl, "footer", tplFooter);
+
+                #endregion
+
+                #region Comparision                                                               
+                CacheData(OpenToteSettlementCommon.cachekeyibcopentotecompare, dtIBCOpenTote, DateTime.Now.AddHours(1));
+                ComparisionNew(winlostdate, ref tplComparision, dtIBCOpenTote);
+                TemplateHandler.ReplaceBlock(ref tpl, "Comparision", tplComparision);
+
+                #endregion
+
+                TemplateHandler.ReplaceBlock(ref tpl, "content", rows.ToString());
+            }
+
+            #endregion
+
+            return tpl;
+        }
+
+        #endregion
+
+        #region AssignDataForRow_OpenTote
+
+        private void AssignDataForRow_OpenTote(ref string row, string report_row_color, DataRow dataRow, string suffix)
+        {
+            TemplateHandler.Assign(ref row, "bgcolor", report_row_color);
+            TemplateHandler.Assign(ref row, "Currency", dataRow["currencyName"]);
+            TemplateHandler.Assign(ref row, "AgWinTO", NumberFormat.DecFormat(dataRow["winTO_Agency" + suffix], 2));
+            TemplateHandler.Assign(ref row, "AgPlaceTO", NumberFormat.DecFormat(dataRow["placeTO_Agency" + suffix], 2));
+            TemplateHandler.Assign(ref row, "AgWinPlaceTO",
+                                   NumberFormat.DecFormat(dataRow["winplaceTO_Agency" + suffix], 2));
+            TemplateHandler.Assign(ref row, "AgTotalTO", NumberFormat.DecFormat(dataRow["totalTOAgency" + suffix], 2));
+            TemplateHandler.Assign(ref row, "AgCommInc", NumberFormat.DecFormat(dataRow["commIncomeAgency" + suffix], 2));
+            TemplateHandler.Assign(ref row, "AgWL", NumberFormat.DecFormat(dataRow["PTWLAgency" + suffix], 2));
+
+            TemplateHandler.Assign(ref row, "IBCWinTO", NumberFormat.DecFormat(dataRow["winTO_IBC" + suffix], 2));
+            TemplateHandler.Assign(ref row, "IBCPlaceTO", NumberFormat.DecFormat(dataRow["placeTO_IBC" + suffix], 2));
+            TemplateHandler.Assign(ref row, "IBCWinPlaceTO",
+                                   NumberFormat.DecFormat(dataRow["winplaceTO_IBC" + suffix], 2));
+            TemplateHandler.Assign(ref row, "IBCTotalTO", NumberFormat.DecFormat(dataRow["totalTOIBC" + suffix], 2));
+            TemplateHandler.Assign(ref row, "IBCCommInc", NumberFormat.DecFormat(dataRow["commIncomeIBC" + suffix], 2));
+            TemplateHandler.Assign(ref row, "IBCToteFee", NumberFormat.DecFormat(dataRow["FeeDue2" + suffix], 2));
+            TemplateHandler.Assign(ref row, "IBCCommExp",
+                                   NumberFormat.DecFormat(dataRow["commIncomeAgency" + suffix], 2));
+            TemplateHandler.Assign(ref row, "IBCPTWL", NumberFormat.DecFormat(dataRow["PTWLIBC" + suffix], 2));
+            TemplateHandler.Assign(ref row, "IBCNetInc", NumberFormat.DecFormat(dataRow["netIncomeIBC" + suffix], 2));
+
+            TemplateHandler.Assign(ref row, "PartnerWinTO", NumberFormat.DecFormat(dataRow["winTOPartner" + suffix], 2));
+            TemplateHandler.Assign(ref row, "PartnerPlaceTO",
+                                   NumberFormat.DecFormat(dataRow["placeTOPartner" + suffix], 2));
+            TemplateHandler.Assign(ref row, "PartnerWinPlaceTO",
+                                   NumberFormat.DecFormat(dataRow["winplaceTOPartner" + suffix], 2));
+            TemplateHandler.Assign(ref row, "PartnerTotalTO",
+                                   NumberFormat.DecFormat(dataRow["totalTOPartner" + suffix], 2));
+            TemplateHandler.Assign(ref row, "PartnerDividendWon",
+                                   NumberFormat.DecFormat(dataRow["dividendWon" + suffix], 2));
+            TemplateHandler.Assign(ref row, "PartnerCommExp",
+                                   NumberFormat.DecFormat(dataRow["commIncomeIBC" + suffix], 2));
+            TemplateHandler.Assign(ref row, "PartnerAmountDue", NumberFormat.DecFormat(dataRow["AmountDue" + suffix], 2));
+        }
+
+        #endregion
+
+        #region TotalPoolOrBaseCurrency_OpenTote
+
+        private void TotalPoolOrBaseCurrency_OpenTote(ref string row, string report_row_color, DataTable dataTable,
+                                                      string suffix, string winlostdate, int poolCurrency,
+                                                      string PartnerType, string db)
+        {
+            string exp = "PoolCurrency='" + poolCurrency + "' and PartnerType='" + PartnerType + "'";
+
+            string evt = "WinlostHR_OpenTote_Details('" + winlostdate + "','" + PartnerType + "','" + poolCurrency +
+                         "','" + db + "');";
+            string strPool = "<div class='hand' style='color:blue;' onclick=\"" + evt + "\">" + PartnerType + " Total" +
+                             "</div>";
+
+            TemplateHandler.Assign(ref row, "bgcolor", report_row_color);
+            TemplateHandler.Assign(ref row, "Pool_Currency", strPool);
+
+            if (suffix.Length == 0)
+                TemplateHandler.Assign(ref row, "Currency", "Base (RM)");
+            else
+                TemplateHandler.Assign(ref row, "Currency", CacheUtils.GetExchangeName(poolCurrency));
+
+            TemplateHandler.Assign(ref row, "AgWinTO",
+                                   NumberFormat.DecFormat(dataTable.Compute("sum(winTO_Agency" + suffix + ")", exp), 2));
+            TemplateHandler.Assign(ref row, "AgPlaceTO",
+                                   NumberFormat.DecFormat(dataTable.Compute("sum(placeTO_Agency" + suffix + ")", exp), 2));
+            TemplateHandler.Assign(ref row, "AgWinPlaceTO",
+                                   NumberFormat.DecFormat(
+                                       dataTable.Compute("sum(winplaceTO_Agency" + suffix + ")", exp), 2));
+            TemplateHandler.Assign(ref row, "AgTotalTO",
+                                   NumberFormat.DecFormat(dataTable.Compute("sum(totalTOAgency" + suffix + ")", exp), 2));
+            TemplateHandler.Assign(ref row, "AgCommInc",
+                                   NumberFormat.DecFormat(
+                                       dataTable.Compute("sum(commIncomeAgency" + suffix + ")", exp), 2));
+            TemplateHandler.Assign(ref row, "AgWL",
+                                   NumberFormat.DecFormat(dataTable.Compute("sum(PTWLAgency" + suffix + ")", exp), 2));
+
+            TemplateHandler.Assign(ref row, "IBCWinTO",
+                                   NumberFormat.DecFormat(dataTable.Compute("sum(winTO_IBC" + suffix + ")", exp), 2));
+            TemplateHandler.Assign(ref row, "IBCPlaceTO",
+                                   NumberFormat.DecFormat(dataTable.Compute("sum(placeTO_IBC" + suffix + ")", exp), 2));
+            TemplateHandler.Assign(ref row, "IBCWinPlaceTO",
+                                   NumberFormat.DecFormat(dataTable.Compute("sum(winplaceTO_IBC" + suffix + ")", exp), 2));
+            TemplateHandler.Assign(ref row, "IBCTotalTO",
+                                   NumberFormat.DecFormat(dataTable.Compute("sum(totalTOIBC" + suffix + ")", exp), 2));
+            TemplateHandler.Assign(ref row, "IBCCommInc",
+                                   NumberFormat.DecFormat(dataTable.Compute("sum(commIncomeIBC" + suffix + ")", exp), 2));
+
+            TemplateHandler.Assign(ref row, "IBCToteFee",
+                                   NumberFormat.DecFormat(dataTable.Compute("sum(FeeDue2" + suffix + ")", exp), 2));
+            TemplateHandler.Assign(ref row, "IBCCommExp",
+                                   NumberFormat.DecFormat(
+                                       dataTable.Compute("sum(commIncomeAgency" + suffix + ")", exp), 2));
+            TemplateHandler.Assign(ref row, "IBCPTWL",
+                                   NumberFormat.DecFormat(dataTable.Compute("sum(PTWLIBC" + suffix + ")", exp), 2));
+            TemplateHandler.Assign(ref row, "IBCNetInc",
+                                   NumberFormat.DecFormat(dataTable.Compute("sum(netIncomeIBC" + suffix + ")", exp), 2));
+
+            TemplateHandler.Assign(ref row, "PartnerWinTO",
+                                   NumberFormat.DecFormat(dataTable.Compute("sum(winTOPartner" + suffix + ")", exp), 2));
+            TemplateHandler.Assign(ref row, "PartnerPlaceTO",
+                                   NumberFormat.DecFormat(dataTable.Compute("sum(placeTOPartner" + suffix + ")", exp), 2));
+            TemplateHandler.Assign(ref row, "PartnerWinPlaceTO",
+                                   NumberFormat.DecFormat(
+                                       dataTable.Compute("sum(winplaceTOPartner" + suffix + ")", exp), 2));
+            TemplateHandler.Assign(ref row, "PartnerTotalTO",
+                                   NumberFormat.DecFormat(dataTable.Compute("sum(totalTOPartner" + suffix + ")", exp), 2));
+            TemplateHandler.Assign(ref row, "PartnerDividendWon",
+                                   NumberFormat.DecFormat(dataTable.Compute("sum(dividendWon" + suffix + ")", exp), 2));
+            TemplateHandler.Assign(ref row, "PartnerCommExp",
+                                   NumberFormat.DecFormat(dataTable.Compute("sum(commIncomeIBC" + suffix + ")", exp), 2));
+            TemplateHandler.Assign(ref row, "PartnerAmountDue",
+                                   NumberFormat.DecFormat(dataTable.Compute("sum(AmountDue" + suffix + ")", exp), 2));
+        }
+
+        #endregion
+
+        #region GrandTotalPoolOrBaseCurrency_OpenTote
+
+        private void GrandTotalPoolOrBaseCurrency_OpenTote(ref string tplFooter, DataTable dataTable, int pool_curr)
+        {
+            string[] suffixes = {"_PoolCurr", ""};
+            string tplSubFooter = TemplateHandler.CopyBlock(tplFooter, "sub-footer");
+            string[] arrTemlateColumns = {
+                                             "Currency",
+                                             "AgWinTO", "AgPlaceTO", "AgWinPlaceTO", "AgTotalTO", "AgCommInc", "AgWL",
+                                             "IBCWinTO", "IBCPlaceTO", "IBCWinPlaceTO", "IBCTotalTO", "IBCCommInc",
+                                             "IBCToteFee", "IBCCommExp", "IBCPTWL", "IBCNetInc",
+                                             "PartnerWinTO", "PartnerPlaceTO", "PartnerWinPlaceTO", "PartnerTotalTO",
+                                             "PartnerDividendWon", "PartnerCommExp", "PartnerAmountDue"
+                                         };
+
+            string[] arrColumns = {
+                                      "",
+                                      "winTO_Agency", "placeTO_Agency", "winplaceTO_Agency", "totalTOAgency",
+                                      "commIncomeAgency", "PTWLAgency",
+                                      "winTO_IBC", "placeTO_IBC", "winplaceTO_IBC", "totalTOIBC", "commIncomeIBC",
+                                      "FeeDue2", "commIncomeAgency", "PTWLIBC", "netIncomeIBC",
+                                      "winTOPartner", "placeTOPartner", "winplaceTOPartner", "totalTOPartner",
+                                      "totalTOPartner", "dividendWon", "commIncomeIBC", "AmountDue"
+                                  };
+            string[] arrCurrs = {CacheUtils.GetExchangeName(pool_curr), "Base (RM)"};
+
+
+            var rows = new StringBuilder();
+            string exp = "";
+            int index = 0;
+            foreach (string suffix in suffixes)
+            {
+                string row = tplSubFooter;
+
+                TemplateHandler.Assign(ref row, "currency", arrCurrs[index]);
+
+                TemplateHandler.Assign(ref row, "AgWinTO",
+                                       NumberFormat.DecFormat(
+                                           dataTable.Compute("sum(winTO_Agency" + suffix + ")", exp), 2));
+                TemplateHandler.Assign(ref row, "AgPlaceTO",
+                                       NumberFormat.DecFormat(
+                                           dataTable.Compute("sum(placeTO_Agency" + suffix + ")", exp), 2));
+                TemplateHandler.Assign(ref row, "AgWinPlaceTO",
+                                       NumberFormat.DecFormat(
+                                           dataTable.Compute("sum(winplaceTO_Agency" + suffix + ")", exp), 2));
+                TemplateHandler.Assign(ref row, "AgTotalTO",
+                                       NumberFormat.DecFormat(
+                                           dataTable.Compute("sum(totalTOAgency" + suffix + ")", exp), 2));
+                TemplateHandler.Assign(ref row, "AgCommInc",
+                                       NumberFormat.DecFormat(
+                                           dataTable.Compute("sum(commIncomeAgency" + suffix + ")", exp), 2));
+                TemplateHandler.Assign(ref row, "AgWL",
+                                       NumberFormat.DecFormat(dataTable.Compute("sum(PTWLAgency" + suffix + ")", exp), 2));
+
+                TemplateHandler.Assign(ref row, "IBCWinTO",
+                                       NumberFormat.DecFormat(dataTable.Compute("sum(winTO_IBC" + suffix + ")", exp), 2));
+                TemplateHandler.Assign(ref row, "IBCPlaceTO",
+                                       NumberFormat.DecFormat(dataTable.Compute("sum(placeTO_IBC" + suffix + ")", exp),
+                                                              2));
+                TemplateHandler.Assign(ref row, "IBCWinPlaceTO",
+                                       NumberFormat.DecFormat(
+                                           dataTable.Compute("sum(winplaceTO_IBC" + suffix + ")", exp), 2));
+                TemplateHandler.Assign(ref row, "IBCTotalTO",
+                                       NumberFormat.DecFormat(dataTable.Compute("sum(totalTOIBC" + suffix + ")", exp), 2));
+                TemplateHandler.Assign(ref row, "IBCCommInc",
+                                       NumberFormat.DecFormat(
+                                           dataTable.Compute("sum(commIncomeIBC" + suffix + ")", exp), 2));
+
+                TemplateHandler.Assign(ref row, "IBCToteFee",
+                                       NumberFormat.DecFormat(dataTable.Compute("sum(FeeDue2" + suffix + ")", exp), 2));
+                TemplateHandler.Assign(ref row, "IBCCommExp",
+                                       NumberFormat.DecFormat(
+                                           dataTable.Compute("sum(commIncomeAgency" + suffix + ")", exp), 2));
+                TemplateHandler.Assign(ref row, "IBCPTWL",
+                                       NumberFormat.DecFormat(dataTable.Compute("sum(PTWLIBC" + suffix + ")", exp), 2));
+                TemplateHandler.Assign(ref row, "IBCNetInc",
+                                       NumberFormat.DecFormat(
+                                           dataTable.Compute("sum(netIncomeIBC" + suffix + ")", exp), 2));
+
+                TemplateHandler.Assign(ref row, "PartnerWinTO",
+                                       NumberFormat.DecFormat(
+                                           dataTable.Compute("sum(winTOPartner" + suffix + ")", exp), 2));
+                TemplateHandler.Assign(ref row, "PartnerPlaceTO",
+                                       NumberFormat.DecFormat(
+                                           dataTable.Compute("sum(placeTOPartner" + suffix + ")", exp), 2));
+                TemplateHandler.Assign(ref row, "PartnerWinPlaceTO",
+                                       NumberFormat.DecFormat(
+                                           dataTable.Compute("sum(winplaceTOPartner" + suffix + ")", exp), 2));
+                TemplateHandler.Assign(ref row, "PartnerTotalTO",
+                                       NumberFormat.DecFormat(
+                                           dataTable.Compute("sum(totalTOPartner" + suffix + ")", exp), 2));
+                TemplateHandler.Assign(ref row, "PartnerDividendWon",
+                                       NumberFormat.DecFormat(dataTable.Compute("sum(dividendWon" + suffix + ")", exp),
+                                                              2));
+                TemplateHandler.Assign(ref row, "PartnerCommExp",
+                                       NumberFormat.DecFormat(
+                                           dataTable.Compute("sum(commIncomeIBC" + suffix + ")", exp), 2));
+                TemplateHandler.Assign(ref row, "PartnerAmountDue",
+                                       NumberFormat.DecFormat(dataTable.Compute("sum(AmountDue" + suffix + ")", exp), 2));
+
+                if (index == 0)
+                    TemplateHandler.ReplaceBlock(ref tplFooter, "sub-footer", row);
+                else
+                    TemplateHandler.ReplaceBlock(ref tplFooter, "sub-footer2", row);
+
+                index++;
+            }
+            TemplateHandler.Assign(ref tplFooter, "rowspan", 2);
+        }
+
+        private void GrandTotalPoolOrBaseCurrency_OpenToteNew(ref string tplFooter, DataTable dataTable, string pool_curr, ref DataTable ibcOpenTote)
+        {
+            try
+            {
+                #region local variables
+                var mainFooter = TemplateHandler.CopyBlock(tplFooter, "copy-footer");
+                string tplSubFooter = TemplateHandler.CopyBlock(tplFooter, "sub-footer");
+
+                string[] arrTemlateColumns = {
+                                             "Currency",
+                                             "AgWinTO", "AgPlaceTO", "AgWinPlaceTO", "AgTotalTO", "AgCommInc", "AgWL",
+                                             "IBCWinTO", "IBCPlaceTO", "IBCWinPlaceTO", "IBCTotalTO", "IBCCommInc",
+                                             "IBCToteFee", "IBCCommExp", "IBCPTWL", "IBCNetInc",
+                                             "PartnerWinTO", "PartnerPlaceTO", "PartnerWinPlaceTO", "PartnerTotalTO",
+                                             "PartnerDividendWon", "PartnerCommExp", "PartnerAmountDue"
+                                         };
+
+                string[] arrColumns = {
+                                      "",
+                                      "winTO_Agency", "placeTO_Agency", "winplaceTO_Agency", "totalTOAgency",
+                                      "commIncomeAgency", "PTWLAgency",
+                                      "winTO_IBC", "placeTO_IBC", "winplaceTO_IBC", "totalTOIBC", "commIncomeIBC",
+                                      "FeeDue2", "commIncomeAgency", "PTWLIBC", "netIncomeIBC",
+                                      "winTOPartner", "placeTOPartner", "winplaceTOPartner", "totalTOPartner",
+                                      "totalTOPartner", "dividendWon", "commIncomeIBC", "AmountDue"
+                                  };
+                string[] poolArr = pool_curr.Split(';');
+
+                string[] arrCurrs = new string[poolArr.Length];
+                for (int i = 0; i < poolArr.Length; i++)
+                {
+                    arrCurrs[i] = CacheUtils.GetExchangeName(CastAide.AsInt32(poolArr[i]));
+                }
+                arrCurrs[poolArr.Length - 1] = "Base (RM)";
+
+
+                //var rows = new StringBuilder();
+                string exp = "";
+                int index = 0;
+                var suffix = "_PoolCurr";
+                StringBuilder mainFooterDetail = new StringBuilder();
+                #endregion
+
+                foreach (string poolCurrencyType in arrCurrs)
+                {
+                    exp = (index < arrCurrs.Length - 1) ? "PoolCurrency = '" + poolArr[index] + "'" : "";
+                    suffix = (index < arrCurrs.Length - 1) ? "_PoolCurr" : "";
+                    string row = tplSubFooter;
+
+                    TemplateHandler.Assign(ref row, "currency", arrCurrs[index]);
+
+                    TemplateHandler.Assign(ref row, "AgWinTO",
+                                           NumberFormat.DecFormat(
+                                               dataTable.Compute("sum(winTO_Agency" + suffix + ")", exp), 2));
+                    TemplateHandler.Assign(ref row, "AgPlaceTO",
+                                           NumberFormat.DecFormat(
+                                               dataTable.Compute("sum(placeTO_Agency" + suffix + ")", exp), 2));
+                    TemplateHandler.Assign(ref row, "AgWinPlaceTO",
+                                           NumberFormat.DecFormat(
+                                               dataTable.Compute("sum(winplaceTO_Agency" + suffix + ")", exp), 2));
+                    TemplateHandler.Assign(ref row, "AgTotalTO",
+                                           NumberFormat.DecFormat(
+                                               dataTable.Compute("sum(totalTOAgency" + suffix + ")", exp), 2));
+                    TemplateHandler.Assign(ref row, "AgCommInc",
+                                           NumberFormat.DecFormat(
+                                               dataTable.Compute("sum(commIncomeAgency" + suffix + ")", exp), 2));
+                    TemplateHandler.Assign(ref row, "AgWL",
+                                           NumberFormat.DecFormat(dataTable.Compute("sum(PTWLAgency" + suffix + ")", exp), 2));
+
+                    TemplateHandler.Assign(ref row, "IBCWinTO",
+                                           NumberFormat.DecFormat(dataTable.Compute("sum(winTO_IBC" + suffix + ")", exp), 2));
+                    TemplateHandler.Assign(ref row, "IBCPlaceTO",
+                                           NumberFormat.DecFormat(dataTable.Compute("sum(placeTO_IBC" + suffix + ")", exp),
+                                                                  2));
+                    TemplateHandler.Assign(ref row, "IBCWinPlaceTO",
+                                           NumberFormat.DecFormat(
+                                               dataTable.Compute("sum(winplaceTO_IBC" + suffix + ")", exp), 2));
+                    TemplateHandler.Assign(ref row, "IBCTotalTO",
+                                           NumberFormat.DecFormat(dataTable.Compute("sum(totalTOIBC" + suffix + ")", exp), 2));
+                    TemplateHandler.Assign(ref row, "IBCCommInc",
+                                           NumberFormat.DecFormat(
+                                               dataTable.Compute("sum(commIncomeIBC" + suffix + ")", exp), 2));
+
+                    TemplateHandler.Assign(ref row, "IBCToteFee",
+                                           NumberFormat.DecFormat(dataTable.Compute("sum(FeeDue2" + suffix + ")", exp), 2));
+                    TemplateHandler.Assign(ref row, "IBCCommExp",
+                                           NumberFormat.DecFormat(
+                                               dataTable.Compute("sum(commIncomeAgency" + suffix + ")", exp), 2));
+                    TemplateHandler.Assign(ref row, "IBCPTWL",
+                                           NumberFormat.DecFormat(dataTable.Compute("sum(PTWLIBC" + suffix + ")", exp), 2));
+                    TemplateHandler.Assign(ref row, "IBCNetInc",
+                                           NumberFormat.DecFormat(
+                                               dataTable.Compute("sum(netIncomeIBC" + suffix + ")", exp), 2));
+
+                    TemplateHandler.Assign(ref row, "PartnerWinTO",
+                                           NumberFormat.DecFormat(
+                                               dataTable.Compute("sum(winTOPartner" + suffix + ")", exp), 2));
+                    TemplateHandler.Assign(ref row, "PartnerPlaceTO",
+                                           NumberFormat.DecFormat(
+                                               dataTable.Compute("sum(placeTOPartner" + suffix + ")", exp), 2));
+                    TemplateHandler.Assign(ref row, "PartnerWinPlaceTO",
+                                           NumberFormat.DecFormat(
+                                               dataTable.Compute("sum(winplaceTOPartner" + suffix + ")", exp), 2));
+                    TemplateHandler.Assign(ref row, "PartnerTotalTO",
+                                           NumberFormat.DecFormat(
+                                               dataTable.Compute("sum(totalTOPartner" + suffix + ")", exp), 2));
+                    TemplateHandler.Assign(ref row, "PartnerDividendWon",
+                                           NumberFormat.DecFormat(dataTable.Compute("sum(dividendWon" + suffix + ")", exp),
+                                                                  2));
+                    TemplateHandler.Assign(ref row, "PartnerCommExp",
+                                           NumberFormat.DecFormat(
+                                               dataTable.Compute("sum(commIncomeIBC" + suffix + ")", exp), 2));
+                    TemplateHandler.Assign(ref row, "PartnerAmountDue",
+                                           NumberFormat.DecFormat(dataTable.Compute("sum(AmountDue" + suffix + ")", exp), 2));
+                    #region assign template
+                    if (index == 0)
+                    {
+                        TemplateHandler.ReplaceBlock(ref tplFooter, "sub-footer", row);
+
+                    }
+                    else
+                    {
+                        string currentRow = mainFooter;
+                        TemplateHandler.ReplaceBlock(ref currentRow, "sub-footer2", row);
+                        mainFooterDetail.Append(currentRow);
+                        if (index == arrCurrs.Length - 1)
+                        {
+                            TemplateHandler.Assign(ref tplFooter, "{footerCurrency}", mainFooterDetail.ToString());
+                            TemplateHandler.RemoveBlock(ref tplFooter, "copy-footer");
+                        }
+                    }
+                    #endregion
+
+                    #region assign data for ibc
+
+                    if (index < arrCurrs.Length - 1)
+                    {
+
+                        DataRow drOpenToteCurrent = ibcOpenTote.NewRow();
+                        drOpenToteCurrent["currencyName"] = arrCurrs[index];
+                        drOpenToteCurrent["IBCTO"] = dataTable.Compute("sum(totalTOPartner" + suffix + ")", exp);
+                        drOpenToteCurrent["IBCDividen"] = dataTable.Compute("sum(dividendWon" + suffix + ")", exp);
+                        ibcOpenTote.Rows.Add(drOpenToteCurrent);
+                    }
+                    #endregion
+
+                    index++;
+                }
+                TemplateHandler.Assign(ref tplFooter, "rowspan", index);
+            }
+            catch {
+                TemplateHandler.RemoveBlock(ref tplFooter, "copy-footer");
+            }
+        }
+        #endregion
+
+        #region Comparision
+        private void ComparisionNew(string winlostdate, ref string tplComparision, DataTable ibcOpenTote)
+        {
+            try
+            {
+                #region local variables
+                var hash = new Hashtable();
+                hash.Add("winlostdate", winlostdate);
+                DataTable dt = IBCProvider.ReportProvider.OpenToteSettlement().Horse_OpenToteTO3rd(hash).ResultSet.Tables[0];
+                DataRow[] Rows = dt.Select();
+                decimal _3rdTO = 0, _3rdDividendWon = 0;
+                string curr = "";
+                decimal ibcTO = 0;
+                decimal ibcDividendWon = 0;
+                bool compareTO = true;
+                bool compareDividen = true;
+                var indexCompare = 0;
+                #endregion
+
+                if (dt.Rows.Count == 0)
+                {
+                    tplComparision = string.Empty;
+                    return;
+                }
+
+                #region assign data when 3rd opentote data does not null
+                #region cache
+                CacheData(OpenToteSettlementCommon.cachekeycompare, dt, DateTime.Now.AddHours(1));
+                #endregion
+
+                //foreach (DataRow dr in Rows)
+                //{
+                //    _3rdTO += CastAide.AsDecimal(dr["TO3rd"]);
+                //    _3rdDividendWon += CastAide.AsDecimal(dr["DividendWon3rd"]);
+                //    curr = CastAide.AsString(dr["currencyName"]);
+
+                //    ibcTO += CastAide.AsDecimal(ibcOpenTote.Rows[indexCompare]["IBCTO"]);
+                //    ibcDividendWon += CastAide.AsDecimal(ibcOpenTote.Rows[indexCompare]["IBCDividen"]);
+
+                //    indexCompare++;
+                //}
+
+                _3rdTO = CastAide.AsDecimal(dt.Compute("sum(TO3rd)", ""));
+                _3rdDividendWon = CastAide.AsDecimal(dt.Compute("sum(DividendWon3rd)", ""));
+                ibcTO = CastAide.AsDecimal(ibcOpenTote.Compute("sum(IBCTO)", ""));
+                ibcDividendWon = CastAide.AsDecimal(ibcOpenTote.Compute("sum(IBCDividen)", ""));
+
+                string evt = "onclick=\"Comparision('" + winlostdate + "','" + ibcTO + "','" + ibcDividendWon + "');\"";
+                string span = "<span style='text-decoration:underline' class='rpt-red-color action' " + evt +
+                                " >Not Matched</span>";
+                if (OpenToteSettlementCommon.IsMatched(ibcTO, _3rdTO))
+                {
+                    TemplateHandler.Assign(ref tplComparision, "clssTOMatched", "rpt-blue-color");
+                    TemplateHandler.Assign(ref tplComparision, "valueTOMatched", "OK");
+                }
+                else
+                {
+                    TemplateHandler.Assign(ref tplComparision, "clssTOMatched", "");
+                    TemplateHandler.Assign(ref tplComparision, "valueTOMatched", span);
+                }
+
+                if (OpenToteSettlementCommon.IsMatched(ibcDividendWon, _3rdDividendWon))
+                {
+                    TemplateHandler.Assign(ref tplComparision, "clssDividendWonMatched", "rpt-blue-color");
+                    TemplateHandler.Assign(ref tplComparision, "valueDividendWonMatched", "OK");
+                }
+                else
+                {
+                    TemplateHandler.Assign(ref tplComparision, "clssDividendWonMatched", "");
+                    TemplateHandler.Assign(ref tplComparision, "valueDividendWonMatched", span);
+                }
+                #endregion
+            }
+            catch
+            {
+                tplComparision = string.Empty;                
+            }
+            
+        }
+        #endregion
+
+        #region LoadComparision
+
+        public string LoadComparision(string winlostdate, string ibcTO, string ibcDividendWon)
+        {
+            #region local vairables
+            var dt = (DataTable) GetCachedObjData(OpenToteSettlementCommon.cachekeycompare);
+            var dtIbc = (DataTable)GetCachedObjData(OpenToteSettlementCommon.cachekeyibcopentotecompare);
+
+            if (dt == null)
+            {
+                var hash = new Hashtable();
+                hash.Add("winlostdate", winlostdate);
+                dt = IBCProvider.ReportProvider.OpenToteSettlement().Horse_OpenToteTO3rd(hash).ResultSet.Tables[0];
+            }
+
+            string tpl = WebUtils.LoadTemplate("Report/OpenToteSettlement/OpenToteSettlementComparision.htm");
+            string tplContent = TemplateHandler.CopyBlock(tpl, "content");
+            var rows = new StringBuilder();
+            #endregion
+            #region if open tote is lost data
+            
+            bool isLostCurrency = false;
+            foreach (DataRow drLostCurrency in dtIbc.Rows)
+            {
+                var lostCurrencyName = drLostCurrency["currencyName"].ToString();
+                lostCurrencyName = lostCurrencyName.Equals("EURO") ? "EUR" : lostCurrencyName;
+                string row = tplContent;     
+
+                if (dt.Rows.Count < dtIbc.Rows.Count)
+                {
+                    foreach (DataRow dr3rdRow in dt.Rows)
+                    {
+                        if (lostCurrencyName.Equals(dr3rdRow["currencyName"].ToString()))
+                        {
+                            isLostCurrency = false;
+                            break;
+                        }
+                        else
+                            isLostCurrency = true;
+                    }
+                }
+
+                if (isLostCurrency)
+                {
+
+                    TemplateHandler.Assign(ref row, "Currency", lostCurrencyName);
+                    TemplateHandler.Assign(ref row, "3rdTO", "N/A");
+                    TemplateHandler.Assign(ref row, "3rdDividendWon", "N/A");
+                    TemplateHandler.Assign(ref row, "ibcTO", "N/A");
+                    TemplateHandler.Assign(ref row, "ibcDividendWon", "N/A");
+                    TemplateHandler.Assign(ref row, "clsTO", "rpt-red-color");
+                    TemplateHandler.Assign(ref row, "clsDividend", "rpt-red-color");
+                    rows.Append(row);
+                }
+                else
+                {
+                    decimal ibcTOCurrent = CastAide.AsDecimal(drLostCurrency["IBCTO"]);
+                    decimal ibcDividendCurrent = CastAide.AsDecimal(drLostCurrency["IBCDividen"]);
+                    DataRow[] current3rd = dt.Select("currencyName = '" + lostCurrencyName + "'");
+                    decimal _3rdTO = (current3rd != null && current3rd.Length > 0) ?  CastAide.AsDecimal(current3rd[0]["TO3rd"]) : 0;
+                    decimal _3rdDividend = (current3rd != null && current3rd.Length > 0) ?  CastAide.AsDecimal(current3rd[0]["DividendWon3rd"]) : 0;
+
+                    TemplateHandler.Assign(ref row, "Currency", lostCurrencyName);                            
+                    TemplateHandler.Assign(ref row, "3rdTO", NumberFormat.DecFormat(_3rdTO, 2));
+                    TemplateHandler.Assign(ref row, "3rdDividendWon", NumberFormat.DecFormat(_3rdDividend, 2));
+                    TemplateHandler.Assign(ref row, "ibcTO", NumberFormat.DecFormat(ibcTOCurrent, 2));
+                    TemplateHandler.Assign(ref row, "ibcDividendWon", NumberFormat.DecFormat(ibcDividendCurrent, 2));
+
+                    if (!OpenToteSettlementCommon.IsMatched(_3rdTO, ibcTOCurrent))
+                        TemplateHandler.Assign(ref row, "clsTO", "rpt-red-color");
+                    else
+                        TemplateHandler.Assign(ref row, "clsTO", "");
+
+                    if (!OpenToteSettlementCommon.IsMatched(_3rdDividend, ibcDividendCurrent))
+                        TemplateHandler.Assign(ref row, "clsDividend", "rpt-red-color");
+                    else
+                        TemplateHandler.Assign(ref row, "clsDividend", "");
+
+                    rows.Append(row);
+                }
+            }
+            
+            #endregion
+
+            TemplateHandler.ReplaceBlock(ref tpl, "content", rows.ToString());
+
+            if (dt.Rows.Count == 0)
+                tpl = "";
+
+            return tpl;
+        }
+
+        #endregion
+
+        #endregion
+
+        public override string RenderHTML(Hashtable input)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

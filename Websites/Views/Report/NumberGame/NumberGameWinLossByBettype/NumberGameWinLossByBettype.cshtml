@@ -1,0 +1,434 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/table.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />    
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/commonIOM.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/Message.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/MultipleSelect/jquery.multiselect.css" />
+@*    <!--checking-->
+        <link rel="stylesheet" type="text/css" href="~/App_Themes/Report/numbergamewinloss.css" />
+    <!--checking-->    *@
+    <link href="~/Views/Report/NumberGame/NumberGameWinLossByBettype/Styles/numbergamereport.css" rel="stylesheet" type="text/css" />
+    
+</head>
+<body>
+    <div class="main" style="">
+        <table style="width: 100%" border="0" cellpadding="0px" cellspacing="0px">
+            <tr>
+                <td>
+                    <div id="divMainHeader" class="">
+                        <div id="left_tab1">
+                            <ul>
+                                <li class="lefticon"></li>
+                                <li class="current"><span>Number Game Win Loss by Bet Type</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="maincontent">
+                        <div class="filterBox">
+                            <div class="filterContent">
+                                <table border="0">
+                                    <tr>
+                                        <td style="padding-right: 4px">
+                                            <div>
+                                                Company:</div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <select id="selectCompany" style="width: 100px; height: 18px;" multiple="multiple">
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td style="padding-left: 8px">
+                                            <div>
+                                                Currency:</div>
+                                        </td>
+                                        <td style="padding-left: 4px">
+                                            <select id="selectCurrency" style="width: 100px; height: 18px;" multiple="multiple">
+                                            </select>
+                                        </td>
+                                        <td style="padding-left: 8px">
+                                            <div>Live Status:</div>
+                                        </td>
+                                        <td style="padding-left: 4px">
+                                            <select id="ddlLiveStatus">
+                                                <option value="-1">All</option>
+                                                <option value="0">None-Live</option>
+                                                <option value="1">Live</option>
+                                            </select>
+                                        </td>
+                                        <td style="padding-left: 8px">
+                                            <div>Date:</div>
+                                        </td>
+                                        <td style="padding-left: 4px">
+                                            <input type="text" id="fdate" readonly="readonly" class="txtdate" style="width: 100px;
+                                                background-color: white;" />
+                                        </td>
+                                        <td>
+                                            <input type="button" onclick="numberGameWLByBettype.getReport()" class="btn" value="REPORT"
+                                                name="btnReport" id="btnReport" />
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div id="err">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contentBox" style="">
+                            <div id="numbergamewinloss" class="freegrid hidden">
+                                <div class="grid-title">
+                                    <div class="grid-title-lable" id="reporttile">
+                                        Title</div>
+                                    <div class="grid-toolbox">
+                                        <input type="button" value="" id="btnExport" class="btnExcel" title="Export to Excel" onclick="numberGameWLByBettype.exportExcel();" />
+                                    </div>
+                                </div>
+                                <div class="free-cell free-top-left">
+                                    <table class="grid-fixed-table free-cell-top-left">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <div class="table-cell" style="width: 100px; height: 39px">Bettype</div>
+                                                </th>
+                                                <th>
+                                                    <div class="table-cell" style="width: 100px; height: 39px">WinLoss</div>
+                                                </th>
+                                                <th>
+                                                    <div class="table-cell" style="width: 100px; height: 39px">Position</div>
+                                                </th>
+                                                <th>
+                                                    <div class="table-cell" style="width: 100px; height: 39px">Comm</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="row_header_wrapper">
+                                    <div class="row_header row-headers-background">
+                                        <table class="grid-fixed-table row_header_content" id="tblContentHeader">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <div style="width: 100px; height: 39px">Bettype</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="width: 100px; height: 39px">WinLoss</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="width: 100px; height: 39px">Position</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="width: 100px; height: 39px">Comm</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col_header row-headers-background scroll-y">
+                                    <div class="header-container">
+                                        <table class="grid-fixed-table col_header_content">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px; height: 39px">Bettype</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px; height: 39px">WinLoss</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div  style="width: 100px; height: 39px">Position</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div  style="width: 100px; height: 39px">Comm</div>
+                                                    </th>
+                                                    <th colspan="2">
+                                                        <div style="height: 17px">Line Total</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div  class="table-cell" style="width: 100px; height: 39px">Turnover</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div class="table-cell" style="width: 100px; height: 39px">Margin</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div class="table-cell" style="width: 100px; height: 39px">Variance</div>
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        <div class="table-cell" style="width: 100px; height: 17px">Real</div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="table-cell" style="width: 100px; height: 17px">Virtual</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="grid-container container">
+                                    <div class="content-container">
+                                        <table id="tblContent" class="grid-fixed-table col_header_content">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px; height: 39px">&nbsp;</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px; height: 39px">&nbsp;</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px; height: 39px">&nbsp;</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px; height: 39px">&nbsp;</div>
+                                                    </th>
+                                                    <th colspan="2">
+                                                        <div style="height: 17px">&nbsp;</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px; height: 39px">&nbsp;</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px; height: 39px">&nbsp;</div>
+                                                    </th>
+                                                    <th rowspan="2">
+                                                        <div style="width: 100px; height: 39px">&nbsp;</div>
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        <div style="width: 100px; height: 17px">&nbsp;</div>
+                                                    </th>
+                                                    <th>
+                                                        <div style="width: 100px; height: 17px">&nbsp;</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row_footer row-footer-background z999">
+                                    <table class="grid-fixed-table row_footer_content">
+                                        <thead>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="col_footer row-footer-background scroll-y">
+                                    <div class="footer-container">
+                                        <table class="col_footer_content grid-fixed-table">
+                                            <thead>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="dialogNgWLDetail" class="hidden">
+        <div id="errMsgWLDetail"></div>
+        <div id="numbergamewinlossdetail" class="freegrid hidden">
+            <div class="grid-title">
+                <div class="grid-title-lable" id="numbergamewinlossdetailtile">
+                    Title</div>
+                <div class="grid-toolbox">
+                    <input type="button" value="" id="btnExportDetail" class="btnExcel" title="Export to Excel" onclick="numberGameEventWinLossDetail.exportExcel();" />
+                </div>
+            </div>
+            <div class="free-cell free-top-left">
+                <table class="grid-fixed-table free-cell-top-left">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="table-cell" style="width: 100px; height: 39px">&nbsp;</div>
+                            </th>
+                            <th>
+                                <div class="table-cell" style="width: 100px; height: 39px">WinLoss</div>
+                            </th>
+                            <th>
+                                <div class="table-cell" style="width: 100px; height: 39px">Position</div>
+                            </th>
+                            <th>
+                                <div class="table-cell" style="width: 100px; height: 39px">Comm</div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="row_header_wrapper">
+                <div class="row_header row-headers-background">
+                    <table class="grid-fixed-table row_header_content" id="tblDetailContentHeader">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div style="width: 100px; height: 39px">&nbsp;</div>
+                                </th>
+                                <th>
+                                    <div style="width: 100px; height: 39px">WinLoss</div>
+                                </th>
+                                <th>
+                                    <div style="width: 100px; height: 39px">Position</div>
+                                </th>
+                                <th>
+                                    <div style="width: 100px; height: 39px">Comm</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col_header row-headers-background scroll-y">
+                <div class="header-container">
+                    <table class="grid-fixed-table col_header_content">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">
+                                    <div style="width: 100px; height: 39px">&nbsp;</div>
+                                </th>
+                                <th rowspan="2">
+                                    <div style="width: 100px; height: 39px">WinLoss</div>
+                                </th>
+                                <th rowspan="2">
+                                    <div  style="width: 100px; height: 39px">Position</div>
+                                </th>
+                                <th rowspan="2">
+                                    <div  style="width: 100px; height: 39px">Comm</div>
+                                </th>
+                                <th colspan="2">
+                                    <div style="height: 17px">Line Total</div>
+                                </th>
+                                <th rowspan="2">
+                                    <div  class="table-cell" style="width: 100px; height: 39px">Turnover</div>
+                                </th>
+                                <th rowspan="2">
+                                    <div class="table-cell" style="width: 100px; height: 39px">Margin</div>
+                                </th>
+                                <th rowspan="2">
+                                    <div class="table-cell" style="width: 100px; height: 39px">Variance</div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <div class="table-cell" style="width: 100px; height: 17px">Real</div>
+                                </th>
+                                <th>
+                                    <div class="table-cell" style="width: 100px; height: 17px">Virtual</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="grid-container container">
+                <div class="content-container">
+                    <table id="tblDetailContent" class="grid-fixed-table col_header_content">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">
+                                    <div style="width: 100px; height: 39px">&nbsp;</div>
+                                </th>
+                                <th rowspan="2">
+                                    <div style="width: 100px; height: 39px">&nbsp;</div>
+                                </th>
+                                <th rowspan="2">
+                                    <div style="width: 100px; height: 39px">&nbsp;</div>
+                                </th>
+                                <th rowspan="2">
+                                    <div style="width: 100px; height: 39px">&nbsp;</div>
+                                </th>
+                                <th colspan="2">
+                                    <div style="height: 17px">&nbsp;</div>
+                                </th>
+                                <th rowspan="2">
+                                    <div style="width: 100px; height: 39px">&nbsp;</div>
+                                </th>
+                                <th rowspan="2">
+                                    <div style="width: 100px; height: 39px">&nbsp;</div>
+                                </th>
+                                <th rowspan="2">
+                                    <div style="width: 100px; height: 39px">&nbsp;</div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <div style="width: 100px; height: 17px">&nbsp;</div>
+                                </th>
+                                <th>
+                                    <div style="width: 100px; height: 17px">&nbsp;</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row_footer row-footer-background z999">
+                <table class="grid-fixed-table row_footer_content">
+                    <thead>
+                    </thead>
+                </table>
+            </div>
+            <div class="col_footer row-footer-background scroll-y">
+                <div class="footer-container">
+                    <table class="col_footer_content grid-fixed-table">
+                        <thead>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <iframe id="frm" width="0" height="0" frameborder="0" style="display: none"></iframe>
+</body>
+@{
+    if(Request["isexport"]!=null && DNAide.Core.CastAide.AsBoolean(Request["isexport"])){
+        var wlDate = DNAide.Core.CastAide.AsString(Request["date"]);
+        var currencies = DNAide.Core.CastAide.AsString(Request["currencies"]);
+        var companies = DNAide.Core.CastAide.AsString(Request["companies"]);
+        var liveStatus = DNAide.Core.CastAide.AsInt32(Request["liveStatus"]);
+        var title = DNAide.Core.CastAide.AsString(Request["title"]);
+        Fanex.Tarus.Reports.Business.NumberGameWinLoss.NumberGameWinLossByBettype.INumberGameWinLossByBettypeService numberGameService = new Fanex.Tarus.Reports.Business.NumberGameWinLoss.NumberGameWinLossByBettype.NumberGameWinLossByBettypeService();
+        if (DNAide.Core.CastAide.AsInt32(Request["type"]) == 1)
+        {
+            numberGameService.ExportExcelNumberGameWinLossByBettype(wlDate, currencies, companies, liveStatus, title);
+        }
+        else if (DNAide.Core.CastAide.AsInt32(Request["type"]) == 2){
+            var bettypeName = DNAide.Core.CastAide.AsString(Request["bettypename"]);   
+            var bettype = DNAide.Core.CastAide.AsInt32(Request["bettype"]);
+            numberGameService.ExportExcelNumberGameWinLossByBettypeDetail(wlDate, liveStatus, bettype, bettypeName, companies, currencies, title);
+        }
+    }
+}
+<script src="~/js/jQuery/jquery-1.7.2.min.js" type="text/javascript"></script>
+<script src="~/js/jQuery/jquery.json-2.2.min.js" type="text/javascript"></script>
+<script src="~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js" type="text/javascript"></script>
+<script src="~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js" type="text/javascript"></script>
+<script src="~/js/common.js" type="text/javascript"></script>
+<script src="~/js/Utils/jquery.calendar.js" type="text/javascript"></script>
+<script src="~/js/MultipleSelect/jquery.multiselect.js" type="text/javascript"></script>
+<script src="~/Views/Report/NumberGame/NumberGameWinLossByBettype/Scripts/numbergamewinlossbybettype.js?ver=1" type="text/javascript"></script>
+
+<script type="text/javascript">
+    window.rootUrl = '@Url.Content("~")';
+    var toDay = '@string.Format("{0:MM/dd/yyyy}", DateTime.Today)';
+    var fDay = '@string.Format("{0:MM/dd/yyyy}", DateTime.Today)';
+    var minDay = '@string.Format("{0:MM/dd/yyyy}", DateTime.Today.AddDays(-(DateTime.Today - Fanex.Tarus.VirtualSport.DataAccess.ReportUtils.BalanceUp.BalanceUpDay).Days))';
+   
+</script>
+</html>

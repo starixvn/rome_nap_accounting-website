@@ -1,0 +1,24 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="IDailyWinLoss2hSoccerAccess.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.10.18">Created</change>
+// </history>
+
+namespace Fanex.Tarus.Reports.DataAccess.DailyWinLoss2hSoccer
+{
+    using System.Collections;
+    using System.Data;
+    using System.Diagnostics.CodeAnalysis;
+    using Fanex.Tarus.Reports.Entities.DailyWinLoss2h;
+
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    public interface IDailyWinLoss2hSoccerAccess
+    {
+        DataSet DailyWLDirect_Sporttype(DailyWinLoss2hParam param, ref Hashtable outputParam);
+        DataSet SelSoccerReportMain(DailyWinLoss2hParam param, ref Hashtable outputParam);
+        DataSet SelDailyWLDirectDetail(DailyWinLoss2hParam param, ref Hashtable outputParam);
+    }
+}

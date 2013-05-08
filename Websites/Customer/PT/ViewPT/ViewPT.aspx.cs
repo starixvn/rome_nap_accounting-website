@@ -1,0 +1,10 @@
+﻿using System;
+
+public partial class Customer_PT_ViewPT_ViewPT :PageBase
+{
+    protected string TileText = "View Position Taking";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+
+    }
+}

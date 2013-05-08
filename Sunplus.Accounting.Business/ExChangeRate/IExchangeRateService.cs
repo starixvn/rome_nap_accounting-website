@@ -1,0 +1,32 @@
+﻿using System.ServiceModel;
+using System.ServiceModel.Web;
+using ExcelUtil.Spreadsheet;
+using Sunplus.Accounting.Entities;
+using System.Collections.Generic;
+
+namespace Sunplus.Accounting.Business.ExChangeRate
+{
+    /// <summary>
+    /// Summary description for IExchangeRateService
+    /// </summary>
+    [ServiceContract]
+    public interface IExchangeRateService
+    {
+       
+        ResultBO ReadExRateFromExcel();
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        List<ExchangeRate> LoadExchangeRateOpenTote();
+
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+        ResultBO UpdateExRateOpenTote(List<ExchangeRate> ExRateList);
+
+        string GenHeader();
+        string GenNewRate();
+        string GenNewRate4Update();
+        ExcelFile ExportExRate();
+
+    }
+}

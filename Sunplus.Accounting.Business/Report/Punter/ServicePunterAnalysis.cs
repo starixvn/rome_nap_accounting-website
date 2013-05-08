@@ -1,0 +1,225 @@
+﻿using System;
+using System.Collections;
+using System.ServiceModel.Activation;
+using BLL.Report.Punter;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.Core.Web.TplCore.App_Templates.Report.Punter.App_Templates.Report.Punter;
+
+/// <summary>
+/// Summary description for DailyTransManager
+/// </summary>
+[AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+public class ServicePunterAnalysis : IServicePunterAnalysis
+{
+    #region IServicePunterAnalysis Members
+
+    public string GeneratePeriodMonthly(string currMonthValue, string currYearValue)
+    {
+        var month = new PeriodMonthly_Template();
+        var punter = new PunterAnalysisManager();
+
+        if (currMonthValue.Length == 0)
+            currMonthValue = (DateTime.Today.Month - 1).ToString();
+        if (currYearValue.Length == 0)
+            currYearValue = DateTime.Today.Year.ToString();
+
+        month.month = punter.GenMonthCalendar("ddlMonth", currMonthValue);
+        month.Year = punter.GenYearCalendar("ddlYear", currYearValue);
+
+        var hash = new Hashtable();
+        hash.Add("data", month.ToString());
+        return JsonUtil.ToJson(hash);
+    }
+
+    public string GeneratePeriodAnnual(string currYearValue)
+    {
+        if (currYearValue.Length == 0)
+            currYearValue = DateTime.Today.Year.ToString();
+        var annual = new PeriodAnnual_Template();
+        var punter = new PunterAnalysisManager();
+        annual.Year = punter.GenYearCalendar("ddlYear", currYearValue);
+        var hash = new Hashtable();
+        hash.Add("data", annual.ToString());
+        return JsonUtil.ToJson(hash);
+    }
+
+    public string GeneratePeriodLongRange(string currfMonthValue, string currtMonthValue, string currfYearValue,
+                                          string currtYearValue)
+    {
+        string eventfunction = "";
+        var longrange = new PeriodLongRange_Template();
+
+        int displaymonth = 0;
+
+        var fdate = new DateTime(2006, 12, 31);
+        DateTime tdate = DateTime.Today;
+        TimeSpan sp = tdate - fdate;
+        int displayday = sp.Days;
+
+        if (currfMonthValue.Length == 0)
+            currfMonthValue = (DateTime.Today.Month - 1).ToString();
+        if (currtMonthValue.Length == 0)
+            currtMonthValue = DateTime.Today.Month.ToString();
+        if (currfYearValue.Length == 0)
+            currfYearValue = DateTime.Today.Year.ToString();
+        if (currtYearValue.Length == 0)
+            currtYearValue = DateTime.Today.Year.ToString();
+
+        var punter = new PunterAnalysisManager();
+        string strfdate = punter.GenMonthCalendar("ddfMonth", currfMonthValue) + "&nbsp;&nbsp;" +
+                          punter.GenYearCalendar("ddfYear", currfYearValue);
+        string strtdate = punter.GenMonthCalendar("ddtMonth", currtMonthValue) + "&nbsp;&nbsp;" +
+                          punter.GenYearCalendar("ddtYear", currtYearValue);
+
+        longrange.fdate = strfdate;
+        longrange.tdate = strtdate;
+
+        var hash = new Hashtable();
+        hash.Add("data", longrange.ToString());
+        return JsonUtil.ToJson(hash);
+    }
+
+    public string SelTopPunterSummary(string username, string fromdate, string todate, string toprow, string orderby,
+                                      string ordertype)
+    {
+        var punter = new PunterAnalysisManager();
+        string s = punter.SelTopPunterSummary(username, fromdate, todate, toprow, orderby, ordertype);
+        return s;
+    }
+
+
+    public void SelTopPunterSummaryExportOnly(string username, string fromdate, string todate, string toprow,
+                                              string orderby, string ordertype)
+    {
+        var punter = new PunterAnalysisManager();
+        punter.Export2ExcelSelTopPunterSummary(username, "", "", fromdate, todate, toprow, orderby, ordertype,
+                                               "SelTopPunterSummary");
+    }
+
+    public string SelTopPunterByCustId(string custid, string username, string fromdate, string todate, string orderby,
+                                       string ordertype)
+    {
+        var punter = new PunterAnalysisManager();
+        string s = punter.SelTopPunterByCustId(custid, username, fromdate, todate, orderby, ordertype);
+        return s;
+    }
+
+    public void SelTopPunterByCustIdExport(string custid, string username, string fromdate, string todate,
+                                           string orderby, string ordertype)
+    {
+        var punter = new PunterAnalysisManager();
+        punter.Export2ExcelSelTopPunterBy(custid, username, "", "", "", fromdate, todate, orderby, ordertype,
+                                          "SelTopPunterByCustId");
+    }
+
+
+    public string SelTopPunterBySporttype(string custid, string username, string sporttype, string fromdate,
+                                          string todate, string orderby, string ordertype)
+    {
+        var punter = new PunterAnalysisManager();
+        string s = punter.SelTopPunterBySporttype(custid, username, sporttype, fromdate, todate, orderby, ordertype);
+        return s;
+    }
+
+    public void SelTopPunterBySporttypeExport(string custid, string username, string sporttype, string fromdate,
+                                              string todate, string orderby, string ordertype)
+    {
+        var punter = new PunterAnalysisManager();
+        punter.Export2ExcelSelTopPunterBySport(custid, username, sporttype, fromdate, todate, orderby, ordertype);
+    }
+
+
+    public string SelTopPunterByBettype(string custid, string username, string sporttype, string bettype,
+                                        string fromdate, string todate, string orderby, string ordertype)
+    {
+        var punter = new PunterAnalysisManager();
+        string s = punter.SelTopPunterByBettype(custid, username, sporttype, bettype, fromdate, todate, orderby,
+                                                ordertype);
+        return s;
+    }
+
+    public void SelTopPunterByBettypeExport(string custid, string username, string sporttype, string bettype,
+                                            string fromdate, string todate, string orderby, string ordertype)
+    {
+        var punter = new PunterAnalysisManager();
+        punter.Export2ExcelSelTopPunterBy(custid, username, "", sporttype, bettype, fromdate, todate, orderby, ordertype,
+                                          "SelTopPunterByBettype");
+    }
+
+    public string SelIpByCustomer(string custid, string username, string fromdate, string todate, ref string fullname)
+    {
+        var punter = new PunterAnalysisManager();
+        string s = punter.SelIpByCustomer(custid, username, fromdate, todate, ref fullname);
+        return s;
+    }
+
+    public void SelIpByCustomerExport(string custid, string username, string fromdate, string todate)
+    {
+        var punter = new PunterAnalysisManager();
+        punter.Export2ExcelSelIPByCustomer(custid, username, fromdate, todate);
+    }
+
+    public string SelBetCountByCustomer(string custid, string username, string fromdate, string todate,
+                                        ref string fullpath, string leagueid)
+    {
+        var punter = new PunterAnalysisManager();
+        string s = punter.SelBetCountByCustomer(custid, username, fromdate, todate, ref fullpath, leagueid);
+        return s;
+    }
+
+    public void SelBetCountByCustomerExport(string custid, string username, string fromdate, string todate,
+                                            string leagueid)
+    {
+        var punter = new PunterAnalysisManager();
+        punter.Export2ExcelSelBetCountByCustomer(custid, username, fromdate, todate, leagueid);
+    }
+
+    public string SelSports(string fromdate, string todate, string sporttype)
+    {
+        var punter = new PunterAnalysisManager();
+        string s = punter.SelSports(fromdate, todate, sporttype);
+        return s;
+    }
+
+    public string SelLeagues(string fromdate, string todate, string sporttype)
+    {
+        var punter = new PunterAnalysisManager();
+        string s = punter.SelLeagues(fromdate, todate, sporttype);
+        return s;
+    }
+
+    public string SelTopPunterSummaryByLeague(string leagueid, string leaguename, string fromdate, string todate,
+                                              string toprow, string orderby, string ordertype)
+    {
+        var punter = new PunterAnalysisManager();
+        string s = punter.SelTopPunterSummaryByLeague(leagueid, leaguename, fromdate, todate, toprow, orderby, ordertype);
+        return s;
+    }
+
+    public void SelTopPunterSummaryByLeagueExport(string leagueid, string leaguename, string fromdate, string todate,
+                                                  string toprow, string orderby, string ordertype)
+    {
+        var punter = new PunterAnalysisManager();
+        punter.Export2ExcelSelTopPunterSummary("", leagueid, leaguename, fromdate, todate, toprow, orderby, ordertype,
+                                               "SelTopPunterSummaryByLeagues");
+    }
+
+    public string SelTopPunterByLeagueCustId(string custId, string leagueid, string username, string sporttype,
+                                             string fromdate, string todate, string orderby, string ordertype)
+    {
+        var punter = new PunterAnalysisManager();
+        string s = punter.SelTopPunterByLeagueCustId(custId, leagueid, username, sporttype, fromdate, todate, orderby,
+                                                     ordertype);
+        return s;
+    }
+
+    public void SelTopPunterByLeagueCustIdExport(string custId, string leagueid, string username, string sporttype,
+                                                 string fromdate, string todate, string orderby, string ordertype)
+    {
+        var punter = new PunterAnalysisManager();
+        punter.Export2ExcelSelTopPunterBy(custId, username, leagueid, sporttype, "", fromdate, todate, orderby,
+                                          ordertype, "SelTopPunterByLeagueCustId");
+    }
+
+    #endregion
+}

@@ -1,0 +1,135 @@
+﻿namespace Fanex.Tarus.Customer.Credit.Controllers
+{
+    using System;
+    using System.Web.Mvc;
+    using Fanex.PTEngine.BusinessObjects;
+    using Fanex.Tarus.Customer.CreditCustomer.Business;
+    using Fanex.Tarus.Customer.CreditCustomer.Entities;
+    using Fanex.Tarus.Web.Controllers.Filters;
+    using Newtonsoft.Json;
+    using Sunplus.Accounting.Core.Common;
+    using Sunplus.Accounting.Core.Helper;
+
+    public class EditSuperController : CustomerSettingBaseController
+    {
+        /// <summary>
+        /// Constructor With
+        /// </summary>
+        /// <param name="customerSettingService">Customer Setting service</param>
+        public EditSuperController(ICustomerSettingService customerSettingService)
+            : base(customerSettingService)
+        {
+        }
+
+        /// <summary>
+        /// Constructor with parameterless
+        /// </summary>
+        public EditSuperController()
+            : base()
+        {
+        }
+
+        /// <summary>
+        /// This funtion will return a result binding to view
+        /// </summary>
+        /// <returns></returns>
+        [AuthenticateRead]
+        public ActionResult EditSuperPage(int custId, string uname)
+        {
+            //save super id
+            // Setting edit page
+            CustomerSettingView customerSettingView = new CustomerSettingView
+            {
+                TitlePage = "Super: " + uname,
+                IsInsertPage = false,
+                IsSuperSetting = true,
+                IsMasterSetting = false,
+                IsAgentSetting = false,
+                IsMemberSetting = false,
+                CustId = custId,
+                CustUserName = uname,
+                CanEditCredit = _customerSettingService.CheckPermissionEditCredit()
+            };
+            return View("~/Views/Customer/CreditCustomer/EditSuper.cshtml", customerSettingView);
+        }
+
+        /// <summary>
+        /// Get Customer
+        /// </summary>
+        /// <param name="requestContext">Constext Of Get customer</param>
+        /// <returns>Customer Object</returns>
+        public override ICustomer GetCustomerForLaterAction(IRequestContext requestContext)
+        {
+            return _customerService.GetCustomerForCompanyEditSuper(requestContext);
+        }
+
+        /// <summary>
+        /// This function will return a current context object
+        /// </summary>
+        /// <returns>Current context object</returns>
+        [HttpPost]
+        public JsonResult GetContextObject(int superId)
+        {
+            //init context for edit supper
+            IRequestContext currentContext = new RequestContext()
+            {
+                CustId = superId,
+                TargetCustId = superId,
+                RoleId = 0,
+                TargetRoleId = 4,
+                FormId = FormType.EditPT,
+                SubAccId = 0,
+                AdminId = AppSession.AccId
+            };
+
+            return Json(JsonConvert.SerializeObject(currentContext, Formatting.Indented, GetJsonSerializerSetting()));
+        }
+
+        /// <summary>
+        /// This function will edit customer pt
+        /// </summary>
+        /// <param name="stringcustomer">String will be deserialized to a customer object</param>
+        /// <param name="currentContext">Current context</param>
+        /// <returns>Return a result message</returns>
+        [AuthenticateHost]
+        [HttpPost]
+        public JsonResult DoEditSuper(string stringcustomer, RequestContext currentContext)
+        {
+            Fanex.PTEngine.BusinessObjects.Result result;
+            try
+            {
+                ICustomer customer = GetCustomerFromDeserializeJsonString(stringcustomer);
+
+                // Do edit super
+                currentContext.CustId = AppSession.AccId;
+                currentContext.AdminId = AppSession.AccId;
+                currentContext.IP = System.Web.HttpContext.Current.Request.UserHostAddress;
+                result = _customerService.CompanyUpdateSuper(customer, currentContext);
+                // format template of error message
+                int tempErrorCode = 0;
+                string tempErrorMessage = "";
+                AlertMessage.ParseError(ref tempErrorCode, ref tempErrorMessage, result.ErrorCode, result.ErrorMessage);
+                result.ErrorCode = tempErrorCode.ToString();
+                result.ErrorMessage = tempErrorMessage;
+
+                if (tempErrorCode == 0)
+                {
+                    //update sync casino
+                    customer.SiteName = _customerSettingService.GetRNGSiteNameByCustId(customer.CustId);
+                    _customerSettingService.UpdateSyncCasinoAfterEditCustomer(customer, currentContext);
+                }
+            }
+            catch (Exception ex)
+            {
+                result = new Fanex.PTEngine.BusinessObjects.Result
+                {
+                    ErrorCode = "1000",
+                    ErrorMessage = ex.Message
+                };
+            }
+
+            // Return result
+            return Json(result);
+        }
+    }
+}

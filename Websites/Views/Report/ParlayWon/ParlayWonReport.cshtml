@@ -1,0 +1,336 @@
+﻿<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/Message.css" />
+<link rel="stylesheet" type="text/css" href="~/js/jQuery/Pager/pagination.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/commonIOM.css" />
+<link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
+<link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
+<link rel="stylesheet" type="text/css" href="~/Views/Report/ParlayWon/Style/ParlayWon.css" />
+<div class="main">
+    <table style="width: 100%" border="0" cellpadding="0px" cellspacing="0px">
+        <tr>
+            <td>
+                <div id="divMainHeader" class="">
+                    <div id="left_tab1">
+                        <ul>
+                            <li class="lefticon"></li>
+                            <li class="current"><span>Parlay Won</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="maincontent" style="">
+                    <div class="filterBox">
+                        <div class="filterContent">
+                            <div id="filter" style="border: none !important; width: 100%;">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <input type="radio" id="rdbMixparlay" name="reporttype" value="9" checked="checked" />
+                                            </td>
+                                            <td style="width: 60px">
+                                                Mix Parlay
+                                            </td>
+                                            <td>
+                                                <input type="radio" id="rdSystemParlay" name="reporttype" value="29" />
+                                            </td>
+                                            <td style="width: 80px">
+                                                System Parlay
+                                            </td>
+                                            <td>
+                                                Date:
+                                            </td>
+                                            <td>
+                                                <input type="text" id="txtfromdate" readonly="readonly" class="txtdate" style="width: 100px;" />
+                                            </td>
+                                            <td>
+                                                <input type="radio" id="rdbsocceronly" name="sportstype" value="soccer" />
+                                            </td>
+                                            <td style="width: 40px">
+                                                Soccer
+                                            </td>
+                                            <td>
+                                                <input type="radio" id="rdborthersports" name="sportstype" value="other" checked="checked" />
+                                            </td>
+                                            <td style="width: 80px">
+                                                Other Sports
+                                            </td>
+                                            <td>
+                                                <input type="button" id="btnReport" name="btnReport" value="View Report" class="btn"
+                                                    onclick="parlayWonReport.viewReport(false)" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div id="err" style="display: none">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contentBox" style="">
+                        <div id="parlayWonGrid" class="freegrid hidden">
+                            <div class="grid-title r">
+                                <div class="grid-title-lable" id="gridtitleCheckBet" style="width: 100%;">
+                                    <div id="subtitle" style="display: inline-block; float: left;" class="b">
+                                    </div>
+                                    <input type="button" value="  " id="btnExportNew" class="btnExcel " style="margin: -2px 20px 0 0;"
+                                        title="Export to Excel" onclick="parlayWonReport.exportExcel();" />
+                                </div>
+                            </div>
+                            <div class="free-cell free-top-left">
+                                <table class="grid-fixed-table free-cell-top-left">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <div style="height: 39px; width: 140px;" class="table-cell">
+                                                    Ref No
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div style="height: 39px; width: 160px;" class="table-cell">
+                                                    UserName
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div style="height: 39px; width: 80px;" class="table-cell">
+                                                    Currency
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div style="height: 39px; width: 80px;" class="table-cell">
+                                                    Exchange
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="row_header_wrapper">
+                                <div class="row_header row-headers-background">
+                                    <table id="gridRowHeader" class="grid-fixed-table row_header_content">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <div style="height: 39px; width: 140px;" class="table-cell">
+                                                        Ref No
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div style="height: 39px; width: 160px;" class="table-cell">
+                                                        UserName
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div style="height: 39px; width: 80px;" class="table-cell">
+                                                        Currency
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div style="height: 39px; width: 80px;" class="table-cell">
+                                                        Exchange
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col_header row-headers-background scroll-y">
+                                <div class="header-container">
+                                    <table class="grid-fixed-table col_header_content">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2">
+                                                    <div style="height: 39px; width: 140px;" class="table-cell">
+                                                        Ref No
+                                                    </div>
+                                                </th>
+                                                <th rowspan="2">
+                                                    <div style="height: 39px; width: 160px;" class="table-cell">
+                                                        UserName
+                                                    </div>
+                                                </th>
+                                                <th rowspan="2">
+                                                    <div style="height: 39px; width: 80px;" class="table-cell">
+                                                        Currency
+                                                    </div>
+                                                </th>
+                                                <th rowspan="2">
+                                                    <div style="height: 39px; width: 80px;" class="table-cell">
+                                                        Exchange
+                                                    </div>
+                                                </th>
+                                                <th colspan="2">
+                                                    <div style="height: 17px; width: 165px;" class="table-cell c">
+                                                        Original Currency</div>
+                                                </th>
+                                                <th colspan="4">
+                                                    <div style="height: 17px; width: 335px;" class="table-cell c">
+                                                        Base Currency</div>
+                                                </th>
+                                                <th rowspan="2">
+                                                    <div style="height: 39px; width: 80px;" class="table-cell">
+                                                        Selection</div>
+                                                </th>
+                                                <th rowspan="2">
+                                                    <div style="height: 39px; width: 80px;" class="table-cell">
+                                                        Win Odds</div>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <div style="height: 17px; width: 80px;" class="table-cell">
+                                                        Stake</div>
+                                                </th>
+                                                <th>
+                                                    <div style="height: 17px; width: 80px;" class="table-cell">
+                                                        Winlost</div>
+                                                </th>
+                                                <th>
+                                                    <div style="height: 17px; width: 80px;" class="table-cell  ">
+                                                        Stake</div>
+                                                </th>
+                                                <th>
+                                                    <div id="baseWinlost" style="height: 17px; width: 80px;" class="table-cell sorter"
+                                                        onclick="parlayWonReport.sorting(true,0)">
+                                                        Winlost</div>
+                                                </th>
+                                                <th>
+                                                    <div style="height: 17px; width: 100px;" class="table-cell">
+                                                        Company Stake</div>
+                                                </th>
+                                                <th>
+                                                    <div id="companyWinlost" style="height: 17px; width: 130px;" class="table-cell sorter"
+                                                        onclick="parlayWonReport.sorting(true,1)">
+                                                        Company Winlost</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="grid-container container">
+                                <div class="content-container">
+                                    <table id="gridDetail" class="grid-fixed-table col_header_content">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2">
+                                                    <div style="height: 39px; width: 140px;" class="table-cell">
+                                                        Ref No</div>
+                                                </th>
+                                                <th rowspan="2">
+                                                    <div style="height: 39px; width: 160px;" class="table-cell">
+                                                        UserName</div>
+                                                </th>
+                                                <th rowspan="2">
+                                                    <div style="height: 39px; width: 80px;" class="table-cell">
+                                                        Currency</div>
+                                                </th>
+                                                <th rowspan="2">
+                                                    <div style="height: 39px; width: 80px;" class="table-cell">
+                                                        Exchange</div>
+                                                </th>
+                                                <th colspan="2">
+                                                    <div style="height: 17px; width: 165px;" class="table-cell c">
+                                                        Original Currency</div>
+                                                </th>
+                                                <th colspan="4">
+                                                    <div style="height: 17px; width: 335px;" class="table-cell c">
+                                                        Base Currency</div>
+                                                </th>
+                                                <th rowspan="2">
+                                                    <div style="height: 39px; width: 80px;" class="table-cell">
+                                                        Selection</div>
+                                                </th>
+                                                <th rowspan="2">
+                                                    <div style="height: 39px; width: 80px;" class="table-cell">
+                                                        Win Odds</div>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <div style="height: 17px; width: 80px;" class="table-cell">
+                                                        Stake</div>
+                                                </th>
+                                                <th>
+                                                    <div style="height: 17px; width: 80px;" class="table-cell">
+                                                        Winlost</div>
+                                                </th>
+                                                <th>
+                                                    <div style="height: 17px; width: 80px;" class="table-cell">
+                                                        Stake</div>
+                                                </th>
+                                                <th>
+                                                    <div style="height: 17px; width: 80px;" class="table-cell">
+                                                        Winlost</div>
+                                                </th>
+                                                <th>
+                                                    <div style="height: 17px; width: 100px;" class="table-cell">
+                                                        Company Stake</div>
+                                                </th>
+                                                <th>
+                                                    <div style="height: 17px; width: 130px;" class="table-cell">
+                                                        Company Winlost</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row_footer row-footer-background z999">
+                                <table id="GridFooterRow" class="grid-fixed-table row_footer_content">
+                                    <thead>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="col_footer row-footer-background scroll-y">
+                                <div class="footer-container">
+                                    <table id="GridFooterCol" class="grid-fixed-table col_footer_content">
+                                        <thead>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+@{
+    if (Request["IsExport"] != null && DNAide.Core.CastAide.AsBoolean(Request["IsExport"]))
+    {
+        string winlostDate = Request["winlostDate"].ToString();
+        int betType = DNAide.Core.CastAide.AsInt32(Request["betType"]);
+        bool isSoccer = DNAide.Core.CastAide.AsBoolean(Request["isSoccer"]);
+        string moveBetsDay = DNAide.Core.CastAide.AsString(Request["moveBetsDay"]);
+        string balanceUpDay = DNAide.Core.CastAide.AsString(Request["balanceUpdate"]);
+        bool fromCache = DNAide.Core.CastAide.AsBoolean(Request["fromCache"]);
+
+        Fanex.Tarus.Reports.Business.ParlayWon.IParlayWonService exportData = new Fanex.Tarus.Reports.Business.ParlayWon.ParlayWonService();
+        exportData.ExportExcelParlayWon(winlostDate, betType, isSoccer, moveBetsDay, balanceUpDay, fromCache);
+
+    }
+}
+<iframe id="frm" width="0" height="0" frameborder="0" style="display: none"></iframe>
+<script type="text/javascript">
+    var serverTime = '@DateTime.Now.ToString()';
+    var currdate = new Date(serverTime);
+    var chosenDate = new Date('@DateTime.Now.AddDays(-1).ToString()')
+    var _moveBetsDay = '@ViewBag.MoveBetsDay.ToString()';
+    var _balanceUpDate = '@ViewBag.BanlanceUpDate.ToString()';
+    var mindate = new Date(_balanceUpDate);
+    window.rootUrl = '@Url.Content("~")';
+    
+    head.js("@Url.Content("~/js/json2.js")", 
+            "@Url.Content("~/js/jQuery/jquery-1.7.js")",
+            "@Url.Content("~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js")",
+            "@Url.Content("~/js/common.js")", 
+            "@Url.Content("~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js?ver=10")",
+            "@Url.Content("~/js/jQuery/Pager/jpager.js")",
+            "@Url.Content("~/Views/Report/ParlayWon/js/ParlayWon.js?ver=4")");
+</script>

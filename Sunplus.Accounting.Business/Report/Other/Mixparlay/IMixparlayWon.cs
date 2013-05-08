@@ -1,0 +1,12 @@
+﻿using Sunplus.Accounting.Entities.ViewModel;
+
+namespace Sunplus.Accounting.Report.Mixparlay
+{
+ 
+    public interface IMixparlayWon
+    {
+        MixparlayDataGridBO GetList_MixparlayWon(bool isSoccer, string date, int pageIndex, int pageSize, bool fromcache, int sortType);
+
+        void MixparlayWonExportToExcel(bool isSoccer, string date, int sortType);
+    }
+}

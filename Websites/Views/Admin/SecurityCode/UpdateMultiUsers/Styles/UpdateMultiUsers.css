@@ -1,0 +1,67 @@
+﻿
+
+.main, .maincontent
+{
+    width: 100%;
+}
+
+.maincontent_box
+{
+    padding-right: 5px;
+}
+
+.maincontent_box
+{
+    width: 615px;
+}
+
+#txtUserList
+{
+    width: 550px;
+}
+
+#txtBaseSecurityCode, .userSecurityCode
+{
+    width: 53px;
+}
+
+#updateSecurityCodeFilters, #userListInfo
+{
+    margin-top: 10px;
+}
+
+.validIcon
+{
+    background: url("Images/validIcon.png") no-repeat scroll center center transparent;
+    border: 0 solid red;
+    height: 18px;
+}
+
+.invalidIcon
+{
+    background: url("Images/invalidIcon.png") no-repeat scroll center center transparent;
+    border: 0 solid red;
+    height: 18px;
+}
+
+#errorMessage
+{
+    width: 624px;
+}
+
+#baseSecurityCodeValidation
+{
+    height: 18px;
+    width: 18px;
+}
+
+
+.mainAccount td
+{
+    background-color: #FFEEDD;
+}
+
+.subAccount .colId
+{
+    margin-left: 20px;
+}

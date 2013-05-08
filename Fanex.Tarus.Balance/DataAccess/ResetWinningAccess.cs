@@ -1,0 +1,113 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Fanex.Tarus.Balance.DataAccess
+{
+    using System.Data;
+
+    using DNAide.Core;
+    using DNAide.Utils;
+
+    using Fanex.Data;
+    using Fanex.Tarus.Balance.Entities;
+
+    public class ResetWinningAccess: IResetWinningAccess
+    {
+        public Dictionary<string, DateTime> SelBalanceUpMovebetDays()
+        {
+            var datatable = new DataTable();
+            var balmoveday = new Dictionary<string, DateTime>();
+            using (ObjectDb objDB = new ObjectDb("SelBalanceUpDay"))
+            {
+                var ds = objDB.ExecuteDataSet();
+                datatable = ds.Tables[0];
+                balmoveday.Add("BalanceUpDay", CastAide.AsDateTime(datatable.Rows[0]["BalanceUpDay"]));
+                balmoveday.Add("MovebetsDay", CastAide.AsDateTime(datatable.Rows[0]["MovebetsDay"]));
+            }
+            return balmoveday;
+        }
+        public ResetWinningDTO GetDataResetWinning(string date, int data)
+        {
+            var list = new List<ResetWinning>();
+            var result = new ResetWinningDTO();
+            Dictionary<string, DateTime> balmoveDays = SelBalanceUpMovebetDays();
+            DateTime BalanceUpDay = balmoveDays["BalanceUpDay"];
+            DateTime MoveBetDay = balmoveDays["MovebetsDay"];
+            string spalias = string.Empty;
+            int compareDays = DateTime.Compare(CastAide.AsDateTime(date), MoveBetDay);
+            if (compareDays > 0 && data == 0)
+                spalias = "ResetWinningMain";
+            else if (compareDays <= 0 && data == 0)
+                spalias = "ResetWinningMain14";
+            else if (compareDays > 0 && data == 1)
+                spalias = "ResetWinningRep";
+            else
+                spalias = "ResetWinningRep14";
+            var datatable = new DataTable();
+            double totalBalance = 0;
+            double sumWinloss = 0, sumVariance = 0;
+            using (ObjectDb objDB = new ObjectDb(spalias))
+            {
+                objDB.AddInParameter("winlostdate", DbType.DateTime, CastAide.AsDateTime(date));
+                objDB.AddOutParameter("totalBalance", DbType.Double, sizeof(double));
+                var ds = objDB.ExecuteDataSet();
+                datatable = ds.Tables[0];
+                totalBalance = CastAide.AsDouble(objDB.GetParameterValue("totalBalance"));
+            }
+            if (datatable != null && datatable.Rows.Count > 0)
+            {
+                foreach (DataRow row in datatable.Rows)
+                {
+                    string product = CastAide.AsString(row["product"]);
+                    string winloss = NumberFormat.DecFormat(CastAide.AsString(row["winlost"]), 2);
+                    string reset = NumberFormat.DecFormat(CastAide.AsString(row["reset"]), 2);
+                    list.Add(new ResetWinning()
+                    {
+                        Products = product,
+                        Winloss = winloss,
+                        Reset = (product.ToLower() == "openning balance") ? "N/A" : CastAide.AsDouble(row["reset"]) == 0 ? "-" : reset,
+                        Variance = product.ToLower() == "openning balance" ? "N/A" : NumberFormat.DecFormat((CastAide.AsDouble(winloss) + CastAide.AsDouble(reset)).ToString(), 2)
+                    });
+
+                    if (datatable.Rows.Count > 2)
+                    {
+                        sumWinloss += CastAide.AsDouble(winloss);
+                        sumVariance += CastAide.AsDouble(winloss) + CastAide.AsDouble(reset);
+                    }
+                }
+            }
+            if (datatable.Rows.Count == 1)
+            {
+                sumWinloss = CastAide.AsDouble(list[0].Winloss);
+                sumVariance = CastAide.AsDouble(list[0].Winloss) + CastAide.AsDouble(list[0].Reset);
+            }
+            else if(datatable.Rows.Count == 2)
+            {
+                sumWinloss = CastAide.AsDouble(list[1].Winloss);
+                sumVariance = CastAide.AsDouble(list[1].Winloss) + CastAide.AsDouble(list[1].Reset);
+            }
+
+
+            var otherVariance = totalBalance - sumWinloss;
+
+            var otherWinloss = new ResetWinning()
+                {
+                    Products = "OTHERS",
+                    Winloss = NumberFormat.DecFormat(otherVariance.ToString(), 2),
+                    Reset = "N/A",
+                    Variance = NumberFormat.DecFormat(otherVariance.ToString(), 2)
+                };
+
+            list.Add(otherWinloss);
+
+            sumVariance += otherVariance;
+
+            result.Items = list;
+            result.Total = NumberFormat.DecFormat(sumVariance, 2);
+            return result;
+
+        }
+    }
+}

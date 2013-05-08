@@ -1,0 +1,889 @@
+﻿using System;
+using System.Collections;
+using System.Data;
+using System.Text;
+using System.Web;
+using DNAide.Core;
+using DNAide.Data;
+using DNAide.Web;
+using IBCUtils;
+
+using Sunplus.Accounting.Business.CacheManager;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Accounting.Core.Web.Controls;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using Sunplus.Core.LoggingLib;
+
+/// <summary>
+/// Summary description for SpondemoWinLoss
+/// </summary>
+namespace BLL.Report
+{
+    public class OtherWinLossReport : ReportBase
+    {
+        #region global variables
+        private string dateOption = string.Empty;
+        private string sportOption = string.Empty;
+        private string fdate = string.Empty;
+        private string tdate = string.Empty;
+        private string currencyOption = string.Empty;
+        private string reportBy = string.Empty;
+        private int reportDetail = 0;
+        private string currencyName = string.Empty;
+        private int isBack = 0;
+        private string site = "spondemo";
+        #endregion
+
+        public OtherWinLossReport()
+        {
+        }
+
+        #region get options
+        private void GetSportOptions(ref bool showSB, ref bool showHR, string sportOption)
+        {
+            //Get ShowSB, ShowHR
+            switch (sportOption)
+            {
+                case "0": //Sport Book
+                    showSB = true;
+                    showHR = false;
+                    break;
+                case "151": //Horse Racing
+                    showSB = false;
+                    showHR = true;
+                    break;
+                default:
+                    showSB = true;
+                    showHR = true;
+                    break;
+            }
+        }
+
+        private void GetReportTypes(ref int reportType, string reportBy)
+        {
+            //Get Report Type (Daily/Monthly/Sport)
+            switch (reportBy)
+            {
+                case "1": //Daily
+                    reportType = 1;
+                    break;
+                case "2": //Monthly
+                    reportType = 2;
+                    break;
+                case "3": //Sport
+                    reportType = 3;
+                    break;
+                default:
+                    reportType = 1;
+                    break;
+            }
+        }
+
+        private void GetCurrencyOptions(ref int baseCurrency, ref int custid, string currencyOption)
+        {
+            switch (currencyOption)
+            {
+                case "0": //default
+                    baseCurrency = 0;
+                    custid = 0;
+                    break;
+                case "-1":
+                    baseCurrency = 3; //USD
+                    custid = 0;
+                    break;
+                case "-2":
+                    baseCurrency = 2; //RM
+                    custid = 0;
+                    break;
+                default:
+                    custid = CastAide.AsInt32(currencyOption);
+                    baseCurrency = 0;
+                    break;
+            }
+        }
+
+        private string GetSportName(int id)
+        {
+            if (id == 0)
+                return "Sportsbook";
+            else if (id == 151)
+                return "Horse Racing";
+            else
+                return string.Empty;
+        }
+        #endregion
+
+        #region render html
+        public override string CreateHeader(Hashtable input)
+        {
+            var header = string.Empty;
+            try
+            {
+                var tpl = WebUtils.LoadTemplate(@"WinLost\OtherReportsWinLoss\WinLossFilter.htm");
+                var html = new StringBuilder();
+                DateTime fdate, tdate;
+                fdate = CastAide.AsDateTime(input["fdate"], DateTime.Now);
+                tdate = CastAide.AsDateTime(input["tdate"], DateTime.Now);
+                var site = CastAide.AsString(input["site"]);
+                var reportCurrencyOptionCached = string.Format("accReport{0}WinlossCurrOption.{1}", site, AppSession.Username);
+
+                TemplateHandler.Assign(ref tpl, "{FromDateCal}", Calendar.GenCalendarControl("fdate", "../../", "fdateTrigger", fdate.ToShortDateString(), false, false, 0, "", "var cal1 = ", 0));
+                TemplateHandler.Assign(ref tpl, "{ToDateCal}", Calendar.GenCalendarControl("tdate", "../../", "tdateTrigger", tdate.ToShortDateString(), true, false, 0, "", "var cal2 = ", 0));
+
+                var curr_option = GetCachedData(reportCurrencyOptionCached);
+                if (string.IsNullOrEmpty(curr_option))
+                {
+                    var dt = GetCurrency(site);
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        var currencyOptionTpl = TemplateHandler.CopyBlock(tpl, "CurrencyOption");
+                        DataRow[] Rows = dt.Select();
+                        foreach (DataRow row in Rows)
+                        {
+                            var option = currencyOptionTpl;
+                            TemplateHandler.Assign(ref option, "{optionvalue}", CastAide.AsString(row["currency"]) + "_" + CastAide.AsString(row["custid"]));
+                            TemplateHandler.Assign(ref option, "{optiondisplay}", CacheUtils.GetExchangeName(CastAide.AsInt32(row["currency"])));
+                            html.AppendLine(option);
+                        }
+                        TemplateHandler.ReplaceBlock(ref tpl, "CurrencyOption", html.ToString());
+                        SetCacheReport(reportCurrencyOptionCached, html.ToString(), DateTime.Now.AddMinutes(60));
+                    }
+                    else
+                        TemplateHandler.RemoveBlock(ref tpl, "CurrencyOption");
+
+                }
+                else
+                    TemplateHandler.ReplaceBlock(ref tpl, "CurrencyOption", curr_option);
+
+                header = tpl;
+            }
+            catch (Exception ex)
+            {
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                header = ex.Message;
+            }
+
+            return header;
+        }
+
+        private string ReportWinLoss()
+        {
+            #region variables
+            bool showSB = true;
+            bool showHR = true;
+            int reportType = 1;
+            int custid, baseCurrency;
+            baseCurrency = 0;
+            custid = 0;
+            
+            DateTime fromdate, todate;
+            fromdate = CastAide.AsDateTime(fdate, DateTime.Now);
+            todate = CastAide.AsDateTime(tdate, DateTime.Now);
+            #endregion
+
+            #region get option values
+            GetSportOptions(ref showSB, ref showHR, sportOption);
+            GetReportTypes(ref reportType, reportBy);
+            GetCurrencyOptions(ref baseCurrency, ref custid, currencyOption);
+            #endregion
+
+            #region get templates
+            var tpl = WebUtils.LoadTemplate("WinLost/OtherReportsWinLoss/WinLossMain.htm");
+            var tplRows = WebUtils.LoadTemplate("WinLost/OtherReportsWinLoss/WinLossRow.htm");
+            var tplFooter = WebUtils.LoadTemplate("WinLost/OtherReportsWinLoss/WinLossFooter.htm");
+            var tplTotal = WebUtils.LoadTemplate("WinLost/OtherReportsWinLoss/WinLossTotal.htm");
+            #endregion
+
+            //Daily or Monthly report
+            if (reportType == 1 || reportType == 2)
+            {
+                TemplateHandler.Assign(ref tpl, "ReportByHead", "Date");
+                TemplateHandler.Assign(ref tplRows, "ReportByAlign", "align='center'");
+            }
+            else
+            {
+                TemplateHandler.Assign(ref tpl, "ReportByHead", "Sport");
+                TemplateHandler.Assign(ref tplRows, "ReportByAlign", "align='left'");
+            }
+            TemplateHandler.Assign(ref tplRows, "UserLink", "");
+
+            var html = new StringBuilder();
+            DataTable dt = GetWinLossReportBySite(site, custid, fromdate, todate, showSB, showHR, reportType, baseCurrency, Sunplus.Accounting.DataAccess.Report.ReportUtils.BalanceUp.BalanceUpDay).ResultSet.Tables[0];
+            var total = new Hashtable();
+            var currenciesList = new ArrayList();
+            int count = 0;
+            int rowsCount = dt.Rows.Count;
+
+            if (rowsCount > 0)
+            {
+                decimal sumTurnoverRM = 0, sumGrossCommRM = 0, sumMemWinlossRM = 0, sumMemCommRM = 0, sumMemTotalRM = 0, sumAgentWinlossRM = 0, sumAgentCommRM = 0, sumAgentTotalRM = 0, sumCompanyRM = 0;
+                decimal sumTurnoverUS = 0, sumGrossCommUS = 0, sumMemWinlossUS = 0, sumMemCommUS = 0, sumMemTotalUS = 0, sumAgentWinlossUS = 0, sumAgentCommUS = 0, sumAgentTotalUS = 0, sumCompanyUS = 0;
+                int currencyID = 0;
+                DataRow[] rows = dt.Select();
+                string currencyName = string.Empty;
+
+                #region assign data rows
+                foreach (DataRow row in rows)
+                {
+                    decimal turnover = 0, grossComm = 0, memWinloss = 0, memComm = 0, memTotal = 0, agentWinloss = 0, agentComm = 0, agentTotal = 0, company = 0;
+                    var r = tplRows;
+                    count++;
+
+                    if (count % 2 == 0)
+                        TemplateHandler.Assign(ref r, "odd_even", "evenrow  ");
+                    else
+                        TemplateHandler.Assign(ref r, "odd_even", "");
+
+                    string reportTypeCol = CastAide.AsString(row["reporttype"]);
+
+                    #region base currency sum
+                    //RM BASE SUM
+                    sumTurnoverRM = sumTurnoverRM + CastAide.AsDecimal(row["turnoverrm"]);
+                    sumGrossCommRM = sumGrossCommRM + CastAide.AsDecimal(row["grosscommrm"]);
+                    sumMemWinlossRM = sumMemWinlossRM + CastAide.AsDecimal(row["winlostrm"]);
+                    sumMemCommRM = sumMemCommRM + CastAide.AsDecimal(row["commrm"]);
+                    sumMemTotalRM = sumMemTotalRM + CastAide.AsDecimal(row["winlostrm"]) + CastAide.AsDecimal(row["commrm"]);
+                    sumAgentWinlossRM = sumAgentWinlossRM + CastAide.AsDecimal(row["awinlostrm"]);
+                    sumAgentCommRM = sumAgentCommRM + CastAide.AsDecimal(row["acommrm"]);
+                    sumAgentTotalRM = sumAgentTotalRM + CastAide.AsDecimal(row["awinlostrm"]) + CastAide.AsDecimal(row["acommrm"]);
+                    sumCompanyRM = sumCompanyRM + CastAide.AsDecimal(row["companyrm"]);
+                    //US BASE SUM
+                    sumTurnoverUS = sumTurnoverUS + CastAide.AsDecimal(row["turnoverusd"]);
+                    sumGrossCommUS = sumGrossCommUS + CastAide.AsDecimal(row["grosscommusd"]);
+                    sumMemWinlossUS = sumMemWinlossUS + CastAide.AsDecimal(row["winlostusd"]);
+                    sumMemCommUS = sumMemCommUS + CastAide.AsDecimal(row["commusd"]);
+                    sumMemTotalUS = sumMemTotalUS + CastAide.AsDecimal(row["winlostusd"]) + CastAide.AsDecimal(row["commusd"]);
+                    sumAgentWinlossUS = sumAgentWinlossUS + CastAide.AsDecimal(row["awinlostusd"]);
+                    sumAgentCommUS = sumAgentCommUS + CastAide.AsDecimal(row["acommusd"]);
+                    sumAgentTotalUS = sumAgentTotalUS + CastAide.AsDecimal(row["awinlostusd"]) + CastAide.AsDecimal(row["acommusd"]);
+                    sumCompanyUS = sumCompanyUS + CastAide.AsDecimal(row["companyusd"]);
+                    #endregion
+
+                    #region assign currency data
+                    if (baseCurrency == 0) //not choose any base currency
+                    {
+                        turnover = CastAide.AsDecimal(row["turnover"]);
+                        grossComm = CastAide.AsDecimal(row["grosscomm"]);
+                        memWinloss = CastAide.AsDecimal(row["winlost"]);
+                        memComm = CastAide.AsDecimal(row["comm"]);
+                        memTotal = memWinloss + memComm;
+                        agentWinloss = CastAide.AsDecimal(row["awinlost"]);
+                        agentComm = CastAide.AsDecimal(row["acomm"]);
+                        agentTotal = agentWinloss + agentComm;
+                        company = CastAide.AsDecimal(row["company"]);
+                        currencyID = CastAide.AsInt32(row["currency"]);
+                    }
+                    else if (baseCurrency == 2) //RM
+                    {
+                        turnover = CastAide.AsDecimal(row["turnoverrm"]);
+                        grossComm = CastAide.AsDecimal(row["grosscommrm"]);
+                        memWinloss = CastAide.AsDecimal(row["winlostrm"]);
+                        memComm = CastAide.AsDecimal(row["commrm"]);
+                        memTotal = memWinloss + memComm;
+                        agentWinloss = CastAide.AsDecimal(row["awinlostrm"]);
+                        agentComm = CastAide.AsDecimal(row["acommrm"]);
+                        agentTotal = agentWinloss + agentComm;
+                        company = CastAide.AsDecimal(row["companyrm"]);
+                        currencyID = 2;
+                    }
+                    else if (baseCurrency == 3) //USD
+                    {
+                        turnover = CastAide.AsDecimal(row["turnoverusd"]);
+                        grossComm = CastAide.AsDecimal(row["grosscommusd"]);
+                        memWinloss = CastAide.AsDecimal(row["winlostusd"]);
+                        memComm = CastAide.AsDecimal(row["commusd"]);
+                        memTotal = memWinloss + memComm;
+                        agentWinloss = CastAide.AsDecimal(row["awinlostusd"]);
+                        agentComm = CastAide.AsDecimal(row["acommusd"]);
+                        agentTotal = agentWinloss + agentComm;
+                        company = CastAide.AsDecimal(row["companyusd"]);
+                        currencyID = 3;
+                    }
+                    #endregion
+
+                    #region assign template for each row
+                    //add currencyID to currencyList
+                    AddCurrency(currenciesList, currencyID);
+
+                    currencyName = CacheUtils.GetExchangeName(currencyID);
+                    if (reportType == 1)//Daily
+                    {
+                        TemplateHandler.Assign(ref r, "ReportByValue", FormatFullDate(reportTypeCol));
+                        //assign currency link
+                        TemplateHandler.Assign(ref r, "CurrLink", "class='lnk' onclick=\"viewDetail('" + currencyName + "','" + currencyID + "','" + FormatFullDate(reportTypeCol) + "')\"");
+                    }
+                    else if (reportType == 2) //monthly
+                    {
+                        TemplateHandler.Assign(ref r, "ReportByValue", FormatMonthYear(reportTypeCol));
+                        //assign currency link
+                        TemplateHandler.Assign(ref r, "CurrLink", "class='lnk' onclick=\"viewDetail('" + currencyName + "','" + currencyID + "','" + FormatMonthYear(reportTypeCol) + "')\"");
+                    }
+                    else if (reportType == 3) //Sport
+                    {
+                        TemplateHandler.Assign(ref r, "ReportByValue", GetSportName(CastAide.AsInt32(reportTypeCol)));
+                        //assign currency link
+                        TemplateHandler.Assign(ref r, "CurrLink", "class='lnk' onclick=\"viewDetail('" + currencyName + "','" + currencyID + "','" + reportTypeCol + "')\"");
+                    }
+
+                    TemplateHandler.Assign(ref r, "currency", currencyName);
+                    TemplateHandler.Assign(ref r, "turnover", FormatHandler.FormatNumber20(turnover));
+                    TemplateHandler.Assign(ref r, "grosscomm", FormatHandler.FormatNumber20(grossComm));
+                    TemplateHandler.Assign(ref r, "memwinloss", FormatHandler.FormatNumber20(memWinloss));
+                    TemplateHandler.Assign(ref r, "memcomm", FormatHandler.FormatNumber20(memComm));
+                    TemplateHandler.Assign(ref r, "memtotal", FormatHandler.FormatNumber20(memTotal));
+                    TemplateHandler.Assign(ref r, "agentwinloss", FormatHandler.FormatNumber20(agentWinloss));
+                    TemplateHandler.Assign(ref r, "agentcomm", FormatHandler.FormatNumber20(agentComm));
+                    TemplateHandler.Assign(ref r, "agenttotal", FormatHandler.FormatNumber20(agentTotal));
+                    TemplateHandler.Assign(ref r, "company", FormatHandler.FormatNumber20(company));
+
+                    //set total in hash for different currency
+                    total = AddTotal(total, currencyID.ToString() + "_" + "turnover", turnover);
+                    total = AddTotal(total, currencyID.ToString() + "_" + "grosscomm", grossComm);
+                    total = AddTotal(total, currencyID.ToString() + "_" + "memwinloss", memWinloss);
+                    total = AddTotal(total, currencyID.ToString() + "_" + "memcomm", memComm);
+                    total = AddTotal(total, currencyID.ToString() + "_" + "memtotal", memTotal);
+                    total = AddTotal(total, currencyID.ToString() + "_" + "agentwinloss", agentWinloss);
+                    total = AddTotal(total, currencyID.ToString() + "_" + "agentcomm", agentComm);
+                    total = AddTotal(total, currencyID.ToString() + "_" + "agenttotal", agentTotal);
+                    total = AddTotal(total, currencyID.ToString() + "_" + "company", company);
+
+                    html.Append(r);
+                    #endregion
+                }
+                #endregion
+
+                #region sum by currency
+                int currencyCount = currenciesList.Count;
+                for (int i = 0; i < currencyCount; i++)
+                {
+                    string rowTotal = tplTotal;
+                    int currID = CastAide.AsInt32(currenciesList[i]);
+                    decimal _turnover = CastAide.AsDecimal(total[currID.ToString() + "_" + "turnover"]);
+                    decimal _grossComm = CastAide.AsDecimal(total[currID.ToString() + "_" + "grosscomm"]);
+                    decimal _memWinloss = CastAide.AsDecimal(total[currID.ToString() + "_" + "memwinloss"]);
+                    decimal _memComm = CastAide.AsDecimal(total[currID.ToString() + "_" + "memcomm"]);
+                    decimal _memTotal = CastAide.AsDecimal(total[currID.ToString() + "_" + "memtotal"]);
+                    decimal _agentWinloss = CastAide.AsDecimal(total[currID.ToString() + "_" + "agentwinloss"]);
+                    decimal _agentComm = CastAide.AsDecimal(total[currID.ToString() + "_" + "agentcomm"]);
+                    decimal _agentTotal = CastAide.AsDecimal(total[currID.ToString() + "_" + "agenttotal"]);
+                    decimal _company = CastAide.AsDecimal(total[currID.ToString() + "_" + "company"]);
+
+                    if (i == 0)
+                        TemplateHandler.Assign(ref rowTotal, "rowcol", currenciesList.Count);
+                    else
+                        TemplateHandler.RemoveBlock(ref rowTotal, "TotalCell");
+
+                    TemplateHandler.Assign(ref rowTotal, "currency", CacheUtils.GetExchangeName(currID));
+                    TemplateHandler.Assign(ref rowTotal, "turnover", FormatHandler.FormatNumber20(_turnover));
+                    TemplateHandler.Assign(ref rowTotal, "grosscomm", FormatHandler.FormatNumber20(_grossComm));
+                    TemplateHandler.Assign(ref rowTotal, "memwinloss", FormatHandler.FormatNumber20(_memWinloss));
+                    TemplateHandler.Assign(ref rowTotal, "memcomm", FormatHandler.FormatNumber20(_memComm));
+                    TemplateHandler.Assign(ref rowTotal, "memtotal", FormatHandler.FormatNumber20(_memTotal));
+                    TemplateHandler.Assign(ref rowTotal, "agentwinloss", FormatHandler.FormatNumber20(_agentWinloss));
+                    TemplateHandler.Assign(ref rowTotal, "agentcomm", FormatHandler.FormatNumber20(_agentComm));
+                    TemplateHandler.Assign(ref rowTotal, "agenttotal", FormatHandler.FormatNumber20(_agentTotal));
+                    TemplateHandler.Assign(ref rowTotal, "company", FormatHandler.FormatNumber20(_company));
+                    html.Append(rowTotal);
+                }
+                #endregion
+
+                TemplateHandler.Assign(ref tpl, "content", html.ToString());
+
+                #region footer
+                //USD base currency
+                TemplateHandler.Assign(ref tplFooter, "turnovertotalus", FormatHandler.FormatNumber20(sumTurnoverUS));
+                TemplateHandler.Assign(ref tplFooter, "grosscommtotalus", FormatHandler.FormatNumber20(sumGrossCommUS));
+                TemplateHandler.Assign(ref tplFooter, "memwinlosstotalus", FormatHandler.FormatNumber20(sumMemWinlossUS));
+                TemplateHandler.Assign(ref tplFooter, "memcommtotalus", FormatHandler.FormatNumber20(sumMemCommUS));
+                TemplateHandler.Assign(ref tplFooter, "memtotaltotalus", FormatHandler.FormatNumber20(sumMemTotalUS));
+                TemplateHandler.Assign(ref tplFooter, "agentwinlosstotalus", FormatHandler.FormatNumber20(sumAgentWinlossUS));
+                TemplateHandler.Assign(ref tplFooter, "agentcommtotalus", FormatHandler.FormatNumber20(sumAgentCommUS));
+                TemplateHandler.Assign(ref tplFooter, "agenttotaltotalus", FormatHandler.FormatNumber20(sumAgentTotalUS));
+                TemplateHandler.Assign(ref tplFooter, "companytotalus", FormatHandler.FormatNumber20(sumCompanyUS));
+                //RM base currency
+                TemplateHandler.Assign(ref tplFooter, "turnovertotalrm", FormatHandler.FormatNumber20(sumTurnoverRM));
+                TemplateHandler.Assign(ref tplFooter, "grosscommtotalrm", FormatHandler.FormatNumber20(sumGrossCommRM));
+                TemplateHandler.Assign(ref tplFooter, "memwinlosstotalrm", FormatHandler.FormatNumber20(sumMemWinlossRM));
+                TemplateHandler.Assign(ref tplFooter, "memcommtotalrm", FormatHandler.FormatNumber20(sumMemCommRM));
+                TemplateHandler.Assign(ref tplFooter, "memtotaltotalrm", FormatHandler.FormatNumber20(sumMemTotalRM));
+                TemplateHandler.Assign(ref tplFooter, "agentwinlosstotalrm", FormatHandler.FormatNumber20(sumAgentWinlossRM));
+                TemplateHandler.Assign(ref tplFooter, "agentcommtotalrm", FormatHandler.FormatNumber20(sumAgentCommRM));
+                TemplateHandler.Assign(ref tplFooter, "agenttotaltotalrm", FormatHandler.FormatNumber20(sumAgentTotalRM));
+                TemplateHandler.Assign(ref tplFooter, "companytotalrm", FormatHandler.FormatNumber20(sumCompanyRM));
+                TemplateHandler.Assign(ref tpl, "footerValue", tplFooter);
+                #endregion
+
+
+            }
+            else
+            {
+                html.Append(AccCommon.GenNoInformation("11"));
+                TemplateHandler.Assign(ref tpl, "content", html.ToString());
+                TemplateHandler.Assign(ref tpl, "footerValue", string.Empty);
+            }
+
+            #region cache report data
+            if (reportType == 1)//daily
+                SetCacheReport(string.Format("accReport{0}WinlossDaily.{1}", site, AppSession.Username).Trim(), tpl, DateTime.Now.AddMinutes(20));
+            else if (reportType == 2)//monthly
+                SetCacheReport(string.Format("accReport{0}WinlossMonthly.{1}", site, AppSession.Username).Trim(), tpl, DateTime.Now.AddMinutes(20));
+            else if (reportType == 3)//sport
+                SetCacheReport(string.Format("accReport{0}WinlossSport.{1}", site, AppSession.Username).Trim(), tpl, DateTime.Now.AddMinutes(20));
+            #endregion
+
+            return tpl;
+        }
+
+        private string ReportWinLossDetail()
+        {
+            #region variables
+            bool showSB = true;
+            bool showHR = true;
+            int reportType = 1;
+            int custid, baseCurrency;
+            baseCurrency = 0;
+            custid = 0;
+
+            DateTime fromdate, todate;
+            fromdate = CastAide.AsDateTime(fdate, DateTime.Now);
+            todate = CastAide.AsDateTime(tdate, DateTime.Now);
+            #endregion
+
+            #region get option values
+            GetSportOptions(ref showSB, ref showHR, sportOption);
+            GetReportTypes(ref reportType, reportBy);
+            GetCurrencyOptions(ref baseCurrency, ref custid, currencyOption);
+            #endregion
+
+            #region get templates
+            var tpl = WebUtils.LoadTemplate("WinLost/OtherReportsWinLoss/WinLossMain.htm");
+            var tplRows = WebUtils.LoadTemplate("WinLost/OtherReportsWinLoss/WinLossRow.htm");
+            var tplFooter = WebUtils.LoadTemplate("WinLost/OtherReportsWinLoss/WinLossFooter.htm");
+            var tplTotal = WebUtils.LoadTemplate("WinLost/OtherReportsWinLoss/WinLossTotal.htm");
+            #endregion
+
+            TemplateHandler.Assign(ref tpl, "ReportByHead", "Username");
+            TemplateHandler.Assign(ref tplRows, "ReportByAlign", "align='left'");
+            TemplateHandler.Assign(ref tplRows, "CurrLink", "");
+            //if (WebSettings.DisableM88BetList == true)
+            //    TemplateHandler.Assign(ref tplRows, "UserLink", "");
+            var html = new StringBuilder();
+            DataTable dt = GetWinLossReportDetailBySite(site, custid, fromdate, todate, showSB, showHR, baseCurrency, Sunplus.Accounting.DataAccess.Report.ReportUtils.BalanceUp.BalanceUpDay).ResultSet.Tables[0];
+            var total = new Hashtable();
+            int count = 0;
+            int rowsCount = dt.Rows.Count;
+
+            if (rowsCount > 0)
+            {
+                decimal sumTurnoverRM = 0, sumGrossCommRM = 0, sumMemWinlossRM = 0, sumMemCommRM = 0, sumMemTotalRM = 0, sumAgentWinlossRM = 0, sumAgentCommRM = 0, sumAgentTotalRM = 0, sumCompanyRM = 0;
+                decimal sumTurnoverUS = 0, sumGrossCommUS = 0, sumMemWinlossUS = 0, sumMemCommUS = 0, sumMemTotalUS = 0, sumAgentWinlossUS = 0, sumAgentCommUS = 0, sumAgentTotalUS = 0, sumCompanyUS = 0;
+                decimal sumTurnover = 0, sumGrossComm = 0, sumMemWinloss = 0, sumMemComm = 0, sumMemTotal = 0, sumAgentWinloss = 0, sumAgentComm = 0, sumAgentTotal = 0, sumCompany = 0;
+                DataRow[] rows = dt.Select();
+                #region assign data rows
+                foreach (DataRow row in rows)
+                {
+                    count++;
+                    decimal turnover = 0, grossComm = 0, memWinloss = 0, memComm = 0, memTotal = 0, agentWinloss = 0, agentComm = 0, agentTotal = 0, company = 0;
+                    string r = tplRows;
+                    if (count % 2 == 0)
+                        TemplateHandler.Assign(ref r, "odd_even", "evenrow");
+                    else
+                        TemplateHandler.Assign(ref r, "odd_even", "");
+
+                    string username = CastAide.AsString(row["username"]);
+
+                    #region total by Currency
+                    //RM BASE SUM
+                    sumTurnoverRM = sumTurnoverRM + CastAide.AsDecimal(row["turnoverrm"]);
+                    sumGrossCommRM = sumGrossCommRM + CastAide.AsDecimal(row["grosscommrm"]);
+                    sumMemWinlossRM = sumMemWinlossRM + CastAide.AsDecimal(row["winlostrm"]);
+                    sumMemCommRM = sumMemCommRM + CastAide.AsDecimal(row["commrm"]);
+                    sumMemTotalRM = sumMemTotalRM + CastAide.AsDecimal(row["winlostrm"]) + CastAide.AsDecimal(row["commrm"]);
+                    sumAgentWinlossRM = sumAgentWinlossRM + CastAide.AsDecimal(row["awinlostrm"]);
+                    sumAgentCommRM = sumAgentCommRM + CastAide.AsDecimal(row["acommrm"]);
+                    sumAgentTotalRM = sumAgentTotalRM + CastAide.AsDecimal(row["awinlostrm"]) + CastAide.AsDecimal(row["acommrm"]);
+                    sumCompanyRM = sumCompanyRM + CastAide.AsDecimal(row["companyrm"]);
+                    //US BASE SUM
+                    sumTurnoverUS = sumTurnoverUS + CastAide.AsDecimal(row["turnoverusd"]);
+                    sumGrossCommUS = sumGrossCommUS + CastAide.AsDecimal(row["grosscommusd"]);
+                    sumMemWinlossUS = sumMemWinlossUS + CastAide.AsDecimal(row["winlostusd"]);
+                    sumMemCommUS = sumMemCommUS + CastAide.AsDecimal(row["commusd"]);
+                    sumMemTotalUS = sumMemTotalUS + CastAide.AsDecimal(row["winlostusd"]) + CastAide.AsDecimal(row["commusd"]);
+                    sumAgentWinlossUS = sumAgentWinlossUS + CastAide.AsDecimal(row["awinlostusd"]);
+                    sumAgentCommUS = sumAgentCommUS + CastAide.AsDecimal(row["acommusd"]);
+                    sumAgentTotalUS = sumAgentTotalUS + CastAide.AsDecimal(row["awinlostusd"]) + CastAide.AsDecimal(row["acommusd"]);
+                    sumCompanyUS = sumCompanyUS + CastAide.AsDecimal(row["companyusd"]);
+                    #endregion
+
+                    #region assign data for each row
+                    if (baseCurrency == 0) //not choose any base currency
+                    {
+                        turnover = CastAide.AsDecimal(row["turnover"]);
+                        grossComm = CastAide.AsDecimal(row["grosscomm"]);
+                        memWinloss = CastAide.AsDecimal(row["winlost"]);
+                        memComm = CastAide.AsDecimal(row["comm"]);
+                        memTotal = memWinloss + memComm;
+                        agentWinloss = CastAide.AsDecimal(row["awinlost"]);
+                        agentComm = CastAide.AsDecimal(row["acomm"]);
+                        agentTotal = agentWinloss + agentComm;
+                        company = CastAide.AsDecimal(row["company"]);
+
+                    }
+                    else if (baseCurrency == 2) //RM
+                    {
+                        turnover = CastAide.AsDecimal(row["turnoverrm"]);
+                        grossComm = CastAide.AsDecimal(row["grosscommrm"]);
+                        memWinloss = CastAide.AsDecimal(row["winlostrm"]);
+                        memComm = CastAide.AsDecimal(row["commrm"]);
+                        memTotal = memWinloss + memComm;
+                        agentWinloss = CastAide.AsDecimal(row["awinlostrm"]);
+                        agentComm = CastAide.AsDecimal(row["acommrm"]);
+                        agentTotal = agentWinloss + agentComm;
+                        company = CastAide.AsDecimal(row["companyrm"]);
+                    }
+                    else if (baseCurrency == 3) //USD
+                    {
+                        turnover = CastAide.AsDecimal(row["turnoverusd"]);
+                        grossComm = CastAide.AsDecimal(row["grosscommusd"]);
+                        memWinloss = CastAide.AsDecimal(row["winlostusd"]);
+                        memComm = CastAide.AsDecimal(row["commusd"]);
+                        memTotal = memWinloss + memComm;
+                        agentWinloss = CastAide.AsDecimal(row["awinlostusd"]);
+                        agentComm = CastAide.AsDecimal(row["acommusd"]);
+                        agentTotal = agentWinloss + agentComm;
+                        company = CastAide.AsDecimal(row["companyusd"]);
+                    }
+                    #endregion
+
+                    #region sum total & assign template
+                    //SUM
+                    sumTurnover = sumTurnover + turnover;
+                    sumGrossComm = sumGrossComm + grossComm;
+                    sumMemWinloss = sumMemWinloss + memWinloss;
+                    sumMemComm = sumMemComm + memComm;
+                    sumMemTotal = sumMemTotal + memTotal;
+                    sumAgentWinloss = sumAgentWinloss + agentWinloss;
+                    sumAgentComm = sumAgentComm + agentComm;
+                    sumAgentTotal = sumAgentTotal + agentTotal;
+                    sumCompany = sumCompany + company;
+
+
+                    //TemplateHandler.Assign(ref r, "ReportByValue", username);
+                    TemplateHandler.Assign(ref r, "ReportByValue", username);
+                    TemplateHandler.Assign(ref r, "UserLink", "class='lnk' onclick=\"getBL('" + CastAide.AsString(row["custid"]) + "','" + username + "')\"");
+
+                    //assign currency
+                    TemplateHandler.Assign(ref r, "currency", currencyName);
+
+                    TemplateHandler.Assign(ref r, "turnover", FormatHandler.FormatNumber20(turnover));
+                    TemplateHandler.Assign(ref r, "grosscomm", FormatHandler.FormatNumber20(grossComm));
+                    TemplateHandler.Assign(ref r, "memwinloss", FormatHandler.FormatNumber20(memWinloss));
+                    TemplateHandler.Assign(ref r, "memcomm", FormatHandler.FormatNumber20(memComm));
+                    TemplateHandler.Assign(ref r, "memtotal", FormatHandler.FormatNumber20(memTotal));
+                    TemplateHandler.Assign(ref r, "agentwinloss", FormatHandler.FormatNumber20(agentWinloss));
+                    TemplateHandler.Assign(ref r, "agentcomm", FormatHandler.FormatNumber20(agentComm));
+                    TemplateHandler.Assign(ref r, "agenttotal", FormatHandler.FormatNumber20(agentTotal));
+                    TemplateHandler.Assign(ref r, "company", FormatHandler.FormatNumber20(company));
+
+                    html.Append(r);
+                    #endregion
+                }
+                #endregion
+
+                #region sum by base currency
+                TemplateHandler.Assign(ref tplTotal, "rowcol", "1");
+                TemplateHandler.Assign(ref tplTotal, "currency", currencyName);
+                TemplateHandler.Assign(ref tplTotal, "turnover", FormatHandler.FormatNumber20(sumTurnover));
+                TemplateHandler.Assign(ref tplTotal, "grosscomm", FormatHandler.FormatNumber20(sumGrossComm));
+                TemplateHandler.Assign(ref tplTotal, "memwinloss", FormatHandler.FormatNumber20(sumMemWinloss));
+                TemplateHandler.Assign(ref tplTotal, "memcomm", FormatHandler.FormatNumber20(sumMemComm));
+                TemplateHandler.Assign(ref tplTotal, "memtotal", FormatHandler.FormatNumber20(sumMemTotal));
+                TemplateHandler.Assign(ref tplTotal, "agentwinloss", FormatHandler.FormatNumber20(sumAgentWinloss));
+                TemplateHandler.Assign(ref tplTotal, "agentcomm", FormatHandler.FormatNumber20(sumAgentComm));
+                TemplateHandler.Assign(ref tplTotal, "agenttotal", FormatHandler.FormatNumber20(sumAgentTotal));
+                TemplateHandler.Assign(ref tplTotal, "company", FormatHandler.FormatNumber20(sumCompany));
+                html.Append(tplTotal);
+                #endregion
+
+
+                #region assign footer
+                //USD base currency
+                TemplateHandler.Assign(ref tplFooter, "turnovertotalus", FormatHandler.FormatNumber20(sumTurnoverUS));
+                TemplateHandler.Assign(ref tplFooter, "grosscommtotalus", FormatHandler.FormatNumber20(sumGrossCommUS));
+                TemplateHandler.Assign(ref tplFooter, "memwinlosstotalus", FormatHandler.FormatNumber20(sumMemWinlossUS));
+                TemplateHandler.Assign(ref tplFooter, "memcommtotalus", FormatHandler.FormatNumber20(sumMemCommUS));
+                TemplateHandler.Assign(ref tplFooter, "memtotaltotalus", FormatHandler.FormatNumber20(sumMemTotalUS));
+                TemplateHandler.Assign(ref tplFooter, "agentwinlosstotalus", FormatHandler.FormatNumber20(sumAgentWinlossUS));
+                TemplateHandler.Assign(ref tplFooter, "agentcommtotalus", FormatHandler.FormatNumber20(sumAgentCommUS));
+                TemplateHandler.Assign(ref tplFooter, "agenttotaltotalus", FormatHandler.FormatNumber20(sumAgentTotalUS));
+                TemplateHandler.Assign(ref tplFooter, "companytotalus", FormatHandler.FormatNumber20(sumCompanyUS));
+
+                //RM base currency
+                TemplateHandler.Assign(ref tplFooter, "turnovertotalrm", FormatHandler.FormatNumber20(sumTurnoverRM));
+                TemplateHandler.Assign(ref tplFooter, "grosscommtotalrm", FormatHandler.FormatNumber20(sumGrossCommRM));
+                TemplateHandler.Assign(ref tplFooter, "memwinlosstotalrm", FormatHandler.FormatNumber20(sumMemWinlossRM));
+                TemplateHandler.Assign(ref tplFooter, "memcommtotalrm", FormatHandler.FormatNumber20(sumMemCommRM));
+                TemplateHandler.Assign(ref tplFooter, "memtotaltotalrm", FormatHandler.FormatNumber20(sumMemTotalRM));
+                TemplateHandler.Assign(ref tplFooter, "agentwinlosstotalrm", FormatHandler.FormatNumber20(sumAgentWinlossRM));
+                TemplateHandler.Assign(ref tplFooter, "agentcommtotalrm", FormatHandler.FormatNumber20(sumAgentCommRM));
+                TemplateHandler.Assign(ref tplFooter, "agenttotaltotalrm", FormatHandler.FormatNumber20(sumAgentTotalRM));
+                TemplateHandler.Assign(ref tplFooter, "companytotalrm", FormatHandler.FormatNumber20(sumCompanyRM));
+
+                #endregion
+                TemplateHandler.Assign(ref tpl, "content", html.ToString());
+                TemplateHandler.Assign(ref tpl, "footerValue", tplFooter);
+            }
+            else
+            {
+                html.Append(AccCommon.GenNoInformation("11"));
+                TemplateHandler.Assign(ref tpl, "content", html.ToString());
+                TemplateHandler.Assign(ref tpl, "footerValue", string.Empty);
+            }
+            SetCacheReport(string.Format("accReport{0}WinlossDetail.{1}", site, AppSession.Username), tpl, DateTime.Now.AddMinutes(20));
+            return tpl;
+        }
+
+        private string HistoryWinLossReport()
+        {
+            #region private varables            
+            var data = string.Empty;
+            var reportWLDaily = string.Format("accReport{0}WinlossDaily.{1}", site, AppSession.Username);
+            var reportWLMonthly = string.Format("accReport{0}WinlossMonthly.{1}", site, AppSession.Username);
+            var reportWLSport = string.Format("accReport{0}WinlossSport.{1}", site, AppSession.Username);
+            #endregion
+                        
+            if (reportBy == "1")//daily
+                data = GetCachedReport(reportWLDaily);
+            else if (reportBy == "2")//monthly
+                data = GetCachedReport(reportWLMonthly);
+            else if (reportBy == "3")//sport
+                data = GetCachedReport(reportWLSport);
+
+            if (string.IsNullOrEmpty(data))
+            {
+                data = ReportWinLoss();
+                #region
+                //if (reportBy == "1")//daily
+                //    data = GetCachedReport(reportWLDaily);
+                //else if (reportBy == "2")//monthly
+                //    data = GetCachedReport(reportWLMonthly);
+                //else if (reportBy == "3")//sport
+                //    data = GetCachedReport(reportWLSport);    
+                #endregion
+            }
+
+            return data;
+        }
+
+        public override string RenderHTML(Hashtable input)
+        {
+            AssignInputParams(input);
+            string htmlData = string.Empty;
+
+            try
+            {
+                if (reportDetail == 0)
+                {
+                    if (isBack == 0)
+                        htmlData = ReportWinLoss();
+                    else
+                        htmlData = HistoryWinLossReport();
+
+                }
+                else
+                    htmlData = ReportWinLossDetail();
+            }
+            catch (Exception ex)
+            {
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                htmlData = ex.Message;
+            }
+
+            return htmlData;
+        }
+        #endregion
+
+        #region data formart
+        private ArrayList AddCurrency(ArrayList arr, int currencyID)
+        {
+            int count = 0;
+            for (int i = 0; i < arr.Count; i++)
+            {
+                if (CastAide.AsInt32(arr[i]) == currencyID)
+                    break;
+                else
+                    count++;
+            }
+            if (count == arr.Count)
+                arr.Add(currencyID);
+
+            return arr;
+        }
+
+        private string FormatFullDate(string date) //format yyyymmdd to mm/dd/yyyy
+        {
+            if (date.Length == 8)
+            {
+                string year = date.Substring(0, 4);
+                string month = date.Substring(4, 2);
+                string day = date.Substring(6, 2);
+                return month + "/" + day + "/" + year;
+            }
+            else            
+                return date;
+            
+        }
+
+        private string FormatMonthYear(string date) //format yyyymm to mm/yyyy
+        {
+            if (date.Length == 6)
+            {
+                string year = date.Substring(0, 4);
+                string month = date.Substring(4, 2);
+                return month + "/" + year;
+            }
+            else            
+                return date;
+            
+        }
+        #endregion
+
+        #region assign input values
+        private Hashtable AddTotal(Hashtable hash, string key, decimal sum)
+        {
+            if (hash.Contains(key))
+            {
+                decimal sumhistory = CastAide.AsDecimal(hash[key]);
+                hash[key] = sum + sumhistory;
+            }
+            else
+            {
+                hash.Add(key, sum);
+            }
+            return hash;
+        }
+
+        private void AssignInputParams(Hashtable input)
+        {
+            dateOption = CastAide.AsString(input["date"]);
+            sportOption = CastAide.AsString(input["sport"]);
+            fdate = CastAide.AsString(input["fdate"]);
+            tdate = CastAide.AsString(input["tdate"]);
+            currencyOption = CastAide.AsString(input["currency"]);
+            reportBy = CastAide.AsString(input["reportby"]);
+            reportDetail = CastAide.AsInt32(input["reportdetail"]);
+            currencyName = CastAide.AsString(input["currencyname"]);
+            isBack = CastAide.AsInt32(input["isback"], 0);
+            site = CastAide.AsString(input["site"]);
+        }
+        #endregion
+
+        #region get data
+        private DataTable GetCurrency(string site)
+        {
+            DataTable dt = null;
+            try
+            {
+                if (site.ToLower().Equals(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Spondemo").ToLower()))
+                    dt = AccountReport.SelectCurrenciesOfSpondemoForWinLossReport().ResultSet.Tables[0];                    
+                else if (site.ToLower().Equals(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "MS88").ToLower()))
+                    dt = AccountReport.Acc_Rpt_Winloss_M88_SelCurrency().ResultSet.Tables[0];
+                else if (site.ToLower().Equals(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Dela").ToLower()))
+                    dt = AccountReport.SelectCurrenciesOfDelaForWinLossReport().ResultSet.Tables[0];
+            }
+            catch (Exception ex)
+            {
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            }
+            return dt;
+        }
+
+        private DbResult GetWinLossReportBySite(string site, int custId, DateTime fromDate, DateTime toDate, bool showSB, bool showHR,
+            int reportType, int baseCurrency, DateTime balanceUpDay)
+        {
+            DbResult result = null;
+            if(site.ToLower().Equals(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Spondemo").ToLower()))
+                result = AccountReport.GetSpondemoReportWinLoss(custId, fromDate, toDate, showSB, showHR, reportType, baseCurrency, balanceUpDay);                
+            if (site.ToLower().Equals(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "MS88").ToLower()))
+                result = AccountReport.Acc_Rpt_WinLoss_M88(custId, fromDate, toDate, showSB, showHR, reportType, baseCurrency, balanceUpDay);
+            if (site.ToLower().Equals(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Dela").ToLower()))
+                result = AccountReport.GetDelaReportWinLoss(custId, fromDate, toDate, showSB, showHR, reportType, baseCurrency, balanceUpDay);
+            return result;
+        }
+
+        private DbResult GetWinLossReportDetailBySite(string site, int custId, DateTime fromDate, DateTime toDate, bool showSB, bool showHR,
+            int baseCurrency, DateTime balanceUpDay)
+        {
+            DbResult result = null;
+            if (site.ToLower().Equals(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Spondemo").ToLower()))
+                result = AccountReport.GetSpondemoReportWinLossDetail(custId, fromDate, toDate, showSB, showHR, baseCurrency, balanceUpDay);                
+            if (site.ToLower().Equals(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "MS88").ToLower()))
+                result = AccountReport.Acc_Rpt_WinLoss_M88_Detail(custId, fromDate, toDate, showSB, showHR, baseCurrency, balanceUpDay);
+            if (site.ToLower().Equals(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Dela").ToLower()))
+                result = AccountReport.GetDelaReportWinLossDetail(custId, fromDate, toDate, showSB, showHR, baseCurrency, balanceUpDay);
+            return result;
+        }
+        #endregion
+
+        #region Export to excel
+        public override void Export2Excel(Hashtable input)
+        {
+            #region private varables
+            AssignInputParams(input);
+            var data = string.Empty;
+            var reportWLDetail = string.Format("accReport{0}WinlossDetail.{1}", site, AppSession.Username);
+            var reportWLDaily = string.Format("accReport{0}WinlossDaily.{1}", site, AppSession.Username);
+            var reportWLMonthly = string.Format("accReport{0}WinlossMonthly.{1}", site, AppSession.Username);
+            var reportWLSport = string.Format("accReport{0}WinlossSport.{1}", site, AppSession.Username);
+            #endregion
+
+            #region get data from cached
+            if (reportDetail == 1)
+            {
+                data = GetCachedReport(reportWLDetail.Trim());
+                if (string.IsNullOrEmpty(data))                
+                    data = ReportWinLossDetail();               
+            }
+            else
+            {
+                if (reportBy == "1")//daily
+                    data = GetCachedReport(reportWLDaily.Trim());
+                else if (reportBy == "2")//monthly
+                    data = GetCachedReport(reportWLMonthly.Trim());
+                else if (reportBy == "3")//sport
+                    data = GetCachedReport(reportWLSport.Trim());
+
+                if(string.IsNullOrEmpty(data))
+                    data = ReportWinLoss();
+            }
+            #endregion
+
+            #region export to excel
+            StringBuilder content = new StringBuilder();
+            content.Append("<html>");
+            content.Append("<head>");
+            content.Append("<META http-EQUIV='Content-Type' CONTENT='text/html; charset=unicode-utf8'>");
+            content.Append("</head>");            
+            content.Append(data);
+            content.Append("</html>");
+
+            var fileName = "ReportFile";
+            if (input.ContainsKey(FileName))
+                fileName = CastAide.AsString(input[FileName]);
+            if (string.IsNullOrEmpty(fileName)) fileName = "ReportFile";
+
+            HttpContext.Current.Response.ClearContent();
+            HttpContext.Current.Response.ContentType = "application/vnd.ms-excel";
+            HttpContext.Current.Response.AddHeader("content-disposition", string.Format("attachment; filename={0}.xls", fileName));
+            HttpContext.Current.Response.Write(content.ToString());
+            HttpContext.Current.Response.End();
+            #endregion
+        }
+        #endregion
+    }
+}

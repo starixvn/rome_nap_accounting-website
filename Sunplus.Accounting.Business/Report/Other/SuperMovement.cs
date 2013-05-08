@@ -1,0 +1,183 @@
+﻿using System;
+using System.Data;
+using System.Text;
+using System.Web;
+using DNAide.Core;
+using DNAide.Data;
+using DNAide.Web;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using IBCUtils;
+
+using Sunplus.Accounting.Core.Helper;
+
+/// <summary>
+/// Summary description for SuperMovement
+/// </summary>
+public partial class ReportHTML
+{
+    public static string GetSuperMovement(int balanceType)
+    {
+        string tpl = string.Empty;
+        string odd_even = "";
+        DateTime fdate = DateTime.Now.AddDays(-6), tdate = DateTime.Now;
+        tpl = WebUtils.LoadTemplate(@"DirectBalance\BalanceMovement.htm");
+        tpl = TemplateHandler.CopyBlock(tpl, "ReportMain");
+
+        //apply style sheet 
+        //Load CSS for freeze headline
+        string styleSheet = string.Empty;
+        string cellspacing = "1";
+        if (HttpContext.Current.Request.Browser.Browser == "IE")
+        {
+            cellspacing = "0";
+            TemplateHandler.Assign(ref tpl, "{Padding-Right}", "");
+        }
+        else
+        {
+            cellspacing = "1";
+            //this for end of column fixed header for Firefox
+            TemplateHandler.Assign(ref tpl, "{Padding-Right}", "style='padding-right:20px'");
+        }
+        TemplateHandler.Assign(ref tpl, "cellspacing", cellspacing);
+        TemplateHandler.Assign(ref tpl, "StyleSheet", styleSheet);
+
+        //apply language
+        TemplateHandler.Assign(ref tpl, "{BalanceMovement}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "SuperBalanceMovement"));
+        TemplateHandler.Assign(ref tpl, "{OriginalBal}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "OriginalBalance"));
+        TemplateHandler.Assign(ref tpl, "{BaseBal}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "BaseBalance"));
+        TemplateHandler.Assign(ref tpl, "{ExcelExport}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "ExcelExport"));
+        TemplateHandler.Assign(ref tpl, "{Refresh}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "refresh"));
+        TemplateHandler.Assign(ref tpl, "{No}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "No"));
+        TemplateHandler.Assign(ref tpl, "{Agent}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Super"));
+        TemplateHandler.Assign(ref tpl, "{Currency}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Currency"));
+        TemplateHandler.Assign(ref tpl, "{Bal}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Balance"));
+        TemplateHandler.Assign(ref tpl, "{Day1}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Day1") + " (" + tdate.AddDays(-6).ToShortDateString() + ")");
+        TemplateHandler.Assign(ref tpl, "{Day2}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Day2") + " (" + tdate.AddDays(-5).ToShortDateString() + ")");
+        TemplateHandler.Assign(ref tpl, "{Day3}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Day3") + " (" + tdate.AddDays(-4).ToShortDateString() + ")");
+        TemplateHandler.Assign(ref tpl, "{Day4}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Day4") + " (" + tdate.AddDays(-3).ToShortDateString() + ")");
+        TemplateHandler.Assign(ref tpl, "{Day5}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Day5") + " (" + tdate.AddDays(-2).ToShortDateString() + ")");
+        TemplateHandler.Assign(ref tpl, "{Day6}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Day6") + " (" + tdate.AddDays(-1).ToShortDateString() + ")");
+        TemplateHandler.Assign(ref tpl, "{Day7}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Day7") + " (" + tdate.ToShortDateString() + ")");
+        TemplateHandler.Assign(ref tpl, "{pos}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "POS"));
+        TemplateHandler.Assign(ref tpl, "{com}", "Com");
+        TemplateHandler.Assign(ref tpl, "{bet}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Bet"));
+        TemplateHandler.Assign(ref tpl, "{trac}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Trac"));
+        TemplateHandler.Assign(ref tpl, "{GrandTotal}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "GrandToTal"));
+
+        //apply date
+
+        TemplateHandler.Assign(ref tpl, "{from_vl}", fdate.ToShortDateString());
+        TemplateHandler.Assign(ref tpl, "{to_vl}", tdate.ToShortDateString());
+
+        DataTable dt = null;
+
+        //apply radiobutton
+        if (balanceType == 0)
+        {
+            TemplateHandler.Assign(ref tpl, "BalType", "Base");
+            //apply data
+            DbResult rs = AccountReport.Acc_Rpt_BalMovement_SAg(true);
+            if (rs.ResultSet.Tables.Count > 0)
+                dt = rs.ResultSet.Tables[0];
+        }
+        else
+        {
+            TemplateHandler.Assign(ref tpl, "BalType", "Original");
+            //apply data
+            DbResult rs = AccountReport.Acc_Rpt_BalMovement_SAg(false);
+            if (rs.ResultSet.Tables.Count > 0)
+                dt = rs.ResultSet.Tables[0];
+        }
+
+
+        if (dt != null && dt.Rows.Count > 0)
+        {
+            //assign row count for Firefox
+            TemplateHandler.Assign(ref tpl, "RowCnt_vl", dt.Rows.Count);
+
+            int idx = 1;
+            string rowTpl = TemplateHandler.CopyBlock(tpl, "normal-row");
+            string row = string.Empty;
+            var html = new StringBuilder();
+            foreach (DataRow dr in dt.Rows)
+            {
+                odd_even = (odd_even == "") ? "evenrow" : "";
+                row = rowTpl;
+                TemplateHandler.Assign(ref row, "{no_val}", idx.ToString());
+                TemplateHandler.Assign(ref row, "{odd_even}", odd_even);
+
+                TemplateHandler.Assign(ref row, "{agent_val}", CastAide.AsString(dr["username"]));
+                TemplateHandler.Assign(ref row, "{currency_val}", CastAide.AsString(dr["currencyname"]));
+                TemplateHandler.Assign(ref row, "{bal_val}", FormatHandler.FormatNumber20(dr["d0bal"]));
+
+                //assign data from day1 to day7
+                for (int i = 1; i <= 7; i++)
+                {
+                    TemplateHandler.Assign(ref row, "{pos_d" + i + "_val}",
+                                           FormatHandler.FormatNumber20(dr["d" + i + "pos"]));
+                    TemplateHandler.Assign(ref row, "{com_d" + i + "_val}",
+                                           FormatHandler.FormatNumber20(dr["d" + i + "com"]));
+                    TemplateHandler.Assign(ref row, "{bet_d" + i + "_val}",
+                                           FormatHandler.FormatNumber20(dr["d" + i + "bet"]));
+                    TemplateHandler.Assign(ref row, "{trac_d" + i + "_val}",
+                                           FormatHandler.FormatNumber20(dr["d" + i + "tra"]));
+                    TemplateHandler.Assign(ref row, "{bal_d" + i + "_val}",
+                                           FormatHandler.FormatNumber20(dr["d" + i + "bal"]));
+                }
+                html.Append(row);
+
+                idx++;
+            }
+
+            //footer
+            string rowTotalTpl = TemplateHandler.CopyBlock(tpl, "total-row");
+            row = rowTotalTpl;
+
+            TemplateHandler.Assign(ref row, "bal_val", FormatHandler.FormatNumber20(dt.Compute("sum(d0bal)", "")));
+
+            for (int i = 1; i <= 7; i++)
+            {
+                TemplateHandler.Assign(ref row, "{pos_d" + i + "_val}",
+                                       FormatHandler.FormatNumber20(dt.Compute("sum(d" + i + "pos)", "")));
+                TemplateHandler.Assign(ref row, "{com_d" + i + "_val}",
+                                       FormatHandler.FormatNumber20(dt.Compute("sum(d" + i + "com)", "")));
+                TemplateHandler.Assign(ref row, "{bet_d" + i + "_val}",
+                                       FormatHandler.FormatNumber20(dt.Compute("sum(d" + i + "bet)", "")));
+                TemplateHandler.Assign(ref row, "{trac_d" + i + "_val}",
+                                       FormatHandler.FormatNumber20(dt.Compute("sum(d" + i + "tra)", "")));
+                TemplateHandler.Assign(ref row, "{bal_d" + i + "_val}",
+                                       FormatHandler.FormatNumber20(dt.Compute("sum(d" + i + "bal)", "")));
+            }
+
+
+            html.Append(row);
+
+            TemplateHandler.ReplaceBlock(ref tpl, "ReportContent", html.ToString());
+        }
+        else
+        {
+            //assign row count
+            TemplateHandler.Assign(ref tpl, "RowCnt_vl", 0);
+
+            string norow = WebUtils.LoadTemplate("NoInformation.htm");
+            TemplateHandler.Assign(ref norow, "{bgcolor-nodata}", "bgcolor-nodata");
+            TemplateHandler.Assign(ref norow, "{nodata}", "<center>" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata") + "</center>");
+            TemplateHandler.Assign(ref norow, "{tdno}", "41");
+            TemplateHandler.ReplaceBlock(ref tpl, "ReportContent", norow);
+        }
+
+        if (balanceType == 0)
+        {
+            ReportCache.REPORT_SUPER_MOVEMENT_BASE = tpl;
+        }
+        else
+        {
+            ReportCache.REPORT_SUPER_MOVEMENT_ORIGINAL = tpl;
+        }
+
+        return tpl;
+    }
+}

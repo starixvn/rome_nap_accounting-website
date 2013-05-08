@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Fanex.Tarus.LiveCasino.Entities;
+using Fanex.Tarus.LiveCasino.Entities.MoveAccount;
+
+namespace Fanex.Tarus.LiveCasino.Business.MoveAccount
+{
+    public interface IMoverAccountManager
+    {
+        //Result MoverMaster(MoveAccountInfo moveAccountInfo);
+
+        //Result MoverAgent(MoveAccountInfo moveAccountInfo);
+
+        Result Move(MoveAccountInfo moveAccountInfo, bool isMoveAgent);
+
+        Result Rollback(MoveAccountInfo moveAccountInfo, bool isMoveAgent);
+    }
+}

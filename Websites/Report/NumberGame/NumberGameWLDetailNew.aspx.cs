@@ -1,0 +1,47 @@
+﻿using System;
+using DNAide.Core;
+using Sunplus.Accounting.Business.BootStrappers;
+using Sunplus.Accounting.Business.Report;
+using Sunplus.Accounting.Core.Web.Controls;
+using Sunplus.Accounting.DataAccess.Report;
+
+public partial class Report_BettypeWL_NumberGame_NumberGameWLDetailNew : PageBase
+{
+    public string strFromDate = "";
+    protected string ToDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today);
+    protected string MinDay = "";
+    protected string FDay = "";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        var displaydays = 0;
+        var sp = DateTime.Today - ReportUtils.BalanceUp.BalanceUpDay;
+        displaydays = sp.Days;
+        ToDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today);
+        MinDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today.AddDays(-displaydays));
+        FDay = string.Format("{0:MM/dd/yyyy}", DateTime.Today);
+        if(Request["isexport"]!= null && CastAide.AsBoolean(Request["isexport"]))
+            ExportNumberGameWinloss(CastAide.AsInt32(Request["type"]));
+    }
+
+    private void ExportNumberGameWinloss(int type)
+    {
+        var numberGameReport = CommonBootStrapper.Locator.GetInstance<INumberGameReport>();
+        var companies = CastAide.AsString(Request["companies"]);
+        var currencies = CastAide.AsString(Request["currencies"]);
+        var date = CastAide.AsString(Request["date"]);
+        switch (type)
+        {
+            case 1:
+                numberGameReport.ExportToExcelNumberGameWinLossByBettype(companies, currencies, date);
+                break;
+            case 2:
+                numberGameReport.ExportToExcelNumberGameWinLossDetailByBettype(date, CastAide.AsInt32(Request["islive"]),
+                                                                               CastAide.AsInt32(Request["bettype"]),
+                                                                               CastAide.AsString(Request["bettypename"]),
+                                                                               companies, currencies);
+                break;
+                default:
+                break;
+        }
+    }
+}

@@ -1,0 +1,733 @@
+﻿$.extend({
+    URLEncode: function (c) {
+        var o = ''; var x = 0; c = c.toString(); var r = /(^[a-zA-Z0-9_.]*)/;
+        while (x < c.length) {
+            var m = r.exec(c.substr(x));
+            if (m != null && m.length > 1 && m[1] != '') {
+                o += m[1]; x += m[1].length;
+            } else {
+                if (c[x] == ' ') o += '+'; else {
+                    var d = c.charCodeAt(x); var h = d.toString(16);
+                    o += '%' + (h.length < 2 ? '0' : '') + h.toUpperCase();
+                } x++;
+            }
+        } return o;
+    },
+    URLDecode: function (s) {
+        var o = s; var binVal, t; var r = /(%[^%]{2})/;
+        while ((m = r.exec(o)) != null && m.length > 1 && m[1] != '') {
+            b = parseInt(m[1].substr(1), 16);
+            t = String.fromCharCode(b); o = o.replace(m[1], t);
+        } return o;
+    }
+});
+
+$(document).ready(function () {
+    $('#rdoPT').attr('checked', true);
+    $("#txtUsername").val($.URLDecode(gup("username")));    
+    Custom.init();
+    ViewPT.getSporttype();
+    $('#btnSubmit').attr('disabled', true);
+});
+
+var ViewPT = {
+    data: null,
+    TplCustInfo: '<table>\
+                    <tr>\
+                        <td>CUSTOMER</td>\
+                        <td><b>${Customer.UserName}</b>&nbsp;(${Customer.CustId})</td>\
+                    </tr>\
+                    {{if (Upline != null)}}\
+                        {{each(i, upline) Upline}}\
+                            <!--upline-->\
+                            <tr>\
+                                <td style="text-transform:uppercase">${RoleName}</td>\
+                                <td>${UserName}&nbsp;(${CustId})</td>\
+                            </tr>\
+                            <!--/upline-->\
+                        {{/each}}\
+                    {{/if}}\
+                </table>',
+    TplHrIBCAutoPt: '{{if (IbcPtForRacebook != null && IbcPtForRacebook.length > 0)}}\
+                    <table class="layout_table ViewPTTable c">\
+                    <tr class="ViewPTHeader b">\
+                        <th width="70"></th>\
+                        {{each(i, tote) IbcPtForRacebook}}\
+                              <th width="80">${ToteName}</th>\
+                        {{/each}}\
+                    </tr>\
+                  <!--r4-->\
+                  <tr class="trbgov" >\
+                    <td class="ViewPTHeader l">IBC Auto PT</td>\
+                    {{each(i, tote) IbcPtForRacebook}}\
+                        <td>${IbcAutoPt}</td>\
+                    {{/each}}\
+                  </tr>\
+                </table>\
+                {{/if}}',
+    TplHrActualIBCPtOnMember: '{{if (IbcPtForRacebook != null && IbcPtForRacebook.length > 0 && IbcPtForRacebook[0].ActualIbcPtOnMember != null)}}\
+                                <font color="#0000FF">Actual IBC PT on Member:</font>\
+                                <table class="layout_table ViewPTTable c" border="1">\
+                                    <tr class="ViewPTHeader">\
+                                        <th width="70" colspan="2" style="width: 70px"></th>\
+                                        {{each(i, tote) IbcPtForRacebook}}\
+                                            <th width="80">${ToteName}</th>\
+                                        {{/each}}\
+                                   </tr>\
+                                   <!--Win-->\
+                                   {{if (IbcPtForRacebook[0].ActualIbcPtOnMember.Win != null)}}\
+                                       <tr class="trbgov" >\
+                                            <td class="ViewPTHeader l" colspan="2">Win</td>\
+                                            {{each(i, actualIbcPt) IbcPtForRacebook}}\
+                                                <td>${ActualIbcPtOnMember.Win}</td>\
+                                            {{/each}}\
+                                        </tr>\
+                                    {{/if}}\
+                                    <!--/Win-->\
+                                    <!--Place-->\
+                                    {{if (IbcPtForRacebook[0].ActualIbcPtOnMember.Place != null)}}\
+                                       <tr class="trbgov" >\
+                                            <td class="ViewPTHeader l" colspan="2">Place</td>\
+                                            {{each(i, actualIbcPt) IbcPtForRacebook}}\
+                                                <td>${ActualIbcPtOnMember.Place}</td>\
+                                            {{/each}}\
+                                        </tr>\
+                                    {{/if}}\
+                                    <!--/Place-->\
+                                    {{if (IbcPtForRacebook[0].ActualIbcPtOnMember.Win != null && IbcPtForRacebook[0].ActualIbcPtOnMember.Place != null)}}\
+                                        <!--EW-->\
+                                        <tr class="trbgov" >\
+                                            <td class="ViewPTHeader l" rowspan="2">E/W</td>\
+                                            <td class="ViewPTHeader l">Win</td>\
+                                            {{each(i, actualIbcPt) IbcPtForRacebook}}\
+                                                <td>${ActualIbcPtOnMember.EWin}</td>\
+                                            {{/each}}\
+                                        </tr>\
+                                        <tr class="trbgov" >\
+                                            <td class="ViewPTHeader l">Place</td>\
+                                            {{each(i, actualIbcPt) IbcPtForRacebook}}\
+                                                <td>${ActualIbcPtOnMember.EPlace}</td>\
+                                            {{/each}}\
+                                        </tr>\
+                                        <!--/EW-->\
+                                    {{/if}}\
+                                </table>\
+                                <br/>\
+                            {{/if}}',
+    TplPtInfo: '{{each(i, pt) PotionTakingDetail}}\
+                    <div style="color:#0000FF; padding: 6px 0px;">${SportName}&nbsp;(${TypeName})&nbsp;&nbsp;&nbsp;&nbsp;[${SportType}-${Bettype}]</div>\
+                    <table class="layout_table ViewPTTable c">\
+	                    <tr class="ViewPTHeader b">\
+		                    <th width="70"><font color="#FF0000">${LiveGame}</font></th>\
+		                    <th width="40">s</th>\
+		                    <th width="40">m</th>\
+		                    <th width="40">a</th>\
+		                    <th width="40">us</th>\
+		                    <th width="40">is</th>\
+		                    <!--AutoMPT-->\
+                            {{if (EnableAutoMaster)}}\
+		                        <th width="40">um</th>\
+		                        <th width="40">im</th>\
+                            {{/if}}\
+		                    <!--/AutoMPT-->\
+		                    <th width="40">n</th>\
+		                    <th width="40">l</th>\
+	                    </tr>\
+	                    <!--r4-->\
+                        {{if (Super != null)}}\
+	                    <tr class="trbgov" >\
+		                    <td class="ViewPTHeader l">Super [4]</td>\
+		                    <td>${Super.Super}</td>\
+		                    <td>${Super.Master}</td>\
+		                    <td>${Super.Agent}</td>\
+		                    <td class="disable"></td>\
+		                    <td class="disable"></td>\
+		                    <!--AutoMPT-->\
+                            {{if (EnableAutoMaster)}}\
+		                        <td class="disable"></td>\
+		                        <td class="disable"></td>\
+                            {{/if}}\
+		                    <!--/AutoMPT-->\
+		                    <td>${Super.MinPt}</td>\
+		                    <td>${Super.MaxPt}</td>\
+	                    </tr>\
+                        {{/if}}\
+	                    <!--/r4-->\
+	                    <!--r3-->\
+                        {{if (Master != null)}}\
+	                    <tr  class="trbgov" >\
+		                    <td class="ViewPTHeader l">Master [3]</td>\
+		                    <td>${Master.Super}</td>\
+		                    <td>${Master.Master}</td>\
+		                    <td class="disable"></td>\
+		                    <td>${Master.SuperAuto}</td>\
+		                    <td><input type="checkbox" disabled="disabled" ${Master.SuperIsAuto} /></td>\
+		                    <!--AutoMPT-->\
+                            {{if (EnableAutoMaster)}}\
+		                        <td class="${DisableFlagCss}"></td>\
+		                        <td class="${DisableFlagCss}"></td>\
+                            {{/if}}\
+		                    <!--/AutoMPT-->\
+		                    <td>${Master.MinPt}</td>\
+		                    <td>${Master.MaxPt}</td>\
+	                    </tr>\
+                        {{/if}}\
+	                    <!--/r3-->\
+	                    <!--r2-->\
+                        {{if (Agent != null)}}\
+	                    <tr class="trbgov" >\
+		                    <td class="ViewPTHeader l">Agent [2]</td>\
+		                    <td class="disable"></td>\
+		                    <td>${Agent.Master}</td>\
+		                    <td>${Agent.Agent}</td>\
+		                    <!--DisableAutoMPT-->\
+                            {{if (!EnableAutoMaster)}}\
+		                        <td>${Agent.SuperAuto}</td>\
+		                        <td><input type="checkbox" disabled="disabled" ${Agent.SuperIsAuto}/></td>\
+		                    <!--/DisableAutoMPT-->\
+		                    <!--AutoMPT-->\
+                            {{else}}\
+		                        <td class="disable"></td>\
+		                        <td class="disable"></td>\
+		                        <td class="${DisableAutoCss}">${Agent.MasterAuto}</td>\
+		                        <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Agent.MasterIsAuto} /></td>\
+                            {{/if}}\
+		                    <!--/AutoMPT-->\
+		                    <td>${Agent.MinPt}</td>\
+		                    <td>${Agent.MaxPt}</td>\
+	                    </tr>\
+                        {{/if}}\
+	                    <!--/r2-->\
+	                    <!--r1-->\
+                        {{if (Member != null)}}\
+	                    <tr class="trbgov" >\
+		                    <td class="ViewPTHeader l">Member [1]</td>\
+		                    <td>${Member.Super}</td>\
+		                    <td>${Member.Master}</td>\
+		                    <td>${Member.Agent}</td>\
+		                    <td>${Member.SuperAuto}</td>\
+		                    <td><input type="checkbox" disabled="disabled" ${Member.SuperIsAuto} /></td>\
+		                    <!--AutoMPT-->\
+                            {{if (EnableAutoMaster)}}\
+		                        <td class="${DisableAutoCss}">${Member.MasterAuto}</td>\
+		                        <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Member.MasterIsAuto} /></td>\
+                            {{/if}}\
+		                    <!--/AutoMPT-->\
+		                    <td class="disable"></td>\
+		                    <td class="disable"></td>\
+	                    </tr>\
+                        {{/if}}\
+	                    <!--/r1-->\
+                    </table>\
+                    <br />\
+                    <!--/tbl-->\
+                {{/each}}',
+    TplCasinoPt: '{{each(i, currentPt) PotionTakingDetail}}\
+                    <div style="padding-left: 20px;">\
+                    <!--tbl-->\
+                    {{if (SportName=="Casino")}}\
+                    <font color="#0000FF">${SportName}&nbsp;(${SportType})&nbsp;&nbsp;&nbsp;&nbsp;[${TypeName}]</font>\
+                    {{else}}\
+                    <font color="#0000FF">${SportName}&nbsp;</font>\
+                    {{/if}}\
+                    <table class="layout_table ViewPTTable c">\
+                        <tr class="ViewPTHeader b">\
+                            <th width="70"><font color="#FF0000"></font></th>\
+                            <th width="40">s</th>\
+                            <th width="40">m</th>\
+                            <th width="40">a</th>\
+                            <th width="40">MinPT</th>\
+                            <th width="40">isAutoPT</th>\
+                            <th width="40">AutoPT</th>\
+                            <th width="40">Comm</th>\
+                        </tr>\
+                        <!--r4-->\
+                        {{if (Super != null)}}\
+                            <tr class="trbgov">\
+                                <td class="ViewPTHeader l">Super [4]</td>\
+                                <td>${Super.Super}</td>\
+                                <td>${Super.Master}</td>\
+                                <td>${Super.Agent}</td>\
+                                <td>${Super.MinPt}</td>\
+                                <td><input type="checkbox" disabled="disabled" ${Super.SuperIsAuto}/></td>\
+                                <td>${Super.SuperAuto}</td>\
+                                <td>${Super.Com}</td>\
+                            </tr>\
+                        {{/if}}\
+                        <!--/r4-->\
+                        <!--r3-->\
+                        {{if (Master != null)}}\
+                            <tr class="trbgov">\
+                                <td class="ViewPTHeader l">Master [3]</td>\
+                                <td>${Master.Super}</td>\
+                                <td>${Master.Master}</td>\
+                                <td></td>\
+                                <td>${Master.MinPt}</td>\
+                                <td><input type="checkbox" disabled="disabled" ${Master.SuperIsAuto}/></td>\
+                                <td>${Master.SuperAuto}</td>\
+                                <td>${Master.Com}</td>\
+                            </tr>\
+                        {{/if}}\
+                        <!--/r3-->\
+                        <!--r2-->\
+                        {{if (Agent != null)}}\
+                            <tr class="trbgov">\
+                                <td class="ViewPTHeader b l">Agent [2]</td>\
+                                <td></td>\
+                                <td>${Agent.Master}</td>\
+                                <td>${Agent.Agent}</td>\
+                                <td>${Agent.MinPt}</td>\
+                                <td><input type="checkbox" disabled="disabled" ${Agent.SuperIsAuto}/></td>\
+                                <td>${Agent.SuperAuto}</td>\
+                                <td>${Agent.Com}</td>\
+                            </tr>\
+                        {{/if}}\
+                        <!--/r2-->\
+                        <!--r1-->\
+                        {{if (Member != null)}}\
+                            <tr class="trbgov">\
+                                <td class="ViewPTHeader l">Member [1]</td>\
+                                <td>${Member.Super}</td>\
+                                <td>${Member.Master}</td>\
+                                <td>${Member.Agent}</td>\
+                                <td>${Member.MinPt}</td>\
+                                <td><input type="checkbox" disabled="disabled" ${Member.SuperIsAuto}/></td>\
+                                <td>${Member.SuperAuto}</td>\
+                                <td>${Member.Com}</td>\
+                            </tr>\
+                        {{/if}}\
+                        <!--/r1-->\
+                    </table>\
+                    <br />\
+                    <!--/tbl-->\
+                    </div>\
+                {{/each}}',
+    TplLiveCsPtInfo: '{{each(i, pt) PotionTakingDetail}}\
+                    <div style="color:#0000FF; padding: 6px 0px;">${SportName}&nbsp;</div>\
+                    <table class="layout_table ViewPTTable c">\
+	                    <tr class="ViewPTHeader b">\
+		                    <th width="70"><font color="#FF0000">${LiveGame}</font></th>\
+		                    <th width="40">s</th>\
+		                    <th width="40">m</th>\
+		                    <th width="40">a</th>\
+		                    <th width="40">us</th>\
+		                    <th width="40">is</th>\
+		                    <!--AutoMPT-->\
+                            {{if (EnableAutoMaster)}}\
+		                        <th width="40">um</th>\
+		                        <th width="40">im</th>\
+                            {{/if}}\
+		                    <!--/AutoMPT-->\
+		                    <th width="40">n</th>\
+		                    <th width="40">comm</th>\
+	                    </tr>\
+	                    <!--r4-->\
+                        {{if (Super != null)}}\
+	                    <tr class="trbgov" >\
+		                    <td class="ViewPTHeader l">Super [4]</td>\
+		                    <td>${Super.Super}</td>\
+		                    <td class="disable"></td>\
+		                    <td class="disable"></td>\
+		                    <td class="disable"></td>\
+		                    <td class="disable"></td>\
+		                    <!--AutoMPT-->\
+                            {{if (EnableAutoMaster)}}\
+		                        <td class="disable"></td>\
+		                        <td class="disable"></td>\
+                            {{/if}}\
+		                    <!--/AutoMPT-->\
+		                    <td>${Super.MinPt}</td>\
+		                    <td>${Super.Com}</td>\
+	                    </tr>\
+                        {{/if}}\
+	                    <!--/r4-->\
+	                    <!--r3-->\
+                        {{if (Master != null)}}\
+	                    <tr  class="trbgov" >\
+		                    <td class="ViewPTHeader l">Master [3]</td>\
+		                    <td>${Master.Super}</td>\
+		                    <td>${Master.Master}</td>\
+		                    <td class="disable"></td>\
+		                    <td>${Master.SuperAuto}</td>\
+		                    <td><input type="checkbox" disabled="disabled" ${Master.SuperIsAuto} /></td>\
+		                    <!--AutoMPT-->\
+                            {{if (EnableAutoMaster)}}\
+		                        <td class="${DisableFlagCss}"></td>\
+		                        <td class="${DisableFlagCss}"></td>\
+                            {{/if}}\
+		                    <!--/AutoMPT-->\
+		                    <td>${Master.MinPt}</td>\
+		                    <td>${Master.Com}</td>\
+	                    </tr>\
+                        {{/if}}\
+	                    <!--/r3-->\
+	                    <!--r2-->\
+                        {{if (Agent != null)}}\
+	                    <tr class="trbgov" >\
+		                    <td class="ViewPTHeader l">Agent [2]</td>\
+		                    <td class="disable"></td>\
+		                    <td>${Agent.Master}</td>\
+		                    <td>${Agent.Agent}</td>\
+		                    <!--DisableAutoMPT-->\
+                            {{if (!EnableAutoMaster)}}\
+		                        <td>${Agent.SuperAuto}</td>\
+		                        <td><input type="checkbox" disabled="disabled" ${Agent.SuperIsAuto}/></td>\
+		                    <!--/DisableAutoMPT-->\
+		                    <!--AutoMPT-->\
+                            {{else}}\
+		                        <td class="disable"></td>\
+		                        <td class="disable"></td>\
+		                        <td class="${DisableAutoCss}">${Agent.MasterAuto}</td>\
+		                        <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Agent.MasterIsAuto} /></td>\
+                            {{/if}}\
+		                    <!--/AutoMPT-->\
+		                    <td>${Agent.MinPt}</td>\
+		                    <td>${Agent.Com}</td>\
+	                    </tr>\
+                        {{/if}}\
+	                    <!--/r2-->\
+	                    <!--r1-->\
+                        {{if (Member != null)}}\
+	                    <tr class="trbgov" >\
+		                    <td class="ViewPTHeader l">Member [1]</td>\
+		                    <td>${Member.Super}</td>\
+		                    <td>${Member.Master}</td>\
+		                    <td>${Member.Agent}</td>\
+		                    <td>${Member.SuperAuto}</td>\
+		                    <td><input type="checkbox" disabled="disabled" ${Member.SuperIsAuto} /></td>\
+		                    <!--AutoMPT-->\
+                            {{if (EnableAutoMaster)}}\
+		                        <td class="${DisableAutoCss}">${Member.MasterAuto}</td>\
+		                        <td class="${DisableAutoCss}"><input type="checkbox" disabled="disabled" ${Member.MasterIsAuto} /></td>\
+                            {{/if}}\
+		                    <!--/AutoMPT-->\
+		                    <td class="disable"></td>\
+		                    <td>${Member.Com}</td>\
+	                    </tr>\
+                        {{/if}}\
+	                    <!--/r1-->\
+                    </table>\
+                    <br />\
+                    <!--/tbl-->\
+                {{/each}}',
+    TplPt: '<div style="padding-left: 20px;">\
+            {{tmpl($data.CustomerInfo) ViewPT.TplCustInfo}}\
+            <div style="padding-left: 20px;">\
+            {{if ($data.IBCPt != null)}}\
+                <!--IBC_PT_HR-->\
+                {{tmpl($data.IBCPt) ViewPT.TplHrIBCAutoPt}}\
+                <br/>\
+                <!--Member_PT_HR-->\
+                {{tmpl($data.IBCPt) ViewPT.TplHrActualIBCPtOnMember}}\
+                <!--/Member_PT_HR-->\
+                <!--/IBC_PT_HR-->\
+                <!--tbl-->\
+            {{/if}}\
+            {{if ($data.PotionTakingDetail != null)}}\
+                {{if ($data.IsCasino)}}\
+                    {{tmpl($data) ViewPT.TplCasinoPt}}\
+                {{else}}\
+                    {{if ($data.IsLiveCasino)}}\
+                        {{tmpl($data) ViewPT.TplLiveCsPtInfo}}\
+                    {{else}}\
+                        {{tmpl($data) ViewPT.TplPtInfo}}\
+                    {{/if}}\
+                {{/if}}\
+            {{/if}}\
+            </div>\
+        </div>',
+    TplCom: '<div style="padding-left: 20px;">\
+            {{tmpl($data.CustomerInfo) ViewPT.TplCustInfo}}\
+            {{if ($data.Comm != null && $data.Comm.length > 0)}}\
+                <table class="layout_table ViewPTTable c" style="width: 900px;">\
+                    <tr class="ViewPTHeader b">\
+                        <td rowspan="2" width="60">&nbsp;</td>\
+                        <td rowspan="2">Group A</td>\
+                        <td rowspan="2">Group B</td>\
+                        <td rowspan="2">Group C</td>\
+                        <td rowspan="2">Group D</td>\
+                        <td rowspan="2">Other</td>\
+                        <!--1X2-->\
+                            <td rowspan="2">1x2</td>\
+                        <!--/1X2-->\
+                        <!--racing-->\
+                        {{if ($data.Comm[0].HorseRacing != null && $data.Comm[0].HorseRacing.AllowViewTotes != null)}}\
+                            <td colspan="${$data.Comm[0].HorseRacing.AllowViewTotes.length}">Horse Racing</td>\
+                        {{/if}}\
+                        <!--/racing-->\
+                        <!--greyhound-->\
+                        {{if ($data.Comm[0].Greyhound != null && $data.Comm[0].Greyhound.AllowViewTotes != null)}}\
+                            <td colspan="${$data.Comm[0].Greyhound.AllowViewTotes.length}">Greyhound</td>\
+                        {{/if}}\
+                        <!--/greyhound-->\
+                        <!--harness-->\
+                        {{if ($data.Comm[0].Harness != null && $data.Comm[0].Harness.AllowViewTotes != null)}}\
+                            <td colspan="${$data.Comm[0].Harness.AllowViewTotes.length}">Harness</td>\
+                        {{/if}}\
+                        <!--/harness-->\
+                        <!--P2P-->\
+                        {{if ($data.Comm[0].P2PGameComm.Status && $data.Comm[0].P2PPrivateGameComm.Status)}}\
+                            <td colspan="2">P2P Comm</td>\
+                         {{/if}}\
+                        <!--/P2P-->\
+                        <!--numbergame-->\
+                        {{if ($data.Comm[0].GameComm != null)}}\
+                            <td rowspan="2">Number Game Comm</td>\
+                        {{/if}}\
+                        <!--/numbergame-->\
+                    </tr>\
+                    <tr class="ViewPTHeader b">\
+                        {{if ($data.Comm[0].HorseRacing != null  && $data.Comm[0].HorseRacing.AllowViewTotes != null)}}\
+                            {{each(ihr, hr) $data.Comm[0].HorseRacing.AllowViewTotes}}\
+                                <td>${Name}</td>\
+                            {{/each}}\
+                        {{/if}}\
+                        {{if ($data.Comm[0].Greyhound != null  && $data.Comm[0].Greyhound.AllowViewTotes != null)}}\
+                            {{each(ihr, hr) $data.Comm[0].Greyhound.AllowViewTotes}}\
+                                <td>${Name}</td>\
+                            {{/each}}\
+                        {{/if}}\
+                        {{if ($data.Comm[0].Harness != null  && $data.Comm[0].Harness.AllowViewTotes != null)}}\
+                            {{each(ihr, hr) $data.Comm[0].Harness.AllowViewTotes}}\
+                                <td>${Name}</td>\
+                            {{/each}}\
+                        {{/if}}\
+                        {{if ($data.Comm[0].P2PGameComm.Status && $data.Comm[0].P2PPrivateGameComm.Status)}}\
+                           <td>${$data.Comm[0].P2PGameComm.Name}</td>\
+                           <td>${$data.Comm[0].P2PPrivateGameComm.Name}</td>\
+                        {{/if}}\
+                    </tr>\
+                    <!--row-->\
+                    {{each(i, current) $data.Comm}}\
+		                <tr class="trbgov">\
+			                <td class="tdtitle b">${RoleName}</td>\
+			                <td>${GroupA.Comm}</td>\
+			                <td>${GroupB.Comm}</td>\
+			                <td>${GroupC.Comm}</td>\
+			                <td>${GroupD.Comm}</td>\
+			                <td>${Other.Comm}</td>\
+			                <!--1X2-->\
+			                {{if (OneXTwo != null && OneXTwo.Status)}}\
+				                <td>${OneXTwo.Comm}</td>\
+			                {{/if}}\
+			                <!--/1X2-->\
+                            {{if (HorseRacing != null)}}\
+                                {{each(ihr, hr) HorseRacing.AllowViewTotes}}\
+                                    <td>${Comm}</td>\
+                                {{/each}}\
+                            {{/if}}\
+                            {{if (Greyhound != null)}}\
+                                {{each(ihr, hr) Greyhound.AllowViewTotes}}\
+                                    <td>${Comm}</td>\
+                                {{/each}}\
+                            {{/if}}\
+                            {{if (Harness != null)}}\
+                                {{each(ihr, hr) Harness.AllowViewTotes}}\
+                                    <td>${Comm}</td>\
+                                {{/each}}\
+                            {{/if}}\
+			                <!--P2P-->\
+                            {{if (P2PGameComm.Status && P2PPrivateGameComm.Status)}}\
+			                <td>${P2PGameComm.Comm}</td>\
+                            <td>${P2PPrivateGameComm.Comm}</td>\
+                            {{/if}}\
+			                <!--/P2P-->\
+			                <!--numbergame-->\
+			                {{if (GameComm != null && GameComm.Status)}}\
+				                <td>${GameComm.Comm}</td>\
+			                {{/if}}\
+			                <!--/numbergame-->\
+		                </tr>\
+	                {{/each}}\
+	                <!--/row-->\
+                </table>\
+            {{/if}}\
+            </div>',
+    getSporttype: function () {
+        var p = {
+            userName: $('#txtUsername').val()
+        };
+        $.ajax({
+            type: "POST",
+            url: "../../../Services/WCF/PT/ViewPT/ViewPTService.svc/GetPtSportType",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(p),
+            success: function (rs) {
+                if (rs != null) {
+                    ViewPT.data = rs.SportsList;
+                    ViewPT.bindSportType(rs);
+                    if ($('#txtUsername').val() != '')
+                        ViewPT.getPt();
+                    $("#btnSubmit").removeAttr("disabled", false);
+                }
+            }
+
+        });
+    },
+    getBettype: function (ind) {
+        var sport = ViewPT.getCurrentSportIndex(ind);
+        var betTypes = sport.Bettype.BettypeList;
+
+        var bettypeSelect = $('#ddlBettype');
+        var options = bettypeSelect.attr('options');
+        $('option', bettypeSelect).remove();
+
+        if (betTypes != null) {
+            $.each(betTypes, function (ind, val) {
+                options[options.length] = new Option(val.BettypeName, val.BettypeId);
+            });
+        }
+
+        if (parseInt(sport.SportId) != 251 && parseInt(sport.SportId) != 252)
+            options[options.length] = new Option("..:: ALL ::..", 0);
+    },
+    bindSportType: function (rs) {
+        var sports = '';
+        $.each(rs.SportsList, function (i, n) {
+            if (n.Children != null) {
+                sports += '<optgroup label="' + n.SportName + '">';
+                $.each(n.Children, function (iC, nC) {
+                    sports += '<option value="' + (i + '_' + iC) + '">' + nC.SportName + '</option>';
+                });
+                sports += '</optgroup>';
+            }
+            else {
+                sports += '<option value="' + i + '">' + n.SportName + '</option>';
+            }
+            //sports += '<option value="' + i + '">' + n.SportName + '</option>';
+        });
+
+        $("#ddlSporttype").append($(sports)).bind("change", function () {
+            ViewPT.getBettype($(this).val());
+        });
+
+        this.getBettype('0');
+    },
+    getPt: function () {
+        $("#err").html("");
+        $("#sContent").html("");
+
+        var sportIndex = $("#ddlSporttype").val();
+        var betTypeId = $("#ddlBettype").val();
+        var userName = $("#txtUsername").val();
+        var isLive = (($('#chkLive').attr("checked")) ? '1' : '0');
+        var sport = ViewPT.getCurrentSportIndex(sportIndex);
+        var sportId = sport == undefined ? 0 : sport.SportId;
+
+        if (userName == "") {
+            showAlertMessage("err", "Please input username!", 1);
+            return;
+        }
+        try { parent.BlockUI(); } catch (e) { }
+        //jQuery.blockUI();
+        var params = '{"userName":"' + userName + '","sportId":"' + sportId + '","bettypeId":"' + betTypeId + '", "isLive": "' + isLive + '"}';
+        $.ajax({
+            type: "POST",
+            url: "../../../Services/WCF/PT/ViewPT/ViewPTService.svc/ViewPositionTaking",
+            data: params,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (resp) {
+                if (resp != null) {
+                    if (resp.ErrorMessage != null && resp.ErrorMessage.length > 0) {
+                        showAlertMessage("err", resp.ErrorMessage, 1);
+                        try { parent.jQuery.unblockUI(); } catch (e) { }
+                        return;
+                    }
+                    $.tmpl(ViewPT.TplPt, resp).appendTo('#sContent');
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                }
+                else {
+
+                    showAlertMessage("err", "There is no information available.", 1);
+
+                }
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            },
+            error: function () { try { parent.jQuery.unblockUI(); } catch (e) { } }
+        });
+    },
+    getCurrentSportIndex: function (indexValue) {
+        var indexArr = indexValue.split('_');
+        var sport = null;
+        if (indexArr.length > 1) {
+            sport = this.data[indexArr[0]].Children[indexArr[1]];
+        } else {
+            sport = this.data[indexValue];
+        }
+        return sport;
+    },
+    viewComm: function () {
+
+        $("#err").html("");
+        $("#sContent").html("");
+
+        var userName = $("#txtUsername").val();
+        var params = '{"userName":"' + userName + '"}';
+        if (userName == "") {
+            showAlertMessage("err", "Please input username!", 1);
+            return;
+        }
+
+        try { parent.BlockUI(); } catch (e) { }
+        $.ajax({
+            type: "POST",
+            url: "../../../Services/WCF/PT/ViewPT/ViewPTService.svc/ViewCommission",
+            data: params,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (resp) {
+                if (resp != null) {
+                    if (resp.ErrorMessage != null && resp.ErrorMessage.length > 0) {
+                        showAlertMessage("err", resp.ErrorMessage, 1);
+                        try { parent.jQuery.unblockUI(); } catch (e) { }
+                        return;
+                    }
+                    $.tmpl(ViewPT.TplCom, resp).appendTo('#sContent');
+                }
+                else {
+                    showAlertMessage("err", "There is no information available.", 1);
+                }
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            },
+            error: function () { try { parent.jQuery.unblockUI(); } catch (e) { } }
+        });
+    },
+    viewData: function () {
+        var rdPtChecked = $('#rdoPT') == undefined ? 1 : ($('#rdoPT').attr('checked'));
+
+        if (rdPtChecked) {
+            ViewPT.getPt();
+        }
+        else {
+            ViewPT.viewComm();
+        }
+    }
+};
+
+function KP(e) {
+    e = (e) ? e : window.event;
+    var key = (e.keyCode) ? e.keyCode : e.which;
+    if (key == 13) ViewPT.viewData();
+    return;
+}
+
+function gup(name) {
+    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+    var regexS = "[\\?&]" + name + "=([^&#]*)";
+    var regex = new RegExp(regexS);
+    var results = regex.exec(window.location.href);
+    if (results == null)
+        return "";
+    else
+        return results[1];
+}
+
+function ChangeType(rdo) {
+    if (rdo.id == 'rdoPT' && $('#tblPT').css('display', '')) return;
+    if (rdo.id == 'rdoComm' && $('#tblPT').css('display', 'none')) return;
+    $('#tblPT').css('display', $('#rdoPT').css('display') = 'none' ? '' : 'none');
+    $('#sContent').html('');
+}
+

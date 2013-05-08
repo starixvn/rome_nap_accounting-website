@@ -1,0 +1,432 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Web;
+using System.Collections.Specialized;
+using DNAide.Core;
+using DNAide.Data;
+using IBCUtils;
+using Sunplus.Accounting.Business.BootStrappers;
+using Sunplus.Accounting.Business.CacheManager;
+using Sunplus.Accounting.Entities.Casino;
+using Sunplus.Accounting.Entities.Customer;
+using System.Data;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.DataAccess;
+using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
+using Sunplus.Core.CachingLib;
+using System.Linq;
+using Sunplus.Accounting.DataAccess.AdoNet;
+namespace Sunplus.Accounting.Business.Customer
+{
+    /// <summary>
+    /// Summary description for CustomerService
+    /// </summary>
+    public class CustomerService
+    {
+        private ICustomerDAO _customerDAO;
+        
+        /// <summary>
+        /// Cache key
+        /// </summary>
+        /// 
+        private const string ListSystemUsernameKey = "ListSystemUsername";
+        private const string ListSystemUserIdKey = "ListSystemUserid";
+        private const string ListSystemCurrencyIdKey = "ListSystemCurrencyId";
+        private static readonly ICache Cache = CacheService.CreateInstance(CacheType.ShareCached);
+        private static Dictionary<string, StringCollection> _listSystemUser;
+        private static Dictionary<string, StringCollection> _listSystemCurrency;
+        public CustomerService(ICustomerDAO customerDao)
+        {
+            //
+            // TODO: Add constructor logic here
+            //
+            _customerDAO = customerDao;
+        }
+
+        public CustomerService()
+        {
+            _customerDAO = CommonBootStrapper.Locator.GetInstance<ICustomerDAO>();
+        }
+
+        /// <summary>
+        /// Get all customer info by username
+        /// </summary>
+        /// <param name="userName">non-empty username</param>
+        /// <param name="accountingSystem"></param>
+        /// <returns>DbResult</returns>
+        public DbResult GetCustomerInfo(string userName, string accountingSystem)
+        {
+            if (string.IsNullOrEmpty(userName))
+                return null;
+
+            if (IsBelongSystem(userName, accountingSystem))
+            {
+                return _customerDAO.GetAllCustInfo(userName);
+            }
+
+            return null;
+        }
+
+  
+        /// <summary>
+        /// Check currency of a user whether match the site currency
+        /// the result will be contain in session, 
+        /// b/c change currency function seldom happens,
+        /// and DBA also do this
+        /// Lewin
+        /// </summary>
+        /// <param name="custId"></param>
+        /// <param name="accountingSystem"></param>
+        /// <returns>true if currency of user equal currency param input</returns>
+        public bool IsValidCustomer(int custId, string accountingSystem)
+        {
+            bool isValid = false;
+            if (custId > 0)
+            {
+                var hash = new Hashtable
+                               {
+                                   {"custid", custId},
+                                   {"system",accountingSystem.ToString().ToUpper()}
+                               };
+
+                //anti pattern, need refactor
+                using (IDataReader rs = DbHelper.ExecuteReader("Acc_CustomerSelIsCustMatchCurrency", hash, DBType.ARCHIVE))
+                {
+                    if (rs != null
+                        && rs.Read())
+                    {
+                        isValid = Convert.ToInt32(rs[0]) > 0;
+
+                        rs.Close();
+                        rs.Dispose();
+                    }
+                }
+            }
+
+
+            return isValid;
+        }
+
+        /// <summary>
+        /// If customer currency is not site currency.
+        /// Redirect user to "not found page"
+        /// </summary>
+        /// <param name="custId"></param>
+        public void CheckCustomerAccess(int custId)
+        {
+            if (!IsValidCustomer(custId, AppSession.SYSTEM))
+                HttpContext.Current.Response.Redirect(Constants.Page.NotFound);
+        }
+
+        /// <summary>
+        /// Update customer info
+        /// </summary>
+        /// <param name="hash"></param>
+        /// <returns>IbcError</returns>
+        public IbcError UpdateInfo(Hashtable hash)
+        {
+            var error = IbcError.SuccessResult;
+            error = UpdateCustomer.CustomerUpdUserInfoRpt(hash);
+            return error;
+        }
+
+    
+        /// <summary>
+        /// check user (by Username) is belong to current system
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="accountingSystem"></param>
+        /// <returns></returns>
+        public static bool IsBelongSystem(string userName, string accountingSystem)
+        {
+            if (accountingSystem.ToLower().Equals(Enumerations.AccountingSystem.Accounting.ToString().ToLower() ))
+                return true;
+
+            if (string.IsNullOrEmpty(userName))
+                return false;
+
+            bool isValidUser = false;
+
+            var listSystemUser = SystemUsernames;
+            var listUserKey = ListSystemUsernameKey + Enumerations.GetSystemName(accountingSystem);
+            StringCollection listUser = null;
+            if (listSystemUser == null || listSystemUser.Count == 0)
+            {
+                listSystemUser = new Dictionary<string, StringCollection>();
+                listUser = new StringCollection();
+
+            }
+            else
+            {
+                listUser = listSystemUser.ContainsKey(listUserKey) ? listSystemUser[listUserKey] : new StringCollection();
+            }
+
+
+            isValidUser = listUser.Contains(userName);
+            //if user does not existed in cache
+            //user database check
+            if (!isValidUser)
+            {
+                var dr = Sunplus.Accounting.DataAccess.IBCDLL.Customer.SelectCustomer.CustSelByUsername(userName, accountingSystem);
+                isValidUser = (dr != null
+                               && dr != null
+                               && dr.Tables.Count > 0
+                               && dr.Tables[0].Rows.Count > 0);
+
+                if (isValidUser)
+                {
+                    listUser.Add(userName);
+                    //save cache in 5 hours
+                    if(listSystemUser.ContainsKey(listUserKey))
+                        listSystemUser[listUserKey] =  listUser;
+                    else
+                        listSystemUser.Add(listUserKey, listUser);
+                
+                    SystemUsernames = listSystemUser;
+                }
+            }       
+       
+            return isValidUser;
+        }
+
+
+        /// <summary>
+        /// check user (by custid) is belong to current system
+        /// </summary>
+        /// <param name="custId"></param>
+        /// <param name="accountingSystem"></param>
+        /// <returns></returns>
+        public static bool IsBelongSystem(int custId, string accountingSystem)
+        {
+            if (accountingSystem.ToLower().Equals(Enumerations.AccountingSystem.Accounting.ToString()))
+                return true;
+
+            if (custId == 0)
+                return false;
+
+            bool isValidUser = false;
+
+            var listSystemUser = SystemUserIds;
+            var listUserKey = ListSystemUserIdKey + Enumerations.GetSystemName(accountingSystem);
+            StringCollection listUser = null;
+            if (listSystemUser == null || listSystemUser.Count == 0)
+            {
+                listSystemUser = new Dictionary<string, StringCollection>();
+                listUser = new StringCollection();
+
+            }
+            else
+            {
+                listUser = listSystemUser.ContainsKey(listUserKey) ? listSystemUser[listUserKey] : new StringCollection();
+            }
+
+
+            isValidUser = listUser.Contains(custId.ToString());
+            //if user does not existed in cache
+            //user database check
+            if (!isValidUser)
+            {
+                var dr = Sunplus.Accounting.DataAccess.IBCDLL.Customer.SelectCustomer.CustSelById(custId, accountingSystem);
+                isValidUser = (dr != null
+                               && dr != null
+                               && dr.Tables.Count > 0
+                               && dr.Tables[0].Rows.Count > 0);
+
+                if (isValidUser)
+                {
+                    listUser.Add(custId.ToString());
+                    //save cache in 5 hours
+                    if (listSystemUser.ContainsKey(listUserKey))
+                        listSystemUser[listUserKey] = listUser;
+                    else
+                        listSystemUser.Add(listUserKey, listUser);
+
+                    SystemUserIds = listSystemUser;
+                }
+            }
+
+            return isValidUser;
+        }
+
+
+        /// <summary>
+        /// check user (by currency) is belong to current system
+        /// </summary>
+        /// <param name="currencyId"></param>
+        /// <param name="accountingSystem"></param>
+        /// <param name="checkCurrency"></param>
+        /// <returns></returns>
+        public static bool IsBelongSystem(int currencyId, string accountingSystem,  bool checkCurrency)
+        {
+            if (accountingSystem.Equals(Enumerations.AccountingSystem.Accounting))
+                return true;
+
+            if (currencyId == 0)
+                return false;
+
+            bool isValidCurrency = false;
+
+            var listSystemCurrency = SystemCurrencyIds;
+            var listCurrencyKey = ListSystemCurrencyIdKey + accountingSystem;
+            StringCollection listCurrency = null;
+            if (listSystemCurrency == null || listSystemCurrency.Count == 0)
+            {
+                listSystemCurrency = new Dictionary<string, StringCollection>();
+                listCurrency = new StringCollection();
+
+            }
+            else
+            {
+                listCurrency = listSystemCurrency.ContainsKey(listCurrencyKey) ? listSystemCurrency[listCurrencyKey] : new StringCollection();
+            }
+
+
+            isValidCurrency = listCurrency.Contains(currencyId.ToString());
+            //if user does not existed in cache
+            //user database check
+            if (!isValidCurrency)
+            {
+                var dr = SelectCustomer.ExchangeSelRpt(accountingSystem);
+                if (dr == null || dr.ResultSet == null || dr.ResultSet.Tables.Count == 0)
+                    return false;
+
+                var drResult = dr.ResultSet.Tables[0].Select("exchangeid=" + currencyId);
+                if (drResult.Count() > 0)
+                    isValidCurrency = true;
+
+                if (isValidCurrency)
+                {
+                    listCurrency.Add(currencyId.ToString());
+                    //save cache in 5 hours
+                    if (listSystemCurrency.ContainsKey(listCurrencyKey))
+                        listSystemCurrency[listCurrencyKey] = listCurrency;
+                    else
+                        listSystemCurrency.Add(listCurrencyKey, listCurrency);
+
+                    SystemCurrencyIds = listSystemCurrency;
+                }
+            }
+
+            return isValidCurrency;
+        }
+        /// <summary>
+        /// Clear all system users
+        /// </summary>
+        public static void ClearSystemUsers()
+        {
+            Cache.Remove(ListSystemUsernameKey);
+            Cache.Remove(ListSystemUserIdKey);
+        }
+
+        /// <summary>
+        /// List users (by username) of specific system (system name, list user)
+        /// </summary>
+        private static Dictionary<string, StringCollection> SystemUsernames
+        {
+
+            get
+            {
+                return Cache.Get(ListSystemUsernameKey) as Dictionary<string, StringCollection>;
+            }
+            set
+            {
+                Cache.Add(ListSystemUsernameKey, value, 1000 * 3600 * 5);
+            }
+        }
+
+        /// <summary>
+        /// List users (by custid) of specific system (system name, list user)
+        /// </summary>
+        private static Dictionary<string, StringCollection> SystemUserIds
+        {
+
+            get
+            {
+                return Cache.Get(ListSystemUserIdKey) as Dictionary<string, StringCollection>;
+            
+            }
+            set
+            {
+                Cache.Add(ListSystemUserIdKey, value, 1000 * 3600 * 5);
+            }
+        }
+
+        /// <summary>
+        /// List users (by custid) of specific system (system name, list user)
+        /// </summary>
+        private static Dictionary<string, StringCollection> SystemCurrencyIds
+        {
+
+            get
+            {
+                return Cache.Get(ListSystemCurrencyIdKey) as Dictionary<string, StringCollection>;
+            }
+            set
+            {
+                Cache.Add(ListSystemCurrencyIdKey, value, 1000 * 3600 * 5);
+            }
+        }
+
+
+        public static CustDetail GetCustInfo(HttpRequest data)
+        {
+            string uplineId = data["uplineid"] ?? data["agentId"];
+            var uplineDetail = new CSCustomerDetail();
+            var customer = new CustDetail
+                               {
+                                   Closed = false,
+                                   Suspend = false
+                               };
+
+            if (!string.IsNullOrEmpty(uplineId))
+            {
+                //UpLineId = ;
+                uplineDetail = IBCProvider.IBCCustomer.GetBasicCustInfoIBC(CastAide.AsInt32(uplineId));
+
+                customer.SuperId = uplineDetail.SIBCCustID;
+                customer.MasterId = uplineDetail.MIBCCustID;
+                customer.AgentId = uplineDetail.AIBCCustID;
+
+                customer.Closed = uplineDetail.Closed;
+                customer.Suspend = uplineDetail.Suspend;
+                customer.IsUplineSyncCasino = uplineDetail.CasinoSync;
+                customer.IsUplineDisableCasino = uplineDetail.CasinoDisabled;
+                customer.IsUplineSyncBingo = uplineDetail.SyncBingo;
+                customer.IsUplineSyncLiveCasino = uplineDetail.LiveCasinoSync;
+                customer.IsUplineDisableLiveCasino = uplineDetail.LiveCasinoDisabled;
+
+            }
+
+
+            customer.FirstName = data["txtFirstname"] ?? data["txtFName"];
+            customer.LastName = data["txtLastname"] ?? data["txtLName"];
+            customer.Address = data["txtAddress"] ?? "";
+            customer.Postal = data["txtPostal"] ?? "";
+            customer.City = data["txtCity"] ?? "";
+            customer.State = data["txtState"] ?? "";
+            customer.Country = data["listCountry"] ?? "";
+            customer.BirthDay = data["txtBirthday"] ?? "";
+            customer.Remark = data["remark"] ?? "";
+            customer.Phone = Encryption.RemoveSpecialChars(data["txtPhone"]) ?? string.Empty;
+            customer.MobilePhone = Encryption.RemoveSpecialChars(data["txtMobile"]) ?? string.Empty;
+            customer.Fax = Encryption.RemoveSpecialChars(data["txtFax"]) ?? string.Empty;
+            customer.Email = Encryption.RemoveSpecialChars(data["email"]) ??
+                             Encryption.RemoveSpecialChars(data["txtEmail"]) ?? "";
+            customer.UserName = (data["txtUsername"] == null)
+                                    ? ""
+                                    : Encryption.RemoveSpecialChars(data["txtUsername"].Trim());
+            customer.Password = (data["txtPwd"] == null) ? "" : Encryption.CfsEnCode(data["txtPwd"].Trim());
+            if (data["hdCurr"] != null || uplineId != null)
+            {
+                string currency = data["hdCurr"] ?? uplineDetail.Currency.ToString();
+                customer.CurrencyId = CastAide.AsInt32(currency);
+                customer.CurrencyName = CacheUtils.GetExchangeName(CacheUtils.Exchange, customer.CurrencyId);
+            }
+
+            return customer;
+        }
+
+    }
+}

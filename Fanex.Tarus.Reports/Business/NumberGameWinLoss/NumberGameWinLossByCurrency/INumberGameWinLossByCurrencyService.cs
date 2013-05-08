@@ -1,0 +1,26 @@
+﻿
+namespace Fanex.Tarus.Reports.Business.NumberGame.ByCurrency
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using Fanex.Tarus.Reports.Entities.NumberGameWinLoss;
+    using Fanex.Tarus.Reports.DataAccess.NumberGameWinLoss.ByCurrency;
+    using Fanex.Tarus.Reports.Entities.NumberGameWinLoss.NumberGameWinLossByCurrency;
+
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public interface IByCurrencyService
+    {
+        NumberGameWinLossByCurrency_MainBO GetNumberGameMainData(NumberGameWinLossByCurrency_MainParams MainParams);
+
+        NumberGameWinLossByCurrency_DetailBO GetNumberGameDetailData(NumberGameWinLossByCurrency_DetailParams DetailParams);
+
+        void ExportExcelNumberGameWinLossByCurMain(NumberGameWinLossByCurrency_MainParams MainParams);
+
+        void ExportExcelNumberGameWinLossByCurDetail(NumberGameWinLossByCurrency_DetailParams DetailParams);
+    }
+}

@@ -1,0 +1,25 @@
+﻿
+namespace Fanex.Tarus.Infrastructure.Constants
+{
+    public static class BetType
+    {
+        public const int Outright = 10;
+
+        public const int Handicap = 1;
+        public const int OverUnder = 3;
+        public const int CorrectScore = 4;
+        public const int TotalGoal = 6;
+        public const int FirstHandicap = 7;
+        public const int FirstOverUnder = 8;
+        public const int FirstGoal_LastGoal = 14;
+        public const int NextGoal = 22;
+        public const int FirstCorrectScore = 30;
+
+        public const int HandicapVirtualSports = 1201;
+        public const int OverUnderVirtualSports = 1203;
+        public const int FirstHandicapVirtualSports = 1207;
+
+        public const int CasinoGames = 71;
+        public const int P2P = 72;
+    }
+}

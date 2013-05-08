@@ -1,0 +1,66 @@
+﻿.on {
+	color:Black;
+	cursor: default;	
+	font-weight:bold ;
+}
+
+.off {
+	color:Blue;
+	cursor: pointer;	
+	font-weight:bold ;
+}
+
+.boxmenu {
+	margin: 5px;
+}
+
+.bgSubTotal {
+	background-color: #ded2be;
+	font-weight: bold;	
+}
+
+.bgCombinationTotal {
+	background-color: #215967;
+	font-weight :bold;
+	color: White;
+}
+
+.c2x {
+	background-color: #ddd9c4;
+}
+
+.c3x {
+	background-color: #caf091;
+}
+
+.c4x {
+	background-color: #b7dee8;
+}
+
+.c5x {
+	background-color: #fde9d9;
+}
+
+.c6x {
+	background-color: #f2dcdb;
+}
+
+.bgGrandTotal {
+	background-color: #daf1bb;	
+}
+
+.bgLineTotal {
+	background-color: #b5c4d0;	
+}
+
+.bgNoneLive {
+	background-color: #caf091;
+}
+
+.bgLive {
+	background-color: #ddd9c4;
+}
+
+.bgMixLive {
+	background-color: #c5d9f1;
+}

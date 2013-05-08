@@ -1,0 +1,647 @@
+﻿@model Fanex.Tarus.Customer.Entities.CustomerList.CustomerListModel
+@using DNAide.Core
+@using Sunplus.Accounting.Core.Configurations
+@using Sunplus.Bingo.Core;
+@using System.Collections;
+@{
+    var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
+    bool visibleP2PSetting = CastAide.AsBoolean(p2pSetting.Value);
+    var IsVisibleMaxExposure = Sunplus.Accounting.Core.Common.Functions.Customer.IsVisibleMaxExposure;
+    var IsVisibleVirtualRate = Sunplus.Accounting.Core.Common.Functions.Customer.IsVisibleVirtualRate;
+    var enableNumberGame = BingoSettings.NumberGame.Enabled;
+
+    var disabledHR = WebSettings.disabledHR;
+    var disabledFI = WebSettings.disabledFI;
+    var enableBingo = BingoSettings.BingoGame.Enabled;
+    var EnableLiveCasino = WebSettings.EnableLiveCasino;
+    var EnableVirtualSports = WebSettings.EnableVirtualSports;
+    var disableCasino = WebSettings.disableCS;
+    bool allowCS = false;
+    bool allowFI = Sunplus.Accounting.Business.Security.Permissions.IsAllowEditFI();
+    bool allowLiveCS = false;
+    int IsShowCustomerSettingRenovation = 0;
+    bool directMaster = (Model.ParentId == 0 ? true : false);
+    if (Model.ParentId == 0)
+    {
+        allowCS = true;
+        allowLiveCS = true;
+    }
+    else
+    {
+        var thirdPartyStatus = Sunplus.Accounting.Business.Security.Permissions.SelStatus3rdParty(CastAide.AsInt32(Model.ParentId));
+        allowCS = Model.ParentId == 0 ? true : thirdPartyStatus.CasinoSync;
+        allowLiveCS = Sunplus.Accounting.Business.Security.Permissions.IsAllowEditLiveCasino(Model.ParentId, thirdPartyStatus.LiveCasinoSync);
+    }
+    if (IsPost)
+    {
+        IsShowCustomerSettingRenovation = WebSettings.IsShowCustomerSettingRenovation;
+    }
+    int colspan = 4;
+    int colspanCom = 6;
+    if (IsVisibleMaxExposure)
+    {
+        colspan++;
+    }
+    if (IsVisibleVirtualRate)
+    {
+        colspan++;
+    }
+    if (enableNumberGame)
+    {
+        colspanCom++;
+    }
+    Hashtable hash = new Hashtable();
+    hash.Add("p2pSetting", p2pSetting);
+    hash.Add("visibleP2PSetting", visibleP2PSetting);
+    hash.Add("IsVisibleMaxExposure", IsVisibleMaxExposure);
+    hash.Add("IsVisibleVirtualRate", IsVisibleVirtualRate);
+    hash.Add("enableNumberGame", enableNumberGame);
+    hash.Add("disabledHR", disabledHR);
+    hash.Add("enableBingo", enableBingo);
+    hash.Add("disableCasino", disableCasino);
+    hash.Add("EnableLiveCasino", EnableLiveCasino);
+    hash.Add("EnableVirtualSports", EnableVirtualSports);
+    hash.Add("disabledFI", disabledFI);
+    hash.Add("directMaster", directMaster);
+    hash.Add("allowCS", allowCS);
+    hash.Add("allowLiveCS", allowLiveCS);
+
+    string[] renderResult = Render(Model, hash);
+}
+@functions {
+    public string[] Render(Fanex.Tarus.Customer.Entities.CustomerList.CustomerListModel customerListModel, Hashtable hash)
+    {
+        string[] result = new string[2];
+        foreach (var superItem in Model.ListChildren)
+        {
+            result[0] += renderRowHeader(superItem, hash);
+            result[1] += renderContent(superItem, hash);
+        }
+        return result;
+    }
+    public string rowCSS(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList superItem)
+    {
+        var bg = (superItem.No % 2 == 0) ? "even" : "";
+        var status = superItem.Status;
+        if (status == "Disabled")
+        {
+            bg = "disabled";
+        }
+        if (status == "Closed")
+        {
+            bg = "closed";
+        }
+        if (status == "Suspended")
+        {
+            bg = "suspended";
+        }
+        return bg;
+    }
+}
+
+@helper renderRowHeader(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList superItem, Hashtable hash)
+    {
+        var bg = rowCSS(superItem);
+        var idAllow = superItem.ChildID.ToString() + '_' + superItem.UserName;
+    <tr name="tr_@superItem.ChildID" class="@bg">
+        <td>
+            <div class="table-cell c " style="width: 40px; height: 18px;">
+                @superItem.No
+            </div>
+        </td>
+        <td>
+            <div class="table-cell c" style="width: 65px; height: 18px;">
+                <a onclick="SuperList.OpenEdit('@Model.ParentId','@superItem.ChildID','@superItem.UserName');">@superItem.Status</a>
+                <span onclick="SuperList.OpenEdit('@Model.ParentId','@superItem.ChildID','@superItem.UserName');" class="status-button" >
+                    &nbsp;&nbsp;&nbsp</span>
+            </div>
+        </td>
+        <td>
+            <div class="table-cell c" style="width: 30px; height: 18px;">
+                <span title="Edit" onmouseout="CustomerList.HideEditBox()"  onclick="CustomerList.ShowMenuEdit('div_@superItem.ChildID')" class="edit-button" >
+                </span>
+                <ul id="div_@superItem.ChildID" style="display:none;">
+                    <!--minmaxPT-->
+                    <li class="canchange" onclick="OpenEditMinMaxPT('@superItem.ChildID','Super');"  >Min
+                        Max PT</li>
+                    <!--/minmaxPT-->
+                    <li class="canchange" onclick="OpenEditCustInfo('@superItem.ChildID','Super');" >Info</li>
+                    <!--horseracing-edit-->
+                    @if (!CastAide.AsBoolean(hash["disabledHR"]))
+                    {
+                        <li class="canchange" onclick="OpenEditHR('@superItem.ChildID',4)" >Racing</li>
+                    }
+                    <!--/horseracing-edit-->
+                    <!--casino-edit-->
+                    @if (!CastAide.AsBoolean(hash["disableCasino"]))
+                    {
+                        <li class="canchange" onclick="OpenEditCS('@superItem.ChildID');" >Casino</li>
+                    }
+                    <!--/casino-edit-->
+                    <!--finance-edit-->
+                    @if (!CastAide.AsBoolean(hash["disabledFI"]))
+                    {
+                        <li class="canchange" onclick="OpenEditFI('@superItem.ChildID', '@Model.ParentId', '4')" >
+                            Finance</li>
+                    }
+                    <!--/finance-edit-->
+                    <!--bingo-edit-->
+                    @if (CastAide.AsBoolean(hash["enableBingo"]))
+                    {
+                        <li class="canchange" onclick="OpenEditBI('@superItem.ChildID', '@Model.ParentId', '4')" >
+                            Bingo</li>
+                    }
+                    <!--/bingo-edit-->
+                    <!--noneSuper-->
+                    <li class="canchange" onclick="OpenEditTransferTime('@superItem.ChildID',0);">Transfer
+                        Condition</li>
+                    <!--/noneSuper-->
+                    <li class="canchange" onclick="OpenChangePwd('@superItem.ChildID','@superItem.UserName');">
+                        Password</li>
+                    <!--edit-p2p-->
+                    @if (CastAide.AsBoolean(hash["visibleP2PSetting"]))
+                    {
+                        <li class="canchange" onclick="SuperList.editSetting('@superItem.ChildID', '4');">Poker</li>
+                    }
+                    <!--/edit-p2p-->
+                    <!--edit-liveCasino-->
+                    @if (!(!CastAide.AsBoolean(hash["EnableLiveCasino"]) | !CastAide.AsBoolean(hash["allowLiveCS"])))
+                    {
+                        <li class="canchange" onclick="SuperList.liveCasinoSetting('@superItem.ChildID', '0', '@Model.ParentId');">
+                            Live Casino</li>
+                    }
+                    <!--/edit-liveCasino-->
+                    <!--edit-virtualSports-->
+                    @if (CastAide.AsBoolean(hash["EnableVirtualSports"]))
+                    {
+                        <li class="canchange" onclick="SuperList.virtualSportsSetting('@superItem.ChildID', '@Model.ParentId', '4');">
+                            Virtual Sports</li>
+                    }
+                    <!--/edit-virtualSports-->
+                </ul>
+            </div>
+        </td>
+        <td>
+            @if (superItem.isDoubleComm)
+            {
+                <div class="table-cell" style="width: 70px; height: 18px;">
+                    <span id="allow_@superItem.ChildID" class="allow-button" onclick="SuperList.confirmUpdateDComm(false,'@idAllow',false);" onmouseout="" onmouseover="">
+                    </span>
+                </div>
+            }
+            else
+            {
+                <div class="table-cell" style="width: 70px; height: 18px;">
+                    <span id="disallow_@superItem.ChildID" class="disallow-button"  onclick="SuperList.confirmUpdateDComm(false,'@idAllow',true);" onmouseout="" onmouseover="">
+                    </span>
+                </div>
+            }
+            <div class="table-cell c" style="width: 20px; height: 18px;">
+                <input id="chk_@idAllow" onclick="CustomerList.selectID()" type="checkbox"/></div>
+        </td>
+        <td>
+            <div id="tooltip_@superItem.UserName" class="table-cell c display" style="width: 120px; height: 18px;text-overflow:ellipsis;">
+                <span>@superItem.UserName</span>
+            </div>
+        </td>
+    </tr>
+}
+@helper renderContent(Fanex.Tarus.Customer.Entities.CustomerList.CustomerList superItem, Hashtable hash)
+    {
+        var bg = rowCSS(superItem);
+    <tr name="tr_@superItem.ChildID" class ="@bg" style="height: 20px;">
+        <td>
+            <div class="table-cell c" style="width: 40px; height: 18px;">
+                &nbsp;</div>
+        </td>
+        <td>
+            <div class="table-cell " style="width: 65px; height: 18px;">
+                &nbsp;</div>
+        </td>
+        <td>
+            <div class="table-cell" style="width: 30px; height: 18px;">
+                &nbsp;</div>
+        </td>
+        <td>
+            <div class="table-cell" style="width: 90px; height: 18px;">
+                <input type="checkbox" /></div>
+        </td>
+        <td>
+            <div class="table-cell" style="width: 120px; height: 18px;">
+                &nbsp;</div>
+        </td>
+        <td>
+            <div class="table-cell c" style="width: 120px; height: 18px;">
+                @superItem.NickName</div>
+        </td>
+        @if (CastAide.AsBoolean(hash["IsVisibleMaxExposure"]))
+        {
+            <td>
+                <div class="table-cell c" style="width: 80px; height: 18px;">
+                    <a onclick="OpenEditMaxEx('@superItem.ChildID','@superItem.UserName',@superItem.MaxExposure,'Super',true)">@superItem.MaxExposure</a>
+                </div>
+            </td>
+        }
+        @if (CastAide.AsBoolean(hash["IsVisibleVirtualRate"]))
+        {
+            <td>
+                <div class="table-cell c" style="width: 60px; height: 18px;">
+                    <a onclick="OpenEditVirtualExRate('@superItem.ChildID','@superItem.UserName','Super',true,'@Model.ParentId')">@superItem.VirtualRate</a></div>
+            </td>
+        }
+        <td>
+            <div id="tooltip_@superItem.FirstName" class="table-cell c display" style="width: 140px;height: 18px;text-overflow:ellipsis;">
+           <span>@superItem.FirstName</span></div>
+        </td>
+        <td>
+            <div id="tooltip_@superItem.LastName"  class="table-cell c display" style="width: 140px; height: 18px;text-overflow:ellipsis;">
+               <span>@superItem.LastName</span></div>
+        </td>
+        <td>
+            <div class="table-cell" style="width: 50px; height: 18px;">
+                <a class="viewdownline-button "  href="MasterAgentList?superId=@superItem.ChildID&doubleCommSuper=@superItem.isDoubleComm.ToString().ToLower()&isSynccasino=@superItem.IsSynCasinoUpline.ToString().ToLower()">
+                    View</a>
+            </div>
+        </td>
+        <td>
+            <div class="table-cell c" style="width: 70px; height: 18px;">
+                @superItem.GroupA
+            </div>
+        </td>
+        <td>
+            <div class="table-cell c" style="width: 70px; height: 18px;">
+                @superItem.GroupB</div>
+        </td>
+        <td>
+            <div class="table-cell c" style="width: 70px; height: 18px;">
+                @superItem.GroupC
+            </div>
+        </td>
+        <td>
+            <div class="table-cell c" style="width: 70px; height: 18px;">
+                @superItem.GroupD</div>
+        </td>
+        <td>
+            <div class="table-cell c" style="width: 70px; height: 18px;">
+                @superItem._1x2</div>
+        </td>
+        <td>
+            <div class="table-cell c" style="width: 70px; height: 18px;">
+                @superItem.Others</div>
+        </td>
+        @if (CastAide.AsBoolean(hash["enableNumberGame"]))
+        {
+            <td>
+                <div class="table-cell c" style="width: 70px; height: 18px;">
+                    @superItem.NumberGame
+                </div>
+            </td>
+        }
+        <td>
+            <div class="table-cell c" style="width: 90px; height: 18px;">
+                <a onclick="ViewIP('@superItem.LastLoginIP')">@superItem.LastLoginIP</a></div>
+        </td>
+    </tr>
+}
+<div id="SuperListgrid" class="freegrid hidden">
+    <div class="free-cell free-top-left">
+        <table class="grid-fixed-table free-cell-top-left">
+            <thead>
+                <tr class="title">
+                    <th colspan="5">
+                        <div class="table-cell" style="height: 17px;">
+                            &nbsp;</div>
+                    </th>
+                </tr>
+                <tr class="title">
+                    <th>
+                        <div class="table-cell" style="width: 40px; height: 38px;">
+                            No</div>
+                    </th>
+                    <th>
+                        <div class="table-cell" style="width: 65px; height: 38px;">
+                            Status</div>
+                    </th>
+                    <th>
+                        <div class="table-cell" style="width: 30px; height: 38px;">
+                            Edit</div>
+                    </th>
+                    <th>
+                        <div class="table-cell" style="width: 90px; height: 38px;">
+                            <input id="btnMultiple" class="verified" type="button" onclick="SuperList.confirmUpdateDComm(true);"
+                                value="Double Comm" /><br />
+                            <input id="chkAll" type="checkbox" onclick="CustomerList.itemAllClicked()" />
+                        </div>
+                    </th>
+                    <th>
+                        <div class="table-cell" style="width: 120px; height: 38px;">
+                            User Name</div>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="row_header_wrapper">
+        <div class="row_header row-headers-background">
+            <table id="tbSuperListrowheader" class="grid-fixed-table row_header_content">
+                <thead>
+                    <tr class="title">
+                        <th colspan="5">
+                            <div class="table-cell" style="height: 17px;">
+                                &nbsp;</div>
+                        </th>
+                    </tr>
+                    <tr class="title">
+                        <th>
+                            <div class="table-cell" style="width: 40px; height: 38px;">
+                                No</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 65px; height: 38px;">
+                                Status</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 30px; height: 38px;">
+                                Edit</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 90px; height: 38px;">
+                                Multiple</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 120px; height: 38px;">
+                                User Name</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @MvcHtmlString.Create(renderResult[0])
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col_header row-headers-background scroll-y">
+        <div class="header-container">
+            <table class="grid-fixed-table col_header_content">
+                <thead>
+                    <tr class="title">
+                        <th colspan="5">
+                            <div class="table-cell" style="height: 17px;">
+                                &nbsp;</div>
+                        </th>
+                        <th colspan="@colspan">
+                            <div class="table-cell" style="height: 17px;">
+                                &nbsp;</div>
+                        </th>
+                        <th colspan="@colspanCom">
+                            <div class="table-cell" style="height: 17px; width: 400px;">
+                                Commission</div>
+                        </th>
+                        <th>
+                            <div style="height: 17px;">
+                                &nbsp;
+                            </div>
+                        </th>
+                    </tr>
+                    <tr class="title">
+                        <th>
+                            <div class="table-cell" style="width: 40px; height: 38px;">
+                                No</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 65px; height: 38px;">
+                                Status</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 30px; height: 38px;">
+                                Edit</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 90px; height: 38px;">
+                                Multiple</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 120px; height: 38px;">
+                                User Name</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 120px; height: 38px;">
+                                Nick Name</div>
+                        </th>
+                        @if (IsVisibleMaxExposure)
+                        {
+                            <th>
+                                <div class="table-cell" style="width: 80px; height: 38px;">
+                                    Max
+                                    <br />
+                                    Exposure (%)
+                                </div>
+                            </th>
+                        }
+                        @if (IsVisibleVirtualRate)
+                        {
+                            <th>
+                                <div class="table-cell" style="width: 60px; height: 38px;">
+                                    Virtual
+                                    <br />
+                                    Rate (%)</div>
+                            </th>
+                        }
+                        <th>
+                            <div class="table-cell" style="width: 140px; height: 38px;">
+                                First Name</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 140px; height: 38px;">
+                                Last Name</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 50px; height: 38px;">
+                                View</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group A
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group B</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group C
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group D</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                1x2</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Others</div>
+                        </th>
+                        @if (enableNumberGame)
+                        {
+                            <th>
+                                <div class="table-cell" style="width: 70px; height: 38px;">
+                                    Number
+                                    <br />
+                                    Game
+                                </div>
+                            </th>
+                        }
+                        <th>
+                            <div class="table-cell" style="width: 90px; height: 38px;">
+                                Last Login IP</div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div class="grid-container container">
+        <div class="content-container">
+            <table id="tbSuperList" class="grid-fixed-table col_header_content">
+                <thead>
+                    <tr class="title">
+                        <th colspan="5">
+                            <div class="table-cell" style="height: 17px;">
+                                &nbsp;</div>
+                        </th>
+                        <th colspan="@colspan">
+                            <div class="table-cell" style="height: 17px;">
+                                &nbsp;</div>
+                        </th>
+                        <th colspan="@colspanCom">
+                            <div class="table-cell" style="height: 17px;">
+                                Commission</div>
+                        </th>
+                        <th>
+                            <div style="height: 17px;">
+                                &nbsp;
+                            </div>
+                        </th>
+                    </tr>
+                    <tr class="title">
+                        <th>
+                            <div class="table-cell" style="width: 40px; height: 38px;">
+                                No</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 65px; height: 38px;">
+                                Status</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 30px; height: 38px;">
+                                Edit</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 90px; height: 38px;">
+                                Multiple</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 120px; height: 38px;">
+                                User Name</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 120px; height: 38px;">
+                                Nick Name</div>
+                        </th>
+                        @if (IsVisibleMaxExposure)
+                        {
+                            <th>
+                                <div class="table-cell" style="width: 80px; height: 38px;">
+                                    Max
+                                    <br />
+                                    Exposure (%)
+                                </div>
+                            </th>
+                        }
+                        @if (IsVisibleVirtualRate)
+                        {
+                            <th>
+                                <div class="table-cell" style="width: 60px; height: 38px;">
+                                    Virtual
+                                    <br />
+                                    Rate (%)</div>
+                            </th>
+                        }
+                        <th>
+                            <div class="table-cell" style="width: 140px; height: 38px;">
+                                First Name</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 140px; height: 38px;">
+                                Last Name</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 50px; height: 38px;">
+                                View</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group A
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group B</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group C
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Group D</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                1x2</div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 70px; height: 38px;">
+                                Others</div>
+                        </th>
+                        @if (enableNumberGame)
+                        {
+                            <th>
+                                <div class="table-cell" style="width: 70px; height: 38px;">
+                                    Number
+                                    <br />
+                                    Game
+                                </div>
+                            </th>
+                        }
+                        <th>
+                            <div class="table-cell" style="width: 90px; height: 38px;">
+                                Last Login IP</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @MvcHtmlString.Create(renderResult[1])
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="popupedit" class="openedit" style="display: none;" onmouseover="CustomerList.EditBoxHover()"
+    onmouseout="CustomerList.HideEditBox()">
+    <ul>
+    </ul>
+</div>
+<script language="javascript" type="text/javascript">
+    var  _totalPages = @Model.TotalPages;
+    var _totalChildren = @Model.TotalChildren;
+    var _IsShowCustomerSettingRenovation = "@IsShowCustomerSettingRenovation";
+    var _IsVisibleMaxExposure = "@IsVisibleMaxExposure";
+    var _IsVisibleVirtualRate = "@IsVisibleVirtualRate";
+    var _enableNumberGame = "@enableNumberGame";
+</script>

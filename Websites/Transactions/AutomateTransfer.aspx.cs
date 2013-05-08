@@ -1,0 +1,22 @@
+﻿using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+using DNAide.Core;
+using DNAide.Data;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Web;
+
+public partial class Finance_AutomateTransfer : PageBase
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {        
+        
+    }
+}

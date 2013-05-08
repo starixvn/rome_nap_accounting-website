@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#"  Service="Sunplus.Accounting.WcfServiceLibrary.Bingo.BingoService"  Debug="true" %>

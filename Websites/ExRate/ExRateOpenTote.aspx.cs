@@ -1,0 +1,10 @@
+﻿using System;
+
+
+public partial class ExRate_ExRateOpenTote : PageBase
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+
+    }
+}

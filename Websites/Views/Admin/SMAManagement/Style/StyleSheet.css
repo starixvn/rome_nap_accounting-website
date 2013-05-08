@@ -1,0 +1,29 @@
+﻿.disabled
+{
+    background: #A0A97A !important;
+}
+.closed
+{
+    background: #CCC7BA !important;
+}
+.suspended
+{
+    background: #F8DED7 !important;
+}
+
+div.sorter
+{
+    background-image: url(../../../../App_Themes/images/sorting_bg.gif);
+    background-repeat: no-repeat !important;
+    background-position: center right !important;
+    cursor: pointer;
+}
+div.sorter.asc
+{
+    background-image: url(../../../../App_Themes/images/sorting_asc.gif) !important;
+}
+div.sorter.desc
+{
+    background-image: url(../../../../App_Themes/images/sorting_desc.gif) !important;
+}
+

@@ -1,0 +1,221 @@
+﻿using System;
+using System.Collections;
+using System.Configuration;
+using System.Data;
+using System.Text;
+
+using DNAide.Core;
+using DNAide.Data;
+using DNAide.Utils;
+using DNAide.Web;
+
+using Sunplus.Accounting.Business;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Accounting.Core.Web.Controls;
+using Sunplus.Accounting.DataAccess;
+using Sunplus.Core.LoggingLib;
+
+namespace BLL.Report.NonePT
+{
+    public class NonePTLastestBetManager : ReportBase
+    {
+        private string msg = "<span class='error-message'>{content}</span>";
+
+        public string GenData(string username, string currency, string bettype, string fromstake, string tostake,
+                              string pageindex, string pagesize)
+        {
+            string tpl = WebUtils.LoadTemplate("Report/NonePT/NonePTLastestBet.htm");
+            int TotalPages = 0;
+            if (string.IsNullOrEmpty(pageindex))
+                pageindex = "1";
+            try
+            {
+                var hashtable = new Hashtable();
+                if (!string.IsNullOrEmpty(username))
+                    hashtable.Add("username", username);
+                if (!string.IsNullOrEmpty(bettype))
+                    hashtable.Add("bettypes", bettype);
+                hashtable.Add("fromstake", fromstake);
+                hashtable.Add("tostake", tostake);
+                hashtable.Add("currency", currency);
+                hashtable.Add("totalpages", 0);
+                hashtable.Add("pageindex", pageindex);
+                hashtable.Add("pagesize", CastAide.AsInt32(pagesize, 100));
+
+                DbResult rs = IBCProvider.ReportProvider.NonePT().NonePTLastestBet(hashtable);
+                DataTable dataTable = rs.ResultSet.Tables[0];
+                DataRow[] dataRows = dataTable.Select();
+
+                TotalPages = CastAide.AsInt32(rs.Outputs["totalpages"]);
+
+                if (dataRows.Length == 0)
+                {
+                    TemplateHandler.ReplaceBlock(ref tpl, "content", AccCommon.GenNoInformation("8"));
+                    TemplateHandler.Assign(ref tpl, "paging", "");
+                }
+                else
+                {
+                    string tplRow = TemplateHandler.CopyBlock(tpl, "content");
+
+                    int index = 0;
+                    var rows = new StringBuilder();
+                    var evt = new DisplayBetlistEvent();
+                    string _liveStyle = "", _odd_even = "";
+                    foreach (DataRow dr in dataRows)
+                    {
+                        string row = tplRow;
+                        index++;
+
+                        TemplateHandler.Assign(ref row, "Order", NumberFormat.DecFormat(dr["RowNum"], 0));
+                        TemplateHandler.Assign(ref row, "UserName", dr["username"]);
+                        TemplateHandler.Assign(ref row, "RefNo", "Ref No:" + dr["transid"]);
+                        TemplateHandler.Assign(ref row, "TransTime", dr["transdate"]);
+                        TemplateHandler.Assign(ref row, "Odds", NumberFormat.DecFormat(dr["odds"], 3));
+                        TemplateHandler.Assign(ref row, "Stake", NumberFormat.DecFormat(dr["Stake"], 2));
+                        TemplateHandler.Assign(ref row, "Currency", dr["CurrencyName"]);
+                        TemplateHandler.Assign(ref row, "Status", dr["Status"]);
+                        string ip = CastAide.AsString(dr["IP"]);
+                        TemplateHandler.Assign(ref row, "IP",
+                                               "<a href=\"" +
+                                               ConfigurationManager.AppSettings["iplocation"].Replace("{ip}",
+                                                                                                      IpManagement.
+                                                                                                          ReplaceVNIP(ip)) +
+                                               "\" target=\"_blank\" ><span class='link'>" + IpManagement.ReplaceVNIP(ip) +
+                                               "</span></a>");
+
+                        _liveStyle = Convert.IsDBNull(dr["liveindicator"])
+                                         ? ""
+                                         : (Convert.ToBoolean(dr["liveindicator"]) ? "event-live" : "");
+                        if (string.IsNullOrEmpty(_liveStyle))
+                        {
+                            _odd_even = (_odd_even == "o") ? "e" : "o";
+                            TemplateHandler.Assign(ref row, "{odd_even}", _odd_even);
+                            TemplateHandler.Assign(ref row, "{live}", "");
+                        }
+                        else
+                            TemplateHandler.Assign(ref row, "{live}", _liveStyle);
+
+                        evt.getEvent(ref row, dr);
+
+
+                        //OpenTote Exchange Rate
+
+
+                        bool isShowOtExRate = CastAide.AsBoolean(dr["isShowOTExRate"], false);
+                        double virtualRate = CastAide.AsDouble(dr["virtualrate"], 0.0);
+
+                        if (!isShowOtExRate)
+                        {
+                            TemplateHandler.RemoveBlock(ref row, "Exchangerate");
+                        }
+                        else
+                            TemplateHandler.Assign(ref row, "{ExchangeRate}",
+                                                   isShowOtExRate ? virtualRate.ToString() : string.Empty);
+
+                        //if (_bettype < 33 && !_status.Equals(Status.WIN))
+                        //{
+                        //    TemplateHandler.Assign(ref row, "{Odds}", _NoShowOdds);
+                        //    TemplateHandler.Assign(ref row, "{OddsWidth}", "");
+                        //}
+
+                        rows.Append(row);
+                    }
+                    TemplateHandler.ReplaceBlock(ref tpl, "content", rows.ToString());
+                    TemplateHandler.Assign(ref tpl, "paging",
+                                           Pager.InitPager(TotalPages, CastAide.AsInt32(pageindex), ""));
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                {
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                }
+                TemplateHandler.Assign(ref msg, "content", ex.Message);
+                TemplateHandler.ReplaceBlock(ref tpl, "content", "<tr><td colspan='8'>" + msg + "</td></tr>");
+            }
+
+            var hash = new Hashtable();
+            hash.Add("data", tpl);
+            hash.Add("Totalpages", TotalPages);
+            return JsonUtil.ToJson(hash);
+        }
+
+
+        public string GenBettype()
+        {
+            string tpl = WebUtils.LoadTemplate("Report/NonePT/DynamicBettype.htm");
+            string tplcontent = TemplateHandler.CopyBlock(tpl, "content");
+            var rows = new StringBuilder();
+            int index = 0;
+            string row = tplcontent;
+            DataTable dt = IBCProvider.ReportProvider.NonePT().GetBettypeList().ResultSet.Tables[0];
+
+            string[] arrBettypes = {"9", "10", "31", "32", "33"};
+            foreach (string btype in arrBettypes)
+            {
+                DataRow dataRow = dt.NewRow();
+                dataRow["TypeID"] = btype;
+                dt.Rows.Add(dataRow);
+            }
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                index++;
+                if (index == 4)
+                {
+                    TemplateHandler.RemoveComment(row);
+                    rows.Append(row);
+                    row = tplcontent;
+                    index = 1;
+                }
+                TemplateHandler.Assign(ref row, "Bettype" + index, dr["TypeID"]);
+                TemplateHandler.Assign(ref row, "BettypeName" + index, CacheRef.GetBettype(dr["TypeID"]));
+            }
+            if (index == 1)
+            {
+                TemplateHandler.RemoveBlock(ref row, "bt2");
+                TemplateHandler.RemoveBlock(ref row, "bt3");
+            }
+            if (index == 2)
+            {
+                TemplateHandler.RemoveBlock(ref row, "bt3");
+            }
+
+            TemplateHandler.RemoveComment(row);
+            rows.Append(row);
+            TemplateHandler.ReplaceBlock(ref tpl, "content", rows.ToString());
+
+            var hash = new Hashtable();
+            hash.Add("bettypes", tpl);
+            return JsonUtil.ToJson(hash);
+        }
+
+        public string GenCurrency()
+        {
+            var html = new StringBuilder();
+            html.Append("<select id='ddlCurrency' name='ddlCurrency'>");
+            DataTable dataTable = IBCProvider.ReportProvider.NonePT().GetCurrencyList().ResultSet.Tables[0];
+
+            html.Append("<option value='0'>All</option>");
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                html.Append("<option value='" + dr["exchangeid"] + "'>" + dr["currency"] + "</option>");
+            }
+
+            html.Append("</select>");
+
+            var hash = new Hashtable();
+            hash.Add("currency", html.ToString());
+            return JsonUtil.ToJson(hash);
+        }
+
+        public override string RenderHTML(Hashtable input)
+        {
+            return string.Empty;
+        }
+    }
+}

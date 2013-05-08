@@ -1,0 +1,274 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/Message.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/table.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/commonIOM.css" />
+    <link href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" rel="stylesheet"
+        type="text/css" />
+    <link href="~/js/MultipleSelect/jquery.multiselect.css" rel="stylesheet" type="text/css" />
+    <link href="~/js/jQuery/GridScroller/gridscroller.css" rel="stylesheet" type="text/css" />
+    <link href="~/views/Report/Licensee/LiveCasinoWinLoss/style/LiveCasinoWinLoss.css" rel="stylesheet" type="text/css" />
+    
+</head>
+<body>
+    <div class="main">
+        <table style="width: 100%" border="0" cellpadding="0px" cellspacing="0px">
+            <tr>
+                <td>
+                    <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
+                        <tr>
+                            <td class="maincontent_headerL">
+                            </td>
+                            <td class="maincontent_headerC">
+                                Live Casino Win Loss Report
+                            </td>
+                            <td class="maincontent_headerR">
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="maincontent" style="padding-top:0px;">
+                        <div class="filterBox" style="width:922px; margin-top: 0px;">
+                            <div class="filterContent">
+                                <div>
+                                    <table>
+                                        <tr>
+                                            <td style="width:160px">
+                                                <div id="ddlLicenseese" class="multiselect" multiple="multiple" style="padding-top: 2px;"></div>
+                                            </td>
+                                            <td style="width:30px; text-align: right"><b>Date</b></td>
+                                            <td>
+                                                <select id="ddlDateSelection" style="width: 110px;">
+                                                    <option value="0">Today</option>
+                                                    <option value="1">Yesterday</option>
+                                                    <option value="2">Current week</option>
+                                                    <option value="3">Last week</option>
+                                                    <option value="4">Current month</option>
+                                                    <option value="5" selected="selected">Last month</option>
+                                                    <option value="6">Since last month</option>
+                                                    <option value="7">Specific date</option>
+                                                </select>
+                                            </td>
+                                            <td style="width:40px; text-align: right"><b>From</b></td>
+                                            <td><input type="text" id="txtfromdate" readonly="readonly" class="txtdate" style="width: 100px;" /></td>
+                                            <td style="width:30px; text-align: right"><b>To</b></td>
+                                            <td><input type="text" id="txttodate" readonly="readonly" class="txtdate" style="width: 100px;" /></td>
+                                            <td><input type="button"  id="btnSubmit" value="Submit" class="btn" onclick="liveCasinoWinLoss.selWinLossReport();" /></td>
+                                        </tr>
+                                        
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                * All figures are displayed in EUR<br />
+                                                * Data is only available up to yesterday (after 5AM GMT-4)<br />
+                                                * For data accuracy,  generate the billing report 5 days after month-end.<br />
+                                                * Licensing fee for 12bet has been dropped from 15% to 7% effective from 15th March 2013.<br />
+                                                * Licensing fee for FDL has been dropped from 5% to 1.5% effective from 1st March 2013.
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div>
+                                    <div id="InformationMssg" style="word-wrap: break-word;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contentBox">
+                            <div id="livecasinowinloss" class="freegrid hidden">
+                                <div class="grid-title">
+                                    <div class="grid-title-lable" id="reporttile">
+                                        Title</div>
+                                    <div class="grid-toolbox">
+                                        <input type="button" value="" id="btnExport" class="btnExcel" title="Export to Excel" onclick="liveCasinoWinLoss.exportExcel();" />
+                                    </div>
+                                </div>
+                                <div class="free-cell free-top-left">
+                                    <table class="grid-fixed-table free-cell-top-left">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <div class="table-cell" style="width: 100px; height: 35px">
+                                                        Licensee
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="table-cell" style="width: 120px; height: 35px">
+                                                        Turnover</div>
+                                                </th>
+                                                <th>
+                                                    <div class="table-cell" style="width: 100px; height: 35px">
+                                                        Total Transaction</div>
+                                                </th>
+                                                <th>
+                                                    <div class="table-cell" style="width: 100px; height: 35px">
+                                                        Gross Win</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="row_header_wrapper">
+                                    <div class="row_header row-headers-background">
+                                        <table class="grid-fixed-table row_header_content" id="tblContentHeader">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <div class="table-cell" style="width: 100px; height: 35px">
+                                                            Licensee
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="table-cell" style="width: 120px; height: 35px">
+                                                            Turnover</div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="table-cell" style="width: 100px; height: 35px">
+                                                            Total Transaction</div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="table-cell" style="width: 100px; height: 35px">
+                                                            Gross Win</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col_header row-headers-background scroll-y">
+                                    <div class="header-container">
+                                        <table class="grid-fixed-table col_header_content">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <div class="table-cell" style="width: 100px; height: 35px">
+                                                            Licensee
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="table-cell" style="width: 120px; height: 35px">
+                                                            Turnover</div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="table-cell" style="width: 100px; height: 35px">
+                                                            Total Transaction</div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="table-cell" style="width: 100px; height: 35px">
+                                                            Gross Win</div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="table-cell" style="width: 100px; height: 35px">
+                                                            Distributor's Revenue</div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="table-cell" style="width: 150px; height: 35px">
+                                                            Star Express's Revenue</div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="table-cell" style="width: 200px; height: 35px">
+                                                            Amount Due To ONEWorks</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="grid-container container">
+                                    <div class="content-container">
+                                        <table id="tblContent" class="grid-fixed-table col_header_content">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <div class="table-cell" style="width: 100px; height: 35px">
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="table-cell" style="width: 120px; height: 35px">
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="table-cell" style="width: 100px; height: 35px">
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="table-cell" style="width: 100px; height: 35px">
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="table-cell" style="width: 100px; height: 35px">
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="table-cell" style="width: 150px; height: 35px">
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="table-cell" style="width: 150px; height: 35px">
+                                                        </div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row_footer row-footer-background z999">
+                                    <table class="grid-fixed-table row_footer_content">
+                                        <thead>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="col_footer row-footer-background scroll-y">
+                                    <div class="footer-container">
+                                        <table class="col_footer_content grid-fixed-table">
+                                            <thead>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <iframe id="frm" width="0" height="0" frameborder="0" style="display: none"></iframe>
+    @{
+        if (DNAide.Core.CastAide.AsBoolean(Request["IsExport"]))
+        {
+            var normalLicensees = DNAide.Core.CastAide.AsString(Request["normallicensee"]);
+            var operators = DNAide.Core.CastAide.AsString(Request["operators"]);
+            var fromDate = DNAide.Core.CastAide.AsString(Request["fdate"]);
+            var toDate = DNAide.Core.CastAide.AsString(Request["tdate"]);
+            var reportTitle = DNAide.Core.CastAide.AsString(Request["reporttile"]);
+
+            Fanex.Tarus.Reports.Business.Licensee.LiveCasinoWinLoss.ILiveCasinoWLByLicenseeService liveCasinoService = new Fanex.Tarus.Reports.Business.Licensee.LiveCasinoWinLoss.LiveCasinoWLByLicenseeService();
+            liveCasinoService.ExportExcelLiveCasinoWinLossReport(normalLicensees, operators, fromDate, toDate, reportTitle);
+        }
+    }
+
+    <script language="javascript" type="text/javascript">
+        var _today = '@DateTime.Today.ToShortDateString()';
+        var _yesterday = '@DateTime.Today.AddDays(-1).ToShortDateString()';
+        window.rootUrl = '@Url.Content("~")';   
+    </script>
+    <script src="~/js/jQuery/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="~/js/jQuery/Template/jquery.tmpl.js" type="text/javascript"></script>
+    <script src="~/js/jQuery/jquery-ui-1.8.20.custom.min.js" type="text/javascript"></script>
+    <script src="~/js/jQuery/jquery.blockUI.1.33.js" type="text/javascript"></script>
+    <script src="~/js/BlockUI.js" type="text/javascript"></script>
+    <script src="~/js/MultipleSelect/jquery.multiselect.js" type="text/javascript"></script>
+    <script src="~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js?ver=1" type="text/javascript"></script>
+    <script type="text/javascript" src="~/js/common.js"></script>
+    <script src="~/views/Report/Licensee/LiveCasinoWinLoss/scripts/LiveCasinoWinLoss.js?ver=1" type="text/javascript"></script>
+</body>
+</html>

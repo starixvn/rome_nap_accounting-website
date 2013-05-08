@@ -1,0 +1,9 @@
+﻿red{   color:Red}
+.blue{ color: blue; cursor: pointer;text-decoration: none;}
+.clearfix{   clear:both}
+
+.col90{   width:90px; white-space:normal;word-wrap: break-word;}
+.bgeven td{background-color:#fff3c8;}
+.total td{background-color:#ddf6cf;font-weight: bold;}
+.totaltitle td{background-color:#FFEEDD;}
+.footer td{background-color:#c5d9b5;}

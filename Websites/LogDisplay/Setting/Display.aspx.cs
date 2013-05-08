@@ -1,0 +1,30 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using DNAide.Core;
+using Sunplus.Accounting.Business.Customer;
+using Sunplus.Accounting.Entities.Customer;
+
+public partial class LogDisplay_SettingPT_Display : PageBase
+{
+    public int custId;
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        var custName = CastAide.AsString(Request.QueryString["custname"], string.Empty);
+        if (!string.IsNullOrEmpty(custName))
+        {
+            CustDetail customer = CustomerUtils.GetCustomer(custName);
+            if (customer != null)
+            {
+                custId = CastAide.AsInt32(customer.CustId, 0);
+            }
+            else
+            {
+                custId = -1;
+            }
+        }
+    }
+}

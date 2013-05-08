@@ -1,0 +1,38 @@
+﻿
+
+.tbllayout
+{
+    width: 300px;
+}
+
+#errorMessage
+{
+    margin-top: 5px;
+}
+
+
+#reportNote
+{
+    margin-top: 10px;
+    margin-left: 5px;
+}
+
+.warning ul
+{
+    color: #6F6F6F;
+    font-weight: bold;
+    list-style: none outside none;
+    margin-bottom: 0px;
+    margin-left: -41px;
+    margin-top: 0;
+}
+
+.warning ul li
+{
+    line-height: 17px;
+}
+
+.warning li>ul 
+{
+    margin-left: -20px;
+}

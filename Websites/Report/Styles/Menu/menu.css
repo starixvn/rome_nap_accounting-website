@@ -1,0 +1,184 @@
+﻿
+a
+{
+    color: #FFFFFF;
+}
+#nav
+{
+    /**background: url("images/gradient.png") repeat-x scroll 0 -110px #7D7D7D; 	background: url("../Images/bg_box01.jpg") repeat-x scroll left top transparent;     height: 29px;     margin: 0 0 0 -1px;     padding: 3px 6px 0px 260px;*/
+    height: 35px;
+    margin: 0px;
+    padding: 0px 0 0 5px;
+    position: relative;
+    z-index: 3;
+}
+#nav:after
+{
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+}
+#nav
+{
+    display: inline-block;
+}
+#nav li
+{
+    float: left;
+    list-style: none outside none;
+    margin: 0px 1px 1px -1px;
+    padding-bottom: 3px;
+    position: relative;
+}
+
+/* main level link */
+#nav li a
+{
+    float: left;
+    width: auto;
+    overflow: hidden;
+    background: url(images/globalnavnormal.png) 100% no-repeat transparent;
+    background-position: 0px -2px;
+    cursor: pointer;
+    padding: 8px 5px 8px 5px;
+    min-width: 92px;
+    text-align: center;
+    font-weight: bold;
+}
+#nav a:hover
+{
+    background: #000;
+    color: #FFFFFF;
+}
+
+#nav a span
+{
+    width: 100%;
+    height: 30px;
+    margin: 3px auto 3px auto;
+}
+
+/* main level link hover */
+#nav li:hover > a, #nav li a:hover
+{
+    background:url(images/globalnavhover.png) 100% no-repeat transparent; 
+    background-position: 0px -2px;
+}
+#nav .mcurrent a
+{
+   background:url(images/globalnavcurrent.png) 100% 77px; 
+}
+
+/* sub levels link hover */
+#nav ul li:hover a, #nav li:hover li a
+{
+    background: none;
+    border: none;
+    color: #666;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none; /**/
+}
+#nav ul a:hover
+{
+    background: #0078ff url(images/gradient.png) repeat-x 0 -100px !important;
+    color: #fff !important;
+    text-shadow: 0 1px 1px rgba(0,0,0, .1);
+}
+
+/* dropdown */
+#nav li:hover > ul
+{
+    display: block;
+}
+
+/* level 2 list */
+#nav ul
+{
+    display: none;
+    margin: 0;
+    padding: 0;
+    width: 220px;
+    position: absolute;
+    top: 37px;
+    left: 0;
+    background: #ddd url(images/gradient.png) repeat-x 0 0;
+    border: solid 1px #b4b4b4;
+    z-index: 300;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0, .3);
+}
+#nav ul li
+{
+    float: none;
+    margin: 0;
+    padding: 0;
+}
+#nav ul li.detail
+{
+    background: url(images/next.png) no-repeat 170px center;
+}
+#nav ul a
+{
+    font-weight: normal;
+    padding: 5px 9px;
+    text-align: left;
+    text-shadow: 0 1px 0 #FFFFFF;
+    width: 92%;
+}
+
+/* level 3+ list */
+#nav ul ul
+{
+    left: 181px;
+    top: -3px;
+}
+
+/* rounded corners of first and last link */
+#nav ul li:first-child > a
+{
+    /*border:solid 1px #0078ff;*/
+    -webkit-border-top-left-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topright: 5px;
+}
+#nav ul li:first-child > a:hover
+{
+    /*border:solid 1px #0078ff;*/
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+#nav ul li:last-child > a
+{
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    -moz-border-radius-bottomright: 5px;
+}
+#nav ul li:last-child > a:hover
+{
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+#nav ul li.single > a:hover
+{
+    border-radius: 5px !important;
+}
+
+/* clearfix */
+
+
+html[xmlns] #nav
+{
+    display: block;
+}
+
+* html #nav
+{
+    height: 1%;
+}

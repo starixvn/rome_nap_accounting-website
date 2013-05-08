@@ -1,0 +1,121 @@
+﻿using System;
+using System.Collections;
+using System.IO;
+using System.Web;
+using DNAide.Core;
+using DNAide.Web;
+using ExcelUtil.Spreadsheet;
+using Microsoft.Office.Interop.Excel;
+using Sunplus.Accounting.Business;
+using Sunplus.Accounting.Business.Report;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.DataAccess.Report;
+
+/// <summary>
+/// Summary description for ReportBase
+/// </summary>
+
+namespace BLL.Report
+{
+    public abstract class ReportBase : BaseManager
+    {
+        public string ExcelContent = "";
+        protected string FileName = "FileName";
+        public string KeyCaching = "";
+        public ExcelFile excelFile;
+        public Workbook workBook;
+        public abstract string RenderHTML(Hashtable input);
+
+        public virtual void Export2Excel(Hashtable input)
+        {
+            string fileName = "ReportFile";
+            if (input.ContainsKey(FileName))
+                fileName = CastAide.AsString(input[FileName]);
+            if (string.IsNullOrEmpty(fileName)) fileName = "ReportFile";
+            HttpContext.Current.Response.Clear();
+            HttpContext.Current.Response.AddHeader("content-disposition", "attachment;filename=" + fileName + ".xls");
+            HttpContext.Current.Response.Charset = "";
+            HttpContext.Current.Response.ContentType = "application/vnd.ms-excel";
+            HttpContext.Current.Response.Write(ReportHTML.CSSExcelReport());
+            HttpContext.Current.Response.Write(ExcelContent);
+            HttpContext.Current.Response.Write("<table><tr><td class='tdhidden'></td></tr></table>");
+            HttpContext.Current.Response.End();
+        }
+
+        protected virtual void SetCacheReport(string key, object value, DateTime expire)
+        {
+            base.CacheData(key, value, expire);
+        }
+
+        public virtual string GetCachedReport(string key)
+        {
+            return base.GetCachedData(key);
+        }
+
+        public virtual object GetCachedObjData(string key)
+        {
+            return base.GetCachedObjData(key);
+        }
+
+        public virtual void ExportExcelFile(string ExportFileName)
+        {
+            if ((excelFile != null || workBook != null) && !string.IsNullOrEmpty(ExportFileName))
+            {
+                HttpContext.Current.Response.ContentType = "Application/x-msexcel";
+                HttpContext.Current.Response.AddHeader("Content-Disposition",
+                                                       string.Format("attachment; filename={0}.xls", ExportFileName));
+
+                if (excelFile != null)
+                    excelFile.SaveXls(HttpContext.Current.Response.OutputStream);
+                if (workBook != null)
+                {
+                    string tplFile = "TemplateAgencyAnalysisChart.xls";
+                    string path = HttpContext.Current.Server.MapPath(tplFile);
+                    string[] files = Directory.GetFiles(path.Replace(tplFile, ""));
+
+                    foreach (string file in files)
+                    {
+                        if (file.Contains(AppSession.AccUserName) && (file.Contains(".xls") || file.Contains(".xlsx")))
+                        {
+                            if (File.Exists(file))
+                                File.Delete(file);
+                        }
+                    }
+
+                    FileName = path.Replace(tplFile,
+                                            ExportFileName + "-" + AppSession.AccUserName + "-" + DateTime.Now.Ticks +
+                                            ".xls");
+                    workBook.SaveCopyAs(FileName);
+                    HttpContext.Current.Response.WriteFile(FileName);
+                }
+            }
+        }
+
+        #region CreateHeader
+
+        /// <summary>
+        /// Create Header with single calendar, button call report and button export to excel
+        /// </summary>
+        /// <param name="input">input is a hashtable, include 3 params: db, path and fdate</param>
+        /// <returns></returns>
+        public virtual string CreateHeader(Hashtable input)
+        {
+            string db = CastAide.AsString(input["db"]);
+            string path = CastAide.AsString(input["path"]);
+            string fdate = CastAide.AsString(input["wldate"]);
+
+            int displaydays = 0;
+            TimeSpan sp = DateTime.Today - ReportUtils.BalanceUp.BalanceUpDay;
+            displaydays = sp.Days;
+            string evt = "";
+            string strDateTimeSingle = Reports.GetDateTimeSingle(fdate, "Date", string.Empty, displaydays, "../", path,
+                                                                 evt);
+
+            TemplateHandler.RemoveBlock(ref strDateTimeSingle, "getdata");
+
+            return strDateTimeSingle;
+        }
+
+        #endregion
+    }
+}
