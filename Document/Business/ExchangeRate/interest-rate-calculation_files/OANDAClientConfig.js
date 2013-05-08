@@ -1,0 +1,1 @@
+OANDAClientConfig.load({"clicktracks":{"datasets":"fxtrade","enableExitTracking":"0","firstPartyJDC":"1","domainSuffixes":["oanda.com","oanda.ae","oanda.sg","oanda.ca","oanda.co.uk"],"serverPath":"//webstats.oanda.com/cgi-bin/ctasp-server.cgi?"},"cookie_server":"c.x.oanda.com"});

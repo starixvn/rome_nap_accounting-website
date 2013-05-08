@@ -1,0 +1,673 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><script type="text/javascript"><!--
+// Inlined /jslib/perf/log_start_time.js
+window.start_time=new Date();
+//-->
+</script><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Interest Rate Calculation |  OANDA fxTrade </title><!--[if lte IE 6]>
+    <link rel="stylesheet" href="/wandacache/ie6-0b33210d9f84b3aff5567d5b0cd9f6cb3126fd35.css" type="text/css"><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!--[EndIf]----><!--[if IE 7]>
+    <link rel="stylesheet" href="/wandacache/ie7-1fb82c0dd00a9dcd06f525edee017fdce4042ae1.css" type="text/css"><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!--[EndIf]----><!--[if IE 8]>
+    <link rel="stylesheet" href="/wandacache/ie8-8e1f0331ee462eb9907ec5b0172dbaf3c30b8193.css" type="text/css"><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!--[EndIf]----><!--[if gte IE 9]><!--><link rel="stylesheet" href="interest-rate-calculation_files/e0e037f75bca190e1e6945983a7b734c7b31c90d.css" type="text/css"><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><link rel="stylesheet" type="text/css" href="interest-rate-calculation_files/umbrella-44a9a63378ef1f926871fdd18fed1c95c0f194d9.css"><link rel="stylesheet" type="text/css" href="interest-rate-calculation_files/header-1352ae35e88952afb8d6b635b95c20c1e720e4e4.css"><link rel="stylesheet" type="text/css" href="interest-rate-calculation_files/breadcrumb-76329c2cf37b87d45938a2306ff356cb6b36f166.css"><link rel="stylesheet" type="text/css" href="interest-rate-calculation_files/media_with_caption-442bd56bb86911a7ad8867a6376e50e827144962.css"><!--<![endif]--><!--[if lt IE 9]>
+<script>
+document.createElement('header');
+document.createElement('nav');
+document.createElement('footer');
+</script><style>
+    header, footer, nav {
+        display:block;
+    }
+</style><![endif]--><link rel="stylesheet" type="text/css" href="interest-rate-calculation_files/legacy-330bb8e7bb148b7cb3ba89a62eab80ea3ea929ef.css"><script type="text/javascript">window.CT_X_Seg = '';</script><meta name="description" content=""><meta name="keywords" content="interest,OANDA,rates,inter,intereses,sobre,2001,Zinsen,00065214,rate,transacci,trade,1000,that,Berechnung,tipo,borrowing,Transaktion,tipos,currency,7308,00019583,5882,account,Position,money,wird,werden,lending,eine,2000,sitos,posici,cuenta,0261,units,Interest,charged,00209,91730,durante,apply,when,open,stamos,this,Units,berechnet,Euro,time,01807,year,03411,unidades,Zinss,fxTrade,following,than,Calculate,abonar,Umrechnung,amount,copy,position,20580,lculo,then,years,duration,dass,quoted,sind,hrung,Zinssatz,appropriate,your,Konto,higher,charges,pays,calculate,paid,held,Jahr,abierta,cargar,31557600,exchange,45am,entsprechenden,Ihnen,Dauer,obtained,einem,with,closed,lifetime,Wert,secs,cargados,bezahlt,tiempo,calcular,8423,enero,duraci,lends,Video,daily,second,para,0476,6180,5176,balance,between,zwei,zwischen,euros,Habenzinssatz,calcula,Geld,corta,Wenn,offene,from,Rate,they,halten,Monday,credited,Short,entre,moneda,short,4516,01604,5606,02401,00918,oder,seconds,dinero,same,erhobenen,saldo,0038,calculating,numbers,obtain"><meta property="fb:admins" content="100001770341310"><meta property="og:title" content="Interest Rate Calculation | OANDA"><meta property="og:type" content="company"><meta property="og:image" content="http://www.oanda.com/images/logo_header.gif"><meta property="og:url" content="http://fxtrade.oanda.com/help/policies/interest-rate-calculation"><meta property="og:site_name" content="OANDA"><link href="https://plus.google.com/114987208887381442392" rel="publisher"><link rel="shortcut icon" href="http://fxtrade.oanda.com/images/favicon.ico"><link rel="canonical" href="http://fxtrade.oanda.com/help/policies/interest-rate-calculation"><script src="interest-rate-calculation_files/ctasp-server.htm" type="text/javascript"></script></head><body>
+<div id="region_reminder" style="display:none;">
+    Based on your location, we have redirected you to <strong>fxTrade<span id="region_reminder_division_name"></span></strong>.
+
+    <span id="region_reminder_controls">
+        <a onclick="return false;" href="http://fxtrade.oanda.com/">Close</a>
+    </span>
+</div>
+
+<div id="main_body">
+    
+        
+
+<header><div id="top_nav">
+        <ul><li>
+    <input id="query" name="query" default="SEARCH" value="SEARCH" onkeypress="return checkSubmit(event)" type="text"><span id="search_button" onclick="searchRedirect()"></span>
+</li>
+
+            
+        <li id="division_dropdown">
+            <span id="region_select">U.S.
+</span>
+            <img src="interest-rate-calculation_files/1x1.gif" style="background-image: url(&quot;/wandacache/86c2d7f4169abf6fd032877eaa6148cdc02f4e4f.png&quot;); background-position: -287px -282px; width: 9px; height: 5px;"><div class="clear_div"></div>
+            <ul><li><a href="http://www.oanda.sg/">ASIA PACIFIC</a></li>
+    <li><a href="http://fxtrade.oanda.ca/">CANADA</a></li>
+    <li><a href="http://fxtrade.oanda.co.uk/">EUROPE</a></li>
+</ul></li>
+
+
+            
+
+    <li id="language_dropdown">
+        <span id="language_select">ENGLISH</span>
+        <img src="interest-rate-calculation_files/1x1.gif" style="background-image: url(&quot;/wandacache/86c2d7f4169abf6fd032877eaa6148cdc02f4e4f.png&quot;); background-position: -287px -282px; width: 9px; height: 5px;"><div class="clear_div"></div>
+        <ul><li><a id="cns" href="http://fxtrade.oanda.com/lang/cns/">简体</a></li>
+                
+
+            
+        
+            
+
+                
+                    <li><a id="cnt" href="http://fxtrade.oanda.com/lang/cnt/">繁體</a></li>
+                
+
+            
+        
+            
+
+                
+                    <li><a id="de" href="http://fxtrade.oanda.com/lang/de/">DEUTSCH</a></li>
+                
+
+            
+        
+            
+        
+            
+
+                
+                    <li><a id="es" href="http://fxtrade.oanda.com/lang/es/">ESPAÑOL</a></li>
+                
+
+            
+        
+            
+
+                
+                    <li><a id="fr" href="http://fxtrade.oanda.com/lang/fr/">FRANÇAIS</a></li>
+                
+
+            
+        
+            
+
+                
+                    <li><a id="it" href="http://fxtrade.oanda.com/lang/it/">ITALIANO</a></li>
+                
+
+            
+        
+            
+
+                
+                    <li><a id="ja" href="http://fxtrade.oanda.com/lang/ja/">日本語</a></li>
+                
+
+            
+        
+            
+
+                
+                    <li><a id="ko" href="http://fxtrade.oanda.com/lang/ko/">한국어</a></li>
+                
+
+            
+        
+            
+
+                
+                    <li><a id="pt" href="http://fxtrade.oanda.com/lang/pt/">PORTUGUÊS</a></li>
+                
+
+            
+        
+            
+
+                
+                    <li><a id="ru" href="http://fxtrade.oanda.com/lang/ru/">PУССКИЙ</a></li>
+                
+
+            
+        
+
+        </ul></li>
+
+
+        </ul></div>
+
+    <div id="reg_signin_buttons_container">
+    
+<div id="reg_button_container">
+    <span class="title">
+        fxTrade
+    </span>
+    <div class="one_button_title_mousetext_container">
+        <span class="button">
+            <a href="http://fxtrade.oanda.com/your_account/fxtrade/register/individual/beforeyoubegin">Register</a>
+
+
+        </span>
+    </div>
+    <span class="mousetext">
+        or
+
+<a href="http://fxtrade.oanda.com/my-account/">Sign in</a>
+
+
+    </span>
+</div>
+
+</div>
+
+
+    <div id="logo">
+        <a href="http://www.oanda.com/"><img src="interest-rate-calculation_files/1x1.gif" style="background-image: url(&quot;/wandacache/e14b1a94d99a395fef9f0bcef488554cae3eb0b9.png&quot;); background-position: 0px -204px; width: 208px; height: 51px;"></a>
+    </div>
+
+    <div id="nav_breadcrumb_container">
+        <div id="navigation">
+            
+
+<ul id="tab_navigation"><li class="selected">
+                <span class="tab_left "></span>
+                <span class="tab_body"><a href="http://fxtrade.oanda.com/">Forex Trading</a>
+
+</span>
+                <span class="tab_right dark-light"></span>
+            </li>
+        
+            <li>
+                <span class="tab_left "></span>
+                <span class="tab_body"><a href="http://www.oanda.com/currency/converter/">Currency Converter</a>
+
+</span>
+                <span class="tab_right light-light"></span>
+            </li>
+        
+            <li>
+                <span class="tab_left "></span>
+                <span class="tab_body"><a href="http://www.oanda.com/rates/">Rate Subscriptions</a>
+
+</span>
+                <span class="tab_right light-light"></span>
+            </li>
+        
+            <li>
+                <span class="tab_left "></span>
+                <span class="tab_body"><a href="http://fxglobaltransfer.oanda.com/">Money Transfers</a>
+
+</span>
+                <span class="tab_right light-light end"></span>
+            </li>
+        
+</ul><ul id="sub_navigation"><li><a href="http://fxtrade.oanda.com/why/">Why OANDA</a>
+</li>
+<li><a href="http://fxtrade.oanda.com/trade-forex/">Products</a>
+</li>
+<li><a href="http://fxtrade.oanda.com/learn/">Learn</a>
+</li>
+<li><a href="http://fxtrade.oanda.com/analysis/">News &amp; Analysis</a>
+</li>
+<img src="interest-rate-calculation_files/1x1.gif" class="sub_nav_logo" style="background-image: url(&quot;/wandacache/e14b1a94d99a395fef9f0bcef488554cae3eb0b9.png&quot;); background-position: -139px -255px; width: 66px; height: 35px;"></ul><!-- subnav --></div>
+        
+    
+
+<div id="breadcrumb_list">
+
+    
+        
+            
+                
+                    
+                        <ul><li class="head"><a href="http://fxtrade.oanda.com/?srccont=breadcrumb"><span>Home
+
+</span></a></li>
+                                            
+                                        
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        
+                                            
+                                                
+                                                    
+                                                        | <li><a href="http://fxtrade.oanda.com/help/?srccont=breadcrumb"><span>Forex Trading Help Desk</span></a></li>
+                                                    
+                                                
+                                            
+                                        
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        
+                                            | <li><a href="http://fxtrade.oanda.com/help/policies/?srccont=breadcrumb"><span>Trading Policies</span></a></li>
+                                        
+                                    
+                                
+                            
+                        
+                            
+                                 | <li class="tail"><span>Interest Rate Calculation</span></li>
+                            
+                        
+                        </ul><div id="help">
+    <div id="help_angle"></div>
+    <a href="http://fxtrade.oanda.com/help/"><img src="interest-rate-calculation_files/1x1.gif" style="background-image: url(&quot;/wandacache/e14b1a94d99a395fef9f0bcef488554cae3eb0b9.png&quot;); background-position: -227px -51px; width: 9px; height: 9px;">Help
+</a>
+</div>
+
+
+</div>
+
+
+    </div>
+
+    
+
+</header><div id="main_core_container">
+    <div id="media_header">
+    
+</div>
+
+    
+<div id="sidebar">
+    <div id="sidebar_contents">
+        <div id="help_button">
+    <img src="interest-rate-calculation_files/1x1.gif" style="background-image: url(&quot;/wandacache/86c2d7f4169abf6fd032877eaa6148cdc02f4e4f.png&quot;); background-position: -204px -242px; width: 31px; height: 23px;"><a href="http://server.iad.liveperson.net/hc/5807093/?cmd=file&amp;file=visitorWantsToChat&amp;site=5807093&amp;byhref=1&amp;SESSIONVAR%21skill=Customer%20Service&amp;imageUrl=https://www.oanda.com/share/i/" onclick="javascript:window.open('http://server.iad.liveperson.net/hc/5807093/?cmd=file&amp;file=visitorWantsToChat&amp;site=5807093&amp;SESSIONVAR!skill=Customer%20Service&amp;imageUrl=https://www.oanda.com/share/i/&amp;referrer='+escape(document.location),'chat5807093','width=472,height=320');return false;">
+    LIVE HELP
+
+    </a>
+</div>
+
+
+    </div>
+</div>
+
+    <div id="title_bar">
+
+
+
+    <div id="headline_container">
+        <h1>Interest Rate Calculation</h1>
+
+    </div>
+
+</div>
+
+    <div id="main_content">
+    <div class="legacy">
+    <div id="CORE_LEFTBLOCK">
+        <div class="group">
+    
+</div>
+<div class="group">
+    <h2>Continuously and Second-by-second</h2>
+<p>OANDA pays competitive interest rates on the account balances, and it
+ pays and charges interest rates on the currency pairs currently held in
+ customer positions. Moreover, OANDA calculates interest rates charged 
+and paid continuously, second-by-second. This is in contrast to other 
+financial markets, where interest rate payments are made at daily 
+intervals with the shortest increment of one business day. This document
+ describes how interest rates are charged and paid.</p>
+<script language="JavaScript" type="text/javascript">
+<!--
+function openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+//-->
+</script><p>Interest rates vary from currency to currency, and they can change on a daily basis.
+
+There are two types of interest rates that come in to play in this context: <strong><em>lending (ask) interest rates</em></strong> apply when OANDA lends you money to buy a currency, and <strong><em>borrowing (bid) interest rates</em></strong>
+ apply when OANDA holds your money. Lending rates are always higher than
+ borrowing rates (e.g., when the bank lends you money, it charges a 
+higher interest rate than it gives you on the money on your accounts). </p>
+<ul><li><a href="http://fxtrade.oanda.com/analysis/historical-rates">Find out OANDA's bid and ask interest rates.</a></li>
+<li><a href="http://fxtrade.oanda.com/analysis/interest-calculator">Calculate the interest you pay or earn when you hold a position over a period of time.</a></li></ul></div>
+<div class="group">
+    <h2>Interest Crediting and Debiting</h2>
+<p>OANDA interest crediting and debiting is performed daily at 4pm EST, 
+and whenever an open trade is closed. Hence, interest on the account 
+balance is paid at 4pm EST each day, with an appropriate entry in the 
+transaction table of each account. Since the account balance is held in 
+USD, the USD borrowing rate is applied. To calculate the account balance
+ interest at 4pm, OANDA analyses the account balance held during each 
+second of the previous 24 hours and pays interest accordingly. For 
+example, if the account balance at 4pm is $10,000 and it changes to 
+$12,000 at 10pm the same night and stays at $12,000 until 4pm the 
+following day, then 6 hours worth of interest is paid on $10,000 and 18 
+hours worth of interest is paid on $12,000.</p>
+
+<p>Calculating interest on open trades is more involved. An open trade, 
+say 1000 units of EUR/CHF, involves two currencies: the Euro and the 
+Swiss Franc. If the open trade is long (i.e., you bought Euro and sold 
+Swiss Francs), then you effectively are long (i.e., you hold) 1000 Euro 
+and OANDA pays you the borrowing interest rate on the 1000 EURO for the 
+duration you hold the trade. At the same time, you are short on the 
+equivalent amount of Swiss Francs, so OANDA charges you the lending 
+interest rate on that amount for the duration of the trade. These 
+interest rates are converted to USD before they are credited/charged to 
+your account.</p>
+<p>If the open trade is short (i.e., you sold Euro and bought Swiss 
+Francs), then you are short EUR and OANDA charges you lending interest 
+rates for that amount of EUR, and you are long CHF and OANDA pays you 
+borrowing interest rates for the corresponding amount of CHF.</p>
+
+</div>
+<div class="group">
+    <h2>How Interest is Calculated</h2>
+<p>The specific algorithm used to calculate the interest on an open trade in XXX/YYY is as follows:</p>
+
+<p><strong>For a long position:</strong><br>1. calculate the borrowing interest on XXX for the duration in question and convert it to USD<br>2. calculate the lending interest on YYY for the duration in question and convert it to USD<br>3. subtract (2) from (1). If negative, then this is the interest you owe --- if positive, then this is what OANDA will pay.<br><br><strong>For a short position:</strong><br>1. calculate the borrowing interest on YYY for the duration in question and convert it to USD<br>2. calculate the lending interest on XXX for the duration in question and convert it to USD<br>3. subtract (2) from (1). If negative, then this is the interest you owe — if positive, then this is what OANDA will pay.</p>
+<p>OANDA credits or debits interest on the account (with an appropriate 
+transaction) for trade that is open at 4pm, calculated for the time 
+interval starting at 4pm the previous day or the time the trade was 
+made, whichever is later, and ending at 4pm. When a trade is closed, 
+OANDA credits or debits interest on the account for the trade, 
+calculated for the time interval starting at the previous 4pm or the 
+time the trade was opened, whichever is later, and ending at the time 
+the trade is closed.</p>
+<p>Let us consider two specific examples.</p>
+
+</div>
+<div class="group">
+    <h2>Example 1: Buy 1000 units EUR/JPY @ 91.7308 on Monday Jan 1, 2001 at 12:02 a.m.</h2>
+<h3 class="nolink">Applicable interest rates</h3>
+<p>Assume that the following interest rates apply for Monday Jan 1, 2001:</p>
+<blockquote style="margin-bottom:0;margin-top:0;"><p>EUR - 4.76 / 4.81%<br>JPY - 0.28 / 0.38 %</p></blockquote>
+<p>Note that the borrowing rate is quoted first, followed by the lending
+ rate, and that interest rates are quoted in percentage points per year.</p>
+<h3 class="nolink">Calculate duration of trade</h3>
+<p>Now assume that the trade is closed at 5:45am later the same day on 
+Jan 1, 2001. The amount of time the trade is held open is 20580 seconds 
+(= 12:01am - 5:45am), or 0.00065214 years (20580 secs / 31557600 secs 
+--- there are 31,557,600 seconds in a year).</p>
+<h3 class="nolink">Calculate interest obtained on EUR</h3>
+<p>For calculating the interest obtained on our EUR position, we use the following formula:</p>
+<blockquote style="margin-bottom:0;margin-top:0;"><p>units * lifetime (in years) * EUR borrowing interest rate (%/year) * conversion to USD</p></blockquote>
+<p>If we plug in the appropriate numbers, we obtain:</p>
+<blockquote style="margin-bottom:0;margin-top:0;"><p>1000 * 0.00065214 * 4.76% * EUR/USD bid exchange rate<br>&nbsp;&nbsp;&nbsp;&nbsp; = 1000 * 0.00065214 * 0.0476 * 0.8423<br>&nbsp;&nbsp;&nbsp;&nbsp; = USD 0.0261</p></blockquote>
+<h3 class="nolink">Calculate interest charged in JPY</h3>
+<p>For calculating the interest charged on our JPY position, we first 
+note that we effectively are short 1000 Euros worth of Japanese Yen, 
+which, with the exchange rate of 91.7308 is 91730.8 units of JPY (= 1000
+ * 91.7308) on which interest is charged. We then use the following 
+formula similar to the one used above:</p>
+<blockquote style="margin-bottom:0;margin-top:0;"><p>units * lifetime (in years) * JPY lending interest rate (%/year) * conversion to USD </p></blockquote>
+<p>If we plug in the appropriate numbers, we obtain:</p>
+<blockquote style="margin-bottom:0;margin-top:0;"><p> 91730.8 * 0.00065214 * 0.38% * JPY/USD ask exchange rate &nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp; = 91730.8 * 0.00065214 * 0.0038 * 0.00918 &nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp; = USD 0.00209 </p></blockquote>
+<h3 class="nolink">Difference between the two interest amounts</h3>
+<p>The account will be credited by the difference between the interest to be credited and the interest to be debited:</p>
+<blockquote style="margin-bottom:0;margin-top:0;"><p>&nbsp; $0.0261 - 0.00209 = USD 0.02401 </p></blockquote>
+<p>Note that in this case the customer is collecting significantly more 
+money than they are paying, due solely to the discrepancy in interest 
+rates between the base and the quote currencies. In this instance, the 
+base currency (EUR) interest rate is higher than the quote (JPY) 
+interest rate, which is referred to as a "discount" quotation.</p>
+<p>If the inverse were true (base currency interest rate lower than the 
+quote currency interest rate), the instrument would be said to be quoted
+ at "premium".</p>
+
+</div>
+<div class="group">
+    <h2>Example 2: Sell 2000 units GBP/CHF @ 2.5882 on Monday Jan 1, 2001 at 04:02 a.m.</h2>
+<h3 class="nolink">Applicable interest rates</h3>
+<p>Assume that the following interest rates apply for Monday Jan 1, 2001:</p>
+<blockquote style="margin-bottom:0;margin-top:0;"><p>CHF - 3.18 / 3.28 %<br>GBP - 5.97 / 6.00 %</p></blockquote>
+<p>Note again that the borrowing rate is quoted first, followed by the 
+lending rate, and that interest rates are quoted in percentage points 
+per year.</p>
+<p>&nbsp;</p>
+<h3 class="nolink">Calculate lifetime of trade</h3>
+<p>Assume that this trade is also closed at 5:45am later the same day on
+ Jan 1, 2001. The amount of time the trade is held open is 6180 seconds 
+(= 04:00am - 5:45am), or 0.00019583 years (6180 secs / 31557600 secs)</p>
+<p>&nbsp;</p>
+<h3 class="nolink">Calculate interest obtained on CHF</h3>
+<p>For calculating the interest obtained on our CHF position, we first 
+calculate the number of CHF units the interest is applied to: 2000 GBP 
+units worth of CHF with the exchange rate of 2.5882 is 2000 * 2.5882 = 
+5176.4. Then we apply the following formula again:</p>
+<blockquote style="margin-bottom:0;margin-top:0;"><p>units * lifetime (in years) * CHF borrowing interest rate (%/year) * conversion to USD</p></blockquote>
+<p>If we plug in the appropriate numbers, we obtain:</p>
+<blockquote style="margin-bottom:0;margin-top:0;"><p>5176.4 * 0.00019583 * 3.18% * 0.5606<br>&nbsp;&nbsp; = USD 0.01807</p></blockquote>
+<p>&nbsp;</p>
+<h3 class="nolink">Calculate interest charged in GBP</h3>
+<p>For calculating the interest charged on our GBP position, we again use the following formula similar to the one used above:</p>
+<blockquote style="margin-bottom:0;margin-top:0;"><p>units * lifetime (in years) * GBP lending interest rate (%/year) * conversion to USD</p></blockquote>
+<p>If we plug in the appropriate numbers, we obtain:</p><blockquote>2000 * 0.00019583 * 6.00% * 1.4516<br>&nbsp;&nbsp; = USD 0.03411</blockquote>
+<p>&nbsp;</p>
+<h3 class="nolink">Difference between the two interest amounts</h3>
+<p>The account will be credited by the difference between the interest to be credited and the interest to be debited:</p>
+<blockquote style="margin-bottom:0;margin-top:0;"><p>$ 0.01807 - $ 0.03411 =&nbsp; - USD 0.01604</p></blockquote>
+<p>Since the amount is negative, the aggregate interest is charged to the account.</p>
+
+</div>
+
+    </div>
+    <div id="CORE_RIGHTBLOCK">
+        
+    </div>
+    <div class="clear_div"></div>
+</div>
+</div>
+
+    <div class="clear_div"></div>
+</div>
+
+
+    
+        
+
+<footer><div id="footer_link_wrapper">
+        <div id="footer_links_left" class="section">
+            <div id="seo_footer_links">
+                
+<div class="footer_column">
+    <div class="footer_link_header">
+        FOREX ACCOUNTS
+
+    </div>
+
+    <div class="footer_link_column">
+        <ul><li><a href="http://fxtrade.oanda.com/trade-forex/fxtrade/">Forex Trading Account</a>
+
+</li>
+            
+                <li><a href="http://fxtrade.oanda.com/trade-forex/demo/">Forex Demo Account</a>
+
+</li>
+            
+                <li><a href="http://fxtrade.oanda.com/trade-forex/metatrader/">MetaTrader 4</a>
+
+</li>
+            
+                <li>&nbsp;
+
+</li>
+            
+                <li>&nbsp;
+
+</li>
+            
+        </ul></div>
+</div>
+
+
+<div class="footer_column">
+    <div class="footer_link_header">
+        MOBILE FOREX APPS
+
+    </div>
+
+    <div class="footer_link_column">
+        <ul><li><a href="http://fxtrade.oanda.com/trade-forex/mobile/iphone">iPhone Forex App</a>
+
+</li>
+            
+                <li><a href="http://fxtrade.oanda.com/trade-forex/mobile/ipad">iPad Forex App</a>
+
+</li>
+            
+                <li><a href="http://fxtrade.oanda.com/trade-forex/mobile/android">Android Forex App</a>
+
+</li>
+            
+                <li><a href="http://fxtrade.oanda.com/trade-forex/mobile/blackberry">BlackBerry Forex App</a>
+
+</li>
+            
+        </ul></div>
+</div>
+
+
+<div class="footer_column">
+    <div class="footer_link_header">
+        FOREX TOOLS
+
+    </div>
+
+    <div class="footer_link_column">
+        <ul><li><a href="http://fxtrade.oanda.com/community/fxmessage/ultimatebb.cgi">Forex Forums</a>
+
+</li>
+            
+                <li><a href="http://fxtrade.oanda.com/analysis/forex-order-book">Forex Order Book</a>
+
+</li>
+            
+                <li><a href="http://fxtrade.oanda.com/analysis/labs/">Forex Labs</a>
+
+</li>
+            
+                <li><a href="http://fxtrade.oanda.com/analysis/economic-indicators/">Economic Indicators</a>
+
+</li>
+            
+                <li><a href="http://fxtrade.oanda.com/analysis/infographics/">Forex Infographics</a>
+
+</li>
+            
+        </ul></div>
+</div>
+
+
+                <div style="clear:both;"></div>
+            </div>
+            <div id="common_disclaimer">
+                
+<span>© 1996 - 2012 OANDA Corporation. All rights reserved. "OANDA", 
+"fxTrade" and OANDA's "fx" family of trade marks are owned by OANDA 
+Corporation. All other trade marks appearing on this Website are the 
+property of their respective owners.
+</span>
+
+            </div>
+        </div>
+
+        <div id="common_footer_links">
+            
+<div class="footer_column">
+    <div class="footer_link_header">
+        OANDA Services
+
+
+    </div>
+
+    <div class="footer_link_column">
+        <ul><li><a href="http://fxtrade.oanda.com/">Forex Trading</a>
+
+</li>
+            
+                <li><a href="http://www.oanda.com/currency/converter/">Currency Converter</a>
+
+</li>
+            
+                <li><a href="http://www.oanda.com/rates/">Rate Subscriptions</a>
+
+</li>
+            
+                <li><a href="http://fxglobaltransfer.oanda.com/">Money Transfers</a>
+
+</li>
+            
+                <li><a href="http://forexblog.oanda.com/">Forex Blog</a>
+
+</li>
+            
+                <li><a href="http://fxconsulting.oanda.com/">Currency Hedging</a>
+
+</li>
+            
+                <li><a href="https://fxunity.oanda.com/">fxUnity</a>
+
+</li>
+            
+        </ul></div>
+</div>
+
+<div class="footer_column">
+    <div class="footer_link_header">
+        About OANDA
+
+
+    </div>
+
+    <div class="footer_link_column">
+        <ul><li><a href="http://www.oanda.com/corp/">About Us</a>
+
+</li>
+            
+                <li><a href="http://www.oanda.com/corp/story/">Our Story</a>
+
+</li>
+            
+                <li><a href="http://www.oanda.com/corp/oandainsights/">Corporate Blog</a>
+
+</li>
+            
+                <li><a href="http://www.oanda.com/corp/news/">Press Room</a>
+
+</li>
+            
+                <li><a href="http://www.oanda.com/corp/jobs/">Jobs</a>
+
+</li>
+            
+        </ul></div>
+</div>
+
+
+        </div>
+
+        <div style="clear:both;"></div>
+    </div>
+    <div id="site_disclaimer" class="section">
+Trading off-exchange foreign exchange on margin carries a high level of 
+risk and is not suitable for all investors. Trading through an online 
+platform carries additional risks.<br>
+Please refer to our more detailed <a href="http://fxtrade.oanda.com/legal/risk-warning">Risk Warning</a>, and <a href="http://www.nfa.futures.org/NFA-investor-information/investor-alerts/forex-investor-alert-february2007.HTML" target="_blank">NFA's FOREX INVESTOR ALERT</a>.
+</div>
+
+
+
+    <div id="extra_links" class="section">
+        <ul><li><a href="http://www.oanda.com/site/terms-of-use">Terms of Use</a></li>
+<li><a href="http://fxtrade.oanda.com/privacy">Privacy Policy</a></li>
+<li><a href="http://fxtrade.oanda.com/site-map">Site Map</a></li>
+<li><a href="http://fxtrade.oanda.com/legal/">Legal</a></li>
+<li><a href="http://fxtrade.oanda.com/help/customer-service/">Contact Us</a></li>
+<li><a href="http://fxtrade.oanda.com/help/customer-service/feedback">Feedback</a></li>
+</ul></div>
+
+</footer></div>
+
+
+
+<script src="interest-rate-calculation_files/c-6180c00f16ead23217ee2197cc00fd806660945f.js"></script><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><script type="text/javascript" src="interest-rate-calculation_files/header_search-02b16727516a607ed506d31f7d918e3e0b782049.js"></script><script src="interest-rate-calculation_files/OANDAClientConfig.js" type="text/javascript"></script></body></html>
