@@ -51,6 +51,9 @@
     <Reference Include="Fanex.MailDeliver.MailClient">
       <HintPath>..\Dependency\Fanex\Fanex.MailDeliver.MailClient.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Tarus.Web.Controllers">
+      <HintPath>..\Websites\Bin\Fanex.Tarus.Web.Controllers.dll</HintPath>
+    </Reference>
     <Reference Include="LVAPIDBLibrary">
       <HintPath>..\Dependency\3rdParty\LiveCasino\LVAPIDBLibrary.dll</HintPath>
     </Reference>
