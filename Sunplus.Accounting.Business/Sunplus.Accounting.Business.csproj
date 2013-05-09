@@ -66,7 +66,7 @@
       <HintPath>..\Dependency\Fanex\Couchbase.dll</HintPath>
     </Reference>
     <Reference Include="DNAide">
-      <HintPath>..\Dependency\DNAide.dll</HintPath>
+      <HintPath>..\..\..\MAIN\accountingsite\Dependency\DNAide.dll</HintPath>
     </Reference>
     <Reference Include="ExcelUtil">
       <HintPath>..\Dependency\ExcelUtil.dll</HintPath>
@@ -88,9 +88,7 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>..\..\..\..\Dependency\Microsoft.Office.Interop.Excel.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\Dependency\Fanex\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -108,18 +106,14 @@
     <Reference Include="SharedCache.WinServiceCommon">
       <HintPath>..\Dependency\SharedCache.WinServiceCommon.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Bingo.Core">
-      <HintPath>..\Dependency\Sunplus.Bingo.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Sunplus.Bingo.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Sunplus.Bingo.Data">
       <HintPath>..\Dependency\Sunplus.Bingo.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Bingo.Entities">
-      <HintPath>..\Dependency\Sunplus.Bingo.Entities.dll</HintPath>
+    <Reference Include="Sunplus.Bingo.DataServices">
+      <HintPath>..\Dependency\Sunplus.Bingo.DataServices.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Bingo.Services">
-      <HintPath>..\Dependency\Sunplus.Bingo.Services.dll</HintPath>
+    <Reference Include="Sunplus.Bingo.Entities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Dependency\Sunplus.Bingo.Entities.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Core.CachingLib">
       <HintPath>..\Dependency\Sunplus.Core.CachingLib.dll</HintPath>
@@ -452,6 +446,14 @@
     <None Include="Report\Winlost\MatchWinLossSingle.cs.exclude" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\MAIN\bingo\Sunplus.Bingo.Core\Sunplus.Bingo.Core.csproj">
+      <Project>{DDCA5291-056F-40A0-B464-FC091B454D41}</Project>
+      <Name>Sunplus.Bingo.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\MAIN\bingo\Sunplus.Bingo.Services\Sunplus.Bingo.Services.csproj">
+      <Project>{4F38F799-68DB-492A-8205-03A87B8A9D9E}</Project>
+      <Name>Sunplus.Bingo.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.BetList\Fanex.Tarus.BetList.csproj">
       <Project>{3C9E433C-4C0D-4CED-8FE7-26BC80894B0F}</Project>
       <Name>Fanex.Tarus.BetList</Name>
@@ -513,10 +515,57 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="ADODB">
+      <Guid>{00000205-0000-0010-8000-00AA006D2EA4}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>5</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="MSComctlLib">
+      <Guid>{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="MSDATASRC">
+      <Guid>{7C0FFAB0-CD84-11D0-949A-00A0C91110ED}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="OWC11">
+      <Guid>{0002E558-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
