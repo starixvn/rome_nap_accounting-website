@@ -17,15 +17,15 @@ namespace Fanex.Tarus.BetList.Controller
     using Fanex.BetList.Accounting.Criteria;
     using Fanex.BetList.Accounting.Models;
     using Fanex.BetList.Accounting.Services;
-    using Fanex.Tarus.Web.Controllers;
+    
     using Fanex.BetList.Accounting;
     using Sunplus.Accounting.Core.Common;
-    using Fanex.Tarus.Web.Controllers.Filters;
+
     using DNAide.Core;
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class TarusBetListController : BaseController
+    public class TarusBetListController : Controller
     {
         private readonly IBetListService _betListService;
 
@@ -38,7 +38,7 @@ namespace Fanex.Tarus.BetList.Controller
         /// Betlist by refno
         /// </summary>
         /// <returns></returns>
-        [AuthenticateRead]
+        
         public ActionResult BetListByRefNo_Main()
         {
             return View("~/Views/BetList/BetListByRefNo/Index.cshtml");
@@ -50,7 +50,7 @@ namespace Fanex.Tarus.BetList.Controller
         /// </summary>
         /// <param name="CustID"></param>
         /// <returns></returns>
-        [AuthenticateRead]
+       
         public ActionResult BetListByCustInfo(int CustID)
         {
             ViewBag.CustID = CustID;
@@ -85,7 +85,7 @@ namespace Fanex.Tarus.BetList.Controller
         }
 
 
-        [AuthenticateRead]
+ 
         public ActionResult BetListByIP()
         {
             return View("~/Views/BetList/BetListByIP/Index.cshtml");
