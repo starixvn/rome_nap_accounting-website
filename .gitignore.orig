@@ -1,0 +1,37 @@
+Thumbs.db
+*.obj
+*.exe
+*.pdb
+*.user
+*.aps
+*.pch
+*.vspscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.sln.docstates
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
+[Bb]in
+[Dd]ebug*/
+*.lib
+*.sbr
+obj/
+[Rr]elease*/
+_ReSharper*/
+[Tt]est[Rr]esult*
+<<<<<<< HEAD
+*.vssscc
+$tf*/
+=======
+Sunplus.Data.DataAbstract/DLL/Fanex.Tarus.BetList.dll
+Sunplus.Data.DataAbstract/DLL/Fanex.Tarus.Web.Controllers.dll
+Sunplus.Data.DataAbstract/DLL/Sunplus.Data.DataAbstract.dll
+Sunplus.Data.DataAbstract/Sunplus.Data.DataAbstract.csproj
+
+>>>>>>> 60f4d943a7a6e79bd7fbfe88ea51d2f7fbb8acb3

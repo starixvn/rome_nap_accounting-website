@@ -1,6 +1,4 @@
-#ignore thumbnails created by windows
 Thumbs.db
-#Ignore files build by Visual Studio
 *.obj
 *.exe
 *.pdb
@@ -12,6 +10,7 @@ Thumbs.db
 *_p.c
 *.ncb
 *.suo
+*.sln.docstates
 *.tlb
 *.tlh
 *.bak
@@ -30,4 +29,3 @@ Sunplus.Data.DataAbstract/DLL/Fanex.Tarus.BetList.dll
 Sunplus.Data.DataAbstract/DLL/Fanex.Tarus.Web.Controllers.dll
 Sunplus.Data.DataAbstract/DLL/Sunplus.Data.DataAbstract.dll
 Sunplus.Data.DataAbstract/Sunplus.Data.DataAbstract.csproj
-
