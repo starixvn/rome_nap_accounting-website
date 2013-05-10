@@ -147,6 +147,7 @@
         <td colspan="2" class="c"></td>
         <td class="c"><b>Super Preset PT</b></td>
         <td colspan="2" class="c"><b>Super Auto Preset PT</b></td>
+        <td class="c"><b>Super Incentive</b></td>
         <td class="c"><b>Master Max PT</b></td>
         <td class="c"><b>Master Min PT</b></td>
         <td class="c"><b>Master Commission</b></td>
@@ -177,6 +178,7 @@
             <input type="button" onclick="ReducePT('listAutoPrePT_{$T.ID}',10)" class="btn-dec10 AutoPre_{$T.ID}" value=" " {#if $T.IsAutoPositionTaking==false} Disabled {#else}{#/if}>
             <input type="button" onclick="IncreasePT('listAutoPrePT_{$T.ID}',10)" class="btn-inc10 AutoPre_{$T.ID}" value=" " {#if $T.IsAutoPositionTaking==false} Disabled {#else}{#/if} >
         </td>
+        <td>Here</td>
          <td>
              <select id="listMaxPT_{$T.ID}" onchange="on_ChangeMax(this);"  max="{roundNumber($T.PositionTakingMax,2)}" min="0"  class="select-pt">
                 <option value="{roundNumber($T.PositionTaking,2)}" selected="true">{roundNumber($T.PositionTaking,2)}</option>
