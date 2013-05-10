@@ -112,11 +112,13 @@
     </table>
     <table class="tblcollapse" style="width: 100%; margin:6px 0px;" id="tblbingo">
     <tr class="title">
-        <td colspan="8">
+        <td colspan="9">
             Position Taking
         </td>
     </tr>
     <!--PT-->
+    {#param name=MaxPayout value=$T.MaxPayout}
+    {#param name=IncentiveRate value=$T.IncentiveRate} 
      {#foreach $T.GameKindList as r}
          {#include GameKindBO root= $T.r}
     {#/for}
@@ -178,7 +180,11 @@
             <input type="button" onclick="ReducePT('listAutoPrePT_{$T.ID}',10)" class="btn-dec10 AutoPre_{$T.ID}" value=" " {#if $T.IsAutoPositionTaking==false} Disabled {#else}{#/if}>
             <input type="button" onclick="IncreasePT('listAutoPrePT_{$T.ID}',10)" class="btn-inc10 AutoPre_{$T.ID}" value=" " {#if $T.IsAutoPositionTaking==false} Disabled {#else}{#/if} >
         </td>
-        <td>Here</td>
+        <td>           
+             <select id="listIncentiveRate" max="{roundNumber($P.IncentiveRate,2)}" min="0"  class="select-pt">
+                <option value="{roundNumber($P.IncentiveRate,2)}" selected="true">{roundNumber($P.IncentiveRate,2)}</option>
+            </select>
+        </td>
          <td>
              <select id="listMaxPT_{$T.ID}" onchange="on_ChangeMax(this);"  max="{roundNumber($T.PositionTakingMax,2)}" min="0"  class="select-pt">
                 <option value="{roundNumber($T.PositionTaking,2)}" selected="true">{roundNumber($T.PositionTaking,2)}</option>
