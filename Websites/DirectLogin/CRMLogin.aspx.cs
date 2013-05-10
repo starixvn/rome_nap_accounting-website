@@ -22,6 +22,10 @@ public partial class DirectLogin_CRMLogin : System.Web.UI.Page
 
         var crmUrl = ConfigurationManager.AppSettings["crmloginurl"];
 
+        Uri uri = HttpContext.Current.Request.Url;
+        string host = uri.Scheme + Uri.SchemeDelimiter + uri.Host + (uri.Port == 80 ? "" : ":" + uri.Port);
+        crmUrl = string.Format(crmUrl, host);
+
         param = string.Format("{0}&{1}&{2}&{3}", accId, accName, onUserId, sid);
         path = Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk";
         RSACryptoPad.EncryptionThread encryption = new RSACryptoPad.EncryptionThread();

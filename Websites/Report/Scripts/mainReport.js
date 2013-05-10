@@ -3,7 +3,7 @@
 };
 
 var mainMenu = '';
-var _isHideIBCPTRacing = false; 
+var _isHideIBCPTRacing = false;
 
 function gotoURL(frmName, url) {
     $('#' + frmName).attr({ src: url });
@@ -188,7 +188,7 @@ function renderMenu(parent, all, level) {
 
 
                 mainMenu += ('<li ' + (level == 0 ? parentId : '') + menuClass + '>\
-                        <a target="' + target +
+                        <a ' + (menu.Name == 'Licensee Settlement' ? ' class="wideMenu"' : '') + ' target="' + target +
                         '" onclick="SubMenuClick(\'pId' + currentParentId + '\',\'' +
                         menu.Id + '\',\'' + menu.FunctionName + '\',\'' +
                         url + '\',\'' + menu.Name + '\')"><span>' +
@@ -208,7 +208,7 @@ function renderMenu(parent, all, level) {
     }
 }
 
-function SubMenuClick(parentId, menuId, functionName, menuUrl, menuName) {
+function SubMenuClick(parentId, menuId, functionName, menuUrl, menuName, target) {
     addParentActiveClass(parentId);
     var iframe = $("#centerFr");
     iframe.unbind("load");
@@ -222,8 +222,12 @@ function SubMenuClick(parentId, menuId, functionName, menuUrl, menuName) {
         //            $("#centerFr").contents().find(".filterContent,.maincontent_box"),
         //            true);
     });
-
-    iframe.attr("src", menuUrl);
+    if (target == "_blank") {
+        window.open(menuUrl, '', 'fullscreen=yes, scrollbars=auto');
+     }
+    else {
+        iframe.attr("src", menuUrl);
+    }
 };
 
 function addParentActiveClass(parentId) {
