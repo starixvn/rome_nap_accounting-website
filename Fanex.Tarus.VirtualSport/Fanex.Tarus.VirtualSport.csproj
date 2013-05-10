@@ -68,6 +68,9 @@
     <Reference Include="Fanex.PTVirtualSports, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\Dependency\VirtualSports\Fanex.PTVirtualSports.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Tarus.Web.Controllers">
+      <HintPath>..\Websites\Bin\Fanex.Tarus.Web.Controllers.dll</HintPath>
+    </Reference>
     <Reference Include="IBCUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\IBCUtils.dll</HintPath>

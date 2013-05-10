@@ -1,0 +1,105 @@
+﻿
+
+using System.Collections.Generic;
+using System.Web.Mvc;
+using ExcelUtil.Spreadsheet;
+using Fanex.Tarus.Business.Implement.Report;
+using Fanex.Tarus.Business.Interface.Report;
+using Fanex.Tarus.Entities.Report;
+using Fanex.Tarus.Entities.Sport;
+using Fanex.Tarus.Web.Controllers.Filters;
+
+namespace Fanex.Tarus.Web.Controllers.Report
+{
+    public class MatchAnalysisController : BaseController
+    { 
+        //
+        // GET: /AnalysisService/
+        private readonly IMatchAnalysisService _matchAnalysisService;
+        public MatchAnalysisController()
+            : this(null)
+        {            
+        }
+
+        public MatchAnalysisController(IMatchAnalysisService matchAnalysisService)
+        {
+            _matchAnalysisService = matchAnalysisService ?? new MatchAnalysisService();
+        }
+        
+        [AuthenticateRead]
+        public ActionResult MatchSelection()
+        {
+            return View("~/Views/Report/MatchAnalysis/MatchSelection.cshtml");
+        }
+
+        //[AuthenticateRead]
+        //public ActionResult MatchAnalysis()
+        //{
+        //    return View("~/Views/Report/MatchAnalysis/MatchAnalysis.cshtml");
+        //}
+
+        //[AuthenticateRead]
+        //public ActionResult MatchReportDetails()
+        //{
+        //    return View("~/Views/Report/MatchAnalysis/MatchReportDetails.cshtml");
+        //}
+
+        #region PostMethod
+        [HttpPost, AuthenticateRead]
+        public JsonResult GetLeagueList(MatchAnalysisParam param)
+        {
+            List<Sporttype> result;            
+            result = _matchAnalysisService.SelLeague(param);
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost, AuthenticateRead]
+        public JsonResult GetMatchList(MatchAnalysisParam param)
+        {
+            List<League> result;
+            result = _matchAnalysisService.SelMatchByLeagueids(param);
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost, AuthenticateRead]
+        public JsonResult SelBettypeByMatchId(MatchAnalysisParam param)
+        {
+            List<BaseModel> result;
+            result = _matchAnalysisService.SelBettypeByMatchId(param);
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost, AuthenticateRead]
+        public JsonResult SelMatchAnalysisReport(MatchAnalysisParam param)
+        {
+            MatchAnalysisDTO result;
+            result = _matchAnalysisService.SelMatchAnalysisByType(param);
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost, AuthenticateRead]
+        public ActionResult ExportReportToExcel(MatchAnalysisParam param)
+        {
+            ExcelFile result = _matchAnalysisService.ExportMatchAnalysis(param);
+            int exportResult = 0;
+            if (result == null)
+            {
+                exportResult = 1;
+            }
+           
+            var jsonResult = Json(exportResult);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;       
+        }
+              
+        #endregion PostMethod
+    }
+}

@@ -54,6 +54,9 @@
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Tarus.Web.Controllers">
+      <HintPath>..\Websites\Bin\Fanex.Tarus.Web.Controllers.dll</HintPath>
+    </Reference>
     <Reference Include="IBCUtils">
       <HintPath>..\Dependency\IBCUtils.dll</HintPath>
     </Reference>
