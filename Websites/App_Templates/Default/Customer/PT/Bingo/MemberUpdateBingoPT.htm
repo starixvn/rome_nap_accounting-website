@@ -126,8 +126,10 @@
    <table style=" line-height: 25px;">
     <tr>
         <td>
-            <b>Agent Incentive </b>
-            {roundNumber($T.MaxPayout,2)}
+            <b>Agent Incentive </b>            
+            <select disabled="disabled" id="listIncentiveRate" max="{roundNumber($T.MaxPayout,2)}" min="0"  class="select-pt">
+                <option value="{roundNumber($T.IncentiveRate,2)}" selected="true">{roundNumber($T.IncentiveRate,2)}</option>
+            </select>
 
             <span style="padding-left:10px"></span>
         </td>
