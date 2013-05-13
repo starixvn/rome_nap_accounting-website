@@ -112,13 +112,11 @@
     </table>
     <table class="tblcollapse" style="width: 100%; margin:6px 0px;" id="tblbingo">
     <tr class="title">
-        <td colspan="9">
+        <td colspan="8">
             Position Taking
         </td>
     </tr>
-    <!--PT-->
-    {#param name=MaxPayout value=$T.MaxPayout}
-    {#param name=IncentiveRate value=$T.IncentiveRate} 
+    <!--PT-->   
      {#foreach $T.GameKindList as r}
          {#include GameKindBO root= $T.r}
     {#/for}
@@ -128,8 +126,16 @@
    <table style=" line-height: 25px;">
     <tr>
         <td>
+            <b>Super Incentive </b>
+            <select id="listIncentiveRate" max="{roundNumber($T.MaxPayout,2)}" min="0"  class="select-pt">
+                <option value="{roundNumber($T.IncentiveRate,2)}" selected="true">{roundNumber($T.IncentiveRate,2)}</option>
+            </select>
+
+            <span style="padding-left:10px"></span>
+        </td>
+        <td>
         {#if $T.SyncBingo==false} 
-            Enable Bingo <input type="checkbox" onclick="IsSyncData(this)" />
+            <b>Enable Bingo</b> <input type="checkbox" onclick="IsSyncData(this)" />
             {#else}{#/if}
         </td>
         <td>
@@ -148,8 +154,7 @@
  <tr>
         <td colspan="2" class="c"></td>
         <td class="c"><b>Super Preset PT</b></td>
-        <td colspan="2" class="c"><b>Super Auto Preset PT</b></td>
-        <td class="c"><b>Super Incentive</b></td>
+        <td colspan="2" class="c"><b>Super Auto Preset PT</b></td>        
         <td class="c"><b>Master Max PT</b></td>
         <td class="c"><b>Master Min PT</b></td>
         <td class="c"><b>Master Commission</b></td>
@@ -179,12 +184,7 @@
             <input type="button" onclick="IncreasePT('listAutoPrePT_{$T.ID}',1)" class="btn-inc1 AutoPre_{$T.ID}" value=" " {#if $T.IsAutoPositionTaking==false} Disabled {#else}{#/if}>
             <input type="button" onclick="ReducePT('listAutoPrePT_{$T.ID}',10)" class="btn-dec10 AutoPre_{$T.ID}" value=" " {#if $T.IsAutoPositionTaking==false} Disabled {#else}{#/if}>
             <input type="button" onclick="IncreasePT('listAutoPrePT_{$T.ID}',10)" class="btn-inc10 AutoPre_{$T.ID}" value=" " {#if $T.IsAutoPositionTaking==false} Disabled {#else}{#/if} >
-        </td>
-        <td>           
-             <select id="listIncentiveRate" max="{roundNumber($P.IncentiveRate,2)}" min="0"  class="select-pt">
-                <option value="{roundNumber($P.IncentiveRate,2)}" selected="true">{roundNumber($P.IncentiveRate,2)}</option>
-            </select>
-        </td>
+        </td>      
          <td>
              <select id="listMaxPT_{$T.ID}" onchange="on_ChangeMax(this);"  max="{roundNumber($T.PositionTakingMax,2)}" min="0"  class="select-pt">
                 <option value="{roundNumber($T.PositionTaking,2)}" selected="true">{roundNumber($T.PositionTaking,2)}</option>

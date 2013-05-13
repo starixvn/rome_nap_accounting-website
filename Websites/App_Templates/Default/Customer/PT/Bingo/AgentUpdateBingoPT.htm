@@ -126,6 +126,14 @@
     <table style=" line-height: 25px;">
     <tr>
         <td>
+            <b>Master Incentive </b>
+            <select id="listIncentiveRate" max="{roundNumber($T.MaxPayout,2)}" min="0"  class="select-pt">
+                <option value="{roundNumber($T.IncentiveRate,2)}" selected="true">{roundNumber($T.IncentiveRate,2)}</option>
+            </select>
+
+            <span style="padding-left:10px"></span>
+        </td>
+        <td>
         {#if $T.SyncBingo==false} 
             Enable Bingo <input type="checkbox" onclick="IsSyncData(this)" />
             {#else}{#/if}

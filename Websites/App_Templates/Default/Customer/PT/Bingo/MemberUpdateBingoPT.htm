@@ -126,6 +126,12 @@
    <table style=" line-height: 25px;">
     <tr>
         <td>
+            <b>Agent Incentive </b>
+            {roundNumber($T.MaxPayout,2)}
+
+            <span style="padding-left:10px"></span>
+        </td>
+        <td>
         {#if $T.SyncBingo==false} 
             Enable Bingo <input type="checkbox" onclick="IsSyncData(this)" />
             {#else}{#/if}
