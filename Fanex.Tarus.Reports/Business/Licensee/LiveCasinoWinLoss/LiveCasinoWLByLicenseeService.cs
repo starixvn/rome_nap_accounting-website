@@ -22,6 +22,7 @@ using Fanex.Tarus.Reports.DataAccess.Licensee.LiveCasinoWinLoss;
     using ExcelUtil.Spreadsheet;
     using Fanex.Tarus.Infrastructure.Helper;
     using System.Drawing;
+using Fanex.Tarus.Reports.Entities.Sport;
 
     
     public class LiveCasinoWLByLicenseeService: ILiveCasinoWLByLicenseeService
@@ -68,13 +69,40 @@ using Fanex.Tarus.Reports.DataAccess.Licensee.LiveCasinoWinLoss;
             return licensees;
         }
 
-        public LiveCasinoWinLoss SelLiveCasinoWinLoss(string normalLicensee, string operators, DateTime fromDate, DateTime toDate)
+        public List<BaseModel> SelAllGameTypes()
+        {
+            var gameTypeList = new List<BaseModel>();
+            try
+            {
+                DataTable dtb = _liveCasinoWinlossAccess.SelAllGameTypes();
+                if (dtb != null & dtb.Rows.Count > 0)
+                {
+                    foreach (DataRow row in dtb.Rows)
+                    {
+                        var gameType = new BaseModel()
+                        {
+                            Id = CastAide.AsInt32(row["bettype"]),
+                            Name = CastAide.AsString(row["gametypename"])
+                        };
+                        gameTypeList.Add(gameType);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return gameTypeList;
+        }
+
+        public LiveCasinoWinLoss SelLiveCasinoWinLoss(string normalLicensee, string operators, DateTime fromDate, DateTime toDate, int gameType)
         {
             var result = new LiveCasinoWinLoss();
             try
             {
                 AppSession.AddSession(HttpContext.Current.Session, _licenseeLiveCasinoWinLossSessionKey, null);
-                var dtLicenseesWinLoss = _liveCasinoWinlossAccess.SelLiveCasinoWLByLicensees(normalLicensee, operators, fromDate, toDate);
+                var dtLicenseesWinLoss = _liveCasinoWinlossAccess.SelLiveCasinoWLByLicensees(normalLicensee, operators, fromDate, toDate, gameType);
                 if (dtLicenseesWinLoss != null && dtLicenseesWinLoss.Rows.Count > 0)
                 {
                     var licenseeConfigSection = LicenseeReportSection.Instance.LicenseesGroup;
@@ -284,7 +312,7 @@ using Fanex.Tarus.Reports.DataAccess.Licensee.LiveCasinoWinLoss;
         }
 
 
-        public void ExportExcelLiveCasinoWinLossReport(string normalLicensee, string operators, string fromDate, string toDate, string reportTitle)
+        public void ExportExcelLiveCasinoWinLossReport(string normalLicensee, string operators, string fromDate, string toDate, int gameType, string reportTitle)
         {
             try
             {
@@ -294,7 +322,7 @@ using Fanex.Tarus.Reports.DataAccess.Licensee.LiveCasinoWinLoss;
                 var reportName = "Licensee-LiveCasinoWinLoss";
                 var excelFile = new ExcelFile();
                 var getSession = (LiveCasinoWinLoss)AppSession.GetSession(HttpContext.Current.Session, _licenseeLiveCasinoWinLossSessionKey);
-                getSession = getSession ?? SelLiveCasinoWinLoss(normalLicensee, operators, CastAide.AsDateTime(fromDate), CastAide.AsDateTime(toDate));
+                getSession = getSession ?? SelLiveCasinoWinLoss(normalLicensee, operators, CastAide.AsDateTime(fromDate), CastAide.AsDateTime(toDate), gameType );
                 var wsReport = excelFile.Worksheets.Add(string.Format("LiveCasinoWinLoss"));
                 #endregion
 

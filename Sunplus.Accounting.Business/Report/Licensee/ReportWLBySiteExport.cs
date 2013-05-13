@@ -611,7 +611,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
         #region total trans
 
-        
+
         public void Export2ExcelTotalTransaction(string reportTitle, int resellerid, int licenseeid, string date, bool showSB, bool showNG, bool showRB, bool showLC, bool showVS)
         {
             #region excel format
@@ -888,10 +888,10 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     fromDate, toDate,
                     showSb, showRb,
                     showNg, showBa,
-                    showLc, reportSelected,
+                    showLc, reportType,
                     drawFilter, excludeTest,
-                    pageIndex, pageSize,
-                    1);
+                    pageIndex, -1,
+                    0);
 
                 var criteria = new WinLossByLicenseeCriteria
                 {
@@ -1557,9 +1557,9 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     fromDate, toDate,
                     showSb, showRb,
                     showNg, showBa,
-                    showLc, reportSelected,
+                    showLc, reportType,
                     drawFilter, excludeTest,
-                    pageIndex, pageSize,
+                    pageIndex, -1,
                     0);
 
                 var criteria = new WinLossByLicenseeCriteria
@@ -1721,9 +1721,9 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     fromDate, toDate,
                     showSb, showRb,
                     showNg, showBa,
-                    showLc, reportSelected,
+                    showLc, reportType,
                     drawFilter, excludeTest,
-                    pageIndex, pageSize,
+                    pageIndex, -1,
                     0);
 
                 var criteria = new WinLossByLicenseeCriteria
@@ -1803,7 +1803,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     showNg, showBa,
                     showLc, reportSelected,
                     drawFilter, excludeTest,
-                    pageIndex, pageSize,
+                    pageIndex, -1,
                     0);
 
                 var criteria = new WinLossByLicenseeCriteria
@@ -1877,14 +1877,14 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             try
             {
                 var report = this.SelReportLicenseeDetailV2(licenseeId,
-                   currency, BaseCurrency,
-                   custId, fromDate,
-                   toDate, showSb,
-                   showRb, showNg,
-                   showBa, showLc,
-                   reportSelected, drawFilter,
-                   excludeTest, pageIndex,
-                   pageSize, 0);
+                   currency, BaseCurrency, custId,
+                   fromDate, toDate,
+                   showSb, showRb,
+                   showNg, showBa,
+                   showLc, reportSelected,
+                   drawFilter, excludeTest,
+                   pageIndex, -1,
+                   0);
 
                 var criteria = new WinLossByLicenseeCriteria
                 {

@@ -53,11 +53,11 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 DepositCurrencyBO deposit = new DepositCurrencyBO()
-                                  {
-                                      currencyId = CastAide.AsInt32(dataRow["currency"]),
-                                      currency = CacheUtils.GetExchangeName(CastAide.AsInt32(dataRow["currency"])),
+                {
+                    currencyId = CastAide.AsInt32(dataRow["currency"]),
+                    currency = CacheUtils.GetExchangeName(CastAide.AsInt32(dataRow["currency"])),
 
-                                  };
+                };
                 list.Add(deposit);
             }
             depositDto.currency = list;
@@ -180,7 +180,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             licenseDto.TotalsBaseCurrency = new List<LicenseeRow>();
 
             //total rows
-            licenseDto.totalrow = dataTable.Rows.Count;
+            //licenseDto.totalrow = dataTable.Rows.Count;
 
             #region foreach row content
 
@@ -237,7 +237,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 licenseDto.Items.Add(licenseeRow);
                 string currency = CacheUtils.GetExchangeName(CastAide.AsInt32(dataRow["currency"]));
             }
-
+            licenseDto.totalrow = licenseDto.Items.Count;
             #endregion
 
             string exp = string.Empty;
@@ -1117,14 +1117,14 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 DataRow[] rows = dataTable.Select();
                 foreach (DataRow row in rows)
                 {
-                    var licensee =  new Item()
-                                    {
-                                        Id = CastAide.AsString(row["LicenseeID"]),
-                                        Name = CastAide.AsString(row["LicenseeName"]),
-                                        EnableBA = CastAide.AsBoolean(row["EnableBA"]),
-                                        BrandName = CastAide.AsString(row["BrandName"]),
-                                        Level = "2",
-                                    };
+                    var licensee = new Item()
+                    {
+                        Id = CastAide.AsString(row["LicenseeID"]),
+                        Name = CastAide.AsString(row["LicenseeName"]),
+                        EnableBA = CastAide.AsBoolean(row["EnableBA"]),
+                        BrandName = CastAide.AsString(row["BrandName"]),
+                        Level = "2",
+                    };
 
                     if (licensee.Name.ToLower().Equals("12bet"))
                         licensee.Level = "3";
@@ -1313,7 +1313,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             transctionDto.Items = new List<Reseller>();
             transctionDto.SelDate = new List<string>();
 
-           try
+            try
             {
                 string MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay.ToShortDateString();
                 string BalanceUpDay = ReportUtils.BalanceUp.BalanceUpDay.ToShortDateString();
@@ -1377,11 +1377,11 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 }
 
                 transctionDto.Total = new Reseller()
-                                          {
-                                              ResellerName = "Total",
-                                              Total = NumberFormat.DecFormat(total, 0),
-                                              EURCost = FormatHandler.FormatNumber2(totalEuro, "en-EN")
-                                          };
+                {
+                    ResellerName = "Total",
+                    Total = NumberFormat.DecFormat(total, 0),
+                    EURCost = FormatHandler.FormatNumber2(totalEuro, "en-EN")
+                };
             }
             catch (Exception ex)
             {
@@ -1512,6 +1512,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 licenseeByDate.LicenseeByDateList = licenseeDetailList;
                 licenseDto.Items.Add(licenseeByDate);
             }
+            licenseDto.totalrow = licenseDto.Items.Count;
             #endregion
             string exp = string.Empty;
             #region Total by currency
@@ -1988,7 +1989,15 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     licenseDto = (LicenseeCurrency)sessionLicenseDto;
                 }
 
-                licenseDtoPaging.Items = licenseDto.Items.Select(c => c).Skip(pageSize * (pageIndex - 1)).Take(pageSize).ToList();
+                if (pageSize != -1)
+                {
+                    licenseDtoPaging.Items = licenseDto.Items.Select(c => c).Skip(pageSize * (pageIndex - 1)).Take(pageSize).ToList();
+                }
+                else
+                {
+                    licenseDtoPaging.Items = licenseDto.Items;
+                }
+
                 licenseDtoPaging.Totals = licenseDto.Totals;
                 licenseDtoPaging.TotalsBaseCurrency = licenseDto.TotalsBaseCurrency;
                 licenseDtoPaging.totalrow = licenseDto.totalrow;
@@ -2021,7 +2030,16 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 {
                     licenseDto = (LicenseeDTOV2)sessionLicenseDto;
                 }
-                licenseDtoPaging.Items = licenseDto.Items.Select(c => c).Skip(pageSize * (pageIndex - 1)).Take(pageSize).ToList();
+
+                if (pageSize != -1)
+                {
+                    licenseDtoPaging.Items = licenseDto.Items.Select(c => c).Skip(pageSize * (pageIndex - 1)).Take(pageSize).ToList();
+                }
+                else
+                {
+                    licenseDtoPaging.Items = licenseDto.Items;
+                }
+
                 licenseDtoPaging.Totals = licenseDto.Totals;
                 licenseDtoPaging.TotalsBaseCurrency = licenseDto.TotalsBaseCurrency;
                 licenseDtoPaging.totalrow = licenseDto.totalrow;
@@ -2053,7 +2071,16 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     licenseDto = (LicenseeDTOV2)sessionLicenseDto;
 
                 }
-                licenseDtoPaging.Items = licenseDto.Items.Select(c => c).Skip(pageSize * (pageIndex - 1)).Take(pageSize).ToList();
+
+                if (pageSize != -1)
+                {
+                    licenseDtoPaging.Items = licenseDto.Items.Select(c => c).Skip(pageSize * (pageIndex - 1)).Take(pageSize).ToList();
+                }
+                else
+                {
+                    licenseDtoPaging.Items = licenseDto.Items;
+                }
+
                 licenseDtoPaging.Totals = licenseDto.Totals;
                 licenseDtoPaging.TotalsBaseCurrency = licenseDto.TotalsBaseCurrency;
                 licenseDtoPaging.totalrow = licenseDto.totalrow;
@@ -2277,7 +2304,16 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 {
                     licenseDto = (LicenseeDTOV2)sessionLicenseDto;
                 }
-                licenseDtoPaging.Items = licenseDto.Items.Select(c => c).Skip(pageSize * (pageIndex - 1)).Take(pageSize).ToList();
+
+                if (pageSize != -1)
+                {
+                    licenseDtoPaging.Items = licenseDto.Items.Select(c => c).Skip(pageSize * (pageIndex - 1)).Take(pageSize).ToList();
+                }
+                else
+                {
+                    licenseDtoPaging.Items = licenseDto.Items;
+                }
+
                 licenseDtoPaging.Totals = licenseDto.Totals;
                 licenseDtoPaging.TotalsBaseCurrency = licenseDto.TotalsBaseCurrency;
                 licenseDtoPaging.totalrow = licenseDto.totalrow;
@@ -2491,7 +2527,16 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 {
                     licenseDto = (LicenseeDTOV2)sessionLicenseDto;
                 }
-                licenseDtoPaging.Items = licenseDto.Items.Select(c => c).Skip(pageSize * (pageIndex - 1)).Take(pageSize).ToList();
+
+                if (pageSize != -1)
+                {
+                    licenseDtoPaging.Items = licenseDto.Items.Select(c => c).Skip(pageSize * (pageIndex - 1)).Take(pageSize).ToList();
+                }
+                else
+                {
+                    licenseDtoPaging.Items = licenseDto.Items;
+                }
+
                 licenseDtoPaging.Totals = licenseDto.Totals;
                 licenseDtoPaging.TotalsBaseCurrency = licenseDto.TotalsBaseCurrency;
                 licenseDtoPaging.totalrow = licenseDto.totalrow;

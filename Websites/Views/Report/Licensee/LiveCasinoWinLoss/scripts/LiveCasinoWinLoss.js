@@ -1,6 +1,8 @@
 ﻿var liveCasinoWinLoss = {
     fromDate: '',
     toDate: '',
+    gameType: 0,
+    gameTypeName: '',
     normalLicensse: [],
     operators: [],
     specificPeriodIndex: 7,
@@ -62,6 +64,24 @@
         $("#txtfromdate").datepicker("setDate", fDate);
     },
 
+    selectGameType: function () {
+        $.ajax({
+            type: "POST",
+            url: window.rootUrl + "LiveCasinoWLByLicensee/SelAllGameTypes",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: null,
+            success: function (rs) {
+                var idGameType = $('#ddlGameType');
+                idGameType.append('<option value="0">All</option>');
+                var length = rs.length;
+                for (var i = 0; i < length; i++) {
+                    idGameType.append('<option value="' + rs[i].Id + '">' + rs[i].Name + '</option>');
+                }
+            }
+        });
+    },
+
     selectLicensees: function () {
         $("#InformationMssg").empty();
         try { parent.BlockUI(); } catch (e) { }
@@ -77,7 +97,7 @@
 
                     //temporary remove PIH reseller 
                     for (var i = 0; i < arrLicensee.length; i++)
-                        if (arrLicensee[i].ResellerId === 8) { 
+                        if (arrLicensee[i].ResellerId === 8) {
                             arrLicensee.splice(i, 1);
                             break;
                         }
@@ -226,7 +246,10 @@
         liveCasinoWinLoss.operators = licenseesSeleted.operators;
         liveCasinoWinLoss.fromDate = $('#txtfromdate').val();
         liveCasinoWinLoss.toDate = $('#txttodate').val();
-
+        liveCasinoWinLoss.gameType = $('#ddlGameType').val();
+       
+        
+        //alert(liveCasinoWinLoss.gameTypeName);
         $("#InformationMssg").empty();
         $('#livecasinowinloss').addClass('hidden');
         try { parent.BlockUI(); } catch (e) { }
@@ -235,10 +258,17 @@
             url: window.rootUrl + "LiveCasinoWLByLicensee/SelLiveCasinoWinLoss",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            data: '{ "normalLicensee":"' + liveCasinoWinLoss.normalLicensse.join(',') + '", "operators":"' + liveCasinoWinLoss.operators.join(',') + '", "fromDate":"' + liveCasinoWinLoss.fromDate + '", "toDate":"' + liveCasinoWinLoss.toDate + '"}',
+            data: '{ "normalLicensee":"' + liveCasinoWinLoss.normalLicensse.join(',') + '", "operators":"' + liveCasinoWinLoss.operators.join(',') + '", "fromDate":"' + liveCasinoWinLoss.fromDate + '", "toDate":"' + liveCasinoWinLoss.toDate + '", "gameType": "' + liveCasinoWinLoss.gameType + '"}',
             success: function (rs) {
                 if (rs && rs.LicenseesWinLoss && rs.LicenseesWinLoss.length > 0) {
-                    $('#reporttile').html('Live Casino Win Loss Report from ' + liveCasinoWinLoss.fromDate + ' to ' + liveCasinoWinLoss.toDate);
+                    if (parseInt(liveCasinoWinLoss.gameType) == 0) {
+                        $('#reporttile').html('Live Casino Win Loss Report from ' + liveCasinoWinLoss.fromDate + ' to ' + liveCasinoWinLoss.toDate + ' - ' + "All Game Types");
+                    }
+                    else {
+                        liveCasinoWinLoss.gameTypeName = $('#ddlGameType').find(":selected").text();
+                        $('#reporttile').html('Live Casino Win Loss Report from ' + liveCasinoWinLoss.fromDate + ' to ' + liveCasinoWinLoss.toDate + ' - ' + liveCasinoWinLoss.gameTypeName);
+                    }
+                    
                     var totalGroups = rs.LicenseesWinLoss.length;
                     var arr = [];
                     var arrLeft = [];
@@ -523,7 +553,7 @@
     },
     exportExcel: function () {
         var urlRequest = window.rootUrl + 'LiveCasinoWLByLicensee/LiveCasinoWinLoss?IsExport=true&normallicensee=' + liveCasinoWinLoss.normalLicensse.join(',') +
-        '&operators=' + liveCasinoWinLoss.operators + '&fdate=' + liveCasinoWinLoss.fromDate + '&tdate=' + liveCasinoWinLoss.toDate +
+        '&operators=' + liveCasinoWinLoss.operators + '&fdate=' + liveCasinoWinLoss.fromDate + '&tdate=' + liveCasinoWinLoss.toDate + '&gametype=' + liveCasinoWinLoss.gameType +
         '&reporttile=' + $('#reporttile').html() + '';
 
         $('#frm').attr('src', urlRequest);
@@ -661,7 +691,7 @@ $(document).ready(function () {
     liveCasinoWinLossHelper.renderCalendar("#txtfromdate, #txttodate");
 
     liveCasinoWinLoss.selectLicensees();
-
+    liveCasinoWinLoss.selectGameType();
     var gridOpts = {
         tblContentId: 'tblContent',
         isShowPager: false

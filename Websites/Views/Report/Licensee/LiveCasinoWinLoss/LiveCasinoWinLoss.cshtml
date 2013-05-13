@@ -38,6 +38,13 @@
                                             <td style="width:160px">
                                                 <div id="ddlLicenseese" class="multiselect" multiple="multiple" style="padding-top: 2px;"></div>
                                             </td>
+                                            <td>
+                                                <div><b>GameType</b></div>
+                                            </td>
+                                             <td >
+                                                <select id="ddlGameType" style="width:100px" > 
+                                                </select>
+                                            </td>
                                             <td style="width:30px; text-align: right"><b>Date</b></td>
                                             <td>
                                                 <select id="ddlDateSelection" style="width: 110px;">
@@ -249,10 +256,12 @@
             var operators = DNAide.Core.CastAide.AsString(Request["operators"]);
             var fromDate = DNAide.Core.CastAide.AsString(Request["fdate"]);
             var toDate = DNAide.Core.CastAide.AsString(Request["tdate"]);
+            var gameType = DNAide.Core.CastAide.AsInt32(Request["gametype"]);
             var reportTitle = DNAide.Core.CastAide.AsString(Request["reporttile"]);
+           
 
             Fanex.Tarus.Reports.Business.Licensee.LiveCasinoWinLoss.ILiveCasinoWLByLicenseeService liveCasinoService = new Fanex.Tarus.Reports.Business.Licensee.LiveCasinoWinLoss.LiveCasinoWLByLicenseeService();
-            liveCasinoService.ExportExcelLiveCasinoWinLossReport(normalLicensees, operators, fromDate, toDate, reportTitle);
+            liveCasinoService.ExportExcelLiveCasinoWinLossReport(normalLicensees, operators, fromDate, toDate, gameType, reportTitle);
         }
     }
 
