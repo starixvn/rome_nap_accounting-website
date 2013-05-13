@@ -554,6 +554,7 @@
 
   </Function>
   <Function Name="Report - Licensee">
+    <Setting Key="GetGameType" SpName="Acc_LiveCasinoGetGameType" DbName="archive"  />
     <Setting Key="GetLicenseesByResellers" SpName="Acc_LicenseeByResellerSel" DbName="licensee"  />
     <Setting Key="GetLiveCasinoWLByLicensee" SpName="Acc_Rpt_LicLiveCasinoWinloss" DbName="archive"  />
     <Setting Key="NumberGameWinlossByLicensee" SpName="Acc_Rpt_LicNumberGameWinloss" DbName="archive"  />
