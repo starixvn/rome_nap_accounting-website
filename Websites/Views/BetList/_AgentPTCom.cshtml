@@ -13,7 +13,6 @@
     string doubleCom = betdetail.Ticket.CommStatus == "1" ? "2x" : string.Empty;
    
 }
-                          
 @if (betlistHelper.IsHRWinPlaceBettype(betdetail.Ticket.BetTypeId))
 {
     <div class="blue">
@@ -26,7 +25,14 @@
 else
 {
     <div class="@betlistHelper.IsNegative(PT)">
-        @betlistHelper.PerCentFormat(PT)
+        @if (betdetail.Ticket.BetTypeId == 71)
+        {
+            <span>0%</span>
+        }
+        else
+        {
+            <span>@betlistHelper.PerCentFormat(PT)</span>
+        }
     </div>
 }
 @if (statusTemp != "running")
@@ -36,7 +42,14 @@ else
     </div>
 }
 <div class="margin-top-5">
-    @doubleCom @betlistHelper.PerCentFormat(discount)
+    @if (betdetail.Ticket.BetTypeId == 71)
+    {
+        <span>0%</span>
+    }
+    else
+    {
+        <span>@doubleCom @betlistHelper.PerCentFormat(discount)</span>
+    }
 </div>
 @if (statusTemp != "running")
 {
