@@ -110,6 +110,31 @@
     </tr>
     <!--/Bet Setting-->
     </table>
+
+    <!-- Incentive Rate -->
+    <table class="tblcollapse" style="width: 100%;">
+        <tr class="title">
+            <td>
+              Incentive Setting
+            </td>
+        </tr>  
+        <tr>
+            <td class="c">
+                <table cellpadding="4" cellspacing="0" border="0" width="100%" class="noneborder" style="height:30px">
+                    <tr>
+                        <td style="width:300px" class="r b">Super Incentive</td>
+                        <td class="l">
+                            <select id="listIncentiveRate" max="{roundNumber($T.MaxPayout,2)}" min="0" class="select-pt">
+                                <option value="{roundNumber($T.IncentiveRate,2)}" selected="true">{roundNumber($T.IncentiveRate,2)}</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr> 
+    </table>
+    <!-- /Incentive Rate -->
+
     <table class="tblcollapse" style="width: 100%; margin:6px 0px;" id="tblbingo">
     <tr class="title">
         <td colspan="8">
@@ -125,14 +150,6 @@
 </table>
    <table style=" line-height: 25px;">
     <tr>
-        <td>
-            <b>Super Incentive </b>
-            <select id="listIncentiveRate" max="{roundNumber($T.MaxPayout,2)}" min="0"  class="select-pt">
-                <option value="{roundNumber($T.IncentiveRate,2)}" selected="true">{roundNumber($T.IncentiveRate,2)}</option>
-            </select>
-
-            <span style="padding-left:10px"></span>
-        </td>
         <td>
         {#if $T.SyncBingo==false} 
             <b>Enable Bingo</b> <input type="checkbox" onclick="IsSyncData(this)" />
