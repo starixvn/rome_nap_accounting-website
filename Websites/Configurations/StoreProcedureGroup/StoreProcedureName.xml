@@ -791,4 +791,9 @@
     <Setting Key="DBA_ResetSecurityCode_Agent" SpName="Acc_CustomerUpdSecurityCode" DbName="DBTXN.BODB02" />
     <Setting Key="DBA_ResetSecurityCode_SubAgent" SpName="Acc_CustomerUpdSecurityCode_Sub" DbName="DBTXN.BODB02" />
   </Function>
+
+  <Function Name="Customer - SMATurnover">
+    <Setting Key="SMASportType" SpName="Acc_SportTypeSel" DbName="archive" />
+    <Setting Key="GetLeague" SpName="Acc_SMATurnoverLeagueSel" DbName="archive" />
+  </Function>
 </Functions>

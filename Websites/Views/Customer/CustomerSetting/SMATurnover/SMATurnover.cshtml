@@ -1,0 +1,145 @@
+﻿<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+<link href="~/App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
+<link href="~/App_Themes/LeftPanel/left_panel.css" rel="stylesheet" type="text/css" />
+<link href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" rel="stylesheet"
+    type="text/css" />
+<link href="~/js/jQuery/monthPicker/monPickr-0.0.1.css" rel="stylesheet" type="text/css"/>
+<link href="~/Views/Customer/CustomerSetting/SMATurnover/Style/SMATurnover.css"  rel="Stylesheet" type="text/css"/>
+
+<script src="~/js/jQuery/jquery-1.7.js" type="text/javascript"></script>
+<script src="~/js/jQuery/json2.js" type="text/javascript"></script>
+<script src="~/js/common.js" type="text/javascript"></script>
+<script src="~/js/jQuery/Template/jquery.tmpl.js" type="text/javascript"></script>
+<script src="~/js/BlockUI.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
+<script src="~/js/jQuery/jquery-ui-1.8.20.custom.min.js" type="text/javascript"></script>
+<script src="~/js/jQuery/monthPicker/monPickr-0.0.1.js?ver=1" type="text/javascript"></script>
+<script src="~/Views/Customer/CustomerSetting/SMATurnover/Scripts/SMATurnover.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
+
+<div class="main">
+    <div class="maincontent">
+        <div style="border: 1px solid #7C98A4; width: 900px; padding: 0px" class="maincontent_box">
+            <div class="box_header" style="width: 100%; margin: 0px">
+                <div id="SMATab" class="left_tab" style="width: 100%">
+                    <ul>
+                        <li id="ListSMATab" class="current"><a href="javascript:;"><span>SMA Turnover List</span></a></li>
+                        <li id="AddSMATab" style="position: relative"><a href="javascript:;"><span style="padding-right: 22px">Add SMA Turnover</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="padding-bottom: 10px">
+                <div id="ListSMAContent" class="marginTurnover">
+                    <div>
+                        <table>
+                            <tr>
+                                <td style="width: 60px; text-align: right; padding-left:8px">
+                                    <b>From Date</b>
+                                </td>
+                                <td>
+                                    <input type="text" id="txtfromdate" readonly="readonly" class="txtdate" style="width: 100px;" />
+                                </td>
+                                <td style="width: 50px; text-align: right;  padding-left:20px">
+                                    <b>To Date</b>
+                                </td>
+                                <td>
+                                    <input type="text" id="txttodate" readonly="readonly" class="txtdate" style="width: 100px;" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left:8px; text-align:right">
+                                    <div>
+                                        <b>Sport</b></div>
+                                </td>
+                                <td>
+                                    <select id="ddlSport" style="width: 105px" onchange="SMATurnover.ChangeSport()">
+                                        <option value="1">Soccer</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div style="padding-left: 20px;  text-align:right">
+                                        <b>League</b></div>
+                                </td>
+                                <td>
+                                    <select id="ddlLeague" style="width: 300px">
+                                    </select>
+                                </td>
+                                <td style="padding-left:8px">
+                                    <input type="button" id="btnSubmit" value="Submit" class="btn" onclick="" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div id="AddSMAContent" class="marginTurnover" style="display:none">
+                    <table>
+                        <tr>
+                            <td class="firstCol">
+                                <div>Match ID</div>
+                            </td>
+                            <td style="width:310px">
+                                <div><input type="text" id="txtMatchId" style="width:200px" />
+                                <input type="button" id="btnGetInfo"  value="Get Info" class="btn"/></div>
+                            </td> 
+                        </tr>
+                        <tr>
+                           <td class="firstCol">
+                                <div>League</div>
+                           </td> 
+                           <td>
+                                <div><input type="text" id="txtLeague" /></div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="firstCol">
+                                <div>Event Date</div>
+                           </td> 
+                           <td>
+                                <div><input type="text" id="txtEventDate" /></div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="firstCol">
+                                <div>Team</div>
+                           </td> 
+                           <td>
+                                <div><input type="text" id="txtTeam" /></div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="firstCol">
+                                <div>SMA Name</div>
+                           </td> 
+                           <td>
+                                <div><input type="text" id="txtSMAName" /></div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="firstCol">
+                                <div>Max Turnover</div>
+                           </td> 
+                           <td>
+                                <div><input type="text" id="txtTurnover" /></div>
+                           </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div><input  type="button" id="btnAdd" value="Add" class="btn" style="width: 40px" /></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        var currDay = '@DNAide.Core.CastAide.AsDateTime(DateTime.Now.ToShortDateString())';
+        var balanceUpDay = '@Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover.SMATurnoverAccess.BalanceUpDay()';
+        var fromdate_opts = { minDate: new Date(balanceUpDay) };
+        SMATurnover.RenderCalendarFromTo("#txtfromdate, #txttodate", fromdate_opts);
+        SMATurnover.ChangeTab();
+        SMATurnover.RenderSport();
+        SMATurnover.RenderLeague("1", currDay, currDay);
+
+    });
+</script>
