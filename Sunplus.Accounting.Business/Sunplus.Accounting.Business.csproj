@@ -83,7 +83,7 @@
       <HintPath>..\Dependency\IBCUtils.dll</HintPath>
     </Reference>
     <Reference Include="LiveCasinoLibrary, Version=1.0.0.11, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\MAIN\bingo\Dependencies\LiveCasinoLibrary.dll</HintPath>
+      <HintPath>..\Dependency\Bingo\LiveCasinoLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
@@ -105,8 +105,20 @@
     <Reference Include="SharedCache.WinServiceCommon">
       <HintPath>..\Dependency\SharedCache.WinServiceCommon.dll</HintPath>
     </Reference>
-    <Reference Include="Sunplus.Bingo.DataServices">
-      <HintPath>..\Dependency\Sunplus.Bingo.DataServices.dll</HintPath>
+    <Reference Include="Sunplus.Bingo.Core, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Dependency\Bingo\Sunplus.Bingo.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Bingo.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Dependency\Bingo\Sunplus.Bingo.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Bingo.Data.LinqToSql, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Dependency\Bingo\Sunplus.Bingo.Data.LinqToSql.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Bingo.Entities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Dependency\Bingo\Sunplus.Bingo.Entities.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Bingo.Services, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Dependency\Bingo\Sunplus.Bingo.Services.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Core.CachingLib">
       <HintPath>..\Dependency\Sunplus.Core.CachingLib.dll</HintPath>
@@ -439,26 +451,6 @@
     <None Include="Report\Winlost\MatchWinLossSingle.cs.exclude" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\MAIN\bingo\Sunplus.Bingo.Core\Sunplus.Bingo.Core.csproj">
-      <Project>{DDCA5291-056F-40A0-B464-FC091B454D41}</Project>
-      <Name>Sunplus.Bingo.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\MAIN\bingo\Sunplus.Bingo.Data.LinqToSql\Sunplus.Bingo.Data.LinqToSql.csproj">
-      <Project>{6B0FC5FC-7A3D-4AEC-8471-D1684CBA5D5C}</Project>
-      <Name>Sunplus.Bingo.Data.LinqToSql</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\MAIN\bingo\Sunplus.Bingo.Data\Sunplus.Bingo.Data.csproj">
-      <Project>{CAD381FA-31D5-4834-B92A-187C8FFDB734}</Project>
-      <Name>Sunplus.Bingo.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\MAIN\bingo\Sunplus.Bingo.Entities\Sunplus.Bingo.Entities.csproj">
-      <Project>{D4146A2E-7C30-4C53-8397-367485A436CC}</Project>
-      <Name>Sunplus.Bingo.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\MAIN\bingo\Sunplus.Bingo.Services\Sunplus.Bingo.Services.csproj">
-      <Project>{4F38F799-68DB-492A-8205-03A87B8A9D9E}</Project>
-      <Name>Sunplus.Bingo.Services</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.BetList\Fanex.Tarus.BetList.csproj">
       <Project>{3C9E433C-4C0D-4CED-8FE7-26BC80894B0F}</Project>
       <Name>Fanex.Tarus.BetList</Name>
@@ -570,7 +562,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
