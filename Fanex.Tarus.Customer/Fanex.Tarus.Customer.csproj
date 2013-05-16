@@ -167,6 +167,8 @@
     <Compile Include="Entities\Result.cs" />
     <Compile Include="Entities\SettingCustomer\AbnormalDetail.cs" />
     <Compile Include="Entities\SettingCustomer\SMATurnover\BaseModel.cs" />
+    <Compile Include="Entities\SettingCustomer\SMATurnover\CustomerTurnoverDetail.cs" />
+    <Compile Include="Entities\SettingCustomer\SMATurnover\MatchInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -77,6 +77,35 @@
         SMATurnover.RenderLeague(sportId, fromDate, toDate);
     },
 
+    GetInfoByMatch: function () {
+        var data = { matchId: $('#txtMatchId').val() };
+        $.ajax({
+            type: "POST",
+            url: "GetInfoByMatchId",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(data),
+            success: function (rs) {
+                if (rs != null) {
+                    if (rs.ErrCode != 0) {
+                        $('#msgError').show();
+                        showAlertMessage("msgError", rs.ErrMsg, 1);
+                        setTimeout(function () { $('#msgError').hide(); }, 4000);
+                        $('#txtLeague').val('');
+                        $('#txtEventDate').val('');
+                        $('#txtTeam').val('');
+                    }
+                    else {
+                        $('#msgError').hide();
+                        $('#txtLeague').val(rs.LeagueName);
+                        $('#txtEventDate').val(rs.EventDate);
+                        $('#txtTeam').val(rs.HomeTeam + ' -vs- ' + rs.AwayTeam);
+                    }
+                }
+            }
+        });
+    },
+
     GetSMATurnoverList: function () {
     }
 

@@ -70,14 +70,16 @@
                     </div>
                 </div>
                 <div id="AddSMAContent" class="marginTurnover" style="display:none">
+                   <div id="msgError" class="errMsg" style="display: none">
+                   </div>
                     <table>
                         <tr>
                             <td class="firstCol">
                                 <div>Match ID</div>
                             </td>
-                            <td style="width:310px">
+                            <td>
                                 <div><input type="text" id="txtMatchId" style="width:200px" />
-                                <input type="button" id="btnGetInfo"  value="Get Info" class="btn"/></div>
+                                <input type="button" id="btnGetInfo"  value="Get Info" class="btn" onclick="SMATurnover.GetInfoByMatch()"/></div>
                             </td> 
                         </tr>
                         <tr>
@@ -85,7 +87,7 @@
                                 <div>League</div>
                            </td> 
                            <td>
-                                <div><input type="text" id="txtLeague" /></div>
+                                <div><input type="text" id="txtLeague" style="width:265px" /></div>
                            </td>
                         </tr>
                         <tr>
@@ -93,7 +95,7 @@
                                 <div>Event Date</div>
                            </td> 
                            <td>
-                                <div><input type="text" id="txtEventDate" /></div>
+                                <div><input type="text" id="txtEventDate" style="width:265px"/></div>
                            </td>
                         </tr>
                         <tr>
@@ -101,7 +103,7 @@
                                 <div>Team</div>
                            </td> 
                            <td>
-                                <div><input type="text" id="txtTeam" /></div>
+                                <div><input type="text" id="txtTeam" style="width:265px" /></div>
                            </td>
                         </tr>
                         <tr>
@@ -109,7 +111,7 @@
                                 <div>SMA Name</div>
                            </td> 
                            <td>
-                                <div><input type="text" id="txtSMAName" /></div>
+                                <div><input type="text" id="txtSMAName"  style="width:265px"/></div>
                            </td>
                         </tr>
                         <tr>
@@ -117,12 +119,12 @@
                                 <div>Max Turnover</div>
                            </td> 
                            <td>
-                                <div><input type="text" id="txtTurnover" /></div>
+                                <div><input type="text" id="txtTurnover" style="width:265px" /></div>
                            </td>
                         </tr>
                         <tr>
-                            <td>
-                                <div><input  type="button" id="btnAdd" value="Add" class="btn" style="width: 40px" /></div>
+                            <td colspan="2">
+                                <div style="padding-left:78px"><input  type="button" id="btnAdd" value="Add" class="btn" style="width: 60px" /></div>
                             </td>
                         </tr>
                     </table>

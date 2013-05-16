@@ -10,6 +10,7 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
     {
         List<BaseModel> GetSportType(int mode);
         List<BaseModel> GetLeague(int sportType, DateTime fromDate, DateTime toDate);
-
+        MatchInfo GetInfoByMatchId(int matchId);
+        List<CustomerTurnoverDetail> GetSMATurnoverList(int sportId, int leagueId, DateTime fromDate, DateTime toDate);
     }
 }

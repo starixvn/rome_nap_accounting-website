@@ -5,6 +5,8 @@ using System.Text;
 using System.Data;
 using Fanex.Data;
 using DNAide.Core;
+using Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover;
+using Sunplus.Accounting.Core.Cache;
 
 namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
 {
@@ -61,6 +63,50 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
                 datatable = ds.Tables[0];
             }
             return datatable;
+        }
+
+        public MatchInfo GetInfoByMatchId(int matchId)
+        {
+            var matchInfo = new MatchInfo();
+            using (ObjectDb objDB = new ObjectDb("GetInfoByMatch"))
+            {
+                objDB.AddInParameter("matchid", DbType.Int32, matchId);
+                objDB.AddOutParameter("errcode", DbType.Int32, sizeof(int));
+                objDB.AddOutParameter("errmsg", DbType.String, 1000);
+                var ds = objDB.ExecuteDataSet();
+                matchInfo.ErrCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                matchInfo.ErrMsg = CastAide.AsString(objDB.GetParameterValue("errmsg"));
+                if (matchInfo.ErrCode == 0)
+                {
+                    var dtb = ds.Tables[0];
+                    var row = dtb.Rows[0];
+                    matchInfo.EventDate = string.Format("{0:M/d/yyyy}", CastAide.AsDateTime(row["eventdate"]));
+                    matchInfo.LeagueId = CastAide.AsString(row["leagueid"]);
+                    matchInfo.LeagueName = CacheRef.GetLeagueName(matchInfo.LeagueId);
+                    matchInfo.HomeTeam = CacheRef.GetTeamName(row["homeid"]);
+                    matchInfo.AwayTeam = CacheRef.GetTeamName(row["awayid"]);
+                }
+            }
+            return matchInfo;
+        }
+
+
+        public DataTable GetSMATurnoverList(int sportId, int leagueId, DateTime fromDate, DateTime toDate)
+        {
+            var dtb = new DataTable();
+            using (ObjectDb objDB = new ObjectDb("GetInfoByMatch"))
+            {
+                objDB.AddInParameter("sporttype", DbType.Int32, sportId);
+                objDB.AddInParameter("leagueid", DbType.Int32, leagueId);
+                objDB.AddInParameter("fromdate", DbType.DateTime, fromDate);
+                objDB.AddInParameter("todate", DbType.DateTime, toDate);
+                var ds = objDB.ExecuteDataSet();
+                if (ds != null)
+                {
+                    dtb = ds.Tables[0];
+                }
+            }
+            return dtb;
         }
     }
 }

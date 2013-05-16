@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover;
 
 namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
 {
@@ -10,5 +11,7 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
     {
         DataTable GetSportType(int mode);
         DataTable GetLeague(int sport, DateTime fromDate, DateTime toDate);
+        MatchInfo GetInfoByMatchId(int matchId);
+        DataTable GetSMATurnoverList(int sportId, int leagueId, DateTime fromDate, DateTime toDate);
     }
 }

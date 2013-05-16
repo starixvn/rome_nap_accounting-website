@@ -795,5 +795,7 @@
   <Function Name="Customer - SMATurnover">
     <Setting Key="SMASportType" SpName="Acc_SportTypeSel" DbName="archive" />
     <Setting Key="GetLeague" SpName="Acc_SMATurnoverLeagueSel" DbName="archive" />
+    <Setting Key="GetInfoByMatch" SpName="Acc_SMATurnoverMatchSel" DbName="archive" />
+    <Setting Key="GetSMATurnoverList" SpName="Acc_SMATurnoverListSel" DbName="archive" />
   </Function>
 </Functions>

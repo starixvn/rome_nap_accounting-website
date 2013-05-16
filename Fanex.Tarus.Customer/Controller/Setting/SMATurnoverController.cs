@@ -44,5 +44,21 @@ namespace Fanex.Tarus.Customer.Controller.Setting
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;
         }
+
+        public JsonResult GetInfoByMatchId(string matchId)
+        {
+            var result = _SMATurnover.GetInfoByMatchId(CastAide.AsInt32(matchId));
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        public JsonResult GetSMATurnoverList(string sportId, string LeagueId, string fromDate, string toDate)
+        {
+            var result = _SMATurnover.GetSMATurnoverList(CastAide.AsInt32(sportId), CastAide.AsInt32(LeagueId), CastAide.AsDateTime(fromDate), CastAide.AsDateTime(toDate));
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
     }
 }
