@@ -166,6 +166,17 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
 
                         dailyWinLoss2hItemX.Margin = ReportService.CalculateMargin(dailyWinLoss2hItemX.LineTotal,
                             dailyWinLoss2hItemX.Turnover) * 100;
+                        //if (dailyWinLoss2hItemX.IsApplyVirtualRate)
+                        //{
+                        //    dailyWinLoss2hItemX.Margin = ReportService.CalculateMargin(dailyWinLoss2hItemX.LineTotal,
+                        //        dailyWinLoss2hItemX.Turnover) * 100;
+                        //}
+                        //else
+                        //{
+                        //    dailyWinLoss2hItemX.Margin = ReportService.CalculateMargin(dailyWinLoss2hItemX.LineTotal,
+                        //        dailyWinLoss2hItemX.Turnover) * 100;
+                        //}
+
                         dailyWinLoss2hItemX.Variance = ReportService.CalculateVariance(
                             dailyWinLoss2hItemX.LineTotal,
                             dailyWinLoss2hItemX.LineTotalVirtual);

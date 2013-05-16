@@ -403,7 +403,8 @@ var NumberGameReportManager = {
         html = '<tr>\
                     <td style="">\
                         <div></div></td>\
-                    <td colspan = "8" class="l" style=""><span class="b longtext-wrapper">' + dwlRow.Name + '</span></td>\
+                    <td colspan = "8" class="l" style=""><span class="b longtext-wrapper">' +
+                        (dwlRow.Name && dwlRow.Name != '' ? dwlRow.Name : '&nbsp') + '</span></td>\
                 </tr>';
         return html;
     },

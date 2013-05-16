@@ -90,7 +90,7 @@ namespace Sunplus.Accounting.Business.BetList
         protected string _betId = "0";
         protected int _liveindicator = 0;
         protected string _showtime = "";
-     
+
         #endregion
 
         public abstract string RenderHTML(Hashtable input);
@@ -102,7 +102,7 @@ namespace Sunplus.Accounting.Business.BetList
         public virtual string CreateHeader(Hashtable input)
         {
             throw new NotImplementedException();
-        }     
+        }
 
         protected void GenEvent(ref string rowHtml, DataRow row, string eventItem, int listType)
         {
@@ -320,17 +320,17 @@ namespace Sunplus.Accounting.Business.BetList
             if (bettype == 121)
             {
                 if (_betteam == "x") choice = "Draw";
-                else if(_betteam == "a") choice = _away;
+                else if (_betteam == "a") choice = _away;
             }
             else if (bettype == 122)
             {
                 if (_betteam == "h") choice = _home;
-                else if(_betteam == "x") choice = "Draw";
+                else if (_betteam == "x") choice = "Draw";
             }
             else if (bettype == 123)
             {
                 if (_betteam == "h") choice = "Draw";
-                else if(_betteam == "a") choice = "No Draw";
+                else if (_betteam == "a") choice = "No Draw";
             }
             if (isMP) choice += oddMP();
             TemplateHandler.Assign(ref eventItem, "{choice}", choice + liveScore);
@@ -633,9 +633,9 @@ namespace Sunplus.Accounting.Business.BetList
         protected void GenCSEvent(ref string eventItem, string home, string away, int listType, bool isMP)
         {
             var Event = home + " -VS- " + away;
-           
+
             string choice = "";
-            choice = (_betteam == "5:0" || _betteam == "0:5") ? _betteam+ " UP" : _betteam;
+            choice = (_betteam == "5:0" || _betteam == "0:5") ? _betteam + " UP" : _betteam;
             if (_bettype == 30)
             {
                 choice = (_betteam == "4:0" || _betteam == "0:4") ? _betteam + " UP" : _betteam;
@@ -932,7 +932,7 @@ namespace Sunplus.Accounting.Business.BetList
         private void GenCSEventMP(ref string eventItem, string home, string away, int mpBettype, int listType, bool isMP)
         {
             var Event = home + " -VS- " + away;
-           
+
             string choice = "";
             choice = (_betteam == "5:0" || _betteam == "0:5") ? _betteam + " UP" : _betteam;
             if (mpBettype == 30)
@@ -1507,7 +1507,7 @@ namespace Sunplus.Accounting.Business.BetList
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
-        }       
+        }
 
         public void FillHeaderSoccer(ref string _s, DataRow r, string sporttype)
         {
@@ -1596,7 +1596,6 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref _s, "hlgoal", string.Empty);
             TemplateHandler.Assign(ref _s, "afgoal", string.Empty);
             TemplateHandler.Assign(ref _s, "algoal", string.Empty);
-
 
             string betstatus = r["betstatus"].ToString().Trim();
             if (betstatus.StartsWith("Refund HT"))
@@ -2145,7 +2144,7 @@ namespace Sunplus.Accounting.Business.BetList
                         TemplateHandler.Assign(ref _s, "{setCss}", "hidden");
                         TemplateHandler.Assign(ref _s, "{contenttblSet}", string.Empty);
                     }
-                   
+
                 }
                 else
                 {
@@ -2157,7 +2156,7 @@ namespace Sunplus.Accounting.Business.BetList
             {
                 LogExtensions.ExceptionHandler(ex);
             }
-           
+
         }
 
         #endregion
@@ -2595,7 +2594,7 @@ namespace Sunplus.Accounting.Business.BetList
             string sportName = string.Empty;
             try
             {
-                
+
                 DataTable dbt = null;
                 DataRow r = null;
                 var dr = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.Betlist.BetList_SBResults(matchid);

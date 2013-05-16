@@ -1,0 +1,21 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="ISportingSolutionsDataAccess.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.10.18">Created</change>
+// </history>
+
+namespace Fanex.Tarus.BetList.DataAccess.SportingSolutions
+{
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using Fanex.Tarus.BetList.Criteria.SportingSolutions;
+
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    public interface ISportingSolutionsDataAccess
+    {
+        List<dynamic> GetSportingSolutionsResult(GetSportingSolutionsResultCriteria criteria);
+    }
+}
