@@ -619,9 +619,9 @@
   </Function>
 
   <Function Name="Admin-Mailing">
-    <Setting Key="Acc_MailingListIns" SpName="Acc_MailingListIns" DbName="db053" />
-    <Setting Key="Acc_MailingListSel" SpName="Acc_MailingListSel" DbName="db053" />
-    <Setting Key="Acc_MailingListUpd" SpName="Acc_MailingListUpd" DbName="db053" />
+    <Setting Key="Acc_MailingListIns" SpName="Acc_MailingListIns" DbName="DBACC.BODB_ACC" />
+    <Setting Key="Acc_MailingListSel" SpName="Acc_MailingListSel" DbName="DBACC.BODB_ACC" />
+    <Setting Key="Acc_MailingListUpd" SpName="Acc_MailingListUpd" DbName="DBACC.BODB_ACC" />
   </Function>
 
   <Function Name="Consolidated Group">
@@ -791,5 +791,11 @@
   <Function Name="Admin-SecurityCode">
     <Setting Key="Admin_SecurityCode_GetUserList" SpName="ACC_CustomerValidation" DbName="DBAGE.BODB02" />
     <Setting Key="DBA_ResetSecurityCode_Agent" SpName="DBA_ResetSecurityCode_Agent" DbName="DBTXN.BODB02" />
+  </Function>
+
+  <Function Name="Racing-Report">
+    <Setting Key="Acc_Rpt_Racing_ComparisionTO3rd" SpName="Acc_Rpt_Racing_ComparisionTO3rd" DbName="DBACC.BODB_ACC" />
+    <Setting Key="Acc_Rpt_WinlostRacing_Group" SpName="Acc_Rpt_WinlostRacing_Group" DbName="DBACC.BODB_ACC" />
+    <Setting Key="Acc_Rpt_WinlostRacing_Group_Daily" SpName="Acc_Rpt_WinlostRacing_Group_Daily" DbName="warehouse" />
   </Function>
 </Functions>
