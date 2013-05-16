@@ -157,6 +157,7 @@ var WL2hShowHideDivManager = {
     showMainReportFromSCR: function (sportId, wldate) {
         if (isAllowRead) {
             try { parent.BlockUI(); } catch (e) { }
+            scoreInfoManager.ClosePopup();
             $("#dailyWLReportDiv").addClass("hidden");
             WL2hShowHideDivManager.updateShareElement();
 

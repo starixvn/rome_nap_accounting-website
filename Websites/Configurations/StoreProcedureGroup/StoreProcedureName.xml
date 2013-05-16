@@ -313,6 +313,9 @@
     <Setting Key="BetList_IP_OtherSports" SpName="Acc_BetListByIP_OtherSports" DbName="warehouse"  />
 
     <Setting Key="BetList_VirtualHR_Popup" SpName="Acc_BetList_SelMatchResult" DbName="db053"  />
+
+    <Setting Key="BetList_ScoreInformation_SelScoreInformation" SpName="Acc_Rpt_DailyWLDirect_Result" DbName="DBACC.BODB02" />
+    <Setting Key="BetList_ScoreInformation_SelScoreInformation_WH" SpName="Acc_Rpt_DailyWLDirect_Result_Old" DbName="punter" />
   </Function>
   <Function Name="ResetWinning">
     <Setting Key="ResetWinningMain" SpName="Acc_ResetWinning_SelByDate" DbName="db054"  />
@@ -554,7 +557,6 @@
 
   </Function>
   <Function Name="Report - Licensee">
-    <Setting Key="GetGameType" SpName="Acc_LiveCasinoGetGameType" DbName="archive"  />
     <Setting Key="GetLicenseesByResellers" SpName="Acc_LicenseeByResellerSel" DbName="licensee"  />
     <Setting Key="GetLiveCasinoWLByLicensee" SpName="Acc_Rpt_LicLiveCasinoWinloss" DbName="archive"  />
     <Setting Key="NumberGameWinlossByLicensee" SpName="Acc_Rpt_LicNumberGameWinloss" DbName="archive"  />
@@ -787,8 +789,7 @@
 
 
   <Function Name="Admin-SecurityCode">
-    <Setting Key="Admin_SecurityCode_GetUserList" SpName="ACC_CustomerValidation" DbName="DBACC.BODB02" />
-    <Setting Key="DBA_ResetSecurityCode_Agent" SpName="Acc_CustomerUpdSecurityCode" DbName="DBTXN.BODB02" />
-    <Setting Key="DBA_ResetSecurityCode_SubAgent" SpName="Acc_CustomerUpdSecurityCode_Sub" DbName="DBTXN.BODB02" />
+    <Setting Key="Admin_SecurityCode_GetUserList" SpName="ACC_CustomerValidation" DbName="DBAGE.BODB02" />
+    <Setting Key="DBA_ResetSecurityCode_Agent" SpName="DBA_ResetSecurityCode_Agent" DbName="DBTXN.BODB02" />
   </Function>
 </Functions>
