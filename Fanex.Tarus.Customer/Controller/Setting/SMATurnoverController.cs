@@ -60,5 +60,13 @@ namespace Fanex.Tarus.Customer.Controller.Setting
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;
         }
+
+        public JsonResult AddSMATurnover(string matchId, string userName, string maxTurnover)
+        {
+            var result = _SMATurnover.AddSMATurnover(CastAide.AsInt32(matchId), userName, CastAide.AsDouble(maxTurnover));
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
     }
 }

@@ -8,6 +8,7 @@ using System.Data;
 using DNAide.Core;
 using DNAide.Utils;
 using Sunplus.Accounting.Core.Cache;
+using Fanex.Tarus.Customer.Entities;
 
 namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
 {
@@ -86,7 +87,7 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
                     var i  = 0;
                     foreach (var detail in matchGroup)
                     {
-                        if(i > 0)
+                        if(i == 0)
                         {
                             Match.EventDate = string.Format("{0:M/d/yyyy}", detail["eventdate"]);
                             Match.HomeTeam = CacheRef.GetTeamName(detail["homeid"]);
@@ -96,7 +97,7 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
                         var Customer = new CustomerTurnoverDetail() { 
                             Username = detail["username"].ToString(),
                             Currency = detail["currency"].ToString(),
-                            SMATurnover = NumberFormat.DecFormat(CastAide.AsDecimal(detail["Totalurnover"]), 2),
+                            SMATurnover = NumberFormat.DecFormat(CastAide.AsDecimal(detail["TotalTurnover"]), 2),
                             MaxTurnover = NumberFormat.DecFormat(CastAide.AsDecimal(detail["MaxTurnover"]), 2)
                         };
                         i++;
@@ -110,6 +111,12 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
             }
 
             return leagueList;
+        }
+
+
+        public Result AddSMATurnover(int matchId, string userName, double maxTurnover)
+        {
+            return _SMATurnoverAccess.AddSMATurnover(matchId, userName, maxTurnover);
         }
     }
 }

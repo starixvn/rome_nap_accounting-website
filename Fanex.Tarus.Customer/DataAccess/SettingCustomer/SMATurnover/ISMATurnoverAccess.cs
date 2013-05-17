@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover;
+using Fanex.Tarus.Customer.Entities;
 
 namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
 {
@@ -13,5 +14,6 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
         DataTable GetLeague(int sport, DateTime fromDate, DateTime toDate);
         MatchInfo GetInfoByMatchId(int matchId);
         DataTable GetSMATurnoverList(int sportId, int leagueId, DateTime fromDate, DateTime toDate);
+        Result AddSMATurnover(int matchId, string userName, double maxTurnover);
     }
 }

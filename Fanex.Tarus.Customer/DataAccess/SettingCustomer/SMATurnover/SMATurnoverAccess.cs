@@ -7,6 +7,7 @@ using Fanex.Data;
 using DNAide.Core;
 using Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover;
 using Sunplus.Accounting.Core.Cache;
+using Fanex.Tarus.Customer.Entities;
 
 namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
 {
@@ -94,12 +95,13 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
         public DataTable GetSMATurnoverList(int sportId, int leagueId, DateTime fromDate, DateTime toDate)
         {
             var dtb = new DataTable();
-            using (ObjectDb objDB = new ObjectDb("GetInfoByMatch"))
+            using (ObjectDb objDB = new ObjectDb("GetSMATurnoverList"))
             {
                 objDB.AddInParameter("sporttype", DbType.Int32, sportId);
                 objDB.AddInParameter("leagueid", DbType.Int32, leagueId);
                 objDB.AddInParameter("fromdate", DbType.DateTime, fromDate);
                 objDB.AddInParameter("todate", DbType.DateTime, toDate);
+                objDB.AddInParameter("movebetsday", DbType.DateTime, MoveBetDay());
                 var ds = objDB.ExecuteDataSet();
                 if (ds != null)
                 {
@@ -107,6 +109,24 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
                 }
             }
             return dtb;
+        }
+
+
+        public Result AddSMATurnover(int matchId, string userName, double maxTurnover)
+        {
+            var result = new Result();
+            using (ObjectDb objDB = new ObjectDb("AddSMATurnover"))
+            {
+                objDB.AddInParameter("matchid", DbType.Int32, matchId);
+                objDB.AddInParameter("username", DbType.String, userName);
+                objDB.AddInParameter("maxturnover", DbType.Double, maxTurnover);
+                objDB.AddOutParameter("errcode", DbType.Int32, sizeof(int));
+                objDB.AddOutParameter("errmsg", DbType.String, 1000);
+                var ds = objDB.ExecuteNonQuery();
+                result.ErrorCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                result.ErrorMessage = CastAide.AsString(objDB.GetParameterValue("errmsg"));
+            }
+            return result;
         }
     }
 }
