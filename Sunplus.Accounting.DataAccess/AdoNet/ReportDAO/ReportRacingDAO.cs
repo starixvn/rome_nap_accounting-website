@@ -244,7 +244,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             {
                 param = new Hashtable();
                 param.Add("winlostdate", fromdate);
-                using (ObjectDb objDB = new ObjectDb("Acc_Rpt_WinlostRacing_Group"))
+                using (ObjectDb objDB = new ObjectDb("Acc_Rpt_WinlostRacing_Group_Daily"))
                 {
                     objDB.AssignParamValues(param);
                     var dsResult = objDB.ExecuteDataSet();
