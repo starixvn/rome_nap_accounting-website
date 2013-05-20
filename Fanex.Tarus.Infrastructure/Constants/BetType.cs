@@ -21,5 +21,8 @@ namespace Fanex.Tarus.Infrastructure.Constants
 
         public const int CasinoGames = 71;
         public const int P2P = 72;
+
+        public const int StartSetX_BetTypeRange = 1311;
+        public const int EndSetX_BetTypeRange = 1334;
     }
 }

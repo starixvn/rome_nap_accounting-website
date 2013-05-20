@@ -46,9 +46,17 @@ using System.Web.Mvc;
             return jsonResult;
         }
 
-        public JsonResult SelLiveCasinoWinLoss(string normalLicensee, string operators, string fromDate, string toDate)
+        public JsonResult SelAllGameTypes()
         {
-            var result = _liveCasinoWinlossService.SelLiveCasinoWinLoss(normalLicensee, operators, CastAide.AsDateTime(fromDate), CastAide.AsDateTime(toDate));
+            var result = _liveCasinoWinlossService.SelAllGameTypes();
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        public JsonResult SelLiveCasinoWinLoss(string normalLicensee, string operators, string fromDate, string toDate, string gameType)
+        {
+            var result = _liveCasinoWinlossService.SelLiveCasinoWinLoss(normalLicensee, operators, CastAide.AsDateTime(fromDate), CastAide.AsDateTime(toDate), CastAide.AsInt32(gameType));
             var jsonResult = Json(result);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;

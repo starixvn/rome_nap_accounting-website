@@ -439,6 +439,35 @@ var licenseeReport = {
         licenseeReport.renderMainReport(1);
         return false;
     },
+    initPagerSuper: function (total_item, items_per_page, current_page) {
+        var opt = { callback: licenseeReport.pageSelectCallbackSuper };
+        opt["items_per_page"] = items_per_page;
+        opt["current_page"] = current_page;
+        $("#pagination").pagination(total_item, opt);
+    },
+    pageSelectCallbackSuper: function (page_index, _items_per_page, jq) {
+        var max_page = Math.ceil(_totalItem / _items_per_page);
+        page_index = page_index < max_page ? page_index : max_page - 1;
+        _pageIndex = page_index + 1;
+        _pageSize = _items_per_page;
+        licenseeReport.ViewSuperDetailReport(licenseeReport.currencyId, 1, licenseeReport.fromDate);
+        return false;
+    },
+    initPagerMaster: function (total_item, items_per_page, current_page) {
+        var opt = { callback: licenseeReport.pageSelectCallbackMaster };
+        opt["items_per_page"] = items_per_page;
+        opt["current_page"] = current_page;
+        $("#pagination").pagination(total_item, opt);
+    },
+    pageSelectCallbackMaster: function (page_index, _items_per_page, jq) {
+        var max_page = Math.ceil(_totalItem / _items_per_page);
+        page_index = page_index < max_page ? page_index : max_page - 1;
+        _pageIndex = page_index + 1;
+        _pageSize = _items_per_page;
+        licenseeReport.ViewMasterDetailReport(licenseeReport.currencyId, 1, licenseeReport.custId, licenseeReport.fromDate);
+        return false;
+    },
+
     initPagerDetail: function (total_item, items_per_page, current_page) {
         var opt = { callback: licenseeReport.pageSelectCallbackDetail };
         opt["items_per_page"] = items_per_page;
@@ -450,7 +479,7 @@ var licenseeReport = {
         page_index = page_index < max_page ? page_index : max_page - 1;
         _pageIndex = page_index + 1;
         _pageSize = _items_per_page;
-        licenseeReport.renderDetailReport(licenseeReport.currencyId, 1, licenseeReport.custId, licenseeReport.SelectedDate);
+        licenseeReport.renderDetailReport(licenseeReport.currencyId, 1, licenseeReport.custId, licenseeReport.fromDate);
         return false;
     },
     initPagerDetail12Bet: function (total_item, items_per_page, current_page) {
@@ -465,7 +494,7 @@ var licenseeReport = {
         _pageIndex = page_index + 1;
         _pageSize = _items_per_page;
 
-        licenseeReport.renderDetail12BetReport(licenseeReport.currencyId, 1, licenseeReport.baseCurrency, licenseeReport.SelectedDate);
+        licenseeReport.renderDetail12BetReport(licenseeReport.currencyId, 1, licenseeReport.baseCurrency, licenseeReport.fromDate);
         return false;
     },
     setPostedData: function (fromCache) {
@@ -770,7 +799,7 @@ var licenseeReport = {
                     mainreport.find(".col_footer_content thead").empty().append(arr_total.join(''));
 
                     _totalItem = rs.totalrow;
-                    licenseeReport.initPagerDetail12Bet(_totalItem, _pageSize, _pageIndex - 1);
+                    licenseeReport.initPagerSuper(_totalItem, _pageSize, _pageIndex - 1);
                 }
                 else {
                     $("#tbWinloss tbody").empty().html('<tr><td colspan="15"><div class="c">There is no information available.</div></td></tr>');
@@ -834,6 +863,7 @@ var licenseeReport = {
             }
 
         }
+
         if (licenseeReport.licenseeId == 0) {
             showAlertMessage("ErrMsg", "Please choose a site.", 1);
             return;
@@ -900,7 +930,7 @@ var licenseeReport = {
                     mainreport.find(".col_footer_content thead").empty().append(arr_total.join(''));
 
                     _totalItem = rs.totalrow;
-                    licenseeReport.initPagerDetail(_totalItem, _pageSize, _pageIndex - 1);
+                    licenseeReport.initPagerMaster(_totalItem, _pageSize, _pageIndex - 1);
                 }
                 else {
                     $("#tbWinloss tbody").empty().html('<tr><td colspan="15"><div class="c">There is no information available.</div></td></tr>');
@@ -1299,7 +1329,7 @@ var licenseeReport = {
             else if (licenseeReport.ReportLevel == 4 && licenseeReport.funcDetail12Bet() != null) {
                 licenseeReport.funcDetail12Bet();
             }
-           
+
         }
         else {
             if (licenseeReport.funcMain != null) {
@@ -1312,7 +1342,24 @@ var licenseeReport = {
         try { parent.BlockUI(); } catch (e) { }
         var reportTitle = this.getTitle();
         var getData = this.setPostedData(true);
-
+        var baseCurrency;
+        switch ($('#dlCurrency').val()) {
+            case "0": //default
+                baseCurrency = 0;
+                break;
+            case "-3":
+                baseCurrency = 3; //USD
+                break;
+            case "-2":
+                baseCurrency = 2; //RM
+                break;
+            case "-6":
+                baseCurrency = 6; //EUR
+                break;
+            default:
+                baseCurrency = 0;
+                break;
+        }
         var param = {
             IsExport: 1,
             reportTitle: reportTitle,
@@ -1325,6 +1372,7 @@ var licenseeReport = {
             showNg: getData.ShowNG,
             showLc: getData.ShowLC,
             showBa: getData.ShowBA,
+            baseCurrency: baseCurrency,
             reportType: getData.ReportType,
             drawFilter: getData.drawfilter,
             excludeTest: getData.excludeTest,
@@ -1335,7 +1383,7 @@ var licenseeReport = {
             custid: this.custId,
             ReportLevel: licenseeReport.ReportLevel
         };
-
+       
         var url = 'WLByLicensee_new.aspx?' + $.param(param);
 
         $('#frm').attr('src', url);

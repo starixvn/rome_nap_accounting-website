@@ -89,6 +89,15 @@
   <ItemGroup>
     <Compile Include="Business\Balance\ISuperBalanceService.cs" />
     <Compile Include="Business\Balance\SuperBalanceService.cs" />
+    <Compile Include="Business\DailyWinLoss2hOtherSports\DailyWinLoss2hRowType.cs" />
+    <Compile Include="Business\DailyWinLoss2hOtherSports\IBCTypeConstants.cs" />
+    <Compile Include="Business\DailyWinLoss2hOtherSports\LivetypeConstants.cs" />
+    <Compile Include="Business\DailyWinLoss2hSoccer\DailyWinLoss2hRowType.cs" />
+    <Compile Include="Business\DailyWinLoss2hSoccer\IBCTypeConstants.cs" />
+    <Compile Include="Business\DailyWinLoss2hSoccer\LivetypeConstants.cs" />
+    <Compile Include="Business\DailyWinLoss2h\DailyWinLoss2hRowType.cs" />
+    <Compile Include="Business\DailyWinLoss2h\IBCTypeConstants.cs" />
+    <Compile Include="Business\DailyWinLoss2h\LivetypeConstants.cs" />
     <Compile Include="Business\Gaming\GamingService.cs" />
     <Compile Include="Business\Gaming\IGamingService.cs" />
     <Compile Include="Business\Gaming\LiveCasinoGameFinancialReport\ILiveCasinoGameFinancialReportService.cs" />
@@ -219,6 +228,7 @@
     <Compile Include="Criteria\Gaming\LiveCasinoGameFinancialReport\GetGameTableCriteria.cs" />
     <Compile Include="Criteria\Gaming\LiveCasinoGameFinancialReport\GetResellerCriteria.cs" />
     <Compile Include="Criteria\Gaming\NumberGameMonthlyWinLossReport\GetReportCriteria.cs" />
+    <Compile Include="Criteria\Main\DailyWinLoss2hSoccer\GetScoreInformationCriteria.cs" />
     <Compile Include="DataAccess\Balance\BalanceAccess.cs" />
     <Compile Include="DataAccess\Balance\IBalanceAccess.cs" />
     <Compile Include="DataAccess\BaseDataAccess.cs" />
@@ -324,6 +334,7 @@
     <Compile Include="Entities\Others\CheckBet.cs" />
     <Compile Include="Entities\PunterAnalysis\PunterAnalysisProduct.cs" />
     <Compile Include="Entities\Racing\ActiveMember.cs" />
+    <Compile Include="Entities\ScoreInformation\ScoreInfo.cs" />
     <Compile Include="Entities\SpecialReport\ParlayWon\ParlayWon.cs" />
     <Compile Include="Entities\PunterAnalysis\BasePunterAnalysis.cs" />
     <Compile Include="Entities\DailyWinLoss2h\DailyWinLoss2hItem.cs" />
@@ -438,7 +449,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Criteria\Main\" />
     <Folder Include="Repositories\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

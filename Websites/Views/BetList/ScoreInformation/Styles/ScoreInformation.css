@@ -1,0 +1,84 @@
+﻿.col10 
+{
+    width: 10px;
+}
+
+.col30
+{
+    width: 30px;
+}
+
+.col205
+{
+    width: 205px;
+}
+
+.col355
+{
+    width: 355px;
+}
+
+.col295
+{
+    width: 295px;
+}
+
+.col90
+{
+    width: 90px;
+}
+
+.col380
+{
+    width: 380px;
+}
+
+.col70
+{
+    width: 70px;
+}
+
+.col260 
+{
+    width: 260px;
+}
+
+.col50 
+{
+    width: 50px;
+}
+
+.sportTypeName_Header
+{
+    color: #0000FF;
+}
+
+.firstGoal
+{
+    background: url("./Images/firstGoal.gif") no-repeat scroll center center transparent;
+    display: inline;
+    height: 10px;
+    padding: 0 4px;
+    width: 14px;
+}
+
+.lastGoal
+{
+    background: url("./Images/lastGoal.gif") no-repeat scroll center center transparent;
+    display: inline;
+    height: 10px;
+    padding: 0 4px;
+    width: 14px;
+}
+
+.status-pending
+{
+    background-color: Yellow !important;
+}
+
+#tennisReportContainer_ScoreInfo .setXContent 
+{
+    margin-top: 20px;
+    width: 450px;
+}
+

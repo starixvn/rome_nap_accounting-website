@@ -131,7 +131,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
 
                         dailyWinLoss2hItemX.AliasName = dailyWinLoss2hItemX.Name;
                         dailyWinLoss2hItemX.Margin = ReportService.CalculateMargin(dailyWinLoss2hItemX.LineTotal,
-                            dailyWinLoss2hItemX.Turnover);
+                            dailyWinLoss2hItemX.Turnover) * 100;
                         dailyWinLoss2hItemX.IsApplyVirtualRate = ReportService.IsApplyVirtualRate(dailyWinLoss2hItemX.Id);
                         dailyWinLoss2hItemX.Variance = ReportService.CalculateVariance(
                             dailyWinLoss2hItemX.LineTotal,

@@ -62,12 +62,12 @@ a
 /* main level link hover */
 #nav li:hover > a, #nav li a:hover
 {
-    background:url(images/globalnavhover.png) 100% no-repeat transparent; 
+    background: url(images/globalnavhover.png) 100% no-repeat transparent;
     background-position: 0px -2px;
 }
 #nav .mcurrent a
 {
-   background:url(images/globalnavcurrent.png) 100% 77px; 
+    background: url(images/globalnavcurrent.png) 100% 77px;
 }
 
 /* sub levels link hover */
@@ -181,4 +181,34 @@ html[xmlns] #nav
 * html #nav
 {
     height: 1%;
+}
+
+#nav li a.wideMenu
+{
+    background: url("images/wide-globalnavnormal.png") no-repeat scroll 0 -2px transparent;
+    min-width: 128px;
+    cursor: pointer;
+    float: left;
+    font-weight: bold;
+    overflow: hidden;
+    padding: 8px 5px;
+    text-align: center;
+    width: auto;
+}
+
+
+/* main level link hover */
+#nav li:hover > a.wideMenu, #nav li a.wideMenu:hover
+{
+    background: url(images/wide-globalnavhover.png) 100% no-repeat transparent;
+    background-position: 0px -2px;
+    padding: 8px 5px;
+    min-width: 128px;
+   width: auto;
+ }
+#nav .mcurrent a.wideMenu
+{
+    background: url(images/wide-globalnavcurrent.png) 100% no-repeat transparent; 
+    background-position: 0px -2px;
+    width: auto;
 }

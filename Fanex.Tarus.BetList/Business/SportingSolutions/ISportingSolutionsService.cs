@@ -1,21 +1,23 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="ISportingSolutionsService.cs" company="">
-// TODO: Update copyright text.
+﻿// --------------------------------------------------------------------------
+// <copyright file="ISportingSolutionsService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.10.18">Created</change>
+// </history>
 
 namespace Fanex.Tarus.BetList.Business.SportingSolutions
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
+    using System.Diagnostics.CodeAnalysis;
+    using Fanex.Tarus.BetList.Criteria.SportingSolutions;
+    using Fanex.Tarus.BetList.Entities.SportingSolutions;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public interface ISportingSolutionsService
     {
         string GetChoice(int betypeId, string resourceId, string betteam, int hdp1, int hdp2, string home, string away);
+
+        SetX_Info Get_SetXContent(GetSportingSolutionsResultCriteria criteria);
     }
 }

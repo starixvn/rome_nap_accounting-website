@@ -4,7 +4,7 @@
     var betdetail = Model;
     string statusTemp = betdetail.Ticket.Status.ToLower();
     BetListHelper betlistHelper = new BetListHelper();
-   
+
     decimal PT = betdetail.Ticket.SuperPositionTaking;
     decimal PT2 = betdetail.SuperPositionTaking2;
     decimal discount = betdetail.Ticket.SuperDiscount;
@@ -25,7 +25,14 @@
 else
 {
     <div class="@betlistHelper.IsNegative(PT)">
-        @betlistHelper.PerCentFormat(PT)
+        @if (betdetail.Ticket.BetTypeId == 71)
+        {
+           
+        }
+        else
+        {
+            <span>@betlistHelper.PerCentFormat(PT)</span>
+        }
     </div>
 }
 @if (statusTemp != "running")
@@ -35,7 +42,14 @@ else
     </div>
 }
 <div class="margin-top-5">
-    @doubleCom @betlistHelper.PerCentFormat(discount)
+    @if (betdetail.Ticket.BetTypeId == 71)
+    {
+        
+    }
+    else
+    {
+        <span>@doubleCom @betlistHelper.PerCentFormat(discount)</span>
+    }
 </div>
 @if (statusTemp != "running")
 {
