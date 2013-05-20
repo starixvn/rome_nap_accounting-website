@@ -7,6 +7,7 @@ using System.Data;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess.IReportDAO;
 using Sunplus.Accounting.DataAccess.Report;
+using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 {
@@ -120,18 +121,16 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
         public DataTable WinlostRacingToteDumpFiles(string winlossdate, int reportType)
         {
-            DbResult dbResult = null;
+            using (ObjectDb objDB = new ObjectDb("Acc_Rpt_Racing_ComparisionTO3rd"))
+            {
+                var param = new Hashtable { { "winlostdate", winlossdate }, { "reporttype", reportType } };
 
-            string strMapping = SpAlias.WinlostRacingToteDumpFile.ToString();
-
-            //var spElement = GetStoreProcedure(StoreProcedureSection.StoreCollection.Report, "Racing").Stores[strMapping];
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.Racing, strMapping);
-            var param = new Hashtable { { "winlostdate", winlossdate }, { "reporttype", reportType } };
-            dbResult = DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
-            if (dbResult != null && dbResult.ResultSet != null && dbResult.ResultSet.Tables.Count > 0)
-                return dbResult.ResultSet.Tables[0];
-            else
+                objDB.AssignParamValues(param);
+                var dsResult = objDB.ExecuteDataSet();
+                if (dsResult != null && dsResult.Tables.Count > 0)
+                    return dsResult.Tables[0];
                 return null;
+            }
         }
 
 
@@ -237,53 +236,60 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
 
         public DataTable WinlostRacing_Group(string fromdate, string todate)
-        {
-            DbResult rsGroup = null, rsGroupDaily = null;
+        {            
             DataTable dtGroup = new DataTable();
-            Hashtable param = new Hashtable();
-            string strMappingDaily = SpAlias.WinlostRacing_Group_Daily.ToString();
-            string strMapping = SpAlias.WinlostRacing_Group.ToString();
-
-            //var spElementDaily = GetStoreProcedure(StoreProcedureSection.StoreCollection.Report, "Racing").Stores[strMappingDaily];
-            //var spElement = GetStoreProcedure(StoreProcedureSection.StoreCollection.Report, "Racing").Stores[strMapping]; 
-            var spElementDaily = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.Racing, strMappingDaily);
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.Racing, strMapping);
+            Hashtable param = new Hashtable();            
             
             if(CastAide.AsDateTime(fromdate) == CastAide.AsDateTime(todate) && CastAide.AsDateTime(todate) == DateTime.Today)
             {
                 param = new Hashtable();
                 param.Add("winlostdate", fromdate);
-                dtGroup = DbHelper.Execute(spElementDaily.Name, param, spElementDaily.DbName).ResultSet.Tables[0]; 
+                using (ObjectDb objDB = new ObjectDb("Acc_Rpt_WinlostRacing_Group_Daily"))
+                {
+                    objDB.AssignParamValues(param);
+                    var dsResult = objDB.ExecuteDataSet();
+                    if (dsResult != null && dsResult.Tables.Count > 0)
+                        dtGroup = dsResult.Tables[0];                    
+                }
             }
             else
             {
                 param = new Hashtable();
                 param.Add("fromdate", fromdate);
-                param.Add("todate", todate);
-                rsGroup = DbHelper.Execute(spElement.Name, param, spElement.DbName); 
+                param.Add("todate", todate);                
+                using (ObjectDb objDB = new ObjectDb("Acc_Rpt_WinlostRacing_Group"))
+                {
+                    objDB.AssignParamValues(param);
+                    var dsResult = objDB.ExecuteDataSet();
+                    if (dsResult != null && dsResult.Tables.Count > 0)
+                        dtGroup = dsResult.Tables[0];
+                }
                 if (CastAide.AsDateTime(todate) >= DateTime.Today)
                 {
                     param = new Hashtable();
                     param.Add("winlostdate", todate);
-                    rsGroupDaily = DbHelper.Execute(spElementDaily.Name, param, spElementDaily.DbName);
-                }
-
-                #region Combine group daily into group
-                dtGroup = rsGroup.ResultSet.Tables[0];
-                if (rsGroupDaily != null)
-                {
-                    DataTable dtGroupDaily = rsGroupDaily.ResultSet.Tables[0];
-                    foreach (DataRow drGroupDaily in dtGroupDaily.Rows)
+                    
+                    using (ObjectDb objDB = new ObjectDb("Acc_Rpt_WinlostRacing_Group_Daily"))
                     {
-                        DataRow drGroup = dtGroup.NewRow();
-                        for (int i = 0; i < drGroupDaily.ItemArray.Length; i++)
+                        objDB.AssignParamValues(param);
+                        var dsDailyResult = objDB.ExecuteDataSet();
+                        if (dsDailyResult != null && dsDailyResult.Tables.Count > 0)
                         {
-                            drGroup[i] = drGroupDaily[i];
-                        }
-                        dtGroup.Rows.Add(drGroup);
+                            #region Combine group daily into group
+                            DataTable dtGroupDaily = dsDailyResult.Tables[0];
+                            foreach (DataRow drGroupDaily in dtGroupDaily.Rows)
+                            {
+                                DataRow drGroup = dtGroup.NewRow();
+                                for (int i = 0; i < drGroupDaily.ItemArray.Length; i++)
+                                {
+                                    drGroup[i] = drGroupDaily[i];
+                                }
+                                dtGroup.Rows.Add(drGroup);
+                            }
+                            #endregion
+                        }                            
                     }
-                }
-                #endregion
+                }                
             }
             return dtGroup;
         }
