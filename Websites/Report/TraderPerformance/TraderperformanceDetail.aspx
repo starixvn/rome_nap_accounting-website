@@ -10,8 +10,8 @@
     <link rel="stylesheet" type="text/css" href="../../App_Themes/Public/commonIOM.css" />
     <link rel="stylesheet" type="text/css" href="../../App_Themes/Public/table.css" />
     <link rel="stylesheet" type="text/css" href="../../App_Themes/Public/input.css" />
-    <link href="../../App_Themes/Report/TraderPerformance.css?<%=WebSettings.Version%>"
-        rel="stylesheet" type="text/css" />
+    <link href="Styles/TraderPerformance.css?version=<%=WebSettings.Version%>" rel="stylesheet"
+        type="text/css" />
     <link href="../../js/jQuery/GridScroller/gridscroller.css" rel="stylesheet" type="text/css" />
     <link href="../../js/jQuery/Pager/pagination.css" rel="stylesheet" type="text/css" />
     <link href="../../js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" rel="stylesheet"
@@ -88,7 +88,7 @@
                                                         No</div>
                                                 </th>
                                                 <th style="">
-                                                    <div class="col100 c table-cell" style="">
+                                                    <div class="col100 c table-cell" fieldtosort="Trader" style="">
                                                         Trader</div>
                                                 </th>
                                                 <th style="">
@@ -119,7 +119,7 @@
                                                             No</div>
                                                     </th>
                                                     <th>
-                                                        <div class="col100 c table-cell" style="">
+                                                        <div class="col100 c table-cell" fieldtosort="Trader" style="">
                                                             Trader</div>
                                                     </th>
                                                     <th>

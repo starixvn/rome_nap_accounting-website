@@ -262,32 +262,32 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 MarginOverall = NumberFormat.DecFormat(CastAide.AsDecimal(dr["overall_margin"]) * 100, 2),
                                 #endregion
                                 #region live bet count
-                                LiveBetCountHdp = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_hdp"], 0), 2),
-                                LiveBetCount1stHdp = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_1sthdp"], 0), 2),
-                                LiveBetCount1stOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_1stou"], 0), 2),
-                                LiveBetCountOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_ou"], 0), 2),
-                                LiveBetCount1st1x2 = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_1st1x2"], 0), 2),
-                                LiveBetCount1x2 = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_1x2"], 0), 2),
+                                LiveBetCountHdp = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_hdp"], 0), 0),
+                                LiveBetCount1stHdp = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_1sthdp"], 0), 0),
+                                LiveBetCount1stOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_1stou"], 0), 0),
+                                LiveBetCountOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_ou"], 0), 0),
+                                LiveBetCount1st1x2 = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_1st1x2"], 0), 0),
+                                LiveBetCount1x2 = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_1x2"], 0), 0),
                                 LiveBetCount1stNoOfCorners =
-                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_1stNoOfCorners"], 0), 2),
+                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_1stNoOfCorners"], 0), 0),
                                 LiveBetCountNoOfCorners =
-                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_NoOfCorners"], 0), 2),
-                                LiveBetCount15minOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_15minOU"], 0), 2),
+                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_NoOfCorners"], 0), 0),
+                                LiveBetCount15minOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_15minOU"], 0), 0),
                                 LiveBetCount1stNoOfYellowCards =
-                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_1stNoOfYellowCards"], 0), 2),
+                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_1stNoOfYellowCards"], 0), 0),
                                 LiveBetCountNoOfYellowCards =
-                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_NoOfYellowCards"], 0), 2),
+                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_NoOfYellowCards"], 0), 0),
                                 LiveBetCount1stOe =
                                     NumberFormat.DecFormat(CastAide.AsDecimal(
                                         dr.Table.Columns.Contains("bet_1stoe") ? dr["bet_1stoe"] : 0,
-                                        0), 2),
+                                        0), 0),
                                 LiveBetCountOe =
                                     NumberFormat.DecFormat(CastAide.AsDecimal(
-                                        dr.Table.Columns.Contains("bet_oe") ? dr["bet_oe"] : 0, 0), 2),
+                                        dr.Table.Columns.Contains("bet_oe") ? dr["bet_oe"] : 0, 0), 0),
                                 LiveBetCountNextCorner =
                                     NumberFormat.DecFormat(CastAide.AsDecimal(
-                                        dr.Table.Columns.Contains("bet_NextCorner") ? dr["bet_NextCorner"] : 0, 0), 2),
-                                LiveBetCountOverall = NumberFormat.DecFormat(CastAide.AsDecimal(dr["overall_livebet"], 0), 2)
+                                        dr.Table.Columns.Contains("bet_NextCorner") ? dr["bet_NextCorner"] : 0, 0), 0),
+                                LiveBetCountOverall = NumberFormat.DecFormat(CastAide.AsDecimal(dr["overall_livebet"], 0), 0)
                                 #endregion
                             };
 
@@ -552,31 +552,30 @@ namespace Sunplus.Accounting.Business.Report.Other
                         MarginOverall = NumberFormat.DecFormat((CastAide.AsDecimal(toOverall, 0) != 0 ? (CastAide.AsDecimal(wlOverall, 0) * 100 / CastAide.AsDecimal(toOverall, 0)) : 0), 2),
                         #endregion
                         #region live bet count
-                        LiveBetCountHdp = NumberFormat.DecFormat(CastAide.AsDecimal(liHdpTotal, 0), 2),
-                        LiveBetCount1stHdp = NumberFormat.DecFormat(CastAide.AsDecimal(li1stHdpTotal, 0), 2),
-                        LiveBetCount1stOu = NumberFormat.DecFormat(CastAide.AsDecimal(li1stOu, 0), 2),
-                        LiveBetCountOu = NumberFormat.DecFormat(CastAide.AsDecimal(liOuTotal, 0), 2),
-                        LiveBetCount1st1x2 = NumberFormat.DecFormat(CastAide.AsDecimal(li1st1x2, 0), 2),
-                        LiveBetCount1x2 = NumberFormat.DecFormat(CastAide.AsDecimal(li1x2, 0), 2),
+                        LiveBetCountHdp = NumberFormat.DecFormat(CastAide.AsDecimal(liHdpTotal, 0), 0),
+                        LiveBetCount1stHdp = NumberFormat.DecFormat(CastAide.AsDecimal(li1stHdpTotal, 0), 0),
+                        LiveBetCount1stOu = NumberFormat.DecFormat(CastAide.AsDecimal(li1stOu, 0), 0),
+                        LiveBetCountOu = NumberFormat.DecFormat(CastAide.AsDecimal(liOuTotal, 0), 0),
+                        LiveBetCount1st1x2 = NumberFormat.DecFormat(CastAide.AsDecimal(li1st1x2, 0), 0),
+                        LiveBetCount1x2 = NumberFormat.DecFormat(CastAide.AsDecimal(li1x2, 0), 0),
                         LiveBetCount1stNoOfCorners =
-                            NumberFormat.DecFormat(CastAide.AsDecimal(li1stNoOfCornerTotal, 0), 2),
+                            NumberFormat.DecFormat(CastAide.AsDecimal(li1stNoOfCornerTotal, 0), 0),
                         LiveBetCountNoOfCorners =
-                            NumberFormat.DecFormat(CastAide.AsDecimal(liNoOfCorner, 0), 2),
-                        LiveBetCount15minOu = NumberFormat.DecFormat(CastAide.AsDecimal(li15MinOu, 0), 2),
+                            NumberFormat.DecFormat(CastAide.AsDecimal(liNoOfCorner, 0), 0),
+                        LiveBetCount15minOu = NumberFormat.DecFormat(CastAide.AsDecimal(li15MinOu, 0), 0),
                         LiveBetCount1stNoOfYellowCards =
-                            NumberFormat.DecFormat(CastAide.AsDecimal(li1stNoOfYellowCard, 0), 2),
+                            NumberFormat.DecFormat(CastAide.AsDecimal(li1stNoOfYellowCard, 0), 0),
                         LiveBetCountNoOfYellowCards =
-                            NumberFormat.DecFormat(CastAide.AsDecimal(liNoOfYellowCard, 0), 2),
+                            NumberFormat.DecFormat(CastAide.AsDecimal(liNoOfYellowCard, 0), 0),
                         LiveBetCount1stOe =
-                            NumberFormat.DecFormat(CastAide.AsDecimal(li1stOe, 0), 2),
+                            NumberFormat.DecFormat(CastAide.AsDecimal(li1stOe, 0), 0),
                         LiveBetCountOe =
-                            NumberFormat.DecFormat(CastAide.AsDecimal(liOe, 0), 2),
+                            NumberFormat.DecFormat(CastAide.AsDecimal(liOe, 0), 0),
                         LiveBetCountNextCorner =
-                            NumberFormat.DecFormat(CastAide.AsDecimal(liNextCorner, 0), 2),
-                        LiveBetCountOverall = NumberFormat.DecFormat(CastAide.AsDecimal(liOverall, 0), 2)
+                            NumberFormat.DecFormat(CastAide.AsDecimal(liNextCorner, 0), 0),
+                        LiveBetCountOverall = NumberFormat.DecFormat(CastAide.AsDecimal(liOverall, 0), 0)
+
                         #endregion
-
-
                     };
                     traderTotal.Add(traderGrandTotal);
                     #endregion
@@ -1309,8 +1308,11 @@ namespace Sunplus.Accounting.Business.Report.Other
 
                     #region Live BetCount
 
-                    bgFormat = ExcelFormat(Color.FromArgb(253, 207, 246),
-                                           HorizontalAlignmentStyle.Right, ExcelFont.NormalWeight, true, false);
+                    bgFormat = ExcelIntFormat(Color.FromArgb(253, 207, 246),
+                                           HorizontalAlignmentStyle.Right,
+                                           ExcelFont.NormalWeight,
+                                           true,
+                                           false);
 
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].Style
                         = bgFormat;
@@ -1785,6 +1787,12 @@ namespace Sunplus.Accounting.Business.Report.Other
                                                             HorizontalAlignmentStyle.Center, ExcelFont.BoldWeight, false, false);
                 var footerStyleSheet = ExcelFormat(Color.FromArgb(159, 183, 213),
                                                              HorizontalAlignmentStyle.Right, ExcelFont.BoldWeight, true, false);
+                var footerIntStyleSheet = ExcelIntFormat(Color.FromArgb(159, 183, 213),
+                    HorizontalAlignmentStyle.Right,
+                    ExcelFont.BoldWeight,
+                    true,
+                    false);
+
                 var footerStyleSheetPercent = ExcelFormat(Color.FromArgb(159, 183, 213),
                                                              HorizontalAlignmentStyle.Right, ExcelFont.BoldWeight, false, true);
                 foreach (var reportFooter in trader.footers)
@@ -2066,7 +2074,7 @@ namespace Sunplus.Accounting.Business.Report.Other
 
                     #region Live BetCount
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
-                        footerStyleSheet;
+                        footerIntStyleSheet;
                     if (CastAide.AsDecimal(reportFooter.LiveBetCount1st1x2) != 0)
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
                             CastAide.AsDecimal(reportFooter.LiveBetCount1st1x2);
@@ -2074,7 +2082,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value = null;
 
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
-                        footerStyleSheet;
+                        footerIntStyleSheet;
                     if (CastAide.AsDecimal(reportFooter.LiveBetCount1x2) != 0)
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
                             CastAide.AsDecimal(reportFooter.LiveBetCount1x2);
@@ -2082,7 +2090,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value = null;
 
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
-                        footerStyleSheet;
+                        footerIntStyleSheet;
                     if (CastAide.AsDecimal(reportFooter.LiveBetCount1stHdp) != 0)
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
                             CastAide.AsDecimal(reportFooter.LiveBetCount1stHdp);
@@ -2090,7 +2098,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value = null;
 
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
-                        footerStyleSheet;
+                        footerIntStyleSheet;
                     if (CastAide.AsDecimal(reportFooter.LiveBetCountHdp) != 0)
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
                             CastAide.AsDecimal(reportFooter.LiveBetCountHdp);
@@ -2098,7 +2106,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value = null;
 
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
-                        footerStyleSheet;
+                        footerIntStyleSheet;
                     if (CastAide.AsDecimal(reportFooter.LiveBetCount1stOu) != 0)
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
                             CastAide.AsDecimal(reportFooter.LiveBetCount1stOu);
@@ -2106,7 +2114,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value = null;
 
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
-                        footerStyleSheet;
+                        footerIntStyleSheet;
                     if (CastAide.AsDecimal(reportFooter.LiveBetCountOu) != 0)
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
                             CastAide.AsDecimal(reportFooter.LiveBetCountOu);
@@ -2116,7 +2124,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                     if (isSoccer == 1)
                     {
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerStyleSheet;
+                            = footerIntStyleSheet;
                         if (CastAide.AsDecimal(reportFooter.LiveBetCount1stNoOfCorners) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                                 Value = CastAide.AsDecimal(reportFooter.LiveBetCount1stNoOfCorners);
@@ -2125,7 +2133,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                             Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerStyleSheet;
+                            = footerIntStyleSheet;
                         if (CastAide.AsDecimal(reportFooter.LiveBetCountNoOfCorners) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                                 Value = CastAide.AsDecimal(reportFooter.LiveBetCountNoOfCorners);
@@ -2134,7 +2142,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                                     Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerStyleSheet;
+                            = footerIntStyleSheet;
                         if (CastAide.AsDecimal(reportFooter.LiveBetCount1stNoOfYellowCards) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                                 Value = CastAide.AsDecimal(reportFooter.LiveBetCount1stNoOfYellowCards);
@@ -2143,7 +2151,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                             Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerStyleSheet;
+                            = footerIntStyleSheet;
                         if (CastAide.AsDecimal(reportFooter.LiveBetCountNoOfYellowCards) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                                 Value = CastAide.AsDecimal(reportFooter.LiveBetCountNoOfYellowCards);
@@ -2152,7 +2160,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                             Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerStyleSheet;
+                            = footerIntStyleSheet;
                         if (CastAide.AsDecimal(reportFooter.LiveBetCount15minOu) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                                 Value = CastAide.AsDecimal(reportFooter.LiveBetCount15minOu);
@@ -2161,7 +2169,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                             Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerStyleSheet;
+                            = footerIntStyleSheet;
                         if (CastAide.AsDecimal(reportFooter.LiveBetCountNextCorner) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                                 Value = CastAide.AsDecimal(reportFooter.LiveBetCountNextCorner);
@@ -2170,7 +2178,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                             Value = null;
                     }
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
-                        footerStyleSheet;
+                        footerIntStyleSheet;
                     if (CastAide.AsDecimal(reportFooter.LiveBetCount1stOe) != 0)
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
                             CastAide.AsDecimal(reportFooter.LiveBetCount1stOe);
@@ -2178,7 +2186,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value = null;
 
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
-                        footerStyleSheet;
+                        footerIntStyleSheet;
                     if (CastAide.AsDecimal(reportFooter.LiveBetCountOe) != 0)
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
                             CastAide.AsDecimal(reportFooter.LiveBetCountOe);
@@ -2186,7 +2194,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value = null;
 
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
-                        footerStyleSheet;
+                        footerIntStyleSheet;
                     if (CastAide.AsDecimal(reportFooter.LiveBetCountOverall) != 0)
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
                             CastAide.AsDecimal(reportFooter.LiveBetCountOverall);
@@ -2306,7 +2314,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                             CastAide.AsDecimal(reportFooter.Margin1stOe) / 100;
                     else
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value = null;
-                  
+
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
                         footerStyleSheetPercent;
                     if (CastAide.AsDecimal(reportFooter.MarginOe) != 0)
@@ -2461,17 +2469,17 @@ namespace Sunplus.Accounting.Business.Report.Other
             }
             else
             {
-              //  var bgFormat = ExcelFormat(Color.FromArgb(255, 255, 255), HorizontalAlignmentStyle.Left,
-              //      ExcelFont.BoldWeight, false, false);
+                //  var bgFormat = ExcelFormat(Color.FromArgb(255, 255, 255), HorizontalAlignmentStyle.Left,
+                //      ExcelFont.BoldWeight, false, false);
 
-              //  wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(nextRow + startRowIndex,
-              //      startColumnIndex, startRowIndex + nextRow,
-              //      startColumnIndex + 2).Merged =
-              //true;
-              //  wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(nextRow + startRowIndex, startColumnIndex,
-              //                                                      startRowIndex + nextRow,
-              //                                                      startColumnIndex + 2).Style =
-              //      bgFormat;
+                //  wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(nextRow + startRowIndex,
+                //      startColumnIndex, startRowIndex + nextRow,
+                //      startColumnIndex + 2).Merged =
+                //true;
+                //  wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(nextRow + startRowIndex, startColumnIndex,
+                //                                                      startRowIndex + nextRow,
+                //                                                      startColumnIndex + 2).Style =
+                //      bgFormat;
 
                 wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(nextRow + startRowIndex, startColumnIndex + (3), nextRow + startRowIndex, startColumnIndex + (3)).Merged = true;
                 wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (3)].Style.Font.Weight = ExcelFont.BoldWeight;
@@ -2926,17 +2934,17 @@ namespace Sunplus.Accounting.Business.Report.Other
             }
             else
             {
-              //  var bgFormat = ExcelFormat(Color.FromArgb(255, 255, 255), HorizontalAlignmentStyle.Left,
-              //      ExcelFont.BoldWeight, false, false);
+                //  var bgFormat = ExcelFormat(Color.FromArgb(255, 255, 255), HorizontalAlignmentStyle.Left,
+                //      ExcelFont.BoldWeight, false, false);
 
-              //  wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(nextRow + startRowIndex,
-              //      startColumnIndex, startRowIndex + nextRow,
-              //      startColumnIndex + 4).Merged =
-              //true;
-              //  wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(nextRow + startRowIndex, startColumnIndex,
-              //                                                      startRowIndex + nextRow,
-              //                                                      startColumnIndex + 4).Style =
-              //      bgFormat;
+                //  wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(nextRow + startRowIndex,
+                //      startColumnIndex, startRowIndex + nextRow,
+                //      startColumnIndex + 4).Merged =
+                //true;
+                //  wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(nextRow + startRowIndex, startColumnIndex,
+                //                                                      startRowIndex + nextRow,
+                //                                                      startColumnIndex + 4).Style =
+                //      bgFormat;
 
                 wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (5)].Style.Font.Weight = ExcelFont.BoldWeight;
                 wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (5)].Style.Font.Color = Color.Red;
@@ -3536,8 +3544,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                 #endregion
 
                 #region margin
-                bgFormat = ExcelFormat(Color.FromArgb(202, 222, 230),
-                                       HorizontalAlignmentStyle.Right, ExcelFont.NormalWeight, true, false);
+                bgFormat = ExcelIntFormat(Color.FromArgb(202, 222, 230),
+                                       HorizontalAlignmentStyle.Right,
+                                       ExcelFont.NormalWeight,
+                                       true,
+                                       false);
                 worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].Style
                     = bgPercentFormat;
                 if (CastAide.AsDecimal(traderDetail.Margin1st1x2) != 0)
@@ -4196,6 +4207,11 @@ namespace Sunplus.Accounting.Business.Report.Other
             #endregion
 
             #region live betcount
+            bgFormat = ExcelIntFormat(isGrandTotal ? Color.FromArgb(159, 183, 213) : Color.FromArgb(204, 255, 204),
+                HorizontalAlignmentStyle.Right,
+                ExcelFont.BoldWeight,
+                true,
+                false);
             worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].Style
                 = bgFormat;
             if (CastAide.AsDecimal(trader.LiveBetCount1st1x2) != 0)
@@ -4657,6 +4673,26 @@ namespace Sunplus.Accounting.Business.Report.Other
                 excelFormat.NumberFormat = "#,##0.00%_);[RED](-#,##0.00%); ";
             return excelFormat;
         }
+
+        private static CellStyle ExcelIntFormat(Color backgroundColor, HorizontalAlignmentStyle alignmentStyle, int font, bool isDecFormat, bool isPercent)
+        {
+            var excelFormat = new CellStyle();
+
+            excelFormat.FillPattern.SetSolid(backgroundColor);
+            excelFormat.Borders.SetBorders(MultipleBorders.Outside, Color.FromArgb(65, 116, 177), LineStyle.Thin);
+            excelFormat.Font.Weight = font;
+            excelFormat.HorizontalAlignment = alignmentStyle;
+            excelFormat.WrapText = true;
+            excelFormat.Font.Name = "Tahoma";
+            excelFormat.Font.Size = 160;
+
+            if (isDecFormat)
+                excelFormat.NumberFormat = "#,##0_);[RED](-#,##0); ";
+            if (isPercent)
+                excelFormat.NumberFormat = "#,##0%_);[RED](-#,##0%); ";
+            return excelFormat;
+        }
+
         #endregion
 
         #region get traderperformance report detail
@@ -5254,53 +5290,53 @@ namespace Sunplus.Accounting.Business.Report.Other
                         #region assign data
                         var traderDataDetail = new TraderPerformanceDetail()
                         {
-                            Comm15minOu = NumberFormat.DecFormat(comm_15mou, 0),
-                            Comm1st1x2 = NumberFormat.DecFormat(comm_ht1x2, 0),
-                            Comm1stHdp = NumberFormat.DecFormat(comm_hthdp, 0),
-                            Comm1stNoOfCorners = NumberFormat.DecFormat(comm_1stcorner, 0),
-                            Comm1stNoOfYellowCards = NumberFormat.DecFormat(comm_1stYellowCard, 0),
-                            Comm1stOe = NumberFormat.DecFormat(comm_1stoe, 0),
-                            Comm1stOu = NumberFormat.DecFormat(comm_htou, 0),
-                            Comm1x2 = NumberFormat.DecFormat(comm_1x2, 0),
-                            CommHdp = NumberFormat.DecFormat(comm_hdp, 0),
-                            CommNoOfCorners = NumberFormat.DecFormat(comm_corner, 0),
-                            CommNoOfYellowCards = NumberFormat.DecFormat(comm_YellowCard, 0),
-                            CommOe = NumberFormat.DecFormat(comm_oe, 0),
-                            CommOu = NumberFormat.DecFormat(comm_ou, 0),
-                            CommNextCorner = NumberFormat.DecFormat(comm_NextCorner, 0),
-                            CommOverall = NumberFormat.DecFormat(comm_overall, 0),
+                            Comm15minOu = NumberFormat.DecFormat(comm_15mou, 2),
+                            Comm1st1x2 = NumberFormat.DecFormat(comm_ht1x2, 2),
+                            Comm1stHdp = NumberFormat.DecFormat(comm_hthdp, 2),
+                            Comm1stNoOfCorners = NumberFormat.DecFormat(comm_1stcorner, 2),
+                            Comm1stNoOfYellowCards = NumberFormat.DecFormat(comm_1stYellowCard, 2),
+                            Comm1stOe = NumberFormat.DecFormat(comm_1stoe, 2),
+                            Comm1stOu = NumberFormat.DecFormat(comm_htou, 2),
+                            Comm1x2 = NumberFormat.DecFormat(comm_1x2, 2),
+                            CommHdp = NumberFormat.DecFormat(comm_hdp, 2),
+                            CommNoOfCorners = NumberFormat.DecFormat(comm_corner, 2),
+                            CommNoOfYellowCards = NumberFormat.DecFormat(comm_YellowCard, 2),
+                            CommOe = NumberFormat.DecFormat(comm_oe, 2),
+                            CommOu = NumberFormat.DecFormat(comm_ou, 2),
+                            CommNextCorner = NumberFormat.DecFormat(comm_NextCorner, 2),
+                            CommOverall = NumberFormat.DecFormat(comm_overall, 2),
 
-                            WinLost15minOu = NumberFormat.DecFormat(wl_15mou, 0),
-                            WinLost1st1x2 = NumberFormat.DecFormat(wl_ht1x2, 0),
-                            WinLost1stHdp = NumberFormat.DecFormat(wl_hthdp, 0),
-                            WinLost1stNoOfCorners = NumberFormat.DecFormat(wl_1stcorner, 0),
-                            WinLost1stNoOfYellowCards = NumberFormat.DecFormat(wl_1stYellowCard, 0),
-                            WinLost1stOe = NumberFormat.DecFormat(wl_1stoe, 0),
-                            WinLost1stOu = NumberFormat.DecFormat(wl_htou, 0),
-                            WinLost1x2 = NumberFormat.DecFormat(wl_1x2, 0),
-                            WinLostHdp = NumberFormat.DecFormat(wl_hdp, 0),
-                            WinLostNoOfCorners = NumberFormat.DecFormat(wl_corner, 0),
-                            WinLostNoOfYellowCards = NumberFormat.DecFormat(wl_YellowCard, 0),
-                            WinLostOe = NumberFormat.DecFormat(wl_oe, 0),
-                            WinLostOu = NumberFormat.DecFormat(wl_ou, 0),
-                            WinLostNextCorner = NumberFormat.DecFormat(wl_NextCorner, 0),
-                            WinLostOverall = NumberFormat.DecFormat(wl_overall, 0),
+                            WinLost15minOu = NumberFormat.DecFormat(wl_15mou, 2),
+                            WinLost1st1x2 = NumberFormat.DecFormat(wl_ht1x2, 2),
+                            WinLost1stHdp = NumberFormat.DecFormat(wl_hthdp, 2),
+                            WinLost1stNoOfCorners = NumberFormat.DecFormat(wl_1stcorner, 2),
+                            WinLost1stNoOfYellowCards = NumberFormat.DecFormat(wl_1stYellowCard, 2),
+                            WinLost1stOe = NumberFormat.DecFormat(wl_1stoe, 2),
+                            WinLost1stOu = NumberFormat.DecFormat(wl_htou, 2),
+                            WinLost1x2 = NumberFormat.DecFormat(wl_1x2, 2),
+                            WinLostHdp = NumberFormat.DecFormat(wl_hdp, 2),
+                            WinLostNoOfCorners = NumberFormat.DecFormat(wl_corner, 2),
+                            WinLostNoOfYellowCards = NumberFormat.DecFormat(wl_YellowCard, 2),
+                            WinLostOe = NumberFormat.DecFormat(wl_oe, 2),
+                            WinLostOu = NumberFormat.DecFormat(wl_ou, 2),
+                            WinLostNextCorner = NumberFormat.DecFormat(wl_NextCorner, 2),
+                            WinLostOverall = NumberFormat.DecFormat(wl_overall, 2),
 
-                            TurnOver15minOu = NumberFormat.DecFormat(to_15mou, 0),
-                            TurnOver1st1x2 = NumberFormat.DecFormat(to_ht1x2, 0),
-                            TurnOver1stHdp = NumberFormat.DecFormat(to_hthdp, 0),
-                            TurnOver1stNoOfCorners = NumberFormat.DecFormat(to_1stcorner, 0),
-                            TurnOver1stNoOfYellowCards = NumberFormat.DecFormat(to_1stYellowCard, 0),
-                            TurnOver1stOe = NumberFormat.DecFormat(to_1stoe, 0),
-                            TurnOver1stOu = NumberFormat.DecFormat(to_htou, 0),
-                            TurnOver1x2 = NumberFormat.DecFormat(to_1x2, 0),
-                            TurnOverHdp = NumberFormat.DecFormat(to_hdp, 0),
-                            TurnOverNoOfCorners = NumberFormat.DecFormat(to_corner, 0),
-                            TurnOverNoOfYellowCards = NumberFormat.DecFormat(to_YellowCard, 0),
-                            TurnOverOe = NumberFormat.DecFormat(to_oe, 0),
-                            TurnOverOu = NumberFormat.DecFormat(to_ou, 0),
-                            TurnOverNextCorner = NumberFormat.DecFormat(to_NextCorner, 0),
-                            TurnOverOverall = NumberFormat.DecFormat(to_overall, 0),
+                            TurnOver15minOu = NumberFormat.DecFormat(to_15mou, 2),
+                            TurnOver1st1x2 = NumberFormat.DecFormat(to_ht1x2, 2),
+                            TurnOver1stHdp = NumberFormat.DecFormat(to_hthdp, 2),
+                            TurnOver1stNoOfCorners = NumberFormat.DecFormat(to_1stcorner, 2),
+                            TurnOver1stNoOfYellowCards = NumberFormat.DecFormat(to_1stYellowCard, 2),
+                            TurnOver1stOe = NumberFormat.DecFormat(to_1stoe, 2),
+                            TurnOver1stOu = NumberFormat.DecFormat(to_htou, 2),
+                            TurnOver1x2 = NumberFormat.DecFormat(to_1x2, 2),
+                            TurnOverHdp = NumberFormat.DecFormat(to_hdp, 2),
+                            TurnOverNoOfCorners = NumberFormat.DecFormat(to_corner, 2),
+                            TurnOverNoOfYellowCards = NumberFormat.DecFormat(to_YellowCard, 2),
+                            TurnOverOe = NumberFormat.DecFormat(to_oe, 2),
+                            TurnOverOu = NumberFormat.DecFormat(to_ou, 2),
+                            TurnOverNextCorner = NumberFormat.DecFormat(to_NextCorner, 2),
+                            TurnOverOverall = NumberFormat.DecFormat(to_overall, 2),
 
                             LiveBetCount15minOu = NumberFormat.DecFormat(livebetcount_15mou, 0),
                             LiveBetCount1st1x2 = NumberFormat.DecFormat(livebetcount_ht1x2, 0),
@@ -5538,53 +5574,53 @@ namespace Sunplus.Accounting.Business.Report.Other
                     #region assign total row
                     var traderTotalLastUser = new TraderPerformanceDetail()
                     {
-                        Comm15minOu = NumberFormat.DecFormat(Total_comm_15mou, 0),
-                        Comm1st1x2 = NumberFormat.DecFormat(Total_comm_ht1x2, 0),
-                        Comm1stHdp = NumberFormat.DecFormat(Total_comm_hthdp, 0),
-                        Comm1stNoOfCorners = NumberFormat.DecFormat(Total_comm_1stcorner, 0),
-                        Comm1stNoOfYellowCards = NumberFormat.DecFormat(Total_comm_1stYellowCard, 0),
-                        Comm1stOe = NumberFormat.DecFormat(Total_comm_1stoe, 0),
-                        Comm1stOu = NumberFormat.DecFormat(Total_comm_htou, 0),
-                        Comm1x2 = NumberFormat.DecFormat(Total_comm_1x2, 0),
-                        CommHdp = NumberFormat.DecFormat(Total_comm_hdp, 0),
-                        CommNoOfCorners = NumberFormat.DecFormat(Total_comm_corner, 0),
-                        CommNoOfYellowCards = NumberFormat.DecFormat(Total_comm_YellowCard, 0),
-                        CommOe = NumberFormat.DecFormat(Total_comm_oe, 0),
-                        CommOu = NumberFormat.DecFormat(Total_comm_ou, 0),
-                        CommNextCorner = NumberFormat.DecFormat(Total_comm_NextCorner, 0),
-                        CommOverall = NumberFormat.DecFormat(Total_comm_overall, 0),
+                        Comm15minOu = NumberFormat.DecFormat(Total_comm_15mou, 2),
+                        Comm1st1x2 = NumberFormat.DecFormat(Total_comm_ht1x2, 2),
+                        Comm1stHdp = NumberFormat.DecFormat(Total_comm_hthdp, 2),
+                        Comm1stNoOfCorners = NumberFormat.DecFormat(Total_comm_1stcorner, 2),
+                        Comm1stNoOfYellowCards = NumberFormat.DecFormat(Total_comm_1stYellowCard, 2),
+                        Comm1stOe = NumberFormat.DecFormat(Total_comm_1stoe, 2),
+                        Comm1stOu = NumberFormat.DecFormat(Total_comm_htou, 2),
+                        Comm1x2 = NumberFormat.DecFormat(Total_comm_1x2, 2),
+                        CommHdp = NumberFormat.DecFormat(Total_comm_hdp, 2),
+                        CommNoOfCorners = NumberFormat.DecFormat(Total_comm_corner, 2),
+                        CommNoOfYellowCards = NumberFormat.DecFormat(Total_comm_YellowCard, 2),
+                        CommOe = NumberFormat.DecFormat(Total_comm_oe, 2),
+                        CommOu = NumberFormat.DecFormat(Total_comm_ou, 2),
+                        CommNextCorner = NumberFormat.DecFormat(Total_comm_NextCorner, 2),
+                        CommOverall = NumberFormat.DecFormat(Total_comm_overall, 2),
 
-                        WinLost15minOu = NumberFormat.DecFormat(Total_wl_15mou, 0),
-                        WinLost1st1x2 = NumberFormat.DecFormat(Total_wl_ht1x2, 0),
-                        WinLost1stHdp = NumberFormat.DecFormat(Total_wl_hthdp, 0),
-                        WinLost1stNoOfCorners = NumberFormat.DecFormat(Total_wl_1stcorner, 0),
-                        WinLost1stNoOfYellowCards = NumberFormat.DecFormat(Total_wl_1stYellowCard, 0),
-                        WinLost1stOe = NumberFormat.DecFormat(Total_wl_1stoe, 0),
-                        WinLost1stOu = NumberFormat.DecFormat(Total_wl_htou, 0),
-                        WinLost1x2 = NumberFormat.DecFormat(Total_wl_1x2, 0),
-                        WinLostHdp = NumberFormat.DecFormat(Total_wl_hdp, 0),
-                        WinLostNoOfCorners = NumberFormat.DecFormat(Total_wl_corner, 0),
-                        WinLostNoOfYellowCards = NumberFormat.DecFormat(Total_wl_YellowCard, 0),
-                        WinLostOe = NumberFormat.DecFormat(Total_wl_oe, 0),
-                        WinLostOu = NumberFormat.DecFormat(Total_wl_ou, 0),
-                        WinLostNextCorner = NumberFormat.DecFormat(Total_wl_NextCorner, 0),
-                        WinLostOverall = NumberFormat.DecFormat(Total_wl_overall, 0),
+                        WinLost15minOu = NumberFormat.DecFormat(Total_wl_15mou, 2),
+                        WinLost1st1x2 = NumberFormat.DecFormat(Total_wl_ht1x2, 2),
+                        WinLost1stHdp = NumberFormat.DecFormat(Total_wl_hthdp, 2),
+                        WinLost1stNoOfCorners = NumberFormat.DecFormat(Total_wl_1stcorner, 2),
+                        WinLost1stNoOfYellowCards = NumberFormat.DecFormat(Total_wl_1stYellowCard, 2),
+                        WinLost1stOe = NumberFormat.DecFormat(Total_wl_1stoe, 2),
+                        WinLost1stOu = NumberFormat.DecFormat(Total_wl_htou, 2),
+                        WinLost1x2 = NumberFormat.DecFormat(Total_wl_1x2, 2),
+                        WinLostHdp = NumberFormat.DecFormat(Total_wl_hdp, 2),
+                        WinLostNoOfCorners = NumberFormat.DecFormat(Total_wl_corner, 2),
+                        WinLostNoOfYellowCards = NumberFormat.DecFormat(Total_wl_YellowCard, 2),
+                        WinLostOe = NumberFormat.DecFormat(Total_wl_oe, 2),
+                        WinLostOu = NumberFormat.DecFormat(Total_wl_ou, 2),
+                        WinLostNextCorner = NumberFormat.DecFormat(Total_wl_NextCorner, 2),
+                        WinLostOverall = NumberFormat.DecFormat(Total_wl_overall, 2),
 
-                        TurnOver15minOu = NumberFormat.DecFormat(Total_to_15mou, 0),
-                        TurnOver1st1x2 = NumberFormat.DecFormat(Total_to_ht1x2, 0),
-                        TurnOver1stHdp = NumberFormat.DecFormat(Total_to_hthdp, 0),
-                        TurnOver1stNoOfCorners = NumberFormat.DecFormat(Total_to_1stcorner, 0),
-                        TurnOver1stNoOfYellowCards = NumberFormat.DecFormat(Total_to_1stYellowCard, 0),
-                        TurnOver1stOe = NumberFormat.DecFormat(Total_to_1stoe, 0),
-                        TurnOver1stOu = NumberFormat.DecFormat(Total_to_htou, 0),
-                        TurnOver1x2 = NumberFormat.DecFormat(Total_to_1x2, 0),
-                        TurnOverHdp = NumberFormat.DecFormat(Total_to_hdp, 0),
-                        TurnOverNoOfCorners = NumberFormat.DecFormat(Total_to_corner, 0),
-                        TurnOverNoOfYellowCards = NumberFormat.DecFormat(Total_to_YellowCard, 0),
-                        TurnOverOe = NumberFormat.DecFormat(Total_to_oe, 0),
-                        TurnOverOu = NumberFormat.DecFormat(Total_to_ou, 0),
-                        TurnOverNextCorner = NumberFormat.DecFormat(Total_to_NextCorner, 0),
-                        TurnOverOverall = NumberFormat.DecFormat(Total_to_overall, 0),
+                        TurnOver15minOu = NumberFormat.DecFormat(Total_to_15mou, 2),
+                        TurnOver1st1x2 = NumberFormat.DecFormat(Total_to_ht1x2, 2),
+                        TurnOver1stHdp = NumberFormat.DecFormat(Total_to_hthdp, 2),
+                        TurnOver1stNoOfCorners = NumberFormat.DecFormat(Total_to_1stcorner, 2),
+                        TurnOver1stNoOfYellowCards = NumberFormat.DecFormat(Total_to_1stYellowCard, 2),
+                        TurnOver1stOe = NumberFormat.DecFormat(Total_to_1stoe, 2),
+                        TurnOver1stOu = NumberFormat.DecFormat(Total_to_htou, 2),
+                        TurnOver1x2 = NumberFormat.DecFormat(Total_to_1x2, 2),
+                        TurnOverHdp = NumberFormat.DecFormat(Total_to_hdp, 2),
+                        TurnOverNoOfCorners = NumberFormat.DecFormat(Total_to_corner, 2),
+                        TurnOverNoOfYellowCards = NumberFormat.DecFormat(Total_to_YellowCard, 2),
+                        TurnOverOe = NumberFormat.DecFormat(Total_to_oe, 2),
+                        TurnOverOu = NumberFormat.DecFormat(Total_to_ou, 2),
+                        TurnOverNextCorner = NumberFormat.DecFormat(Total_to_NextCorner, 2),
+                        TurnOverOverall = NumberFormat.DecFormat(Total_to_overall, 2),
 
                         LiveBetCount15minOu = NumberFormat.DecFormat(Total_livebetcount_15mou, 0),
                         LiveBetCount1st1x2 = NumberFormat.DecFormat(Total_livebetcount_ht1x2, 0),
@@ -5637,53 +5673,53 @@ namespace Sunplus.Accounting.Business.Report.Other
                     #region assign footer
                     var traderFooter = new TraderPerformanceDetail()
                     {
-                        Comm15minOu = NumberFormat.DecFormat(Grand_comm_15mou, 0),
-                        Comm1st1x2 = NumberFormat.DecFormat(Grand_comm_ht1x2, 0),
-                        Comm1stHdp = NumberFormat.DecFormat(Grand_comm_hthdp, 0),
-                        Comm1stNoOfCorners = NumberFormat.DecFormat(Grand_comm_1stcorner, 0),
-                        Comm1stNoOfYellowCards = NumberFormat.DecFormat(Grand_comm_1stYellowCard, 0),
-                        Comm1stOe = NumberFormat.DecFormat(Grand_comm_1stoe, 0),
-                        Comm1stOu = NumberFormat.DecFormat(Grand_comm_htou, 0),
-                        Comm1x2 = NumberFormat.DecFormat(Grand_comm_1x2, 0),
-                        CommHdp = NumberFormat.DecFormat(Grand_comm_hdp, 0),
-                        CommNoOfCorners = NumberFormat.DecFormat(Grand_comm_corner, 0),
-                        CommNoOfYellowCards = NumberFormat.DecFormat(Grand_comm_YellowCard, 0),
-                        CommOe = NumberFormat.DecFormat(Grand_comm_oe, 0),
-                        CommOu = NumberFormat.DecFormat(Grand_comm_ou, 0),
-                        CommNextCorner = NumberFormat.DecFormat(Grand_comm_NextCorner, 0),
-                        CommOverall = NumberFormat.DecFormat(Grand_comm_overall, 0),
+                        Comm15minOu = NumberFormat.DecFormat(Grand_comm_15mou, 2),
+                        Comm1st1x2 = NumberFormat.DecFormat(Grand_comm_ht1x2, 2),
+                        Comm1stHdp = NumberFormat.DecFormat(Grand_comm_hthdp, 2),
+                        Comm1stNoOfCorners = NumberFormat.DecFormat(Grand_comm_1stcorner, 2),
+                        Comm1stNoOfYellowCards = NumberFormat.DecFormat(Grand_comm_1stYellowCard, 2),
+                        Comm1stOe = NumberFormat.DecFormat(Grand_comm_1stoe, 2),
+                        Comm1stOu = NumberFormat.DecFormat(Grand_comm_htou, 2),
+                        Comm1x2 = NumberFormat.DecFormat(Grand_comm_1x2, 2),
+                        CommHdp = NumberFormat.DecFormat(Grand_comm_hdp, 2),
+                        CommNoOfCorners = NumberFormat.DecFormat(Grand_comm_corner, 2),
+                        CommNoOfYellowCards = NumberFormat.DecFormat(Grand_comm_YellowCard, 2),
+                        CommOe = NumberFormat.DecFormat(Grand_comm_oe, 2),
+                        CommOu = NumberFormat.DecFormat(Grand_comm_ou, 2),
+                        CommNextCorner = NumberFormat.DecFormat(Grand_comm_NextCorner, 2),
+                        CommOverall = NumberFormat.DecFormat(Grand_comm_overall, 2),
 
-                        WinLost15minOu = NumberFormat.DecFormat(Grand_wl_15mou, 0),
-                        WinLost1st1x2 = NumberFormat.DecFormat(Grand_wl_ht1x2, 0),
-                        WinLost1stHdp = NumberFormat.DecFormat(Grand_wl_hthdp, 0),
-                        WinLost1stNoOfCorners = NumberFormat.DecFormat(Grand_wl_1stcorner, 0),
-                        WinLost1stNoOfYellowCards = NumberFormat.DecFormat(Grand_wl_1stYellowCard, 0),
-                        WinLost1stOe = NumberFormat.DecFormat(Grand_wl_1stoe, 0),
-                        WinLost1stOu = NumberFormat.DecFormat(Grand_wl_htou, 0),
-                        WinLost1x2 = NumberFormat.DecFormat(Grand_wl_1x2, 0),
-                        WinLostHdp = NumberFormat.DecFormat(Grand_wl_hdp, 0),
-                        WinLostNoOfCorners = NumberFormat.DecFormat(Grand_wl_corner, 0),
-                        WinLostNoOfYellowCards = NumberFormat.DecFormat(Grand_wl_YellowCard, 0),
-                        WinLostOe = NumberFormat.DecFormat(Grand_wl_oe, 0),
-                        WinLostOu = NumberFormat.DecFormat(Grand_wl_ou, 0),
-                        WinLostNextCorner = NumberFormat.DecFormat(Grand_wl_NextCorner, 0),
-                        WinLostOverall = NumberFormat.DecFormat(Grand_wl_overall, 0),
+                        WinLost15minOu = NumberFormat.DecFormat(Grand_wl_15mou, 2),
+                        WinLost1st1x2 = NumberFormat.DecFormat(Grand_wl_ht1x2, 2),
+                        WinLost1stHdp = NumberFormat.DecFormat(Grand_wl_hthdp, 2),
+                        WinLost1stNoOfCorners = NumberFormat.DecFormat(Grand_wl_1stcorner, 2),
+                        WinLost1stNoOfYellowCards = NumberFormat.DecFormat(Grand_wl_1stYellowCard, 2),
+                        WinLost1stOe = NumberFormat.DecFormat(Grand_wl_1stoe, 2),
+                        WinLost1stOu = NumberFormat.DecFormat(Grand_wl_htou, 2),
+                        WinLost1x2 = NumberFormat.DecFormat(Grand_wl_1x2, 2),
+                        WinLostHdp = NumberFormat.DecFormat(Grand_wl_hdp, 2),
+                        WinLostNoOfCorners = NumberFormat.DecFormat(Grand_wl_corner, 2),
+                        WinLostNoOfYellowCards = NumberFormat.DecFormat(Grand_wl_YellowCard, 2),
+                        WinLostOe = NumberFormat.DecFormat(Grand_wl_oe, 2),
+                        WinLostOu = NumberFormat.DecFormat(Grand_wl_ou, 2),
+                        WinLostNextCorner = NumberFormat.DecFormat(Grand_wl_NextCorner, 2),
+                        WinLostOverall = NumberFormat.DecFormat(Grand_wl_overall, 2),
 
-                        TurnOver15minOu = NumberFormat.DecFormat(Grand_to_15mou, 0),
-                        TurnOver1st1x2 = NumberFormat.DecFormat(Grand_to_ht1x2, 0),
-                        TurnOver1stHdp = NumberFormat.DecFormat(Grand_to_hthdp, 0),
-                        TurnOver1stNoOfCorners = NumberFormat.DecFormat(Grand_to_1stcorner, 0),
-                        TurnOver1stNoOfYellowCards = NumberFormat.DecFormat(Grand_to_1stYellowCard, 0),
-                        TurnOver1stOe = NumberFormat.DecFormat(Grand_to_1stoe, 0),
-                        TurnOver1stOu = NumberFormat.DecFormat(Grand_to_htou, 0),
-                        TurnOver1x2 = NumberFormat.DecFormat(Grand_to_1x2, 0),
-                        TurnOverHdp = NumberFormat.DecFormat(Grand_to_hdp, 0),
-                        TurnOverNoOfCorners = NumberFormat.DecFormat(Grand_to_corner, 0),
-                        TurnOverNoOfYellowCards = NumberFormat.DecFormat(Grand_to_YellowCard, 0),
-                        TurnOverOe = NumberFormat.DecFormat(Grand_to_oe, 0),
-                        TurnOverOu = NumberFormat.DecFormat(Grand_to_ou, 0),
-                        TurnOverNextCorner = NumberFormat.DecFormat(Grand_to_NextCorner, 0),
-                        TurnOverOverall = NumberFormat.DecFormat(Grand_to_overall, 0),
+                        TurnOver15minOu = NumberFormat.DecFormat(Grand_to_15mou, 2),
+                        TurnOver1st1x2 = NumberFormat.DecFormat(Grand_to_ht1x2, 2),
+                        TurnOver1stHdp = NumberFormat.DecFormat(Grand_to_hthdp, 2),
+                        TurnOver1stNoOfCorners = NumberFormat.DecFormat(Grand_to_1stcorner, 2),
+                        TurnOver1stNoOfYellowCards = NumberFormat.DecFormat(Grand_to_1stYellowCard, 2),
+                        TurnOver1stOe = NumberFormat.DecFormat(Grand_to_1stoe, 2),
+                        TurnOver1stOu = NumberFormat.DecFormat(Grand_to_htou, 2),
+                        TurnOver1x2 = NumberFormat.DecFormat(Grand_to_1x2, 2),
+                        TurnOverHdp = NumberFormat.DecFormat(Grand_to_hdp, 2),
+                        TurnOverNoOfCorners = NumberFormat.DecFormat(Grand_to_corner, 2),
+                        TurnOverNoOfYellowCards = NumberFormat.DecFormat(Grand_to_YellowCard, 2),
+                        TurnOverOe = NumberFormat.DecFormat(Grand_to_oe, 2),
+                        TurnOverOu = NumberFormat.DecFormat(Grand_to_ou, 2),
+                        TurnOverNextCorner = NumberFormat.DecFormat(Grand_to_NextCorner, 2),
+                        TurnOverOverall = NumberFormat.DecFormat(Grand_to_overall, 2),
 
                         LiveBetCount15minOu = NumberFormat.DecFormat(Grand_livebetcount_15mou, 0),
                         LiveBetCount1st1x2 = NumberFormat.DecFormat(Grand_livebetcount_ht1x2, 0),
@@ -5711,7 +5747,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Margin1x2 = NumberFormat.DecFormat(Grand_m_1x2 * 100, 2),
                         MarginHdp = NumberFormat.DecFormat(Grand_m_hdp * 100, 2),
                         MarginNoOfCorners = NumberFormat.DecFormat(Grand_m_corner * 100, 2),
-                        MarginNoOfYellowCards = NumberFormat.DecFormat(Grand_m_YellowCard * 100, 0),
+                        MarginNoOfYellowCards = NumberFormat.DecFormat(Grand_m_YellowCard * 100, 2),
                         MarginOe = NumberFormat.DecFormat(Grand_m_oe * 100, 2),
                         MarginOu = NumberFormat.DecFormat(Grand_m_ou * 100, 2),
                         MarginNextCorner = NumberFormat.DecFormat(Grand_m_NextCorner * 100, 2),

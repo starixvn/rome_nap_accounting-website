@@ -59,8 +59,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         {
             var hashUpdated = new Hashtable();
             try
-            {                
-                using (ObjectDb objDb = new ObjectDb("Acc_CustomerInsMember_Com", 600))
+            {
+                using (ObjectDb objDb = new ObjectDb("CustomerSetting_InsertSuper", 600))
                 {
                     objDb.AssignParamValues(hash);
 

@@ -15,8 +15,8 @@
         type="text/css" />
     <link href="../../js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" rel="stylesheet"
         type="text/css" />
-    <link href="../../App_Themes/Report/TraderPerformance.css?version=<%=WebSettings.Version%>"
-        rel="stylesheet" type="text/css" />
+    <link href="Styles/TraderPerformance.css?version=<%=WebSettings.Version%>" rel="stylesheet"
+        type="text/css" />
     <link href="../../js/jQuery/GridScroller/gridscroller.css" rel="stylesheet" type="text/css" />
     <script src="../../js/jQuery/jquery-1.7.2.min.js" type="text/javascript"></script>
     <script src="../../js/jQuery/UI/jquery-ui-1.8.10.custom.min.js" type="text/javascript"></script>
@@ -91,7 +91,7 @@
                                                         No</div>
                                                 </th>
                                                 <th>
-                                                    <div class="col100 c table-cell" style="height: 61px;">
+                                                    <div class="col100 c table-cell sorter" fieldtosort="Trader" style="height: 61px;">
                                                         Trader</div>
                                                 </th>
                                                 <th>
@@ -112,7 +112,7 @@
                                                             No</div>
                                                     </th>
                                                     <th>
-                                                        <div class="col100 c table-cell" style="height: 61px;">
+                                                        <div class="col100 c sorter table-cell" style="height: 61px;" fieldtosort="Trader">
                                                             Trader</div>
                                                     </th>
                                                     <th>
@@ -164,7 +164,7 @@
                                                             Commission</div>
                                                     </th>
                                                     <th rowspan="2" align="center">
-                                                        <div class="col100 c table-cell" style="height: 61px;">
+                                                        <div class="col100 c table-cell sorter" style="height: 61px;">
                                                             Trader</div>
                                                     </th>
                                                 </tr>
@@ -226,7 +226,7 @@
                                                             O/E</div>
                                                     </th>
                                                     <th>
-                                                        <div class="col90 c table-cell" style="height: 39px;">
+                                                        <div class="col90 c table-cell sorter" style="height: 39px;">
                                                             Overall</div>
                                                     </th>
                                                     <th>
@@ -286,7 +286,7 @@
                                                             O/E</div>
                                                     </th>
                                                     <th>
-                                                        <div class="col80 c table-cell" style="height: 39px;">
+                                                        <div class="col80 c table-cell sorter" style="height: 39px;">
                                                             Overall</div>
                                                     </th>
                                                     <th>
@@ -346,7 +346,7 @@
                                                             O/E</div>
                                                     </th>
                                                     <th>
-                                                        <div class="col80 c table-cell" style="height: 39px;">
+                                                        <div class="col80 c table-cell sorter" style="height: 39px;">
                                                             Overall</div>
                                                     </th>
                                                     <th>
@@ -406,7 +406,7 @@
                                                             O/E</div>
                                                     </th>
                                                     <th>
-                                                        <div class="col80 c table-cell" style="height: 39px;">
+                                                        <div class="col80 c table-cell sorter" style="height: 39px;">
                                                             Overall</div>
                                                     </th>
                                                     <th>
@@ -466,7 +466,7 @@
                                                             O/E</div>
                                                     </th>
                                                     <th>
-                                                        <div class="col80 c table-cell" style="height: 39px;">
+                                                        <div class="col80 c table-cell sorter" style="height: 39px;">
                                                             Overall</div>
                                                     </th>
                                                 </tr>
@@ -512,7 +512,7 @@
                                                             Commission</div>
                                                     </th>
                                                     <th rowspan="2" align="center">
-                                                        <div class="col100 c table-cell" style="height: 61px;">
+                                                        <div class="col100 c table-cell sorter" style="height: 61px;">
                                                             Trader</div>
                                                     </th>
                                                 </tr>
@@ -574,7 +574,7 @@
                                                             O/E</div>
                                                     </th>
                                                     <th>
-                                                        <div class="col90 c" style="height: 39px;">
+                                                        <div class="col90 c sorter" style="height: 39px;">
                                                             Overall</div>
                                                     </th>
                                                     <th>
@@ -634,7 +634,7 @@
                                                             O/E</div>
                                                     </th>
                                                     <th>
-                                                        <div class="col80 c" style="height: 39px;">
+                                                        <div class="col80 c sorter" style="height: 39px;">
                                                             Overall</div>
                                                     </th>
                                                     <th>
@@ -694,7 +694,7 @@
                                                             O/E</div>
                                                     </th>
                                                     <th>
-                                                        <div class="col80 c" style="height: 39px;">
+                                                        <div class="col80 c sorter" style="height: 39px;">
                                                             Overall</div>
                                                     </th>
                                                     <th>
@@ -754,7 +754,7 @@
                                                             O/E</div>
                                                     </th>
                                                     <th>
-                                                        <div class="col80 c" style="height: 39px;">
+                                                        <div class="col80 c sorter" style="height: 39px;">
                                                             Overall</div>
                                                     </th>
                                                     <th>
@@ -814,7 +814,7 @@
                                                             O/E</div>
                                                     </th>
                                                     <th>
-                                                        <div class="col80 c" style="height: 39px;">
+                                                        <div class="col80 c sorter" style="height: 39px;">
                                                             Overall</div>
                                                     </th>
                                                 </tr>
