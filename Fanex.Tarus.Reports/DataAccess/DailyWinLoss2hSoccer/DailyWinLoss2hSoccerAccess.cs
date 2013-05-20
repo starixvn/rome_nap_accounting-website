@@ -98,6 +98,6 @@ namespace Fanex.Tarus.Reports.DataAccess.DailyWinLoss2hSoccer
             }
 
             return result;
-        }
+        }      
     }
 }

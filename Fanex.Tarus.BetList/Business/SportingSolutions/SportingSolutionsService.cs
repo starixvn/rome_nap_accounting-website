@@ -1,24 +1,42 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="SportingSolutionsService.cs" company="">
-// TODO: Update copyright text.
+﻿// --------------------------------------------------------------------------
+// <copyright file="SportingSolutionsService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
 
 namespace Fanex.Tarus.BetList.Business.SportingSolutions
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    using System.Text;
     using DNAide.Core;
+    using Fanex.Tarus.BetList.Criteria.SportingSolutions;
+    using Fanex.Tarus.BetList.DataAccess.SportingSolutions;
+    using Fanex.Tarus.BetList.Entities.SportingSolutions;
 
-   
-    public class SportingSolutionsService: ISportingSolutionsService
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    public class SportingSolutionsService : ISportingSolutionsService
     {
+        private readonly ISportingSolutionsDataAccess _repository;
+
+        public SportingSolutionsService()
+            : this(null)
+        {
+        }
+
+        public SportingSolutionsService(ISportingSolutionsDataAccess repository)
+        {
+            this._repository = repository ?? new SportingSolutionsDataAccess();
+        }
+
         public string GetChoice(int bettypeId, string resourceId, string betteam, int hdp1, int hdp2, string home, string away)
         {
             string choice = string.Empty;
-           // var bettypeId = CastAide.AsInt32(resourceId.Substring(3,4));
+            // var bettypeId = CastAide.AsInt32(resourceId.Substring(3,4));
             string Set = string.Empty, Game = string.Empty;
             if (bettypeId > 1309 && resourceId.Length >= 3)
             {
@@ -42,12 +60,12 @@ namespace Fanex.Tarus.BetList.Business.SportingSolutions
                     choice = betteam == "h" ? home : away;
                     break;
                 case 1302:// Match Correct Scorce
-                    choice = GenMatchCorrectScore(betteam);;
+                    choice = GenMatchCorrectScore(betteam); ;
                     break;
                 case 1305:// Match Total Games Odd/Even
                 case 1318:// Set x Total Games Odd/Even
                 case 1331: // Set x Game Y Total Points Odd/Even
-                    choice =  betteam == "h" ? "Odd" : "Even";
+                    choice = betteam == "h" ? "Odd" : "Even";
                     break;
                 case 1306:// Match Total Games 2-Way
                 case 1304:// Total Set
@@ -177,23 +195,23 @@ namespace Fanex.Tarus.BetList.Business.SportingSolutions
 
         private string GenSetXGameYTotalPointsExact(string betteam)
         {
-             string choice = string.Empty;
-             switch (betteam)
-             {
-                 case "01":
-                     choice = "4 points";
-                     break;
-                 case "02":
-                     choice = "5 points";
-                     break;
-                 case "03":
-                     choice = "6 points";
-                     break;
-                 case "04":
-                     choice = "7 UP points";
-                     break;
-             }
-             return choice;
+            string choice = string.Empty;
+            switch (betteam)
+            {
+                case "01":
+                    choice = "4 points";
+                    break;
+                case "02":
+                    choice = "5 points";
+                    break;
+                case "03":
+                    choice = "6 points";
+                    break;
+                case "04":
+                    choice = "7 UP points";
+                    break;
+            }
+            return choice;
         }
 
         private string GenSetXGameYCorrectScore(string betteam)
@@ -395,6 +413,33 @@ namespace Fanex.Tarus.BetList.Business.SportingSolutions
             return choice;
         }
 
-       
+        public SetX_Info Get_SetXContent(GetSportingSolutionsResultCriteria criteria)
+        {
+            var result = new SetX_Info
+           {
+               Id = criteria.Resourceid,
+               HomeScores = new List<string>(),
+               AwayScores = new List<string>()
+           };
+
+            var rawData = this._repository.GetSportingSolutionsResult(criteria);
+            if (rawData != null &&
+                rawData.Count > 0)
+            {
+                var resultValue = CastAide.AsString(rawData.First().resultvalue);
+                if (!String.IsNullOrEmpty(resultValue))
+                {
+                    string[] arrGameScore = resultValue.Split(new char[] { ' ' });
+                    for (var i = 1; i < arrGameScore.Length; i++)
+                    {
+                        string[] scores = arrGameScore[i].Split(new char[] { '-' });
+                        result.HomeScores.Add(scores[0].Replace("*", string.Empty));
+                        result.AwayScores.Add(scores[1].Replace("*", string.Empty));
+                    }
+                }
+            }
+
+            return result;
+        }
     }
 }

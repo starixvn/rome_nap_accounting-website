@@ -83,6 +83,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
                             },
                             Id = leagueId,
                             Name = CacheRef.GetLeagueName(leagueId),
+                            GroupId = leagueId
                         };
                         leagueHeadLine.GroupName = leagueHeadLine.Name;
 
@@ -93,7 +94,8 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
                                 Id = RowTypeConstants.SportTotal
                             },
                             Name = Labels.Total + ":",
-                            GroupName = leagueHeadLine.Name
+                            GroupName = leagueHeadLine.Name,
+                            GroupId = leagueId
                         };
 
                         var rowIndex = 0;
@@ -108,6 +110,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
                             {
                                 MatchInfo = new Match
                                 {
+                                    Id = CastAide.AsInt32(row["matchId"]),
                                     Name = CastAide.AsString(row["MatchCode"]),
                                     HomeTeam = new BaseModel
                                     {
@@ -123,6 +126,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
                                 },
 
                                 GroupName = leagueHeadLine.Name,
+                                GroupId = leagueHeadLine.Id,
                                 WinLoss = CastAide.AsDouble(row["WinLost"]),
                                 Position = CastAide.AsDouble(row["Position"]),
                                 Commission = CastAide.AsDouble(row["Commission"]),
@@ -154,8 +158,8 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
                         result.ReportTotal.NormalTotal.Add(sportTotal);
                         if (rowIndex > 1)
                         {
-                            sportTotal.Margin = ReportService.CalculateMargin(dailyWinLoss2hItemX.LineTotal,
-                                dailyWinLoss2hItemX.Turnover) * 100;
+                            sportTotal.Margin = ReportService.CalculateMargin(sportTotal.LineTotal,
+                                sportTotal.Turnover) * 100;
                             sportTotal.Round();
                             result.ReportDetails.Add(sportTotal);
                         }
@@ -170,7 +174,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
                              result.ReportTotal.NormalTotal.Turnover) * 100;
                     result.ReportTotal.EightRMTotal.WinLoss = CastAide.AsDouble(outParam["winlost_8rm"], 0);
                     result.ReportTotal.BARMTotal.WinLoss = CastAide.AsDouble(outParam["winlost_barm"], 0);
-                    
+
                     result.ReportTotal.NormalTotal.Round();
                 }
             }

@@ -906,10 +906,18 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
             {
                 return -1;
             }
+
             if (!dwlA.GroupName.StartsWith("*") && dwlB.GroupName.StartsWith("*"))
             {
                 return 1;
             }
+
+            if (dwlA.GroupName == dwlB.GroupName &&
+                dwlA.GroupId != dwlB.GroupId)
+            {
+                return dwlA.GroupId.CompareTo(dwlB.GroupId);
+            }
+
             if (dwlA.GroupName == dwlB.GroupName)
             {
                 if (dwlA.RowTypeDWL2h.Id == dwlB.RowTypeDWL2h.Id)
@@ -931,6 +939,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
                 }
                 return dwlA.RowTypeDWL2h.Id.CompareTo(dwlB.RowTypeDWL2h.Id);
             }
+
             return dwlA.GroupName.CompareTo(dwlB.GroupName);
         }
 

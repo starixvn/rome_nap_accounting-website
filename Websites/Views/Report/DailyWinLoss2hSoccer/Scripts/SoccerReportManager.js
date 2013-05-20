@@ -1,8 +1,4 @@
-﻿
-
-
-
-var SoccerReportManager = {
+﻿var SoccerReportManager = {
     reportDate: null,
     sportTypeId: null,
     bettype: null,
@@ -17,6 +13,7 @@ var SoccerReportManager = {
     bettypeName: null,
     isLive: null,
     IsHedge: null,
+    rowIndex: 0,
     initGrid: function (sportId, wldate) {
         SoccerReportManager.sportTypeId = sportId;
         SoccerReportManager.reportDate = wldate;
@@ -54,6 +51,7 @@ var SoccerReportManager = {
         });
 
         SoccerReportManager.initReportTable();
+        scoreInfoManager.InitPage();
         $("#dailyWLReportDiv").removeClass("hidden");
         try { parent.jQuery.unblockUI(); } catch (e) { }
         SoccerReportManager.viewReport(wldate);
@@ -92,6 +90,8 @@ var SoccerReportManager = {
         if (!isAllowReadSoccerReport) {
             return;
         }
+
+        scoreInfoManager.ClosePopup();
         SoccerReportManager.reportDate = wldate;
         var data = {
             param:
@@ -317,6 +317,8 @@ var SoccerReportManager = {
         if (!isAllowReadSoccerReport) {
             return;
         }
+
+        scoreInfoManager.ClosePopup();
         var isHedge = (hedge && hedge.indexOf("(hedge)") != -1);
         var data = {
             param:
@@ -393,11 +395,13 @@ var SoccerReportManager = {
             var arrFooter = [];
             var items = reportDetail.ReportDetails;
             var numberItems = items.length;
+
+            SoccerReportManager.rowIndex = 0;
             for (var i = 0; i < numberItems; i++) {
                 arrBody.push(SoccerReportManager.renderDailyWLRowSportDetails(items[i], i));
             }
-            arrFooter.push(SoccerReportManager.renderTotalRow_RightReport(reportDetail.ReportTotal.NormalTotal, isLive, bettypeName, isHedge));
 
+            arrFooter.push(SoccerReportManager.renderTotalRow_RightReport(reportDetail.ReportTotal.NormalTotal, isLive, bettypeName, isHedge));
             var allIBCTotal = reportDetail.ReportTotal.EightRMTotal.WinLoss;
             if (isBARMActive == 'true') {
                 allIBCTotal += reportDetail.ReportTotal.BARMTotal.WinLoss;
@@ -427,6 +431,7 @@ var SoccerReportManager = {
         switch (dwlRow.RowTypeDWL2h.Id) {
             case 0:
                 html = SoccerReportManager.renderMainRow_RightReport(dwlRow, index);
+                SoccerReportManager.rowIndex++;
                 break;
             case 3:
                 html = SoccerReportManager.renderBettypeTotalRow_RightReport(dwlRow);
@@ -436,6 +441,7 @@ var SoccerReportManager = {
                 break;
             case 10:
                 html = SoccerReportManager.renderLeagueHeadLine(dwlRow);
+                SoccerReportManager.rowIndex = 0;
                 break;
         }
         return html;
@@ -445,7 +451,8 @@ var SoccerReportManager = {
         html = '<tr>\
                     <td>\
                         <span></span></td>\
-                    <td colspan = "11" class="l"><span class="b longtext-wrapper">' + dwlRow.Name + '</span></td>\
+                    <td colspan = "11" class="l"><span class="b longtext-wrapper">' +
+                        (dwlRow.Name && dwlRow.Name != '' ? dwlRow.Name : '&nbsp') + '</span></td>\
                 </tr>';
         return html;
     },
@@ -461,8 +468,25 @@ var SoccerReportManager = {
                         <td class="l" style="max-width: 300px;"><div class="longtext-wrapper">' + row.MatchInfo.AwayTeam.Name + '</span></td>';
         }
 
-        html = '<tr class="' + (row.RowIndex % 2 == 0 ? "evenrow" : "") + '">\
-                    <td style="word-wrap: break-word;"><div class="c">' + row.MatchInfo.Name + '</span></td>'
+        var openScoreInfoEvent = "scoreInfoManager.GetReport('" + SoccerReportManager.reportDate + "','" +
+                                                                  SoccerReportManager.sportTypeId + "','" +
+                                                                  "Soccer" + "','" +
+                                                                  SoccerReportManager.bettype + "','" +
+                                                                  SoccerReportManager.bettypeName + "'," +
+                                                                  SoccerReportManager.isLive + ",'" +
+                                                                  SoccerReportManager.isHedge + "','" +
+                                                                  row.GroupId + "','" +
+                                                                  row.GroupName + "'," +
+                                                                  row.MatchInfo.Id + ",'" +
+                                                                  row.MatchInfo.Name + "','" +
+                                                                  row.MatchInfo.HomeTeam.Id + "','" +
+                                                                  row.MatchInfo.HomeTeam.Name + "','" +
+                                                                  row.MatchInfo.AwayTeam.Id + "','" +
+                                                                  row.MatchInfo.AwayTeam.Name + "'); return;";
+        var scoreInfoLink = '<a class="b" title="Show Score Information" onclick="' + openScoreInfoEvent + '">' + row.MatchInfo.Name + '</a>';
+
+        html = '<tr class="' + (SoccerReportManager.rowIndex % 2 == 0 ? "evenrow" : "") + '">\
+                    <td style="word-wrap: break-word;"><div class="c">' + scoreInfoLink + '</span></td>'
                    + eventDetail + '<td class="r"><div class="' + (row.WinLoss.toFixed(2) > 0 ? 'red' : '') + '">' + StringFormatter.formatNumber(row.WinLoss) + '</span></td>\
                     <td class="r"><span>' + StringFormatter.formatNumber(row.Position) + '</span></td>\
                     <td class="r"><span>' + StringFormatter.formatNumber(row.Commission) + '</span></td>\

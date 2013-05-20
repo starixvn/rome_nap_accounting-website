@@ -41,6 +41,7 @@ namespace Fanex.Tarus.Reports.Entities.DailyWinLoss2h
         public BaseModel LiveType { get; set; }
 
         public string GroupName { get; set; }
+        public int GroupId { get; set; }
 
         public void Add(DailyWinLoss2hItem info)
         {
