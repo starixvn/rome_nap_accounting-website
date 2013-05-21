@@ -505,17 +505,6 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hSoccer
 
             currentCol++;
 
-            currentCol = startCol + 4;
-            currentCell = wsReport.Cells[currentRow, currentCol];
-            currentCell.Style = bgHeader;
-            currentCell.Value = "Real";
-            currentCol++;
-
-            currentCell = wsReport.Cells[currentRow, currentCol];
-            currentCell.Style = bgHeader;
-            currentCell.Value = "Virtual";
-            currentCol++;
-
             currentCell = wsReport.Cells[currentRow, currentCol];
             currentCell.Style = bgHeader;
             currentCell.Value = "Real";
@@ -1196,13 +1185,13 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hSoccer
             currentCellRange.Merged = true;
             currentCellRange.Style = bgHeader;
             currentCellRange.Value = "Turnover";
-            currentCol++;
+            currentCol += 2;
 
             currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow, currentCol + 1);
             currentCellRange.Merged = true;
             currentCellRange.Style = bgHeader;
             currentCellRange.Value = "Margin";
-            currentCol++;
+            currentCol += 2;
             currentRow++;
 
             //SecondRow
@@ -1217,6 +1206,16 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hSoccer
             currentCell.Value = "Virtual";
             currentCol++;
 
+            currentCol++;
+
+            currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Style = bgHeader;
+            currentCell.Value = "Real";
+            currentCol++;
+
+            currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Style = bgHeader;
+            currentCell.Value = "Virtual";
             currentCol++;
 
             currentCell = wsReport.Cells[currentRow, currentCol];

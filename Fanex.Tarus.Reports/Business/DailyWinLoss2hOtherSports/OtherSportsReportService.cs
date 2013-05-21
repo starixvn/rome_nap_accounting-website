@@ -115,12 +115,14 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
                             Commission = CastAide.AsDouble(row["Commission"]),
                             LineTotal = CastAide.AsDouble(row["RealLineTotal"]),
                             LineTotalVirtual = CastAide.AsDouble(row["VirtualLineTotal"]),
-                            Turnover = CastAide.AsDouble(row["Turnover"]),
                             IsLive = CastAide.AsBoolean(row["LiveIndicator"]),
                             RowTypeDWL2h = new Entities.Sport.BaseModel
                             {
                                 Id = RowTypeConstants.Normal
-                            }
+                            },
+
+                            Turnover = CastAide.AsDouble(row["Turnover"]),
+                            TurnoverVirtual = 100
                         };
 
                         if (isHavingHedgeColumn)
@@ -131,6 +133,9 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
                         dailyWinLoss2hItemX.AliasName = dailyWinLoss2hItemX.Name;
                         dailyWinLoss2hItemX.Margin = ReportService.CalculateMargin(dailyWinLoss2hItemX.LineTotal,
                             dailyWinLoss2hItemX.Turnover) * 100;
+                        dailyWinLoss2hItemX.MarginVirtual = ReportService.CalculateMargin(dailyWinLoss2hItemX.LineTotalVirtual,
+                            dailyWinLoss2hItemX.TurnoverVirtual) * 100;
+
                         dailyWinLoss2hItemX.IsApplyVirtualRate = ReportService.IsApplyVirtualRate(dailyWinLoss2hItemX.Id);
                         dailyWinLoss2hItemX.Variance = ReportService.CalculateVariance(
                             dailyWinLoss2hItemX.LineTotal,
@@ -153,8 +158,13 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
 
                     result.NoneLiveReport.ReportTotal.NormalTotal.Margin = ReportService.CalculateMargin(result.NoneLiveReport.ReportTotal.NormalTotal.LineTotal,
                             result.NoneLiveReport.ReportTotal.NormalTotal.Turnover) * 100;
+                    result.NoneLiveReport.ReportTotal.NormalTotal.MarginVirtual = ReportService.CalculateMargin(result.NoneLiveReport.ReportTotal.NormalTotal.LineTotalVirtual,
+                            result.NoneLiveReport.ReportTotal.NormalTotal.TurnoverVirtual) * 100;
+
                     result.LiveReport.ReportTotal.NormalTotal.Margin = ReportService.CalculateMargin(result.LiveReport.ReportTotal.NormalTotal.LineTotal,
                             result.LiveReport.ReportTotal.NormalTotal.Turnover) * 100;
+                    result.LiveReport.ReportTotal.NormalTotal.MarginVirtual = ReportService.CalculateMargin(result.LiveReport.ReportTotal.NormalTotal.LineTotalVirtual,
+                          result.LiveReport.ReportTotal.NormalTotal.TurnoverVirtual) * 100;
 
                     result.NoneLiveReport.ReportTotal.NormalTotal.Round();
                     result.LiveReport.ReportTotal.NormalTotal.Round();
@@ -268,14 +278,16 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
                             Position = CastAide.AsDouble(row["Position"]),
                             Commission = CastAide.AsDouble(row["Commission"]),
                             LineTotal = CastAide.AsDouble(row["RealLineTotal"]),
-                            Turnover = CastAide.AsDouble(row["Turnover"]),
                             LineTotalVirtual = CastAide.AsDouble(row["VirtualLineTotal"]),
                             IsLive = CastAide.AsBoolean(row["LiveIndicator"]),
 
                             RowTypeDWL2h = new Entities.Sport.BaseModel
                             {
                                 Id = RowTypeConstants.Normal
-                            }
+                            },
+
+                            Turnover = CastAide.AsDouble(row["Turnover"]),
+                            TurnoverVirtual = 100
                         };
 
                         if (isHavingHedgeColumn)
@@ -292,6 +304,9 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
                         dailyWinLoss2hItemX.AliasName = GetBetTypeName(dailyWinLoss2hItemX);
                         dailyWinLoss2hItemX.Margin = ReportService.CalculateMargin(dailyWinLoss2hItemX.LineTotal,
                             dailyWinLoss2hItemX.Turnover) * 100;
+                        dailyWinLoss2hItemX.MarginVirtual = ReportService.CalculateMargin(dailyWinLoss2hItemX.LineTotalVirtual,
+                            dailyWinLoss2hItemX.TurnoverVirtual) * 100;
+
                         dailyWinLoss2hItemX.IsApplyVirtualRate = ReportService.IsApplyVirtualRate(dailyWinLoss2hItemX.Id);
                         dailyWinLoss2hItemX.Variance = ReportService.CalculateVariance(
                             dailyWinLoss2hItemX.LineTotal,
@@ -314,8 +329,13 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
 
                     result.NoneLiveReport.ReportTotal.NormalTotal.Margin = ReportService.CalculateMargin(result.NoneLiveReport.ReportTotal.NormalTotal.LineTotal,
                             result.NoneLiveReport.ReportTotal.NormalTotal.Turnover) * 100;
+                    result.NoneLiveReport.ReportTotal.NormalTotal.MarginVirtual = ReportService.CalculateMargin(result.NoneLiveReport.ReportTotal.NormalTotal.LineTotalVirtual,
+                           result.NoneLiveReport.ReportTotal.NormalTotal.TurnoverVirtual) * 100;
+                    
                     result.LiveReport.ReportTotal.NormalTotal.Margin = ReportService.CalculateMargin(result.LiveReport.ReportTotal.NormalTotal.LineTotal,
                               result.LiveReport.ReportTotal.NormalTotal.Turnover) * 100;
+                    result.LiveReport.ReportTotal.NormalTotal.MarginVirtual = ReportService.CalculateMargin(result.LiveReport.ReportTotal.NormalTotal.LineTotalVirtual,
+                              result.LiveReport.ReportTotal.NormalTotal.TurnoverVirtual) * 100;
 
                     result.NoneLiveReport.ReportTotal.NormalTotal.Round();
                     result.LiveReport.ReportTotal.NormalTotal.Round();
@@ -356,7 +376,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
             if (dml2hReport != null)
             {
                 ExportReport_OtherSportsMain(ref wsReport, dml2hReport.NoneLiveReport, startCol, ref currentRow, param, false);
-                this.ExportEmptyRow(ref wsReport, ref currentRow, startCol, startCol + 8);
+                this.ExportEmptyRow(ref wsReport, ref currentRow, startCol, startCol + 10);
                 ExportReport_OtherSportsMain(ref wsReport, dml2hReport.LiveReport, startCol, ref currentRow, param, true);
             }
 
@@ -395,8 +415,12 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
             ReportService.RespondStream(excelFile, reportName);
         }
 
-        private void ExportReport_OtherSportsMain(ref ExcelWorksheet wsReport, DailyWinLoss2hReport report,
-           int startCol, ref int currentRow, DailyWinLoss2hParam param, bool isLive)
+        private void ExportReport_OtherSportsMain(ref ExcelWorksheet wsReport,
+            DailyWinLoss2hReport report,
+            int startCol, 
+            ref int currentRow, 
+            DailyWinLoss2hParam param,
+            bool isLive)
         {
             var reportHeaderTitle = string.Format("OTHER SPORTS {0} PRODUCT WIN/LOSS REPORT", isLive ? "\"LIVE\"" : "\"NON - LIVE\"");
             ExportHeader_SoccerMain(ref wsReport, startCol, ref currentRow, reportHeaderTitle);
@@ -416,7 +440,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
             if (dml2hReport != null)
             {
                 ExportReport_OtherSportsBySport(ref wsReport, dml2hReport.NoneLiveReport, startCol, ref currentRow, param, false);
-                this.ExportEmptyRow(ref wsReport, ref currentRow, startCol, startCol + 8);
+                this.ExportEmptyRow(ref wsReport, ref currentRow, startCol, startCol + 10);
                 ExportReport_OtherSportsBySport(ref wsReport, dml2hReport.LiveReport, startCol, ref currentRow, param, true);
             }
 

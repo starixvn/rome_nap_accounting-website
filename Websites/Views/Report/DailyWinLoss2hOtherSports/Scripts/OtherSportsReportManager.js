@@ -113,10 +113,10 @@ var OtherSportsReportManager = {
             },
             error: function () {
                 $("#nonliveDailyWLOtherSports").find("tr:not(.header)").remove();
-                $("#nonliveDailyWLOtherSports").append('<tr><td colspan="9" class="b c">There is no information available.</td></tr>');
+                $("#nonliveDailyWLOtherSports").append('<tr><td colspan="11" class="b c">There is no information available.</td></tr>');
                 OtherSportsReportManager.showNonLiveReport(true);
                 $("#liveDailyWLOtherSports").find("tr:not(.header)").remove();
-                $("#liveDailyWLOtherSports").append('<tr><td colspan="9" class="b c">There is no information available.</td></tr>');
+                $("#liveDailyWLOtherSports").append('<tr><td colspan="11" class="b c">There is no information available.</td></tr>');
                 OtherSportsReportManager.showLiveReport(true);
             },
             complete: function () {
@@ -143,7 +143,7 @@ var OtherSportsReportManager = {
                 arrBody.push(OtherSportsReportManager.renderDailyWLRow(items[i], (i % 2 == 0 ? "evenrow" : "")));
             }
 
-            arrBody.push('<tr><td colspan="9" style="height: 18px;"></td></tr>');
+            arrBody.push('<tr><td colspan="11" style="height: 18px;"></td></tr>');
             arrBody.push(OtherSportsReportManager.renderDailyWLTotal(noneLiveReport.ReportTotal.NormalTotal));
 
             var allIBCTotal = noneLiveReport.ReportTotal.EightRMTotal.WinLoss;
@@ -163,7 +163,7 @@ var OtherSportsReportManager = {
         }
         else {
             $("#nonliveDailyWLOtherSports").find("tr:not(.header)").remove();
-            $("#nonliveDailyWLOtherSports").append('<tr><td colspan="9" class="b c">There is no information available.</td></tr>');
+            $("#nonliveDailyWLOtherSports").append('<tr><td colspan="11" class="b c">There is no information available.</td></tr>');
         }
         OtherSportsReportManager.showNonLiveReport(true);
     },
@@ -176,7 +176,7 @@ var OtherSportsReportManager = {
             for (var i = 0; i < totalSportReport; i++) {
                 arrBody.push(OtherSportsReportManager.renderDailyWLRow(items[i], (i % 2 == 0 ? "evenrow" : "")));
             }
-            arrBody.push('<tr><td colspan="9" style="height: 18px;"></td></tr>');
+            arrBody.push('<tr><td colspan="11" style="height: 18px;"></td></tr>');
 
             arrBody.push(OtherSportsReportManager.renderDailyWLTotal(liveReport.ReportTotal.NormalTotal));
             var allIBCTotal = liveReport.ReportTotal.EightRMTotal.WinLoss;
@@ -196,7 +196,7 @@ var OtherSportsReportManager = {
         }
         else {
             $("#liveDailyWLOtherSports").find("tr:not(.header)").remove();
-            $("#liveDailyWLOtherSports").append('<tr><td colspan="9" class="b c">There is no information available.</td></tr>');
+            $("#liveDailyWLOtherSports").append('<tr><td colspan="11" class="b c">There is no information available.</td></tr>');
         }
         OtherSportsReportManager.showLiveReport(true);
 
@@ -212,8 +212,10 @@ var OtherSportsReportManager = {
                         <td class="r"><span class="' + (row.LineTotalVirtual.toFixed(2) <= 0 ? '' : 'red') + '">' + StringFormatter.formatNumber(row.LineTotalVirtual) + '</span></td>\
                         <td class="r"><span class="' + (row.Variance.toFixed(2) <= 0 ? '' : 'red') + '">' + StringFormatter.formatNumber(row.Variance) + '</span></td>\
                         <td class="r"><span class="' + '' + '">' + StringFormatter.formatNumber(row.Turnover) + '</span></td>\
+                        <td class="r"><span class="' + '' + '">' + StringFormatter.formatNumber(row.TurnoverVirtual) + '</span></td>\
                         <td class="r"><span class="' + (row.Turnover.toFixed(2) != 0 && row.Margin.toFixed(2) <= 0 ? '' : 'red') + '">' + (row.Turnover.toFixed(2) != 0 ? StringFormatter.formatNumber(row.Margin) + "%" : "N/A") + '</span></td>\
-                    </tr>';
+                        <td class="r"><span class="' + (row.TurnoverVirtual.toFixed(2) != 0 && row.MarginVirtual.toFixed(2) <= 0 ? '' : 'red') + '">' + (row.TurnoverVirtual.toFixed(2) != 0 ? StringFormatter.formatNumber(row.MarginVirtual) + "%" : "N/A") + '</span></td>\
+                   </tr>';
         return html;
     },
     renderDailyWLTotal: function (row) {
@@ -227,8 +229,10 @@ var OtherSportsReportManager = {
                         <td class="tdtitle r b" bgcolor="#dddddd"><span class="' + (row.LineTotalVirtual.toFixed(2) <= 0 ? '' : 'red') + '">' + StringFormatter.formatNumber(row.LineTotalVirtual) + '</span></td>\
                         <td class="tdtitle r b" bgcolor="#dddddd"><span class="' + (row.Variance.toFixed(2) <= 0 ? '' : 'red') + '">' + StringFormatter.formatNumber(row.Variance) + '</span></td>\
                         <td class="r b"><span class="' + '' + '">' + StringFormatter.formatNumber(row.Turnover) + '</span></td>\
+                        <td class="r b"><span class="' + '' + '">' + StringFormatter.formatNumber(row.TurnoverVirtual) + '</span></td>\
                         <td class="r"><span class="' + ((row.Turnover.toFixed(2) == 0 || row.Margin.toFixed(2) < 0) ? '' : 'red') + '">' + (row.Turnover.toFixed(2) != 0 ? StringFormatter.formatNumber(row.Margin) + "%" : "N/A") + '</span></td>\
-                    </tr>';
+                        <td class="r"><span class="' + ((row.TurnoverVirtual.toFixed(2) == 0 || row.MarginVirtual.toFixed(2) < 0) ? '' : 'red') + '">' + (row.TurnoverVirtual.toFixed(2) != 0 ? StringFormatter.formatNumber(row.MarginVirtual) + "%" : "N/A") + '</span></td>\
+                  </tr>';
         return html;
     },
     renderIBCTotalRow_LeftReport: function (allIBCTotal) {
@@ -247,7 +251,7 @@ var OtherSportsReportManager = {
         html = '<tr>\
                         <td class="r b"><span>' + ibcMsg + '</span></td>\
                         <td class="r b"><span class="' + (allIBCTotal < 0 ? '' : 'red') + '">' + StringFormatter.formatNumber(allIBCTotal) + '</span></td>\
-                        <td colspan="7"></td>\
+                        <td colspan="9"></td>\
                 </tr>';
         return html;
     },
@@ -292,9 +296,9 @@ var OtherSportsReportManager = {
             },
             error: function () {
                 $("#nonliveDailyWLOtherSportsBySport").find("tr:not(.header)").remove();
-                $("#nonliveDailyWLOtherSportsBySport").append('<tr><td colspan="9" class="b c">There is no information available.</td></tr>');
+                $("#nonliveDailyWLOtherSportsBySport").append('<tr><td colspan="11" class="b c">There is no information available.</td></tr>');
                 $("#liveDailyWLOtherSportsBySport").find("tr:not(.header)").remove();
-                $("#liveDailyWLOtherSportsBySport").append('<tr><td colspan="9" class="b c">There is no information available.</td></tr>');
+                $("#liveDailyWLOtherSportsBySport").append('<tr><td colspan="11" class="b c">There is no information available.</td></tr>');
 
             },
             complete: function () {
@@ -369,7 +373,7 @@ var OtherSportsReportManager = {
             for (var i = 0; i < totalSportReport; i++) {
                 arrBody.push(OtherSportsReportManager.renderDailyWLRowBySport(items[i], (i % 2 == 0 ? "evenrow" : "")));
             }
-            arrBody.push('<tr><td colspan="9" style="height: 18px;"></td></tr>');
+            arrBody.push('<tr><td colspan="11" style="height: 18px;"></td></tr>');
             arrBody.push(OtherSportsReportManager.renderDailyWLTotalBySport(noneLiveReport.ReportTotal.NormalTotal));
 
             var allIBCTotal = noneLiveReport.ReportTotal.EightRMTotal.WinLoss;
@@ -389,7 +393,7 @@ var OtherSportsReportManager = {
         }
         else {
             $("#nonliveDailyWLOtherSportsBySport").find("tr:not(.header)").remove();
-            $("#nonliveDailyWLOtherSportsBySport").append('<tr><td colspan="9" class="b c">There is no information available.</td></tr>');
+            $("#nonliveDailyWLOtherSportsBySport").append('<tr><td colspan="11" class="b c">There is no information available.</td></tr>');
         }
     },
     renderLiveReportBySportDWL2h: function (liveReport, sporttype, sportname) {
@@ -404,7 +408,7 @@ var OtherSportsReportManager = {
             for (var i = 0; i < totalSportReport; i++) {
                 arrBody.push(OtherSportsReportManager.renderDailyWLRowBySport(items[i], (i % 2 == 0 ? "evenrow" : "")));
             }
-            arrBody.push('<tr><td colspan="9" style="height: 18px;"></td></tr>');
+            arrBody.push('<tr><td colspan="11" style="height: 18px;"></td></tr>');
             arrBody.push(OtherSportsReportManager.renderDailyWLTotalBySport(liveReport.ReportTotal.NormalTotal));
 
             var allIBCTotal = liveReport.ReportTotal.EightRMTotal.WinLoss;
@@ -424,7 +428,7 @@ var OtherSportsReportManager = {
         }
         else {
             $("#liveDailyWLOtherSportsBySport").find("tr:not(.header)").remove();
-            $("#liveDailyWLOtherSportsBySport").append('<tr><td colspan="9" class="b c">There is no information available.</td></tr>');
+            $("#liveDailyWLOtherSportsBySport").append('<tr><td colspan="11" class="b c">There is no information available.</td></tr>');
         }
     },
     renderDailyWLRowBySport: function (row, cssClass) {
@@ -438,7 +442,9 @@ var OtherSportsReportManager = {
                         <td class="r"><span class="' + (row.LineTotalVirtual.toFixed(2) <= 0 ? '' : 'red') + '">' + StringFormatter.formatNumber(row.LineTotalVirtual) + '</span></td>\
                         <td class="r"><span class="' + (row.Variance.toFixed(2) <= 0 ? '' : 'red') + '">' + StringFormatter.formatNumber(row.Variance) + '</span></td>\
                         <td class="r"><span class="' + '' + '">' + StringFormatter.formatNumber(row.Turnover) + '</span></td>\
+                        <td class="r"><span class="' + '' + '">' + StringFormatter.formatNumber(row.TurnoverVirtual) + '</span></td>\
                         <td class="r"><span class="' + (row.Turnover.toFixed(2) == 0 || row.Margin.toFixed(2) <= 0 ? '' : 'red') + '">' + (row.Turnover.toFixed(2) != 0 ? StringFormatter.formatNumber(row.Margin) + "%" : "N/A") + '</span></td>\
+                        <td class="r"><span class="' + (row.TurnoverVirtual.toFixed(2) == 0 || row.MarginVirtual.toFixed(2) <= 0 ? '' : 'red') + '">' + (row.TurnoverVirtual.toFixed(2) != 0 ? StringFormatter.formatNumber(row.MarginVirtual) + "%" : "N/A") + '</span></td>\
                     </tr>';
         return html;
     },
@@ -453,7 +459,9 @@ var OtherSportsReportManager = {
                         <td class="tdtitle r b" bgcolor="#dddddd"><span class="' + (row.LineTotalVirtual.toFixed(2) <= 0 ? '' : 'red') + '">' + StringFormatter.formatNumber(row.LineTotalVirtual) + '</span></td>\
                         <td class="tdtitle r b" bgcolor="#dddddd"><span class="' + (row.Variance.toFixed(2) <= 0 ? '' : 'red') + '">' + StringFormatter.formatNumber(row.Variance) + '</span></td>\
                         <td class="r b"><span class="' + '' + '">' + StringFormatter.formatNumber(row.Turnover) + '</span></td>\
+                        <td class="r b"><span class="' + '' + '">' + StringFormatter.formatNumber(row.TurnoverVirtual) + '</span></td>\
                         <td class="r"><span class="' + ((row.Turnover.toFixed(2) == 0 || row.Margin.toFixed(2) <= 0) ? '' : 'red') + '">' + (row.Turnover.toFixed(2) != 0 ? StringFormatter.formatNumber(row.Margin) + "%" : "N/A") + '</span></td>\
+                        <td class="r"><span class="' + ((row.TurnoverVirtual.toFixed(2) == 0 || row.MarginVirtual.toFixed(2) <= 0) ? '' : 'red') + '">' + (row.TurnoverVirtual.toFixed(2) != 0 ? StringFormatter.formatNumber(row.MarginVirtual) + "%" : "N/A") + '</span></td>\
                     </tr>';
         return html;
     },
@@ -473,7 +481,7 @@ var OtherSportsReportManager = {
         html = '<tr>\
                         <td class="r b"><span>' + ibcMsg + '</span></td>\
                         <td class="r b"><span class="' + (allIBCTotal.toFixed(2) < 0 ? '' : 'red') + '">' + StringFormatter.formatNumber(allIBCTotal) + '</span></td>\
-                        <td colspan="7"></td>\
+                        <td colspan="9"></td>\
                 </tr>';
         return html;
     },
@@ -530,7 +538,7 @@ var OtherSportsReportManager = {
             },
             error: function () {
                 $("#tblContent_RDtOsp").find("tr:not(.header)").remove();
-                $("#tblContent_RDtOsp").append('<tr><td colspan="12" class="b c"><span>There is no information available.</span></td></tr>');
+                $("#tblContent_RDtOsp").append('<tr><td colspan="14" class="b c"><span>There is no information available.</span></td></tr>');
                 OtherSportsReportManager.showOtherSportsBettypeReport(true);
                 $("#gridbettypeOSR").removeClass('hidden');
             },
@@ -578,7 +586,7 @@ var OtherSportsReportManager = {
             }
             else {
                 $("#tblContent_RDtOsp").find("tr:not(.header)").remove();
-                $("#tblContent_RDtOsp").append('<tr><td colspan="12" class="b c"><span>There is no information available.</span></td></tr>');
+                $("#tblContent_RDtOsp").append('<tr><td colspan="14" class="b c"><span>There is no information available.</span></td></tr>');
             }
 
             OtherSportsReportManager.showOtherSportsBettypeReport(true);
@@ -610,7 +618,7 @@ var OtherSportsReportManager = {
         html = '<tr>\
                     <td>\
                         <span></span></td>\
-                    <td colspan = "11" class="l"><span class="b longtext-wrapper">' +
+                    <td colspan = "13" class="l"><span class="b longtext-wrapper">' +
                         (dwlRow.Name && dwlRow.Name != '' ? dwlRow.Name : '&nbsp') + '</span></td>\
                 </tr>';
         return html;
@@ -653,7 +661,9 @@ var OtherSportsReportManager = {
                     <td class="r"><span class="' + (row.LineTotalVirtual.toFixed(2) > 0 ? 'red' : '') + '">' + StringFormatter.formatNumber(row.LineTotalVirtual) + '</span></td>\
                     <td class="r"><span class="' + (row.Variance.toFixed(2) > 0 ? 'red' : '') + '">' + StringFormatter.formatNumber(row.Variance) + '</span></td>\
                     <td class="r"><span>' + StringFormatter.formatNumber(row.Turnover) + '</span></td>\
+                    <td class="r"><span>' + StringFormatter.formatNumber(row.TurnoverVirtual) + '</span></td>\
                     <td class="r"><span class=" ' + (row.Turnover.toFixed(2) != 0 && row.Margin.toFixed(2) > 0 ? 'red' : '') + '">' + (row.Turnover.toFixed(2) != 0 ? StringFormatter.formatNumber(row.Margin) + '%' : 'N/A') + '</span></td>\
+                    <td class="r"><span class=" ' + (row.TurnoverVirtual.toFixed(2) != 0 && row.MarginVirtual.toFixed(2) > 0 ? 'red' : '') + '">' + (row.TurnoverVirtual.toFixed(2) != 0 ? StringFormatter.formatNumber(row.MarginVirtual) + '%' : 'N/A') + '</span></td>\
                 </tr>';
         return html;
     },
@@ -668,7 +678,9 @@ var OtherSportsReportManager = {
                 <td class="r"><span class="' + (row.LineTotalVirtual.toFixed(2) > 0 ? 'red' : '') + '">' + StringFormatter.formatNumber(row.LineTotalVirtual) + '</span></td>\
                 <td class="r"><span class="' + (row.Variance.toFixed(2) > 0 ? 'red' : '') + '">' + StringFormatter.formatNumber(row.Variance) + '</span></td>\
                 <td class="r"><span>' + StringFormatter.formatNumber(row.Turnover) + '</span></td>\
+                <td class="r"><span>' + StringFormatter.formatNumber(row.TurnoverVirtual) + '</span></td>\
                 <td class="r"><span class="' + (row.Turnover.toFixed(2) != 0 && row.Margin.toFixed(2) > 0 ? 'red' : '') + '" style="font-weight: normal;">' + (row.Turnover.toFixed(2) != 0 ? StringFormatter.formatNumber(row.Margin) + '%' : 'N/A') + '</span></td>\
+                <td class="r"><span class="' + (row.TurnoverVirtual.toFixed(2) != 0 && row.MarginVirtual.toFixed(2) > 0 ? 'red' : '') + '" style="font-weight: normal;">' + (row.TurnoverVirtual.toFixed(2) != 0 ? StringFormatter.formatNumber(row.MarginVirtual) + '%' : 'N/A') + '</span></td>\
             </tr>';
         return html;
     },
@@ -685,7 +697,9 @@ var OtherSportsReportManager = {
                 <td class="r"><span class="' + (row.LineTotalVirtual.toFixed(2) > 0 ? 'red' : '') + '" style="font-weight: normal;">' + StringFormatter.formatNumber(row.LineTotalVirtual) + '</span></td>\
                 <td class="r"><span class="' + (row.Variance.toFixed(2) > 0 ? 'red' : '') + '" style="font-weight: normal;">' + StringFormatter.formatNumber(row.Variance) + '</span></td>\
                 <td class="r"><span style="font-weight: normal;">' + StringFormatter.formatNumber(row.Turnover) + '</span></td>\
+                <td class="r"><span style="font-weight: normal;">' + StringFormatter.formatNumber(row.TurnoverVirtual) + '</span></td>\
                 <td class="r"><span class="' + (row.Turnover.toFixed(2) != 0 && row.Margin.toFixed(2) > 0 ? 'red' : '') + '" style="font-weight: normal;">' + (row.Turnover.toFixed(2) != 0 ? StringFormatter.formatNumber(row.Margin) + '%' : 'N/A') + '</span></td>\
+                <td class="r"><span class="' + (row.TurnoverVirtual.toFixed(2) != 0 && row.MarginVirtual.toFixed(2) > 0 ? 'red' : '') + '" style="font-weight: normal;">' + (row.TurnoverVirtual.toFixed(2) != 0 ? StringFormatter.formatNumber(row.MarginVirtual) + '%' : 'N/A') + '</span></td>\
             </tr>';
         return html;
     },
@@ -705,7 +719,7 @@ var OtherSportsReportManager = {
                         <td class="r" colspan = "4"><span class="b">' +
                                                   ibcMsg + '</span></td>\
                         <td class="r"><span class="b ' + (ibcValue.toFixed(2) > 0 ? 'red' : '') + '">' + StringFormatter.formatNumber(ibcValue) + '</span></td>\
-                        <td colspan ="7" class ="c" style="height:18px;"></td>\
+                        <td colspan ="9" class ="c" style="height:18px;"></td>\
                     </tr>';
         return html;
     },
@@ -784,7 +798,7 @@ var OtherSportsReportManager = {
         if (isshow) {
             $("#gridSplitter_OSR").removeClass('hidden');
             $("#gridbettypeOSR").removeClass("hidden");
-            $("#otherSportsReport").css("width", "2000px");
+            $("#otherSportsReport").css("width", "3000px");
             var totalWidth = $("#otherSportsReportTable").width() + 10;
             $("#otherSportsReport").css("width", totalWidth + "px");
             var mainReportWidth = $(".mainreport").width();
