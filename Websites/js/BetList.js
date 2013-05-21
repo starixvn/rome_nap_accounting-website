@@ -150,6 +150,12 @@ function ViewResultHR(url) {
     //    else
     //        ibcWnd.open(url, '', 300, 100, 300, 250, 'class1', 'class2');
 }
+
+function openHRresult(url, title, width, heigh) {
+    OpenPopup(url, title, 420, heigh, true, false, window, 0, null, null);
+}
+
+
 function ViewResultNumberGame(url) {
     //ibcWnd.open(url, '', 100, 100, 710, 200, 'class1', 'class2');
 
@@ -426,11 +432,7 @@ function reset_date() {
     document.getElementById(tdateId).value = (td.getMonth() + 1) + "/" + td.getDate() + "/" + td.getFullYear();
 }
 
-function openHRresult(url, title, width, heigh) {
-    var theWidth = window.innerWidth ? window.innerWidth : document.body.offsetWidth;
 
-   ibcWnd.open(url, title, theWidth / 2 - 270, 50, width, heigh);
-}
 
 function GetBetListFromCheckBet(transId, custId) {
     $('#boxheader').addClass('hidden');
