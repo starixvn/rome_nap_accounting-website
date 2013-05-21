@@ -55,6 +55,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex\Fanex.PTEngine.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.PTRacing">
+      <HintPath>..\Dependency\Fanex\Fanex.PTRacing.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Tarus.Web.Controllers">
       <HintPath>..\Websites\Bin\Fanex.Tarus.Web.Controllers.dll</HintPath>
     </Reference>
@@ -75,10 +78,6 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Json, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\System.Json.4.0.20126.16343\lib\net40\System.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\System.Net.Http.2.0.20126.16343\lib\net40\System.Net.Http.dll</HintPath>
@@ -95,10 +94,6 @@
     <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\AspNetWebApi.Core.4.0.20126.16343\lib\net40\System.Web.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http.Common, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\System.Web.Http.Common.4.0.20126.16343\lib\net40\System.Web.Http.Common.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -118,6 +113,8 @@
     <Compile Include="Business\CustomerList\ICustomerListService.cs" />
     <Compile Include="Business\CustomerLogin\CustomerSecurityCodeService.cs" />
     <Compile Include="Business\CustomerLogin\ICustomerSecurityCodeService.cs" />
+    <Compile Include="Business\Racing\IRacingSettingService.cs" />
+    <Compile Include="Business\Racing\RacingSettingService.cs" />
     <Compile Include="Business\SettingCustomer\AbnormalBetService.cs" />
     <Compile Include="Business\SettingCustomer\CasinoComm\CasinoCommissionService.cs" />
     <Compile Include="Business\SettingCustomer\CasinoComm\ICasinoCommissionService.cs" />
@@ -138,6 +135,13 @@
     <Compile Include="Controller\Credit\EditSuperController.cs" />
     <Compile Include="Controller\CustomerList\CustomerListController.cs" />
     <Compile Include="Controller\CustomerLogin\CustomerSecurityCodeController.cs" />
+    <Compile Include="Controller\Racing\EditAgentPTRacingController.cs" />
+    <Compile Include="Controller\Racing\EditMasterPTRacingController.cs" />
+    <Compile Include="Controller\Racing\EditMemberPTRacingController.cs" />
+    <Compile Include="Controller\Racing\EditSuperPTRacingController.cs" />
+    <Compile Include="Controller\Racing\MasterEditMemberPTRacingController.cs" />
+    <Compile Include="Controller\Racing\PTRacingSettingBaseController.cs" />
+    <Compile Include="Controller\Racing\SuperEditMemberPTRacingController.cs" />
     <Compile Include="Controller\Setting\AbnormalBetController.cs" />
     <Compile Include="Controller\Setting\CasinoCommissionController.cs" />
     <Compile Include="Controller\Setting\CustomerSettingController.cs" />
@@ -159,6 +163,7 @@
     <Compile Include="Entities\CreditCustomer\Site.cs" />
     <Compile Include="Entities\CreditCustomer\Sites.cs" />
     <Compile Include="Entities\CustomerList\CustomerList.cs" />
+    <Compile Include="Entities\Racing\CustomerSettingView.cs" />
     <Compile Include="Entities\Result.cs" />
     <Compile Include="Entities\SettingCustomer\AbnormalDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

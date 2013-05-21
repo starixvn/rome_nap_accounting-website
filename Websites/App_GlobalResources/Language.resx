@@ -2416,4 +2416,7 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="VirtualAllTotal" xml:space="preserve">
     <value>Virtual All Total:</value>
   </data>
+  <data name="Unchanged" xml:space="preserve">
+    <value>There is no change to update.</value>
+  </data>
 </root>

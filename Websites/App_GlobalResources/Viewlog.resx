@@ -2713,7 +2713,7 @@
     <value>Disable Racing UK Tote</value>
   </data>
   <data name="MinBv151OT" xml:space="preserve">
-    <value>Racing UK-Min Bet</value>
+    <value>Racing UK - Min Bet</value>
   </data>
   <data name="MaxBv151OT" xml:space="preserve">
     <value>Racing UK-Max Bet</value>
@@ -3103,10 +3103,10 @@
     <value>Greyhound UK- Min Bet</value>
   </data>
   <data name="MinBv152_51" xml:space="preserve">
-    <value>Racing Aust - Min Bet</value>
+    <value>Greyhound Aust - Min Bet</value>
   </data>
   <data name="MinBv153_51" xml:space="preserve">
-    <value>Racing Aust - Min Bet</value>
+    <value>Harness Aust - Min Bet</value>
   </data>
   <data name="minv151pt_51" xml:space="preserve">
     <value>Racing - Min Aust Tote Win</value>

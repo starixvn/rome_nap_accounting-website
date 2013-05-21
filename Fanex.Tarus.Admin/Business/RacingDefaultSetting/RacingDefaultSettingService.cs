@@ -1,0 +1,89 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="RacingDefaultSettingService.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Admin.Business.RacingDefaultSetting
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using Fanex.Tarus.Admin.Entities;
+    using Fanex.Tarus.Admin.DataAccess.RacingDefaultSetting;
+    using System.Data;
+    using Fanex.Tarus.Infrastructure.Extensions;
+    using DNAide.Core;
+    using Fanex.Tarus.Infrastructure.Common;
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class RacingDefaultSettingService : IRacingDefaultSettingService
+    {
+        IRacingDefaultSettingAccess _racingDefaultSettingAccess = null;
+        public RacingDefaultSettingService() : this(null)
+        { 
+        }
+        public RacingDefaultSettingService(IRacingDefaultSettingAccess racingDefaultSettingAccess) 
+        {
+            _racingDefaultSettingAccess = racingDefaultSettingAccess ?? new RacingDefaultSettingAccess();
+        }
+
+        public List<RacingDefaultSetting> SelRacingDefaultSetting(int SportType, int Bettype, string Currency)
+        {
+            List<RacingDefaultSetting> result = new List<RacingDefaultSetting>();
+
+            try
+            {
+                var racingDataset= _racingDefaultSettingAccess.SelRacingDefaultSetting(SportType, Bettype, Currency);
+                if (racingDataset != null && racingDataset.Tables != null && racingDataset.Tables.Count > 0 && racingDataset.Tables[0].Rows.Count > 0)
+                {
+                    var racingTable = racingDataset.Tables[0];
+                    int index = 1;
+                    foreach (DataRow item in racingTable.Rows)
+                    {
+                        result.Add(new RacingDefaultSetting
+                        {
+                            Index = index,
+                            SportTypeID = CastAide.AsInt32(item["sporttype"]),
+                            BettypeID = CastAide.AsInt32(item["bettype"]),
+                            CurrencyID = CastAide.AsInt32(item["currency"]),
+                            CurrencyName = item["currencyName"].ToString(),
+                            CurrencyCode = item["currencyCode"].ToString(),
+                            MinBet = CastAide.AsDecimal(item["minbet"])
+                        });
+                        index++;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return result;
+        }
+
+        public Result UpdateRacingDefaultSetting(int UserID, int Sporttype, int Bettype, int CurrencyID, int MinBet)
+        {
+            var result = new Result();
+            result = _racingDefaultSettingAccess.UpdateRacingDefaulSetting(UserID, Sporttype, Bettype, CurrencyID, MinBet);
+            return result;
+        }
+
+        public List<Result> UpdateMultipleRacingDefaultSetting(List<RacingDefaultSetting> racingList)
+        {
+            List<Result> resultList = new List<Result>();
+            foreach (var racing in racingList)
+            {
+                var result = new Result();
+                result = _racingDefaultSettingAccess.UpdateRacingDefaulSetting(AppSession.AccId ,CastAide.AsInt32(racing.SportTypeID), CastAide.AsInt32(racing.BettypeID),
+                                                CastAide.AsInt32(racing.CurrencyID), CastAide.AsInt32(racing.MinBet));
+                resultList.Add(result);
+            }
+
+            return resultList;
+        }
+    }
+}
