@@ -1,0 +1,12 @@
+﻿
+namespace Fanex.Tarus.Customer.Business.Racing
+{
+    using Fanex.PTRacing.BusinessObjects;
+    using System.Collections;
+
+    public interface IRacingSettingService
+    {
+        ICustomer GetCustomerInfo(IRequestContext requestContext);
+        Result SaveCustomerSettings(ICustomer oldCustomerSettings, ICustomer newCustomerSettings, RequestContext currentContext, Hashtable otherSettings);
+    }
+}
