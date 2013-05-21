@@ -714,4 +714,52 @@
   <data name="Fromsite" xml:space="preserve">
     <value>From Site</value>
   </data>
+  <data name="maxbv152_41" xml:space="preserve">
+    <value>Greyhound UK- Max Bet</value>
+  </data>
+  <data name="maxbv152_51" xml:space="preserve">
+    <value>Greyhound Aust - Max Bet</value>
+  </data>
+  <data name="maxbv153_51" xml:space="preserve">
+    <value>Harness Aust - Max Bet</value>
+  </data>
+  <data name="updatediscountv151_31" xml:space="preserve">
+    <value>Update  Racing - SA Tote Comm</value>
+  </data>
+  <data name="updatediscountv151_41" xml:space="preserve">
+    <value>Update  Racing - UK/Irish Tote Comm</value>
+  </data>
+  <data name="updatediscountv151_51" xml:space="preserve">
+    <value>Update  Racing - Aust Tote Comm</value>
+  </data>
+  <data name="updatediscountv152_41" xml:space="preserve">
+    <value>Update  Greyhound - UK/Irish Tote Comm</value>
+  </data>
+  <data name="updatediscountv152_51" xml:space="preserve">
+    <value>Update  Greyhound - Aust Tote Comm</value>
+  </data>
+  <data name="updatediscountv153_51" xml:space="preserve">
+    <value>Update  Harness - Aust Tote Comm</value>
+  </data>
+  <data name="iscopypreset151_51" xml:space="preserve">
+    <value>IsCopy Preset Racing - Aust Tote</value>
+  </data>
+  <data name="updatepositiontakingv151_31" xml:space="preserve">
+    <value>Update Horse Racing - UK/Irish Tote</value>
+  </data>
+  <data name="updatepositiontakingv151_41" xml:space="preserve">
+    <value>Update Horse Racing - SA Tote</value>
+  </data>
+  <data name="updatepositiontakingv151_51" xml:space="preserve">
+    <value>Update Horse Racing - Aust Tote</value>
+  </data>
+  <data name="updatepositiontakingv152_41" xml:space="preserve">
+    <value>Update Greyhound - UK/Irish Tote</value>
+  </data>
+  <data name="updatepositiontakingv152_51" xml:space="preserve">
+    <value>Update Greyhound - Aust Tote</value>
+  </data>
+  <data name="updatepositiontakingv153_51" xml:space="preserve">
+    <value>Update Harness - Aust Tote</value>
+  </data>
 </root>

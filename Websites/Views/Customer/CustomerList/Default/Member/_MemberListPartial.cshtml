@@ -94,8 +94,8 @@
         </td>
         <td>
             <div class="table-cell c" style="width: 65px; height: 18px;">
-                <a onclick="MemberList.OpenEdit('@Model.ParentId','@memberItem.ChildID','@memberItem.UserName');">@memberItem.Status</a>
-                <span onclick="MemberList.OpenEdit('@Model.ParentId','@memberItem.ChildID','@memberItem.UserName');" class="status-button" >
+                <a onclick="EditSportsBookSetting(1, '@memberItem.ChildID', '@Model.ParentId', '@memberItem.UserName');">@memberItem.Status</a>
+                <span onclick="EditSportsBookSetting(1, '@memberItem.ChildID', '@Model.ParentId', '@memberItem.UserName');"  class="status-button" >
                     &nbsp;&nbsp;&nbsp</span>
             </div>
         </td>
@@ -107,7 +107,7 @@
                     <!--horseracing-edit-->
                     @if (!CastAide.AsBoolean(hash["disabledHR"]))
                     {
-                        <li class="canchange" onclick="OpenEditHR('@memberItem.ChildID',1)" >Racing</li>
+                        <li class="canchange" onclick="EditHorseracingSetting(1, '@memberItem.ChildID','@Model.ParentId')" >Racing</li>
                     }
                     <!--/horseracing-edit-->
                     <!--casino-edit-->

@@ -1,0 +1,58 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="RacingDefaultSetting.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Admin.Entities
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class RacingDefaultSetting
+    {
+        public int Index { get; set; }
+
+        public string SportName { get; set; }
+
+        public int SportTypeID { get; set; }
+
+        public int BettypeID { get; set; }
+
+        public string BettypeName { get; set; }
+
+        public string CurrencyName { get; set; }
+
+        public int CurrencyID { get; set; }
+
+        public string CurrencyCode { get; set; }
+
+        public decimal MinBet { get; set; }
+    }
+
+    public class Sport
+    {
+        public string SportName { get; set; }
+
+        public int SportID { get; set; }
+
+        public List<Tote> ToteList { get; set; }
+
+        public Sport()
+        {
+            ToteList = new List<Tote>();
+        }
+    }
+
+    public class Tote
+    {
+        public string ToteName { get; set; }
+
+        public int ToteID { get; set; }
+    }
+}

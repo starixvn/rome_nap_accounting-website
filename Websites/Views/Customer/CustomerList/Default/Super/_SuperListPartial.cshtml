@@ -111,8 +111,8 @@
         </td>
         <td>
             <div class="table-cell c" style="width: 65px; height: 18px;">
-                <a onclick="SuperList.OpenEdit('@Model.ParentId','@superItem.ChildID','@superItem.UserName');">@superItem.Status</a>
-                <span onclick="SuperList.OpenEdit('@Model.ParentId','@superItem.ChildID','@superItem.UserName');" class="status-button" >
+                <a onclick="EditSportsBookSetting(4, '@superItem.ChildID', 0 , '@superItem.UserName');"  >@superItem.Status</a>
+                <span onclick="EditSportsBookSetting(4, '@superItem.ChildID', 0 , '@superItem.UserName');"   class="status-button" >
                     &nbsp;&nbsp;&nbsp</span>
             </div>
         </td>
@@ -122,14 +122,14 @@
                 </span>
                 <ul id="div_@superItem.ChildID" style="display:none;">
                     <!--minmaxPT-->
-                    <li class="canchange" onclick="OpenEditMinMaxPT('@superItem.ChildID','Super');"  >Min
+                    <li class="canchange" onclick="EditMinMaxPT(4, '@superItem.ChildID', 0 , '@superItem.UserName');"  >
                         Max PT</li>
                     <!--/minmaxPT-->
-                    <li class="canchange" onclick="OpenEditCustInfo('@superItem.ChildID','Super');" >Info</li>
+                    <li class="canchange" onclick="OpenEditCustInfo('@superItem.ChildID','@Model.ParentId','Super');" >Info</li>
                     <!--horseracing-edit-->
                     @if (!CastAide.AsBoolean(hash["disabledHR"]))
                     {
-                        <li class="canchange" onclick="OpenEditHR('@superItem.ChildID',4)" >Racing</li>
+                        <li class="canchange" onclick="EditHorseracingSetting(4,'@superItem.ChildID')" >Racing</li>
                     }
                     <!--/horseracing-edit-->
                     <!--casino-edit-->

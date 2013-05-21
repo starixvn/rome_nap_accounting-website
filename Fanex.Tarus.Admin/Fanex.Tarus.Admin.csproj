@@ -75,6 +75,8 @@
     <Compile Include="Business\BACustomer\IBACustomerService.cs" />
     <Compile Include="Business\MailingList\ISpecialDeleteService.cs" />
     <Compile Include="Business\MailingList\SpecialDeleteService.cs" />
+    <Compile Include="Business\RacingDefaultSetting\IRacingDefaultSettingService.cs" />
+    <Compile Include="Business\RacingDefaultSetting\RacingDefaultSettingService.cs" />
     <Compile Include="Business\SecurityCode\AdminSecurityCodeService.cs" />
     <Compile Include="Business\SecurityCode\IAdminSecurityCodeService.cs" />
     <Compile Include="Business\SMAManagement\ISMAManagementService.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="Controller\AutoFollowBetController.cs" />
     <Compile Include="Controller\BACustomerController.cs" />
     <Compile Include="Controller\MailingList\SpecialDeleteController.cs" />
+    <Compile Include="Controller\RacingDefaultSettingController.cs" />
     <Compile Include="Controller\SecurityCode\AdminSecurityCodeController.cs" />
     <Compile Include="Controller\SMAManagement\SMAManagementController.cs" />
     <Compile Include="Criteria\SecurityCode\GetUserListCriteria.cs" />
@@ -92,13 +95,17 @@
     <Compile Include="DataAccess\BACustomer\IBACustomerAccess.cs" />
     <Compile Include="DataAccess\MailingList\ISpecialDeleteAccess.cs" />
     <Compile Include="DataAccess\MailingList\SpecialDeleteAccess.cs" />
+    <Compile Include="DataAccess\RacingDefaultSetting\IRacingDefaultSettingAccess.cs" />
+    <Compile Include="DataAccess\RacingDefaultSetting\RacingDefaultSettingAccess.cs" />
     <Compile Include="DataAccess\SecurityCode\AdminSecurityCodeDataAccess.cs" />
     <Compile Include="DataAccess\SecurityCode\IAdminSecurityCodeDataAccess.cs" />
     <Compile Include="DataAccess\SMAManagement\ISMAManagementAccess.cs" />
     <Compile Include="DataAccess\SMAManagement\SMAManagementAccess.cs" />
+    <Compile Include="Entities\CustomerSecurityCode.cs" />
     <Compile Include="Entities\FollowedCustomer.cs" />
     <Compile Include="Entities\Licensee.cs" />
     <Compile Include="Entities\MailingList\SpecialDeleteMailing.cs" />
+    <Compile Include="Entities\RacingDefaultSetting.cs" />
     <Compile Include="Entities\Result.cs" />
     <Compile Include="Entities\SecurityCode\CustomerInfo.cs" />
     <Compile Include="Entities\SMAManagement\FilterInfo.cs" />
