@@ -402,7 +402,7 @@ var racingwinloss = {
         for (i = 0; i < rows.length; i++) {
             html += '<tr class="' + cssclass + '">\
                 <td>\
-                    <div class="col160 b">' + rows[i].Name + '</div>\
+                    <div class="col200 b">' + rows[i].Name + '</div>\
                 </td>\
                 <td>\
                     <div class="col60 c b">' + (rows[i].Currency == "" ? "&nbsp;" : rows[i].Currency) + '</div>\
@@ -764,7 +764,7 @@ var racingwinlossdetail = {
         if (index == 0) {
             html = '<tr>\
                         <td rowspan="' + totalrow + '">\
-                            <div class="col160">' + row.Name + '</div>\
+                            <div class="col200">' + row.Name + '</div>\
                         </td>\
                         <td >\
                             <div class="col60 c blue hideIBCBetlist" onclick="betlist.initPopupBetlist(\'' + row.Id + '\',\'' + row.RaceNo + '\',\'' + row.CurrencyId + '\',\'' + row.Currency + '\');">' + row.RaceNo + '</div>\
@@ -786,7 +786,7 @@ var racingwinlossdetail = {
             if (i == 0) {
                 html += '<tr class="' + cssclass + '">\
                 <td rowspan="' + rows.length + '">\
-                    <div class="col160 b">' + rows[i].Name + '</div>\
+                    <div class="col200 b">' + rows[i].Name + '</div>\
                 </td>\
                 <td>\
                     <div class="col60 c b">' + rows[i].Currency + '</div>\
