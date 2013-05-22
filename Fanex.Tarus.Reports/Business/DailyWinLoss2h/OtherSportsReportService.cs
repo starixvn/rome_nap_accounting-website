@@ -122,8 +122,8 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
                                 Id = RowTypeConstants.Normal
                             },
 
-                            Turnover = CastAide.AsDouble(row["Turnover"]),
-                            TurnoverVirtual = 100
+                            Turnover = CastAide.AsDouble(row["RealTurnover"]),
+                            TurnoverVirtual = CastAide.AsDouble(row["VirtualTurnover"])
                         };
 
                         if (isHavingHedgeColumn)
@@ -286,8 +286,8 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
                                 Id = RowTypeConstants.Normal
                             },
 
-                            Turnover = CastAide.AsDouble(row["Turnover"]),
-                            TurnoverVirtual = 100
+                            Turnover = CastAide.AsDouble(row["RealTurnover"]),
+                            TurnoverVirtual = CastAide.AsDouble(row["VirtualTurnover"])
                         };
 
                         if (isHavingHedgeColumn)

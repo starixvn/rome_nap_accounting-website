@@ -121,8 +121,8 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
                                 Id = RowTypeConstants.Normal
                             },
 
-                            Turnover = CastAide.AsDouble(row["Turnover"]),
-                            TurnoverVirtual = 100
+                            Turnover = CastAide.AsDouble(row["RealTurnover"]),
+                            TurnoverVirtual = CastAide.AsDouble(row["VirtualTurnover"])
                         };
 
                         if (isHavingHedgeColumn)
@@ -286,8 +286,8 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
                                 Id = RowTypeConstants.Normal
                             },
 
-                            Turnover = CastAide.AsDouble(row["Turnover"]),
-                            TurnoverVirtual = 100
+                            Turnover = CastAide.AsDouble(row["RealTurnover"]),
+                            TurnoverVirtual = CastAide.AsDouble(row["VirtualTurnover"])
                         };
 
                         if (isHavingHedgeColumn)
@@ -331,7 +331,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
                             result.NoneLiveReport.ReportTotal.NormalTotal.Turnover) * 100;
                     result.NoneLiveReport.ReportTotal.NormalTotal.MarginVirtual = ReportService.CalculateMargin(result.NoneLiveReport.ReportTotal.NormalTotal.LineTotalVirtual,
                            result.NoneLiveReport.ReportTotal.NormalTotal.TurnoverVirtual) * 100;
-                    
+
                     result.LiveReport.ReportTotal.NormalTotal.Margin = ReportService.CalculateMargin(result.LiveReport.ReportTotal.NormalTotal.LineTotal,
                               result.LiveReport.ReportTotal.NormalTotal.Turnover) * 100;
                     result.LiveReport.ReportTotal.NormalTotal.MarginVirtual = ReportService.CalculateMargin(result.LiveReport.ReportTotal.NormalTotal.LineTotalVirtual,
@@ -417,8 +417,8 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
 
         private void ExportReport_OtherSportsMain(ref ExcelWorksheet wsReport,
             DailyWinLoss2hReport report,
-            int startCol, 
-            ref int currentRow, 
+            int startCol,
+            ref int currentRow,
             DailyWinLoss2hParam param,
             bool isLive)
         {

@@ -247,7 +247,7 @@ var DailyWinLoss2hManager = {
                             <div class="col100 r">' + StringFormatter.formatNumber(dwlRow.Turnover) + '</div>\
                          </td>\
                          <td>\
-                            <div class="col100 r">' + StringFormatter.formatNumber(dwlRow.TurnoverVirtual) + '</div>\
+                            <div class="col100 r">' +  (dwlRow.IsApplyVirtualRate ? StringFormatter.formatNumber(dwlRow.TurnoverVirtual) : "N/A") + '</div>\
                          </td>\
                          <td>\
                             <div class="col80 r ' + (dwlRow.Turnover.toFixed(2) != 0 && dwlRow.Margin.toFixed(2) > 0 ? 'red' : '') + '">' +

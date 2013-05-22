@@ -134,8 +134,8 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
                             IsApplyVirtualRate = CastAide.AsBoolean(row["EnableVirtual"]),
                             RowTypeDWL2h = new Entities.Sport.BaseModel(),
 
-                            Turnover = CastAide.AsDouble(row["Turnover"]),
-                            TurnoverVirtual = 100
+                            Turnover = CastAide.AsDouble(row["RealTurnover"]),
+                            TurnoverVirtual = CastAide.AsDouble(row["VirtualTurnover"])
                         };
 
                         dailyWinLoss2hItemX.RowTypeDWL2h.Id = GetRowTypeFromIBC(CastAide.AsInt32(row["ibc"]));
@@ -1175,9 +1175,9 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
             int startColumn,
             int endColumn)
         {
-            var currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, 
+            var currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow,
                 startColumn,
-                currentRow, 
+                currentRow,
                 endColumn);
             var excelGemboxUtils = new ExcelGemboxUtils();
             var textStyle = excelGemboxUtils.GetStyleText(255, 255, 255);

@@ -123,8 +123,8 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
                                 Id = RowTypeConstants.Normal
                             },
 
-                            Turnover = CastAide.AsDouble(row["Turnover"]),
-                            TurnoverVirtual = 100
+                            Turnover = CastAide.AsDouble(row["RealTurnover"]),
+                            TurnoverVirtual = CastAide.AsDouble(row["VirtualTurnover"])
                         };
 
                         switch (dailyWinLoss2hItemX.Id)
@@ -314,8 +314,8 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
                                 },
                                 RowIndex = rowIndex,
 
-                                Turnover = CastAide.AsDouble(row["Turnover"]),
-                                TurnoverVirtual = 100
+                                Turnover = CastAide.AsDouble(row["RealTurnover"]),
+                                TurnoverVirtual = CastAide.AsDouble(row["VirtualTurnover"])
                             };
 
                             dailyWinLoss2hItemX.Margin = ReportService.CalculateMargin(dailyWinLoss2hItemX.LineTotal,

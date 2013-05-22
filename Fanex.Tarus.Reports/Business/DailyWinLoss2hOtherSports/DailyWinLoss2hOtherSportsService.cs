@@ -129,8 +129,8 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
                             RowTypeDWL2h = new Entities.Sport.BaseModel(),
                             LineTotalVirtual = CastAide.AsDouble(row["VirtualLineTotal"]),
 
-                            Turnover = CastAide.AsDouble(row["Turnover"]),
-                            TurnoverVirtual = 100
+                            Turnover = CastAide.AsDouble(row["RealTurnover"]),
+                            TurnoverVirtual = CastAide.AsDouble(row["VirtualTurnover"])
                         };
 
                         dailyWinLoss2hItemX.RowTypeDWL2h.Id = GetRowTypeFromIBC(CastAide.AsInt32(row["ibc"]));
@@ -641,7 +641,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
             currentCol++;
 
             currentCol++;
-            
+
             currentCell = wsReport.Cells[currentRow, currentCol];
             currentCell.Style = bgHeader;
             currentCell.Value = "Real";

@@ -122,10 +122,10 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hSoccer
                             Position = CastAide.AsDouble(row["Position"]),
                             Commission = CastAide.AsDouble(row["Commission"]),
                             LineTotal = CastAide.AsDouble(row["RealLineTotal"]),
-                            Turnover = CastAide.AsDouble(row["Turnover"]),
+                            Turnover = CastAide.AsDouble(row["RealTurnover"]),
                             RowTypeDWL2h = new Entities.Sport.BaseModel(),
                             LineTotalVirtual = CastAide.AsDouble(row["VirtualLineTotal"]),
-                            TurnoverVirtual = 100
+                            TurnoverVirtual = CastAide.AsDouble(row["VirtualTurnover"])
                         };
 
                         dailyWinLoss2hItemX.RowTypeDWL2h.Id = GetRowTypeFromIBC(CastAide.AsInt32(row["ibc"]));
