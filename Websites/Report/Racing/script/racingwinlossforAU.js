@@ -218,7 +218,7 @@ var racingwinloss = {
         if (index == 0) {
             html = '<tr>\
                     <td rowspan="' + totalrow + '">\
-                        <div class="col160">' + row.Name + '</div>\
+                        <div class="col200">' + row.Name + '</div>\
                     </td>\
                     <td >\
                         <div class="col60 c">' + row.Currency + '</div>\
@@ -318,7 +318,7 @@ var racingwinloss = {
             if (i == 0) {
                 html += '<tr class="' + cssclass + '">\
                 <td rowspan="' + rows.length + '">\
-                    <div class="col160 blue b" onclick="racingwinlossdetail.GetDataReportDetail(\'' + rows[i].CurrencyId + '\',\'' + rows[i].Id + '\',\'' + rows[i].Name.replace(' Total', '') + '\');">' + rows[i].Name + '</div>\
+                    <div class="col200 blue b" onclick="racingwinlossdetail.GetDataReportDetail(\'' + rows[i].CurrencyId + '\',\'' + rows[i].Id + '\',\'' + rows[i].Name.replace(' Total', '') + '\');">' + rows[i].Name + '</div>\
                 </td>\
                 <td>\
                     <div class="col60 c b">' + (rows[i].Currency == "" ? "&nbsp;" : rows[i].Currency) + '</div>\
@@ -342,7 +342,7 @@ var racingwinloss = {
             if (i == 0) {
                 html += '<tr class="' + cssclass + '">\
                     <td rowspan="' + rows.length + '">\
-                        <div class="col160 b">' + rows[i].Name + '</div>\
+                        <div class="col200 b">' + rows[i].Name + '</div>\
                     </td>\
                     <td>\
                         <div class="col60 c b">' + (rows[i].Currency == "" ? "&nbsp;" : rows[i].Currency) + '</div>\
@@ -380,7 +380,7 @@ var racingwinloss = {
             if (i == 0) {
                 html += '<tr class="' + cssclass + '">\
                     <td rowspan="' + rows.length + '">\
-                        <div class="col160 b">' + rows[i].Name + '</div>\
+                        <div class="col200 b">' + rows[i].Name + '</div>\
                     </td>\
                     <td>\
                         <div class="col60 c b">' + (rows[i].Currency == "" ? "&nbsp;" : rows[i].Currency) + '</div>\
