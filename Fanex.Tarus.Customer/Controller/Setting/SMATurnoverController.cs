@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover;
 using Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover;
 using DNAide.Core;
+using Fanex.Tarus.Web.Controllers.Filters;
 
 namespace Fanex.Tarus.Customer.Controller.Setting
 {
@@ -22,6 +23,7 @@ namespace Fanex.Tarus.Customer.Controller.Setting
             _SMATurnover = SMATurnover ?? new SMATurnoverService();
         }
 
+        [AuthenticateRead]
         public ActionResult Index()
         {
             return View("~/Views/Customer/CustomerSetting/SMATurnover/SMATurnover.cshtml");
@@ -61,9 +63,27 @@ namespace Fanex.Tarus.Customer.Controller.Setting
             return jsonResult;
         }
 
-        public JsonResult AddSMATurnover(string matchId, string userName, string maxTurnover)
+        [AuthenticateHost]
+        public JsonResult AddSMATurnover(string matchId, string custName, string maxTurnover)
         {
-            var result = _SMATurnover.AddSMATurnover(CastAide.AsInt32(matchId), userName, CastAide.AsDouble(maxTurnover));
+            var result = _SMATurnover.AddSMATurnover(CastAide.AsInt32(matchId), custName, CastAide.AsDouble(maxTurnover));
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [AuthenticateHost]
+        public JsonResult UpdateSMATurnover(string matchId, string custId, string maxTurnover)
+        {
+            var result = _SMATurnover.UpdateSMATurnover(CastAide.AsInt32(matchId), CastAide.AsInt32(custId), CastAide.AsDouble(maxTurnover));
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        public JsonResult CheckMaxTurnoverValue( string custName, string matchId, string maxTurnover, string mode)
+        {
+            var result = _SMATurnover.CheckMaxTurnoverValue(CastAide.AsInt32(matchId), custName, CastAide.AsDouble(maxTurnover), CastAide.AsInt32(mode));
             var jsonResult = Json(result);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;

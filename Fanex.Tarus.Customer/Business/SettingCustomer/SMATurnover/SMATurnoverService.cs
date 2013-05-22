@@ -9,6 +9,8 @@ using DNAide.Core;
 using DNAide.Utils;
 using Sunplus.Accounting.Core.Cache;
 using Fanex.Tarus.Customer.Entities;
+using Sunplus.Accounting.Core.Common;
+using System.Web;
 
 namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
 {
@@ -96,9 +98,10 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
                         }
                         var Customer = new CustomerTurnoverDetail() { 
                             Username = detail["username"].ToString(),
+                            CustId = detail["custid"].ToString(),
                             Currency = detail["currency"].ToString(),
-                            SMATurnover = NumberFormat.DecFormat(CastAide.AsDecimal(detail["TotalTurnover"]), 2),
-                            MaxTurnover = NumberFormat.DecFormat(CastAide.AsDecimal(detail["MaxTurnover"]), 2)
+                            SMATurnover = NumberFormat.DecFormat(detail["TotalTurnover"], 2),
+                            MaxTurnover = NumberFormat.DecFormat(detail["MaxTurnover"], 2)
                         };
                         i++;
                         customerList.Add(Customer);
@@ -114,9 +117,20 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
         }
 
 
-        public Result AddSMATurnover(int matchId, string userName, double maxTurnover)
+        public Result AddSMATurnover(int matchId, string custName, double maxTurnover)
         {
-            return _SMATurnoverAccess.AddSMATurnover(matchId, userName, maxTurnover);
+            return _SMATurnoverAccess.AddSMATurnover(matchId, custName, maxTurnover, AppSession.AccId, HttpContext.Current.Request.UserHostAddress);
+        }
+
+
+        public Result UpdateSMATurnover(int matchId, int custId, double maxTurnover)
+        {
+            return _SMATurnoverAccess.UpdateSMATurnover(matchId, custId, maxTurnover, AppSession.AccId, HttpContext.Current.Request.UserHostAddress);
+        }
+
+        public Result CheckMaxTurnoverValue(int matchId, string custName, double maxTurnover, int mode)
+        {
+            return _SMATurnoverAccess.CheckMaxTurnoverValue(matchId, custName, maxTurnover, mode);
         }
     }
 }

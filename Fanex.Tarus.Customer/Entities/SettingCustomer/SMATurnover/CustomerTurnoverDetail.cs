@@ -7,6 +7,8 @@ namespace Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover
 {
     public class CustomerTurnoverDetail
     {
+        public string CustId { get; set; }
+
         public string Username { get; set; }
 
         public string Currency { get; set; }

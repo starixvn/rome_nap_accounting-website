@@ -19,4 +19,26 @@
 .col100 {
 	width: 100px;
 }
+.freegrid td.rowLeague, .grid-fixed-table td.rowLeague {
+	border: none;
+	border-bottom:solid 1px #7C98A4;
+	background-color:#FDE9D9;
+	font-weight:bold;
+}
+
+.colEdit 
+{
+    background: no-repeat scroll center center transparent;
+	font-weight: normal;
+	text-decoration: underline;
+	color:  Blue;
+	border: 0px none;
+	cursor: pointer;
+}
+
+input.btnEdit[disabled] {
+    opacity: 0.4;
+	
+}
+
 

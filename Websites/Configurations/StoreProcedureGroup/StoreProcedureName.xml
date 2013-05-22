@@ -797,6 +797,8 @@
     <Setting Key="GetLeague" SpName="Acc_SMATurnoverLeagueSel" DbName="archive" />
     <Setting Key="GetInfoByMatch" SpName="Acc_SMATurnoverMatchSel" DbName="archive" />
     <Setting Key="GetSMATurnoverList" SpName="Acc_SMATurnoverListSel" DbName="archive" />
-    <Setting Key="AddSMATurnover" SpName="Acc_SMATurnoverIns" DbName="DBTXN.BODB02" />
+    <Setting Key="AddSMATurnover" SpName="Acc_SMATurnoverIns" DbName="archive" />
+    <Setting Key="UpdateSMATurnover" SpName="Acc_SMATurnoverUpd" DbName="archive" />
+    <Setting Key="CheckMaxTurnover" SpName="Acc_SMATurnoverCheckTotalTurnover" DbName="archive" />
   </Function>
 </Functions>
