@@ -102,6 +102,7 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
                             Currency = detail["currency"].ToString(),
                             SMATurnover = NumberFormat.DecFormat(detail["TotalTurnover"], 2),
                             MaxTurnover = NumberFormat.DecFormat(detail["MaxTurnover"], 2)
+                            
                         };
                         i++;
                         customerList.Add(Customer);

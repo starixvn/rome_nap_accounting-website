@@ -55,7 +55,6 @@
                                 </td>
                                 <td>
                                     <select id="ddlSport" style="width: 105px" onchange="SMATurnover.ChangeSport()">
-                                        <option value="1">Soccer</option>
                                     </select>
                                 </td>
                                 <td>
@@ -193,7 +192,7 @@
                                 <div>Match ID</div>
                             </td>
                             <td>
-                                <div><input type="text" id="txtMatchId" style="width:200px"  onkeyup="onKeyEnter(event)";/>
+                                <div><input type="text" id="txtMatchId" style="width:200px"  onkeyup="onKeyEnter(event)"; onkeypress="return CheckIntNumber(event)"/>
                                 <input type="button" id="btnGetInfo"  value="Get Info" class="btn" onclick="SMATurnover.GetInfoByMatch()"/></div>
                             </td> 
                         </tr>
@@ -202,7 +201,7 @@
                                 <div>League</div>
                            </td> 
                            <td>
-                                <div><input type="text" id="txtLeague" style="width:265px" /></div>
+                                <div><input type="text" id="txtLeague" style="width:265px; background-color:#D9D9D9" /></div>
                            </td>
                         </tr>
                         <tr>
@@ -210,7 +209,7 @@
                                 <div>Event Date</div>
                            </td> 
                            <td>
-                                <div><input type="text" id="txtEventDate" style="width:265px"/></div>
+                                <div><input type="text" id="txtEventDate" style="width:265px; background-color:#D9D9D9"/></div>
                            </td>
                         </tr>
                         <tr>
@@ -218,7 +217,7 @@
                                 <div>Team</div>
                            </td> 
                            <td>
-                                <div><input type="text" id="txtTeam" style="width:265px" /></div>
+                                <div><input type="text" id="txtTeam" style="width:265px; background-color:#D9D9D9" /></div>
                            </td>
                         </tr>
                         <tr>

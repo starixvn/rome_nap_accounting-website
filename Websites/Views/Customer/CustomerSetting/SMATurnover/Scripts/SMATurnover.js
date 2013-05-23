@@ -17,8 +17,8 @@
             var oldValue = obj.attr("oldValue");
             var currValue = obj.val();
             currValue = SeparateNumricByThousand(currValue);
-            obj.val(currValue);
-            if (oldValue.trim() != currValue.trim()) {
+            obj.val(addCommas(currValue));
+            if (parseFloat(SeparateNumricByThousand(oldValue)) != parseFloat(currValue)) {
                 $('#btnUpdate_' + matchId + '_' + custId).removeAttr('disabled');
             }
             else {
@@ -66,6 +66,7 @@
             $('#txtTeam').val('');
             $('#txtSuperName').val('');
             $('#txtTurnover').val('');
+            $('#msgErrorAdd').hide();
         });
     },
 
@@ -114,34 +115,43 @@
 
     GetInfoByMatch: function () {
         try { parent.BlockUI(); } catch (e) { }
-        $('#msgError').hide();
-        var data = { matchId: $('#txtMatchId').val() };
-        $.ajax({
-            type: "POST",
-            url: "GetInfoByMatchId",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: JSON.stringify(data),
-            success: function (rs) {
-                if (rs != null) {
-                    if (rs.ErrCode != 0) {
-                        $('#msgError').show();
-                        showAlertMessage("msgError", rs.ErrMsg, 1);
-                        setTimeout(function () { $('#msgError').hide(); }, 4000);
-                        $('#txtLeague').val('');
-                        $('#txtEventDate').val('');
-                        $('#txtTeam').val('');
+        $('#msgErrorAdd').hide();
+        var matchId = $('#txtMatchId').val();
+        if (matchId == "") {
+            $('#msgErrorAdd').show();
+            showAlertMessage("msgErrorAdd", "Please input matchId !", 1);
+            setTimeout(function () { $('#msgErrorAdd').hide(); }, 4000);
+        }
+        else {
+            var data = { matchId: matchId };
+            $.ajax({
+                type: "POST",
+                url: "GetInfoByMatchId",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(data),
+                success: function (rs) {
+                    if (rs != null) {
+                        if (rs.ErrCode != 0) {
+                            $('#msgErrorAdd').show();
+                            showAlertMessage("msgErrorAdd", rs.ErrMsg, 1);
+                            setTimeout(function () { $('#msgErrorAdd').hide(); }, 4000);
+                            $('#txtLeague').val('');
+                            $('#txtEventDate').val('');
+                            $('#txtTeam').val('');
+                        }
+                        else {
+                            $('#msgErrorAdd').hide();
+                            $('#txtLeague').val(rs.LeagueName);
+                            $('#txtEventDate').val(rs.EventDate);
+                            $('#txtTeam').val(rs.HomeTeam + ' -vs- ' + rs.AwayTeam);
+                        }
                     }
-                    else {
-                        $('#msgError').hide();
-                        $('#txtLeague').val(rs.LeagueName);
-                        $('#txtEventDate').val(rs.EventDate);
-                        $('#txtTeam').val(rs.HomeTeam + ' -vs- ' + rs.AwayTeam);
-                    }
+
                 }
-                try { parent.jQuery.unblockUI(); } catch (e) { }
-            }
-        });
+            });
+        }
+        try { parent.jQuery.unblockUI(); } catch (e) { }
     },
 
     GetSMATurnoverList: function () {
@@ -280,7 +290,7 @@
                 else if (parseInt(rs.ErrorCode) == 100) {
                     showAlertMessage("msgErrorAdd", rs.ErrorMessage, 1);
                     $('#msgErrorAdd').show();
-                    setTimeout(function () { $('#msgError').hide(); }, 4000);
+                    setTimeout(function () { $('#msgErrorAdd').hide(); }, 4000);
                 }
                 else {
                     if (!confirm(rs.ErrorMessage)) {
@@ -422,7 +432,7 @@ function SeparateNumricByThousand(number) {
     for (var i = 0; i < stringarr.length; i++) {
         value += stringarr[i];
     }
-    return addCommas(value);
+    return value;
 }
 
 
