@@ -352,11 +352,6 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
                         }                        
                     }
                     
-                    if (CastAide.AsDecimal(row["MultipliedBy"]) > 1)
-                    {
-                        rowStyle = "add-customer-bggray";            
-                    }
-                    
                     TemplateHandler.Assign(ref strTmp, "rowstyle", rowStyle);
                     TemplateHandler.Assign(ref strTmp, "reason", remark);
                 }
