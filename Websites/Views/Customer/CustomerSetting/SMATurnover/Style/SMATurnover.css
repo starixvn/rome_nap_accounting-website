@@ -1,44 +1,64 @@
-﻿.marginContent {
- margin-top: 10px;
- margin-left: 10px;
+﻿.marginContent
+{
+    margin-top: 10px;
+    margin-left: 10px;
 }
-.firstCol {
-	padding-left: 8px;
-	text-align: right;
-	
+.firstCol
+{
+    padding-left: 8px;
+    text-align: right;
 }
-.col180 {
-	width: 180px;
+.col180
+{
+    width: 180px;
 }
-.col60 {
-	width: 60px;
+.col60
+{
+    width: 60px;
 }
-.col200 {
-	width: 200px;
+.col200
+{
+    width: 200px;
 }
-.col100 {
-	width: 100px;
+.col100
+{
+    width: 100px;
 }
-.freegrid td.rowLeague, .grid-fixed-table td.rowLeague {
-	border: none;
-	border-bottom:solid 1px #7C98A4;
-	background-color:#FDE9D9;
-	font-weight:bold;
+.col160
+{
+    width: 160px;
 }
 
-.colEdit 
+.freegrid td.rowLeague, .grid-fixed-table td.rowLeague
+{
+    border: none;
+    border-bottom: solid 1px #7C98A4;
+    background-color: #FDE9D9;
+    font-weight: bold;
+}
+
+.colEdit
 {
     background: no-repeat scroll center center transparent;
-	font-weight: normal;
-	text-decoration: underline;
-	color:  Blue;
-	border: 0px none;
-	cursor: pointer;
+    font-weight: normal;
+    text-decoration: underline;
+    color: Blue;
+    border: 0px none;
+    cursor: pointer;
 }
 
-input.btnEdit[disabled] {
+input.btnEdit[disabled]
+{
     opacity: 0.4;
-	
+}
+
+.smaTurnover-matchInfo td
+{
+    border: none;
+    background-color: #FDE9D9;
 }
 
 
+.smaTurnover-matchInfo tr
+{
+}

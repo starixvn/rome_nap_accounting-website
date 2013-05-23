@@ -158,6 +158,7 @@
     <Compile Include="DataAccess\SettingCustomer\CasinoComm\CasinoCommAccess.cs" />
     <Compile Include="DataAccess\SettingCustomer\CasinoComm\ICasinoCommAccess.cs" />
     <Compile Include="DataAccess\SettingCustomer\IAbnormalBetAccess.cs" />
+    <Compile Include="Entities\BaseModel.cs" />
     <Compile Include="Entities\CreditCustomer\Currency.cs" />
     <Compile Include="Entities\CreditCustomer\CustomerSettingView.cs" />
     <Compile Include="Entities\CreditCustomer\MemberGroup.cs" />
@@ -166,9 +167,10 @@
     <Compile Include="Entities\CustomerList\CustomerList.cs" />
     <Compile Include="Entities\Result.cs" />
     <Compile Include="Entities\SettingCustomer\AbnormalDetail.cs" />
-    <Compile Include="Entities\SettingCustomer\SMATurnover\BaseModel.cs" />
     <Compile Include="Entities\SettingCustomer\SMATurnover\CustomerTurnoverDetail.cs" />
+    <Compile Include="Entities\SettingCustomer\SMATurnover\League.cs" />
     <Compile Include="Entities\SettingCustomer\SMATurnover\MatchInfo.cs" />
+    <Compile Include="Entities\SettingCustomer\SMATurnover\Sport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

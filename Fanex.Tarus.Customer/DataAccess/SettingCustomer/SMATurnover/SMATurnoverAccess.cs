@@ -8,6 +8,7 @@ using DNAide.Core;
 using Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover;
 using Sunplus.Accounting.Core.Cache;
 using Fanex.Tarus.Customer.Entities;
+using Sunplus.Accounting.Core.Extensions;
 
 namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
 {
@@ -75,9 +76,9 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
                 objDB.AddOutParameter("errcode", DbType.Int32, sizeof(int));
                 objDB.AddOutParameter("errmsg", DbType.String, 1000);
                 var ds = objDB.ExecuteDataSet();
-                matchInfo.ErrCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
-                matchInfo.ErrMsg = CastAide.AsString(objDB.GetParameterValue("errmsg"));
-                if (matchInfo.ErrCode == 0)
+                matchInfo.ErrorCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                matchInfo.ErrorMessage = CastAide.AsString(objDB.GetParameterValue("errmsg"));
+                if (matchInfo.ErrorCode == 0)
                 {
                     var dtb = ds.Tables[0];
                     var row = dtb.Rows[0];
@@ -112,60 +113,90 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
         }
 
 
-        public Result AddSMATurnover(int matchId, string custName, double maxTurnover, int userId, string ip)
+        public Result AddSMATurnover(int matchId, string custName, decimal maxTurnover, int userId, string ip)
         {
             var result = new Result();
-            using (ObjectDb objDB = new ObjectDb("AddSMATurnover"))
+            try
             {
-                objDB.AddInParameter("matchid", DbType.Int32, matchId);
-                objDB.AddInParameter("username", DbType.String, custName);
-                objDB.AddInParameter("maxturnover", DbType.Double, maxTurnover);
-                objDB.AddInParameter("userid", DbType.Int32, userId);
-                objDB.AddInParameter("ip", DbType.String, ip);
-                objDB.AddOutParameter("errcode", DbType.Int32, sizeof(int));
-                objDB.AddOutParameter("errmsg", DbType.String, 1000);
-                var ds = objDB.ExecuteNonQuery();
-                result.ErrorCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
-                result.ErrorMessage = CastAide.AsString(objDB.GetParameterValue("errmsg"));
+                using (ObjectDb objDB = new ObjectDb("AddSMATurnover"))
+                {
+                    objDB.AddInParameter("matchid", DbType.Int32, matchId);
+                    objDB.AddInParameter("username", DbType.String, custName);
+                    objDB.AddInParameter("maxturnover", DbType.Decimal, maxTurnover);
+                    objDB.AddInParameter("userid", DbType.Int32, userId);
+                    objDB.AddInParameter("ip", DbType.String, ip);
+                    objDB.AddOutParameter("errcode", DbType.Int32, sizeof(int));
+                    objDB.AddOutParameter("errmsg", DbType.String, 1000);
+                    var ds = objDB.ExecuteNonQuery();
+                    result.ErrorCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                    result.ErrorMessage = CastAide.AsString(objDB.GetParameterValue("errmsg"));
+                }
             }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+                result.ErrorCode = -1;
+                result.ErrorMessage = "Add failed!";
+            }
+          
             return result;
         }
 
 
-        public Result UpdateSMATurnover(int matchId, int custId, double maxTurnover, int userId, string ip)
+        public Result UpdateSMATurnover(int matchId, int custId, decimal maxTurnover, int userId, string ip)
         {
             var result = new Result();
-            using (ObjectDb objDB = new ObjectDb("UpdateSMATurnover"))
+            try
             {
-                objDB.AddInParameter("matchid", DbType.Int32, matchId);
-                objDB.AddInParameter("custid", DbType.Int32, custId);
-                objDB.AddInParameter("maxturnover", DbType.Double, maxTurnover);
-                objDB.AddInParameter("userid", DbType.Int32, userId);
-                objDB.AddInParameter("ip", DbType.String, ip);
-                objDB.AddOutParameter("errcode", DbType.Int32, sizeof(int));
-                objDB.AddOutParameter("errmsg", DbType.String, 1000);
-                var ds = objDB.ExecuteNonQuery();
-                result.ErrorCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
-                result.ErrorMessage = CastAide.AsString(objDB.GetParameterValue("errmsg"));
+                using (ObjectDb objDB = new ObjectDb("UpdateSMATurnover"))
+                {
+                    objDB.AddInParameter("matchid", DbType.Int32, matchId);
+                    objDB.AddInParameter("custid", DbType.Int32, custId);
+                    objDB.AddInParameter("maxturnover", DbType.Decimal, maxTurnover);
+                    objDB.AddInParameter("userid", DbType.Int32, userId);
+                    objDB.AddInParameter("ip", DbType.String, ip);
+                    objDB.AddOutParameter("errcode", DbType.Int32, sizeof(int));
+                    objDB.AddOutParameter("errmsg", DbType.String, 1000);
+                    var ds = objDB.ExecuteNonQuery();
+                    result.ErrorCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                    result.ErrorMessage = CastAide.AsString(objDB.GetParameterValue("errmsg"));
+                }
             }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+                result.ErrorCode = -1;
+                result.ErrorMessage = "Update failed!";
+            }
+
             return result;
         }
 
 
-        public Result CheckMaxTurnoverValue(int matchId, string custName, double maxTurnover, int mode)
+        public Result CheckMaxTurnoverValue(int matchId, string custName, decimal maxTurnover, int mode)
         {
+
             var result = new Result();
-            using (ObjectDb objDB = new ObjectDb("CheckMaxTurnover"))
+            try
             {
-                objDB.AddInParameter("matchid", DbType.Int32, matchId);
-                objDB.AddInParameter("username", DbType.String, custName);
-                objDB.AddInParameter("maxturnover", DbType.Double, maxTurnover);
-                objDB.AddInParameter("mode", DbType.Int32, mode);
-                objDB.AddOutParameter("errcode", DbType.Int32, sizeof(int));
-                objDB.AddOutParameter("errmsg", DbType.String, 1000);
-                var ds = objDB.ExecuteNonQuery();
-                result.ErrorCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
-                result.ErrorMessage = CastAide.AsString(objDB.GetParameterValue("errmsg"));
+                using (ObjectDb objDB = new ObjectDb("CheckMaxTurnover"))
+                {
+                    objDB.AddInParameter("matchid", DbType.Int32, matchId);
+                    objDB.AddInParameter("username", DbType.String, custName);
+                    objDB.AddInParameter("maxturnover", DbType.Decimal, maxTurnover);
+                    objDB.AddInParameter("mode", DbType.Int32, mode);
+                    objDB.AddOutParameter("errcode", DbType.Int32, sizeof(int));
+                    objDB.AddOutParameter("errmsg", DbType.String, 1000);
+                    var ds = objDB.ExecuteNonQuery();
+                    result.ErrorCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                    result.ErrorMessage = CastAide.AsString(objDB.GetParameterValue("errmsg"));
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+                result.ErrorCode = -1;
+                result.ErrorMessage = "Check max turnover failed!";
             }
             return result;
         }

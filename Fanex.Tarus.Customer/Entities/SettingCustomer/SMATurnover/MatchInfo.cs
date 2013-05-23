@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover
 {
-    public class MatchInfo
+    public class MatchInfo: Result
     {
         public string LeagueName { get; set; }
 
@@ -17,8 +17,6 @@ namespace Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover
 
         public string AwayTeam { get; set; }
 
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
+       
     }
 }

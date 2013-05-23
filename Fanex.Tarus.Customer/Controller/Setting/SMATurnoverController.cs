@@ -31,7 +31,7 @@ namespace Fanex.Tarus.Customer.Controller.Setting
 
         public JsonResult GetSportType(string mode)
         {
-            var result = new List<BaseModel>();
+            var result = new List<Sport>();
             result = _SMATurnover.GetSportType(CastAide.AsInt32(mode));
             var jsonResult = Json(result);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
@@ -40,7 +40,7 @@ namespace Fanex.Tarus.Customer.Controller.Setting
 
         public JsonResult GetLeague(string sport, string fromDate, string toDate)
         {
-            var result = new List<BaseModel>();
+            var result = new List<League>();
             result = _SMATurnover.GetLeague(CastAide.AsInt32(sport), CastAide.AsDateTime(fromDate), CastAide.AsDateTime(toDate));
             var jsonResult = Json(result);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
@@ -66,7 +66,7 @@ namespace Fanex.Tarus.Customer.Controller.Setting
         [AuthenticateHost]
         public JsonResult AddSMATurnover(string matchId, string custName, string maxTurnover)
         {
-            var result = _SMATurnover.AddSMATurnover(CastAide.AsInt32(matchId), custName, CastAide.AsDouble(maxTurnover));
+            var result = _SMATurnover.AddSMATurnover(CastAide.AsInt32(matchId), custName, CastAide.AsDecimal(maxTurnover));
             var jsonResult = Json(result);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;
@@ -75,7 +75,7 @@ namespace Fanex.Tarus.Customer.Controller.Setting
         [AuthenticateHost]
         public JsonResult UpdateSMATurnover(string matchId, string custId, string maxTurnover)
         {
-            var result = _SMATurnover.UpdateSMATurnover(CastAide.AsInt32(matchId), CastAide.AsInt32(custId), CastAide.AsDouble(maxTurnover));
+            var result = _SMATurnover.UpdateSMATurnover(CastAide.AsInt32(matchId), CastAide.AsInt32(custId), CastAide.AsDecimal(maxTurnover));
             var jsonResult = Json(result);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;
@@ -83,7 +83,7 @@ namespace Fanex.Tarus.Customer.Controller.Setting
 
         public JsonResult CheckMaxTurnoverValue( string custName, string matchId, string maxTurnover, string mode)
         {
-            var result = _SMATurnover.CheckMaxTurnoverValue(CastAide.AsInt32(matchId), custName, CastAide.AsDouble(maxTurnover), CastAide.AsInt32(mode));
+            var result = _SMATurnover.CheckMaxTurnoverValue(CastAide.AsInt32(matchId), custName, CastAide.AsDecimal(maxTurnover), CastAide.AsInt32(mode));
             var jsonResult = Json(result);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;

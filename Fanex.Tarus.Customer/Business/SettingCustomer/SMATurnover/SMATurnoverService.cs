@@ -11,6 +11,7 @@ using Sunplus.Accounting.Core.Cache;
 using Fanex.Tarus.Customer.Entities;
 using Sunplus.Accounting.Core.Common;
 using System.Web;
+using Sunplus.Accounting.Core.Extensions;
 
 namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
 {
@@ -27,13 +28,13 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
             _SMATurnoverAccess = SMATurnoverAccess ?? new SMATurnoverAccess();
         }
 
-        public List<BaseModel> GetSportType(int mode)
+        public List<Sport> GetSportType(int mode)
         {
-            var sportList = new List<BaseModel>();
+            var sportList = new List<Sport>();
             DataTable dtb = _SMATurnoverAccess.GetSportType(mode);
             foreach (DataRow row in dtb.Rows)
             {
-                var sport = new BaseModel()
+                var sport = new Sport()
                 {
                     Id = CastAide.AsInt32(row["sporttype"]),
                     Name = CastAide.AsString(row["sportname"])
@@ -43,13 +44,13 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
             return sportList;
         }
 
-        public List<BaseModel> GetLeague(int sportType, DateTime fromDate, DateTime toDate)
+        public List<League> GetLeague(int sportType, DateTime fromDate, DateTime toDate)
         {
-            var leagueList = new List<BaseModel>();
+            var leagueList = new List<League>();
             var dtb = _SMATurnoverAccess.GetLeague(sportType, fromDate, toDate);
             foreach (DataRow row in dtb.Rows)
             {
-                var league = new BaseModel() { 
+                var league = new League() { 
                     Id = CastAide.AsInt32(row["leagueid"]),
                     Name = CastAide.AsString(row["leaguename"])
                 };
@@ -68,68 +69,76 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
         public List<CustomerTurnoverDetail> GetSMATurnoverList(int sportId, int leagueId, DateTime fromDate, DateTime toDate)
         {
             var leagueList = new List<CustomerTurnoverDetail>();
-            var dtb = _SMATurnoverAccess.GetSMATurnoverList(sportId, leagueId, fromDate, toDate);
-            var query = from league in dtb.AsEnumerable()
-                        group league by league.Field<string>("leaguename") into dtbLeague
-                        from match in
-                            (from league in dtbLeague.AsEnumerable()
-                             group league by league.Field<int>("matchid"))
-                        group match by dtbLeague.Key;
-
-            foreach (var leagueGroup in query)
+            try
             {
-                var League = new CustomerTurnoverDetail();
-                League.LeagueName = leagueGroup.Key;
-                var matchList = new List<CustomerTurnoverDetail>();
-                foreach (var matchGroup in leagueGroup)
+                var dtb = _SMATurnoverAccess.GetSMATurnoverList(sportId, leagueId, fromDate, toDate);
+                var query = from league in dtb.AsEnumerable()
+                            group league by league.Field<string>("leaguename") into dtbLeague
+                            from match in
+                                (from league in dtbLeague.AsEnumerable()
+                                 group league by league.Field<int>("matchid"))
+                            group match by dtbLeague.Key;
+
+                foreach (var leagueGroup in query)
                 {
-                    var Match = new CustomerTurnoverDetail();
-                    Match.MatchId = matchGroup.Key.ToString();
-                    var customerList = new List<CustomerTurnoverDetail>();
-                    var i  = 0;
-                    foreach (var detail in matchGroup)
+                    var League = new CustomerTurnoverDetail();
+                    League.LeagueName = leagueGroup.Key;
+                    var matchList = new List<CustomerTurnoverDetail>();
+                    foreach (var matchGroup in leagueGroup)
                     {
-                        if(i == 0)
+                        var Match = new CustomerTurnoverDetail();
+                        Match.MatchId = matchGroup.Key.ToString();
+                        var customerList = new List<CustomerTurnoverDetail>();
+                        var i = 0;
+                        foreach (var detail in matchGroup)
                         {
-                            Match.EventDate = string.Format("{0:M/d/yyyy}", detail["eventdate"]);
-                            Match.HomeTeam = CacheRef.GetTeamName(detail["homeid"]);
-                            Match.AwayTeam = CacheRef.GetTeamName(detail["awayid"]);
-                            Match.IsSettled = CastAide.AsInt32(detail["ruben"]);
+                            if (i == 0)
+                            {
+                                Match.EventDate = string.Format("{0:M/d/yyyy}", detail["eventdate"]);
+                                Match.HomeTeam = CacheRef.GetTeamName(detail["homeid"]);
+                                Match.AwayTeam = CacheRef.GetTeamName(detail["awayid"]);
+                                Match.IsSettled = CastAide.AsInt32(detail["ruben"]);
+                            }
+                            var Customer = new CustomerTurnoverDetail()
+                            {
+                                Username = detail["username"].ToString(),
+                                CustId = detail["custid"].ToString(),
+                                Currency = detail["currency"].ToString(),
+                                SMATurnover = NumberFormat.DecFormat(detail["TotalTurnover"], 2),
+                                MaxTurnover = NumberFormat.DecFormat(detail["MaxTurnover"], 0)
+
+                            };
+                            i++;
+                            customerList.Add(Customer);
                         }
-                        var Customer = new CustomerTurnoverDetail() { 
-                            Username = detail["username"].ToString(),
-                            CustId = detail["custid"].ToString(),
-                            Currency = detail["currency"].ToString(),
-                            SMATurnover = NumberFormat.DecFormat(detail["TotalTurnover"], 2),
-                            MaxTurnover = NumberFormat.DecFormat(detail["MaxTurnover"], 2)
-                            
-                        };
-                        i++;
-                        customerList.Add(Customer);
+                        Match.CustomerList = customerList;
+                        matchList.Add(Match);
                     }
-                    Match.CustomerList = customerList;
-                    matchList.Add(Match);
+                    League.CustomerList = matchList;
+                    leagueList.Add(League);
                 }
-                League.CustomerList = matchList;
-                leagueList.Add(League);
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
             }
 
             return leagueList;
         }
 
 
-        public Result AddSMATurnover(int matchId, string custName, double maxTurnover)
+        public Result AddSMATurnover(int matchId, string custName, decimal maxTurnover)
         {
             return _SMATurnoverAccess.AddSMATurnover(matchId, custName, maxTurnover, AppSession.AccId, HttpContext.Current.Request.UserHostAddress);
         }
 
 
-        public Result UpdateSMATurnover(int matchId, int custId, double maxTurnover)
+        public Result UpdateSMATurnover(int matchId, int custId, decimal maxTurnover)
         {
             return _SMATurnoverAccess.UpdateSMATurnover(matchId, custId, maxTurnover, AppSession.AccId, HttpContext.Current.Request.UserHostAddress);
         }
 
-        public Result CheckMaxTurnoverValue(int matchId, string custName, double maxTurnover, int mode)
+        public Result CheckMaxTurnoverValue(int matchId, string custName, decimal maxTurnover, int mode)
         {
             return _SMATurnoverAccess.CheckMaxTurnoverValue(matchId, custName, maxTurnover, mode);
         }

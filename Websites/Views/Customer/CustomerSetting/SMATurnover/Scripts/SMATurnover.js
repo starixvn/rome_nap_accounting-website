@@ -16,9 +16,9 @@
             var custId = obj.attr("custId");
             var oldValue = obj.attr("oldValue");
             var currValue = obj.val();
-            currValue = SeparateNumricByThousand(currValue);
-            obj.val(addCommas(currValue));
-            if (parseFloat(SeparateNumricByThousand(oldValue)) != parseFloat(currValue)) {
+            currValue = Helper.SeparateNumricByThousand(currValue);
+            obj.val(formatNumber2(currValue));
+            if (currValue != oldValue) {
                 $('#btnUpdate_' + matchId + '_' + custId).removeAttr('disabled');
             }
             else {
@@ -132,9 +132,9 @@
                 data: JSON.stringify(data),
                 success: function (rs) {
                     if (rs != null) {
-                        if (rs.ErrCode != 0) {
+                        if (rs.ErrorCode != 0) {
                             $('#msgErrorAdd').show();
-                            showAlertMessage("msgErrorAdd", rs.ErrMsg, 1);
+                            showAlertMessage("msgErrorAdd", rs.ErrorMessage, 1);
                             setTimeout(function () { $('#msgErrorAdd').hide(); }, 4000);
                             $('#txtLeague').val('');
                             $('#txtEventDate').val('');
@@ -184,7 +184,7 @@
             tblContentId: 'tblSMATurnover',
             manualCopyHeader: true,
             fullWidth: true,
-            gridWidth: 705, //=totalColumnWidth + totalColumn*4 +totalColumn
+            gridWidth: 665, //=totalColumnWidth + totalColumn*4 +totalColumn
             gridHeight: 200,
             freezeWidth: 200,
             numberFreezeCol: 1
@@ -202,12 +202,20 @@
             var matchLength = row.CustomerList.length;
             var matchList = row.CustomerList;
             for (var i = 0; i < matchLength; i++) {
-                var match = matchList[i]
+                var match = matchList[i];
+
+                var matchInfo = '<table class="smaTurnover-matchInfo">\
+                                    <tr>\
+                                        <td class="col200">' + 'MatchID: ' + match.MatchId + '(' + match.EventDate + ')' + '</td>\
+                                        <td  class="col200">' + match.HomeTeam + ' -vs- ' + match.AwayTeam + '+</td>\
+                                    </tr>\
+                                 </table>';
+
                 html += '<tr>';
                 //html += '<td colspan="5" style="background-color:#D9E9FD; font-weight:bold; height:17px"><span style="width:200px">' + row.LeagueName + '</span><span style="width:250px">MatchID: ' + match.MatchId + ' (' + match.EventDate + ')</span><span style="width:170px">' + match.HomeTeam + ' -vs-' + match.AwayTeam + '</span><span style="">Add SMA</span></td>';
                 html += '<td class="rowLeague"><div class="col200">' + row.LeagueName + '</div></td>';
-                html += '<td class="rowLeague" colspan="2"><div class="">MatchID: ' + match.MatchId + '(' + match.EventDate + ')</div></td>';
-                html += '<td class="rowLeague"><div class="col200">' + match.HomeTeam + ' -vs- ' + match.AwayTeam + '</div></td>';
+                html += '<td class="rowLeague" colspan="3">' + matchInfo + '</div></td>';
+                //html += '<td class="rowLeague"><div class="col160">' + match.HomeTeam + ' -vs- ' + match.AwayTeam + '</div></td>';
                 html += '<td class="rowLeague"><div class="col60" ><input type="button" class="colEdit" value="Add SMA" onclick="SMATurnover.RedirectToAddSMA(\'' + match.MatchId + '\')"></div></td>';
                 html += '</tr>';
                 var customerLength = match.CustomerList.length;
@@ -219,12 +227,12 @@
                     html += '<td><div class="col100 c ">' + customer.Currency + '</div></td>';
                     html += '<td><div class="col160 r ">' + customer.SMATurnover + '</div></td>';
                     if (parseInt(customer.IsSettled) == 0) {
-                        html += '<td><div class="col200 table-cell" style="height:17px"><input type="text" class="MaxTurnover" id="txtMaxTurnover_' + match.MatchId + "_" + customer.CustId + '" matchId="' + match.MatchId + '" custId="' + customer.CustId + '" oldValue="' + customer.MaxTurnover + '" value="' + customer.MaxTurnover + '" style="text-align:right; width:197px" onkeypress="return CheckDecNumberValue(event)"></div></td>';
+                        html += '<td><div class="col160 table-cell" style="height:17px"><input type="text" class="MaxTurnover" id="txtMaxTurnover_' + match.MatchId + "_" + customer.CustId + '" matchId="' + match.MatchId + '" custId="' + customer.CustId + '" oldValue="' + customer.MaxTurnover + '" value="' + customer.MaxTurnover + '" style="text-align:right; width:157px" maxlength="15" onkeypress="return CheckIntNumber(event)"></div></td>';
                     }
                     else {
-                        html += '<td><div class="col200 r" style="height:17px">' + customer.MaxTurnover + '</div></td>';
+                        html += '<td><div class="col160 r" style="height:17px">' + customer.MaxTurnover + '</div></td>';
                     }
-                    html += '<td><div class="col60 c" style="height:17px"><input type="button" disabled="disabled" id="btnUpdate_' + match.MatchId + "_" + customer.CustId + '" title="Update" onclick="SMATurnover.UpdateSMATurnoverProccess(\'' + customer.CustId + '\',\'' + match.MatchId + '\',\'' + customer.Username + '\')" class="btnEdit" /></div></td>';
+                    html += '<td><div class="col60 table-cell c" style="height:17px"><input type="button" disabled="disabled" id="btnUpdate_' + match.MatchId + "_" + customer.CustId + '" title="Update" onclick="SMATurnover.UpdateSMATurnoverProccess(\'' + customer.CustId + '\',\'' + match.MatchId + '\',\'' + customer.Username + '\')" class="btnEdit" /></div></td>';
                     html += '</tr>';
                     countUser++;
                 }
@@ -388,8 +396,8 @@
 
     makeTwoTableSameHeight: function (tableA, tableB, isFormatHeader, isFormatBody) {
         if (isFormatBody) {
-            var rows_TableA = tableA.find("tbody tr");
-            var rows_TableB = tableB.find("tbody tr");
+            var rows_TableA = tableA.find("> tbody > tr");
+            var rows_TableB = tableB.find("> tbody > tr");
             var minRowLength = rows_TableA.length < rows_TableB.length ? rows_TableA.length : rows_TableB.length;
             for (var i = 0; i < minRowLength; i++) {
                 var columns_TableA = $(rows_TableA[i]).find("td");
@@ -401,8 +409,13 @@
                     var maxHeight = height_TableA > height_TableB ? height_TableA : height_TableB;
 
                     if (height_TableA != height_TableB) {
-                        $(columns_TableA[0]).css("height", maxHeight);
-                        $(columns_TableB[0]).css("height", maxHeight);
+                        $(columns_TableA[0]).css("height", maxHeight + 'px');
+                        $(columns_TableB[0]).css("height", maxHeight + 'px');
+
+                        if ($(columns_TableA[0]).hasClass("rowLeague") &&
+                            $.browser.mozilla) {
+                            $(columns_TableA[0]).css("height", maxHeight + 5 + 'px');
+                        }
                     }
                 }
             }
@@ -411,46 +424,8 @@
 
     InputMaxTurnover: function () {
         var maxTurnover = $('#txtTurnover').val();
-        $('#txtTurnover').val(SeparateNumricByThousand(maxTurnover));
+        $('#txtTurnover').val(formatNumber2(Helper.SeparateNumricByThousand(maxTurnover)));
 
     }
 }
 
-function addCommas(n) {
-    var rx = /(\d+)(\d{3})/;
-    return String(n).replace(/^\d+/, function (w) {
-        while (rx.test(w)) {
-            w = w.replace(rx, '$1,$2');
-        }
-        return w;
-    });
-}
-
-function SeparateNumricByThousand(number) {
-    var value = "";
-    stringarr = number.split(',');
-    for (var i = 0; i < stringarr.length; i++) {
-        value += stringarr[i];
-    }
-    return value;
-}
-
-
-function CheckDecNumberValue(e) {
-    var code = "";
-    if (e.keyCode) code = e.keyCode;
-    else if (e.which) code = e.which;
-    if (code == 9) {
-        return code;
-    }
-    if ((code < 48 || code > 57) && code != 8 && code != 13 && code != 0 && code != 46 && code != 45 && code != 37 && code != 39) {
-        return false;
-    }
-    return true;
-}
-
-function onKeyEnter(e) {
-    if (e.keyCode == 13) {
-        SMATurnover.GetInfoByMatch();
-    }
-}
