@@ -441,6 +441,7 @@ var NumberGameReportManager = {
                 <td class="r"><span class="' + (row.Variance.toFixed(2) > 0 ? 'red' : '') + '" style="">' + StringFormatter.formatNumber(row.Variance) + '</span></td>\
                 <td class="r"><span class="" style="">' + StringFormatter.formatNumber(row.Turnover) + '</span></td>\
                 <td class="r"><span class="" style="">' + StringFormatter.formatNumber(row.TurnoverVirtual) + '</span></td>\
+                <td class="r"><span class="' + (row.Turnover.toFixed(2) != 0 && row.Margin.toFixed(2) > 0 ? 'red' : '') + '" style="font-weight: normal;">' + (row.Turnover.toFixed(2) != 0 ? StringFormatter.formatNumber(row.Margin) + '%' : 'N/A') + '</span></td>\
                 <td class="r"><span class="' + (row.TurnoverVirtual.toFixed(2) != 0 && row.MarginVirtual.toFixed(2) > 0 ? 'red' : '') + '" style="font-weight: normal;">' + (row.TurnoverVirtual.toFixed(2) != 0 ? StringFormatter.formatNumber(row.MarginVirtual) + '%' : 'N/A') + '</span></td>\
             </tr>';
         return html;
