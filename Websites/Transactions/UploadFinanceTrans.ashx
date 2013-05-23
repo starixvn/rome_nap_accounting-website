@@ -22,6 +22,7 @@ using System.Text;
 using Sunplus.Accounting.Core.Common;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
+using System.Linq;
 
 public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
 {
@@ -255,9 +256,29 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
         if (dtbFail.Rows.Count > 0)
             strFail = AlertMessage.GetMsg("Failed transactions, please check!", AlertMessage.MsgType.Error) + GenHTMLByTable(dtbFail, "add-customer-bggray", true) + "<br />";
         if (dtbSuccess.Rows.Count > 0)
-            strSuccess = AlertMessage.GetMsg("Valid transactions", AlertMessage.MsgType.Success) + GenHTMLByTable(dtbSuccess, string.Empty, false);
+        {
+            string msgMultiply = GetMultipliedCurrency(dtbSuccess);
+            string strMsg = "<b>Please be aware that there is at least one transaction with exchange rate having 'Multiplied by' number: <br/></b>";
+            strSuccess = AlertMessage.GetMsg("Valid transactions", AlertMessage.MsgType.Success) +
+                (msgMultiply.Length > 0 ? AlertMessage.GetMsg(strMsg + msgMultiply, AlertMessage.MsgType.Warning) : string.Empty) +
+                GenHTMLByTable(dtbSuccess, string.Empty, false);
+        }
 
         return strFail + strSuccess;
+    }
+    
+    string GetMultipliedCurrency(DataTable dt)
+    {
+        List<string> result = new List<string>();
+        var Currencies = dt.AsEnumerable().Where(s => CastAide.AsDecimal(s["MultipliedBy"]) > 1).Select(s => s["currencyname"]).ToList().Distinct();
+        foreach (var currency in Currencies)
+        {
+            var row = dt.AsEnumerable().Where(s => CastAide.AsString(s["currencyname"]) == CastAide.AsString(currency)).ToList().FirstOrDefault();            
+            var currencyName = row["CurrencyName"];
+            var multipliedBy = row["MultipliedBy"];
+            result.Add("<span class=\"currencyList\"></span><b>- Currency " + currencyName + " - Multiplied by " + multipliedBy + "</b>");
+        }
+        return string.Join("<br>" , result);
     }
 
     string GenHTMLByTable(DataTable dtb, string rowStyle, bool hasReason)
@@ -298,11 +319,44 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
                 {
                     rowStyle = string.Empty;
                     var remark = string.Empty;
-                    if (!string.IsNullOrEmpty(row["CurrentExRate"].ToString()) && CastAide.AsDecimal(row["CurrentExRate"]) != 1 && SplitString(row["CurrentExRate"].ToString()) != SplitString(row["ExRate"].ToString()))
-                    { 
-                        rowStyle = "add-customer-difcurr";
-                        remark = "<b>Different system actual rate (" + SplitString(row["CurrentExRate"].ToString()) + ")</b>";
+                   
+                    int fromCurrency = CastAide.AsInt32(row["FromCurrency"]);
+                    int toCurrency = CastAide.AsInt32(row["ToCurrency"]);
+                    decimal exrate = CastAide.AsDecimal(row["exrate"]);
+                    string strCurrentExRate = SplitString(CastAide.AsString(row["CurrentExRate"]));
+                    string strExRate = SplitString(CastAide.AsString(row["ExRate"]));
+
+                    if (fromCurrency == toCurrency && CastAide.AsDecimal(strExRate) != 1)
+                    {
+                        remark = "<b>Same currency, but actual rate different 1.</b>";
+                        rowStyle = "add-customer-bggray";
                     }
+                    else if(fromCurrency == 2 || toCurrency == 2)
+                    {                        
+                        if (!string.IsNullOrEmpty(row["CurrentExRate"].ToString()) && strCurrentExRate != strExRate )
+                        {
+                            decimal minActualRate = (-1) * CastAide.AsDecimal(row["MinActualRate"]);
+                            decimal maxActualRate = CastAide.AsDecimal(row["MaxActualRate"]);
+                            decimal min = CastAide.AsDecimal(strCurrentExRate) * (1 + minActualRate);
+                            decimal max = CastAide.AsDecimal(strCurrentExRate) * (1 + maxActualRate);
+
+                            if (Convert.IsDBNull(row["MinActualRate"]) || !Convert.IsDBNull(row["MinActualRate"]) && exrate >= min && exrate <= max)
+                            {
+                                remark = "<b>Different system actual rate (" + strCurrentExRate + ")</b>";                                
+                            }
+                            else
+                            {
+                                remark = "<b>Exceed limit range (" + SplitString(min.ToString()) + " - " + SplitString(max.ToString()) + ")</b>";                                
+                            }
+                            rowStyle = "add-customer-bggray";                        
+                        }                        
+                    }
+                    
+                    if (CastAide.AsDecimal(row["MultipliedBy"]) > 1)
+                    {
+                        rowStyle = "add-customer-bggray";            
+                    }
+                    
                     TemplateHandler.Assign(ref strTmp, "rowstyle", rowStyle);
                     TemplateHandler.Assign(ref strTmp, "reason", remark);
                 }
