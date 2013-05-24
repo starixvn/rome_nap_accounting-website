@@ -15,10 +15,18 @@
             var matchId = obj.attr("matchId");
             var custId = obj.attr("custId");
             var oldValue = obj.attr("oldValue");
-            var currValue = obj.val();
-            currValue = Helper.SeparateNumricByThousand(currValue);
-            obj.val(formatNumber2(currValue));
-            if (currValue != oldValue) {
+            var currValueOriginal = obj.val();
+            if (currValueOriginal != "") {
+                currValue = Helper.SeparateNumricByThousand(currValueOriginal);
+                var formatCurrentValue = formatNumber2(currValue);
+                if (formatCurrentValue != "NaN") {
+                    obj.val(formatCurrentValue);
+                }
+            }
+            else {
+                obj.val('');
+            }
+            if (formatCurrentValue != oldValue && formatCurrentValue != "NaN" && currValueOriginal != "") {
                 $('#btnUpdate_' + matchId + '_' + custId).removeAttr('disabled');
             }
             else {
@@ -38,7 +46,7 @@
                              $.datepicker._defaults.dateFormat,
                          selectedDate, instance.settings);
                 dates.not(this).datepicker("option", option, date);
-
+                SMATurnover.ChangeSport();
             }
         };
         var new_opts = $.extend(true, defaults, opts);
@@ -99,7 +107,7 @@
                 var idLeague = $('#ddlLeague');
                 idLeague.append('<option value="0">All Leagues</option>')
                 for (var i = 0; i < rs.length; i++) {
-                    idLeague.append('<option value="' + rs[i].Id + '">' + rs[i].Name + '</option>')
+                    idLeague.append('<option value="' + rs[i].Id + '" title="' + rs[i].Name + '">' + rs[i].Name + '</option>')
                 }
             }
         });
@@ -166,12 +174,13 @@
             success: function (rs) {
                 var arr = [];
                 if (rs != null && rs.length > 0) {
-                    $("#tblContentHeader tbody").empty().append(SMATurnover.renderFrozenRow(rs));
+                    //$("#tblContentHeader tbody").empty().append(SMATurnover.renderFrozenRow(rs));
                     $("#tblSMATurnover tbody").empty().append(SMATurnover.renderRow(rs));
                 }
                 else {
-                    $("#tblContentHeader tbody").empty().append('<tr><td><div class="">&nbsp;</div></td></tr>');
-                    $("#tblSMATurnover tbody").empty().append('<tr><td><div class="">&nbsp;</div></td><td colspan="4"><div class="c">There is no data.</div></td></tr>');
+                    //$("#tblContentHeader tbody").empty().append('<tr><td><div class="">&nbsp;</div></td></tr>');
+                    //$("#tblSMATurnover tbody").empty().append('<tr><td><div class="">&nbsp;</div></td><td colspan="4"><div class="c">There is no data.</div></td></tr>');
+                    $("#tblSMATurnover tbody").empty().append('<tr><td colspan="5"><div class="c" style:"width:662">There is no data.</div></td></tr>');
                 }
 
                 SMATurnover.initGrid();
@@ -186,12 +195,12 @@
             fullWidth: true,
             gridWidth: 665, //=totalColumnWidth + totalColumn*4 +totalColumn
             gridHeight: 200,
-            freezeWidth: 200,
-            numberFreezeCol: 1
+            freezeWidth: 0,
+            numberFreezeCol: 0
         };
 
         $("#SMATurnover").removeClass("hidden").gridScroller(gridOpts);
-        SMATurnover.makeTwoTableSameHeight($("#SMATurnover table.row_header_content"), $("#SMATurnover table.col_header_content"), false, true);
+        // SMATurnover.makeTwoTableSameHeight($("#SMATurnover table.row_header_content"), $("#SMATurnover table.col_header_content"), false, true);
     },
 
     renderRow: function (result) {
@@ -207,7 +216,7 @@
                 var matchInfo = '<table class="smaTurnover-matchInfo">\
                                     <tr>\
                                         <td class="col200">' + 'MatchID: ' + match.MatchId + '(' + match.EventDate + ')' + '</td>\
-                                        <td  class="col200">' + match.HomeTeam + ' -vs- ' + match.AwayTeam + '+</td>\
+                                        <td  class="col200">' + match.HomeTeam + ' -vs- ' + match.AwayTeam + '</td>\
                                     </tr>\
                                  </table>';
 
@@ -326,6 +335,8 @@
             success: function (rs) {
                 if (parseInt(rs.ErrorCode) == 0) {
                     showAlertMessage("msgErrorAdd", "Add successfully!", 0);
+                    $('#txtSuperName').val('');
+                    $('#txtTurnover').val('');
                 }
                 else {
                     showAlertMessage("msgErrorAdd", rs.ErrorMessage, 1);
@@ -424,8 +435,9 @@
 
     InputMaxTurnover: function () {
         var maxTurnover = $('#txtTurnover').val();
-        $('#txtTurnover').val(formatNumber2(Helper.SeparateNumricByThousand(maxTurnover)));
-
+        if (maxTurnover != "") {
+            $('#txtTurnover').val(formatNumber2(Helper.SeparateNumricByThousand(maxTurnover)));
+        }
     }
 }
 
