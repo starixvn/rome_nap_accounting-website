@@ -35,3 +35,7 @@ Sunplus.Data.DataAbstract/DLL/Fanex.Tarus.Entities.dll
 Sunplus.Data.DataAbstract/DLL/Fanex.Tarus.Infrastructure.dll
 Sunplus.Data.DataAbstract/DLL/Sunplus.Accounting.Core.dll
 Sunplus.Data.DataAbstract/DLL/Sunplus.Accounting.Entities.dll
+Sunplus.Data.DataAbstract/DLL/Enyim.Caching.xml
+Sunplus.Data.DataAbstract/DLL/Microsoft.Practices.EnterpriseLibrary.Common.xml
+Sunplus.Data.DataAbstract/DLL/Microsoft.Practices.EnterpriseLibrary.Data.xml
+Sunplus.Data.DataAbstract/DLL/Microsoft.Practices.EnterpriseLibrary.Logging.xml
