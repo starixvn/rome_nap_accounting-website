@@ -27,3 +27,15 @@ _ReSharper*/
 Sunplus.Data.DataAbstract/DLL/Fanex.Tarus.BetList.dll
 Sunplus.Data.DataAbstract/DLL/Fanex.Tarus.Web.Controllers.dll
 Sunplus.Data.DataAbstract/DLL/Sunplus.Data.DataAbstract.dll
+Sunplus.Data.DataAbstract/DLL/Fanex.Tarus.Business.Implement.dll
+Sunplus.Data.DataAbstract/DLL/Fanex.Tarus.Business.Interface.dll
+Sunplus.Data.DataAbstract/DLL/Fanex.Tarus.DataAccess.Implement.dll
+Sunplus.Data.DataAbstract/DLL/Fanex.Tarus.DataAccess.Interface.dll
+Sunplus.Data.DataAbstract/DLL/Fanex.Tarus.Entities.dll
+Sunplus.Data.DataAbstract/DLL/Fanex.Tarus.Infrastructure.dll
+Sunplus.Data.DataAbstract/DLL/Sunplus.Accounting.Core.dll
+Sunplus.Data.DataAbstract/DLL/Sunplus.Accounting.Entities.dll
+Sunplus.Data.DataAbstract/DLL/Enyim.Caching.xml
+Sunplus.Data.DataAbstract/DLL/Microsoft.Practices.EnterpriseLibrary.Common.xml
+Sunplus.Data.DataAbstract/DLL/Microsoft.Practices.EnterpriseLibrary.Data.xml
+Sunplus.Data.DataAbstract/DLL/Microsoft.Practices.EnterpriseLibrary.Logging.xml
