@@ -1,0 +1,64 @@
+﻿<link href="~/App_Themes/Public/common.css" rel="stylesheet" type="text/css" />
+<link href="~/App_Themes/Public/table.css" rel="stylesheet" type="text/css" />
+<link href="~/App_Themes/Public/input.css" rel="stylesheet" type="text/css" />
+<link href="~/App_Themes/Customer/customerlist.css" rel="stylesheet" type="text/css" />
+<link href="~/App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
+<link href="~/App_Themes/LeftPanel/left_panel.css" rel="stylesheet" type="text/css" />
+
+<script src="~/js/jQuery/jquery.js" type="text/javascript"></script>
+
+<script src="~/js/jQuery/ajaxfileupload.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="~/js/common.js"></script>
+    
+<script type="text/javascript" src="~/js/BlockUI.js"></script>
+
+<script src="~/js/jQuery/jquery.blockUI.1.33.js" type="text/javascript"></script>
+<script src="~/Views/Finance/Transfer/AutoTransfer/js/AutomateTransfer.js" type="text/javascript"></script>
+
+<div class="main">
+        <div class="maincontent">
+            <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
+                <tr>
+                    <td class="maincontent_headerL">
+                    </td>
+                    <td class="maincontent_headerC">
+                        Automate Transfer
+                    </td>
+                    <td class="maincontent_headerR">
+                    </td>
+                </tr>
+            </table>
+            <div style="border: 1px solid #7C98A4; width: 700px; padding: 0px" class="maincontent_box">
+                
+                <div id="msgError" class="errMsg" style="display: none">
+                </div>
+                <div style="padding-bottom: 10px">
+                    <div id="content_tab1" style="margin-top: 10px; margin-left: 10px;">
+                        <div>
+                            <div class="b mT5">
+                                Choose an Excel file to update:
+                            </div>
+                            <input type="file" style="font-size: 11px; vertical-align: middle" onchange="javascript:return AutomateTransfer.IsValidFileExtension();"
+                                size="40" name="txtfile" id="txtfile" />
+                            <input class="btn" id="btnUpload" type="submit" onclick="AutomateTransfer.UploadFile()" value="Open File" style="margin-left: 9px" />
+                            <input class='btn' id='btnSubmit' onclick='AutomateTransfer.UpdateData()' type='button' value='Update Now!'
+                                disabled="disabled" style="margin-left: 9px" />
+                            <div class="defaulttext">
+                                <span>File Size limit 1 MB</span> <a href="~/Views/Finance/Transfer/AutoTransfer/Automate Finance.xls" style="font-weight: bold;
+                                    margin-left: 10px">Click here to download template</a>
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            <div id="divcontainer" class="bg_table" style="width:696px; display:none">
+                <div id="content">
+                </div>
+                <input type="hidden" id="bolDelDataTmp" value="0" />
+                <input type="hidden" id="FileName" value="0" />
+                <iframe id="fDeleteTmp" name="fDeleteTmp" style="display: none"></iframe>
+            </div>
+            
+        </div>
+</div>
