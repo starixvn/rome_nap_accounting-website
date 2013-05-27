@@ -1,0 +1,136 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="ScoreInformationService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
+
+namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hSoccer
+{
+    using System;
+    using System.Collections;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using DNAide.Core;
+    using Fanex.Tarus.Infrastructure.Caching;
+    using Fanex.Tarus.Infrastructure.Extensions;
+    using Fanex.Tarus.Reports.Criteria.Main.DailyWinLoss2hSoccer;
+    using Fanex.Tarus.Reports.Entities.ScoreInformation;
+    using Fanex.Tarus.Infrastructure.Resource;
+
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    public partial class DailyWinLoss2hSoccerService : IDailyWinLoss2hSoccerService
+    {
+        public ScoreInfo GetScoreInformation(GetScoreInformationCriteria criteria)
+        {
+            try
+            {
+                Hashtable outputParam = new Hashtable();
+                var rawData = this._dailyWinLoss2hSoccerAccess.GetScoreInformation(criteria, ref outputParam);
+                //var rawData = new
+                //{
+                //    homeid = criteria.HomeTeam,
+                //    awayid = criteria.AwayTeam,
+                //    hometeam = criteria.HomeTeamName,
+                //    awayteam = criteria.AwayTeamName,
+                //    eventdate = criteria.ReportDate,
+
+                //    hthomescore = "3",
+                //    htawayscore = "2",
+                //    finalhomescore = "5",
+                //    finalawayscore = "6",
+                //    IsRefund = true,
+                //    IsCalRefund = false,
+                //    betstatus = "21",
+                //    eventstatus = "Complete",
+                //    TraderName = "Baoabo7689"
+                //};
+
+                ScoreInfo result = new ScoreInfo();
+                if (rawData != null && rawData.Count > 0)
+                {
+                    this.GetSoccerInfo(ref result, outputParam, rawData.First(), criteria);
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return null;
+        }
+
+        private void GetSoccerInfo(ref ScoreInfo result,
+            Hashtable outputParam,
+            dynamic rawData,
+            GetScoreInformationCriteria criteria)
+        {
+            result.HomeTeamId = CastAide.AsInt32(rawData.homeID);
+            result.HomeTeamName = CacheRef.GetTeamName(result.HomeTeamId);
+            result.AwayTeamId = CastAide.AsInt32(rawData.awayID);
+            result.AwayTeamName = CacheRef.GetTeamName(result.AwayTeamId);
+            result.IsNeutral = CastAide.AsBoolean(rawData.IsNeutral);
+
+            result.HomeHTScore = CastAide.AsString(rawData.hthomescore);
+            result.HomeFinalScore = CastAide.AsString(rawData.finalhomescore);
+            result.AwayHTScore = CastAide.AsString(rawData.htawayscore);
+            result.AwayFinalScore = CastAide.AsString(rawData.finalawayscore);
+            result.EventStatus = CastAide.AsString(rawData.eventstatus);
+            result.TraderName = CastAide.AsString(outputParam["tradername"]);
+            result.EventTime = CastAide.AsString(rawData.eventdate);
+
+            string betStatus = CastAide.AsString(rawData.betstatus);
+            bool isRefund = CastAide.AsBoolean(rawData.IsRefund);
+            bool isCalRefund = CastAide.AsBoolean(rawData.IsCalRefund);
+            var strNotAvailable = Labels.NotAvailable;
+
+            if (!string.IsNullOrEmpty(betStatus))
+            {
+                var isancelHT = betStatus.StartsWith("Refund HT") || betStatus.StartsWith("Refund");
+                var isCancelFinal = betStatus.StartsWith("Refund FT") || betStatus.StartsWith("Refund");
+                if (isancelHT)
+                {
+                    result.HomeHTScore = strNotAvailable;
+                    result.AwayHTScore = strNotAvailable;
+                }
+
+                if (isCancelFinal)
+                {
+                    result.HomeFinalScore = strNotAvailable;
+                    result.AwayFinalScore = strNotAvailable;
+                }
+
+                if (!isRefund &&
+                    !isCalRefund)
+                {
+                    string[] arrBetStatus = betStatus.Split(':');
+                    string ht1stScoreTeam = arrBetStatus[1].Split('-')[0];
+                    string final1stScoreTeam = arrBetStatus[1].Split('-')[1];
+                    switch (ht1stScoreTeam)
+                    {
+                        case "1":
+                            result.HT1stScoreTeam = result.HomeTeamId;
+                            break;
+                        case "2":
+                            result.HT1stScoreTeam = result.AwayTeamId;
+                            break;
+                    }
+
+                    switch (final1stScoreTeam)
+                    {
+                        case "1":
+                            result.Final1stScoreTeam = result.HomeTeamId;
+                            break;
+                        case "2":
+                            result.Final1stScoreTeam = result.AwayTeamId;
+                            break;
+                    }
+                }
+            }
+        }
+    }
+}

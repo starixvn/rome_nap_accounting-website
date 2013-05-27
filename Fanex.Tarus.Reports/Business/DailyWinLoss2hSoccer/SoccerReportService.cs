@@ -249,6 +249,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hSoccer
                             },
                             Id = leagueId,
                             Name = CacheRef.GetLeagueName(leagueId),
+                            GroupId = leagueId
                         };
 
                         leagueHeadLine.GroupName = leagueHeadLine.Name;
@@ -259,7 +260,8 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hSoccer
                                 Id = RowTypeConstants.SportTotal
                             },
                             Name = Labels.Total + ":",
-                            GroupName = leagueHeadLine.Name
+                            GroupName = leagueHeadLine.Name,
+                            GroupId = leagueHeadLine.Id
                         };
 
                         var rowIndex = 0;
@@ -275,6 +277,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hSoccer
                                 MatchInfo = new Match
                                 {
                                     Name = CastAide.AsString(row["MatchCode"]),
+                                    Id = CastAide.AsInt32(row["matchId"]),
                                     HomeTeam = new BaseModel
                                     {
                                         Id = CastAide.AsInt32(row["HomeId"]),
@@ -289,6 +292,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hSoccer
                                 },
 
                                 GroupName = leagueHeadLine.Name,
+                                GroupId = leagueHeadLine.Id,
                                 WinLoss = CastAide.AsDouble(row["WinLost"]),
                                 Position = CastAide.AsDouble(row["Position"]),
                                 Commission = CastAide.AsDouble(row["Commission"]),

@@ -1,12 +1,20 @@
-﻿
-using System.Web.Mvc;
-using Fanex.Tarus.Reports.Business.DailyWinLoss2hSoccer;
-using Fanex.Tarus.Reports.Entities.DailyWinLoss2h;
-using Fanex.Tarus.Web.Controllers;
-using Fanex.Tarus.Web.Controllers.Filters;
+﻿// --------------------------------------------------------------------------
+// <copyright file="DailyWinLoss2hSoccerController.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
 
 namespace Fanex.Tarus.Reports.Controllers
 {
+    using System.Web.Mvc;
+    using Fanex.Tarus.Reports.Business.DailyWinLoss2hSoccer;
+    using Fanex.Tarus.Reports.Entities.DailyWinLoss2h;
+    using Fanex.Tarus.Web.Controllers;
+    using Fanex.Tarus.Web.Controllers.Filters;
+
     public class DailyWinLoss2hSoccerController : BaseController
     {
         #region IFields
@@ -100,8 +108,9 @@ namespace Fanex.Tarus.Reports.Controllers
             var jsonResult = Json(exportResult);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;
-        }      
+        }
 
+     
         #endregion PostMethod
         #endregion IMethods
     }

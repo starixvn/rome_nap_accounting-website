@@ -1,0 +1,30 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="BetListContants.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.10.18">Created</change>
+// </history>
+
+namespace Fanex.Tarus.BetList.Constants
+{
+    using System.Diagnostics.CodeAnalysis;
+
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    public class BetListContants
+    {
+        public const string SCORE_INFOMATION_HOME_TEAM_ID = "1";
+        public const string SCORE_INFOMATION_AWAY_TEAM_ID = "2";
+
+        public const string SCORE_INFOMATION_REFUND = "Refund";
+        public const string SCORE_INFOMATION_REFUND_HT = "Refund HT";
+        public const string SCORE_INFOMATION_REFUND_FT = "Refund FT";
+
+        public const int SCORE_INFOMATION_SETS_OF_BASKETBALL = 5; // 4sets, OT
+        public const int SCORE_INFOMATION_SETS_OF_HOCKEY_SPORT = 4; // 3sets, OT
+        public const int SCORE_INFOMATION_SETS_OF_TENNIS = 5; // 5sets
+        public const int SCORE_INFOMATION_SETS_OF_BASEBALL = 9; // 9sets
+        public const int SCORE_INFOMATION_SETS_OF_BADMINTON = 5; // 5sets
+    }
+}

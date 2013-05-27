@@ -33,7 +33,21 @@ namespace Fanex.Tarus.Reports.DataAccess.Licensee.LiveCasinoWinLoss
             return dtb;
         }
 
-        public DataTable SelLiveCasinoWLByLicensees(string normalLicensee, string Operator , DateTime fromDate, DateTime toDate)
+        public DataTable SelAllGameTypes()
+        {
+            DataTable dtb = null;
+            using (ObjectDb objDB = new ObjectDb("GetGameType"))
+            {
+                var ds = objDB.ExecuteDataSet();
+                if (ds != null & ds.Tables != null)
+                {
+                    dtb = ds.Tables[0];
+                }
+            }
+            return dtb;
+        }
+
+        public DataTable SelLiveCasinoWLByLicensees(string normalLicensee, string Operator , DateTime fromDate, DateTime toDate, int gameType)
         {
             DataTable datatable = null;
             using (ObjectDb objDB = new ObjectDb("GetLiveCasinoWLByLicensee"))
@@ -42,6 +56,7 @@ namespace Fanex.Tarus.Reports.DataAccess.Licensee.LiveCasinoWinLoss
                 objDB.AddInParameter("operator", DbType.String, Operator);
                 objDB.AddInParameter("fromdate", DbType.DateTime, fromDate);
                 objDB.AddInParameter("todate", DbType.DateTime, toDate);
+                objDB.AddInParameter("gametype", DbType.Int32, gameType);
                 var ds = objDB.ExecuteDataSet();
                 if (ds != null & ds.Tables != null)
                 {
@@ -51,6 +66,5 @@ namespace Fanex.Tarus.Reports.DataAccess.Licensee.LiveCasinoWinLoss
             }
             return datatable;
         }
-
     }
 }

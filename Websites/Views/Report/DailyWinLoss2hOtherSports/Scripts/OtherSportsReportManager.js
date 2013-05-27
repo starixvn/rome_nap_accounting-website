@@ -20,6 +20,7 @@ var OtherSportsReportManager = {
     sportTypeNameLive: null,
     sportTypeIdNoneLive: null,
     sportTypeNameNoneLive: null,
+    rowIndex: 0,
     initGrid: function (sportId, wldate) {
         OtherSportsReportManager.sportTypeId = sportId;
         OtherSportsReportManager.reportDate = wldate;
@@ -56,6 +57,7 @@ var OtherSportsReportManager = {
             WL2hShowHideDivManager.showMainReportFromOSR(sportId, wldate);
         });
 
+        scoreInfoManager.InitPage();
         $("#dailyWLReportDiv").removeClass("hidden");
 
         try { parent.jQuery.unblockUI(); } catch (e) { }
@@ -140,8 +142,8 @@ var OtherSportsReportManager = {
             for (var i = 0; i < totalSportReport; i++) {
                 arrBody.push(OtherSportsReportManager.renderDailyWLRow(items[i], (i % 2 == 0 ? "evenrow" : "")));
             }
-            arrBody.push('<tr><td colspan="9" style="height: 18px;"></td></tr>');
 
+            arrBody.push('<tr><td colspan="9" style="height: 18px;"></td></tr>');
             arrBody.push(OtherSportsReportManager.renderDailyWLTotal(noneLiveReport.ReportTotal.NormalTotal));
 
             var allIBCTotal = noneLiveReport.ReportTotal.EightRMTotal.WinLoss;
@@ -253,6 +255,8 @@ var OtherSportsReportManager = {
         if (!isAllowReadOtherSportsReport) {
             return;
         }
+
+        scoreInfoManager.ClosePopup();
         OtherSportsReportManager.sportTypeIdBySport = sporttype;
         if (reportDate == null || reportDate == undefined) {
             OtherSportsReportManager.reportDateBySport = OtherSportsReportManager.reportDate;
@@ -305,7 +309,6 @@ var OtherSportsReportManager = {
     },
     renderDailyWLReportBySport: function (dailyWLResult, sporttype, sportname) {
         if (dailyWLResult) {
-
             $("#btnReport").unbind("click");
             $("#btnExport").unbind("click");
             $("#btnToday").unbind("click");
@@ -331,11 +334,13 @@ var OtherSportsReportManager = {
 
             $('#btnBackMainReportOtherSportNonLive').unbind("click");
             $('#btnBackMainReportOtherSportNonLive').click(function () {
+                scoreInfoManager.ClosePopup();
                 OtherSportsReportManager.showNonLiveReport(true);
             });
 
             $('#btnBackMainReportOtherSportLive').unbind("click");
             $('#btnBackMainReportOtherSportLive').click(function () {
+                scoreInfoManager.ClosePopup();
                 OtherSportsReportManager.showNonLiveReport(true);
             });
 
@@ -476,6 +481,8 @@ var OtherSportsReportManager = {
         if (!isAllowReadOtherSportsReport) {
             return;
         }
+
+        scoreInfoManager.ClosePopup();
         var sporttype = "";
         var sporttypeName = "";
         if (isLive == 'true') {
@@ -544,12 +551,12 @@ var OtherSportsReportManager = {
                 var arrFooter = [];
                 var numberItems = items.length;
 
+                OtherSportsReportManager.rowIndex = 0;
                 for (var i = 0; i < numberItems; i++) {
                     arrBody.push(OtherSportsReportManager.renderDailyWLRowSportDetails(items[i], i));
                 }
 
                 arrFooter.push(OtherSportsReportManager.renderTotalRow_RightReport(dailyWLResult.ReportTotal.NormalTotal, isLive, bettypename, isHedge));
-
                 var allIBCTotal = dailyWLResult.ReportTotal.EightRMTotal.WinLoss;
                 if (isBARMActive == 'true') {
                     allIBCTotal += dailyWLResult.ReportTotal.BARMTotal.WinLoss;
@@ -583,6 +590,7 @@ var OtherSportsReportManager = {
         switch (dwlRow.RowTypeDWL2h.Id) {
             case 0:
                 html = OtherSportsReportManager.renderMainRow_RightReport(dwlRow, index);
+                OtherSportsReportManager.rowIndex++;
                 break;
             case 3:
                 html = OtherSportsReportManager.renderBettypeTotalRow_RightReport(dwlRow);
@@ -592,6 +600,7 @@ var OtherSportsReportManager = {
                 break;
             case 10:
                 html = OtherSportsReportManager.renderLeagueHeadLine(dwlRow);
+                OtherSportsReportManager.rowIndex = 0;
                 break;
         }
         return html;
@@ -601,7 +610,8 @@ var OtherSportsReportManager = {
         html = '<tr>\
                     <td>\
                         <span></span></td>\
-                    <td colspan = "11" class="l"><span class="b longtext-wrapper">' + dwlRow.Name + '</span></td>\
+                    <td colspan = "11" class="l"><span class="b longtext-wrapper">' +
+                        (dwlRow.Name && dwlRow.Name != '' ? dwlRow.Name : '&nbsp') + '</span></td>\
                 </tr>';
         return html;
     },
@@ -617,8 +627,25 @@ var OtherSportsReportManager = {
                         <td class="l" style="max-width: 300px;"><span class="longtext-wrapper">' + row.MatchInfo.AwayTeam.Name + '</span></td>';
         }
 
-        html = '<tr class="' + (row.RowIndex % 2 == 0 ? "evenrow" : "") + '">\
-                    <td style="word-wrap: break-word;"><span class="c">' + row.MatchInfo.Name + '</span></td>'
+        var openScoreInfoEvent = "scoreInfoManager.GetReport('" + OtherSportsReportManager.reportDate + "','" +
+                                                                  OtherSportsReportManager.sportTypeIdNoneLive + "','" +
+                                                                  OtherSportsReportManager.sportTypeNameNoneLive + "','" +
+                                                                  OtherSportsReportManager.bettype + "','" +
+                                                                  OtherSportsReportManager.bettypeName + "'," +
+                                                                  OtherSportsReportManager.isLive + ",'" +
+                                                                  OtherSportsReportManager.isHedge + "','" +
+                                                                  row.GroupId + "','" +
+                                                                  row.GroupName + "'," +
+                                                                  row.MatchInfo.Id + ",'" +
+                                                                  row.MatchInfo.Name + "','" +
+                                                                  row.MatchInfo.HomeTeam.Id + "','" +
+                                                                  row.MatchInfo.HomeTeam.Name + "','" +
+                                                                  row.MatchInfo.AwayTeam.Id + "','" +
+                                                                  row.MatchInfo.AwayTeam.Name + "'); return;";
+        var scoreInfoLink = '<a class="b" title="Show Score Information" onclick="' + openScoreInfoEvent + '">' + row.MatchInfo.Name + '</a>';
+
+        html = '<tr class="' + (OtherSportsReportManager.rowIndex % 2 == 0 ? "evenrow" : "") + '">\
+                    <td style="word-wrap: break-word;"><span class="c">' + scoreInfoLink + '</span></td>'
                    + eventDetail + '<td class="r"><span class="' + (row.WinLoss.toFixed(2) > 0 ? 'red' : '') + '">' + StringFormatter.formatNumber(row.WinLoss) + '</span></td>\
                     <td class="r"><span>' + StringFormatter.formatNumber(row.Position) + '</span></td>\
                     <td class="r"><span>' + StringFormatter.formatNumber(row.Commission) + '</span></td>\

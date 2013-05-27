@@ -248,6 +248,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
                             },
                             Id = leagueId,
                             Name = CacheRef.GetLeagueName(leagueId),
+                            GroupId = leagueId
                         };
 
                         leagueHeadLine.GroupName = leagueHeadLine.Name;
@@ -259,7 +260,8 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
                                 Id = RowTypeConstants.SportTotal
                             },
                             Name = Labels.Total + ":",
-                            GroupName = leagueHeadLine.Name
+                            GroupName = leagueHeadLine.Name,
+                            GroupId = leagueId
                         };
 
                         var rowIndex = 0;
@@ -274,6 +276,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
                             {
                                 MatchInfo = new Match
                                 {
+                                    Id = CastAide.AsInt32(row["matchId"]),
                                     Name = CastAide.AsString(row["MatchCode"]),
                                     HomeTeam = new BaseModel
                                     {
@@ -289,6 +292,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
                                 },
 
                                 GroupName = leagueHeadLine.Name,
+                                GroupId = leagueHeadLine.Id,
                                 WinLoss = CastAide.AsDouble(row["WinLost"]),
                                 Position = CastAide.AsDouble(row["Position"]),
                                 Commission = CastAide.AsDouble(row["Commission"]),
@@ -354,6 +358,12 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
             if (!dwlA.GroupName.StartsWith("*") && dwlB.GroupName.StartsWith("*"))
             {
                 return 1;
+            }
+            
+            if (dwlA.GroupName == dwlB.GroupName &&
+                dwlA.GroupId != dwlB.GroupId)
+            {
+                return dwlA.GroupId.CompareTo(dwlB.GroupId);
             }
 
             if (dwlA.GroupName == dwlB.GroupName)

@@ -77,7 +77,7 @@
                                         <table class="tbl-header-frozen">
                                             <tr>
                                                 <td>
-                                                    <div class="col160">
+                                                    <div class="col200">
                                                         &nbsp;
                                                     </div>
                                                 </td>
@@ -89,7 +89,7 @@
                                             </tr>
                                             <tr>
                                                 <td style="border-bottom: none 0px;">
-                                                    <div class="col160 c">
+                                                    <div class="col200 c">
                                                         Pool-Currency</div>
                                                 </td>
                                                 <td style="border-bottom: none 0px;" class="ibc">
@@ -253,7 +253,7 @@
                                         <table class="tbl-header-frozen">
                                             <tr>
                                                 <td>
-                                                    <div class="col160">
+                                                    <div class="col200">
                                                         &nbsp;
                                                     </div>
                                                 </td>
@@ -265,7 +265,7 @@
                                             </tr>
                                             <tr>
                                                 <td style="border-bottom: none 0px;">
-                                                    <div class="col160 c">
+                                                    <div class="col200 c">
                                                         Meeting-Currency</div>
                                                 </td>
                                                 <td style="border-bottom: none 0px;" class="ibc">
