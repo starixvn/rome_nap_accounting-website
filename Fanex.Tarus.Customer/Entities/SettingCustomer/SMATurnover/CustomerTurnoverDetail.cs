@@ -27,7 +27,7 @@ namespace Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover
 
         public string MatchId { get; set; }
 
-        public int IsSettled { get; set; }
+        public string EventStatus { get; set; }
 
         public List<CustomerTurnoverDetail> CustomerList { get; set; }
 

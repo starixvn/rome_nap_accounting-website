@@ -94,10 +94,10 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
                         {
                             if (i == 0)
                             {
-                                Match.EventDate = string.Format("{0:M/d/yyyy}", detail["eventdate"]);
+                                Match.EventDate = string.Format("{0:MM/dd/yyyy}", detail["eventdate"]);
                                 Match.HomeTeam = CacheRef.GetTeamName(detail["homeid"]);
                                 Match.AwayTeam = CacheRef.GetTeamName(detail["awayid"]);
-                                Match.IsSettled = CastAide.AsInt32(detail["ruben"]);
+                                Match.EventStatus = CastAide.AsString(detail["eventstatus"]);
                             }
                             var Customer = new CustomerTurnoverDetail()
                             {
