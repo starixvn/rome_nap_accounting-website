@@ -32,7 +32,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report.Licensee
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        LicenseeCurrency SelReportByLicenseeV2(int LicenseeID, int Currency, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache);
+        LicenseeCurrency SelReportByLicenseeV2(int LicenseeID, int Currency, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
@@ -41,19 +41,19 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report.Licensee
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        LicenseeDTOV2 SelReportLicenseeDetail_SAgV2(int LicenseeID, int Currency, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache);
+        LicenseeDTOV2 SelReportLicenseeDetail_SAgV2(int LicenseeID, int Currency, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        LicenseeDTOV2 SelReportLicenseeDetail_MAgV2(int LicenseeID, int Currency, int CustId, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache);
+        LicenseeDTOV2 SelReportLicenseeDetail_MAgV2(int LicenseeID, int Currency, int CustId, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        LicenseeDTOV2 SelReportLicenseeDetail_AgV2(int LicenseeID, int Currency, int CustId, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG,int ShowBA, int ShowLC, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache);
+        LicenseeDTOV2 SelReportLicenseeDetail_AgV2(int LicenseeID, int Currency, int CustId, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG,int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        LicenseeDTOV2 SelReportLicenseeDetailV2(int LicenseeID, int Currency, int baseCurrency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, int drawfilter,int excludeTest, int pageIndex, int pageSize, int fromCache);
+        LicenseeDTOV2 SelReportLicenseeDetailV2(int LicenseeID, int Currency, int baseCurrency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
@@ -61,7 +61,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report.Licensee
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        LicenseeTotalTransctionDTO SelTotalTransction(int resellerid, int licenseeid, string date, bool showSB, bool showNG, bool showRB, bool showLC, bool showVS);
+        LicenseeTotalTransctionDTO SelTotalTransction(int resellerid, int licenseeid, string date, bool showSB, bool showNG, bool showRB, bool showLC, bool showVS, bool showCS);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]

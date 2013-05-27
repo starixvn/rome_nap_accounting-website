@@ -88,6 +88,7 @@
                                                     <span> <input type="checkbox" id="chbNG" checked="checked" class="chksport" onclick="changeSport();" /><label for="chbNG">Number Game</label></span> 
                                                     <span> <input type="checkbox" id="chbLiveCasino" class="chksport" checked="checked" onclick="changeSport();" /><label for="chbLiveCasino">Live Casino</label> </span>
                                                     <span> <input type="checkbox" id="chkVirtualSport" class="chksport" checked="checked" onclick="changeSport();" /><label for="chkVirtualSport">Virutal Sports</label> </span>
+                                                    <span> <input type="checkbox" id="chkRNGCasino" class="chksport" checked="checked" onclick="changeSport();" /><label for="chkRNGCasino">RNG Casino</label> </span>
                                         </td>
                                     </tr>
                                     <tr><td colspan="4" style="text-align:left;">* For data accuracy,  generate the billing report 5 days after month-end.</td></tr>

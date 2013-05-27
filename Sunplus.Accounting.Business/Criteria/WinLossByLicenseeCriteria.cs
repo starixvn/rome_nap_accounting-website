@@ -42,6 +42,8 @@ namespace Sunplus.Accounting.Business.Criteria
 
         public int ShowVS { get; set; }
 
+        public int ShowCS { get; set; }
+
         public int ReportType { get; set; }
 
         public int Drawfilter { get; set; }

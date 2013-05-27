@@ -167,6 +167,8 @@ var licenseeReport = {
     ShowSB: 0,
     ShowRB: 0,
     ShowLC: 0,
+    ShowVS: 0,
+    ShowCS: 0,
     ReportLevel: 0,
     getTitle: function () {
         //return "Deposit report for " + $('#dlSite option:selected').text() + " from " + $("#fdate").val() + " to " + $("#tdate").val()
@@ -188,14 +190,14 @@ var licenseeReport = {
             html += '<td><div class="r" style="width:100px; height:17px;">' + row.CustomerWL + '</div></td>';
             html += '<td><div class="r" style="width:100px; height:17px;">' + row.CustomerComm + '</div></td>';
             html += '<td><div class="r" style="width:100px; height:17px;">' + row.CustomerWLTotal + '</div></td>'
-            html += '<td><div class="r" style="width:100px; height:17px;">' + row.LicenseeWL + '</div></td>';
+            html += '<td><div class="r" style="width:120px; height:17px;">' + row.LicenseeWL + '</div></td>';
             html += '<td><div class="r" style="width:80px; height:17px;">' + row.BA + '</div></td>';
             html += '<td><div class="r" style="width:100px; height:17px;">' + row.WinlossRB + '</div></td>';
             html += '<td><div class="r" style="width:100px; height:17px;">' + row.Racing + '</div></td>';
             html += '<td><div class="r" style="width:100px; height:17px;">' + row.Total + '</div></td>';
             html += '<td><div class="r" style="width:100px; height:17px;">' + row.AmtDuetoBA + '</div></td>';
             html += '<td><div class="r" style="width:100px; height:17px;">' + row.AmtDuetoRB + '</div></td>';
-            html += '<td><div class="r" style="width:100px; height:17px;">' + row.Company + '</div></td>';
+            html += '<td><div class="r" style="width:120px; height:17px;">' + row.Company + '</div></td>';
 
             html += '</tr>'
         }
@@ -230,14 +232,14 @@ var licenseeReport = {
                 <td><div class="r" style="width:100px; height:17px;">' + row.CustomerWL + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.CustomerComm + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.CustomerWLTotal + '</div></td>\
-                <td><div class="r" style="width:100px; height:17px;">' + row.LicenseeWL + '</div></td>\
+                <td><div class="r" style="width:120px; height:17px;">' + row.LicenseeWL + '</div></td>\
                 <td><div class="r" style="width:80px; height:17px;">' + row.BA + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.WinlossRB + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.Racing + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.Total + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.AmtDuetoBA + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.AmtDuetoRB + '</div></td>\
-                <td><div class="r" style="width:100px; height:17px;">' + row.Company + '</div></td>\
+                <td><div class="r" style="width:120px; height:17px;">' + row.Company + '</div></td>\
             </tr>';
         return html;
     },
@@ -261,14 +263,14 @@ var licenseeReport = {
                 <td><div class="r" style="width:100px; height:17px;">' + row.CustomerWL + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.CustomerComm + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.CustomerWLTotal + '</div></td>\
-                <td><div class="r" style="width:100px; height:17px;">' + row.LicenseeWL + '</div></td>\
+                <td><div class="r" style="width:120px; height:17px;">' + row.LicenseeWL + '</div></td>\
                 <td><div class="r" style="width:80px; height:17px;">' + row.BA + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.WinlossRB + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.Racing + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.Total + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.AmtDuetoBA + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.AmtDuetoRB + '</div></td>\
-                <td><div class="r" style="width:100px; height:17px;">' + row.Company + '</div></td>\
+                <td><div class="r" style="width:120px; height:17px;">' + row.Company + '</div></td>\
             </tr>';
         return html;
     },
@@ -293,14 +295,14 @@ var licenseeReport = {
                 <td><div class="r" style="width:100px; height:17px;">' + row.CustomerWL + '</div></td>\
                 <td><div class="r"  style="width:100px; height:17px;">' + row.CustomerComm + '</div></td>\
                 <td><div class="r"  style="width:100px; height:17px;">' + row.CustomerWLTotal + '</div></td>\
-                <td><div class="r" style="width:100px; height:17px;">' + row.LicenseeWL + '</div></td>\
+                <td><div class="r" style="width:120px; height:17px;">' + row.LicenseeWL + '</div></td>\
                 <td><div class="r" style="width:80px; height:17px;">' + row.BA + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.WinlossRB + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.Racing + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.Total + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.AmtDuetoBA + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.AmtDuetoRB + '</div></td>\
-                <td><div class="r" style="width:100px; height:17px;">' + row.Company + '</div></td>\
+                <td><div class="r" style="width:120px; height:17px;">' + row.Company + '</div></td>\
             </tr>';
         return html;
     },
@@ -325,14 +327,14 @@ var licenseeReport = {
                 <td><div class="r" style="width:100px; height:17px;">' + row.CustomerWL + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.CustomerComm + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.CustomerWLTotal + '</div></td>\
-                <td><div class="r" style="width:100px; height:17px;">' + row.LicenseeWL + '</div></td>\
+                <td><div class="r" style="width:120px; height:17px;">' + row.LicenseeWL + '</div></td>\
                 <td><div class="r" style="width:80px; height:17px;">' + row.BA + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.WinlossRB + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.Racing + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.Total + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.AmtDuetoBA + '</div></td>\
                 <td><div class="r" style="width:100px; height:17px;">' + row.AmtDuetoRB + '</div></td>\
-                <td><div class="r" style="width:100px; height:17px;">' + row.Company + '</div></td>\
+                <td><div class="r" style="width:120px; height:17px;">' + row.Company + '</div></td>\
             </tr>';
         return html;
     },
@@ -358,14 +360,14 @@ var licenseeReport = {
                     <td><div class="r b" style="width:100px; height:17px;">' + row.CustomerWL + '</div></td>\
                     <td><div class="r b"  style="width:100px; height:17px;">' + row.CustomerComm + '</div></td>\
                     <td><div class="r b"  style="width:100px; height:17px;">' + row.CustomerWLTotal + '</div></td>\
-                    <td><div class="r b" style="width:100px; height:17px;">' + row.LicenseeWL + '</div></td>\
+                    <td><div class="r b" style="width:120px; height:17px;">' + row.LicenseeWL + '</div></td>\
                     <td><div class="r b" style="width:80px; height:17px;">' + row.BA + '</div></td>\
                     <td><div class="r b" style="width:100px; height:17px;">' + row.WinlossRB + '</div></td>\
                     <td><div class="r b" style="width:100px; height:17px;">' + row.Racing + '</div></td>\
                     <td><div class="r b" style="width:100px; height:17px;">' + row.Total + '</div></td>\
                     <td><div class="r b" style="width:100px; height:17px;">' + row.AmtDuetoBA + '</div></td>\
                     <td><div class="r b" style="width:100px; height:17px;">' + row.AmtDuetoRB + '</div></td>\
-                    <td><div class="r b" style="width:100px; height:17px;">' + row.Company + '</div></td>\
+                    <td><div class="r b" style="width:120px; height:17px;">' + row.Company + '</div></td>\
                 </tr>';
         return html;
     },
@@ -397,14 +399,14 @@ var licenseeReport = {
                     <div class="r b"  style="width:100px; height:17px;">' + row.CustomerWL + '</div></td>\
                     <td><div class="r b"  style="width:100px; height:17px;">' + row.CustomerComm + '</div></td>\
                     <td><div class="r b"  style="width:100px; height:17px;">' + row.CustomerWLTotal + '</div></td>\
-                    <td><div class="r b" style="width:100px; height:17px;">' + row.LicenseeWL + '</div></td>\
+                    <td><div class="r b" style="width:120px; height:17px;">' + row.LicenseeWL + '</div></td>\
                     <td><div class="r b" style="width:80px; height:17px;">' + row.BA + '</div></td>\
                     <td><div class="r b" style="width:100px; height:17px;">' + row.WinlossRB + '</div></td>\
                     <td><div class="r b" style="width:100px; height:17px;">' + row.Racing + '</div></td>\
                     <td><div class="r b" style="width:100px; height:17px;">' + row.Total + '</div></td>\
                     <td><div class="r b" style="width:100px; height:17px;">' + row.AmtDuetoBA + '</div></td>\
                     <td><div class="r b" style="width:100px; height:17px;">' + row.AmtDuetoRB + '</div></td>\
-                    <td><div class="r b" style="width:100px; height:17px;">' + row.Company + '</div></td>\
+                    <td><div class="r b" style="width:120px; height:17px;">' + row.Company + '</div></td>\
                 </tr>';
         return html;
 
@@ -510,6 +512,8 @@ var licenseeReport = {
             ShowNG: licenseeReport.ShowNG,
             ShowBA: licenseeReport.ShowBA,
             ShowLC: licenseeReport.ShowLC,
+            ShowCS: licenseeReport.ShowCS,
+            ShowVS: licenseeReport.ShowVS,
             ReportType: licenseeReport.reportType,
             drawfilter: licenseeReport.drawFilter,
             excludeTest: licenseeReport.excludeTesting,
@@ -517,36 +521,9 @@ var licenseeReport = {
             pageSize: _pageSize,
             fromCache: fromCache
         };
-        if ((licenseeReport.ShowSB == 1 && licenseeReport.ShowNG == 1 && licenseeReport.ShowLC == 1) || (licenseeReport.ShowSB == 0 && licenseeReport.ShowNG == 0 && licenseeReport.ShowLC == 0)) {
 
-            $('#titleCompany').html("SB+NG+LC");
-            $('#titleLicensee').html("Licensee W/L(SB+NG+LC)");
+        LicenseeReportHelper.displayLicensee();
 
-        }
-        else if (licenseeReport.ShowSB == 1 && licenseeReport.ShowNG == 1) {
-            $('#titleCompany').html("SB+NG");
-            $('#titleLicensee').html("Licensee W/L(SB+NG)");
-        }
-        else if (licenseeReport.ShowSB == 1 && licenseeReport.ShowLC == 1) {
-            $('#titleCompany').html("SB+LC");
-            $('#titleLicensee').html("Licensee W/L(SB+LC)");
-        }
-        else if (licenseeReport.ShowLC == 1 && licenseeReport.ShowNG == 1) {
-            $('#titleCompany').html("LC+NG");
-            $('#titleLicensee').html("Licensee W/L(LC+NG)");
-        }
-        else if (licenseeReport.ShowSB == 1) {
-            $('#titleCompany').html("SB");
-            $('#titleLicensee').html("Licensee W/L(SB)");
-        }
-        else if (licenseeReport.ShowNG == 1) {
-            $('#titleCompany').html("NG");
-            $('#titleLicensee').html("Licensee W/L(NG)");
-        }
-        else if (licenseeReport.ShowLC == 1) {
-            $('#titleCompany').html("LC");
-            $('#titleLicensee').html("Licensee W/L(LC)");
-        }
         return data;
     },
     renderMainReport: function (fromCache) {
@@ -588,6 +565,16 @@ var licenseeReport = {
             licenseeReport.ShowLC = 1;
         else
             licenseeReport.ShowLC = 0;
+
+        if ($("#chbVS").attr("checked"))
+            licenseeReport.ShowVS = 1;
+        else
+            licenseeReport.ShowVS = 0;
+
+        if ($("#chbRNGCasino").attr("checked"))
+            licenseeReport.ShowCS = 1;
+        else
+            licenseeReport.ShowCS = 0;
 
         if (licenseeReport.licenseeId == 0) {
             showAlertMessage("ErrMsg", "Please choose a Licensee.", 1);
@@ -1250,6 +1237,8 @@ var licenseeReport = {
         var ShowSB = 1;
         var ShowRB = 1;
         var ShowNG = 1;
+        var ShowVS = 0;
+        var ShowCS = 0;
         var currencyOption = $('#dlCurrency').val();
         //var excludeTest = parseInt($("input[name=rdExcludeTesting]:checked").val());
         var site = licenseeReport.licenseeId;
@@ -1270,6 +1259,13 @@ var licenseeReport = {
             ShowLC = 1;
         else
             ShowLC = 0;
+
+        if ($("#chbVS").attr("checked"))
+            ShowVS = 1;
+
+        if ($("#chbRNGCasino").attr("checked"))
+            ShowCS = 1;
+
         if (parseInt(licenseeReport.reportType) == 1) {
             licenseeReport.fromDate = date;
             licenseeReport.toDate = date;
@@ -1312,7 +1308,9 @@ var licenseeReport = {
         else
             baseCurrency = '';
 
-        var url = '../../BetList/BetListDepositReportV2.aspx?custid=' + custId + '&username=' + username + '&fdate=' + licenseeReport.fromDate + '&tdate=' + licenseeReport.toDate + '&showSB=' + ShowSB + '&showRB=' + ShowRB + '&showNG=' + ShowNG + '&showLC=' + ShowLC + '&showBA=' + licenseeReport.ShowBA + '&drawFilter=' + licenseeReport.drawFilter + '&baseCurrency=' + baseCurrency + '&site=' + site;
+        var url = '../../BetList/BetListDepositReportV2.aspx?custid=' + custId + '&username=' + username + '&fdate=' + licenseeReport.fromDate + '&tdate=' + licenseeReport.toDate + '&showSB=' + ShowSB + '&showRB=' + ShowRB + '&showNG=' + ShowNG + '&showLC=' + ShowLC 
+        + '&showVS=' + ShowVS + '&showCS=' + ShowCS
+        + '&showBA=' + licenseeReport.ShowBA + '&drawFilter=' + licenseeReport.drawFilter + '&baseCurrency=' + baseCurrency + '&site=' + site;
 
         var NewWindow = window.open(url, 'BetList', ' scrollbars=yes, toolbar=no, menubar=no,location=no,status=no,resizable=yes');
         if (NewWindow) NewWindow.focus();
@@ -1372,6 +1370,8 @@ var licenseeReport = {
             showNg: getData.ShowNG,
             showLc: getData.ShowLC,
             showBa: getData.ShowBA,
+            showVS: getData.ShowVS,
+            showCS: getData.ShowCS,
             baseCurrency: baseCurrency,
             reportType: getData.ReportType,
             drawFilter: getData.drawfilter,
@@ -1383,7 +1383,7 @@ var licenseeReport = {
             custid: this.custId,
             ReportLevel: licenseeReport.ReportLevel
         };
-       
+
         var url = 'WLByLicensee_new.aspx?' + $.param(param);
 
         $('#frm').attr('src', url);

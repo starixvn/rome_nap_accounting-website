@@ -34,6 +34,7 @@ var totalTrans = {
     showRB: true,
     showLC: true,
     ShowVS: true,
+    showCS: true,
     getMonth: function () {
         var d = new Date();
         RenderMonthly("dllMonth", 2010, d.getFullYear(), d.getMonth() + 1);
@@ -147,6 +148,11 @@ var totalTrans = {
         else
             totalTrans.ShowVS = false;
 
+        if ($("#chkRNGCasino").attr("checked"))
+            totalTrans.showCS = true;
+        else
+            totalTrans.showCS = false;
+
         if (arrdate.length > 1) {
             var data = {
                 resellerid: totalTrans.reseller,
@@ -156,7 +162,8 @@ var totalTrans = {
                 showNG: totalTrans.showNG,
                 showRB: totalTrans.showRB,
                 showLC: totalTrans.showLC,
-                showVS: totalTrans.ShowVS
+                showVS: totalTrans.ShowVS,
+                showCS: totalTrans.showCS
             };
             $.ajax({
                 type: "POST",

@@ -1307,7 +1307,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
         }
 
-        public LicenseeTotalTransctionDTO SelTotalTransction(int resellerid, int licenseeid, string date, bool showSB, bool showNG, bool showRB, bool showLC, bool showVS)
+        public LicenseeTotalTransctionDTO SelTotalTransction(int resellerid, int licenseeid, string date, bool showSB, bool showNG, bool showRB, bool showLC, bool showVS, bool showCS)
         {
             LicenseeTotalTransctionDTO transctionDto = new LicenseeTotalTransctionDTO();
             transctionDto.Items = new List<Reseller>();
@@ -1320,7 +1320,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
 
                 DataTable rates = _licenseReportDAO.GetRates(date);
-                DataTable tb = _licenseReportDAO.SelTotalTicket(resellerid, licenseeid, date, MoveBetsDay, BalanceUpDay, showSB, showNG, showRB, showLC, showVS);
+                DataTable tb = _licenseReportDAO.SelTotalTicket(resellerid, licenseeid, date, MoveBetsDay, BalanceUpDay, showSB, showNG, showRB, showLC, showVS, showCS);
                 if (tb == null)
                     return transctionDto;
 
@@ -1420,7 +1420,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
         #endregion
 
 
-        public LicenseeCurrency SelReportByLicenseeV2FromDB(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, string MoveBetsDay, int drawfilter, int excludeTest)
+        public LicenseeCurrency SelReportByLicenseeV2FromDB(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, string MoveBetsDay, int drawfilter, int excludeTest)
         {
             LicenseeCurrency licenseDto = new LicenseeCurrency();
            // bool IsOld = CastAide.AsDateTime(FromDate) < new DateTime(2009, 01, 01);
@@ -1428,7 +1428,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             if (BaseCurrency > 0)
                 Currency = 0;
             DbResult dbResult = _licenseReportDAO.SelReportByLicenseeV2(LicenseeID, Currency, FromDate, ToDate, showSB,
-                                                                          ShowRB, ShowNG, ShowBA, ShowLC, ReportType, MoveBetsDay, false,
+                                                                          ShowRB, ShowNG, ShowBA, ShowLC, ShowVS, ShowCS, ReportType, MoveBetsDay, false,
                                                                           drawfilter, excludeTest);
 
             DataTable dataTable = new DataTable();
@@ -1598,14 +1598,14 @@ namespace Sunplus.Accounting.Business.Report.Deposit
         }
 
 
-        public LicenseeDTOV2 SelReportByLicenseeDetailV2FromDB(int LicenseeID, int Currency, int BaseCurrency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, string MoveBetsDay, int drawfilter, int excludeTest)
+        public LicenseeDTOV2 SelReportByLicenseeDetailV2FromDB(int LicenseeID, int Currency, int BaseCurrency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, string MoveBetsDay, int drawfilter, int excludeTest)
         {
             LicenseeDTOV2 licenseDto = new LicenseeDTOV2();
             //bool IsOld = CastAide.AsDateTime(FromDate) < new DateTime(2009, 01, 01);
 
 
             DbResult dbResult = _licenseReportDAO.SelReportByLicenseeDetailV2(LicenseeID, Currency, CustId, FromDate, ToDate, showSB,
-                                                                          ShowRB, ShowNG, ShowBA, ShowLC, ReportType, MoveBetsDay, false,
+                                                                          ShowRB, ShowNG, ShowBA, ShowLC, ShowVS, ShowCS, ReportType, MoveBetsDay, false,
                                                                           drawfilter, excludeTest);
 
             DataTable dataTable = new DataTable();
@@ -1779,7 +1779,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             return licenseDto;
         }
 
-        public LicenseeDTOV2 SelReportByLicenseeDetail_AgV2FromDB(int LicenseeID, int Currency, int CustId, int BaseCurrency, string FromDate, string ToDate, int ShowSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, int drawfilter, int excludeTest)
+        public LicenseeDTOV2 SelReportByLicenseeDetail_AgV2FromDB(int LicenseeID, int Currency, int CustId, int BaseCurrency, string FromDate, string ToDate, int ShowSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest)
         {
             //bool IsOld = CastAide.AsDateTime(FromDate) < new DateTime(2009, 01, 01);
             LicenseeDTOV2 licenseDto = new LicenseeDTOV2();
@@ -1792,7 +1792,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 DataTable dataTable = null;
                 string MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay.ToShortDateString();
 
-                DbResult dbResult = _licenseReportDAO.SelReportByLicenseeDetail_AgV2(LicenseeID, Currency, CustId, FromDate, ToDate, ShowSB, ShowRB, ShowNG, ShowBA, ShowLC, ReportType, MoveBetsDay, false, drawfilter, excludeTest);
+                DbResult dbResult = _licenseReportDAO.SelReportByLicenseeDetail_AgV2(LicenseeID, Currency, CustId, FromDate, ToDate, ShowSB, ShowRB, ShowNG, ShowBA, ShowLC, ShowVS, ShowCS, ReportType, MoveBetsDay, false, drawfilter, excludeTest);
 
                 if (dbResult != null && dbResult.ResultSet.Tables.Count > 0)
                     dataTable = dbResult.ResultSet.Tables[0];
@@ -1971,7 +1971,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
         }
 
 
-        public LicenseeCurrency SelReportByLicenseeV2(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache)
+        public LicenseeCurrency SelReportByLicenseeV2(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache)
         {
 
             var licenseDto = new LicenseeCurrency();
@@ -1983,7 +1983,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 var sessionLicenseDto = AppSession.GetSession(System.Web.HttpContext.Current.Session,
                                                            _keySelReportByLicensee);
                 if (sessionLicenseDto == null || fromCache == 0)
-                    licenseDto = SelReportByLicenseeV2FromDB(LicenseeID, Currency, BaseCurrency, FromDate, ToDate, showSB, ShowRB, ShowNG, ShowBA, ShowLC, ReportType, MoveBetsDay, drawfilter, excludeTest);
+                    licenseDto = SelReportByLicenseeV2FromDB(LicenseeID, Currency, BaseCurrency, FromDate, ToDate, showSB, ShowRB, ShowNG, ShowBA, ShowLC, ShowVS, ShowCS, ReportType, MoveBetsDay, drawfilter, excludeTest);
                 else
                 {
                     licenseDto = (LicenseeCurrency)sessionLicenseDto;
@@ -2011,7 +2011,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             return licenseDtoPaging;
         }
 
-        public LicenseeDTOV2 SelReportByLicenseeDetail_AgV2(int LicenseeID, int Currency, int CustId, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache)
+        public LicenseeDTOV2 SelReportByLicenseeDetail_AgV2(int LicenseeID, int Currency, int CustId, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache)
         {
             LicenseeDTOV2 licenseDto = new LicenseeDTOV2();
             LicenseeDTOV2 licenseDtoPaging = new LicenseeDTOV2();
@@ -2025,7 +2025,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 DataTable dataTable = null;
 
                 if (sessionLicenseDto == null || fromCache == 0)
-                    licenseDto = SelReportByLicenseeDetail_AgV2FromDB(LicenseeID, Currency, CustId, BaseCurrency, FromDate, ToDate, showSB, ShowRB, ShowNG, ShowBA, ShowLC, ReportType, drawfilter, excludeTest);
+                    licenseDto = SelReportByLicenseeDetail_AgV2FromDB(LicenseeID, Currency, CustId, BaseCurrency, FromDate, ToDate, showSB, ShowRB, ShowNG, ShowBA, ShowLC, ShowVS, ShowCS, ReportType, drawfilter, excludeTest);
                 else
                 {
                     licenseDto = (LicenseeDTOV2)sessionLicenseDto;
@@ -2052,7 +2052,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             return licenseDtoPaging;
         }
 
-        public LicenseeDTOV2 SelReportLicenseeDetailV2(int LicenseeID, int Currency, int BaseCurrency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache)
+        public LicenseeDTOV2 SelReportLicenseeDetailV2(int LicenseeID, int Currency, int BaseCurrency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache)
         {
             LicenseeDTOV2 licenseDto = new LicenseeDTOV2();
             LicenseeDTOV2 licenseDtoPaging = new LicenseeDTOV2();
@@ -2065,7 +2065,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 string MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay.ToShortDateString();
 
                 if (sessionLicenseDto == null || fromCache == 0)
-                    licenseDto = SelReportByLicenseeDetailV2FromDB(LicenseeID, Currency, BaseCurrency, CustId, FromDate, ToDate, showSB, ShowRB, ShowNG, ShowBA, ShowLC, ReportType, MoveBetsDay, drawfilter, excludeTest);
+                    licenseDto = SelReportByLicenseeDetailV2FromDB(LicenseeID, Currency, BaseCurrency, CustId, FromDate, ToDate, showSB, ShowRB, ShowNG, ShowBA, ShowLC, ShowVS, ShowCS, ReportType, MoveBetsDay, drawfilter, excludeTest);
                 else
                 {
                     licenseDto = (LicenseeDTOV2)sessionLicenseDto;
@@ -2094,7 +2094,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             return licenseDtoPaging;
         }
 
-        public LicenseeDTOV2 SelReportByLicenseeDetail_SAgV2FromDB(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int ShowSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, int drawfilter, int excludeTest)
+        public LicenseeDTOV2 SelReportByLicenseeDetail_SAgV2FromDB(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int ShowSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest)
         {
             //bool IsOld = CastAide.AsDateTime(FromDate) < new DateTime(2009, 01, 01);
             LicenseeDTOV2 licenseDto = new LicenseeDTOV2();
@@ -2107,7 +2107,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 DataTable dataTable = null;
                 string MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay.ToShortDateString();
 
-                DbResult dbResult = _licenseReportDAO.SelReportByLicenseeDetail_SAgV2(LicenseeID, Currency, FromDate, ToDate, ShowSB, ShowRB, ShowNG, ShowBA, ShowLC, ReportType, MoveBetsDay, false, drawfilter, excludeTest);
+                DbResult dbResult = _licenseReportDAO.SelReportByLicenseeDetail_SAgV2(LicenseeID, Currency, FromDate, ToDate, ShowSB, ShowRB, ShowNG, ShowBA, ShowLC, ShowVS, ShowCS, ReportType, MoveBetsDay, false, drawfilter, excludeTest);
 
                 if (dbResult != null && dbResult.ResultSet.Tables.Count > 0)
                     dataTable = dbResult.ResultSet.Tables[0];
@@ -2285,7 +2285,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             return licenseDto;
         }
 
-        public LicenseeDTOV2 SelReportByLicenseeDetail_SAgV2(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache)
+        public LicenseeDTOV2 SelReportByLicenseeDetail_SAgV2(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache)
         {
             LicenseeDTOV2 licenseDto = new LicenseeDTOV2();
             LicenseeDTOV2 licenseDtoPaging = new LicenseeDTOV2();
@@ -2299,7 +2299,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 DataTable dataTable = null;
 
                 if (sessionLicenseDto == null || fromCache == 0)
-                    licenseDto = SelReportByLicenseeDetail_SAgV2FromDB(LicenseeID, Currency, BaseCurrency, FromDate, ToDate, showSB, ShowRB, ShowNG, ShowBA, ShowLC, ReportType, drawfilter, excludeTest);
+                    licenseDto = SelReportByLicenseeDetail_SAgV2FromDB(LicenseeID, Currency, BaseCurrency, FromDate, ToDate, showSB, ShowRB, ShowNG, ShowBA, ShowLC, ShowVS, ShowCS, ReportType, drawfilter, excludeTest);
                 else
                 {
                     licenseDto = (LicenseeDTOV2)sessionLicenseDto;
@@ -2326,7 +2326,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             return licenseDtoPaging;
         }
 
-        public LicenseeDTOV2 SelReportByLicenseeDetail_MAgV2FromDB(int LicenseeID, int Currency, int CustId, int BaseCurrency, string FromDate, string ToDate, int ShowSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, int drawfilter, int excludeTest)
+        public LicenseeDTOV2 SelReportByLicenseeDetail_MAgV2FromDB(int LicenseeID, int Currency, int CustId, int BaseCurrency, string FromDate, string ToDate, int ShowSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest)
         {
             LicenseeDTOV2 licenseDto = new LicenseeDTOV2();
            // bool IsOld = CastAide.AsDateTime(FromDate) < new DateTime(2009, 01, 01);
@@ -2335,7 +2335,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             string MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay.ToShortDateString();
 
             DbResult dbResult = _licenseReportDAO.SelReportByLicenseeDetail_MAgV2(LicenseeID, Currency, CustId, FromDate, ToDate, ShowSB,
-                                                                          ShowRB, ShowNG, ShowBA, ShowLC, ReportType, MoveBetsDay, false,
+                                                                          ShowRB, ShowNG, ShowBA, ShowLC, ShowVS, ShowCS, ReportType, MoveBetsDay, false,
                                                                           drawfilter, excludeTest);
 
             if (dbResult == null)
@@ -2508,7 +2508,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             return licenseDto;
         }
 
-        public LicenseeDTOV2 SelReportByLicenseeDetail_MAgV2(int LicenseeID, int Currency, int custId, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache)
+        public LicenseeDTOV2 SelReportByLicenseeDetail_MAgV2(int LicenseeID, int Currency, int custId, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache)
         {
             LicenseeDTOV2 licenseDto = new LicenseeDTOV2();
             LicenseeDTOV2 licenseDtoPaging = new LicenseeDTOV2();
@@ -2522,7 +2522,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 DataTable dataTable = null;
 
                 if (sessionLicenseDto == null || fromCache == 0)
-                    licenseDto = SelReportByLicenseeDetail_MAgV2FromDB(LicenseeID, Currency, custId, BaseCurrency, FromDate, ToDate, showSB, ShowRB, ShowNG, ShowBA, ShowLC, ReportType, drawfilter, excludeTest);
+                    licenseDto = SelReportByLicenseeDetail_MAgV2FromDB(LicenseeID, Currency, custId, BaseCurrency, FromDate, ToDate, showSB, ShowRB, ShowNG, ShowBA, ShowLC, ShowVS, ShowCS, ReportType, drawfilter, excludeTest);
                 else
                 {
                     licenseDto = (LicenseeDTOV2)sessionLicenseDto;
