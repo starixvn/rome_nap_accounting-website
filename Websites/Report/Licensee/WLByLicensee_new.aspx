@@ -25,7 +25,7 @@
     <script src="../../js/jQuery/GridScroller/jquery.gridscroller.1.0.js" type="text/javascript"></script>
     <script src="../../js/jQuery/Pager/jpager.js?ver=1" type="text/javascript"></script>
     <script src="js/LicenseeReportV2.js?ver=1" type="text/javascript"></script>
-    <script src="js/LicenseeReportHelper.js?ver=1" type="text/javascript"></script>
+    <script src="js/LicenseeReportV2Helper.js?ver=1" type="text/javascript"></script>
 </head>
 <body>
     <div class="main">
@@ -135,7 +135,7 @@
                                             <span><input type="checkbox" id="chbShowBA" checked="checked" class="chksport" onclick="changeSport();" /><label for="chbShowBA">BA</label></span> 
                                             <span><input type="checkbox" id="chbLiveCasino" checked="checked" value="LC" class="chksport group1" onclick="changeSport();" /><label for="chbLiveCasino">Live Casino</label></span>
                                             <span><input type="checkbox" id="chbVS" checked="checked" class="chksport group1" value="VS" onclick="changeSport();" /><label for="chbVS">Virtual Sports</label></span>
-                                            <span><input type="checkbox" id="chbRNGCasino" checked="checked" class="chksport group1" value="CS" onclick="changeSport();" /><label for="chbRNGCasino">RNG Casino</label></span>
+                                            <span id="spRNGCasino"><input type="checkbox" id="chbRNGCasino" checked="checked" class="chksport group1" value="CS" onclick="changeSport();" /><label for="chbRNGCasino">RNG Casino</label></span>
                                         </td>
                                         <td colspan="2" class="r">
                                             <input id="Button2" name="btnReport" type="button" value="REPORT" class="btn" onclick="ResetValue();licenseeReport.renderMainReport(0);" />

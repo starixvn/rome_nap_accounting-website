@@ -65,6 +65,9 @@ function SelCurrency() {
     if ($('#dlSite').val() == '0')
         return;
     $("#ErrMsg").html("");
+
+    LicenseeReportHelper.CheckLicenseeOfferRNGCasino(data.siteId);
+
     try { parent.BlockUI(); } catch (e) { }
     $.ajax({
         type: "POST",

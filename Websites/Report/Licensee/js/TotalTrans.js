@@ -15,12 +15,14 @@ $(function () {
     totalTrans.getMonth();
     totalTrans.getSites();
     $("#ddlSite").change(function () {
-          $("#ddlSite option:selected").each(function () {
-                    //alert($(this).attr("fulltext"));
-                    $("#txtSite").val($(this).attr("fulltext"));
-              });
-        }).change();
-        
+        $("#ddlSite option:selected").each(function () {
+            //alert($(this).attr("fulltext"));
+            $("#txtSite").val($(this).attr("fulltext"));
+        });
+                
+        TotalTransHelper.CheckLicenseeOfferRNGCasino(this.value);
+    }).change();
+
 });
 
 var totalTrans = {
