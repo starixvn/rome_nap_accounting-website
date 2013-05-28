@@ -10,7 +10,8 @@
                     break;
                 }
             }
-
+            // no need to check
+            /*
             if (isOffer) {
                 $('#spRNGCasino').show();
                 $('#chkRNGCasino').attr('checked', true).addClass('chksport ');
@@ -18,7 +19,7 @@
             else {
                 $('#chkRNGCasino').attr('checked', false).removeClass('chksport ');
                 $('#spRNGCasino').hide();
-            }
+            }*/
         }
     };
 })(jQuery);
