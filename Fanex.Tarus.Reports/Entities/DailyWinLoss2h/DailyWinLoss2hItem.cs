@@ -25,7 +25,9 @@ namespace Fanex.Tarus.Reports.Entities.DailyWinLoss2h
         public double Variance { get; set; }
 
         public double Turnover { get; set; }
+        public double TurnoverVirtual { get; set; }
         public double Margin { get; set; }
+        public double MarginVirtual { get; set; }
 
         public string Status { get; set; }
         public string Hedge { get; set; }
@@ -48,10 +50,11 @@ namespace Fanex.Tarus.Reports.Entities.DailyWinLoss2h
             this.WinLoss += info.WinLoss;
             this.Position += info.Position;
             this.Commission += info.Commission;
-            this.Turnover += info.Turnover;
 
             this.LineTotal += info.LineTotal;
             this.LineTotalVirtual += info.LineTotalVirtual;
+            this.Turnover += info.Turnover;
+            this.TurnoverVirtual += info.TurnoverVirtual;
             this.Variance += info.Variance;
         }
 
@@ -61,6 +64,7 @@ namespace Fanex.Tarus.Reports.Entities.DailyWinLoss2h
             this.Position = info.Position;
             this.Commission = info.Commission;
             this.Turnover = info.Turnover;
+            this.TurnoverVirtual = info.TurnoverVirtual;
             this.LineTotal = info.LineTotal;
             this.LineTotalVirtual = info.LineTotalVirtual;
             this.Variance = info.Variance;
@@ -72,6 +76,7 @@ namespace Fanex.Tarus.Reports.Entities.DailyWinLoss2h
             this.Position = Math.Round(this.Position, 2);
             this.Commission = Math.Round(this.Commission, 2);
             this.Turnover = Math.Round(this.Turnover, 2);
+            this.TurnoverVirtual = Math.Round(this.TurnoverVirtual, 2);
             this.LineTotal = Math.Round(this.LineTotal, 2);
             this.LineTotalVirtual = Math.Round(this.LineTotalVirtual, 2);
             this.Variance = Math.Round(this.Variance, 2);

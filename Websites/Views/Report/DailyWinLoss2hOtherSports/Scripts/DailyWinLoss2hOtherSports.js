@@ -235,9 +235,16 @@ var DailyWinLoss2hManager = {
                         <td>\
                             <div class="col100 r" style="">' + StringFormatter.formatNumber(dwlRow.Turnover) + '</div>\
                         </td>\
+                        <td>\
+                            <div class="col100 r" style="">' + StringFormatter.formatNumber(dwlRow.TurnoverVirtual) + '</div>\
+                        </td>\
                          <td>\
                             <div class="col80 r ' + (dwlRow.Turnover.toFixed(2) != 0 && dwlRow.Margin.toFixed(2) > 0 ? 'red' : '') + '" style="">' +
                            (dwlRow.Turnover.toFixed(2) != 0 ? StringFormatter.formatNumber(dwlRow.Margin) + '%' : 'N/A') + '</div>\
+                        </td>\
+                         <td>\
+                            <div class="col80 r ' + (dwlRow.TurnoverVirtual.toFixed(2) != 0 && dwlRow.MarginVirtual.toFixed(2) > 0 ? 'red' : '') + '" style="">' +
+                           (dwlRow.TurnoverVirtual.toFixed(2) != 0 ? StringFormatter.formatNumber(dwlRow.MarginVirtual) + '%' : 'N/A') + '</div>\
                         </td>\
                     </tr>';
         }
@@ -251,7 +258,7 @@ var DailyWinLoss2hManager = {
                                 <td colspan="3"></td>\
                                 <td nowrap class="longtext-wrapper">' + StringFormatter.getDisplayColorOfValue(dwlRow.LineTotal) + '</td>\
                                   <td nowrap class="longtext-wrapper">' + StringFormatter.getDisplayColorOfValue(dwlRow.LineTotalVirtual) + '</td>\
-                              <td colspan="3"></td>\
+                              <td colspan="5"></td>\
                    </tr>';
         }
         return html;
@@ -264,7 +271,7 @@ var DailyWinLoss2hManager = {
                                 <td colspan="3"></td>\
                                 <td nowrap class="longtext-wrapper">' + StringFormatter.getDisplayColorOfValue(dwlRow.LineTotal) + '</td>\
                                    <td nowrap class="longtext-wrapper">' + StringFormatter.getDisplayColorOfValue(dwlRow.LineTotalVirtual) + '</td>\
-                             <td colspan="3"></td>\
+                             <td colspan="5"></td>\
                    </tr>';
         }
         return html;
@@ -277,14 +284,14 @@ var DailyWinLoss2hManager = {
                                 <td colspan="3"></td>\
                                 <td nowrap class="longtext-wrapper">' + StringFormatter.getDisplayColorOfValue(dwlRow.LineTotal) + '</td>\
                                  <td nowrap class="longtext-wrapper">' + StringFormatter.getDisplayColorOfValue(dwlRow.LineTotalVirtual) + '</td>\
-                              <td colspan="3"></td>\
+                              <td colspan="5"></td>\
                    </tr>';
         }
         return html;
     },
     emptyRowHtml: function (dwlRow, wldate) {
         var html = '<tr>\
-                        <td colspan ="9" class ="c" style="height:18px;"></td>\
+                        <td colspan ="11" class ="c" style="height:18px;"></td>\
                     </tr>';
         return html;
     },
@@ -306,7 +313,7 @@ var DailyWinLoss2hManager = {
     },
     renderNoData: function () {
         DailyWinLoss2hManager.tb.find("tr:not(.header)").remove();
-        DailyWinLoss2hManager.tb.append('<tr id="noinfo"><td id="tdNoInfomation" colspan="9" class="b c" style="" >There is no information available.</td></tr>');
+        DailyWinLoss2hManager.tb.append('<tr id="noinfo"><td id="tdNoInfomation" colspan="11" class="b c" style="" >There is no information available.</td></tr>');
         DailyWinLoss2hManager.me.removeClass('hidden');
         try { parent.jQuery.unblockUI(); } catch (e) { }
     },
@@ -331,7 +338,7 @@ var DailyWinLoss2hManager = {
                                 <td class="b">' + ibcMsg + '</td>\
                                 <td colspan="3"></td>\
                                 <td nowrap class="b longtext-wrapper" style="">' + StringFormatter.getDisplayColorOfValue(allIBCTotal) + '</td>\
-                                <td colspan="3"></td>\
+                                <td colspan="5"></td>\
                    </tr>';
         return html;
     },
@@ -364,6 +371,12 @@ var DailyWinLoss2hManager = {
                             <div class="col100 r"></div>\
                         </td>\
                          <td>\
+                            <div class="col100 r"></div>\
+                        </td>\
+                         <td>\
+                            <div class="col80 r" style=""></div>\
+                        </td>\
+                         <td>\
                             <div class="col80 r" style=""></div>\
                         </td>\
                     </tr>';
@@ -374,7 +387,7 @@ var DailyWinLoss2hManager = {
     renderCommwentRF: function (dailyWLReport) {
         var footerMsg = "* Grand Total (Virtual): Virtual All Total + 8RM + BARM";
         var html = '<tr>\
-                        <td id="tdNoInfomation" colspan="9" class="l" style="background-color: #E7EAEA;" >\
+                        <td id="tdNoInfomation" colspan="11" class="l" style="background-color: #E7EAEA;" >\
                             <div style="font-weight: bold;padding: 20px 0 15px;color: #565656;">' + footerMsg + '</div>\
                         </td>\
                     </tr>';

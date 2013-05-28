@@ -130,22 +130,28 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
                                 WinLoss = CastAide.AsDouble(row["WinLost"]),
                                 Position = CastAide.AsDouble(row["Position"]),
                                 Commission = CastAide.AsDouble(row["Commission"]),
-                                Turnover = CastAide.AsDouble(row["Turnover"]),
                                 LineTotal = CastAide.AsDouble(row["RealLineTotal"]),
                                 LineTotalVirtual = CastAide.AsDouble(row["VirtualLineTotal"]),
                                 RowTypeDWL2h = new Entities.Sport.BaseModel
                                 {
                                     Id = RowTypeConstants.Normal
                                 },
-                                RowIndex = rowIndex
+                                RowIndex = rowIndex,
+
+                                Turnover = CastAide.AsDouble(row["RealTurnover"]),
+                                TurnoverVirtual = CastAide.AsDouble(row["VirtualTurnover"])
                             };
 
                             dailyWinLoss2hItemX.Variance = ReportService.CalculateVariance(
                                 dailyWinLoss2hItemX.LineTotal,
                                 dailyWinLoss2hItemX.LineTotalVirtual);
+
                             dailyWinLoss2hItemX.Margin = ReportService.CalculateMargin(
                                 dailyWinLoss2hItemX.LineTotal,
                                 dailyWinLoss2hItemX.Turnover) * 100;
+                            dailyWinLoss2hItemX.MarginVirtual = ReportService.CalculateMargin(
+                                dailyWinLoss2hItemX.LineTotalVirtual,
+                                dailyWinLoss2hItemX.TurnoverVirtual) * 100;
 
                             sportTotal.Add(dailyWinLoss2hItemX);
                             dailyWinLoss2hItemX.Round();
@@ -160,6 +166,9 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
                         {
                             sportTotal.Margin = ReportService.CalculateMargin(sportTotal.LineTotal,
                                 sportTotal.Turnover) * 100;
+                            sportTotal.MarginVirtual = ReportService.CalculateMargin(sportTotal.LineTotalVirtual,
+                                sportTotal.TurnoverVirtual) * 100;
+
                             sportTotal.Round();
                             result.ReportDetails.Add(sportTotal);
                         }
@@ -172,9 +181,11 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
 
                     result.ReportTotal.NormalTotal.Margin = ReportService.CalculateMargin(result.ReportTotal.NormalTotal.LineTotal,
                              result.ReportTotal.NormalTotal.Turnover) * 100;
+                    result.ReportTotal.NormalTotal.MarginVirtual = ReportService.CalculateMargin(result.ReportTotal.NormalTotal.LineTotalVirtual,
+                             result.ReportTotal.NormalTotal.TurnoverVirtual) * 100;
+
                     result.ReportTotal.EightRMTotal.WinLoss = CastAide.AsDouble(outParam["winlost_8rm"], 0);
                     result.ReportTotal.BARMTotal.WinLoss = CastAide.AsDouble(outParam["winlost_barm"], 0);
-
                     result.ReportTotal.NormalTotal.Round();
                 }
             }
@@ -186,8 +197,10 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
             return result;
         }
 
-        private void ExportHeader_SoccerMain(ref ExcelWorksheet wsReport, int startCol,
-                                           ref int currentRow, string reportHeaderTitle)
+        private void ExportHeader_SoccerMain(ref ExcelWorksheet wsReport,
+            int startCol,
+            ref int currentRow,
+            string reportHeaderTitle)
         {
             var currentCol = startCol;
             ExcelCell currentCell;
@@ -195,6 +208,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
             var excelGemboxUtils = new ExcelGemboxUtils();
             var commStyle = GetCommonStyleDWL2h();
             var bgHeader = excelGemboxUtils.GetStyleTitle(Color.FromArgb(205, 222, 255));
+            var maxColIndex = 10;
 
             currentCol = startCol;
             wsReport.Columns[currentCol++].Width = 6000;
@@ -206,9 +220,11 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
             wsReport.Columns[currentCol++].Width = 4000;
             wsReport.Columns[currentCol++].Width = 4000;
             wsReport.Columns[currentCol++].Width = 4000;
+            wsReport.Columns[currentCol++].Width = 4000;
+            wsReport.Columns[currentCol++].Width = 4000;
 
             currentCol = startCol;
-            currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, startCol, currentRow, startCol + 8);
+            currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, startCol, currentRow, startCol + maxColIndex);
             currentCellRange.Merged = true;
             currentCellRange.Style = commStyle;
             currentCellRange.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
@@ -254,17 +270,17 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
             currentCellRange.Value = "Variance";
             currentCol++;
 
-            currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow + 1, currentCol);
+            currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow, currentCol + 1);
             currentCellRange.Merged = true;
             currentCellRange.Style = bgHeader;
             currentCellRange.Value = "Turnover";
-            currentCol++;
+            currentCol += 2;
 
-            currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow + 1, currentCol);
+            currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow, currentCol + 1);
             currentCellRange.Merged = true;
             currentCellRange.Style = bgHeader;
             currentCellRange.Value = "Margin";
-            currentCol++;
+            currentCol += 2;
             currentRow++;
 
             //SecondRow
@@ -278,11 +294,35 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
             currentCell.Style = bgHeader;
             currentCell.Value = "Virtual";
             currentCol++;
+
+            currentCol++;
+
+            currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Style = bgHeader;
+            currentCell.Value = "Real";
+            currentCol++;
+
+            currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Style = bgHeader;
+            currentCell.Value = "Virtual";
+            currentCol++;
+            currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Style = bgHeader;
+            currentCell.Value = "Real";
+            currentCol++;
+
+            currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Style = bgHeader;
+            currentCell.Value = "Virtual";
+            currentCol++;
             currentRow++;
         }
 
-        private void ExportBody_SoccerMain(ref ExcelWorksheet wsReport, DailyWinLoss2hReport report,
-            int startCol, ref int currentRow, DailyWinLoss2hParam param,
+        private void ExportBody_SoccerMain(ref ExcelWorksheet wsReport,
+            DailyWinLoss2hReport report,
+            int startCol,
+            ref int currentRow,
+            DailyWinLoss2hParam param,
             bool isLive)
         {
             var excelGemboxUtils = new ExcelGemboxUtils();
@@ -300,6 +340,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
             var evenRowbgTurnoverFormat = excelGemboxUtils.GetStyleIntNumber(".00", evenRowColor, true, true);
             var evenRownumberDefaultFormat = GetStyleIntNumberLiveCasino(".00", evenRowColor, false, false);
             ExcelCell currentCell;
+            var maxColIndex = 10;
 
             if (report != null && report.ReportDetails.Count > 0)
             {
@@ -356,11 +397,31 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
                     currentCol++;
 
                     currentCell = wsReport.Cells[currentRow, currentCol];
+                    currentCell.Style = (isEvenRow ? evenRownumberDefaultFormat : numberDefaultFormat);
+                    currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                    currentCell.Value = CastAide.AsDecimal(detail.TurnoverVirtual);
+                    currentCol++;
+
+                    currentCell = wsReport.Cells[currentRow, currentCol];
                     currentCell.Style = (isEvenRow ? evenRowbgFormatPercent : bgFormatPercent);
                     currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
                     if (Math.Round(detail.Turnover, 2) != 0)
                     {
                         currentCell.Value = CastAide.AsDouble(detail.Margin) / 100;
+                    }
+                    else
+                    {
+                        currentCell.Value = "N/A";
+                    }
+
+                    currentCol++;
+
+                    currentCell = wsReport.Cells[currentRow, currentCol];
+                    currentCell.Style = (isEvenRow ? evenRowbgFormatPercent : bgFormatPercent);
+                    currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                    if (Math.Round(detail.TurnoverVirtual, 2) != 0)
+                    {
+                        currentCell.Value = CastAide.AsDouble(detail.MarginVirtual) / 100;
                     }
                     else
                     {
@@ -374,7 +435,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
                     #endregion MainRow
                 }
 
-                this.ExportEmptyRow(ref wsReport, ref currentRow, startCol, startCol + 8);
+                this.ExportEmptyRow(ref wsReport, ref currentRow, startCol, startCol + maxColIndex);
 
                 #region TotalRow
 
@@ -437,11 +498,32 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
                 currentCol++;
 
                 currentCell = wsReport.Cells[currentRow, currentCol];
+                currentCell.Style = numberDefaultFormat;
+                currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+                currentCell.Value = CastAide.AsDecimal(normalTotal.TurnoverVirtual);
+                currentCol++;
+
+                currentCell = wsReport.Cells[currentRow, currentCol];
                 currentCell.Style = bgFormatPercent;
                 currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
                 if (Math.Round(normalTotal.Turnover, 2) != 0)
                 {
                     currentCell.Value = CastAide.AsDouble(normalTotal.Margin) / 100;
+                }
+                else
+                {
+                    currentCell.Value = "N/A";
+                }
+
+                currentCol++;
+
+                currentCell = wsReport.Cells[currentRow, currentCol];
+                currentCell.Style = bgFormatPercent;
+                currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                if (Math.Round(normalTotal.TurnoverVirtual, 2) != 0)
+                {
+                    currentCell.Value = CastAide.AsDouble(normalTotal.MarginVirtual) / 100;
                 }
                 else
                 {
@@ -457,7 +539,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
             }
             else
             {
-                this.ExportEmptyReport(ref wsReport, ref currentRow, startCol, startCol + 8);
+                this.ExportEmptyReport(ref wsReport, ref currentRow, startCol, startCol + maxColIndex);
             }
         }
 
@@ -503,10 +585,10 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
             currentCel.Value = CastAide.AsDecimal(allIBCTotal);
             currentCol++;
 
-            currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow, currentCol + 6);
+            currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow, currentCol + 8);
             currentCellRange.Merged = true;
             currentCellRange.Style = commonStyle;
-            currentCol += 7;
+            currentCol += 9;
             currentRow++;
         }
 
@@ -537,6 +619,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
             CellRange currentCellRange;
             var currentCol = startCol;
             var isEvenRow = true;
+            var maxColIndex = 13;
 
             #endregion ExcelFormat
 
@@ -561,7 +644,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
                             currentCell.Value = detail.MatchInfo.Name;
                             currentCol++;
 
-                            var eventDetail = "";
+                            var eventDetail = string.Empty;
                             if (param.BetType == Constants.Bettype.Outright || param.SportType == Constants.Sports.Financials)
                             {
                                 eventDetail = detail.MatchInfo.HomeTeam.Name + (detail.MatchInfo.IsNeutral ? " (N)" : "");
@@ -636,11 +719,31 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
                             currentCol++;
 
                             currentCell = wsReport.Cells[currentRow, currentCol];
+                            currentCell.Style = (isEvenRow ? evenRownumberDefaultFormat : numberDefaultFormat);
+                            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                            currentCell.Value = CastAide.AsDecimal(detail.TurnoverVirtual);
+                            currentCol++;
+
+                            currentCell = wsReport.Cells[currentRow, currentCol];
                             currentCell.Style = (isEvenRow ? evenRowbgFormatPercent : bgFormatPercent);
                             currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
                             if (Math.Round(detail.Turnover, 2) != 0)
                             {
                                 currentCell.Value = CastAide.AsDouble(detail.Margin) / 100;
+                            }
+                            else
+                            {
+                                currentCell.Value = "N/A";
+                            }
+
+                            currentCol++;
+
+                            currentCell = wsReport.Cells[currentRow, currentCol];
+                            currentCell.Style = (isEvenRow ? evenRowbgFormatPercent : bgFormatPercent);
+                            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                            if (Math.Round(detail.TurnoverVirtual, 2) != 0)
+                            {
+                                currentCell.Value = CastAide.AsDouble(detail.MarginVirtual) / 100;
                             }
                             else
                             {
@@ -706,11 +809,31 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
                             currentCol++;
 
                             currentCell = wsReport.Cells[currentRow, currentCol];
+                            currentCell.Style = numberDefaultFormat;
+                            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                            currentCell.Value = CastAide.AsDecimal(detail.TurnoverVirtual);
+                            currentCol++;
+
+                            currentCell = wsReport.Cells[currentRow, currentCol];
                             currentCell.Style = bgFormatPercent;
                             currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
                             if (Math.Round(detail.Turnover, 2) != 0)
                             {
                                 currentCell.Value = CastAide.AsDouble(detail.Margin) / 100;
+                            }
+                            else
+                            {
+                                currentCell.Value = "N/A";
+                            }
+
+                            currentCol++;
+
+                            currentCell = wsReport.Cells[currentRow, currentCol];
+                            currentCell.Style = bgFormatPercent;
+                            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                            if (Math.Round(detail.TurnoverVirtual, 2) != 0)
+                            {
+                                currentCell.Value = CastAide.AsDouble(detail.MarginVirtual) / 100;
                             }
                             else
                             {
@@ -731,7 +854,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
 
                             currentCol = startCol;
                             currentCol++;
-                            currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow, currentCol + 10);
+                            currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow, currentCol + maxColIndex - 1);
                             currentCellRange.Merged = true;
                             currentCellRange.Style = commonStyle;
                             currentCellRange.Style.Font.Weight = ExcelFont.BoldWeight;
@@ -749,7 +872,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
             }
             else
             {
-                this.ExportEmptyReport(ref wsReport, ref currentRow, startCol, startCol + 10);
+                this.ExportEmptyReport(ref wsReport, ref currentRow, startCol, startCol + maxColIndex);
             }
 
             #endregion Body
@@ -767,7 +890,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
             var excelGemboxUtils = new ExcelGemboxUtils();
             var bgHeader = excelGemboxUtils.GetStyleTitle(Color.FromArgb(205, 222, 255));
             var commonStyle = excelGemboxUtils.GetStyleText(255, 255, 255);
-            var endCol = startCol + 11;
+            var maxColIndex = 13;
 
             currentCol = startCol;
             var teamNameColWidth = 4000;
@@ -783,8 +906,10 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
             wsReport.Columns[currentCol++].Width = 3300;
             wsReport.Columns[currentCol++].Width = 3300;
             wsReport.Columns[currentCol++].Width = 3300;
+            wsReport.Columns[currentCol++].Width = 3300;
+            wsReport.Columns[currentCol++].Width = 3300;
 
-            var currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, startCol, currentRow, startCol + 11);
+            var currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, startCol, currentRow, startCol + maxColIndex);
             currentCellRange.Merged = true;
             currentCellRange.Style = commonStyle;
             currentCellRange.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
@@ -839,22 +964,44 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
             currentCellRange.Value = "Variance";
             currentCol++;
 
-            currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow + 1, currentCol);
+            currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow, currentCol + 1);
             currentCellRange.Merged = true;
             currentCellRange.Style = bgHeader;
             currentCellRange.Value = "Turnover";
-            currentCol++;
+            currentCol += 2;
 
-            currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow + 1, currentCol);
+            currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow, currentCol + 1);
             currentCellRange.Merged = true;
             currentCellRange.Style = bgHeader;
             currentCellRange.Value = "Margin";
-            currentCol++;
+            currentCol += 2;
             currentRow++;
 
             //SecondRow
             currentCol = startCol + 7;
             var currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Style = bgHeader;
+            currentCell.Value = "Real";
+            currentCol++;
+
+            currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Style = bgHeader;
+            currentCell.Value = "Virtual";
+            currentCol++;
+
+            currentCol++;
+
+            currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Style = bgHeader;
+            currentCell.Value = "Real";
+            currentCol++;
+
+            currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Style = bgHeader;
+            currentCell.Value = "Virtual";
+            currentCol++;
+
+            currentCell = wsReport.Cells[currentRow, currentCol];
             currentCell.Style = bgHeader;
             currentCell.Value = "Real";
             currentCol++;
@@ -935,6 +1082,12 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
             currentCol++;
 
             currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Style = numberDefaultFormat;
+            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+            currentCell.Value = CastAide.AsDecimal(total.TurnoverVirtual);
+            currentCol++;
+
+            currentCell = wsReport.Cells[currentRow, currentCol];
             currentCell.Style = bgFormatPercent;
             currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
             if (Math.Round(total.Turnover, 2) != 0)
@@ -947,11 +1100,28 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
             }
 
             currentCol++;
+
+            currentCell = wsReport.Cells[currentRow, currentCol];
+            currentCell.Style = bgFormatPercent;
+            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+            if (Math.Round(total.TurnoverVirtual, 2) != 0)
+            {
+                currentCell.Value = CastAide.AsDouble(total.MarginVirtual) / 100;
+            }
+            else
+            {
+                currentCell.Value = "N/A";
+            }
+
+            currentCol++;
             currentRow++;
         }
 
         private void ExportIBCTotal_DailyWLDirectDetails(ref ExcelWorksheet wsReport,
-            DailyWinLoss2hReportTotal detail, int startCol, ref int currentRow, DailyWinLoss2hParam param)
+            DailyWinLoss2hReportTotal detail,
+            int startCol,
+            ref int currentRow,
+            DailyWinLoss2hParam param)
         {
             var allIBCTotal = detail.EightRMTotal.WinLoss;
             if (_barmConfig.IsActive)
@@ -991,10 +1161,10 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hOtherSports
             currentCell.Value = CastAide.AsDecimal(allIBCTotal);
             currentCol++;
 
-            currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow, currentCol + 6);
+            currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow, currentCol + 8);
             currentCellRange.Merged = true;
             currentCellRange.Style = commonStyle;
-            currentCol += 7;
+            currentCol += 9;
         }
 
         #endregion SoccerReport
