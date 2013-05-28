@@ -257,7 +257,7 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
                    transids_bd,
                    transids_12eu,
                    transids_mhc,
-                   message.UserName, message.userPwd, message.UserId.ToString(), IP, out errcode, out errmsg
+                   message.UserName, message.userPwd, message.UserId.ToString(), IP,  message.Reason, out errcode, out errmsg
                     );
 
                 if (errcode == "0")
@@ -303,12 +303,12 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
                 DataTable dtMatch = dbResult.ResultSet.Tables[0];
                 DataTable dtUsers = dbResult.ResultSet.Tables[1];
                 DataTable dtChoice = new DataTable();
-                _emailService.SendEmailWhenDeleteBetToCSD(result, dtMatch, dtUsers, dtChoice, true, false);
+                _emailService.SendEmailWhenDeleteBetToCSD(result, dtMatch, dtUsers, dtChoice, true, false, message.Reason);
 
                 //Send email with real and test currency
                 dtUsers = dbResult.ResultSet.Tables[3];
-                _emailService.SendEmailWhenDeleteBetToInternalGroup(result, dtMatch, dtUsers, dtChoice, true, false, true);
-                _emailService.SendEmailWhenDeleteBetToInternalGroup(result, dtMatch, dtUsers, dtChoice, true, false, false);
+                _emailService.SendEmailWhenDeleteBetToInternalGroup(result, dtMatch, dtUsers, dtChoice, true, false, true, message.Reason);
+                _emailService.SendEmailWhenDeleteBetToInternalGroup(result, dtMatch, dtUsers, dtChoice, true, false, false, message.Reason);
 
             }
             catch (System.Exception ex)

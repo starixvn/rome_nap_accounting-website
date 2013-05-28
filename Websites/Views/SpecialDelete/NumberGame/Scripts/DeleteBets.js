@@ -136,8 +136,15 @@ var delbet = {
     submit: function () {
         $("#ErrorMessage").hide();
         $("#ErrorMessage2").hide();
-        if ($("#userpwd").val() == "") {
+
+        if ($("#reason").val() == "") {
+            $("#ErrorMessage").width(200).html("<div class='alertboxerr'><div>Please enter reason</div></div>").show();
+            $("#reason").focus();
+            return;
+        }
+        else if ($("#userpwd").val() == "") {
             $("#ErrorMessage").width(200).html("<div class='alertboxerr'><div>Please enter password</div></div>").show();
+            $("#userpwd").focus();
             return;
         }
         if (!this.checkMsg()) return;
@@ -433,15 +440,14 @@ var delbet = {
         msg.Content_jp = $('#mjp').val();
         msg.Content_th = $('#mth').val();
         msg.Content_es = $('#mes').val();
-        msg.Content_ko = $('#mko').val();
+        msg.Content_ko = $('#mko').val();        
         msg.UserName = $("#hiddenAccUserName").val();
         msg.UserId = $("#hiddenAccID").val();
         msg.userPwd = $('#userpwd').val();
         msg.CreatorId = $('#hiddenAccID').val();
         msg.CreatorName = $('#hiddenAccUserName').val();
-
-
-
+        msg.Reason = $('#reason').val();
+        
         delbet.param.transids_n = delbet.getSeletedId('Normal');
         delbet.param.transids_d = delbet.getSeletedId('Deposit');
         delbet.param.transids_bd = delbet.getSeletedId('BetDaq');

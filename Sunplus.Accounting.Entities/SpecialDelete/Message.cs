@@ -132,10 +132,12 @@
         }
 
         public string userPwd { get; set; }
+
+        public string Reason { get; set; }
     }
 
     public class MessageMP : Message
     {
-        public int IsSend { get; set; }
+        public int IsSend { get; set; }        
     }
 }

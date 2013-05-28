@@ -58,7 +58,7 @@ namespace Fanex.Tarus.SpecialDelete.DataAccess.NumberGame
             string transids_bd, 
             string transids_12eu, 
             string transids_mhc,            
-            string username, string password, string userid, string ip, out string errcode, out string errmsg)
+            string username, string password, string userid, string ip, string reason, out string errcode, out string errmsg)
         {
             using (ObjectDb objDB = new ObjectDb("Acc_BettransDelSpecial_NumberGame"))
             {
@@ -80,6 +80,7 @@ namespace Fanex.Tarus.SpecialDelete.DataAccess.NumberGame
                 h.Add("userpwd", Encryption.CfsEnCode(password));
                 h.Add("userid", userid);
                 h.Add("ip", ip);
+                h.Add("reason", reason);
                 h.Add("errcode", 0);
                 h.Add("errmsg", "");
 

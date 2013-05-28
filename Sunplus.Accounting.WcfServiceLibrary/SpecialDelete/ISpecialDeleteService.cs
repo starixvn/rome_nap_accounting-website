@@ -25,7 +25,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.SpecialDelete
         Result DeleteSpecialTransactionNumberGame(int matchId, long frefno, long trefno, string live, string dead,
                      int DelOption, string transids,
             int DelOption_BD, string transids_BD, int DelOption_12EU, string transids_12EU, int DelOption_MHC, string transids_MHC,
-            Message message);
+            Message message, string reason);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
@@ -36,7 +36,8 @@ namespace Sunplus.Accounting.WcfServiceLibrary.SpecialDelete
                                           string DelOption_12EU, string transids_12EU,
                                           string DelOption_MHC, string transids_MHC, string betteam430,
                                           string betteam6, string betteam14, string betteam16, Message message,
-                                          string homescore, string awayscore, string Fromtransdate, string Totransdate, int SAFilter);
+                                          string homescore, string awayscore, string Fromtransdate, string Totransdate, int SAFilter,
+                                          string reason);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]

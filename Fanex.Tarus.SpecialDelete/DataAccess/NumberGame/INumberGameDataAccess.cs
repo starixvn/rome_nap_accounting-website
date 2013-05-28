@@ -29,7 +29,7 @@ namespace Fanex.Tarus.SpecialDelete.DataAccess.NumberGame
             string transids_12eu,
             string transids_mhc,
                         
-            string username, string password, string userid, string ip,
+            string username, string password, string userid, string ip, string reason,
             out string errcode, out string errmsg
 
            );

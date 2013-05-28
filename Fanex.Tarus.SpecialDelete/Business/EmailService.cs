@@ -66,7 +66,7 @@ using Fanex.Tarus.SpecialDelete.Entity;
             }
         }
 
-        public void SendEmailWhenDeleteBetToInternalGroup(ResultModel result, DataTable dtMatch, DataTable dtUsers, DataTable dtChoice, bool IsNumberGame, bool IsLiveCasino, bool IsRealCurrency)
+        public void SendEmailWhenDeleteBetToInternalGroup(ResultModel result, DataTable dtMatch, DataTable dtUsers, DataTable dtChoice, bool IsNumberGame, bool IsLiveCasino, bool IsRealCurrency, string reason)
         {
             try
             {
@@ -169,6 +169,7 @@ using Fanex.Tarus.SpecialDelete.Entity;
                         TemplateHandler.Assign(ref tplMatch, "EventDate", CastAide.AsDateTime(drMatch["EventDate"]).ToShortDateString());
                         TemplateHandler.Assign(ref tplMatch, "UserName", AppSession.Username);
                         TemplateHandler.Assign(ref tplMatch, "time", Convert.ToDateTime(drMatch["DATETIME"]));
+                        TemplateHandler.Assign(ref tplMatch, "reason", reason);
 
                         string site = string.Empty;
                         string bgColor = string.Empty;
@@ -440,7 +441,7 @@ using Fanex.Tarus.SpecialDelete.Entity;
             return body;
         }
 
-        public void SendEmailWhenDeleteBetToCSD(ResultModel result, DataTable dtMatch, DataTable dtUsers, DataTable dtChoice, bool IsNumberGame, bool IsLiveCasino)
+        public void SendEmailWhenDeleteBetToCSD(ResultModel result, DataTable dtMatch, DataTable dtUsers, DataTable dtChoice, bool IsNumberGame, bool IsLiveCasino, string reason)
         {
             try
             {
@@ -508,6 +509,7 @@ using Fanex.Tarus.SpecialDelete.Entity;
                         TemplateHandler.Assign(ref tplMatch, "EventDate", CastAide.AsDateTime(drMatch["EventDate"]).ToShortDateString());
                         TemplateHandler.Assign(ref tplMatch, "UserName", AppSession.Username);
                         TemplateHandler.Assign(ref tplMatch, "time", Convert.ToDateTime(drMatch["DATETIME"]));
+                        TemplateHandler.Assign(ref tplMatch, "reason", reason);
 
                         string site = string.Empty;
                         string bgColor = string.Empty;
@@ -682,6 +684,7 @@ using Fanex.Tarus.SpecialDelete.Entity;
                         tplpath = "LiveCasino/";
                     string tplMatchAll = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMail.htm");
                     TemplateHandler.Assign(ref tplMatchAll, "ActionType", "Recovered");
+                    TemplateHandler.RemoveBlock(ref tplMatchAll, "reason");
 
                     string tplUser = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow.htm");
                                         
@@ -986,6 +989,7 @@ using Fanex.Tarus.SpecialDelete.Entity;
                         tplpath = "LiveCasino/";
                     string tplMatchAll = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMail.htm");
                     TemplateHandler.Assign(ref tplMatchAll, "ActionType", "Recovered");
+                    TemplateHandler.RemoveBlock(ref tplMatchAll, "reason");
 
                     string tplUser = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow.htm");
 

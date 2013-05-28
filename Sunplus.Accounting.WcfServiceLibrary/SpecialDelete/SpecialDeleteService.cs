@@ -30,14 +30,15 @@ namespace Sunplus.Accounting.WcfServiceLibrary.SpecialDelete
         }
 
 
-        public Result DeleteSpecialTransactionNumberGame(int matchId, long frefno, long trefno, string live, string dead, int DelOption, string transids, int DelOption_BD, string transids_BD, int DelOption_12EU, string transids_12EU, int DelOption_MHC, string transids_MHC, Message message) 
+        public Result DeleteSpecialTransactionNumberGame(int matchId, long frefno, long trefno, string live, string dead, int DelOption, string transids, int DelOption_BD, string transids_BD, int DelOption_12EU, string transids_12EU, int DelOption_MHC, string transids_MHC, Message message, string reason) 
         {
             var specialDelete = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.SpecialDelete.NumberGame.ISpecialDeleteService>();
             return specialDelete.DeleteSpecialTransactionNumberGame(matchId, frefno, trefno, live, dead,
                                                                     DelOption, transids, 
                                                                     DelOption_BD, transids_BD,
                                                                     DelOption_12EU, transids_12EU,
-                                                                    DelOption_MHC, transids_MHC, message);
+                                                                    DelOption_MHC, transids_MHC, message,
+                                                                    reason);
         }
 
 
@@ -45,7 +46,8 @@ namespace Sunplus.Accounting.WcfServiceLibrary.SpecialDelete
             string betteam1378, string betteam515, string hdp, string uname, string userId, string pass,
             string DelOption, string transids, string Liveindicator, string DelOption_BD, string transids_BD, 
             string DelOption_12EU, string transids_12EU, string DelOption_MHC, string transids_MHC,
-            string betteam430, string betteam6, string betteam14, string betteam16, Message message, string homescore, string awayscore, string Fromtransdate, string Totransdate, int SAFilter)
+            string betteam430, string betteam6, string betteam14, string betteam16, Message message, string homescore, string awayscore, string Fromtransdate, string Totransdate, int SAFilter,
+            string reason)
         {
             var specialDelete = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.SpecialDelete.ISpecialDeleteService>();
             return specialDelete.DeleteSpecialTransaction(matchId, frefno, trefno, bettype,
@@ -53,7 +55,8 @@ namespace Sunplus.Accounting.WcfServiceLibrary.SpecialDelete
                                           userId, pass, DelOption, transids,
                                           Liveindicator, DelOption_BD, transids_BD,
                                           DelOption_12EU, transids_12EU,
-                                          DelOption_MHC, transids_MHC, betteam430, betteam6, betteam14, betteam16, message, homescore, awayscore, Fromtransdate, Totransdate, SAFilter);
+                                          DelOption_MHC, transids_MHC, betteam430, betteam6, betteam14, betteam16, message, homescore, awayscore, Fromtransdate, Totransdate, SAFilter,
+                                          reason);
             //Result result = new Result();
             //return result;
         }

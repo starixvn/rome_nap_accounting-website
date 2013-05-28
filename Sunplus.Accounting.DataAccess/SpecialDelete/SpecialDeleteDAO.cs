@@ -51,7 +51,7 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
         }
 
 
-        public DeleteResult DeleteSpecialTransactionNumberGame(int matchId, long frefno, long trefno, string live, string dead, string username, int custId, string userpwd, int DelOption, string transids, int DelOption_BD, string transids_BD, int DelOption_12EU, string transids_12EU, int DelOption_MHC, string transids_MHC, string ip)
+        public DeleteResult DeleteSpecialTransactionNumberGame(int matchId, long frefno, long trefno, string live, string dead, string username, int custId, string userpwd, int DelOption, string transids, int DelOption_BD, string transids_BD, int DelOption_12EU, string transids_12EU, int DelOption_MHC, string transids_MHC, string ip, string reason)
         {
 
             using (ObjectDb objDb = new ObjectDb("Acc_BettransDelSpecial_NumberGame", 600))
@@ -74,6 +74,7 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
                 hashtable.Add("deloption_mhc", DelOption_MHC);
                 hashtable.Add("transids_mhc", transids_MHC);
                 hashtable.Add("ip", ip);
+                hashtable.Add("reason", reason);
                 hashtable.Add("errcode", 0);
                 hashtable.Add("errmsg", string.Empty);
 
@@ -100,7 +101,8 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
                                                        string liveindicator, string DelOption_BD, string transids_BD,
                                                        string DelOption_12EU, string transids_12EU,
                                                        string DelOption_MHC, string transids_MHC, string betteam430,
-                                                       string betteam6, string betteam14, string betteam16, string homescore, string awayscore, string fromtransdate, string totransdate, int SAFilter)
+                                                       string betteam6, string betteam14, string betteam16, string homescore, string awayscore, string fromtransdate, string totransdate, int SAFilter,
+                                                       string reason)
         {
             
             using (ObjectDb objDb = new ObjectDb("Acc_BettransDelSpecial", 300))
@@ -135,6 +137,8 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
                 hash.Add("betteam14", betteam14);
                 hash.Add("betteam16", betteam16);
                 hash.Add("safilter", SAFilter);
+                hash.Add("reason", reason);
+
                 if (string.IsNullOrEmpty(homescore))
                     homescore = string.Empty;
                 if (string.IsNullOrEmpty(awayscore))
@@ -345,7 +349,8 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
                                                        string kickoffdate, string DelOption_BD, string transids_BD,
                                                        string DelOption_12EU, string transids_12EU,
                                                        string DelOption_MHC, string transids_MHC, string betteam430, 
-                                                       string betteam6, string betteam14, string betteam16, int SAFilter)
+                                                       string betteam6, string betteam14, string betteam16, int SAFilter,
+                                                       string reason)
         {             
 
             using (ObjectDb objDb = new ObjectDb("Acc_BettransDelSpecialDel_EarlyKO", 1000))
@@ -380,6 +385,7 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
                 hash.Add("betteam14", betteam14);
                 hash.Add("betteam16", betteam16);
                 hash.Add("safilter", SAFilter);
+                hash.Add("reason", reason);
 
                 objDb.AssignParamValues(hash);
 
@@ -470,7 +476,7 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
                                           string DelOption_D, string transids_D,      
                                           string DelOption_BD, string transids_BD, string DelOption_12EU,
                                           string transids_12EU, string DelOption_MHC, string transids_MHC, string betteam430,
-                                          string betteam6, string betteam14, string betteam16, string Fromtransdate, string Totransdate, string ParlayType)
+                                          string betteam6, string betteam14, string betteam16, string Fromtransdate, string Totransdate, string ParlayType, string reason)
         {
 
 
@@ -523,6 +529,7 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
                 hash.Add("errcode", 0);
                 hash.Add("errmsg", string.Empty);
                 hash.Add("ip", Utils.GetClientIP());
+                hash.Add("reason", reason);
                 //hash.Add("parlaytype", ParlayType);
 
                 objDb.AssignParamValues(hash);

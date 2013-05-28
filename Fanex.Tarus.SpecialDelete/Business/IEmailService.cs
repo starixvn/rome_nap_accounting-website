@@ -21,9 +21,9 @@ using System.Data;
     {
         bool SendMailWhenDeleteBetToDBA(string ErrMsg, string ErrCode, string MatchID, string FromRefNo, string ToRefNo);
 
-        void SendEmailWhenDeleteBetToInternalGroup(ResultModel result, DataTable dtMatch, DataTable dtUsers, DataTable dtChoice, bool IsNumberGame, bool IsLiveCasino, bool IsRealCurrency);
+        void SendEmailWhenDeleteBetToInternalGroup(ResultModel result, DataTable dtMatch, DataTable dtUsers, DataTable dtChoice, bool IsNumberGame, bool IsLiveCasino, bool IsRealCurrency, string reason);
 
-        void SendEmailWhenDeleteBetToCSD(ResultModel result, DataTable dtMatch, DataTable dtUsers, DataTable dtChoice, bool IsNumberGame, bool IsLiveCasino);
+        void SendEmailWhenDeleteBetToCSD(ResultModel result, DataTable dtMatch, DataTable dtUsers, DataTable dtChoice, bool IsNumberGame, bool IsLiveCasino, string reason);
 
         bool SendMailWhenRecoverBetToDBA(string ErrMsg, string ErrCode, string TransID);
 

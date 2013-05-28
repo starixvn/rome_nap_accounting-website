@@ -1128,7 +1128,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
         }
         #endregion
 
-        protected string SendEmailToCSD(int errcode, string errmsg, DataSet rs, bool IsNumberGame)
+        protected string SendEmailToCSD(int errcode, string errmsg, DataSet rs, bool IsNumberGame, string reason)
         {
             string ErrMsg = "";
             try
@@ -1303,6 +1303,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                     TemplateHandler.Assign(ref tplMatch, "Away", CacheRef.GetTeamName(drMatch["awayid"]));
                                     TemplateHandler.Assign(ref tplMatch, "EventDate", FormatHandler.FormatDateEn(drMatch["EventDate"]));
                                     TemplateHandler.Assign(ref tplMatch, "UserName", AppSession.Username);
+                                    TemplateHandler.Assign(ref tplMatch, "reason", reason);
                                     TemplateHandler.Assign(ref tplMatch, "time", Convert.ToDateTime(drMatch["datetime"]));
 
                                     string site = string.Empty;
@@ -1489,7 +1490,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             }
         }
 
-        protected string SendEmailWhenDeleteBetToInternalGroup(int errcode, string errmsg, DataSet rs, bool IsNumberGame, bool IsLiveCasino, bool IsRealCurrency)
+        protected string SendEmailWhenDeleteBetToInternalGroup(int errcode, string errmsg, DataSet rs, bool IsNumberGame, bool IsLiveCasino, bool IsRealCurrency, string reason)
         {
             string ErrMsg = "";
             try
@@ -1624,6 +1625,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             }
                             TemplateHandler.Assign(ref tplMatch, "EventDate", FormatHandler.FormatDateEn(drMatch["EventDate"]));
                             TemplateHandler.Assign(ref tplMatch, "UserName", AppSession.Username);
+                            TemplateHandler.Assign(ref tplMatch, "reason", reason);
                             TemplateHandler.Assign(ref tplMatch, "time", Convert.ToDateTime(drMatch["datetime"]));
 
                             string site = string.Empty;
@@ -1815,12 +1817,15 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             tplpath = "LiveCasino/";
                         string tplMatchAll = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMail.htm");
                         TemplateHandler.Assign(ref tplMatchAll, "ActionType", "Recovered");
+                        TemplateHandler.RemoveBlock(ref tplMatchAll, "reason");
 
                         string tplUser = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow.htm");
 
                         //For special bets - 12EU
                         string tplMatchAll_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMail_SpecialBet.htm");
                         TemplateHandler.Assign(ref tplMatchAll_SpecialBet, "ActionType", "Recovered");
+                        TemplateHandler.RemoveBlock(ref tplMatchAll, "reason");
+
                         string tplUser_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow_SpecialBet.htm");
 
                         tplUser_SpecialBet = tplUser_SpecialBet.Replace("Bets", "Bet");
@@ -2188,7 +2193,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
         /// <param name="rs"></param>
         /// <param name="transid"></param>
         /// <returns></returns>
-        protected string SendEmailToCSDEarlyKO(DataSet rs, string transid)
+        protected string SendEmailToCSDEarlyKO(DataSet rs, string transid, string reason)
         {
             string ErrMsg = "";
             try
@@ -2351,6 +2356,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                 TemplateHandler.Assign(ref tplMatch, "EventDate", FormatHandler.FormatDateEn(drMatch["EventDate"]));
                                 TemplateHandler.Assign(ref tplMatch, "UserName", AppSession.Username);
                                 TemplateHandler.Assign(ref tplMatch, "time", Convert.ToDateTime(drMatch["datetime"]));
+                                TemplateHandler.Assign(ref tplMatch, "reason", reason);
 
                                 string site = string.Empty;
                                 string bgColor = string.Empty;
@@ -2509,7 +2515,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
         }
 
 
-        protected string SendEmailWhenDeleteBetToInternalGroupEarlyKO(DataSet rs, string transid, bool IsRealCurrency)
+        protected string SendEmailWhenDeleteBetToInternalGroupEarlyKO(DataSet rs, string transid, bool IsRealCurrency, string reason)
         {
             string ErrMsg = "";
             try
@@ -2596,6 +2602,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         TemplateHandler.Assign(ref tplMatch, "EventDate", FormatHandler.FormatDateEn(drMatch["EventDate"]));
                         TemplateHandler.Assign(ref tplMatch, "UserName", AppSession.Username);
                         TemplateHandler.Assign(ref tplMatch, "time", Convert.ToDateTime(drMatch["datetime"]));
+                        TemplateHandler.Assign(ref tplMatch, "reason", reason);
 
                         string site = string.Empty;
                         string bgColor = string.Empty;

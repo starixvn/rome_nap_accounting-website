@@ -656,7 +656,15 @@ var specialDelete = {
         $('#ErrorMessage').html('');
         $('#trMsg2').hide();
         $('#ErrMsg').html('');
-        if ($('#username').val() == "") {
+
+        if ($('#reason').val() == "") {
+            $('#trMsg2').show();
+            showAlertMessage("ErrorMessage", "Please enter reason", 1);
+            //$('#ErrorMessage').html("*Please enter reason");
+            $('#reason').focus();
+            return false;
+        }
+        else if ($('#username').val() == "") {
             $('#trMsg2').show();
             showAlertMessage("ErrorMessage", "Please enter username", 1);
             //$('#ErrorMessage').html("*Please enter username");
@@ -855,7 +863,8 @@ var specialDelete = {
             'Fromtransdate': par.FromTransdate,
             'Totransdate': par.ToTransdate,
             'SAFilter': par.SAFilter,
-            'Liveindicator': par.Liveindicator
+            'Liveindicator': par.Liveindicator,
+            'reason': $('#reason').val(),
         };
         $.ajax({
             type: "POST",
