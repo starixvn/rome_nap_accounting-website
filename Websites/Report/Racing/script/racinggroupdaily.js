@@ -22,7 +22,7 @@ var racingGroup = {
                                 <div class="col100 c">' + row.WinlostDate + '</div>\
                             </td>\
                             <td >\
-                                <div class="col100 c">' + row.Name + '</div>\
+                                <div class="col130 c">' + row.Name + '</div>\
                             </td>\
                         </tr>';
         }
