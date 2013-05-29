@@ -965,13 +965,27 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             var fistColumnText = string.Empty;
 
             string currencyName = "";
-            if (criteria.ConvertToCurrency == 0)
+            int currencyId = 0;
+            if (criteria.ConvertToCurrency == 0 && criteria.Currency == 0)
+            {
+                currencyId = 0;
+            }
+            else if (criteria.ConvertToCurrency == 0 && criteria.Currency > 0)
+            {
+                currencyId = criteria.Currency;
+            }
+            else if (criteria.ConvertToCurrency != 0 && criteria.Currency != 0)
+            {
+                currencyId = criteria.ConvertToCurrency;
+            }
+
+            if (currencyId == 0)
             {
                 currencyName = " - View in All Currencies";
             }
             else
             {
-                currencyName = Sunplus.Accounting.Business.CacheManager.CacheUtils.GetExchangeName(Math.Abs(criteria.ConvertToCurrency));            
+                currencyName = Sunplus.Accounting.Business.CacheManager.CacheUtils.GetExchangeName(currencyId);            
                 currencyName = " - View in " + currencyName;
                 currencyName = currencyName.Replace("US$", "USD");
             }
