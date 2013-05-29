@@ -41,8 +41,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                           string liveindicator, string DelOption_BD, string transids_BD,
                                           string DelOption_12EU, string transids_12EU,
                                           string DelOption_MHC, string transids_MHC, string betteam430,
-                                          string betteam6, string betteam14, string betteam16, Message message, string homescore, string awayscore, string fromtransdate, string totransdate, int SAFilter,
-                                          string reason)
+                                          string betteam6, string betteam14, string betteam16, Message message, string homescore, string awayscore, string fromtransdate, string totransdate, int SAFilter)
         {
             Result result = new Result(0, string.Empty);
             if (!Permissions.GetHostPermission(Enumerations.Functions.SpecialDelete.SpecialDeleteSportBook))
@@ -59,7 +58,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                           liveindicator, DelOption_BD, transids_BD,
                                           DelOption_12EU, transids_12EU,
                                           DelOption_MHC, transids_MHC, betteam430, betteam6, betteam14, betteam16, homescore, awayscore, fromtransdate, totransdate, SAFilter,
-                                          reason);
+                                          message.Reason);
 
 
             if (delResult.Error.ErrorCode > 0)
@@ -75,10 +74,10 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 {
                     result.ErrorMessage += AlertMessage.GetMsg("Have a problem when sending private message to users. Please infom to IT about this.", AlertMessage.MsgType.Error);
                 }
-                result.ErrorMessage += SendEmailToCSD(delResult.Error.ErrorCode, delResult.Error.ErrorMessage, delResult.PrivateMessage, false, reason);
+                result.ErrorMessage += SendEmailToCSD(delResult.Error.ErrorCode, delResult.Error.ErrorMessage, delResult.PrivateMessage, false, message.Reason);
 
-                SendEmailWhenDeleteBetToInternalGroup(delResult.Error.ErrorCode, delResult.Error.ErrorMessage, delResult.PrivateMessage, false, false, true, reason); // for real currency
-                SendEmailWhenDeleteBetToInternalGroup(delResult.Error.ErrorCode, delResult.Error.ErrorMessage, delResult.PrivateMessage, false, false, false, reason); // for test currency
+                SendEmailWhenDeleteBetToInternalGroup(delResult.Error.ErrorCode, delResult.Error.ErrorMessage, delResult.PrivateMessage, false, false, true, message.Reason); // for real currency
+                SendEmailWhenDeleteBetToInternalGroup(delResult.Error.ErrorCode, delResult.Error.ErrorMessage, delResult.PrivateMessage, false, false, false, message.Reason); // for test currency
                 
             }
             return result;

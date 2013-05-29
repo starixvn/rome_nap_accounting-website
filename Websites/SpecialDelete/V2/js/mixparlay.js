@@ -46,6 +46,7 @@ var mixparlay = {
         });
         //
         $('input.btn.showbet').bind('click', function (e) {
+            $('#reason').val('');
             mixparlay.showBet(1, mixparlay.counter, true);
         });
         $('input.btn.delbet').bind('click', function (e) {
@@ -709,21 +710,21 @@ var mixparlay = {
         $('#ErrorMessage').html('');
         $('#trMsg2').hide();
 
-        if ($('#reason').val() == "") {
+        if ($('#reason').val().trim() == "") {
             $('#trMsg2').show();
-            showAlertMessage("ErrorMessage", "Please enter reason", 1);
+            showAlertMessage("ErrorMessage", "Please enter a reason.", 1);
             $('#reason').focus();
             return false;
-        }
+        }        
         else if ($('#username').val() == "") {
             $('#trMsg2').show();
-            showAlertMessage("ErrorMessage", "Please enter username", 1);
+            showAlertMessage("ErrorMessage", "Please enter username.", 1);
             $('#username').focus();
             return false;
         }
         else if ($('#userpwd').val() == "") {
             $('#trMsg2').show();
-            showAlertMessage("ErrorMessage", "Please enter password", 1);
+            showAlertMessage("ErrorMessage", "Please enter password.", 1);
             $('#userpwd').focus();
             return false;
         }

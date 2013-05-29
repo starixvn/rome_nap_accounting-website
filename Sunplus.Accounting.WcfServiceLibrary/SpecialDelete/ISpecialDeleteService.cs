@@ -36,8 +36,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.SpecialDelete
                                           string DelOption_12EU, string transids_12EU,
                                           string DelOption_MHC, string transids_MHC, string betteam430,
                                           string betteam6, string betteam14, string betteam16, Message message,
-                                          string homescore, string awayscore, string Fromtransdate, string Totransdate, int SAFilter,
-                                          string reason);
+                                          string homescore, string awayscore, string Fromtransdate, string Totransdate, int SAFilter);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]

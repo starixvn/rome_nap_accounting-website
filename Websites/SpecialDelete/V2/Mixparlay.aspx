@@ -408,7 +408,7 @@
                         <tr>
                             <td>REASON:</td>
                             <td>
-                                <input type="text" id="reason" name="reason" onkeyup="countChar(this,150,charNum)" />&nbsp;<span style="color:Red;">(*)</span><i><label id="charNum">Characters Left: 150</label></i>
+                                <input type="text" id="reason" name="reason" onkeyup="countChar(this,150,'#charNum')" />&nbsp;<span style="color:Red;">(*)</span><i><label id="charNum">Characters Left: 150</label></i>
                             </td>
                         </tr>
                         <tr>

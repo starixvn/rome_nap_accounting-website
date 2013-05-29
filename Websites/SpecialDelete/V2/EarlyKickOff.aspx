@@ -295,7 +295,7 @@
             <div class="box_clear"></div>
             <div class="box_button delete" style="display:none;">
                 <table border="0px" class="table"><tbody>
-                    <tr><td>REASON:</td><td><input type="text" id="reason" name="reason" onkeyup="countChar(this,150,charNum)" />&nbsp;<span style="color:Red;">(*)</span><i><label id="charNum">Characters Left: 150</label></i></td></tr>
+                    <tr><td>REASON:</td><td><input type="text" id="reason" name="reason" onkeyup="countChar(this,150,'#charNum')" />&nbsp;<span style="color:Red;">(*)</span><i><label id="charNum">Characters Left: 150</label></i></td></tr>
                     <tr><td>USERNAME:</td><td><input type="text" id="username" name="username" disabled="disabled"></td></tr><tr><td>PASSWORD:</td><td><input type="password" id="userpwd" name="userpwd"></td></tr><tr><td colspan="2"><div class="error-message" id="ErrorMessage"></div></td></tr>
                 </tbody></table>
                 <br/>

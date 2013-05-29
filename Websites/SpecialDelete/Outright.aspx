@@ -16,7 +16,7 @@
 
     <script src="../js/jQuery/json2.js" type="text/javascript"></script>
     <script type="text/javascript" src="../js/common.js"></script>   
-    <script src="js/SpecialDelete.js" type="text/javascript"></script>
+    <script src="js/SpecialDelete.js?ver=1" type="text/javascript"></script>
     
     
     <style type="text/css">

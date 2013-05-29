@@ -19,8 +19,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                           string liveindicator, string DelOption_BD, string transids_BD,
                                           string DelOption_12EU, string transids_12EU,
                                           string DelOption_MHC, string transids_MHC, string betteam430,
-                                          string betteam6, string betteam14, string betteam16, Message message, string homescore, string awayscore, string fromtransdate, string totransdate, int SAFilter,
-                                          string reason);
+                                          string betteam6, string betteam14, string betteam16, Message message, string homescore, string awayscore, string fromtransdate, string totransdate, int SAFilter);
 
         SpecialDeleteDTO SelRecoverBets(string transid);
 

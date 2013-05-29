@@ -109,6 +109,7 @@ var delbet = {
         }).ForceDecimalOnly();
 
         $("#btnShow").click(function () {
+            $('#reason').val('');
             delbet.checkRefNo();
         });
 
@@ -145,13 +146,13 @@ var delbet = {
         $("#ErrorMessage2").hide();
         $("#msg").hide();
 
-        if ($("#reason").val() == "") {
-            $("#ErrorMessage").width(200).html("<div class='alertboxerr'><div>Please enter reason</div></div>").show();
+        if ($("#reason").val().trim() == "") {
+            $("#ErrorMessage").width(200).html("<div class='alertboxerr'><div>Please enter a reason.</div></div>").show();
             $("#reason").focus();
             return;
         }
         else if ($("#userpwd").val() == "") {
-            $("#ErrorMessage").width(200).html("<div class='alertboxerr'><div>Please enter password</div></div>").show();
+            $("#ErrorMessage").width(200).html("<div class='alertboxerr'><div>Please enter password.</div></div>").show();
             $("#userpwd").focus();
             return;
         }

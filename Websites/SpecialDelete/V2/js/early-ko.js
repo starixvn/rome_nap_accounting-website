@@ -44,6 +44,7 @@ var earlyko = {
         });
         //
         $('input.btn.showbet').bind('click', function (e) {
+            $('#reason').val('');
             earlyko.showBet();
         });
         $('input.btn.delbet').bind('click', function (e) {
@@ -396,6 +397,7 @@ var earlyko = {
     showBet: function () {
 
         try {
+            
             $('#ErrMsg').empty();
             $('#spErrCS').html('');
             $('#dvContent').html('');
@@ -599,16 +601,15 @@ var earlyko = {
         $('#ErrorMessage').html('');
         $('#trMsg2').hide();
 
-        if ($('#reason').val() == "") {
+        if ($('#reason').val().trim() == "") {
             $('#trMsg2').show();
-            showAlertMessage("ErrorMessage", "Please enter reason", 1);
-            //$('#ErrorMessage').html("*Please enter username");
+            showAlertMessage("ErrorMessage", "Please enter a reason.", 1);            
             $('#reason').focus();
             return false;
-        }
+        }        
         else if ($('#username').val() == "") {
             $('#trMsg2').show();
-            showAlertMessage("ErrorMessage", "Please enter username", 1);
+            showAlertMessage("ErrorMessage", "Please enter username.", 1);
             //$('#ErrorMessage').html("*Please enter username");
             $('#username').focus();
             return false;
@@ -616,7 +617,7 @@ var earlyko = {
         else if ($('#userpwd').val() == "") {
             $('#trMsg2').show();
             //$('#ErrorMessage').html("*Please enter password");
-            showAlertMessage("ErrorMessage", "Please enter password", 1);
+            showAlertMessage("ErrorMessage", "Please enter password.", 1);
             $('#userpwd').focus();
             return false;
         }
