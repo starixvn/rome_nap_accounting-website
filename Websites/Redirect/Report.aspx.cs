@@ -1,0 +1,39 @@
+﻿using System;
+using Fanex.Security;
+using Sunplus.Accounting.Core.Common;
+using System.Configuration;
+using Fanex.Tarus.Reports.Core.Configurations;
+using System.Collections.Generic;
+using System.Linq;
+
+
+public partial class Redirect_Report : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (Request["accreportkey"] != null && !string.IsNullOrEmpty(Request["accreportkey"]))
+        {
+            var userName = Cryptography.CfsEnCrypt(AppSession.AccUserName.ToString());
+            var onuserId = Cryptography.CfsEnCrypt(AppSession.OnAccId.ToString());
+            
+
+
+            var accUrlIndentify = Request["accreportkey"];
+            var mappingUrlSection = MappingReportUrlSection.Instance.ReportUrl;
+            if (mappingUrlSection != null)
+            {
+                var getMappingConfig = (from m in
+                                            mappingUrlSection.Cast<ReportUrlElement>().Where(
+                                                m => m.AccUrl.ToLower().Equals(accUrlIndentify.ToLower()) && m.Active)
+                                        select m);
+                if (getMappingConfig != null && getMappingConfig.Count() > 0)
+                {
+                    var napUrl = getMappingConfig.First().NapUrl;
+                    var url = string.Format("{0}?username={1}&onuserid={2}&redirectUrl={3}", ConfigurationManager.AppSettings["NapReportLoginUrl"], userName, onuserId, napUrl);
+                    Response.Redirect(url);
+                }
+            }
+        }
+        Response.Redirect("Index.aspx");
+    }
+}
