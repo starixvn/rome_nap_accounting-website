@@ -29,7 +29,7 @@ var racingGroup = {
         else {
             html = '<tr>\
                             <td >\
-                                <div class="col100 c">' + row.Name + '</div>\
+                                <div class="col130 c">' + row.Name + '</div>\
                             </td>\
                         </tr>';
         }
@@ -104,11 +104,11 @@ var racingGroup = {
                         for (var n = 0; n < grandtotal; n++) {
                             var granditem = rs.Total[n];
                             if (n == (grandtotal - 1)) {
-                                racingGroup.arrfrozen.push('<tr class="grandtotal"><td colspan="2"><div class="b c" style="width:203px;">Grand Total</div></td></tr>');
+                                racingGroup.arrfrozen.push('<tr class="grandtotal"><td colspan="2"><div class="b c" style="width:233px;">Grand Total</div></td></tr>');
                                 racingGroup.arr.push(racingGroup.renderScrollRow(granditem, 'grandtotal'));
                             }
                             else {
-                                racingGroup.arrfrozen.push('<tr class="grandtotalpartner"><td colspan="2"><div class="b c" style="width:203px;">' + granditem.Name + '</div></td></tr>');
+                                racingGroup.arrfrozen.push('<tr class="grandtotalpartner"><td colspan="2"><div class="b c" style="width:233px;">' + granditem.Name + '</div></td></tr>');
                                 racingGroup.arr.push(racingGroup.renderScrollRow(granditem, 'grandtotalpartner'));
                             }
                         }

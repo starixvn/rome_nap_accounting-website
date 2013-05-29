@@ -238,7 +238,7 @@
                                                             Date</div>
                                                     </td>
                                                     <td style="border-bottom: none 0px;" class="ibc">
-                                                        <div class="col100 c">
+                                                        <div class="col130 c">
                                                             PartnerType</div>
                                                     </td>
                                                 </tr>

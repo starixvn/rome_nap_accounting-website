@@ -795,7 +795,7 @@
 
   <Function Name="Racing-Report">
     <Setting Key="Acc_Rpt_Racing_ComparisionTO3rd" SpName="Acc_Rpt_Racing_ComparisionTO3rd" DbName="DBACC.BODB_ACC" />
-    <Setting Key="Acc_Rpt_WinlostRacing_Group" SpName="Acc_Rpt_WinlostRacing_Group" DbName="DBACC.BODB_ACC" />
+    <Setting Key="Acc_Rpt_WinlostRacing_Group" SpName="Acc_Rpt_WinlostRacing_Group" DbName="DBACC.bodb_report" />
     <Setting Key="Acc_Rpt_WinlostRacing_Group_Daily" SpName="Acc_Rpt_WinlostRacing_Group_Daily" DbName="warehouse" />
   </Function>
 </Functions>
