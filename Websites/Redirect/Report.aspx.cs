@@ -15,7 +15,7 @@ public partial class Redirect_Report : System.Web.UI.Page
         {
             var userName = Cryptography.CfsEnCrypt(AppSession.AccUserName.ToString());
             var onuserId = Cryptography.CfsEnCrypt(AppSession.OnAccId.ToString());
-            
+
 
 
             var accUrlIndentify = Request["accreportkey"];
@@ -34,6 +34,9 @@ public partial class Redirect_Report : System.Web.UI.Page
                 }
             }
         }
-        Response.Redirect("Index.aspx");
+        else
+        {
+            Response.Redirect("Index.aspx");
+        }
     }
 }
