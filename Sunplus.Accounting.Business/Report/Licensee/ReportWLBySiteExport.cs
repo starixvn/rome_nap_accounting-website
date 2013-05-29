@@ -1700,7 +1700,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             string fromDate, string toDate,
             int showSb, int showRb,
             int showNg, int showBa,
-            int showLc, int showCS, int showVS, int reportType,
+            int showLc, int showVS, int showCS, int reportType,
             int drawFilter, int excludeTest,
             int pageIndex, int pageSize,
             int reportSelected, int custId)
