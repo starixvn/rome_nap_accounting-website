@@ -963,20 +963,30 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
             var title = string.Empty;
             var fistColumnText = string.Empty;
+
+            string currencyName = Sunplus.Accounting.Business.CacheManager.CacheUtils.GetExchangeName(Math.Abs(criteria.Currency));
+            if (!string.IsNullOrEmpty(currencyName))
+            {
+                currencyName = " - View in " + (criteria.Currency < 0 ? "Base Currency " : "") + currencyName;
+            }
+            
+
             switch (drilldownLevel)
             {
                 case ReportDrilldownLevel.Currency:
-                    title = string.Format("Win Loss By Licensee from {0} to {1}",
+                    title = string.Format("Win Loss By Licensee from {0} to {1}{2}",
                                           criteria.FromDate,
-                                          criteria.ToDate);
+                                          criteria.ToDate,
+                                          currencyName);
                     fistColumnText = "Date";
                     break;
 
                 case ReportDrilldownLevel.Agent:
                 case ReportDrilldownLevel.Member:
-                    title = string.Format("Win Loss By Licensee from {0} to {1}",
+                    title = string.Format("Win Loss By Licensee from {0} to {1}{2}",
                                           criteria.FromDate,
-                                          criteria.ToDate);
+                                          criteria.ToDate,
+                                          currencyName);
                     fistColumnText = "UserName";
                     break;
             }
