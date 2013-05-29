@@ -200,7 +200,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                         TemplateHandler.Assign(ref strRow, "No", index.ToString());
                         TemplateHandler.Assign(ref strRow, "TransTime", DateFormat.FullDateFormat(dr["transdate"]));
-                        TemplateHandler.Assign(ref strRow, "TransID", CastAide.AsString(dr["transid"]));
+
+                     
 
                         //generate event
                         BetlistRow blRow = InputBetlistRow(dr);
@@ -807,7 +808,16 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                         TemplateHandler.Assign(ref strRow, "No", index.ToString());
                         TemplateHandler.Assign(ref strRow, "TransTime", DateFormat.FullDateFormat(dr["transdate"]));
-                        TemplateHandler.Assign(ref strRow, "TransID", CastAide.AsString(dr["transid"]));
+
+                        if (betType == 71)//RNG Casino
+                        {
+                            TemplateHandler.Assign(ref strRow, "TransID", CastAide.AsString(dr["refno"]));
+                        }
+                        else
+                        {
+                            TemplateHandler.Assign(ref strRow, "TransID", CastAide.AsString(dr["transid"]));
+                        }
+                        
 
                         //generate event
                         BetlistRow blRow = InputBetlistRowV2(dr);
@@ -964,6 +974,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                             case 1102:
                             case 1103:
                                 TemplateHandler.Assign(ref strRow, "{Odds}", "-");
+                                                   
                                 break;
                             default:
                                 TemplateHandler.Assign(ref strRow, "Odds", IBCUtils.FormatHandler.FormatNumber3(_odds));

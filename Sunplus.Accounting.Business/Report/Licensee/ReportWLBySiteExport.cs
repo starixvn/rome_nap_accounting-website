@@ -964,12 +964,17 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             var title = string.Empty;
             var fistColumnText = string.Empty;
 
-            string currencyName = Sunplus.Accounting.Business.CacheManager.CacheUtils.GetExchangeName(Math.Abs(criteria.Currency));
-            if (!string.IsNullOrEmpty(currencyName))
+            string currencyName = "";
+            if (criteria.ConvertToCurrency == 0)
             {
-                currencyName = " - View in " + (criteria.Currency < 0 ? "Base Currency " : "") + currencyName;
+                currencyName = " - View in All Currencies";
             }
-            
+            else
+            {
+                currencyName = Sunplus.Accounting.Business.CacheManager.CacheUtils.GetExchangeName(Math.Abs(criteria.ConvertToCurrency));            
+                currencyName = " - View in " + currencyName;
+                currencyName = currencyName.Replace("US$", "USD");
+            }
 
             switch (drilldownLevel)
             {
