@@ -200,7 +200,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                         TemplateHandler.Assign(ref strRow, "No", index.ToString());
                         TemplateHandler.Assign(ref strRow, "TransTime", DateFormat.FullDateFormat(dr["transdate"]));
-                        TemplateHandler.Assign(ref strRow, "TransID", CastAide.AsString(dr["transid"]));
+
+                     
 
                         //generate event
                         BetlistRow blRow = InputBetlistRow(dr);
@@ -664,6 +665,9 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 bool showrb = CastAide.AsInt32(input["showrb"], 1) == 1;
                 bool showng = CastAide.AsInt32(input["showng"], 1) == 1;
                 bool showlc = CastAide.AsInt32(input["showlc"], 1) == 1;
+                bool showvs = CastAide.AsInt32(input["showvs"], 1) == 1;
+                bool showcs = CastAide.AsInt32(input["showcs"], 1) == 1;
+
                 int showba = CastAide.AsInt32(input["showba"], 0);
                 //int excludetest = CastAide.AsInt32(input["excludetest"], 0);
                 int drawfilter = CastAide.AsInt32(input["drawfilter"], 1);
@@ -706,7 +710,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 int drawFilter = CastAide.AsInt32(input["drawFilter"]);
                 DbResult dbResult = _licenseReportDAO.SelBetlistByLicenseeV2(custid, fdate, tdate, MoveBetsDay, BalanceUpDay,
-                                                                           showsb, showrb, showng, showba, showlc, drawfilter);
+                                                                           showsb, showrb, showng, showba, showlc, showvs, showcs, drawfilter);
 
                 DataTable dataTable = new DataTable();
                 DataTable dataTable2 = new DataTable();
@@ -804,7 +808,16 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                         TemplateHandler.Assign(ref strRow, "No", index.ToString());
                         TemplateHandler.Assign(ref strRow, "TransTime", DateFormat.FullDateFormat(dr["transdate"]));
-                        TemplateHandler.Assign(ref strRow, "TransID", CastAide.AsString(dr["transid"]));
+
+                        if (betType == 71)//RNG Casino
+                        {
+                            TemplateHandler.Assign(ref strRow, "TransID", CastAide.AsString(dr["refno"]));
+                        }
+                        else
+                        {
+                            TemplateHandler.Assign(ref strRow, "TransID", CastAide.AsString(dr["transid"]));
+                        }
+                        
 
                         //generate event
                         BetlistRow blRow = InputBetlistRowV2(dr);
@@ -961,6 +974,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                             case 1102:
                             case 1103:
                                 TemplateHandler.Assign(ref strRow, "{Odds}", "-");
+                                                   
                                 break;
                             default:
                                 TemplateHandler.Assign(ref strRow, "Odds", IBCUtils.FormatHandler.FormatNumber3(_odds));

@@ -27,19 +27,19 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
         LicenseeDTO SelReportByLicensee(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter, int excludeTest, int BAFiter, int pageIndex, int pageSize, int fromCache);
 
-        LicenseeCurrency SelReportByLicenseeV2(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache);
+        LicenseeCurrency SelReportByLicenseeV2(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache);
 
         LicenseeDTO SelReportByLicenseeDetail_Ag(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache);
 
-        LicenseeDTOV2 SelReportByLicenseeDetail_SAgV2(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache);
+        LicenseeDTOV2 SelReportByLicenseeDetail_SAgV2(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache);
 
-        LicenseeDTOV2 SelReportByLicenseeDetail_MAgV2(int LicenseeID, int Currency, int custId, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache);
+        LicenseeDTOV2 SelReportByLicenseeDetail_MAgV2(int LicenseeID, int Currency, int custId, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache);
 
-        LicenseeDTOV2 SelReportByLicenseeDetail_AgV2(int LicenseeID, int Currency, int custId, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache);
+        LicenseeDTOV2 SelReportByLicenseeDetail_AgV2(int LicenseeID, int Currency, int custId, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache);
 
         LicenseeDTO SelReportByLicenseeDetail(int LicenseeID, int Currency, int BaseCurrency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter, int excludeTest, int BAFilter, int pageIndex, int pageSize, int fromCache);
 
-        LicenseeDTOV2 SelReportLicenseeDetailV2(int LicenseeID, int Currency, int BaseCurrency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache);
+        LicenseeDTOV2 SelReportLicenseeDetailV2(int LicenseeID, int Currency, int BaseCurrency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache);
 
         ExcelFile ExportLicenseeReport(string site, string fdate, string tdate, ref bool hasData, string reportType, string level, string currency, string baseCurrency);
 
@@ -51,16 +51,16 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                                           string toDate, int showSb, int showRb, int showNg, int reportType, int drawFilter, int excludeTest, int BAFilter,
                                           int pageIndex, int pageSize, int reportSelected, int custId);
         void Export2ExcelReportByLicenseeV2(string reportTitle, int licenseeId, int currency, int BaseCurrency, string fromDate,
-                                          string toDate, int showSb, int showRb, int showNg, int showBa, int showLc, int reportType, int drawFilter, int excludeTest,
+                                          string toDate, int showSb, int showRb, int showNg, int showBa, int showLc, int ShowVS, int ShowCS, int reportType, int drawFilter, int excludeTest,
                                           int pageIndex, int pageSize, int reportSelected, int custId);
 
         LicenseeTotalTransctionDTO SelDateTotalTransction();
 
         List<Reseller> GetLicenseeByReseller();
 
-        LicenseeTotalTransctionDTO SelTotalTransction(int resellerid, int licenseeid, string date, bool showSB, bool showNG, bool showRB, bool showLC, bool showVS);
+        LicenseeTotalTransctionDTO SelTotalTransction(int resellerid, int licenseeid, string date, bool showSB, bool showNG, bool showRB, bool showLC, bool showVS, bool showCS);
 
-        void Export2ExcelTotalTransaction(string reportTitle, int resellerid, int licenseeid, string date, bool showSB, bool showNG, bool showRB, bool showLC, bool showVS);
+        void Export2ExcelTotalTransaction(string reportTitle, int resellerid, int licenseeid, string date, bool showSB, bool showNG, bool showRB, bool showLC, bool showVS, bool showCS);
 
         NegativeBalanceMemberDTO SelNegativeBalanceMember(string site, int pageIndex, int pageSize, bool fromCache);
 
@@ -76,7 +76,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
            string fromDate, string toDate,
            int showSb, int showRb,
            int showNg, int showBa,
-           int showLc, int reportType,
+           int showLc, int ShowVS, int ShowCS, int reportType,
            int drawFilter, int excludeTest,
            int pageIndex, int pageSize,
            int reportSelected, int custId);
@@ -86,7 +86,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
            string fromDate, string toDate,
            int showSb, int showRb,
            int showNg, int showBa,
-           int showLc, int reportType,
+           int showLc, int ShowVS, int ShowCS, int reportType,
            int drawFilter, int excludeTest,
            int pageIndex, int pageSize,
            int reportSelected, int custId);
@@ -96,7 +96,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
            string fromDate, string toDate,
            int showSb, int showRb,
            int showNg, int showBa,
-           int showLc, int reportType,
+           int showLc, int showVS, int showCS, int reportType,
            int drawFilter, int excludeTest,
            int pageIndex, int pageSize,
            int reportSelected, int custId);
@@ -106,7 +106,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
            string fromDate, string toDate,
            int showSb, int showRb,
            int showNg, int showBa,
-           int showLc, int reportType,
+           int showLc, int showVS, int showCS, int reportType,
            int drawFilter, int excludeTest,
            int pageIndex, int pageSize,
            int reportSelected, int custId);
@@ -116,7 +116,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
            string fromDate, string toDate,
            int showSb, int showRb,
            int showNg, int showBa,
-           int showLc, int reportType,
+           int showLc, int showVS, int ShowCS, int reportType,
            int drawFilter, int excludeTest,
            int pageIndex, int pageSize,
            int reportSelected, int custId);

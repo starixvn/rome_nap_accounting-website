@@ -2935,7 +2935,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
             var listBetlistDetail = new List<BetListDetail>();
             string MoveBetsDay = Sunplus.Accounting.DataAccess.Report.ReportUtils.BalanceUp.MoveBetsDay.ToShortDateString();
             string BalanceUpDay = Sunplus.Accounting.DataAccess.Report.ReportUtils.BalanceUp.BalanceUpDay.ToShortDateString();
-            DbResult dbResult = _licenseReportDAO.SelBetlistByLicenseeV2(custId, fdate, tdate, MoveBetsDay, BalanceUpDay, showsb, showrb, showng, showba, showlc, drawFilter);
+            DbResult dbResult = _licenseReportDAO.SelBetlistByLicenseeV2(custId, fdate, tdate, MoveBetsDay, BalanceUpDay, showsb, showrb, showng, showba, showlc, false, false, drawFilter);
             DataTable dataTable = dbResult.ResultSet.Tables[0];
             if (dataTable != null)
             {

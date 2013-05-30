@@ -314,7 +314,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             return dataTable;
         }
 
-        public DataTable SelTotalTicket(int resellerid, int licenseeid, string date, string MoveBetsDay, string BalanceUpDay, bool showSB, bool showNG, bool showRB, bool showLC, bool showVS)
+        public DataTable SelTotalTicket(int resellerid, int licenseeid, string date, string MoveBetsDay, string BalanceUpDay, bool showSB, bool showNG, bool showRB, bool showLC, bool showVS, bool showCS)
         {
             DataTable dataTable = null;
             try
@@ -340,6 +340,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                 h.Add("showrb", showRB);
                 h.Add("showlc", showLC);
                 h.Add("showvs", showVS);
+                h.Add("showcs", showCS);
                 h.Add("isold", IsOld);
 
                 DbResult dbResult = DbHelper.Execute(sp, h, db, 6000);
@@ -416,7 +417,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
 
 
-        public DbResult SelReportByLicenseeV2(int LicenseeID, int Currency, string FromDate, string ToDate, int ShowSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, string MoveBetsDay, bool IsOld, int drawfilter, int excludeTest)
+        public DbResult SelReportByLicenseeV2(int LicenseeID, int Currency, string FromDate, string ToDate, int ShowSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, string MoveBetsDay, bool IsOld, int drawfilter, int excludeTest)
         {
             DbResult dbResult = null;
             try
@@ -438,6 +439,8 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                 param.Add("showng", ShowNG);
                 param.Add("showba", ShowBA);
                 param.Add("showlc", ShowLC);
+                param.Add("showvs", ShowVS);
+                param.Add("showcs", ShowCS);
                 param.Add("reporttype", ReportType);
                 param.Add("movebetsday", MoveBetsDay);
                 param.Add("isold", IsOld);
@@ -456,7 +459,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             return dbResult;
         }
 
-        public DbResult SelReportByLicenseeDetail_AgV2(int LicenseeID, int Currency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, string MoveBetsDay, bool IsOld, int drawfilter, int excludeTest)
+        public DbResult SelReportByLicenseeDetail_AgV2(int LicenseeID, int Currency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, string MoveBetsDay, bool IsOld, int drawfilter, int excludeTest)
         {
             DbResult dbResult = null;
             try
@@ -471,7 +474,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
                 param.Add("licenseeid", LicenseeID);
                 param.Add("currency", Math.Abs(Currency));
-                param.Add("srecommend", CustId);
+                param.Add("mrecommend", CustId);
                 param.Add("fromdate", FromDate);
                 param.Add("todate", ToDate);
                 param.Add("showsb", showSB);
@@ -479,6 +482,8 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                 param.Add("showng", ShowNG);
                 param.Add("showba", ShowBA);
                 param.Add("showlc", ShowLC);
+                param.Add("showvs", ShowVS);
+                param.Add("showcs", ShowCS);
                 param.Add("reporttype", ReportType);
                 param.Add("movebetsday", MoveBetsDay);
                 param.Add("isold", IsOld);
@@ -497,7 +502,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             return dbResult;
         }
 
-        public DbResult SelReportByLicenseeDetailV2(int LicenseeID, int Currency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, string MoveBetsDay, bool IsOld, int drawfilter, int excludeTest)
+        public DbResult SelReportByLicenseeDetailV2(int LicenseeID, int Currency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, string MoveBetsDay, bool IsOld, int drawfilter, int excludeTest)
         {
             DbResult dbResult = null;
             try
@@ -520,6 +525,8 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                 param.Add("showng", ShowNG);
                 param.Add("showba", ShowBA);
                 param.Add("showlc", ShowLC);
+                param.Add("showvs", ShowVS);
+                param.Add("showcs", ShowCS);
                 param.Add("reporttype", ReportType);
                 param.Add("movebetsday", MoveBetsDay);
                 param.Add("isold", IsOld);
@@ -538,7 +545,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             return dbResult;
         }
 
-        public DbResult SelBetlistByLicenseeV2(int CustId, string FromDate, string ToDate, string MoveBetsDay, string BalanceUpDay, bool ShowSB, bool ShowRB, bool ShowNG, int ShowBA, bool ShowLC, int drawFilter)
+        public DbResult SelBetlistByLicenseeV2(int CustId, string FromDate, string ToDate, string MoveBetsDay, string BalanceUpDay, bool ShowSB, bool ShowRB, bool ShowNG, int ShowBA, bool ShowLC, bool ShowVS, bool ShowCS, int drawFilter)
         {
             DbResult dbResult = null;
             try
@@ -562,6 +569,8 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                 h.Add("showng", ShowNG);
                 h.Add("showba", ShowBA);
                 h.Add("showlc", ShowLC);
+                h.Add("showvs", ShowVS);
+                h.Add("showcs", ShowCS);
                 h.Add("drawfilter", drawFilter);
                 h.Add("totalrows", 0);
                 h.Add("sumwinlost", 0);
@@ -702,7 +711,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             return dbResult;
         }
 
-        public DbResult SelReportByLicenseeDetail_SAgV2(int LicenseeID, int Currency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, string MoveBetsDay, bool IsOld, int drawfilter, int excludeTest)
+        public DbResult SelReportByLicenseeDetail_SAgV2(int LicenseeID, int Currency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, string MoveBetsDay, bool IsOld, int drawfilter, int excludeTest)
         {
             DbResult dbResult = null;
             try
@@ -724,6 +733,8 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                 param.Add("showng", ShowNG);
                 param.Add("showba", ShowBA);
                 param.Add("showlc", ShowLC);
+                param.Add("showvs", ShowVS);
+                param.Add("showcs", ShowCS);
                 param.Add("reporttype", ReportType);
                 param.Add("movebetsday", MoveBetsDay);
                 param.Add("isold", IsOld);
@@ -742,7 +753,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             return dbResult;
         }
 
-        public DbResult SelReportByLicenseeDetail_MAgV2(int LicenseeID, int Currency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, string MoveBetsDay, bool IsOld, int drawfilter, int excludeTest)
+        public DbResult SelReportByLicenseeDetail_MAgV2(int LicenseeID, int Currency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, string MoveBetsDay, bool IsOld, int drawfilter, int excludeTest)
         {
             DbResult dbResult = null;
             try
@@ -765,6 +776,8 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                 param.Add("showng", ShowNG);
                 param.Add("showba", ShowBA);
                 param.Add("showlc", ShowLC);
+                param.Add("showvs", ShowVS);
+                param.Add("showcs", ShowCS);
                 param.Add("reporttype", ReportType);
                 param.Add("movebetsday", MoveBetsDay);
                 param.Add("isold", IsOld);
