@@ -990,25 +990,37 @@ var licenseeReport = {
             licenseeReport.toDate = date;
         }
         if (parseInt(licenseeReport.reportType) == 2) {
+            //mm/dd/yyyy
 
-            var dt = date.split('/');
+
             var startD = $("#fdate").val().split('/');
             var endD = $("#tdate").val().split('/');
-
-            if (parseInt(dt[0]) == parseInt(startD[0])) {
-                licenseeReport.fromDate = dt[0] + "/" + startD[1] + "/" + dt[1];
+            var _y;
+            var dt = date.split('/');
+            if (dt.length == 2) {
+                _y = dt[1];
+            }
+            if (dt.length == 3) {
+                _y = dt[2];
             }
             else {
-                licenseeReport.fromDate = dt[0] + "/01/" + dt[1];
+                _y = startD[2];
+            }
+
+
+            if (parseInt(dt[0]) == parseInt(startD[0])) {
+                licenseeReport.fromDate = dt[0] + "/" + startD[1] + "/" + _y;
+            }
+            else {
+                licenseeReport.fromDate = dt[0] + "/01/" + _y;
             }
 
             if (parseInt(dt[0]) == parseInt(endD[0])) {
-                licenseeReport.toDate = dt[0] + "/" + endD[1] + "/" + dt[1];
+                licenseeReport.toDate = dt[0] + "/" + endD[1] + "/" + _y;
             }
             else {
-                licenseeReport.toDate = dt[0] + "/" + daysInMonth(parseInt(dt[0]), parseInt(dt[1])) + "/" + dt[1];
+                licenseeReport.toDate = dt[0] + "/" + daysInMonth(parseInt(dt[0]), parseInt(_y)) + "/" + _y;
             }
-
         }
         if (licenseeReport.licenseeId == 0) {
             showAlertMessage("ErrMsg", "Please choose a site.", 1);
@@ -1279,19 +1291,31 @@ var licenseeReport = {
             var startD = $("#fdate").val().split('/');
             var endD = $("#tdate").val().split('/');
 
-            if (parseInt(dt[0]) == parseInt(startD[0])) {
-                licenseeReport.fromDate = dt[0] + "/" + startD[1] + "/" + dt[1];
+            var _y;
+            var dt = date.split('/');
+            if (dt.length == 2) {
+                _y = dt[1];
+            }
+            if (dt.length == 3) {
+                _y = dt[2];
             }
             else {
-                licenseeReport.fromDate = dt[0] + "/01/" + dt[1];
+                _y = startD[2];
+            }
+
+            if (parseInt(dt[0]) == parseInt(startD[0])) {
+                licenseeReport.fromDate = dt[0] + "/" + startD[1] + "/" + _y;
+            }
+            else {
+                licenseeReport.fromDate = dt[0] + "/01/" + _y;
             }
 
             if (parseInt(dt[0]) == parseInt(endD[0])) {
-                licenseeReport.toDate = dt[0] + "/" + endD[1] + "/" + dt[1];
+                licenseeReport.toDate = dt[0] + "/" + endD[1] + "/" + _y;
 
             }
             else {
-                licenseeReport.toDate = dt[0] + "/" + daysInMonth(parseInt(dt[0]), parseInt(dt[1])) + "/" + dt[1];
+                licenseeReport.toDate = dt[0] + "/" + daysInMonth(parseInt(dt[0]), parseInt(_y)) + "/" + _y;
             }
         }
 
@@ -1311,7 +1335,7 @@ var licenseeReport = {
         else
             baseCurrency = '';
 
-        var url = '../../BetList/BetListDepositReportV2.aspx?custid=' + custId + '&username=' + username + '&fdate=' + licenseeReport.fromDate + '&tdate=' + licenseeReport.toDate + '&showSB=' + ShowSB + '&showRB=' + ShowRB + '&showNG=' + ShowNG + '&showLC=' + ShowLC 
+        var url = '../../BetList/BetListDepositReportV2.aspx?custid=' + custId + '&username=' + username + '&fdate=' + licenseeReport.fromDate + '&tdate=' + licenseeReport.toDate + '&showSB=' + ShowSB + '&showRB=' + ShowRB + '&showNG=' + ShowNG + '&showLC=' + ShowLC
         + '&showVS=' + ShowVS + '&showCS=' + ShowCS
         + '&showBA=' + licenseeReport.ShowBA + '&drawFilter=' + licenseeReport.drawFilter + '&baseCurrency=' + baseCurrency + '&site=' + site;
 
