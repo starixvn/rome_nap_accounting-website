@@ -1365,7 +1365,7 @@ var licenseeReport = {
     },
     exportExcel: function () {
         try { parent.BlockUI(); } catch (e) { }
-        var reportTitle = this.getTitle();
+        var reportTitle = $('#dlSite option:selected').text();
         var getData = this.setPostedData(true);
         var baseCurrency;
         switch ($('#dlCurrency').val()) {

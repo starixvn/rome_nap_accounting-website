@@ -895,7 +895,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 ExcelFile excelFile = new ExcelFile();
                 ExcelWorksheetCollection worksheets = excelFile.Worksheets;
-                string sheetName = "Win Loss By Licensee";
+                string sheetName = "Win Loss By Licensee " + reportTitle;
                 ExcelWorksheet workSheet = worksheets.Add(sheetName);
 
                 int startRow = 0;
@@ -910,7 +910,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     startColumn,
                     ref currentRow,
                     criteria,
-                    ReportDrilldownLevel.Currency);
+                    ReportDrilldownLevel.Currency, reportTitle);
 
                 this.ExportCurrencyReportContent(ref workSheet,
                     startRow,
@@ -921,8 +921,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 #endregion MakeExcelFile
 
-                this.ReponseStream(excelFile, string.Format("Win_Loss_By_Licensee_From_{0}_To_{1}",
-                   fromDate, toDate));
+                this.ReponseStream(excelFile, string.Format("Win_Loss_By_Licensee_{0}_From_{1}_To_{2}",
+                   reportTitle, fromDate, toDate));
             }
             catch (Exception ex)
             {
@@ -944,7 +944,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
           int startColumn,
           ref int currentRow,
           WinLossByLicenseeCriteria criteria,
-          ReportDrilldownLevel drilldownLevel)
+          ReportDrilldownLevel drilldownLevel, string reportTitle)
         {
             #region ExcelTypes
 
@@ -993,7 +993,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             switch (drilldownLevel)
             {
                 case ReportDrilldownLevel.Currency:
-                    title = string.Format("Win Loss By Licensee from {0} to {1}{2}",
+                    title = string.Format("Win Loss By Licensee {0} from {1} to {2}{3}",
+                                            reportTitle,
                                           criteria.FromDate,
                                           criteria.ToDate,
                                           currencyName);
@@ -1002,7 +1003,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 case ReportDrilldownLevel.Agent:
                 case ReportDrilldownLevel.Member:
-                    title = string.Format("Win Loss By Licensee from {0} to {1}{2}",
+                    title = string.Format("Win Loss By Licensee {0} from {1} to {2}{3}",
+                                            reportTitle,
                                           criteria.FromDate,
                                           criteria.ToDate,
                                           currencyName);
@@ -1605,7 +1607,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 ExcelFile excelFile = new ExcelFile();
                 ExcelWorksheetCollection worksheets = excelFile.Worksheets;
-                string sheetName = "Win Loss By Licensee";
+                string sheetName = "Win Loss By Licensee " + reportTitle;
                 ExcelWorksheet workSheet = worksheets.Add(sheetName);
 
                 int startRow = 0;
@@ -1620,7 +1622,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     startColumn,
                     ref currentRow,
                     criteria,
-                    ReportDrilldownLevel.Agent);
+                    ReportDrilldownLevel.Agent, reportTitle);
 
                 this.ExportSuperReportContent(ref workSheet,
                     startRow,
@@ -1631,8 +1633,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 #endregion MakeExcelFile
 
-                this.ReponseStream(excelFile, string.Format("Win_Loss_By_Licensee_From_{0}_To_{1}",
-                    fromDate, toDate));
+                this.ReponseStream(excelFile, string.Format("Win_Loss_By_Licensee_{0}_From_{1}_To_{2}",
+                  reportTitle, fromDate, toDate));
             }
             catch (Exception ex)
             {
@@ -1771,7 +1773,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 ExcelFile excelFile = new ExcelFile();
                 ExcelWorksheetCollection worksheets = excelFile.Worksheets;
-                string sheetName = "Win Loss By Licensee";
+                string sheetName = "Win Loss By Licensee " + reportTitle;
                 ExcelWorksheet workSheet = worksheets.Add(sheetName);
 
                 int startRow = 0;
@@ -1786,7 +1788,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     startColumn,
                     ref currentRow,
                     criteria,
-                    ReportDrilldownLevel.Agent);
+                    ReportDrilldownLevel.Agent, reportTitle);
 
                 this.ExportSuperReportContent(ref workSheet,
                     startRow,
@@ -1797,8 +1799,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 #endregion MakeExcelFile
 
-                this.ReponseStream(excelFile, string.Format("Win_Loss_By_Licensee_From_{0}_To_{1}",
-                    fromDate, toDate));
+                this.ReponseStream(excelFile, string.Format("Win_Loss_By_Licensee_{0}_From_{1}_To_{2}",
+                  reportTitle, fromDate, toDate));
             }
             catch (Exception ex)
             {
@@ -1853,7 +1855,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 ExcelFile excelFile = new ExcelFile();
                 ExcelWorksheetCollection worksheets = excelFile.Worksheets;
-                string sheetName = "Win Loss By Licensee";
+                string sheetName = "Win Loss By Licensee " + reportTitle;
                 ExcelWorksheet workSheet = worksheets.Add(sheetName);
 
                 int startRow = 0;
@@ -1868,7 +1870,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     startColumn,
                     ref currentRow,
                     criteria,
-                    ReportDrilldownLevel.Agent);
+                    ReportDrilldownLevel.Agent, reportTitle);
 
                 this.ExportSuperReportContent(ref workSheet,
                     startRow,
@@ -1879,8 +1881,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 #endregion MakeExcelFile
 
-                this.ReponseStream(excelFile, string.Format("Win_Loss_By_Licensee_From_{0}_To_{1}",
-                    fromDate, toDate));
+                this.ReponseStream(excelFile, string.Format("Win_Loss_By_Licensee_{0}_From_{1}_To_{2}",
+                  reportTitle, fromDate, toDate));
             }
             catch (Exception ex)
             {
@@ -1935,7 +1937,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 ExcelFile excelFile = new ExcelFile();
                 ExcelWorksheetCollection worksheets = excelFile.Worksheets;
-                string sheetName = "Win Loss By Licensee";
+                string sheetName = "Win Loss By Licensee " + reportTitle;
                 ExcelWorksheet workSheet = worksheets.Add(sheetName);
 
                 int startRow = 0;
@@ -1950,7 +1952,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                      startColumn,
                      ref currentRow,
                      criteria,
-                     ReportDrilldownLevel.Member);
+                     ReportDrilldownLevel.Member, reportTitle);
 
                 this.ExportSuperReportContent(ref workSheet,
                     startRow,
@@ -1961,8 +1963,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 #endregion MakeExcelFile
 
-                this.ReponseStream(excelFile, string.Format("Win_Loss_By_Licensee_From_{0}_To_{1}",
-                    fromDate, toDate));
+                this.ReponseStream(excelFile, string.Format("Win_Loss_By_Licensee_{0}_From_{1}_To_{2}",
+                  reportTitle, fromDate, toDate));
             }
             catch (Exception ex)
             {
