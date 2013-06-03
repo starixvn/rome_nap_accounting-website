@@ -170,7 +170,7 @@ var licenseeReport = {
     ReportLevel: 0,
     getTitle: function () {
         //return "Deposit report for " + $('#dlSite option:selected').text() + " from " + $("#fdate").val() + " to " + $("#tdate").val()
-        return "Deposit report for " + $('#dlSite option:selected').text() + " from " + licenseeReport.fromDate + " to " + licenseeReport.toDate
+        return "Win Loss by Licensee report for " + $('#dlSite option:selected').text() + " from " + licenseeReport.fromDate + " to " + licenseeReport.toDate
     },
     renderMainRow: function (rows, cssClass) {
         var html = '';

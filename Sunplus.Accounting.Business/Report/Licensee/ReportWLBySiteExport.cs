@@ -925,13 +925,12 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 #endregion ExcelTypes
                 #region MakeExcelFile
-
                 this.ExportReportHeader(ref workSheet,
                     startRow,
                     startColumn,
                     ref currentRow,
                     criteria,
-                    ReportDrilldownLevel.Currency);
+                    ReportDrilldownLevel.Currency, reportTitle);
 
                 this.ExportCurrencyReportContent(ref workSheet,
                     startRow,
@@ -942,8 +941,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 #endregion MakeExcelFile
 
-                this.ReponseStream(excelFile, string.Format("Win_Loss_By_Licensee_From_{0}_To_{1}",
-                   fromDate, toDate));
+                this.ReponseStream(excelFile, reportTitle );
             }
             catch (Exception ex)
             {
@@ -953,6 +951,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
         private void ReponseStream(ExcelFile excelFile, string reportName)
         {
+            reportName = reportName.Replace(" ", "_");
+            reportName = reportName.Replace("/", "_");
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
@@ -965,7 +965,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
           int startColumn,
           ref int currentRow,
           WinLossByLicenseeCriteria criteria,
-          ReportDrilldownLevel drilldownLevel)
+          ReportDrilldownLevel drilldownLevel, string reportTitle)
         {
             #region ExcelTypes
 
@@ -987,17 +987,19 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             switch (drilldownLevel)
             {
                 case ReportDrilldownLevel.Currency:
-                    title = string.Format("Win Loss By Licensee from {0} to {1}",
-                                          criteria.FromDate,
-                                          criteria.ToDate);
+                    //title = string.Format("Win Loss By Licensee from {0} to {1}",
+                    //                      criteria.FromDate,
+                    //                      criteria.ToDate);
+                    title = reportTitle;
                     fistColumnText = "Date";
                     break;
 
                 case ReportDrilldownLevel.Agent:
                 case ReportDrilldownLevel.Member:
-                    title = string.Format("Win Loss By Licensee from {0} to {1}",
-                                          criteria.FromDate,
-                                          criteria.ToDate);
+                    //title = string.Format("Win Loss By Licensee from {0} to {1}",
+                    //                      criteria.FromDate,
+                    //                      criteria.ToDate);
+                    title = reportTitle;
                     fistColumnText = "UserName";
                     break;
             }
@@ -1600,7 +1602,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     startColumn,
                     ref currentRow,
                     criteria,
-                    ReportDrilldownLevel.Agent);
+                    ReportDrilldownLevel.Agent, reportTitle);
 
                 this.ExportSuperReportContent(ref workSheet,
                     startRow,
@@ -1611,8 +1613,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 #endregion MakeExcelFile
 
-                this.ReponseStream(excelFile, string.Format("Win_Loss_By_Licensee_From_{0}_To_{1}",
-                    fromDate, toDate));
+                this.ReponseStream(excelFile, reportTitle);
             }
             catch (Exception ex)
             {
@@ -1764,7 +1765,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     startColumn,
                     ref currentRow,
                     criteria,
-                    ReportDrilldownLevel.Agent);
+                    ReportDrilldownLevel.Agent, reportTitle);
 
                 this.ExportSuperReportContent(ref workSheet,
                     startRow,
@@ -1775,8 +1776,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 #endregion MakeExcelFile
 
-                this.ReponseStream(excelFile, string.Format("Win_Loss_By_Licensee_From_{0}_To_{1}",
-                    fromDate, toDate));
+                this.ReponseStream(excelFile, reportTitle);
             }
             catch (Exception ex)
             {
@@ -1844,7 +1844,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     startColumn,
                     ref currentRow,
                     criteria,
-                    ReportDrilldownLevel.Agent);
+                    ReportDrilldownLevel.Agent, reportTitle);
 
                 this.ExportSuperReportContent(ref workSheet,
                     startRow,
@@ -1855,8 +1855,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 #endregion MakeExcelFile
 
-                this.ReponseStream(excelFile, string.Format("Win_Loss_By_Licensee_From_{0}_To_{1}",
-                    fromDate, toDate));
+                this.ReponseStream(excelFile, reportTitle);
             }
             catch (Exception ex)
             {
@@ -1924,7 +1923,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                      startColumn,
                      ref currentRow,
                      criteria,
-                     ReportDrilldownLevel.Member);
+                     ReportDrilldownLevel.Member, reportTitle);
 
                 this.ExportSuperReportContent(ref workSheet,
                     startRow,
@@ -1935,8 +1934,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 #endregion MakeExcelFile
 
-                this.ReponseStream(excelFile, string.Format("Win_Loss_By_Licensee_From_{0}_To_{1}",
-                    fromDate, toDate));
+                this.ReponseStream(excelFile, reportTitle);
             }
             catch (Exception ex)
             {
