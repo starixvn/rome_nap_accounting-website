@@ -23,6 +23,23 @@ namespace Sunplus.Accounting.Business.PT.Bingo
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class BingoManager:BaseManager, IBingoService
     {
+        private string GetClientIP() 
+        {
+            string ip = string.Empty;
+            try
+            {
+                if (HttpContext.Current.Request.IsLocal)
+                    ip = "127.0.0.1";
+                else
+                    ip = Convert.ToString(HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"]);
+            }
+            catch (Exception ex)
+            {
+               
+            }
+            return ip;
+        }
+
         public Sunplus.Bingo.Entities.Customer GetCustomerSetting(int custID, int updatedByRoleID)
         {
             var customer = new Sunplus.Bingo.Entities.Customer();
@@ -57,7 +74,7 @@ namespace Sunplus.Accounting.Business.PT.Bingo
                 if (!Permissions.GetHostPermission(Enumerations.Functions.Customer.OtherCust))
                     return new Result(Sunplus.Accounting.Core.Common.Constants.Error.NotAutherized, ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "_500"));
                 var customerService = BingoContainer.Current.Resolve<ICustomerService>();
-                string fromIP = HttpContext.Current.Request.UserHostAddress;
+                string fromIP = GetClientIP();
                 int modifyBy = AppSession.AccId;
                 string modifyUserName = AppSession.AccUserName;
                 result =
@@ -77,7 +94,7 @@ namespace Sunplus.Accounting.Business.PT.Bingo
             if (!Permissions.GetHostPermission(Enumerations.Functions.Customer.Customer))
                 return new Result(Sunplus.Accounting.Core.Common.Constants.Error.NotAutherized, ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "_500"));
             var customerService = BingoContainer.Current.Resolve<ICustomerService>();
-            string fromIP = HttpContext.Current.Request.UserHostAddress;
+            string fromIP = GetClientIP();
             int modifyBy = AppSession.AccId;
             string modifyUserName = AppSession.AccUserName;
             var result =

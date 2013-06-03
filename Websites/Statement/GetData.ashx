@@ -41,7 +41,9 @@ public class GetData : BaseHandler
         reportNo = CastAide.AsInt32(context.Request["repno"], 1);
         if (reportNo < 1 || reportNo > 5 || reportNo == 2) //combine reportNo 1&2
             reportNo = 1;
-        if (Helper.CheckIsInternal(Username))
+        
+        var helper=new Helper();
+        if (helper.CheckIsInternal(Username))
         {
             context.Response.Write("<div class=\"alertboxerr\"><div>This function supports to view statement of Real Accounts only!</div></div>");
             return;

@@ -1037,6 +1037,12 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hSoccer
                 return 1;
             }
 
+            if (dwlA.GroupName == dwlB.GroupName &&
+                dwlA.GroupId != dwlB.GroupId)
+            {
+                return dwlA.GroupId.CompareTo(dwlB.GroupId);
+            }
+
             if (dwlA.GroupName == dwlB.GroupName)
             {
                 if (dwlA.RowTypeDWL2h.Id == dwlB.RowTypeDWL2h.Id)
@@ -1045,6 +1051,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2hSoccer
                     {
                         return string.Compare(dwlA.MatchInfo.Name, dwlB.MatchInfo.Name);
                     }
+
                     return 0;
                 }
 

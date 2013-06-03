@@ -213,6 +213,7 @@
     <Compile Include="Controllers\PunterAnalysisController.cs" />
     <Compile Include="Controllers\DailyWinLoss2hController.cs" />
     <Compile Include="Controllers\WinLoss\TreeWinLossController.cs" />
+    <Compile Include="Core\Configurations\MappingReportUrlSection.cs" />
     <Compile Include="Core\Configurations\LicenseeReportSection.cs" />
     <Compile Include="Core\AppSession.cs" />
     <Compile Include="Criteria\Gaming\LiveCasinoGameFinancialReport\GetFinancialReportCriteria.cs" />

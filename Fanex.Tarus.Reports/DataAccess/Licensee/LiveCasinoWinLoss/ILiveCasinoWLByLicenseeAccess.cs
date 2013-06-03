@@ -7,11 +7,9 @@
 namespace Fanex.Tarus.Reports.DataAccess.Licensee.LiveCasinoWinLoss
 {
     using System;
+    using System.Data;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-using Fanex.Tarus.Reports.Entities.Licensee;
-using System.Data;
+    using Fanex.Tarus.Reports.Entities.Sport;
 
     /// <summary>
     /// TODO: Update summary.
@@ -19,7 +17,8 @@ using System.Data;
     public interface ILiveCasinoWLByLicenseeAccess
     {
         DataTable SelAllLicensees(string productCode);
-        DataTable SelLiveCasinoWLByLicensees(string normalLicensee, string Operator, DateTime fromDate, DateTime toDate);
+        DataTable SelAllGameTypes();
+        DataTable SelLiveCasinoWLByLicensees(string normalLicensee, string Operator, DateTime fromDate, DateTime toDate, int gameType);
 
     }
 }
