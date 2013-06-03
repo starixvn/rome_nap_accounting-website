@@ -921,8 +921,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 #endregion MakeExcelFile
 
-                this.ReponseStream(excelFile, string.Format("Win_Loss_By_Licensee_{0}_From_{1}_To_{2}",
-                   reportTitle, fromDate, toDate));
+                this.ReponseStream(excelFile, reportTitle);
             }
             catch (Exception ex)
             {
@@ -932,6 +931,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
         private void ReponseStream(ExcelFile excelFile, string reportName)
         {
+            reportName = reportName.Replace(" ", "_");
+            reportName = reportName.Replace("/", "_");
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
@@ -993,21 +994,23 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             switch (drilldownLevel)
             {
                 case ReportDrilldownLevel.Currency:
-                    title = string.Format("Win Loss By Licensee {0} from {1} to {2}{3}",
-                                            reportTitle,
-                                          criteria.FromDate,
-                                          criteria.ToDate,
-                                          currencyName);
+                    //title = string.Format("Win Loss By Licensee {0} from {1} to {2}{3}",
+                    //                        reportTitle,
+                    //                      criteria.FromDate,
+                    //                      criteria.ToDate,
+                    //                      currencyName);
+                    title = reportTitle;
                     fistColumnText = "Date";
                     break;
 
                 case ReportDrilldownLevel.Agent:
                 case ReportDrilldownLevel.Member:
-                    title = string.Format("Win Loss By Licensee {0} from {1} to {2}{3}",
-                                            reportTitle,
-                                          criteria.FromDate,
-                                          criteria.ToDate,
-                                          currencyName);
+                    //title = string.Format("Win Loss By Licensee {0} from {1} to {2}{3}",
+                    //                        reportTitle,
+                    //                      criteria.FromDate,
+                    //                      criteria.ToDate,
+                    //                      currencyName);
+                    title = reportTitle;
                     fistColumnText = "UserName";
                     break;
             }
@@ -1633,8 +1636,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 #endregion MakeExcelFile
 
-                this.ReponseStream(excelFile, string.Format("Win_Loss_By_Licensee_{0}_From_{1}_To_{2}",
-                  reportTitle, fromDate, toDate));
+                this.ReponseStream(excelFile, reportTitle);
             }
             catch (Exception ex)
             {
@@ -1799,8 +1801,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 #endregion MakeExcelFile
 
-                this.ReponseStream(excelFile, string.Format("Win_Loss_By_Licensee_{0}_From_{1}_To_{2}",
-                  reportTitle, fromDate, toDate));
+                this.ReponseStream(excelFile, reportTitle);
             }
             catch (Exception ex)
             {
@@ -1881,8 +1882,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 #endregion MakeExcelFile
 
-                this.ReponseStream(excelFile, string.Format("Win_Loss_By_Licensee_{0}_From_{1}_To_{2}",
-                  reportTitle, fromDate, toDate));
+                this.ReponseStream(excelFile, reportTitle);
             }
             catch (Exception ex)
             {
@@ -1963,8 +1963,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 #endregion MakeExcelFile
 
-                this.ReponseStream(excelFile, string.Format("Win_Loss_By_Licensee_{0}_From_{1}_To_{2}",
-                  reportTitle, fromDate, toDate));
+                this.ReponseStream(excelFile, reportTitle);
             }
             catch (Exception ex)
             {
