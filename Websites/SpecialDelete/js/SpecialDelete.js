@@ -604,11 +604,12 @@ function GetData_OR() {
         data: param,
         success: function(rs) {
             $('#dvContent').html(rs);
+            $('#username').val(AccUserName);
             on_deposit();
-            parent.jQuery.unblockUI();
+            parent.jQuery.unblockUI();            
         }
     });
-
+    
     return true;
 }
 

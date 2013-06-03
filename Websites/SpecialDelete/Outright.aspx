@@ -48,9 +48,10 @@
             <input type="hidden" id="hdbettype" name="hdbettype" value="10" />
             <input type="hidden" id="userId" name="userId" value="<%=AppSession.AccId %>" />
         </div>
-     </div>
-    
-   
+         <script type="text/javascript">
+             var AccUserName = '<%=username %>';             
+         </script>
+</div>   
 </body>
 </html>
 
