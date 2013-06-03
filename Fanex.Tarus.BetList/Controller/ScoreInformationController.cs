@@ -13,6 +13,7 @@ namespace Fanex.Tarus.BetList.Controller
     using System.Web.Mvc;
     using Fanex.Tarus.BetList.Business.ScoreInformation;
     using Fanex.Tarus.BetList.Criteria.ScoreInformation;
+    
 
     [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class ScoreInformationController : Controller

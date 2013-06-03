@@ -42,13 +42,8 @@
     <Reference Include="DNAide">
       <HintPath>..\Dependency\DNAide.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.BetList.Accounting, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Fanex.BetList.Accounting">
       <HintPath>..\Dependency\Fanex\Fanex.BetList.Accounting.dll</HintPath>
-    </Reference>
-    <Reference Include="Fanex.Caching, Version=1.0.404.95, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependency\Fanex\Fanex.Caching.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -60,15 +55,15 @@
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependency\Fanex\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
+      <HintPath>..\Dependency\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependency\Fanex\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+      <HintPath>..\Dependency\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependency\Fanex\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <HintPath>..\Dependency\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />

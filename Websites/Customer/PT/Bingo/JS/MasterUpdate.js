@@ -127,7 +127,10 @@ function updatePT() {
         var totalBettingRange;
         //Loop to get PT setting GameKind
         Customer.MaxTransferCredit=maxTransferCredit;
-        Customer.IsAutoReset=$("#cbxAutoReset").attr("checked");
+        Customer.IsAutoReset = $("#cbxAutoReset").attr("checked");
+        Customer.IncentiveRate = $('#listIncentiveRate').val();
+
+
         for (var i=0;i<totalGameKind;i++)
         {
             var gamekind=Customer.GameKindList[i];
