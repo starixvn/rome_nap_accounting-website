@@ -328,7 +328,7 @@ public class UploadFinanceTrans : IHttpHandler, IRequiresSessionState
 
                     if (fromCurrency == toCurrency && CastAide.AsDecimal(strExRate) != 1)
                     {
-                        remark = "<b>Same currency, but actual rate different 1.</b>";
+                        remark = "<b>Same currency, but actual rate is different 1.</b>";
                         rowStyle = "add-customer-bggray";
                     }
                     else if(fromCurrency == 2 || toCurrency == 2)
