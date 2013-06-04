@@ -230,12 +230,12 @@ var SoccerReportManager = {
     },
     renderNoData_NoneLiveReport: function () {
         SoccerReportManager.nonLiveSCR_TB.find("tr:not(.header)").remove();
-        SoccerReportManager.nonLiveSCR_TB.append('<tr id="noinfo"><td id="tdNoInfomation" colspan="9" class="b c" style="" >There is no information available.</td></tr>');
+        SoccerReportManager.nonLiveSCR_TB.append('<tr id="noinfo"><td id="tdNoInfomation" colspan="11" class="b c" style="" >There is no information available.</td></tr>');
         SoccerReportManager.nonLiveSCR.removeClass('hidden');
     },
     renderNoData_LiveReport: function () {
         SoccerReportManager.liveSCR_TB.find("tr:not(.header)").remove();
-        SoccerReportManager.liveSCR_TB.append('<tr id="noinfo"><td id="tdNoInfomation" colspan="9" class="b c" style="" >There is no information available.</td></tr>');
+        SoccerReportManager.liveSCR_TB.append('<tr id="noinfo"><td id="tdNoInfomation" colspan="11" class="b c" style="" >There is no information available.</td></tr>');
         SoccerReportManager.liveSCR.removeClass('hidden');
     },
     renderMainRow_LeftReport: function (row, cssClass) {
@@ -249,7 +249,9 @@ var SoccerReportManager = {
                 <td class="r"><span class="' + (row.LineTotalVirtual.toFixed(2) > 0 ? 'red' : '') + '">' + StringFormatter.formatNumber(row.LineTotalVirtual) + '</span></td>\
                 <td class="r"><span>' + StringFormatter.getDisplayColorOfValue(row.Variance) + '</span></td>\
                 <td class="r"><span>' + StringFormatter.formatNumber(row.Turnover) + '</span></td>\
+                <td class="r"><span>' + StringFormatter.formatNumber(row.TurnoverVirtual) + '</span></td>\
                 <td class="r"><span class="' + (row.Turnover.toFixed(2) != 0 && row.Margin.toFixed(2) > 0 ? 'red' : '') + '">' + (row.Turnover.toFixed(2) != 0 ? StringFormatter.formatNumber(row.Margin) + '%' : 'N/A') + '</span></td>\
+                <td class="r"><span class="' + (row.TurnoverVirtual.toFixed(2) != 0 && row.MarginVirtual.toFixed(2) > 0 ? 'red' : '') + '">' + (row.TurnoverVirtual.toFixed(2) != 0 ? StringFormatter.formatNumber(row.MarginVirtual) + '%' : 'N/A') + '</span></td>\
             </tr>';
         return html;
     },
@@ -264,7 +266,9 @@ var SoccerReportManager = {
                 <td class="r" style="background-color:#B5C4D0"><span class="b ' + (row.LineTotalVirtual.toFixed(2) > 0 ? 'red' : '') + '">' + StringFormatter.formatNumber(row.LineTotalVirtual) + '</span></td>\
                 <td class="r" style="background-color:#B5C4D0"><span class="b">' + StringFormatter.getDisplayColorOfValue(row.Variance) + '</span></td>\
                 <td class="r"><span class="b">' + StringFormatter.formatNumber(row.Turnover) + '</span></td>\
+                <td class="r"><span class="b">' + StringFormatter.formatNumber(row.TurnoverVirtual) + '</span></td>\
                 <td class="r"><span class="' + (row.Turnover.toFixed(2) != 0 && row.Margin.toFixed(2) > 0 ? 'red' : '') + '" style="font-weight: normal;">' + (row.Turnover.toFixed(2) != 0 ? StringFormatter.formatNumber(row.Margin) + '%' : 'N/A') + '</span></td>\
+                <td class="r"><span class="' + (row.TurnoverVirtual.toFixed(2) != 0 && row.MarginVirtual.toFixed(2) > 0 ? 'red' : '') + '" style="font-weight: normal;">' + (row.TurnoverVirtual.toFixed(2) != 0 ? StringFormatter.formatNumber(row.MarginVirtual) + '%' : 'N/A') + '</span></td>\
             </tr>';
         return html;
     },
@@ -283,13 +287,13 @@ var SoccerReportManager = {
                         <td class="r"><span class="b">' +
                                        ibcMsg + '</span></td>\
                         <td class="r"><span class="b ' + (ibcValue.toFixed(2) > 0 ? 'red' : '') + '">' + StringFormatter.formatNumber(ibcValue) + '</span></td>\
-                        <td colspan ="7" class ="c" style="height:18px;"></td>\
+                        <td colspan ="9" class ="c" style="height:18px;"></td>\
                     </tr>';
         return html;
     },
     renderEmptyRow_LeftReport: function () {
         var html = '<tr>\
-                        <td colspan ="9" class ="c" style="height:18px;"></td>\
+                        <td colspan ="11" class ="c" style="height:18px;"></td>\
                     </tr>';
         return html;
     },
@@ -369,7 +373,7 @@ var SoccerReportManager = {
                 SoccerReportManager.renderNoData_ReportDetails();
             },
             complete: function () {
-                $("#soccerReport").css("width", "2000px");
+                $("#soccerReport").css("width", "3000px");
                 var totalWidth = $("#soccerReportTable").width() + 10;
                 $("#soccerReport").css("width", totalWidth + "px");
                 var mainReportWidth = $(".mainreport").width();
@@ -455,7 +459,7 @@ var SoccerReportManager = {
         html = '<tr>\
                     <td style="">\
                         <span></span></td>\
-                    <td colspan = "11" class="l" style=""><span class="b longtext-wrapper">' +
+                    <td colspan = "13" class="l" style=""><span class="b longtext-wrapper">' +
                         (dwlRow.Name && dwlRow.Name != '' ? dwlRow.Name : '&nbsp') + '</span></td>\
                 </tr>';
         return html;
@@ -498,7 +502,9 @@ var SoccerReportManager = {
                     <td class="r"><span class="' + (row.LineTotalVirtual.toFixed(2) > 0 ? 'red' : '') + '">' + StringFormatter.formatNumber(row.LineTotalVirtual) + '</span></td>\
                     <td class="r"><span>' + StringFormatter.getDisplayColorOfValue(row.Variance) + '</span></td>\
                     <td class="r"><span>' + StringFormatter.formatNumber(row.Turnover) + '</span></td>\
+                    <td class="r"><span>' + StringFormatter.formatNumber(row.TurnoverVirtual) + '</span></td>\
                     <td class="r"><span class="' + (row.Turnover.toFixed(2) != 0 && row.Margin.toFixed(2) > 0 ? 'red' : '') + '">' + (row.Turnover.toFixed(2) != 0 ? StringFormatter.formatNumber(row.Margin) + '%' : 'N/A') + '</span></td>\
+                    <td class="r"><span class="' + (row.TurnoverVirtual.toFixed(2) != 0 && row.MarginVirtual.toFixed(2) > 0 ? 'red' : '') + '">' + (row.TurnoverVirtual.toFixed(2) != 0 ? StringFormatter.formatNumber(row.MarginVirtual) + '%' : 'N/A') + '</span></td>\
                 </tr>';
         return html;
     },
@@ -513,7 +519,9 @@ var SoccerReportManager = {
                 <td class="r"><span class="' + (row.LineTotalVirtual.toFixed(2) > 0 ? 'red' : '') + '">' + StringFormatter.formatNumber(row.LineTotalVirtual) + '</span></td>\
                 <td class="r"><span>' + StringFormatter.getDisplayColorOfValue(row.Variance) + '</span></td>\
                 <td class="r"><span>' + StringFormatter.formatNumber(row.Turnover) + '</span></td>\
+                <td class="r"><span>' + StringFormatter.formatNumber(row.TurnoverVirtual) + '</span></td>\
                 <td class="r"><span class="' + (row.Turnover.toFixed(2) != 0 && row.Margin.toFixed(2) > 0 ? 'red' : '') + '" style="font-weight: normal;">' + (row.Turnover.toFixed(2) != 0 ? StringFormatter.formatNumber(row.Margin) + '%' : 'N/A') + '</span></td>\
+                <td class="r"><span class="' + (row.TurnoverVirtual.toFixed(2) != 0 && row.MarginVirtual.toFixed(2) > 0 ? 'red' : '') + '" style="font-weight: normal;">' + (row.TurnoverVirtual.toFixed(2) != 0 ? StringFormatter.formatNumber(row.MarginVirtual) + '%' : 'N/A') + '</span></td>\
             </tr>';
         return html;
     },
@@ -530,7 +538,9 @@ var SoccerReportManager = {
                 <td class="r"><span class="' + (row.LineTotalVirtual.toFixed(2) > 0 ? 'red' : '') + '" style="font-weight: normal;">' + StringFormatter.formatNumber(row.LineTotalVirtual) + '</span></td>\
                 <td class="r"><span style="font-weight: normal;">' + StringFormatter.getDisplayColorOfValue(row.Variance) + '</span></td>\
                 <td class="r"><span style="font-weight: normal;">' + StringFormatter.formatNumber(row.Turnover) + '</span></td>\
+                <td class="r"><span style="font-weight: normal;">' + StringFormatter.formatNumber(row.TurnoverVirtual) + '</span></td>\
                 <td class="r"><span class="' + (row.Turnover.toFixed(2) != 0 && row.Margin.toFixed(2) > 0 ? 'red' : '') + '" style="font-weight: normal;">' + (row.Turnover.toFixed(2) != 0 ? StringFormatter.formatNumber(row.Margin) + '%' : 'N/A') + '</span></td>\
+                <td class="r"><span class="' + (row.TurnoverVirtual.toFixed(2) != 0 && row.MarginVirtual.toFixed(2) > 0 ? 'red' : '') + '" style="font-weight: normal;">' + (row.TurnoverVirtual.toFixed(2) != 0 ? StringFormatter.formatNumber(row.MarginVirtual) + '%' : 'N/A') + '</span></td>\
             </tr>';
         return html;
     },
@@ -549,13 +559,13 @@ var SoccerReportManager = {
                         <td class="r" colspan = "4"><span class="b" style="">' +
                                                    ibcMsg + '</span></td>\
                         <td class="r"><span class="b col100 ' + (ibcValue.toFixed(2) > 0 ? 'red' : '') + '" style="">' + StringFormatter.formatNumber(ibcValue) + '</span></td>\
-                        <td class="r" colspan ="7" class ="c" style="height:18px;"></td>\
+                        <td class="r" colspan ="9" class ="c" style="height:18px;"></td>\
                     </tr>';
         return html;
     },
     renderNoData_ReportDetails: function () {
         SoccerReportManager.reportDetailSCR_TB.find("tr:not(.header)").remove();
-        SoccerReportManager.reportDetailSCR_TB.append('<tr id="noinfo"><td id="tdNoInfomation" colspan="12" class="b c" style="" >There is no information available.</td></tr>');
+        SoccerReportManager.reportDetailSCR_TB.append('<tr id="noinfo"><td id="tdNoInfomation" colspan="14" class="b c" style="" >There is no information available.</td></tr>');
         SoccerReportManager.reportDetailSCR.removeClass('hidden');
     },
     exportToExcel: function () {
