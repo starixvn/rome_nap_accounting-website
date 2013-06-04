@@ -1,0 +1,152 @@
+﻿@using Fanex.BetList.Accounting.Models
+@using Fanex.BetList.Accounting.Core
+@using Fanex.BetList.Core.TicketHelper;
+@{
+    var systemParlayDetail = Model.SystemParlayDetail;
+    decimal subtotal = Model.SystemParlayDetail.SubTotal;
+    BetListHelper betlistHelper = new BetListHelper();
+}
+
+<div id="EventDetail" class="freegrid" style="margin-top: 10px;">
+    <div class="grid-title r">
+        <div class="grid-title-lable" id="gridtitleCheckBet" style="width: 100%;">
+            <div id="subtitle" style="display: inline-block; float: left;" class="b">
+                Combination details
+            </div>
+        </div>
+    </div>
+    <div class="col_header row-headers-background scroll-y">
+        <div class="header-container">
+            <table class="grid-fixed-table col_header_content">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="width120 height34 table-cell">
+                                Date</div>
+                        </th>
+                        <th>
+                            <div class="width270 height34 table-cell">
+                                Event</div>
+                        </th>
+                        <th>
+                            <div class="width60 height34 table-cell">
+                                Odds</div>
+                        </th>
+                        <th>
+                            <div class="width50 height34 table-cell">
+                                Stake</div>
+                        </th>
+                        <th>
+                            <div class="width60 height34 table-cell">
+                                Win Loss</div>
+                        </th>
+                        <th>
+                            <div class="width100 height34 table-cell">
+                                Status</div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div class="grid-container container">
+        <div class="content-container">
+            <table id="tblContent" class="grid-fixed-table col_header_content ">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="width120 height34 table-cell">
+                                Date</div>
+                        </th>
+                        <th>
+                            <div class="width270 height34 table-cell">
+                                Event</div>
+                        </th>
+                        <th>
+                            <div class="width60 height34 table-cell">
+                                Odds</div>
+                        </th>
+                        <th>
+                            <div class="width50 height34 table-cell">
+                                Stake</div>
+                        </th>
+                        <th>
+                            <div class="width60 height34 table-cell">
+                                Win Loss</div>
+                        </th>
+                        <th>
+                            <div class="width100 height34 table-cell">
+                                Status</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.SystemParlayDetail.EventList.Count; i++)
+                    {
+                        Event eventTmp = systemParlayDetail.EventList[i];
+                        <tr>
+                            @if (i == 0)
+                            {
+                                <td rowspan = " @systemParlayDetail.EventList.Count">
+                                    <div class="width120 height34 table-cell">
+                                        @eventTmp.WinLossDate</div>
+                                </td>
+                            }
+                            <td>
+                                <div class="width270 height34 table-cell">
+                                    @for (int j = 0; j < @eventTmp.MatchList.Count; j++)
+                                    {
+                                        var match = eventTmp.MatchList[j];
+                                        <div>
+                                            <span>@CacheRef.GetTeamName(match.HomeID) </span>- <span>@CacheRef.GetTeamName(match.AwayID)
+                                            </span>
+                                        </div>
+                                    }
+                                </div>
+                            </td>
+                            <td >
+                                <div class="width60 height34 table-cell r">
+                                  @String.Format("{0:0.00#}", eventTmp.Odds)</div>
+                            </td>
+                            <td >
+                                <div class="width50 height34 table-cell r">
+                                    @eventTmp.Stake.Format(2)</div>
+                            </td>
+                            <td >
+                                <div class="width60 height34 table-cell r  @betlistHelper.IsNegative(systemParlayDetail.EventList[i].WinLoss)">
+                                    @eventTmp.WinLoss.Format(2)</div>
+                            </td>
+                            <td>
+                                <div class="width100 height34 table-cell c">
+                                    @eventTmp.Status</div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col_footer row-footer-background scroll-y">
+        <div class="footer-container">
+            <table id="GridFooterCol" class="grid-fixed-table col_footer_content">
+                <thead>
+                    <tr>
+                        <th colspan="4">
+                            <div style="width: 505px;" class=" table-cell r">
+                                Sub total</div>
+                        </th>
+                        <th>
+                            <div class="width60  table-cell r @betlistHelper.IsNegative(systemParlayDetail.SubTotal)">
+                                @subtotal.Format(2)
+                            </div>
+                        </th>
+                        <th>
+                            <div class="width100  table-cell">
+                                &nbsp;</div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>

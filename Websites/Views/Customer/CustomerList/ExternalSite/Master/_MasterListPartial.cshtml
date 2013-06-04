@@ -108,8 +108,8 @@
         </td>
         <td>
             <div class="table-cell c" style="width: 65px; height: 18px;">
-                <a onclick="masterList.OpenEdit('@Model.ParentId','@masterItem.ChildID','@masterItem.UserName');">@masterItem.Status</a>
-                <span onclick="masterList.OpenEdit('@Model.ParentId','@masterItem.ChildID','@masterItem.UserName');" class="status-button" >
+                <a onclick="EditSportsBookSetting(3, '@masterItem.ChildID', '@Model.ParentId', '@masterItem.UserName');" >@masterItem.Status</a>
+                <span onclick="EditSportsBookSetting(3, '@masterItem.ChildID', '@Model.ParentId', '@masterItem.UserName');"  class="status-button" >
                     &nbsp;&nbsp;&nbsp</span>
             </div>
         </td>
@@ -119,14 +119,14 @@
                 </span>
                 <ul id="div_@masterItem.ChildID" style="display:none;">
                     <!--minmaxPT-->
-                    <li class="canchange" onclick="OpenEditMinMaxPT('@masterItem.ChildID','Master');"  >
+                   <li class="canchange" onclick="EditMinMaxPT(3, '@masterItem.ChildID', '@Model.ParentId', '@masterItem.UserName');"  >
                         Min Max PT</li>
                     <!--/minmaxPT-->
                     <li class="canchange" onclick="OpenEditCustInfo('@masterItem.ChildID','Master');" >Info</li>
                     <!--horseracing-edit-->
                     @if (!CastAide.AsBoolean(hash["disabledHR"]))
                     {
-                        <li class="canchange" onclick="OpenEditHR('@masterItem.ChildID',3)" >Racing</li>
+                         <li class="canchange" onclick="EditHorseracingSetting(3, '@masterItem.ChildID', '@Model.ParentId')" >Racing</li>
                     }
                     <!--/horseracing-edit-->
                     <!--casino-edit-->
