@@ -21,8 +21,9 @@ public class DeleteBet : BaseHandler
             betFrom = CastAide.AsString(context.Request["betfrom"]);
             matchId = CastAide.AsInt32(context.Request["matchid"]);
             var bettype = CastAide.AsInt32(context.Request["bettype"]);
+            string reason = CastAide.AsString(context.Request["reason"]);
             
-            context.Response.Write(Sunplus.Accounting.Business.BetList.DeleteBet.DelBet(betId, betFrom, matchId, bettype));
+            context.Response.Write(Sunplus.Accounting.Business.BetList.DeleteBet.DelBet(betId, betFrom, matchId, bettype, reason));
         }
         catch (System.Exception e)
         {

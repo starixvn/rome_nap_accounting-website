@@ -116,6 +116,7 @@ function executeDel()
         link = link + '&mjp=' + encodeURIComponent(obj('mjp').value);
         link = link + '&mes=' + encodeURIComponent(obj('mes').value);
         link = link + '&bettype=' + obj('Bettype').value;
+        link = link + '&reason=' + obj('reason').value;
         
          $.ajax({
         url: link,

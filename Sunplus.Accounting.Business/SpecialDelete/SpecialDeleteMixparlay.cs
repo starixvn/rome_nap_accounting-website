@@ -641,7 +641,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                     TemplateHandler.Assign(ref rowMP, "masterpt", NumberFormat.DecFormat(drBet["mpositiontaking"], 2));
                                     TemplateHandler.Assign(ref rowMP, "agentpt", NumberFormat.DecFormat(drBet["apositiontaking"], 2));
 
-                                    TemplateHandler.Assign(ref rowMP, "stake", NumberFormat.DecFormat(drBet["stakepositiontaking"], 2));
+                                    TemplateHandler.Assign(ref rowMP, "stake", NumberFormat.DecFormat(drBet["stake"], 2));
                                     TemplateHandler.Assign(ref rowMP, "currency", CacheUtils.GetExchangeName(CastAide.AsInt32(drBet["currency"])));
 
                                     string choice = GenMPMailRow(drBet, CastAide.AsString(drBet["subtransid"]));
@@ -840,7 +840,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             TemplateHandler.Assign(ref rowMP, "masterpt", NumberFormat.DecFormat(drBet["mpositiontaking"], 2));
                             TemplateHandler.Assign(ref rowMP, "agentpt", NumberFormat.DecFormat(drBet["apositiontaking"], 2));
 
-                            TemplateHandler.Assign(ref rowMP, "stake", NumberFormat.DecFormat(drBet["stakepositiontaking"], 2));
+                            TemplateHandler.Assign(ref rowMP, "stake", NumberFormat.DecFormat(drBet["stake"], 2));
                             TemplateHandler.Assign(ref rowMP, "currency", CacheUtils.GetExchangeName(CastAide.AsInt32(drBet["currency"])));
 
                             string choice = GenMPMailRow(drBet, CastAide.AsString(drBet["subtransid"]));

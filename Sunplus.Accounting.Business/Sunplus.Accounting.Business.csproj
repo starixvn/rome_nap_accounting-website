@@ -463,6 +463,10 @@
       <Project>{C7489BA0-A2D2-4414-997F-FD0EFF4C2835}</Project>
       <Name>Fanex.Tarus.LiveCasino</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.Tarus.SpecialDelete\Fanex.Tarus.SpecialDelete.csproj">
+      <Project>{6F5889CA-CC0E-4A4D-9824-C811AEFCEC4E}</Project>
+      <Name>Fanex.Tarus.SpecialDelete</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sunplus.Data.DataAbstract\Sunplus.Data.DataAbstract.csproj">
       <Project>{1B2228C6-443E-48FF-90EF-A122810D77E7}</Project>
       <Name>Sunplus.Data.DataAbstract</Name>
@@ -562,7 +566,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
