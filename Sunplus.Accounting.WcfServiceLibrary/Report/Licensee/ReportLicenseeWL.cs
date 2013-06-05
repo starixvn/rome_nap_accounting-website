@@ -62,10 +62,10 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report.Licensee
         }
 
 
-        public LicenseeTotalTransctionDTO SelTotalTransction(int resellerid, int licenseeid, string date, bool showSB, bool showNG, bool showRB, bool showLC, bool showVS)
+        public LicenseeTotalTransctionDTO SelTotalTransction(int resellerid, int licenseeid, string date, bool showSB, bool showNG, bool showRB, bool showLC, bool showVS, bool showCS)
         {
             var licenseeList = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.Deposit.IReportWLBySiteService>();
-            return licenseeList.SelTotalTransction(resellerid, licenseeid, date, showSB, showNG, showRB, showLC, showVS);
+            return licenseeList.SelTotalTransction(resellerid, licenseeid, date, showSB, showNG, showRB, showLC, showVS, showCS);
         }
 
 
@@ -84,25 +84,25 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report.Licensee
         #region IReportLicenseeWL Members
 
 
-        public LicenseeCurrency SelReportByLicenseeV2(int LicenseeID, int Currency, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache)
+        public LicenseeCurrency SelReportByLicenseeV2(int LicenseeID, int Currency, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache)
         {
             var licenseeList = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.Deposit.IReportWLBySiteService>();
-            return licenseeList.SelReportByLicenseeV2(LicenseeID, Currency, baseCurrency, FromDate, ToDate, showSB, ShowRB, ShowNG, ShowBA, ShowLC, ReportType, drawfilter, excludeTest, pageIndex, pageSize, fromCache);
+            return licenseeList.SelReportByLicenseeV2(LicenseeID, Currency, baseCurrency, FromDate, ToDate, showSB, ShowRB, ShowNG, ShowBA, ShowLC, ShowVS, ShowCS, ReportType, drawfilter, excludeTest, pageIndex, pageSize, fromCache);
         }
 
         #endregion
 
 
-        public LicenseeDTOV2 SelReportLicenseeDetail_AgV2(int LicenseeID, int Currency, int CustId, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache)
+        public LicenseeDTOV2 SelReportLicenseeDetail_AgV2(int LicenseeID, int Currency, int CustId, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache)
         {
             var licenseeList = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.Deposit.IReportWLBySiteService>();
-            return licenseeList.SelReportByLicenseeDetail_AgV2(LicenseeID, Currency, CustId, baseCurrency, FromDate, ToDate, showSB, ShowRB, ShowNG, ShowBA, ShowLC, ReportType, drawfilter, excludeTest, pageIndex, pageSize, fromCache);
+            return licenseeList.SelReportByLicenseeDetail_AgV2(LicenseeID, Currency, CustId, baseCurrency, FromDate, ToDate, showSB, ShowRB, ShowNG, ShowBA, ShowLC, ShowVS, ShowCS, ReportType, drawfilter, excludeTest, pageIndex, pageSize, fromCache);
         }
 
-        public LicenseeDTOV2 SelReportLicenseeDetailV2(int LicenseeID, int Currency, int baseCurrency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache)
+        public LicenseeDTOV2 SelReportLicenseeDetailV2(int LicenseeID, int Currency, int baseCurrency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache)
         {
             var licenseeList = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.Deposit.IReportWLBySiteService>();
-            return licenseeList.SelReportLicenseeDetailV2(LicenseeID, Currency, baseCurrency, CustId, FromDate, ToDate, showSB, ShowRB, ShowNG, ShowBA, ShowLC, ReportType, drawfilter, excludeTest, pageIndex, pageSize, fromCache);
+            return licenseeList.SelReportLicenseeDetailV2(LicenseeID, Currency, baseCurrency, CustId, FromDate, ToDate, showSB, ShowRB, ShowNG, ShowBA, ShowLC, ShowVS, ShowCS, ReportType, drawfilter, excludeTest, pageIndex, pageSize, fromCache);
         }
 
 
@@ -122,16 +122,16 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report.Licensee
         }
 
 
-        public LicenseeDTOV2 SelReportLicenseeDetail_SAgV2(int LicenseeID, int Currency, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache)
+        public LicenseeDTOV2 SelReportLicenseeDetail_SAgV2(int LicenseeID, int Currency, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache)
         {
             var licenseeList = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.Deposit.IReportWLBySiteService>();
-            return licenseeList.SelReportByLicenseeDetail_SAgV2(LicenseeID, Currency, baseCurrency, FromDate, ToDate, showSB, ShowRB, ShowNG, ShowBA, ShowLC, ReportType, drawfilter, excludeTest, pageIndex, pageSize, fromCache);
+            return licenseeList.SelReportByLicenseeDetail_SAgV2(LicenseeID, Currency, baseCurrency, FromDate, ToDate, showSB, ShowRB, ShowNG, ShowBA, ShowLC, ShowVS, ShowCS, ReportType, drawfilter, excludeTest, pageIndex, pageSize, fromCache);
         }
 
-        public LicenseeDTOV2 SelReportLicenseeDetail_MAgV2(int LicenseeID, int Currency, int CustId, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache)
+        public LicenseeDTOV2 SelReportLicenseeDetail_MAgV2(int LicenseeID, int Currency, int CustId, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache)
         {
             var licenseeList = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.Deposit.IReportWLBySiteService>();
-            return licenseeList.SelReportByLicenseeDetail_MAgV2(LicenseeID, Currency, CustId, baseCurrency, FromDate, ToDate, showSB, ShowRB, ShowNG, ShowBA, ShowLC, ReportType, drawfilter, excludeTest, pageIndex, pageSize, fromCache);
+            return licenseeList.SelReportByLicenseeDetail_MAgV2(LicenseeID, Currency, CustId, baseCurrency, FromDate, ToDate, showSB, ShowRB, ShowNG, ShowBA, ShowLC, ShowVS, ShowCS, ReportType, drawfilter, excludeTest, pageIndex, pageSize, fromCache);
         }
     }
 }

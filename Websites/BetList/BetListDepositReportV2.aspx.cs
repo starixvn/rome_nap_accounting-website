@@ -37,6 +37,8 @@ public partial class BetListDepositReport : PageBase
         hash.Add("showng", CastAide.AsString(Request["showNG"]));
         hash.Add("showba", CastAide.AsString(Request["showBA"]));
         hash.Add("showlc", CastAide.AsString(Request["showLC"]));
+        hash.Add("showvs", CastAide.AsString(Request["showVS"]));
+        hash.Add("showcs", CastAide.AsString(Request["showCS"]));
         //hash.Add("excludetest", CastAide.AsInt32(Request["excludeTest"]));
         hash.Add("drawfilter", CastAide.AsInt32(Request["drawFilter"]));
         hash.Add("basecurrency", CastAide.AsString(Request["baseCurrency"]));

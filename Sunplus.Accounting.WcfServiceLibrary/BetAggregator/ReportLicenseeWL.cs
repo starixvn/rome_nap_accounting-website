@@ -54,7 +54,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.BetAggregator
                                                         ReportType, drawfilter,excludeTest, 1, pageIndex, pageSize, fromCache);
         }
 
-        public List<BetListDetail> BetlistDepositReport(int custId, string fdate, string tdate, bool showsb, bool showng, int showba, bool showrb, bool showlc, int drawFilter)
+        public List<BetListDetail> BetlistDepositReport(int custId, string fdate, string tdate, bool showsb, bool showng, int showba, bool showrb, bool showlc,  int drawFilter)
         {
             var betlist = CommonBootStrapper.Locator.GetInstance<IReportWLBABySiteService>();
             return betlist.SelBetlistDepositReport(custId, fdate, tdate, showsb, showng, showrb, showba, showlc, drawFilter);

@@ -25,6 +25,7 @@
     <script src="../../js/jQuery/GridScroller/jquery.gridscroller.1.0.js" type="text/javascript"></script>
     <script src="../../js/jQuery/Pager/jpager.js?ver=1" type="text/javascript"></script>
     <script src="js/LicenseeReportV2.js?ver=1" type="text/javascript"></script>
+    <script src="js/LicenseeReportV2Helper.js?ver=1" type="text/javascript"></script>
 </head>
 <body>
     <div class="main">
@@ -127,19 +128,14 @@
                                     </tr>
                                     <tr>
                                         <td colspan="4">
-                                            <span>
-                                                <input type="checkbox" id="chbAll" checked="checked" onclick="change(this);" /><label
-                                                    for="chbAll">All</label></span> <span>
-                                                        <input type="checkbox" id="chbSport" class="chksport" checked="checked" onclick="changeSport();" /><label
-                                                            for="chbSport">Sportsbook</label></span> <span>
-                                                                <input type="checkbox" id="chbRacing" class="chksport" checked="checked" onclick="changeSport();" /><label
-                                                                    for="chbRacing">Racing</label></span> <span>
-                                                                        <input type="checkbox" id="chbNG" checked="checked" class="chksport" onclick="changeSport();" /><label
-                                                                            for="chbNG">Number Game</label></span> <span>
-                                                                                <input type="checkbox" id="chbShowBA" checked="checked" class="chksport" onclick="changeSport();" /><label
-                                                                                    for="chbShowBA">BA</label></span> <span>
-                                                                                        <input type="checkbox" id="chbLiveCasino" checked="checked" class="chksport" onclick="changeSport();" /><label
-                                                                                            for="chbShowBA">Live Casino</label></span>
+                                            <span><input type="checkbox" id="chbAll" checked="checked" onclick="change(this);" /><label for="chbAll">All</label></span> 
+                                            <span><input type="checkbox" id="chbSport" class="chksport group1" value="SB" checked="checked" onclick="changeSport();" /><label for="chbSport">Sportsbook</label></span> 
+                                            <span><input type="checkbox" id="chbRacing" class="chksport" checked="checked" onclick="changeSport();" /><label for="chbRacing">Racing</label></span> 
+                                            <span><input type="checkbox" id="chbNG" checked="checked" value="NG" class="chksport group1" onclick="changeSport();" /><label for="chbNG">Number Game</label></span> 
+                                            <span><input type="checkbox" id="chbShowBA" checked="checked" class="chksport" onclick="changeSport();" /><label for="chbShowBA">BA</label></span> 
+                                            <span><input type="checkbox" id="chbLiveCasino" checked="checked" value="LC" class="chksport group1" onclick="changeSport();" /><label for="chbLiveCasino">Live Casino</label></span>
+                                            <span><input type="checkbox" id="chbVS" checked="checked" class="chksport group1" value="VS" onclick="changeSport();" /><label for="chbVS">Virtual Sports</label></span>
+                                            <span id="spRNGCasino"><input type="checkbox" id="chbRNGCasino" checked="checked" class="chksport group1" value="CS" onclick="changeSport();" /><label for="chbRNGCasino">RNG Casino</label></span>
                                         </td>
                                         <td colspan="2" class="r">
                                             <input id="Button2" name="btnReport" type="button" value="REPORT" class="btn" onclick="ResetValue();licenseeReport.renderMainReport(0);" />
@@ -291,7 +287,7 @@
                                                             Total</div>
                                                     </th>
                                                     <th rowspan="2">
-                                                        <div class="table-cell" style="width: 100px; height: 30px;" id="titleLicensee">
+                                                        <div class="table-cell" style="width: 120px; height: 30px;" id="titleLicensee">
                                                         </div>
                                                     </th>
                                                     <th rowspan="2">
@@ -319,7 +315,7 @@
                                                             Racing</div>
                                                     </th>
                                                     <th rowspan="2">
-                                                        <div class="table-cell" style="width: 100px; height: 30px;" id="titleCompany">
+                                                        <div class="table-cell" style="width: 120px; height: 30px;" id="titleCompany">
                                                         </div>
                                                     </th>
                                                 </tr>
