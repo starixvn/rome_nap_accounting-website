@@ -101,3 +101,64 @@ $('.maincontent').delegate('.freegrid tr', 'hover', function (event) {
         })
 });
 
+function EditHorseracingSetting(roleid, custid, uplineid) {
+        var url = "";
+        switch (roleid) {
+            case 4:
+                url = "EditSuperPTRacing/Index?custid=" + custid;
+                break;
+            case 3:
+                url = "EditMasterPTRacing/Index?custid=" + custid + "&uplineid=" + uplineid;
+                break;
+            case 2:
+                url = "EditAgentPTRacing/Index?custid=" + custid + "&uplineid=" + uplineid;
+                break;
+            default:
+                url = "EditMemberPTRacing/Index?custid=" + custid + "&uplineid=" + uplineid;
+                break;
+        }
+        showPopup("Update Racing Setting", url, "", "", 1050, 700, false, 2000, null);
+    }
+
+    function EditSportsBookSetting(roleid, custid, uplineid, username) {
+        var url = "";
+        var title = "";
+        switch (roleid) {
+            case 4:
+                url = "EditSuper/EditSuperPage?custId=" + custid + '&uname=' + username;
+                title = "Edit Super Setting";
+                break;
+            case 3:
+                url = "EditMaster/EditMasterPage?custId=" + custid + "&superId=" + uplineid + '&uname=' + username;
+                 title = "Edit Master Setting";
+                break;
+            case 2:
+                url = "EditAgent/EditAgentPage?custId=" + custid + "&masterId=" + uplineid + '&uname=' + username;
+                 title = "Edit Agent Setting";
+                break;
+            default:
+                url = "EditMember/EditMemberPage?custId=" + custid + "&agentId=" + uplineid + '&uname=' + username;
+                 title = "Edit Member Setting";
+                break;
+        }
+        showPopup(title, url, "", "", 900, 700, false, 2000, null);
+    }
+
+
+    function EditMinMaxPT(roleid, custid, uplineid, username) {
+        var url = "";
+        switch (roleid) {
+            case 4:
+                url = "EditSuperMinPt/EditSuperMinPtPage?&custId=" + custid + "&uname=" + username;
+                break;
+            case 3:
+                url = "EditMasterMinMaxPt/EditMasterMinMaxPtPage?&custId=" + custid + "&uplineId=" + uplineid + '&uname=' + username;
+                break;
+            default:
+                url = "EditAgentMinMaxPt/EditAgentMinMaxPtPage?&custId=" + custid + "&uplineId=" + uplineid + '&uname=' + username;
+                break;
+        }
+        showPopup("Edit Min/Max PT", url, "", "", 800, 700, false, 2000, null);
+    }
+
+

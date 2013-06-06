@@ -210,23 +210,24 @@ function renderMenu(parent, all, level) {
 
 function SubMenuClick(parentId, menuId, functionName, menuUrl, menuName, target) {
     addParentActiveClass(parentId);
-    var iframe = $("#centerFr");
-    iframe.unbind("load");
-    iframe.load(function () {
-        jQuery.unblockUI();
-        fanexLegendManager.initPage(menuId, functionName, menuName, "#previewReportLegendDialog");
-        fanexLegendManager.getReportLegend(
-            $("#centerFr").contents().find(".filterContent,.maincontent_box"),
+    var iframe = document.getElementById("centerFr");
+    //Check is not redirect to new acc report
+    if (menuUrl.indexOf("accreportkey") == -1) {
+        var $iframe = $(iframe);
+        $iframe.unbind("load");
+        $iframe.load(function() {
+            jQuery.unblockUI();
+            fanexLegendManager.initPage(menuId, functionName, menuName, "#previewReportLegendDialog");
+            fanexLegendManager.getReportLegend(
+            $iframe.contents().find(".filterContent,.maincontent_box"),
             false);
-        //        fanexLegendManager.getReportLegend(
-        //            $("#centerFr").contents().find(".filterContent,.maincontent_box"),
-        //            true);
-    });
+        });
+    }
     if (target == "_blank") {
         window.open(menuUrl, '', 'fullscreen=yes, scrollbars=auto');
-     }
+    }
     else {
-        iframe.attr("src", menuUrl);
+        iframe.src = menuUrl;
     }
 };
 

@@ -212,12 +212,12 @@ var NumberGameReportManager = {
     },
     renderNoData_NoneLiveReport: function () {
         NumberGameReportManager.nonLiveNGR_TB.find("tr:not(.header)").remove();
-        NumberGameReportManager.nonLiveNGR_TB.append('<tr id="noinfo"><td id="tdNoInfomation" colspan="9" class="b c" style="" >There is no information available.</td></tr>');
+        NumberGameReportManager.nonLiveNGR_TB.append('<tr id="noinfo"><td id="tdNoInfomation" colspan="11" class="b c" style="" >There is no information available.</td></tr>');
         NumberGameReportManager.nonLiveNGR.removeClass('hidden');
     },
     renderNoData_LiveReport: function () {
         NumberGameReportManager.liveNGR_TB.find("tr:not(.header)").remove();
-        NumberGameReportManager.liveNGR_TB.append('<tr id="noinfo"><td id="tdNoInfomation" colspan="9" class="b c" style="" >There is no information available.</td></tr>');
+        NumberGameReportManager.liveNGR_TB.append('<tr id="noinfo"><td id="tdNoInfomation" colspan="11" class="b c" style="" >There is no information available.</td></tr>');
         NumberGameReportManager.liveNGR.removeClass('hidden');
     },
     renderMainRow_LeftReport: function (row, cssClass) {
@@ -231,7 +231,9 @@ var NumberGameReportManager = {
                 <td class="r"><span class="' + (row.LineTotalVirtual.toFixed(2) > 0 ? 'red' : '') + '" style="">' + StringFormatter.formatNumber(row.LineTotalVirtual) + '</span></td>\
                 <td class="r"><span class="' + (row.Variance.toFixed(2) > 0 ? 'red' : '') + '" style="">' + StringFormatter.formatNumber(row.Variance) + '</span></td>\
                 <td class="r"><span class="" style="">' + StringFormatter.formatNumber(row.Turnover) + '</span></td>\
+                <td class="r"><span class="" style="">' + StringFormatter.formatNumber(row.TurnoverVirtual) + '</span></td>\
                 <td class="r"><span class="' + (row.Turnover.toFixed(2) != 0 && row.Margin.toFixed(2) > 0 ? 'red' : '') + '" style="">' + (row.Turnover.toFixed(2) != 0 ? StringFormatter.formatNumber(row.Margin) + '%' : 'N/A') + '</span></td>\
+                <td class="r"><span class="' + (row.TurnoverVirtual.toFixed(2) != 0 && row.MarginVirtual.toFixed(2) > 0 ? 'red' : '') + '" style="">' + (row.TurnoverVirtual.toFixed(2) != 0 ? StringFormatter.formatNumber(row.MarginVirtual) + '%' : 'N/A') + '</span></td>\
             </tr>';
         return html;
     },
@@ -246,13 +248,15 @@ var NumberGameReportManager = {
                 <td class="r" style="background-color:#B5C4D0"><span class="b ' + (row.LineTotalVirtual.toFixed(2) > 0 ? 'red' : '') + '" style="">' + StringFormatter.formatNumber(row.LineTotalVirtual) + '</span></td>\
                 <td class="r" style="background-color:#B5C4D0"><span class="b ' + (row.Variance.toFixed(2) > 0 ? 'red' : '') + '" style="">' + StringFormatter.formatNumber(row.Variance) + '</span></td>\
                 <td class="r"><span class="b" style="">' + StringFormatter.formatNumber(row.Turnover) + '</span></td>\
+                <td class="r"><span class="b" style="">' + StringFormatter.formatNumber(row.TurnoverVirtual) + '</span></td>\
                 <td class="r"><span class="' + (row.Turnover.toFixed(2) != 0 && row.Margin.toFixed(2) > 0 ? 'red' : '') + '" style="font-weight: normal;">' + (row.Turnover.toFixed(2) != 0 ? StringFormatter.formatNumber(row.Margin) + '%' : 'N/A') + '</span></td>\
+                <td class="r"><span class="' + (row.TurnoverVirtual.toFixed(2) != 0 && row.MarginVirtual.toFixed(2) > 0 ? 'red' : '') + '" style="font-weight: normal;">' + (row.TurnoverVirtual.toFixed(2) != 0 ? StringFormatter.formatNumber(row.MarginVirtual) + '%' : 'N/A') + '</span></td>\
             </tr>';
         return html;
     },
     renderEmptyRow_LeftReport: function () {
         var html = '<tr>\
-                        <td colspan ="9" class ="c" style="height:18px;"></td>\
+                        <td colspan ="11" class ="c" style="height:18px;"></td>\
                     </tr>';
         return html;
     },
@@ -328,7 +332,7 @@ var NumberGameReportManager = {
                 NumberGameReportManager.renderNoData_ReportDetails();
             },
             complete: function () {
-                $("#numberGameReport").css("width", "2000px");
+                $("#numberGameReport").css("width", "3000px");
                 var totalWidth = $("#numberGameReportTable").width() + 10;
                 $("#numberGameReport").css("width", totalWidth + "px");
                 var pagewidth = $(window).width();
@@ -394,7 +398,7 @@ var NumberGameReportManager = {
     },
     emptyRowHtml_RightReport: function (dwlRow) {
         var html = '<tr>\
-                        <td colspan ="9" class ="c" style="height:18px;"></td>\
+                        <td colspan ="11" class ="c" style="height:18px;"></td>\
                     </tr>';
         return html;
     },
@@ -403,7 +407,7 @@ var NumberGameReportManager = {
         html = '<tr>\
                     <td style="">\
                         <div></div></td>\
-                    <td colspan = "8" class="l" style=""><span class="b longtext-wrapper">' +
+                    <td colspan = "10" class="l" style=""><span class="b longtext-wrapper">' +
                         (dwlRow.Name && dwlRow.Name != '' ? dwlRow.Name : '&nbsp') + '</span></td>\
                 </tr>';
         return html;
@@ -419,7 +423,9 @@ var NumberGameReportManager = {
                     <td class="r"><span class="' + (row.LineTotalVirtual.toFixed(2) > 0 ? 'red' : '') + '" style="">' + StringFormatter.formatNumber(row.LineTotalVirtual) + '</span></td>\
                     <td class="r"><span class="' + (row.Variance.toFixed(2) > 0 ? 'red' : '') + '" style="">' + StringFormatter.formatNumber(row.Variance) + '</span></td>\
                     <td class="r"><span class="" style="">' + StringFormatter.formatNumber(row.Turnover) + '</span></td>\
+                    <td class="r"><span class="" style="">' + StringFormatter.formatNumber(row.TurnoverVirtual) + '</span></td>\
                     <td class="r"><span class="' + (row.Turnover.toFixed(2) != 0 && row.Margin.toFixed(2) > 0 ? 'red' : '') + '" style="">' + (row.Turnover.toFixed(2) != 0 ? StringFormatter.formatNumber(row.Margin) + '%' : 'N/A') + '</span></td>\
+                    <td class="r"><span class="' + (row.TurnoverVirtual.toFixed(2) != 0 && row.MarginVirtual.toFixed(2) > 0 ? 'red' : '') + '" style="">' + (row.TurnoverVirtual.toFixed(2) != 0 ? StringFormatter.formatNumber(row.MarginVirtual) + '%' : 'N/A') + '</span></td>\
                 </tr>';
         return html;
     },
@@ -434,7 +440,9 @@ var NumberGameReportManager = {
                 <td class="r"><span class="' + (row.LineTotalVirtual.toFixed(2) > 0 ? 'red' : '') + '" style="">' + StringFormatter.formatNumber(row.LineTotalVirtual) + '</span></td>\
                 <td class="r"><span class="' + (row.Variance.toFixed(2) > 0 ? 'red' : '') + '" style="">' + StringFormatter.formatNumber(row.Variance) + '</span></td>\
                 <td class="r"><span class="" style="">' + StringFormatter.formatNumber(row.Turnover) + '</span></td>\
+                <td class="r"><span class="" style="">' + StringFormatter.formatNumber(row.TurnoverVirtual) + '</span></td>\
                 <td class="r"><span class="' + (row.Turnover.toFixed(2) != 0 && row.Margin.toFixed(2) > 0 ? 'red' : '') + '" style="font-weight: normal;">' + (row.Turnover.toFixed(2) != 0 ? StringFormatter.formatNumber(row.Margin) + '%' : 'N/A') + '</span></td>\
+                <td class="r"><span class="' + (row.TurnoverVirtual.toFixed(2) != 0 && row.MarginVirtual.toFixed(2) > 0 ? 'red' : '') + '" style="font-weight: normal;">' + (row.TurnoverVirtual.toFixed(2) != 0 ? StringFormatter.formatNumber(row.MarginVirtual) + '%' : 'N/A') + '</span></td>\
             </tr>';
         return html;
     },
@@ -451,13 +459,15 @@ var NumberGameReportManager = {
                 <td class="r"><span class="' + (row.LineTotalVirtual.toFixed(2) > 0 ? 'red' : '') + '" style="font-weight: normal;">' + StringFormatter.formatNumber(row.LineTotalVirtual) + '</span></td>\
                 <td class="r"><span class="' + (row.Variance.toFixed(2) > 0 ? 'red' : '') + '" style="font-weight: normal;">' + StringFormatter.formatNumber(row.Variance) + '</span></td>\
                 <td class="r"><span class="" style="font-weight: normal;">' + StringFormatter.formatNumber(row.Turnover) + '</span></td>\
+                <td class="r"><span class="" style="font-weight: normal;">' + StringFormatter.formatNumber(row.TurnoverVirtual) + '</span></td>\
                 <td class="r"><span class="' + (row.Turnover.toFixed(2) != 0 && row.Margin.toFixed(2) > 0 ? 'red' : '') + '" style="font-weight: normal;">' + (row.Turnover.toFixed(2) != 0 ? StringFormatter.formatNumber(row.Margin) + '%' : 'N/A') + '</span></td>\
+                <td class="r"><span class="' + (row.TurnoverVirtual.toFixed(2) != 0 && row.MarginVirtual.toFixed(2) > 0 ? 'red' : '') + '" style="font-weight: normal;">' + (row.TurnoverVirtual.toFixed(2) != 0 ? StringFormatter.formatNumber(row.MarginVirtual) + '%' : 'N/A') + '</span></td>\
             </tr>';
         return html;
     },
     renderNoData_ReportDetails: function () {
         NumberGameReportManager.reportDetailNGR_TB.find("tr:not(.header)").remove();
-        NumberGameReportManager.reportDetailNGR_TB.append('<tr id="noinfo"><td id="tdNoInfomation" colspan="12" class="b c" style="" >There is no information available.</td></tr>');
+        NumberGameReportManager.reportDetailNGR_TB.append('<tr id="noinfo"><td id="tdNoInfomation" colspan="14" class="b c" style="" >There is no information available.</td></tr>');
         NumberGameReportManager.reportDetailNGR.removeClass('hidden');
     },
     exportToExcel: function () {

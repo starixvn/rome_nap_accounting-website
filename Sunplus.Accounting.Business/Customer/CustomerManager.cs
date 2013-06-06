@@ -768,13 +768,13 @@ namespace Sunplus.Accounting.Business.Customer
                                     VirtualSportsSetting = string.Format("VirtualSportMemberPT/EditMember?custId={0}&uplineId={1}", custId, parentId);
                                     TemplateHandler.Assign(ref htmlcontent, "{IsHidden1}", "hidden");
                                     TemplateHandler.Assign(ref htmlcontent, "{IsShow1}", "");
-                                    RacingUpdateURL = "MemberUpdate";
+                                    RacingUpdateURL = string.Format("EditMemberPTRacing/Index?custid={0}&uplineid={1}", custId, parentId);
 
                                     break;
 
                                 case 2: // agent
-                                    RacingUpdateURL = "AgentUpdate";
                                     int _masterID = CastAide.AsInt32(row2["masterid"], -1);
+                                    RacingUpdateURL = string.Format("EditAgentPTRacing/Index?custid={0}&uplineid={1}", custId, _masterID);
                                     bingoLinkSetting = "Customer/PT/Bingo/AgentUpdate.aspx?custId=" + custId;
                                     pokerLinkSetting = "Customer/PT/Poker/AgentUpdate.aspx?custId=" + custId;
                                     downlineListURL = "Customer/MemberList.aspx?agentId=" + custId;
@@ -789,8 +789,8 @@ namespace Sunplus.Accounting.Business.Customer
                                     if (!CustomerUtils.IsTransferDaily(Convert.ToString(_masterID))) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime");
                                     break;
                                 case 3: // master
-                                    RacingUpdateURL = "MasterUpdate";
                                     int _superID = CastAide.AsInt32(row2["superId"], -1);
+                                    RacingUpdateURL = string.Format("EditMasterPTRacing/Index?custid={0}&uplineid={1}", custId, _superID);
                                     bingoLinkSetting = "Customer/PT/Bingo/MasterUpdate.aspx?custId=" + custId;
                                     pokerLinkSetting = "Customer/PT/Poker/MasterUpdate.aspx?custId=" + custId;
                                     detailUrl = isDeposit ? "DepositCustomer/EditSettingAgent" : "Customer/v2/EditMaster.aspx?set=1&custId=" + custId + "&superId=" + _superID.ToString() + "&uname=" + userName;
@@ -803,9 +803,9 @@ namespace Sunplus.Accounting.Business.Customer
                                     VirtualSportsSetting = string.Format("VirtualSportMasterPT/EditMaster?custId={0}&uplineId={1}", custId, _superID);
                                     TemplateHandler.Assign(ref htmlcontent, "{type}", "Master");
                                     break;
-                                case 4: // super
-                                    RacingUpdateURL = "SuperUpdate";
+                                case 4: // super                                    
                                     parentId = 0;
+                                    RacingUpdateURL = string.Format("EditSuperPTRacing/Index?custid={0}", custId);
                                     bingoLinkSetting = "Customer/PT/Bingo/SuperUpdate.aspx?custId=" + custId;
                                     pokerLinkSetting = "Customer/PT/Poker/SuperUpdate.aspx?custId=" + custId;
                                     addDownlineURL_New = isDeposit ? "DepositCustomer/AddNewAgent" : "AddNewMaster/AddNewMasterPage?superId=" + custId + "&username=" + userName;
@@ -1135,7 +1135,9 @@ namespace Sunplus.Accounting.Business.Customer
             switch (roleId)
             {
                 case 1: // member
-                    parentId = Convert.ToInt32(row2["agentId"]);
+                    parentId = CastAide.AsInt32(row2["agentId"]);
+                    var superId = CastAide.AsInt32(row2["superId"]);
+                    var masterId = CastAide.AsInt32(row2["masterId"]);
                     TemplateHandler.Assign(ref htmlcontent, "{isHiddenMember}", "inline");
                     TemplateHandler.Assign(ref htmlcontent, "{lblMinMax}", isDeposit ? "" : "<li id=\"detail_tab_1\" onclick=\"detail_tabnew_Click(this)\"><a href=\"javascript:void(0);\"><span>Super PT</span></a></li>");
                     TemplateHandler.Assign(ref htmlcontent, "{lblMinMax1}", isDeposit ? "" : "<a href=\"javascript:void(0);\"><span>Master PT</span></a>");
@@ -1156,15 +1158,14 @@ namespace Sunplus.Accounting.Business.Customer
                     }
                     if (!WebSettings.disabledHR)
                     {
-                        submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/pt/racing/SuperOnMemberUpdate.aspx?custId=" + custId.ToString() + "\");' target='centerFr'>Racing</a>";
+                        submenu1 += string.Format("<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"SuperEditMemberPTRacing/Index?custid={0}&superid={1}\");' target='centerFr'>Racing</a>", custId, superId);
                     }
                     if (BingoSettings.BingoGame.Enabled && isAllowEditBI)
                     {
                         submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/PT/Bingo/SuperOnMemberUpdate.aspx?custId=" + custId.ToString() + "&roleid=" + roleId.ToString() + "\");' target='centerFr'>Bingo</a>";
                     }
                     if (WebSettings.EnableLiveCasino)
-                    {
-                        var superId = Convert.ToInt32(row2["superId"]);
+                    {                        
                         if (AppSession.IsSyncLCSCurrentCust)
                         {
                             submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "LiveCasino/PTSetting/SuperEditOnMember.aspx?custId=" + custId.ToString() + "&superId=" + superId + "\");' target='centerFr'>Live Casino</a>";
@@ -1172,7 +1173,6 @@ namespace Sunplus.Accounting.Business.Customer
                     }
                     if (WebSettings.EnableVirtualSports)
                     {
-                        var superId = Convert.ToInt32(row2["superId"]);
                         if (!AppSession.IsHideVirtualSportsCurrentCust)
                         {
                             submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "VirtualSportMemberPT/SuperEditMember?custId=" + custId.ToString() + "&superId=" + superId + "\");' target='centerFr'>Virtual Sports</a>";
@@ -1186,7 +1186,7 @@ namespace Sunplus.Accounting.Business.Customer
                     }
                     if (!WebSettings.disabledHR)
                     {
-                        submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/pt/racing/MasterOnMemberUpdate.aspx?custId=" + custId.ToString() + "\");' target='centerFr'>Racing</a>";
+                        submenu2 += string.Format("<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"MasterEditMemberPTRacing/Index?custid={0}&masterid={1}\");' target='centerFr'>Racing</a>", custId, masterId);
                     }
 
                     if (BingoSettings.BingoGame.Enabled && isAllowEditBI)
@@ -1195,7 +1195,6 @@ namespace Sunplus.Accounting.Business.Customer
                     }
                     if (WebSettings.EnableLiveCasino)
                     {
-                        var masterId = Convert.ToInt32(row2["masterId"]);
                         if (AppSession.IsSyncLCSCurrentCust)
                         {
                             submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "LiveCasino/PTSetting/MasterEditOnMember.aspx?custId=" + custId.ToString() + "&masterId=" + masterId + "\");' target='centerFr'>Live Casino</a>";
@@ -1203,7 +1202,6 @@ namespace Sunplus.Accounting.Business.Customer
                     }
                     if (WebSettings.EnableVirtualSports)
                     {
-                        var masterId = Convert.ToInt32(row2["masterId"]);
                         if (!AppSession.IsHideVirtualSportsCurrentCust)
                         {
                             submenu2 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "VirtualSportMemberPT/MasterEditMember?custId=" + custId.ToString() + "&masterId=" + masterId + "\");' target='centerFr'>Virtual Sports</a>";

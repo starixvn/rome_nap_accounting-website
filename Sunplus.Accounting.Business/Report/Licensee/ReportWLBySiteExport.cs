@@ -114,7 +114,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             #endregion
         }
 
-        public void Export2ExcelReportByLicenseeV2(string reportTitle, int licenseeId, int currency, int BaseCurrency, string fromDate, string toDate, int showSb, int showRb, int showNg, int showBa, int showLc, int reportType, int drawFilter, int excludeTest, int pageIndex, int pageSize, int reportSelected, int custId)
+        public void Export2ExcelReportByLicenseeV2(string reportTitle, int licenseeId, int currency, int BaseCurrency, string fromDate, string toDate, int showSb, int showRb, int showNg, int showBa, int showLc, int ShowVS, int ShowCS, int reportType, int drawFilter, int excludeTest, int pageIndex, int pageSize, int reportSelected, int custId)
         {
 
             #region excel format
@@ -143,43 +143,19 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     getReportDataV2 = (LicenseeCurrency)AppSession.GetSession(System.Web.HttpContext.Current.Session,
                                                            _keySelReportByLicensee);
                     getReportDataV2 = getReportDataV2 ??
-                                    SelReportByLicenseeV2FromDB(licenseeId, currency, BaseCurrency, fromDate, toDate, showSb, showRb, showNg, showBa, showLc,
+                                    SelReportByLicenseeV2FromDB(licenseeId, currency, BaseCurrency, fromDate, toDate, showSb, showRb, showNg, showBa, showLc, ShowVS, ShowCS,
                                                               reportType, MoveBetsDay,
                                                               drawFilter, excludeTest);
 
 
-                    //    break;
-                    //case 1:
-                    //    getReportDataV2 = (LicenseeDTOV2)AppSession.GetSession(System.Web.HttpContext.Current.Session,
-                    //                                           _keySelReportByLicenseeDetail_Ag);
-                    //    getReportDataV2 = getReportDataV2 ??
-                    //                    SelReportByLicenseeDetail_AgV2FromDB(licenseeId, currency, BaseCurrency, fromDate, toDate, showSb,
-                    //                                                       showRb, showNg, showBa, showLc,
-                    //                                                       reportType, drawFilter, excludeTest);
-                    //    break;
-                    //case 2:
-                    //    getReportDataV2 = (LicenseeDTOV2)AppSession.GetSession(System.Web.HttpContext.Current.Session,
-                    //                                           _keySelReportByLicenseeDetail);
-                    //    getReportDataV2 = getReportDataV2 ??
-                    //                    SelReportByLicenseeDetailV2FromDB(licenseeId, currency, BaseCurrency, custId, fromDate, toDate,
-                    //                                                    showSb, showRb, showNg, showBa, showLc,
-                    //                                                    reportType, MoveBetsDay, drawFilter, excludeTest);
+                                                                 
                     break;
                 default:
                     break;
             }
 
 
-            //if (getReportDataV2 != null && getReportDataV2.Items != null)
-            //{
-            //    Export2ExcelReportByLicenseeAssignContentV2("",ref wsReport, startRow, startCol, ref nextRow, false, false,
-            //                                              getReportDataV2.Items, reportSelected);
-            //    Export2ExcelReportByLicenseeAssignContentV2("Total ",ref wsReport, startRow, startCol, ref nextRow, true, false,
-            //                                              getReportDataV2.Totals, reportSelected);
-            //    Export2ExcelReportByLicenseeAssignContentV2("Total ",ref wsReport, startRow, startCol, ref nextRow, false, true,
-            //                                              getReportDataV2.TotalsBaseCurrency, reportSelected);
-
-            //}
+            
 
             #endregion
 
@@ -612,7 +588,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
         #region total trans
 
 
-        public void Export2ExcelTotalTransaction(string reportTitle, int resellerid, int licenseeid, string date, bool showSB, bool showNG, bool showRB, bool showLC, bool showVS)
+        public void Export2ExcelTotalTransaction(string reportTitle, int resellerid, int licenseeid, string date, bool showSB, bool showNG, bool showRB, bool showLC, bool showVS, bool showCS)
         {
             #region excel format
             const int startCol = 0;
@@ -635,7 +611,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             //AppSession.AddSession(System.Web.HttpContext.Current.Session, _keySelTotalTransction, transctionDto);
             var getSession =
                 (LicenseeTotalTransctionDTO)AppSession.GetSession(HttpContext.Current.Session, _keySelTotalTransction) ??
-                SelTotalTransction(resellerid, licenseeid, date, showSB, showNG, showRB, showLC, showVS);
+                SelTotalTransction(resellerid, licenseeid, date, showSB, showNG, showRB, showLC, showVS, showCS);
 
             if (getSession != null && getSession.Items != null && getSession.Items.Count > 0)
             {
@@ -876,7 +852,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             string fromDate, string toDate,
             int showSb, int showRb,
             int showNg, int showBa,
-            int showLc, int reportType,
+            int showLc, int ShowVS, int ShowCS, 
+            int reportType,
             int drawFilter, int excludeTest,
             int pageIndex, int pageSize,
             int reportSelected, int custId)
@@ -888,7 +865,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     fromDate, toDate,
                     showSb, showRb,
                     showNg, showBa,
-                    showLc, reportType,
+                    showLc, ShowVS, ShowCS, reportType,
                     drawFilter, excludeTest,
                     pageIndex, -1,
                     0);
@@ -904,6 +881,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     ShowNG = showNg,
                     ShowBA = showBa,
                     ShowLC = showLc,
+                    ShowVS = ShowVS,
+                    ShowCS = ShowCS,
                     ReportType = reportType,
                     Drawfilter = drawFilter,
                     ExcludeTest = excludeTest,
@@ -916,7 +895,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 ExcelFile excelFile = new ExcelFile();
                 ExcelWorksheetCollection worksheets = excelFile.Worksheets;
-                string sheetName = "Win Loss By Licensee";
+                string sheetName = "Win Loss By Licensee " + reportTitle;
                 ExcelWorksheet workSheet = worksheets.Add(sheetName);
 
                 int startRow = 0;
@@ -925,6 +904,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 #endregion ExcelTypes
                 #region MakeExcelFile
+
                 this.ExportReportHeader(ref workSheet,
                     startRow,
                     startColumn,
@@ -941,7 +921,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 #endregion MakeExcelFile
 
-                this.ReponseStream(excelFile, reportTitle );
+                this.ReponseStream(excelFile, reportTitle);
             }
             catch (Exception ex)
             {
@@ -984,21 +964,52 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
             var title = string.Empty;
             var fistColumnText = string.Empty;
+
+            string currencyName = "";
+            int currencyId = 0;
+            if (criteria.ConvertToCurrency == 0 && criteria.Currency == 0)
+            {
+                currencyId = 0;
+            }
+            else if (criteria.ConvertToCurrency == 0 && criteria.Currency > 0)
+            {
+                currencyId = criteria.Currency;
+            }
+            else if (criteria.ConvertToCurrency != 0 && criteria.Currency != 0)
+            {
+                currencyId = criteria.ConvertToCurrency;
+            }
+
+            if (currencyId == 0)
+            {
+                currencyName = " - View in All Currencies";
+            }
+            else
+            {
+                currencyName = Sunplus.Accounting.Business.CacheManager.CacheUtils.GetExchangeName(currencyId);            
+                currencyName = " - View in " + currencyName;
+                currencyName = currencyName.Replace("US$", "USD");
+            }
+
             switch (drilldownLevel)
             {
                 case ReportDrilldownLevel.Currency:
-                    //title = string.Format("Win Loss By Licensee from {0} to {1}",
+                    //title = string.Format("Win Loss By Licensee {0} from {1} to {2}{3}",
+                    //                        reportTitle,
                     //                      criteria.FromDate,
-                    //                      criteria.ToDate);
+                    //                      criteria.ToDate,
+                    //                      currencyName);
                     title = reportTitle;
                     fistColumnText = "Date";
                     break;
 
                 case ReportDrilldownLevel.Agent:
                 case ReportDrilldownLevel.Member:
-                    //title = string.Format("Win Loss By Licensee from {0} to {1}",
+                    //title = string.Format("Win Loss By Licensee {0} from {1} to {2}{3}",
+                    //                        reportTitle,
                     //                      criteria.FromDate,
-                    //                      criteria.ToDate);
+                    //                      criteria.ToDate,
+                    //                      currencyName);
                     title = reportTitle;
                     fistColumnText = "UserName";
                     break;
@@ -1134,7 +1145,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
             currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
             currentCellRange.Merged = true;
-            currentCellRange.Value = this.GetColLicenseeWinLossTitle(criteria.ShowSB, criteria.ShowNG, criteria.ShowLC);
+            currentCellRange.Value = this.GetColLicenseeWinLossTitle(criteria.ShowSB, criteria.ShowNG, criteria.ShowLC, criteria.ShowVS, criteria.ShowCS);
             currentCellRange.Style = headerTextStyle;
             currentColumn++;
 
@@ -1176,7 +1187,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
             currentCellRange = ws.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn);
             currentCellRange.Merged = true;
-            currentCellRange.Value = this.GetColLicenseeWinLossTitleSuffix(criteria.ShowSB, criteria.ShowNG, criteria.ShowLC);
+            currentCellRange.Value = this.GetColLicenseeWinLossTitleSuffix(criteria.ShowSB, criteria.ShowNG, criteria.ShowLC, criteria.ShowVS, criteria.ShowCS);
             currentCellRange.Style = headerTextStyle;
             currentColumn++;
             currentRow++;
@@ -1274,9 +1285,9 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             }
         }
 
-        private string GetColLicenseeWinLossTitle(int showSB, int showNG, int showLC)
+        private string GetColLicenseeWinLossTitle(int showSB, int showNG, int showLC, int showVS, int showCS)
         {
-            var suffix = this.GetColLicenseeWinLossTitleSuffix(showSB, showNG, showLC);
+            var suffix = this.GetColLicenseeWinLossTitleSuffix(showSB, showNG, showLC, showVS, showCS);
             if (!string.IsNullOrEmpty(suffix))
             {
                 return "LicenseeWinLoss (" + suffix + ")";
@@ -1285,7 +1296,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             return "LicenseeWinLoss";
         }
 
-        private string GetColLicenseeWinLossTitleSuffix(int showSB, int showNG, int showLC)
+        private string GetColLicenseeWinLossTitleSuffix(int showSB, int showNG, int showLC, int showVS, int showCS)
         {
             var products = new List<string>();
 
@@ -1304,13 +1315,23 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 products.Add("LC");
             }
 
+            if (showVS != 0)
+            {
+                products.Add("VS");
+            }
+
+            if (showCS != 0)
+            {
+                products.Add("CS");                
+            }
+
             if (products.Count > 0)
             {
                 return string.Join("+", products);
             }
             else
             {
-                return "SB + NG + LC";
+                return "SB + NG + LC + VS + CS";
             }
         }
 
@@ -1547,7 +1568,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             string fromDate, string toDate,
             int showSb, int showRb,
             int showNg, int showBa,
-            int showLc, int reportType,
+            int showLc, int showVS, int showCS, int reportType,
             int drawFilter, int excludeTest,
             int pageIndex, int pageSize,
             int reportSelected, int custId)
@@ -1559,7 +1580,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     fromDate, toDate,
                     showSb, showRb,
                     showNg, showBa,
-                    showLc, reportType,
+                    showLc, showVS, showCS, reportType,
                     drawFilter, excludeTest,
                     pageIndex, -1,
                     0);
@@ -1575,6 +1596,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     ShowNG = showNg,
                     ShowBA = showBa,
                     ShowLC = showLc,
+                    ShowVS = showVS,
+                    ShowCS = showCS,
                     ReportType = reportType,
                     Drawfilter = drawFilter,
                     ExcludeTest = excludeTest,
@@ -1587,7 +1610,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 ExcelFile excelFile = new ExcelFile();
                 ExcelWorksheetCollection worksheets = excelFile.Worksheets;
-                string sheetName = "Win Loss By Licensee";
+                string sheetName = "Win Loss By Licensee " + reportTitle;
                 ExcelWorksheet workSheet = worksheets.Add(sheetName);
 
                 int startRow = 0;
@@ -1710,7 +1733,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             string fromDate, string toDate,
             int showSb, int showRb,
             int showNg, int showBa,
-            int showLc, int reportType,
+            int showLc, int showVS, int showCS, int reportType,
             int drawFilter, int excludeTest,
             int pageIndex, int pageSize,
             int reportSelected, int custId)
@@ -1722,7 +1745,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     fromDate, toDate,
                     showSb, showRb,
                     showNg, showBa,
-                    showLc, reportType,
+                    showLc, showVS, showCS, reportType,
                     drawFilter, excludeTest,
                     pageIndex, -1,
                     0);
@@ -1738,6 +1761,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     ShowNG = showNg,
                     ShowBA = showBa,
                     ShowLC = showLc,
+                    ShowVS = showVS,
+                    ShowCS = showCS,
                     ReportType = reportType,
                     Drawfilter = drawFilter,
                     ExcludeTest = excludeTest,
@@ -1750,7 +1775,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 ExcelFile excelFile = new ExcelFile();
                 ExcelWorksheetCollection worksheets = excelFile.Worksheets;
-                string sheetName = "Win Loss By Licensee";
+                string sheetName = "Win Loss By Licensee " + reportTitle;
                 ExcelWorksheet workSheet = worksheets.Add(sheetName);
 
                 int startRow = 0;
@@ -1789,7 +1814,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             string fromDate, string toDate,
             int showSb, int showRb,
             int showNg, int showBa,
-            int showLc, int reportType,
+            int showLc, int showVS, int showCS, int reportType,
             int drawFilter, int excludeTest,
             int pageIndex, int pageSize,
             int reportSelected, int custId)
@@ -1801,7 +1826,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     fromDate, toDate,
                     showSb, showRb,
                     showNg, showBa,
-                    showLc, reportSelected,
+                    showLc, showVS, showCS, reportSelected,
                     drawFilter, excludeTest,
                     pageIndex, -1,
                     0);
@@ -1817,6 +1842,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     ShowNG = showNg,
                     ShowBA = showBa,
                     ShowLC = showLc,
+                    ShowVS = showVS,
+                    ShowCS = showCS,
                     ReportType = reportType,
                     Drawfilter = drawFilter,
                     ExcludeTest = excludeTest,
@@ -1829,7 +1856,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 ExcelFile excelFile = new ExcelFile();
                 ExcelWorksheetCollection worksheets = excelFile.Worksheets;
-                string sheetName = "Win Loss By Licensee";
+                string sheetName = "Win Loss By Licensee " + reportTitle;
                 ExcelWorksheet workSheet = worksheets.Add(sheetName);
 
                 int startRow = 0;
@@ -1868,7 +1895,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             string fromDate, string toDate,
             int showSb, int showRb,
             int showNg, int showBa,
-            int showLc, int reportType,
+            int showLc, int showVS, int showCS, int reportType,
             int drawFilter, int excludeTest,
             int pageIndex, int pageSize,
             int reportSelected, int custId)
@@ -1880,7 +1907,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                    fromDate, toDate,
                    showSb, showRb,
                    showNg, showBa,
-                   showLc, reportSelected,
+                   showLc, showVS, showCS, reportSelected,
                    drawFilter, excludeTest,
                    pageIndex, -1,
                    0);
@@ -1896,6 +1923,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     ShowNG = showNg,
                     ShowBA = showBa,
                     ShowLC = showLc,
+                    ShowVS = showVS,
+                    ShowCS = showCS,
                     ReportType = reportType,
                     Drawfilter = drawFilter,
                     ExcludeTest = excludeTest,
@@ -1908,7 +1937,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 ExcelFile excelFile = new ExcelFile();
                 ExcelWorksheetCollection worksheets = excelFile.Worksheets;
-                string sheetName = "Win Loss By Licensee";
+                string sheetName = "Win Loss By Licensee " + reportTitle;
                 ExcelWorksheet workSheet = worksheets.Add(sheetName);
 
                 int startRow = 0;

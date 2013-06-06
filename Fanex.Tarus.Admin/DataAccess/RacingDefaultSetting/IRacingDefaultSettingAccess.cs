@@ -1,0 +1,24 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="IRacingDefaultSettingAccess.cs" company="Microsoft">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+namespace Fanex.Tarus.Admin.DataAccess.RacingDefaultSetting
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Data;
+    using Fanex.Tarus.Admin.Entities;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public interface IRacingDefaultSettingAccess
+    {
+        DataSet SelRacingDefaultSetting(int SportType, int Bettype, string Currency);
+        Result UpdateRacingDefaulSetting(int UserID, int Sporttype, int Bettype, int CurrencyID, int MinBet);
+    }
+}

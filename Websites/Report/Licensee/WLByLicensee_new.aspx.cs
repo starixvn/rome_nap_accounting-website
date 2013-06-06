@@ -20,6 +20,9 @@ public partial class Report_Deposit_Deposit : PageBase
             var showNg = CastAide.AsInt32(Request["showNg"]);
             var showBa = CastAide.AsInt32(Request["showBa"]);
             var showLc = CastAide.AsInt32(Request["showLc"]);
+            var showVS = CastAide.AsInt32(Request["showVS"]);
+            var showCS = CastAide.AsInt32(Request["showCS"]);
+
             var reportType = CastAide.AsInt32(Request["reportType"]);
             var drawFilter = CastAide.AsInt32(Request["drawFilter"]);
             var excludeTest = CastAide.AsInt32(Request["excludeTest"]);
@@ -40,7 +43,7 @@ public partial class Report_Deposit_Deposit : PageBase
                         fromDate, toDate,
                         showSb, showRb,
                         showNg, showBa,
-                        showLc, reportType,
+                        showLc, showVS, showCS, reportType,
                         drawFilter, excludeTest,
                         pageIndex, pageSize,
                         reportSelected, custId);
@@ -51,7 +54,7 @@ public partial class Report_Deposit_Deposit : PageBase
                         fromDate, toDate,
                         showSb, showRb,
                         showNg, showBa,
-                        showLc, reportType,
+                        showLc, showVS, showCS, reportType,
                         drawFilter, excludeTest,
                         pageIndex, pageSize,
                         reportSelected, custId);
@@ -62,7 +65,7 @@ public partial class Report_Deposit_Deposit : PageBase
                         fromDate, toDate,
                         showSb, showRb,
                         showNg, showBa,
-                        showLc, reportType,
+                        showLc, showVS, showCS, reportType,
                         drawFilter, excludeTest,
                         pageIndex, pageSize,
                         reportSelected, custId);
@@ -73,7 +76,7 @@ public partial class Report_Deposit_Deposit : PageBase
                         fromDate, toDate,
                         showSb, showRb,
                         showNg, showBa,
-                        showLc, reportType,
+                        showLc, showVS, showCS, reportType,
                         drawFilter, excludeTest,
                         pageIndex, pageSize,
                         reportSelected, custId);
@@ -84,7 +87,7 @@ public partial class Report_Deposit_Deposit : PageBase
                         fromDate, toDate,
                         showSb, showRb,
                         showNg, showBa,
-                        showLc, reportType,
+                        showLc, showVS, showCS, reportType,
                         drawFilter, excludeTest,
                         pageIndex, pageSize,
                         reportSelected, custId);
