@@ -10,6 +10,8 @@ using Sunplus.Accounting.Core.Web;
 using Sunplus.Core.LoggingLib;
 
 using System.Text.RegularExpressions;
+using Fanex.Tarus.Infrastructure.Extensions;
+using System.Messaging;
 
 public partial class ExcelData : System.Web.UI.Page
 {
@@ -18,7 +20,9 @@ public partial class ExcelData : System.Web.UI.Page
         try
         {
 
-            Response.Write(RemotingRef.RefData.GetBetTypeName("1") + "<br>");
+            MessageQueue queue = new MessageQueue(@"FormatName:DIRECT=TCP:10.40.40.127\private$\entlib");
+
+            queue.Send("First Message ", " Label ");
         }
         catch (Exception ex)
         {
