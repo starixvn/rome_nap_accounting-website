@@ -92,7 +92,8 @@
                <div class="content-body clearfix">
                     <div id="defaultSetting" class="body-scroll" >
                         <table class="tbl-body-scroll">
-                            <tbody id="tblDefault" data-bind='template:{name:"tplRow", foreach: items}'></tbody>
+                            <tbody id="tblDefault" data-bind='template:{name:"tplRow", foreach: items}'>
+                            </tbody>
                         </table>
                        <script id="tplRow" type="text/html">
                             <tr>
