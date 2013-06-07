@@ -35,9 +35,9 @@ using System.Data;
 
         void SendEmailWhenRecoverBetToCSD(ResultModel result, DbResult rs, bool IsNumberGame, bool IsLiveCasino, string transid, bool IsNegativeBalance);
 
-        string SendEmailWhenDeleteMixParlayBetToCSD(int errcode, string errmsg, DataSet rs, string reason);
+        string SendEmailWhenDeleteMixParlayBetFromBetListToCSD(int errcode, string errmsg, DataSet rs, string reason);
 
-        string SendEmailWhenDeleteMixParlayBetToInternalGroup(int errcode, string errmsg, DataSet rs, bool IsRealCurrency, string reason);
+        string SendEmailWhenDeleteMixParlayBetFromBetListToInternalGroup(int errcode, string errmsg, DataSet rs, bool IsRealCurrency, string reason);
 
         string SendEmailToCSDEarlyKO(DataSet rs, string transid, string reason);
 

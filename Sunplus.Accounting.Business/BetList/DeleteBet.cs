@@ -164,24 +164,34 @@ namespace Sunplus.Accounting.Business.BetList
                         if(bettype == 9)
                         {
                             //2-MixParlay
-                            _emailService.SendEmailWhenDeleteMixParlayBetToCSD(errcode, errmsg, delResult.PrivateMessage, reason);
-                            _emailService.SendEmailWhenDeleteMixParlayBetToInternalGroup(errcode, errmsg, delResult.PrivateMessage, false, reason);
-                            _emailService.SendEmailWhenDeleteMixParlayBetToInternalGroup(errcode, errmsg, delResult.PrivateMessage, true, reason);
+                            _emailService.SendEmailWhenDeleteMixParlayBetFromBetListToCSD(errcode, errmsg, delResult.PrivateMessage, reason);
+                            _emailService.SendEmailWhenDeleteMixParlayBetFromBetListToInternalGroup(errcode, errmsg, delResult.PrivateMessage, false, reason);
+                            _emailService.SendEmailWhenDeleteMixParlayBetFromBetListToInternalGroup(errcode, errmsg, delResult.PrivateMessage, true, reason);
                         }
                         else if(bettype >= 80 && bettype <=120)
                         {
                             ////4- Number Game                        
                             _emailService.SendEmailWhenDeleteBetToCSD(resultModel, dtMatch, dtUsers, dtChoice, true, false, reason);
-                            _emailService.SendEmailWhenDeleteBetToInternalGroup(resultModel, dtMatch, dtUsers, dtChoice, false, false, false, reason);
-                            _emailService.SendEmailWhenDeleteBetToInternalGroup(resultModel, dtMatch, dtUsers, dtChoice, false, false, true, reason);
+                            _emailService.SendEmailWhenDeleteBetToInternalGroup(resultModel, dtMatch, dtUsers, dtChoice, true, false, false, reason);
+                            _emailService.SendEmailWhenDeleteBetToInternalGroup(resultModel, dtMatch, dtUsers, dtChoice, true, false, true, reason);
                         }                       
                         
                         else if (bettype == 1101 || bettype == 1102)
                         {
                             //6-LiveCasino
+                            DataRow[] dr = delResult.PrivateMessage.Tables[2].Select("isDeposit = 1");
+                            if (dr.Length > 0)
+                            {
+                                dtChoice = dr.CopyToDataTable();
+                            }                            
                             _emailService.SendEmailWhenDeleteBetToCSD(resultModel, dtMatch, dtUsers, dtChoice, false, true, reason);
 
-                            dtChoice = delResult.PrivateMessage.Tables[2];
+                            dtChoice = new DataTable();
+                            DataRow[] dr2 = delResult.PrivateMessage.Tables[2].Select("isRealCust = 1");
+                            if (dr2.Length > 0)
+                            {
+                                dtChoice = dr2.CopyToDataTable();
+                            }                            
                             _emailService.SendEmailWhenDeleteBetToInternalGroup(resultModel, dtMatch, dtUsers, dtChoice, false, true, true, reason); // real currency
                             _emailService.SendEmailWhenDeleteBetToInternalGroup(resultModel, dtMatch, dtUsers, dtChoice, false, true, false, reason);//  for test currency
                         }

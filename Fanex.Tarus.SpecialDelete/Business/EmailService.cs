@@ -1757,7 +1757,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
         int bettype = 0;
         bool IsSearchResult = false;
 
-        public string SendEmailWhenDeleteMixParlayBetToCSD(int errcode, string errmsg, DataSet rs, string reason)
+        public string SendEmailWhenDeleteMixParlayBetFromBetListToCSD(int errcode, string errmsg, DataSet rs, string reason)
         {
             string ErrMsg = "";
             try
@@ -1767,47 +1767,19 @@ namespace Fanex.Tarus.SpecialDelete.Business
 
                 if (rs != null && rs.Tables.Count >= 2)
                 {
-                    DataTable dtMatch = rs.Tables[0];
-                    DataTable dtUsers = new DataTable();
-
-                    dtUsers = rs.Tables[1];
+                    DataTable dtTrans = rs.Tables[1];
+                    DataTable dtChoice = rs.Tables[0];
 
                     string tplpath = "Mixpalay/";
-                    string tplMatchAll = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "TplSendMailMixparlayFull.htm");
+                    string tplMatchAll = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "TplSendMailMixparlayFromBetList.htm");
                     TemplateHandler.Assign(ref tplMatchAll, "ActionType", "Deleted");
                     string tplUserMP = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "TplMPSendMailRow.htm");
+               
 
-                    ////For special bets - 12EU
-                    //string tplMatchAll_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/DeleteBetReportSendMail_SpecialBet.htm");
-                    //TemplateHandler.Assign(ref tplMatchAll_SpecialBet, "ActionType", "Deleted");
-
-                    //string tplUser_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/DeleteBetReportSendMailAllRow_SpecialBet.htm");
-
-
-                    if (dtMatch.Rows.Count > 0 && dtUsers.Rows.Count > 0)
+                    if (dtTrans.Rows.Count > 0 && dtChoice.Rows.Count > 0)
                     {
                         #region send mail to CSD
-                        string strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + (CastAide.AsBoolean(dtMatch.Rows[0]["isNeutral"]) ? "(N)" : string.Empty);
-                        if (CastAide.AsInt32(dtUsers.Rows[0]["choice_bettype"]) == 10)
-                        {
-                            TemplateHandler.RemoveBlock(ref tplMatchAll, "betype-choice");
-                            TemplateHandler.RemoveBlock(ref tplMatchAll, "score");
-                            TemplateHandler.RemoveBlock(ref tplMatchAll, "hdp");
-                            TemplateHandler.RemoveBlock(ref tplMatchAll, "vs");
-
-                            ////For 12EU
-                            //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "betype-choice");
-                            //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "score");
-                            //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "hdp");
-                            //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "vs");
-
-                            //TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "betype-choice");
-                            //TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "score");
-                            //TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "hdp");
-
-                            strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + " - " + CacheRef.GetLeagueName(dtMatch.Rows[0]["leagueid"]);
-                        }
-
+                        
                         #region Create Dataset dsUser
 
                         var collections = SpecialDeleteSection.Instance.DeleteBet;
@@ -1826,9 +1798,9 @@ namespace Fanex.Tarus.SpecialDelete.Business
 
                                 foreach (DataRow dr in dtMail.Rows)
                                 {
-                                    DataTable dtUser = dtUsers.Clone();
+                                    DataTable dtUser = dtTrans.Clone();
 
-                                    var _rows = dtUsers.AsEnumerable().Where(s => s["site"].ToString().ToLower() == dr["site"].ToString().ToLower());
+                                    var _rows = dtTrans.AsEnumerable().Where(s => s["site"].ToString().ToLower() == dr["site"].ToString().ToLower());
 
                                     if (_rows.Count() == 0)
                                         continue;
@@ -1869,11 +1841,11 @@ namespace Fanex.Tarus.SpecialDelete.Business
                                     };
                                     mailing.Items = new DataTable();
 
-                                    DataTable dtUser = dtUsers.Clone();
+                                    DataTable dtUser = dtTrans.Clone();
                                     string expression = string.Empty;
                                     expression = "" + store.Name + "='" + store.Alias + "'";
 
-                                    DataRow[] rows = dtUsers.Select(expression);
+                                    DataRow[] rows = dtTrans.Select(expression);
                                     foreach (DataRow row in rows)
                                     {
                                         dtUser.ImportRow(row);
@@ -1892,23 +1864,15 @@ namespace Fanex.Tarus.SpecialDelete.Business
                             if (dataforMailing.Items.Rows.Count > 0)
                             {
                                 #region MatchInfo
-                                DataRow drMatch = dtMatch.Rows[0];
+                                DataRow drMatch = dtTrans.Rows[0];
                                 string Subject = string.Empty;
 
 
                                 Subject = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "specialDelete_MPBet_Subject");
                                 Subject = string.Format(Subject, "{site}", "{site_name}", Convert.ToDateTime(drMatch["datetime"]));
 
-                                string tplMatch = tplMatchAll.Clone().ToString();
+                                string tplMatch = tplMatchAll.Clone().ToString();                      
 
-                                //Match
-                                if (strHome.Length == 0 && CacheRef.GetTeamName(drMatch["awayid"]).Length == 0)
-                                    strHome = "Number Game No " + drMatch["matchcode"];
-
-                                TemplateHandler.Assign(ref tplMatch, "Code", drMatch["matchcode"]);
-                                TemplateHandler.Assign(ref tplMatch, "Home", strHome);
-                                TemplateHandler.Assign(ref tplMatch, "Away", CacheRef.GetTeamName(drMatch["awayid"]));
-                                TemplateHandler.Assign(ref tplMatch, "EventDate", FormatHandler.FormatDateEn(drMatch["EventDate"]));
                                 TemplateHandler.Assign(ref tplMatch, "UserName", AppSession.Username);
                                 TemplateHandler.Assign(ref tplMatch, "time", Convert.ToDateTime(drMatch["datetime"]));
                                 TemplateHandler.Assign(ref tplMatch, "reason", reason);
@@ -1942,8 +1906,9 @@ namespace Fanex.Tarus.SpecialDelete.Business
 
                                     TemplateHandler.Assign(ref rowMP, "stake", NumberFormat.DecFormat(drBet["stake"], 2));
                                     TemplateHandler.Assign(ref rowMP, "currency", CacheUtils.GetExchangeName(CastAide.AsInt32(drBet["currency"])));
-
-                                    string choice = GenMPMailRow(drBet, CastAide.AsString(drBet["subtransid"]));
+                                    
+                                    //todo                                    
+                                    string choice = GenMPMailRow(dtChoice);
                                     TemplateHandler.Assign(ref rowMP, "choice", choice);
 
                                     body_mix.Append(rowMP);
@@ -2000,7 +1965,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
             return ErrMsg;
         }
 
-        public string SendEmailWhenDeleteMixParlayBetToInternalGroup(int errcode, string errmsg, DataSet rs, bool IsRealCurrency, string reason)
+        public string SendEmailWhenDeleteMixParlayBetFromBetListToInternalGroup(int errcode, string errmsg, DataSet rs, bool IsRealCurrency, string reason)
         {
             string ErrMsg = "";
             try
@@ -2010,10 +1975,8 @@ namespace Fanex.Tarus.SpecialDelete.Business
 
                 if (rs != null && rs.Tables.Count >= 2)
                 {
-                    DataTable dtMatch = rs.Tables[0];
-                    DataTable dtUsers = new DataTable();
-
-                    dtUsers = rs.Tables[3];
+                    DataTable dtTrans = rs.Tables[1];
+                    DataTable dtChoice = rs.Tables[0];                    
 
                     string expression = "";
 
@@ -2026,7 +1989,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
                         expression = " currency  = 20";
                     }
 
-                    DataRow[] rows = dtUsers.Select(expression);
+                    DataRow[] rows = dtTrans.Select(expression);
                     int cnt = rows.Count();
 
                     string site = string.Empty;
@@ -2040,52 +2003,18 @@ namespace Fanex.Tarus.SpecialDelete.Business
                         else
                             site += s + ", ";
                     }
-
+                    
                     string tplpath = "Mixpalay/";
-                    string tplMatchAll = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "TplSendMailMixparlayFull.htm");
+                    string tplMatchAll = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "TplSendMailMixparlayFromBetList.htm");
                     TemplateHandler.Assign(ref tplMatchAll, "ActionType", "Deleted");
                     string tplUserMP = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "TplMPSendMailRow.htm");
 
-                    ////For special bets - 12EU
-                    //string tplMatchAll_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/DeleteBetReportSendMail_SpecialBet.htm");
-                    //TemplateHandler.Assign(ref tplMatchAll_SpecialBet, "ActionType", "Deleted");
-
-                    //string tplUser_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/DeleteBetReportSendMailAllRow_SpecialBet.htm");
-
-
-                    if (dtMatch.Rows.Count > 0 && cnt > 0)
+                    if (dtTrans.Rows.Count > 0 && cnt > 0)                    
                     {
-                        #region send mail to CSD
-
-                        #region Template
-                        string strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + (CastAide.AsBoolean(dtMatch.Rows[0]["isNeutral"]) ? "(N)" : string.Empty);
-                        if (CastAide.AsInt32(dtUsers.Rows[0]["choice_bettype"]) == 10)
-                        {
-                            TemplateHandler.RemoveBlock(ref tplMatchAll, "betype-choice");
-                            TemplateHandler.RemoveBlock(ref tplMatchAll, "score");
-                            TemplateHandler.RemoveBlock(ref tplMatchAll, "hdp");
-                            TemplateHandler.RemoveBlock(ref tplMatchAll, "vs");
-
-                            ////For 12EU
-                            //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "betype-choice");
-                            //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "score");
-                            //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "hdp");
-                            //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "vs");
-
-                            //TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "betype-choice");
-                            //TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "score");
-                            //TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "hdp");
-
-                            strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + " - " + CacheRef.GetLeagueName(dtMatch.Rows[0]["leagueid"]);
-                        }
-                        #endregion
-
-
-
-
+                        #region send mail to CSD                     
 
                         #region MatchInfo
-                        DataRow drMatch = dtMatch.Rows[0];
+                        DataRow drMatch = dtTrans.Rows[0];
                         string Subject = string.Empty;
 
 
@@ -2100,15 +2029,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
                         TemplateHandler.Assign(ref Subject, "site_name", string.Empty);
 
                         string tplMatch = tplMatchAll.Clone().ToString();
-
-                        //Match
-                        if (strHome.Length == 0 && CacheRef.GetTeamName(drMatch["awayid"]).Length == 0)
-                            strHome = "Number Game No " + drMatch["matchcode"];
-
-                        TemplateHandler.Assign(ref tplMatch, "Code", drMatch["matchcode"]);
-                        TemplateHandler.Assign(ref tplMatch, "Home", strHome);
-                        TemplateHandler.Assign(ref tplMatch, "Away", CacheRef.GetTeamName(drMatch["awayid"]));
-                        TemplateHandler.Assign(ref tplMatch, "EventDate", FormatHandler.FormatDateEn(drMatch["EventDate"]));
+                        
                         TemplateHandler.Assign(ref tplMatch, "UserName", AppSession.Username);
                         TemplateHandler.Assign(ref tplMatch, "time", Convert.ToDateTime(drMatch["datetime"]));
                         TemplateHandler.Assign(ref tplMatch, "reason", reason);
@@ -2142,7 +2063,8 @@ namespace Fanex.Tarus.SpecialDelete.Business
                             TemplateHandler.Assign(ref rowMP, "stake", NumberFormat.DecFormat(drBet["stake"], 2));
                             TemplateHandler.Assign(ref rowMP, "currency", CacheUtils.GetExchangeName(CastAide.AsInt32(drBet["currency"])));
 
-                            string choice = GenMPMailRow(drBet, CastAide.AsString(drBet["subtransid"]));
+                            //todo
+                            string choice = GenMPMailRow(dtChoice);
                             TemplateHandler.Assign(ref rowMP, "choice", choice);
 
                             body_mix.Append(rowMP);
@@ -2214,228 +2136,122 @@ namespace Fanex.Tarus.SpecialDelete.Business
         /// <param name="row2"></param>
         /// <param name="subtransid"></param>
         /// <returns></returns>
-        private string GenMPMailRow(DataRow row2, string subtransid)
+        private string GenMPMailRow(DataTable dtChoice)
         {
-            string mpItem = string.Empty;
+            int count = dtChoice.Rows.Count;
+            string mpItemList = string.Empty;
+            
             try
             {
-                mpItem = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("SpecialDelete/Mixpalay/TplMPSendMailChoice.htm");
-                TemplateHandler.Assign(ref mpItem, "MoreBetInfo", "");
-                string mpHome = CacheRef.GetTeamName(row2["homeid"]) + (CastAide.AsBoolean(row2["isNeutral"]) ? "(N)" : string.Empty);
-                string mpAway = CacheRef.GetTeamName(row2["awayid"]);
-                betteam = Fanex.Tarus.Infrastructure.Helper.SportHelper.BetTeam.GetBetTeam(row2["betteam"].ToString(), CastAide.AsInt32(row2["choice_bettype"]), "e");
-                sportypeName = CacheRef.GetSportName(row2["sporttype"]);
-                leagueName = CacheRef.GetLeagueName(row2["leagueid"]);
-                bettype = Convert.IsDBNull(row2["choice_bettype"]) ? 0 : Convert.ToInt32(row2["choice_bettype"]);
-                hdp1 = Convert.IsDBNull(row2["choice_hdp1"]) ? 0 : Convert.ToDecimal(row2["choice_hdp1"]);
-                hdp2 = Convert.IsDBNull(row2["choice_hdp2"]) ? 0 : Convert.ToDecimal(row2["choice_hdp2"]);
-                odds = Convert.IsDBNull(row2["choice_odds"]) ? 0 : Convert.ToDecimal(row2["choice_odds"]);
-                bettypeName = CacheRef.GetBettype(bettype);
-
-                string subtid = row2["subtransid"].ToString();
-                bool liveindicator = CastAide.AsBoolean(row2["liveindicator"], false);
-
-                TemplateHandler.Assign(ref mpItem, "bgcolor", liveindicator ? "pink" : "#FFFFAA");
-
-                if (subtid == subtransid)
+                foreach (DataRow row2 in dtChoice.Rows)
                 {
+                    count--;
+                    string mpItem = string.Empty;
+
+                    mpItem = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("SpecialDelete/Mixpalay/TplMPSendMailChoice.htm");
+                    TemplateHandler.Assign(ref mpItem, "MoreBetInfo", "");
+                    string mpHome = CacheRef.GetTeamName(row2["homeid"]) + (CastAide.AsBoolean(row2["isNeutral"]) ? "(N)" : string.Empty);
+                    string mpAway = CacheRef.GetTeamName(row2["awayid"]);
+                    betteam = Fanex.Tarus.Infrastructure.Helper.SportHelper.BetTeam.GetBetTeam(row2["betteam"].ToString(), CastAide.AsInt32(row2["bettype"]), "e");
+                    sportypeName = CacheRef.GetSportName(row2["sporttype"]);
+                    leagueName = CacheRef.GetLeagueName(row2["leagueid"]);
+                    bettype = Convert.IsDBNull(row2["bettype"]) ? 0 : Convert.ToInt32(row2["bettype"]);
+                    hdp1 = Convert.IsDBNull(row2["hdp1"]) ? 0 : Convert.ToDecimal(row2["hdp1"]);
+                    hdp2 = Convert.IsDBNull(row2["hdp2"]) ? 0 : Convert.ToDecimal(row2["hdp2"]);
+                    odds = Convert.IsDBNull(row2["odds"]) ? 0 : Convert.ToDecimal(row2["odds"]);
+                    bettypeName = CacheRef.GetBettype(bettype);
+
+                    bool liveindicator = CastAide.AsBoolean(row2["liveindicator"], false);
+
+                    TemplateHandler.Assign(ref mpItem, "bgcolor", liveindicator ? "pink" : "#FFFFAA");
+
                     TemplateHandler.Assign(ref mpItem, "style_bettype", "font-weight:bold; color:Blue");
-                }
-                else
-                {
-                    TemplateHandler.Assign(ref mpItem, "style_bettype", "");
-                }
-
-                string formatlive = string.Empty;
-                if (liveindicator)
-                {
-                    formatlive = string.Format("&nbsp;<b>[{0}-{1}]</b>", CastAide.AsInt32(row2["livehomescore"], 0), CastAide.AsInt32(row2["liveawayscore"], 0));
-                }
-                TemplateHandler.Assign(ref mpItem, "formatlive", formatlive);
-
-                switch (bettype)
-                {
-                    case 1:
-                    case 7:
-                    case 20:
-                    case 21:
-                    case 22:
-                    case 124:
-                    case 125:
-                        GenHdpEvent(ref mpItem, mpHome, mpAway, betteam, true);
-                        break;
-                    case 121:
-                    case 122:
-                    case 123:
-                        GenHomeAwayDrawNoBet(ref mpItem, mpHome, mpAway, betteam, true);
-                        break;
-                    case 2:
-                    case 12:
-                        GenOEEvent(ref mpItem, mpHome, mpAway, true);
-                        break;
-                    case 3:
-                    case 8:
-                        GenOUEvent(ref mpItem, mpHome, mpAway, true);
-                        break;
-                    case 4:
-                    case 14:
-                    case 30:
-                        GenCSEvent(ref mpItem, mpHome, mpAway, true);
-                        break;
-                    case 5:
-                    case 15:
-                        Gen1x2Event(ref mpItem, mpHome, mpAway, true);
-                        break;
-                    case 6:
-                    case 16:
-                        GenTGEvent(ref mpItem, mpHome, mpAway, true);
-                        break;
-                    case 24:
-                        GenDoubleChanceEvent(ref mpItem, mpHome, mpAway, true);
-                        break;
-                    case 25:
-                        GenDrawNoBetEvent(ref mpItem, mpHome, mpAway, true);
-                        break;
-                    case 26:
-                        GenBothOneNeitherEvent(ref mpItem, mpHome, mpAway, true);
-                        break;
-                    case 27:
-                        GenToWinToNilEvent(ref mpItem, mpHome, mpAway, true);
-                        break;
-                    case 28:
-                        GenThreeWayHandicap(ref mpItem, mpHome, mpAway, true);
-                        break;
-                    case 13:
-                        GenCleanSheetEvent(ref mpItem, mpHome, mpAway, true);
-                        break;
-
-                    default:
-                        mpItem = string.Empty;
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-            }
-            return mpItem;
-        }
-
-        protected string GenMPRow(string refno, string transid)
-        {
-            string tplEvent = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("SpecialDelete/SendMailRowMPEvent.htm");
-            TemplateHandler.Assign(ref tplEvent, "MoreBetInfo", "");
-            string strData = "";
-            try
-            {
-                System.Threading.Thread.Sleep(5000);
-                DNAide.Data.DbResult ds = AccountReport.AccBetsSelBetCheckM(refno);
-                string eventItems = string.Empty;
-                if (ds != null && ds.ResultSet.Tables[0].Rows.Count > 0)
-                {
-                    int ind = 1; int numC = ds.ResultSet.Tables[0].Rows.Count;
-                    foreach (DataRow row2 in ds.ResultSet.Tables[0].Select())
+                    
+                    string formatlive = string.Empty;
+                    if (liveindicator)
                     {
-                        string mpItem = (string)tplEvent.Clone();
-                        string mpEvent = (string)mpItem.Clone();
-                        string mpHome = CacheRef.GetTeamName(row2["homeid"]) + (CastAide.AsBoolean(row2["isNeutral"]) ? "(N)" : string.Empty);
-                        string mpAway = CacheRef.GetTeamName(row2["awayid"]);
-                        betteam = Fanex.Tarus.Infrastructure.Helper.SportHelper.BetTeam.GetBetTeam(row2["betteam"].ToString(), Convert.ToInt32(row2["bettype"]), "e");
-                        sportypeName = CacheRef.GetSportName(row2["Sporttype"]);
-                        leagueName = CacheRef.GetLeagueName(row2["leagueid"]);
-                        bettype = Convert.IsDBNull(row2["bettype"]) ? 0 : Convert.ToInt32(row2["bettype"]);
-                        decimal mpHdp1 = Convert.IsDBNull(row2["hdp1"]) ? 0 : Convert.ToDecimal(row2["hdp1"]);
-                        decimal mpHdp2 = Convert.IsDBNull(row2["hdp1"]) ? 0 : Convert.ToDecimal(row2["hdp2"]);
-                        decimal mpHdp = (betteam == "h") ? mpHdp2 - mpHdp1 : mpHdp1 - mpHdp2;
-                        decimal mpOdds = Convert.IsDBNull(row2["odds"]) ? 0 : Convert.ToDecimal(row2["odds"]);
-                        odds = mpOdds;
-                        hdp1 = mpHdp1;
-                        hdp2 = mpHdp2;
+                        formatlive = string.Format("&nbsp;<b>[{0}-{1}]</b>", CastAide.AsInt32(row2["livehomescore"], 0), CastAide.AsInt32(row2["liveawayscore"], 0));
+                    }
+                    TemplateHandler.Assign(ref mpItem, "formatlive", formatlive);
 
-                        bettypeName = Fanex.Tarus.Infrastructure.Helper.SportHelper.Bettype.GetBettype(CastAide.AsInt32(row2["bettype"]));
-                        string moreBetInfo = string.Empty;
+                    #region betttype
 
-                        string tid = row2["transid"].ToString();
-                        string mid = row2["matchid"].ToString();
-                        string bid = row2["bettype"].ToString();
-                        int statusId = CastAide.AsInt32(row2["statusid"]);
+                    switch (bettype)
+                    {
+                        case 1:
+                        case 7:
+                        case 20:
+                        case 21:
+                        case 22:
+                        case 124:
+                        case 125:
+                            GenHdpEvent(ref mpItem, mpHome, mpAway, betteam, true);
+                            break;
+                        case 121:
+                        case 122:
+                        case 123:
+                            GenHomeAwayDrawNoBet(ref mpItem, mpHome, mpAway, betteam, true);
+                            break;
+                        case 2:
+                        case 12:
+                            GenOEEvent(ref mpItem, mpHome, mpAway, true);
+                            break;
+                        case 3:
+                        case 8:
+                            GenOUEvent(ref mpItem, mpHome, mpAway, true);
+                            break;
+                        case 4:
+                        case 14:
+                        case 30:
+                            GenCSEvent(ref mpItem, mpHome, mpAway, true);
+                            break;
+                        case 5:
+                        case 15:
+                            Gen1x2Event(ref mpItem, mpHome, mpAway, true);
+                            break;
+                        case 6:
+                        case 16:
+                            GenTGEvent(ref mpItem, mpHome, mpAway, true);
+                            break;
+                        case 24:
+                            GenDoubleChanceEvent(ref mpItem, mpHome, mpAway, true);
+                            break;
+                        case 25:
+                            GenDrawNoBetEvent(ref mpItem, mpHome, mpAway, true);
+                            break;
+                        case 26:
+                            GenBothOneNeitherEvent(ref mpItem, mpHome, mpAway, true);
+                            break;
+                        case 27:
+                            GenToWinToNilEvent(ref mpItem, mpHome, mpAway, true);
+                            break;
+                        case 28:
+                            GenThreeWayHandicap(ref mpItem, mpHome, mpAway, true);
+                            break;
+                        case 13:
+                            GenCleanSheetEvent(ref mpItem, mpHome, mpAway, true);
+                            break;
 
-                        if (tid == transid)
-                        {
-                            TemplateHandler.Assign(ref mpItem, "MP", "");
-                            TemplateHandler.Assign(ref mpItem, "style", "style=\"background-color:#FFFFAA;border:solid 1px #7C98A4\"");
-                            IsSearchResult = true;
-                        }
-                        else
-                        {
-                            TemplateHandler.Assign(ref mpItem, "MP", "MP");
-                            TemplateHandler.Assign(ref mpItem, "bgcolor", "");
-                            IsSearchResult = false;
-                        }
+                        default:
+                            mpItem = string.Empty;
+                            break;
+                    }
+                    #endregion
 
-                        if (ind == numC)
-                        {
-                            TemplateHandler.Assign(ref mpItem, "hr", "");
-                        }
-                        switch (bettype)
-                        {
-                            case 1:
-                            case 7:
-                            case 20:
-                            case 21:
-                            case 124:
-                            case 125:
-                            case 1201:
-                                GenHdpEvent(ref mpItem, mpHome, mpAway, betteam, statusId, true);
-                                break;
-                            case 2:
-                            case 12:
-                                GenOEEvent(ref mpItem, mpHome, mpAway, statusId, true);
-                                break;
-                            case 3:
-                            case 8:
-                            case 1203:
-                                GenOUEvent(ref mpItem, mpHome, mpAway, statusId, true);
-                                break;
-                            case 4:
-                            case 14:
-                            case 30:
-                            case 1204:
-                                GenCSEvent(ref mpItem, mpHome, mpAway, statusId, true);
-                                break;
-                            case 5:
-                            case 15:
-                            case 1205:
-                                Gen1x2Event(ref mpItem, mpHome, mpAway, statusId, true);
-                                break;
-                            case 6:
-                            case 16:
-                            case 1206:
-                                GenTGEvent(ref mpItem, mpHome, mpAway, statusId, true);
-                                break;
-                            case 121:
-                            case 122:
-                            case 123:
-                                GenHomeAwayDrawNoBet(ref mpItem, mpHome, mpAway, statusId, betteam, true);
-                                break;
-                            default:
-                                mpItem = string.Empty;
-                                break;
-                        }
-
-                        strData += mpItem + ((ind == numC) ? "" : "<br>");
-                        ind++;
+                    mpItemList += mpItem;
+                    if (count > 0)
+                    {
+                        mpItemList += "-----------------------------<br/>";
                     }
                 }
-
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
-            return strData;
+            return mpItemList;
         }
-
+       
         protected string oddMP()
         {
             string cls = (IsSearchResult) ? "" : "MP";
@@ -3647,6 +3463,121 @@ namespace Fanex.Tarus.SpecialDelete.Business
                 ErrMsg += AlertMessage.GetMsg(ex.Message, AlertMessage.MsgType.Error);
             }
             return ErrMsg;
+        }
+
+        protected string GenMPRow(string refno, string transid)
+        {
+            string tplEvent = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("SpecialDelete/SendMailRowMPEvent.htm");
+            TemplateHandler.Assign(ref tplEvent, "MoreBetInfo", "");
+            string strData = "";
+            try
+            {
+                System.Threading.Thread.Sleep(5000);
+                DNAide.Data.DbResult ds = AccountReport.AccBetsSelBetCheckM(refno);
+                string eventItems = string.Empty;
+                if (ds != null && ds.ResultSet.Tables[0].Rows.Count > 0)
+                {
+                    int ind = 1; int numC = ds.ResultSet.Tables[0].Rows.Count;
+                    foreach (DataRow row2 in ds.ResultSet.Tables[0].Select())
+                    {
+                        string mpItem = (string)tplEvent.Clone();
+                        string mpEvent = (string)mpItem.Clone();
+                        string mpHome = CacheRef.GetTeamName(row2["homeid"]) + (CastAide.AsBoolean(row2["isNeutral"]) ? "(N)" : string.Empty);
+                        string mpAway = CacheRef.GetTeamName(row2["awayid"]);
+                        betteam = Fanex.Tarus.Infrastructure.Helper.SportHelper.BetTeam.GetBetTeam(row2["betteam"].ToString(), Convert.ToInt32(row2["bettype"]), "e");
+                        sportypeName = CacheRef.GetSportName(row2["Sporttype"]);
+                        leagueName = CacheRef.GetLeagueName(row2["leagueid"]);
+                        bettype = Convert.IsDBNull(row2["bettype"]) ? 0 : Convert.ToInt32(row2["bettype"]);
+                        decimal mpHdp1 = Convert.IsDBNull(row2["hdp1"]) ? 0 : Convert.ToDecimal(row2["hdp1"]);
+                        decimal mpHdp2 = Convert.IsDBNull(row2["hdp1"]) ? 0 : Convert.ToDecimal(row2["hdp2"]);
+                        decimal mpHdp = (betteam == "h") ? mpHdp2 - mpHdp1 : mpHdp1 - mpHdp2;
+                        decimal mpOdds = Convert.IsDBNull(row2["odds"]) ? 0 : Convert.ToDecimal(row2["odds"]);
+                        odds = mpOdds;
+                        hdp1 = mpHdp1;
+                        hdp2 = mpHdp2;
+
+                        bettypeName = Fanex.Tarus.Infrastructure.Helper.SportHelper.Bettype.GetBettype(CastAide.AsInt32(row2["bettype"]));
+                        string moreBetInfo = string.Empty;
+
+                        string tid = row2["transid"].ToString();
+                        string mid = row2["matchid"].ToString();
+                        string bid = row2["bettype"].ToString();
+                        int statusId = CastAide.AsInt32(row2["statusid"]);
+
+                        if (tid == transid)
+                        {
+                            TemplateHandler.Assign(ref mpItem, "MP", "");
+                            TemplateHandler.Assign(ref mpItem, "style", "style=\"background-color:#FFFFAA;border:solid 1px #7C98A4\"");
+                            IsSearchResult = true;
+                        }
+                        else
+                        {
+                            TemplateHandler.Assign(ref mpItem, "MP", "MP");
+                            TemplateHandler.Assign(ref mpItem, "bgcolor", "");
+                            IsSearchResult = false;
+                        }
+
+                        if (ind == numC)
+                        {
+                            TemplateHandler.Assign(ref mpItem, "hr", "");
+                        }
+                        switch (bettype)
+                        {
+                            case 1:
+                            case 7:
+                            case 20:
+                            case 21:
+                            case 124:
+                            case 125:
+                            case 1201:
+                                GenHdpEvent(ref mpItem, mpHome, mpAway, betteam, statusId, true);
+                                break;
+                            case 2:
+                            case 12:
+                                GenOEEvent(ref mpItem, mpHome, mpAway, statusId, true);
+                                break;
+                            case 3:
+                            case 8:
+                            case 1203:
+                                GenOUEvent(ref mpItem, mpHome, mpAway, statusId, true);
+                                break;
+                            case 4:
+                            case 14:
+                            case 30:
+                            case 1204:
+                                GenCSEvent(ref mpItem, mpHome, mpAway, statusId, true);
+                                break;
+                            case 5:
+                            case 15:
+                            case 1205:
+                                Gen1x2Event(ref mpItem, mpHome, mpAway, statusId, true);
+                                break;
+                            case 6:
+                            case 16:
+                            case 1206:
+                                GenTGEvent(ref mpItem, mpHome, mpAway, statusId, true);
+                                break;
+                            case 121:
+                            case 122:
+                            case 123:
+                                GenHomeAwayDrawNoBet(ref mpItem, mpHome, mpAway, statusId, betteam, true);
+                                break;
+                            default:
+                                mpItem = string.Empty;
+                                break;
+                        }
+
+                        strData += mpItem + ((ind == numC) ? "" : "<br>");
+                        ind++;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return strData;
         }
 
         #endregion
