@@ -205,7 +205,7 @@
 
     renderRow: function (result) {
         var html = '';
-        var countUser = 0;
+
         for (var index = 0; index < result.length; index++) {
             var row = result[index];
             var matchLength = row.CustomerList.length;
@@ -235,15 +235,15 @@
                     html += '<td><div class="col200 c">' + customer.Username + '</div></td>';
                     html += '<td><div class="col100 c ">' + customer.Currency + '</div></td>';
                     html += '<td><div class="col160 r ">' + customer.SMATurnover + '</div></td>';
-                    if (parseInt(customer.IsSettled) == 0) {
+                    if (match.EventStatus != "completed") {
                         html += '<td><div class="col160 table-cell" style="height:17px"><input type="text" class="MaxTurnover" id="txtMaxTurnover_' + match.MatchId + "_" + customer.CustId + '" matchId="' + match.MatchId + '" custId="' + customer.CustId + '" oldValue="' + customer.MaxTurnover + '" value="' + customer.MaxTurnover + '" style="text-align:right; width:157px" maxlength="15" onkeypress="return CheckIntNumber(event)"></div></td>';
                     }
                     else {
                         html += '<td><div class="col160 r" style="height:17px">' + customer.MaxTurnover + '</div></td>';
                     }
-                    html += '<td><div class="col60 table-cell c" style="height:17px"><input type="button" disabled="disabled" id="btnUpdate_' + match.MatchId + "_" + customer.CustId + '" title="Update" onclick="SMATurnover.UpdateSMATurnoverProccess(\'' + customer.CustId + '\',\'' + match.MatchId + '\',\'' + customer.Username + '\')" class="btnEdit" /></div></td>';
+                    html += '<td><div class="col60 table-cell c" style="height:17px"><input type="button" disabled="disabled" id="btnUpdate_' + match.MatchId + "_" + customer.CustId + '" title="Update" onclick="SMATurnover.UpdateSMATurnoverProccess(\'' + customer.CustId + '\',\'' + match.MatchId + '\',\'' + customer.Username + '\')" class="btnSave" /></div></td>';
                     html += '</tr>';
-                    countUser++;
+
                 }
             }
         }
@@ -389,6 +389,7 @@
             url: "UpdateSMATurnover",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
+            async: false,
             data: JSON.stringify(data),
             success: function (rs) {
                 if (parseInt(rs.ErrorCode) == 0) {
