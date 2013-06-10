@@ -47,7 +47,7 @@
     cursor: pointer;
 }
 
-input.btnEdit[disabled]
+input.btnSave[disabled]
 {
     opacity: 0.4;
 }

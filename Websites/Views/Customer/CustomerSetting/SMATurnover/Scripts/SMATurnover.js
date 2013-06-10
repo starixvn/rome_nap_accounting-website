@@ -293,35 +293,43 @@
         var custName = $('#txtSuperName').val();
         var maxTurnover = $('#txtTurnover').val();
         try { parent.BlockUI(); } catch (e) { }
-        var data = { matchId: matchId, custName: custName, maxTurnover: maxTurnover, mode: 0 };
-        $.ajax({
-            type: "POST",
-            url: "CheckMaxTurnoverValue",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: JSON.stringify(data),
-            success: function (rs) {
-                if (parseInt(rs.ErrorCode) == 0) {
-                    SMATurnover.AddSuperTurnoverValue(matchId, custName, maxTurnover);
-                }
-                else if (parseInt(rs.ErrorCode) == 100) {
-                    showAlertMessage("msgErrorAdd", rs.ErrorMessage, 1);
-                    $('#msgErrorAdd').show();
-                    setTimeout(function () { $('#msgErrorAdd').hide(); }, 4000);
-                }
-                else {
-                    if (!confirm(rs.ErrorMessage)) {
-                        try { parent.jQuery.unblockUI(); } catch (e) { }
-                        return;
-                    }
-                    else {
+        var maxturnover = Helper.SeparateNumricByThousand($('#txtTurnover').val());
+        if (parseInt(maxturnover) > 999999999999) {
+            showAlertMessage("msgErrorAdd", "Max Turnover should be less than or equal 999,999,999,999", 1);
+            $('#msgErrorAdd').show();
+            setTimeout(function () { $('#msgErrorAdd').hide(); }, 4000);
+        }
+        else {
+            var data = { matchId: matchId, custName: custName, maxTurnover: maxTurnover, mode: 0 };
+            $.ajax({
+                type: "POST",
+                url: "CheckMaxTurnoverValue",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(data),
+                success: function (rs) {
+                    if (parseInt(rs.ErrorCode) == 0) {
                         SMATurnover.AddSuperTurnoverValue(matchId, custName, maxTurnover);
                     }
-                }
+                    else if (parseInt(rs.ErrorCode) == 100) {
+                        showAlertMessage("msgErrorAdd", rs.ErrorMessage, 1);
+                        $('#msgErrorAdd').show();
+                        setTimeout(function () { $('#msgErrorAdd').hide(); }, 4000);
+                    }
+                    else {
+                        if (!confirm(rs.ErrorMessage)) {
+                            try { parent.jQuery.unblockUI(); } catch (e) { }
+                            return;
+                        }
+                        else {
+                            SMATurnover.AddSuperTurnoverValue(matchId, custName, maxTurnover);
+                        }
+                    }
 
-                try { parent.jQuery.unblockUI(); } catch (e) { }
-            }
-        });
+                }
+            });
+        }
+        try { parent.jQuery.unblockUI(); } catch (e) { }
     },
 
     AddSuperTurnoverValue: function (matchId, custName, maxTurnover) {
@@ -350,36 +358,43 @@
     UpdateSMATurnoverProccess: function (custId, matchId, custName) {
         var maxTurnover = $("#txtMaxTurnover_" + matchId + "_" + custId).val();
         try { parent.BlockUI(); } catch (e) { }
-        var dataCheckSuperTurnoverValue = { matchId: matchId, custName: custName, maxTurnover: maxTurnover, mode: 1 };
-        $.ajax({
-            type: "POST",
-            url: "CheckMaxTurnoverValue",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: JSON.stringify(dataCheckSuperTurnoverValue),
-            success: function (rs) {
-                if (parseInt(rs.ErrorCode) == 0) {
-                    SMATurnover.UpdateSuperTurnoverValue(matchId, custId, maxTurnover);
-                }
-                else if (parseInt(rs.ErrorCode) == 100) {
-                    showAlertMessage("msgError", rs.ErrorMessage, 1);
-                    $('#msgError').show();
-                    setTimeout(function () { $('#msgError').hide(); }, 4000);
-                }
-                else {
-                    if (!confirm(rs.ErrorMessage)) {
-                        try { parent.jQuery.unblockUI(); } catch (e) { }
-                        return;
-                    }
-                    else {
+        var maxturnover = Helper.SeparateNumricByThousand(maxTurnover);
+        if (parseInt(maxturnover) > 999999999999) {
+            showAlertMessage("msgError", "Max Turnover should be less than or equal 999,999,999,999", 1);
+            $('#msgError').show();
+            setTimeout(function () { $('#msgError').hide(); }, 4000);
+        }
+        else {
+            var dataCheckSuperTurnoverValue = { matchId: matchId, custName: custName, maxTurnover: maxTurnover, mode: 1 };
+            $.ajax({
+                type: "POST",
+                url: "CheckMaxTurnoverValue",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(dataCheckSuperTurnoverValue),
+                success: function (rs) {
+                    if (parseInt(rs.ErrorCode) == 0) {
                         SMATurnover.UpdateSuperTurnoverValue(matchId, custId, maxTurnover);
                     }
+                    else if (parseInt(rs.ErrorCode) == 100) {
+                        showAlertMessage("msgError", rs.ErrorMessage, 1);
+                        $('#msgError').show();
+                        setTimeout(function () { $('#msgError').hide(); }, 4000);
+                    }
+                    else {
+                        if (!confirm(rs.ErrorMessage)) {
+                            try { parent.jQuery.unblockUI(); } catch (e) { }
+                            return;
+                        }
+                        else {
+                            SMATurnover.UpdateSuperTurnoverValue(matchId, custId, maxTurnover);
+                        }
 
+                    }
                 }
-                try { parent.jQuery.unblockUI(); } catch (e) { }
-            }
-        });
-
+            });
+        }
+        try { parent.jQuery.unblockUI(); } catch (e) { }
     },
 
     UpdateSuperTurnoverValue: function (matchId, custId, maxTurnover) {
@@ -435,9 +450,10 @@
     },
 
     InputMaxTurnover: function () {
-        var maxTurnover = $('#txtTurnover').val();
-        if (maxTurnover != "") {
-            $('#txtTurnover').val(formatNumber2(Helper.SeparateNumricByThousand(maxTurnover)));
+        // var maxTurnover = $('#txtTurnover').val();
+        var maxturnover = Helper.SeparateNumricByThousand($('#txtTurnover').val());
+        if (maxturnover != "") {
+            $('#txtTurnover').val(formatNumber2(maxturnover));
         }
     }
 }
