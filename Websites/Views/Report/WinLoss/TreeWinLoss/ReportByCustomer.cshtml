@@ -16,27 +16,27 @@
                 <thead>
                     <tr>
                         <th>
-                            <div class="table-cell" style="width: 30px; height: 39px">
+                            <div class="table-cell" style="width: 30px; height: 61px">
                                 No</div>
                         </th>
                         <th>
-                            <div class="table-cell" style="width: 100px; height: 39px">
+                            <div class="table-cell" style="width: 100px; height: 61px">
                                 Username</div>
                         </th>
                         <th>
-                            <div class="table-cell" style="width: 120px; height: 39px">
+                            <div class="table-cell" style="width: 120px; height: 61px">
                                 Turnover</div>
                         </th>
                         <th>
-                            <div class="table-cell" style="width: 120px; height: 39px">
+                            <div class="table-cell" style="width: 120px; height: 61px">
                                 Win Loss</div>
                         </th>
                         <th>
-                            <div class="table-cell" style="width: 80px; height: 39px">
+                            <div class="table-cell" style="width: 80px; height: 61px">
                                 Comm</div>
                         </th>
                         <th>
-                            <div class="table-cell" style="width: 120px; height: 39px">
+                            <div class="table-cell" style="width: 120px; height: 61px">
                                 Total</div>
                         </th>
                     </tr>
@@ -49,27 +49,27 @@
                     <thead>
                         <tr>
                             <th>
-                                <div class="table-cell" style="width: 30px; height: 39px">
+                                <div class="table-cell" style="width: 30px; height: 61px">
                                     &nbsp;</div>
                             </th>
                             <th>
-                                <div class="table-cell" style="width: 100px; height: 39px">
+                                <div class="table-cell" style="width: 100px; height: 61px">
                                     &nbsp;</div>
                             </th>
                             <th>
-                                <div class="table-cell" style="width: 120px; height: 39px">
+                                <div class="table-cell" style="width: 120px; height: 61px">
                                     &nbsp;</div>
                             </th>
                             <th>
-                                <div class="table-cell" style="width: 120px; height: 39px">
+                                <div class="table-cell" style="width: 120px; height: 61px">
                                     &nbsp;</div>
                             </th>
                             <th>
-                                <div class="table-cell" style="width: 80px; height: 39px">
+                                <div class="table-cell" style="width: 80px; height: 61px">
                                     &nbsp;</div>
                             </th>
                             <th>
-                                <div class="table-cell" style="width: 120px; height: 39px">
+                                <div class="table-cell" style="width: 120px; height: 61px">
                                     &nbsp;</div>
                             </th>
                         </tr>
@@ -84,63 +84,61 @@
                 <table class="grid-fixed-table col_header_content">
                     <thead>
                         <tr>
-                            <th rowspan="2">
-                                <div class="table-cell" style="width: 30px; height: 39px">
+                            <th rowspan="3">
+                                <div class="table-cell" style="width: 30px; height: 61px">
                                     &nbsp;</div>
                             </th>
-                            <th rowspan="2">
-                                <div class="table-cell" style="width: 100px; height: 39px">
+                            <th rowspan="3">
+                                <div class="table-cell" style="width: 100px; height: 61px">
                                     &nbsp;</div>
                             </th>
-                            <th rowspan="2">
-                                <div class="table-cell" style="width: 120px; height: 39px">
+                            <th rowspan="3">
+                                <div class="table-cell" style="width: 120px; height: 61px">
                                     &nbsp;</div>
                             </th>
-                            <th rowspan="2">
-                                <div class="table-cell" style="width: 120px; height: 39px">
+                            <th rowspan="3">
+                                <div class="table-cell" style="width: 120px; height: 61px">
                                     &nbsp;</div>
                             </th>
-                            <th rowspan="2">
-                                <div class="table-cell" style="width: 80px; height: 39px">
+                            <th rowspan="3">
+                                <div class="table-cell" style="width: 80px; height: 61px">
                                     &nbsp;</div>
                             </th>
-                            <th rowspan="2">
-                                <div class="table-cell" style="width: 120px; height: 39px">
+                            <th rowspan="3">
+                                <div class="table-cell" style="width: 120px; height: 61px">
                                     &nbsp;</div>
                             </th>
-                            <th colspan="5">
+                            <th colspan="9">
                                 <div style="height: 17px">
                                     Base RM</div>
                             </th>
-                            <th rowspan="2">
-                                <div class="table-cell" style="width: 80px; height: 39px">
+                            <th rowspan="3">
+                                <div class="table-cell" style="width: 80px; height: 61px">
                                     Virtual Rate (%)</div>
                             </th>
                         </tr>
                         <tr>
-                            <th>
-                                <div class="table-cell" style="width: 110px; height: 17px">
-                                    Turnover</div>
+                             <th rowspan="2">
+                                <div class="table-cell sorter" style="width: 110px; height: 39px" id="dvBaseRMTurnover" onclick="treeWinLossByCustomerLevel.sorting(this, 'BaseRMTurnover')">Turnover</div>
                             </th>
-                            <th>
-                                <div class="table-cell sorter" style="width: 110px; height: 17px" id="divBaseRMTotal"
-                                    onclick="treeWinLossByCustomerLevel.sorting(this, 'BaseRMTotal')">
-                                    Total</div>
+                             <th rowspan="2">
+                                <div class="table-cell sorter" style="width: 110px; height: 39px" id="divBaseRMTotal" onclick="treeWinLossByCustomerLevel.sorting(this, 'BaseRMVirtualTO')">Virtual <br/> Turnover</div>
                             </th>
-                            <th>
-                                <div class="table-cell" style="width: 110px; height: 17px">
-                                    Virtual Total</div>
+                             <th colspan="2">
+                                <div class="table-cell" style="width: 220px; height: 17px">Turnover Variance</div>
                             </th>
-                            <th>
-                                <div class="table-cell sorter" style="width: 110px; height: 17px" id="divBaseRMVariance"
-                                    onclick="treeWinLossByCustomerLevel.sorting(this,'BaseRMVariance')">
-                                    Variance</div>
+                             <th colspan="2">
+                                <div class="table-cell" style="width: 220px; height: 17px" id="divBaseRMVariance">Winlost Variance</div>
                             </th>
-                            <th>
-                                <div class="table-cell sorter" style="width: 110px; height: 17px" id="divMargin"
-                                    onclick="treeWinLossByCustomerLevel.sorting(this,'Margin')">
-                                    Margin (%)</div>
-                            </th>
+                            <th rowspan="2"><div class="table-cell sorter" style="width: 110px; height: 39px" id="dvBaseRMTotal" onclick="treeWinLossByCustomerLevel.sorting(this,'BaseRMTotal')">Total</div></th>
+                            <th rowspan="2"><div class="table-cell sorter" style="width: 110px; height: 39px" id="dvBaseRMVirtualTotal" onclick="treeWinLossByCustomerLevel.sorting(this,'BaseRMVirtualTotal')">Virtual Total</div></th>
+                            <th rowspan="2"><div class="table-cell sorter" style="width: 110px; height: 39px" id="divMargin" onclick="treeWinLossByCustomerLevel.sorting(this,'Margin')">Margin (%)</div></th>
+                        </tr>
+                        <tr>
+                            <th> <div class="table-cell sorter" style="width: 110px; height: 17px" id="dvBaseRMTOVariancePlus" onclick="treeWinLossByCustomerLevel.sorting(this,'BaseRMTOVariancePlus')">+</div></th>
+                            <th> <div class="table-cell sorter" style="width: 110px; height: 17px" id="dvBaseRMTOVarianceMinus" onclick="treeWinLossByCustomerLevel.sorting(this,'BaseRMTOVarianceMinus')">-</div></th>
+                            <th> <div class="table-cell sorter" style="width: 110px; height: 17px" id="dvBaseRMWLVariancePlus" onclick="treeWinLossByCustomerLevel.sorting(this,'BaseRMWLVariancePlus')">+</div></th>
+                            <th> <div class="table-cell sorter" style="width: 110px; height: 17px" id="dvBaseRMWLVarianceMinus" onclick="treeWinLossByCustomerLevel.sorting(this,'BaseRMWLVarianceMinus')">-</div></th>
                         </tr>
                     </thead>
                 </table>
@@ -151,58 +149,64 @@
                 <table id="tblContent" class="grid-fixed-table col_header_content">
                     <thead>
                         <tr>
-                            <th rowspan="2">
-                                <div class="table-cell" style="width: 30px; height: 39px">
+                            <th rowspan="3">
+                                <div class="table-cell" style="width: 30px; height: 61px">
                                     &nbsp;</div>
                             </th>
-                            <th rowspan="2">
-                                <div class="table-cell" style="width: 100px; height: 39px">
+                            <th rowspan="3">
+                                <div class="table-cell" style="width: 100px; height: 61px">
                                     &nbsp;</div>
                             </th>
-                            <th rowspan="2">
-                                <div class="table-cell" style="width: 120px; height: 39px">
+                            <th rowspan="3">
+                                <div class="table-cell" style="width: 120px; height: 61px">
                                     &nbsp;</div>
                             </th>
-                            <th rowspan="2">
-                                <div class="table-cell" style="width: 120px; height: 39px">
+                            <th rowspan="3">
+                                <div class="table-cell" style="width: 120px; height: 61px">
                                     &nbsp;</div>
                             </th>
-                            <th rowspan="2">
-                                <div class="table-cell" style="width: 80px; height: 39px">
+                            <th rowspan="3">
+                                <div class="table-cell" style="width: 80px; height: 61px">
                                     &nbsp;</div>
                             </th>
-                            <th rowspan="2">
-                                <div class="table-cell" style="width: 120px; height: 39px">
+                            <th rowspan="3">
+                                <div class="table-cell" style="width: 120px; height: 61px">
                                     &nbsp;</div>
                             </th>
-                            <th colspan="5">
+                            <th colspan="9">
                                 <div style="height: 17px">
                                     Base RM</div>
                             </th>
-                            <th rowspan="2">
-                                <div class="table-cell" style="width: 80px; height: 39px">
+                            <th rowspan="3">
+                                <div class="table-cell" style="width: 80px; height: 61px">
                                     Virtual Rate (%)</div>
                             </th>
                         </tr>
                         <tr>
-                            <th>
-                                <div class="table-cell" style="width: 110px; height: 17px">
-                                    Turnover</div>
+                            <th rowspan="2">
+                            <div class="table-cell" style="width: 110px; height: 39px">
+                                Turnover</div>
                             </th>
-                            <th>
-                                <div class="table-cell sorter" style="width: 110px; height: 17px">
-                                    Total</div>
-                            </th>
-                            <th>
-                                <div class="table-cell" style="width: 110px; height: 17px">
+                            <th rowspan="2">
+                                <div class="table-cell sorter" style="width: 110px; height: 39px">
                                     Virtual Total</div>
                             </th>
-                            <th>
-                                <div class="table-cell sorter" style="width: 110px; height: 17px">
-                                    Variance</div>
+                            <th colspan="2">
+                                <div class="table-cell" style="width: 110px; height: 39px">
+                                    Turnover Variance</div>
                             </th>
-                            <th>
-                                <div class="table-cell sorter" style="width: 110px; height: 17px" >
+                            <th colspan="2">
+                                <div class="table-cell sorter" style="width: 110px; height: 39px">
+                                    Winlost Variance</div>
+                            </th>
+                            <th rowspan="2">
+                                <div class="table-cell sorter" style="width: 110px; height: 39px">Total</div>
+                            </th>
+                            <th rowspan="2">
+                                <div class="table-cell sorter" style="width: 110px; height: 39px">Virtual Total</div>
+                            </th>
+                             <th rowspan="2">
+                                <div class="table-cell sorter" style="width: 110px; height: 39px">
                                     Margin (%)</div>
                             </th>
                         </tr>
@@ -231,6 +235,7 @@
                         <tr>
                          @{
                     string turnoverTotal = string.Empty;
+                    string turnoverTotalVirtual = string.Empty;
                     string marginTotal = string.Empty;
 
                     if (ViewBag.isShowSB == true ||
@@ -240,13 +245,15 @@
                     ViewBag.isShowVS == true)
                     {
                         turnoverTotal = NumberFormat.DoubleFormat(Model.Total.BaseRMTurnover, 2);
+                        turnoverTotalVirtual = NumberFormat.DoubleFormat(Model.Total.BaseRMVirtualTO, 2);
                     }
                     else
                     {
                         turnoverTotal = "N/A";
+                        turnoverTotalVirtual = "N/A";
                     }
 
-                    if (turnoverTotal == "N/A" || turnoverTotal == "0.00")
+                    if (turnoverTotalVirtual == "N/A" || turnoverTotalVirtual == "0.00")
                     {
                         marginTotal = "N/A";
                     }
@@ -280,21 +287,17 @@
                                 <div class="r" style="width: 120px; height: 17px">
                                     &nbsp;</div>
                             </th>
-                            <th>
-                                <div class="r" style="width: 110px; height: 17px">@turnoverTotal</div>
-                            </th>
-                            <th>
-                                <div class="r" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total.BaseRMTotal, 2)</div>
-                            </th>
-                            <th>
-                                <div class="r" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total.BaseRMVirtualTotal, 2)</div>
-                            </th>
-                            <th>
-                                <div class="r" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total.BaseRMVariance, 2)</div>
-                            </th>
-                            <th>
-                                <div class="r" style="width: 110px; height: 17px">@marginTotal</div>
-                            </th>
+                            
+                            <th><div class="r" style="width: 110px; height: 17px">@turnoverTotal</div></th>
+                            <th><div class="r" style="width: 110px; height: 17px">@turnoverTotalVirtual</div></th>
+                            <th><div class="r" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total.BaseRMTOVariancePlus, 2)</div></th>
+                            <th><div class="r" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total.BaseRMTOVarianceMinus, 2)</div></th>
+                            <th><div class="r " style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total.BaseRMWLVariancePlus, 2)</div></th>
+                            <th><div class="r " style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total.BaseRMWLVarianceMinus, 2)</div></th>
+                            <th><div class="r " style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total.BaseRMTotal, 2)</div></th>
+                            <th><div class="r " style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total.BaseRMVirtualTotal, 2)</div></th>
+                            <th><div class="r " style="width: 110px; height: 17px">@marginTotal</div></th>
+
                             <th>
                                 <div class="r" style="width: 80px; height: 17px">
                                     &nbsp;</div>
@@ -326,7 +329,10 @@
                 gridWidth: 1260, //=totalColumnWidth + totalColumn*4 +totalColumn
                 gridHeight: 100,
                 freezeWidth: 595,
-                numberFreezeCol: 6
+                numberFreezeCol: 6,
+                startPerPage: 100,
+                maxTtemsPerPage: 500,
+                item_per_page_arr: [100, 200, 300, 400, 500]
             };
             $('#mainreportgrid').initGrid(gridOpts);
             $('#btnExport').on('click', function () { treeWinLoss.exportExcel(); });

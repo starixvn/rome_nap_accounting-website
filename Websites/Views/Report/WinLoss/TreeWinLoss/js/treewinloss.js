@@ -197,7 +197,6 @@ var treeWinLoss = {
             dataType: "html",
             success: function (evt) {
                 $('#mainreport').html(evt);
-                treeWinLossByCustomerLevel.paramsPaging.PageSize = 500;
             },
             error: function (req, status, error) {
                 treeWinLoss.showErrorMessage(error);
@@ -342,15 +341,18 @@ var treeWinLossByCustomerLevel = {
         callback: null,
         start_per_page: 100,
         step_per_page: 100,
-        max_items_per_page: 1000,
-        items_per_page: 500,
+        max_items_per_page: 500,
+        items_per_page: 100,
+        item_per_page_arr: [100, 200, 300, 400, 500],
         current_page: 1
     },
     paramsPaging:{
         PageIndex: 1,
-        PageSize: 500,
+        PageSize: 100,
     },
     renderWlReport: function () {
+       var preLeft =  $('#mainreportgrid .x-scrollbar').scrollLeft();
+       $('#mainreportgrid').removeClass("hidden");
         $('#reporttile').html(headerText);
 
         var arrFrozen = [];
@@ -383,15 +385,19 @@ var treeWinLossByCustomerLevel = {
             manualCopyHeader: true,
             fullWidth: true,
             fullHeight: true,
-             gridWidth: 1260, //=totalColumnWidth + totalColumn*4 +totalColumn
-            gridHeight: 100,
+            gridWidth: 1300, //=totalColumnWidth + totalColumn*4 +totalColumn 1260
+            gridHeight: 160,
             freezeWidth: 595,
             numberFreezeCol: 6
         };
          
-//        $('#mainreportgrid').initGrid(gridOpts);
         treeWinLossByCustomerLevel.initPager(wlJson.WinLoss.length,  treeWinLossByCustomerLevel.paramsPaging.PageSize,  treeWinLossByCustomerLevel.paramsPaging.PageIndex - 1);
-         $('#mainreportgrid').removeClass("hidden").gridScroller(gridOpts);
+       
+        var scroller = $('#mainreportgrid').removeClass("hidden").gridScroller(gridOpts);
+        if($.browser.mozilla && parseFloat($.browser.version) <= 7) {
+            $('#mainreportgrid .x-scrollbar').prop("scrollLeft",preLeft);
+            $('#mainreportgrid .container').prop("scrollLeft", preLeft);
+        }        
     },
     renderWlReportFrozenRow: function (row, no) {
         var downlineLinke = '<div class="c" style="width: 100px; height: 17px"><a href="javascript:;" onclick="treeWinLoss.goToDownLine(' + row.Id + ',\'' + row.Title + '\');">' + row.Title + '</a></div>';
@@ -420,7 +426,7 @@ var treeWinLossByCustomerLevel = {
         return html;
     },
     renderWlReportScrollRow: function (row) {
-    var turnover = '';
+    var turnover = '', turnoverVirtual='';
     var margin = '';
     if( treeWinLoss.params.isShowSB == true ||
                         treeWinLoss.params.isShowNG  == true ||
@@ -428,15 +434,17 @@ var treeWinLossByCustomerLevel = {
                        treeWinLoss.params.isShowLCS  == true ||
                        treeWinLoss.params.isShowVS == true)
                        {
-                        turnover = numeral(row.BaseRMTurnover).format('0,0.00');
+                            turnover = numeral(row.BaseRMTurnover).format('0,0.00');
+                            turnoverVirtual = numeral(row.BaseRMVirtualTO).format('0,0.00');
                        }
                        else{
-                        turnover = 'N/A';
+                            turnover = 'N/A';
+                            turnoverVirtual = 'N/A';
                        }
 
-    if(turnover == 'N/A' || turnover == '0.00')
+    if(turnoverVirtual == 'N/A' || turnoverVirtual == '0.00')
     {
-     margin = 'N/A';
+        margin = 'N/A';
     }
     else{ 
         margin =  numeral(row.Margin).format('0,0.00');
@@ -445,7 +453,7 @@ var treeWinLossByCustomerLevel = {
                                     <div class="c" style="width: 30px; height: 17px">&nbsp;</div>\
                                 </td>\
                                 <td>\
-                                    <div class="c" style="width: 80px; height: 17px">&nbsp;</div>\
+                                    <div class="c" style="width: 100px; height: 17px">&nbsp;</div>\
                                 </td>\
                                 <td>\
                                     <div class="r" style="width: 120px; height: 17px">&nbsp;</div>\
@@ -460,16 +468,28 @@ var treeWinLossByCustomerLevel = {
                                     <div class="r" style="width: 120px; height: 17px">&nbsp;</div>\
                                 </td>\
                                 <td>\
-                                    <div class="r" style="width: 110px; height: 17px">' +turnover + '</div>\
+                                    <div class="r" style="width: 110px; height: 17px">' + turnover + '</div>\
                                 </td>\
                                 <td>\
-                                    <div class="r ' + (treeWinLoss.numberColor(row.BaseRMTotal, false, '')) + '" style="width: 110px; height: 17px">' +  numeral(row.BaseRMTotal).format('0,0.00') + '</div>\
+                                    <div class="r" style="width: 110px; height: 17px">' +  turnoverVirtual + '</div>\
                                 </td>\
                                 <td>\
-                                    <div class="r ' + (treeWinLoss.numberColor(row.BaseRMVirtualTotal, false, '')) + '" style="width: 110px; height: 17px">' + numeral(row.BaseRMVirtualTotal).format('0,0.00') + '</div>\
+                                    <div class="r" style="width: 110px; height: 17px">' + numeral(row.BaseRMTOVariancePlus).format('0,0.00') + '</div>\
                                 </td>\
                                 <td>\
-                                    <div class="r ' + (treeWinLoss.numberColor(row.BaseRMTotal, true, row.BaseRMVariance)) + '" style="width: 110px; height: 17px">' + numeral(row.BaseRMVariance).format('0,0.00') + '</div>\
+                                    <div class="r" style="width: 110px; height: 17px">' + numeral(row.BaseRMTOVarianceMinus).format('0,0.00') + '</div>\
+                                </td>\
+                                <td>\
+                                    <div class="r ' + (treeWinLoss.numberColor(row.Total, true, numeral(row.BaseRMWLVariancePlus).format('0,0.00'))) + '" style="width: 110px; height: 17px">' + numeral(row.BaseRMWLVariancePlus.toFixed(2)).format('0,0.00') + '</div>\
+                                </td>\
+                                 <td>\
+                                    <div class="r ' + (treeWinLoss.numberColor(row.Total, true, numeral(row.BaseRMWLVarianceMinus).format('0,0.00'))) + '" style="width: 110px; height: 17px">' +  numeral(row.BaseRMWLVarianceMinus.toFixed(2)).format('0,0.00') + '</div>\
+                                </td>\
+                                <td>\
+                                    <div class="r ' + (treeWinLoss.numberColor(row.BaseRMTotal, false, '')) + '" style="width: 110px; height: 17px">' + numeral(row.BaseRMTotal).format('0,0.00') + '</div>\
+                                </td>\
+                                <td>\
+                                    <div class="r ' + (treeWinLoss.numberColor(row.BaseRMVirtualTotal, false)) + '" style="width: 110px; height: 17px">' + numeral(row.BaseRMVirtualTotal).format('0,0.00') + '</div>\
                                 </td>\
                                 <td>\
                                     <div class="r ' + (treeWinLoss.numberColor(row.Margin, false, '')) + '" style="width: 110px; height: 17px">' + margin + '</div>\
@@ -558,10 +578,13 @@ var treeWinLossByCustomerLevel = {
 
         treeWinLossByCustomerLevel.paramsPaging.PageIndex = page_index + 1;
         treeWinLossByCustomerLevel.paramsPaging.PageSize = _items_per_page;
-        treeWinLossByCustomerLevel.renderWlReport();
+        treeWinLossByCustomerLevel.renderWlReport();   
+       
         return false;
     }
 };
+
+var timeoutId = 0;
 
 var treeWinLossHelper = {
     fromDate: '',
