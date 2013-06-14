@@ -42,6 +42,14 @@
     <Reference Include="DNAide">
       <HintPath>..\Websites\Bin\DNAide.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.BetList.Core, Version=1.0.4875.18837, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Fanex\Fanex.BetList.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.BetList.Core.TicketHelper, Version=1.0.4875.18839, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Fanex\Fanex.BetList.Core.TicketHelper.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Common">
       <HintPath>..\Dependency\Fanex\Fanex.Common.dll</HintPath>
     </Reference>
@@ -53,6 +61,10 @@
     </Reference>
     <Reference Include="Fanex.Tarus.Web.Controllers">
       <HintPath>..\Websites\Bin\Fanex.Tarus.Web.Controllers.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\IBCUtils.dll</HintPath>
     </Reference>
     <Reference Include="LVAPIDBLibrary">
       <HintPath>..\Dependency\3rdParty\LiveCasino\LVAPIDBLibrary.dll</HintPath>
@@ -116,6 +128,10 @@
     <Compile Include="Services\SpecialDeleteService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.Tarus.BetList\Fanex.Tarus.BetList.csproj">
+      <Project>{3C9E433C-4C0D-4CED-8FE7-26BC80894B0F}</Project>
+      <Name>Fanex.Tarus.BetList</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Business.Implement\Fanex.Tarus.Business.Implement.csproj">
       <Project>{BE4A5642-A3B6-4329-BB8F-4973446E7FA9}</Project>
       <Name>Fanex.Tarus.Business.Implement</Name>
@@ -128,8 +144,15 @@
       <Project>{09B74F02-6C21-4C5E-A52C-B6D56595A262}</Project>
       <Name>Sunplus.Accounting.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Sunplus.Accounting.DataAccess\Sunplus.Accounting.DataAccess.csproj">
+      <Project>{27984FEE-40DC-40DC-B3B9-3A8776C5511D}</Project>
+      <Name>Sunplus.Accounting.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sunplus.Accounting.Entities\Sunplus.Accounting.Entities.csproj">
+      <Project>{C2043B3C-AF85-4334-8542-F9AC2B031D79}</Project>
+      <Name>Sunplus.Accounting.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

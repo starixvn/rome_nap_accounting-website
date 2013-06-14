@@ -111,7 +111,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 specialDeleteBo.Betteam = Fanex.Tarus.Infrastructure.Helper.SportHelper.BetTeam.GetBetTeam(dataRow["betteam"].ToString(), CastAide.AsInt32(dataRow["bettype"]), "e");
                 specialDeleteBo.Odds = NumberFormat.DecFormat(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOdds(CastAide.AsDecimal(dataRow["odds"]), CastAide.AsInt32(dataRow["bettype"]), CastAide.AsInt32(dataRow["oddstype"])), 3);
                 specialDeleteBo.OddType = CacheRef.GetOddsTypeName(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOddsType(CastAide.AsInt32(dataRow["bettype"]), CastAide.AsInt32(dataRow["oddstype"])));
-                specialDeleteBo.Amount = NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["StakePositiontaking"]), 2);
+                specialDeleteBo.Amount = NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["stake"]), 2);
                 specialDeleteBo.Currency = CacheUtils.GetExchangeName(CastAide.AsInt32(dataRow["currency"]));
                 switch (CastAide.AsInt32(dataRow["bettype"]))
                 {
@@ -188,7 +188,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                     specialDeleteBo.OddType = CacheRef.GetOddsTypeName(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOddsType(CastAide.AsInt32(dataRow["bettype"]), CastAide.AsInt32(dataRow["oddstype"])));
                 }
 
-                specialDeleteBo.Amount = NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["stakepositiontaking"]), 2);
+                specialDeleteBo.Amount = NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["stake"]), 2);
                 specialDeleteBo.CurrencyId = CastAide.AsString(dataRow["currency"], string.Empty);
                 specialDeleteBo.Currency = CacheUtils.GetExchangeName(CastAide.AsInt32(dataRow["currency"]));
                 switch (CastAide.AsInt32(dataRow["bettype"]))
@@ -1128,7 +1128,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
         }
         #endregion
 
-        protected string SendEmailToCSD(int errcode, string errmsg, DataSet rs, bool IsNumberGame)
+        protected string SendEmailToCSD(int errcode, string errmsg, DataSet rs, bool IsNumberGame, string reason)
         {
             string ErrMsg = "";
             try
@@ -1151,12 +1151,12 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         TemplateHandler.Assign(ref tplMatchAll, "ActionType", "Deleted");
                         string tplUser = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow.htm");
 
-                        //For special bets - 12EU
-                        string tplMatchAll_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMail_SpecialBet.htm");
+                        ////For special bets - 12EU
+                        //string tplMatchAll_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMail_SpecialBet.htm");
 
-                        TemplateHandler.Assign(ref tplMatchAll_SpecialBet, "ActionType", "Deleted");
+                        //TemplateHandler.Assign(ref tplMatchAll_SpecialBet, "ActionType", "Deleted");
 
-                        string tplUser_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow_SpecialBet.htm");
+                        //string tplUser_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow_SpecialBet.htm");
 
 
 
@@ -1179,15 +1179,15 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                 TemplateHandler.RemoveBlock(ref tplUser, "score");
                                 TemplateHandler.RemoveBlock(ref tplUser, "hdp");
 
-                                //For 12EU
-                                TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "betype-choice");
-                                TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "score");
-                                TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "hdp");
-                                TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "vs");
+                                ////For 12EU
+                                //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "betype-choice");
+                                //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "score");
+                                //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "hdp");
+                                //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "vs");
 
-                                TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "betype-choice");
-                                TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "score");
-                                TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "hdp");
+                                //TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "betype-choice");
+                                //TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "score");
+                                //TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "hdp");
 
                                 strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + " - " + CacheRef.GetLeagueName(dtMatch.Rows[0]["leagueid"]);
 
@@ -1303,6 +1303,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                     TemplateHandler.Assign(ref tplMatch, "Away", CacheRef.GetTeamName(drMatch["awayid"]));
                                     TemplateHandler.Assign(ref tplMatch, "EventDate", FormatHandler.FormatDateEn(drMatch["EventDate"]));
                                     TemplateHandler.Assign(ref tplMatch, "UserName", AppSession.Username);
+                                    TemplateHandler.Assign(ref tplMatch, "reason", reason);
                                     TemplateHandler.Assign(ref tplMatch, "time", Convert.ToDateTime(drMatch["datetime"]));
 
                                     string site = string.Empty;
@@ -1334,7 +1335,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                         TemplateHandler.Assign(ref row, "bet", Fanex.Tarus.Infrastructure.Helper.SportHelper.BetTeam.GetBetTeam(drBet["betteam"].ToString(), CastAide.AsInt32(drBet["bettype"]), "e"));
                                         TemplateHandler.Assign(ref row, "odds", NumberFormat.DecFormat(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOdds(CastAide.AsDecimal(drBet["odds"]), CastAide.AsInt32(drBet["bettype"]), CastAide.AsInt32(drBet["oddstype"])), 3));
                                         TemplateHandler.Assign(ref row, "OddsType", CacheRef.GetOddsTypeName(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOddsType(CastAide.AsInt32(drBet["bettype"]), CastAide.AsInt32(drBet["oddstype"]))));
-                                        TemplateHandler.Assign(ref row, "amount", NumberFormat.DecFormat(drBet["StakePositiontaking"], 2));
+                                        TemplateHandler.Assign(ref row, "amount", NumberFormat.DecFormat(drBet["stake"], 2));
                                         TemplateHandler.Assign(ref row, "currency", CacheUtils.GetExchangeName(CastAide.AsInt32(drBet["currency"])));
 
                                         switch (CastAide.AsInt32(drBet["bettype"]))
@@ -1489,7 +1490,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             }
         }
 
-        protected string SendEmailWhenDeleteBetToInternalGroup(int errcode, string errmsg, DataSet rs, bool IsNumberGame, bool IsLiveCasino, bool IsRealCurrency)
+        protected string SendEmailWhenDeleteBetToInternalGroup(int errcode, string errmsg, DataSet rs, bool IsNumberGame, bool IsLiveCasino, bool IsRealCurrency, string reason)
         {
             string ErrMsg = "";
             try
@@ -1529,12 +1530,12 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         TemplateHandler.Assign(ref tplMatchAll, "ActionType", "Deleted");
                         string tplUser = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow.htm");
 
-                        //For special bets - 12EU
-                        string tplMatchAll_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMail_SpecialBet.htm");
+                        ////For special bets - 12EU
+                        //string tplMatchAll_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMail_SpecialBet.htm");
 
-                        TemplateHandler.Assign(ref tplMatchAll_SpecialBet, "ActionType", "Deleted");
+                        //TemplateHandler.Assign(ref tplMatchAll_SpecialBet, "ActionType", "Deleted");
 
-                        string tplUser_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow_SpecialBet.htm");
+                        //string tplUser_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow_SpecialBet.htm");
                         #endregion
 
                         #region send mail
@@ -1554,15 +1555,15 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                 TemplateHandler.RemoveBlock(ref tplUser, "score");
                                 TemplateHandler.RemoveBlock(ref tplUser, "hdp");
 
-                                //For 12EU
-                                TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "betype-choice");
-                                TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "score");
-                                TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "hdp");
-                                TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "vs");
+                                ////For 12EU
+                                //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "betype-choice");
+                                //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "score");
+                                //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "hdp");
+                                //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "vs");
 
-                                TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "betype-choice");
-                                TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "score");
-                                TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "hdp");
+                                //TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "betype-choice");
+                                //TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "score");
+                                //TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "hdp");
 
                                 strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + " - " + CacheRef.GetLeagueName(dtMatch.Rows[0]["leagueid"]);
 
@@ -1624,6 +1625,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             }
                             TemplateHandler.Assign(ref tplMatch, "EventDate", FormatHandler.FormatDateEn(drMatch["EventDate"]));
                             TemplateHandler.Assign(ref tplMatch, "UserName", AppSession.Username);
+                            TemplateHandler.Assign(ref tplMatch, "reason", reason);
                             TemplateHandler.Assign(ref tplMatch, "time", Convert.ToDateTime(drMatch["datetime"]));
 
                             string site = string.Empty;
@@ -1698,7 +1700,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
                                 TemplateHandler.Assign(ref row, "odds", NumberFormat.DecFormat(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOdds(CastAide.AsDecimal(drBet["odds"]), CastAide.AsInt32(drBet["bettype"]), CastAide.AsInt32(drBet["oddstype"])), 3));
                                 TemplateHandler.Assign(ref row, "OddsType", CacheRef.GetOddsTypeName(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOddsType(CastAide.AsInt32(drBet["bettype"]), CastAide.AsInt32(drBet["oddstype"]))));
-                                TemplateHandler.Assign(ref row, "amount", NumberFormat.DecFormat(drBet["StakePositiontaking"], 2));
+                                TemplateHandler.Assign(ref row, "amount", NumberFormat.DecFormat(drBet["stake"], 2));
                                 TemplateHandler.Assign(ref row, "currency", GetCurrencyName(CastAide.AsInt32(drBet["currency"])));
 
                                 switch (CastAide.AsInt32(drBet["bettype"]))
@@ -1815,12 +1817,15 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             tplpath = "LiveCasino/";
                         string tplMatchAll = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMail.htm");
                         TemplateHandler.Assign(ref tplMatchAll, "ActionType", "Recovered");
+                        TemplateHandler.RemoveBlock(ref tplMatchAll, "reason");
 
                         string tplUser = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow.htm");
 
                         //For special bets - 12EU
                         string tplMatchAll_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMail_SpecialBet.htm");
                         TemplateHandler.Assign(ref tplMatchAll_SpecialBet, "ActionType", "Recovered");
+                        TemplateHandler.RemoveBlock(ref tplMatchAll, "reason");
+
                         string tplUser_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow_SpecialBet.htm");
 
                         tplUser_SpecialBet = tplUser_SpecialBet.Replace("Bets", "Bet");
@@ -1974,7 +1979,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                 }
                                 TemplateHandler.Assign(ref row, "odds", NumberFormat.DecFormat(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOdds(CastAide.AsDecimal(drBet["odds"]), CastAide.AsInt32(drBet["bettype"]), CastAide.AsInt32(drBet["oddstype"])), 3));
                                 TemplateHandler.Assign(ref row, "OddsType", CacheRef.GetOddsTypeName(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOddsType(CastAide.AsInt32(drBet["bettype"]), CastAide.AsInt32(drBet["oddstype"]))));
-                                TemplateHandler.Assign(ref row, "amount", NumberFormat.DecFormat(drBet["StakePositiontaking"], 2));
+                                TemplateHandler.Assign(ref row, "amount", NumberFormat.DecFormat(drBet["stake"], 2));
                                 TemplateHandler.Assign(ref row, "currency", GetCurrencyName(CastAide.AsInt32(drBet["currency"])));
 
                                 switch (CastAide.AsInt32(drBet["bettype"]))
@@ -2188,7 +2193,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
         /// <param name="rs"></param>
         /// <param name="transid"></param>
         /// <returns></returns>
-        protected string SendEmailToCSDEarlyKO(DataSet rs, string transid)
+        protected string SendEmailToCSDEarlyKO(DataSet rs, string transid, string reason)
         {
             string ErrMsg = "";
             try
@@ -2206,11 +2211,11 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         string tplUser = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow.htm");
                         string tplUserMP = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRowMP.htm");
 
-                        //For special bets - 12EU
-                        string tplMatchAll_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMail_SpecialBet.htm");
-                        TemplateHandler.Assign(ref tplMatchAll_SpecialBet, "ActionType", "Deleted");
+                        ////For special bets - 12EU
+                        //string tplMatchAll_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMail_SpecialBet.htm");
+                        //TemplateHandler.Assign(ref tplMatchAll_SpecialBet, "ActionType", "Deleted");
 
-                        string tplUser_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow_SpecialBet.htm");
+                        //string tplUser_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow_SpecialBet.htm");
 
                         #region send mail to CSD
                         string strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + (CastAide.AsBoolean(dtMatch.Rows[0]["isNeutral"]) ? "(N)" : string.Empty);
@@ -2225,15 +2230,15 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             TemplateHandler.RemoveBlock(ref tplUser, "score");
                             TemplateHandler.RemoveBlock(ref tplUser, "hdp");
 
-                            //For 12EU
-                            TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "betype-choice");
-                            TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "score");
-                            TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "hdp");
-                            TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "vs");
+                            ////For 12EU
+                            //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "betype-choice");
+                            //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "score");
+                            //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "hdp");
+                            //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "vs");
 
-                            TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "betype-choice");
-                            TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "score");
-                            TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "hdp");
+                            //TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "betype-choice");
+                            //TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "score");
+                            //TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "hdp");
 
                             strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + " - " + CacheRef.GetLeagueName(dtMatch.Rows[0]["leagueid"]);
 
@@ -2351,6 +2356,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                 TemplateHandler.Assign(ref tplMatch, "EventDate", FormatHandler.FormatDateEn(drMatch["EventDate"]));
                                 TemplateHandler.Assign(ref tplMatch, "UserName", AppSession.Username);
                                 TemplateHandler.Assign(ref tplMatch, "time", Convert.ToDateTime(drMatch["datetime"]));
+                                TemplateHandler.Assign(ref tplMatch, "reason", reason);
 
                                 string site = string.Empty;
                                 string bgColor = string.Empty;
@@ -2379,7 +2385,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                         string choice = GenMPRow(CastAide.AsString(drBet["refno"]), CastAide.AsString(drBet["subtransid"]));
                                         TemplateHandler.Assign(ref rowMP, "choice", choice);
                                         TemplateHandler.Assign(ref rowMP, "bettype", Fanex.Tarus.Infrastructure.Helper.SportHelper.Bettype.GetBettype(CastAide.AsInt32(drBet["parlaytype"])));
-                                        TemplateHandler.Assign(ref rowMP, "stake", NumberFormat.DecFormat(drBet["StakePositiontaking"], 2));
+                                        TemplateHandler.Assign(ref rowMP, "stake", NumberFormat.DecFormat(drBet["stake"], 2));
                                         TemplateHandler.Assign(ref rowMP, "currency", CacheUtils.GetExchangeName(CastAide.AsInt32(drBet["currency"])));
 
                                         body_mix.Append(rowMP);
@@ -2403,7 +2409,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                         TemplateHandler.Assign(ref row, "bet", Fanex.Tarus.Infrastructure.Helper.SportHelper.BetTeam.GetBetTeam(drBet["betteam"].ToString(), CastAide.AsInt32(drBet["bettype"]), "e"));
                                         TemplateHandler.Assign(ref row, "odds", NumberFormat.DecFormat(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOdds(CastAide.AsDecimal(drBet["odds"]), CastAide.AsInt32(drBet["bettype"]), CastAide.AsInt32(drBet["oddstype"])), 3));
                                         TemplateHandler.Assign(ref row, "OddsType", CacheRef.GetOddsTypeName(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOddsType(CastAide.AsInt32(drBet["bettype"]), CastAide.AsInt32(drBet["oddstype"]))));
-                                        TemplateHandler.Assign(ref row, "amount", NumberFormat.DecFormat(drBet["StakePositiontaking"], 2));
+                                        TemplateHandler.Assign(ref row, "amount", NumberFormat.DecFormat(drBet["stake"], 2));
                                         TemplateHandler.Assign(ref row, "currency", CacheUtils.GetExchangeName(CastAide.AsInt32(drBet["currency"])));
 
                                         switch (CastAide.AsInt32(drBet["bettype"]))
@@ -2509,7 +2515,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
         }
 
 
-        protected string SendEmailWhenDeleteBetToInternalGroupEarlyKO(DataSet rs, string transid, bool IsRealCurrency)
+        protected string SendEmailWhenDeleteBetToInternalGroupEarlyKO(DataSet rs, string transid, bool IsRealCurrency, string reason)
         {
             string ErrMsg = "";
             try
@@ -2540,11 +2546,11 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         string tplUser = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow.htm");
                         string tplUserMP = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRowMP.htm");
 
-                        //For special bets - 12EU
-                        string tplMatchAll_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMail_SpecialBet.htm");
-                        TemplateHandler.Assign(ref tplMatchAll_SpecialBet, "ActionType", "Deleted");
+                        ////For special bets - 12EU
+                        //string tplMatchAll_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMail_SpecialBet.htm");
+                        //TemplateHandler.Assign(ref tplMatchAll_SpecialBet, "ActionType", "Deleted");
 
-                        string tplUser_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow_SpecialBet.htm");
+                        //string tplUser_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow_SpecialBet.htm");
 
                         #region send mail to CSD
                         string strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + (CastAide.AsBoolean(dtMatch.Rows[0]["isNeutral"]) ? "(N)" : string.Empty);
@@ -2559,15 +2565,15 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             TemplateHandler.RemoveBlock(ref tplUser, "score");
                             TemplateHandler.RemoveBlock(ref tplUser, "hdp");
 
-                            //For 12EU
-                            TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "betype-choice");
-                            TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "score");
-                            TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "hdp");
-                            TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "vs");
+                            ////For 12EU
+                            //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "betype-choice");
+                            //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "score");
+                            //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "hdp");
+                            //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "vs");
 
-                            TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "betype-choice");
-                            TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "score");
-                            TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "hdp");
+                            //TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "betype-choice");
+                            //TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "score");
+                            //TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "hdp");
 
                             strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + " - " + CacheRef.GetLeagueName(dtMatch.Rows[0]["leagueid"]);
 
@@ -2596,6 +2602,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         TemplateHandler.Assign(ref tplMatch, "EventDate", FormatHandler.FormatDateEn(drMatch["EventDate"]));
                         TemplateHandler.Assign(ref tplMatch, "UserName", AppSession.Username);
                         TemplateHandler.Assign(ref tplMatch, "time", Convert.ToDateTime(drMatch["datetime"]));
+                        TemplateHandler.Assign(ref tplMatch, "reason", reason);
 
                         string site = string.Empty;
                         string bgColor = string.Empty;
@@ -2637,7 +2644,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                 string choice = GenMPRow(CastAide.AsString(drBet["refno"]), CastAide.AsString(drBet["subtransid"]));
                                 TemplateHandler.Assign(ref rowMP, "choice", choice);
 
-                                TemplateHandler.Assign(ref rowMP, "stake", NumberFormat.DecFormat(drBet["StakePositiontaking"], 2));
+                                TemplateHandler.Assign(ref rowMP, "stake", NumberFormat.DecFormat(drBet["stake"], 2));
                                 TemplateHandler.Assign(ref rowMP, "currency", CacheUtils.GetExchangeName(CastAide.AsInt32(drBet["currency"])));
 
                                 body_mix.Append(rowMP);
@@ -2661,7 +2668,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                 TemplateHandler.Assign(ref row, "bet", Fanex.Tarus.Infrastructure.Helper.SportHelper.BetTeam.GetBetTeam(drBet["betteam"].ToString(), CastAide.AsInt32(drBet["bettype"]), "e"));
                                 TemplateHandler.Assign(ref row, "odds", NumberFormat.DecFormat(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOdds(CastAide.AsDecimal(drBet["odds"]), CastAide.AsInt32(drBet["bettype"]), CastAide.AsInt32(drBet["oddstype"])), 3));
                                 TemplateHandler.Assign(ref row, "OddsType", CacheRef.GetOddsTypeName(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOddsType(CastAide.AsInt32(drBet["bettype"]), CastAide.AsInt32(drBet["oddstype"]))));
-                                TemplateHandler.Assign(ref row, "amount", NumberFormat.DecFormat(drBet["StakePositiontaking"], 2));
+                                TemplateHandler.Assign(ref row, "amount", NumberFormat.DecFormat(drBet["stake"], 2));
                                 TemplateHandler.Assign(ref row, "currency", CacheUtils.GetExchangeName(CastAide.AsInt32(drBet["currency"])));
 
                                 switch (CastAide.AsInt32(drBet["bettype"]))

@@ -16,7 +16,7 @@
 
     <script src="../js/jQuery/json2.js" type="text/javascript"></script>
     <script type="text/javascript" src="../js/common.js"></script>   
-    <script src="js/SpecialDelete.js" type="text/javascript"></script>
+    <script src="js/SpecialDelete.js?ver=1" type="text/javascript"></script>
     
     
     <style type="text/css">
@@ -48,9 +48,10 @@
             <input type="hidden" id="hdbettype" name="hdbettype" value="10" />
             <input type="hidden" id="userId" name="userId" value="<%=AppSession.AccId %>" />
         </div>
-     </div>
-    
-   
+         <script type="text/javascript">
+             var AccUserName = '<%=username %>';             
+         </script>
+</div>   
 </body>
 </html>
 

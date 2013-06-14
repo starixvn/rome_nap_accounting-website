@@ -146,6 +146,8 @@ namespace Fanex.Tarus.SpecialDelete.Entity
         }
 
         public string userPwd { get; set; }
+
+        public string Reason { get; set; }
     }
 
     public class MessageMP : Message

@@ -30,14 +30,15 @@ namespace Sunplus.Accounting.WcfServiceLibrary.SpecialDelete
         }
 
 
-        public Result DeleteSpecialTransactionNumberGame(int matchId, long frefno, long trefno, string live, string dead, int DelOption, string transids, int DelOption_BD, string transids_BD, int DelOption_12EU, string transids_12EU, int DelOption_MHC, string transids_MHC, Message message) 
+        public Result DeleteSpecialTransactionNumberGame(int matchId, long frefno, long trefno, string live, string dead, int DelOption, string transids, int DelOption_BD, string transids_BD, int DelOption_12EU, string transids_12EU, int DelOption_MHC, string transids_MHC, Message message, string reason) 
         {
             var specialDelete = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.SpecialDelete.NumberGame.ISpecialDeleteService>();
             return specialDelete.DeleteSpecialTransactionNumberGame(matchId, frefno, trefno, live, dead,
                                                                     DelOption, transids, 
                                                                     DelOption_BD, transids_BD,
                                                                     DelOption_12EU, transids_12EU,
-                                                                    DelOption_MHC, transids_MHC, message);
+                                                                    DelOption_MHC, transids_MHC, message,
+                                                                    reason);
         }
 
 

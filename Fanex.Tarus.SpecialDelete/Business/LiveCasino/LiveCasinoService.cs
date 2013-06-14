@@ -304,7 +304,8 @@ namespace Fanex.Tarus.SpecialDelete.Business.LiveCasino
                         transids_d,
                         transids_bd,
                         transids_12eu,
-                        transids_mhc);
+                        transids_mhc,
+                        message.Reason);
 
                     if (!string.IsNullOrEmpty(ErrMsg))
                     {
@@ -324,8 +325,8 @@ namespace Fanex.Tarus.SpecialDelete.Business.LiveCasino
                    transids_d,
                    transids_bd,
                    transids_12eu,
-                   transids_mhc
-                    );
+                   transids_mhc,
+                   message.Reason);
 
                 if (ErrCode2 == 0)
                 {
@@ -374,13 +375,13 @@ namespace Fanex.Tarus.SpecialDelete.Business.LiveCasino
                     DataTable dtMatch = dbResult.ResultSet.Tables[0];
                     DataTable dtUsers = dbResult.ResultSet.Tables[1];
                     DataTable dtChoice = dbResult.ResultSet.Tables[2];
-                    _emailService.SendEmailWhenDeleteBetToCSD(result, dtMatch, dtUsers, dtChoice, false, true);
+                    _emailService.SendEmailWhenDeleteBetToCSD(result, dtMatch, dtUsers, dtChoice, false, true, message.Reason);
 
                     //Send email cho real với test currency
                     dtUsers = dbResult.ResultSet.Tables[4];
                     dtChoice = dbResult.ResultSet.Tables[5];
-                    _emailService.SendEmailWhenDeleteBetToInternalGroup(result, dtMatch, dtUsers, dtChoice, false, true, true);
-                    _emailService.SendEmailWhenDeleteBetToInternalGroup(result, dtMatch, dtUsers, dtChoice, false, true, false);
+                    _emailService.SendEmailWhenDeleteBetToInternalGroup(result, dtMatch, dtUsers, dtChoice, false, true, true, message.Reason);
+                    _emailService.SendEmailWhenDeleteBetToInternalGroup(result, dtMatch, dtUsers, dtChoice, false, true, false, message.Reason);
                 }
             }
             catch (System.Exception ex)

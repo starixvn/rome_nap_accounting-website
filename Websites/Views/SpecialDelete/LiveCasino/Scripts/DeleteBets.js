@@ -91,7 +91,7 @@ var delbet = {
                     }
 
                     $("#divMainContainer").hide();
-                    $("#msg").show();                    
+                    $("#msg").show();
                 }
             }
         });
@@ -109,6 +109,7 @@ var delbet = {
         }).ForceDecimalOnly();
 
         $("#btnShow").click(function () {
+            $('#reason').val('');
             delbet.checkRefNo();
         });
 
@@ -144,8 +145,15 @@ var delbet = {
         $("#ErrorMessage").hide();
         $("#ErrorMessage2").hide();
         $("#msg").hide();
-        if ($("#userpwd").val() == "") {
-            $("#ErrorMessage").width(200).html("<div class='alertboxerr'><div>Please enter password</div></div>").show();
+
+        if ($("#reason").val().trim() == "") {
+            $("#ErrorMessage").width(200).html("<div class='alertboxerr'><div>Please enter a reason.</div></div>").show();
+            $("#reason").focus();
+            return;
+        }
+        else if ($("#userpwd").val() == "") {
+            $("#ErrorMessage").width(200).html("<div class='alertboxerr'><div>Please enter password.</div></div>").show();
+            $("#userpwd").focus();
             return;
         }
         if (!this.checkMsg()) return;
@@ -424,7 +432,7 @@ var delbet = {
         msg.userPwd = $('#userpwd').val();
         msg.CreatorId = $('#hiddenAccID').val();
         msg.CreatorName = $('#hiddenAccUserName').val();
-
+        msg.Reason = $('#reason').val();
 
         delbet.param.transids_n = delbet.getSeletedId('Normal');
         delbet.param.transids_d = delbet.getSeletedId('Deposit');

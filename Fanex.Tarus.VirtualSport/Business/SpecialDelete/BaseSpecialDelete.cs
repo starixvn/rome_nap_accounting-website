@@ -205,7 +205,7 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
                                 //TemplateHandler.Assign(ref row, "odds", NumberFormat.DecFormat(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOdds(CastAide.AsDecimal(drBet["odds"]), CastAide.AsInt32(drBet["bettype"]), CastAide.AsInt32(drBet["oddstype"])), 3));
                                 //TemplateHandler.Assign(ref row, "OddsType", CacheRef.GetOddsTypeName(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOddsType(CastAide.AsInt32(drBet["bettype"]), CastAide.AsInt32(drBet["oddstype"]))));
                                 TemplateHandler.Assign(ref row, "OddsType", string.Empty);
-                                TemplateHandler.Assign(ref row, "amount", NumberFormat.DecFormat(drBet["StakePositiontaking"], 2));
+                                TemplateHandler.Assign(ref row, "amount", NumberFormat.DecFormat(drBet["stake"], 2));
                                 TemplateHandler.Assign(ref row, "currency", GetCurrencyName(CastAide.AsInt32(drBet["currency"])));
 
                                 Decimal hdp1 = Convert.IsDBNull(drBet["hdp1"]) ? 0 : Convert.ToDecimal(drBet["hdp1"]);
@@ -438,7 +438,7 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
                 betTransactionInfo.Betteam = Betteam;
                 betTransactionInfo.Odds = NumberFormat.DecFormat(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOdds(CastAide.AsDecimal(dataRow["odds"]), CastAide.AsInt32(dataRow["bettype"]), 10), 3);
                 betTransactionInfo.OddType = "";
-                betTransactionInfo.Amount = NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["StakePositiontaking"]), 2);
+                betTransactionInfo.Amount = NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["stake"]), 2);
 
                 betTransactionInfo.Currency = GetCurrencyName(CastAide.AsInt32(dataRow["currency"]));
                 switch (CastAide.AsInt32(dataRow["bettype"]))
@@ -839,7 +839,7 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
                                         //TemplateHandler.Assign(ref row, "odds", NumberFormat.DecFormat(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOdds(CastAide.AsDecimal(drBet["odds"]), CastAide.AsInt32(drBet["bettype"]), CastAide.AsInt32(drBet["oddstype"])), 3));
                                         //TemplateHandler.Assign(ref row, "OddsType", CacheRef.GetOddsTypeName(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOddsType(CastAide.AsInt32(drBet["bettype"]), CastAide.AsInt32(drBet["oddstype"]))));
                                         TemplateHandler.Assign(ref row, "OddsType", string.Empty);
-                                        TemplateHandler.Assign(ref row, "amount", NumberFormat.DecFormat(drBet["StakePositiontaking"], 2));
+                                        TemplateHandler.Assign(ref row, "amount", NumberFormat.DecFormat(drBet["stake"], 2));
                                         TemplateHandler.Assign(ref row, "currency", CacheUtils.GetExchangeName(CastAide.AsInt32(drBet["currency"])));
 
                                         Decimal hdp1 = Convert.IsDBNull(drBet["hdp1"]) ? 0 : Convert.ToDecimal(drBet["hdp1"]);
@@ -1142,7 +1142,7 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
 
                                 TemplateHandler.Assign(ref row, "odds", NumberFormat.DecFormat(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOdds(CastAide.AsDecimal(drBet["odds"]), CastAide.AsInt32(drBet["bettype"]), 10), 3));
                                 TemplateHandler.Assign(ref row, "OddsType", string.Empty);
-                                TemplateHandler.Assign(ref row, "amount", NumberFormat.DecFormat(drBet["StakePositiontaking"], 2));
+                                TemplateHandler.Assign(ref row, "amount", NumberFormat.DecFormat(drBet["stake"], 2));
                                 TemplateHandler.Assign(ref row, "currency", GetCurrencyName(CastAide.AsInt32(drBet["currency"])));
 
                                 Decimal hdp1 = Convert.IsDBNull(drBet["hdp1"]) ? 0 : Convert.ToDecimal(drBet["hdp1"]);

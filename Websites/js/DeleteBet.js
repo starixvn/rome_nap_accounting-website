@@ -17,15 +17,23 @@ function hideLanguage() {
 }
 function check_UnameAndPwd() {
     $('#errBox').removeAttr('class');
-    
-    obj('errormsg').innerHTML = '';
-    if (obj('username').value == "") {
 
-        showAlertMessage("errormsg", "Please enter username", 1);
+    obj('errormsg').innerHTML = '';
+
+    if (obj('reason').value.trim() == "") {
+        showAlertMessage("errormsg", "Please enter a reason.", 1);
+        obj('reason').focus();
+        return false;
+    }
+    else if (obj('username').value == "") 
+    {
+        showAlertMessage("errormsg", "Please enter username.", 1);
         obj('username').focus();
         return false;
-    } else if (obj('password').value == "") {
-        showAlertMessage("errormsg", "Please enter password", 1);
+    }
+    else if (obj('password').value == "") 
+    {
+        showAlertMessage("errormsg", "Please enter password.", 1);
         obj('password').focus();
         return false;
     }
@@ -108,6 +116,7 @@ function executeDel()
         link = link + '&mjp=' + encodeURIComponent(obj('mjp').value);
         link = link + '&mes=' + encodeURIComponent(obj('mes').value);
         link = link + '&bettype=' + obj('Bettype').value;
+        link = link + '&reason=' + obj('reason').value;
         
          $.ajax({
         url: link,

@@ -18,7 +18,7 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
         DeleteResult DeleteSpecialTransactionNumberGame(int matchId, long frefno, long trefno, string live, string dead,
                      string username, int custId, string userpwd, int DelOption, string transids,  
             int DelOption_BD, string transids_BD, int DelOption_12EU, string transids_12EU, int DelOption_MHC, string transids_MHC,
-            string ip);
+            string ip, string reason);
 
         DeleteResult DeleteSpecialTransaction(string matchId, string frefno, string trefno, string bettype,
                                           string betteam1378, string betteam515, string hdp, string uname,
@@ -26,7 +26,8 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
                                           string liveindicator, string DelOption_BD, string transids_BD,
                                           string DelOption_12EU, string transids_12EU,
                                           string DelOption_MHC, string transids_MHC, string betteam430,
-                                          string betteam6, string betteam14, string betteam16, string homescore, string awayscore, string fromtransdate, string totransdate, int SAFilter);
+                                          string betteam6, string betteam14, string betteam16, string homescore, string awayscore, string fromtransdate, string totransdate, int SAFilter,
+                                          string reason);
 
         DbResult SelRecoverSpecialBets(string transid);
 
@@ -53,7 +54,8 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
                                                        string kickoffdate, string DelOption_BD, string transids_BD,
                                                        string DelOption_12EU, string transids_12EU,
                                                        string DelOption_MHC, string transids_MHC, string betteam430,
-                                                       string betteam6, string betteam14, string betteam16, int SAFilter);
+                                                       string betteam6, string betteam14, string betteam16, int SAFilter,
+                                                       string reason);
         #endregion
         #region Mixparlay
         DbResult GetMPList(SpecialDeleteParam deleteParam);
@@ -65,7 +67,8 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
                                           string DelOption_D, string transids_D,
                                           string DelOption_BD, string transids_BD, string DelOption_12EU, 
                                           string transids_12EU, string DelOption_MHC, string transids_MHC, string betteam430,
-                                          string betteam6, string betteam14, string betteam16, string Fromtransdate, string Totransdate, string ParlayType);
+                                          string betteam6, string betteam14, string betteam16, string Fromtransdate, string Totransdate, string ParlayType,
+                                          string reason);
         #endregion
 
         DbResult CheckRefno(string matchid, string fromRefno, string toRefno, string type);

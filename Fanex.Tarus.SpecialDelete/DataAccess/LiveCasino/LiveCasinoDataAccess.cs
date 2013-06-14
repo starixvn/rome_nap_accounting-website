@@ -69,8 +69,8 @@ namespace Fanex.Tarus.SpecialDelete.DataAccess.LiveCasino
            string transids_d,
            string transids_bd,
            string transids_12eu,
-           string transids_mhc
-            )
+           string transids_mhc,
+           string reason)
         {
             using (ObjectDb objDB = new ObjectDb("Acc_BettransDelSpecial_LiveCS"))
             {
@@ -83,6 +83,7 @@ namespace Fanex.Tarus.SpecialDelete.DataAccess.LiveCasino
                 h.Add("userpwd", Encryption.CfsEnCode(UserPwd));
                 h.Add("userid", UserID);
                 h.Add("ip", IP);
+                h.Add("reason", reason);
 
                 h.Add("transids_n", transids_n);
                 h.Add("transids_d", transids_d);
@@ -109,7 +110,8 @@ namespace Fanex.Tarus.SpecialDelete.DataAccess.LiveCasino
            string transids_d,
            string transids_bd,
            string transids_12eu,
-           string transids_mhc)
+           string transids_mhc,
+           string reason)
         {
             
             using (ObjectDb objDB = new ObjectDb("TP_Controller_MiniBac_SpecialDelete"))

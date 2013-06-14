@@ -57,7 +57,8 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                           userId, pass, DelOption, transids,
                                           liveindicator, DelOption_BD, transids_BD,
                                           DelOption_12EU, transids_12EU,
-                                          DelOption_MHC, transids_MHC, betteam430, betteam6, betteam14, betteam16, homescore, awayscore, fromtransdate, totransdate, SAFilter);
+                                          DelOption_MHC, transids_MHC, betteam430, betteam6, betteam14, betteam16, homescore, awayscore, fromtransdate, totransdate, SAFilter,
+                                          message.Reason);
 
 
             if (delResult.Error.ErrorCode > 0)
@@ -66,17 +67,17 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 result.ErrorMessage = AlertMessage.GetMsg(delResult.Error.ErrorMessage, AlertMessage.MsgType.Error);
             }
             else
-            {
+            {                
                 //send private message to users
                 bool send = SendPrivateMsgToUsers(delResult.PrivateMessage, CastAide.AsInt32(matchId), message);
                 if (!send)
                 {
                     result.ErrorMessage += AlertMessage.GetMsg("Have a problem when sending private message to users. Please infom to IT about this.", AlertMessage.MsgType.Error);
                 }
-                result.ErrorMessage += SendEmailToCSD(delResult.Error.ErrorCode, delResult.Error.ErrorMessage, delResult.PrivateMessage, false);
+                result.ErrorMessage += SendEmailToCSD(delResult.Error.ErrorCode, delResult.Error.ErrorMessage, delResult.PrivateMessage, false, message.Reason);
 
-                SendEmailWhenDeleteBetToInternalGroup(delResult.Error.ErrorCode, delResult.Error.ErrorMessage, delResult.PrivateMessage, false, false, true); // for real currency
-                SendEmailWhenDeleteBetToInternalGroup(delResult.Error.ErrorCode, delResult.Error.ErrorMessage, delResult.PrivateMessage, false, false, false); // for test currency
+                SendEmailWhenDeleteBetToInternalGroup(delResult.Error.ErrorCode, delResult.Error.ErrorMessage, delResult.PrivateMessage, false, false, true, message.Reason); // for real currency
+                SendEmailWhenDeleteBetToInternalGroup(delResult.Error.ErrorCode, delResult.Error.ErrorMessage, delResult.PrivateMessage, false, false, false, message.Reason); // for test currency
                 
             }
             return result;
@@ -297,7 +298,8 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                               userId, pass, DelOption, transids,
                                               kickoffdate, DelOption_BD, transids_BD,
                                               DelOption_12EU, transids_12EU,
-                                              DelOption_MHC, transids_MHC, betteam430, betteam6, betteam14, betteam16, SAFilter);
+                                              DelOption_MHC, transids_MHC, betteam430, betteam6, betteam14, betteam16, SAFilter,
+                                              message.Reason);
 
 
                 if (delResult.Error.ErrorCode > 0)
@@ -314,10 +316,10 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                     {
                         result.ErrorMessage += AlertMessage.GetMsg("Have a problem when sending private message to users. Please infom to IT about this.", AlertMessage.MsgType.Error);
                     }
-                    result.ErrorMessage += SendEmailToCSDEarlyKO(delResult.PrivateMessage, string.Empty);
+                    result.ErrorMessage += SendEmailToCSDEarlyKO(delResult.PrivateMessage, string.Empty, message.Reason);
 
-                    SendEmailWhenDeleteBetToInternalGroupEarlyKO(delResult.PrivateMessage, string.Empty, true); // real currency
-                    SendEmailWhenDeleteBetToInternalGroupEarlyKO(delResult.PrivateMessage, string.Empty, false); // test currency
+                    SendEmailWhenDeleteBetToInternalGroupEarlyKO(delResult.PrivateMessage, string.Empty, true, message.Reason); // real currency
+                    SendEmailWhenDeleteBetToInternalGroupEarlyKO(delResult.PrivateMessage, string.Empty, false, message.Reason); // test currency
                 }
             }
             catch (Exception ex)
@@ -613,7 +615,8 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                               DelOption_D, transids_D,
                                               DelOption_BD, transids_BD,
                                               DelOption_12EU, transids_12EU,
-                                              DelOption_MHC, transids_MHC, betteam430, betteam6, betteam14, betteam16, Fromtransdate, Totransdate, ParlayType);
+                                              DelOption_MHC, transids_MHC, betteam430, betteam6, betteam14, betteam16, Fromtransdate, Totransdate, ParlayType,
+                                              message.Reason);
 
             var errcode = delResult.Error.ErrorCode;
             var errmsg = delResult.Error.ErrorMessage;
@@ -659,10 +662,10 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 }
                 // send mail to CSD
                 var mixparlay = new SpecialDeleteMixparlay();
-                result.ErrorMessage += mixparlay.SendEmailToCSD(errcode, errmsg, delResult.PrivateMessage);
+                result.ErrorMessage += mixparlay.SendEmailToCSD(errcode, errmsg, delResult.PrivateMessage, message.Reason);
 
-                mixparlay.SendEmailWhenDeleteBetToInternalGroup(errcode, errmsg, delResult.PrivateMessage, true); // real currency
-                mixparlay.SendEmailWhenDeleteBetToInternalGroup(errcode, errmsg, delResult.PrivateMessage, false); // test currency
+                mixparlay.SendEmailWhenDeleteBetToInternalGroup(errcode, errmsg, delResult.PrivateMessage, true, message.Reason); // real currency
+                mixparlay.SendEmailWhenDeleteBetToInternalGroup(errcode, errmsg, delResult.PrivateMessage, false, message.Reason); // test currency
             }
 
             return result;

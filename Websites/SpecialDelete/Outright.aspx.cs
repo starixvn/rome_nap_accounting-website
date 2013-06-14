@@ -22,11 +22,14 @@ using DNAide.Data;
 
 public partial class SpecialDelete_Outright : PageBase
 {
+    public string username;
 
     protected void Page_Load(object sender, EventArgs e)
     {
         try
         {
+            username = AppSession.AccUserName;
+
             string tpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("SpecialDelete/FillterFormOutright.htm");
             StringBuilder Options = new StringBuilder();
             string op = string.Empty;
