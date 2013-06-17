@@ -137,7 +137,6 @@ var CheckNormalBet = {
             CheckNormalBet.initGrid();
             try { parent.jQuery.unblockUI(); } catch (e) { }
         }
-
     },
     initGrid: function () {
         var gridOpts = {

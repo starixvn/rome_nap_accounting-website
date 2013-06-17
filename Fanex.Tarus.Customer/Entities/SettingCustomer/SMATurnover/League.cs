@@ -1,0 +1,11 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover
+{
+    public class League: BaseModel
+    {
+    }
+}

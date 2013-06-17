@@ -119,6 +119,10 @@
     <Compile Include="Business\SettingCustomer\CasinoComm\CasinoCommissionService.cs" />
     <Compile Include="Business\SettingCustomer\CasinoComm\ICasinoCommissionService.cs" />
     <Compile Include="Business\SettingCustomer\IAbnormalBetService.cs" />
+    <Compile Include="Business\SettingCustomer\SMATurnover\ISMATurnoverService.cs" />
+    <Compile Include="Business\SettingCustomer\SMATurnover\SMATurnoverService.cs" />
+    <Compile Include="DataAccess\SettingCustomer\SMATurnover\ISMATurnoverAccess.cs" />
+    <Compile Include="DataAccess\SettingCustomer\SMATurnover\SMATurnoverAccess.cs" />
     <Compile Include="Controller\Credit\AddNewAgentController.cs" />
     <Compile Include="Controller\Credit\AddNewMasterController.cs" />
     <Compile Include="Controller\Credit\AddNewMemberController.cs" />
@@ -145,6 +149,7 @@
     <Compile Include="Controller\Setting\AbnormalBetController.cs" />
     <Compile Include="Controller\Setting\CasinoCommissionController.cs" />
     <Compile Include="Controller\Setting\CustomerSettingController.cs" />
+    <Compile Include="Controller\Setting\SMATurnoverController.cs" />
     <Compile Include="Criteria\CustomerLogin\ResetSecurityCodeCriteria.cs" />
     <Compile Include="DataAccess\BaseDataAccess.cs" />
     <Compile Include="DataAccess\CreditCustomer\CustomerSettingDataAccess.cs" />
@@ -157,6 +162,7 @@
     <Compile Include="DataAccess\SettingCustomer\CasinoComm\CasinoCommAccess.cs" />
     <Compile Include="DataAccess\SettingCustomer\CasinoComm\ICasinoCommAccess.cs" />
     <Compile Include="DataAccess\SettingCustomer\IAbnormalBetAccess.cs" />
+    <Compile Include="Entities\BaseModel.cs" />
     <Compile Include="Entities\CreditCustomer\Currency.cs" />
     <Compile Include="Entities\CreditCustomer\CustomerSettingView.cs" />
     <Compile Include="Entities\CreditCustomer\MemberGroup.cs" />
@@ -166,6 +172,10 @@
     <Compile Include="Entities\Racing\CustomerSettingView.cs" />
     <Compile Include="Entities\Result.cs" />
     <Compile Include="Entities\SettingCustomer\AbnormalDetail.cs" />
+    <Compile Include="Entities\SettingCustomer\SMATurnover\CustomerTurnoverDetail.cs" />
+    <Compile Include="Entities\SettingCustomer\SMATurnover\League.cs" />
+    <Compile Include="Entities\SettingCustomer\SMATurnover\MatchInfo.cs" />
+    <Compile Include="Entities\SettingCustomer\SMATurnover\Sport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
