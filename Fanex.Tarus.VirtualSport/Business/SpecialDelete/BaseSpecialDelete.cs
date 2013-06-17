@@ -73,6 +73,8 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
 
                         string tplMatchAll = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMail.htm");
                         TemplateHandler.Assign(ref tplMatchAll, "ActionType", "Recovered");
+                        TemplateHandler.RemoveBlock(ref tplMatchAll, "reason");
+
                         string tplUser = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow.htm");
 
                         //For special bets - 12EU
@@ -649,8 +651,9 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
                         }
 
                         string tplMatchAll = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMail.htm");
-
                         TemplateHandler.Assign(ref tplMatchAll, "ActionType", "Deleted");
+                        TemplateHandler.RemoveBlock(ref tplMatchAll, "reason");
+
                         string tplUser = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow.htm");
 
                         //For special bets - 12EU
@@ -744,7 +747,7 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
                                 }
                                 else
                                 {
-                                    #region Others Group                                    
+                                    #region Others Group
                                     foreach (Dictionary<string, string> store in c.Value)
                                     {
                                         SpecialDeleteDataforMailing mailing = new SpecialDeleteDataforMailing()
@@ -771,7 +774,7 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
 
                                         DataRow[] rows = dtUsers.Select(expression);
                                         foreach (DataRow row in rows)
-                                        {                                            
+                                        {
                                             dtUser.ImportRow(row);
                                         }
 
@@ -919,7 +922,7 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
                                     LogMail.Append("<!--Content-->" + Environment.NewLine + tplMatch + Environment.NewLine + "<!--/Content-->" + Environment.NewLine);
                                     LogMail.Append("<!--End--><hr/><!--/End-->" + Environment.NewLine + Environment.NewLine);
 
-                                 //   var CCMail = GetEmailReceivers();
+                                    //   var CCMail = GetEmailReceivers();
 
                                     // write log file
                                     WriteLogMail(LogMail.ToString());
@@ -1005,8 +1008,9 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
                                 return ErrMsg;
                         }
                         string tplMatchAll = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMail.htm");
-
                         TemplateHandler.Assign(ref tplMatchAll, "ActionType", "Deleted");
+                        TemplateHandler.RemoveBlock(ref tplMatchAll, "reason");
+
                         string tplUser = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow.htm");
 
                         //For special bets - 12EU
@@ -1238,7 +1242,7 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
             return ErrMsg;
         }
 
-        #region WriteLogMail      
+        #region WriteLogMail
 
         protected void WriteLogMail(string content)
         {

@@ -38,14 +38,14 @@ namespace Fanex.Tarus.SpecialDelete.Business
     /// </summary>
     public class EmailService : BaseService, IEmailService
     {
-        INumberWheelService _INumberWheelService;        
+        INumberWheelService _INumberWheelService;
 
         public EmailService()
         {
             _INumberWheelService = new NumberWheelService();
         }
 
-        #region General 
+        #region General
 
         public string SendEmailWhenDeleteBetFromBetListToCSD(int errcode, string errmsg, DataSet rs, bool IsNumberGame, string reason)
         {
@@ -693,9 +693,9 @@ namespace Fanex.Tarus.SpecialDelete.Business
         {
             try
             {
-               
-                if (dtMatch != null && dtMatch.Rows.Count> 0 && dtUsers != null && dtUsers.Rows.Count>0)
-                {                    
+
+                if (dtMatch != null && dtMatch.Rows.Count > 0 && dtUsers != null && dtUsers.Rows.Count > 0)
+                {
                     var rows = dtUsers.AsEnumerable().Select(s => s).ToList();
 
                     string expression = "";
@@ -723,7 +723,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
 
                     TemplateHandler.Assign(ref tplMatchAll, "ActionType", "Deleted");
                     string tplUser = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow.htm");
-                   
+
                     #endregion
 
                     #region send mail
@@ -732,7 +732,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
                     {
                         #region Template
                         string strHome = "";
-                            
+
                         #endregion
 
                         #region Create Dataset dsUser
@@ -836,7 +836,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
                                 if (CastAide.AsInt32(drBet["bettype"]) == 90)
                                 {
                                     betType = IsLive ? betType + " (Live Game)" : betType + " (Pre Game)";
-                                }                                
+                                }
                             }
 
                             TemplateHandler.Assign(ref row, "bettype", betType);
@@ -845,12 +845,12 @@ namespace Fanex.Tarus.SpecialDelete.Business
                             {
                                 var refNo = CastAide.AsDecimal(drBet["refno"]);
                                 var choice = string.Empty;
-                                if (dtChoice != null && dtChoice.Rows.Count>0)                                
+                                if (dtChoice != null && dtChoice.Rows.Count > 0)
                                 {
                                     var _transid = CastAide.AsDecimal(drBet["refno"]);
                                     choice = BuildChoiceColumnForLiveCasino(_transid, dtChoice);
                                 }
-                                TemplateHandler.Assign(ref row, "bet", choice);                                
+                                TemplateHandler.Assign(ref row, "bet", choice);
                             }
                             else if (IsNumberGame && CastAide.AsInt32(drBet["bettype"]) == 90)
                             {
@@ -866,7 +866,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
                                 {
                                     int bettype = CastAide.AsInt32(drBet["bettype"]);
                                     string _betteam = CastAide.AsString(drBet["betteam"]);
-                                    TemplateHandler.Assign(ref row, "bet", ConvertBeteamOfNumberGame(bettype, _betteam)); 
+                                    TemplateHandler.Assign(ref row, "bet", ConvertBeteamOfNumberGame(bettype, _betteam));
                                 }
                                 else if (IsLiveCasino)
                                 {
@@ -889,18 +889,18 @@ namespace Fanex.Tarus.SpecialDelete.Business
                             TemplateHandler.Assign(ref row, "creator", drBet["creator"]);
 
                             if (IsLiveCasino)
-                            {                               
-                                
-                                TemplateHandler.Assign(ref row, "superpt", NumberFormat.DecFormat(drBet["spositiontaking"],2));
-                                TemplateHandler.Assign(ref row, "masterpt", NumberFormat.DecFormat(drBet["mpositiontaking"],2));
-                                TemplateHandler.Assign(ref row, "agentpt", NumberFormat.DecFormat(drBet["apositiontaking"],2));
+                            {
+
+                                TemplateHandler.Assign(ref row, "superpt", NumberFormat.DecFormat(drBet["spositiontaking"], 2));
+                                TemplateHandler.Assign(ref row, "masterpt", NumberFormat.DecFormat(drBet["mpositiontaking"], 2));
+                                TemplateHandler.Assign(ref row, "agentpt", NumberFormat.DecFormat(drBet["apositiontaking"], 2));
                             }
 
-                            
 
-                            TemplateHandler.Assign(ref row, "winloss", status == "running" ?  "-" : NumberFormat.DecFormat(drBet["winlost"], 2));
-                            TemplateHandler.Assign(ref row, "comm", status == "running" ?  "-" : NumberFormat.DecFormat(drBet["comm"], 2));
-                            TemplateHandler.Assign(ref row, "index", NumberFormat.DecFormat(index,0));
+
+                            TemplateHandler.Assign(ref row, "winloss", status == "running" ? "-" : NumberFormat.DecFormat(drBet["winlost"], 2));
+                            TemplateHandler.Assign(ref row, "comm", status == "running" ? "-" : NumberFormat.DecFormat(drBet["comm"], 2));
+                            TemplateHandler.Assign(ref row, "index", NumberFormat.DecFormat(index, 0));
 
                             TemplateHandler.Assign(ref tplMatch, "ListNegativebalanceCustomer", ListNegativebalanceCustomer(rows));
                             body.Append(row);
@@ -939,20 +939,21 @@ namespace Fanex.Tarus.SpecialDelete.Business
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
-                result.ErrorHandler.Add(new Result() { 
+                result.ErrorHandler.Add(new Result()
+                {
                     Key = "100",
                     Value = ex.Message
                 });
             }
-        }        
+        }
 
         public void SendEmailWhenDeleteBetToCSD(ResultModel result, DataTable dtMatch, DataTable dtUsers, DataTable dtChoice, bool IsNumberGame, bool IsLiveCasino, string reason)
         {
             try
             {
 
-                if (dtMatch != null && dtMatch.Rows.Count>0 && dtUsers != null && dtUsers.Rows.Count>0 )
-                {                   
+                if (dtMatch != null && dtMatch.Rows.Count > 0 && dtUsers != null && dtUsers.Rows.Count > 0)
+                {
                     var rows = dtUsers.AsEnumerable().Select(s => s).ToList();
 
                     string expression = "";
@@ -1078,7 +1079,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
                                         });
                                     }
                                 }
-                                
+
                                 #endregion
                             }
                             else
@@ -1196,7 +1197,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
                     TemplateHandler.RemoveBlock(ref tplMatchAll, "reason");
 
                     string tplUser = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow.htm");
-                                        
+
                     tplMatchAll = tplMatchAll.Replace("Bets", "Bet");
                     tplUser = tplUser.Replace("Bets", "Bet");
 
@@ -1247,7 +1248,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
                         string productType = "";
                         if (IsNumberGame)
                             productType = "Number Game";
-                        if(IsLiveCasino)
+                        if (IsLiveCasino)
                             productType = "Live Casino";
 
                         if (IsRealCurrency)
@@ -1262,7 +1263,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
                         string tplMatch = tplMatchAll.Clone().ToString();
 
                         //Match
-                        if(IsNumberGame)
+                        if (IsNumberGame)
                             strHome = "Number Game No " + drMatch["matchcode"];
 
                         TemplateHandler.Assign(ref tplMatch, "Code", drMatch["matchcode"]);
@@ -1304,9 +1305,9 @@ namespace Fanex.Tarus.SpecialDelete.Business
 
                             username = CastAide.AsString(drBet["username"]);
                             TemplateHandler.Assign(ref row, "bgcolor", bgColor);
-                            TemplateHandler.Assign(ref row, "username", username);                            
+                            TemplateHandler.Assign(ref row, "username", username);
 
-                            
+
                             string bettypeName = CacheRef.GetBettype(drBet["bettype"]);
                             TemplateHandler.Assign(ref row, "refno", drBet["transid"]);
 
@@ -1317,7 +1318,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
                                 if (rs.ResultSet.Tables.Count >= 3)
                                     choice = BuildChoiceColumnForLiveCasino(refNo, rs.ResultSet.Tables[2]);
                                 TemplateHandler.Assign(ref row, "bettype", bettypeName);
-                                TemplateHandler.Assign(ref row, "bet", choice);                                
+                                TemplateHandler.Assign(ref row, "bet", choice);
                             }
                             else if (CastAide.AsInt32(drBet["bettype"]) == 90)
                             {
@@ -1354,7 +1355,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
                             string status = CastAide.AsString(drBet["status"]).ToLower();
 
                             TemplateHandler.Assign(ref row, "winloss", status == "running" ? "-" : NumberFormat.DecFormat(drBet["winlost"], 2));
-                            TemplateHandler.Assign(ref row, "comm", string.Empty);                                                        
+                            TemplateHandler.Assign(ref row, "comm", string.Empty);
                             TemplateHandler.Assign(ref row, "currency", SelCurrencyName(CastAide.AsString(drBet["currency"])));
 
 
@@ -1367,17 +1368,17 @@ namespace Fanex.Tarus.SpecialDelete.Business
 
                             if (IsLiveCasino)
                             {
-                                TemplateHandler.Assign(ref row, "stake", NumberFormat.DecFormat(drBet["stake"], 2));                                
-                                TemplateHandler.Assign(ref row, "superpt", NumberFormat.DecFormat(drBet["spositiontaking"],2));
-                                TemplateHandler.Assign(ref row, "masterpt", NumberFormat.DecFormat(drBet["mpositiontaking"],2));
-                                TemplateHandler.Assign(ref row, "agentpt", NumberFormat.DecFormat(drBet["apositiontaking"],2));
+                                TemplateHandler.Assign(ref row, "stake", NumberFormat.DecFormat(drBet["stake"], 2));
+                                TemplateHandler.Assign(ref row, "superpt", NumberFormat.DecFormat(drBet["spositiontaking"], 2));
+                                TemplateHandler.Assign(ref row, "masterpt", NumberFormat.DecFormat(drBet["mpositiontaking"], 2));
+                                TemplateHandler.Assign(ref row, "agentpt", NumberFormat.DecFormat(drBet["apositiontaking"], 2));
                             }
 
                             body.Append(row);
                         }
                         #endregion
 
-                        if(IsNegativeBalance)
+                        if (IsNegativeBalance)
                             TemplateHandler.Assign(ref tplMatch, "ListNegativebalanceCustomer", "<b>Negative bet credit customer(s):</b> " + username);
                         else
                             TemplateHandler.Assign(ref tplMatch, "ListNegativebalanceCustomer", "");
@@ -1401,7 +1402,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
                         SpecialDeleteElement mailElement = new SpecialDeleteElement();
 
                         if (IsRealCurrency)
-                        {                           
+                        {
                             mailElement = SpecialDeleteSection.Instance.NotificationRealCurrency["EmailNotification"];
                             ToMailCSD = mailElement.To;
                             CC = mailElement.CC;
@@ -1438,12 +1439,13 @@ namespace Fanex.Tarus.SpecialDelete.Business
                         string msg = "";
                         site = site.ToUpper();
 
-                       
+
 
                         if (f)
                         {
                             msg = "Details of recover " + site + " ticket(s) are sent successfully to " + ToMailCSD;
-                            result.ErrorHandler.Add(new Result() { 
+                            result.ErrorHandler.Add(new Result()
+                            {
                                 Key = "-100",
                                 Value = msg
                             });
@@ -1462,12 +1464,12 @@ namespace Fanex.Tarus.SpecialDelete.Business
 
                         #endregion
 
-                        
+
                     }
                     #endregion
 
 
-                }               
+                }
 
             }
             catch (Exception ex)
@@ -1478,7 +1480,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
                     Key = "100",
                     Value = ex.Message
                 });
-            }            
+            }
         }
 
         public void SendEmailWhenRecoverBetToCSD(ResultModel result, DbResult rs, bool IsNumberGame, bool IsLiveCasino, string transid, bool IsNegativeBalance)
@@ -1681,7 +1683,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
                         mailElement = SpecialDeleteSection.Instance.RecoverBet["MailForRecoverBet"];
                         ToMailCSD = mailElement.To;
                         CC = mailElement.CC;
-                        BCC = mailElement.BCC;                         
+                        BCC = mailElement.BCC;
 
                         Regex regx = new Regex("12eu", RegexOptions.IgnoreCase);
 
@@ -1704,7 +1706,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
 
                         string msg = "";
                         site = site.ToUpper();
-                                            
+
 
                         if (f)
                         {
@@ -1774,12 +1776,12 @@ namespace Fanex.Tarus.SpecialDelete.Business
                     string tplMatchAll = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "TplSendMailMixparlayFromBetList.htm");
                     TemplateHandler.Assign(ref tplMatchAll, "ActionType", "Deleted");
                     string tplUserMP = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "TplMPSendMailRow.htm");
-               
+
 
                     if (dtTrans.Rows.Count > 0 && dtChoice.Rows.Count > 0)
                     {
                         #region send mail to CSD
-                        
+
                         #region Create Dataset dsUser
 
                         var collections = SpecialDeleteSection.Instance.DeleteBet;
@@ -1871,7 +1873,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
                                 Subject = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "specialDelete_MPBet_Subject");
                                 Subject = string.Format(Subject, "{site}", "{site_name}", Convert.ToDateTime(drMatch["datetime"]));
 
-                                string tplMatch = tplMatchAll.Clone().ToString();                      
+                                string tplMatch = tplMatchAll.Clone().ToString();
 
                                 TemplateHandler.Assign(ref tplMatch, "UserName", AppSession.Username);
                                 TemplateHandler.Assign(ref tplMatch, "time", Convert.ToDateTime(drMatch["datetime"]));
@@ -1906,7 +1908,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
 
                                     TemplateHandler.Assign(ref rowMP, "stake", NumberFormat.DecFormat(drBet["stake"], 2));
                                     TemplateHandler.Assign(ref rowMP, "currency", CacheUtils.GetExchangeName(CastAide.AsInt32(drBet["currency"])));
-                                    
+
                                     //todo                                    
                                     string choice = GenMPMailRow(dtChoice);
                                     TemplateHandler.Assign(ref rowMP, "choice", choice);
@@ -1976,7 +1978,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
                 if (rs != null && rs.Tables.Count >= 2)
                 {
                     DataTable dtTrans = rs.Tables[1];
-                    DataTable dtChoice = rs.Tables[0];                    
+                    DataTable dtChoice = rs.Tables[0];
 
                     string expression = "";
 
@@ -2003,15 +2005,15 @@ namespace Fanex.Tarus.SpecialDelete.Business
                         else
                             site += s + ", ";
                     }
-                    
+
                     string tplpath = "Mixpalay/";
                     string tplMatchAll = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "TplSendMailMixparlayFromBetList.htm");
                     TemplateHandler.Assign(ref tplMatchAll, "ActionType", "Deleted");
                     string tplUserMP = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "TplMPSendMailRow.htm");
 
-                    if (dtTrans.Rows.Count > 0 && cnt > 0)                    
+                    if (dtTrans.Rows.Count > 0 && cnt > 0)
                     {
-                        #region send mail to CSD                     
+                        #region send mail to CSD
 
                         #region MatchInfo
                         DataRow drMatch = dtTrans.Rows[0];
@@ -2029,7 +2031,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
                         TemplateHandler.Assign(ref Subject, "site_name", string.Empty);
 
                         string tplMatch = tplMatchAll.Clone().ToString();
-                        
+
                         TemplateHandler.Assign(ref tplMatch, "UserName", AppSession.Username);
                         TemplateHandler.Assign(ref tplMatch, "time", Convert.ToDateTime(drMatch["datetime"]));
                         TemplateHandler.Assign(ref tplMatch, "reason", reason);
@@ -2140,7 +2142,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
         {
             int count = dtChoice.Rows.Count;
             string mpItemList = string.Empty;
-            
+
             try
             {
                 foreach (DataRow row2 in dtChoice.Rows)
@@ -2166,7 +2168,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
                     TemplateHandler.Assign(ref mpItem, "bgcolor", liveindicator ? "pink" : "#FFFFAA");
 
                     TemplateHandler.Assign(ref mpItem, "style_bettype", "font-weight:bold; color:Blue");
-                    
+
                     string formatlive = string.Empty;
                     if (liveindicator)
                     {
@@ -2251,7 +2253,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
             }
             return mpItemList;
         }
-       
+
         protected string oddMP()
         {
             string cls = (IsSearchResult) ? "" : "MP";
@@ -3615,7 +3617,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
 
         #region VirtualSport
 
-        public string SendEmailWhenDeleteVirtualSportToCSD(int errcode, string errmsg, DataSet rs, string reason)
+        public string SendEmailWhenDeleteVirtualSportToCSD(int errcode, string errmsg, DataSet rs)
         {
             string ErrMsg = "";
             try
@@ -3628,8 +3630,9 @@ namespace Fanex.Tarus.SpecialDelete.Business
                         DataTable dtMatch = rs.Tables[0];
                         DataTable dtUsers = rs.Tables[1];
 
-                        string tplpath = "";                        
+                        string tplpath = "";
                         string tplMatchAll = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMail.htm");
+                        TemplateHandler.RemoveBlock(ref tplMatchAll, "reason");
 
                         TemplateHandler.Assign(ref tplMatchAll, "ActionType", "Deleted");
                         string tplUser = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow.htm");
@@ -3777,13 +3780,12 @@ namespace Fanex.Tarus.SpecialDelete.Business
                                     Subject = "Deleted Virtual Sports Bets Report for {site} {site_name} (" + Convert.ToDateTime(drMatch["datetime"]) + ")";
 
                                     string tplMatch = tplMatchAll.Clone().ToString();
-                                   
+
                                     TemplateHandler.Assign(ref tplMatch, "Code", drMatch["matchcode"]);
                                     TemplateHandler.Assign(ref tplMatch, "Home", strHome);
                                     TemplateHandler.Assign(ref tplMatch, "Away", CacheRef.GetTeamName(drMatch["awayid"]));
                                     TemplateHandler.Assign(ref tplMatch, "EventDate", FormatHandler.FormatDateEn(drMatch["EventDate"]));
                                     TemplateHandler.Assign(ref tplMatch, "UserName", AppSession.Username);
-                                    TemplateHandler.Assign(ref tplMatch, "reason", reason);
                                     TemplateHandler.Assign(ref tplMatch, "time", Convert.ToDateTime(drMatch["datetime"]));
 
                                     string site = string.Empty;
@@ -3936,7 +3938,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
             return ErrMsg;
         }
 
-        public string SendEmailWhenDeleteVirtualSportToInternalGroup(int errcode, string errmsg, DataSet rs, bool isRealCurrency, string reason)
+        public string SendEmailWhenDeleteVirtualSportToInternalGroup(int errcode, string errmsg, DataSet rs, bool isRealCurrency)
         {
             string ErrMsg = "";
             try
@@ -3964,8 +3966,9 @@ namespace Fanex.Tarus.SpecialDelete.Business
                         int cnt = drTicketsDeleted.Count();
 
                         #region Template
-                        string tplpath = "";                      
+                        string tplpath = "";
                         string tplMatchAll = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMail.htm");
+                        TemplateHandler.RemoveBlock(ref tplMatchAll, "reason");
 
                         TemplateHandler.Assign(ref tplMatchAll, "ActionType", "Deleted");
                         string tplUser = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow.htm");
@@ -4014,7 +4017,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
 
                             string ToMailCSD = "";
                             string CC = "", BCC = "";
-                            
+
                             SpecialDeleteElement mailling = new SpecialDeleteElement();
 
                             if (isRealCurrency)
@@ -4053,7 +4056,6 @@ namespace Fanex.Tarus.SpecialDelete.Business
                             TemplateHandler.Assign(ref tplMatch, "Away", CacheRef.GetTeamName(drMatch["awayid"]));
                             TemplateHandler.Assign(ref tplMatch, "EventDate", FormatHandler.FormatDateEn(drMatch["EventDate"]));
                             TemplateHandler.Assign(ref tplMatch, "UserName", AppSession.Username);
-                            TemplateHandler.Assign(ref tplMatch, "reason", reason);
                             TemplateHandler.Assign(ref tplMatch, "time", Convert.ToDateTime(drMatch["datetime"]));
 
                             string site = string.Empty;

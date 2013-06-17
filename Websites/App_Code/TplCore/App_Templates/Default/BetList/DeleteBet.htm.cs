@@ -15,15 +15,17 @@ namespace Fanex.Agent.UI
 		{
 			protected static string s0 = "<center><div class=\"maincontent_box\"><table border=\"0\"><tr><td colspan=\"2\" class=\"c\">Delete bet: <span style=\"font-weight:bold\">";
 			public string BetId = "{BetId}";
-			protected static string s1 = "</span></td></tr><tr><td>REASON:</td><td><input type=\"text\" id=\"reason\" name=\"reason\"style=\"width:120px\" onkeyup=\"countChar(this,150,'#charNum')\" />&nbsp;<span style=\"color:Red;\">(*)</span><i><label id=\"charNum\">Characters Left: 150</label></i></td></tr><tr><td>Username:</td><td><input type='text' name='username' id='username' style=\"width:120px\" maxlength=\"50\" disabled=\"disabled\" /></td></tr><tr><td>Password:</td><td><input type='password' name='password' id='password' style=\"width:120px\" maxlength=\"50\" /></td></tr></table></div><div class=\"bg_table\"><table border=\"0px\"><tr><th colspan=\"3\" bgcolor=\"#88aaff\">Please include \"@@\" in message content for replace ticket numbers</th></tr><tr bgcolor=\"#ADADAD\"><thalign=\"center\"><span style=\"color:Red;\">*</span>Message En</th><thalign=\"center\"><span style=\"color:Red;\">*</span>Message Ch</th><thalign=\"center\">Message Cs</th></tr><tr><td><textarea rows=\"10\" id=\"men\" name=\"men\" cols=\"25\"></textarea></td><td><textarea rows=\"10\" id=\"mch\" name=\"mch\" cols=\"25\"></textarea></td><td><textarea rows=\"10\" id=\"mcs\" name=\"mcs\" cols=\"25\"></textarea></td></tr><tr><th colspan=\"3\" bgcolor=\"#88aaff\"><a id=\"other_display\" onclick=\"hideLanguage()\" href=\"#\"><span style=\"color: Black;\">Other Languages</span> [+]</a></th></tr><tr bgcolor=\"#ADADAD\" id=\"otherLanguage_title\" style=\"display:none;\"><thalign=\"center\">Message Th</th><thalign=\"center\">Message It</th><th align=\"center\">Message Jp</th></tr><tr id=\"otherLanguage_content\" style=\"display:none;\"><td><textarea rows=\"10\" id=\"mth\" name=\"mth\" cols=\"25\"></textarea></td><td><textarea rows=\"10\" id=\"mit\" name=\"mit\" cols=\"25\"></textarea></td><td><textarea rows=\"10\" id=\"mjp\" name=\"mjp\" cols=\"25\"></textarea></td></tr><tr bgcolor=\"#ADADAD\" id=\"otherLanguage_title1\" style=\"display:none;\"><thalign=\"center\">Message Es</th><thalign=\"center\"></th><th align=\"center\"></th></tr><tr id=\"otherLanguage_content1\" style=\"display:none;\"><td><textarea rows=\"10\" id=\"mes\" name=\"mes\" cols=\"25\"></textarea></td><td></td><td></td></tr></table><table><tr><td colspan='2' class='c'><input class=\"btn\" type='submit' name='delBtn' onclick=\"executeDel()\" value='Delete' /></td></tr></table><span style=\"color:#FF0000\" id='errormsg'></span></div></center><input type=\"hidden\" id=\"betfrom\" name=\"betfrom\" value=\"";
+			protected static string s1 = "</span></td></tr>";
+			public DeleteBet_reason_Block reason = new DeleteBet_reason_Block();
+			protected static string s2 = "<tr><td>Username:</td><td><input type='text' name='username' id='username' style=\"width:120px\" maxlength=\"50\" disabled=\"disabled\" /></td></tr><tr><td>Password:</td><td><input type='password' name='password' id='password' style=\"width:120px\" maxlength=\"50\" /></td></tr></table></div><div class=\"bg_table\"><table border=\"0px\"><tr><th colspan=\"3\" bgcolor=\"#88aaff\">Please include \"@@\" in message content for replace ticket numbers</th></tr><tr bgcolor=\"#ADADAD\"><thalign=\"center\"><span style=\"color:Red;\">*</span>Message En</th><thalign=\"center\"><span style=\"color:Red;\">*</span>Message Ch</th><thalign=\"center\">Message Cs</th></tr><tr><td><textarea rows=\"10\" id=\"men\" name=\"men\" cols=\"25\"></textarea></td><td><textarea rows=\"10\" id=\"mch\" name=\"mch\" cols=\"25\"></textarea></td><td><textarea rows=\"10\" id=\"mcs\" name=\"mcs\" cols=\"25\"></textarea></td></tr><tr><th colspan=\"3\" bgcolor=\"#88aaff\"><a id=\"other_display\" onclick=\"hideLanguage()\" href=\"#\"><span style=\"color: Black;\">Other Languages</span> [+]</a></th></tr><tr bgcolor=\"#ADADAD\" id=\"otherLanguage_title\" style=\"display:none;\"><thalign=\"center\">Message Th</th><thalign=\"center\">Message It</th><th align=\"center\">Message Jp</th></tr><tr id=\"otherLanguage_content\" style=\"display:none;\"><td><textarea rows=\"10\" id=\"mth\" name=\"mth\" cols=\"25\"></textarea></td><td><textarea rows=\"10\" id=\"mit\" name=\"mit\" cols=\"25\"></textarea></td><td><textarea rows=\"10\" id=\"mjp\" name=\"mjp\" cols=\"25\"></textarea></td></tr><tr bgcolor=\"#ADADAD\" id=\"otherLanguage_title1\" style=\"display:none;\"><thalign=\"center\">Message Es</th><thalign=\"center\"></th><th align=\"center\"></th></tr><tr id=\"otherLanguage_content1\" style=\"display:none;\"><td><textarea rows=\"10\" id=\"mes\" name=\"mes\" cols=\"25\"></textarea></td><td></td><td></td></tr></table><table><tr><td colspan='2' class='c'><input class=\"btn\" type='submit' name='delBtn' onclick=\"executeDel()\" value='Delete' /></td></tr></table><span style=\"color:#FF0000\" id='errormsg'></span></div></center><input type=\"hidden\" id=\"betfrom\" name=\"betfrom\" value=\"";
 			public string betfrom_vl = "{betfrom_vl}";
-			protected static string s2 = "\" /><input type=\"hidden\" id=\"betID\" name=\"betfrom\" value=\"";
+			protected static string s3 = "\" /><input type=\"hidden\" id=\"betID\" name=\"betfrom\" value=\"";
 			protected string t0_BetId;
-			protected static string s3 = "\" /><input type=\"hidden\" id=\"matchID\" name=\"betfrom\" value=\"";
+			protected static string s4 = "\" /><input type=\"hidden\" id=\"matchID\" name=\"betfrom\" value=\"";
 			public string MatchId = "{MatchId}";
-			protected static string s4 = "\" /><input type=\"hidden\" id=\"Bettype\" name=\"bettype\" value=\"";
+			protected static string s5 = "\" /><input type=\"hidden\" id=\"Bettype\" name=\"bettype\" value=\"";
 			public string Bettype = "{Bettype}";
-			protected static string s5 = "\" />";
+			protected static string s6 = "\" />";
 			public override void ToString(ref StringBuilder bd)
 			{
 				if(!Visible) return;
@@ -32,14 +34,16 @@ namespace Fanex.Agent.UI
 					bd.Append(s0);
 					bd.Append(BetId);
 					bd.Append(s1);
-					bd.Append(betfrom_vl);
+					if(null != reason) reason.ToString(ref bd);
 					bd.Append(s2);
-					bd.Append(BetId);
+					bd.Append(betfrom_vl);
 					bd.Append(s3);
-					bd.Append(MatchId);
+					bd.Append(BetId);
 					bd.Append(s4);
-					bd.Append(Bettype);
+					bd.Append(MatchId);
 					bd.Append(s5);
+					bd.Append(Bettype);
+					bd.Append(s6);
 				}
 				if(IsAssigned){bd.Append(Value);}
 			}
@@ -50,6 +54,20 @@ namespace Fanex.Agent.UI
 				return bd.ToString();
 			}
 
+		}
+
+		public class DeleteBet_reason_Block: Block
+		{
+			protected static string s7 = "<tr><td>REASON:</td><td><input type=\"text\" id=\"reason\" name=\"reason\"style=\"width:120px\" onkeyup=\"countChar(this,150,'#charNum')\" />&nbsp;<span style=\"color:Red;\">(*)</span><i><label id=\"charNum\">Characters Left: 150</label></i></td></tr>";
+			public override void ToString(ref StringBuilder bd)
+			{
+				if(!Visible) return;
+				if(RenderChild)
+				{
+					bd.Append(s7);
+				}
+				if(IsAssigned){bd.Append(Value);}
+			}
 		}
 
 	}

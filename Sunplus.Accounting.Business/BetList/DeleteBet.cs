@@ -24,7 +24,7 @@ using System.Collections.Generic;
 namespace Sunplus.Accounting.Business.BetList
 {
     public class DeleteBet
-    {     
+    {
         public static string LoadContent()
         {
             string betId = CastAide.AsString(HttpContext.Current.Request["betid"]);
@@ -37,6 +37,11 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref html, "{betfrom_vl}", betFrom);
             TemplateHandler.Assign(ref html, "{MatchId}", matchID);
             TemplateHandler.Assign(ref html, "{Bettype}", bettype);
+
+            if (CastAide.AsInt32(bettype) >= 1201 && CastAide.AsInt32(bettype) <= 1220)
+            {
+                TemplateHandler.RemoveBlock(ref html, "reason");
+            }
             return html;
         }
 
@@ -53,7 +58,7 @@ namespace Sunplus.Accounting.Business.BetList
                     throw new Exception(ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "error_InvalidRequest"));
                 }
                 else
-                {                    
+                {
                     var delResult = new DeleteResult();
                     if (bettype == 9)
                     {
@@ -149,8 +154,8 @@ namespace Sunplus.Accounting.Business.BetList
 
                         //Response.Write("<script type='text/javascript'>alert('You have deleted successfully BetID : " + betId + " ');  opener.location.reload();close();</script>");
 
-                        #region Send CSD, Real Currency, Test Currency 
-                        
+                        #region Send CSD, Real Currency, Test Currency
+
                         IEmailService _emailService = new EmailService();
 
                         DataTable dtMatch = delResult.PrivateMessage.Tables[0];
@@ -160,22 +165,22 @@ namespace Sunplus.Accounting.Business.BetList
                         ResultModel resultModel = new ResultModel();
                         resultModel.ErrorHandler = new List<Result>();
                         resultModel.IsSuccess = true;
-                      
-                        if(bettype == 9)
+
+                        if (bettype == 9)
                         {
                             //2-MixParlay
                             _emailService.SendEmailWhenDeleteMixParlayBetFromBetListToCSD(errcode, errmsg, delResult.PrivateMessage, reason);
                             _emailService.SendEmailWhenDeleteMixParlayBetFromBetListToInternalGroup(errcode, errmsg, delResult.PrivateMessage, false, reason);
                             _emailService.SendEmailWhenDeleteMixParlayBetFromBetListToInternalGroup(errcode, errmsg, delResult.PrivateMessage, true, reason);
                         }
-                        else if(bettype >= 80 && bettype <=120)
+                        else if (bettype >= 80 && bettype <= 120)
                         {
                             ////4- Number Game                        
                             _emailService.SendEmailWhenDeleteBetToCSD(resultModel, dtMatch, dtUsers, dtChoice, true, false, reason);
                             _emailService.SendEmailWhenDeleteBetToInternalGroup(resultModel, dtMatch, dtUsers, dtChoice, true, false, false, reason);
                             _emailService.SendEmailWhenDeleteBetToInternalGroup(resultModel, dtMatch, dtUsers, dtChoice, true, false, true, reason);
-                        }                       
-                        
+                        }
+
                         else if (bettype == 1101 || bettype == 1102)
                         {
                             //6-LiveCasino
@@ -183,7 +188,7 @@ namespace Sunplus.Accounting.Business.BetList
                             if (dr.Length > 0)
                             {
                                 dtChoice = dr.CopyToDataTable();
-                            }                            
+                            }
                             _emailService.SendEmailWhenDeleteBetToCSD(resultModel, dtMatch, dtUsers, dtChoice, false, true, reason);
 
                             dtChoice = new DataTable();
@@ -191,16 +196,16 @@ namespace Sunplus.Accounting.Business.BetList
                             if (dr2.Length > 0)
                             {
                                 dtChoice = dr2.CopyToDataTable();
-                            }                            
+                            }
                             _emailService.SendEmailWhenDeleteBetToInternalGroup(resultModel, dtMatch, dtUsers, dtChoice, false, true, true, reason); // real currency
                             _emailService.SendEmailWhenDeleteBetToInternalGroup(resultModel, dtMatch, dtUsers, dtChoice, false, true, false, reason);//  for test currency
                         }
                         else if (bettype >= 1201 && bettype <= 1220)
                         {
                             //7-Virtual Sport
-                            _emailService.SendEmailWhenDeleteVirtualSportToCSD(errcode, errmsg, delResult.PrivateMessage, reason);
-                            _emailService.SendEmailWhenDeleteVirtualSportToInternalGroup(errcode, errmsg, delResult.PrivateMessage, true, reason); // for real currency
-                            _emailService.SendEmailWhenDeleteVirtualSportToInternalGroup(errcode, errmsg, delResult.PrivateMessage, false, reason); // for test currency                        
+                            _emailService.SendEmailWhenDeleteVirtualSportToCSD(errcode, errmsg, delResult.PrivateMessage);
+                            _emailService.SendEmailWhenDeleteVirtualSportToInternalGroup(errcode, errmsg, delResult.PrivateMessage, true); // for real currency
+                            _emailService.SendEmailWhenDeleteVirtualSportToInternalGroup(errcode, errmsg, delResult.PrivateMessage, false); // for test currency                        
 
                         }
                         else
@@ -241,7 +246,7 @@ namespace Sunplus.Accounting.Business.BetList
                         //dtUsers = dbResult.ResultSet.Tables[3];
                         //_emailService.SendEmailWhenDeleteBetToInternalGroup(result, dtMatch, dtUsers, dtChoice, true, false, true, message.Reason);
                         //_emailService.SendEmailWhenDeleteBetToInternalGroup(result, dtMatch, dtUsers, dtChoice, true, false, false, message.Reason);
-                        
+
                         //5- Early Kick-off
                         //result.ErrorMessage += SendEmailToCSDEarlyKO(delResult.PrivateMessage, string.Empty, message.Reason);
 
@@ -281,7 +286,7 @@ namespace Sunplus.Accounting.Business.BetList
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw;
-               
+
             }
             return result;
         }

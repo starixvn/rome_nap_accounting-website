@@ -43,8 +43,8 @@ using System.Data;
 
         string SendEmailWhenDeleteBetToInternalGroupEarlyKO(DataSet rs, string transid, bool IsRealCurrency, string reason);
 
-        string SendEmailWhenDeleteVirtualSportToCSD(int errcode, string errmsg, DataSet rs, string reason);
+        string SendEmailWhenDeleteVirtualSportToCSD(int errcode, string errmsg, DataSet rs);
 
-        string SendEmailWhenDeleteVirtualSportToInternalGroup(int errcode, string errmsg, DataSet rs, bool isRealCurrency, string reason);
+        string SendEmailWhenDeleteVirtualSportToInternalGroup(int errcode, string errmsg, DataSet rs, bool isRealCurrency);
     }
 }
