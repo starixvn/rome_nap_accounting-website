@@ -15,6 +15,7 @@ var Helper = {
         $('#spMonth').monPickr({
             today: lastdate,
             maxDate: _today,
+            minDate: _minday,
             showDateRange: true,
             fromDayId: 'spFrom',
             toDayId: 'spTo',
