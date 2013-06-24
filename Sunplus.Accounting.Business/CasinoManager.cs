@@ -517,6 +517,7 @@ namespace Sunplus.Accounting.Business
                     maxRnGComm = CastAide.AsDouble(csSetting[4]);
                     maxMiniGameComm = CastAide.AsDouble(csSetting[5]);
                     maxGroupSPT = CastAide.AsDouble(csSetting[3]);
+                    maxSPT = maxGroupSPT;
                 }
                 //build header
                 TemplateHandler.RemoveBlock(ref tplHeader, Globals.PRESET_PT);
