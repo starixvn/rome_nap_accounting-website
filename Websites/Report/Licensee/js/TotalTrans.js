@@ -120,7 +120,6 @@ var totalTrans = {
         $("#gridtitle").html(this.title);
         var arrdate = $("#dllMonth").val().split("_");
         totalTrans.date = arrdate[1] + "-" + arrdate[0] + "-01";
-        alert(totalTrans.date);
         $("#ddlSite option:selected").each(function () {
             totalTrans.licensee = $(this).val();
             totalTrans.reseller = $(this).attr("reseller");
