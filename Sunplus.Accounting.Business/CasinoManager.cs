@@ -2427,7 +2427,7 @@ namespace Sunplus.Accounting.Business
                             maxMComm = (!_cust.PTByGameType) ? Globals.MAX_Comm : Math.Min(maxMComm, Globals.MAX_Comm);
                             MComm = Math.Min(MComm, Globals.MAX_Comm);
 
-                            maxAPresetPT = (!_cust.PTByGameType) ? Globals.MAX_MaxPTValue : a1Max;
+                            maxAPresetPT = (!_cust.PTByGameType) ? Globals.MAX_MaxPTValue : a1Max;                            
                             //group value
                             maxGroupMComm = Math.Max(maxMComm, maxGroupMComm);
                             maxGroupAPresetPT = Math.Max(maxGroupAPresetPT, maxAPresetPT);
