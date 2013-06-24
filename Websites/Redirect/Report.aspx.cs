@@ -16,8 +16,6 @@ public partial class Redirect_Report : System.Web.UI.Page
             var userName = Cryptography.CfsEnCrypt(AppSession.AccUserName.ToString());
             var onuserId = Cryptography.CfsEnCrypt(AppSession.OnAccId.ToString());
 
-
-
             var accUrlIndentify = Request["accreportkey"];
             var mappingUrlSection = MappingReportUrlSection.Instance.ReportUrl;
             if (mappingUrlSection != null)
