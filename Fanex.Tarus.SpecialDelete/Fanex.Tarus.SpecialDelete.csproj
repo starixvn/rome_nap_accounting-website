@@ -93,6 +93,7 @@
     <Compile Include="Controllers\NumberGame\NumberGameController.cs" />
     <Compile Include="Core\Function.cs" />
     <Compile Include="Core\Helper.cs" />
+    <Compile Include="Core\MappingSpecialDeleteUrlSection.cs" />
     <Compile Include="Core\ProductType.cs" />
     <Compile Include="Core\SportType.cs" />
     <Compile Include="DataAccess\BaseDataAccess.cs" />
