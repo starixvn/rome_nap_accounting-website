@@ -39,33 +39,17 @@ namespace Sunplus.Accounting.Business.Report.Racing
 
                 UserControlCollection collection = UserControlSection.Instance.Report[UserControlSection.StoreCollection.Racing.ToString()].Stores;
 
-                ArrayList arrayList = new ArrayList();
-                
-                
-                foreach (UserControlElement element in collection)
-                {
-                    bool HasPermission = Permissions.HasPermission(element.Function.ToLower());
-                    if (HasPermission)
-                    {
-                        arrayList.Add(element.Site.ToLower());
-                    }
-                }
-
                 var ptSites = RacingSection.Instance.PtSites.Split(',');
 
                 foreach (DataRow row in rows)
                 {
                     var site = row["LicenseeName"].ToString().ToLower();
-                    bool HasPermission = arrayList.Contains(site);
-                    if (HasPermission)
-                    {
-                        var racingItem = new RacingDailyBySiteItem();
-                        racingItem.Id = CastAide.AsInt32(row["LicenseeId"]);
-                        racingItem.Name = CastAide.AsString(row["LicenseeName"]);
-                        racingItem.HasPt = ptSites.Contains(site);
+                    var racingItem = new RacingDailyBySiteItem();
+                    racingItem.Id = CastAide.AsInt32(row["LicenseeId"]);
+                    racingItem.Name = CastAide.AsString(row["LicenseeName"]);
+                    racingItem.HasPt = ptSites.Contains(site);
 
-                        racingDailyBySiteBo.SiteItems.Add(racingItem);
-                    }
+                    racingDailyBySiteBo.SiteItems.Add(racingItem);
                 }
             }
             catch (Exception ex)
