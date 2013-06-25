@@ -442,7 +442,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
                                 WinLoss = CastAide.AsDecimal(row["WinLost"]),
                                 Position = CastAide.AsDecimal(row["Position"]),
                                 Commission = CastAide.AsDecimal(row["Commission"]),
-                                Turnover = CastAide.AsDecimal(row["Turnover"]),
+                                Turnover = CastAide.AsDecimal(row["RealTurnover"]),
                                 RowType = new Entities.Sport.BaseModel
                                 {
                                     Id = RowType.Normal
