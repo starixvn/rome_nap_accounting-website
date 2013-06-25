@@ -156,7 +156,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             row.betteam = CastAide.AsString(dr["betteam"]);
             row.odds = CastAide.AsDecimal(dr["odds"]);
             row.oddstype = CastAide.AsInt32(dr["oddstype"]);
-            row.StakePositiontaking = CastAide.AsDecimal(dr["StakePositiontaking"]);
+            row.StakePositiontaking = CastAide.AsDecimal(dr["stake"]);
             row.currency = CastAide.AsInt32(dr["currency"]);
             row.hdp1 = CastAide.AsDecimal(dr["hdp1"]);
             row.hdp2 = CastAide.AsDecimal(dr["hdp2"]);

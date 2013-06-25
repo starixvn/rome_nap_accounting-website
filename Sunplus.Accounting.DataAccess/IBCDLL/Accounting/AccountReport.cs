@@ -17,6 +17,7 @@
     using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.DataAccess.Report;
     using Sunplus.Accounting.Entities;
+    using Sunplus.Accounting.Entities.SpecialDelete;
 
     public sealed class AccountReport : DataAccess
     {
@@ -1250,9 +1251,8 @@
         /// <param name="pwd"></param>
         /// <param name="uid"></param>
         /// <returns></returns>
-        public static IbcError BetTransDel(long transno, string uname, string pwd, int custid, int uid)
-        {             
-            var error = new IbcError();
+        public static DeleteResult BetTransDel(long transno, string uname, string pwd, int custid, int uid, string reason)
+        {                         
             try
             {                 
                 using (ObjectDb objDb = new ObjectDb("Acc_BettransDelBet"))
@@ -1266,39 +1266,37 @@
                     p.Add("errcode", 0);
                     p.Add("errmsg", string.Empty);
                     p.Add("ip", HttpContext.Current.Request.UserHostAddress);
+                    p.Add("reason", reason);
 
-                    objDb.AssignParamValues(p);
-                    objDb.ExecuteNonQuery();
-                    var errcode = Convert.ToInt32(objDb.GetParameterValue("errcode"));
+                    objDb.AssignParamValues(p);                    
 
-                    if (errcode == 0)
+                    var privateMessage = objDb.ExecuteDataSet();
+                    
+                    return new DeleteResult()
                     {
-                        error.ErrorCode = IbcError.SUCCESS;
-                        error.ErrorMsg = IbcError.SUCCESS_MSG;
-                    }
-                    else
-                    {
-                        error.ErrorCode = errcode;
-                        error.ErrorMsg = string.Format("{0}", objDb.GetParameterValue("errmsg"));
-                    }
+                        Error = new Result()
+                        {
+                            ErrorCode = CastAide.AsInt32(objDb.GetParameterValue("errcode")),
+                            ErrorMessage = CastAide.AsString(objDb.GetParameterValue("errmsg"))
+                        },
+                        PrivateMessage = privateMessage
+
+                    };
                 }
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
-                error.ErrorCode = 100;
-                error.ErrorMsg = ex.Message;
+                LogExtensions.ExceptionHandler(ex);                
             }
-            return error;
+
+            return new DeleteResult();
         }
 
-        public static IbcError BetTransDelParlay(long transId, int userId, string uname, string pwd, int custId)
+        public static DeleteResult BetTransDelParlay(long transId, int userId, string uname, string pwd, int custId, string reason)
         {
-            DbResult rs = null;
             var error = new IbcError();
             try
-            {
-                
+            {                
                 using (ObjectDb objDb = new ObjectDb("Acc_BettransDelBet_Parlay"))
                 {
                     var p = new Hashtable();
@@ -1310,30 +1308,30 @@
                     p.Add("errcode", 0);
                     p.Add("errmsg", string.Empty);
                     p.Add("ip", HttpContext.Current.Request.UserHostAddress);
+                    p.Add("reason", reason);
 
-                    objDb.AssignParamValues(p);
-                    objDb.ExecuteNonQuery();
-                    var errcode = Convert.ToInt32(objDb.GetParameterValue("errcode"));
+                    objDb.AssignParamValues(p);                    
+                    
+                    var privateMessage = objDb.ExecuteDataSet();
 
-                    if (errcode == 0)
+                    return new DeleteResult()
                     {
-                        error.ErrorCode = IbcError.SUCCESS;
-                        error.ErrorMsg = IbcError.SUCCESS_MSG;
-                    }
-                    else
-                    {
-                        error.ErrorCode = errcode;
-                        error.ErrorMsg = string.Format("{0}", objDb.GetParameterValue("errmsg"));
-                    }
+                        Error = new Result()
+                        {
+                            ErrorCode = CastAide.AsInt32(objDb.GetParameterValue("errcode")),
+                            ErrorMessage = CastAide.AsString(objDb.GetParameterValue("errmsg"))
+                        },
+                        PrivateMessage = privateMessage
+
+                    };
                 }
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
-                error.ErrorCode = 100;
-                error.ErrorMsg = ex.Message;
+                LogExtensions.ExceptionHandler(ex);                
             }
-            return error;
+
+            return new DeleteResult();
         }
 
         /// <summary>

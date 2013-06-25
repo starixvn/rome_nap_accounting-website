@@ -73,6 +73,8 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
 
                         string tplMatchAll = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMail.htm");
                         TemplateHandler.Assign(ref tplMatchAll, "ActionType", "Recovered");
+                        TemplateHandler.RemoveBlock(ref tplMatchAll, "reason");
+
                         string tplUser = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow.htm");
 
                         //For special bets - 12EU
@@ -205,7 +207,7 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
                                 //TemplateHandler.Assign(ref row, "odds", NumberFormat.DecFormat(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOdds(CastAide.AsDecimal(drBet["odds"]), CastAide.AsInt32(drBet["bettype"]), CastAide.AsInt32(drBet["oddstype"])), 3));
                                 //TemplateHandler.Assign(ref row, "OddsType", CacheRef.GetOddsTypeName(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOddsType(CastAide.AsInt32(drBet["bettype"]), CastAide.AsInt32(drBet["oddstype"]))));
                                 TemplateHandler.Assign(ref row, "OddsType", string.Empty);
-                                TemplateHandler.Assign(ref row, "amount", NumberFormat.DecFormat(drBet["StakePositiontaking"], 2));
+                                TemplateHandler.Assign(ref row, "amount", NumberFormat.DecFormat(drBet["stake"], 2));
                                 TemplateHandler.Assign(ref row, "currency", GetCurrencyName(CastAide.AsInt32(drBet["currency"])));
 
                                 Decimal hdp1 = Convert.IsDBNull(drBet["hdp1"]) ? 0 : Convert.ToDecimal(drBet["hdp1"]);
@@ -438,7 +440,7 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
                 betTransactionInfo.Betteam = Betteam;
                 betTransactionInfo.Odds = NumberFormat.DecFormat(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOdds(CastAide.AsDecimal(dataRow["odds"]), CastAide.AsInt32(dataRow["bettype"]), 10), 3);
                 betTransactionInfo.OddType = "";
-                betTransactionInfo.Amount = NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["StakePositiontaking"]), 2);
+                betTransactionInfo.Amount = NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["stake"]), 2);
 
                 betTransactionInfo.Currency = GetCurrencyName(CastAide.AsInt32(dataRow["currency"]));
                 switch (CastAide.AsInt32(dataRow["bettype"]))
@@ -649,8 +651,9 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
                         }
 
                         string tplMatchAll = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMail.htm");
-
                         TemplateHandler.Assign(ref tplMatchAll, "ActionType", "Deleted");
+                        TemplateHandler.RemoveBlock(ref tplMatchAll, "reason");
+
                         string tplUser = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow.htm");
 
                         //For special bets - 12EU
@@ -744,7 +747,7 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
                                 }
                                 else
                                 {
-                                    #region Others Group                                    
+                                    #region Others Group
                                     foreach (Dictionary<string, string> store in c.Value)
                                     {
                                         SpecialDeleteDataforMailing mailing = new SpecialDeleteDataforMailing()
@@ -771,7 +774,7 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
 
                                         DataRow[] rows = dtUsers.Select(expression);
                                         foreach (DataRow row in rows)
-                                        {                                            
+                                        {
                                             dtUser.ImportRow(row);
                                         }
 
@@ -839,7 +842,7 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
                                         //TemplateHandler.Assign(ref row, "odds", NumberFormat.DecFormat(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOdds(CastAide.AsDecimal(drBet["odds"]), CastAide.AsInt32(drBet["bettype"]), CastAide.AsInt32(drBet["oddstype"])), 3));
                                         //TemplateHandler.Assign(ref row, "OddsType", CacheRef.GetOddsTypeName(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOddsType(CastAide.AsInt32(drBet["bettype"]), CastAide.AsInt32(drBet["oddstype"]))));
                                         TemplateHandler.Assign(ref row, "OddsType", string.Empty);
-                                        TemplateHandler.Assign(ref row, "amount", NumberFormat.DecFormat(drBet["StakePositiontaking"], 2));
+                                        TemplateHandler.Assign(ref row, "amount", NumberFormat.DecFormat(drBet["stake"], 2));
                                         TemplateHandler.Assign(ref row, "currency", CacheUtils.GetExchangeName(CastAide.AsInt32(drBet["currency"])));
 
                                         Decimal hdp1 = Convert.IsDBNull(drBet["hdp1"]) ? 0 : Convert.ToDecimal(drBet["hdp1"]);
@@ -919,7 +922,7 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
                                     LogMail.Append("<!--Content-->" + Environment.NewLine + tplMatch + Environment.NewLine + "<!--/Content-->" + Environment.NewLine);
                                     LogMail.Append("<!--End--><hr/><!--/End-->" + Environment.NewLine + Environment.NewLine);
 
-                                 //   var CCMail = GetEmailReceivers();
+                                    //   var CCMail = GetEmailReceivers();
 
                                     // write log file
                                     WriteLogMail(LogMail.ToString());
@@ -1005,8 +1008,9 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
                                 return ErrMsg;
                         }
                         string tplMatchAll = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMail.htm");
-
                         TemplateHandler.Assign(ref tplMatchAll, "ActionType", "Deleted");
+                        TemplateHandler.RemoveBlock(ref tplMatchAll, "reason");
+
                         string tplUser = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow.htm");
 
                         //For special bets - 12EU
@@ -1142,7 +1146,7 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
 
                                 TemplateHandler.Assign(ref row, "odds", NumberFormat.DecFormat(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOdds(CastAide.AsDecimal(drBet["odds"]), CastAide.AsInt32(drBet["bettype"]), 10), 3));
                                 TemplateHandler.Assign(ref row, "OddsType", string.Empty);
-                                TemplateHandler.Assign(ref row, "amount", NumberFormat.DecFormat(drBet["StakePositiontaking"], 2));
+                                TemplateHandler.Assign(ref row, "amount", NumberFormat.DecFormat(drBet["stake"], 2));
                                 TemplateHandler.Assign(ref row, "currency", GetCurrencyName(CastAide.AsInt32(drBet["currency"])));
 
                                 Decimal hdp1 = Convert.IsDBNull(drBet["hdp1"]) ? 0 : Convert.ToDecimal(drBet["hdp1"]);
@@ -1238,7 +1242,7 @@ namespace Fanex.Tarus.VirtualSport.Business.SpecialDelete
             return ErrMsg;
         }
 
-        #region WriteLogMail      
+        #region WriteLogMail
 
         protected void WriteLogMail(string content)
         {

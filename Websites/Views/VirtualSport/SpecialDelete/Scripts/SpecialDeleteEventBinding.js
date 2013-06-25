@@ -38,6 +38,7 @@ var specialDeleteEventBinding = {
 
         // show bet
         $('input.btn.showbet').bind('click', function (e) {
+            $('#reason').val('');
             specialDeleteVirtualSport.showBet();
         });
 

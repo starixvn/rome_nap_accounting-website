@@ -110,7 +110,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete.NumberGame
         
 
         #region DeleteSpecialTransactionNumberGame
-        public Result DeleteSpecialTransactionNumberGame(int matchId, long frefno, long trefno, string live, string dead, int DelOption, string transids, int DelOption_BD, string transids_BD, int DelOption_12EU, string transids_12EU, int DelOption_MHC, string transids_MHC, Message message)
+        public Result DeleteSpecialTransactionNumberGame(int matchId, long frefno, long trefno, string live, string dead, int DelOption, string transids, int DelOption_BD, string transids_BD, int DelOption_12EU, string transids_12EU, int DelOption_MHC, string transids_MHC, Message message, string reason)
         {
             Result result = new Result(0, string.Empty);
             if (!Permissions.GetHostPermission(Enumerations.Functions.SpecialDelete.SpecialDeleteNumberGame))
@@ -129,7 +129,8 @@ namespace Sunplus.Accounting.Business.SpecialDelete.NumberGame
                                                                                      username, custId, userpwd,
                                                                                      DelOption, transids,
                                                                                      DelOption_BD, transids_BD,
-                                                                                     DelOption_12EU, transids_12EU, DelOption_MHC, transids_MHC, ip);
+                                                                                     DelOption_12EU, transids_12EU, DelOption_MHC, transids_MHC, ip,
+                                                                                     reason);
             
             if(delResult.Error.ErrorCode > 0)
             {
@@ -148,10 +149,10 @@ namespace Sunplus.Accounting.Business.SpecialDelete.NumberGame
                 else
                 {
                     result.ErrorCode = 0;
-                    result.ErrorMessage = SendEmailToCSD(delResult.Error.ErrorCode, delResult.Error.ErrorMessage, delResult.PrivateMessage, true);
+                    result.ErrorMessage = SendEmailToCSD(delResult.Error.ErrorCode, delResult.Error.ErrorMessage, delResult.PrivateMessage, true, reason);
 
-                    SendEmailWhenDeleteBetToInternalGroup(delResult.Error.ErrorCode, delResult.Error.ErrorMessage, delResult.PrivateMessage, true, false, true); // real currency
-                    SendEmailWhenDeleteBetToInternalGroup(delResult.Error.ErrorCode, delResult.Error.ErrorMessage, delResult.PrivateMessage, true, false, false); // test currency
+                    SendEmailWhenDeleteBetToInternalGroup(delResult.Error.ErrorCode, delResult.Error.ErrorMessage, delResult.PrivateMessage, true, false, true, reason); // real currency
+                    SendEmailWhenDeleteBetToInternalGroup(delResult.Error.ErrorCode, delResult.Error.ErrorMessage, delResult.PrivateMessage, true, false, false, reason); // test currency
                 }
             }
             return result;

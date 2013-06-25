@@ -13,14 +13,16 @@ namespace Fanex.Tarus.SpecialDelete.DataAccess.LiveCasino
            string transids_d,
            string transids_bd,
            string transids_12eu,
-           string transids_mhc);
+           string transids_mhc,
+           string reason);
 
         void DeleteBetsAtLiveCasinodb(string matchid, string f_transid, string t_transid, string UserName, string UserID, out string ErrMsg, out string ErrCode,
            string transids_n,
            string transids_d,
            string transids_bd,
            string transids_12eu,
-           string transids_mhc);
+           string transids_mhc,
+           string reason);
 
         DataSet GetTicketsForRecoverBet(string TransID, out string ErrMsg, out int ErrCode);
 

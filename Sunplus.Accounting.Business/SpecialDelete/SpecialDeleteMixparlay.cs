@@ -458,7 +458,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
         /// <param name="errmsg"></param>
         /// <param name="dbResult"></param>
         /// <returns></returns>
-        public string SendEmailToCSD(int errcode, string errmsg, DataSet rs)
+        public string SendEmailToCSD(int errcode, string errmsg, DataSet rs, string reason)
         {
             string ErrMsg = "";
             try
@@ -612,6 +612,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                 TemplateHandler.Assign(ref tplMatch, "EventDate", FormatHandler.FormatDateEn(drMatch["EventDate"]));
                                 TemplateHandler.Assign(ref tplMatch, "UserName", AppSession.Username);
                                 TemplateHandler.Assign(ref tplMatch, "time", Convert.ToDateTime(drMatch["datetime"]));
+                                TemplateHandler.Assign(ref tplMatch, "reason", reason);
 
                                 string site = string.Empty;
                                 #endregion
@@ -640,7 +641,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                     TemplateHandler.Assign(ref rowMP, "masterpt", NumberFormat.DecFormat(drBet["mpositiontaking"], 2));
                                     TemplateHandler.Assign(ref rowMP, "agentpt", NumberFormat.DecFormat(drBet["apositiontaking"], 2));
 
-                                    TemplateHandler.Assign(ref rowMP, "stake", NumberFormat.DecFormat(drBet["stakepositiontaking"], 2));
+                                    TemplateHandler.Assign(ref rowMP, "stake", NumberFormat.DecFormat(drBet["stake"], 2));
                                     TemplateHandler.Assign(ref rowMP, "currency", CacheUtils.GetExchangeName(CastAide.AsInt32(drBet["currency"])));
 
                                     string choice = GenMPMailRow(drBet, CastAide.AsString(drBet["subtransid"]));
@@ -700,7 +701,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             return ErrMsg;
         }
 
-        public string SendEmailWhenDeleteBetToInternalGroup(int errcode, string errmsg, DataSet rs, bool IsRealCurrency)
+        public string SendEmailWhenDeleteBetToInternalGroup(int errcode, string errmsg, DataSet rs, bool IsRealCurrency, string reason)
         {
             string ErrMsg = "";
             try
@@ -811,6 +812,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         TemplateHandler.Assign(ref tplMatch, "EventDate", FormatHandler.FormatDateEn(drMatch["EventDate"]));
                         TemplateHandler.Assign(ref tplMatch, "UserName", AppSession.Username);
                         TemplateHandler.Assign(ref tplMatch, "time", Convert.ToDateTime(drMatch["datetime"]));
+                        TemplateHandler.Assign(ref tplMatch, "reason", reason);
 
                                 
                         #endregion
@@ -838,7 +840,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             TemplateHandler.Assign(ref rowMP, "masterpt", NumberFormat.DecFormat(drBet["mpositiontaking"], 2));
                             TemplateHandler.Assign(ref rowMP, "agentpt", NumberFormat.DecFormat(drBet["apositiontaking"], 2));
 
-                            TemplateHandler.Assign(ref rowMP, "stake", NumberFormat.DecFormat(drBet["stakepositiontaking"], 2));
+                            TemplateHandler.Assign(ref rowMP, "stake", NumberFormat.DecFormat(drBet["stake"], 2));
                             TemplateHandler.Assign(ref rowMP, "currency", CacheUtils.GetExchangeName(CastAide.AsInt32(drBet["currency"])));
 
                             string choice = GenMPMailRow(drBet, CastAide.AsString(drBet["subtransid"]));

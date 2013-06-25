@@ -67,6 +67,7 @@ var specialDelete = {
         });
         // show bet
         $('input.btn.showbet').bind('click', function (e) {
+            $('#reason').val('');
             specialDelete.showBet();
         });
         $('input.btn.delbet').bind('click', function (e) {
@@ -418,7 +419,7 @@ var specialDelete = {
     },
     showBet: function () {
         try {
-
+            
             $('#ErrMsg').empty();
             $('#spErrCS').html('');
             $('#dvContent').html('');
@@ -656,9 +657,16 @@ var specialDelete = {
         $('#ErrorMessage').html('');
         $('#trMsg2').hide();
         $('#ErrMsg').html('');
-        if ($('#username').val() == "") {
+
+        if ($('#reason').val().trim() == "") {
             $('#trMsg2').show();
-            showAlertMessage("ErrorMessage", "Please enter username", 1);
+            showAlertMessage("ErrorMessage", "Please enter a reason.", 1);
+            $('#reason').focus();
+            return false;
+        }
+        else if ($('#username').val() == "") {
+            $('#trMsg2').show();
+            showAlertMessage("ErrorMessage", "Please enter username.", 1);
             //$('#ErrorMessage').html("*Please enter username");
             $('#username').focus();
             return false;
@@ -666,7 +674,7 @@ var specialDelete = {
         else if ($('#userpwd').val() == "") {
             $('#trMsg2').show();
             //$('#ErrorMessage').html("*Please enter password");
-            showAlertMessage("ErrorMessage", "Please enter password", 1);
+            showAlertMessage("ErrorMessage", "Please enter password.", 1);
             $('#userpwd').focus();
             return false;
         }
@@ -775,6 +783,7 @@ var specialDelete = {
         msg.userPwd = $('#userpwd').val();
         msg.CreatorId = $('#userId').val();
         msg.CreatorName = $('#username').val();
+        msg.Reason = $('#reason').val();
 
         var bettypes = '', betteam430 = '', betteam6 = '', betteam14 = '', betteam16 = '';
         if (typeof (par) !== undefined) {
@@ -1025,7 +1034,7 @@ var specialDelete = {
                 specialDelete.oldMatch = newMatched;
                 var data = { matchid: matchid,
                     fromRefno: fromRefno,
-                    toRefno: toRefno ,
+                    toRefno: toRefno,
                     type: '0'//Sportsbook
                 };
                 specialDelete.validMessage = '';

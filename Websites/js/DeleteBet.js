@@ -1,5 +1,5 @@
-﻿function obj(id){
-	return document.getElementById(id);
+﻿function obj(id) {
+    return document.getElementById(id);
 }
 function hideLanguage() {
     if (String(obj('other_display').innerHTML).indexOf("-") != -1) {
@@ -17,21 +17,29 @@ function hideLanguage() {
 }
 function check_UnameAndPwd() {
     $('#errBox').removeAttr('class');
-    
-    obj('errormsg').innerHTML = '';
-    if (obj('username').value == "") {
 
-        showAlertMessage("errormsg", "Please enter username", 1);
+    obj('errormsg').innerHTML = '';
+
+    if (obj('reason') != null) {
+        if (obj('reason').value.trim() == "") {
+            showAlertMessage("errormsg", "Please enter a reason.", 1);
+            obj('reason').focus();
+            return false;
+        }
+    }
+
+    if (obj('username').value == "") {
+        showAlertMessage("errormsg", "Please enter username.", 1);
         obj('username').focus();
         return false;
-    } else if (obj('password').value == "") {
-        showAlertMessage("errormsg", "Please enter password", 1);
+    }
+    else if (obj('password').value == "") {
+        showAlertMessage("errormsg", "Please enter password.", 1);
         obj('password').focus();
         return false;
     }
 
-    if (obj('betfrom') && obj('betfrom').value == 'p') 
-    {
+    if (obj('betfrom') && obj('betfrom').value == 'p') {
         var str = obj('men').value + obj('mch').value;
         if (str.length > 0)
             return CheckValidPrivateMsg();
@@ -41,7 +49,7 @@ function check_UnameAndPwd() {
     else
         return CheckValidPrivateMsg();
 }
-function CheckValidPrivateMsg() { 
+function CheckValidPrivateMsg() {
     if (obj('men') && obj('men').value == "") {
         showAlertMessage("errormsg", "You must enter English message", 1);
         obj('men').focus();
@@ -89,13 +97,11 @@ function CheckValidPrivateMsg() {
     }
     return true;
 }
-function executeDel()
-{
-    if (check_UnameAndPwd()== true)
-    {
+function executeDel() {
+    if (check_UnameAndPwd() == true) {
         obj('errormsg').innerHTML = '';
         var link = '../Handlers/DeleteBet.ashx?betid=' + obj('betID').value;
-        
+
         link = link + '&betfrom=' + obj('betfrom').value;
         link = link + '&matchid=' + obj('matchID').value;
         link = link + '&username=' + encodeURIComponent(obj('username').value);
@@ -108,45 +114,41 @@ function executeDel()
         link = link + '&mjp=' + encodeURIComponent(obj('mjp').value);
         link = link + '&mes=' + encodeURIComponent(obj('mes').value);
         link = link + '&bettype=' + obj('Bettype').value;
-        
-         $.ajax({
-        url: link,
-        dataType:'html',
-        success: function(data)
-        {
-            if (data!="")
-            {
-                var input = data.split("|");
-                if (input.length>1)
-                {
-                    if (input[0]=="Error")
-                    {
-                        $('#errBox').attr('class', 'alertboxerr');
-                        obj('errormsg').innerHTML = input[1];
-                        //obj('username').value = "";
-                        obj('password').value = "";
-                    }
-                    else if (input[0] == "Success")
-                    {
-                        obj('errormsg').innerHTML = '';
-                        alert(input[1]);
-                        opener.location.reload();
-                        close();
-                    }   
-                }
-            }
-            else
-                obj('errormsg').innerHTML = '';
+        if (obj('reason') != null) {
+            link = link + '&reason=' + obj('reason').value;
         }
-    });
+
+        $.ajax({
+            url: link,
+            dataType: 'html',
+            success: function (data) {
+                if (data != "") {
+                    var input = data.split("|");
+                    if (input.length > 1) {
+                        if (input[0] == "Error") {
+                            $('#errBox').attr('class', 'alertboxerr');
+                            obj('errormsg').innerHTML = input[1];
+                            //obj('username').value = "";
+                            obj('password').value = "";
+                        }
+                        else if (input[0] == "Success") {
+                            obj('errormsg').innerHTML = '';
+                            alert(input[1]);
+                            opener.location.reload();
+                            close();
+                        }
+                    }
+                }
+                else
+                    obj('errormsg').innerHTML = '';
+            }
+        });
     }
-    else
-    {
+    else {
         $('#errBox').attr('class', 'alertboxerr');
     }
 }
-function Reset()
-{
+function Reset() {
     obj('username').value = "";
     obj('password').value = "";
     obj('men').value = "";
@@ -160,5 +162,5 @@ function Reset()
     obj("otherLanguage_title").style.display = "none";
     obj("otherLanguage_content").style.display = "none";
     obj('other_display').innerHTML = "<span style=\"color: Black;\">Other Language</span> [+]";
-    
+
 }

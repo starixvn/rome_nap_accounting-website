@@ -56,6 +56,7 @@ var specialDeleteVirtualSport = {
     },
     showBet: function () {
         try {
+           
             // check valid refno 
             if (specialDeleteUtils.validMessage.length > 0) {
                 showAlertMessage("ErrorMessage", specialDeleteUtils.validMessage, 1);

@@ -44,6 +44,7 @@ var earlyko = {
         });
         //
         $('input.btn.showbet').bind('click', function (e) {
+            $('#reason').val('');
             earlyko.showBet();
         });
         $('input.btn.delbet').bind('click', function (e) {
@@ -396,13 +397,14 @@ var earlyko = {
     showBet: function () {
 
         try {
+            
             $('#ErrMsg').empty();
             $('#spErrCS').html('');
             $('#dvContent').html('');
 
             //--------------
             par.MatchId = $('#matchid').val();
-            if (!isNumberNotNull('matchid') && parseInt(par.MatchId)>2147483647) {
+            if (!isNumberNotNull('matchid') && parseInt(par.MatchId) > 2147483647) {
                 showAlertMessage("ErrMsg", "Please enter a valid Match Id (number) !", 1);
                 $('#matchid').focus();
                 return false;
@@ -598,9 +600,16 @@ var earlyko = {
         $('#ErrMsg').empty();
         $('#ErrorMessage').html('');
         $('#trMsg2').hide();
-        if ($('#username').val() == "") {
+
+        if ($('#reason').val().trim() == "") {
             $('#trMsg2').show();
-            showAlertMessage("ErrorMessage", "Please enter username", 1);
+            showAlertMessage("ErrorMessage", "Please enter a reason.", 1);            
+            $('#reason').focus();
+            return false;
+        }        
+        else if ($('#username').val() == "") {
+            $('#trMsg2').show();
+            showAlertMessage("ErrorMessage", "Please enter username.", 1);
             //$('#ErrorMessage').html("*Please enter username");
             $('#username').focus();
             return false;
@@ -608,7 +617,7 @@ var earlyko = {
         else if ($('#userpwd').val() == "") {
             $('#trMsg2').show();
             //$('#ErrorMessage').html("*Please enter password");
-            showAlertMessage("ErrorMessage", "Please enter password", 1);
+            showAlertMessage("ErrorMessage", "Please enter password.", 1);
             $('#userpwd').focus();
             return false;
         }
@@ -717,6 +726,7 @@ var earlyko = {
             msg.userPwd = $('#userpwd').val();
             msg.CreatorId = $('#userId').val();
             msg.CreatorName = $('#username').val();
+            msg.Reason = $('#reason').val();
 
             var bettypes = '', betteam430 = '', betteam6 = '', betteam14 = '', betteam16 = '';
             if (typeof (par) !== undefined) {
@@ -727,30 +737,30 @@ var earlyko = {
                 betteam16 = par.Betteam16 || '';
             }
 
-//            var data = {
-//                'matchId': $('#matchid').val(),
-//                'bettype': bettypes,
-//                'betteam1378': $('#ddlBetTeam1378').val(),
-//                'betteam515': $('#ddlBetTeam515').val(),
-//                'hdp': ($('#hdp').val() == '' ? '9999' : $('#hdp').val()),
-//                'uname': $('#username').val(),
-//                'userId': $('#userId').val(),
-//                'pass': $('#userpwd').val(),
-//                'DelOption': data_partner.Deposit.opt,
-//                'transids': data_partner.Deposit.ids.join(','),
-//                'kickoffdate': $.trim($('#txtdate').val()),
-//                'DelOption_BD': data_partner.BetDaq.opt,
-//                'transids_BD': data_partner.BetDaq.ids.join(','),
-//                'DelOption_12EU': data_partner.EU.opt,
-//                'transids_12EU': data_partner.EU.ids.join(','),
-//                'DelOption_MHC': data_partner.MHC.opt,
-//                'transids_MHC': data_partner.MHC.ids.join(','),
-//                'betteam430': betteam430,
-//                'betteam6': betteam6,
-//                'betteam14': betteam14,
-//                'betteam16': betteam16,
-//                'message': msg,
-//                'SAFilter': par.SAFilter
+            //            var data = {
+            //                'matchId': $('#matchid').val(),
+            //                'bettype': bettypes,
+            //                'betteam1378': $('#ddlBetTeam1378').val(),
+            //                'betteam515': $('#ddlBetTeam515').val(),
+            //                'hdp': ($('#hdp').val() == '' ? '9999' : $('#hdp').val()),
+            //                'uname': $('#username').val(),
+            //                'userId': $('#userId').val(),
+            //                'pass': $('#userpwd').val(),
+            //                'DelOption': data_partner.Deposit.opt,
+            //                'transids': data_partner.Deposit.ids.join(','),
+            //                'kickoffdate': $.trim($('#txtdate').val()),
+            //                'DelOption_BD': data_partner.BetDaq.opt,
+            //                'transids_BD': data_partner.BetDaq.ids.join(','),
+            //                'DelOption_12EU': data_partner.EU.opt,
+            //                'transids_12EU': data_partner.EU.ids.join(','),
+            //                'DelOption_MHC': data_partner.MHC.opt,
+            //                'transids_MHC': data_partner.MHC.ids.join(','),
+            //                'betteam430': betteam430,
+            //                'betteam6': betteam6,
+            //                'betteam14': betteam14,
+            //                'betteam16': betteam16,
+            //                'message': msg,
+            //                'SAFilter': par.SAFilter
             //            };
             var data = {
                 'matchId': par.MatchId,

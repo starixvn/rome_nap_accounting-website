@@ -1477,3 +1477,10 @@ function SiteRenderingCreditAndDeposit(selectControlId, rootPath) {
         error: Error
     });
 }
+
+//Thai @20130528
+function countChar(txtarea, l, charNum) {
+    var len = $(txtarea).val().length;
+    if (len > l) $(txtarea).val($(txtarea).val().slice(0, l));
+    else $(charNum).text("Characters Left:" + (l - len));
+}

@@ -34,9 +34,16 @@ function on_delete() {
     
     $('#ErrorMessage').html('');
     $('#trMsg2').hide();
-    if ($('#username').val() == "") {
+
+    if ($('#reason').val().trim() == "") {
         $('#trMsg2').show();
-        showAlertMessage("ErrorMessage", "Please enter username", 1);
+        showAlertMessage("ErrorMessage", "Please enter a reason.", 1);        
+        $('#reason').focus();
+        return false;
+    }    
+    else if ($('#username').val() == "") {
+        $('#trMsg2').show();
+        showAlertMessage("ErrorMessage", "Please enter username.", 1);
         //$('#ErrorMessage').html("*Please enter username");
         $('#username').focus();
         return false;
@@ -44,7 +51,7 @@ function on_delete() {
     else if ($('#userpwd').val() == "") {
         $('#trMsg2').show();
         //$('#ErrorMessage').html("*Please enter password");
-        showAlertMessage("ErrorMessage", "Please enter password", 1);
+        showAlertMessage("ErrorMessage", "Please enter password.", 1);
         $('#userpwd').focus();
         return false;
     }
@@ -190,6 +197,7 @@ function on_delete() {
     msg.userPwd = $('#userpwd').val();
     msg.CreatorId = $('#userId').val();
     msg.CreatorName = $('#username').val();
+    msg.Reason = $('#reason').val();
     
     var bettype = $('#bettype').val();
 
@@ -567,6 +575,8 @@ function CheckAllBettype(obj) {
 
 //----------------------- for outright-------------------
 function GetData_OR() {
+    $('#reason').val('');
+
     if (!isNumberNotNull('frefno')) {
         showAlertMessage("ErrMsg", "Please enter a valid From Ref Number!", 1);
         $('#frefno').focus();
@@ -594,11 +604,12 @@ function GetData_OR() {
         data: param,
         success: function(rs) {
             $('#dvContent').html(rs);
+            $('#username').val(AccUserName);
             on_deposit();
-            parent.jQuery.unblockUI();
+            parent.jQuery.unblockUI();            
         }
     });
-
+    
     return true;
 }
 

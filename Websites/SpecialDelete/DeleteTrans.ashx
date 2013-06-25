@@ -459,7 +459,7 @@ public class DeleteTrans : IHttpHandler,IRequiresSessionState {
                                         TemplateHandler.Assign(ref row, "bet", drBet["betteam"]);
                                         TemplateHandler.Assign(ref row, "odds", NumberFormat.DecFormat(drBet["odds"], 3));
                                         TemplateHandler.Assign(ref row, "OddsType", CacheRef.GetOddsTypeName(drBet["oddstype"]));
-                                        TemplateHandler.Assign(ref row, "amount", NumberFormat.DecFormat(drBet["StakePositiontaking"], 2));
+                                        TemplateHandler.Assign(ref row, "amount", NumberFormat.DecFormat(drBet["stake"], 2));
                                         TemplateHandler.Assign(ref row, "currency", CacheUtils.GetExchangeName(CastAide.AsInt32(drBet["currency"])));
 
                                         switch (CastAide.AsInt32(drBet["bettype"]))
