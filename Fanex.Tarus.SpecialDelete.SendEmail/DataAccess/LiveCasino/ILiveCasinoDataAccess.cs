@@ -1,0 +1,36 @@
+﻿using System.Data;
+
+namespace Fanex.Tarus.SpecialDelete.SendEmail.DataAccess.LiveCasino
+{
+    public interface ILiveCasinoDataAccess
+    {
+        DataSet GetTickets(string matchid, string f_transid, string t_transid);
+
+        DataSet GetMatch(string matchid);
+
+        DataSet DeleteBetsAtIBCdb(string matchid, string f_transid, string t_transid, string UserName, string UserPwd, string UserID, string IP, out string ErrMsg, out int ErrCode,
+           string transids_n,
+           string transids_d,
+           string transids_bd,
+           string transids_12eu,
+           string transids_mhc,
+           string reason);
+
+        void DeleteBetsAtLiveCasinodb(string matchid, string f_transid, string t_transid, string UserName, string UserID, out string ErrMsg, out string ErrCode,
+           string transids_n,
+           string transids_d,
+           string transids_bd,
+           string transids_12eu,
+           string transids_mhc,
+           string reason);
+
+        DataSet GetTicketsForRecoverBet(string TransID, out string ErrMsg, out int ErrCode);
+
+        DataSet RecoverBetAtIBCdb(string TransId, string UserId, string IP, out string ErrMsg, out int ErrCode, out bool IsNegativeBalance);
+
+        string RecoverBetAtLivecasinoDB(string IBCTransID, string AdminID, string AdminName, string CasinoNo);
+
+        void RemoveMsgInBoDBMessage(string TransID, string UserID);
+        
+    }
+}

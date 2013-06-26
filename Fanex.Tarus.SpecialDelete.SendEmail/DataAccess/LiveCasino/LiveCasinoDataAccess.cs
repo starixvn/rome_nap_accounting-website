@@ -1,0 +1,214 @@
+﻿using System;
+using System.Data;
+using Fanex.Tarus.SpecialDelete.SendEmail.Entity;
+using Fanex.Data;
+using DNAide.Utils;
+using System.Collections;
+
+namespace Fanex.Tarus.SpecialDelete.SendEmail.DataAccess.LiveCasino
+{
+    public class LiveCasinoDataAccess : BaseDataAccess, ILiveCasinoDataAccess
+    {
+        public DataSet GetTickets(string matchid, string f_transid, string t_transid)
+        {
+            using (ObjectDb objDB = new ObjectDb("Acc_BettransSelSpecialDel_LiveCS"))
+            {
+
+                Hashtable h = new Hashtable();
+
+                h.Add("matchid", matchid);
+                h.Add("fromrefno", f_transid);
+                h.Add("torefno", t_transid);
+
+                objDB.AssignParamValues(h);
+
+                return objDB.ExecuteDataSet();
+            }
+        }
+
+        public DataSet GetTicketsForRecoverBet(string TransID, out string ErrMsg, out int ErrCode)
+        {
+            using (ObjectDb objDB = new ObjectDb("Acc_Get_LiveCasino_RecoverBet"))
+            {
+
+                DataSet ds = new DataSet();
+                Hashtable h = new Hashtable();
+
+                h.Add("transid", TransID);
+                h.Add("errcode", 0);
+                h.Add("errmsg", string.Empty);
+
+                objDB.AssignParamValues(h);
+
+                ds = objDB.ExecuteDataSet();
+
+                ErrCode = Convert.ToInt32(objDB.GetParameterValue("errcode"));
+                ErrMsg = Convert.ToString(objDB.GetParameterValue("errmsg"));
+
+                return ds;
+            }
+        }
+
+        public DataSet GetMatch(string MatchId)
+        {
+            using (ObjectDb objDB = new ObjectDb("Acc_Get_LiveCasinoGameByID"))
+            {
+                
+                Hashtable h = new Hashtable();
+
+                h.Add("matchid", MatchId);
+
+                objDB.AssignParamValues(h);
+
+                return objDB.ExecuteDataSet();
+            }
+        }
+
+        public DataSet DeleteBetsAtIBCdb(string matchid, string f_transid, string t_transid, string UserName, string UserPwd, string UserID, string IP, out string ErrMsg, out int ErrCode,
+           string transids_n,
+           string transids_d,
+           string transids_bd,
+           string transids_12eu,
+           string transids_mhc,
+           string reason)
+        {
+            using (ObjectDb objDB = new ObjectDb("Acc_BettransDelSpecial_LiveCS"))
+            {
+                Hashtable h = new Hashtable();
+                h.Add("matchid", matchid);
+                h.Add("f_transid", f_transid);
+                h.Add("t_transid", t_transid);
+                
+                h.Add("username", UserName);
+                h.Add("userpwd", Encryption.CfsEnCode(UserPwd));
+                h.Add("userid", UserID);
+                h.Add("ip", IP);
+                h.Add("reason", reason);
+
+                h.Add("transids_n", transids_n);
+                h.Add("transids_d", transids_d);
+                h.Add("transids_bd", transids_bd); 
+                h.Add("transids_12eu", transids_12eu);
+                h.Add("transids_mhc", transids_mhc);
+
+                h.Add("errcode", 0);
+                h.Add("errmsg", "");
+
+                objDB.AssignParamValues(h);
+                
+                var dataSet = objDB.ExecuteDataSet();
+
+                ErrCode = DNAide.Core.CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                ErrMsg = DNAide.Core.CastAide.AsString(objDB.GetParameterValue("errmsg"));
+
+                return dataSet;
+            }
+        }
+
+        public void DeleteBetsAtLiveCasinodb(string matchid, string f_transid, string t_transid, string UserName, string UserID, out string ErrMsg, out string ErrCode, 
+           string transids_n,
+           string transids_d,
+           string transids_bd,
+           string transids_12eu,
+           string transids_mhc,
+           string reason)
+        {
+            
+            using (ObjectDb objDB = new ObjectDb("TP_Controller_MiniBac_SpecialDelete"))
+            {
+                Hashtable h = new Hashtable();
+
+                h.Add("matchid", matchid);
+                h.Add("fromibctransid", f_transid);
+                h.Add("toibctransid", t_transid);
+                h.Add("sysdate", DateTime.Now);
+                h.Add("adminname", UserName);
+                h.Add("adminid", UserID);
+                h.Add("casinono", "01");
+
+                h.Add("errcode", 0);
+                h.Add("errmsg", "");
+
+                h.Add("transids_n", transids_n);
+                h.Add("transids_d", transids_d);
+                h.Add("transids_bd", transids_bd);
+                h.Add("transids_12eu", transids_12eu);
+                h.Add("transids_mhc", transids_mhc);
+
+                objDB.AssignParamValues(h);
+              
+                objDB.ExecuteNonQuery();
+
+                ErrMsg = DNAide.Core.CastAide.AsString(objDB.GetParameterValue("errmsg"));
+                ErrCode = DNAide.Core.CastAide.AsString(objDB.GetParameterValue("errcode"));
+            }
+        }
+
+        public DataSet RecoverBetAtIBCdb(string TransId, string UserId, string IP, out string ErrMsg, out int ErrCode, out bool IsNegativeBalance)
+        {
+            using (ObjectDb objDB = new ObjectDb("Acc_Set_LiveCasino_RecoverBet"))
+            {
+                Hashtable h = new Hashtable();
+
+                h.Add("transid", TransId);
+                h.Add("userid", UserId);
+                h.Add("ip", IP);
+                h.Add("errcode", 0);
+                h.Add("errmsg", "");
+                h.Add("isnegativebal", 0);
+
+                objDB.AssignParamValues(h);
+
+                var ds = objDB.ExecuteDataSet();
+
+                ErrMsg = DNAide.Core.CastAide.AsString(objDB.GetParameterValue("errmsg"));
+                ErrCode = DNAide.Core.CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                IsNegativeBalance = DNAide.Core.CastAide.AsBoolean(objDB.GetParameterValue("isnegativebal"));
+
+                return ds;
+            }
+        }
+
+        public string RecoverBetAtLivecasinoDB(string IBCTransID, string AdminID, string AdminName, string CasinoNo)
+        {
+            using (ObjectDb objDB = new ObjectDb("TP_Controller_MiniBac_RecoverBet"))
+            {
+                Hashtable h = new Hashtable();
+
+                h.Add("ibctransid", IBCTransID);
+                h.Add("sysdate", DateTime.Now);
+                h.Add("adminid", AdminID);
+                h.Add("adminname", AdminName);
+                h.Add("casinono", "01");
+                h.Add("errcode", 0);
+                h.Add("errmsg", "");
+
+                objDB.AssignParamValues(h);
+                
+                objDB.ExecuteNonQuery();
+
+                var ErrMsg = DNAide.Core.CastAide.AsString(objDB.GetParameterValue("errmsg"));
+                var ErrCode = DNAide.Core.CastAide.AsString(objDB.GetParameterValue("errcode"));
+
+                if (string.IsNullOrEmpty(ErrMsg)) return string.Empty;
+                return ErrCode + ": " + ErrMsg;
+            }
+        }
+
+        public void RemoveMsgInBoDBMessage(string TransID, string UserID)
+        {
+            using (ObjectDb objDB = new ObjectDb("Acc_Msg_Remove"))
+            {
+                Hashtable h = new Hashtable();
+
+                h.Add("transid", TransID);
+                h.Add("userid", UserID);
+
+                objDB.AssignParamValues(h);
+
+                objDB.ExecuteNonQuery();
+            }
+        }
+      
+    }
+}

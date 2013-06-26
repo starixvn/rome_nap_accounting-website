@@ -1,0 +1,28 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Runtime.Serialization;
+
+namespace Fanex.Tarus.SpecialDelete.SendEmail.Entity.NumberGame
+{
+    
+    public class Match
+    {
+        public int MatchID { get; set; }
+
+        public string MatchCode { get; set; }
+
+        public string MatchEvent { get; set; }
+
+        public string EventDate { get; set; }
+
+        public string HomeName { get; set; }
+
+        public int HomeId { get; set; }
+
+        public int AwayId { get; set; }
+
+        public string AwayName { get; set; }
+    }
+}
