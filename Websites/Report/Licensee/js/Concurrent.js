@@ -14,7 +14,7 @@ var TplPeak = '{{each(i, current) rows}}\
 function renderSite() {
     $.ajax({
         type: "POST",
-        url: "../../Services/WCF/HelperService.svc/GetSiteList",
+        url: "../../Services/WCF/HelperService.svc/GetSiteList_Report_Licensee",
         data: "",
         contentType: "application/json; charset=utf-8",
         success: function (rs) {
