@@ -11,5 +11,7 @@ namespace Sunplus.Accounting.Business
         List<Site> GetSiteLicensee();
 
         string[] GetStandardCurrencyList();
+
+        List<SiteDTO> GetSites_Report_Licensee(Enumerations.AccountingSystem system);
     }
 }

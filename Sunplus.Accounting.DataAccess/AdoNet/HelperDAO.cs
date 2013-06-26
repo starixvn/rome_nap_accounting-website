@@ -13,7 +13,7 @@ using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet
 {
-    public class HelperDAO:DataAccess, IHelperDAO
+    public class HelperDAO : DataAccess, IHelperDAO
     {
         public IEnumerable<Country> GetCountryList()
         {
@@ -46,7 +46,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         public Result AddCountry(string countryName)
         {
             var result = new Result();
-           
+
             var spElement =
                 GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.HelperSession.StoreCollection.HelperControl,
                                   "InsertCountry");
@@ -69,9 +69,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         public DataTable GetSites(Enumerations.AccountingSystem system)
         {
             DbResult ds = null;
-
-
-            var param = new Hashtable {{"system", system.ToString().ToUpper()}};
+            var param = new Hashtable { { "system", system.ToString().ToUpper() } };
             var spElement =
                 GetStoreProcedure(HelperSession.StoreCollection.HelperControl, "SiteSel");
             ds = DbHelper.Execute(spElement.Name, param, spElement.DbName);
@@ -79,6 +77,28 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             DataTable result = null;
             if (ds != null && ds.ResultSet != null && ds.ResultSet.Tables.Count > 0)
                 result = ds.ResultSet.Tables[0];
+            return result;
+        }
+
+        public DataTable GetSites_Report_Licensee(Enumerations.AccountingSystem system)
+        {
+            DbResult ds = null;
+            var param = new Hashtable { 
+                { 
+                    "system", 
+                    system.ToString().ToUpper()
+                } 
+            };
+
+            var spElement =
+                GetStoreProcedure(HelperSession.StoreCollection.HelperControl, "SiteSel_Report_Licensee");
+            ds = DbHelper.Execute(spElement.Name, param, spElement.DbName);
+            DataTable result = null;
+            if (ds != null && ds.ResultSet != null && ds.ResultSet.Tables.Count > 0)
+            {
+                result = ds.ResultSet.Tables[0];
+            }
+
             return result;
         }
 
