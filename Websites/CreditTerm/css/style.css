@@ -12,7 +12,7 @@ div#credit_content
 }
 div.panel_search
 {
-    width: 562px;
+    width: 804px;
     background-color: #B5C4D0;
     border: 1px solid #7C98A4;
     margin-bottom: 5px;
@@ -29,7 +29,7 @@ div.header
     background-color: #B5C4D0;
     font-weight: bold;
     border: 1px solid #7C98A4;
-    width: 562px;
+    width: 804px;
 }
 div.header div
 {
@@ -42,13 +42,13 @@ div.content
     height: 500px;
     overflow-y: scroll;
     overflow-x: hidden;
-    width: 564px;
+    width: 804px;
 }
 div.content div.item
 {
     border-left: 1px solid #7C98A4;
     border-bottom: 1px solid #7C98A4;
-    width: 546px;
+    width: 804px;
 }
 div.content div.item div
 {
@@ -90,9 +90,19 @@ div.currency
     width: 70px;
     height: 14px;
 }
+div.members
+{
+    width: 80px;
+    height: 14px;
+}
 div.checker
 {
     width: 100px;
+    height: 14px;
+}
+div.consolidationreport
+{
+    width: 160px;
     height: 14px;
 }
 div.edit
@@ -194,4 +204,42 @@ span#search input.btn_clear
     width: 24px!important;
     height: 18px!important;
     cursor: pointer;
+}
+.allow-button {
+    background: url("Images/allowed.png") no-repeat scroll center center transparent;
+    display: block;
+    height: 16px;
+    width: 174px;
+}
+.allow-button:hover {
+    background: url("Images/allowed-hover.png") no-repeat scroll center center transparent;
+}
+.disallow-button {
+    background: url("Images/disallowed.png") no-repeat scroll center center transparent;
+    display: block;
+    height: 16px;
+    width: 174px;
+}
+.disallow-button:hover {
+    background: url("Images/disallowed-hover.png") no-repeat scroll center center transparent;
+}
+.on-button {
+    background: url("Images/on.png") repeat scroll 0 0 transparent;
+    display: block;
+    height: 16px;
+    margin-left: 5px;
+    width: 44px;
+}
+.on-button:hover {
+    background: url("Images/on-hover.png") repeat scroll 0 0 transparent;
+}
+.off-button {
+    background: url("Images/off.png") repeat scroll 0 0 transparent;
+    display: block;
+    height: 16px;
+    margin-left: 5px;
+    width: 43px;
+}
+.off-button:hover {
+    background: url("Images/off-hover.png") repeat scroll 0 0 transparent;
 }
