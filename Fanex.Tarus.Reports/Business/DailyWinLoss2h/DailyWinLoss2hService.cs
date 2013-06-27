@@ -15,6 +15,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
     using System.Data;
     using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
+    using System.Linq;
     using System.Web;
     using DNAide.Core;
     using ExcelUtil.Spreadsheet;
@@ -110,19 +111,10 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
                         }
                     };
 
-                    if (dataTable.Rows.Count > 0)
-                    {
-                        currentSporttype = CastAide.AsInt32(dataTable.Rows[0]["SportType"]);
-                        sportTotal.IsApplyVirtualRate = CastAide.AsBoolean(dataTable.Rows[0]["EnableVirtual"]);
-                    }
-
-                    #endregion Declaration
-                    #region ForEach
-
-                    var dailyWinLoss2hItemX = new DailyWinLoss2hItem();
+                    var tempTable = new List<DailyWinLoss2hItem>();
                     foreach (DataRow row in dataTable.Rows)
                     {
-                        dailyWinLoss2hItemX = new DailyWinLoss2hItem
+                        var tempData = new DailyWinLoss2hItem
                         {
                             Id = CastAide.AsInt32(row["SportType"]),
                             Name = CastAide.AsString(row["SportName"]),
@@ -133,12 +125,50 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
                             LineTotalVirtual = CastAide.AsDouble(row["VirtualLineTotal"]),
                             IsApplyVirtualRate = CastAide.AsBoolean(row["EnableVirtual"]),
                             RowTypeDWL2h = new Entities.Sport.BaseModel(),
-
                             Turnover = CastAide.AsDouble(row["RealTurnover"]),
-                            TurnoverVirtual = CastAide.AsDouble(row["VirtualTurnover"])
+                            TurnoverVirtual = CastAide.AsDouble(row["VirtualTurnover"]),
+                            IBC = CastAide.AsInt32(row["ibc"])
                         };
 
-                        dailyWinLoss2hItemX.RowTypeDWL2h.Id = GetRowTypeFromIBC(CastAide.AsInt32(row["ibc"]));
+                        if (tempData.IBC == 1 ||
+                            tempData.IBC == 2)
+                        {
+                            tempData.IsApplyVirtualRate = true;
+                        }
+
+                        tempTable.Add(tempData);
+                    }
+
+
+                    tempTable = tempTable.OrderBy(t => t.Id).OrderByDescending(t => t.IsApplyVirtualRate).ToList();
+                    if (tempTable.Count > 0)
+                    {
+                        currentSporttype = CastAide.AsInt32(tempTable[0].Id);
+                        sportTotal.IsApplyVirtualRate = CastAide.AsBoolean(tempTable[0].IsApplyVirtualRate);
+                    }
+
+                    #endregion Declaration
+                    #region ForEach
+
+                    var dailyWinLoss2hItemX = new DailyWinLoss2hItem();
+                    foreach (var row in tempTable)
+                    {
+                        dailyWinLoss2hItemX = new DailyWinLoss2hItem
+                        {
+                            Id = CastAide.AsInt32(row.Id),
+                            Name = CastAide.AsString(row.Name),
+                            WinLoss = CastAide.AsDouble(row.WinLoss),
+                            Position = CastAide.AsDouble(row.Position),
+                            Commission = CastAide.AsDouble(row.Commission),
+                            LineTotal = CastAide.AsDouble(row.LineTotal),
+                            LineTotalVirtual = CastAide.AsDouble(row.LineTotalVirtual),
+                            IsApplyVirtualRate = CastAide.AsBoolean(row.IsApplyVirtualRate),
+                            RowTypeDWL2h = new Entities.Sport.BaseModel(),
+                            Turnover = CastAide.AsDouble(row.Turnover),
+                            TurnoverVirtual = CastAide.AsDouble(row.TurnoverVirtual)
+                        };
+
+                        dailyWinLoss2hItemX.RowTypeDWL2h.Id = GetRowTypeFromIBC(CastAide.AsInt32(row.IBC));
                         if (dailyWinLoss2hItemX.RowTypeDWL2h.Id == RowTypeConstants.BARM && !_barmConfig.IsActive)
                         {
                             continue;
@@ -170,18 +200,6 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
                             dailyWinLoss2hItemX.Turnover) * 100;
                         dailyWinLoss2hItemX.MarginVirtual = ReportService.CalculateMargin(dailyWinLoss2hItemX.LineTotalVirtual,
                             dailyWinLoss2hItemX.TurnoverVirtual) * 100;
-
-                        //if (dailyWinLoss2hItemX.IsApplyVirtualRate)
-                        //{
-                        //    dailyWinLoss2hItemX.Margin = ReportService.CalculateMargin(dailyWinLoss2hItemX.LineTotal,
-                        //        dailyWinLoss2hItemX.Turnover) * 100;
-                        //}
-                        //else
-                        //{
-                        //    dailyWinLoss2hItemX.Margin = ReportService.CalculateMargin(dailyWinLoss2hItemX.LineTotal,
-                        //        dailyWinLoss2hItemX.Turnover) * 100;
-                        //}
-
                         dailyWinLoss2hItemX.Variance = ReportService.CalculateVariance(
                             dailyWinLoss2hItemX.LineTotal,
                             dailyWinLoss2hItemX.LineTotalVirtual);
@@ -376,8 +394,191 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
 
             if (dml2hReport != null && dml2hReport.ReportDetails.Count > 0)
             {
-                foreach (var item in dml2hReport.ReportDetails)
+                var isChange_ApplyVirtualRateType = false;
+                var detailLength = dml2hReport.ReportDetails.Count;
+                for (var i = 0; i < detailLength; i++)
                 {
+                    var item = dml2hReport.ReportDetails[i];
+                    if (item.RowTypeDWL2h.Id == 0 &&
+                        !item.IsApplyVirtualRate &&
+                        !isChange_ApplyVirtualRateType)
+                    {
+                        var total = dml2hReport.ReportTotal;
+
+                        #region NormalTotal
+
+                        var normalTotal = total.NormalTotal;
+                        currentCol = startCol;
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style = evenRowCommonStyle;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                        currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+                        currentCell.Value = Labels.Virtual_All_Total;
+                        currentCol++;
+
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style = evenRowFormat;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                        currentCell.Value = CastAide.AsDecimal(normalTotal.WinLoss);
+                        currentCol++;
+
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style = evenRowNumberDefaultFormat;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                        currentCell.Value = CastAide.AsDecimal(normalTotal.Position);
+                        currentCol++;
+
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style = evenRowNumberDefaultFormat;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                        currentCell.Value = CastAide.AsDecimal(normalTotal.Commission);
+                        currentCol++;
+
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style = evenRowFormat;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                        currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+                        currentCell.Value = CastAide.AsDecimal(normalTotal.LineTotal);
+                        currentCol++;
+
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style = evenRowFormat;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                        currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+                        currentCell.Value = CastAide.AsDecimal(normalTotal.LineTotalVirtual);
+                        currentCol++;
+
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style = evenRowFormat;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                        currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+                        currentCell.Value = CastAide.AsDecimal(normalTotal.Variance);
+                        currentCol++;
+
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style = evenRowNumberDefaultFormat;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                        currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+                        currentCell.Value = CastAide.AsDecimal(normalTotal.Turnover);
+                        currentCol++;
+
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style = evenRowNumberDefaultFormat;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                        currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+                        currentCell.Value = CastAide.AsDecimal(normalTotal.TurnoverVirtual);
+                        currentCol++;
+
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style = evenRowFormatPercent;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                        if (CastAide.AsDouble(normalTotal.Turnover) != 0)
+                        {
+                            currentCell.Value = CastAide.AsDouble(normalTotal.Margin) / 100;
+                        }
+                        else
+                        {
+                            currentCell.Value = "N/A";
+                        }
+
+                        currentCol++;
+
+                        currentCell = wsReport.Cells[currentRow, currentCol];
+                        currentCell.Style = evenRowFormatPercent;
+                        currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                        if (CastAide.AsDouble(normalTotal.TurnoverVirtual) != 0)
+                        {
+                            currentCell.Value = CastAide.AsDouble(normalTotal.MarginVirtual) / 100;
+                        }
+                        else
+                        {
+                            currentCell.Value = "N/A";
+                        }
+
+                        currentCol++;
+                        currentRow++;
+
+                        #endregion NormalTotal
+                        #region IBCTotal
+
+                        var soccerEightRM = total.SoccerEightRMTotal;
+                        if (soccerEightRM != null &&
+                            (soccerEightRM.LineTotal != 0 || soccerEightRM.LineTotalVirtual != 0))
+                        {
+                            currentCol = startCol;
+                            currentCell = wsReport.Cells[currentRow, currentCol];
+                            currentCell.Style = evenRowCommonStyle;
+                            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                            currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+                            currentCell.Value = soccerEightRM.AliasName;
+                            currentCol++;
+
+                            currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow, currentCol + 2);
+                            currentCellRange.Style = evenRowCommonStyle;
+                            currentCellRange.Merged = true;
+                            currentCol += 3;
+
+                            currentCell = wsReport.Cells[currentRow, currentCol];
+                            currentCell.Style = evenRowFormat;
+                            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                            currentCell.Value = CastAide.AsDecimal(soccerEightRM.LineTotal);
+                            currentCol++;
+
+                            currentCell = wsReport.Cells[currentRow, currentCol];
+                            currentCell.Style = evenRowFormat;
+                            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                            currentCell.Value = CastAide.AsDecimal(soccerEightRM.LineTotalVirtual);
+                            currentCol++;
+
+                            currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow, currentCol + 4);
+                            currentCellRange.Style = evenRowCommonStyle;
+                            currentCellRange.Merged = true;
+                            currentCol += 5;
+                            currentRow++;
+                        }
+
+                        var soccerBARM = total.SoccerBARMTotal;
+                        if (_barmConfig.IsActive &&
+                            soccerBARM != null &&
+                            (soccerBARM.LineTotal != 0 || soccerBARM.LineTotalVirtual != 0))
+                        {
+                            currentCol = startCol;
+                            currentCell = wsReport.Cells[currentRow, currentCol];
+                            currentCell.Style = evenRowCommonStyle;
+                            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                            currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
+                            currentCell.Value = soccerBARM.AliasName;
+                            currentCol++;
+
+                            currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow, currentCol + 2);
+                            currentCellRange.Style = evenRowCommonStyle;
+                            currentCellRange.Merged = true;
+                            currentCol += 3;
+
+                            currentCell = wsReport.Cells[currentRow, currentCol];
+                            currentCell.Style = evenRowFormat;
+                            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                            currentCell.Value = CastAide.AsDecimal(soccerBARM.LineTotal);
+                            currentCol++;
+
+                            currentCell = wsReport.Cells[currentRow, currentCol];
+                            currentCell.Style = evenRowFormat;
+                            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+                            currentCell.Value = CastAide.AsDecimal(soccerBARM.LineTotalVirtual);
+                            currentCol++;
+
+                            currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow, currentCol + 4);
+                            currentCellRange.Style = evenRowCommonStyle;
+                            currentCellRange.Merged = true;
+                            currentCol += 5;
+                            currentRow++;
+                        }
+
+                        #endregion IBCTotal
+
+                        this.ExportEmptyRow(ref wsReport, ref currentRow, startCol, startCol + maxColIndex);
+                    }
+
                     switch (item.RowTypeDWL2h.Id)
                     {
                         case RowTypeConstants.Normal:
@@ -564,8 +765,22 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
                         case RowTypeConstants.SportTotal:
                             break;
                         case RowTypeConstants.EmptyRow:
-                            this.ExportEmptyRow(ref wsReport, ref currentRow, startCol, startCol + maxColIndex);
+                            var nextInfoIndex = i < detailLength - 1 ? i + 1 : i;
+                            var nextInfo = dml2hReport.ReportDetails[nextInfoIndex];
+                            if (isChange_ApplyVirtualRateType ||
+                                nextInfo.IsApplyVirtualRate)
+                            {
+                                this.ExportEmptyRow(ref wsReport, ref currentRow, startCol, startCol + maxColIndex);
+                            }
+
                             break;
+                    }
+
+                    if (item.RowTypeDWL2h.Id == 0 &&
+                       !item.IsApplyVirtualRate &&
+                       !isChange_ApplyVirtualRateType)
+                    {
+                        isChange_ApplyVirtualRateType = true;
                     }
                 }
 
@@ -711,185 +926,12 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
             var numberDefaultFormat = GetStyleIntNumberLiveCasino(".00", Color.FromArgb(253, 252, 252), false, false);
             var commonStyle = excelGemboxUtils.GetStyleText(255, 255, 255);
             var bgFormatPercent = excelGemboxUtils.GetStyleIntNumber(".00%", bgColor, false, true);
-            var total = report.ReportTotal;
 
             ExcelCell currentCell;
             CellRange currentCellRange;
             var currentCol = startCol;
             var maxColIndex = 10;
-
-            #region NormalTotal
-
-            var normalTotal = total.NormalTotal;
-            currentCol = startCol;
-            currentCell = wsReport.Cells[currentRow, currentCol];
-            currentCell.Style = commonStyle;
-            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-            currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
-            currentCell.Value = Labels.Virtual_All_Total;
-            currentCol++;
-
-            currentCell = wsReport.Cells[currentRow, currentCol];
-            currentCell.Style = bgFormat;
-            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-            currentCell.Value = CastAide.AsDecimal(normalTotal.WinLoss);
-            currentCol++;
-
-            currentCell = wsReport.Cells[currentRow, currentCol];
-            currentCell.Style = numberDefaultFormat;
-            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-            currentCell.Value = CastAide.AsDecimal(normalTotal.Position);
-            currentCol++;
-
-            currentCell = wsReport.Cells[currentRow, currentCol];
-            currentCell.Style = numberDefaultFormat;
-            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-            currentCell.Value = CastAide.AsDecimal(normalTotal.Commission);
-            currentCol++;
-
-            currentCell = wsReport.Cells[currentRow, currentCol];
-            currentCell.Style = bgFormat;
-            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-            currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
-            currentCell.Value = CastAide.AsDecimal(normalTotal.LineTotal);
-            currentCol++;
-
-            currentCell = wsReport.Cells[currentRow, currentCol];
-            currentCell.Style = bgFormat;
-            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-            currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
-            currentCell.Value = CastAide.AsDecimal(normalTotal.LineTotalVirtual);
-            currentCol++;
-
-            currentCell = wsReport.Cells[currentRow, currentCol];
-            currentCell.Style = bgFormat;
-            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-            currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
-            currentCell.Value = CastAide.AsDecimal(normalTotal.Variance);
-            currentCol++;
-
-            currentCell = wsReport.Cells[currentRow, currentCol];
-            currentCell.Style = numberDefaultFormat;
-            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-            currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
-            currentCell.Value = CastAide.AsDecimal(normalTotal.Turnover);
-            currentCol++;
-
-            currentCell = wsReport.Cells[currentRow, currentCol];
-            currentCell.Style = numberDefaultFormat;
-            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-            currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
-            currentCell.Value = CastAide.AsDecimal(normalTotal.TurnoverVirtual);
-            currentCol++;
-
-            currentCell = wsReport.Cells[currentRow, currentCol];
-            currentCell.Style = bgFormatPercent;
-            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-            if (CastAide.AsDouble(normalTotal.Turnover) != 0)
-            {
-                currentCell.Value = CastAide.AsDouble(normalTotal.Margin) / 100;
-            }
-            else
-            {
-                currentCell.Value = "N/A";
-            }
-
-            currentCol++;
-
-            currentCell = wsReport.Cells[currentRow, currentCol];
-            currentCell.Style = bgFormatPercent;
-            currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-            if (CastAide.AsDouble(normalTotal.TurnoverVirtual) != 0)
-            {
-                currentCell.Value = CastAide.AsDouble(normalTotal.MarginVirtual) / 100;
-            }
-            else
-            {
-                currentCell.Value = "N/A";
-            }
-
-            currentCol++;
-            currentRow++;
-
-            #endregion NormalTotal
-            #region IBCTotal
-
-            var soccerEightRM = total.SoccerEightRMTotal;
-            if (soccerEightRM != null &&
-                (soccerEightRM.LineTotal != 0 || soccerEightRM.LineTotalVirtual != 0))
-            {
-                currentCol = startCol;
-                currentCell = wsReport.Cells[currentRow, currentCol];
-                currentCell.Style = commonStyle;
-                currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
-                currentCell.Value = soccerEightRM.AliasName;
-                currentCol++;
-
-                currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow, currentCol + 2);
-                currentCellRange.Style = commonStyle;
-                currentCellRange.Merged = true;
-                currentCol += 3;
-
-                currentCell = wsReport.Cells[currentRow, currentCol];
-                currentCell.Style = bgFormat;
-                currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                currentCell.Value = CastAide.AsDecimal(soccerEightRM.LineTotal);
-                currentCol++;
-
-                currentCell = wsReport.Cells[currentRow, currentCol];
-                currentCell.Style = bgFormat;
-                currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                currentCell.Value = CastAide.AsDecimal(soccerEightRM.LineTotalVirtual);
-                currentCol++;
-
-                currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow, currentCol + 4);
-                currentCellRange.Style = commonStyle;
-                currentCellRange.Merged = true;
-                currentCol += 5;
-                currentRow++;
-            }
-
-            var soccerBARM = total.SoccerBARMTotal;
-            if (_barmConfig.IsActive &&
-                soccerBARM != null &&
-                (soccerBARM.LineTotal != 0 || soccerBARM.LineTotalVirtual != 0))
-            {
-                currentCol = startCol;
-                currentCell = wsReport.Cells[currentRow, currentCol];
-                currentCell.Style = commonStyle;
-                currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                currentCell.Style.Font.Weight = ExcelFont.BoldWeight;
-                currentCell.Value = soccerBARM.AliasName;
-                currentCol++;
-
-                currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow, currentCol + 2);
-                currentCellRange.Style = commonStyle;
-                currentCellRange.Merged = true;
-                currentCol += 3;
-
-                currentCell = wsReport.Cells[currentRow, currentCol];
-                currentCell.Style = bgFormat;
-                currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                currentCell.Value = CastAide.AsDecimal(soccerBARM.LineTotal);
-                currentCol++;
-
-                currentCell = wsReport.Cells[currentRow, currentCol];
-                currentCell.Style = bgFormat;
-                currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                currentCell.Value = CastAide.AsDecimal(soccerBARM.LineTotalVirtual);
-                currentCol++;
-
-                currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow, currentCol + 4);
-                currentCellRange.Style = commonStyle;
-                currentCellRange.Merged = true;
-                currentCol += 5;
-                currentRow++;
-            }
-
-            #endregion IBCTotal
-
-            this.ExportEmptyRow(ref wsReport, ref currentRow, startCol, startCol + maxColIndex);
+            var total = report.ReportTotal;
 
             #region GrandTotal
 
@@ -968,7 +1010,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
             currentCellRange.Style.Font.Weight = ExcelFont.BoldWeight;
             currentCellRange.Style.FillPattern.SetSolid(Color.FromArgb(231, 234, 234));
             currentCellRange.Style.Font.Color = Color.FromArgb(86, 86, 86);
-            currentCellRange.Value = "* Virtual All Total: Total of Soccer + Other Sports + Mix Parlay + System Parlay + Number Game\n* Grand Total (Virtual): Virtual All Total + 8RM + BARM";
+            currentCellRange.Value = "* Virtual All Total: Number Game + Mix Parlay + System Parlay + Other Sports + Soccer\n* Grand Total (Virtual): Virtual All Total + 8RM + BARM + Virtual Sports + Racing + Casino + Live Casino + Bingo + P2P";
             currentRow += 3;
 
             #endregion FooterComment

@@ -168,8 +168,41 @@ var DailyWinLoss2hManager = {
             var arrFooter = [];
             var odd_even = "";
             var items = dailyWLResult.ReportDetails;
+            var isChange_ApplyVirtualRateType = false;
             for (var i = 0; i < items.length; i++) {
-                arrBody.push(DailyWinLoss2hManager.renderDailyWLRow(items[i], wldate));
+                var info = items[i];
+                if (info.RowTypeDWL2h.Id == 0 &&
+                    !info.IsApplyVirtualRate &&
+                    !isChange_ApplyVirtualRateType) {
+                    arrBody.push(DailyWinLoss2hManager.renderAllTotalRF(dailyWLResult.ReportTotal.NormalTotal));
+                    if (isEightRMActive == 'true' &&
+                        dailyWLResult.ReportTotal.SoccerEightRMTotal &&
+                        dailyWLResult.ReportTotal.SoccerEightRMTotal.LineTotalVirtual != 0) {
+                        arrBody.push(DailyWinLoss2hManager.eightrmFooter(dailyWLResult.ReportTotal.SoccerEightRMTotal));
+                    }
+
+                    if (isBARMActive == 'true' &&
+                        dailyWLResult.ReportTotal.SoccerBARMTotal &&
+                        dailyWLResult.ReportTotal.SoccerBARMTotal.LineTotalVirtual != 0) {
+                        arrBody.push(DailyWinLoss2hManager.barmFooter(dailyWLResult.ReportTotal.SoccerBARMTotal));
+                    }
+
+                    arrBody.push(DailyWinLoss2hManager.emptyRowHtml());
+                }
+
+                var nextInfoIndex = i < items.length - 1 ? i + 1 : i;
+                var nextInfo = items[nextInfoIndex];
+                if (info.RowTypeDWL2h.Id != 9 ||
+                    isChange_ApplyVirtualRateType ||
+                    nextInfo.IsApplyVirtualRate) {
+                    arrBody.push(DailyWinLoss2hManager.renderDailyWLRow(info, wldate));
+                }
+
+                if (info.RowTypeDWL2h.Id == 0 &&
+                    !info.IsApplyVirtualRate &&
+                    !isChange_ApplyVirtualRateType) {
+                    isChange_ApplyVirtualRateType = true;
+                }
             }
 
             arrFooter.push(DailyWinLoss2hManager.renderReportFooter(dailyWLResult));
@@ -247,7 +280,7 @@ var DailyWinLoss2hManager = {
                             <div class="col100 r">' + StringFormatter.formatNumber(dwlRow.Turnover) + '</div>\
                          </td>\
                          <td>\
-                            <div class="col100 r">' +  (dwlRow.IsApplyVirtualRate ? StringFormatter.formatNumber(dwlRow.TurnoverVirtual) : "N/A") + '</div>\
+                            <div class="col100 r">' + (dwlRow.IsApplyVirtualRate ? StringFormatter.formatNumber(dwlRow.TurnoverVirtual) : "N/A") + '</div>\
                          </td>\
                          <td>\
                             <div class="col80 r ' + (dwlRow.Turnover.toFixed(2) != 0 && dwlRow.Margin.toFixed(2) > 0 ? 'red' : '') + '">' +
@@ -417,7 +450,7 @@ var DailyWinLoss2hManager = {
     eightrmFooter: function (dwlRow, wldate) {
         var html = "";
         if (dwlRow) {
-            html = '<tr style="height:18px;" align="right">\
+            html = '<tr style="height:18px;" align="right" class="evenrow">\
                                 <td class="longtext-wrapper r b">' + dwlRow.AliasName + '</td>\
                                 <td colspan="3"></td>\
                                 <td nowrap class="longtext-wrapper">' + StringFormatter.getDisplayColorOfValue(dwlRow.LineTotal) + '</td>\
@@ -430,7 +463,7 @@ var DailyWinLoss2hManager = {
     barmFooter: function (dwlRow, wldate) {
         var html = "";
         if (dwlRow) {
-            html = '<tr style="height:18px;" align="right">\
+            html = '<tr style="height:18px;" align="right" class="evenrow">\
                                 <td class="longtext-wrapper r b">' + dwlRow.AliasName + '</td>\
                                 <td colspan="3"></td>\
                                 <td nowrap class="longtext-wrapper">' + StringFormatter.getDisplayColorOfValue(dwlRow.LineTotal) + '</td>\
@@ -441,17 +474,7 @@ var DailyWinLoss2hManager = {
         return html;
     },
     renderReportFooter: function (dailyWLReport) {
-        var arr = [];
-        arr.push(DailyWinLoss2hManager.renderAllTotalRF(dailyWLReport.ReportTotal.NormalTotal));
-        if (isEightRMActive == 'true' && dailyWLReport.ReportTotal.SoccerEightRMTotal && dailyWLReport.ReportTotal.SoccerEightRMTotal.LineTotalVirtual != 0) {
-            arr.push(DailyWinLoss2hManager.eightrmFooter(dailyWLReport.ReportTotal.SoccerEightRMTotal));
-        }
-
-        if (isBARMActive == 'true' && dailyWLReport.ReportTotal.SoccerBARMTotal && dailyWLReport.ReportTotal.SoccerBARMTotal.LineTotalVirtual != 0) {
-            arr.push(DailyWinLoss2hManager.barmFooter(dailyWLReport.ReportTotal.SoccerBARMTotal));
-        }
-
-        arr.push(DailyWinLoss2hManager.emptyRowHtml());
+        var arr = [];     
         arr.push(DailyWinLoss2hManager.renderGrandTotalRF(dailyWLReport.ReportTotal.GrandTotal));
         arr.push(DailyWinLoss2hManager.renderCommentRF());
         return arr.join('');
@@ -459,7 +482,7 @@ var DailyWinLoss2hManager = {
     renderAllTotalRF: function (total) {
         var html;
         if (total) {
-            html = '<tr>\
+            html = '<tr class="evenrow">\
                         <td>\
                             <div class="col160 r b">Virtual All Total:</div>\
                         </td>\
@@ -563,9 +586,9 @@ var DailyWinLoss2hManager = {
         return arr.join("");
     },
     renderCommentRF: function () {
-        var footerMsg = "* Virtual All Total: Total of Soccer + Other Sports + Mix Parlay + System Parlay + Number Game";
+        var footerMsg = "* Virtual All Total: Number Game + Mix Parlay + System Parlay + Other Sports + Soccer";
         footerMsg += "<br />";
-        footerMsg += "* Grand Total (Virtual): Virtual All Total + 8RM + BARM";
+        footerMsg += "* Grand Total (Virtual): Virtual All Total + 8RM + BARM + Virtual Sports + Racing + Casino + Live Casino + Bingo + P2P";
 
         var html = '<tr>\
                         <td id="tdNoInfomation" colspan="11" class="l" style="background-color: #E7EAEA;" >\
