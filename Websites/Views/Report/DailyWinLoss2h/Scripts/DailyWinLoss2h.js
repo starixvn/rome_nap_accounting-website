@@ -297,7 +297,7 @@ var DailyWinLoss2hManager = {
     eightrmRowHtml: function (dwlRow, wldate) {
         var html = "";
         if (dwlRow) {
-            html = '<tr style="height:18px;" align="right">\
+            html = '<tr style="height:18px;" align="right" class="evenrow">\
                                 <td align="left" class="longtext-wrapper">' + dwlRow.AliasName + '</td>\
                                 <td colspan="3"></td>\
                                 <td nowrap class="longtext-wrapper">' + StringFormatter.getDisplayColorOfValue(dwlRow.LineTotal) + '</td>\
@@ -310,7 +310,7 @@ var DailyWinLoss2hManager = {
     barmRowHtml: function (dwlRow, wldate) {
         var html = "";
         if (dwlRow) {
-            html = '<tr style="height:18px;" align="right">\
+            html = '<tr style="height:18px;" align="right" class="evenrow">\
                                 <td align="left" class="longtext-wrapper">' + dwlRow.AliasName + '</td>\
                                 <td colspan="3"></td>\
                                 <td nowrap class="longtext-wrapper">' + StringFormatter.getDisplayColorOfValue(dwlRow.LineTotal) + '</td>\
