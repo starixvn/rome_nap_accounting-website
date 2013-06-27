@@ -463,9 +463,9 @@
       <Project>{C7489BA0-A2D2-4414-997F-FD0EFF4C2835}</Project>
       <Name>Fanex.Tarus.LiveCasino</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Fanex.Tarus.SpecialDelete\Fanex.Tarus.SpecialDelete.csproj">
-      <Project>{6F5889CA-CC0E-4A4D-9824-C811AEFCEC4E}</Project>
-      <Name>Fanex.Tarus.SpecialDelete</Name>
+    <ProjectReference Include="..\Fanex.Tarus.SpecialDelete.SendEmail\Fanex.Tarus.SpecialDelete.SendEmail.csproj">
+      <Project>{03F0B48D-0F0D-448C-A014-30FE5FDE7F85}</Project>
+      <Name>Fanex.Tarus.SpecialDelete.SendEmail</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sunplus.Data.DataAbstract\Sunplus.Data.DataAbstract.csproj">
       <Project>{1B2228C6-443E-48FF-90EF-A122810D77E7}</Project>

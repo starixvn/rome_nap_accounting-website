@@ -11,10 +11,12 @@ using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Core.LoggingLib;
-using Fanex.Tarus.SpecialDelete.Business;
+//using Fanex.Tarus.SpecialDelete.Business;
 using System.Data;
-using Fanex.Tarus.SpecialDelete.Entity;
+//using Fanex.Tarus.SpecialDelete.Entity;
 using System.Collections.Generic;
+using Fanex.Tarus.SpecialDelete.SendEmail.Business;
+using Fanex.Tarus.SpecialDelete.SendEmail.Entity;
 
 //using Sunplus.Core.LoggingLib;
 
