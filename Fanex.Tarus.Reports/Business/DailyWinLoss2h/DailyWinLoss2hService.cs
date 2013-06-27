@@ -699,30 +699,30 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
                             {
                                 currentCol = startCol;
                                 currentCell = wsReport.Cells[currentRow, currentCol];
-                                currentCell.Style = commonStyle;
+                                currentCell.Style = evenRowCommonStyle;
                                 currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Left;
                                 currentCell.Value = item.AliasName;
                                 currentCol++;
 
                                 currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow, currentCol + 2);
-                                currentCellRange.Style = commonStyle;
+                                currentCellRange.Style = evenRowCommonStyle;
                                 currentCellRange.Merged = true;
                                 currentCol += 3;
 
                                 currentCell = wsReport.Cells[currentRow, currentCol];
-                                currentCell.Style = bgFormat;
+                                currentCell.Style = evenRowFormat;
                                 currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
                                 currentCell.Value = CastAide.AsDecimal(item.LineTotal);
                                 currentCol++;
 
                                 currentCell = wsReport.Cells[currentRow, currentCol];
-                                currentCell.Style = bgFormat;
+                                currentCell.Style = evenRowFormat;
                                 currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
                                 currentCell.Value = CastAide.AsDecimal(item.LineTotalVirtual);
                                 currentCol++;
 
                                 currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow, currentCol + 4);
-                                currentCellRange.Style = commonStyle;
+                                currentCellRange.Style = evenRowCommonStyle;
                                 currentCellRange.Merged = true;
                                 currentCol += 5;
                                 currentRow++;
@@ -733,30 +733,30 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
                             {
                                 currentCol = startCol;
                                 currentCell = wsReport.Cells[currentRow, currentCol];
-                                currentCell.Style = commonStyle;
+                                currentCell.Style = evenRowCommonStyle;
                                 currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Left;
                                 currentCell.Value = item.AliasName;
                                 currentCol++;
 
                                 currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow, currentCol + 2);
-                                currentCellRange.Style = commonStyle;
+                                currentCellRange.Style = evenRowCommonStyle;
                                 currentCellRange.Merged = true;
                                 currentCol += 3;
 
                                 currentCell = wsReport.Cells[currentRow, currentCol];
-                                currentCell.Style = bgFormat;
+                                currentCell.Style = evenRowFormat;
                                 currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
                                 currentCell.Value = CastAide.AsDecimal(item.LineTotal);
                                 currentCol++;
 
                                 currentCell = wsReport.Cells[currentRow, currentCol];
-                                currentCell.Style = bgFormat;
+                                currentCell.Style = evenRowFormat;
                                 currentCell.Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
                                 currentCell.Value = CastAide.AsDecimal(item.LineTotalVirtual);
                                 currentCol++;
 
                                 currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentCol, currentRow, currentCol + 4);
-                                currentCellRange.Style = commonStyle;
+                                currentCellRange.Style = evenRowCommonStyle;
                                 currentCellRange.Merged = true;
                                 currentCol += 5;
                                 currentRow++;
