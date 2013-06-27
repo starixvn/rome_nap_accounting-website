@@ -1,4 +1,10 @@
-﻿var isnolastborder = true;
+﻿var isIE10 = false;
+/*@cc_on
+if (/^10/.test(@_jscript_version)) {
+    isIE10 = true;
+}
+@*/
+var isnolastborder = true;
 var jOldVerion = parseFloat($.fn.jquery.substring(0, 3))<= 1.5 ? true : false;
 
 (function ($) {
@@ -69,9 +75,9 @@ var jOldVerion = parseFloat($.fn.jquery.substring(0, 3))<= 1.5 ? true : false;
 
             gridwidth = $(this).find(".tbl-header-frozen").width() + width + 17;
             $(this).css({ width: gridwidth + 'px', height: gridheight + 'px' });
-            bodyscroll.css({ width: scrollablewidth + "px", height: bodyscrollheight + "px" });
+            bodyscroll.css({ width: (scrollablewidth + ( isIE10 ? -1:0)) + "px", height: bodyscrollheight + "px" });
             $(this).find("div.body-frozen").css({ height: (bodyscrollheight - 37) + "px" });
-            $(this).find("div.header-scroll, div.footer-scroll").css("width", width + "px");
+            $(this).find("div.header-scroll, div.footer-scroll").css("width", (width + ( isIE10 ? -1:0)) + "px");
 
         });
     };
