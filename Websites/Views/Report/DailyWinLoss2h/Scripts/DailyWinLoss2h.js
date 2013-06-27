@@ -588,7 +588,7 @@ var DailyWinLoss2hManager = {
     renderCommentRF: function () {
         var footerMsg = "* Virtual All Total: Number Game + Mix Parlay + System Parlay + Other Sports + Soccer";
         footerMsg += "<br />";
-        footerMsg += "* Grand Total (Virtual): Virtual All Total + 8RM + BARM + Virtual Sports + Racing + Casino + Live Casino + Bingo + P2P";
+        footerMsg += "* Grand Total: Virtual All Total + 8RM + BARM + Virtual Sports + Racing + Casino + Live Casino + Bingo + P2P";
 
         var html = '<tr>\
                         <td id="tdNoInfomation" colspan="11" class="l" style="background-color: #E7EAEA;" >\

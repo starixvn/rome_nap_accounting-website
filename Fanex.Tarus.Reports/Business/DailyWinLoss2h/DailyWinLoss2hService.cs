@@ -1010,7 +1010,7 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
             currentCellRange.Style.Font.Weight = ExcelFont.BoldWeight;
             currentCellRange.Style.FillPattern.SetSolid(Color.FromArgb(231, 234, 234));
             currentCellRange.Style.Font.Color = Color.FromArgb(86, 86, 86);
-            currentCellRange.Value = "* Virtual All Total: Number Game + Mix Parlay + System Parlay + Other Sports + Soccer\n* Grand Total (Virtual): Virtual All Total + 8RM + BARM + Virtual Sports + Racing + Casino + Live Casino + Bingo + P2P";
+            currentCellRange.Value = "* Virtual All Total: Number Game + Mix Parlay + System Parlay + Other Sports + Soccer\n* Grand Total: Virtual All Total + 8RM + BARM + Virtual Sports + Racing + Casino + Live Casino + Bingo + P2P";
             currentRow += 3;
 
             #endregion FooterComment
