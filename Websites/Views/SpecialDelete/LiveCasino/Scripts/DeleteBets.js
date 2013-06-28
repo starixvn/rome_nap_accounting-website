@@ -146,7 +146,7 @@ var delbet = {
         $("#ErrorMessage2").hide();
         $("#msg").hide();
 
-        if ($("#reason").val().trim() == "") {
+        if ($.trim($("#reason").val()) == "") {  
             $("#ErrorMessage").width(200).html("<div class='alertboxerr'><div>Please enter a reason.</div></div>").show();
             $("#reason").focus();
             return;
