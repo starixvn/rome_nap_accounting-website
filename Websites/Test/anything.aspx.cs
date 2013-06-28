@@ -12,15 +12,25 @@ public partial class Test_anything : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         string s = DNAide.Utils.Encryption.CfsDeCrypt("i9hNnaZltx04XF6oTNOKTnvvtLC/zfxr");
-      //  string pwd1 = "%bodbAdminNetLogin2587";
-        string pwd2 = "casino168";
-        string CfsEnCrypt = DNAide.Utils.Encryption.CfsEnCrypt(pwd2);
-        Response.Write(CfsEnCrypt + "<br/>");
+        string pwd1 = "%bodbAdminNetLogin2587";
+        string pwd2 = "@pl@dm!n";
+        //string CfsEnCrypt = DNAide.Utils.Encryption.CfsEnCrypt(pwd2);
+        string CfsEnCrypt = DNAide.Utils.Encryption.CfsEnCrypt("ibc$agt%2TGwG*a");
+        //Response.Write(CfsEnCrypt + "<br/>");
 
-        string CfsDeCrypt = DNAide.Utils.Encryption.CfsDeCrypt(CfsEnCrypt);
-        Response.Write(CfsDeCrypt + "<br/>"); 
+        //string CfsDeCrypt = DNAide.Utils.Encryption.CfsDeCrypt(CfsEnCrypt);
+        //CfsDeCrypt=IBCCrypt.ConnStrCipher.EncodeConnString("pwd=%$casinoag#@1;");
+        Response.Write(CfsEnCrypt + "<br/>"); 
 
 
-
+        //ReadOnlyCollection<TimeZoneInfo> zones = TimeZoneInfo.GetSystemTimeZones();
+        
+        //foreach (TimeZoneInfo zone in zones)
+        //{
+            
+        //    DateTime localTime = DateTime.Now.AddDays(-2);
+        //    var utcTime = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(localTime, zone.Id);
+        //    Response.Write("Local Time: " + localTime.ToString() + ", Zone Time: " + utcTime + ", ID: " + zone.Id + ", DisplayName: " + zone.DisplayName + "<br>");
+        //}
     }
 }

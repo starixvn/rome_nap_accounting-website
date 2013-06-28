@@ -5,40 +5,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <script src="../js/jQuery/jquery.js" type="text/javascript"></script>
-    <script src="../js/jQuery/knockout-1.2.0.js" type="text/javascript"></script>
    
 </head>
 <body>
 
-  
-
- <p>
-    <div id="dvPT"></div>
-</p>
  
-<script type="text/javascript">
-
-    var select = document.createElement("select");
-    
-
-    var str = '';
-    for (var i = 0; i < 100; i++) {
-        //str += '<option value='+ i +'>'+ i +'</option>'
-        var opt = document.createElement("option");
-        
-
-        if (i == 10) {
-            opt.selected = true;
-        }
-        opt.text = opt.value = i;
-        select.add(opt);
-    }
-
-    
-    document.getElementById('dvPT').appendChild(select);
-</script>
-
 </body>
 
 
