@@ -759,7 +759,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Report
                     {
                         if (i < lstbetstatus.Length - 1)
                         {
-                            if (CastAide.AsInt32(bettype) == 1101)
+                            if (CastAide.AsInt32(bettype) == 1101 || CastAide.AsInt32(bettype) == 1103)
                             {
                                 string result = CacheRef.GetLiveCasinoResult(CastAide.AsInt32(lstbetstatus[i]));
                                 if (i < 2)
@@ -767,14 +767,14 @@ namespace Fanex.Tarus.LiveCasino.Business.Report
                                 else
                                     betstatusresult += result + ", ";
                             }
-                            else if (CastAide.AsInt32(bettype) == 1102)
+                            else if (CastAide.AsInt32(bettype) == 1102 || CastAide.AsInt32(bettype) == 1104)
                             {
                                 betstatusresult += CacheRef.GetRouletteBetItem(CastAide.AsInt32(lstbetstatus[i])) + ";";
                             }
                         }
                         else
                         {
-                            if (CastAide.AsInt32(bettype) == 1101)
+                            if (CastAide.AsInt32(bettype) == 1101 || CastAide.AsInt32(bettype) == 1103)
                             {
                                 string result = CacheRef.GetLiveCasinoResult(CastAide.AsInt32(lstbetstatus[i]));
                                 if (lstbetstatus.Length > 2)
@@ -782,7 +782,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Report
                                 else
                                     betstatusresult += result + ";-";
                             }
-                            else if (CastAide.AsInt32(bettype) == 1102)
+                            else if (CastAide.AsInt32(bettype) == 1102 || CastAide.AsInt32(bettype) == 1104)
                             {
                                 betstatusresult += CacheRef.GetRouletteBetItem(CastAide.AsInt32(lstbetstatus[i]));
                             }
