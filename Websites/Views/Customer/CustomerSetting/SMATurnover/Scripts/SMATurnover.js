@@ -180,7 +180,7 @@
                 else {
                     //$("#tblContentHeader tbody").empty().append('<tr><td><div class="">&nbsp;</div></td></tr>');
                     //$("#tblSMATurnover tbody").empty().append('<tr><td><div class="">&nbsp;</div></td><td colspan="4"><div class="c">There is no data.</div></td></tr>');
-                    $("#tblSMATurnover tbody").empty().append('<tr><td colspan="5"><div class="c" style:"width:662">There is no data.</div></td></tr>');
+                    $("#tblSMATurnover tbody").empty().append('<tr><td colspan="6"><div class="c">There is no data.</div></td></tr>');
                 }
 
                 SMATurnover.initGrid();
@@ -193,7 +193,7 @@
             tblContentId: 'tblSMATurnover',
             manualCopyHeader: true,
             fullWidth: true,
-            gridWidth: 665, //=totalColumnWidth + totalColumn*4 +totalColumn
+            gridWidth: 830, //=totalColumnWidth + totalColumn*4 +totalColumn
             gridHeight: 200,
             freezeWidth: 0,
             numberFreezeCol: 0
@@ -221,10 +221,8 @@
                                  </table>';
 
                 html += '<tr>';
-                //html += '<td colspan="5" style="background-color:#D9E9FD; font-weight:bold; height:17px"><span style="width:200px">' + row.LeagueName + '</span><span style="width:250px">MatchID: ' + match.MatchId + ' (' + match.EventDate + ')</span><span style="width:170px">' + match.HomeTeam + ' -vs-' + match.AwayTeam + '</span><span style="">Add SMA</span></td>';
                 html += '<td class="rowLeague"><div class="col200">' + row.LeagueName + '</div></td>';
-                html += '<td class="rowLeague" colspan="3">' + matchInfo + '</div></td>';
-                //html += '<td class="rowLeague"><div class="col160">' + match.HomeTeam + ' -vs- ' + match.AwayTeam + '</div></td>';
+                html += '<td class="rowLeague" colspan="4">' + matchInfo + '</div></td>';
                 html += '<td class="rowLeague"><div class="col60" ><input type="button" class="colEdit" value="Add SMA" onclick="SMATurnover.RedirectToAddSMA(\'' + match.MatchId + '\')"></div></td>';
                 html += '</tr>';
                 var customerLength = match.CustomerList.length;
@@ -241,9 +239,10 @@
                     else {
                         html += '<td><div class="col160 r" style="height:17px">' + customer.MaxTurnover + '</div></td>';
                     }
+
+                    html += '<td><div class="col160 c">Something</div></td>';
                     html += '<td><div class="col60 table-cell c" style="height:17px"><input type="button" disabled="disabled" id="btnUpdate_' + match.MatchId + "_" + customer.CustId + '" title="Update" onclick="SMATurnover.UpdateSMATurnoverProccess(\'' + customer.CustId + '\',\'' + match.MatchId + '\',\'' + customer.Username + '\')" class="btnSave" /></div></td>';
                     html += '</tr>';
-
                 }
             }
         }

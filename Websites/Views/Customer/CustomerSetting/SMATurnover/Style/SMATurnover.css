@@ -62,3 +62,17 @@ input.btnSave[disabled]
 .smaTurnover-matchInfo tr
 {
 }
+
+
+.maincontent_box 
+{
+     background: none;
+}
+
+.filterBox 
+{    
+    width: 882px;
+    margin-top: 5px;
+    margin-bottom: 5px; 
+    background: url("../../../../../App_Themes/Images/banner/bg_head_tb.jpg") repeat-x scroll left bottom #FFFFFF;
+}
