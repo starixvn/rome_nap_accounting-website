@@ -13,6 +13,8 @@ using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.Entities.PositionTaking.Racing;
 using Sunplus.Accounting.Business.Customer;
+using Fanex.Tarus.DataAccess.Implement.Customer;
+using System.Linq;
 
 
 public partial class PositionTakingCS : RequiredAuthorizationPage
@@ -121,7 +123,11 @@ public partial class PositionTakingCS : RequiredAuthorizationPage
                 {
                     if (_c.CasinoSync) //this customer have already been sync to Casino 
                         CasinoManager.GetCustSettingCS(ref _c); //get more information from Casino
-                    ctrHTML.Text = CasinoManager.GenCasinoPTHTML(_c, Globals.CasinoGroup.Group1, ptType);
+
+                    
+                    bool _IsLicensee = IsLicensee(_c.SiteName);
+                    var group = _IsLicensee ? Globals.CasinoGroup.Group2 : Globals.CasinoGroup.Group1;
+                    ctrHTML.Text = CasinoManager.GenCasinoPTHTML(_c, group, ptType);
                 }
                 else //other user
                 {
@@ -158,7 +164,9 @@ public partial class PositionTakingCS : RequiredAuthorizationPage
                     //{
                     //    PageTitle = Resources.Language.lblInsertCasinoSetting;
                     //}
-                    ctrHTML.Text = CasinoManager.GenCasinoPTHTML(_c, Globals.CasinoGroup.Group1, ptType);
+                    bool _IsLicensee = IsLicensee(_c.SiteName);
+                    var group = _IsLicensee ? Globals.CasinoGroup.Group2 : Globals.CasinoGroup.Group1;
+                    ctrHTML.Text = CasinoManager.GenCasinoPTHTML(_c, group, ptType);
                 }
 
             }
@@ -198,5 +206,14 @@ public partial class PositionTakingCS : RequiredAuthorizationPage
         writer.WriteLine("<script type=\"text/javascript\">\r\n");
         writer.WriteLine(_jsVariables.ToString());
         writer.WriteLine("</script>\r\n");
+    }
+
+    bool IsLicensee(string siteName)
+    {
+        
+        var licenseeAccess = new DepositCustomerAccess();
+        var dtLicensee = licenseeAccess.SelAllLicensee();
+        bool result = dtLicensee.Select().Where(s => CastAide.AsString(s["LicenseeName"]) == siteName).Count() > 0;
+        return result; 
     }
 }

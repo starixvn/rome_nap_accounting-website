@@ -118,8 +118,8 @@ namespace Sunplus.Accounting.Core.Web
         {
             try
             {
-                maxValue = Math.Min(Math.Max(maxValue, 0), 0.9);
-                minValue = Math.Min(Math.Max(minValue, 0), 0.9);
+                //maxValue = Math.Min(Math.Max(maxValue, 0), 0.9);
+                //minValue = Math.Min(Math.Max(minValue, 0), 0.9);
 
                 string tplSelect = WebUtils.LoadTemplate(Globals.TPL_CTR_SELECTOPTION);
                 var options = new StringBuilder();

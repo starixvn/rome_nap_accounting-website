@@ -489,6 +489,9 @@ namespace Sunplus.Accounting.Business
                 double maxGroupSPT = Globals.MAX_MaxPTValue,
                        maxGroupSMinPT = Globals.MAX_MinPTValue,
                        maxGroupSComm = Globals.MAX_Comm;
+
+                //maxGroupSPT = 0.93;
+
                 double SPTGroup = Globals.CURRENT_MaxPTValue,
                        SMinPTGroup = Globals.CURRENT_MinPTValue,
                        SCommGroup = Globals.CURRENT_Comm; //current GROUP value
@@ -513,6 +516,8 @@ namespace Sunplus.Accounting.Business
                 {
                     maxRnGComm = CastAide.AsDouble(csSetting[4]);
                     maxMiniGameComm = CastAide.AsDouble(csSetting[5]);
+                    maxGroupSPT = CastAide.AsDouble(csSetting[3]);
+                    maxSPT = maxGroupSPT;
                 }
                 //build header
                 TemplateHandler.RemoveBlock(ref tplHeader, Globals.PRESET_PT);
@@ -2422,7 +2427,7 @@ namespace Sunplus.Accounting.Business
                             maxMComm = (!_cust.PTByGameType) ? Globals.MAX_Comm : Math.Min(maxMComm, Globals.MAX_Comm);
                             MComm = Math.Min(MComm, Globals.MAX_Comm);
 
-                            maxAPresetPT = (!_cust.PTByGameType) ? Globals.MAX_MaxPTValue : a1Max;
+                            maxAPresetPT = (!_cust.PTByGameType) ? Globals.MAX_MaxPTValue : a1Max;                            
                             //group value
                             maxGroupMComm = Math.Max(maxMComm, maxGroupMComm);
                             maxGroupAPresetPT = Math.Max(maxGroupAPresetPT, maxAPresetPT);
