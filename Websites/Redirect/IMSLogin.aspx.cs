@@ -9,9 +9,9 @@ public partial class DirectLogin_IMS : System.Web.UI.Page
     {
         var userId = Cryptography.CfsEnCrypt(AppSession.AccId.ToString());
         var onuserId = Cryptography.CfsEnCrypt(AppSession.OnAccId.ToString());
-        var time = Cryptography.CfsEnCrypt(DateTime.Now.ToString());
+        var redirectToUrl = Request["redirectToUrl"];
 
-        var url = string.Format("{0}?userid={1}&onuserid={2}&time={3}", ConfigurationManager.AppSettings["IMSLoginUrl"], userId, onuserId, time);
+        var url = string.Format("{0}?userid={1}&onuserid={2}&redirectToUrl={3}", ConfigurationManager.AppSettings["IMSLoginUrl"], userId, onuserId, redirectToUrl);
         Response.Redirect(url);
     }
 }
