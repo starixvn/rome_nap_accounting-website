@@ -469,13 +469,16 @@
     <value>Game Type</value>
   </data>
   <data name="g1101" xml:space="preserve">
-    <value>Baccarat</value>
+    <value>Party Baccarat</value>
   </data>
   <data name="g1102" xml:space="preserve">
-    <value>Roulette</value>
+    <value>Party Roulette</value>
   </data>
   <data name="g1103" xml:space="preserve">
-    <value>Sicbo</value>
+    <value>Live Baccarat</value>
+  </data>
+  <data name="g1104" xml:space="preserve">
+    <value>Live Roulette</value>
   </data>
   <data name="addfrom01" xml:space="preserve">
     <value>Accounting Site</value>

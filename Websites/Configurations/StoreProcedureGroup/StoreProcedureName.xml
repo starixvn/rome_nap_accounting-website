@@ -154,13 +154,13 @@
   </Function>
 
   <Function Name="Live Casino - Special Delete - Recover Bet">
-    <Setting Key="Acc_BettransSelSpecialDel_LiveCS" SpName="Acc_BettransSelSpecialDel_LiveCS_xtest" DbName="db053" />
+    <Setting Key="Acc_BettransSelSpecialDel_LiveCS" SpName="Acc_BettransSelSpecialDel_LiveCS" DbName="db053" />
     <Setting Key="Acc_BettransCheckNegativeBetCredit" SpName="Acc_BettransCheckNegativeBetCredit" DbName="main" />
     <Setting Key="Acc_BettransDelSpecial_LiveCS" SpName="Acc_BettransDelSpecial_LiveCS" DbName="DBTXN.BODB02" />
     <Setting Key="TP_Controller_MiniBac_SpecialDelete" SpName="TP_Game_MiniBac_SpecialDelete" DbName="LV_MainDB" Plain="1"/>
     <Setting Key="Acc_SpecialDel_CheckMatchIDwithRefno" SpName="Acc_SpecialDel_CheckMatchIDwithRefno" DbName="db053" />
 
-    <Setting Key="Acc_Get_LiveCasino_RecoverBet" SpName="Acc_BettransSelRecoverBet_LiveCS_xtest" DbName="db053" />
+    <Setting Key="Acc_Get_LiveCasino_RecoverBet" SpName="Acc_BettransSelRecoverBet_LiveCS" DbName="db053" />
     <Setting Key="Acc_Get_LiveCasinoGameByID" SpName="Acc_LiveCS_SelGameByID" DbName="db053" />
     <Setting Key="Acc_Set_LiveCasino_RecoverBet" SpName="Acc_BettransRecoverBet_LiveCS" DbName="DBTXN.BODB02" />
     <Setting Key="TP_Controller_MiniBac_RecoverBet" SpName="TP_Game_MiniBac_RecoverBet" DbName="LV_MainDB" Plain="1"/>
