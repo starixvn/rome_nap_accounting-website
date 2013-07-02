@@ -256,6 +256,7 @@ namespace Sunplus.Accounting.Business
         {
             try
             {
+                casinoNo = "01";
                 return IBCProvider.Casino.GetGameKinds(casinoNo, siteName);
             }
             catch (Exception ex)
