@@ -78,6 +78,34 @@
                         </table>
                     </div>
                     <div class="contentBox">
+                        <div class="_100ReachedBox">
+                            <table cellspacing="0">
+                                <tr style="line-height: 17px;">
+                                    <th class="lbl100Reached">
+                                        Number of SMA reached to 100%
+                                    </th>
+                                    <th class="lbl100ReachedCounter">
+                                    </th>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="refreshBox">
+                            <div class="refreshIcon">
+                                Not Refresh
+                            </div>
+                            <div class="refreshDropdownIcon">
+                            </div>
+                        </div>
+                        <div class="countDownOptionContainer">
+                            <div class="countDownOption countDownOptionCheck" val="Not Refresh">
+                                Not Refresh</div>
+                            <div class="countDownOption" val="10">
+                                10 sec</div>
+                            <div class="countDownOption" val="20">
+                                20 sec</div>
+                            <div class="countDownOption" val="30">
+                                30 sec</div>
+                        </div>
                         @Html.Partial("~/Views/Customer/CustomerSetting/SMATurnover/SMATurnoverContent.cshtml")
                     </div>
                 </div>

@@ -1,17 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data;
-using Fanex.Data;
-using DNAide.Core;
-using Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover;
-using Sunplus.Accounting.Core.Cache;
-using Fanex.Tarus.Customer.Entities;
-using Sunplus.Accounting.Core.Extensions;
+﻿// --------------------------------------------------------------------------
+// <copyright file="SMATurnoverAccess.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
 
 namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using DNAide.Core;
+    using Fanex.Data;
+    using Fanex.Tarus.Customer.Entities;
+    using Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover;
+    using Sunplus.Accounting.Core.Cache;
+    using Sunplus.Accounting.Core.Extensions;
+
     public class SMATurnoverAccess : ISMATurnoverAccess
     {
         public static Dictionary<string, DateTime> SelBalanceUpMovebetDays()
@@ -92,7 +99,6 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
             return matchInfo;
         }
 
-
         public DataTable GetSMATurnoverList(int sportId, int leagueId, DateTime fromDate, DateTime toDate)
         {
             var dtb = new DataTable();
@@ -138,7 +144,7 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
                 result.ErrorCode = -1;
                 result.ErrorMessage = "Add failed!";
             }
-          
+
             return result;
         }
 

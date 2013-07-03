@@ -64,15 +64,200 @@ input.btnSave[disabled]
 }
 
 
-.maincontent_box 
+.maincontent_box
 {
-     background: none;
+    background: none;
 }
 
-.filterBox 
-{    
+.filterBox
+{
     width: 882px;
     margin-top: 5px;
-    margin-bottom: 5px; 
+    margin-bottom: 5px;
     background: url("../../../../../App_Themes/Images/banner/bg_head_tb.jpg") repeat-x scroll left bottom #FFFFFF;
+}
+
+._100ReachedBox
+{
+    display: inline-block;
+}
+
+.lbl100Reached
+{
+    padding: 4px 7px 4px 7px;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 12px;
+    color: #2678cf;
+    background: url(Images/1.jpg) repeat-x;
+    border: solid #7a97a4;
+    border-width: 1px 1px 1px 5px;
+}
+
+.lbl100ReachedCounter
+{
+    border: solid 1px #7a97a4;
+    width: 30px;
+    box-shadow: inset 1px 1px 3px #CCC;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 12px;
+    color: #F00;
+    text-align: right;
+    padding: 3px;
+}
+
+.refreshBox
+{
+    display: inline-block;
+    border: solid 1px #7c98a4;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 12px;
+    width: 105px;
+    height: 18px;
+    box-shadow: inset 1px 1px 3px #CCC;
+    float: right;
+    margin-top: 5px;
+}
+
+.refreshIcon
+{
+    background: url(Images/refresh.png) no-repeat;
+    float: left;
+    line-height: 18px;
+    cursor: pointer;   
+    padding-left: 8px;
+    width: 85px;
+}
+
+.refreshDropdownIcon
+{
+    background: url(Images/dropdown.png);
+    width: 12px;
+    float: left;
+    height: 18px;
+    line-height: 15px;
+    cursor: pointer;
+}
+
+.box100PercentageUsedContainer
+{
+    padding: 0px;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 10px;
+    width: 100px;
+    border: 1px solid #7c98a4;
+    line-height: 15px;
+}
+
+.boxPercentUsed_100Percent
+{
+    padding: 0px;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 10px;
+    width: 100px;
+    border: 1px solid #7c98a4;
+    line-height: 15px;
+    background: url(Images/2.jpg) repeat-x;
+    text-align: center;
+    color: #FFFFFF;
+    font-weight: bold;
+    margin-left: 30px;
+}
+
+.boxPercentUsed_Low
+{
+    padding: 0px;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 10px;
+    width: 100px;
+    border: 1px solid #7c98a4;
+    line-height: 15px;
+    text-align: center;
+    color: #000000;
+    font-weight: bold;
+    margin-left: 30px;
+}
+
+.btnAddSMA
+{
+    border: solid 1px #a7510a;
+    font-size: 10px;
+    font-family: Tahoma, Geneva, sans-serif;
+    background: url(Images/4.jpg) repeat-x;
+    color: #FFF;
+    padding: 1px;
+    text-align: center;
+    width: 50px;
+    line-height: 13px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.btnAddSMA:hover
+{
+    color: #0000FF;
+}
+
+.lblLeagueHeadline
+{
+    font-family: Tahoma, Geneva, sans-serif;
+    background-color: #fde4d0;
+    font-size: 12px;
+    color: #a74c00;
+}
+
+.lblTeamInfo
+{
+    font-size: 14px;
+    display: inline-block;
+}
+
+.rightArrow_LeagueInfo
+{
+    background: url(Images/arrow.png) no-repeat;
+    height: 8px;
+    width: 5px;
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.eventDate_LeagueInfo
+{
+    font-size: 12px;
+    display: inline-block;
+    font-weight: normal;
+    margin-right: 5px;
+}
+
+.matchIdBox_LeagueInfo
+{
+    border: solid 1px #f99e55;
+    padding: 1px 3px 1px 3px;
+    font-size: 10px;
+    background-color: #ffb981;
+    display: inline-block;
+}
+
+.countDownOptionContainer
+{
+    left: 2px;
+    top: 53px;
+    display: none;
+    float: right;
+    position: absolute;
+    background-color: #DFDFDF;
+    border: 1px solid #D4D4D4;
+    cursor: default; 
+    width: 105px;
+     z-index: 10;
+}
+
+.countDownOptionCheck {
+    background: url("Images/countdownCheck.png") no-repeat scroll 3px 8px transparent;
+}
+
+.countDownOption 
+{
+    border-bottom: 1px solid white;
+    padding: 1px 0 1px 15px;
 }

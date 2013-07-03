@@ -1,21 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Fanex.Tarus.Web.Controllers;
-using System.Web.Mvc;
-using Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover;
-using Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover;
-using DNAide.Core;
-using Fanex.Tarus.Web.Controllers.Filters;
+﻿// --------------------------------------------------------------------------
+// <copyright file="SMATurnoverController.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
 
 namespace Fanex.Tarus.Customer.Controller.Setting
 {
-    public class SMATurnoverController: BaseController
+    using System.Collections.Generic;
+    using System.Web.Mvc;
+    using DNAide.Core;
+    using Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover;
+    using Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover;
+    using Fanex.Tarus.Web.Controllers;
+    using Fanex.Tarus.Web.Controllers.Filters;
+
+    public class SMATurnoverController : BaseController
     {
         public ISMATurnoverService _SMATurnover;
 
-        public SMATurnoverController():this(null)
+        public SMATurnoverController()
+            : this(null)
         { }
 
         public SMATurnoverController(ISMATurnoverService SMATurnover)
@@ -81,7 +88,7 @@ namespace Fanex.Tarus.Customer.Controller.Setting
             return jsonResult;
         }
 
-        public JsonResult CheckMaxTurnoverValue( string custName, string matchId, string maxTurnover, string mode)
+        public JsonResult CheckMaxTurnoverValue(string custName, string matchId, string maxTurnover, string mode)
         {
             var result = _SMATurnover.CheckMaxTurnoverValue(CastAide.AsInt32(matchId), custName, CastAide.AsDecimal(maxTurnover), CastAide.AsInt32(mode));
             var jsonResult = Json(result);

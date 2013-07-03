@@ -1,21 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover;
-using Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover;
-using System.Data;
-using DNAide.Core;
-using DNAide.Utils;
-using Sunplus.Accounting.Core.Cache;
-using Fanex.Tarus.Customer.Entities;
-using Sunplus.Accounting.Core.Common;
-using System.Web;
-using Sunplus.Accounting.Core.Extensions;
+﻿// --------------------------------------------------------------------------
+// <copyright file="SMATurnoverService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
 
 namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
 {
-    public class SMATurnoverService: ISMATurnoverService
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
+    using System.Web;
+    using DNAide.Core;
+    using DNAide.Utils;
+    using Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover;
+    using Fanex.Tarus.Customer.Entities;
+    using Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover;
+    using Sunplus.Accounting.Core.Cache;
+    using Sunplus.Accounting.Core.Common;
+    using Sunplus.Accounting.Core.Extensions;
+
+    public class SMATurnoverService : ISMATurnoverService
     {
         public ISMATurnoverAccess _SMATurnoverAccess;
 
@@ -50,7 +58,8 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
             var dtb = _SMATurnoverAccess.GetLeague(sportType, fromDate, toDate);
             foreach (DataRow row in dtb.Rows)
             {
-                var league = new League() { 
+                var league = new League()
+                {
                     Id = CastAide.AsInt32(row["leagueid"]),
                     Name = CastAide.AsString(row["leaguename"])
                 };
@@ -105,8 +114,8 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
                                 CustId = detail["custid"].ToString(),
                                 Currency = detail["currency"].ToString(),
                                 SMATurnover = NumberFormat.DecFormat(detail["TotalTurnover"], 2),
-                                MaxTurnover = NumberFormat.DecFormat(detail["MaxTurnover"], 0)
-
+                                MaxTurnover = NumberFormat.DecFormat(detail["MaxTurnover"], 0),
+                                PercentageUsed = NumberFormat.DecFormat(detail["PercentageUsed"], 0)
                             };
                             i++;
                             customerList.Add(Customer);
@@ -126,12 +135,10 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
             return leagueList;
         }
 
-
         public Result AddSMATurnover(int matchId, string custName, decimal maxTurnover)
         {
             return _SMATurnoverAccess.AddSMATurnover(matchId, custName, maxTurnover, AppSession.AccId, HttpContext.Current.Request.UserHostAddress);
         }
-
 
         public Result UpdateSMATurnover(int matchId, int custId, decimal maxTurnover)
         {
