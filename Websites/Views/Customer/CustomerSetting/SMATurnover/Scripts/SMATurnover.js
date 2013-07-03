@@ -18,7 +18,9 @@
         sendMailInteralCounter: 10000,
         sendMailIntervalEvent: null,
         lastReport: null,
-        reportRows: null
+        reportRows: null,
+        updateCountdownEvent: null,
+        countdownTime: 0
     },
     InitPage: function () {
         var fromdate_opts = { minDate: new Date(balanceUpDay) };
@@ -61,6 +63,14 @@
         refreshIcon.unbind("click");
         refreshIcon.click(function () {
             if (SMATurnover.cachedData.refreshIntervalCounter > 0) {
+                var refreshIcon = $(".refreshBox .refreshIcon");
+                SMATurnover.cachedData.countdownTime = SMATurnover.cachedData.refreshIntervalCounter / 1000;
+                refreshIcon.html(SMATurnover.cachedData.countdownTime);
+
+                window.clearInterval(SMATurnover.cachedData.refreshIntervalEvent);
+                SMATurnover.cachedData.refreshIntervalEvent = setInterval(function () {
+                    SMATurnover.refreshSMATurnoverList(false);
+                }, SMATurnover.cachedData.refreshIntervalCounter);
                 SMATurnover.refreshSMATurnoverList(false);
             }
         });
@@ -128,6 +138,7 @@
                 SMATurnover.cachedData.refreshIntervalCounter = 0;
                 if (SMATurnover.cachedData.refreshIntervalEvent > 0) {
                     window.clearInterval(SMATurnover.cachedData.refreshIntervalEvent);
+                    window.clearInterval(SMATurnover.cachedData.updateCountdownEvent);
                 }
             }
             else {
@@ -138,9 +149,20 @@
 
                 if (SMATurnover.cachedData.refreshIntervalEvent > 0) {
                     window.clearInterval(SMATurnover.cachedData.refreshIntervalEvent);
+                    window.clearInterval(SMATurnover.cachedData.updateCountdownEvent);
                 }
 
                 SMATurnover.cachedData.refreshIntervalCounter = parseInt(coundownAfter * 1000);
+                SMATurnover.cachedData.countdownTime = parseInt(coundownAfter);
+                SMATurnover.cachedData.updateCountdownEvent = setInterval(function () {
+                    if (SMATurnover.cachedData.countdownTime > 0) {
+                        SMATurnover.cachedData.countdownTime--;
+                    } else {
+                        SMATurnover.cachedData.countdownTime = SMATurnover.cachedData.refreshIntervalCounter / 1000;
+                    }
+
+                    refreshIcon.html(SMATurnover.cachedData.countdownTime);
+                }, 1000);
                 SMATurnover.cachedData.refreshIntervalEvent = setInterval(function () {
                     SMATurnover.refreshSMATurnoverList(false);
                 }, SMATurnover.cachedData.refreshIntervalCounter);
@@ -323,7 +345,8 @@
             success: function (rs) {
                 if (SMATurnover.cachedData.lastReport == null ||
                     SMATurnover.cachedData.lastReport.length != rs.length) {
-                    //                    SMATurnover.RenderReport(rs);
+                    SMATurnover.cachedData.lastReport = rs;
+                    SMATurnover.RenderReport(rs);
                 } else {
                     var reportLength = rs.length;
                     for (var i = 0; i < reportLength; i++) {
@@ -417,6 +440,7 @@
                     //$("#tblContentHeader tbody").empty().append('<tr><td><div class="">&nbsp;</div></td></tr>');
                     //$("#tblSMATurnover tbody").empty().append('<tr><td><div class="">&nbsp;</div></td><td colspan="4"><div class="c">There is no data.</div></td></tr>');
                     SMATurnover.cachedData.tblSMATurnoverBody.empty().append('<tr><td colspan="6"><div class="c">There is no data.</div></td></tr>');
+                    $(".lbl100ReachedCounter").html(0);
                 }
 
                 SMATurnover.initGrid();
