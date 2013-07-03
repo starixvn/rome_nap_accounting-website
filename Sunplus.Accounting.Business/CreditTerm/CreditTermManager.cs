@@ -11,6 +11,7 @@ using Sunplus.Accounting.DataAccess.ICreditTermDAO;
 using Sunplus.Accounting.Entities.CreditTerm;
 using Sunplus.Accounting.Entities.PositionTaking.Racing;
 using Sunplus.Core.LoggingLib;
+using Sunplus.Accounting.Entities;
 
 namespace Sunplus.Accounting.Business.CreditTerm
 {
@@ -28,19 +29,25 @@ namespace Sunplus.Accounting.Business.CreditTerm
             try
             {
                 var dbResult = _creditTermDAO.GetAllGroup();
-                if (dbResult != null && dbResult.ResultSet != null && dbResult.ResultSet.Tables.Count > 0)
+                if (dbResult != null)
                 {
-                    var rows = dbResult.ResultSet.Tables[0].Rows;
+                    var rows = dbResult.Rows;
+                    var random = new Random();
                     listGroup.AddRange(from DataRow row in rows
                                        select
                                            new Group()
                                                {
                                                    GroupId = CastAide.AsInt32(row["groupid"]),
+                                                   CustId = CastAide.AsInt32(row["custid"]),
                                                    HeadUsername = row["username"].ToString(),
                                                    Currency = CacheUtils.GetExchangeName(CastAide.AsInt32(row["currency"])),
+                                                   Members = CastAide.AsInt32(row["TotalMember"]),
                                                    Checker = row["checkername"].ToString(),
+                                                   ConsolidationReport = CastAide.AsBoolean(row["IsRptConsol"]),
                                                    Permisssion = false
                                              });
+
+                    listGroup = listGroup.OrderBy(m => m.Currency).ThenBy(m => m.HeadUsername).ToList();
                 }
             }
             catch (Exception ex)
@@ -48,6 +55,13 @@ namespace Sunplus.Accounting.Business.CreditTerm
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return listGroup;
+        }
+
+        public Result UpdateConsolidationReportAllowStatus(int custId, bool isViewReport)
+        {
+            var result = _creditTermDAO.UpdateConsolidationReportAllowStatus(custId, isViewReport, AppSession.AccId);
+
+            return result;
         }
     }
 }
