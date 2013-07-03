@@ -122,7 +122,7 @@ var treeWinLoss = {
     getTreeWinLossReportByProducts: function (isGetCurrentFilter) {
         $('#err').hide();
         try { $("#dialog-modal").dialog("destroy").remove(); } catch (e) { }
-        $('#divFilterBox').css({ width: '1136px' });
+        $('#divFilterBox').css({ width: '100%' });
 
         if ($('#ddlProduct').multiSelect('getCheckedItems').length <= 0) {
             treeWinLoss.showErrorMessage("Please choose Product!");
