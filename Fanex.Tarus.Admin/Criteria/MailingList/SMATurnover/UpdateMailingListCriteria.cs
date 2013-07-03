@@ -17,6 +17,22 @@ namespace Fanex.Tarus.Admin.Criteria.MailingList.SMATurnover
     {
         public bool IsUpdate { get; set; }
 
+        public int FuncID
+        {
+            get
+            {
+                return 328;
+            }
+        }
+
+        public string FuncName
+        {
+            get
+            {
+                return "[SMATurnoverMailingList]";
+            }
+        }
+
         public MailLicensee mailLicensee { get; set; }
 
         public string GetSettingKey()

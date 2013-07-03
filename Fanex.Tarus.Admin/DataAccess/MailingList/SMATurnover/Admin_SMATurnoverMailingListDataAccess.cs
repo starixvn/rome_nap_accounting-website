@@ -24,6 +24,7 @@ namespace Fanex.Tarus.Admin.DataAccess.MailingList.SMATurnover
             DataTable datatable = null;
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
+                objectDb.AddInParameter("FuncID", DbType.Int32, criteria.FuncID);
                 var ds = objectDb.ExecuteDataSet();
                 if (ds.Tables.Count > 0)
                 {
@@ -44,6 +45,8 @@ namespace Fanex.Tarus.Admin.DataAccess.MailingList.SMATurnover
                 objectDb.AddInParameter("tolist", DbType.String, criteria.mailLicensee.ToList);
                 objectDb.AddInParameter("cclist", DbType.String, criteria.mailLicensee.CCList);
                 objectDb.AddInParameter("bcclist", DbType.String, criteria.mailLicensee.BCCList);
+                objectDb.AddInParameter("FuncID", DbType.Int32, criteria.FuncID);
+                objectDb.AddInParameter("FuncName", DbType.String, criteria.FuncName);
                 objectDb.AddOutParameter("errmsg", DbType.String, 500);
                 objectDb.AddOutParameter("errcode", DbType.Int32, sizeof(int));
                 objectDb.ExecuteNonQuery();

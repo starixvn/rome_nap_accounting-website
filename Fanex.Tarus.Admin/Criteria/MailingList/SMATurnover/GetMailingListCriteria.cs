@@ -14,6 +14,14 @@ namespace Fanex.Tarus.Admin.Criteria.MailingList.SMATurnover
     [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class GetMailingListCriteria
     {
+        public int FuncID
+        {
+            get
+            {
+                return 328;
+            }
+        }
+
         public string GetSettingKey()
         {
             return "Acc_MailingListSel";
