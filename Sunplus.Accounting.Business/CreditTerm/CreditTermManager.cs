@@ -42,6 +42,7 @@ namespace Sunplus.Accounting.Business.CreditTerm
                                                    HeadUsername = row["username"].ToString(),
                                                    Currency = CacheUtils.GetExchangeName(CastAide.AsInt32(row["currency"])),
                                                    Members = CastAide.AsInt32(row["TotalMember"]),
+                                                   RoleId = CastAide.AsInt32(row["roleid"]),
                                                    Checker = row["checkername"].ToString(),
                                                    ConsolidationReport = CastAide.AsBoolean(row["IsRptConsol"]),
                                                    Permisssion = false

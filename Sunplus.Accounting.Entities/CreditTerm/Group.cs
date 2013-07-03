@@ -21,6 +21,8 @@ namespace Sunplus.Accounting.Entities.CreditTerm
         [DataMember]
         public int Members { get; set; }
         [DataMember]
+        public int RoleId { get; set; }
+        [DataMember]
         public string Checker { get; set; }
         [DataMember]
         public bool ConsolidationReport { get; set; }
