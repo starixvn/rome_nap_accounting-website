@@ -622,7 +622,7 @@
     <Setting Key="Acc_MailingListIns" SpName="Acc_MailingListIns" DbName="DBACC.BODB_ACC" />
     <Setting Key="Acc_MailingListSel" SpName="Acc_MailingListSel" DbName="DBACC.BODB_ACC" />
     <Setting Key="Acc_MailingListUpd" SpName="Acc_MailingListUpd" DbName="DBACC.BODB_ACC" />
-  </Function>
+ </Function>
 
   <Function Name="Consolidated Group">
     <Setting Key="Acc_CustomerDelConsolidatedGroup" SpName="Acc_CustomerDelConsolidatedGroup" DbName="DBAGE.bodb_AGE" />
