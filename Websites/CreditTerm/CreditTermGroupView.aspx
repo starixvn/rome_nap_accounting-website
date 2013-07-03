@@ -1,7 +1,7 @@
 <%@ Page Language="C#" AutoEventWireup="true" CodeFile="CreditTermGroupView.aspx.cs"
     Inherits="CreditTermGroupView" %>
-<%@ Import Namespace="Sunplus.Accounting.Core.Common" %>
 
+<%@ Import Namespace="Sunplus.Accounting.Core.Common" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -35,13 +35,13 @@
                     </td>
                 </tr>
             </table>
-            <div class="maincontent_box" style="width: 564px;">
+            <div class="maincontent_box" style="width: 800px;">
                 <div id="credit_content" style="">
                     <div class="panel_search">
                         <span id="search"><b>Headline Filtering</b>&nbsp;
                             <input id="txt_search" type="text" class="text" value="" /><input id="btn_search"
                                 type="button" class="btn_search" value="&nbsp;" title="Search" /><input id="btn_clear"
-                                type="button" class="btn_clear" value="&nbsp;" title="Clear search" />
+                                    type="button" class="btn_clear" value="&nbsp;" title="Clear search" />
                         </span>
                     </div>
                     <div id="group_header" class="header">
@@ -53,8 +53,12 @@
                             Username of Headline</div>
                         <div class="currency">
                             Currency</div>
+                        <div class="members">
+                            Member(s)</div>
                         <div class="checker">
                             Checker</div>
+                        <div class="consolidationreport">
+                            Consolidated Group</div>
                         <div class="edit">
                             Edit Group</div>
                         <div id="refresh" class="refresh end">
