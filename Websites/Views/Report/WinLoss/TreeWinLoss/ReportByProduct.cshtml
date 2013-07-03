@@ -229,7 +229,7 @@
                         ViewBag.isShowVS == true)
                         {
                             turnover = NumberFormat.DoubleFormat(winlossDetail.BaseRMTurnover, 2);
-                            virtualTO = NumberFormat.DoubleFormat(winlossDetail.BaseRMVirtualTO, 2);
+                            virtualTO = NumberFormat.DoubleFormat(winlossDetail.BaseRMVirtualTurnover, 2);
                         }
                         else
                         {
@@ -311,11 +311,11 @@
                     ViewBag.isShowVS == true)
                     {
                         turnoverTotal = NumberFormat.DoubleFormat(Model.Total.BaseRMTurnover, 2);
-                        turnoverVirtualTotal = NumberFormat.DoubleFormat(Model.Total.BaseRMVirtualTO, 2);
+                        turnoverVirtualTotal = NumberFormat.DoubleFormat(Model.Total.BaseRMVirtualTurnover, 2);
                         turnover8RM = NumberFormat.DoubleFormat(Model.Total8RM.BaseRMTurnover, 2);
                         turnoverBARM = NumberFormat.DoubleFormat(Model.TotalBARM.BaseRMTurnover, 2);
                         turnoverGrandTotal = NumberFormat.DoubleFormat(Model.GrandTotal.BaseRMTurnover, 2);
-                        turnoverVirtualGrandTotal = NumberFormat.DoubleFormat(Model.GrandTotal.BaseRMVirtualTO, 2);
+                        turnoverVirtualGrandTotal = NumberFormat.DoubleFormat(Model.GrandTotal.BaseRMVirtualTurnover, 2);
                     }
                     else
                     {

@@ -30,7 +30,7 @@ namespace Fanex.Tarus.Reports.DataAccess.WinLoss.TreeWinLoss
                                                 bool isWarehouse,
                                                 ref Hashtable outputPrams)
         {
-            var spName = "Acc_Rpt_TreeWinlostByProduct_Old";
+            var spName = isWarehouse == true ? "Acc_Rpt_TreeWinlostByProduct_Old" : "Acc_Rpt_TreeWinlostByProduct";
             using (ObjectDb objdb = new ObjectDb(spName, 300))
             {
                 var param = new Hashtable();
@@ -65,7 +65,7 @@ namespace Fanex.Tarus.Reports.DataAccess.WinLoss.TreeWinLoss
                                                 bool isShowVS,
                                                 bool isWarehouse)
         {
-            var spName = "Acc_Rpt_TreeWinlostByCom_Old";
+            var spName = isWarehouse == true ? "Acc_Rpt_TreeWinlostByCom_Old" : "Acc_Rpt_TreeWinlostByCom";
             using (ObjectDb objdb = new ObjectDb(spName, 300))
             {
                 var param = new Hashtable();
@@ -100,7 +100,7 @@ namespace Fanex.Tarus.Reports.DataAccess.WinLoss.TreeWinLoss
                                                 bool isShowVS,
                                                 bool isWarehouse)
         {
-            var spName = "Acc_Rpt_TreeWinlostBySAg_Old";
+            var spName = isWarehouse == true ? "Acc_Rpt_TreeWinlostBySAg_Old" : "Acc_Rpt_TreeWinlostBySAg";
             using (ObjectDb objdb = new ObjectDb(spName, 300))
             {
                 var param = new Hashtable();
@@ -135,7 +135,7 @@ namespace Fanex.Tarus.Reports.DataAccess.WinLoss.TreeWinLoss
                                                 bool isShowVS,
                                                 bool isWarehouse)
         {
-            var spName = "Acc_Rpt_TreeWinlostByMAg_Old";
+            var spName = isWarehouse == true ? "Acc_Rpt_TreeWinlostByMAg_Old" : "Acc_Rpt_TreeWinlostByMAg";
             using (ObjectDb objdb = new ObjectDb(spName, 300))
             {
                 var param = new Hashtable();
@@ -170,7 +170,7 @@ namespace Fanex.Tarus.Reports.DataAccess.WinLoss.TreeWinLoss
                                                 bool isShowVS,
                                                 bool isWarehouse)
         {
-            var spName = "Acc_Rpt_TreeWinlostByAg_Old";
+            var spName = isWarehouse == true ? "Acc_Rpt_TreeWinlostByAg_Old" : "Acc_Rpt_TreeWinlostByAg";
             using (ObjectDb objdb = new ObjectDb(spName, 300))
             {
                 var param = new Hashtable();

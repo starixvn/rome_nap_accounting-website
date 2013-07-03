@@ -62,18 +62,166 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
 
             try
             {
-                winlossModel = GetTreeWinLossReportByProduct_DateRange(
-                                                                        fromDate,
-                                                                        toDate,
-                                                                        isShowSB,
-                                                                        isShowNG,
-                                                                        isShowRB,
-                                                                        isShowLCS,
-                                                                        isShowCS,
-                                                                        isShowP2P,
-                                                                        isShowBI,
-                                                                        isShowVS,
-                                                                        false);
+                var winloss14 = new TreeWinLoss();
+                var winlossWH = new TreeWinLoss();
+
+                Task<TreeWinLoss>[] tasks = new Task<TreeWinLoss>[2];
+
+                if (CastAide.AsDateTime(toDate) > moveBetsDay && CastAide.AsDateTime(fromDate) > moveBetsDay)
+                {
+                    winloss14 = GetTreeWinLossReportByProduct_DateRange(
+                                                                       fromDate,
+                                                                       toDate,
+                                                                       isShowSB,
+                                                                       isShowNG,
+                                                                       isShowRB,
+                                                                       isShowLCS,
+                                                                       isShowCS,
+                                                                       isShowP2P,
+                                                                       isShowBI,
+                                                                       isShowVS,
+                                                                       false);
+                }
+                else if (CastAide.AsDateTime(toDate) <= moveBetsDay && CastAide.AsDateTime(fromDate) <= moveBetsDay)
+                {
+                    winlossWH = GetTreeWinLossReportByProduct_DateRange(
+                                                                     fromDate,
+                                                                     toDate,
+                                                                     isShowSB,
+                                                                     isShowNG,
+                                                                     isShowRB,
+                                                                     isShowLCS,
+                                                                     isShowCS,
+                                                                     isShowP2P,
+                                                                     isShowBI,
+                                                                     isShowVS,
+                                                                     true);
+                }
+                else
+                {
+                    if (CastAide.AsDateTime(toDate) >= moveBetsDay)
+                    {
+                        tasks[0] = Task<TreeWinLoss>.Factory.StartNew(() =>
+                        {
+                            return GetTreeWinLossReportByProduct_DateRange(
+                                                                       moveBetsDay.AddDays(1).ToString(),
+                                                                       toDate,
+                                                                       isShowSB,
+                                                                       isShowNG,
+                                                                       isShowRB,
+                                                                       isShowLCS,
+                                                                       isShowCS,
+                                                                       isShowP2P,
+                                                                       isShowBI,
+                                                                       isShowVS,
+                                                                       false);
+                        });
+                    }
+                    else
+                    {
+                        tasks[0] = Task<TreeWinLoss>.Factory.StartNew(() =>
+                        {
+                            return new TreeWinLoss();
+                        });
+                    }
+
+                    if (CastAide.AsDateTime(fromDate) < moveBetsDay)
+                    {
+                        tasks[1] = Task<TreeWinLoss>.Factory.StartNew(() =>
+                        {
+                            return GetTreeWinLossReportByProduct_DateRange(
+                                                                     fromDate,
+                                                                     moveBetsDay.ToString(),
+                                                                     isShowSB,
+                                                                     isShowNG,
+                                                                     isShowRB,
+                                                                     isShowLCS,
+                                                                     isShowCS,
+                                                                     isShowP2P,
+                                                                     isShowBI,
+                                                                     isShowVS,
+                                                                     true);
+                        });
+                    }
+                    else
+                    {
+                        tasks[1] = Task<TreeWinLoss>.Factory.StartNew(() =>
+                        {
+                            return new TreeWinLoss();
+                        });
+                    }
+
+                    Task.WaitAll(tasks);
+
+                    winlossWH = tasks[1].Result;
+                    winloss14 = tasks[0].Result;
+
+                }
+                List<TreeWinLossDetail> treeWinlossListTmp = new List<TreeWinLossDetail>();
+
+                treeWinlossListTmp = winloss14.WinLoss.Concat(winlossWH.WinLoss).ToList();
+
+                winlossModel.WinLoss = treeWinlossListTmp.GroupBy(x => x.Id)
+                                              .Select(y => new TreeWinLossDetail
+                                              {
+                                                  Id = string.Format("{0}", y.Key),
+                                                  Title = CacheUtils.GetExchangeName(CastAide.AsInt32(y.Key)),
+                                                  Turnover = y.Sum(x => x.Turnover),
+                                                  WinLoss = y.Sum(x => x.WinLoss),
+                                                  Comm = y.Sum(x => x.Comm),
+                                                  Total = y.Sum(x => x.Total),
+                                                  BaseRMTurnover = y.Sum(x => x.BaseRMTurnover),
+                                                  BaseRMTotal = y.Sum(x => x.BaseRMTotal),
+                                                  BaseRMVirtualTurnover = y.Sum(x => x.BaseRMVirtualTurnover),
+                                                  BaseRMVirtualTotal = y.Sum(x => x.BaseRMVirtualTotal),
+                                                  BaseRMTOVariancePlus = y.Sum(x => x.BaseRMTOVariancePlus),
+                                                  BaseRMTOVarianceMinus = y.Sum(x => x.BaseRMTOVarianceMinus),
+                                                  BaseRMWLVariancePlus = y.Sum(x => x.BaseRMWLVariancePlus),
+                                                  BaseRMWLVarianceMinus = y.Sum(x => x.BaseRMWLVarianceMinus),
+                                                  VirtualRate = y.Sum(x => x.VirtualRate),
+                                                  Margin = y.Sum(x => x.BaseRMVirtualTurnover) == 0 ? 0 : (y.Sum(x => x.BaseRMVirtualTotal) / y.Sum(x => x.BaseRMVirtualTurnover) * 100)
+                                              }).ToList();
+
+
+                winlossModel.GrandTotal.BaseRMTurnover = winloss14.GrandTotal.BaseRMTurnover + winlossWH.GrandTotal.BaseRMTurnover;
+                winlossModel.GrandTotal.BaseRMTotal = winloss14.GrandTotal.BaseRMTotal + winlossWH.GrandTotal.BaseRMTotal;
+                winlossModel.GrandTotal.BaseRMVirtualTotal = winloss14.GrandTotal.BaseRMVirtualTotal + winlossWH.GrandTotal.BaseRMVirtualTotal;
+                winlossModel.GrandTotal.BaseRMVirtualTurnover = winloss14.GrandTotal.BaseRMVirtualTurnover + winlossWH.GrandTotal.BaseRMVirtualTurnover;
+                winlossModel.GrandTotal.BaseRMTOVariancePlus = winloss14.GrandTotal.BaseRMTOVariancePlus + winlossWH.GrandTotal.BaseRMTOVariancePlus;
+                winlossModel.GrandTotal.BaseRMTOVarianceMinus = winloss14.GrandTotal.BaseRMTOVarianceMinus + winlossWH.GrandTotal.BaseRMTOVarianceMinus;
+                winlossModel.GrandTotal.BaseRMWLVariancePlus = winloss14.GrandTotal.BaseRMWLVariancePlus + winlossWH.GrandTotal.BaseRMWLVariancePlus;
+                winlossModel.GrandTotal.BaseRMWLVarianceMinus = winloss14.GrandTotal.BaseRMWLVarianceMinus + winlossWH.GrandTotal.BaseRMWLVarianceMinus;
+                winlossModel.GrandTotal.Margin = winlossModel.GrandTotal.BaseRMVirtualTurnover == 0 ? 0 : (winlossModel.GrandTotal.BaseRMVirtualTotal / winlossModel.GrandTotal.BaseRMVirtualTurnover * 100);
+
+                winlossModel.Total8RM.BaseRMTurnover = winloss14.Total8RM.BaseRMTurnover + winlossWH.Total8RM.BaseRMTurnover;
+                winlossModel.Total8RM.BaseRMTotal = winloss14.Total8RM.BaseRMTotal + winlossWH.Total8RM.BaseRMTotal;
+                winlossModel.Total8RM.BaseRMVirtualTotal = winloss14.Total8RM.BaseRMVirtualTotal + winlossWH.Total8RM.BaseRMVirtualTotal;
+                winlossModel.Total8RM.BaseRMVirtualTurnover = winloss14.Total8RM.BaseRMVirtualTurnover + winlossWH.Total8RM.BaseRMVirtualTurnover;
+                winlossModel.Total8RM.BaseRMTOVariancePlus = winloss14.Total8RM.BaseRMTOVariancePlus + winlossWH.Total8RM.BaseRMTOVariancePlus;
+                winlossModel.Total8RM.BaseRMTOVarianceMinus = winloss14.Total8RM.BaseRMTOVarianceMinus + winlossWH.Total8RM.BaseRMTOVarianceMinus;
+                winlossModel.Total8RM.BaseRMWLVariancePlus = winloss14.Total8RM.BaseRMWLVariancePlus + winlossWH.Total8RM.BaseRMWLVariancePlus;
+                winlossModel.Total8RM.BaseRMWLVarianceMinus = winloss14.Total8RM.BaseRMWLVarianceMinus + winlossWH.Total8RM.BaseRMWLVarianceMinus;
+                winlossModel.Total8RM.Margin = winlossModel.Total8RM.BaseRMVirtualTurnover == 0 ? 0 : (winlossModel.Total8RM.BaseRMVirtualTotal / winlossModel.Total8RM.BaseRMVirtualTurnover * 100);
+
+                winlossModel.TotalBARM.BaseRMTurnover = winloss14.TotalBARM.BaseRMTurnover + winlossWH.TotalBARM.BaseRMTurnover;
+                winlossModel.TotalBARM.BaseRMTotal = winloss14.TotalBARM.BaseRMTotal + winlossWH.TotalBARM.BaseRMTotal;
+                winlossModel.TotalBARM.BaseRMVirtualTotal = winloss14.TotalBARM.BaseRMVirtualTotal + winlossWH.TotalBARM.BaseRMVirtualTotal;
+                winlossModel.TotalBARM.BaseRMVirtualTurnover = winloss14.TotalBARM.BaseRMVirtualTurnover + winlossWH.TotalBARM.BaseRMVirtualTurnover;
+                winlossModel.TotalBARM.BaseRMTOVariancePlus = winloss14.TotalBARM.BaseRMTOVariancePlus + winlossWH.TotalBARM.BaseRMTOVariancePlus;
+                winlossModel.TotalBARM.BaseRMTOVarianceMinus = winloss14.TotalBARM.BaseRMTOVarianceMinus + winlossWH.TotalBARM.BaseRMTOVarianceMinus;
+                winlossModel.TotalBARM.BaseRMWLVariancePlus = winloss14.TotalBARM.BaseRMWLVariancePlus + winlossWH.TotalBARM.BaseRMWLVariancePlus;
+                winlossModel.TotalBARM.BaseRMWLVarianceMinus = winloss14.TotalBARM.BaseRMWLVarianceMinus + winlossWH.TotalBARM.BaseRMWLVarianceMinus;
+                winlossModel.TotalBARM.Margin = winlossModel.TotalBARM.BaseRMVirtualTurnover == 0 ? 0 : (winlossModel.TotalBARM.BaseRMVirtualTotal / winlossModel.TotalBARM.BaseRMVirtualTurnover * 100);
+
+                winlossModel.Total.BaseRMTurnover = winloss14.Total.BaseRMTurnover + winlossWH.Total.BaseRMTurnover;
+                winlossModel.Total.BaseRMTotal = winloss14.Total.BaseRMTotal + winlossWH.Total.BaseRMTotal;
+                winlossModel.Total.BaseRMVirtualTotal = winloss14.Total.BaseRMVirtualTotal + winlossWH.Total.BaseRMVirtualTotal;
+                winlossModel.Total.BaseRMVirtualTurnover = winloss14.Total.BaseRMVirtualTurnover + winlossWH.Total.BaseRMVirtualTurnover;
+                winlossModel.Total.BaseRMTOVariancePlus = winloss14.Total.BaseRMTOVariancePlus + winlossWH.Total.BaseRMTOVariancePlus;
+                winlossModel.Total.BaseRMTOVarianceMinus = winloss14.Total.BaseRMTOVarianceMinus + winlossWH.Total.BaseRMTOVarianceMinus;
+                winlossModel.Total.BaseRMWLVariancePlus = winloss14.Total.BaseRMWLVariancePlus + winlossWH.Total.BaseRMWLVariancePlus;
+                winlossModel.Total.BaseRMWLVarianceMinus = winloss14.Total.BaseRMWLVarianceMinus + winlossWH.Total.BaseRMWLVarianceMinus;
+                winlossModel.Total.Margin = winlossModel.Total.BaseRMVirtualTurnover == 0 ? 0 : (winlossModel.Total.BaseRMVirtualTotal / winlossModel.Total.BaseRMVirtualTurnover * 100);
 
                 AppSession.AddSession(HttpContext.Current.Session, _treeWinLossSessionKey, winlossModel);
             }
@@ -144,13 +292,13 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                         baseRMWLVariancePlus += _baseRMWLVariancePlus;
                         baseRMWLVarianceMinus += _baseRMWLVarianceMinus;
 
-                        double margin = _baseRMVirtualTO == 0 ? 0 : _baseRMVirtualTotal / _baseRMVirtualTO * 100;
+                        //double margin = _baseRMVirtualTO == 0 ? 0 : _baseRMVirtualTotal / _baseRMVirtualTO * 100;
                         #region wl detail
                         winloss.WinLoss.Add(
                             new TreeWinLossDetail()
                             {
                                 Id = string.Format("{0}", winlossDetail["currency"]),
-                                Title = CacheUtils.GetExchangeName(CastAide.AsInt32(winlossDetail["currency"])),
+                                //Title = CacheUtils.GetExchangeName(CastAide.AsInt32(winlossDetail["currency"])),
                                 Turnover = CastAide.AsDouble(winlossDetail["turnover"]),
                                 WinLoss = CastAide.AsDouble(winlossDetail["winloss"]),
                                 Comm = CastAide.AsDouble(winlossDetail["commission"]),
@@ -163,15 +311,15 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                                 BaseRMWLVariancePlus = _baseRMWLVariancePlus,
                                 BaseRMWLVarianceMinus = _baseRMWLVarianceMinus,
                                 BaseRMVirtualTotal = _baseRMVirtualTotal,
-                                BaseRMVirtualTO = _baseRMVirtualTO,
-                                Margin = margin
+                                BaseRMVirtualTurnover = _baseRMVirtualTO,
+                                //Margin = margin
                             });
                         #endregion
                     }
 
 
                     #region Total
-                    double margin_total = baseRMVirtualTO == 0 ? 0 : baseRMVirtualTotal / baseRMVirtualTO * 100;
+                    //double margin_total = baseRMVirtualTO == 0 ? 0 : baseRMVirtualTotal / baseRMVirtualTO * 100;
                     winloss.Total = new TreeWinLossDetail()
                     {
                         Id = string.Empty,
@@ -187,8 +335,8 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                         BaseRMWLVariancePlus = baseRMWLVariancePlus,
                         BaseRMWLVarianceMinus = baseRMWLVarianceMinus,
                         BaseRMVirtualTotal = baseRMVirtualTotal,
-                        BaseRMVirtualTO = baseRMVirtualTO,
-                        Margin = margin_total
+                        BaseRMVirtualTurnover = baseRMVirtualTO,
+                        //Margin = margin_total
                     };
                     #endregion
 
@@ -202,13 +350,13 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                         Comm = 0,
                         Total = 0,
                         BaseRMTurnover = CastAide.AsDouble(ouputParams["turnover_8rm"]),
-                        BaseRMVirtualTO = CastAide.AsDouble(ouputParams["turnover_8rm"]),
+                        BaseRMVirtualTurnover = CastAide.AsDouble(ouputParams["turnover_8rm"]),
 
                         BaseRMTotal = CastAide.AsDouble(ouputParams["total_8rm"]),
                         BaseRMVirtualTotal = CastAide.AsDouble(ouputParams["virtualtotal_8rm"])
                         
                     };
-                    winloss.Total8RM.Margin = winloss.Total8RM.BaseRMTurnover == 0 ? 0 : winloss.Total8RM.BaseRMTotal / winloss.Total8RM.BaseRMTurnover * 100;
+                    //winloss.Total8RM.Margin = winloss.Total8RM.BaseRMTurnover == 0 ? 0 : winloss.Total8RM.BaseRMTotal / winloss.Total8RM.BaseRMTurnover * 100;
                     #endregion
 
                     #region BARM
@@ -221,12 +369,12 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                         Comm = 0,
                         Total = 0,
                         BaseRMTurnover = CastAide.AsDouble(ouputParams["turnover_barm"]),
-                        BaseRMVirtualTO = CastAide.AsDouble(ouputParams["turnover_barm"]),
+                        BaseRMVirtualTurnover = CastAide.AsDouble(ouputParams["turnover_barm"]),
 
                         BaseRMTotal = CastAide.AsDouble(ouputParams["total_barm"]),                        
                         BaseRMVirtualTotal = CastAide.AsDouble(ouputParams["virtualtotal_barm"])
                     };
-                    winloss.TotalBARM.Margin = winloss.TotalBARM.BaseRMTurnover == 0 ? 0 : winloss.TotalBARM.BaseRMTotal / winloss.TotalBARM.BaseRMVirtualTO * 100;
+                    //winloss.TotalBARM.Margin = winloss.TotalBARM.BaseRMTurnover == 0 ? 0 : winloss.TotalBARM.BaseRMTotal / winloss.TotalBARM.BaseRMVirtualTurnover * 100;
                     #endregion
 
                     #region grand Total
@@ -245,9 +393,9 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                         BaseRMWLVariancePlus = baseRMWLVariancePlus,
                         BaseRMWLVarianceMinus = baseRMWLVarianceMinus,
                         BaseRMVirtualTotal = baseRMVirtualTotal + winloss.Total8RM.BaseRMVirtualTotal + winloss.TotalBARM.BaseRMVirtualTotal,
-                        BaseRMVirtualTO = baseRMVirtualTO + winloss.Total8RM.BaseRMVirtualTO + winloss.TotalBARM.BaseRMVirtualTO
+                        BaseRMVirtualTurnover = baseRMVirtualTO + winloss.Total8RM.BaseRMVirtualTurnover + winloss.TotalBARM.BaseRMVirtualTurnover
                     };
-                    winloss.GrandTotal.Margin = winloss.GrandTotal.BaseRMVirtualTO == 0 ? 0 : winloss.GrandTotal.BaseRMVirtualTotal / winloss.GrandTotal.BaseRMVirtualTO * 100;
+                    //winloss.GrandTotal.Margin = winloss.GrandTotal.BaseRMVirtualTurnover == 0 ? 0 : winloss.GrandTotal.BaseRMVirtualTotal / winloss.GrandTotal.BaseRMVirtualTurnover * 100;
                     #endregion
 
                     winloss.WinLoss = winloss.WinLoss.OrderBy(c => c.Title).ToList();
@@ -278,7 +426,28 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
             AppSession.AddSession(HttpContext.Current.Session, _treeWinLossSessionKey, null);
             try
             {
-                winlossModel =  GetTreeWinLossReportByCurrency_DateRange(
+                var winloss14 = new TreeWinLoss();
+                var winlossWH = new TreeWinLoss();
+
+                Task<TreeWinLoss>[] tasks = new Task<TreeWinLoss>[2];
+                if (CastAide.AsDateTime(toDate) > moveBetsDay && CastAide.AsDateTime(fromDate) > moveBetsDay)
+                {
+                    winloss14 = GetTreeWinLossReportByCurrency_DateRange(
+                                                                 fromDate,
+                                                                 toDate,
+                                                                 currency,
+                                                                 isShowSB,
+                                                                 isShowNG,
+                                                                 isShowRB,
+                                                                 isShowLCS,
+                                                                 isShowCS,
+                                                                 isShowP2P,
+                                                                 isShowBI,
+                                                                 isShowVS, false);
+                }
+                else if (CastAide.AsDateTime(toDate) <= moveBetsDay && CastAide.AsDateTime(fromDate) <= moveBetsDay)
+                {
+                    winlossWH = GetTreeWinLossReportByCurrency_DateRange(
                                                                 fromDate,
                                                                 toDate,
                                                                 currency,
@@ -290,6 +459,102 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                                                                 isShowP2P,
                                                                 isShowBI,
                                                                 isShowVS, true);
+                }
+                else
+                {
+                    if (CastAide.AsDateTime(toDate) >= moveBetsDay)
+                    {
+                        tasks[0] = Task<TreeWinLoss>.Factory.StartNew(() =>
+                        {
+                            return GetTreeWinLossReportByCurrency_DateRange(
+                                                                 moveBetsDay.AddDays(1).ToString(),
+                                                                 toDate,
+                                                                 currency,
+                                                                 isShowSB,
+                                                                 isShowNG,
+                                                                 isShowRB,
+                                                                 isShowLCS,
+                                                                 isShowCS,
+                                                                 isShowP2P,
+                                                                 isShowBI,
+                                                                 isShowVS, false);
+                        });
+                    }
+                    else
+                    {
+                        tasks[0] = Task<TreeWinLoss>.Factory.StartNew(() =>
+                        {
+                            return new TreeWinLoss();
+                        });
+                    }
+
+                    if (CastAide.AsDateTime(fromDate) < moveBetsDay)
+                    {
+                        tasks[1] = Task<TreeWinLoss>.Factory.StartNew(() =>
+                        {
+                            return GetTreeWinLossReportByCurrency_DateRange(
+                                                                fromDate,
+                                                                moveBetsDay.ToString(),
+                                                                currency,
+                                                                isShowSB,
+                                                                isShowNG,
+                                                                isShowRB,
+                                                                isShowLCS,
+                                                                isShowCS,
+                                                                isShowP2P,
+                                                                isShowBI,
+                                                                isShowVS, true);
+                        });
+                    }
+                    else
+                    {
+                        tasks[1] = Task<TreeWinLoss>.Factory.StartNew(() =>
+                        {
+                            return new TreeWinLoss();
+                        });
+                    }
+
+                    Task.WaitAll(tasks);
+
+                    winlossWH = tasks[1].Result;
+                    winloss14 = tasks[0].Result;
+                }
+                List<TreeWinLossDetail> treeWinlossListTmp = new List<TreeWinLossDetail>();
+                treeWinlossListTmp = winloss14.WinLoss.Concat(winlossWH.WinLoss).ToList();
+
+                winlossModel.WinLoss = treeWinlossListTmp.GroupBy(x => new { x.Id, x.Title, x.VirtualRate })
+                                               .Select(y => new TreeWinLossDetail
+                                               {
+                                                   Id = string.Format("{0}", y.Key.Id),
+                                                   Title = y.Key.Title,
+                                                   Turnover = y.Sum(x => x.Turnover),
+                                                   WinLoss = y.Sum(x => x.WinLoss),
+                                                   Comm = y.Sum(x => x.Comm),
+                                                   Total = y.Sum(x => x.Total),
+                                                   BaseRMTurnover = y.Sum(x => x.BaseRMTurnover),
+                                                   BaseRMTotal = y.Sum(x => x.BaseRMTotal),
+                                                   BaseRMVirtualTurnover = y.Sum(x => x.BaseRMVirtualTurnover),
+                                                   BaseRMVirtualTotal = y.Sum(x => x.BaseRMVirtualTotal),
+                                                   BaseRMTOVariancePlus = y.Sum(x => x.BaseRMTOVariancePlus),
+                                                   BaseRMTOVarianceMinus = y.Sum(x => x.BaseRMTOVarianceMinus),
+                                                   BaseRMWLVariancePlus = y.Sum(x => x.BaseRMWLVariancePlus),
+                                                   BaseRMWLVarianceMinus = y.Sum(x => x.BaseRMWLVarianceMinus),
+                                                   VirtualRate = y.Sum(x => x.VirtualRate),
+                                                   Margin = y.Sum(x => x.BaseRMVirtualTurnover) == 0 ? 0 : (y.Sum(x => x.BaseRMVirtualTotal) / y.Sum(x => x.BaseRMVirtualTurnover) * 100)
+                                               }).ToList();
+
+                winlossModel.Total.BaseRMTurnover = winloss14.Total.BaseRMTurnover + winlossWH.Total.BaseRMTurnover;
+                winlossModel.Total.BaseRMTotal = winloss14.Total.BaseRMTotal + winlossWH.Total.BaseRMTotal;
+                winlossModel.Total.BaseRMVirtualTotal = winloss14.Total.BaseRMVirtualTotal + winlossWH.Total.BaseRMVirtualTotal;
+                winlossModel.Total.BaseRMTurnover = winloss14.Total.BaseRMTurnover + winlossWH.Total.BaseRMTurnover;
+                winlossModel.Total.BaseRMTotal = winloss14.Total.BaseRMTotal + winlossWH.Total.BaseRMTotal;
+                winlossModel.Total.BaseRMVirtualTotal = winloss14.Total.BaseRMVirtualTotal + winlossWH.Total.BaseRMVirtualTotal;
+                winlossModel.Total.BaseRMVirtualTurnover = winloss14.Total.BaseRMVirtualTurnover + winlossWH.Total.BaseRMVirtualTurnover;
+                winlossModel.Total.BaseRMTOVariancePlus = winloss14.Total.BaseRMTOVariancePlus + winlossWH.Total.BaseRMTOVariancePlus;
+                winlossModel.Total.BaseRMTOVarianceMinus = winloss14.Total.BaseRMTOVarianceMinus + winlossWH.Total.BaseRMTOVarianceMinus;
+                winlossModel.Total.BaseRMWLVariancePlus = winloss14.Total.BaseRMWLVariancePlus + winlossWH.Total.BaseRMWLVariancePlus;
+                winlossModel.Total.BaseRMWLVarianceMinus = winloss14.Total.BaseRMWLVarianceMinus + winlossWH.Total.BaseRMWLVarianceMinus;
+                winlossModel.Total.Margin = winlossModel.Total.BaseRMVirtualTurnover == 0 ? 0 : (winlossModel.Total.BaseRMVirtualTotal / winlossModel.Total.BaseRMVirtualTurnover * 100);
 
 
                 AppSession.AddSession(HttpContext.Current.Session, _treeWinLossSessionKey, winlossModel);
@@ -362,7 +627,7 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                         baseRMWLVariancePlus += _baseRMWLVariancePlus;
                         baseRMWLVarianceMinus += _baseRMWLVarianceMinus;
 
-                        double margin = _baseRMVirtualTO == 0 ? 0 : _baseRMVirtualTotal / _baseRMVirtualTO * 100;
+                        //double margin = _baseRMVirtualTO == 0 ? 0 : _baseRMVirtualTotal / _baseRMVirtualTO * 100;
                         #region wl detail
                         winloss.WinLoss.Add(
                             new TreeWinLossDetail()
@@ -381,9 +646,9 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                                 BaseRMWLVariancePlus = _baseRMWLVariancePlus,
                                 BaseRMWLVarianceMinus = _baseRMWLVarianceMinus,
                                 BaseRMVirtualTotal = _baseRMVirtualTotal,
-                                BaseRMVirtualTO = _baseRMVirtualTO,
+                                BaseRMVirtualTurnover = _baseRMVirtualTO,
                                 
-                                Margin = margin,
+                                //Margin = margin,
 
                                 VirtualRate = CastAide.AsDouble(winlossDetail["virtualrate"]),
                             });
@@ -391,7 +656,7 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                     }
 
                     #region Total
-                    double margin_total = baseRMVirtualTO == 0 ? 0 : baseRMVirtualTotal / baseRMVirtualTO * 100;
+                    //double margin_total = baseRMVirtualTO == 0 ? 0 : baseRMVirtualTotal / baseRMVirtualTO * 100;
                     winloss.Total = new TreeWinLossDetail()
                     {
                         Id = string.Empty,
@@ -408,8 +673,8 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                         BaseRMWLVariancePlus = baseRMWLVariancePlus,
                         BaseRMWLVarianceMinus = baseRMWLVarianceMinus,
                         BaseRMVirtualTotal = baseRMVirtualTotal,
-                        BaseRMVirtualTO = baseRMVirtualTO,
-                        Margin = margin_total
+                        BaseRMVirtualTurnover = baseRMVirtualTO,
+                        //Margin = margin_total
                     };
                     #endregion
                 }
@@ -441,7 +706,28 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
             AppSession.AddSession(HttpContext.Current.Session, _treeWinLossSessionKey, null);
             try
             {
-                winlossModel = GetTreeWinLossReportBySuper_DateRange(
+                var winloss14 = new TreeWinLoss();
+                var winlossWH = new TreeWinLoss();
+
+                Task<TreeWinLoss>[] tasks = new Task<TreeWinLoss>[2];
+                if (CastAide.AsDateTime(toDate) > moveBetsDay && CastAide.AsDateTime(fromDate) > moveBetsDay)
+                {
+                    winloss14 = GetTreeWinLossReportBySuper_DateRange(
+                                                                 fromDate,
+                                                                  toDate,
+                                                                  superId,
+                                                                  isShowSB,
+                                                                  isShowNG,
+                                                                  isShowRB,
+                                                                  isShowLCS,
+                                                                  isShowCS,
+                                                                  isShowP2P,
+                                                                  isShowBI,
+                                                                  isShowVS, false);
+                }
+                else if (CastAide.AsDateTime(toDate) <= moveBetsDay && CastAide.AsDateTime(fromDate) <= moveBetsDay)
+                {
+                    winlossWH = GetTreeWinLossReportBySuper_DateRange(
                                                                 fromDate,
                                                                 toDate,
                                                                 superId,
@@ -453,8 +739,102 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                                                                 isShowP2P,
                                                                 isShowBI,
                                                                 isShowVS, true);
+                }
+                else
+                {
+                    if (CastAide.AsDateTime(toDate) >= moveBetsDay)
+                    {
+                        tasks[0] = Task<TreeWinLoss>.Factory.StartNew(() =>
+                        {
+                            return GetTreeWinLossReportBySuper_DateRange(
+                                                                moveBetsDay.AddDays(1).ToString(),
+                                                                 toDate,
+                                                                 superId,
+                                                                 isShowSB,
+                                                                 isShowNG,
+                                                                 isShowRB,
+                                                                 isShowLCS,
+                                                                 isShowCS,
+                                                                 isShowP2P,
+                                                                 isShowBI,
+                                                                 isShowVS, false);
+                        });
+                    }
+                    else
+                    {
+                        tasks[0] = Task<TreeWinLoss>.Factory.StartNew(() =>
+                        {
+                            return new TreeWinLoss();
+                        });
+                    }
 
-                winlossModel.WinLoss = winlossModel.WinLoss.OrderBy(c => c.Title).ToList();
+                    if (CastAide.AsDateTime(fromDate) < moveBetsDay)
+                    {
+                        tasks[1] = Task<TreeWinLoss>.Factory.StartNew(() =>
+                        {
+                            return GetTreeWinLossReportBySuper_DateRange(
+                                                                fromDate,
+                                                                moveBetsDay.ToString(),
+                                                                superId,
+                                                                isShowSB,
+                                                                isShowNG,
+                                                                isShowRB,
+                                                                isShowLCS,
+                                                                isShowCS,
+                                                                isShowP2P,
+                                                                isShowBI,
+                                                                isShowVS, true);
+                        });
+                    }
+                    else
+                    {
+                        tasks[1] = Task<TreeWinLoss>.Factory.StartNew(() =>
+                        {
+                            return new TreeWinLoss();
+                        });
+                    }
+
+                    Task.WaitAll(tasks);
+
+                    winlossWH = tasks[1].Result;
+                    winloss14 = tasks[0].Result;
+                }
+                List<TreeWinLossDetail> treeWinlossListTmp = new List<TreeWinLossDetail>();
+                treeWinlossListTmp = winloss14.WinLoss.Concat(winlossWH.WinLoss).ToList();
+
+                winlossModel.WinLoss = treeWinlossListTmp.GroupBy(x => new { x.Id, x.Title, x.VirtualRate })
+                                               .Select(y => new TreeWinLossDetail
+                                               {
+                                                   Id = string.Format("{0}", y.Key.Id),
+                                                   Title = y.Key.Title,
+                                                   Turnover = y.Sum(x => x.Turnover),
+                                                   WinLoss = y.Sum(x => x.WinLoss),
+                                                   Comm = y.Sum(x => x.Comm),
+                                                   Total = y.Sum(x => x.Total),
+                                                   BaseRMTurnover = y.Sum(x => x.BaseRMTurnover),
+                                                   BaseRMTotal = y.Sum(x => x.BaseRMTotal),
+                                                   BaseRMVirtualTurnover = y.Sum(x => x.BaseRMVirtualTurnover),
+                                                   BaseRMVirtualTotal = y.Sum(x => x.BaseRMVirtualTotal),
+                                                   BaseRMTOVariancePlus = y.Sum(x => x.BaseRMTOVariancePlus),
+                                                   BaseRMTOVarianceMinus = y.Sum(x => x.BaseRMTOVarianceMinus),
+                                                   BaseRMWLVariancePlus = y.Sum(x => x.BaseRMWLVariancePlus),
+                                                   BaseRMWLVarianceMinus = y.Sum(x => x.BaseRMWLVarianceMinus),
+                                                   VirtualRate = y.Sum(x => x.VirtualRate),
+                                                   Margin = y.Sum(x => x.BaseRMVirtualTurnover) == 0 ? 0 : (y.Sum(x => x.BaseRMVirtualTotal) / y.Sum(x => x.BaseRMVirtualTurnover) * 100)
+                                               }).ToList();
+
+                winlossModel.Total.BaseRMTurnover = winloss14.Total.BaseRMTurnover + winlossWH.Total.BaseRMTurnover;
+                winlossModel.Total.BaseRMTotal = winloss14.Total.BaseRMTotal + winlossWH.Total.BaseRMTotal;
+                winlossModel.Total.BaseRMVirtualTotal = winloss14.Total.BaseRMVirtualTotal + winlossWH.Total.BaseRMVirtualTotal;
+                winlossModel.Total.BaseRMTurnover = winloss14.Total.BaseRMTurnover + winlossWH.Total.BaseRMTurnover;
+                winlossModel.Total.BaseRMTotal = winloss14.Total.BaseRMTotal + winlossWH.Total.BaseRMTotal;
+                winlossModel.Total.BaseRMVirtualTotal = winloss14.Total.BaseRMVirtualTotal + winlossWH.Total.BaseRMVirtualTotal;
+                winlossModel.Total.BaseRMVirtualTurnover = winloss14.Total.BaseRMVirtualTurnover + winlossWH.Total.BaseRMVirtualTurnover;
+                winlossModel.Total.BaseRMTOVariancePlus = winloss14.Total.BaseRMTOVariancePlus + winlossWH.Total.BaseRMTOVariancePlus;
+                winlossModel.Total.BaseRMTOVarianceMinus = winloss14.Total.BaseRMTOVarianceMinus + winlossWH.Total.BaseRMTOVarianceMinus;
+                winlossModel.Total.BaseRMWLVariancePlus = winloss14.Total.BaseRMWLVariancePlus + winlossWH.Total.BaseRMWLVariancePlus;
+                winlossModel.Total.BaseRMWLVarianceMinus = winloss14.Total.BaseRMWLVarianceMinus + winlossWH.Total.BaseRMWLVarianceMinus;
+                winlossModel.Total.Margin = winlossModel.Total.BaseRMVirtualTurnover == 0 ? 0 : (winlossModel.Total.BaseRMVirtualTotal / winlossModel.Total.BaseRMVirtualTurnover * 100);
 
                 AppSession.AddSession(HttpContext.Current.Session, _treeWinLossSessionKey, winlossModel);
 
@@ -528,7 +908,7 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                         baseRMWLVariancePlus += _baseRMWLVariancePlus;
                         baseRMWLVarianceMinus += _baseRMWLVarianceMinus;
 
-                        double margin = _baseRMVirtualTO == 0 ? 0 : _baseRMVirtualTotal / _baseRMVirtualTO * 100;
+                        //double margin = _baseRMVirtualTO == 0 ? 0 : _baseRMVirtualTotal / _baseRMVirtualTO * 100;
 
                         #region wl detail
                         winloss.WinLoss.Add(
@@ -548,9 +928,9 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                                 BaseRMWLVariancePlus = _baseRMWLVariancePlus,
                                 BaseRMWLVarianceMinus = _baseRMWLVarianceMinus,
                                 BaseRMVirtualTotal = _baseRMVirtualTotal,
-                                BaseRMVirtualTO = _baseRMVirtualTO,
+                                BaseRMVirtualTurnover = _baseRMVirtualTO,
 
-                                Margin = margin,
+                                //Margin = margin,
 
                                 VirtualRate = CastAide.AsDouble(winlossDetail["virtualrate"]),
                             });
@@ -558,7 +938,7 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                     }
 
                     #region Total
-                    double margin_total = baseRMVirtualTO == 0 ? 0 : baseRMVirtualTotal / baseRMVirtualTO * 100;
+                    //double margin_total = baseRMVirtualTO == 0 ? 0 : baseRMVirtualTotal / baseRMVirtualTO * 100;
                     winloss.Total = new TreeWinLossDetail()
                     {
                         Id = string.Empty,
@@ -575,9 +955,9 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                         BaseRMWLVariancePlus = baseRMWLVariancePlus,
                         BaseRMWLVarianceMinus = baseRMWLVarianceMinus,
                         BaseRMVirtualTotal = baseRMVirtualTotal,
-                        BaseRMVirtualTO = baseRMVirtualTO,
+                        BaseRMVirtualTurnover = baseRMVirtualTO,
                         
-                        Margin = margin_total
+                        //Margin = margin_total
                     };
                     #endregion
                 }
@@ -608,9 +988,75 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
             AppSession.AddSession(HttpContext.Current.Session, _treeWinLossSessionKey, null);
             try
             {
-                winlossModel =  GetTreeWinLossReportByMaster_DateRange(
+                var winloss14 = new TreeWinLoss();
+                var winlossWH = new TreeWinLoss();
+
+                Task<TreeWinLoss>[] tasks = new Task<TreeWinLoss>[2];
+                if (CastAide.AsDateTime(toDate) > moveBetsDay && CastAide.AsDateTime(fromDate) > moveBetsDay)
+                {
+                    winloss14 = GetTreeWinLossReportByMaster_DateRange(
+                                                                   fromDate,
+                                                                  toDate,
+                                                                  masterId,
+                                                                  isShowSB,
+                                                                  isShowNG,
+                                                                  isShowRB,
+                                                                  isShowLCS,
+                                                                  isShowCS,
+                                                                  isShowP2P,
+                                                                  isShowBI,
+                                                                  isShowVS, false);
+                }
+                else if (CastAide.AsDateTime(toDate) <= moveBetsDay && CastAide.AsDateTime(fromDate) <= moveBetsDay)
+                {
+                    winlossWH = GetTreeWinLossReportByMaster_DateRange(
                                                                 fromDate,
                                                                 toDate,
+                                                                masterId,
+                                                                isShowSB,
+                                                                isShowNG,
+                                                                isShowRB,
+                                                                isShowLCS,
+                                                                isShowCS,
+                                                                isShowP2P,
+                                                                isShowBI,
+                                                                isShowVS, true);
+                }
+                else
+                {
+                    if (CastAide.AsDateTime(toDate) >= moveBetsDay)
+                    {
+                        tasks[0] = Task<TreeWinLoss>.Factory.StartNew(() =>
+                        {
+                            return GetTreeWinLossReportByMaster_DateRange(
+                                                                  moveBetsDay.AddDays(1).ToString(),
+                                                                 toDate,
+                                                                 masterId,
+                                                                 isShowSB,
+                                                                 isShowNG,
+                                                                 isShowRB,
+                                                                 isShowLCS,
+                                                                 isShowCS,
+                                                                 isShowP2P,
+                                                                 isShowBI,
+                                                                 isShowVS, false);
+                        });
+                    }
+                    else
+                    {
+                        tasks[0] = Task<TreeWinLoss>.Factory.StartNew(() =>
+                        {
+                            return new TreeWinLoss();
+                        });
+                    }
+
+                    if (CastAide.AsDateTime(fromDate) < moveBetsDay)
+                    {
+                        tasks[1] = Task<TreeWinLoss>.Factory.StartNew(() =>
+                        {
+                            return GetTreeWinLossReportByMaster_DateRange(
+                                                                fromDate,
+                                                                moveBetsDay.ToString(),
                                                                  masterId,
                                                                 isShowSB,
                                                                 isShowNG,
@@ -620,7 +1066,57 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                                                                 isShowP2P,
                                                                 isShowBI,
                                                                 isShowVS, true);
-               
+                        });
+                    }
+                    else
+                    {
+                        tasks[1] = Task<TreeWinLoss>.Factory.StartNew(() =>
+                        {
+                            return new TreeWinLoss();
+                        });
+                    }
+
+                    Task.WaitAll(tasks);
+
+                    winlossWH = tasks[1].Result;
+                    winloss14 = tasks[0].Result;
+                }
+                List<TreeWinLossDetail> treeWinlossListTmp = new List<TreeWinLossDetail>();
+                treeWinlossListTmp = winloss14.WinLoss.Concat(winlossWH.WinLoss).ToList();
+
+                winlossModel.WinLoss = treeWinlossListTmp.GroupBy(x => new { x.Id, x.Title, x.VirtualRate })
+                                               .Select(y => new TreeWinLossDetail
+                                               {
+                                                   Id = string.Format("{0}", y.Key.Id),
+                                                   Title = y.Key.Title,
+                                                   Turnover = y.Sum(x => x.Turnover),
+                                                   WinLoss = y.Sum(x => x.WinLoss),
+                                                   Comm = y.Sum(x => x.Comm),
+                                                   Total = y.Sum(x => x.Total),
+                                                   BaseRMTurnover = y.Sum(x => x.BaseRMTurnover),
+                                                   BaseRMTotal = y.Sum(x => x.BaseRMTotal),
+                                                   BaseRMVirtualTurnover = y.Sum(x => x.BaseRMVirtualTurnover),
+                                                   BaseRMVirtualTotal = y.Sum(x => x.BaseRMVirtualTotal),
+                                                   BaseRMTOVariancePlus = y.Sum(x => x.BaseRMTOVariancePlus),
+                                                   BaseRMTOVarianceMinus = y.Sum(x => x.BaseRMTOVarianceMinus),
+                                                   BaseRMWLVariancePlus = y.Sum(x => x.BaseRMWLVariancePlus),
+                                                   BaseRMWLVarianceMinus = y.Sum(x => x.BaseRMWLVarianceMinus),
+                                                   VirtualRate = y.Sum(x => x.VirtualRate),
+                                                   Margin = y.Sum(x => x.BaseRMVirtualTurnover) == 0 ? 0 : (y.Sum(x => x.BaseRMVirtualTotal) / y.Sum(x => x.BaseRMVirtualTurnover) * 100)
+                                               }).ToList();
+
+                winlossModel.Total.BaseRMTurnover = winloss14.Total.BaseRMTurnover + winlossWH.Total.BaseRMTurnover;
+                winlossModel.Total.BaseRMTotal = winloss14.Total.BaseRMTotal + winlossWH.Total.BaseRMTotal;
+                winlossModel.Total.BaseRMVirtualTotal = winloss14.Total.BaseRMVirtualTotal + winlossWH.Total.BaseRMVirtualTotal;
+                winlossModel.Total.BaseRMTurnover = winloss14.Total.BaseRMTurnover + winlossWH.Total.BaseRMTurnover;
+                winlossModel.Total.BaseRMTotal = winloss14.Total.BaseRMTotal + winlossWH.Total.BaseRMTotal;
+                winlossModel.Total.BaseRMVirtualTotal = winloss14.Total.BaseRMVirtualTotal + winlossWH.Total.BaseRMVirtualTotal;
+                winlossModel.Total.BaseRMVirtualTurnover = winloss14.Total.BaseRMVirtualTurnover + winlossWH.Total.BaseRMVirtualTurnover;
+                winlossModel.Total.BaseRMTOVariancePlus = winloss14.Total.BaseRMTOVariancePlus + winlossWH.Total.BaseRMTOVariancePlus;
+                winlossModel.Total.BaseRMTOVarianceMinus = winloss14.Total.BaseRMTOVarianceMinus + winlossWH.Total.BaseRMTOVarianceMinus;
+                winlossModel.Total.BaseRMWLVariancePlus = winloss14.Total.BaseRMWLVariancePlus + winlossWH.Total.BaseRMWLVariancePlus;
+                winlossModel.Total.BaseRMWLVarianceMinus = winloss14.Total.BaseRMWLVarianceMinus + winlossWH.Total.BaseRMWLVarianceMinus;
+                winlossModel.Total.Margin = winlossModel.Total.BaseRMVirtualTurnover == 0 ? 0 : (winlossModel.Total.BaseRMVirtualTotal / winlossModel.Total.BaseRMVirtualTurnover * 100);
 
                 AppSession.AddSession(HttpContext.Current.Session, _treeWinLossSessionKey, winlossModel);
             }
@@ -692,7 +1188,7 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                         baseRMWLVariancePlus += _baseRMWLVariancePlus;
                         baseRMWLVarianceMinus += _baseRMWLVarianceMinus;
 
-                        double margin = _baseRMVirtualTO == 0 ? 0 : _baseRMVirtualTotal / _baseRMVirtualTO * 100;
+                        //double margin = _baseRMVirtualTO == 0 ? 0 : _baseRMVirtualTotal / _baseRMVirtualTO * 100;
 
                         #region wl detail
                         winloss.WinLoss.Add(
@@ -712,9 +1208,9 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                                 BaseRMWLVariancePlus = _baseRMWLVariancePlus,
                                 BaseRMWLVarianceMinus = _baseRMWLVarianceMinus,
                                 BaseRMVirtualTotal = _baseRMVirtualTotal,
-                                BaseRMVirtualTO = _baseRMVirtualTO,
+                                BaseRMVirtualTurnover = _baseRMVirtualTO,
 
-                                Margin = margin,
+                                //Margin = margin,
 
                                 VirtualRate = CastAide.AsDouble(winlossDetail["virtualrate"]),
                             });
@@ -722,7 +1218,7 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                     }
 
                     #region Total
-                    double margin_total = baseRMVirtualTO == 0 ? 0 : baseRMVirtualTotal / baseRMVirtualTO * 100;
+                    //double margin_total = baseRMVirtualTO == 0 ? 0 : baseRMVirtualTotal / baseRMVirtualTO * 100;
                     winloss.Total = new TreeWinLossDetail()
                     {
                         Id = string.Empty,
@@ -739,8 +1235,8 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                         BaseRMWLVariancePlus = baseRMWLVariancePlus,
                         BaseRMWLVarianceMinus = baseRMWLVarianceMinus,
                         BaseRMVirtualTotal = baseRMVirtualTotal,
-                        BaseRMVirtualTO = baseRMVirtualTO,
-                        Margin = margin_total
+                        BaseRMVirtualTurnover = baseRMVirtualTO,
+                        //Margin = margin_total
 
                     };
                     #endregion
@@ -773,7 +1269,29 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
             AppSession.AddSession(HttpContext.Current.Session, _treeWinLossSessionKey, null);
             try
             {
-                winlossModel =  GetTreeWinLossReportByAgent_DateRange(
+                var winloss14 = new TreeWinLoss();
+                var winlossWH = new TreeWinLoss();
+
+                Task<TreeWinLoss>[] tasks = new Task<TreeWinLoss>[2];
+                if (CastAide.AsDateTime(toDate) > moveBetsDay && CastAide.AsDateTime(fromDate) > moveBetsDay)
+                {
+                    winloss14 = GetTreeWinLossReportByAgent_DateRange(
+                                                                 fromDate,
+                                                                  toDate,
+                                                                  agentId,
+                                                                  isShowSB,
+                                                                  isShowNG,
+                                                                  isShowRB,
+                                                                  isShowLCS,
+                                                                  isShowCS,
+                                                                  isShowP2P,
+                                                                  isShowBI,
+                                                                  isShowVS,
+                                                                  false);
+                }
+                else if (CastAide.AsDateTime(toDate) <= moveBetsDay && CastAide.AsDateTime(fromDate) <= moveBetsDay)
+                {
+                    winlossWH = GetTreeWinLossReportByAgent_DateRange(
                                                                 fromDate,
                                                                 toDate,
                                                                 agentId,
@@ -786,7 +1304,105 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                                                                 isShowBI,
                                                                 isShowVS,
                                                                 true);
-                
+                }
+                else
+                {
+                    if (CastAide.AsDateTime(toDate) >= moveBetsDay)
+                    {
+                        tasks[0] = Task<TreeWinLoss>.Factory.StartNew(() =>
+                        {
+                            return GetTreeWinLossReportByAgent_DateRange(
+                                                                moveBetsDay.AddDays(1).ToString(),
+                                                                 toDate,
+                                                                 agentId,
+                                                                 isShowSB,
+                                                                 isShowNG,
+                                                                 isShowRB,
+                                                                 isShowLCS,
+                                                                 isShowCS,
+                                                                 isShowP2P,
+                                                                 isShowBI,
+                                                                 isShowVS,
+                                                                 false);
+                        });
+                    }
+                    else
+                    {
+                        tasks[0] = Task<TreeWinLoss>.Factory.StartNew(() =>
+                        {
+                            return new TreeWinLoss();
+                        });
+                    }
+
+                    if (CastAide.AsDateTime(fromDate) < moveBetsDay)
+                    {
+                        tasks[1] = Task<TreeWinLoss>.Factory.StartNew(() =>
+                        {
+                            return GetTreeWinLossReportByAgent_DateRange(
+                                                                fromDate,
+                                                                moveBetsDay.ToString(),
+                                                                agentId,
+                                                                isShowSB,
+                                                                isShowNG,
+                                                                isShowRB,
+                                                                isShowLCS,
+                                                                isShowCS,
+                                                                isShowP2P,
+                                                                isShowBI,
+                                                                isShowVS,
+                                                                true);
+                        });
+                    }
+                    else
+                    {
+                        tasks[1] = Task<TreeWinLoss>.Factory.StartNew(() =>
+                        {
+                            return new TreeWinLoss();
+                        });
+                    }
+
+                    Task.WaitAll(tasks);
+
+                    winlossWH = tasks[1].Result;
+                    winloss14 = tasks[0].Result;
+                }
+                List<TreeWinLossDetail> treeWinlossListTmp = new List<TreeWinLossDetail>();
+                treeWinlossListTmp = winloss14.WinLoss.Concat(winlossWH.WinLoss).ToList();
+
+                winlossModel.WinLoss = treeWinlossListTmp.GroupBy(x => new { x.Id, x.Title, x.VirtualRate })
+                                               .Select(y => new TreeWinLossDetail
+                                               {
+
+                                                   Id = string.Format("{0}", y.Key.Id),
+                                                   Title = y.Key.Title,
+                                                   Turnover = y.Sum(x => x.Turnover),
+                                                   WinLoss = y.Sum(x => x.WinLoss),
+                                                   Comm = y.Sum(x => x.Comm),
+                                                   Total = y.Sum(x => x.Total),
+                                                   BaseRMTurnover = y.Sum(x => x.BaseRMTurnover),
+                                                   BaseRMTotal = y.Sum(x => x.BaseRMTotal),
+                                                   BaseRMVirtualTurnover = y.Sum(x => x.BaseRMVirtualTurnover),
+                                                   BaseRMVirtualTotal = y.Sum(x => x.BaseRMVirtualTotal),
+                                                   BaseRMTOVariancePlus = y.Sum(x => x.BaseRMTOVariancePlus),
+                                                   BaseRMTOVarianceMinus = y.Sum(x => x.BaseRMTOVarianceMinus),
+                                                   BaseRMWLVariancePlus = y.Sum(x => x.BaseRMWLVariancePlus),
+                                                   BaseRMWLVarianceMinus = y.Sum(x => x.BaseRMWLVarianceMinus),
+                                                   VirtualRate = y.Sum(x => x.VirtualRate),
+                                                   Margin = y.Sum(x => x.BaseRMVirtualTurnover) == 0 ? 0 : (y.Sum(x => x.BaseRMVirtualTotal) / y.Sum(x => x.BaseRMVirtualTurnover) * 100)
+                                               }).ToList();
+
+                winlossModel.Total.BaseRMTurnover = winloss14.Total.BaseRMTurnover + winlossWH.Total.BaseRMTurnover;
+                winlossModel.Total.BaseRMTotal = winloss14.Total.BaseRMTotal + winlossWH.Total.BaseRMTotal;
+                winlossModel.Total.BaseRMVirtualTotal = winloss14.Total.BaseRMVirtualTotal + winlossWH.Total.BaseRMVirtualTotal;
+                winlossModel.Total.BaseRMTurnover = winloss14.Total.BaseRMTurnover + winlossWH.Total.BaseRMTurnover;
+                winlossModel.Total.BaseRMTotal = winloss14.Total.BaseRMTotal + winlossWH.Total.BaseRMTotal;
+                winlossModel.Total.BaseRMVirtualTotal = winloss14.Total.BaseRMVirtualTotal + winlossWH.Total.BaseRMVirtualTotal;
+                winlossModel.Total.BaseRMVirtualTurnover = winloss14.Total.BaseRMVirtualTurnover + winlossWH.Total.BaseRMVirtualTurnover;
+                winlossModel.Total.BaseRMTOVariancePlus = winloss14.Total.BaseRMTOVariancePlus + winlossWH.Total.BaseRMTOVariancePlus;
+                winlossModel.Total.BaseRMTOVarianceMinus = winloss14.Total.BaseRMTOVarianceMinus + winlossWH.Total.BaseRMTOVarianceMinus;
+                winlossModel.Total.BaseRMWLVariancePlus = winloss14.Total.BaseRMWLVariancePlus + winlossWH.Total.BaseRMWLVariancePlus;
+                winlossModel.Total.BaseRMWLVarianceMinus = winloss14.Total.BaseRMWLVarianceMinus + winlossWH.Total.BaseRMWLVarianceMinus;
+                winlossModel.Total.Margin = winlossModel.Total.BaseRMVirtualTurnover == 0 ? 0 : (winlossModel.Total.BaseRMVirtualTotal / winlossModel.Total.BaseRMVirtualTurnover * 100);
 
                 AppSession.AddSession(HttpContext.Current.Session, _treeWinLossSessionKey, winlossModel);
             }
@@ -858,7 +1474,7 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                         baseRMWLVariancePlus += _baseRMWLVariancePlus;
                         baseRMWLVarianceMinus += _baseRMWLVarianceMinus;
 
-                        double margin = _baseRMVirtualTO == 0 ? 0 : _baseRMVirtualTotal / _baseRMVirtualTO * 100;
+                        //double margin = _baseRMVirtualTO == 0 ? 0 : _baseRMVirtualTotal / _baseRMVirtualTO * 100;
 
                         #region wl detail
                         winloss.WinLoss.Add(
@@ -878,9 +1494,9 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                                 BaseRMWLVariancePlus = _baseRMWLVariancePlus,
                                 BaseRMWLVarianceMinus = _baseRMWLVarianceMinus,
                                 BaseRMVirtualTotal = _baseRMVirtualTotal,
-                                BaseRMVirtualTO = _baseRMVirtualTO,
+                                BaseRMVirtualTurnover = _baseRMVirtualTO,
 
-                                Margin = margin,
+                                //Margin = margin,
 
                                 VirtualRate = CastAide.AsDouble(winlossDetail["virtualrate"]),
                             });
@@ -888,7 +1504,7 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                     }
 
                     #region Total
-                    double margin_total = baseRMVirtualTO == 0 ? 0 : baseRMVirtualTotal / baseRMVirtualTO * 100;
+                    //double margin_total = baseRMVirtualTO == 0 ? 0 : baseRMVirtualTotal / baseRMVirtualTO * 100;
                     winloss.Total = new TreeWinLossDetail()
                     {
                         Id = string.Empty,
@@ -905,8 +1521,8 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                         BaseRMWLVariancePlus = baseRMWLVariancePlus,
                         BaseRMWLVarianceMinus = baseRMWLVarianceMinus,
                         BaseRMVirtualTotal = baseRMVirtualTotal,
-                        BaseRMVirtualTO = baseRMVirtualTO,
-                        Margin = margin_total
+                        BaseRMVirtualTurnover = baseRMVirtualTO,
+                        //Margin = margin_total
                     };
                     #endregion
                 }
@@ -1279,9 +1895,9 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winlossDetail.BaseRMTurnover);
 
-                    turnoverVirtual = NumberFormat.DoubleFormat(winlossDetail.BaseRMVirtualTO, 2);
+                    turnoverVirtual = NumberFormat.DoubleFormat(winlossDetail.BaseRMVirtualTurnover, 2);
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winlossDetail.BaseRMVirtualTO);
+                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winlossDetail.BaseRMVirtualTurnover);
                 }
                 else
                 {
@@ -1382,12 +1998,12 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                isShowLCS == true ||
                isShowVS == true)
                 {
-                    turnover = NumberFormat.DoubleFormat(winloss.Total.BaseRMVirtualTO, 2);
+                    turnover = NumberFormat.DoubleFormat(winloss.Total.BaseRMVirtualTurnover, 2);
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total.BaseRMTurnover);
 
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total.BaseRMVirtualTO);
+                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total.BaseRMVirtualTurnover);
                 }
                 else
                 {
@@ -1462,8 +2078,8 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                     turnoverTotal = NumberFormat.DoubleFormat(winloss.Total.BaseRMTurnover, 2);
 
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total.BaseRMVirtualTO); 
-                    turnoverVirtualTotal = NumberFormat.DoubleFormat(winloss.Total.BaseRMVirtualTO, 2);
+                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total.BaseRMVirtualTurnover); 
+                    turnoverVirtualTotal = NumberFormat.DoubleFormat(winloss.Total.BaseRMVirtualTurnover, 2);
                 }
                 else
                 {
@@ -1606,8 +2222,8 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                     turnoverBARM = NumberFormat.DoubleFormat(winloss.TotalBARM.BaseRMTurnover, 2);
 
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.TotalBARM.BaseRMVirtualTO);
-                    turnoverBARM = NumberFormat.DoubleFormat(winloss.TotalBARM.BaseRMVirtualTO, 2); 
+                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.TotalBARM.BaseRMVirtualTurnover);
+                    turnoverBARM = NumberFormat.DoubleFormat(winloss.TotalBARM.BaseRMVirtualTurnover, 2); 
                 }
                 else
                 {
@@ -1675,8 +2291,8 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.GrandTotal.BaseRMTurnover);
 
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.GrandTotal.BaseRMVirtualTO);
-                    turnoverGrandTotal = NumberFormat.DoubleFormat(winloss.GrandTotal.BaseRMVirtualTO, 2); 
+                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.GrandTotal.BaseRMVirtualTurnover);
+                    turnoverGrandTotal = NumberFormat.DoubleFormat(winloss.GrandTotal.BaseRMVirtualTurnover, 2); 
                 }
                 else
                 {

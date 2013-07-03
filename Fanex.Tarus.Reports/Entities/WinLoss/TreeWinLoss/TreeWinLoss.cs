@@ -42,7 +42,7 @@ namespace Fanex.Tarus.Reports.Entities.WinLoss.TreeWinLoss
         public double BaseRMTurnover { get; set; }
         public double BaseRMTotal { get; set; }
         public double BaseRMVirtualTotal { get; set; }
-        public double BaseRMVirtualTO { get; set; }
+        public double BaseRMVirtualTurnover { get; set; }
         public double BaseRMTOVariancePlus { get; set; }
         public double BaseRMTOVarianceMinus { get; set; }
         public double BaseRMWLVariancePlus { get; set; }
