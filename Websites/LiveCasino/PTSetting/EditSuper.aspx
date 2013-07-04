@@ -117,9 +117,7 @@
                     </tr>
                     {{/each}}
                 </table>
-                {{if(isHideUpdate == 0)}}
-                    <input type="button" class="btnUpdateSetting" value="Update" data-bind="enable: isAllowUpdate, click: function(){editSuper.updateLiveCasino(0)}" />
-                {{/if}}
+                    <input type="button" class="btnUpdateSetting"  value="Update" data-bind="enable: isAllowUpdate, click: function(){editSuper.updateLiveCasino(0)}, style:{display:isShowBtSave ? '':'none'}" />
 
             </script>
         </div>
@@ -139,9 +137,7 @@
         editSuper.superId = <%=CustId %>;
         editSuper.exchangeId = <%=ExchangeId %>;
         var userId = <%=AppSession.AccId %>;
-        var currentSystemName = '<%=AppSession.CurrentSystemNAME%>';
-        var isHideUpdate = (currentSystemName == '<%=Enumerations.AccountingSystem.EXTERNAL %>' ? 1 : 0);        
-        console.log(isHideUpdate);
+        var isShowBtSave = <%=(Enumerations.AccountingSystem.EXTERNAL==AppSession.CurrentSystemNAME) ? "false":"true" %>; 
         var ip = '<%=Utils.GetClientIP() %>';
         editSuper.requestContext.IsAddNewSuper = <%=IsAddNew %> ;
         editSuper.msgUncheckBettingLimit = '<%= Resources.Language.UnCheckBettingLimit%>' ;

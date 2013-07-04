@@ -48,7 +48,7 @@ function LoadData(rs)
             SettingContent.setParam("IsGroupSetting",rs.IsUsedGameKind);
             SettingContent.processTemplate(rs);
             AssignCommission();
-            if (isHideUpdate == 1) {
+            if (!isShowBtSave) {
                 $('#tblHideUpdate').css('display', 'none');
             }
             if (rs.SyncBingo)

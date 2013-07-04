@@ -50,9 +50,7 @@
     </div>
     </form>
      <script language="javascript" type="text/javascript">
-         var currentSystem = '<%= AppSession.CurrentSystemNAME %>'
-         var isHideUpdate = (currentSystem == '<%=Enumerations.AccountingSystem.EXTERNAL %>' ? 1 : 0);
-         
+          var isShowBtSave = <%=(Enumerations.AccountingSystem.EXTERNAL==AppSession.CurrentSystemNAME) ? "false":"true" %>; 
     </script>
 </body>
 </html>
