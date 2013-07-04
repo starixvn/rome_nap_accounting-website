@@ -1,4 +1,8 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="SuperUpdate.aspx.cs" Inherits="Customer_PT_Poker_SuperUpdate" %>
+<%@ Import Namespace="Sunplus.Accounting.Core.Common" %>
+<%@ Import Namespace="Sunplus.Accounting.Core.Configurations" %>
+<%@ Import Namespace="Sunplus.Accounting.Core.Helper" %>
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -103,7 +107,10 @@
                     <tr>   
                     {{/each}}                
                 </table>
-                <input type="button" class="btnUpdateSetting" value="Update" data-bind="enable: isAllowUpdate, event:{click:updatePocker}" />
+                  {{if(!isHideUpdate)}}
+                     <input type="button" class="btnUpdateSetting" value="Update" data-bind="enable: isAllowUpdate, event:{click:updatePocker}" />
+                {{/if}}
+               
             </script>
         </div>
     </div>
@@ -124,10 +131,13 @@
         var roleId=<%=roleId%>;
         var isDisabled=<%=isDisabled%>;
         var msgDisabled='<%=msgDisabled%>';
+        var isHideUpdate = false;
+        if('<%=AppSession.CurrentSystemNAME %>' == '<%=Enumerations.AccountingSystem.EXTERNAL %>')
+        {
+            isHideUpdate = true;
+        }
         $(function () {
             pokerData.getCustomerSetting(custId,roleId);
-           
-            
         });
     </script>
 </body>

@@ -66,7 +66,7 @@
         @*betting limit and position taking*@
         @Html.Partial("~/Views/Customer/CreditCustomer/BettingLimitAndPositionTakingPartialView.cshtml")
         @*button add*@
-        @if (!AppSession.CurrentSystemNAME.ToString().Equals(Enumerations.AccountingSystem.EXTERNAL))
+        @if (!AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
         { 
         <table cellspacing="0" cellpadding="0" border="0">
             <tbody>

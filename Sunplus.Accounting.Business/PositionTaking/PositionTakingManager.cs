@@ -339,6 +339,10 @@ namespace Sunplus.Accounting.Business.PositionTaking
                 var custPT = new Dictionary<string, double>();
 
                 string tplSetting = WebUtils.LoadTemplate(TPL_FINANCE_SETTING);
+                if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
+                {
+                    TemplateHandler.RemoveBlock(ref tplSetting, "HideUpdate");
+                }
                 var accountType = (Globals.AccountType)(roleId);
                 DbResult data = null;
                 switch (ptType)

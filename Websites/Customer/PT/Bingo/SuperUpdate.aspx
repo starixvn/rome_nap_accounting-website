@@ -1,4 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="SuperUpdate.aspx.cs"
+﻿<%@ Import Namespace="Fanex.Tarus.Infrastructure.Common" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="SuperUpdate.aspx.cs"
     Inherits="Customer_Bingo_SuperUpdate" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -48,5 +49,12 @@
         </div>
     </div>
     </form>
+     <script language="javascript" type="text/javascript">
+         var currentSystem = '<%= AppSession.CurrentSystemNAME %>'
+         var isHideUpdate = false;
+         if (currentSystem == '<%=Enumerations.AccountingSystem.EXTERNAL %>') {
+             isHideUpdate = true;
+         }
+    </script>
 </body>
 </html>

@@ -3,6 +3,7 @@
 <%@ Import Namespace="Sunplus.Accounting.Core.Configurations" %>
 <%@ Import Namespace="Sunplus.Accounting.Core.Helper" %>
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -116,7 +117,9 @@
                     </tr>
                     {{/each}}
                 </table>
-                <input type="button" class="btnUpdateSetting" value="Update" data-bind="enable: isAllowUpdate, click: function(){editSuper.updateLiveCasino(0)}" />
+                {{if(isHideUpdate == 0)}}
+                    <input type="button" class="btnUpdateSetting" value="Update" data-bind="enable: isAllowUpdate, click: function(){editSuper.updateLiveCasino(0)}" />
+                {{/if}}
 
             </script>
         </div>
@@ -133,17 +136,17 @@
     <script src="script/EditSuper.js?ver=<%=WebSettings.Version%>" type="text/javascript"></script>
     
     <script language="javascript" type="text/javascript">
-        
         editSuper.superId = <%=CustId %>;
         editSuper.exchangeId = <%=ExchangeId %>;
         var userId = <%=AppSession.AccId %>;
+        var currentSystemName = '<%=AppSession.CurrentSystemNAME%>';
+        var isHideUpdate = (currentSystemName == '<%=Enumerations.AccountingSystem.EXTERNAL %>' ? 1 : 0);        
+        console.log(isHideUpdate);
         var ip = '<%=Utils.GetClientIP() %>';
         editSuper.requestContext.IsAddNewSuper = <%=IsAddNew %> ;
         editSuper.msgUncheckBettingLimit = '<%= Resources.Language.UnCheckBettingLimit%>' ;
         editSuper.requestContext.SuperId =  <%=CustId %>;        
         
     </script>
-    
-    
 </body>
 </html>
