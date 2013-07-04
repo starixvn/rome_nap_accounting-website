@@ -107,7 +107,7 @@
                     <tr>   
                     {{/each}}                
                 </table>
-                  {{if(!isHideUpdate)}}
+                  {{if(isHideUpdate == 0)}}
                      <input type="button" class="btnUpdateSetting" value="Update" data-bind="enable: isAllowUpdate, event:{click:updatePocker}" />
                 {{/if}}
                
@@ -131,11 +131,8 @@
         var roleId=<%=roleId%>;
         var isDisabled=<%=isDisabled%>;
         var msgDisabled='<%=msgDisabled%>';
-        var isHideUpdate = false;
-        if('<%=AppSession.CurrentSystemNAME %>' == '<%=Enumerations.AccountingSystem.EXTERNAL %>')
-        {
-            isHideUpdate = true;
-        }
+        var currentSystemName = '<%=AppSession.CurrentSystemNAME %>';
+       var isHideUpdate = (currentSystemName == '<%=Enumerations.AccountingSystem.EXTERNAL %>' ? 1 : 0); 
         $(function () {
             pokerData.getCustomerSetting(custId,roleId);
         });

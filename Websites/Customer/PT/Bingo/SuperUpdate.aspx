@@ -51,10 +51,8 @@
     </form>
      <script language="javascript" type="text/javascript">
          var currentSystem = '<%= AppSession.CurrentSystemNAME %>'
-         var isHideUpdate = false;
-         if (currentSystem == '<%=Enumerations.AccountingSystem.EXTERNAL %>') {
-             isHideUpdate = true;
-         }
+         var isHideUpdate = (currentSystem == '<%=Enumerations.AccountingSystem.EXTERNAL %>' ? 1 : 0);
+         
     </script>
 </body>
 </html>
