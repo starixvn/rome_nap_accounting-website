@@ -74,63 +74,32 @@ namespace Fanex.Tarus.Reports.Controllers.WinLoss
             {
                 var winloss = new TreeWinLoss();
                 var title = string.Empty;
+
+                winloss = _treeWinLossService.GetTreeWinLossReport(fromDate,
+                                           toDate,
+                                           uplineId,
+                                           isShowSB,
+                                           isShowNG,
+                                           isShowRB,
+                                           isShowLCS,
+                                           isShowCS,
+                                           isShowP2P,
+                                           isShowBI,
+                                           isShowVS,reportType);
+
                 switch (reportType)
                 {
                     case 1://get all supers by currency
                         title = string.Format("Super Win Loss ({0} currency)", uplineName);
-                        winloss = _treeWinLossService.GetTreeWinLossReportByCurrency(fromDate,
-                                            toDate,
-                                            uplineId,
-                                            isShowSB,
-                                            isShowNG,
-                                            isShowRB,
-                                            isShowLCS,
-                                            isShowCS,
-                                            isShowP2P,
-                                            isShowBI,
-                                            isShowVS);
                         break;
                     case 2://get all masters by superid
                         title = string.Format("Master Win Loss (Super {0})", uplineName);
-                        winloss = _treeWinLossService.GetTreeWinLossReportBySuper(fromDate,
-                                            toDate,
-                                            uplineId,
-                                            isShowSB,
-                                            isShowNG,
-                                            isShowRB,
-                                            isShowLCS,
-                                            isShowCS,
-                                            isShowP2P,
-                                            isShowBI,
-                                            isShowVS);
                         break;
                     case 3://get all agents by master id
                         title = string.Format("Agent Win Loss (Master {0})", uplineName);
-                        winloss = _treeWinLossService.GetTreeWinLossReportByMaster(fromDate,
-                                            toDate,
-                                            uplineId,
-                                            isShowSB,
-                                            isShowNG,
-                                            isShowRB,
-                                            isShowLCS,
-                                            isShowCS,
-                                            isShowP2P,
-                                            isShowBI,
-                                            isShowVS);
                         break;
                     case 4://get all members by agent id
                         title = string.Format("Member Win Loss (Agent {0})", uplineName);
-                        winloss = _treeWinLossService.GetTreeWinLossReportByAgent(fromDate,
-                                            toDate,
-                                            uplineId,
-                                            isShowSB,
-                                            isShowNG,
-                                            isShowRB,
-                                            isShowLCS,
-                                            isShowCS,
-                                            isShowP2P,
-                                            isShowBI,
-                                            isShowVS);
                         break;
                     default:
                         break;

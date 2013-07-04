@@ -409,8 +409,8 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
         }
         #endregion
 
-        #region Currency
-        public TreeWinLoss GetTreeWinLossReportByCurrency(string fromDate,
+        #region Custom
+        public TreeWinLoss GetTreeWinLossReport(string fromDate,
                                                 string toDate,
                                                 int currency,
                                                 bool isShowSB,
@@ -420,7 +420,8 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                                                 bool isShowCS,
                                                 bool isShowP2P,
                                                 bool isShowBI,
-                                                bool isShowVS)
+                                                bool isShowVS,
+                                              int reportType)
         {
             var winlossModel = new TreeWinLoss();
             AppSession.AddSession(HttpContext.Current.Session, _treeWinLossSessionKey, null);
@@ -432,7 +433,7 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                 Task<TreeWinLoss>[] tasks = new Task<TreeWinLoss>[2];
                 if (CastAide.AsDateTime(toDate) > moveBetsDay && CastAide.AsDateTime(fromDate) > moveBetsDay)
                 {
-                    winloss14 = GetTreeWinLossReportByCurrency_DateRange(
+                    winloss14 = GetTreeWinLossReportCustom_DateRange(
                                                                  fromDate,
                                                                  toDate,
                                                                  currency,
@@ -443,11 +444,11 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                                                                  isShowCS,
                                                                  isShowP2P,
                                                                  isShowBI,
-                                                                 isShowVS, false);
+                                                                 isShowVS, false, reportType);
                 }
                 else if (CastAide.AsDateTime(toDate) <= moveBetsDay && CastAide.AsDateTime(fromDate) <= moveBetsDay)
                 {
-                    winlossWH = GetTreeWinLossReportByCurrency_DateRange(
+                    winlossWH = GetTreeWinLossReportCustom_DateRange(
                                                                 fromDate,
                                                                 toDate,
                                                                 currency,
@@ -458,7 +459,7 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                                                                 isShowCS,
                                                                 isShowP2P,
                                                                 isShowBI,
-                                                                isShowVS, true);
+                                                                isShowVS, true, reportType);
                 }
                 else
                 {
@@ -466,7 +467,7 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                     {
                         tasks[0] = Task<TreeWinLoss>.Factory.StartNew(() =>
                         {
-                            return GetTreeWinLossReportByCurrency_DateRange(
+                            return GetTreeWinLossReportCustom_DateRange(
                                                                  moveBetsDay.AddDays(1).ToString(),
                                                                  toDate,
                                                                  currency,
@@ -477,7 +478,7 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                                                                  isShowCS,
                                                                  isShowP2P,
                                                                  isShowBI,
-                                                                 isShowVS, false);
+                                                                 isShowVS, false, reportType);
                         });
                     }
                     else
@@ -492,7 +493,7 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                     {
                         tasks[1] = Task<TreeWinLoss>.Factory.StartNew(() =>
                         {
-                            return GetTreeWinLossReportByCurrency_DateRange(
+                            return GetTreeWinLossReportCustom_DateRange(
                                                                 fromDate,
                                                                 moveBetsDay.ToString(),
                                                                 currency,
@@ -503,7 +504,7 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                                                                 isShowCS,
                                                                 isShowP2P,
                                                                 isShowBI,
-                                                                isShowVS, true);
+                                                                isShowVS, true, reportType);
                         });
                     }
                     else
@@ -566,7 +567,7 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
             return winlossModel;
         }
 
-        private TreeWinLoss GetTreeWinLossReportByCurrency_DateRange(string fromDate,
+        private TreeWinLoss GetTreeWinLossReportCustom_DateRange(string fromDate,
                                                 string toDate,
                                                 int currency,
                                                 bool isShowSB,
@@ -577,12 +578,13 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                                                 bool isShowP2P,
                                                 bool isShowBI,
                                                 bool isShowVS,
-                                                bool isWarehouse)
+                                                bool isWarehouse,
+                                                int reportType)
         {
             var winloss = new TreeWinLoss();
             try
             {
-                var getReport = _treeWinLossDataAccess.GetTreeWinLossReportByCurrency(
+                var getReport = _treeWinLossDataAccess.GetTreeWinLossReport(
                                                             fromDate,
                                                             toDate,
                                                             currency,
@@ -594,7 +596,8 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                                                             isShowP2P,
                                                             isShowBI,
                                                             isShowVS,
-                                                            isWarehouse);
+                                                            isWarehouse, 
+                                                            reportType);
 
                 double baseRMTotal = 0, baseRMTurnover = 0, baseRMVirtualTotal = 0, baseRMVirtualTO = 0, baseRMTOVariancePlus = 0, baseRMTOVarianceMinus = 0, baseRMWLVariancePlus = 0, baseRMWLVarianceMinus = 0;
                 double _baseRMTotal = 0, _baseRMTurnover = 0, _baseRMVirtualTotal = 0, _baseRMVirtualTO = 0, _baseRMTOVariancePlus = 0, _baseRMTOVarianceMinus = 0, _baseRMWLVariancePlus = 0, _baseRMWLVarianceMinus = 0;
@@ -603,7 +606,25 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                 {
                     var tbWinLoss = getReport.Tables[0];
                     winloss.WinLoss = new List<TreeWinLossDetail>();
-                    
+
+                    string IDMap = string.Empty;
+                    switch (reportType)
+                    {
+                        case 1://get all supers by currency
+                            IDMap = "srecommend";
+                            break;
+                        case 2://get all masters by superid
+                            IDMap = "mrecommend";
+                            break;
+                        case 3://get all agents by master id
+                            IDMap = "recommend";
+                            break;
+                        case 4://get all members by agent id
+                            IDMap = "custid";
+                            break;
+                        default:
+                            break;
+                    }
                     foreach (DataRow winlossDetail in tbWinLoss.Rows)
                     {
                         _baseRMTotal = CastAide.AsDouble(winlossDetail["totalrm"]);
@@ -632,855 +653,7 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                         winloss.WinLoss.Add(
                             new TreeWinLossDetail()
                             {
-                                Id = string.Format("{0}", winlossDetail["srecommend"]),
-                                Title = string.Format("{0}", winlossDetail["username"]),
-                                Turnover = CastAide.AsDouble(winlossDetail["turnover"]),
-                                WinLoss = CastAide.AsDouble(winlossDetail["winloss"]),
-                                Comm = CastAide.AsDouble(winlossDetail["commission"]),
-                                Total = CastAide.AsDouble(winlossDetail["total"]),
-
-                                BaseRMTurnover = _baseRMTurnover,
-                                BaseRMTotal = _baseRMTotal,
-                                BaseRMTOVariancePlus = _baseRMTOVariancePlus,
-                                BaseRMTOVarianceMinus = _baseRMTOVarianceMinus,
-                                BaseRMWLVariancePlus = _baseRMWLVariancePlus,
-                                BaseRMWLVarianceMinus = _baseRMWLVarianceMinus,
-                                BaseRMVirtualTotal = _baseRMVirtualTotal,
-                                BaseRMVirtualTurnover = _baseRMVirtualTO,
-                                
-                                //Margin = margin,
-
-                                VirtualRate = CastAide.AsDouble(winlossDetail["virtualrate"]),
-                            });
-                        #endregion
-                    }
-
-                    #region Total
-                    //double margin_total = baseRMVirtualTO == 0 ? 0 : baseRMVirtualTotal / baseRMVirtualTO * 100;
-                    winloss.Total = new TreeWinLossDetail()
-                    {
-                        Id = string.Empty,
-                        Title = string.Empty,
-                        Turnover = 0,
-                        WinLoss = 0,
-                        Comm = 0,
-                        Total = 0,
-
-                        BaseRMTurnover = baseRMTurnover,
-                        BaseRMTotal = baseRMTotal,
-                        BaseRMTOVariancePlus = baseRMTOVariancePlus,
-                        BaseRMTOVarianceMinus = baseRMTOVarianceMinus,
-                        BaseRMWLVariancePlus = baseRMWLVariancePlus,
-                        BaseRMWLVarianceMinus = baseRMWLVarianceMinus,
-                        BaseRMVirtualTotal = baseRMVirtualTotal,
-                        BaseRMVirtualTurnover = baseRMVirtualTO,
-                        //Margin = margin_total
-                    };
-                    #endregion
-                }
-
-                winloss.WinLoss = winloss.WinLoss.OrderBy(c => c.Title).ToList();
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-            }
-            return winloss;
-        }
-        #endregion
-
-        #region Super
-        public TreeWinLoss GetTreeWinLossReportBySuper(string fromDate,
-                                                string toDate,
-                                                int superId,
-                                                bool isShowSB,
-                                                bool isShowNG,
-                                                bool isShowRB,
-                                                bool isShowLCS,
-                                                bool isShowCS,
-                                                bool isShowP2P,
-                                                bool isShowBI,
-                                                bool isShowVS)
-        {
-            var winlossModel = new TreeWinLoss();
-            AppSession.AddSession(HttpContext.Current.Session, _treeWinLossSessionKey, null);
-            try
-            {
-                var winloss14 = new TreeWinLoss();
-                var winlossWH = new TreeWinLoss();
-
-                Task<TreeWinLoss>[] tasks = new Task<TreeWinLoss>[2];
-                if (CastAide.AsDateTime(toDate) > moveBetsDay && CastAide.AsDateTime(fromDate) > moveBetsDay)
-                {
-                    winloss14 = GetTreeWinLossReportBySuper_DateRange(
-                                                                 fromDate,
-                                                                  toDate,
-                                                                  superId,
-                                                                  isShowSB,
-                                                                  isShowNG,
-                                                                  isShowRB,
-                                                                  isShowLCS,
-                                                                  isShowCS,
-                                                                  isShowP2P,
-                                                                  isShowBI,
-                                                                  isShowVS, false);
-                }
-                else if (CastAide.AsDateTime(toDate) <= moveBetsDay && CastAide.AsDateTime(fromDate) <= moveBetsDay)
-                {
-                    winlossWH = GetTreeWinLossReportBySuper_DateRange(
-                                                                fromDate,
-                                                                toDate,
-                                                                superId,
-                                                                isShowSB,
-                                                                isShowNG,
-                                                                isShowRB,
-                                                                isShowLCS,
-                                                                isShowCS,
-                                                                isShowP2P,
-                                                                isShowBI,
-                                                                isShowVS, true);
-                }
-                else
-                {
-                    if (CastAide.AsDateTime(toDate) >= moveBetsDay)
-                    {
-                        tasks[0] = Task<TreeWinLoss>.Factory.StartNew(() =>
-                        {
-                            return GetTreeWinLossReportBySuper_DateRange(
-                                                                moveBetsDay.AddDays(1).ToString(),
-                                                                 toDate,
-                                                                 superId,
-                                                                 isShowSB,
-                                                                 isShowNG,
-                                                                 isShowRB,
-                                                                 isShowLCS,
-                                                                 isShowCS,
-                                                                 isShowP2P,
-                                                                 isShowBI,
-                                                                 isShowVS, false);
-                        });
-                    }
-                    else
-                    {
-                        tasks[0] = Task<TreeWinLoss>.Factory.StartNew(() =>
-                        {
-                            return new TreeWinLoss();
-                        });
-                    }
-
-                    if (CastAide.AsDateTime(fromDate) < moveBetsDay)
-                    {
-                        tasks[1] = Task<TreeWinLoss>.Factory.StartNew(() =>
-                        {
-                            return GetTreeWinLossReportBySuper_DateRange(
-                                                                fromDate,
-                                                                moveBetsDay.ToString(),
-                                                                superId,
-                                                                isShowSB,
-                                                                isShowNG,
-                                                                isShowRB,
-                                                                isShowLCS,
-                                                                isShowCS,
-                                                                isShowP2P,
-                                                                isShowBI,
-                                                                isShowVS, true);
-                        });
-                    }
-                    else
-                    {
-                        tasks[1] = Task<TreeWinLoss>.Factory.StartNew(() =>
-                        {
-                            return new TreeWinLoss();
-                        });
-                    }
-
-                    Task.WaitAll(tasks);
-
-                    winlossWH = tasks[1].Result;
-                    winloss14 = tasks[0].Result;
-                }
-                List<TreeWinLossDetail> treeWinlossListTmp = new List<TreeWinLossDetail>();
-                treeWinlossListTmp = winloss14.WinLoss.Concat(winlossWH.WinLoss).ToList();
-
-                winlossModel.WinLoss = treeWinlossListTmp.GroupBy(x => new { x.Id, x.Title, x.VirtualRate })
-                                               .Select(y => new TreeWinLossDetail
-                                               {
-                                                   Id = string.Format("{0}", y.Key.Id),
-                                                   Title = y.Key.Title,
-                                                   Turnover = y.Sum(x => x.Turnover),
-                                                   WinLoss = y.Sum(x => x.WinLoss),
-                                                   Comm = y.Sum(x => x.Comm),
-                                                   Total = y.Sum(x => x.Total),
-                                                   BaseRMTurnover = y.Sum(x => x.BaseRMTurnover),
-                                                   BaseRMTotal = y.Sum(x => x.BaseRMTotal),
-                                                   BaseRMVirtualTurnover = y.Sum(x => x.BaseRMVirtualTurnover),
-                                                   BaseRMVirtualTotal = y.Sum(x => x.BaseRMVirtualTotal),
-                                                   BaseRMTOVariancePlus = y.Sum(x => x.BaseRMTOVariancePlus),
-                                                   BaseRMTOVarianceMinus = y.Sum(x => x.BaseRMTOVarianceMinus),
-                                                   BaseRMWLVariancePlus = y.Sum(x => x.BaseRMWLVariancePlus),
-                                                   BaseRMWLVarianceMinus = y.Sum(x => x.BaseRMWLVarianceMinus),
-                                                   VirtualRate = y.Sum(x => x.VirtualRate),
-                                                   Margin = y.Sum(x => x.BaseRMVirtualTurnover) == 0 ? 0 : (y.Sum(x => x.BaseRMVirtualTotal) / y.Sum(x => x.BaseRMVirtualTurnover) * 100)
-                                               }).ToList();
-
-                winlossModel.Total.BaseRMTurnover = winloss14.Total.BaseRMTurnover + winlossWH.Total.BaseRMTurnover;
-                winlossModel.Total.BaseRMTotal = winloss14.Total.BaseRMTotal + winlossWH.Total.BaseRMTotal;
-                winlossModel.Total.BaseRMVirtualTotal = winloss14.Total.BaseRMVirtualTotal + winlossWH.Total.BaseRMVirtualTotal;
-                winlossModel.Total.BaseRMTurnover = winloss14.Total.BaseRMTurnover + winlossWH.Total.BaseRMTurnover;
-                winlossModel.Total.BaseRMTotal = winloss14.Total.BaseRMTotal + winlossWH.Total.BaseRMTotal;
-                winlossModel.Total.BaseRMVirtualTotal = winloss14.Total.BaseRMVirtualTotal + winlossWH.Total.BaseRMVirtualTotal;
-                winlossModel.Total.BaseRMVirtualTurnover = winloss14.Total.BaseRMVirtualTurnover + winlossWH.Total.BaseRMVirtualTurnover;
-                winlossModel.Total.BaseRMTOVariancePlus = winloss14.Total.BaseRMTOVariancePlus + winlossWH.Total.BaseRMTOVariancePlus;
-                winlossModel.Total.BaseRMTOVarianceMinus = winloss14.Total.BaseRMTOVarianceMinus + winlossWH.Total.BaseRMTOVarianceMinus;
-                winlossModel.Total.BaseRMWLVariancePlus = winloss14.Total.BaseRMWLVariancePlus + winlossWH.Total.BaseRMWLVariancePlus;
-                winlossModel.Total.BaseRMWLVarianceMinus = winloss14.Total.BaseRMWLVarianceMinus + winlossWH.Total.BaseRMWLVarianceMinus;
-                winlossModel.Total.Margin = winlossModel.Total.BaseRMVirtualTurnover == 0 ? 0 : (winlossModel.Total.BaseRMVirtualTotal / winlossModel.Total.BaseRMVirtualTurnover * 100);
-
-                AppSession.AddSession(HttpContext.Current.Session, _treeWinLossSessionKey, winlossModel);
-
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-            }
-            return winlossModel;
-        }
-
-        private TreeWinLoss GetTreeWinLossReportBySuper_DateRange(string fromDate,
-                                                string toDate,
-                                                int superId,
-                                                bool isShowSB,
-                                                bool isShowNG,
-                                                bool isShowRB,
-                                                bool isShowLCS,
-                                                bool isShowCS,
-                                                bool isShowP2P,
-                                                bool isShowBI,
-                                                bool isShowVS,
-                                                bool isWarehouse)
-        {
-            var winloss = new TreeWinLoss();
-            try
-            {
-                var getReport = _treeWinLossDataAccess.GetTreeWinLossReportBySuper(
-                                                            fromDate,
-                                                            toDate,
-                                                            superId,
-                                                            isShowSB,
-                                                            isShowNG,
-                                                            isShowRB,
-                                                            isShowLCS,
-                                                            isShowCS,
-                                                            isShowP2P,
-                                                            isShowBI,
-                                                            isShowVS,
-                                                            isWarehouse);
-
-                double baseRMTotal = 0, baseRMTurnover = 0, baseRMVirtualTotal = 0, baseRMVirtualTO = 0, baseRMTOVariancePlus = 0, baseRMTOVarianceMinus = 0, baseRMWLVariancePlus = 0, baseRMWLVarianceMinus = 0;
-                double _baseRMTotal = 0, _baseRMTurnover = 0, _baseRMVirtualTotal = 0, _baseRMVirtualTO = 0, _baseRMTOVariancePlus = 0, _baseRMTOVarianceMinus = 0, _baseRMWLVariancePlus = 0, _baseRMWLVarianceMinus = 0;
-
-                if (getReport != null && getReport.Tables != null && getReport.Tables.Count > 0 && getReport.Tables[0].Rows.Count > 0)
-                {
-                    var tbWinLoss = getReport.Tables[0];
-                    winloss.WinLoss = new List<TreeWinLossDetail>();
-                    
-                    foreach (DataRow winlossDetail in tbWinLoss.Rows)
-                    {
-                        _baseRMTotal = CastAide.AsDouble(winlossDetail["totalrm"]);
-                        _baseRMTurnover = CastAide.AsDouble(winlossDetail["turnoverrm"]);
-                        _baseRMVirtualTO = CastAide.AsDouble(winlossDetail["Virtual_Turnover"]);
-                        _baseRMVirtualTotal = CastAide.AsDouble(winlossDetail["virtual_total"]);
-
-                        _baseRMTOVariancePlus = CastAide.AsDouble(winlossDetail["TOVariance+"]);
-                        _baseRMTOVarianceMinus = CastAide.AsDouble(winlossDetail["TOVariance-"]);
-                        _baseRMWLVariancePlus = CastAide.AsDouble(winlossDetail["WLVariance+"]);
-                        _baseRMWLVarianceMinus = CastAide.AsDouble(winlossDetail["WLVariance-"]);
-
-
-
-                        baseRMTotal += _baseRMTotal;
-                        baseRMTurnover += _baseRMTurnover;
-                        baseRMVirtualTO += _baseRMVirtualTO;
-                        baseRMVirtualTotal += _baseRMVirtualTotal;
-
-                        baseRMTOVariancePlus += _baseRMTOVariancePlus;
-                        baseRMTOVarianceMinus += _baseRMTOVarianceMinus;
-                        baseRMWLVariancePlus += _baseRMWLVariancePlus;
-                        baseRMWLVarianceMinus += _baseRMWLVarianceMinus;
-
-                        //double margin = _baseRMVirtualTO == 0 ? 0 : _baseRMVirtualTotal / _baseRMVirtualTO * 100;
-
-                        #region wl detail
-                        winloss.WinLoss.Add(
-                            new TreeWinLossDetail()
-                            {
-                                Id = string.Format("{0}", winlossDetail["mrecommend"]),
-                                Title = string.Format("{0}", winlossDetail["username"]),
-                                Turnover = CastAide.AsDouble(winlossDetail["turnover"]),
-                                WinLoss = CastAide.AsDouble(winlossDetail["winloss"]),
-                                Comm = CastAide.AsDouble(winlossDetail["commission"]),
-                                Total = CastAide.AsDouble(winlossDetail["total"]),
-
-                                BaseRMTurnover = _baseRMTurnover,
-                                BaseRMTotal = _baseRMTotal,
-                                BaseRMTOVariancePlus = _baseRMTOVariancePlus,
-                                BaseRMTOVarianceMinus = _baseRMTOVarianceMinus,
-                                BaseRMWLVariancePlus = _baseRMWLVariancePlus,
-                                BaseRMWLVarianceMinus = _baseRMWLVarianceMinus,
-                                BaseRMVirtualTotal = _baseRMVirtualTotal,
-                                BaseRMVirtualTurnover = _baseRMVirtualTO,
-
-                                //Margin = margin,
-
-                                VirtualRate = CastAide.AsDouble(winlossDetail["virtualrate"]),
-                            });
-                        #endregion
-                    }
-
-                    #region Total
-                    //double margin_total = baseRMVirtualTO == 0 ? 0 : baseRMVirtualTotal / baseRMVirtualTO * 100;
-                    winloss.Total = new TreeWinLossDetail()
-                    {
-                        Id = string.Empty,
-                        Title = string.Empty,
-                        Turnover = 0,
-                        WinLoss = 0,
-                        Comm = 0,
-                        Total = 0,
-
-                        BaseRMTurnover = baseRMTurnover,
-                        BaseRMTotal = baseRMTotal,
-                        BaseRMTOVariancePlus = baseRMTOVariancePlus,
-                        BaseRMTOVarianceMinus = baseRMTOVarianceMinus,
-                        BaseRMWLVariancePlus = baseRMWLVariancePlus,
-                        BaseRMWLVarianceMinus = baseRMWLVarianceMinus,
-                        BaseRMVirtualTotal = baseRMVirtualTotal,
-                        BaseRMVirtualTurnover = baseRMVirtualTO,
-                        
-                        //Margin = margin_total
-                    };
-                    #endregion
-                }
-                
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-            }
-            return winloss;
-        }
-        #endregion
-
-        #region Master
-        public TreeWinLoss GetTreeWinLossReportByMaster(string fromDate,
-                                                string toDate,
-                                                int masterId,
-                                                bool isShowSB,
-                                                bool isShowNG,
-                                                bool isShowRB,
-                                                bool isShowLCS,
-                                                bool isShowCS,
-                                                bool isShowP2P,
-                                                bool isShowBI,
-                                                bool isShowVS)
-        {
-            var winlossModel = new TreeWinLoss();
-            AppSession.AddSession(HttpContext.Current.Session, _treeWinLossSessionKey, null);
-            try
-            {
-                var winloss14 = new TreeWinLoss();
-                var winlossWH = new TreeWinLoss();
-
-                Task<TreeWinLoss>[] tasks = new Task<TreeWinLoss>[2];
-                if (CastAide.AsDateTime(toDate) > moveBetsDay && CastAide.AsDateTime(fromDate) > moveBetsDay)
-                {
-                    winloss14 = GetTreeWinLossReportByMaster_DateRange(
-                                                                   fromDate,
-                                                                  toDate,
-                                                                  masterId,
-                                                                  isShowSB,
-                                                                  isShowNG,
-                                                                  isShowRB,
-                                                                  isShowLCS,
-                                                                  isShowCS,
-                                                                  isShowP2P,
-                                                                  isShowBI,
-                                                                  isShowVS, false);
-                }
-                else if (CastAide.AsDateTime(toDate) <= moveBetsDay && CastAide.AsDateTime(fromDate) <= moveBetsDay)
-                {
-                    winlossWH = GetTreeWinLossReportByMaster_DateRange(
-                                                                fromDate,
-                                                                toDate,
-                                                                masterId,
-                                                                isShowSB,
-                                                                isShowNG,
-                                                                isShowRB,
-                                                                isShowLCS,
-                                                                isShowCS,
-                                                                isShowP2P,
-                                                                isShowBI,
-                                                                isShowVS, true);
-                }
-                else
-                {
-                    if (CastAide.AsDateTime(toDate) >= moveBetsDay)
-                    {
-                        tasks[0] = Task<TreeWinLoss>.Factory.StartNew(() =>
-                        {
-                            return GetTreeWinLossReportByMaster_DateRange(
-                                                                  moveBetsDay.AddDays(1).ToString(),
-                                                                 toDate,
-                                                                 masterId,
-                                                                 isShowSB,
-                                                                 isShowNG,
-                                                                 isShowRB,
-                                                                 isShowLCS,
-                                                                 isShowCS,
-                                                                 isShowP2P,
-                                                                 isShowBI,
-                                                                 isShowVS, false);
-                        });
-                    }
-                    else
-                    {
-                        tasks[0] = Task<TreeWinLoss>.Factory.StartNew(() =>
-                        {
-                            return new TreeWinLoss();
-                        });
-                    }
-
-                    if (CastAide.AsDateTime(fromDate) < moveBetsDay)
-                    {
-                        tasks[1] = Task<TreeWinLoss>.Factory.StartNew(() =>
-                        {
-                            return GetTreeWinLossReportByMaster_DateRange(
-                                                                fromDate,
-                                                                moveBetsDay.ToString(),
-                                                                 masterId,
-                                                                isShowSB,
-                                                                isShowNG,
-                                                                isShowRB,
-                                                                isShowLCS,
-                                                                isShowCS,
-                                                                isShowP2P,
-                                                                isShowBI,
-                                                                isShowVS, true);
-                        });
-                    }
-                    else
-                    {
-                        tasks[1] = Task<TreeWinLoss>.Factory.StartNew(() =>
-                        {
-                            return new TreeWinLoss();
-                        });
-                    }
-
-                    Task.WaitAll(tasks);
-
-                    winlossWH = tasks[1].Result;
-                    winloss14 = tasks[0].Result;
-                }
-                List<TreeWinLossDetail> treeWinlossListTmp = new List<TreeWinLossDetail>();
-                treeWinlossListTmp = winloss14.WinLoss.Concat(winlossWH.WinLoss).ToList();
-
-                winlossModel.WinLoss = treeWinlossListTmp.GroupBy(x => new { x.Id, x.Title, x.VirtualRate })
-                                               .Select(y => new TreeWinLossDetail
-                                               {
-                                                   Id = string.Format("{0}", y.Key.Id),
-                                                   Title = y.Key.Title,
-                                                   Turnover = y.Sum(x => x.Turnover),
-                                                   WinLoss = y.Sum(x => x.WinLoss),
-                                                   Comm = y.Sum(x => x.Comm),
-                                                   Total = y.Sum(x => x.Total),
-                                                   BaseRMTurnover = y.Sum(x => x.BaseRMTurnover),
-                                                   BaseRMTotal = y.Sum(x => x.BaseRMTotal),
-                                                   BaseRMVirtualTurnover = y.Sum(x => x.BaseRMVirtualTurnover),
-                                                   BaseRMVirtualTotal = y.Sum(x => x.BaseRMVirtualTotal),
-                                                   BaseRMTOVariancePlus = y.Sum(x => x.BaseRMTOVariancePlus),
-                                                   BaseRMTOVarianceMinus = y.Sum(x => x.BaseRMTOVarianceMinus),
-                                                   BaseRMWLVariancePlus = y.Sum(x => x.BaseRMWLVariancePlus),
-                                                   BaseRMWLVarianceMinus = y.Sum(x => x.BaseRMWLVarianceMinus),
-                                                   VirtualRate = y.Sum(x => x.VirtualRate),
-                                                   Margin = y.Sum(x => x.BaseRMVirtualTurnover) == 0 ? 0 : (y.Sum(x => x.BaseRMVirtualTotal) / y.Sum(x => x.BaseRMVirtualTurnover) * 100)
-                                               }).ToList();
-
-                winlossModel.Total.BaseRMTurnover = winloss14.Total.BaseRMTurnover + winlossWH.Total.BaseRMTurnover;
-                winlossModel.Total.BaseRMTotal = winloss14.Total.BaseRMTotal + winlossWH.Total.BaseRMTotal;
-                winlossModel.Total.BaseRMVirtualTotal = winloss14.Total.BaseRMVirtualTotal + winlossWH.Total.BaseRMVirtualTotal;
-                winlossModel.Total.BaseRMTurnover = winloss14.Total.BaseRMTurnover + winlossWH.Total.BaseRMTurnover;
-                winlossModel.Total.BaseRMTotal = winloss14.Total.BaseRMTotal + winlossWH.Total.BaseRMTotal;
-                winlossModel.Total.BaseRMVirtualTotal = winloss14.Total.BaseRMVirtualTotal + winlossWH.Total.BaseRMVirtualTotal;
-                winlossModel.Total.BaseRMVirtualTurnover = winloss14.Total.BaseRMVirtualTurnover + winlossWH.Total.BaseRMVirtualTurnover;
-                winlossModel.Total.BaseRMTOVariancePlus = winloss14.Total.BaseRMTOVariancePlus + winlossWH.Total.BaseRMTOVariancePlus;
-                winlossModel.Total.BaseRMTOVarianceMinus = winloss14.Total.BaseRMTOVarianceMinus + winlossWH.Total.BaseRMTOVarianceMinus;
-                winlossModel.Total.BaseRMWLVariancePlus = winloss14.Total.BaseRMWLVariancePlus + winlossWH.Total.BaseRMWLVariancePlus;
-                winlossModel.Total.BaseRMWLVarianceMinus = winloss14.Total.BaseRMWLVarianceMinus + winlossWH.Total.BaseRMWLVarianceMinus;
-                winlossModel.Total.Margin = winlossModel.Total.BaseRMVirtualTurnover == 0 ? 0 : (winlossModel.Total.BaseRMVirtualTotal / winlossModel.Total.BaseRMVirtualTurnover * 100);
-
-                AppSession.AddSession(HttpContext.Current.Session, _treeWinLossSessionKey, winlossModel);
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-            }
-            return winlossModel;
-        }
-
-        private TreeWinLoss GetTreeWinLossReportByMaster_DateRange(string fromDate,
-                                               string toDate,
-                                               int masterId,
-                                               bool isShowSB,
-                                               bool isShowNG,
-                                               bool isShowRB,
-                                               bool isShowLCS,
-                                               bool isShowCS,
-                                               bool isShowP2P,
-                                               bool isShowBI,
-                                               bool isShowVS,
-                                                bool isWarehouse)
-        {
-            var winloss = new TreeWinLoss();
-            try
-            {
-                var getReport = _treeWinLossDataAccess.GetTreeWinLossReportByMaster(
-                                                            fromDate,
-                                                            toDate,
-                                                            masterId,
-                                                            isShowSB,
-                                                            isShowNG,
-                                                            isShowRB,
-                                                            isShowLCS,
-                                                            isShowCS,
-                                                            isShowP2P,
-                                                            isShowBI,
-                                                            isShowVS,
-                                                            isWarehouse);
-
-                double baseRMTotal = 0, baseRMTurnover = 0, baseRMVirtualTotal = 0, baseRMVirtualTO = 0, baseRMTOVariancePlus = 0, baseRMTOVarianceMinus = 0, baseRMWLVariancePlus = 0, baseRMWLVarianceMinus = 0;
-                double _baseRMTotal = 0, _baseRMTurnover = 0, _baseRMVirtualTotal = 0, _baseRMVirtualTO = 0, _baseRMTOVariancePlus = 0, _baseRMTOVarianceMinus = 0, _baseRMWLVariancePlus = 0, _baseRMWLVarianceMinus = 0;
-
-                if (getReport != null && getReport.Tables != null && getReport.Tables.Count > 0 && getReport.Tables[0].Rows.Count > 0)
-                {
-                    var tbWinLoss = getReport.Tables[0];
-                    winloss.WinLoss = new List<TreeWinLossDetail>();
-                    
-                    foreach (DataRow winlossDetail in tbWinLoss.Rows)
-                    {
-                        _baseRMTotal = CastAide.AsDouble(winlossDetail["totalrm"]);
-                        _baseRMTurnover = CastAide.AsDouble(winlossDetail["turnoverrm"]);
-                        _baseRMVirtualTO = CastAide.AsDouble(winlossDetail["Virtual_Turnover"]);
-                        _baseRMVirtualTotal = CastAide.AsDouble(winlossDetail["virtual_total"]);
-
-                        _baseRMTOVariancePlus = CastAide.AsDouble(winlossDetail["TOVariance+"]);
-                        _baseRMTOVarianceMinus = CastAide.AsDouble(winlossDetail["TOVariance-"]);
-                        _baseRMWLVariancePlus = CastAide.AsDouble(winlossDetail["WLVariance+"]);
-                        _baseRMWLVarianceMinus = CastAide.AsDouble(winlossDetail["WLVariance-"]);
-
-
-                        baseRMTotal += _baseRMTotal;
-                        baseRMTurnover += _baseRMTurnover;
-                        baseRMVirtualTO += _baseRMVirtualTO;
-                        baseRMVirtualTotal += _baseRMVirtualTotal;
-
-                        baseRMTOVariancePlus += _baseRMTOVariancePlus;
-                        baseRMTOVarianceMinus += _baseRMTOVarianceMinus;
-                        baseRMWLVariancePlus += _baseRMWLVariancePlus;
-                        baseRMWLVarianceMinus += _baseRMWLVarianceMinus;
-
-                        //double margin = _baseRMVirtualTO == 0 ? 0 : _baseRMVirtualTotal / _baseRMVirtualTO * 100;
-
-                        #region wl detail
-                        winloss.WinLoss.Add(
-                            new TreeWinLossDetail()
-                            {
-                                Id = string.Format("{0}", winlossDetail["recommend"]),
-                                Title = string.Format("{0}", winlossDetail["username"]),
-                                Turnover = CastAide.AsDouble(winlossDetail["turnover"]),
-                                WinLoss = CastAide.AsDouble(winlossDetail["winloss"]),
-                                Comm = CastAide.AsDouble(winlossDetail["commission"]),
-                                Total = CastAide.AsDouble(winlossDetail["total"]),
-
-                                BaseRMTurnover = _baseRMTurnover,
-                                BaseRMTotal = _baseRMTotal,
-                                BaseRMTOVariancePlus = _baseRMTOVariancePlus,
-                                BaseRMTOVarianceMinus = _baseRMTOVarianceMinus,
-                                BaseRMWLVariancePlus = _baseRMWLVariancePlus,
-                                BaseRMWLVarianceMinus = _baseRMWLVarianceMinus,
-                                BaseRMVirtualTotal = _baseRMVirtualTotal,
-                                BaseRMVirtualTurnover = _baseRMVirtualTO,
-
-                                //Margin = margin,
-
-                                VirtualRate = CastAide.AsDouble(winlossDetail["virtualrate"]),
-                            });
-                        #endregion
-                    }
-
-                    #region Total
-                    //double margin_total = baseRMVirtualTO == 0 ? 0 : baseRMVirtualTotal / baseRMVirtualTO * 100;
-                    winloss.Total = new TreeWinLossDetail()
-                    {
-                        Id = string.Empty,
-                        Title = string.Empty,
-                        Turnover = 0,
-                        WinLoss = 0,
-                        Comm = 0,
-                        Total = 0,
-
-                        BaseRMTurnover = baseRMTurnover,
-                        BaseRMTotal = baseRMTotal,
-                        BaseRMTOVariancePlus = baseRMTOVariancePlus,
-                        BaseRMTOVarianceMinus = baseRMTOVarianceMinus,
-                        BaseRMWLVariancePlus = baseRMWLVariancePlus,
-                        BaseRMWLVarianceMinus = baseRMWLVarianceMinus,
-                        BaseRMVirtualTotal = baseRMVirtualTotal,
-                        BaseRMVirtualTurnover = baseRMVirtualTO,
-                        //Margin = margin_total
-
-                    };
-                    #endregion
-
-                    winloss.WinLoss = winloss.WinLoss.OrderBy(c => c.Title).ToList();
-                }
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-            }
-            return winloss;
-        }
-        #endregion
-
-        #region Agent
-        public TreeWinLoss GetTreeWinLossReportByAgent(string fromDate,
-                                                string toDate,
-                                                int agentId,
-                                                bool isShowSB,
-                                                bool isShowNG,
-                                                bool isShowRB,
-                                                bool isShowLCS,
-                                                bool isShowCS,
-                                                bool isShowP2P,
-                                                bool isShowBI,
-                                                bool isShowVS)
-        {
-            var winlossModel = new TreeWinLoss();
-            AppSession.AddSession(HttpContext.Current.Session, _treeWinLossSessionKey, null);
-            try
-            {
-                var winloss14 = new TreeWinLoss();
-                var winlossWH = new TreeWinLoss();
-
-                Task<TreeWinLoss>[] tasks = new Task<TreeWinLoss>[2];
-                if (CastAide.AsDateTime(toDate) > moveBetsDay && CastAide.AsDateTime(fromDate) > moveBetsDay)
-                {
-                    winloss14 = GetTreeWinLossReportByAgent_DateRange(
-                                                                 fromDate,
-                                                                  toDate,
-                                                                  agentId,
-                                                                  isShowSB,
-                                                                  isShowNG,
-                                                                  isShowRB,
-                                                                  isShowLCS,
-                                                                  isShowCS,
-                                                                  isShowP2P,
-                                                                  isShowBI,
-                                                                  isShowVS,
-                                                                  false);
-                }
-                else if (CastAide.AsDateTime(toDate) <= moveBetsDay && CastAide.AsDateTime(fromDate) <= moveBetsDay)
-                {
-                    winlossWH = GetTreeWinLossReportByAgent_DateRange(
-                                                                fromDate,
-                                                                toDate,
-                                                                agentId,
-                                                                isShowSB,
-                                                                isShowNG,
-                                                                isShowRB,
-                                                                isShowLCS,
-                                                                isShowCS,
-                                                                isShowP2P,
-                                                                isShowBI,
-                                                                isShowVS,
-                                                                true);
-                }
-                else
-                {
-                    if (CastAide.AsDateTime(toDate) >= moveBetsDay)
-                    {
-                        tasks[0] = Task<TreeWinLoss>.Factory.StartNew(() =>
-                        {
-                            return GetTreeWinLossReportByAgent_DateRange(
-                                                                moveBetsDay.AddDays(1).ToString(),
-                                                                 toDate,
-                                                                 agentId,
-                                                                 isShowSB,
-                                                                 isShowNG,
-                                                                 isShowRB,
-                                                                 isShowLCS,
-                                                                 isShowCS,
-                                                                 isShowP2P,
-                                                                 isShowBI,
-                                                                 isShowVS,
-                                                                 false);
-                        });
-                    }
-                    else
-                    {
-                        tasks[0] = Task<TreeWinLoss>.Factory.StartNew(() =>
-                        {
-                            return new TreeWinLoss();
-                        });
-                    }
-
-                    if (CastAide.AsDateTime(fromDate) < moveBetsDay)
-                    {
-                        tasks[1] = Task<TreeWinLoss>.Factory.StartNew(() =>
-                        {
-                            return GetTreeWinLossReportByAgent_DateRange(
-                                                                fromDate,
-                                                                moveBetsDay.ToString(),
-                                                                agentId,
-                                                                isShowSB,
-                                                                isShowNG,
-                                                                isShowRB,
-                                                                isShowLCS,
-                                                                isShowCS,
-                                                                isShowP2P,
-                                                                isShowBI,
-                                                                isShowVS,
-                                                                true);
-                        });
-                    }
-                    else
-                    {
-                        tasks[1] = Task<TreeWinLoss>.Factory.StartNew(() =>
-                        {
-                            return new TreeWinLoss();
-                        });
-                    }
-
-                    Task.WaitAll(tasks);
-
-                    winlossWH = tasks[1].Result;
-                    winloss14 = tasks[0].Result;
-                }
-                List<TreeWinLossDetail> treeWinlossListTmp = new List<TreeWinLossDetail>();
-                treeWinlossListTmp = winloss14.WinLoss.Concat(winlossWH.WinLoss).ToList();
-
-                winlossModel.WinLoss = treeWinlossListTmp.GroupBy(x => new { x.Id, x.Title, x.VirtualRate })
-                                               .Select(y => new TreeWinLossDetail
-                                               {
-
-                                                   Id = string.Format("{0}", y.Key.Id),
-                                                   Title = y.Key.Title,
-                                                   Turnover = y.Sum(x => x.Turnover),
-                                                   WinLoss = y.Sum(x => x.WinLoss),
-                                                   Comm = y.Sum(x => x.Comm),
-                                                   Total = y.Sum(x => x.Total),
-                                                   BaseRMTurnover = y.Sum(x => x.BaseRMTurnover),
-                                                   BaseRMTotal = y.Sum(x => x.BaseRMTotal),
-                                                   BaseRMVirtualTurnover = y.Sum(x => x.BaseRMVirtualTurnover),
-                                                   BaseRMVirtualTotal = y.Sum(x => x.BaseRMVirtualTotal),
-                                                   BaseRMTOVariancePlus = y.Sum(x => x.BaseRMTOVariancePlus),
-                                                   BaseRMTOVarianceMinus = y.Sum(x => x.BaseRMTOVarianceMinus),
-                                                   BaseRMWLVariancePlus = y.Sum(x => x.BaseRMWLVariancePlus),
-                                                   BaseRMWLVarianceMinus = y.Sum(x => x.BaseRMWLVarianceMinus),
-                                                   VirtualRate = y.Sum(x => x.VirtualRate),
-                                                   Margin = y.Sum(x => x.BaseRMVirtualTurnover) == 0 ? 0 : (y.Sum(x => x.BaseRMVirtualTotal) / y.Sum(x => x.BaseRMVirtualTurnover) * 100)
-                                               }).ToList();
-
-                winlossModel.Total.BaseRMTurnover = winloss14.Total.BaseRMTurnover + winlossWH.Total.BaseRMTurnover;
-                winlossModel.Total.BaseRMTotal = winloss14.Total.BaseRMTotal + winlossWH.Total.BaseRMTotal;
-                winlossModel.Total.BaseRMVirtualTotal = winloss14.Total.BaseRMVirtualTotal + winlossWH.Total.BaseRMVirtualTotal;
-                winlossModel.Total.BaseRMTurnover = winloss14.Total.BaseRMTurnover + winlossWH.Total.BaseRMTurnover;
-                winlossModel.Total.BaseRMTotal = winloss14.Total.BaseRMTotal + winlossWH.Total.BaseRMTotal;
-                winlossModel.Total.BaseRMVirtualTotal = winloss14.Total.BaseRMVirtualTotal + winlossWH.Total.BaseRMVirtualTotal;
-                winlossModel.Total.BaseRMVirtualTurnover = winloss14.Total.BaseRMVirtualTurnover + winlossWH.Total.BaseRMVirtualTurnover;
-                winlossModel.Total.BaseRMTOVariancePlus = winloss14.Total.BaseRMTOVariancePlus + winlossWH.Total.BaseRMTOVariancePlus;
-                winlossModel.Total.BaseRMTOVarianceMinus = winloss14.Total.BaseRMTOVarianceMinus + winlossWH.Total.BaseRMTOVarianceMinus;
-                winlossModel.Total.BaseRMWLVariancePlus = winloss14.Total.BaseRMWLVariancePlus + winlossWH.Total.BaseRMWLVariancePlus;
-                winlossModel.Total.BaseRMWLVarianceMinus = winloss14.Total.BaseRMWLVarianceMinus + winlossWH.Total.BaseRMWLVarianceMinus;
-                winlossModel.Total.Margin = winlossModel.Total.BaseRMVirtualTurnover == 0 ? 0 : (winlossModel.Total.BaseRMVirtualTotal / winlossModel.Total.BaseRMVirtualTurnover * 100);
-
-                AppSession.AddSession(HttpContext.Current.Session, _treeWinLossSessionKey, winlossModel);
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-            }
-            return winlossModel;
-        }
-
-        private TreeWinLoss GetTreeWinLossReportByAgent_DateRange(string fromDate,
-                                              string toDate,
-                                              int agentId,
-                                              bool isShowSB,
-                                              bool isShowNG,
-                                              bool isShowRB,
-                                              bool isShowLCS,
-                                              bool isShowCS,
-                                              bool isShowP2P,
-                                              bool isShowBI,
-                                              bool isShowVS,
-                                              bool isWarehouse)
-        {
-            var winloss = new TreeWinLoss();
-            try
-            {
-                var getReport = _treeWinLossDataAccess.GetTreeWinLossReportByAgent(
-                                                            fromDate,
-                                                            toDate,
-                                                            agentId,
-                                                            isShowSB,
-                                                            isShowNG,
-                                                            isShowRB,
-                                                            isShowLCS,
-                                                            isShowCS,
-                                                            isShowP2P,
-                                                            isShowBI,
-                                                            isShowVS,
-                                                            isWarehouse);
-
-                double baseRMTotal = 0, baseRMTurnover = 0, baseRMVirtualTotal = 0, baseRMVirtualTO = 0, baseRMTOVariancePlus = 0, baseRMTOVarianceMinus = 0, baseRMWLVariancePlus = 0, baseRMWLVarianceMinus = 0;
-                double _baseRMTotal = 0, _baseRMTurnover = 0, _baseRMVirtualTotal = 0, _baseRMVirtualTO = 0, _baseRMTOVariancePlus = 0, _baseRMTOVarianceMinus = 0, _baseRMWLVariancePlus = 0, _baseRMWLVarianceMinus = 0;
-
-                if (getReport != null && getReport.Tables != null && getReport.Tables.Count > 0 && getReport.Tables[0].Rows.Count > 0)
-                {
-                    var tbWinLoss = getReport.Tables[0];
-                    winloss.WinLoss = new List<TreeWinLossDetail>();
-                    
-                    foreach (DataRow winlossDetail in tbWinLoss.Rows)
-                    {
-                        _baseRMTotal = CastAide.AsDouble(winlossDetail["totalrm"]);
-                        _baseRMTurnover = CastAide.AsDouble(winlossDetail["turnoverrm"]);
-                        _baseRMVirtualTO = CastAide.AsDouble(winlossDetail["Virtual_Turnover"]);
-                        _baseRMVirtualTotal = CastAide.AsDouble(winlossDetail["virtual_total"]);
-
-                        _baseRMTOVariancePlus = CastAide.AsDouble(winlossDetail["TOVariance+"]);
-                        _baseRMTOVarianceMinus = CastAide.AsDouble(winlossDetail["TOVariance-"]);
-                        _baseRMWLVariancePlus = CastAide.AsDouble(winlossDetail["WLVariance+"]);
-                        _baseRMWLVarianceMinus = CastAide.AsDouble(winlossDetail["WLVariance-"]);
-
-
-                        baseRMTotal += _baseRMTotal;
-                        baseRMTurnover += _baseRMTurnover;
-                        baseRMVirtualTO += _baseRMVirtualTO;
-                        baseRMVirtualTotal += _baseRMVirtualTotal;
-
-                        baseRMTOVariancePlus += _baseRMTOVariancePlus;
-                        baseRMTOVarianceMinus += _baseRMTOVarianceMinus;
-                        baseRMWLVariancePlus += _baseRMWLVariancePlus;
-                        baseRMWLVarianceMinus += _baseRMWLVarianceMinus;
-
-                        //double margin = _baseRMVirtualTO == 0 ? 0 : _baseRMVirtualTotal / _baseRMVirtualTO * 100;
-
-                        #region wl detail
-                        winloss.WinLoss.Add(
-                            new TreeWinLossDetail()
-                            {
-                                Id = string.Format("{0}", winlossDetail["custid"]),
+                                Id = string.Format("{0}", winlossDetail[IDMap]),
                                 Title = string.Format("{0}", winlossDetail["username"]),
                                 Turnover = CastAide.AsDouble(winlossDetail["turnover"]),
                                 WinLoss = CastAide.AsDouble(winlossDetail["winloss"]),
@@ -1536,7 +709,6 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
             return winloss;
         }
         #endregion
-
 
         public IList<HistoryDetail> GetVirtualRateUpdateHistory(int customerId)
         {
@@ -1606,10 +778,7 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                     }
                     else
                     {
-                        switch (reportType)
-                        {
-                            case 1://get all supers by currency                                
-                                getSession = GetTreeWinLossReportByCurrency(fromDate,
+                        getSession = GetTreeWinLossReport(fromDate,
                                                     toDate,
                                                     uplineId,
                                                     isShowSB,
@@ -1619,50 +788,8 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                                                     isShowCS,
                                                     isShowP2P,
                                                     isShowBI,
-                                                    isShowVS);
-                                break;
-                            case 2://get all masters by superid
-                                getSession = GetTreeWinLossReportBySuper(fromDate,
-                                                    toDate,
-                                                    uplineId,
-                                                    isShowSB,
-                                                    isShowNG,
-                                                    isShowRB,
-                                                    isShowLCS,
-                                                    isShowCS,
-                                                    isShowP2P,
-                                                    isShowBI,
-                                                    isShowVS);
-                                break;
-                            case 3://get all agents by master id                                
-                                getSession = GetTreeWinLossReportByMaster(fromDate,
-                                                    toDate,
-                                                    uplineId,
-                                                    isShowSB,
-                                                    isShowNG,
-                                                    isShowRB,
-                                                    isShowLCS,
-                                                    isShowCS,
-                                                    isShowP2P,
-                                                    isShowBI,
-                                                    isShowVS);
-                                break;
-                            case 4://get all members by agent id
-                                getSession = GetTreeWinLossReportByAgent(fromDate,
-                                                    toDate,
-                                                    uplineId,
-                                                    isShowSB,
-                                                    isShowNG,
-                                                    isShowRB,
-                                                    isShowLCS,
-                                                    isShowCS,
-                                                    isShowP2P,
-                                                    isShowBI,
-                                                    isShowVS);
-                                break;
-                            default:
-                                break;
-                        }
+                                                    isShowVS,
+                                                    reportType);
                     }
                 }
                 #endregion

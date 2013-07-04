@@ -25,53 +25,18 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                                                     bool isShowBI,
                                                     bool isShowVS);
 
-        TreeWinLoss GetTreeWinLossReportByCurrency(string fromDate,
-                                                string toDate,
-                                                int currency,
-                                                bool isShowSB,
-                                                bool isShowNG,
-                                                bool isShowRB,
-                                                bool isShowLCS,
-                                                bool isShowCS,
-                                                bool isShowP2P,
-                                                bool isShowBI,
-                                                bool isShowVS);
-
-        TreeWinLoss GetTreeWinLossReportBySuper(string fromDate,
-                                                string toDate,
-                                                int superId,
-                                                bool isShowSB,
-                                                bool isShowNG,
-                                                bool isShowRB,
-                                                bool isShowLCS,
-                                                bool isShowCS,
-                                                bool isShowP2P,
-                                                bool isShowBI,
-                                                bool isShowVS);
-
-        TreeWinLoss GetTreeWinLossReportByMaster(string fromDate,
-                                                string toDate,
-                                                int masterId,
-                                                bool isShowSB,
-                                                bool isShowNG,
-                                                bool isShowRB,
-                                                bool isShowLCS,
-                                                bool isShowCS,
-                                                bool isShowP2P,
-                                                bool isShowBI,
-                                                bool isShowVS);
-
-        TreeWinLoss GetTreeWinLossReportByAgent(string fromDate,
-                                                string toDate,
-                                                int agentId,
-                                                bool isShowSB,
-                                                bool isShowNG,
-                                                bool isShowRB,
-                                                bool isShowLCS,
-                                                bool isShowCS,
-                                                bool isShowP2P,
-                                                bool isShowBI,
-                                                bool isShowVS);
+        TreeWinLoss GetTreeWinLossReport(string fromDate,
+                                              string toDate,
+                                               int customID,
+                                              bool isShowSB,
+                                              bool isShowNG,
+                                              bool isShowRB,
+                                              bool isShowLCS,
+                                              bool isShowCS,
+                                              bool isShowP2P,
+                                              bool isShowBI,
+                                              bool isShowVS,
+                                              int reportType);
 
         IList<HistoryDetail> GetVirtualRateUpdateHistory(int customerId);
 

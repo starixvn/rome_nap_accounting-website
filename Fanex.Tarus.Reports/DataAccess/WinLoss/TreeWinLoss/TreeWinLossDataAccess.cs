@@ -16,7 +16,6 @@ namespace Fanex.Tarus.Reports.DataAccess.WinLoss.TreeWinLoss
     /// </summary>
     public class TreeWinLossDataAccess: ITreeWinLossDataAccess
     {
-
         public DataSet GetTreeWinLossReportByProducts(string fromDate,
                                                 string toDate,
                                                 bool isShowSB,
@@ -52,147 +51,65 @@ namespace Fanex.Tarus.Reports.DataAccess.WinLoss.TreeWinLoss
         }
 
 
-        public DataSet GetTreeWinLossReportByCurrency(string fromDate,
-                                                string toDate,
-                                                int currency,
-                                                bool isShowSB,
-                                                bool isShowNG,
-                                                bool isShowRB,
-                                                bool isShowLCS,
-                                                bool isShowCS,
-                                                bool isShowP2P,
-                                                bool isShowBI,
-                                                bool isShowVS,
-                                                bool isWarehouse)
+
+        public DataSet GetTreeWinLossReport(string fromDate,
+                                              string toDate,
+                                               int customID,
+                                              bool isShowSB,
+                                              bool isShowNG,
+                                              bool isShowRB,
+                                              bool isShowLCS,
+                                              bool isShowCS,
+                                              bool isShowP2P,
+                                              bool isShowBI,
+                                              bool isShowVS,
+                                              bool isWarehouse,
+                                              int reportType)
         {
-            var spName = isWarehouse == true ? "Acc_Rpt_TreeWinlostByCom_Old" : "Acc_Rpt_TreeWinlostByCom";
+            var spName = string.Empty;
+            var param = new Hashtable();
+            param.Add("fromdate", CastAide.AsDateTime(fromDate));
+            param.Add("todate", CastAide.AsDateTime(toDate));
+            param.Add("showsb", isShowSB);
+            param.Add("showng", isShowNG);
+            param.Add("showrb", isShowRB);
+            param.Add("showlivecasino", isShowLCS);
+            param.Add("showcasino", isShowCS);
+            param.Add("showp2p", isShowP2P);
+            param.Add("showbi", isShowBI);
+            param.Add("showvs", isShowVS);
+
+            switch (reportType)
+            {
+                case 1://get all supers by currency
+                    param.Add("currency", customID);
+                    spName = isWarehouse == true ? "Acc_Rpt_TreeWinlostByCom_Old" : "Acc_Rpt_TreeWinlostByCom";
+                    break;
+                case 2://get all masters by superid
+                    param.Add("srecommend", customID);
+                    spName = isWarehouse == true ? "Acc_Rpt_TreeWinlostBySAg_Old" : "Acc_Rpt_TreeWinlostBySAg";
+                    break;
+                case 3://get all agents by master id
+                    param.Add("mrecommend", customID);
+                    spName = isWarehouse == true ? "Acc_Rpt_TreeWinlostByMAg_Old" : "Acc_Rpt_TreeWinlostByMAg";
+                    break;
+                case 4://get all members by agent id
+                    param.Add("recommend", customID);
+                    spName = isWarehouse == true ? "Acc_Rpt_TreeWinlostByAg_Old" : "Acc_Rpt_TreeWinlostByAg";
+                    break;
+                default:
+                    break;
+            }
+
             using (ObjectDb objdb = new ObjectDb(spName, 300))
             {
-                var param = new Hashtable();
-                //param.Add("winlostdate", CastAide.AsDateTime(fromDate));
-                param.Add("fromdate", CastAide.AsDateTime(fromDate));
-                param.Add("todate", CastAide.AsDateTime(toDate));
-                param.Add("currency", currency);
-                param.Add("showsb", isShowSB);
-                param.Add("showng", isShowNG);
-                param.Add("showrb", isShowRB);
-                param.Add("showlivecasino", isShowLCS);
-                param.Add("showcasino", isShowCS);
-                param.Add("showp2p", isShowP2P);
-                param.Add("showbi", isShowBI);
-                param.Add("showvs", isShowVS);
                 objdb.AssignParamValues(param);
                 var winloss = objdb.ExecuteDataSet();
                 return winloss;
             }
         }
 
-        public DataSet GetTreeWinLossReportBySuper(string fromDate,
-                                                string toDate,
-                                                int superId,
-                                                bool isShowSB,
-                                                bool isShowNG,
-                                                bool isShowRB,
-                                                bool isShowLCS,
-                                                bool isShowCS,
-                                                bool isShowP2P,
-                                                bool isShowBI,
-                                                bool isShowVS,
-                                                bool isWarehouse)
-        {
-            var spName = isWarehouse == true ? "Acc_Rpt_TreeWinlostBySAg_Old" : "Acc_Rpt_TreeWinlostBySAg";
-            using (ObjectDb objdb = new ObjectDb(spName, 300))
-            {
-                var param = new Hashtable();
-                //param.Add("winlostdate", CastAide.AsDateTime(fromDate));
-                param.Add("fromdate", CastAide.AsDateTime(fromDate));
-                param.Add("todate", CastAide.AsDateTime(toDate));
-                param.Add("srecommend", superId);
-                param.Add("showsb", isShowSB);
-                param.Add("showng", isShowNG);
-                param.Add("showrb", isShowRB);
-                param.Add("showlivecasino", isShowLCS);
-                param.Add("showcasino", isShowCS);
-                param.Add("showp2p", isShowP2P);
-                param.Add("showbi", isShowBI);
-                param.Add("showvs", isShowVS);
-                objdb.AssignParamValues(param);
-                var winloss = objdb.ExecuteDataSet();
-                return winloss;
-            }
-        }
-
-        public DataSet GetTreeWinLossReportByMaster(string fromDate,
-                                                string toDate,
-                                                int masterId,
-                                                bool isShowSB,
-                                                bool isShowNG,
-                                                bool isShowRB,
-                                                bool isShowLCS,
-                                                bool isShowCS,
-                                                bool isShowP2P,
-                                                bool isShowBI,
-                                                bool isShowVS,
-                                                bool isWarehouse)
-        {
-            var spName = isWarehouse == true ? "Acc_Rpt_TreeWinlostByMAg_Old" : "Acc_Rpt_TreeWinlostByMAg";
-            using (ObjectDb objdb = new ObjectDb(spName, 300))
-            {
-                var param = new Hashtable();
-                //param.Add("winlostdate", CastAide.AsDateTime(fromDate));
-                param.Add("fromdate", CastAide.AsDateTime(fromDate));
-                param.Add("todate", CastAide.AsDateTime(toDate));
-                param.Add("mrecommend", masterId);
-                param.Add("showsb", isShowSB);
-                param.Add("showng", isShowNG);
-                param.Add("showrb", isShowRB);
-                param.Add("showlivecasino", isShowLCS);
-                param.Add("showcasino", isShowCS);
-                param.Add("showp2p", isShowP2P);
-                param.Add("showbi", isShowBI);
-                param.Add("showvs", isShowVS);
-                objdb.AssignParamValues(param);
-                var winloss = objdb.ExecuteDataSet();
-                return winloss;
-            }
-        }
-
-        public DataSet GetTreeWinLossReportByAgent(string fromDate,
-                                                string toDate,
-                                                int agentId,
-                                                bool isShowSB,
-                                                bool isShowNG,
-                                                bool isShowRB,
-                                                bool isShowLCS,
-                                                bool isShowCS,
-                                                bool isShowP2P,
-                                                bool isShowBI,
-                                                bool isShowVS,
-                                                bool isWarehouse)
-        {
-            var spName = isWarehouse == true ? "Acc_Rpt_TreeWinlostByAg_Old" : "Acc_Rpt_TreeWinlostByAg";
-            using (ObjectDb objdb = new ObjectDb(spName, 300))
-            {
-                var param = new Hashtable();
-                //param.Add("winlostdate", CastAide.AsDateTime(fromDate));
-                param.Add("fromdate", CastAide.AsDateTime(fromDate));
-                param.Add("todate", CastAide.AsDateTime(toDate));
-                param.Add("recommend", agentId);
-                param.Add("showsb", isShowSB);
-                param.Add("showng", isShowNG);
-                param.Add("showrb", isShowRB);
-                param.Add("showlivecasino", isShowLCS);
-                param.Add("showcasino", isShowCS);
-                param.Add("showp2p", isShowP2P);
-                param.Add("showbi", isShowBI);
-                param.Add("showvs", isShowVS);
-                objdb.AssignParamValues(param);
-                var winloss = objdb.ExecuteDataSet();
-                return winloss;
-            }
-        }
-
-
+       
         public DataSet GetVirtualRateUpdateHistory(int customerId)
         {
             using (ObjectDb objdb = new ObjectDb("Acc_CustomerSelVirtualRateHistory"))

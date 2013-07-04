@@ -27,57 +27,19 @@ namespace Fanex.Tarus.Reports.DataAccess.WinLoss.TreeWinLoss
                                                 bool isWarehouse,
                                                 ref Hashtable outputPrams);
 
-        DataSet GetTreeWinLossReportByCurrency(string fromDate,
-                                                string toDate,
-                                                int currency,
-                                                bool isShowSB,
-                                                bool isShowNG,
-                                                bool isShowRB,
-                                                bool isShowLCS,
-                                                bool isShowCS,
-                                                bool isShowP2P,
-                                                bool isShowBI,
-                                                bool isShowVS,
-                                                bool isWarehouse);
-
-        DataSet GetTreeWinLossReportBySuper(string fromDate,
-                                                string toDate,
-                                                int superId,
-                                                bool isShowSB,
-                                                bool isShowNG,
-                                                bool isShowRB,
-                                                bool isShowLCS,
-                                                bool isShowCS,
-                                                bool isShowP2P,
-                                                bool isShowBI,
-                                                bool isShowVS,
-                                                bool isWarehouse);
-
-        DataSet GetTreeWinLossReportByMaster(string fromDate,
-                                                string toDate,
-                                                int masterId,
-                                                bool isShowSB,
-                                                bool isShowNG,
-                                                bool isShowRB,
-                                                bool isShowLCS,
-                                                bool isShowCS,
-                                                bool isShowP2P,
-                                                bool isShowBI,
-                                                bool isShowVS,
-                                                bool isWarehouse);
-
-        DataSet GetTreeWinLossReportByAgent(string fromDate,
-                                                string toDate,
-                                                int agentId,
-                                                bool isShowSB,
-                                                bool isShowNG,
-                                                bool isShowRB,
-                                                bool isShowLCS,
-                                                bool isShowCS,
-                                                bool isShowP2P,
-                                                bool isShowBI,
-                                                bool isShowVS,
-                                                bool isWarehouse);
+        DataSet GetTreeWinLossReport(string fromDate,
+                                             string toDate,
+                                              int customID,
+                                             bool isShowSB,
+                                             bool isShowNG,
+                                             bool isShowRB,
+                                             bool isShowLCS,
+                                             bool isShowCS,
+                                             bool isShowP2P,
+                                             bool isShowBI,
+                                             bool isShowVS,
+                                             bool isWarehouse,
+                                               int reportType);
 
         DataSet GetVirtualRateUpdateHistory(int customerId);
     }
