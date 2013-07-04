@@ -3,6 +3,7 @@
 @using Sunplus.Accounting.Core.Configurations
 @using Sunplus.Bingo.Core;
 @using System.Collections;
+
 @{
     var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
     bool visibleP2PSetting = CastAide.AsBoolean(p2pSetting.Value);
