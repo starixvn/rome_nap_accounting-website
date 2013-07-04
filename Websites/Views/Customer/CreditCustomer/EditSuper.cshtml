@@ -1,5 +1,6 @@
 ﻿@using Fanex.PTEngine
 @using Fanex.Tarus.Customer.CreditCustomer.Entities;
+@using Fanex.Tarus.Infrastructure.Common;
 @model Fanex.Tarus.Customer.CreditCustomer.Entities.CustomerSettingView
 @{
     Page.Title = "Title goes here";
@@ -47,6 +48,8 @@
         </div>
     </div>
     <div class="bg_table" style="width: 844px;">
+    @if (!AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
+    { 
         <table cellspacing="0" cellpadding="0" border="0" style="margin-bottom:10px;">
             <tbody>
                 <tr>
@@ -58,10 +61,13 @@
                 </tr>
             </tbody>
         </table>
+    }
         @Html.Partial("~/Views/Customer/CreditCustomer/CustInfoPartialView.cshtml", Model)
         @*betting limit and position taking*@
         @Html.Partial("~/Views/Customer/CreditCustomer/BettingLimitAndPositionTakingPartialView.cshtml")
         @*button add*@
+        @if (!AppSession.CurrentSystemNAME.ToString().Equals(Enumerations.AccountingSystem.EXTERNAL))
+        { 
         <table cellspacing="0" cellpadding="0" border="0">
             <tbody>
                 <tr>
@@ -73,5 +79,6 @@
                 </tr>
             </tbody>
         </table>
+        }
     </div>
 </div>

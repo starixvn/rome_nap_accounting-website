@@ -62,7 +62,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.PTEngine">
+    <Reference Include="Fanex.PTEngine, Version=1.0.4894.26393, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex\Fanex.PTEngine.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTVirtualSports, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

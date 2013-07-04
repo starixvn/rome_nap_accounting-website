@@ -146,26 +146,64 @@
                 <div id="box_detail">
                     <div id="de_left">
                         <ul>
-                              <!--detail_edit_menu-->
+                            <!--detail_edit_menu-->
                             <li id="detail_tab_3" class="current" onclick="detail_tabnew_Click(this)"><a href="javascript:void(0);">
                                 <span>Edit</span></a></li>
-                            <!--/detail_edit_menu-->  
+                            <!--/detail_edit_menu-->
                         </ul>
                     </div>
-                    <div id="detail_tab_contents">
+                    <div id="detail_tab_contents" style="height: 240px;">
                         <div id="detail_tab_content_3" class="l detail_tab_content ">
                             <!-- Detail menu -->
                             <a href="" onclick="openInfoPanel('{linkSettingInfo}');return false;" class="button_left02">
                                 Info</a><br />
-                            <span class="{IsHidden1}"><a class="button_left02" href="javascript:parent.gotoURL('centerFr','{linkAddnewDownline}');">
+                            <span class="{IsShow1}"><a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{linkSettingDetail}');">
+                                Edit Position Taking</a><br />
+                            </span><span class="{IsHidden1}"><a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{linkSettingDetail}');">
+                                Edit Position Taking</a><br />
+                            </span><span class="{IsHidden1}"><a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{linkAddnewDownline}');">
                                 Add New</a><br />
                             </span>
                             <!--editTransferTime-->
-                            <span class="{IsHidden1}"><a class="button_left02" href="javascript:parent.gotoURL('centerFr','Customer/v2/EditTransferTime.aspx?set=1&custid={CustId}&rid={RoleId}');">
+                            <span class="{IsHidden1}"><a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','Customer/v2/EditTransferTime.aspx?set=1&custid={CustId}&rid={RoleId}');">
                                 Edit Transfer Condition</a><br />
                             </span>
-                            <!--/editTransferTime
-                            
+                            <!--/editTransferTime-->
+                            <!--Horseracing update link-->
+                            <!--horseracing-editlink-->
+                            <span class="{IsShow1}"><a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{RacingUpdateURL}');">
+                                Edit Racing</a><br />
+                            </span><span class="{IsHidden1}"><a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{RacingUpdateURL}');">
+                                Edit Racing</a><br />
+                            </span>
+                            <!--/horseracing-editlink-->
+                            <!--edit-casino-->
+                            <span class="{IsShow1}"><a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','Customer/PositionTakingCS.aspx?custId={CustId}');">
+                                Edit Casino</a><br />
+                            </span><span class="{IsHidden1}"><a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','Customer/PositionTakingCS.aspx?custId={CustId}');">
+                                Edit Casino</a><br />
+                            </span>
+                            <!--/edit-casino-->
+                            <!--edit-finance-->
+                            <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','Customer/v2/UpdateFinancePT.aspx?custId={CustId}&roleid={RoleId}&uplineid={ParentId}');">
+                                Edit Finance</a><br />
+                            <!--/edit-finance-->
+                            <!--edit-bingo-->
+                            <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{bingoLinkSetting}');">
+                                Edit Bingo</a><br />
+                            <!--/edit-bingo-->
+                            <!--edit-p2p-->
+                            <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{pokerLinkSetting}');">
+                                Edit Poker</a><br />
+                            <!--/edit-p2p-->      
+                            <!--edit-LiveCasino-->
+                            <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{livecasinoLinkSetting}');">
+                                Edit Live Casino</a><br />
+                            <!--/edit-LiveCasino-->    
+                            <!--edit-VirtualSport-->
+                            <a class="button_left02" href="javascript:;" onclick="parent.gotoURL('centerFr','{virtualSportLinkSetting}');">
+                                Edit Virtual Sports</a>
+                            <!--/edit-VirtualSport-->        
                             <!-- Detail menu -->
                         </div>
                     </div>

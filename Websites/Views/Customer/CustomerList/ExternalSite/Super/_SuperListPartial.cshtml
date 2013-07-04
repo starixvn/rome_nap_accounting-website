@@ -4,11 +4,34 @@
 @using Sunplus.Bingo.Core;
 @using System.Collections;
 @{
+    var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
+    bool visibleP2PSetting = CastAide.AsBoolean(p2pSetting.Value);
     var IsVisibleMaxExposure = Sunplus.Accounting.Core.Common.Functions.Customer.IsVisibleMaxExposure;
     var IsVisibleVirtualRate = Sunplus.Accounting.Core.Common.Functions.Customer.IsVisibleVirtualRate;
     var enableNumberGame = BingoSettings.NumberGame.Enabled;
 
+    var disabledHR = WebSettings.disabledHR;
+    var disabledFI = WebSettings.disabledFI;
+    var enableBingo = BingoSettings.BingoGame.Enabled;
+    var EnableLiveCasino = WebSettings.EnableLiveCasino;
+    var EnableVirtualSports = WebSettings.EnableVirtualSports;
+    var disableCasino = WebSettings.disableCS;
+    bool allowCS = false;
+    bool allowFI = Sunplus.Accounting.Business.Security.Permissions.IsAllowEditFI();
+    bool allowLiveCS = false;
     int IsShowCustomerSettingRenovation = 0;
+    bool directMaster = (Model.ParentId == 0 ? true : false);
+    if (Model.ParentId == 0)
+    {
+        allowCS = true;
+        allowLiveCS = true;
+    }
+    else
+    {
+        var thirdPartyStatus = Sunplus.Accounting.Business.Security.Permissions.SelStatus3rdParty(CastAide.AsInt32(Model.ParentId));
+        allowCS = Model.ParentId == 0 ? true : thirdPartyStatus.CasinoSync;
+        allowLiveCS = Sunplus.Accounting.Business.Security.Permissions.IsAllowEditLiveCasino(Model.ParentId, thirdPartyStatus.LiveCasinoSync);
+    }
 
     if (IsPost)
     {
@@ -30,9 +53,20 @@
     }
     Hashtable hash = new Hashtable();
 
+    hash.Add("p2pSetting", p2pSetting);
+    hash.Add("visibleP2PSetting", visibleP2PSetting);
     hash.Add("IsVisibleMaxExposure", IsVisibleMaxExposure);
     hash.Add("IsVisibleVirtualRate", IsVisibleVirtualRate);
     hash.Add("enableNumberGame", enableNumberGame);
+    hash.Add("disabledHR", disabledHR);
+    hash.Add("enableBingo", enableBingo);
+    hash.Add("disableCasino", disableCasino);
+    hash.Add("EnableLiveCasino", EnableLiveCasino);
+    hash.Add("EnableVirtualSports", EnableVirtualSports);
+    hash.Add("disabledFI", disabledFI);
+    hash.Add("directMaster", directMaster);
+    hash.Add("allowCS", allowCS);
+    hash.Add("allowLiveCS", allowLiveCS);
 
     string[] renderResult = Render(Model, hash);
 }
@@ -78,7 +112,9 @@
         </td>
         <td>
             <div class="table-cell c" style="width: 65px; height: 18px;">
-                @superItem.Status
+                <a onclick="EditSportsBookSetting(4, '@superItem.ChildID', 0 , '@superItem.UserName');"  >@superItem.Status</a>
+                <span onclick="EditSportsBookSetting(4, '@superItem.ChildID', 0 , '@superItem.UserName');"   class="status-button" >
+                    &nbsp;&nbsp;&nbsp</span>
             </div>
         </td>
         <td>
@@ -86,13 +122,59 @@
                 <span title="Edit" onmouseout="CustomerList.HideEditBox()"  onclick="CustomerList.ShowMenuEdit('div_@superItem.ChildID')" class="edit-button" >
                 </span>
                 <ul id="div_@superItem.ChildID" style="display:none;">
-                    <li class="canchange" onclick="OpenEditCustInfo('@superItem.ChildID','Super');" >Info</li>
+                    <li class="canchange" onclick="OpenEditCustInfo('@superItem.ChildID','@Model.ParentId','Super');" >Info</li>
+                    <!--horseracing-edit-->
+                    @if (!CastAide.AsBoolean(hash["disabledHR"]))
+                    {
+                        <li class="canchange" onclick="EditHorseracingSetting(4,'@superItem.ChildID')" >Racing</li>
+                    }
+                    <!--/horseracing-edit-->
+                    <!--casino-edit-->
+                    @if (!CastAide.AsBoolean(hash["disableCasino"]))
+                    {
+                        <li class="canchange" onclick="OpenEditCS('@superItem.ChildID');" >Casino</li>
+                    }
+                    <!--/casino-edit-->
+                    <!--finance-edit-->
+                    @if (!CastAide.AsBoolean(hash["disabledFI"]))
+                    {
+                        <li class="canchange" onclick="OpenEditFI('@superItem.ChildID', '@Model.ParentId', '4')" >
+                            Finance</li>
+                    }
+                    <!--/finance-edit-->
+                    <!--bingo-edit-->
+                    @if (CastAide.AsBoolean(hash["enableBingo"]))
+                    {
+                        <li class="canchange" onclick="OpenEditBI('@superItem.ChildID', '@Model.ParentId', '4')" >
+                            Bingo</li>
+                    }
+                    <!--/bingo-edit-->
                     <!--noneSuper-->
                     <li class="canchange" onclick="OpenEditTransferTime('@superItem.ChildID',0);">Transfer
                         Condition</li>
                     <!--/noneSuper-->
                     <li class="canchange" onclick="OpenChangePwd('@superItem.ChildID','@superItem.UserName');">
                         Password</li>
+                    <!--edit-p2p-->
+                    @if (CastAide.AsBoolean(hash["visibleP2PSetting"]))
+                    {
+                        <li class="canchange" onclick="SuperList.editSetting('@superItem.ChildID', '4');">Poker</li>
+                    }
+                    <!--/edit-p2p-->
+                    <!--edit-liveCasino-->
+                    @if (!(!CastAide.AsBoolean(hash["EnableLiveCasino"]) | !CastAide.AsBoolean(hash["allowLiveCS"])))
+                    {
+                        <li class="canchange" onclick="SuperList.liveCasinoSetting('@superItem.ChildID', '0', '@Model.ParentId');">
+                            Live Casino</li>
+                    }
+                    <!--/edit-liveCasino-->
+                    <!--edit-virtualSports-->
+                    @if (CastAide.AsBoolean(hash["EnableVirtualSports"]))
+                    {
+                        <li class="canchange" onclick="SuperList.virtualSportsSetting('@superItem.ChildID', '@Model.ParentId', '4');">
+                            Virtual Sports</li>
+                    }
+                    <!--/edit-virtualSports-->
                 </ul>
             </div>
         </td>
