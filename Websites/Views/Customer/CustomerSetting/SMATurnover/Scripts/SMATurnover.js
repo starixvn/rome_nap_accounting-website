@@ -62,15 +62,15 @@
         var refreshIcon = $(".refreshBox .refreshIcon");
         refreshIcon.unbind("click");
         refreshIcon.click(function () {
-            if (SMATurnover.cachedData.refreshIntervalCounter > 0) {
+            if (SMATurnover.cachedData.refreshIntervalCounter > 1) {
                 var refreshIcon = $(".refreshBox .refreshIcon");
-                SMATurnover.cachedData.countdownTime = SMATurnover.cachedData.refreshIntervalCounter / 1000;
-                refreshIcon.html(SMATurnover.cachedData.countdownTime);
-
+                SMATurnover.cachedData.countdownTime = SMATurnover.cachedData.refreshIntervalCounter / 1000;             
                 window.clearInterval(SMATurnover.cachedData.refreshIntervalEvent);
                 SMATurnover.cachedData.refreshIntervalEvent = setInterval(function () {
                     SMATurnover.refreshSMATurnoverList(false);
                 }, SMATurnover.cachedData.refreshIntervalCounter);
+
+                refreshIcon.html(SMATurnover.cachedData.countdownTime);
                 SMATurnover.refreshSMATurnoverList(false);
             }
         });
@@ -155,7 +155,7 @@
                 SMATurnover.cachedData.refreshIntervalCounter = parseInt(coundownAfter * 1000);
                 SMATurnover.cachedData.countdownTime = parseInt(coundownAfter);
                 SMATurnover.cachedData.updateCountdownEvent = setInterval(function () {
-                    if (SMATurnover.cachedData.countdownTime > 0) {
+                    if (SMATurnover.cachedData.countdownTime > 1) {
                         SMATurnover.cachedData.countdownTime--;
                     } else {
                         SMATurnover.cachedData.countdownTime = SMATurnover.cachedData.refreshIntervalCounter / 1000;

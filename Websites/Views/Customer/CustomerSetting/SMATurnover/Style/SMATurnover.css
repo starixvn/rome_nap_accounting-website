@@ -111,7 +111,7 @@ input.btnSave[disabled]
     border: solid 1px #7c98a4;
     font-family: Tahoma, Geneva, sans-serif;
     font-size: 12px;
-    width: 105px;
+    width: 110px;
     height: 18px;
     box-shadow: inset 1px 1px 3px #CCC;
     float: right;
@@ -130,8 +130,8 @@ input.btnSave[disabled]
 
 .refreshDropdownIcon
 {
-    background: url(Images/dropdown.png);
-    width: 12px;
+    background: url(Images/dropdown.png) no-repeat;
+    width: 17px;
     float: left;
     height: 18px;
     line-height: 15px;
@@ -232,10 +232,11 @@ input.btnSave[disabled]
 .matchIdBox_LeagueInfo
 {
     border: solid 1px #f99e55;
-    padding: 1px 3px 1px 3px;
+    padding: 0px 3px 0px 3px;
     font-size: 10px;
     background-color: #ffb981;
     display: inline-block;
+    line-height: 17px;
 }
 
 .countDownOptionContainer
@@ -248,7 +249,7 @@ input.btnSave[disabled]
     background-color: #DFDFDF;
     border: 1px solid #D4D4D4;
     cursor: default;
-    width: 105px;
+    width: 110px;
     z-index: 10;
 }
 
