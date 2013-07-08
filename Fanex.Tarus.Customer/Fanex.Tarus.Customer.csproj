@@ -51,8 +51,7 @@
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.PTEngine, Version=1.0.4639.27705, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Fanex.PTEngine">
       <HintPath>..\Dependency\Fanex\Fanex.PTEngine.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTRacing">

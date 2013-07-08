@@ -427,7 +427,10 @@ namespace Sunplus.Accounting.Business
             {
                 TemplateHandler.RemoveBlock(ref tplPT, "inserting");
             }
-
+            if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
+            {
+                TemplateHandler.RemoveBlock(ref tplPT, "HideUpdate");
+            }
             var accountType = (Globals.AccountType) (_cust.RoleId);
             AssignCommonHeader(ref tplPT);
             try

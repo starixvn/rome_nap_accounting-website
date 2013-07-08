@@ -94,7 +94,6 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
                 AppSession.RoleID = roleId;
                 AppSession.AccPwd = IBCUtils.Encryption.CfsEnCode(password);
 
-
                 if (!AuthManager.IsValidRequestUrl(context.Request.Url.Host, AppSession.CurrentSystemName))
                 {
                     context.Session.Clear();

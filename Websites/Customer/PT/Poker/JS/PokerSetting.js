@@ -156,6 +156,7 @@
     },
     mappingPokerData: function (data, custid) {
         pokerManager.pokerDefaultData = $.extend(true, {}, data);
+
         pokerManager.pokerVM.CustInfo = data.CustInfo;
         pokerManager.pokerVM.CustInfo.CustId=custid;
         pokerManager.pokerVM.BetSetting = new pokerManager.BetSetting(data.BetSetting);
