@@ -64,9 +64,10 @@
         refreshIcon.click(function () {
             if (SMATurnover.cachedData.refreshIntervalCounter > 1) {
                 var refreshIcon = $(".refreshBox .refreshIcon");
-                SMATurnover.cachedData.countdownTime = SMATurnover.cachedData.refreshIntervalCounter / 1000;             
+                SMATurnover.cachedData.countdownTime = SMATurnover.cachedData.refreshIntervalCounter / 1000;
                 window.clearInterval(SMATurnover.cachedData.refreshIntervalEvent);
                 SMATurnover.cachedData.refreshIntervalEvent = setInterval(function () {
+                    SMATurnover.cachedData.countdownTime = SMATurnover.cachedData.refreshIntervalCounter / 1000;
                     SMATurnover.refreshSMATurnoverList(false);
                 }, SMATurnover.cachedData.refreshIntervalCounter);
 
@@ -164,6 +165,7 @@
                     refreshIcon.html(SMATurnover.cachedData.countdownTime);
                 }, 1000);
                 SMATurnover.cachedData.refreshIntervalEvent = setInterval(function () {
+                    SMATurnover.cachedData.countdownTime = SMATurnover.cachedData.refreshIntervalCounter / 1000;
                     SMATurnover.refreshSMATurnoverList(false);
                 }, SMATurnover.cachedData.refreshIntervalCounter);
             }
@@ -484,7 +486,7 @@
 
                 html += '<tr>';
                 html += '<td class="rowLeague" colspan="5">\
-                            <div class="col200 lblLeagueHeadline">' + row.LeagueName + '</div>' +
+                            <div class="lblLeagueHeadline">' + row.LeagueName + '</div>' +
                             '<div class="lblTeamInfo">' + match.HomeTeam + ' -vs- ' + match.AwayTeam + '</div>' +
                             '<div class="rightArrow_LeagueInfo"></div>' +
                             '<div class="eventDate_LeagueInfo">Event Date: ' + match.EventDate + '</div>' +
