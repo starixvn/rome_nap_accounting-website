@@ -47,8 +47,11 @@
             <tr class="title">
                 <td style="width:800px">
                     Bet Setting                    
-                </td>                
+                </td> 
+                 @if (!AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
+                 {                
                 <td style="width:40px"><input type="button" h="true" class="btnUpdate" title="Save" onclick="vsCustomer.updateBettingLimit()" /></td>
+                 }
             </tr>
             <tr>
                 <td colspan="2">
@@ -62,7 +65,10 @@
                 <td style="width:800px">
                     Position Taking
                 </td>
+                 @if (!AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
+                 { 
                 <td style="width:40px"><input type="button" h="true" class="btnUpdate" title="Save" onclick="vsCustomer.updatePtSetting()" /></td>
+                 }
             </tr>
             <tr>
                 <td colspan="2">

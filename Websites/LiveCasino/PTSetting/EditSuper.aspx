@@ -66,7 +66,7 @@
                     </tr>
                      <tr class="title1">
                         <td  class="l" colspan="3">Position Taking/Commission </td>
-                        <td class="l"><input type="button" title="Save" class="btnUpdate" data-bind="enable: isAllowUpdatePtSetting, click: function(){editSuper.updateLiveCasino(1)}" h="${isAllowUpdatePtSetting}" /></td>
+                        <td class="l"><input type="button" title="Save" class="btnUpdate" data-bind="enable: isAllowUpdatePtSetting, click: function(){editSuper.updateLiveCasino(1)}, style:{display:isShowBtSave ? '':'none'}" h="${isAllowUpdatePtSetting}" /></td>
                     </tr>
                      <tr>
                         <td class="c b">Super Max Position</td>
@@ -80,7 +80,7 @@
                     </tr>
                     <tr class="title1">
                         <td  class="l" colspan="3">Member Win Limit </td>
-                        <td class="l"><input type="button" class="btnUpdate" title="Save" data-bind="enable: isAllowUpdateWinLimit, click: function(){editSuper.updateLiveCasino(2)}" h="${isAllowUpdateWinLimit}" /></td>
+                        <td class="l"><input type="button" class="btnUpdate" title="Save" data-bind="enable: isAllowUpdateWinLimit, click: function(){editSuper.updateLiveCasino(2)}, style:{display:isShowBtSave ? '':'none'}" h="${isAllowUpdateWinLimit}" /></td>
                     </tr>
                     <tr>
                         <td class="b r">Maximum Win</td>
@@ -95,7 +95,7 @@
                     </tr>
                     <tr class="title1">
                         <td  class="l" colspan="3">Game Setting </td>
-                        <td class="l"><input type="button" class="btnUpdate" title="Save" data-bind="enable: isAllowUpdateGameSetting, click: function(){editSuper.updateLiveCasino(3)}" h="${isAllowUpdateGameSetting}" /></td>
+                        <td class="l"><input type="button" class="btnUpdate" title="Save" data-bind="enable: isAllowUpdateGameSetting, click: function(){editSuper.updateLiveCasino(3)}, style:{display:isShowBtSave ? '':'none'}" h="${isAllowUpdateGameSetting}" /></td>
                     </tr>
                     <tr>
                         <td class="r b">Game Type</td>

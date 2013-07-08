@@ -1,13 +1,17 @@
-﻿<table class="tblcollapse" style="width: 844px; margin-bottom: 10px;">
+﻿@using Fanex.Tarus.Infrastructure.Common
+<table class="tblcollapse" style="width: 844px; margin-bottom: 10px;">
 
     <tr class="title">
         <td colspan="4">
             <span style="padding-left:330px">General Information</span>
-            <span style="padding-left:350px">  
-                <!-- ko if: (context.targetRoleId != 1 || (context.targetRoleId == 1 &&  context.roleId == 2 ))  -->
-                <input type="button" class="btnUpdate" title="Save" onclick="vsCustomer.updateStatusSetting()"/>
-                <!--/ko-->
-            </span>
+             @if (!AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
+             {  
+                <span style="padding-left:350px">  
+                    <!-- ko if: (context.targetRoleId != 1 || (context.targetRoleId == 1 &&  context.roleId == 2 ))  -->
+                    <input type="button" class="btnUpdate" title="Save" onclick="vsCustomer.updateStatusSetting()"/>
+                    <!--/ko-->
+                </span>
+             }
         </td>        
     </tr>
     
