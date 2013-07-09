@@ -6,29 +6,16 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Globalization;
 using System.Collections.ObjectModel;
+using System.Data;
+using Fanex.Data;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public partial class Test_anything : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        //string s = DNAide.Utils.Encryption.CfsDeCrypt("i9hNnaZltx04XF6oTNOKTnvvtLC/zfxr");
-        //string pwd1 = "%bodbAdminNetLogin2587";
-        //string pwd2 = "@pl@dm!n";
-        //string CfsEnCrypt = DNAide.Utils.Encryption.CfsEnCrypt(pwd2);
-        //Response.Write(CfsEnCrypt + "<br/>");
+    }
 
-        //string CfsDeCrypt = DNAide.Utils.Encryption.CfsDeCrypt(CfsEnCrypt);
-        //Response.Write(CfsDeCrypt + "<br/>"); 
-
-
-        ReadOnlyCollection<TimeZoneInfo> zones = TimeZoneInfo.GetSystemTimeZones();
-        
-        foreach (TimeZoneInfo zone in zones)
-        {
-            
-            DateTime localTime = DateTime.Now.AddDays(-2);
-            var utcTime = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(localTime, zone.Id);
-            Response.Write("Local Time: " + localTime.ToString() + ", Zone Time: " + utcTime + ", ID: " + zone.Id + ", DisplayName: " + zone.DisplayName + "<br>");
-        }
-    ,
+   
 }
