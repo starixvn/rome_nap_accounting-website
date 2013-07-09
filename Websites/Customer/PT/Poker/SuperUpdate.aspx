@@ -1,4 +1,8 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="SuperUpdate.aspx.cs" Inherits="Customer_PT_Poker_SuperUpdate" %>
+<%@ Import Namespace="Sunplus.Accounting.Core.Common" %>
+<%@ Import Namespace="Sunplus.Accounting.Core.Configurations" %>
+<%@ Import Namespace="Sunplus.Accounting.Core.Helper" %>
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -56,7 +60,7 @@
                     </tr>
                      <tr class="title1">
                         <td  class="l">Bet Setting </td>
-                        <td colspan="3" class="l"><input type="button" title="Save" class="btnUpdate" data-bind="enable: isAllowUpdateBetSetting, click: function(){pokerManager.pokerVM.updateBetSetting(true)}" /></td>
+                        <td colspan="3" class="l"><input type="button" title="Save" class="btnUpdate" data-bind="enable: isAllowUpdateBetSetting, click: function(){pokerManager.pokerVM.updateBetSetting(true)},style:{display:isShowBtSave ? '':'none'}" /></td>
                     </tr>
                      <tr>
                         <td class="l">Member max. transfer credit</td>
@@ -70,7 +74,7 @@
                     </tr>
                     <tr class="title1">
                         <td  class="l">Game Setting </td>
-                        <td colspan="3" class="l"><input type="button" class="btnUpdate" title="Save" data-bind="enable: isAllowUpdateGameSetting, click: function(){pokerManager.pokerVM.updateGameSetting(false)}" /></td>
+                        <td colspan="3" class="l"><input type="button" class="btnUpdate" title="Save" data-bind="enable: isAllowUpdateGameSetting, click: function(){pokerManager.pokerVM.updateGameSetting(false)},style:{display:isShowBtSave ? '':'none'}" /></td>
                     </tr>
                     <tr>
                         <td class="l b">Game Type</td>
@@ -88,7 +92,7 @@
                     {{/each}}
                     <tr class="title1">
                         <td  class="l">Commission</td>
-                        <td colspan="3" class="l"><input type="button" title="Save" class="btnUpdate" data-bind="enable: isAllowUpdateCommission, click: function(){pokerManager.pokerVM.updateCommission(true)}" /></td>
+                        <td colspan="3" class="l"><input type="button" title="Save" class="btnUpdate" data-bind="enable: isAllowUpdateCommission, click: function(){pokerManager.pokerVM.updateCommission(true)},style:{display:isShowBtSave ? '':'none'}" /></td>
                     </tr>
                      <tr>
                         <td></td>
@@ -103,7 +107,8 @@
                     <tr>   
                     {{/each}}                
                 </table>
-                <input type="button" class="btnUpdateSetting" value="Update" data-bind="enable: isAllowUpdate, event:{click:updatePocker}" />
+                     <input type="button" class="btnUpdateSetting" value="Update" data-bind="enable: isAllowUpdate, event:{click:updatePocker},style:{display:isShowBtSave ? '':'none'}" />
+               
             </script>
         </div>
     </div>
@@ -124,10 +129,9 @@
         var roleId=<%=roleId%>;
         var isDisabled=<%=isDisabled%>;
         var msgDisabled='<%=msgDisabled%>';
+       var isShowBtSave = <%=(Enumerations.AccountingSystem.EXTERNAL==AppSession.CurrentSystemNAME) ? "false":"true" %>; 
         $(function () {
             pokerData.getCustomerSetting(custId,roleId);
-           
-            
         });
     </script>
 </body>
