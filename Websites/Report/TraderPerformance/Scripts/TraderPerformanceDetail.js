@@ -147,10 +147,30 @@ var permissionManagement = {
 };
 
 var traderPerformanceDetailManager = {
+    enums: {
+        SortDirection: {
+            Desc: "desc",
+            Asc: "asc",
+            None: ""
+        },
+
+        SortDataType: {
+            Number: "number",
+            String: "string"
+        }
+    },
     param: {
         FromDate: "",
         ToDate: "",
         IsSooccer: 0
+    },
+    cacheData: {
+        sorterList: null,
+        currentSorter: null,
+        sortDataType: null,
+        sortField: null,
+        sortFactor: null,
+        isSorting: false
     },
     setParam: function () {
         traderPerformanceDetailManager.param.FromDate = $("#fdate").val();
@@ -173,7 +193,7 @@ var traderPerformanceDetailManager = {
         pageIndex = 1;
         traderPerformanceDetailManager.viewReport();
     },
-    viewReport: function () {
+    viewReport: function (isSorting) {
         try { parent.BlockUI(); } catch (e) { }
         var reportGrid = traderPerformanceDetailManager.traderPerformanceDetailReport;
         traderPerformanceDetailManager.setParam();
@@ -182,21 +202,35 @@ var traderPerformanceDetailManager = {
         traderPerformanceDetailManager.gridtitleSummary.html("Trader Performance detail - From Date: " +
                             traderPerformanceDetailManager.param.FromDate + " To Date: " +
                             traderPerformanceDetailManager.param.ToDate);
+
+        var params = '';
+        if (isSorting) {
+            params = '{"fromDate":"' + traderPerformanceDetailManager.param.FromDate +
+                      '","toDate":"' + traderPerformanceDetailManager.param.ToDate +
+                      '","isSoccer":"' + traderPerformanceDetailManager.param.IsSooccer +
+                      '", "pageIndex":"' + pageIndex +
+                      '", "pageSize":"' + pageSize +
+                      '", "getNewData": "' + getNewData +
+                      '", "sortField": "' + traderPerformanceDetailManager.cacheData.sortField +
+                      '", "sortFactor": "' + traderPerformanceDetailManager.cacheData.sortFactor +
+                      '", "sortDataType": "' + traderPerformanceDetailManager.cacheData.sortDataType + '"}';
+        } else {
+            params = '{"fromDate":"' + traderPerformanceDetailManager.param.FromDate +
+                      '","toDate":"' + traderPerformanceDetailManager.param.ToDate +
+                      '","isSoccer":"' + traderPerformanceDetailManager.param.IsSooccer +
+                      '", "pageIndex":"' + pageIndex +
+                      '", "pageSize":"' + pageSize +
+                      '", "getNewData": "' + getNewData + '"}';
+        }
+
         $.ajax({
             type: "POST",
             url: "../../Services/WCF/Report/TraderPerformanceService.svc/GetTraderPerformanceReportDetail",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            data: '{"fromDate":"' + traderPerformanceDetailManager.param.FromDate +
-                    '","toDate":"' + traderPerformanceDetailManager.param.ToDate +
-                    '","isSoccer":"' + traderPerformanceDetailManager.param.IsSooccer +
-                    '", "pageIndex":"' + pageIndex +
-                    '", "pageSize":"' + pageSize +
-                    '", "getNewData": "' + getNewData + '"}',
+            data: params,
             success: function (rs) {
-                traderPerformanceDetailManager.traderPerformanceDetailReport.find(".col_header_content thead").empty().append(traderPerformanceDetailManager.displayTraderPerformanceDetailReportHeader(traderPerformanceDetailManager.param.IsSooccer));
-                $("#traderPerformanceDetailReport_Container tbody").empty().append(traderPerformanceDetailManager.displayTraderPerformanceDetailReport(rs));
-                try { parent.jQuery.unblockUI(); } catch (e) { }
+                traderPerformanceDetailManager.renderReport(rs, isSorting);
             },
             error: function () {
                 //                traderPerformanceDetailManager.traderPerformanceDetailReport.find(".col_header_content thead").empty().append(traderPerformanceDetailManager.displayTraderPerformanceDetailReportHeader(traderPerformanceDetailManager.param.IsSooccer));
@@ -205,27 +239,37 @@ var traderPerformanceDetailManager = {
                 // traderPerformanceDetailManager.initPager(0, pageSize, 0);
             },
             complete: function () {
-                reportGrid.removeClass("hidden");
-                var gridOpts = {
-                    tblContentId: 'traderPerformanceDetailReport_Container',
-                    manualCopyHeader: true,
-                    fullWidth: true,
-                    fullHeight: true,
-                    gridHeight: 200,
-                    gridWidth: 710,
-                    freezeWidth: 490,
-                    freezeHeight: 56,
-                    numberFreezeCol: 5
-                };
-                traderPerformanceDetailManager.traderPerformanceDetailReport.gridScroller(gridOpts);
-                traderPerformanceDetailManager.make2TableBodySameHeight($("#traderPerformanceDetailReport_RowHeader"), $("#traderPerformanceDetailReport_Container"));
-                traderPerformanceDetailManager.make2TableHeaderSameHeight($(".row_footer_content"), $(".col_footer_content"));
+                try { parent.jQuery.unblockUI(); } catch (e) { }
             }
         });
     },
+    renderReport: function (rs, isSorting) {
+        var reportGrid = traderPerformanceDetailManager.traderPerformanceDetailReport;
+        if (!isSorting) {
+            traderPerformanceDetailManager.traderPerformanceDetailReport.find(".col_header_content thead").empty().append(traderPerformanceDetailManager.displayTraderPerformanceDetailReportHeader(traderPerformanceDetailManager.param.IsSooccer));
+        }
+
+        $("#traderPerformanceDetailReport_Container tbody").empty().append(traderPerformanceDetailManager.displayTraderPerformanceDetailReport(rs));
+        reportGrid.removeClass("hidden");
+        var gridOpts = {
+            tblContentId: 'traderPerformanceDetailReport_Container',
+            manualCopyHeader: true,
+            fullWidth: true,
+            fullHeight: true,
+            gridHeight: 200,
+            gridWidth: 710,
+            freezeWidth: 490,
+            freezeHeight: 56,
+            numberFreezeCol: 5
+        };
+        traderPerformanceDetailManager.traderPerformanceDetailReport.gridScroller(gridOpts);
+        traderPerformanceDetailManager.make2TableBodySameHeight($("#traderPerformanceDetailReport_RowHeader"), $("#traderPerformanceDetailReport_Container"));
+        traderPerformanceDetailManager.make2TableHeaderSameHeight($(".row_footer_content"), $(".col_footer_content"));
+        traderPerformanceDetailManager.displaySorter(rs);
+    },
     displayTraderPerformanceDetailReport: function (rs) {
         var bodyHtml = "";
-        if (rs.rows != null && rs.rows.length > 0) {
+        if (rs && rs.rows != null && rs.rows.length > 0) {
             totalItem = rs.total;
             var frozenHtml = "";
             var traderPerformanceDetail = null;
@@ -454,103 +498,103 @@ var traderPerformanceDetailManager = {
         headerHtml += '<th colspan="' + colspanOfEachType + '"><div class="colHeaderSoccer c table-cell" style="height: 17px;">Live BetCount</div></th>';
         headerHtml += '<th colspan="' + colspanOfEachType + '"><div class="colHeaderSoccer c table-cell" style="height: 17px;">Margin %</div></th>';
         headerHtml += '<th colspan="' + colspanOfEachType + '"><div class="colHeaderSoccer c table-cell" style="height: 17px;">Commission</div></th>';
-        headerHtml += '<th rowspan="2" align="center"><div class="col100 c" style="">Trader</div></th>';
+        headerHtml += '<th rowspan="2" align="center"><div class="col100 c" fieldToSort="Trader">Trader</div></th>';
         headerHtml += '</tr>';
 
         //SecondRow
         headerHtml += '<tr>';
         //Winlost
-        headerHtml += '<th><div class="col60 c" style="">HT</div></th>';
-        headerHtml += '<th><div class="col60 c" style="">FT</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">1st 1x2</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">1x2</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">1st HDP</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">HDP</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">1st O/U</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">O/U</div></th>';
+        headerHtml += '<th><div class="col60 c">HT</div></th>';
+        headerHtml += '<th><div class="col60 c">FT</div></th>';
+        headerHtml += '<th><div class="col80 c">1st 1x2</div></th>';
+        headerHtml += '<th><div class="col80 c">1x2</div></th>';
+        headerHtml += '<th><div class="col80 c">1st HDP</div></th>';
+        headerHtml += '<th><div class="col80 c">HDP</div></th>';
+        headerHtml += '<th><div class="col80 c">1st O/U</div></th>';
+        headerHtml += '<th><div class="col80 c">O/U</div></th>';
         if (isSoccer == 1) {
-            headerHtml += '<th><div class="col80 c" style="">1st No. of Corner</div></th>';
-            headerHtml += '<th><div class="col80 c" style="">No. of Corner</div></th>';
-            headerHtml += '<th><div class="col80 c" style="">1st No. of Yellow Card</div></th>';
-            headerHtml += '<th><div class="col80 c" style=""> No. of Yellow Card</div></th>';
-            headerHtml += '<th><div class="col80 c" style="">15mins O/U</div></th>';
-            headerHtml += '<th><div class="col80 c" style="">Next Corner</div></th>';
+            headerHtml += '<th><div class="col80 c">1st No. of Corner</div></th>';
+            headerHtml += '<th><div class="col80 c">No. of Corner</div></th>';
+            headerHtml += '<th><div class="col80 c">1st No. of Yellow Card</div></th>';
+            headerHtml += '<th><div class="col80 c"> No. of Yellow Card</div></th>';
+            headerHtml += '<th><div class="col80 c">15mins O/U</div></th>';
+            headerHtml += '<th><div class="col80 c">Next Corner</div></th>';
         }
-        headerHtml += '<th><div class="col80 c" style="">1st O/E</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">O/E</div></th>';
-        headerHtml += '<th><div class="col90 c" style="">Overall</div></th>';
+        headerHtml += '<th><div class="col80 c">1st O/E</div></th>';
+        headerHtml += '<th><div class="col80 c">O/E</div></th>';
+        headerHtml += '<th><div class="col90 c sorter" fieldToSort="Win Loss">Overall</div></th>';
         //Turnover
-        headerHtml += '<th><div class="col80 c" style="">1st 1x2</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">1x2</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">1st HDP</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">HDP</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">1st O/U</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">O/U</div></th>';
+        headerHtml += '<th><div class="col80 c">1st 1x2</div></th>';
+        headerHtml += '<th><div class="col80 c">1x2</div></th>';
+        headerHtml += '<th><div class="col80 c">1st HDP</div></th>';
+        headerHtml += '<th><div class="col80 c">HDP</div></th>';
+        headerHtml += '<th><div class="col80 c">1st O/U</div></th>';
+        headerHtml += '<th><div class="col80 c">O/U</div></th>';
         if (isSoccer == 1) {
-            headerHtml += '<th><div class="col80 c" style="">1st No. of Corner</div></th>';
-            headerHtml += '<th><div class="col80 c" style="">No. of Corner</div></th>';
-            headerHtml += '<th><div class="col80 c" style="">1st No. of Yellow Card</div></th>';
-            headerHtml += '<th><div class="col80 c" style=""> No. of Yellow Card</div></th>';
-            headerHtml += '<th><div class="col80 c" style="">15mins O/U</div></th>';
-            headerHtml += '<th><div class="col80 c" style="">Next Corner</div></th>';
+            headerHtml += '<th><div class="col80 c">1st No. of Corner</div></th>';
+            headerHtml += '<th><div class="col80 c">No. of Corner</div></th>';
+            headerHtml += '<th><div class="col80 c">1st No. of Yellow Card</div></th>';
+            headerHtml += '<th><div class="col80 c"> No. of Yellow Card</div></th>';
+            headerHtml += '<th><div class="col80 c">15mins O/U</div></th>';
+            headerHtml += '<th><div class="col80 c">Next Corner</div></th>';
         }
-        headerHtml += '<th><div class="col80 c" style="">1st O/E</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">O/E</div></th>';
-        headerHtml += '<th><div class="col80 c" style=";">Overall</div></th>';
+        headerHtml += '<th><div class="col80 c">1st O/E</div></th>';
+        headerHtml += '<th><div class="col80 c">O/E</div></th>';
+        headerHtml += '<th><div class="col80 c sorter" fieldToSort="Turnover">Overall</div></th>';
         //Live BetCount
-        headerHtml += '<th><div class="col80 c" style="">1st 1x2</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">1x2</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">1st HDP</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">HDP</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">1st O/U</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">O/U</div></th>';
+        headerHtml += '<th><div class="col80 c">1st 1x2</div></th>';
+        headerHtml += '<th><div class="col80 c">1x2</div></th>';
+        headerHtml += '<th><div class="col80 c">1st HDP</div></th>';
+        headerHtml += '<th><div class="col80 c">HDP</div></th>';
+        headerHtml += '<th><div class="col80 c">1st O/U</div></th>';
+        headerHtml += '<th><div class="col80 c">O/U</div></th>';
         if (isSoccer == 1) {
-            headerHtml += '<th><div class="col80 c" style="">1st No. of Corner</div></th>';
-            headerHtml += '<th><div class="col80 c" style="">No. of Corner</div></th>';
-            headerHtml += '<th><div class="col80 c" style="">1st No. of Yellow Card</div></th>';
-            headerHtml += '<th><div class="col80 c" style=""> No. of Yellow Card</div></th>';
-            headerHtml += '<th><div class="col80 c" style="">15mins O/U</div></th>';
-            headerHtml += '<th><div class="col80 c" style="">Next Corner</div></th>';
+            headerHtml += '<th><div class="col80 c">1st No. of Corner</div></th>';
+            headerHtml += '<th><div class="col80 c">No. of Corner</div></th>';
+            headerHtml += '<th><div class="col80 c">1st No. of Yellow Card</div></th>';
+            headerHtml += '<th><div class="col80 c"> No. of Yellow Card</div></th>';
+            headerHtml += '<th><div class="col80 c">15mins O/U</div></th>';
+            headerHtml += '<th><div class="col80 c">Next Corner</div></th>';
         }
-        headerHtml += '<th><div class="col80 c" style="">1st O/E</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">O/E</div></th>';
-        headerHtml += '<th><div class="col80 c" style=";">Overall</div></th>';
+        headerHtml += '<th><div class="col80 c">1st O/E</div></th>';
+        headerHtml += '<th><div class="col80 c">O/E</div></th>';
+        headerHtml += '<th><div class="col80 c sorter" fieldToSort="Live Bet Count">Overall</div></th>';
         //Margin %
-        headerHtml += '<th><div class="col80 c" style="">1st 1x2</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">1x2</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">1st HDP</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">HDP</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">1st O/U</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">O/U</div></th>';
+        headerHtml += '<th><div class="col80 c">1st 1x2</div></th>';
+        headerHtml += '<th><div class="col80 c">1x2</div></th>';
+        headerHtml += '<th><div class="col80 c">1st HDP</div></th>';
+        headerHtml += '<th><div class="col80 c">HDP</div></th>';
+        headerHtml += '<th><div class="col80 c">1st O/U</div></th>';
+        headerHtml += '<th><div class="col80 c">O/U</div></th>';
         if (isSoccer == 1) {
-            headerHtml += '<th><div class="col80 c" style="">1st No. of Corner</div></th>';
-            headerHtml += '<th><div class="col80 c" style="">No. of Corner</div></th>';
-            headerHtml += '<th><div class="col80 c" style="">1st No. of Yellow Card</div></th>';
-            headerHtml += '<th><div class="col80 c" style=""> No. of Yellow Card</div></th>';
-            headerHtml += '<th><div class="col80 c" style="">15mins O/U</div></th>';
-            headerHtml += '<th><div class="col80 c" style="">Next Corner</div></th>';
+            headerHtml += '<th><div class="col80 c">1st No. of Corner</div></th>';
+            headerHtml += '<th><div class="col80 c">No. of Corner</div></th>';
+            headerHtml += '<th><div class="col80 c">1st No. of Yellow Card</div></th>';
+            headerHtml += '<th><div class="col80 c"> No. of Yellow Card</div></th>';
+            headerHtml += '<th><div class="col80 c">15mins O/U</div></th>';
+            headerHtml += '<th><div class="col80 c">Next Corner</div></th>';
         }
-        headerHtml += '<th><div class="col80 c" style="">1st O/E</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">O/E</div></th>';
-        headerHtml += '<th><div class="col80 c" style=";">Overall</div></th>';
+        headerHtml += '<th><div class="col80 c">1st O/E</div></th>';
+        headerHtml += '<th><div class="col80 c">O/E</div></th>';
+        headerHtml += '<th><div class="col80 c sorter" fieldToSort="Margin">Overall</div></th>';
         //Commission
-        headerHtml += '<th><div class="col80 c" style="">1st 1x2</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">1x2</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">1st HDP</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">HDP</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">1st O/U</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">O/U</div></th>';
+        headerHtml += '<th><div class="col80 c">1st 1x2</div></th>';
+        headerHtml += '<th><div class="col80 c">1x2</div></th>';
+        headerHtml += '<th><div class="col80 c">1st HDP</div></th>';
+        headerHtml += '<th><div class="col80 c">HDP</div></th>';
+        headerHtml += '<th><div class="col80 c">1st O/U</div></th>';
+        headerHtml += '<th><div class="col80 c">O/U</div></th>';
         if (isSoccer == 1) {
-            headerHtml += '<th><div class="col80 c" style="">1st No. of Corner</div></th>';
-            headerHtml += '<th><div class="col80 c" style="">No. of Corner</div></th>';
-            headerHtml += '<th><div class="col80 c" style="">1st No. of Yellow Card</div></th>';
-            headerHtml += '<th><div class="col80 c" style=""> No. of Yellow Card</div></th>';
-            headerHtml += '<th><div class="col80 c" style="">15mins O/U</div></th>';
-            headerHtml += '<th><div class="col80 c" style="">Next Corner</div></th>';
+            headerHtml += '<th><div class="col80 c">1st No. of Corner</div></th>';
+            headerHtml += '<th><div class="col80 c">No. of Corner</div></th>';
+            headerHtml += '<th><div class="col80 c">1st No. of Yellow Card</div></th>';
+            headerHtml += '<th><div class="col80 c"> No. of Yellow Card</div></th>';
+            headerHtml += '<th><div class="col80 c">15mins O/U</div></th>';
+            headerHtml += '<th><div class="col80 c">Next Corner</div></th>';
         }
-        headerHtml += '<th><div class="col80 c" style="">1st O/E</div></th>';
-        headerHtml += '<th><div class="col80 c" style="">O/E</div></th>';
-        headerHtml += '<th><div class="col80 c" style=";">Overall</div></th>';
+        headerHtml += '<th><div class="col80 c">1st O/E</div></th>';
+        headerHtml += '<th><div class="col80 c">O/E</div></th>';
+        headerHtml += '<th><div class="col80 c sorter" fieldToSort="Comission">Overall</div></th>';
 
         headerHtml += '</tr>';
         return headerHtml;
@@ -692,7 +736,7 @@ var traderPerformanceDetailManager = {
     },
     getReportPager: function () {
         isSoccer = traderPerformanceDetailManager.param.isSoccer;
-        traderPerformanceDetailManager.viewReport();
+        traderPerformanceDetailManager.viewReport(traderPerformanceDetailManager.cacheData.isSorting);
     },
     make2TableHeaderSameHeight: function (tableA, tableB) {
         var rowsA = tableA.find("thead tr");
@@ -740,6 +784,134 @@ var traderPerformanceDetailManager = {
                     $(cellsA[j]).css("height", currentHeightB + "px").css("vertical-align", "middle");
                 }
             }
+        }
+    },
+    displaySorter: function (rs) {
+        traderPerformanceDetailManager.cacheData.sorterList = traderPerformanceDetailManager.traderPerformanceDetailReport.find(".sorter");
+        if (rs && rs.rows != null && rs.rows.length > 0) {
+            traderPerformanceDetailManager.cacheData.sorterList.removeClass("disableSorter");
+            traderPerformanceDetailManager.cacheData.sorterList.each(function () {
+                $(this).attr("title", "Sort by " + $(this).attr("fieldToSort"))
+            });
+
+            traderPerformanceDetailManager.cacheData.sorterList.unbind("click");
+            traderPerformanceDetailManager.cacheData.sorterList.click(function () {
+                traderPerformanceDetailManager.sorterClick($(this));
+            });
+        } else {
+            traderPerformanceDetailManager.cacheData.sorterList.addClass("disableSorter");
+        }
+    },
+    sorterClick: function (btn) {
+        var oldSorter = traderPerformanceDetailManager.cacheData.currentSorter;
+        var fieldToSort = btn.attr("fieldToSort");
+        if (oldSorter && oldSorter.attr("fieldToSort") != fieldToSort) {
+            oldSorter.removeClass(traderPerformanceDetailManager.enums.SortDirection.Asc)
+                     .removeClass(traderPerformanceDetailManager.enums.SortDirection.Desc);
+        }
+
+        traderPerformanceDetailManager.cacheData.currentSorter = btn;
+        var sortDirection = traderPerformanceDetailManager.changeSorterStatus(btn);
+        traderPerformanceDetailManager.mappingSortInfo(sortDirection, fieldToSort);
+
+        try { parent.BlockUI(); } catch (e) { }
+        var params = {
+            fromDate: traderPerformanceDetailManager.param.FromDate,
+            toDate: traderPerformanceDetailManager.param.ToDate,
+            isSoccer: traderPerformanceDetailManager.param.IsSooccer,
+            pageIndex: pageIndex,
+            pageSize: pageSize,
+            getNewData: getNewData,
+            SortField: traderPerformanceDetailManager.cacheData.sortField,
+            SortFactor: traderPerformanceDetailManager.cacheData.sortFactor,
+            SortDataType: traderPerformanceDetailManager.cacheData.sortDataType
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "../../Services/WCF/Report/TraderPerformanceService.svc/GetTraderPerformanceReportDetail",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: '{"fromDate":"' + traderPerformanceDetailManager.param.FromDate +
+                    '","toDate":"' + traderPerformanceDetailManager.param.ToDate +
+                    '","isSoccer":"' + traderPerformanceDetailManager.param.IsSooccer +
+                    '", "pageIndex":"' + pageIndex +
+                    '", "pageSize":"' + pageSize +
+                    '", "getNewData": "' + getNewData +
+                    '", "sortField": "' + traderPerformanceDetailManager.cacheData.sortField +
+                    '", "sortFactor": "' + traderPerformanceDetailManager.cacheData.sortFactor +
+                    '", "sortDataType": "' + traderPerformanceDetailManager.cacheData.sortDataType + '"}',
+            success: function (rs) {
+                traderPerformanceDetailManager.cacheData.isSorting = true;
+                traderPerformanceDetailManager.renderReport(rs, true);
+            },
+            error: function () {
+            },
+            complete: function () {
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            }
+        });
+    },
+    changeSorterStatus: function (btn) {
+        var sortDirection = "";
+        var sortDirectionEnums = traderPerformanceDetailManager.enums.SortDirection;
+        if (btn.hasClass(sortDirectionEnums.Asc)) {
+            sortDirection = sortDirectionEnums.Desc;
+            btn.removeClass(sortDirectionEnums.Asc).addClass(sortDirection);
+        } else if (btn.hasClass(sortDirectionEnums.Desc)) {
+            sortDirection = sortDirectionEnums.Asc;
+            btn.removeClass(sortDirectionEnums.Desc).addClass(sortDirection);
+        } else {
+            sortDirection = sortDirectionEnums.Asc;
+            btn.addClass(sortDirection);
+        }
+
+        return sortDirection;
+    },
+    mappingSortInfo: function (sortDirection, fieldToSort) {
+        var sortDirectionEnums = traderPerformanceDetailManager.enums.SortDirection;
+        switch (sortDirection) {
+            case sortDirectionEnums.Asc:
+                traderPerformanceDetailManager.cacheData.sortFactor = 1;
+                break;
+            case sortDirectionEnums.Desc:
+                traderPerformanceDetailManager.cacheData.sortFactor = -1;
+                break;
+            default:
+                traderPerformanceDetailManager.cacheData.sortFactor = 0;
+                break;
+        }
+
+        var sortDataTypeEnums = traderPerformanceDetailManager.enums.SortDataType;
+        switch (fieldToSort) {
+            case "Trader":
+                traderPerformanceDetailManager.cacheData.sortField = "UserName";
+                traderPerformanceDetailManager.cacheData.sortDataType = sortDataTypeEnums.String;
+                break;
+            case "Win Loss":
+                traderPerformanceDetailManager.cacheData.sortField = "WinLostOverall";
+                traderPerformanceDetailManager.cacheData.sortDataType = sortDataTypeEnums.Number;
+                break;
+            case "Turnover":
+                traderPerformanceDetailManager.cacheData.sortField = "TurnOverOverall";
+                traderPerformanceDetailManager.cacheData.sortDataType = sortDataTypeEnums.Number;
+                break;
+            case "Live Bet Count":
+                traderPerformanceDetailManager.cacheData.sortField = "LiveBetCountOverall";
+                traderPerformanceDetailManager.cacheData.sortDataType = sortDataTypeEnums.Number;
+                break;
+            case "Margin":
+                traderPerformanceDetailManager.cacheData.sortField = "MarginOverall";
+                traderPerformanceDetailManager.cacheData.sortDataType = sortDataTypeEnums.Number;
+                break;
+            case "Comission":
+                traderPerformanceDetailManager.cacheData.sortField = "CommOverall";
+                traderPerformanceDetailManager.cacheData.sortDataType = sortDataTypeEnums.Number;
+                break;
+            default:
+                traderPerformanceDetailManager.cacheData.sortField = null;
+                traderPerformanceDetailManager.cacheData.sortDataType = null;
+                break;
         }
     }
 }

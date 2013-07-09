@@ -1,0 +1,35 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="GetTraderPerformanceReportDetailCriteria.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
+
+namespace Sunplus.Accounting.WcfServiceLibrary.Criteria.TraderPerformance
+{
+    using System.Diagnostics.CodeAnalysis;
+
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    public class GetTraderPerformanceReportDetailCriteria
+    {
+        public string fromDate { get; set; }
+
+        public string toDate { get; set; }
+
+        public int isSoccer { get; set; }
+
+        public int pageIndex { get; set; }
+
+        public int pageSize { get; set; }
+
+        public bool getNewData { get; set; }
+
+        public string SortField { get; set; }
+
+        public int SortFactor { get; set; }
+
+        public string SortDataType { get; set; }
+    }
+}
