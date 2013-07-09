@@ -29,7 +29,7 @@
     <Setting Key="DailyWLDirectRacing_14" SpName="Acc_Rpt_DailyWLDirect_Racing14" DbName="warehouse" />
     <Setting Key="DailyWLDirectRacing_WH" SpName="Acc_Rpt_DailyWLDirect_Racing" DbName="punter" />
     <Setting Key="DailyWLDirectRacingBySport" SpName="Acc_Rpt_DailyWLDirect_RacingBySport" DbName="warehouse" />
-    <Setting Key="DailyWLDirectRacingBySport_14" SpName="Acc_Rpt_DailyWLDirect_RacingBySport14" DbName="warehouse" />
+    <Setting Key="DailyWLDirectRacingBySport_14" SpName="Acc_Rpt_DailyFWLDirect_RacingBySport14" DbName="warehouse" />
     <Setting Key="DailyWLDirectRacingBySport_WH" SpName="Acc_Rpt_DailyWLDirect_RacingBySport" DbName="punter" />
     <Setting Key="DailyWLDirectRacingBySportDetails" SpName="Acc_Rpt_DailyWLDirect_RacingBySport_Details" DbName="warehouse" />
     <Setting Key="DailyWLDirectRacingBySportDetails_14" SpName="Acc_Rpt_DailyWLDirect_RacingBySport_Details14" DbName="warehouse" />
@@ -557,12 +557,13 @@
 
   </Function>
   <Function Name="Report - Licensee">
+    <Setting Key="GetGameType" SpName="Acc_LiveCasinoGetGameType" DbName="archive"  />
+    <Setting Key="GetLicenseesByResellers" SpName="Acc_LicenseeByResellerSel" DbName="licensee"  />
     <Setting Key="GetLicenseesByResellers" SpName="Acc_LicenseeByResellerSel" DbName="licensee"  />
     <Setting Key="GetLiveCasinoWLByLicensee" SpName="Acc_Rpt_LicLiveCasinoWinloss" DbName="archive"  />
     <Setting Key="NumberGameWinlossByLicensee" SpName="Acc_Rpt_LicNumberGameWinloss" DbName="archive"  />
     <Setting Key="GetSportTypeVirtualSport" SpName="Acc_SporttypeGetVirtualSport" DbName="archive"  />
     <Setting Key="VirtualSportWinlossByLicensee" SpName="Acc_Rpt_LicVirtualSportWinloss" DbName="archive"  />
-
     <Setting Key="OA_Get_ResellerProductCharge" SpName="OA_Get_ResellerProductCharge" DbName="archive"  />
   </Function>
 
