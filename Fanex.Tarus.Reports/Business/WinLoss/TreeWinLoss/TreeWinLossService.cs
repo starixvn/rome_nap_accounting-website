@@ -99,7 +99,7 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                 }
                 else
                 {
-                    if (CastAide.AsDateTime(toDate) >= moveBetsDay)
+                    if (CastAide.AsDateTime(toDate) > moveBetsDay)
                     {
                         tasks[0] = Task<TreeWinLoss>.Factory.StartNew(() =>
                         {
@@ -125,7 +125,7 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                         });
                     }
 
-                    if (CastAide.AsDateTime(fromDate) < moveBetsDay)
+                    if (CastAide.AsDateTime(fromDate) <= moveBetsDay)
                     {
                         tasks[1] = Task<TreeWinLoss>.Factory.StartNew(() =>
                         {
@@ -463,7 +463,7 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                 }
                 else
                 {
-                    if (CastAide.AsDateTime(toDate) >= moveBetsDay)
+                    if (CastAide.AsDateTime(toDate) > moveBetsDay)
                     {
                         tasks[0] = Task<TreeWinLoss>.Factory.StartNew(() =>
                         {
@@ -489,7 +489,7 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                         });
                     }
 
-                    if (CastAide.AsDateTime(fromDate) < moveBetsDay)
+                    if (CastAide.AsDateTime(fromDate) <= moveBetsDay)
                     {
                         tasks[1] = Task<TreeWinLoss>.Factory.StartNew(() =>
                         {
