@@ -1242,10 +1242,12 @@ using Fanex.Tarus.SpecialDelete.Entity;
             string rs = "";
             switch (bettype)
             {
-                case 1101://Baccarat
+                case 1101://Party Baccarat
+                case 1103://Live Baccarat
                     rs = CacheRef.GetLiveCasinoResult(betteam);
                     break;
-                case 1102://Live Roulette
+                case 1102://Party Roulette
+                case 1104://Live Roulette
                     rs = CacheRef.GetRouletteBetResult(betteam);
                     break;
             }
