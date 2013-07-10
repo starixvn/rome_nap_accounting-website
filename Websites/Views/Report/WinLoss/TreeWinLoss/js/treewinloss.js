@@ -435,7 +435,7 @@ var treeWinLossByCustomerLevel = {
                        treeWinLoss.params.isShowVS == true)
                        {
                             turnover = numeral(row.BaseRMTurnover).format('0,0.00');
-                            turnoverVirtual = numeral(row.BaseRMVirtualTotal).format('0,0.00');
+                            turnoverVirtual = numeral(row.BaseRMVirtualTurnover).format('0,0.00');
                        }
                        else{
                             turnover = 'N/A';
