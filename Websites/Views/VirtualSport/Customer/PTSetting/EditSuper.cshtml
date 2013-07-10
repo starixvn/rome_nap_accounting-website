@@ -79,17 +79,17 @@
 
         @if (!AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
         { 
-            <table cellspacing="0" cellpadding="0" border="0">
-                <tbody>
-                    <tr>
-                        <td class="custBtn1">
-                        </td>
-                        <td onclick="return eds.editSuper();" class="custBtn2 hand">
-                            Update
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+           <table cellspacing="0" cellpadding="0" border="0" style="margin-top: 5px;">
+            <tbody>
+                <tr>
+                    <td class="custBtn1">
+                    </td>
+                    <td onclick="return vsCustomer.updateSuper();" id="btnAdd" class="custBtn2 hand">
+                        Update
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         }
     </div>
 </div>

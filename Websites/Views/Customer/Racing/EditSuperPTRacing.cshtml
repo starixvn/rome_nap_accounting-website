@@ -24,17 +24,17 @@
     <div class="bg_table" style="width: 1013px;">
         @if (!AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
         { 
-            <table cellspacing="0" cellpadding="0" border="0" style="margin-bottom: 10px;">
-                <tbody>
-                    <tr>
-                        <td class="custBtn1">
-                        </td>
-                        <td onclick="return eds.editSuper();" class="custBtn2 hand">
-                            Update
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+           <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <td class="custBtn1">
+                    </td>
+                    <td onclick="return customerPTRacingSetting.updateCustomerSettings();" class="custBtn2 hand">
+                        Update
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         }
 @*customr info*@
         <div id="divCustInfo">
@@ -45,16 +45,16 @@
         @if (!AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
         { 
             <table cellspacing="0" cellpadding="0" border="0">
-                <tbody>
-                    <tr>
-                        <td class="custBtn1">
-                        </td>
-                        <td onclick="return eds.editSuper();" class="custBtn2 hand">
-                            Update
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <tbody>
+                <tr>
+                    <td class="custBtn1">
+                    </td>
+                    <td onclick="return customerPTRacingSetting.updateCustomerSettings();" class="custBtn2 hand">
+                        Update
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         }
     </div>
 </div>
