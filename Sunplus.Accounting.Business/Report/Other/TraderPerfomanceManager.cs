@@ -64,7 +64,12 @@ namespace Sunplus.Accounting.Business.Report.Other
                             wl1stOe = 0,
                             wlOe = 0,
                             wlNextCorner = 0,
-                            wlOverall = 0;
+                            wlOverall = 0,
+                            wlNextBooking = 0,
+                            wlTotalBookings15minOu = 0,
+                            wlCorners15minOu = 0,
+                            wl10minOu = 0,
+                            wlSingleTeamOu = 0;
                     #endregion
                     #region comm
                     decimal comHdpTotal = 0,
@@ -81,7 +86,12 @@ namespace Sunplus.Accounting.Business.Report.Other
                             com1stOe = 0,
                             comOe = 0,
                             comNextCorner = 0,
-                            comOverall = 0;
+                            comOverall = 0,
+                            comNextBooking = 0,
+                            comTotalBookings15minOu = 0,
+                            comCorners15minOu = 0,
+                            com10minOu = 0,
+                            comSingleTeamOu = 0;
                     #endregion
                     #region turn over
                     decimal toHdpTotal = 0,
@@ -98,7 +108,12 @@ namespace Sunplus.Accounting.Business.Report.Other
                             to1stOe = 0,
                             toOe = 0,
                             toNextCorner = 0,
-                            toOverall = 0;
+                            toOverall = 0,
+                            toNextBooking = 0,
+                            toTotalBookings15minOu = 0,
+                            toCorners15minOu = 0,
+                            to10minOu = 0,
+                            toSingleTeamOu = 0;
                     #endregion
                     #region margin
                     decimal mgHdpTotal = 0,
@@ -115,7 +130,12 @@ namespace Sunplus.Accounting.Business.Report.Other
                             mg1stOe = 0,
                             mgOe = 0,
                             mgNextCorner = 0,
-                            mgOverall = 0;
+                            mgOverall = 0,
+                            mgNextBooking = 0,
+                            mgTotalBookings15minOu = 0,
+                            mgCorners15minOu = 0,
+                            mg10minOu = 0,
+                            mgSingleTeamOu = 0;
                     #endregion
                     #region live betcount
                     decimal liHdpTotal = 0,
@@ -132,7 +152,12 @@ namespace Sunplus.Accounting.Business.Report.Other
                             li1stOe = 0,
                             liOe = 0,
                             liNextCorner = 0,
-                            liOverall = 0;
+                            liOverall = 0,
+                            liNextBooking = 0,
+                            liTotalBookings15minOu = 0,
+                            liCorners15minOu = 0,
+                            li10minOu = 0,
+                            liSingleTeamOu = 0;
                     #endregion
                     #endregion
                     #endregion
@@ -158,10 +183,10 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 WinLostNoOfCorners =
                                     NumberFormat.DecFormat(CastAide.AsDecimal(dr["winlost_NoOfCorners"]), 2),
                                 WinLost15minOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["winlost_15minOU"], 0), 2),
-                                WinLost1stNoOfYellowCards =
-                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["winlost_1stNoOfYellowCards"]), 2),
-                                WinLostNoOfYellowCards =
-                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["winlost_NoOfYellowCards"]), 2),
+                                WinLost1stTotalBookings =
+                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["winlost_1stTotalBookings"]), 2),
+                                WinLostTotalBookings =
+                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["winlost_TotalBookings"]), 2),
                                 WinLost1stOe =
                                        NumberFormat.DecFormat(CastAide.AsDecimal(dr["winlost_1stoe"]), 2),
                                 WinLostOe =
@@ -169,6 +194,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 WinLostNextCorner =
                                     NumberFormat.DecFormat(dr.Table.Columns.Contains("winlost_NextCorner") ? CastAide.AsDecimal(dr["winlost_NextCorner"]) : 0, 2),
                                 WinLostOverall = NumberFormat.DecFormat(CastAide.AsDecimal(dr["overall_wl"]), 2),
+                                WinLost10minsOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["winlost_10minOU"]), 2),
+                                WinLostTotalBookings15minsOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["winlost_15minTotalBookings"]), 2),
+                                WinLostCorners15minsOU = NumberFormat.DecFormat(CastAide.AsDecimal(dr["winlost_15minCorners"]), 2),
+                                WinLostNextBookings = NumberFormat.DecFormat(CastAide.AsDecimal(dr["winlost_NextBooking"]), 2),
+                                WinLostSingleTeamOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["winlost_SingleTeamOU"]), 2),
                                 #endregion
                                 #region comm
                                 CommHdp = NumberFormat.DecFormat(CastAide.AsDecimal(dr["comm_hdp"], 0), 2),
@@ -181,10 +211,10 @@ namespace Sunplus.Accounting.Business.Report.Other
                                     NumberFormat.DecFormat(CastAide.AsDecimal(dr["comm_1stNoOfCorners"], 0), 2),
                                 CommNoOfCorners = NumberFormat.DecFormat(CastAide.AsDecimal(dr["comm_NoOfCorners"], 0), 2),
                                 Comm15minOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["comm_15minOU"], 0), 2),
-                                Comm1stNoOfYellowCards =
-                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["comm_1stNoOfYellowCards"], 0), 2),
-                                CommNoOfYellowCards =
-                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["comm_NoOfYellowCards"], 0), 2),
+                                Comm1stTotalBookings =
+                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["comm_1stTotalBookings"], 0), 2),
+                                CommTotalBookings =
+                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["comm_TotalBookings"], 0), 2),
                                 Comm1stOe =
                                     NumberFormat.DecFormat(CastAide.AsDecimal(
                                         dr.Table.Columns.Contains("comm_1stoe")
@@ -201,6 +231,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                                             ? dr["comm_NextCorner"]
                                             : 0, 0), 2),
                                 CommOverall = NumberFormat.DecFormat(CastAide.AsDecimal(dr["overall_com"], 0), 2),
+                                Comm10minsOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["Comm_10minOU"]), 2),
+                                CommTotalBookings15minsOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["Comm_15minTotalBookings"]), 2),
+                                CommCorners15minsOU = NumberFormat.DecFormat(CastAide.AsDecimal(dr["Comm_15minCorners"]), 2),
+                                CommNextBookings = NumberFormat.DecFormat(CastAide.AsDecimal(dr["Comm_NextBooking"]), 2),
+                                CommSingleTeamOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["Comm_SingleTeamOU"]), 2),
                                 #endregion
                                 #region turn-over
                                 TurnOverHdp = NumberFormat.DecFormat(CastAide.AsDecimal(dr["stake_hdp"], 0), 2),
@@ -213,10 +248,10 @@ namespace Sunplus.Accounting.Business.Report.Other
                                     NumberFormat.DecFormat(CastAide.AsDecimal(dr["stake_1stNoOfCorners"], 0), 2),
                                 TurnOverNoOfCorners = NumberFormat.DecFormat(CastAide.AsDecimal(dr["stake_NoOfCorners"], 0), 2),
                                 TurnOver15minOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["stake_15minOU"], 0), 2),
-                                TurnOver1stNoOfYellowCards =
-                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["stake_1stNoOfYellowCards"], 0), 2),
-                                TurnOverNoOfYellowCards =
-                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["stake_NoOfYellowCards"], 0), 2),
+                                TurnOver1stTotalBookings =
+                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["stake_1stTotalBookings"], 0), 2),
+                                TurnOverTotalBookings =
+                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["stake_TotalBookings"], 0), 2),
                                 TurnOver1stOe =
                                     NumberFormat.DecFormat(CastAide.AsDecimal(
                                         dr.Table.Columns.Contains("stake_1stoe")
@@ -230,6 +265,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                                     NumberFormat.DecFormat(CastAide.AsDecimal(
                                         dr.Table.Columns.Contains("stake_NextCorner") ? dr["stake_NextCorner"] : 0, 0), 2),
                                 TurnOverOverall = NumberFormat.DecFormat(CastAide.AsDecimal(dr["overall_st"], 0), 2),
+                                TurnOver10minsOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["stake_10minOU"]), 2),
+                                TurnOverTotalBookings15minsOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["stake_15minTotalBookings"]), 2),
+                                TurnOverCorners15minsOU = NumberFormat.DecFormat(CastAide.AsDecimal(dr["stake_15minCorners"]), 2),
+                                TurnOverNextBookings = NumberFormat.DecFormat(CastAide.AsDecimal(dr["stake_NextBooking"]), 2),
+                                TurnOverSingleTeamOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["stake_SingleTeamOU"]), 2),
                                 #endregion
                                 #region margin
                                 Margin1stHdp = NumberFormat.DecFormat(CastAide.AsDecimal(dr["margin_1sthdp"]) * 100, 2),
@@ -242,10 +282,10 @@ namespace Sunplus.Accounting.Business.Report.Other
                                     NumberFormat.DecFormat(CastAide.AsDecimal(dr["margin_1stNoOfCorners"]) * 100, 2),
                                 MarginNoOfCorners = NumberFormat.DecFormat(CastAide.AsDecimal(dr["margin_NoOfCorners"]) * 100, 2),
                                 Margin15minOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["margin_15minOU"]) * 100, 2),
-                                Margin1stNoOfYellowCards =
-                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["margin_1stNoOfYellowCards"]) * 100, 2),
-                                MarginNoOfYellowCards =
-                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["margin_NoOfYellowCards"]) * 100, 2),
+                                Margin1stTotalBookings =
+                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["margin_1stTotalBookings"]) * 100, 2),
+                                MarginTotalBookings =
+                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["margin_TotalBookings"]) * 100, 2),
                                 Margin1stOe =
                                     NumberFormat.DecFormat(CastAide.AsDecimal(
                                         dr.Table.Columns.Contains("margin_1stoe")
@@ -260,6 +300,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                                         dr.Table.Columns.Contains("margin_NextCorner") ? dr["margin_NextCorner"] : 0) * 100,
                                         2),
                                 MarginOverall = NumberFormat.DecFormat(CastAide.AsDecimal(dr["overall_margin"]) * 100, 2),
+                                Margin10minsOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["Margin_10minOU"]), 2),
+                                MarginTotalBookings15minsOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["Margin_15minTotalBookings"]), 2),
+                                MarginCorners15minsOU = NumberFormat.DecFormat(CastAide.AsDecimal(dr["Margin_15minCorners"]), 2),
+                                MarginNextBookings = NumberFormat.DecFormat(CastAide.AsDecimal(dr["Margin_NextBooking"]), 2),
+                                MarginSingleTeamOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["Margin_SingleTeamOU"]), 2),
                                 #endregion
                                 #region live bet count
                                 LiveBetCountHdp = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_hdp"], 0), 0),
@@ -273,10 +318,10 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 LiveBetCountNoOfCorners =
                                     NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_NoOfCorners"], 0), 0),
                                 LiveBetCount15minOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_15minOU"], 0), 0),
-                                LiveBetCount1stNoOfYellowCards =
-                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_1stNoOfYellowCards"], 0), 0),
-                                LiveBetCountNoOfYellowCards =
-                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_NoOfYellowCards"], 0), 0),
+                                LiveBetCount1stTotalBookings =
+                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_1stTotalBookings"], 0), 0),
+                                LiveBetCountTotalBookings =
+                                    NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_TotalBookings"], 0), 0),
                                 LiveBetCount1stOe =
                                     NumberFormat.DecFormat(CastAide.AsDecimal(
                                         dr.Table.Columns.Contains("bet_1stoe") ? dr["bet_1stoe"] : 0,
@@ -287,7 +332,12 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 LiveBetCountNextCorner =
                                     NumberFormat.DecFormat(CastAide.AsDecimal(
                                         dr.Table.Columns.Contains("bet_NextCorner") ? dr["bet_NextCorner"] : 0, 0), 0),
-                                LiveBetCountOverall = NumberFormat.DecFormat(CastAide.AsDecimal(dr["overall_livebet"], 0), 0)
+                                LiveBetCountOverall = NumberFormat.DecFormat(CastAide.AsDecimal(dr["overall_livebet"], 0), 0),
+                                LiveBetCount10minsOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_10minOU"]), 0),
+                                LiveBetCountTotalBookings15minsOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_15minTotalBookings"]), 0),
+                                LiveBetCountCorners15minsOU = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_15minCorners"]), 0),
+                                LiveBetCountNextBookings = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_NextBooking"]), 0),
+                                LiveBetCountSingleTeamOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_SingleTeamOU"]), 0)
                                 #endregion
                             };
 
@@ -306,9 +356,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 CastAide.AsDecimal(dr["winlost_NoOfCorners"]);
                             wl15MinOu += CastAide.AsDecimal(dr["winlost_15minOU"]);
                             wl1stNoOfYellowCard +=
-                                CastAide.AsDecimal(dr["winlost_1stNoOfYellowCards"]);
+                                CastAide.AsDecimal(dr["winlost_1stTotalBookings"]);
                             wlNoOfYellowCard +=
-                                CastAide.AsDecimal(dr["winlost_NoOfYellowCards"]);
+                                CastAide.AsDecimal(dr["winlost_TotalBookings"]);
                             wl1stOe +=
                                 CastAide.AsDecimal(
                                     dr.Table.Columns.Contains("winlost_1stoe")
@@ -325,6 +375,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                                         ? dr["winlost_NextCorner"]
                                         : 0);
                             wlOverall += CastAide.AsDecimal(dr["overall_wl"]);
+                            wlNextBooking += CastAide.AsDecimal(dr["winlost_10minOU"]);
+                            wlTotalBookings15minOu += CastAide.AsDecimal(dr["winlost_15minTotalBookings"]);
+                            wlCorners15minOu += CastAide.AsDecimal(dr["winlost_15minCorners"]);
+                            wl10minOu += CastAide.AsDecimal(dr["winlost_NextBooking"]);
+                            wlSingleTeamOu += CastAide.AsDecimal(dr["winlost_SingleTeamOU"]);
                             #endregion
                             #region comm
                             comHdpTotal += CastAide.AsDecimal(dr["comm_hdp"]);
@@ -338,9 +393,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                             comNoOfCorner += CastAide.AsDecimal(dr["comm_NoOfCorners"]);
                             com15MinOu += CastAide.AsDecimal(dr["comm_15minOU"]);
                             com1stNoOfYellowCard +=
-                                CastAide.AsDecimal(dr["comm_1stNoOfYellowCards"]);
+                                CastAide.AsDecimal(dr["comm_1stTotalBookings"]);
                             comNoOfYellowCard +=
-                                CastAide.AsDecimal(dr["comm_NoOfYellowCards"]);
+                                CastAide.AsDecimal(dr["comm_TotalBookings"]);
                             com1stOe +=
                                 CastAide.AsDecimal(
                                     dr.Table.Columns.Contains("comm_1stoe")
@@ -357,6 +412,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                                         ? dr["comm_NextCorner"]
                                         : 0);
                             comOverall += CastAide.AsDecimal(dr["overall_com"]);
+                            comNextBooking += CastAide.AsDecimal(dr["comm_10minOU"]);
+                            comTotalBookings15minOu += CastAide.AsDecimal(dr["comm_15minTotalBookings"]);
+                            comCorners15minOu += CastAide.AsDecimal(dr["comm_15minCorners"]);
+                            com10minOu += CastAide.AsDecimal(dr["comm_NextBooking"]);
+                            comSingleTeamOu += CastAide.AsDecimal(dr["comm_SingleTeamOU"]);
                             #endregion
                             #region turn-over
                             toHdpTotal += CastAide.AsDecimal(dr["stake_hdp"]);
@@ -370,9 +430,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                             toNoOfCorner += CastAide.AsDecimal(dr["stake_NoOfCorners"]);
                             to15MinOu += CastAide.AsDecimal(dr["stake_15minOU"]);
                             to1stNoOfYellowCard +=
-                                CastAide.AsDecimal(dr["stake_1stNoOfYellowCards"]);
+                                CastAide.AsDecimal(dr["stake_1stTotalBookings"]);
                             toNoOfYellowCard +=
-                                CastAide.AsDecimal(dr["stake_NoOfYellowCards"]);
+                                CastAide.AsDecimal(dr["stake_TotalBookings"]);
                             to1stOe +=
                                 CastAide.AsDecimal(
                                     dr.Table.Columns.Contains("stake_1stoe")
@@ -387,6 +447,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                                         ? dr["stake_NextCorner"]
                                         : 0);
                             toOverall += CastAide.AsDecimal(dr["overall_st"], 0);
+                            toNextBooking += CastAide.AsDecimal(dr["stake_10minOU"]);
+                            toTotalBookings15minOu += CastAide.AsDecimal(dr["stake_15minTotalBookings"]);
+                            toCorners15minOu += CastAide.AsDecimal(dr["stake_15minCorners"]);
+                            to10minOu += CastAide.AsDecimal(dr["stake_NextBooking"]);
+                            toSingleTeamOu += CastAide.AsDecimal(dr["stake_SingleTeamOU"]);
                             #endregion
                             #region margin
                             mgHdpTotal += CastAide.AsDecimal(dr["margin_hdp"]);
@@ -400,9 +465,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                             mgNoOfCorner += CastAide.AsDecimal(dr["margin_NoOfCorners"]);
                             mg15MinOu += CastAide.AsDecimal(dr["margin_15minOU"]);
                             mg1stNoOfYellowCard +=
-                                CastAide.AsDecimal(dr["margin_1stNoOfYellowCards"]);
+                                CastAide.AsDecimal(dr["margin_1stTotalBookings"]);
                             mgNoOfYellowCard +=
-                                CastAide.AsDecimal(dr["margin_NoOfYellowCards"]);
+                                CastAide.AsDecimal(dr["margin_TotalBookings"]);
                             mg1stOe +=
                                 CastAide.AsDecimal(
                                     dr.Table.Columns.Contains("margin_1stoe")
@@ -417,6 +482,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                                         ? dr["margin_NextCorner"]
                                         : 0);
                             mgOverall += CastAide.AsDecimal(dr["overall_margin"]);
+                            mgNextBooking += CastAide.AsDecimal(dr["margin_10minOU"]);
+                            mgTotalBookings15minOu += CastAide.AsDecimal(dr["margin_15minTotalBookings"]);
+                            mgCorners15minOu += CastAide.AsDecimal(dr["margin_15minCorners"]);
+                            mg10minOu += CastAide.AsDecimal(dr["margin_NextBooking"]);
+                            mgSingleTeamOu += CastAide.AsDecimal(dr["margin_SingleTeamOU"]);
                             #endregion
                             #region live bet count
                             liHdpTotal += CastAide.AsDecimal(dr["bet_hdp"]);
@@ -431,9 +501,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 CastAide.AsDecimal(dr["bet_NoOfCorners"]);
                             li15MinOu += CastAide.AsDecimal(dr["bet_15minOU"]);
                             li1stNoOfYellowCard +=
-                                CastAide.AsDecimal(dr["bet_1stNoOfYellowCards"]);
+                                CastAide.AsDecimal(dr["bet_1stTotalBookings"]);
                             liNoOfYellowCard +=
-                                CastAide.AsDecimal(dr["bet_NoOfYellowCards"]);
+                                CastAide.AsDecimal(dr["bet_TotalBookings"]);
                             li1stOe +=
                                 CastAide.AsDecimal(
                                     dr.Table.Columns.Contains("bet_1stoe") ? dr["bet_1stoe"] : 0);
@@ -444,6 +514,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 CastAide.AsDecimal(
                                     dr.Table.Columns.Contains("bet_NextCorner") ? dr["bet_NextCorner"] : 0);
                             liOverall += CastAide.AsDecimal(dr["overall_livebet"]);
+                            liNextBooking += CastAide.AsDecimal(dr["bet_10minOU"]);
+                            liTotalBookings15minOu += CastAide.AsDecimal(dr["bet_15minTotalBookings"]);
+                            liCorners15minOu += CastAide.AsDecimal(dr["bet_15minCorners"]);
+                            li10minOu += CastAide.AsDecimal(dr["bet_NextBooking"]);
+                            liSingleTeamOu += CastAide.AsDecimal(dr["bet_SingleTeamOU"]);
                             #endregion
                             #endregion
                             if (CastAide.AsInt32(dr["custid"]) == 0 && CastAide.AsDecimal(dr["overall_st"], 0) == 0)
@@ -469,9 +544,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                         WinLostNoOfCorners =
                             NumberFormat.DecFormat(CastAide.AsDecimal(wlNoOfCorner, 0), 2),
                         WinLost15minOu = NumberFormat.DecFormat(CastAide.AsDecimal(wl15MinOu, 0), 2),
-                        WinLost1stNoOfYellowCards =
+                        WinLost1stTotalBookings =
                             NumberFormat.DecFormat(CastAide.AsDecimal(wl1stNoOfYellowCard, 0), 2),
-                        WinLostNoOfYellowCards =
+                        WinLostTotalBookings =
                             NumberFormat.DecFormat(CastAide.AsDecimal(wlNoOfYellowCard, 0), 2),
                         WinLost1stOe =
                             NumberFormat.DecFormat(CastAide.AsDecimal(wl1stOe, 0), 2),
@@ -480,6 +555,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         WinLostNextCorner =
                             NumberFormat.DecFormat(CastAide.AsDecimal(wlNextCorner, 0), 2),
                         WinLostOverall = NumberFormat.DecFormat(CastAide.AsDecimal(wlOverall, 0), 2),
+                        WinLost10minsOu = NumberFormat.DecFormat(CastAide.AsDecimal(wl10minOu, 0), 2),
+                        WinLostTotalBookings15minsOu = NumberFormat.DecFormat(CastAide.AsDecimal(wlTotalBookings15minOu, 0), 2),
+                        WinLostCorners15minsOU = NumberFormat.DecFormat(CastAide.AsDecimal(wlCorners15minOu, 0), 2),
+                        WinLostNextBookings = NumberFormat.DecFormat(CastAide.AsDecimal(wlNextBooking, 0), 2),
+                        WinLostSingleTeamOu = NumberFormat.DecFormat(CastAide.AsDecimal(wlSingleTeamOu, 0), 2),
                         #endregion
                         #region comm
                         CommHdp = NumberFormat.DecFormat(CastAide.AsDecimal(comHdpTotal, 0), 2),
@@ -492,9 +572,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                             NumberFormat.DecFormat(CastAide.AsDecimal(com1stNoOfCornerTotal, 0), 2),
                         CommNoOfCorners = NumberFormat.DecFormat(CastAide.AsDecimal(comNoOfCorner, 0), 2),
                         Comm15minOu = NumberFormat.DecFormat(CastAide.AsDecimal(com15MinOu, 0), 2),
-                        Comm1stNoOfYellowCards =
+                        Comm1stTotalBookings =
                             NumberFormat.DecFormat(CastAide.AsDecimal(com1stNoOfYellowCard, 0), 2),
-                        CommNoOfYellowCards =
+                        CommTotalBookings =
                             NumberFormat.DecFormat(CastAide.AsDecimal(comNoOfYellowCard, 0), 2),
                         Comm1stOe =
                             NumberFormat.DecFormat(CastAide.AsDecimal(com1stOe, 0), 2),
@@ -503,6 +583,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         CommNextCorner =
                             NumberFormat.DecFormat(CastAide.AsDecimal(comNextCorner, 0), 2),
                         CommOverall = NumberFormat.DecFormat(CastAide.AsDecimal(comOverall, 0), 2),
+                        Comm10minsOu = NumberFormat.DecFormat(CastAide.AsDecimal(com10minOu, 0), 2),
+                        CommTotalBookings15minsOu = NumberFormat.DecFormat(CastAide.AsDecimal(comTotalBookings15minOu, 0), 2),
+                        CommCorners15minsOU = NumberFormat.DecFormat(CastAide.AsDecimal(comCorners15minOu, 0), 2),
+                        CommNextBookings = NumberFormat.DecFormat(CastAide.AsDecimal(comNextBooking, 0), 2),
+                        CommSingleTeamOu = NumberFormat.DecFormat(CastAide.AsDecimal(comSingleTeamOu, 0), 2),
                         #endregion
                         #region turn-over
                         TurnOverHdp = NumberFormat.DecFormat(CastAide.AsDecimal(toHdpTotal, 0), 2),
@@ -515,9 +600,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                             NumberFormat.DecFormat(CastAide.AsDecimal(to1stNoOfCornerTotal, 0), 2),
                         TurnOverNoOfCorners = NumberFormat.DecFormat(CastAide.AsDecimal(toNoOfCorner, 0), 2),
                         TurnOver15minOu = NumberFormat.DecFormat(CastAide.AsDecimal(to15MinOu, 0), 2),
-                        TurnOver1stNoOfYellowCards =
+                        TurnOver1stTotalBookings =
                             NumberFormat.DecFormat(CastAide.AsDecimal(to1stNoOfYellowCard, 0), 2),
-                        TurnOverNoOfYellowCards =
+                        TurnOverTotalBookings =
                             NumberFormat.DecFormat(CastAide.AsDecimal(toNoOfYellowCard, 0), 2),
                         TurnOver1stOe =
                             NumberFormat.DecFormat(CastAide.AsDecimal(to1stOe, 0), 2),
@@ -526,6 +611,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         TurnOverNextCorner =
                             NumberFormat.DecFormat(CastAide.AsDecimal(toNextCorner, 0), 2),
                         TurnOverOverall = NumberFormat.DecFormat(CastAide.AsDecimal(toOverall, 0), 2),
+                        TurnOver10minsOu = NumberFormat.DecFormat(CastAide.AsDecimal(to10minOu, 0), 2),
+                        TurnOverTotalBookings15minsOu = NumberFormat.DecFormat(CastAide.AsDecimal(toTotalBookings15minOu, 0), 2),
+                        TurnOverCorners15minsOU = NumberFormat.DecFormat(CastAide.AsDecimal(toCorners15minOu, 0), 2),
+                        TurnOverNextBookings = NumberFormat.DecFormat(CastAide.AsDecimal(toNextBooking, 0), 2),
+                        TurnOverSingleTeamOu = NumberFormat.DecFormat(CastAide.AsDecimal(toSingleTeamOu, 0), 2),
                         #endregion
                         #region margin
 
@@ -539,9 +629,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                             NumberFormat.DecFormat((CastAide.AsDecimal(to1stNoOfCornerTotal, 0) != 0 ? (CastAide.AsDecimal(wl1stNoOfCornerTotal, 0) * 100 / CastAide.AsDecimal(to1stNoOfCornerTotal, 0)) : 0), 2),
                         MarginNoOfCorners = NumberFormat.DecFormat((CastAide.AsDecimal(toNoOfCorner, 0) > 0 ? (CastAide.AsDecimal(wlNoOfCorner, 0) * 100 / CastAide.AsDecimal(toNoOfCorner, 0)) : 0), 2),
                         Margin15minOu = NumberFormat.DecFormat((CastAide.AsDecimal(to15MinOu, 0) != 0 ? (CastAide.AsDecimal(wl15MinOu, 0) * 100 / CastAide.AsDecimal(to15MinOu, 0)) : 0), 2),
-                        Margin1stNoOfYellowCards =
+                        Margin1stTotalBookings =
                             NumberFormat.DecFormat((CastAide.AsDecimal(to1stNoOfYellowCard, 0) != 0 ? (CastAide.AsDecimal(wl1stNoOfYellowCard, 0) * 100 / CastAide.AsDecimal(to1stNoOfYellowCard, 0)) : 0), 2),
-                        MarginNoOfYellowCards =
+                        MarginTotalBookings =
                             NumberFormat.DecFormat((CastAide.AsDecimal(toNoOfYellowCard, 0) != 0 ? (CastAide.AsDecimal(wlNoOfYellowCard, 0) * 100 / CastAide.AsDecimal(toNoOfYellowCard, 0)) : 0), 2),
                         Margin1stOe =
                             NumberFormat.DecFormat((CastAide.AsDecimal(to1stOe, 0) != 0 ? (CastAide.AsDecimal(wl1stOe, 0) * 100 / CastAide.AsDecimal(to1stOe, 0)) : 0), 2),
@@ -550,6 +640,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         MarginNextCorner =
                             NumberFormat.DecFormat((CastAide.AsDecimal(toNextCorner, 0) != 0 ? (CastAide.AsDecimal(wlNextCorner, 0) * 100 / CastAide.AsDecimal(toNextCorner, 0)) : 0), 2),
                         MarginOverall = NumberFormat.DecFormat((CastAide.AsDecimal(toOverall, 0) != 0 ? (CastAide.AsDecimal(wlOverall, 0) * 100 / CastAide.AsDecimal(toOverall, 0)) : 0), 2),
+                        Margin10minsOu = NumberFormat.DecFormat(CastAide.AsDecimal(mg10minOu, 0), 2),
+                        MarginTotalBookings15minsOu = NumberFormat.DecFormat(CastAide.AsDecimal(mgTotalBookings15minOu, 0), 2),
+                        MarginCorners15minsOU = NumberFormat.DecFormat(CastAide.AsDecimal(mgCorners15minOu, 0), 2),
+                        MarginNextBookings = NumberFormat.DecFormat(CastAide.AsDecimal(mgNextBooking, 0), 2),
+                        MarginSingleTeamOu = NumberFormat.DecFormat(CastAide.AsDecimal(mgSingleTeamOu, 0), 2),
                         #endregion
                         #region live bet count
                         LiveBetCountHdp = NumberFormat.DecFormat(CastAide.AsDecimal(liHdpTotal, 0), 0),
@@ -563,9 +658,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                         LiveBetCountNoOfCorners =
                             NumberFormat.DecFormat(CastAide.AsDecimal(liNoOfCorner, 0), 0),
                         LiveBetCount15minOu = NumberFormat.DecFormat(CastAide.AsDecimal(li15MinOu, 0), 0),
-                        LiveBetCount1stNoOfYellowCards =
+                        LiveBetCount1stTotalBookings =
                             NumberFormat.DecFormat(CastAide.AsDecimal(li1stNoOfYellowCard, 0), 0),
-                        LiveBetCountNoOfYellowCards =
+                        LiveBetCountTotalBookings =
                             NumberFormat.DecFormat(CastAide.AsDecimal(liNoOfYellowCard, 0), 0),
                         LiveBetCount1stOe =
                             NumberFormat.DecFormat(CastAide.AsDecimal(li1stOe, 0), 0),
@@ -573,8 +668,12 @@ namespace Sunplus.Accounting.Business.Report.Other
                             NumberFormat.DecFormat(CastAide.AsDecimal(liOe, 0), 0),
                         LiveBetCountNextCorner =
                             NumberFormat.DecFormat(CastAide.AsDecimal(liNextCorner, 0), 0),
-                        LiveBetCountOverall = NumberFormat.DecFormat(CastAide.AsDecimal(liOverall, 0), 0)
-
+                        LiveBetCountOverall = NumberFormat.DecFormat(CastAide.AsDecimal(liOverall, 0), 0),
+                        LiveBetCount10minsOu = NumberFormat.DecFormat(CastAide.AsDecimal(li10minOu, 0), 0),
+                        LiveBetCountTotalBookings15minsOu = NumberFormat.DecFormat(CastAide.AsDecimal(liTotalBookings15minOu, 0), 0),
+                        LiveBetCountCorners15minsOU = NumberFormat.DecFormat(CastAide.AsDecimal(liCorners15minOu, 0), 0),
+                        LiveBetCountNextBookings = NumberFormat.DecFormat(CastAide.AsDecimal(liNextBooking, 0), 0),
+                        LiveBetCountSingleTeamOu = NumberFormat.DecFormat(CastAide.AsDecimal(liSingleTeamOu, 0), 0)
                         #endregion
                     };
                     traderTotal.Add(traderGrandTotal);
@@ -642,13 +741,18 @@ namespace Sunplus.Accounting.Business.Report.Other
             const string ou = "O/U";
             const string firstNoOfCorner = "1st No. of Corner";
             const string noOfCorner = "No. of Corner";
-            const string firstNoOfYelowCard = "1st No. of Yellow Card";
-            const string noOfYelowCard = "No. of Yellow Card";
+            const string firstNoOfYelowCard = "1st Total Bookings";
+            const string noOfYelowCard = "Total Bookings";
             const string fifteenMinsOu = "15mins O/U";
             const string firstOE = "1st O/E";
             const string OE = "O/E";
             const string nextCorner = "Next Corner";
             const string overall = "Overall";
+            const string nextBooking = "Next Booking ";
+            const string Corners15min = "Corners 15mins O/U";
+            const string TotalBooking15min = "Total Bookings 15mins O/U";
+            const string OU10min = "10mins O/U";
+            const string SingleTeamOU = "Single Team O/U";
 
             var reportName = isSoccer == 1 ? "TraderPerformance_Soccer" : "TraderPerformance_OtherSports";
             var excelFile = new ExcelFile();
@@ -656,7 +760,7 @@ namespace Sunplus.Accounting.Business.Report.Other
             const int startColumnIndex = 0;
             var nextRow = 0;
             var wsTraderPerformanceReport = excelFile.Worksheets.Add(reportName);
-            var mergedTotalColumns = isSoccer == 1 ? 14 : 8;
+            var mergedTotalColumns = isSoccer == 1 ? 19 : 8;
             #endregion
 
             #region Header
@@ -880,6 +984,34 @@ namespace Sunplus.Accounting.Business.Report.Other
 
                 if (isSoccer == 1)
                 {
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    wsTraderPerformanceReport.Columns[nextHeaderColumn].Width = 4000;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style
+                        =
+                        bgHeaderFormat;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style.VerticalAlignment = VerticalAlignmentStyle.Center;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn++)].
+                        Value =
+                        fifteenMinsOu;
+
+                    wsTraderPerformanceReport.Columns[nextHeaderColumn].Width = 4000;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style
+                        =
+                        bgHeaderFormat;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style.VerticalAlignment = VerticalAlignmentStyle.Center;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn++)].
+                        Value =
+                        OU10min;
+
+                    wsTraderPerformanceReport.Columns[nextHeaderColumn].Width = 4000;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style
+                        =
+                        bgHeaderFormat;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style.VerticalAlignment = VerticalAlignmentStyle.Center;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn++)].
+                        Value =
+                        SingleTeamOU;
+
                     wsTraderPerformanceReport.Columns[nextHeaderColumn].Width = 4000;
                     wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style
                         =
@@ -897,6 +1029,24 @@ namespace Sunplus.Accounting.Business.Report.Other
                     wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn++)].
                         Value =
                         noOfCorner;
+
+                    wsTraderPerformanceReport.Columns[nextHeaderColumn].Width = 4000;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style
+                        =
+                        bgHeaderFormat;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style.VerticalAlignment = VerticalAlignmentStyle.Center;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn++)].
+                        Value =
+                        Corners15min;
+
+                    wsTraderPerformanceReport.Columns[nextHeaderColumn].Width = 4000;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style
+                        =
+                        bgHeaderFormat;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style.VerticalAlignment = VerticalAlignmentStyle.Center;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn++)].
+                        Value =
+                        nextCorner;
 
                     wsTraderPerformanceReport.Columns[nextHeaderColumn].Width = 4000;
                     wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style
@@ -923,7 +1073,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                     wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style.VerticalAlignment = VerticalAlignmentStyle.Center;
                     wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn++)].
                         Value =
-                        fifteenMinsOu;
+                        TotalBooking15min;
 
                     wsTraderPerformanceReport.Columns[nextHeaderColumn].Width = 4000;
                     wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style
@@ -932,9 +1082,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                     wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style.VerticalAlignment = VerticalAlignmentStyle.Center;
                     wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn++)].
                         Value =
-                        nextCorner;
+                        nextBooking;
                 }
-                //----
+
                 wsTraderPerformanceReport.Columns[nextHeaderColumn].Width = 4000;
                 wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style =
                     bgHeaderFormat;
@@ -1071,6 +1221,36 @@ namespace Sunplus.Accounting.Business.Report.Other
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
                             Style
                             = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.WinLost15minOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.WinLost15minOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.WinLost10minsOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.WinLost10minsOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.WinLostSingleTeamOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.WinLostSingleTeamOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
                         if (CastAide.AsDecimal(reportDetail.WinLost1stNoOfCorners) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                                 Value = CastAide.AsDecimal(reportDetail.WinLost1stNoOfCorners);
@@ -1086,34 +1266,14 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 Value = CastAide.AsDecimal(reportDetail.WinLostNoOfCorners);
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
-                            Style
-                            = bgFormat;
-                        if (CastAide.AsDecimal(reportDetail.WinLost1stNoOfYellowCards) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.WinLost1stNoOfYellowCards);
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                             Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
                             Style
                             = bgFormat;
-                        if (CastAide.AsDecimal(reportDetail.WinLostNoOfYellowCards) != 0)
+                        if (CastAide.AsDecimal(reportDetail.WinLostCorners15minsOU) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.WinLostNoOfYellowCards);
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
-                            Style
-                            = bgFormat;
-                        if (CastAide.AsDecimal(reportDetail.WinLost15minOu) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.WinLost15minOu);
+                                Value = CastAide.AsDecimal(reportDetail.WinLostCorners15minsOU);
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                             Value = null;
@@ -1124,6 +1284,46 @@ namespace Sunplus.Accounting.Business.Report.Other
                         if (CastAide.AsDecimal(reportDetail.WinLostNextCorner) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                                 Value = CastAide.AsDecimal(reportDetail.WinLostNextCorner);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.WinLost1stTotalBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.WinLost1stTotalBookings);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.WinLostTotalBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.WinLostTotalBookings);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.WinLostTotalBookings15minsOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.WinLostTotalBookings15minsOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.WinLostNextBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.WinLostNextBookings);
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                             Value = null;
@@ -1220,6 +1420,36 @@ namespace Sunplus.Accounting.Business.Report.Other
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
                             Style
                             = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.TurnOver15minOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.TurnOver15minOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.TurnOver10minsOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.TurnOver10minsOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.TurnOverSingleTeamOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.TurnOverSingleTeamOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
                         if (CastAide.AsDecimal(reportDetail.TurnOver1stNoOfCorners) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                                 Value = CastAide.AsDecimal(reportDetail.TurnOver1stNoOfCorners);
@@ -1240,29 +1470,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
                             Style
                             = bgFormat;
-                        if (CastAide.AsDecimal(reportDetail.TurnOver1stNoOfYellowCards) != 0)
+                        if (CastAide.AsDecimal(reportDetail.TurnOverCorners15minsOU) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.TurnOver1stNoOfYellowCards);
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
-                            Style
-                            = bgFormat;
-                        if (CastAide.AsDecimal(reportDetail.TurnOverNoOfYellowCards) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.TurnOverNoOfYellowCards);
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
-                            Style
-                            = bgFormat;
-                        if (CastAide.AsDecimal(reportDetail.TurnOver15minOu) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.TurnOver15minOu);
+                                Value = CastAide.AsDecimal(reportDetail.TurnOverCorners15minsOU);
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                             Value = null;
@@ -1273,6 +1483,46 @@ namespace Sunplus.Accounting.Business.Report.Other
                         if (CastAide.AsDecimal(reportDetail.TurnOverNextCorner) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                                 Value = CastAide.AsDecimal(reportDetail.TurnOverNextCorner);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.TurnOver1stTotalBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.TurnOver1stTotalBookings);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.TurnOverTotalBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.TurnOverTotalBookings);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.TurnOverTotalBookings15minsOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.TurnOverTotalBookings15minsOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.TurnOverNextBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.TurnOverNextBookings);
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                             Value = null;
@@ -1372,6 +1622,36 @@ namespace Sunplus.Accounting.Business.Report.Other
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
                             Style
                             = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.LiveBetCount15minOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.LiveBetCount15minOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.LiveBetCount10minsOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.LiveBetCount10minsOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.LiveBetCountSingleTeamOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.LiveBetCountSingleTeamOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
                         if (CastAide.AsDecimal(reportDetail.LiveBetCount1stNoOfCorners) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                                 Value = CastAide.AsDecimal(reportDetail.LiveBetCount1stNoOfCorners);
@@ -1392,29 +1672,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
                             Style
                             = bgFormat;
-                        if (CastAide.AsDecimal(reportDetail.LiveBetCount1stNoOfYellowCards) != 0)
+                        if (CastAide.AsDecimal(reportDetail.LiveBetCountCorners15minsOU) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.LiveBetCount1stNoOfYellowCards);
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
-                            Style
-                            = bgFormat;
-                        if (CastAide.AsDecimal(reportDetail.LiveBetCountNoOfYellowCards) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.LiveBetCountNoOfYellowCards);
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
-                            Style
-                            = bgFormat;
-                        if (CastAide.AsDecimal(reportDetail.LiveBetCount15minOu) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.LiveBetCount15minOu);
+                                Value = CastAide.AsDecimal(reportDetail.LiveBetCountCorners15minsOU);
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                             Value = null;
@@ -1425,6 +1685,46 @@ namespace Sunplus.Accounting.Business.Report.Other
                         if (CastAide.AsDecimal(reportDetail.LiveBetCountNextCorner) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                                 Value = CastAide.AsDecimal(reportDetail.LiveBetCountNextCorner);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.LiveBetCount1stTotalBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.LiveBetCount1stTotalBookings);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.LiveBetCountTotalBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.LiveBetCountTotalBookings);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.LiveBetCountTotalBookings15minsOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.LiveBetCountTotalBookings15minsOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.LiveBetCountNextBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.LiveBetCountNextBookings);
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                             Value = null;
@@ -1522,60 +1822,110 @@ namespace Sunplus.Accounting.Business.Report.Other
                     {
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
                             Style
-                            = bgFormatPercent;
-                        if (CastAide.AsDecimal(reportDetail.Margin1stNoOfCorners) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.Margin1stNoOfCorners) / 100;
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                           Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
-                            Style
-                            = bgFormatPercent;
-                        if (CastAide.AsDecimal(reportDetail.MarginNoOfCorners) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.MarginNoOfCorners) / 100;
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
-                            Style
-                            = bgFormatPercent;
-                        if (CastAide.AsDecimal(reportDetail.Margin1stNoOfYellowCards) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.Margin1stNoOfYellowCards) / 100;
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
-                            Style
-                            = bgFormatPercent;
-                        if (CastAide.AsDecimal(reportDetail.MarginNoOfYellowCards) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.MarginNoOfYellowCards) / 100;
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
-                            Style
-                            = bgFormatPercent;
+                            = bgFormat;
                         if (CastAide.AsDecimal(reportDetail.Margin15minOu) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.Margin15minOu) / 100;
+                                Value = CastAide.AsDecimal(reportDetail.Margin15minOu);
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                             Value = null;
 
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
                             Style
-                            = bgFormatPercent;
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.Margin10minsOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.Margin10minsOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.MarginSingleTeamOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.MarginSingleTeamOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.Margin1stNoOfCorners) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.Margin1stNoOfCorners);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.MarginNoOfCorners) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.MarginNoOfCorners);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.MarginCorners15minsOU) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.MarginCorners15minsOU);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
                         if (CastAide.AsDecimal(reportDetail.MarginNextCorner) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.MarginNextCorner) / 100;
+                                Value = CastAide.AsDecimal(reportDetail.MarginNextCorner);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.Margin1stTotalBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.Margin1stTotalBookings);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.MarginTotalBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.MarginTotalBookings);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.MarginTotalBookings15minsOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.MarginTotalBookings15minsOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.MarginNextBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.MarginNextBookings);
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                             Value = null;
@@ -1674,6 +2024,36 @@ namespace Sunplus.Accounting.Business.Report.Other
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
                             Style
                             = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.Comm15minOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.Comm15minOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.Comm10minsOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.Comm10minsOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.CommSingleTeamOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.CommSingleTeamOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
                         if (CastAide.AsDecimal(reportDetail.Comm1stNoOfCorners) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                                 Value = CastAide.AsDecimal(reportDetail.Comm1stNoOfCorners);
@@ -1694,29 +2074,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
                             Style
                             = bgFormat;
-                        if (CastAide.AsDecimal(reportDetail.Comm1stNoOfYellowCards) != 0)
+                        if (CastAide.AsDecimal(reportDetail.CommCorners15minsOU) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.Comm1stNoOfYellowCards);
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
-                            Style
-                            = bgFormat;
-                        if (CastAide.AsDecimal(reportDetail.CommNoOfYellowCards) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.CommNoOfYellowCards);
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
-                            Style
-                            = bgFormat;
-                        if (CastAide.AsDecimal(reportDetail.Comm15minOu) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
-                                Value = CastAide.AsDecimal(reportDetail.Comm15minOu);
+                                Value = CastAide.AsDecimal(reportDetail.CommCorners15minsOU);
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                             Value = null;
@@ -1727,6 +2087,46 @@ namespace Sunplus.Accounting.Business.Report.Other
                         if (CastAide.AsDecimal(reportDetail.CommNextCorner) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                                 Value = CastAide.AsDecimal(reportDetail.CommNextCorner);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.Comm1stTotalBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.Comm1stTotalBookings);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.CommTotalBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.CommTotalBookings);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.CommTotalBookings15minsOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.CommTotalBookings15minsOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].
+                            Style
+                            = bgFormat;
+                        if (CastAide.AsDecimal(reportDetail.CommNextBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
+                                Value = CastAide.AsDecimal(reportDetail.CommNextBookings);
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                             Value = null;
@@ -1863,43 +2263,8 @@ namespace Sunplus.Accounting.Business.Report.Other
 
                     if (isSoccer == 1)
                     {
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerStyleSheet;
-                        if (CastAide.AsDecimal(reportFooter.WinLost1stNoOfCorners) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.WinLost1stNoOfCorners);
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerStyleSheet;
-                        if (CastAide.AsDecimal(reportFooter.WinLostNoOfCorners) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.WinLostNoOfCorners);
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerStyleSheet;
-                        if (CastAide.AsDecimal(reportFooter.WinLost1stNoOfYellowCards) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.WinLost1stNoOfYellowCards);
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerStyleSheet;
-                        if (CastAide.AsDecimal(reportFooter.WinLostNoOfYellowCards) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.WinLostNoOfYellowCards);
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
                             = footerStyleSheet;
                         if (CastAide.AsDecimal(reportFooter.WinLost15minOu) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
@@ -1908,11 +2273,102 @@ namespace Sunplus.Accounting.Business.Report.Other
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                             Value = null;
 
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.WinLost10minsOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.WinLost10minsOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.WinLostSingleTeamOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.WinLostSingleTeamOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.WinLost1stNoOfCorners) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.WinLost1stNoOfCorners);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.WinLostNoOfCorners) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.WinLostNoOfCorners);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.WinLostCorners15minsOU) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.WinLostCorners15minsOU);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
                             = footerStyleSheet;
                         if (CastAide.AsDecimal(reportFooter.WinLostNextCorner) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                                 Value = CastAide.AsDecimal(reportFooter.WinLostNextCorner);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.WinLost1stTotalBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.WinLost1stTotalBookings);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.WinLostTotalBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.WinLostTotalBookings);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.WinLostTotalBookings15minsOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.WinLostTotalBookings15minsOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.WinLostNextBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.WinLostNextBookings);
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                             Value = null;
@@ -1993,43 +2449,8 @@ namespace Sunplus.Accounting.Business.Report.Other
 
                     if (isSoccer == 1)
                     {
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerStyleSheet;
-                        if (CastAide.AsDecimal(reportFooter.TurnOver1stNoOfCorners) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.TurnOver1stNoOfCorners);
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerStyleSheet;
-                        if (CastAide.AsDecimal(reportFooter.TurnOverNoOfCorners) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.TurnOverNoOfCorners);
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerStyleSheet;
-                        if (CastAide.AsDecimal(reportFooter.TurnOver1stNoOfYellowCards) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.TurnOver1stNoOfYellowCards);
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerStyleSheet;
-                        if (CastAide.AsDecimal(reportFooter.TurnOverNoOfYellowCards) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.TurnOverNoOfYellowCards);
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
                             = footerStyleSheet;
                         if (CastAide.AsDecimal(reportFooter.TurnOver15minOu) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
@@ -2038,11 +2459,102 @@ namespace Sunplus.Accounting.Business.Report.Other
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                             Value = null;
 
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.TurnOver10minsOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.TurnOver10minsOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.TurnOverSingleTeamOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.TurnOverSingleTeamOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.TurnOver1stNoOfCorners) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.TurnOver1stNoOfCorners);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.TurnOverNoOfCorners) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.TurnOverNoOfCorners);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.TurnOverCorners15minsOU) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.TurnOverCorners15minsOU);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
                             = footerStyleSheet;
                         if (CastAide.AsDecimal(reportFooter.TurnOverNextCorner) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                                 Value = CastAide.AsDecimal(reportFooter.TurnOverNextCorner);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.TurnOver1stTotalBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.TurnOver1stTotalBookings);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.TurnOverTotalBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.TurnOverTotalBookings);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.TurnOverTotalBookings15minsOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.TurnOverTotalBookings15minsOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.TurnOverNextBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.TurnOverNextBookings);
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                             Value = null;
@@ -2123,44 +2635,9 @@ namespace Sunplus.Accounting.Business.Report.Other
 
                     if (isSoccer == 1)
                     {
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerIntStyleSheet;
-                        if (CastAide.AsDecimal(reportFooter.LiveBetCount1stNoOfCorners) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.LiveBetCount1stNoOfCorners);
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerIntStyleSheet;
-                        if (CastAide.AsDecimal(reportFooter.LiveBetCountNoOfCorners) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.LiveBetCountNoOfCorners);
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                    Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerIntStyleSheet;
-                        if (CastAide.AsDecimal(reportFooter.LiveBetCount1stNoOfYellowCards) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.LiveBetCount1stNoOfYellowCards);
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerIntStyleSheet;
-                        if (CastAide.AsDecimal(reportFooter.LiveBetCountNoOfYellowCards) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.LiveBetCountNoOfYellowCards);
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerIntStyleSheet;
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
                         if (CastAide.AsDecimal(reportFooter.LiveBetCount15minOu) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                                 Value = CastAide.AsDecimal(reportFooter.LiveBetCount15minOu);
@@ -2168,11 +2645,102 @@ namespace Sunplus.Accounting.Business.Report.Other
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                             Value = null;
 
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerIntStyleSheet;
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.LiveBetCount10minsOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.LiveBetCount10minsOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.LiveBetCountSingleTeamOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.LiveBetCountSingleTeamOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.LiveBetCount1stNoOfCorners) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.LiveBetCount1stNoOfCorners);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.LiveBetCountNoOfCorners) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.LiveBetCountNoOfCorners);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.LiveBetCountCorners15minsOU) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.LiveBetCountCorners15minsOU);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
                         if (CastAide.AsDecimal(reportFooter.LiveBetCountNextCorner) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                                 Value = CastAide.AsDecimal(reportFooter.LiveBetCountNextCorner);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.LiveBetCount1stTotalBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.LiveBetCount1stTotalBookings);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.LiveBetCountTotalBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.LiveBetCountTotalBookings);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.LiveBetCountTotalBookings15minsOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.LiveBetCountTotalBookings15minsOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.LiveBetCountNextBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.LiveBetCountNextBookings);
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                             Value = null;
@@ -2253,59 +2821,115 @@ namespace Sunplus.Accounting.Business.Report.Other
 
                     if (isSoccer == 1)
                     {
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerStyleSheetPercent;
-                        if (CastAide.AsDecimal(reportFooter.Margin1stNoOfCorners) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.Margin1stNoOfCorners) / 100;
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerStyleSheetPercent;
-                        if (CastAide.AsDecimal(reportFooter.MarginNoOfCorners) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.MarginNoOfCorners) / 100;
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerStyleSheetPercent;
-                        if (CastAide.AsDecimal(reportFooter.Margin1stNoOfYellowCards) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.Margin1stNoOfYellowCards) / 100;
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerStyleSheetPercent;
-                        if (CastAide.AsDecimal(reportFooter.MarginNoOfYellowCards) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.MarginNoOfYellowCards) / 100;
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerStyleSheetPercent;
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
                         if (CastAide.AsDecimal(reportFooter.Margin15minOu) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.Margin15minOu) / 100;
+                                Value = CastAide.AsDecimal(reportFooter.Margin15minOu);
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                             Value = null;
 
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerStyleSheetPercent;
-                        if (CastAide.AsDecimal(reportFooter.MarginNextCorner) != 0)
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.Margin10minsOu) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.MarginNextCorner) / 100;
+                                Value = CastAide.AsDecimal(reportFooter.Margin10minsOu);
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = null;
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.MarginSingleTeamOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.MarginSingleTeamOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.Margin1stNoOfCorners) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.Margin1stNoOfCorners);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.MarginNoOfCorners) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.MarginNoOfCorners);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.MarginCorners15minsOU) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.MarginCorners15minsOU);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.MarginNextCorner) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.MarginNextCorner);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.Margin1stTotalBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.Margin1stTotalBookings);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.MarginTotalBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.MarginTotalBookings);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.MarginTotalBookings15minsOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.MarginTotalBookings15minsOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.MarginNextBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.MarginNextBookings);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
                     }
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
                         footerStyleSheetPercent;
@@ -2383,43 +3007,8 @@ namespace Sunplus.Accounting.Business.Report.Other
 
                     if (isSoccer == 1)
                     {
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerStyleSheet;
-                        if (CastAide.AsDecimal(reportFooter.Comm1stNoOfCorners) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.Comm1stNoOfCorners);
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerStyleSheet;
-                        if (CastAide.AsDecimal(reportFooter.CommNoOfCorners) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.CommNoOfCorners);
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerStyleSheet;
-                        if (CastAide.AsDecimal(reportFooter.Comm1stNoOfYellowCards) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.Comm1stNoOfYellowCards);
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
-                            = footerStyleSheet;
-                        if (CastAide.AsDecimal(reportFooter.CommNoOfYellowCards) != 0)
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                                Value = CastAide.AsDecimal(reportFooter.CommNoOfYellowCards);
-                        else
-                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
-                            Value = null;
-
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
                             = footerStyleSheet;
                         if (CastAide.AsDecimal(reportFooter.Comm15minOu) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
@@ -2428,11 +3017,102 @@ namespace Sunplus.Accounting.Business.Report.Other
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                             Value = null;
 
-                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.Comm10minsOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.Comm10minsOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.CommSingleTeamOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.CommSingleTeamOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.Comm1stNoOfCorners) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.Comm1stNoOfCorners);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.CommNoOfCorners) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.CommNoOfCorners);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.CommCorners15minsOU) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.CommCorners15minsOU);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
                             = footerStyleSheet;
                         if (CastAide.AsDecimal(reportFooter.CommNextCorner) != 0)
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                                 Value = CastAide.AsDecimal(reportFooter.CommNextCorner);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.Comm1stTotalBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.Comm1stTotalBookings);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.CommTotalBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.CommTotalBookings);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.CommTotalBookings15minsOu) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.CommTotalBookings15minsOu);
+                        else
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                            Value = null;
+
+                        wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].
+                            Style
+                            = footerStyleSheet;
+                        if (CastAide.AsDecimal(reportFooter.CommNextBookings) != 0)
+                            wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
+                                Value = CastAide.AsDecimal(reportFooter.CommNextBookings);
                         else
                             wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].
                             Value = null;
@@ -2515,13 +3195,20 @@ namespace Sunplus.Accounting.Business.Report.Other
             const string ou = "O/U";
             const string firstNoOfCorner = "1st No. of Corner";
             const string noOfCorner = "No. of Corner";
-            const string firstNoOfYelowCard = "1st No. of Yellow Card";
-            const string noOfYelowCard = "No. of Yellow Card";
+            //const string firstNoOfYelowCard = "1st No. of Yellow Card";
+            const string firstNoOfYelowCard = "1st Total Bookings";
+            //const string noOfYelowCard = "No. of Yellow Card";
+            const string noOfYelowCard = "Total Bookings";
             const string fifteenMinsOu = "15mins O/U";
             const string firstOE = "1st O/E";
             const string OE = "O/E";
             const string nextCorner = "Next Corner";
             const string overall = "Overall";
+            const string nextBooking = "Next Booking ";
+            const string Corners15min = "Corners 15mins O/U";
+            const string TotalBooking15min = "Total Bookings 15mins O/U";
+            const string OU10min = "10mins O/U";
+            const string SingleTeamOU = "Single Team O/U";
 
             var reportName = isSoccer == 1 ? "TraderPerformanceDetail_Soccer" : "TraderPerformanceDetail_OtherSports";
             var excelFile = new ExcelFile();
@@ -2529,7 +3216,7 @@ namespace Sunplus.Accounting.Business.Report.Other
             const int startColumnIndex = 0;
             var nextRow = 0;
             var wsTraderPerformanceReport = excelFile.Worksheets.Add(reportName);
-            var mergedTotalColumns = isSoccer == 1 ? 14 : 8;
+            var mergedTotalColumns = isSoccer == 1 ? 19 : 8;
             #endregion
             #region Header
             var bgHeaderFormat = ExcelFormat(Color.FromArgb(159, 183, 213), HorizontalAlignmentStyle.Center, ExcelFont.BoldWeight, false, false);
@@ -2821,6 +3508,33 @@ namespace Sunplus.Accounting.Business.Report.Other
                     wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style.VerticalAlignment = VerticalAlignmentStyle.Center;
                     wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn++)].
                         Value =
+                        fifteenMinsOu;
+
+                    wsTraderPerformanceReport.Columns[nextHeaderColumn].Width = 4000;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style
+                        =
+                        bgHeaderFormat;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style.VerticalAlignment = VerticalAlignmentStyle.Center;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn++)].
+                        Value =
+                        OU10min;
+
+                    wsTraderPerformanceReport.Columns[nextHeaderColumn].Width = 4000;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style
+                        =
+                        bgHeaderFormat;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style.VerticalAlignment = VerticalAlignmentStyle.Center;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn++)].
+                        Value =
+                        SingleTeamOU;
+
+                    wsTraderPerformanceReport.Columns[nextHeaderColumn].Width = 4000;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style
+                        =
+                        bgHeaderFormat;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style.VerticalAlignment = VerticalAlignmentStyle.Center;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn++)].
+                        Value =
                         firstNoOfCorner;
 
                     wsTraderPerformanceReport.Columns[nextHeaderColumn].Width = 4000;
@@ -2831,6 +3545,24 @@ namespace Sunplus.Accounting.Business.Report.Other
                     wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn++)].
                         Value =
                         noOfCorner;
+
+                    wsTraderPerformanceReport.Columns[nextHeaderColumn].Width = 4000;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style
+                        =
+                        bgHeaderFormat;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style.VerticalAlignment = VerticalAlignmentStyle.Center;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn++)].
+                        Value =
+                        Corners15min;
+
+                    wsTraderPerformanceReport.Columns[nextHeaderColumn].Width = 4000;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style
+                        =
+                        bgHeaderFormat;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style.VerticalAlignment = VerticalAlignmentStyle.Center;
+                    wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn++)].
+                        Value =
+                        nextCorner;
 
                     wsTraderPerformanceReport.Columns[nextHeaderColumn].Width = 4000;
                     wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style
@@ -2857,7 +3589,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                     wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style.VerticalAlignment = VerticalAlignmentStyle.Center;
                     wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn++)].
                         Value =
-                        fifteenMinsOu;
+                        TotalBooking15min;
 
                     wsTraderPerformanceReport.Columns[nextHeaderColumn].Width = 4000;
                     wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style
@@ -2866,7 +3598,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                     wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style.VerticalAlignment = VerticalAlignmentStyle.Center;
                     wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn++)].
                         Value =
-                        nextCorner;
+                        nextBooking;
                 }
                 //----
                 wsTraderPerformanceReport.Columns[nextHeaderColumn].Width = 4000;
@@ -3159,6 +3891,36 @@ namespace Sunplus.Accounting.Business.Report.Other
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
                         Style
                         = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.WinLost15minOu) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.WinLost15minOu);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.WinLost10minsOu) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.WinLost10minsOu);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.WinLostSingleTeamOu) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.WinLostSingleTeamOu);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
                     if (CastAide.AsDecimal(traderDetail.WinLost1stNoOfCorners) != 0)
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                             Value = CastAide.AsDecimal(traderDetail.WinLost1stNoOfCorners);
@@ -3179,29 +3941,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
                         Style
                         = bgFormat;
-                    if (CastAide.AsDecimal(traderDetail.WinLost1stNoOfYellowCards) != 0)
+                    if (CastAide.AsDecimal(traderDetail.WinLostCorners15minsOU) != 0)
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                            Value = CastAide.AsDecimal(traderDetail.WinLost1stNoOfYellowCards);
-                    else
-                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = null;
-
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
-                        Style
-                        = bgFormat;
-                    if (CastAide.AsDecimal(traderDetail.WinLostNoOfYellowCards) != 0)
-                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                            Value = CastAide.AsDecimal(traderDetail.WinLostNoOfYellowCards);
-                    else
-                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = null;
-
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
-                        Style
-                        = bgFormat;
-                    if (CastAide.AsDecimal(traderDetail.WinLost15minOu) != 0)
-                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                            Value = CastAide.AsDecimal(traderDetail.WinLost15minOu);
+                            Value = CastAide.AsDecimal(traderDetail.WinLostCorners15minsOU);
                     else
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                         Value = null;
@@ -3212,6 +3954,46 @@ namespace Sunplus.Accounting.Business.Report.Other
                     if (CastAide.AsDecimal(traderDetail.WinLostNextCorner) != 0)
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                             Value = CastAide.AsDecimal(traderDetail.WinLostNextCorner);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.WinLost1stTotalBookings) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.WinLost1stTotalBookings);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.WinLostTotalBookings) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.WinLostTotalBookings);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.WinLostTotalBookings15minsOu) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.WinLostTotalBookings15minsOu);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.WinLostNextBookings) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.WinLostNextBookings);
                     else
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                         Value = null;
@@ -3308,6 +4090,36 @@ namespace Sunplus.Accounting.Business.Report.Other
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
                         Style
                         = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.TurnOver15minOu) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.TurnOver15minOu);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.TurnOver10minsOu) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.TurnOver10minsOu);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.TurnOverSingleTeamOu) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.TurnOverSingleTeamOu);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
                     if (CastAide.AsDecimal(traderDetail.TurnOver1stNoOfCorners) != 0)
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                             Value = CastAide.AsDecimal(traderDetail.TurnOver1stNoOfCorners);
@@ -3328,29 +4140,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
                         Style
                         = bgFormat;
-                    if (CastAide.AsDecimal(traderDetail.TurnOver1stNoOfYellowCards) != 0)
+                    if (CastAide.AsDecimal(traderDetail.TurnOverCorners15minsOU) != 0)
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                            Value = CastAide.AsDecimal(traderDetail.TurnOver1stNoOfYellowCards);
-                    else
-                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = null;
-
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
-                        Style
-                        = bgFormat;
-                    if (CastAide.AsDecimal(traderDetail.TurnOverNoOfYellowCards) != 0)
-                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                            Value = CastAide.AsDecimal(traderDetail.TurnOverNoOfYellowCards);
-                    else
-                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = null;
-
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
-                        Style
-                        = bgFormat;
-                    if (CastAide.AsDecimal(traderDetail.TurnOver15minOu) != 0)
-                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                            Value = CastAide.AsDecimal(traderDetail.TurnOver15minOu);
+                            Value = CastAide.AsDecimal(traderDetail.TurnOverCorners15minsOU);
                     else
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                         Value = null;
@@ -3361,6 +4153,46 @@ namespace Sunplus.Accounting.Business.Report.Other
                     if (CastAide.AsDecimal(traderDetail.TurnOverNextCorner) != 0)
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                             Value = CastAide.AsDecimal(traderDetail.TurnOverNextCorner);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.TurnOver1stTotalBookings) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.TurnOver1stTotalBookings);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.TurnOverTotalBookings) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.TurnOverTotalBookings);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.TurnOverTotalBookings15minsOu) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.TurnOverTotalBookings15minsOu);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.TurnOverNextBookings) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.TurnOverNextBookings);
                     else
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                         Value = null;
@@ -3395,7 +4227,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                 #endregion
 
                 #region live betcount
-                bgFormat = ExcelFormat(Color.FromArgb(253, 207, 246),
+                bgFormat = ExcelIntFormat(Color.FromArgb(253, 207, 246),
                                        HorizontalAlignmentStyle.Right, ExcelFont.NormalWeight, true, false);
                 worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].Style
                     = bgFormat;
@@ -3456,6 +4288,36 @@ namespace Sunplus.Accounting.Business.Report.Other
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
                         Style
                         = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.LiveBetCount15minOu) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.LiveBetCount15minOu);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.LiveBetCount10minsOu) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.LiveBetCount10minsOu);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.LiveBetCountSingleTeamOu) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.LiveBetCountSingleTeamOu);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
                     if (CastAide.AsDecimal(traderDetail.LiveBetCount1stNoOfCorners) != 0)
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                             Value = CastAide.AsDecimal(traderDetail.LiveBetCount1stNoOfCorners);
@@ -3476,29 +4338,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
                         Style
                         = bgFormat;
-                    if (CastAide.AsDecimal(traderDetail.LiveBetCount1stNoOfYellowCards) != 0)
+                    if (CastAide.AsDecimal(traderDetail.LiveBetCountCorners15minsOU) != 0)
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                            Value = CastAide.AsDecimal(traderDetail.LiveBetCount1stNoOfYellowCards);
-                    else
-                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = null;
-
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
-                        Style
-                        = bgFormat;
-                    if (CastAide.AsDecimal(traderDetail.LiveBetCountNoOfYellowCards) != 0)
-                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                            Value = CastAide.AsDecimal(traderDetail.LiveBetCountNoOfYellowCards);
-                    else
-                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = null;
-
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
-                        Style
-                        = bgFormat;
-                    if (CastAide.AsDecimal(traderDetail.LiveBetCount15minOu) != 0)
-                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                            Value = CastAide.AsDecimal(traderDetail.LiveBetCount15minOu);
+                            Value = CastAide.AsDecimal(traderDetail.LiveBetCountCorners15minsOU);
                     else
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                         Value = null;
@@ -3509,6 +4351,46 @@ namespace Sunplus.Accounting.Business.Report.Other
                     if (CastAide.AsDecimal(traderDetail.LiveBetCountNextCorner) != 0)
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                             Value = CastAide.AsDecimal(traderDetail.LiveBetCountNextCorner);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.LiveBetCount1stTotalBookings) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.LiveBetCount1stTotalBookings);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.LiveBetCountTotalBookings) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.LiveBetCountTotalBookings);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.LiveBetCountTotalBookings15minsOu) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.LiveBetCountTotalBookings15minsOu);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.LiveBetCountNextBookings) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.LiveBetCountNextBookings);
                     else
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                         Value = null;
@@ -3544,11 +4426,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                 #endregion
 
                 #region margin
-                bgFormat = ExcelIntFormat(Color.FromArgb(202, 222, 230),
-                                       HorizontalAlignmentStyle.Right,
-                                       ExcelFont.NormalWeight,
-                                       true,
-                                       false);
+                bgPercentFormat = ExcelFormat(Color.FromArgb(202, 222, 230),
+                                  HorizontalAlignmentStyle.Right, ExcelFont.NormalWeight, false, true);
+
                 worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].Style
                     = bgPercentFormat;
                 if (CastAide.AsDecimal(traderDetail.Margin1st1x2) != 0)
@@ -3608,9 +4488,39 @@ namespace Sunplus.Accounting.Business.Report.Other
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
                         Style
                         = bgPercentFormat;
+                    if (CastAide.AsDecimal(traderDetail.Margin15minOu) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.Margin15minOu);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgPercentFormat;
+                    if (CastAide.AsDecimal(traderDetail.Margin10minsOu) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.Margin10minsOu);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgPercentFormat;
+                    if (CastAide.AsDecimal(traderDetail.MarginSingleTeamOu) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.MarginSingleTeamOu);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgPercentFormat;
                     if (CastAide.AsDecimal(traderDetail.Margin1stNoOfCorners) != 0)
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                            Value = CastAide.AsDecimal(traderDetail.Margin1stNoOfCorners) / 100;
+                            Value = CastAide.AsDecimal(traderDetail.Margin1stNoOfCorners);
                     else
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                         Value = null;
@@ -3620,7 +4530,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                         = bgPercentFormat;
                     if (CastAide.AsDecimal(traderDetail.MarginNoOfCorners) != 0)
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                            Value = CastAide.AsDecimal(traderDetail.MarginNoOfCorners) / 100;
+                            Value = CastAide.AsDecimal(traderDetail.MarginNoOfCorners);
                     else
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                         Value = null;
@@ -3628,29 +4538,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
                         Style
                         = bgPercentFormat;
-                    if (CastAide.AsDecimal(traderDetail.Margin1stNoOfYellowCards) != 0)
+                    if (CastAide.AsDecimal(traderDetail.MarginCorners15minsOU) != 0)
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                            Value = CastAide.AsDecimal(traderDetail.Margin1stNoOfYellowCards) / 100;
-                    else
-                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = null;
-
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
-                        Style
-                        = bgPercentFormat;
-                    if (CastAide.AsDecimal(traderDetail.MarginNoOfYellowCards) != 0)
-                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                            Value = CastAide.AsDecimal(traderDetail.MarginNoOfYellowCards) / 100;
-                    else
-                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = null;
-
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
-                        Style
-                        = bgPercentFormat;
-                    if (CastAide.AsDecimal(traderDetail.Margin15minOu) != 0)
-                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                            Value = CastAide.AsDecimal(traderDetail.Margin15minOu) / 100;
+                            Value = CastAide.AsDecimal(traderDetail.MarginCorners15minsOU);
                     else
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                         Value = null;
@@ -3660,7 +4550,47 @@ namespace Sunplus.Accounting.Business.Report.Other
                         = bgPercentFormat;
                     if (CastAide.AsDecimal(traderDetail.MarginNextCorner) != 0)
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                            Value = CastAide.AsDecimal(traderDetail.MarginNextCorner) / 100;
+                            Value = CastAide.AsDecimal(traderDetail.MarginNextCorner);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgPercentFormat;
+                    if (CastAide.AsDecimal(traderDetail.Margin1stTotalBookings) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.Margin1stTotalBookings);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgPercentFormat;
+                    if (CastAide.AsDecimal(traderDetail.MarginTotalBookings) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.MarginTotalBookings);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgPercentFormat;
+                    if (CastAide.AsDecimal(traderDetail.MarginTotalBookings15minsOu) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.MarginTotalBookings15minsOu);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgPercentFormat;
+                    if (CastAide.AsDecimal(traderDetail.MarginNextBookings) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.MarginNextBookings);
                     else
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                         Value = null;
@@ -3756,6 +4686,36 @@ namespace Sunplus.Accounting.Business.Report.Other
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
                         Style
                         = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.Comm15minOu) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.Comm15minOu);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.Comm10minsOu) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.Comm10minsOu);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.CommSingleTeamOu) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.CommSingleTeamOu);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
                     if (CastAide.AsDecimal(traderDetail.Comm1stNoOfCorners) != 0)
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                             Value = CastAide.AsDecimal(traderDetail.Comm1stNoOfCorners);
@@ -3776,32 +4736,12 @@ namespace Sunplus.Accounting.Business.Report.Other
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
                         Style
                         = bgFormat;
-                    if (CastAide.AsDecimal(traderDetail.Comm1stNoOfYellowCards) != 0)
+                    if (CastAide.AsDecimal(traderDetail.CommCorners15minsOU) != 0)
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                            Value = CastAide.AsDecimal(traderDetail.Comm1stNoOfYellowCards);
+                            Value = CastAide.AsDecimal(traderDetail.CommCorners15minsOU);
                     else
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                         Value = null;
-
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
-                        Style
-                        = bgFormat;
-                    if (CastAide.AsDecimal(traderDetail.CommNoOfYellowCards) != 0)
-                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                            Value = CastAide.AsDecimal(traderDetail.CommNoOfYellowCards);
-                    else
-                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = null;
-
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
-                        Style
-                        = bgFormat;
-                    if (CastAide.AsDecimal(traderDetail.Comm15minOu) != 0)
-                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                            Value = CastAide.AsDecimal(traderDetail.Comm15minOu);
-                    else
-                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                            Value = null;
 
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
                         Style
@@ -3809,6 +4749,46 @@ namespace Sunplus.Accounting.Business.Report.Other
                     if (CastAide.AsDecimal(traderDetail.CommNextCorner) != 0)
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                             Value = CastAide.AsDecimal(traderDetail.CommNextCorner);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.Comm1stTotalBookings) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.Comm1stTotalBookings);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.CommTotalBookings) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.CommTotalBookings);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.CommTotalBookings15minsOu) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.CommTotalBookings15minsOu);
+                    else
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = null;
+
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                        Style
+                        = bgFormat;
+                    if (CastAide.AsDecimal(traderDetail.CommNextBookings) != 0)
+                        worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                            Value = CastAide.AsDecimal(traderDetail.CommNextBookings);
                     else
                         worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                         Value = null;
@@ -3975,6 +4955,36 @@ namespace Sunplus.Accounting.Business.Report.Other
                 worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
                     Style
                     = bgFormat;
+                if (CastAide.AsDecimal(trader.WinLost15minOu) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.WinLost15minOu);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
+                if (CastAide.AsDecimal(trader.WinLost10minsOu) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.WinLost10minsOu);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
+                if (CastAide.AsDecimal(trader.WinLostSingleTeamOu) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.WinLostSingleTeamOu);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
                 if (CastAide.AsDecimal(trader.WinLost1stNoOfCorners) != 0)
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                         Value = CastAide.AsDecimal(trader.WinLost1stNoOfCorners);
@@ -3995,29 +5005,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                 worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
                     Style
                     = bgFormat;
-                if (CastAide.AsDecimal(trader.WinLost1stNoOfYellowCards) != 0)
+                if (CastAide.AsDecimal(trader.WinLostCorners15minsOU) != 0)
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = CastAide.AsDecimal(trader.WinLost1stNoOfYellowCards);
-                else
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                    Value = null;
-
-                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
-                    Style
-                    = bgFormat;
-                if (CastAide.AsDecimal(trader.WinLostNoOfYellowCards) != 0)
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = CastAide.AsDecimal(trader.WinLostNoOfYellowCards);
-                else
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                    Value = null;
-
-                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
-                    Style
-                    = bgFormat;
-                if (CastAide.AsDecimal(trader.WinLost15minOu) != 0)
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = CastAide.AsDecimal(trader.WinLost15minOu);
+                        Value = CastAide.AsDecimal(trader.WinLostCorners15minsOU);
                 else
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                     Value = null;
@@ -4028,6 +5018,46 @@ namespace Sunplus.Accounting.Business.Report.Other
                 if (CastAide.AsDecimal(trader.WinLostNextCorner) != 0)
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                         Value = CastAide.AsDecimal(trader.WinLostNextCorner);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
+                if (CastAide.AsDecimal(trader.WinLost1stTotalBookings) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.WinLost1stTotalBookings);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
+                if (CastAide.AsDecimal(trader.WinLostTotalBookings) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.WinLostTotalBookings);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
+                if (CastAide.AsDecimal(trader.WinLostTotalBookings15minsOu) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.WinLostTotalBookings15minsOu);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
+                if (CastAide.AsDecimal(trader.WinLostNextBookings) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.WinLostNextBookings);
                 else
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                     Value = null;
@@ -4120,6 +5150,36 @@ namespace Sunplus.Accounting.Business.Report.Other
                 worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
                     Style
                     = bgFormat;
+                if (CastAide.AsDecimal(trader.TurnOver15minOu) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.TurnOver15minOu);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
+                if (CastAide.AsDecimal(trader.TurnOver10minsOu) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.TurnOver10minsOu);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
+                if (CastAide.AsDecimal(trader.TurnOverSingleTeamOu) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.TurnOverSingleTeamOu);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
                 if (CastAide.AsDecimal(trader.TurnOver1stNoOfCorners) != 0)
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                         Value = CastAide.AsDecimal(trader.TurnOver1stNoOfCorners);
@@ -4140,29 +5200,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                 worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
                     Style
                     = bgFormat;
-                if (CastAide.AsDecimal(trader.TurnOver1stNoOfYellowCards) != 0)
+                if (CastAide.AsDecimal(trader.TurnOverCorners15minsOU) != 0)
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = CastAide.AsDecimal(trader.TurnOver1stNoOfYellowCards);
-                else
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                    Value = null;
-
-                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
-                    Style
-                    = bgFormat;
-                if (CastAide.AsDecimal(trader.TurnOverNoOfYellowCards) != 0)
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = CastAide.AsDecimal(trader.TurnOverNoOfYellowCards);
-                else
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                    Value = null;
-
-                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
-                    Style
-                    = bgFormat;
-                if (CastAide.AsDecimal(trader.TurnOver15minOu) != 0)
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = CastAide.AsDecimal(trader.TurnOver15minOu);
+                        Value = CastAide.AsDecimal(trader.TurnOverCorners15minsOU);
                 else
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                     Value = null;
@@ -4173,6 +5213,46 @@ namespace Sunplus.Accounting.Business.Report.Other
                 if (CastAide.AsDecimal(trader.TurnOverNextCorner) != 0)
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                         Value = CastAide.AsDecimal(trader.TurnOverNextCorner);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
+                if (CastAide.AsDecimal(trader.TurnOver1stTotalBookings) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.TurnOver1stTotalBookings);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
+                if (CastAide.AsDecimal(trader.TurnOverTotalBookings) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.TurnOverTotalBookings);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
+                if (CastAide.AsDecimal(trader.TurnOverTotalBookings15minsOu) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.TurnOverTotalBookings15minsOu);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
+                if (CastAide.AsDecimal(trader.TurnOverNextBookings) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.TurnOverNextBookings);
                 else
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                     Value = null;
@@ -4207,11 +5287,8 @@ namespace Sunplus.Accounting.Business.Report.Other
             #endregion
 
             #region live betcount
-            bgFormat = ExcelIntFormat(isGrandTotal ? Color.FromArgb(159, 183, 213) : Color.FromArgb(204, 255, 204),
-                HorizontalAlignmentStyle.Right,
-                ExcelFont.BoldWeight,
-                true,
-                false);
+            bgFormat = ExcelIntFormat(isGrandTotal ? Color.FromArgb(159, 183, 213) : Color.FromArgb(204, 255, 204), HorizontalAlignmentStyle.Right,
+                                    ExcelFont.BoldWeight, true, false);
             worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].Style
                 = bgFormat;
             if (CastAide.AsDecimal(trader.LiveBetCount1st1x2) != 0)
@@ -4270,6 +5347,36 @@ namespace Sunplus.Accounting.Business.Report.Other
                 worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
                     Style
                     = bgFormat;
+                if (CastAide.AsDecimal(trader.LiveBetCount15minOu) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.LiveBetCount15minOu);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
+                if (CastAide.AsDecimal(trader.LiveBetCount10minsOu) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.LiveBetCount10minsOu);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
+                if (CastAide.AsDecimal(trader.LiveBetCountSingleTeamOu) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.LiveBetCountSingleTeamOu);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
                 if (CastAide.AsDecimal(trader.LiveBetCount1stNoOfCorners) != 0)
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                         Value = CastAide.AsDecimal(trader.LiveBetCount1stNoOfCorners);
@@ -4290,29 +5397,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                 worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
                     Style
                     = bgFormat;
-                if (CastAide.AsDecimal(trader.LiveBetCount1stNoOfYellowCards) != 0)
+                if (CastAide.AsDecimal(trader.LiveBetCountCorners15minsOU) != 0)
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = CastAide.AsDecimal(trader.LiveBetCount1stNoOfYellowCards);
-                else
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                    Value = null;
-
-                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
-                    Style
-                    = bgFormat;
-                if (CastAide.AsDecimal(trader.LiveBetCountNoOfYellowCards) != 0)
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = CastAide.AsDecimal(trader.LiveBetCountNoOfYellowCards);
-                else
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                    Value = null;
-
-                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
-                    Style
-                    = bgFormat;
-                if (CastAide.AsDecimal(trader.LiveBetCount15minOu) != 0)
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = CastAide.AsDecimal(trader.LiveBetCount15minOu);
+                        Value = CastAide.AsDecimal(trader.LiveBetCountCorners15minsOU);
                 else
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                     Value = null;
@@ -4323,6 +5410,46 @@ namespace Sunplus.Accounting.Business.Report.Other
                 if (CastAide.AsDecimal(trader.LiveBetCountNextCorner) != 0)
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                         Value = CastAide.AsDecimal(trader.LiveBetCountNextCorner);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
+                if (CastAide.AsDecimal(trader.LiveBetCount1stTotalBookings) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.LiveBetCount1stTotalBookings);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
+                if (CastAide.AsDecimal(trader.LiveBetCountTotalBookings) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.LiveBetCountTotalBookings);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
+                if (CastAide.AsDecimal(trader.LiveBetCountTotalBookings15minsOu) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.LiveBetCountTotalBookings15minsOu);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
+                if (CastAide.AsDecimal(trader.LiveBetCountNextBookings) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.LiveBetCountNextBookings);
                 else
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                     Value = null;
@@ -4416,9 +5543,39 @@ namespace Sunplus.Accounting.Business.Report.Other
                 worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
                     Style
                     = bgPercentFormat;
+                if (CastAide.AsDecimal(trader.Margin15minOu) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.Margin15minOu);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgPercentFormat;
+                if (CastAide.AsDecimal(trader.Margin10minsOu) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.Margin10minsOu);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgPercentFormat;
+                if (CastAide.AsDecimal(trader.MarginSingleTeamOu) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.MarginSingleTeamOu);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgPercentFormat;
                 if (CastAide.AsDecimal(trader.Margin1stNoOfCorners) != 0)
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = CastAide.AsDecimal(trader.Margin1stNoOfCorners) / 100;
+                        Value = CastAide.AsDecimal(trader.Margin1stNoOfCorners);
                 else
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                     Value = null;
@@ -4428,7 +5585,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                     = bgPercentFormat;
                 if (CastAide.AsDecimal(trader.MarginNoOfCorners) != 0)
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = CastAide.AsDecimal(trader.MarginNoOfCorners) / 100;
+                        Value = CastAide.AsDecimal(trader.MarginNoOfCorners);
                 else
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                     Value = null;
@@ -4436,29 +5593,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                 worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
                     Style
                     = bgPercentFormat;
-                if (CastAide.AsDecimal(trader.Margin1stNoOfYellowCards) != 0)
+                if (CastAide.AsDecimal(trader.MarginCorners15minsOU) != 0)
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = CastAide.AsDecimal(trader.Margin1stNoOfYellowCards) / 100;
-                else
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                    Value = null;
-
-                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
-                    Style
-                    = bgPercentFormat;
-                if (CastAide.AsDecimal(trader.MarginNoOfYellowCards) != 0)
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = CastAide.AsDecimal(trader.MarginNoOfYellowCards) / 100;
-                else
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                   Value = null;
-
-                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
-                    Style
-                    = bgPercentFormat;
-                if (CastAide.AsDecimal(trader.Margin15minOu) != 0)
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = CastAide.AsDecimal(trader.Margin15minOu) / 100;
+                        Value = CastAide.AsDecimal(trader.MarginCorners15minsOU);
                 else
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                     Value = null;
@@ -4468,7 +5605,47 @@ namespace Sunplus.Accounting.Business.Report.Other
                     = bgPercentFormat;
                 if (CastAide.AsDecimal(trader.MarginNextCorner) != 0)
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = CastAide.AsDecimal(trader.MarginNextCorner) / 100;
+                        Value = CastAide.AsDecimal(trader.MarginNextCorner);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgPercentFormat;
+                if (CastAide.AsDecimal(trader.Margin1stTotalBookings) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.Margin1stTotalBookings);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgPercentFormat;
+                if (CastAide.AsDecimal(trader.MarginTotalBookings) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.MarginTotalBookings);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgPercentFormat;
+                if (CastAide.AsDecimal(trader.MarginTotalBookings15minsOu) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.MarginTotalBookings15minsOu);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgPercentFormat;
+                if (CastAide.AsDecimal(trader.MarginNextBookings) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.MarginNextBookings);
                 else
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                     Value = null;
@@ -4503,6 +5680,8 @@ namespace Sunplus.Accounting.Business.Report.Other
             #endregion
 
             #region comm
+            bgFormat = ExcelFormat(isGrandTotal ? Color.FromArgb(159, 183, 213) : Color.FromArgb(204, 255, 204), HorizontalAlignmentStyle.Right,
+                                    ExcelFont.BoldWeight, true, false);
             worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].Style
                 = bgFormat;
             if (CastAide.AsDecimal(trader.Comm1st1x2) != 0)
@@ -4561,6 +5740,36 @@ namespace Sunplus.Accounting.Business.Report.Other
                 worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
                     Style
                     = bgFormat;
+                if (CastAide.AsDecimal(trader.Comm15minOu) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.Comm15minOu);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
+                if (CastAide.AsDecimal(trader.Comm10minsOu) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.Comm10minsOu);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
+                if (CastAide.AsDecimal(trader.CommSingleTeamOu) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.CommSingleTeamOu);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
                 if (CastAide.AsDecimal(trader.Comm1stNoOfCorners) != 0)
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                         Value = CastAide.AsDecimal(trader.Comm1stNoOfCorners);
@@ -4581,29 +5790,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                 worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
                     Style
                     = bgFormat;
-                if (CastAide.AsDecimal(trader.Comm1stNoOfYellowCards) != 0)
+                if (CastAide.AsDecimal(trader.CommCorners15minsOU) != 0)
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = CastAide.AsDecimal(trader.Comm1stNoOfYellowCards);
-                else
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                    Value = null;
-
-                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
-                    Style
-                    = bgFormat;
-                if (CastAide.AsDecimal(trader.CommNoOfYellowCards) != 0)
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = CastAide.AsDecimal(trader.CommNoOfYellowCards);
-                else
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                    Value = null;
-
-                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
-                    Style
-                    = bgFormat;
-                if (CastAide.AsDecimal(trader.Comm15minOu) != 0)
-                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
-                        Value = CastAide.AsDecimal(trader.Comm15minOu);
+                        Value = CastAide.AsDecimal(trader.CommCorners15minsOU);
                 else
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                     Value = null;
@@ -4614,6 +5803,46 @@ namespace Sunplus.Accounting.Business.Report.Other
                 if (CastAide.AsDecimal(trader.CommNextCorner) != 0)
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                         Value = CastAide.AsDecimal(trader.CommNextCorner);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
+                if (CastAide.AsDecimal(trader.Comm1stTotalBookings) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.Comm1stTotalBookings);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
+                if (CastAide.AsDecimal(trader.CommTotalBookings) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.CommTotalBookings);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
+                if (CastAide.AsDecimal(trader.CommTotalBookings15minsOu) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.CommTotalBookings15minsOu);
+                else
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                    Value = null;
+
+                worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].
+                    Style
+                    = bgFormat;
+                if (CastAide.AsDecimal(trader.CommNextBookings) != 0)
+                    worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
+                        Value = CastAide.AsDecimal(trader.CommNextBookings);
                 else
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                     Value = null;
@@ -4748,7 +5977,12 @@ namespace Sunplus.Accounting.Business.Report.Other
                             to_overall = 0,
                             to_1stoe = 0,
                             to_NextCorner = 0,
-                            to_oe = 0;
+                            to_oe = 0,
+                            to_NextBooking = 0,
+                            to_TotalBookings15minOu = 0,
+                            to_Corners15minOu = 0,
+                            to_10minOu = 0,
+                            to_SingleTeamOu = 0;
                     decimal Total_to_hthdp = 0,
                             Total_to_hdp = 0,
                             Total_to_htou = 0,
@@ -4763,7 +5997,12 @@ namespace Sunplus.Accounting.Business.Report.Other
                             Total_to_overall = 0,
                             Total_to_1stoe = 0,
                             Total_to_NextCorner = 0,
-                            Total_to_oe = 0;
+                            Total_to_oe = 0,
+                            Total_to_NextBooking = 0,
+                            Total_to_TotalBookings15minOu = 0,
+                            Total_to_Corners15minOu = 0,
+                            Total_to_10minOu = 0,
+                            Total_to_SingleTeamOu = 0;
                     decimal Grand_to_hthdp = 0,
                             Grand_to_hdp = 0,
                             Grand_to_htou = 0,
@@ -4778,7 +6017,12 @@ namespace Sunplus.Accounting.Business.Report.Other
                             Grand_to_overall = 0,
                             Grand_to_1stoe = 0,
                             Grand_to_NextCorner = 0,
-                            Grand_to_oe = 0;
+                            Grand_to_oe = 0,
+                            Grand_to_NextBooking = 0,
+                            Grand_to_TotalBookings15minOu = 0,
+                            Grand_to_Corners15minOu = 0,
+                            Grand_to_10minOu = 0,
+                            Grand_to_SingleTeamOu = 0;
                     #endregion
 
                     #region livebetcount
@@ -4796,7 +6040,12 @@ namespace Sunplus.Accounting.Business.Report.Other
                             livebetcount_overall = 0,
                             livebetcount_1stoe = 0,
                             livebetcount_NextCorner = 0,
-                            livebetcount_oe = 0;
+                            livebetcount_oe = 0,
+                            livebetcount_NextBooking = 0,
+                            livebetcount_TotalBookings15minOu = 0,
+                            livebetcount_Corners15minOu = 0,
+                            livebetcount_10minOu = 0,
+                            livebetcount_SingleTeamOu = 0;
                     decimal Total_livebetcount_hthdp = 0,
                             Total_livebetcount_hdp = 0,
                             Total_livebetcount_htou = 0,
@@ -4811,7 +6060,12 @@ namespace Sunplus.Accounting.Business.Report.Other
                             Total_livebetcount_overall = 0,
                             Total_livebetcount_1stoe = 0,
                             Total_livebetcount_NextCorner = 0,
-                            Total_livebetcount_oe = 0;
+                            Total_livebetcount_oe = 0,
+                            Total_livebetcount_NextBooking = 0,
+                            Total_livebetcount_TotalBookings15minOu = 0,
+                            Total_livebetcount_Corners15minOu = 0,
+                            Total_livebetcount_10minOu = 0,
+                            Total_livebetcount_SingleTeamOu = 0;
                     decimal Grand_livebetcount_hthdp = 0,
                             Grand_livebetcount_hdp = 0,
                             Grand_livebetcount_htou = 0,
@@ -4826,7 +6080,12 @@ namespace Sunplus.Accounting.Business.Report.Other
                             Grand_livebetcount_overall = 0,
                             Grand_livebetcount_1stoe = 0,
                             Grand_livebetcount_NextCorner = 0,
-                            Grand_livebetcount_oe = 0;
+                            Grand_livebetcount_oe = 0,
+                            Grand_livebetcount_NextBooking = 0,
+                            Grand_livebetcount_TotalBookings15minOu = 0,
+                            Grand_livebetcount_Corners15minOu = 0,
+                            Grand_livebetcount_10minOu = 0,
+                            Grand_livebetcount_SingleTeamOu = 0;
                     #endregion
 
                     #region winlost
@@ -4844,7 +6103,12 @@ namespace Sunplus.Accounting.Business.Report.Other
                             wl_overall = 0,
                             wl_1stoe = 0,
                             wl_NextCorner = 0,
-                            wl_oe = 0;
+                            wl_oe = 0,
+                            wl_NextBooking = 0,
+                            wl_TotalBookings15minOu = 0,
+                            wl_Corners15minOu = 0,
+                            wl_10minOu = 0,
+                            wl_SingleTeamOu = 0;
                     decimal Total_wl_hthdp = 0,
                             Total_wl_hdp = 0,
                             Total_wl_htou = 0,
@@ -4859,7 +6123,12 @@ namespace Sunplus.Accounting.Business.Report.Other
                             Total_wl_overall = 0,
                             Total_wl_1stoe = 0,
                             Total_wl_NextCorner = 0,
-                            Total_wl_oe = 0;
+                            Total_wl_oe = 0,
+                            Total_wl_NextBooking = 0,
+                            Total_wl_TotalBookings15minOu = 0,
+                            Total_wl_Corners15minOu = 0,
+                            Total_wl_10minOu = 0,
+                            Total_wl_SingleTeamOu = 0;
                     decimal Grand_wl_hthdp = 0,
                             Grand_wl_hdp = 0,
                             Grand_wl_htou = 0,
@@ -4874,7 +6143,12 @@ namespace Sunplus.Accounting.Business.Report.Other
                             Grand_wl_overall = 0,
                             Grand_wl_1stoe = 0,
                             Grand_wl_NextCorner = 0,
-                            Grand_wl_oe = 0;
+                            Grand_wl_oe = 0,
+                            Grand_wl_NextBooking = 0,
+                            Grand_wl_TotalBookings15minOu = 0,
+                            Grand_wl_Corners15minOu = 0,
+                            Grand_wl_10minOu = 0,
+                            Grand_wl_SingleTeamOu = 0;
                     #endregion
 
                     #region comm
@@ -4892,7 +6166,12 @@ namespace Sunplus.Accounting.Business.Report.Other
                             comm_overall = 0,
                             comm_1stoe = 0,
                             comm_NextCorner = 0,
-                            comm_oe = 0;
+                            comm_oe = 0,
+                            comm_NextBooking = 0,
+                            comm_TotalBookings15minOu = 0,
+                            comm_Corners15minOu = 0,
+                            comm_10minOu = 0,
+                            comm_SingleTeamOu = 0;
                     decimal Total_comm_hthdp = 0,
                             Total_comm_hdp = 0,
                             Total_comm_htou = 0,
@@ -4907,7 +6186,12 @@ namespace Sunplus.Accounting.Business.Report.Other
                             Total_comm_overall = 0,
                             Total_comm_1stoe = 0,
                             Total_comm_NextCorner = 0,
-                            Total_comm_oe = 0;
+                            Total_comm_oe = 0,
+                            Total_comm_NextBooking = 0,
+                            Total_comm_TotalBookings15minOu = 0,
+                            Total_comm_Corners15minOu = 0,
+                            Total_comm_10minOu = 0,
+                            Total_comm_SingleTeamOu = 0;
                     decimal Grand_comm_hthdp = 0,
                             Grand_comm_hdp = 0,
                             Grand_comm_htou = 0,
@@ -4922,55 +6206,75 @@ namespace Sunplus.Accounting.Business.Report.Other
                             Grand_comm_overall = 0,
                             Grand_comm_1stoe = 0,
                             Grand_comm_NextCorner = 0,
-                            Grand_comm_oe = 0;
+                            Grand_comm_oe = 0,
+                            Grand_comm_NextBooking = 0,
+                            Grand_comm_TotalBookings15minOu = 0,
+                            Grand_comm_Corners15minOu = 0,
+                            Grand_comm_10minOu = 0,
+                            Grand_comm_SingleTeamOu = 0;
                     #endregion
 
                     #region margin
                     decimal m_hthdp = 0,
-                           m_hdp = 0,
-                           m_htou = 0,
-                           m_ou = 0,
-                           m_ht1x2 = 0,
-                           m_1x2 = 0,
-                           m_1stcorner = 0,
-                           m_corner = 0,
-                           m_15mou = 0,
-                           m_1stYellowCard = 0,
-                           m_YellowCard = 0,
-                           m_overall = 0,
-                           m_1stoe = 0,
-                           m_NextCorner = 0,
-                           m_oe = 0;
+                            m_hdp = 0,
+                            m_htou = 0,
+                            m_ou = 0,
+                            m_ht1x2 = 0,
+                            m_1x2 = 0,
+                            m_1stcorner = 0,
+                            m_corner = 0,
+                            m_15mou = 0,
+                            m_1stYellowCard = 0,
+                            m_YellowCard = 0,
+                            m_overall = 0,
+                            m_1stoe = 0,
+                            m_NextCorner = 0,
+                            m_oe = 0,
+                            m_NextBooking = 0,
+                            m_TotalBookings15minOu = 0,
+                            m_Corners15minOu = 0,
+                            m_10minOu = 0,
+                            m_SingleTeamOu = 0;
                     decimal Total_m_hthdp = 0,
-                           Total_m_hdp = 0,
-                           Total_m_htou = 0,
-                           Total_m_ou = 0,
-                           Total_m_ht1x2 = 0,
-                           Total_m_1x2 = 0,
-                           Total_m_1stcorner = 0,
-                           Total_m_corner = 0,
-                           Total_m_15mou = 0,
-                           Total_m_1stYellowCard = 0,
-                           Total_m_YellowCard = 0,
-                           Total_m_overall = 0,
-                           Total_m_1stoe = 0,
-                           Total_m_NextCorner = 0,
-                           Total_m_oe = 0;
+                            Total_m_hdp = 0,
+                            Total_m_htou = 0,
+                            Total_m_ou = 0,
+                            Total_m_ht1x2 = 0,
+                            Total_m_1x2 = 0,
+                            Total_m_1stcorner = 0,
+                            Total_m_corner = 0,
+                            Total_m_15mou = 0,
+                            Total_m_1stYellowCard = 0,
+                            Total_m_YellowCard = 0,
+                            Total_m_overall = 0,
+                            Total_m_1stoe = 0,
+                            Total_m_NextCorner = 0,
+                            Total_m_oe = 0,
+                            Total_m_NextBooking = 0,
+                            Total_m_TotalBookings15minOu = 0,
+                            Total_m_Corners15minOu = 0,
+                            Total_m_10minOu = 0,
+                            Total_m_SingleTeamOu = 0;
                     decimal Grand_m_hthdp = 0,
-                           Grand_m_hdp = 0,
-                           Grand_m_htou = 0,
-                           Grand_m_ou = 0,
-                           Grand_m_ht1x2 = 0,
-                           Grand_m_1x2 = 0,
-                           Grand_m_1stcorner = 0,
-                           Grand_m_corner = 0,
-                           Grand_m_15mou = 0,
-                           Grand_m_1stYellowCard = 0,
-                           Grand_m_YellowCard = 0,
-                           Grand_m_overall = 0,
-                           Grand_m_1stoe = 0,
-                           Grand_m_NextCorner = 0,
-                           Grand_m_oe = 0;
+                            Grand_m_hdp = 0,
+                            Grand_m_htou = 0,
+                            Grand_m_ou = 0,
+                            Grand_m_ht1x2 = 0,
+                            Grand_m_1x2 = 0,
+                            Grand_m_1stcorner = 0,
+                            Grand_m_corner = 0,
+                            Grand_m_15mou = 0,
+                            Grand_m_1stYellowCard = 0,
+                            Grand_m_YellowCard = 0,
+                            Grand_m_overall = 0,
+                            Grand_m_1stoe = 0,
+                            Grand_m_NextCorner = 0,
+                            Grand_m_oe = 0,
+                            Grand_m_NextBooking = 0,
+                            Grand_m_TotalBookings15minOu = 0,
+                            Grand_m_Corners15minOu = 0,
+                            Grand_m_10minOu = 0,
+                            Grand_m_SingleTeamOu = 0;
                     #endregion
 
                     var subCount = 0;
@@ -4995,85 +6299,110 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 #region assign total row
                                 var traderTotal = new TraderPerformanceDetail()
                                 {
-                                    Comm15minOu = NumberFormat.DecFormat(Total_comm_15mou, 0),
-                                    Comm1st1x2 = NumberFormat.DecFormat(Total_comm_ht1x2, 0),
-                                    Comm1stHdp = NumberFormat.DecFormat(Total_comm_hthdp, 0),
-                                    Comm1stNoOfCorners = NumberFormat.DecFormat(Total_comm_1stcorner, 0),
-                                    Comm1stNoOfYellowCards = NumberFormat.DecFormat(Total_comm_1stYellowCard, 0),
-                                    Comm1stOe = NumberFormat.DecFormat(Total_comm_1stoe, 0),
-                                    Comm1stOu = NumberFormat.DecFormat(Total_comm_htou, 0),
-                                    Comm1x2 = NumberFormat.DecFormat(Total_comm_1x2, 0),
-                                    CommHdp = NumberFormat.DecFormat(Total_comm_hdp, 0),
-                                    CommNoOfCorners = NumberFormat.DecFormat(Total_comm_corner, 0),
-                                    CommNoOfYellowCards = NumberFormat.DecFormat(Total_comm_YellowCard, 0),
-                                    CommOe = NumberFormat.DecFormat(Total_comm_oe, 0),
-                                    CommOu = NumberFormat.DecFormat(Total_comm_ou, 0),
-                                    CommNextCorner = NumberFormat.DecFormat(Total_comm_NextCorner, 0),
-                                    CommOverall = NumberFormat.DecFormat(Total_comm_overall, 0),
+                                    Comm15minOu = NumberFormat.DecFormat(Total_comm_15mou, 2),
+                                    Comm1st1x2 = NumberFormat.DecFormat(Total_comm_ht1x2, 2),
+                                    Comm1stHdp = NumberFormat.DecFormat(Total_comm_hthdp, 2),
+                                    Comm1stNoOfCorners = NumberFormat.DecFormat(Total_comm_1stcorner, 2),
+                                    Comm1stTotalBookings = NumberFormat.DecFormat(Total_comm_1stYellowCard, 2),
+                                    Comm1stOe = NumberFormat.DecFormat(Total_comm_1stoe, 2),
+                                    Comm1stOu = NumberFormat.DecFormat(Total_comm_htou, 2),
+                                    Comm1x2 = NumberFormat.DecFormat(Total_comm_1x2, 2),
+                                    CommHdp = NumberFormat.DecFormat(Total_comm_hdp, 2),
+                                    CommNoOfCorners = NumberFormat.DecFormat(Total_comm_corner, 2),
+                                    CommTotalBookings = NumberFormat.DecFormat(Total_comm_YellowCard, 2),
+                                    CommOe = NumberFormat.DecFormat(Total_comm_oe, 2),
+                                    CommOu = NumberFormat.DecFormat(Total_comm_ou, 2),
+                                    CommNextCorner = NumberFormat.DecFormat(Total_comm_NextCorner, 2),
+                                    CommOverall = NumberFormat.DecFormat(Total_comm_overall, 2),
+                                    CommNextBookings = NumberFormat.DecFormat(Total_comm_NextBooking, 2),
+                                    CommTotalBookings15minsOu = NumberFormat.DecFormat(Total_comm_TotalBookings15minOu, 2),
+                                    CommCorners15minsOU = NumberFormat.DecFormat(Total_comm_Corners15minOu, 2),
+                                    Comm10minsOu = NumberFormat.DecFormat(Total_comm_10minOu, 2),
+                                    CommSingleTeamOu = NumberFormat.DecFormat(Total_comm_SingleTeamOu, 2),
 
-                                    WinLost15minOu = NumberFormat.DecFormat(Total_wl_15mou, 0),
-                                    WinLost1st1x2 = NumberFormat.DecFormat(Total_wl_ht1x2, 0),
-                                    WinLost1stHdp = NumberFormat.DecFormat(Total_wl_hthdp, 0),
-                                    WinLost1stNoOfCorners = NumberFormat.DecFormat(Total_wl_1stcorner, 0),
-                                    WinLost1stNoOfYellowCards = NumberFormat.DecFormat(Total_wl_1stYellowCard, 0),
-                                    WinLost1stOe = NumberFormat.DecFormat(Total_wl_1stoe, 0),
-                                    WinLost1stOu = NumberFormat.DecFormat(Total_wl_htou, 0),
-                                    WinLost1x2 = NumberFormat.DecFormat(Total_wl_1x2, 0),
-                                    WinLostHdp = NumberFormat.DecFormat(Total_wl_hdp, 0),
-                                    WinLostNoOfCorners = NumberFormat.DecFormat(Total_wl_corner, 0),
-                                    WinLostNoOfYellowCards = NumberFormat.DecFormat(Total_wl_YellowCard, 0),
+                                    WinLost15minOu = NumberFormat.DecFormat(Total_wl_15mou, 2),
+                                    WinLost1st1x2 = NumberFormat.DecFormat(Total_wl_ht1x2, 2),
+                                    WinLost1stHdp = NumberFormat.DecFormat(Total_wl_hthdp, 2),
+                                    WinLost1stNoOfCorners = NumberFormat.DecFormat(Total_wl_1stcorner, 2),
+                                    WinLost1stTotalBookings = NumberFormat.DecFormat(Total_wl_1stYellowCard, 2),
+                                    WinLost1stOe = NumberFormat.DecFormat(Total_wl_1stoe, 2),
+                                    WinLost1stOu = NumberFormat.DecFormat(Total_wl_htou, 2),
+                                    WinLost1x2 = NumberFormat.DecFormat(Total_wl_1x2, 2),
+                                    WinLostHdp = NumberFormat.DecFormat(Total_wl_hdp, 2),
+                                    WinLostNoOfCorners = NumberFormat.DecFormat(Total_wl_corner, 2),
+                                    WinLostTotalBookings = NumberFormat.DecFormat(Total_wl_YellowCard, 2),
                                     WinLostOe = NumberFormat.DecFormat(Total_wl_oe, 0),
                                     WinLostOu = NumberFormat.DecFormat(Total_wl_ou, 0),
-                                    WinLostNextCorner = NumberFormat.DecFormat(Total_wl_NextCorner, 0),
-                                    WinLostOverall = NumberFormat.DecFormat(Total_wl_overall, 0),
+                                    WinLostNextCorner = NumberFormat.DecFormat(Total_wl_NextCorner, 2),
+                                    WinLostOverall = NumberFormat.DecFormat(Total_wl_overall, 2),
+                                    WinLostNextBookings = NumberFormat.DecFormat(Total_wl_NextBooking, 2),
+                                    WinLostTotalBookings15minsOu = NumberFormat.DecFormat(Total_wl_TotalBookings15minOu, 2),
+                                    WinLostCorners15minsOU = NumberFormat.DecFormat(Total_wl_Corners15minOu, 2),
+                                    WinLost10minsOu = NumberFormat.DecFormat(Total_wl_10minOu, 2),
+                                    WinLostSingleTeamOu = NumberFormat.DecFormat(Total_wl_SingleTeamOu, 2),
 
-                                    TurnOver15minOu = NumberFormat.DecFormat(Total_to_15mou, 0),
-                                    TurnOver1st1x2 = NumberFormat.DecFormat(Total_to_ht1x2, 0),
-                                    TurnOver1stHdp = NumberFormat.DecFormat(Total_to_hthdp, 0),
-                                    TurnOver1stNoOfCorners = NumberFormat.DecFormat(Total_to_1stcorner, 0),
-                                    TurnOver1stNoOfYellowCards = NumberFormat.DecFormat(Total_to_1stYellowCard, 0),
-                                    TurnOver1stOe = NumberFormat.DecFormat(Total_to_1stoe, 0),
-                                    TurnOver1stOu = NumberFormat.DecFormat(Total_to_htou, 0),
-                                    TurnOver1x2 = NumberFormat.DecFormat(Total_to_1x2, 0),
-                                    TurnOverHdp = NumberFormat.DecFormat(Total_to_hdp, 0),
-                                    TurnOverNoOfCorners = NumberFormat.DecFormat(Total_to_corner, 0),
-                                    TurnOverNoOfYellowCards = NumberFormat.DecFormat(Total_to_YellowCard, 0),
-                                    TurnOverOe = NumberFormat.DecFormat(Total_to_oe, 0),
-                                    TurnOverOu = NumberFormat.DecFormat(Total_to_ou, 0),
-                                    TurnOverNextCorner = NumberFormat.DecFormat(Total_to_NextCorner, 0),
-                                    TurnOverOverall = NumberFormat.DecFormat(Total_to_overall, 0),
+                                    TurnOver15minOu = NumberFormat.DecFormat(Total_to_15mou, 2),
+                                    TurnOver1st1x2 = NumberFormat.DecFormat(Total_to_ht1x2, 2),
+                                    TurnOver1stHdp = NumberFormat.DecFormat(Total_to_hthdp, 2),
+                                    TurnOver1stNoOfCorners = NumberFormat.DecFormat(Total_to_1stcorner, 2),
+                                    TurnOver1stTotalBookings = NumberFormat.DecFormat(Total_to_1stYellowCard, 2),
+                                    TurnOver1stOe = NumberFormat.DecFormat(Total_to_1stoe, 2),
+                                    TurnOver1stOu = NumberFormat.DecFormat(Total_to_htou, 2),
+                                    TurnOver1x2 = NumberFormat.DecFormat(Total_to_1x2, 2),
+                                    TurnOverHdp = NumberFormat.DecFormat(Total_to_hdp, 2),
+                                    TurnOverNoOfCorners = NumberFormat.DecFormat(Total_to_corner, 2),
+                                    TurnOverTotalBookings = NumberFormat.DecFormat(Total_to_YellowCard, 2),
+                                    TurnOverOe = NumberFormat.DecFormat(Total_to_oe, 2),
+                                    TurnOverOu = NumberFormat.DecFormat(Total_to_ou, 2),
+                                    TurnOverNextCorner = NumberFormat.DecFormat(Total_to_NextCorner, 2),
+                                    TurnOverOverall = NumberFormat.DecFormat(Total_to_overall, 2),
+                                    TurnOverNextBookings = NumberFormat.DecFormat(Total_m_NextBooking, 2),
+                                    TurnOverTotalBookings15minsOu = NumberFormat.DecFormat(Total_m_TotalBookings15minOu, 2),
+                                    TurnOverCorners15minsOU = NumberFormat.DecFormat(Total_m_Corners15minOu, 2),
+                                    TurnOver10minsOu = NumberFormat.DecFormat(Total_m_10minOu, 2),
+                                    TurnOverSingleTeamOu = NumberFormat.DecFormat(Total_m_SingleTeamOu, 2),
 
                                     LiveBetCount15minOu = NumberFormat.DecFormat(Total_livebetcount_15mou, 0),
                                     LiveBetCount1st1x2 = NumberFormat.DecFormat(Total_livebetcount_ht1x2, 0),
                                     LiveBetCount1stHdp = NumberFormat.DecFormat(Total_livebetcount_hthdp, 0),
                                     LiveBetCount1stNoOfCorners = NumberFormat.DecFormat(Total_livebetcount_1stcorner, 0),
-                                    LiveBetCount1stNoOfYellowCards = NumberFormat.DecFormat(Total_livebetcount_1stYellowCard, 0),
+                                    LiveBetCount1stTotalBookings = NumberFormat.DecFormat(Total_livebetcount_1stYellowCard, 0),
                                     LiveBetCount1stOe = NumberFormat.DecFormat(Total_livebetcount_1stoe, 0),
                                     LiveBetCount1stOu = NumberFormat.DecFormat(Total_livebetcount_htou, 0),
                                     LiveBetCount1x2 = NumberFormat.DecFormat(Total_livebetcount_1x2, 0),
                                     LiveBetCountHdp = NumberFormat.DecFormat(Total_livebetcount_hdp, 0),
                                     LiveBetCountNoOfCorners = NumberFormat.DecFormat(Total_livebetcount_corner, 0),
-                                    LiveBetCountNoOfYellowCards = NumberFormat.DecFormat(Total_livebetcount_YellowCard, 0),
+                                    LiveBetCountTotalBookings = NumberFormat.DecFormat(Total_livebetcount_YellowCard, 0),
                                     LiveBetCountOe = NumberFormat.DecFormat(Total_livebetcount_oe, 0),
                                     LiveBetCountOu = NumberFormat.DecFormat(Total_livebetcount_ou, 0),
                                     LiveBetCountNextCorner = NumberFormat.DecFormat(Total_livebetcount_NextCorner, 0),
                                     LiveBetCountOverall = NumberFormat.DecFormat(Total_livebetcount_overall, 0),
+                                    LiveBetCountNextBookings = NumberFormat.DecFormat(Total_livebetcount_NextBooking, 0),
+                                    LiveBetCountTotalBookings15minsOu = NumberFormat.DecFormat(Total_livebetcount_TotalBookings15minOu, 0),
+                                    LiveBetCountCorners15minsOU = NumberFormat.DecFormat(Total_livebetcount_Corners15minOu, 0),
+                                    LiveBetCount10minsOu = NumberFormat.DecFormat(Total_livebetcount_10minOu, 0),
+                                    LiveBetCountSingleTeamOu = NumberFormat.DecFormat(Total_livebetcount_SingleTeamOu, 0),
 
                                     Margin15minOu = NumberFormat.DecFormat(Total_m_15mou * 100, 2),
                                     Margin1st1x2 = NumberFormat.DecFormat(Total_m_ht1x2 * 100, 2),
                                     Margin1stHdp = NumberFormat.DecFormat(Total_m_hthdp * 100, 2),
                                     Margin1stNoOfCorners = NumberFormat.DecFormat(Total_m_1stcorner * 100, 2),
-                                    Margin1stNoOfYellowCards = NumberFormat.DecFormat(Total_m_1stYellowCard * 100, 2),
+                                    Margin1stTotalBookings = NumberFormat.DecFormat(Total_m_1stYellowCard * 100, 2),
                                     Margin1stOe = NumberFormat.DecFormat(Total_m_1stoe * 100, 2),
                                     Margin1stOu = NumberFormat.DecFormat(Total_m_htou * 100, 2),
                                     Margin1x2 = NumberFormat.DecFormat(Total_m_1x2 * 100, 2),
                                     MarginHdp = NumberFormat.DecFormat(Total_m_hdp * 100, 2),
                                     MarginNoOfCorners = NumberFormat.DecFormat(Total_m_corner * 100, 2),
-                                    MarginNoOfYellowCards = NumberFormat.DecFormat(Total_m_YellowCard * 100, 2),
+                                    MarginTotalBookings = NumberFormat.DecFormat(Total_m_YellowCard * 100, 2),
                                     MarginOe = NumberFormat.DecFormat(Total_m_oe * 100, 2),
                                     MarginOu = NumberFormat.DecFormat(Total_m_ou * 100, 2),
                                     MarginNextCorner = NumberFormat.DecFormat(Total_m_NextCorner * 100, 2),
                                     MarginOverall = NumberFormat.DecFormat(Total_m_overall * 100, 2),
+                                    MarginNextBookings = NumberFormat.DecFormat(Total_to_NextBooking, 2),
+                                    MarginTotalBookings15minsOu = NumberFormat.DecFormat(Total_to_TotalBookings15minOu, 2),
+                                    MarginCorners15minsOU = NumberFormat.DecFormat(Total_to_Corners15minOu, 2),
+                                    Margin10minsOu = NumberFormat.DecFormat(Total_to_10minOu, 2),
+                                    MarginSingleTeamOu = NumberFormat.DecFormat(Total_to_SingleTeamOu, 2),
 
                                     UserName = string.Format("{0} Total", preUsername),
                                     CustId = preCusId,
@@ -5108,6 +6437,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 Total_to_1stoe = 0;
                                 Total_to_NextCorner = 0;
                                 Total_to_oe = 0;
+                                Total_to_NextBooking = 0;
+                                Total_to_TotalBookings15minOu = 0;
+                                Total_to_Corners15minOu = 0;
+                                Total_to_10minOu = 0;
+                                Total_to_SingleTeamOu = 0;
 
                                 #endregion
                                 #region livebetcount
@@ -5127,6 +6461,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 Total_livebetcount_1stoe = 0;
                                 Total_livebetcount_NextCorner = 0;
                                 Total_livebetcount_oe = 0;
+                                Total_livebetcount_NextBooking = 0;
+                                Total_livebetcount_TotalBookings15minOu = 0;
+                                Total_livebetcount_Corners15minOu = 0;
+                                Total_livebetcount_10minOu = 0;
+                                Total_livebetcount_SingleTeamOu = 0;
 
                                 #endregion
                                 #region winlost
@@ -5146,6 +6485,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 Total_wl_1stoe = 0;
                                 Total_wl_NextCorner = 0;
                                 Total_wl_oe = 0;
+                                Total_wl_NextBooking = 0;
+                                Total_wl_TotalBookings15minOu = 0;
+                                Total_wl_Corners15minOu = 0;
+                                Total_wl_10minOu = 0;
+                                Total_wl_SingleTeamOu = 0;
 
                                 #endregion
                                 #region comm
@@ -5165,6 +6509,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 Total_comm_1stoe = 0;
                                 Total_comm_NextCorner = 0;
                                 Total_comm_oe = 0;
+                                Total_comm_NextBooking = 0;
+                                Total_comm_TotalBookings15minOu = 0;
+                                Total_comm_Corners15minOu = 0;
+                                Total_comm_10minOu = 0;
+                                Total_comm_SingleTeamOu = 0;
 
                                 #endregion
                                 #region margin
@@ -5184,12 +6533,19 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 Total_m_1stoe = 0;
                                 Total_m_NextCorner = 0;
                                 Total_m_oe = 0;
+                                Total_m_NextBooking = 0;
+                                Total_m_TotalBookings15minOu = 0;
+                                Total_m_Corners15minOu = 0;
+                                Total_m_10minOu = 0;
+                                Total_m_SingleTeamOu = 0;
 
                                 #endregion
                             }
+
                             preCusId = currentCustId;
                             preUsername = currentUserName;
                         }
+
                         subCount++;
                         #region for each row
                         #region turnover
@@ -5202,13 +6558,17 @@ namespace Sunplus.Accounting.Business.Report.Other
                         to_1stcorner = CastAide.AsDecimal(dr["stake_1stnoofcorners"]);
                         to_corner = CastAide.AsDecimal(dr["stake_noofcorners"]);
                         to_15mou = CastAide.AsDecimal(dr["stake_15minou"]);
-                        to_1stYellowCard = CastAide.AsDecimal(dr["stake_1stNoOfYellowCards"]);
-                        to_YellowCard = CastAide.AsDecimal(dr["stake_NoOfYellowCards"]);
+                        to_1stYellowCard = CastAide.AsDecimal(dr["stake_1stTotalBookings"]);
+                        to_YellowCard = CastAide.AsDecimal(dr["stake_TotalBookings"]);
                         to_1stoe = CastAide.AsDecimal(dr["stake_1stoe"]);
                         to_oe = CastAide.AsDecimal(dr["stake_oe"]);
                         to_NextCorner = dr.Table.Columns.Contains("stake_NextCorner") ? CastAide.AsDecimal(dr["stake_NextCorner"]) : 0;
-                        to_overall = to_hthdp + to_hdp + to_htou + to_ou + to_ht1x2 + to_1x2 + to_1stcorner + to_corner +
-                                     to_15mou + to_1stYellowCard + to_YellowCard + to_1stoe + to_oe + to_NextCorner;
+                        to_overall = CastAide.AsDecimal(dr["overall_st"]);
+                        to_NextBooking = CastAide.AsDecimal(dr["stake_NextBooking"]);
+                        to_TotalBookings15minOu = CastAide.AsDecimal(dr["stake_15minTotalBookings"]);
+                        to_Corners15minOu = CastAide.AsDecimal(dr["stake_15minCorners"]);
+                        to_10minOu = CastAide.AsDecimal(dr["stake_10minOU"]);
+                        to_SingleTeamOu = CastAide.AsDecimal(dr["stake_SingleTeamOU"]);
                         #endregion
                         #region livebetcount
                         livebetcount_hthdp = CastAide.AsDecimal(dr["bet_1sthdp"]);
@@ -5220,15 +6580,17 @@ namespace Sunplus.Accounting.Business.Report.Other
                         livebetcount_1stcorner = CastAide.AsDecimal(dr["bet_1stnoofcorners"]);
                         livebetcount_corner = CastAide.AsDecimal(dr["bet_noofcorners"]);
                         livebetcount_15mou = CastAide.AsDecimal(dr["bet_15minou"]);
-                        livebetcount_1stYellowCard = CastAide.AsDecimal(dr["bet_1stNoOfYellowCards"]);
-                        livebetcount_YellowCard = CastAide.AsDecimal(dr["bet_NoOfYellowCards"]);
+                        livebetcount_1stYellowCard = CastAide.AsDecimal(dr["bet_1stTotalBookings"]);
+                        livebetcount_YellowCard = CastAide.AsDecimal(dr["bet_TotalBookings"]);
                         livebetcount_1stoe = CastAide.AsDecimal(dr["bet_1stoe"]);
                         livebetcount_NextCorner = dr.Table.Columns.Contains("bet_NextCorner") ? CastAide.AsDecimal(dr["bet_NextCorner"]) : 0;
                         livebetcount_oe = CastAide.AsDecimal(dr["bet_oe"]);
-
-                        livebetcount_overall = livebetcount_hthdp + livebetcount_hdp + livebetcount_htou + livebetcount_ou + livebetcount_ht1x2 +
-                            livebetcount_1x2 + livebetcount_1stcorner + livebetcount_corner +
-                                     livebetcount_15mou + livebetcount_1stYellowCard + livebetcount_YellowCard + livebetcount_1stoe + livebetcount_oe + livebetcount_NextCorner;
+                        livebetcount_overall = CastAide.AsDecimal(dr["overall_livebet"]);
+                        livebetcount_NextBooking = CastAide.AsDecimal(dr["bet_NextBooking"]);
+                        livebetcount_TotalBookings15minOu = CastAide.AsDecimal(dr["bet_15minTotalBookings"]);
+                        livebetcount_Corners15minOu = CastAide.AsDecimal(dr["bet_15minCorners"]);
+                        livebetcount_10minOu = CastAide.AsDecimal(dr["bet_10minOU"]);
+                        livebetcount_SingleTeamOu = CastAide.AsDecimal(dr["bet_SingleTeamOU"]);
                         #endregion
                         #region winlost
                         wl_hthdp = CastAide.AsDecimal(dr["winlost_1sthdp"]);
@@ -5240,14 +6602,17 @@ namespace Sunplus.Accounting.Business.Report.Other
                         wl_1stcorner = CastAide.AsDecimal(dr["winlost_1stnoofcorners"]);
                         wl_corner = CastAide.AsDecimal(dr["winlost_noofcorners"]);
                         wl_15mou = CastAide.AsDecimal(dr["winlost_15minou"]);
-                        wl_1stYellowCard = CastAide.AsDecimal(dr["winlost_1stNoOfYellowCards"]);
-                        wl_YellowCard = CastAide.AsDecimal(dr["winlost_NoOfYellowCards"]);
+                        wl_1stYellowCard = CastAide.AsDecimal(dr["winlost_1stTotalBookings"]);
+                        wl_YellowCard = CastAide.AsDecimal(dr["winlost_TotalBookings"]);
                         wl_1stoe = CastAide.AsDecimal(dr["winlost_1stoe"]);
                         wl_NextCorner = dr.Table.Columns.Contains("winlost_NextCorner") ? CastAide.AsDecimal(dr["winlost_NextCorner"]) : 0;
                         wl_oe = CastAide.AsDecimal(dr["winlost_oe"]);
-
-                        wl_overall = wl_hthdp + wl_hdp + wl_htou + wl_ou + wl_ht1x2 + wl_1x2 + wl_1stcorner + wl_corner +
-                                     wl_15mou + wl_1stYellowCard + wl_YellowCard + wl_1stoe + wl_oe + wl_NextCorner;
+                        wl_overall = CastAide.AsDecimal(dr["overall_wl"]);
+                        wl_NextBooking = CastAide.AsDecimal(dr["winlost_NextBooking"]);
+                        wl_TotalBookings15minOu = CastAide.AsDecimal(dr["winlost_15minTotalBookings"]);
+                        wl_Corners15minOu = CastAide.AsDecimal(dr["winlost_15minCorners"]);
+                        wl_10minOu = CastAide.AsDecimal(dr["winlost_10minOU"]);
+                        wl_SingleTeamOu = CastAide.AsDecimal(dr["winlost_SingleTeamOU"]);
                         #endregion
                         #region comm
                         comm_hthdp = CastAide.AsDecimal(dr["comm_1sthdp"]);
@@ -5259,14 +6624,17 @@ namespace Sunplus.Accounting.Business.Report.Other
                         comm_1stcorner = CastAide.AsDecimal(dr["comm_1stnoofcorners"]);
                         comm_corner = CastAide.AsDecimal(dr["comm_noofcorners"]);
                         comm_15mou = CastAide.AsDecimal(dr["comm_15minou"]);
-                        comm_1stYellowCard = CastAide.AsDecimal(dr["comm_1stNoOfYellowCards"]);
-                        comm_YellowCard = CastAide.AsDecimal(dr["comm_NoOfYellowCards"]);
+                        comm_1stYellowCard = CastAide.AsDecimal(dr["comm_1stTotalBookings"]);
+                        comm_YellowCard = CastAide.AsDecimal(dr["comm_TotalBookings"]);
                         comm_1stoe = CastAide.AsDecimal(dr["comm_1stoe"]);
                         comm_NextCorner = dr.Table.Columns.Contains("comm_NextCorner") ? CastAide.AsDecimal(dr["comm_NextCorner"]) : 0;
                         comm_oe = CastAide.AsDecimal(dr["comm_oe"]);
-
-                        comm_overall = comm_hthdp + comm_hdp + comm_htou + comm_ou + comm_ht1x2 + comm_1x2 +
-                                       comm_1stcorner + comm_corner + comm_15mou + comm_1stYellowCard + comm_YellowCard + comm_1stoe + comm_oe + comm_NextCorner;
+                        comm_overall = CastAide.AsDecimal(dr["overall_com"]);
+                        comm_NextBooking = CastAide.AsDecimal(dr["comm_NextBooking"]);
+                        comm_TotalBookings15minOu = CastAide.AsDecimal(dr["comm_15minTotalBookings"]);
+                        comm_Corners15minOu = CastAide.AsDecimal(dr["comm_15minCorners"]);
+                        comm_10minOu = CastAide.AsDecimal(dr["comm_10minOU"]);
+                        comm_SingleTeamOu = CastAide.AsDecimal(dr["comm_SingleTeamOU"]);
                         #endregion
                         #region margin
                         m_hthdp = CastAide.AsDecimal(dr["margin_1sthdp"]);
@@ -5278,13 +6646,17 @@ namespace Sunplus.Accounting.Business.Report.Other
                         m_1stcorner = CastAide.AsDecimal(dr["margin_1stnoofcorners"]);
                         m_corner = CastAide.AsDecimal(dr["margin_noofcorners"]);
                         m_15mou = CastAide.AsDecimal(dr["margin_15minou"]);
-                        m_1stYellowCard = CastAide.AsDecimal(dr["margin_1stNoOfYellowCards"]);
-                        m_YellowCard = CastAide.AsDecimal(dr["margin_NoOfYellowCards"]);
+                        m_1stYellowCard = CastAide.AsDecimal(dr["margin_1stTotalBookings"]);
+                        m_YellowCard = CastAide.AsDecimal(dr["margin_TotalBookings"]);
                         m_1stoe = CastAide.AsDecimal(dr["margin_1stoe"]);
                         m_NextCorner = CastAide.AsDecimal(dr["margin_NextCorner"]);
                         m_oe = CastAide.AsDecimal(dr["margin_oe"]);
-
                         m_overall = CastAide.AsDecimal(dr["overall_margin"]);
+                        m_NextBooking = CastAide.AsDecimal(dr["margin_NextBooking"]);
+                        m_TotalBookings15minOu = CastAide.AsDecimal(dr["margin_15minTotalBookings"]);
+                        m_Corners15minOu = CastAide.AsDecimal(dr["margin_15minCorners"]);
+                        m_10minOu = CastAide.AsDecimal(dr["margin_10minOU"]);
+                        m_SingleTeamOu = CastAide.AsDecimal(dr["margin_SingleTeamOU"]);
                         #endregion
 
                         #region assign data
@@ -5294,81 +6666,106 @@ namespace Sunplus.Accounting.Business.Report.Other
                             Comm1st1x2 = NumberFormat.DecFormat(comm_ht1x2, 2),
                             Comm1stHdp = NumberFormat.DecFormat(comm_hthdp, 2),
                             Comm1stNoOfCorners = NumberFormat.DecFormat(comm_1stcorner, 2),
-                            Comm1stNoOfYellowCards = NumberFormat.DecFormat(comm_1stYellowCard, 2),
+                            Comm1stTotalBookings = NumberFormat.DecFormat(comm_1stYellowCard, 2),
                             Comm1stOe = NumberFormat.DecFormat(comm_1stoe, 2),
                             Comm1stOu = NumberFormat.DecFormat(comm_htou, 2),
                             Comm1x2 = NumberFormat.DecFormat(comm_1x2, 2),
                             CommHdp = NumberFormat.DecFormat(comm_hdp, 2),
                             CommNoOfCorners = NumberFormat.DecFormat(comm_corner, 2),
-                            CommNoOfYellowCards = NumberFormat.DecFormat(comm_YellowCard, 2),
+                            CommTotalBookings = NumberFormat.DecFormat(comm_YellowCard, 2),
                             CommOe = NumberFormat.DecFormat(comm_oe, 2),
                             CommOu = NumberFormat.DecFormat(comm_ou, 2),
                             CommNextCorner = NumberFormat.DecFormat(comm_NextCorner, 2),
                             CommOverall = NumberFormat.DecFormat(comm_overall, 2),
+                            CommNextBookings = NumberFormat.DecFormat(comm_NextBooking, 2),
+                            CommTotalBookings15minsOu = NumberFormat.DecFormat(comm_TotalBookings15minOu, 2),
+                            CommCorners15minsOU = NumberFormat.DecFormat(comm_Corners15minOu, 2),
+                            Comm10minsOu = NumberFormat.DecFormat(comm_10minOu, 2),
+                            CommSingleTeamOu = NumberFormat.DecFormat(comm_SingleTeamOu, 2),
 
                             WinLost15minOu = NumberFormat.DecFormat(wl_15mou, 2),
                             WinLost1st1x2 = NumberFormat.DecFormat(wl_ht1x2, 2),
                             WinLost1stHdp = NumberFormat.DecFormat(wl_hthdp, 2),
                             WinLost1stNoOfCorners = NumberFormat.DecFormat(wl_1stcorner, 2),
-                            WinLost1stNoOfYellowCards = NumberFormat.DecFormat(wl_1stYellowCard, 2),
+                            WinLost1stTotalBookings = NumberFormat.DecFormat(wl_1stYellowCard, 2),
                             WinLost1stOe = NumberFormat.DecFormat(wl_1stoe, 2),
                             WinLost1stOu = NumberFormat.DecFormat(wl_htou, 2),
                             WinLost1x2 = NumberFormat.DecFormat(wl_1x2, 2),
                             WinLostHdp = NumberFormat.DecFormat(wl_hdp, 2),
                             WinLostNoOfCorners = NumberFormat.DecFormat(wl_corner, 2),
-                            WinLostNoOfYellowCards = NumberFormat.DecFormat(wl_YellowCard, 2),
+                            WinLostTotalBookings = NumberFormat.DecFormat(wl_YellowCard, 2),
                             WinLostOe = NumberFormat.DecFormat(wl_oe, 2),
                             WinLostOu = NumberFormat.DecFormat(wl_ou, 2),
                             WinLostNextCorner = NumberFormat.DecFormat(wl_NextCorner, 2),
                             WinLostOverall = NumberFormat.DecFormat(wl_overall, 2),
+                            WinLostNextBookings = NumberFormat.DecFormat(wl_NextBooking, 2),
+                            WinLostTotalBookings15minsOu = NumberFormat.DecFormat(wl_TotalBookings15minOu, 2),
+                            WinLostCorners15minsOU = NumberFormat.DecFormat(wl_Corners15minOu, 2),
+                            WinLost10minsOu = NumberFormat.DecFormat(wl_10minOu, 2),
+                            WinLostSingleTeamOu = NumberFormat.DecFormat(wl_SingleTeamOu, 2),
 
                             TurnOver15minOu = NumberFormat.DecFormat(to_15mou, 2),
                             TurnOver1st1x2 = NumberFormat.DecFormat(to_ht1x2, 2),
                             TurnOver1stHdp = NumberFormat.DecFormat(to_hthdp, 2),
                             TurnOver1stNoOfCorners = NumberFormat.DecFormat(to_1stcorner, 2),
-                            TurnOver1stNoOfYellowCards = NumberFormat.DecFormat(to_1stYellowCard, 2),
+                            TurnOver1stTotalBookings = NumberFormat.DecFormat(to_1stYellowCard, 2),
                             TurnOver1stOe = NumberFormat.DecFormat(to_1stoe, 2),
                             TurnOver1stOu = NumberFormat.DecFormat(to_htou, 2),
                             TurnOver1x2 = NumberFormat.DecFormat(to_1x2, 2),
                             TurnOverHdp = NumberFormat.DecFormat(to_hdp, 2),
                             TurnOverNoOfCorners = NumberFormat.DecFormat(to_corner, 2),
-                            TurnOverNoOfYellowCards = NumberFormat.DecFormat(to_YellowCard, 2),
+                            TurnOverTotalBookings = NumberFormat.DecFormat(to_YellowCard, 2),
                             TurnOverOe = NumberFormat.DecFormat(to_oe, 2),
                             TurnOverOu = NumberFormat.DecFormat(to_ou, 2),
                             TurnOverNextCorner = NumberFormat.DecFormat(to_NextCorner, 2),
                             TurnOverOverall = NumberFormat.DecFormat(to_overall, 2),
+                            TurnOverNextBookings = NumberFormat.DecFormat(m_NextBooking, 2),
+                            TurnOverTotalBookings15minsOu = NumberFormat.DecFormat(m_TotalBookings15minOu, 2),
+                            TurnOverCorners15minsOU = NumberFormat.DecFormat(m_Corners15minOu, 2),
+                            TurnOver10minsOu = NumberFormat.DecFormat(m_10minOu, 2),
+                            TurnOverSingleTeamOu = NumberFormat.DecFormat(m_SingleTeamOu, 2),
 
                             LiveBetCount15minOu = NumberFormat.DecFormat(livebetcount_15mou, 0),
                             LiveBetCount1st1x2 = NumberFormat.DecFormat(livebetcount_ht1x2, 0),
                             LiveBetCount1stHdp = NumberFormat.DecFormat(livebetcount_hthdp, 0),
                             LiveBetCount1stNoOfCorners = NumberFormat.DecFormat(livebetcount_1stcorner, 0),
-                            LiveBetCount1stNoOfYellowCards = NumberFormat.DecFormat(livebetcount_1stYellowCard, 0),
+                            LiveBetCount1stTotalBookings = NumberFormat.DecFormat(livebetcount_1stYellowCard, 0),
                             LiveBetCount1stOe = NumberFormat.DecFormat(livebetcount_1stoe, 0),
                             LiveBetCount1stOu = NumberFormat.DecFormat(livebetcount_htou, 0),
                             LiveBetCount1x2 = NumberFormat.DecFormat(livebetcount_1x2, 0),
                             LiveBetCountHdp = NumberFormat.DecFormat(livebetcount_hdp, 0),
                             LiveBetCountNoOfCorners = NumberFormat.DecFormat(livebetcount_corner, 0),
-                            LiveBetCountNoOfYellowCards = NumberFormat.DecFormat(livebetcount_YellowCard, 0),
+                            LiveBetCountTotalBookings = NumberFormat.DecFormat(livebetcount_YellowCard, 0),
                             LiveBetCountOe = NumberFormat.DecFormat(livebetcount_oe, 0),
                             LiveBetCountOu = NumberFormat.DecFormat(livebetcount_ou, 0),
                             LiveBetCountNextCorner = NumberFormat.DecFormat(livebetcount_NextCorner, 0),
                             LiveBetCountOverall = NumberFormat.DecFormat(livebetcount_overall, 0),
+                            LiveBetCountNextBookings = NumberFormat.DecFormat(livebetcount_NextBooking, 0),
+                            LiveBetCountTotalBookings15minsOu = NumberFormat.DecFormat(livebetcount_TotalBookings15minOu, 0),
+                            LiveBetCountCorners15minsOU = NumberFormat.DecFormat(livebetcount_Corners15minOu, 0),
+                            LiveBetCount10minsOu = NumberFormat.DecFormat(livebetcount_10minOu, 0),
+                            LiveBetCountSingleTeamOu = NumberFormat.DecFormat(livebetcount_SingleTeamOu, 0),
 
                             Margin15minOu = NumberFormat.DecFormat(m_15mou * 100, 2),
                             Margin1st1x2 = NumberFormat.DecFormat(m_ht1x2 * 100, 2),
                             Margin1stHdp = NumberFormat.DecFormat(m_hthdp * 100, 2),
                             Margin1stNoOfCorners = NumberFormat.DecFormat(m_1stcorner * 100, 2),
-                            Margin1stNoOfYellowCards = NumberFormat.DecFormat(m_1stYellowCard * 100, 2),
+                            Margin1stTotalBookings = NumberFormat.DecFormat(m_1stYellowCard * 100, 2),
                             Margin1stOe = NumberFormat.DecFormat(m_1stoe * 100, 2),
                             Margin1stOu = NumberFormat.DecFormat(m_htou * 100, 2),
                             Margin1x2 = NumberFormat.DecFormat(m_1x2 * 100, 2),
                             MarginHdp = NumberFormat.DecFormat(m_hdp * 100, 2),
                             MarginNoOfCorners = NumberFormat.DecFormat(m_corner * 100, 2),
-                            MarginNoOfYellowCards = NumberFormat.DecFormat(m_YellowCard * 100, 2),
+                            MarginTotalBookings = NumberFormat.DecFormat(m_YellowCard * 100, 2),
                             MarginOe = NumberFormat.DecFormat(m_oe * 100, 2),
                             MarginOu = NumberFormat.DecFormat(m_ou * 100, 2),
                             MarginNextCorner = NumberFormat.DecFormat(m_NextCorner * 100, 2),
                             MarginOverall = NumberFormat.DecFormat(m_overall * 100, 2),
+                            MarginNextBookings = NumberFormat.DecFormat(to_NextBooking * 100, 2),
+                            MarginTotalBookings15minsOu = NumberFormat.DecFormat(to_TotalBookings15minOu * 100, 2),
+                            MarginCorners15minsOU = NumberFormat.DecFormat(to_Corners15minOu * 100, 2),
+                            Margin10minsOu = NumberFormat.DecFormat(to_10minOu * 100, 2),
+                            MarginSingleTeamOu = NumberFormat.DecFormat(to_SingleTeamOu * 100, 2),
 
                             CustId = currentCustId,
                             UserName = currentUserName,
@@ -5402,6 +6799,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Total_to_1stoe += to_1stoe;
                         Total_to_NextCorner += to_NextCorner;
                         Total_to_oe += to_oe;
+                        Total_to_NextBooking += to_NextBooking;
+                        Total_to_TotalBookings15minOu += to_TotalBookings15minOu;
+                        Total_to_Corners15minOu += to_Corners15minOu;
+                        Total_to_10minOu += to_10minOu;
+                        Total_to_SingleTeamOu += to_SingleTeamOu;
                         #endregion
                         #region livebetcount
                         Total_livebetcount_hthdp += livebetcount_hthdp;
@@ -5419,6 +6821,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Total_livebetcount_1stoe += livebetcount_1stoe;
                         Total_livebetcount_NextCorner += livebetcount_NextCorner;
                         Total_livebetcount_oe += livebetcount_oe;
+                        Total_livebetcount_NextBooking += livebetcount_NextBooking;
+                        Total_livebetcount_TotalBookings15minOu += livebetcount_TotalBookings15minOu;
+                        Total_livebetcount_Corners15minOu += livebetcount_Corners15minOu;
+                        Total_livebetcount_10minOu += livebetcount_10minOu;
+                        Total_livebetcount_SingleTeamOu += livebetcount_SingleTeamOu;
                         #endregion
                         #region winlost
                         Total_wl_hthdp += wl_hthdp;
@@ -5435,9 +6842,12 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Total_wl_1stoe += wl_1stoe;
                         Total_wl_oe += wl_oe;
                         Total_wl_NextCorner += wl_NextCorner;
-                        Total_wl_overall = Total_wl_hthdp + Total_wl_hdp + Total_wl_htou + Total_wl_ou + Total_wl_ht1x2 +
-                                           Total_wl_1x2 + Total_wl_1stcorner + Total_wl_corner + Total_wl_15mou +
-                                           Total_wl_1stYellowCard + Total_wl_YellowCard + Total_wl_1stoe + Total_wl_oe + Total_wl_NextCorner;
+                        Total_wl_overall += wl_overall;
+                        Total_wl_NextBooking += wl_NextBooking;
+                        Total_wl_TotalBookings15minOu += wl_TotalBookings15minOu;
+                        Total_wl_Corners15minOu += wl_Corners15minOu;
+                        Total_wl_10minOu += wl_10minOu;
+                        Total_wl_SingleTeamOu += wl_SingleTeamOu;
                         #endregion
                         #region comm
                         Total_comm_hthdp += comm_hthdp;
@@ -5455,6 +6865,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Total_comm_oe += comm_oe;
                         Total_comm_NextCorner += comm_NextCorner;
                         Total_comm_overall += comm_overall;
+                        Total_comm_NextBooking += comm_NextBooking;
+                        Total_comm_TotalBookings15minOu += comm_TotalBookings15minOu;
+                        Total_comm_Corners15minOu += comm_Corners15minOu;
+                        Total_comm_10minOu += comm_10minOu;
+                        Total_comm_SingleTeamOu += comm_SingleTeamOu;
                         #endregion
                         #region margin
                         Total_m_hthdp = Total_to_hthdp == 0 ? Total_wl_hthdp : Total_wl_hthdp / Total_to_hthdp;
@@ -5463,7 +6878,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Total_m_ou = Total_to_ou == 0 ? Total_wl_ou : Total_wl_ou / Total_to_ou;
                         Total_m_ht1x2 = Total_to_ht1x2 == 0 ? Total_wl_ht1x2 : Total_wl_ht1x2 / Total_to_ht1x2;
                         Total_m_1x2 = Total_to_1x2 == 0 ? Total_wl_1x2 : Total_wl_1x2 / Total_to_1x2;
-                        Total_m_1stcorner = Total_to_1stcorner == 0
+                        Total_m_1stcorner += Total_to_1stcorner == 0
                                                 ? Total_wl_1stcorner
                                                 : Total_wl_1stcorner / Total_to_1stcorner;
                         Total_m_corner = Total_to_corner == 0 ? Total_wl_corner : Total_wl_corner / Total_to_corner;
@@ -5478,7 +6893,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Total_m_oe = Total_to_oe == 0 ? Total_wl_oe : Total_wl_oe / Total_to_oe;
                         Total_m_NextCorner = Total_to_NextCorner == 0 ? Total_wl_NextCorner : Total_wl_NextCorner / Total_to_NextCorner;
                         Total_m_overall = Total_to_overall == 0 ? Total_wl_overall : Total_wl_overall / Total_to_overall;
-
+                        Total_m_NextBooking = Total_to_NextBooking == 0 ? Total_wl_NextBooking : Total_wl_NextBooking / Total_to_NextBooking;
+                        Total_m_TotalBookings15minOu = Total_to_TotalBookings15minOu == 0 ? Total_wl_TotalBookings15minOu : Total_wl_TotalBookings15minOu / Total_to_TotalBookings15minOu;
+                        Total_m_Corners15minOu = Total_to_Corners15minOu == 0 ? Total_wl_Corners15minOu : Total_wl_Corners15minOu / Total_to_Corners15minOu;
+                        Total_m_10minOu = Total_to_10minOu == 0 ? Total_wl_10minOu : Total_wl_10minOu / Total_to_10minOu;
+                        Total_m_SingleTeamOu = Total_to_SingleTeamOu == 0 ? Total_wl_SingleTeamOu : Total_wl_SingleTeamOu / Total_to_SingleTeamOu;
                         #endregion
                         #endregion
 
@@ -5499,6 +6918,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Grand_to_oe += to_oe;
                         Grand_to_NextCorner += to_NextCorner;
                         Grand_to_overall += to_overall;
+                        Grand_to_NextBooking += to_NextBooking;
+                        Grand_to_TotalBookings15minOu += to_TotalBookings15minOu;
+                        Grand_to_Corners15minOu += to_Corners15minOu;
+                        Grand_to_10minOu += to_10minOu;
+                        Grand_to_SingleTeamOu += to_SingleTeamOu;
                         #endregion
                         #region livebetcount
                         Grand_livebetcount_hthdp += livebetcount_hthdp;
@@ -5516,6 +6940,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Grand_livebetcount_oe += livebetcount_oe;
                         Grand_livebetcount_NextCorner += livebetcount_NextCorner;
                         Grand_livebetcount_overall += livebetcount_overall;
+                        Grand_livebetcount_NextBooking += livebetcount_NextBooking;
+                        Grand_livebetcount_TotalBookings15minOu += livebetcount_TotalBookings15minOu;
+                        Grand_livebetcount_Corners15minOu += livebetcount_Corners15minOu;
+                        Grand_livebetcount_10minOu += livebetcount_10minOu;
+                        Grand_livebetcount_SingleTeamOu += livebetcount_SingleTeamOu;
                         #endregion
                         #region winlost
                         Grand_wl_hthdp += wl_hthdp;
@@ -5533,6 +6962,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Grand_wl_oe += wl_oe;
                         Grand_wl_NextCorner += wl_NextCorner;
                         Grand_wl_overall += wl_overall;
+                        Grand_wl_NextBooking += wl_NextBooking;
+                        Grand_wl_TotalBookings15minOu += wl_TotalBookings15minOu;
+                        Grand_wl_Corners15minOu += wl_Corners15minOu;
+                        Grand_wl_10minOu += wl_10minOu;
+                        Grand_wl_SingleTeamOu += wl_SingleTeamOu;
                         #endregion winlost
                         #region comm
                         Grand_comm_hthdp += comm_hthdp;
@@ -5550,6 +6984,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Grand_comm_oe += comm_oe;
                         Grand_comm_NextCorner += comm_NextCorner;
                         Grand_comm_overall += comm_overall;
+                        Grand_comm_NextBooking += comm_NextBooking;
+                        Grand_comm_TotalBookings15minOu += comm_TotalBookings15minOu;
+                        Grand_comm_Corners15minOu += comm_Corners15minOu;
+                        Grand_comm_10minOu += comm_10minOu;
+                        Grand_comm_SingleTeamOu += comm_SingleTeamOu;
                         #endregion
                         #region margin
                         Grand_m_hthdp = Grand_to_hthdp != 0 ? Grand_wl_hthdp / Grand_to_hthdp : 0;
@@ -5567,6 +7006,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Grand_m_oe = Grand_to_oe != 0 ? Grand_wl_oe / Grand_to_oe : 0;
                         Grand_m_NextCorner = Grand_to_NextCorner != 0 ? Grand_wl_NextCorner / Grand_to_NextCorner : 0;
                         Grand_m_overall = Grand_to_overall != 0 ? Grand_wl_overall / Grand_to_overall : 0;
+                        Grand_m_NextBooking = Grand_to_NextBooking == 0 ? Grand_wl_NextBooking : Grand_wl_NextBooking / Grand_to_NextBooking;
+                        Grand_m_TotalBookings15minOu = Grand_to_TotalBookings15minOu == 0 ? Grand_wl_TotalBookings15minOu : Grand_wl_TotalBookings15minOu / Grand_to_TotalBookings15minOu;
+                        Grand_m_Corners15minOu = Grand_to_Corners15minOu == 0 ? Grand_wl_Corners15minOu : Grand_wl_Corners15minOu / Grand_to_Corners15minOu;
+                        Grand_m_10minOu = Grand_to_10minOu == 0 ? Grand_wl_10minOu : Grand_wl_10minOu / Grand_to_10minOu;
+                        Grand_m_SingleTeamOu = Grand_to_SingleTeamOu == 0 ? Grand_wl_SingleTeamOu : Grand_wl_SingleTeamOu / Grand_to_SingleTeamOu;
                         #endregion
                         #endregion
                     }
@@ -5578,81 +7022,106 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Comm1st1x2 = NumberFormat.DecFormat(Total_comm_ht1x2, 2),
                         Comm1stHdp = NumberFormat.DecFormat(Total_comm_hthdp, 2),
                         Comm1stNoOfCorners = NumberFormat.DecFormat(Total_comm_1stcorner, 2),
-                        Comm1stNoOfYellowCards = NumberFormat.DecFormat(Total_comm_1stYellowCard, 2),
+                        Comm1stTotalBookings = NumberFormat.DecFormat(Total_comm_1stYellowCard, 2),
                         Comm1stOe = NumberFormat.DecFormat(Total_comm_1stoe, 2),
                         Comm1stOu = NumberFormat.DecFormat(Total_comm_htou, 2),
                         Comm1x2 = NumberFormat.DecFormat(Total_comm_1x2, 2),
                         CommHdp = NumberFormat.DecFormat(Total_comm_hdp, 2),
                         CommNoOfCorners = NumberFormat.DecFormat(Total_comm_corner, 2),
-                        CommNoOfYellowCards = NumberFormat.DecFormat(Total_comm_YellowCard, 2),
+                        CommTotalBookings = NumberFormat.DecFormat(Total_comm_YellowCard, 2),
                         CommOe = NumberFormat.DecFormat(Total_comm_oe, 2),
                         CommOu = NumberFormat.DecFormat(Total_comm_ou, 2),
                         CommNextCorner = NumberFormat.DecFormat(Total_comm_NextCorner, 2),
                         CommOverall = NumberFormat.DecFormat(Total_comm_overall, 2),
+                        CommNextBookings = NumberFormat.DecFormat(Total_comm_NextBooking, 2),
+                        CommTotalBookings15minsOu = NumberFormat.DecFormat(Total_comm_TotalBookings15minOu, 2),
+                        CommCorners15minsOU = NumberFormat.DecFormat(Total_comm_Corners15minOu, 2),
+                        Comm10minsOu = NumberFormat.DecFormat(Total_comm_10minOu, 2),
+                        CommSingleTeamOu = NumberFormat.DecFormat(Total_comm_SingleTeamOu, 2),
 
                         WinLost15minOu = NumberFormat.DecFormat(Total_wl_15mou, 2),
                         WinLost1st1x2 = NumberFormat.DecFormat(Total_wl_ht1x2, 2),
                         WinLost1stHdp = NumberFormat.DecFormat(Total_wl_hthdp, 2),
                         WinLost1stNoOfCorners = NumberFormat.DecFormat(Total_wl_1stcorner, 2),
-                        WinLost1stNoOfYellowCards = NumberFormat.DecFormat(Total_wl_1stYellowCard, 2),
+                        WinLost1stTotalBookings = NumberFormat.DecFormat(Total_wl_1stYellowCard, 2),
                         WinLost1stOe = NumberFormat.DecFormat(Total_wl_1stoe, 2),
                         WinLost1stOu = NumberFormat.DecFormat(Total_wl_htou, 2),
                         WinLost1x2 = NumberFormat.DecFormat(Total_wl_1x2, 2),
                         WinLostHdp = NumberFormat.DecFormat(Total_wl_hdp, 2),
                         WinLostNoOfCorners = NumberFormat.DecFormat(Total_wl_corner, 2),
-                        WinLostNoOfYellowCards = NumberFormat.DecFormat(Total_wl_YellowCard, 2),
+                        WinLostTotalBookings = NumberFormat.DecFormat(Total_wl_YellowCard, 2),
                         WinLostOe = NumberFormat.DecFormat(Total_wl_oe, 2),
                         WinLostOu = NumberFormat.DecFormat(Total_wl_ou, 2),
                         WinLostNextCorner = NumberFormat.DecFormat(Total_wl_NextCorner, 2),
                         WinLostOverall = NumberFormat.DecFormat(Total_wl_overall, 2),
+                        WinLostNextBookings = NumberFormat.DecFormat(Total_wl_NextBooking, 2),
+                        WinLostTotalBookings15minsOu = NumberFormat.DecFormat(Total_wl_TotalBookings15minOu, 2),
+                        WinLostCorners15minsOU = NumberFormat.DecFormat(Total_wl_Corners15minOu, 2),
+                        WinLost10minsOu = NumberFormat.DecFormat(Total_wl_10minOu, 2),
+                        WinLostSingleTeamOu = NumberFormat.DecFormat(Total_wl_SingleTeamOu, 2),
 
                         TurnOver15minOu = NumberFormat.DecFormat(Total_to_15mou, 2),
                         TurnOver1st1x2 = NumberFormat.DecFormat(Total_to_ht1x2, 2),
                         TurnOver1stHdp = NumberFormat.DecFormat(Total_to_hthdp, 2),
                         TurnOver1stNoOfCorners = NumberFormat.DecFormat(Total_to_1stcorner, 2),
-                        TurnOver1stNoOfYellowCards = NumberFormat.DecFormat(Total_to_1stYellowCard, 2),
+                        TurnOver1stTotalBookings = NumberFormat.DecFormat(Total_to_1stYellowCard, 2),
                         TurnOver1stOe = NumberFormat.DecFormat(Total_to_1stoe, 2),
                         TurnOver1stOu = NumberFormat.DecFormat(Total_to_htou, 2),
                         TurnOver1x2 = NumberFormat.DecFormat(Total_to_1x2, 2),
                         TurnOverHdp = NumberFormat.DecFormat(Total_to_hdp, 2),
                         TurnOverNoOfCorners = NumberFormat.DecFormat(Total_to_corner, 2),
-                        TurnOverNoOfYellowCards = NumberFormat.DecFormat(Total_to_YellowCard, 2),
+                        TurnOverTotalBookings = NumberFormat.DecFormat(Total_to_YellowCard, 2),
                         TurnOverOe = NumberFormat.DecFormat(Total_to_oe, 2),
                         TurnOverOu = NumberFormat.DecFormat(Total_to_ou, 2),
                         TurnOverNextCorner = NumberFormat.DecFormat(Total_to_NextCorner, 2),
                         TurnOverOverall = NumberFormat.DecFormat(Total_to_overall, 2),
+                        TurnOverNextBookings = NumberFormat.DecFormat(Total_m_NextBooking, 2),
+                        TurnOverTotalBookings15minsOu = NumberFormat.DecFormat(Total_m_TotalBookings15minOu, 2),
+                        TurnOverCorners15minsOU = NumberFormat.DecFormat(Total_m_Corners15minOu, 2),
+                        TurnOver10minsOu = NumberFormat.DecFormat(Total_m_10minOu, 2),
+                        TurnOverSingleTeamOu = NumberFormat.DecFormat(Total_m_SingleTeamOu, 2),
 
                         LiveBetCount15minOu = NumberFormat.DecFormat(Total_livebetcount_15mou, 0),
                         LiveBetCount1st1x2 = NumberFormat.DecFormat(Total_livebetcount_ht1x2, 0),
                         LiveBetCount1stHdp = NumberFormat.DecFormat(Total_livebetcount_hthdp, 0),
                         LiveBetCount1stNoOfCorners = NumberFormat.DecFormat(Total_livebetcount_1stcorner, 0),
-                        LiveBetCount1stNoOfYellowCards = NumberFormat.DecFormat(Total_livebetcount_1stYellowCard, 0),
+                        LiveBetCount1stTotalBookings = NumberFormat.DecFormat(Total_livebetcount_1stYellowCard, 0),
                         LiveBetCount1stOe = NumberFormat.DecFormat(Total_livebetcount_1stoe, 0),
                         LiveBetCount1stOu = NumberFormat.DecFormat(Total_livebetcount_htou, 0),
                         LiveBetCount1x2 = NumberFormat.DecFormat(Total_livebetcount_1x2, 0),
                         LiveBetCountHdp = NumberFormat.DecFormat(Total_livebetcount_hdp, 0),
                         LiveBetCountNoOfCorners = NumberFormat.DecFormat(Total_livebetcount_corner, 0),
-                        LiveBetCountNoOfYellowCards = NumberFormat.DecFormat(Total_livebetcount_YellowCard, 0),
+                        LiveBetCountTotalBookings = NumberFormat.DecFormat(Total_livebetcount_YellowCard, 0),
                         LiveBetCountOe = NumberFormat.DecFormat(Total_livebetcount_oe, 0),
                         LiveBetCountOu = NumberFormat.DecFormat(Total_livebetcount_ou, 0),
                         LiveBetCountNextCorner = NumberFormat.DecFormat(Total_livebetcount_NextCorner, 0),
                         LiveBetCountOverall = NumberFormat.DecFormat(Total_livebetcount_overall, 0),
+                        LiveBetCountNextBookings = NumberFormat.DecFormat(Total_livebetcount_NextBooking, 0),
+                        LiveBetCountTotalBookings15minsOu = NumberFormat.DecFormat(Total_livebetcount_TotalBookings15minOu, 0),
+                        LiveBetCountCorners15minsOU = NumberFormat.DecFormat(Total_livebetcount_Corners15minOu, 0),
+                        LiveBetCount10minsOu = NumberFormat.DecFormat(Total_livebetcount_10minOu, 0),
+                        LiveBetCountSingleTeamOu = NumberFormat.DecFormat(Total_livebetcount_SingleTeamOu, 0),
 
                         Margin15minOu = NumberFormat.DecFormat(Total_m_15mou * 100, 2),
                         Margin1st1x2 = NumberFormat.DecFormat(Total_m_ht1x2 * 100, 2),
                         Margin1stHdp = NumberFormat.DecFormat(Total_m_hthdp * 100, 2),
                         Margin1stNoOfCorners = NumberFormat.DecFormat(Total_m_1stcorner * 100, 2),
-                        Margin1stNoOfYellowCards = NumberFormat.DecFormat(Total_m_1stYellowCard * 100, 2),
+                        Margin1stTotalBookings = NumberFormat.DecFormat(Total_m_1stYellowCard * 100, 2),
                         Margin1stOe = NumberFormat.DecFormat(Total_m_1stoe * 100, 2),
                         Margin1stOu = NumberFormat.DecFormat(Total_m_htou * 100, 2),
                         Margin1x2 = NumberFormat.DecFormat(Total_m_1x2 * 100, 2),
                         MarginHdp = NumberFormat.DecFormat(Total_m_hdp * 100, 2),
                         MarginNoOfCorners = NumberFormat.DecFormat(Total_m_corner * 100, 2),
-                        MarginNoOfYellowCards = NumberFormat.DecFormat(Total_m_YellowCard * 100, 2),
+                        MarginTotalBookings = NumberFormat.DecFormat(Total_m_YellowCard * 100, 2),
                         MarginOe = NumberFormat.DecFormat(Total_m_oe * 100, 2),
                         MarginOu = NumberFormat.DecFormat(Total_m_ou * 100, 2),
                         MarginNextCorner = NumberFormat.DecFormat(Total_m_NextCorner * 100, 2),
                         MarginOverall = NumberFormat.DecFormat(Total_m_overall * 100, 2),
+                        MarginNextBookings = NumberFormat.DecFormat(Total_m_NextBooking * 100, 2),
+                        MarginTotalBookings15minsOu = NumberFormat.DecFormat(Total_m_TotalBookings15minOu * 100, 2),
+                        MarginCorners15minsOU = NumberFormat.DecFormat(Total_m_Corners15minOu * 100, 2),
+                        Margin10minsOu = NumberFormat.DecFormat(Total_m_10minOu * 100, 2),
+                        MarginSingleTeamOu = NumberFormat.DecFormat(Total_m_SingleTeamOu * 100, 2),
 
                         UserName = string.Format("{0} Total", preUsername),
                         CustId = preCusId,
@@ -5677,81 +7146,106 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Comm1st1x2 = NumberFormat.DecFormat(Grand_comm_ht1x2, 2),
                         Comm1stHdp = NumberFormat.DecFormat(Grand_comm_hthdp, 2),
                         Comm1stNoOfCorners = NumberFormat.DecFormat(Grand_comm_1stcorner, 2),
-                        Comm1stNoOfYellowCards = NumberFormat.DecFormat(Grand_comm_1stYellowCard, 2),
+                        Comm1stTotalBookings = NumberFormat.DecFormat(Grand_comm_1stYellowCard, 2),
                         Comm1stOe = NumberFormat.DecFormat(Grand_comm_1stoe, 2),
                         Comm1stOu = NumberFormat.DecFormat(Grand_comm_htou, 2),
                         Comm1x2 = NumberFormat.DecFormat(Grand_comm_1x2, 2),
                         CommHdp = NumberFormat.DecFormat(Grand_comm_hdp, 2),
                         CommNoOfCorners = NumberFormat.DecFormat(Grand_comm_corner, 2),
-                        CommNoOfYellowCards = NumberFormat.DecFormat(Grand_comm_YellowCard, 2),
+                        CommTotalBookings = NumberFormat.DecFormat(Grand_comm_YellowCard, 2),
                         CommOe = NumberFormat.DecFormat(Grand_comm_oe, 2),
                         CommOu = NumberFormat.DecFormat(Grand_comm_ou, 2),
                         CommNextCorner = NumberFormat.DecFormat(Grand_comm_NextCorner, 2),
                         CommOverall = NumberFormat.DecFormat(Grand_comm_overall, 2),
+                        CommNextBookings = NumberFormat.DecFormat(Grand_comm_NextBooking, 2),
+                        CommTotalBookings15minsOu = NumberFormat.DecFormat(Grand_comm_TotalBookings15minOu, 2),
+                        CommCorners15minsOU = NumberFormat.DecFormat(Grand_comm_Corners15minOu, 2),
+                        Comm10minsOu = NumberFormat.DecFormat(Grand_comm_10minOu, 2),
+                        CommSingleTeamOu = NumberFormat.DecFormat(Grand_comm_SingleTeamOu, 2),
 
                         WinLost15minOu = NumberFormat.DecFormat(Grand_wl_15mou, 2),
                         WinLost1st1x2 = NumberFormat.DecFormat(Grand_wl_ht1x2, 2),
                         WinLost1stHdp = NumberFormat.DecFormat(Grand_wl_hthdp, 2),
                         WinLost1stNoOfCorners = NumberFormat.DecFormat(Grand_wl_1stcorner, 2),
-                        WinLost1stNoOfYellowCards = NumberFormat.DecFormat(Grand_wl_1stYellowCard, 2),
+                        WinLost1stTotalBookings = NumberFormat.DecFormat(Grand_wl_1stYellowCard, 2),
                         WinLost1stOe = NumberFormat.DecFormat(Grand_wl_1stoe, 2),
                         WinLost1stOu = NumberFormat.DecFormat(Grand_wl_htou, 2),
                         WinLost1x2 = NumberFormat.DecFormat(Grand_wl_1x2, 2),
                         WinLostHdp = NumberFormat.DecFormat(Grand_wl_hdp, 2),
                         WinLostNoOfCorners = NumberFormat.DecFormat(Grand_wl_corner, 2),
-                        WinLostNoOfYellowCards = NumberFormat.DecFormat(Grand_wl_YellowCard, 2),
+                        WinLostTotalBookings = NumberFormat.DecFormat(Grand_wl_YellowCard, 2),
                         WinLostOe = NumberFormat.DecFormat(Grand_wl_oe, 2),
                         WinLostOu = NumberFormat.DecFormat(Grand_wl_ou, 2),
                         WinLostNextCorner = NumberFormat.DecFormat(Grand_wl_NextCorner, 2),
                         WinLostOverall = NumberFormat.DecFormat(Grand_wl_overall, 2),
+                        WinLostNextBookings = NumberFormat.DecFormat(Grand_wl_NextBooking, 2),
+                        WinLostTotalBookings15minsOu = NumberFormat.DecFormat(Grand_wl_TotalBookings15minOu, 2),
+                        WinLostCorners15minsOU = NumberFormat.DecFormat(Grand_wl_Corners15minOu, 2),
+                        WinLost10minsOu = NumberFormat.DecFormat(Grand_wl_10minOu, 2),
+                        WinLostSingleTeamOu = NumberFormat.DecFormat(Grand_wl_SingleTeamOu, 2),
 
                         TurnOver15minOu = NumberFormat.DecFormat(Grand_to_15mou, 2),
                         TurnOver1st1x2 = NumberFormat.DecFormat(Grand_to_ht1x2, 2),
                         TurnOver1stHdp = NumberFormat.DecFormat(Grand_to_hthdp, 2),
                         TurnOver1stNoOfCorners = NumberFormat.DecFormat(Grand_to_1stcorner, 2),
-                        TurnOver1stNoOfYellowCards = NumberFormat.DecFormat(Grand_to_1stYellowCard, 2),
+                        TurnOver1stTotalBookings = NumberFormat.DecFormat(Grand_to_1stYellowCard, 2),
                         TurnOver1stOe = NumberFormat.DecFormat(Grand_to_1stoe, 2),
                         TurnOver1stOu = NumberFormat.DecFormat(Grand_to_htou, 2),
                         TurnOver1x2 = NumberFormat.DecFormat(Grand_to_1x2, 2),
                         TurnOverHdp = NumberFormat.DecFormat(Grand_to_hdp, 2),
                         TurnOverNoOfCorners = NumberFormat.DecFormat(Grand_to_corner, 2),
-                        TurnOverNoOfYellowCards = NumberFormat.DecFormat(Grand_to_YellowCard, 2),
+                        TurnOverTotalBookings = NumberFormat.DecFormat(Grand_to_YellowCard, 2),
                         TurnOverOe = NumberFormat.DecFormat(Grand_to_oe, 2),
                         TurnOverOu = NumberFormat.DecFormat(Grand_to_ou, 2),
                         TurnOverNextCorner = NumberFormat.DecFormat(Grand_to_NextCorner, 2),
                         TurnOverOverall = NumberFormat.DecFormat(Grand_to_overall, 2),
+                        TurnOverNextBookings = NumberFormat.DecFormat(Grand_m_NextBooking, 2),
+                        TurnOverTotalBookings15minsOu = NumberFormat.DecFormat(Grand_m_TotalBookings15minOu, 2),
+                        TurnOverCorners15minsOU = NumberFormat.DecFormat(Grand_m_Corners15minOu, 2),
+                        TurnOver10minsOu = NumberFormat.DecFormat(Grand_m_10minOu, 2),
+                        TurnOverSingleTeamOu = NumberFormat.DecFormat(Grand_m_SingleTeamOu, 2),
 
                         LiveBetCount15minOu = NumberFormat.DecFormat(Grand_livebetcount_15mou, 0),
                         LiveBetCount1st1x2 = NumberFormat.DecFormat(Grand_livebetcount_ht1x2, 0),
                         LiveBetCount1stHdp = NumberFormat.DecFormat(Grand_livebetcount_hthdp, 0),
                         LiveBetCount1stNoOfCorners = NumberFormat.DecFormat(Grand_livebetcount_1stcorner, 0),
-                        LiveBetCount1stNoOfYellowCards = NumberFormat.DecFormat(Grand_livebetcount_1stYellowCard, 0),
+                        LiveBetCount1stTotalBookings = NumberFormat.DecFormat(Grand_livebetcount_1stYellowCard, 0),
                         LiveBetCount1stOe = NumberFormat.DecFormat(Grand_livebetcount_1stoe, 0),
                         LiveBetCount1stOu = NumberFormat.DecFormat(Grand_livebetcount_htou, 0),
                         LiveBetCount1x2 = NumberFormat.DecFormat(Grand_livebetcount_1x2, 0),
                         LiveBetCountHdp = NumberFormat.DecFormat(Grand_livebetcount_hdp, 0),
                         LiveBetCountNoOfCorners = NumberFormat.DecFormat(Grand_livebetcount_corner, 0),
-                        LiveBetCountNoOfYellowCards = NumberFormat.DecFormat(Grand_livebetcount_YellowCard, 0),
+                        LiveBetCountTotalBookings = NumberFormat.DecFormat(Grand_livebetcount_YellowCard, 0),
                         LiveBetCountOe = NumberFormat.DecFormat(Grand_livebetcount_oe, 0),
                         LiveBetCountOu = NumberFormat.DecFormat(Grand_livebetcount_ou, 0),
                         LiveBetCountNextCorner = NumberFormat.DecFormat(Grand_livebetcount_NextCorner, 0),
                         LiveBetCountOverall = NumberFormat.DecFormat(Grand_livebetcount_overall, 0),
+                        LiveBetCountNextBookings = NumberFormat.DecFormat(Grand_livebetcount_NextBooking, 0),
+                        LiveBetCountTotalBookings15minsOu = NumberFormat.DecFormat(Grand_livebetcount_TotalBookings15minOu, 0),
+                        LiveBetCountCorners15minsOU = NumberFormat.DecFormat(Grand_livebetcount_Corners15minOu, 0),
+                        LiveBetCount10minsOu = NumberFormat.DecFormat(Grand_livebetcount_10minOu, 0),
+                        LiveBetCountSingleTeamOu = NumberFormat.DecFormat(Grand_livebetcount_SingleTeamOu, 0),
 
                         Margin15minOu = NumberFormat.DecFormat(Grand_m_15mou * 100, 2),
                         Margin1st1x2 = NumberFormat.DecFormat(Grand_m_ht1x2 * 100, 2),
                         Margin1stHdp = NumberFormat.DecFormat(Grand_m_hthdp * 100, 2),
                         Margin1stNoOfCorners = NumberFormat.DecFormat(Grand_m_1stcorner * 100, 2),
-                        Margin1stNoOfYellowCards = NumberFormat.DecFormat(Grand_m_1stYellowCard * 100, 2),
+                        Margin1stTotalBookings = NumberFormat.DecFormat(Grand_m_1stYellowCard * 100, 2),
                         Margin1stOe = NumberFormat.DecFormat(Grand_m_1stoe * 100, 2),
                         Margin1stOu = NumberFormat.DecFormat(Grand_m_htou * 100, 2),
                         Margin1x2 = NumberFormat.DecFormat(Grand_m_1x2 * 100, 2),
                         MarginHdp = NumberFormat.DecFormat(Grand_m_hdp * 100, 2),
                         MarginNoOfCorners = NumberFormat.DecFormat(Grand_m_corner * 100, 2),
-                        MarginNoOfYellowCards = NumberFormat.DecFormat(Grand_m_YellowCard * 100, 2),
+                        MarginTotalBookings = NumberFormat.DecFormat(Grand_m_YellowCard * 100, 2),
                         MarginOe = NumberFormat.DecFormat(Grand_m_oe * 100, 2),
                         MarginOu = NumberFormat.DecFormat(Grand_m_ou * 100, 2),
                         MarginNextCorner = NumberFormat.DecFormat(Grand_m_NextCorner * 100, 2),
                         MarginOverall = NumberFormat.DecFormat(Grand_m_overall * 100, 2),
+                        MarginNextBookings = NumberFormat.DecFormat(Grand_m_NextBooking * 100, 2),
+                        MarginTotalBookings15minsOu = NumberFormat.DecFormat(Grand_m_TotalBookings15minOu * 100, 2),
+                        MarginCorners15minsOU = NumberFormat.DecFormat(Grand_m_Corners15minOu * 100, 2),
+                        Margin10minsOu = NumberFormat.DecFormat(Grand_m_10minOu * 100, 2),
+                        MarginSingleTeamOu = NumberFormat.DecFormat(Grand_m_SingleTeamOu * 100, 2),
 
                         UserName = string.Empty,
                         League = string.Empty,

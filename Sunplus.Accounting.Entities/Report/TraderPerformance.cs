@@ -40,13 +40,23 @@ namespace Sunplus.Accounting.Entities.Report
         [DataMember]
         public string TurnOver15minOu { get; set; }
         [DataMember]
-        public string TurnOver1stNoOfYellowCards { get; set; }
+        public string TurnOver1stTotalBookings { get; set; }
         [DataMember]
-        public string TurnOverNoOfYellowCards { get; set; }
+        public string TurnOverTotalBookings { get; set; }
         [DataMember]
         public string TurnOverNextCorner { get; set; }
         [DataMember]
         public string TurnOverOverall { get; set; }
+        [DataMember]
+        public string TurnOverNextBookings { get; set; }
+        [DataMember]
+        public string TurnOverTotalBookings15minsOu { get; set; }
+        [DataMember]
+        public string TurnOverCorners15minsOU { get; set; }
+        [DataMember]
+        public string TurnOver10minsOu { get; set; }
+        [DataMember]
+        public string TurnOverSingleTeamOu { get; set; }
         #endregion
 
         #region winlost
@@ -73,13 +83,23 @@ namespace Sunplus.Accounting.Entities.Report
         [DataMember]
         public string WinLost15minOu { get; set; }
         [DataMember]
-        public string WinLost1stNoOfYellowCards { get; set; }
+        public string WinLost1stTotalBookings { get; set; }
         [DataMember]
-        public string WinLostNoOfYellowCards { get; set; }
+        public string WinLostTotalBookings { get; set; }
         [DataMember]
         public string WinLostOverall { get; set; }
         [DataMember]
         public string WinLostNextCorner { get; set; }
+        [DataMember]
+        public string WinLostNextBookings { get; set; }
+        [DataMember]
+        public string WinLostTotalBookings15minsOu { get; set; }
+        [DataMember]
+        public string WinLostCorners15minsOU { get; set; }
+        [DataMember]
+        public string WinLost10minsOu { get; set; }
+        [DataMember]
+        public string WinLostSingleTeamOu { get; set; }
         #endregion
 
         #region Comm
@@ -106,13 +126,23 @@ namespace Sunplus.Accounting.Entities.Report
         [DataMember]
         public string Comm15minOu { get; set; }
         [DataMember]
-        public string Comm1stNoOfYellowCards { get; set; }
+        public string Comm1stTotalBookings { get; set; }
         [DataMember]
-        public string CommNoOfYellowCards { get; set; }
+        public string CommTotalBookings { get; set; }
         [DataMember]
         public string CommNextCorner { get; set; }
         [DataMember]
         public string CommOverall { get; set; }
+        [DataMember]
+        public string CommNextBookings { get; set; }
+        [DataMember]
+        public string CommTotalBookings15minsOu { get; set; }
+        [DataMember]
+        public string CommCorners15minsOU { get; set; }
+        [DataMember]
+        public string Comm10minsOu { get; set; }
+        [DataMember]
+        public string CommSingleTeamOu { get; set; }
         #endregion
 
         #region Margin
@@ -139,13 +169,23 @@ namespace Sunplus.Accounting.Entities.Report
         [DataMember]
         public string Margin15minOu { get; set; }
         [DataMember]
-        public string Margin1stNoOfYellowCards { get; set; }
+        public string Margin1stTotalBookings { get; set; }
         [DataMember]
-        public string MarginNoOfYellowCards { get; set; }
+        public string MarginTotalBookings { get; set; }
         [DataMember]
         public string MarginNextCorner { get; set; }
         [DataMember]
         public string MarginOverall { get; set; }
+        [DataMember]
+        public string MarginNextBookings { get; set; }
+        [DataMember]
+        public string MarginTotalBookings15minsOu { get; set; }
+        [DataMember]
+        public string MarginCorners15minsOU { get; set; }
+        [DataMember]
+        public string Margin10minsOu { get; set; }
+        [DataMember]
+        public string MarginSingleTeamOu { get; set; }
         #endregion
 
         #region Live Bet Count
@@ -172,13 +212,23 @@ namespace Sunplus.Accounting.Entities.Report
         [DataMember]
         public string LiveBetCount15minOu { get; set; }
         [DataMember]
-        public string LiveBetCount1stNoOfYellowCards { get; set; }
+        public string LiveBetCount1stTotalBookings { get; set; }
         [DataMember]
-        public string LiveBetCountNoOfYellowCards { get; set; }
+        public string LiveBetCountTotalBookings { get; set; }
         [DataMember]
         public string LiveBetCountNextCorner { get; set; }
         [DataMember]
         public string LiveBetCountOverall { get; set; }
+        [DataMember]
+        public string LiveBetCountNextBookings { get; set; }
+        [DataMember]
+        public string LiveBetCountTotalBookings15minsOu { get; set; }
+        [DataMember]
+        public string LiveBetCountCorners15minsOU { get; set; }
+        [DataMember]
+        public string LiveBetCount10minsOu { get; set; }
+        [DataMember]
+        public string LiveBetCountSingleTeamOu { get; set; }
         #endregion
     }
 

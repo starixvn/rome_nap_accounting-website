@@ -383,12 +383,17 @@ var traderPerformanceDetailManager = {
         row += '<td class="' + a3Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.WinLost1stOu) < 0 ? '<font style="color:#f11">(' + n.WinLost1stOu + ')</font>' : (n.WinLost1stOu == 0 ? '' : n.WinLost1stOu)) + '</div></td>';
         row += '<td class="' + a3Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.WinLostOu) < 0 ? '<font style="color:#f11">(' + n.WinLostOu + ')</font>' : (n.WinLostOu == 0 ? '' : n.WinLostOu)) + '</div></td>';
         if (isSoccer == 1) {
+            row += '<td class="' + a3Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.WinLost15minOu) < 0 ? '<font style="color:#f11">(' + n.WinLost15minOu + ')</font>' : (n.WinLost15minOu == 0 ? '' : n.WinLost15minOu)) + '</div></td>';
+            row += '<td class="' + a3Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.WinLost10minsOu) < 0 ? '<font style="color:#f11">(' + n.WinLost10minsOu + ')</font>' : (n.WinLost10minsOu == 0 ? '' : n.WinLost10minsOu)) + '</div></td>';
+            row += '<td class="' + a3Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.WinLostSingleTeamOu) < 0 ? '<font style="color:#f11">(' + n.WinLostSingleTeamOu + ')</font>' : (n.WinLostSingleTeamOu == 0 ? '' : n.WinLostSingleTeamOu)) + '</div></td>';
             row += '<td class="' + a3Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.WinLost1stNoOfCorners) < 0 ? '<font style="color:#f11">(' + n.WinLost1stNoOfCorners + ')</font>' : (n.WinLost1stNoOfCorners == 0 ? '' : n.WinLost1stNoOfCorners)) + '</div></td>';
             row += '<td class="' + a3Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.WinLostNoOfCorners) < 0 ? '<font style="color:#f11">(' + n.WinLostNoOfCorners + ')</font>' : (n.WinLostNoOfCorners == 0 ? '' : n.WinLostNoOfCorners)) + '</div></td>';
-            row += '<td class="' + a3Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.WinLost1stNoOfYellowCards) < 0 ? '<font style="color:#f11">(' + n.WinLost1stNoOfYellowCards + ')</font>' : (n.WinLost1stNoOfYellowCards == 0 ? '' : n.WinLost1stNoOfYellowCards)) + '</div></td>';
-            row += '<td class="' + a3Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.WinLostNoOfYellowCards) < 0 ? '<font style="color:#f11">(' + n.WinLostNoOfYellowCards + ')</font>' : (n.WinLostNoOfYellowCards == 0 ? '' : n.WinLostNoOfYellowCards)) + '</div></td>';
-            row += '<td class="' + a3Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.WinLost15minOu) < 0 ? '<font style="color:#f11">(' + n.WinLost15minOu + ')</font>' : (n.WinLost15minOu == 0 ? '' : n.WinLost15minOu)) + '</div></td>';
+            row += '<td class="' + a3Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.WinLostCorners15minsOU) < 0 ? '<font style="color:#f11">(' + n.WinLostCorners15minsOU + ')</font>' : (n.WinLostCorners15minsOU == 0 ? '' : n.WinLostCorners15minsOU)) + '</div></td>';
             row += '<td class="' + a3Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.WinLostNextCorner) < 0 ? '<font style="color:#f11">(' + n.WinLostNextCorner + ')</font>' : (n.WinLostNextCorner == 0 ? '' : n.WinLostNextCorner)) + '</div></td>';
+            row += '<td class="' + a3Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.WinLost1stTotalBookings) < 0 ? '<font style="color:#f11">(' + n.WinLost1stTotalBookings + ')</font>' : (n.WinLost1stTotalBookings == 0 ? '' : n.WinLost1stTotalBookings)) + '</div></td>';
+            row += '<td class="' + a3Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.WinLostTotalBookings) < 0 ? '<font style="color:#f11">(' + n.WinLostTotalBookings + ')</font>' : (n.WinLostTotalBookings == 0 ? '' : n.WinLostTotalBookings)) + '</div></td>';
+            row += '<td class="' + a3Css + " " + (totalCss) + '"><div class="col100 r">&nbsp;' + (parseFloat(n.WinLostTotalBookings15minsOu) < 0 ? '<font style="color:#f11">(' + n.WinLostTotalBookings15minsOu + ')</font>' : (n.WinLostTotalBookings15minsOu == 0 ? '' : n.WinLostTotalBookings15minsOu)) + '</div></td>';
+            row += '<td class="' + a3Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.WinLostNextBookings) < 0 ? '<font style="color:#f11">(' + n.WinLostNextBookings + ')</font>' : (n.WinLostNextBookings == 0 ? '' : n.WinLostNextBookings)) + '</div></td>';
         }
         row += '<td class="' + a3Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.WinLost1stOe) < 0 ? '<font style="color:#f11">(' + n.WinLost1stOe + ')</font>' : (n.WinLost1stOe == 0 ? '' : n.WinLost1stOe)) + '</div></td>';
         row += '<td class="' + a3Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.WinLostOe) < 0 ? '<font style="color:#f11">(' + n.WinLostOe + ')</font>' : (n.WinLostOe == 0 ? '' : n.WinLostOe)) + '</div></td>';
@@ -401,12 +406,17 @@ var traderPerformanceDetailManager = {
         row += '<td class="' + a2Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOver1stOu) < 0 ? '<font style="color:#f11">(' + n.TurnOver1stOu + ')</font>' : (n.TurnOver1stOu == 0 ? '' : n.TurnOver1stOu)) + '</div></td>';
         row += '<td class="' + a2Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOverOu) < 0 ? '<font style="color:#f11">(' + n.TurnOverOu + ')</font>' : (n.TurnOverOu == 0 ? '' : n.TurnOverOu)) + '</div></td>';
         if (isSoccer == 1) {
+            row += '<td class="' + a2Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOver15minOu) < 0 ? '<font style="color:#f11">(' + n.TurnOver15minOu + ')</font>' : (n.TurnOver15minOu == 0 ? '' : n.TurnOver15minOu)) + '</div></td>';
+            row += '<td class="' + a2Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOver10minsOu) < 0 ? '<font style="color:#f11">(' + n.TurnOver10minsOu + ')</font>' : (n.TurnOver10minsOu == 0 ? '' : n.TurnOver10minsOu)) + '</div></td>';
+            row += '<td class="' + a2Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOverSingleTeamOu) < 0 ? '<font style="color:#f11">(' + n.TurnOverSingleTeamOu + ')</font>' : (n.TurnOverSingleTeamOu == 0 ? '' : n.TurnOverSingleTeamOu)) + '</div></td>';
             row += '<td class="' + a2Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOver1stNoOfCorners) < 0 ? '<font style="color:#f11">(' + n.TurnOver1stNoOfCorners + ')</font>' : (n.TurnOver1stNoOfCorners == 0 ? '' : n.TurnOver1stNoOfCorners)) + '</div></td>';
             row += '<td class="' + a2Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOverNoOfCorners) < 0 ? '<font style="color:#f11">(' + n.TurnOverNoOfCorners + ')</font>' : (n.TurnOverNoOfCorners == 0 ? '' : n.TurnOverNoOfCorners)) + '</div></td>';
-            row += '<td class="' + a2Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOver1stNoOfYellowCards) < 0 ? '<font style="color:#f11">(' + n.TurnOver1stNoOfYellowCards + ')</font>' : (n.TurnOver1stNoOfYellowCards == 0 ? '' : n.TurnOver1stNoOfYellowCards)) + '</div></td>';
-            row += '<td class="' + a2Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOverNoOfYellowCards) < 0 ? '<font style="color:#f11">(' + n.TurnOverNoOfYellowCards + ')</font>' : (n.TurnOverNoOfYellowCards == 0 ? '' : n.TurnOverNoOfYellowCards)) + '</div></td>';
-            row += '<td class="' + a2Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOver15minOu) < 0 ? '<font style="color:#f11">(' + n.TurnOver15minOu + ')</font>' : (n.TurnOver15minOu == 0 ? '' : n.TurnOver15minOu)) + '</div></td>';
+            row += '<td class="' + a2Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOverCorners15minsOU) < 0 ? '<font style="color:#f11">(' + n.TurnOverCorners15minsOU + ')</font>' : (n.TurnOverCorners15minsOU == 0 ? '' : n.TurnOverCorners15minsOU)) + '</div></td>';
             row += '<td class="' + a2Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOverNextCorner) < 0 ? '<font style="color:#f11">(' + n.TurnOverNextCorner + ')</font>' : (n.TurnOverNextCorner == 0 ? '' : n.TurnOverNextCorner)) + '</div></td>';
+            row += '<td class="' + a2Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOver1stTotalBookings) < 0 ? '<font style="color:#f11">(' + n.TurnOver1stTotalBookings + ')</font>' : (n.TurnOver1stTotalBookings == 0 ? '' : n.TurnOver1stTotalBookings)) + '</div></td>';
+            row += '<td class="' + a2Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOverTotalBookings) < 0 ? '<font style="color:#f11">(' + n.TurnOverTotalBookings + ')</font>' : (n.TurnOverTotalBookings == 0 ? '' : n.TurnOverTotalBookings)) + '</div></td>';
+            row += '<td class="' + a2Css + " " + (totalCss) + '"><div class="col100 r">&nbsp;' + (parseFloat(n.TurnOverTotalBookings15minsOu) < 0 ? '<font style="color:#f11">(' + n.TurnOverTotalBookings15minsOu + ')</font>' : (n.TurnOverTotalBookings15minsOu == 0 ? '' : n.TurnOverTotalBookings15minsOu)) + '</div></td>';
+            row += '<td class="' + a2Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOverNextBookings) < 0 ? '<font style="color:#f11">(' + n.TurnOverNextBookings + ')</font>' : (n.TurnOverNextBookings == 0 ? '' : n.TurnOverNextBookings)) + '</div></td>';
         }
         row += '<td class="' + a2Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOver1stOe) < 0 ? '<font style="color:#f11">(' + n.TurnOver1stOe + ')</font>' : (n.TurnOver1stOe == 0 ? '' : n.TurnOver1stOe)) + '</div></td>';
         row += '<td class="' + a2Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOverOe) < 0 ? '<font style="color:#f11">(' + n.TurnOverOe + ')</font>' : (n.TurnOverOe == 0 ? '' : n.TurnOverOe)) + '</div></td>';
@@ -419,12 +429,18 @@ var traderPerformanceDetailManager = {
         row += '<td class="' + a6Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCount1stOu) < 0 ? '<font style="color:#f11">(' + n.LiveBetCount1stOu + ')</font>' : (n.LiveBetCount1stOu == 0 ? '' : n.LiveBetCount1stOu)) + '</div></td>';
         row += '<td class="' + a6Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCountOu) < 0 ? '<font style="color:#f11">(' + n.LiveBetCountOu + ')</font>' : (n.LiveBetCountOu == 0 ? '' : n.LiveBetCountOu)) + '</div></td>';
         if (isSoccer == 1) {
+            row += '<td class="' + a6Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCount15minOu) < 0 ? '<font style="color:#f11">(' + n.LiveBetCount15minOu + ')</font>' : (n.LiveBetCount15minOu == 0 ? '' : n.LiveBetCount15minOu)) + '</div></td>';
+            row += '<td class="' + a6Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCount10minsOu) < 0 ? '<font style="color:#f11">(' + n.LiveBetCount10minsOu + ')</font>' : (n.LiveBetCount10minsOu == 0 ? '' : n.LiveBetCount10minsOu)) + '</div></td>';
+            row += '<td class="' + a6Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCountSingleTeamOu) < 0 ? '<font style="color:#f11">(' + n.LiveBetCountSingleTeamOu + ')</font>' : (n.LiveBetCountSingleTeamOu == 0 ? '' : n.LiveBetCountSingleTeamOu)) + '</div></td>';
             row += '<td class="' + a6Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCount1stNoOfCorners) < 0 ? '<font style="color:#f11">(' + n.LiveBetCount1stNoOfCorners + ')</font>' : (n.LiveBetCount1stNoOfCorners == 0 ? '' : n.LiveBetCount1stNoOfCorners)) + '</div></td>';
             row += '<td class="' + a6Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCountNoOfCorners) < 0 ? '<font style="color:#f11">(' + n.LiveBetCountNoOfCorners + ')</font>' : (n.LiveBetCountNoOfCorners == 0 ? '' : n.LiveBetCountNoOfCorners)) + '</div></td>';
-            row += '<td class="' + a6Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCount1stNoOfYellowCards) < 0 ? '<font style="color:#f11">(' + n.LiveBetCount1stNoOfYellowCards + ')</font>' : (n.LiveBetCount1stNoOfYellowCards == 0 ? '' : n.LiveBetCount1stNoOfYellowCards)) + '</div></td>';
-            row += '<td class="' + a6Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCountNoOfYellowCards) < 0 ? '<font style="color:#f11">(' + n.LiveBetCountNoOfYellowCards + ')</font>' : (n.LiveBetCountNoOfYellowCards == 0 ? '' : n.LiveBetCountNoOfYellowCards)) + '</div></td>';
-            row += '<td class="' + a6Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCount15minOu) < 0 ? '<font style="color:#f11">(' + n.LiveBetCount15minOu + ')</font>' : (n.LiveBetCount15minOu == 0 ? '' : n.LiveBetCount15minOu)) + '</div></td>';
+            row += '<td class="' + a6Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCountCorners15minsOU) < 0 ? '<font style="color:#f11">(' + n.LiveBetCountCorners15minsOU + ')</font>' : (n.LiveBetCountCorners15minsOU == 0 ? '' : n.LiveBetCountCorners15minsOU)) + '</div></td>';
             row += '<td class="' + a6Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCountNextCorner) < 0 ? '<font style="color:#f11">(' + n.LiveBetCountNextCorner + ')</font>' : (n.LiveBetCountNextCorner == 0 ? '' : n.LiveBetCountNextCorner)) + '</div></td>';
+            row += '<td class="' + a6Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCount1stTotalBookings) < 0 ? '<font style="color:#f11">(' + n.LiveBetCount1stTotalBookings + ')</font>' : (n.LiveBetCount1stTotalBookings == 0 ? '' : n.LiveBetCount1stTotalBookings)) + '</div></td>';
+            row += '<td class="' + a6Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCountTotalBookings) < 0 ? '<font style="color:#f11">(' + n.LiveBetCountTotalBookings + ')</font>' : (n.LiveBetCountTotalBookings == 0 ? '' : n.LiveBetCountTotalBookings)) + '</div></td>';
+            row += '<td class="' + a6Css + " " + (totalCss) + '"><div class="col100 r">&nbsp;' + (parseFloat(n.LiveBetCountTotalBookings15minsOu) < 0 ? '<font style="color:#f11">(' + n.LiveBetCountTotalBookings15minsOu + ')</font>' : (n.LiveBetCountTotalBookings15minsOu == 0 ? '' : n.LiveBetCountTotalBookings15minsOu)) + '</div></td>';
+            row += '<td class="' + a6Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCountNextBookings) < 0 ? '<font style="color:#f11">(' + n.LiveBetCountNextBookings + ')</font>' : (n.LiveBetCountNextBookings == 0 ? '' : n.LiveBetCountNextBookings)) + '</div></td>';
+
         }
         row += '<td class="' + a6Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCount1stOe) < 0 ? '<font style="color:#f11">(' + n.LiveBetCount1stOe + ')</font>' : (n.LiveBetCount1stOe == 0 ? '' : n.LiveBetCount1stOe)) + '</div></td>';
         row += '<td class="' + a6Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCountOe) < 0 ? '<font style="color:#f11">(' + n.LiveBetCountOe + ')</font>' : (n.LiveBetCountOe == 0 ? '' : n.LiveBetCountOe)) + '</div></td>';
@@ -437,12 +453,18 @@ var traderPerformanceDetailManager = {
         row += '<td class="' + a5Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.Margin1stOu) < 0 ? '<font style="color:#f11">(' + n.Margin1stOu + '%)</font>' : (n.Margin1stOu == 0 ? '' : n.Margin1stOu + '%')) + '</div></td>';
         row += '<td class="' + a5Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.MarginOu) < 0 ? '<font style="color:#f11">(' + n.MarginOu + '%)</font>' : (n.MarginOu == 0 ? '' : n.MarginOu + '%')) + '</div></td>';
         if (isSoccer == 1) {
+            row += '<td class="' + a5Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.Margin15minOu) < 0 ? '<font style="color:#f11">(' + n.Margin15minOu + '%)</font>' : (n.Margin15minOu == 0 ? '' : n.Margin15minOu + '%')) + '</div></td>';
+            row += '<td class="' + a5Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.Margin10minsOu) < 0 ? '<font style="color:#f11">(' + n.Margin10minsOu + '%)</font>' : (n.Margin10minsOu == 0 ? '' : n.Margin10minsOu + '%')) + '</div></td>';
+            row += '<td class="' + a5Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.MarginSingleTeamOu) < 0 ? '<font style="color:#f11">(' + n.MarginSingleTeamOu + '%)</font>' : (n.MarginSingleTeamOu == 0 ? '' : n.MarginSingleTeamOu + '%')) + '</div></td>';
             row += '<td class="' + a5Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.Margin1stNoOfCorners) < 0 ? '<font style="color:#f11">(' + n.Margin1stNoOfCorners + '%)</font>' : (n.Margin1stNoOfCorners == 0 ? '' : n.Margin1stNoOfCorners + '%')) + '</div></td>';
             row += '<td class="' + a5Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.MarginNoOfCorners) < 0 ? '<font style="color:#f11">(' + n.MarginNoOfCorners + '%)</font>' : (n.MarginNoOfCorners == 0 ? '' : n.MarginNoOfCorners + '%')) + '</div></td>';
-            row += '<td class="' + a5Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.Margin1stNoOfYellowCards) < 0 ? '<font style="color:#f11">(' + n.Margin1stNoOfYellowCards + '%)</font>' : (n.Margin1stNoOfYellowCards == 0 ? '' : n.Margin1stNoOfYellowCards + '%')) + '</div></td>';
-            row += '<td class="' + a5Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.MarginNoOfYellowCards) < 0 ? '<font style="color:#f11">(' + n.MarginNoOfYellowCards + '%)</font>' : (n.MarginNoOfYellowCards == 0 ? '' : n.MarginNoOfYellowCards + '%')) + '</div></td>';
-            row += '<td class="' + a5Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.Margin15minOu) < 0 ? '<font style="color:#f11">(' + n.Margin15minOu + '%)</font>' : (n.Margin15minOu == 0 ? '' : n.Margin15minOu + '%')) + '</div></td>';
+            row += '<td class="' + a5Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.MarginCorners15minsOU) < 0 ? '<font style="color:#f11">(' + n.MarginCorners15minsOU + '%)</font>' : (n.MarginCorners15minsOU == 0 ? '' : n.MarginCorners15minsOU + '%')) + '</div></td>';
             row += '<td class="' + a5Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.MarginNextCorner) < 0 ? '<font style="color:#f11">(' + n.MarginNextCorner + '%)</font>' : (n.MarginNextCorner == 0 ? '' : n.MarginNextCorner + '%')) + '</div></td>';
+            row += '<td class="' + a5Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.Margin1stTotalBookings) < 0 ? '<font style="color:#f11">(' + n.Margin1stTotalBookings + '%)</font>' : (n.Margin1stTotalBookings == 0 ? '' : n.Margin1stTotalBookings + '%')) + '</div></td>';
+            row += '<td class="' + a5Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.MarginTotalBookings) < 0 ? '<font style="color:#f11">(' + n.MarginTotalBookings + '%)</font>' : (n.MarginTotalBookings == 0 ? '' : n.MarginTotalBookings + '%')) + '</div></td>';
+            row += '<td class="' + a5Css + " " + (totalCss) + '"><div class="col100 r">&nbsp;' + (parseFloat(n.MarginTotalBookings15minsOu) < 0 ? '<font style="color:#f11">(' + n.MarginTotalBookings15minsOu + ')</font>' : (n.MarginTotalBookings15minsOu == 0 ? '' : n.MarginTotalBookings15minsOu + '%')) + '</div></td>';
+            row += '<td class="' + a5Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.MarginNextBookings) < 0 ? '<font style="color:#f11">(' + n.MarginNextBookings + '%)</font>' : (n.MarginNextBookings == 0 ? '' : n.MarginNextBookings + '%')) + '</div></td>';
+
         }
         row += '<td class="' + a5Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.Margin1stOe) < 0 ? '<font style="color:#f11">(' + n.Margin1stOe + '%)</font>' : (n.Margin1stOe == 0 ? '' : n.Margin1stOe + '%')) + '</div></td>';
         row += '<td class="' + a5Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.MarginOe) < 0 ? '<font style="color:#f11">(' + n.MarginOe + '%)</font>' : (n.MarginOe == 0 ? '' : n.MarginOe + '%')) + '</div></td>';
@@ -455,12 +477,18 @@ var traderPerformanceDetailManager = {
         row += '<td class="' + a4Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.Comm1stOu) < 0 ? '<font style="color:#f11">(' + n.Comm1stOu + ')</font>' : (n.Comm1stOu == 0 ? '' : n.Comm1stOu)) + '</div></td>';
         row += '<td class="' + a4Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.CommOu) < 0 ? '<font style="color:#f11">(' + n.CommOu + ')</font>' : (n.CommOu == 0 ? '' : n.CommOu)) + '</div></td>';
         if (isSoccer == 1) {
+            row += '<td class="' + a4Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.Comm15minOu) < 0 ? '<font style="color:#f11">(' + n.Comm15minOu + ')</font>' : (n.Comm15minOu == 0 ? '' : n.Comm15minOu)) + '</div></td>';
+            row += '<td class="' + a4Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.Comm10minsOu) < 0 ? '<font style="color:#f11">(' + n.Comm10minsOu + ')</font>' : (n.Comm10minsOu == 0 ? '' : n.Comm10minsOu)) + '</div></td>';
+            row += '<td class="' + a4Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.CommSingleTeamOu) < 0 ? '<font style="color:#f11">(' + n.CommSingleTeamOu + ')</font>' : (n.CommSingleTeamOu == 0 ? '' : n.CommSingleTeamOu)) + '</div></td>';
             row += '<td class="' + a4Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.Comm1stNoOfCorners) < 0 ? '<font style="color:#f11">(' + n.Comm1stNoOfCorners + ')</font>' : (n.Comm1stNoOfCorners == 0 ? '' : n.Comm1stNoOfCorners)) + '</div></td>';
             row += '<td class="' + a4Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.CommNoOfCorners) < 0 ? '<font style="color:#f11">(' + n.CommNoOfCorners + ')</font>' : (n.CommNoOfCorners == 0 ? '' : n.CommNoOfCorners)) + '</div></td>';
-            row += '<td class="' + a4Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.Comm1stNoOfYellowCards) < 0 ? '<font style="color:#f11">(' + n.Comm1stNoOfYellowCards + ')</font>' : (n.Comm1stNoOfYellowCards == 0 ? '' : n.Comm1stNoOfYellowCards)) + '</div></td>';
-            row += '<td class="' + a4Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.CommNoOfYellowCards) < 0 ? '<font style="color:#f11">(' + n.CommNoOfYellowCards + ')</font>' : (n.CommNoOfYellowCards == 0 ? '' : n.CommNoOfYellowCards)) + '</div></td>';
-            row += '<td class="' + a4Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.Comm15minOu) < 0 ? '<font style="color:#f11">(' + n.Comm15minOu + ')</font>' : (n.Comm15minOu == 0 ? '' : n.Comm15minOu)) + '</div></td>';
+            row += '<td class="' + a4Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.CommCorners15minsOU) < 0 ? '<font style="color:#f11">(' + n.CommCorners15minsOU + ')</font>' : (n.CommCorners15minsOU == 0 ? '' : n.CommCorners15minsOU)) + '</div></td>';
             row += '<td class="' + a4Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.CommNextCorner) < 0 ? '<font style="color:#f11">(' + n.CommNextCorner + ')</font>' : (n.CommNextCorner == 0 ? '' : n.CommNextCorner)) + '</div></td>';
+            row += '<td class="' + a4Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.Comm1stTotalBookings) < 0 ? '<font style="color:#f11">(' + n.Comm1stTotalBookings + ')</font>' : (n.Comm1stTotalBookings == 0 ? '' : n.Comm1stTotalBookings)) + '</div></td>';
+            row += '<td class="' + a4Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.CommTotalBookings) < 0 ? '<font style="color:#f11">(' + n.CommTotalBookings + ')</font>' : (n.CommTotalBookings == 0 ? '' : n.CommTotalBookings)) + '</div></td>';
+            row += '<td class="' + a4Css + " " + (totalCss) + '"><div class="col100 r">&nbsp;' + (parseFloat(n.CommTotalBookings15minsOu) < 0 ? '<font style="color:#f11">(' + n.CommTotalBookings15minsOu + ')</font>' : (n.CommTotalBookings15minsOu == 0 ? '' : n.CommTotalBookings15minsOu)) + '</div></td>';
+            row += '<td class="' + a4Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.CommNextBookings) < 0 ? '<font style="color:#f11">(' + n.CommNextBookings + ')</font>' : (n.CommNextBookings == 0 ? '' : n.CommNextBookings)) + '</div></td>';
+
         }
         row += '<td class="' + a4Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.Comm1stOe) < 0 ? '<font style="color:#f11">(' + n.Comm1stOe + ')</font>' : (n.Comm1stOe == 0 ? '' : n.Comm1stOe)) + '</div></td>';
         row += '<td class="' + a4Css + " " + (totalCss) + '"><div class="col80 r">&nbsp;' + (parseFloat(n.CommOe) < 0 ? '<font style="color:#f11">(' + n.CommOe + ')</font>' : (n.CommOe == 0 ? '' : n.CommOe)) + '</div></td>';
@@ -478,7 +506,7 @@ var traderPerformanceDetailManager = {
         return row;
     },
     displayTraderPerformanceDetailReportHeader: function (isSoccer) {
-        var colspanOfEachType = 15;
+        var colspanOfEachType = 20;
         if (isSoccer == 0) {
             colspanOfEachType = 9;
         }
@@ -513,12 +541,17 @@ var traderPerformanceDetailManager = {
         headerHtml += '<th><div class="col80 c">1st O/U</div></th>';
         headerHtml += '<th><div class="col80 c">O/U</div></th>';
         if (isSoccer == 1) {
+            headerHtml += '<th><div class="col80 c">15mins O/U</div></th>';
+            headerHtml += '<th><div class="col80 c">10mins O/U</div></th>';
+            headerHtml += '<th><div class="col80 c">Single Team O/U</div></th>';
             headerHtml += '<th><div class="col80 c">1st No. of Corner</div></th>';
             headerHtml += '<th><div class="col80 c">No. of Corner</div></th>';
-            headerHtml += '<th><div class="col80 c">1st No. of Yellow Card</div></th>';
-            headerHtml += '<th><div class="col80 c"> No. of Yellow Card</div></th>';
-            headerHtml += '<th><div class="col80 c">15mins O/U</div></th>';
+            headerHtml += '<th><div class="col80 c">Corners 15mins O/U</div></th>';
             headerHtml += '<th><div class="col80 c">Next Corner</div></th>';
+            headerHtml += '<th><div class="col80 c">1st Total Bookings</div></th>';
+            headerHtml += '<th><div class="col80 c">Total Bookings</div></th>';
+            headerHtml += '<th><div class="col100 c">Total Bookings 15mins O/U</div></th>';
+            headerHtml += '<th><div class="col80 c">Next Booking</div></th>';
         }
         headerHtml += '<th><div class="col80 c">1st O/E</div></th>';
         headerHtml += '<th><div class="col80 c">O/E</div></th>';
@@ -531,12 +564,17 @@ var traderPerformanceDetailManager = {
         headerHtml += '<th><div class="col80 c">1st O/U</div></th>';
         headerHtml += '<th><div class="col80 c">O/U</div></th>';
         if (isSoccer == 1) {
+            headerHtml += '<th><div class="col80 c">15mins O/U</div></th>';
+            headerHtml += '<th><div class="col80 c">10mins O/U</div></th>';
+            headerHtml += '<th><div class="col80 c">Single Team O/U</div></th>';
             headerHtml += '<th><div class="col80 c">1st No. of Corner</div></th>';
             headerHtml += '<th><div class="col80 c">No. of Corner</div></th>';
-            headerHtml += '<th><div class="col80 c">1st No. of Yellow Card</div></th>';
-            headerHtml += '<th><div class="col80 c"> No. of Yellow Card</div></th>';
-            headerHtml += '<th><div class="col80 c">15mins O/U</div></th>';
+            headerHtml += '<th><div class="col80 c">Corners 15mins O/U</div></th>';
             headerHtml += '<th><div class="col80 c">Next Corner</div></th>';
+            headerHtml += '<th><div class="col80 c">1st Total Bookings</div></th>';
+            headerHtml += '<th><div class="col80 c">Total Bookings</div></th>';
+            headerHtml += '<th><div class="col100 c">Total Bookings 15mins O/U</div></th>';
+            headerHtml += '<th><div class="col80 c">Next Booking</div></th>';
         }
         headerHtml += '<th><div class="col80 c">1st O/E</div></th>';
         headerHtml += '<th><div class="col80 c">O/E</div></th>';
@@ -549,12 +587,17 @@ var traderPerformanceDetailManager = {
         headerHtml += '<th><div class="col80 c">1st O/U</div></th>';
         headerHtml += '<th><div class="col80 c">O/U</div></th>';
         if (isSoccer == 1) {
+            headerHtml += '<th><div class="col80 c">15mins O/U</div></th>';
+            headerHtml += '<th><div class="col80 c">10mins O/U</div></th>';
+            headerHtml += '<th><div class="col80 c">Single Team O/U</div></th>';
             headerHtml += '<th><div class="col80 c">1st No. of Corner</div></th>';
             headerHtml += '<th><div class="col80 c">No. of Corner</div></th>';
-            headerHtml += '<th><div class="col80 c">1st No. of Yellow Card</div></th>';
-            headerHtml += '<th><div class="col80 c"> No. of Yellow Card</div></th>';
-            headerHtml += '<th><div class="col80 c">15mins O/U</div></th>';
+            headerHtml += '<th><div class="col80 c">Corners 15mins O/U</div></th>';
             headerHtml += '<th><div class="col80 c">Next Corner</div></th>';
+            headerHtml += '<th><div class="col80 c">1st Total Bookings</div></th>';
+            headerHtml += '<th><div class="col80 c">Total Bookings</div></th>';
+            headerHtml += '<th><div class="col100 c">Total Bookings 15mins O/U</div></th>';
+            headerHtml += '<th><div class="col80 c">Next Booking</div></th>';
         }
         headerHtml += '<th><div class="col80 c">1st O/E</div></th>';
         headerHtml += '<th><div class="col80 c">O/E</div></th>';
@@ -567,12 +610,17 @@ var traderPerformanceDetailManager = {
         headerHtml += '<th><div class="col80 c">1st O/U</div></th>';
         headerHtml += '<th><div class="col80 c">O/U</div></th>';
         if (isSoccer == 1) {
+            headerHtml += '<th><div class="col80 c">15mins O/U</div></th>';
+            headerHtml += '<th><div class="col80 c">10mins O/U</div></th>';
+            headerHtml += '<th><div class="col80 c">Single Team O/U</div></th>';
             headerHtml += '<th><div class="col80 c">1st No. of Corner</div></th>';
             headerHtml += '<th><div class="col80 c">No. of Corner</div></th>';
-            headerHtml += '<th><div class="col80 c">1st No. of Yellow Card</div></th>';
-            headerHtml += '<th><div class="col80 c"> No. of Yellow Card</div></th>';
-            headerHtml += '<th><div class="col80 c">15mins O/U</div></th>';
+            headerHtml += '<th><div class="col80 c">Corners 15mins O/U</div></th>';
             headerHtml += '<th><div class="col80 c">Next Corner</div></th>';
+            headerHtml += '<th><div class="col80 c">1st Total Bookings</div></th>';
+            headerHtml += '<th><div class="col80 c">Total Bookings</div></th>';
+            headerHtml += '<th><div class="col100 c">Total Bookings 15mins O/U</div></th>';
+            headerHtml += '<th><div class="col80 c">Next Booking</div></th>';
         }
         headerHtml += '<th><div class="col80 c">1st O/E</div></th>';
         headerHtml += '<th><div class="col80 c">O/E</div></th>';
@@ -585,12 +633,17 @@ var traderPerformanceDetailManager = {
         headerHtml += '<th><div class="col80 c">1st O/U</div></th>';
         headerHtml += '<th><div class="col80 c">O/U</div></th>';
         if (isSoccer == 1) {
+            headerHtml += '<th><div class="col80 c">15mins O/U</div></th>';
+            headerHtml += '<th><div class="col80 c">10mins O/U</div></th>';
+            headerHtml += '<th><div class="col80 c">Single Team O/U</div></th>';
             headerHtml += '<th><div class="col80 c">1st No. of Corner</div></th>';
             headerHtml += '<th><div class="col80 c">No. of Corner</div></th>';
-            headerHtml += '<th><div class="col80 c">1st No. of Yellow Card</div></th>';
-            headerHtml += '<th><div class="col80 c"> No. of Yellow Card</div></th>';
-            headerHtml += '<th><div class="col80 c">15mins O/U</div></th>';
+            headerHtml += '<th><div class="col80 c">Corners 15mins O/U</div></th>';
             headerHtml += '<th><div class="col80 c">Next Corner</div></th>';
+            headerHtml += '<th><div class="col80 c">1st Total Bookings</div></th>';
+            headerHtml += '<th><div class="col80 c">Total Bookings</div></th>';
+            headerHtml += '<th><div class="col100 c">Total Bookings 15mins O/U</div></th>';
+            headerHtml += '<th><div class="col80 c">Next Booking</div></th>';
         }
         headerHtml += '<th><div class="col80 c">1st O/E</div></th>';
         headerHtml += '<th><div class="col80 c">O/E</div></th>';
@@ -620,12 +673,17 @@ var traderPerformanceDetailManager = {
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.WinLost1stOu) < 0 ? '<font style="color:#f11">(' + n.WinLost1stOu + ')</font>' : (n.WinLost1stOu == 0 ? '' : n.WinLost1stOu)) + '</div></th>';
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.WinLostOu) < 0 ? '<font style="color:#f11">(' + n.WinLostOu + ')</font>' : (n.WinLostOu == 0 ? '' : n.WinLostOu)) + '</div></th>';
         if (isSoccer == 1) {
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.WinLost15minOu) < 0 ? '<font style="color:#f11">(' + n.WinLost15minOu + ')</font>' : (n.WinLost15minOu == 0 ? '' : n.WinLost15minOu)) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.WinLost10minsOu) < 0 ? '<font style="color:#f11">(' + n.WinLost10minsOu + ')</font>' : (n.WinLost10minsOu == 0 ? '' : n.WinLost10minsOu)) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.WinLostSingleTeamOu) < 0 ? '<font style="color:#f11">(' + n.WinLostSingleTeamOu + ')</font>' : (n.WinLostSingleTeamOu == 0 ? '' : n.WinLostSingleTeamOu)) + '</div></th>';
             row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.WinLost1stNoOfCorners) < 0 ? '<font style="color:#f11">(' + n.WinLost1stNoOfCorners + ')</font>' : (n.WinLost1stNoOfCorners == 0 ? '' : n.WinLost1stNoOfCorners)) + '</div></th>';
             row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.WinLostNoOfCorners) < 0 ? '<font style="color:#f11">(' + n.WinLostNoOfCorners + ')</font>' : (n.WinLostNoOfCorners == 0 ? '' : n.WinLostNoOfCorners)) + '</div></th>';
-            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.WinLost1stNoOfYellowCards) < 0 ? '<font style="color:#f11">(' + n.WinLost1stNoOfYellowCards + ')</font>' : (n.WinLost1stNoOfYellowCards == 0 ? '' : n.WinLost1stNoOfYellowCards)) + '</div></th>';
-            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.WinLostNoOfYellowCards) < 0 ? '<font style="color:#f11">(' + n.WinLostNoOfYellowCards + ')</font>' : (n.WinLostNoOfYellowCards == 0 ? '' : n.WinLostNoOfYellowCards)) + '</div></th>';
-            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.WinLost15minOu) < 0 ? '<font style="color:#f11">(' + n.WinLost15minOu + ')</font>' : (n.WinLost15minOu == 0 ? '' : n.WinLost15minOu)) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.WinLostCorners15minsOU) < 0 ? '<font style="color:#f11">(' + n.WinLostCorners15minsOU + ')</font>' : (n.WinLostCorners15minsOU == 0 ? '' : n.WinLostCorners15minsOU)) + '</div></th>';
             row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.WinLostNextCorner) < 0 ? '<font style="color:#f11">(' + n.WinLostNextCorner + ')</font>' : (n.WinLostNextCorner == 0 ? '' : n.WinLostNextCorner)) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.WinLost1stTotalBookings) < 0 ? '<font style="color:#f11">(' + n.WinLost1stTotalBookings + ')</font>' : (n.WinLost1stTotalBookings == 0 ? '' : n.WinLost1stTotalBookings)) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.WinLostTotalBookings) < 0 ? '<font style="color:#f11">(' + n.WinLostTotalBookings + ')</font>' : (n.WinLostTotalBookings == 0 ? '' : n.WinLostTotalBookings)) + '</div></th>';
+            row += '<th><div class="col100 r">&nbsp;' + (parseFloat(n.WinLostTotalBookings15minsOu) < 0 ? '<font style="color:#f11">(' + n.WinLostTotalBookings15minsOu + ')</font>' : (n.WinLostTotalBookings15minsOu == 0 ? '' : n.WinLostTotalBookings15minsOu)) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.WinLostNextBookings) < 0 ? '<font style="color:#f11">(' + n.WinLostNextBookings + ')</font>' : (n.WinLostNextBookings == 0 ? '' : n.WinLostNextBookings)) + '</div></th>';
         }
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.WinLost1stOe) < 0 ? '<font style="color:#f11">(' + n.WinLost1stOe + ')</font>' : (n.WinLost1stOe == 0 ? '' : n.WinLost1stOe)) + '</div></th>';
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.WinLostOe) < 0 ? '<font style="color:#f11">(' + n.WinLostOe + ')</font>' : (n.WinLostOe == 0 ? '' : n.WinLostOe)) + '</div></th>';
@@ -638,12 +696,17 @@ var traderPerformanceDetailManager = {
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOver1stOu) < 0 ? '<font style="color:#f11">(' + n.TurnOver1stOu + ')</font>' : (n.TurnOver1stOu == 0 ? '' : n.TurnOver1stOu)) + '</div></th>';
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOverOu) < 0 ? '<font style="color:#f11">(' + n.TurnOverOu + ')</font>' : (n.TurnOverOu == 0 ? '' : n.TurnOverOu)) + '</div></th>';
         if (isSoccer == 1) {
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOver15minOu) < 0 ? '<font style="color:#f11">(' + n.TurnOver15minOu + ')</font>' : (n.TurnOver15minOu == 0 ? '' : n.TurnOver15minOu)) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOver10minsOu) < 0 ? '<font style="color:#f11">(' + n.TurnOver10minsOu + ')</font>' : (n.TurnOver10minsOu == 0 ? '' : n.TurnOver10minsOu)) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOverSingleTeamOu) < 0 ? '<font style="color:#f11">(' + n.TurnOverSingleTeamOu + ')</font>' : (n.TurnOverSingleTeamOu == 0 ? '' : n.TurnOverSingleTeamOu)) + '</div></th>';
             row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOver1stNoOfCorners) < 0 ? '<font style="color:#f11">(' + n.TurnOver1stNoOfCorners + ')</font>' : (n.TurnOver1stNoOfCorners == 0 ? '' : n.TurnOver1stNoOfCorners)) + '</div></th>';
             row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOverNoOfCorners) < 0 ? '<font style="color:#f11">(' + n.TurnOverNoOfCorners + ')</font>' : (n.TurnOverNoOfCorners == 0 ? '' : n.TurnOverNoOfCorners)) + '</div></th>';
-            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOver1stNoOfYellowCards) < 0 ? '<font style="color:#f11">(' + n.TurnOver1stNoOfYellowCards + ')</font>' : (n.TurnOver1stNoOfYellowCards == 0 ? '' : n.TurnOver1stNoOfYellowCards)) + '</div></th>';
-            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOverNoOfYellowCards) < 0 ? '<font style="color:#f11">(' + n.TurnOverNoOfYellowCards + ')</font>' : (n.TurnOverNoOfYellowCards == 0 ? '' : n.TurnOverNoOfYellowCards)) + '</div></th>';
-            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOver15minOu) < 0 ? '<font style="color:#f11">(' + n.TurnOver15minOu + ')</font>' : (n.TurnOver15minOu == 0 ? '' : n.TurnOver15minOu)) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOverCorners15minsOU) < 0 ? '<font style="color:#f11">(' + n.TurnOverCorners15minsOU + ')</font>' : (n.TurnOverCorners15minsOU == 0 ? '' : n.TurnOverCorners15minsOU)) + '</div></th>';
             row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOverNextCorner) < 0 ? '<font style="color:#f11">(' + n.TurnOverNextCorner + ')</font>' : (n.TurnOverNextCorner == 0 ? '' : n.TurnOverNextCorner)) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOver1stTotalBookings) < 0 ? '<font style="color:#f11">(' + n.TurnOver1stTotalBookings + ')</font>' : (n.TurnOver1stTotalBookings == 0 ? '' : n.TurnOver1stTotalBookings)) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOverTotalBookings) < 0 ? '<font style="color:#f11">(' + n.TurnOverTotalBookings + ')</font>' : (n.TurnOverTotalBookings == 0 ? '' : n.TurnOverTotalBookings)) + '</div></th>';
+            row += '<th><div class="col100 r">&nbsp;' + (parseFloat(n.TurnOverTotalBookings15minsOu) < 0 ? '<font style="color:#f11">(' + n.TurnOverTotalBookings15minsOu + ')</font>' : (n.TurnOverTotalBookings15minsOu == 0 ? '' : n.TurnOverTotalBookings15minsOu)) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOverNextBookings) < 0 ? '<font style="color:#f11">(' + n.TurnOverNextBookings + ')</font>' : (n.TurnOverNextBookings == 0 ? '' : n.TurnOverNextBookings)) + '</div></th>';
         }
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOver1stOe) < 0 ? '<font style="color:#f11">(' + n.TurnOver1stOe + ')</font>' : (n.TurnOver1stOe == 0 ? '' : n.TurnOver1stOe)) + '</div></th>';
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.TurnOverOe) < 0 ? '<font style="color:#f11">(' + n.TurnOverOe + ')</font>' : (n.TurnOverOe == 0 ? '' : n.TurnOverOe)) + '</div></th>';
@@ -656,12 +719,17 @@ var traderPerformanceDetailManager = {
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCount1stOu) < 0 ? '<font style="color:#f11">(' + n.LiveBetCount1stOu + ')</font>' : (n.LiveBetCount1stOu == 0 ? '' : n.LiveBetCount1stOu)) + '</div></th>';
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCountOu) < 0 ? '<font style="color:#f11">(' + n.LiveBetCountOu + ')</font>' : (n.LiveBetCountOu == 0 ? '' : n.LiveBetCountOu)) + '</div></th>';
         if (isSoccer == 1) {
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCount15minOu) < 0 ? '<font style="color:#f11">(' + n.LiveBetCount15minOu + ')</font>' : (n.LiveBetCount15minOu == 0 ? '' : n.LiveBetCount15minOu)) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCount10minsOu) < 0 ? '<font style="color:#f11">(' + n.LiveBetCount10minsOu + ')</font>' : (n.LiveBetCount10minsOu == 0 ? '' : n.LiveBetCount10minsOu)) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCountSingleTeamOu) < 0 ? '<font style="color:#f11">(' + n.LiveBetCountSingleTeamOu + ')</font>' : (n.LiveBetCountSingleTeamOu == 0 ? '' : n.LiveBetCountSingleTeamOu)) + '</div></th>';
             row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCount1stNoOfCorners) < 0 ? '<font style="color:#f11">(' + n.LiveBetCount1stNoOfCorners + ')</font>' : (n.LiveBetCount1stNoOfCorners == 0 ? '' : n.LiveBetCount1stNoOfCorners)) + '</div></th>';
             row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCountNoOfCorners) < 0 ? '<font style="color:#f11">(' + n.LiveBetCountNoOfCorners + ')</font>' : (n.LiveBetCountNoOfCorners == 0 ? '' : n.LiveBetCountNoOfCorners)) + '</div></th>';
-            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCount1stNoOfYellowCards) < 0 ? '<font style="color:#f11">(' + n.LiveBetCount1stNoOfYellowCards + ')</font>' : (n.LiveBetCount1stNoOfYellowCards == 0 ? '' : n.LiveBetCount1stNoOfYellowCards)) + '</div></th>';
-            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCountNoOfYellowCards) < 0 ? '<font style="color:#f11">(' + n.LiveBetCountNoOfYellowCards + ')</font>' : (n.LiveBetCountNoOfYellowCards == 0 ? '' : n.LiveBetCountNoOfYellowCards)) + '</div></th>';
-            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCount15minOu) < 0 ? '<font style="color:#f11">(' + n.LiveBetCount15minOu + ')</font>' : (n.LiveBetCount15minOu == 0 ? '' : n.LiveBetCount15minOu)) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCountCorners15minsOU) < 0 ? '<font style="color:#f11">(' + n.LiveBetCountCorners15minsOU + ')</font>' : (n.LiveBetCountCorners15minsOU == 0 ? '' : n.LiveBetCountCorners15minsOU)) + '</div></th>';
             row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCountNextCorner) < 0 ? '<font style="color:#f11">(' + n.LiveBetCountNextCorner + ')</font>' : (n.LiveBetCountNextCorner == 0 ? '' : n.LiveBetCountNextCorner)) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCount1stTotalBookings) < 0 ? '<font style="color:#f11">(' + n.LiveBetCount1stTotalBookings + ')</font>' : (n.LiveBetCount1stTotalBookings == 0 ? '' : n.LiveBetCount1stTotalBookings)) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCountTotalBookings) < 0 ? '<font style="color:#f11">(' + n.LiveBetCountTotalBookings + ')</font>' : (n.LiveBetCountTotalBookings == 0 ? '' : n.LiveBetCountTotalBookings)) + '</div></th>';
+            row += '<th><div class="col100 r">&nbsp;' + (parseFloat(n.LiveBetCountTotalBookings15minsOu) < 0 ? '<font style="color:#f11">(' + n.LiveBetCountTotalBookings15minsOu + ')</font>' : (n.LiveBetCountTotalBookings15minsOu == 0 ? '' : n.LiveBetCountTotalBookings15minsOu)) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCountNextBookings) < 0 ? '<font style="color:#f11">(' + n.LiveBetCountNextBookings + ')</font>' : (n.LiveBetCountNextBookings == 0 ? '' : n.LiveBetCountNextBookings)) + '</div></th>';
         }
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCount1stOe) < 0 ? '<font style="color:#f11">(' + n.LiveBetCount1stOe + ')</font>' : (n.LiveBetCount1stOe == 0 ? '' : n.LiveBetCount1stOe)) + '</div></th>';
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.LiveBetCountOe) < 0 ? '<font style="color:#f11">(' + n.LiveBetCountOe + ')</font>' : (n.LiveBetCountOe == 0 ? '' : n.LiveBetCountOe)) + '</div></th>';
@@ -674,12 +742,17 @@ var traderPerformanceDetailManager = {
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.Margin1stOu) < 0 ? '<font style="color:#f11">(' + n.Margin1stOu + '%)</font>' : (n.Margin1stOu == 0 ? '' : n.Margin1stOu + '%')) + '</div></th>';
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.MarginOu) < 0 ? '<font style="color:#f11">(' + n.MarginOu + '%)</font>' : (n.MarginOu == 0 ? '' : n.MarginOu + '%')) + '</div></th>';
         if (isSoccer == 1) {
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.Margin15minOu) < 0 ? '<font style="color:#f11">(' + n.Margin15minOu + '%)</font>' : (n.Margin15minOu == 0 ? '' : n.Margin15minOu + '%')) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.Margin10minsOu) < 0 ? '<font style="color:#f11">(' + n.Margin10minsOu + '%)</font>' : (n.Margin10minsOu == 0 ? '' : n.Margin10minsOu + '%')) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.MarginSingleTeamOu) < 0 ? '<font style="color:#f11">(' + n.MarginSingleTeamOu + '%)</font>' : (n.MarginSingleTeamOu == 0 ? '' : n.MarginSingleTeamOu + '%')) + '</div></th>';
             row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.Margin1stNoOfCorners) < 0 ? '<font style="color:#f11">(' + n.Margin1stNoOfCorners + '%)</font>' : (n.Margin1stNoOfCorners == 0 ? '' : n.Margin1stNoOfCorners + '%')) + '</div></th>';
             row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.MarginNoOfCorners) < 0 ? '<font style="color:#f11">(' + n.MarginNoOfCorners + '%)</font>' : (n.MarginNoOfCorners == 0 ? '' : n.MarginNoOfCorners + '%')) + '</div></th>';
-            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.Margin1stNoOfYellowCards) < 0 ? '<font style="color:#f11">(' + n.Margin1stNoOfYellowCards + '%)</font>' : (n.Margin1stNoOfYellowCards == 0 ? '' : n.Margin1stNoOfYellowCards + '%')) + '</div></th>';
-            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.MarginNoOfYellowCards) < 0 ? '<font style="color:#f11">(' + n.MarginNoOfYellowCards + '%)</font>' : (n.MarginNoOfYellowCards == 0 ? '' : n.MarginNoOfYellowCards + '%')) + '</div></th>';
-            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.Margin15minOu) < 0 ? '<font style="color:#f11">(' + n.Margin15minOu + '%)</font>' : (n.Margin15minOu == 0 ? '' : n.Margin15minOu + '%')) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.MarginCorners15minsOU) < 0 ? '<font style="color:#f11">(' + n.MarginCorners15minsOU + '%)</font>' : (n.MarginCorners15minsOU == 0 ? '' : n.MarginCorners15minsOU + '%')) + '</div></th>';
             row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.MarginNextCorner) < 0 ? '<font style="color:#f11">(' + n.MarginNextCorner + '%)</font>' : (n.MarginNextCorner == 0 ? '' : n.MarginNextCorner + '%')) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.Margin1stTotalBookings) < 0 ? '<font style="color:#f11">(' + n.Margin1stTotalBookings + '%)</font>' : (n.Margin1stTotalBookings == 0 ? '' : n.Margin1stTotalBookings + '%')) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.MarginTotalBookings) < 0 ? '<font style="color:#f11">(' + n.MarginTotalBookings + '%)</font>' : (n.MarginTotalBookings == 0 ? '' : n.MarginTotalBookings + '%')) + '</div></th>';
+            row += '<th><div class="col100 r">&nbsp;' + (parseFloat(n.MarginTotalBookings15minsOu) < 0 ? '<font style="color:#f11">(' + n.MarginTotalBookings15minsOu + ')</font>' : (n.MarginTotalBookings15minsOu == 0 ? '' : n.MarginTotalBookings15minsOu + '%')) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.MarginNextBookings) < 0 ? '<font style="color:#f11">(' + n.MarginNextBookings + '%)</font>' : (n.MarginNextBookings == 0 ? '' : n.MarginNextBookings + '%')) + '</div></th>';
         }
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.Margin1stOe) < 0 ? '<font style="color:#f11">(' + n.Margin1stOe + '%)</font>' : (n.Margin1stOe == 0 ? '' : n.Margin1stOe + '%')) + '</div></th>';
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.MarginOe) < 0 ? '<font style="color:#f11">(' + n.MarginOe + '%)</font>' : (n.MarginOe == 0 ? '' : n.MarginOe + '%')) + '</div></th>';
@@ -692,12 +765,18 @@ var traderPerformanceDetailManager = {
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.Comm1stOu) < 0 ? '<font style="color:#f11">(' + n.Comm1stOu + ')</font>' : (n.Comm1stOu == 0 ? '' : n.Comm1stOu)) + '</div></th>';
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.CommOu) < 0 ? '<font style="color:#f11">(' + n.CommOu + ')</font>' : (n.CommOu == 0 ? '' : n.CommOu)) + '</div></th>';
         if (isSoccer == 1) {
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.Comm15minOu) < 0 ? '<font style="color:#f11">(' + n.Comm15minOu + ')</font>' : (n.Comm15minOu == 0 ? '' : n.Comm15minOu)) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.Comm10minsOu) < 0 ? '<font style="color:#f11">(' + n.Comm10minsOu + ')</font>' : (n.Comm10minsOu == 0 ? '' : n.Comm10minsOu)) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.CommSingleTeamOu) < 0 ? '<font style="color:#f11">(' + n.CommSingleTeamOu + ')</font>' : (n.CommSingleTeamOu == 0 ? '' : n.CommSingleTeamOu)) + '</div></th>';
             row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.Comm1stNoOfCorners) < 0 ? '<font style="color:#f11">(' + n.Comm1stNoOfCorners + ')</font>' : (n.Comm1stNoOfCorners == 0 ? '' : n.Comm1stNoOfCorners)) + '</div></th>';
             row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.CommNoOfCorners) < 0 ? '<font style="color:#f11">(' + n.CommNoOfCorners + ')</font>' : (n.CommNoOfCorners == 0 ? '' : n.CommNoOfCorners)) + '</div></th>';
-            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.Comm1stNoOfYellowCards) < 0 ? '<font style="color:#f11">(' + n.Comm1stNoOfYellowCards + ')</font>' : (n.Comm1stNoOfYellowCards == 0 ? '' : n.Comm1stNoOfYellowCards)) + '</div></th>';
-            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.CommNoOfYellowCards) < 0 ? '<font style="color:#f11">(' + n.CommNoOfYellowCards + ')</font>' : (n.CommNoOfYellowCards == 0 ? '' : n.CommNoOfYellowCards)) + '</div></th>';
-            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.Comm15minOu) < 0 ? '<font style="color:#f11">(' + n.Comm15minOu + ')</font>' : (n.Comm15minOu == 0 ? '' : n.Comm15minOu)) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.CommCorners15minsOU) < 0 ? '<font style="color:#f11">(' + n.CommCorners15minsOU + ')</font>' : (n.CommCorners15minsOU == 0 ? '' : n.CommCorners15minsOU)) + '</div></th>';
             row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.CommNextCorner) < 0 ? '<font style="color:#f11">(' + n.CommNextCorner + ')</font>' : (n.CommNextCorner == 0 ? '' : n.CommNextCorner)) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.Comm1stTotalBookings) < 0 ? '<font style="color:#f11">(' + n.Comm1stTotalBookings + ')</font>' : (n.Comm1stTotalBookings == 0 ? '' : n.Comm1stTotalBookings)) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.CommTotalBookings) < 0 ? '<font style="color:#f11">(' + n.CommTotalBookings + ')</font>' : (n.CommTotalBookings == 0 ? '' : n.CommTotalBookings)) + '</div></th>';
+            row += '<th><div class="col100 r">&nbsp;' + (parseFloat(n.CommTotalBookings15minsOu) < 0 ? '<font style="color:#f11">(' + n.CommTotalBookings15minsOu + ')</font>' : (n.CommTotalBookings15minsOu == 0 ? '' : n.CommTotalBookings15minsOu)) + '</div></th>';
+            row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.CommNextBookings) < 0 ? '<font style="color:#f11">(' + n.CommNextBookings + ')</font>' : (n.CommNextBookings == 0 ? '' : n.CommNextBookings)) + '</div></th>';
+
         }
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.Comm1stOe) < 0 ? '<font style="color:#f11">(' + n.Comm1stOe + ')</font>' : (n.Comm1stOe == 0 ? '' : n.Comm1stOe)) + '</div></th>';
         row += '<th><div class="col80 r">&nbsp;' + (parseFloat(n.CommOe) < 0 ? '<font style="color:#f11">(' + n.CommOe + ')</font>' : (n.CommOe == 0 ? '' : n.CommOe)) + '</div></th>';
