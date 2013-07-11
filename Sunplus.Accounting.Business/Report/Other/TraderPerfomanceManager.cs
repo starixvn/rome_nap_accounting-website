@@ -375,10 +375,10 @@ namespace Sunplus.Accounting.Business.Report.Other
                                         ? dr["winlost_NextCorner"]
                                         : 0);
                             wlOverall += CastAide.AsDecimal(dr["overall_wl"]);
-                            wlNextBooking += CastAide.AsDecimal(dr["winlost_10minOU"]);
+                            wlNextBooking += CastAide.AsDecimal(dr["winlost_NextBooking"]);
                             wlTotalBookings15minOu += CastAide.AsDecimal(dr["winlost_15minTotalBookings"]);
                             wlCorners15minOu += CastAide.AsDecimal(dr["winlost_15minCorners"]);
-                            wl10minOu += CastAide.AsDecimal(dr["winlost_NextBooking"]);
+                            wl10minOu += CastAide.AsDecimal(dr["winlost_10minOU"]);
                             wlSingleTeamOu += CastAide.AsDecimal(dr["winlost_SingleTeamOU"]);
                             #endregion
                             #region comm
@@ -412,10 +412,10 @@ namespace Sunplus.Accounting.Business.Report.Other
                                         ? dr["comm_NextCorner"]
                                         : 0);
                             comOverall += CastAide.AsDecimal(dr["overall_com"]);
-                            comNextBooking += CastAide.AsDecimal(dr["comm_10minOU"]);
+                            comNextBooking += CastAide.AsDecimal(dr["comm_NextBooking"]);
                             comTotalBookings15minOu += CastAide.AsDecimal(dr["comm_15minTotalBookings"]);
                             comCorners15minOu += CastAide.AsDecimal(dr["comm_15minCorners"]);
-                            com10minOu += CastAide.AsDecimal(dr["comm_NextBooking"]);
+                            com10minOu += CastAide.AsDecimal(dr["comm_10minOU"]);
                             comSingleTeamOu += CastAide.AsDecimal(dr["comm_SingleTeamOU"]);
                             #endregion
                             #region turn-over
@@ -447,10 +447,10 @@ namespace Sunplus.Accounting.Business.Report.Other
                                         ? dr["stake_NextCorner"]
                                         : 0);
                             toOverall += CastAide.AsDecimal(dr["overall_st"], 0);
-                            toNextBooking += CastAide.AsDecimal(dr["stake_10minOU"]);
+                            toNextBooking += CastAide.AsDecimal(dr["stake_NextBooking"]);
                             toTotalBookings15minOu += CastAide.AsDecimal(dr["stake_15minTotalBookings"]);
                             toCorners15minOu += CastAide.AsDecimal(dr["stake_15minCorners"]);
-                            to10minOu += CastAide.AsDecimal(dr["stake_NextBooking"]);
+                            to10minOu += CastAide.AsDecimal(dr["stake_10minOU"]);
                             toSingleTeamOu += CastAide.AsDecimal(dr["stake_SingleTeamOU"]);
                             #endregion
                             #region margin
@@ -482,10 +482,10 @@ namespace Sunplus.Accounting.Business.Report.Other
                                         ? dr["margin_NextCorner"]
                                         : 0);
                             mgOverall += CastAide.AsDecimal(dr["overall_margin"]);
-                            mgNextBooking += CastAide.AsDecimal(dr["margin_10minOU"]);
+                            mgNextBooking += CastAide.AsDecimal(dr["margin_NextBooking"]);
                             mgTotalBookings15minOu += CastAide.AsDecimal(dr["margin_15minTotalBookings"]);
                             mgCorners15minOu += CastAide.AsDecimal(dr["margin_15minCorners"]);
-                            mg10minOu += CastAide.AsDecimal(dr["margin_NextBooking"]);
+                            mg10minOu += CastAide.AsDecimal(dr["margin_10minOU"]);
                             mgSingleTeamOu += CastAide.AsDecimal(dr["margin_SingleTeamOU"]);
                             #endregion
                             #region live bet count
@@ -514,10 +514,10 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 CastAide.AsDecimal(
                                     dr.Table.Columns.Contains("bet_NextCorner") ? dr["bet_NextCorner"] : 0);
                             liOverall += CastAide.AsDecimal(dr["overall_livebet"]);
-                            liNextBooking += CastAide.AsDecimal(dr["bet_10minOU"]);
+                            liNextBooking += CastAide.AsDecimal(dr["bet_NextBooking"]);
                             liTotalBookings15minOu += CastAide.AsDecimal(dr["bet_15minTotalBookings"]);
                             liCorners15minOu += CastAide.AsDecimal(dr["bet_15minCorners"]);
-                            li10minOu += CastAide.AsDecimal(dr["bet_NextBooking"]);
+                            li10minOu += CastAide.AsDecimal(dr["bet_10minOU"]);
                             liSingleTeamOu += CastAide.AsDecimal(dr["bet_SingleTeamOU"]);
                             #endregion
                             #endregion
@@ -640,11 +640,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         MarginNextCorner =
                             NumberFormat.DecFormat((CastAide.AsDecimal(toNextCorner, 0) != 0 ? (CastAide.AsDecimal(wlNextCorner, 0) * 100 / CastAide.AsDecimal(toNextCorner, 0)) : 0), 2),
                         MarginOverall = NumberFormat.DecFormat((CastAide.AsDecimal(toOverall, 0) != 0 ? (CastAide.AsDecimal(wlOverall, 0) * 100 / CastAide.AsDecimal(toOverall, 0)) : 0), 2),
-                        Margin10minsOu = NumberFormat.DecFormat(CastAide.AsDecimal(mg10minOu, 0), 2),
-                        MarginTotalBookings15minsOu = NumberFormat.DecFormat(CastAide.AsDecimal(mgTotalBookings15minOu, 0), 2),
-                        MarginCorners15minsOU = NumberFormat.DecFormat(CastAide.AsDecimal(mgCorners15minOu, 0), 2),
-                        MarginNextBookings = NumberFormat.DecFormat(CastAide.AsDecimal(mgNextBooking, 0), 2),
-                        MarginSingleTeamOu = NumberFormat.DecFormat(CastAide.AsDecimal(mgSingleTeamOu, 0), 2),
+                        Margin10minsOu = NumberFormat.DecFormat((CastAide.AsDecimal(to10minOu, 0) != 0 ? (CastAide.AsDecimal(wl10minOu, 0) * 100 / CastAide.AsDecimal(to10minOu, 0)) : 0), 2),
+                        MarginTotalBookings15minsOu = NumberFormat.DecFormat((CastAide.AsDecimal(toTotalBookings15minOu, 0) != 0 ? (CastAide.AsDecimal(wlTotalBookings15minOu, 0) * 100 / CastAide.AsDecimal(toTotalBookings15minOu, 0)) : 0), 2),
+                        MarginCorners15minsOU = NumberFormat.DecFormat((CastAide.AsDecimal(toOverall, 0) != 0 ? (CastAide.AsDecimal(wlOverall, 0) * 100 / CastAide.AsDecimal(toOverall, 0)) : 0), 2),
+                        MarginNextBookings = NumberFormat.DecFormat((CastAide.AsDecimal(toNextBooking, 0) != 0 ? (CastAide.AsDecimal(wlNextBooking, 0) * 100 / CastAide.AsDecimal(toNextBooking, 0)) : 0), 2),
+                        MarginSingleTeamOu = NumberFormat.DecFormat((CastAide.AsDecimal(toSingleTeamOu, 0) != 0 ? (CastAide.AsDecimal(wlSingleTeamOu, 0) * 100 / CastAide.AsDecimal(toSingleTeamOu, 0)) : 0), 2),
                         #endregion
                         #region live bet count
                         LiveBetCountHdp = NumberFormat.DecFormat(CastAide.AsDecimal(liHdpTotal, 0), 0),
@@ -6356,11 +6356,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                                     TurnOverOu = NumberFormat.DecFormat(Total_to_ou, 2),
                                     TurnOverNextCorner = NumberFormat.DecFormat(Total_to_NextCorner, 2),
                                     TurnOverOverall = NumberFormat.DecFormat(Total_to_overall, 2),
-                                    TurnOverNextBookings = NumberFormat.DecFormat(Total_m_NextBooking, 2),
-                                    TurnOverTotalBookings15minsOu = NumberFormat.DecFormat(Total_m_TotalBookings15minOu, 2),
-                                    TurnOverCorners15minsOU = NumberFormat.DecFormat(Total_m_Corners15minOu, 2),
-                                    TurnOver10minsOu = NumberFormat.DecFormat(Total_m_10minOu, 2),
-                                    TurnOverSingleTeamOu = NumberFormat.DecFormat(Total_m_SingleTeamOu, 2),
+                                    TurnOverNextBookings = NumberFormat.DecFormat(Total_to_NextBooking, 2),
+                                    TurnOverTotalBookings15minsOu = NumberFormat.DecFormat(Total_to_TotalBookings15minOu, 2),
+                                    TurnOverCorners15minsOU = NumberFormat.DecFormat(Total_to_Corners15minOu, 2),
+                                    TurnOver10minsOu = NumberFormat.DecFormat(Total_to_10minOu, 2),
+                                    TurnOverSingleTeamOu = NumberFormat.DecFormat(Total_to_SingleTeamOu, 2),
 
                                     LiveBetCount15minOu = NumberFormat.DecFormat(Total_livebetcount_15mou, 0),
                                     LiveBetCount1st1x2 = NumberFormat.DecFormat(Total_livebetcount_ht1x2, 0),
@@ -6398,11 +6398,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                                     MarginOu = NumberFormat.DecFormat(Total_m_ou * 100, 2),
                                     MarginNextCorner = NumberFormat.DecFormat(Total_m_NextCorner * 100, 2),
                                     MarginOverall = NumberFormat.DecFormat(Total_m_overall * 100, 2),
-                                    MarginNextBookings = NumberFormat.DecFormat(Total_to_NextBooking, 2),
-                                    MarginTotalBookings15minsOu = NumberFormat.DecFormat(Total_to_TotalBookings15minOu, 2),
-                                    MarginCorners15minsOU = NumberFormat.DecFormat(Total_to_Corners15minOu, 2),
-                                    Margin10minsOu = NumberFormat.DecFormat(Total_to_10minOu, 2),
-                                    MarginSingleTeamOu = NumberFormat.DecFormat(Total_to_SingleTeamOu, 2),
+                                    MarginNextBookings = NumberFormat.DecFormat(Total_m_NextBooking, 2),
+                                    MarginTotalBookings15minsOu = NumberFormat.DecFormat(Total_m_TotalBookings15minOu, 2),
+                                    MarginCorners15minsOU = NumberFormat.DecFormat(Total_m_Corners15minOu, 2),
+                                    Margin10minsOu = NumberFormat.DecFormat(Total_m_10minOu, 2),
+                                    MarginSingleTeamOu = NumberFormat.DecFormat(Total_m_SingleTeamOu, 2),
 
                                     UserName = string.Format("{0} Total", preUsername),
                                     CustId = preCusId,
@@ -6719,11 +6719,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                             TurnOverOu = NumberFormat.DecFormat(to_ou, 2),
                             TurnOverNextCorner = NumberFormat.DecFormat(to_NextCorner, 2),
                             TurnOverOverall = NumberFormat.DecFormat(to_overall, 2),
-                            TurnOverNextBookings = NumberFormat.DecFormat(m_NextBooking, 2),
-                            TurnOverTotalBookings15minsOu = NumberFormat.DecFormat(m_TotalBookings15minOu, 2),
-                            TurnOverCorners15minsOU = NumberFormat.DecFormat(m_Corners15minOu, 2),
-                            TurnOver10minsOu = NumberFormat.DecFormat(m_10minOu, 2),
-                            TurnOverSingleTeamOu = NumberFormat.DecFormat(m_SingleTeamOu, 2),
+                            TurnOverNextBookings = NumberFormat.DecFormat(to_NextBooking, 2),
+                            TurnOverTotalBookings15minsOu = NumberFormat.DecFormat(to_TotalBookings15minOu, 2),
+                            TurnOverCorners15minsOU = NumberFormat.DecFormat(to_Corners15minOu, 2),
+                            TurnOver10minsOu = NumberFormat.DecFormat(to_10minOu, 2),
+                            TurnOverSingleTeamOu = NumberFormat.DecFormat(to_SingleTeamOu, 2),
 
                             LiveBetCount15minOu = NumberFormat.DecFormat(livebetcount_15mou, 0),
                             LiveBetCount1st1x2 = NumberFormat.DecFormat(livebetcount_ht1x2, 0),
@@ -6761,11 +6761,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                             MarginOu = NumberFormat.DecFormat(m_ou * 100, 2),
                             MarginNextCorner = NumberFormat.DecFormat(m_NextCorner * 100, 2),
                             MarginOverall = NumberFormat.DecFormat(m_overall * 100, 2),
-                            MarginNextBookings = NumberFormat.DecFormat(to_NextBooking * 100, 2),
-                            MarginTotalBookings15minsOu = NumberFormat.DecFormat(to_TotalBookings15minOu * 100, 2),
-                            MarginCorners15minsOU = NumberFormat.DecFormat(to_Corners15minOu * 100, 2),
-                            Margin10minsOu = NumberFormat.DecFormat(to_10minOu * 100, 2),
-                            MarginSingleTeamOu = NumberFormat.DecFormat(to_SingleTeamOu * 100, 2),
+                            MarginNextBookings = NumberFormat.DecFormat(m_NextBooking * 100, 2),
+                            MarginTotalBookings15minsOu = NumberFormat.DecFormat(m_TotalBookings15minOu * 100, 2),
+                            MarginCorners15minsOU = NumberFormat.DecFormat(m_Corners15minOu * 100, 2),
+                            Margin10minsOu = NumberFormat.DecFormat(m_10minOu * 100, 2),
+                            MarginSingleTeamOu = NumberFormat.DecFormat(m_SingleTeamOu * 100, 2),
 
                             CustId = currentCustId,
                             UserName = currentUserName,
@@ -6872,32 +6872,32 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Total_comm_SingleTeamOu += comm_SingleTeamOu;
                         #endregion
                         #region margin
-                        Total_m_hthdp = Total_to_hthdp == 0 ? Total_wl_hthdp : Total_wl_hthdp / Total_to_hthdp;
-                        Total_m_hdp = Total_to_hdp == 0 ? Total_wl_hdp : Total_wl_hdp / Total_to_hdp;
-                        Total_m_htou = Total_to_htou == 0 ? Total_wl_htou : Total_wl_htou / Total_to_htou;
-                        Total_m_ou = Total_to_ou == 0 ? Total_wl_ou : Total_wl_ou / Total_to_ou;
-                        Total_m_ht1x2 = Total_to_ht1x2 == 0 ? Total_wl_ht1x2 : Total_wl_ht1x2 / Total_to_ht1x2;
-                        Total_m_1x2 = Total_to_1x2 == 0 ? Total_wl_1x2 : Total_wl_1x2 / Total_to_1x2;
+                        Total_m_hthdp = Total_to_hthdp == 0 ? 0 : Total_wl_hthdp / Total_to_hthdp;
+                        Total_m_hdp = Total_to_hdp == 0 ? 0 : Total_wl_hdp / Total_to_hdp;
+                        Total_m_htou = Total_to_htou == 0 ? 0 : Total_wl_htou / Total_to_htou;
+                        Total_m_ou = Total_to_ou == 0 ? 0 : Total_wl_ou / Total_to_ou;
+                        Total_m_ht1x2 = Total_to_ht1x2 == 0 ? 0 : Total_wl_ht1x2 / Total_to_ht1x2;
+                        Total_m_1x2 = Total_to_1x2 == 0 ? 0 : Total_wl_1x2 / Total_to_1x2;
                         Total_m_1stcorner += Total_to_1stcorner == 0
-                                                ? Total_wl_1stcorner
+                                                ? 0
                                                 : Total_wl_1stcorner / Total_to_1stcorner;
-                        Total_m_corner = Total_to_corner == 0 ? Total_wl_corner : Total_wl_corner / Total_to_corner;
-                        Total_m_15mou = Total_to_15mou == 0 ? Total_wl_15mou : Total_wl_15mou / Total_to_15mou;
+                        Total_m_corner = Total_to_corner == 0 ? 0 : Total_wl_corner / Total_to_corner;
+                        Total_m_15mou = Total_to_15mou == 0 ? 0 : Total_wl_15mou / Total_to_15mou;
                         Total_m_1stYellowCard = Total_to_1stYellowCard == 0
-                                                    ? Total_wl_1stYellowCard
+                                                    ? 0
                                                     : Total_wl_1stYellowCard / Total_to_1stYellowCard;
                         Total_m_YellowCard = Total_to_YellowCard == 0
-                                                 ? Total_wl_YellowCard
+                                                 ? 0
                                                  : Total_wl_YellowCard / Total_to_YellowCard;
-                        Total_m_1stoe = Total_to_1stoe == 0 ? Total_wl_1stoe : Total_wl_1stoe / Total_to_1stoe;
-                        Total_m_oe = Total_to_oe == 0 ? Total_wl_oe : Total_wl_oe / Total_to_oe;
-                        Total_m_NextCorner = Total_to_NextCorner == 0 ? Total_wl_NextCorner : Total_wl_NextCorner / Total_to_NextCorner;
-                        Total_m_overall = Total_to_overall == 0 ? Total_wl_overall : Total_wl_overall / Total_to_overall;
-                        Total_m_NextBooking = Total_to_NextBooking == 0 ? Total_wl_NextBooking : Total_wl_NextBooking / Total_to_NextBooking;
-                        Total_m_TotalBookings15minOu = Total_to_TotalBookings15minOu == 0 ? Total_wl_TotalBookings15minOu : Total_wl_TotalBookings15minOu / Total_to_TotalBookings15minOu;
-                        Total_m_Corners15minOu = Total_to_Corners15minOu == 0 ? Total_wl_Corners15minOu : Total_wl_Corners15minOu / Total_to_Corners15minOu;
-                        Total_m_10minOu = Total_to_10minOu == 0 ? Total_wl_10minOu : Total_wl_10minOu / Total_to_10minOu;
-                        Total_m_SingleTeamOu = Total_to_SingleTeamOu == 0 ? Total_wl_SingleTeamOu : Total_wl_SingleTeamOu / Total_to_SingleTeamOu;
+                        Total_m_1stoe = Total_to_1stoe == 0 ? 0 : Total_wl_1stoe / Total_to_1stoe;
+                        Total_m_oe = Total_to_oe == 0 ? 0 : Total_wl_oe / Total_to_oe;
+                        Total_m_NextCorner = Total_to_NextCorner == 0 ? 0 : Total_wl_NextCorner / Total_to_NextCorner;
+                        Total_m_overall = Total_to_overall == 0 ? 0 : Total_wl_overall / Total_to_overall;
+                        Total_m_NextBooking = Total_to_NextBooking == 0 ? 0 : Total_wl_NextBooking / Total_to_NextBooking;
+                        Total_m_TotalBookings15minOu = Total_to_TotalBookings15minOu == 0 ? 0 : Total_wl_TotalBookings15minOu / Total_to_TotalBookings15minOu;
+                        Total_m_Corners15minOu = Total_to_Corners15minOu == 0 ? 0 : Total_wl_Corners15minOu / Total_to_Corners15minOu;
+                        Total_m_10minOu = Total_to_10minOu == 0 ? 0 : Total_wl_10minOu / Total_to_10minOu;
+                        Total_m_SingleTeamOu = Total_to_SingleTeamOu == 0 ? 0 : Total_wl_SingleTeamOu / Total_to_SingleTeamOu;
                         #endregion
                         #endregion
 
@@ -7199,11 +7199,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         TurnOverOu = NumberFormat.DecFormat(Grand_to_ou, 2),
                         TurnOverNextCorner = NumberFormat.DecFormat(Grand_to_NextCorner, 2),
                         TurnOverOverall = NumberFormat.DecFormat(Grand_to_overall, 2),
-                        TurnOverNextBookings = NumberFormat.DecFormat(Grand_m_NextBooking, 2),
-                        TurnOverTotalBookings15minsOu = NumberFormat.DecFormat(Grand_m_TotalBookings15minOu, 2),
-                        TurnOverCorners15minsOU = NumberFormat.DecFormat(Grand_m_Corners15minOu, 2),
-                        TurnOver10minsOu = NumberFormat.DecFormat(Grand_m_10minOu, 2),
-                        TurnOverSingleTeamOu = NumberFormat.DecFormat(Grand_m_SingleTeamOu, 2),
+                        TurnOverNextBookings = NumberFormat.DecFormat(Grand_to_NextBooking, 2),
+                        TurnOverTotalBookings15minsOu = NumberFormat.DecFormat(Grand_to_TotalBookings15minOu, 2),
+                        TurnOverCorners15minsOU = NumberFormat.DecFormat(Grand_to_Corners15minOu, 2),
+                        TurnOver10minsOu = NumberFormat.DecFormat(Grand_to_10minOu, 2),
+                        TurnOverSingleTeamOu = NumberFormat.DecFormat(Grand_to_SingleTeamOu, 2),
 
                         LiveBetCount15minOu = NumberFormat.DecFormat(Grand_livebetcount_15mou, 0),
                         LiveBetCount1st1x2 = NumberFormat.DecFormat(Grand_livebetcount_ht1x2, 0),
