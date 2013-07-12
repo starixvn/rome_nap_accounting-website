@@ -11,6 +11,8 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
 {
     using System;
     using System.Collections.Generic;
+    using System.Web;
+    using Fanex.Tarus.Customer.Criteria.SMATurnover;
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover;
 
@@ -23,5 +25,12 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
         Result AddSMATurnover(int matchId, string custName, decimal maxTurnover);
         Result UpdateSMATurnover(int matchId, int custId, decimal maxTurnover);
         Result CheckMaxTurnoverValue(int matchId, string custName, decimal maxTurnover, int mode);
+
+        AddSMAListResult UploadSMAList(HttpPostedFileBase fileUploaded,
+            AddSMAListCriteria criteria);
+
+        MatchInfo GetMatchInfo_AddSMAList(GetMatchInfo_AddSMAListCriteria criteria);
+
+        void DownloadTemplate_AddSMAList();
     }
 }

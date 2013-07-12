@@ -45,6 +45,10 @@
     <Reference Include="DNAide">
       <HintPath>..\Dependency\DNAide.dll</HintPath>
     </Reference>
+    <Reference Include="ExcelUtil, Version=29.3.0.1000, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\ExcelUtil.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Common">
       <HintPath>..\Dependency\Fanex\Fanex.Common.dll</HintPath>
     </Reference>
@@ -72,12 +76,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NPOI">
+      <HintPath>..\Dependency\NPoi\NPOI.dll</HintPath>
+    </Reference>
     <Reference Include="Sunplus.Libraries.AOP">
       <HintPath>..\Dependency\Sunplus.Libraries.AOP.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\System.Net.Http.2.0.20126.16343\lib\net40\System.Net.Http.dll</HintPath>
@@ -91,6 +99,7 @@
       <HintPath>..\packages\System.Net.Http.2.0.20126.16343\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\AspNetWebApi.Core.4.0.20126.16343\lib\net40\System.Web.Http.dll</HintPath>
@@ -115,12 +124,16 @@
     <Compile Include="Business\CustomerLogin\ICustomerSecurityCodeService.cs" />
     <Compile Include="Business\Racing\IRacingSettingService.cs" />
     <Compile Include="Business\Racing\RacingSettingService.cs" />
+    <Compile Include="Business\ReportService.cs" />
     <Compile Include="Business\SettingCustomer\AbnormalBetService.cs" />
     <Compile Include="Business\SettingCustomer\CasinoComm\CasinoCommissionService.cs" />
     <Compile Include="Business\SettingCustomer\CasinoComm\ICasinoCommissionService.cs" />
     <Compile Include="Business\SettingCustomer\IAbnormalBetService.cs" />
     <Compile Include="Business\SettingCustomer\SMATurnover\ISMATurnoverService.cs" />
     <Compile Include="Business\SettingCustomer\SMATurnover\SMATurnoverService.cs" />
+    <Compile Include="Criteria\SMATurnover\AddSMAListCriteria.cs" />
+    <Compile Include="Criteria\SMATurnover\CheckSMAListCriteria.cs" />
+    <Compile Include="Criteria\SMATurnover\GetMatchInfo_AddSMAListCriteria.cs" />
     <Compile Include="DataAccess\SettingCustomer\SMATurnover\ISMATurnoverAccess.cs" />
     <Compile Include="DataAccess\SettingCustomer\SMATurnover\SMATurnoverAccess.cs" />
     <Compile Include="Controller\Credit\AddNewAgentController.cs" />
@@ -172,6 +185,7 @@
     <Compile Include="Entities\Racing\CustomerSettingView.cs" />
     <Compile Include="Entities\Result.cs" />
     <Compile Include="Entities\SettingCustomer\AbnormalDetail.cs" />
+    <Compile Include="Entities\SettingCustomer\SMATurnover\AddSMAListResult.cs" />
     <Compile Include="Entities\SettingCustomer\SMATurnover\CustomerTurnoverDetail.cs" />
     <Compile Include="Entities\SettingCustomer\SMATurnover\League.cs" />
     <Compile Include="Entities\SettingCustomer\SMATurnover\MatchInfo.cs" />

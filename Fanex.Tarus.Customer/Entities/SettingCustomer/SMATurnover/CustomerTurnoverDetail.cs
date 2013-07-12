@@ -30,8 +30,7 @@ namespace Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover
         public string EventStatus { get; set; }
 
         public string PercentageUsed { get; set; }
-
-
+        
         public string SportName { get; set; }
 
         public List<CustomerTurnoverDetail> CustomerList { get; set; }

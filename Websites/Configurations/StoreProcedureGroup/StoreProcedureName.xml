@@ -826,5 +826,7 @@
     <Setting Key="AddSMATurnover" SpName="Acc_SMATurnoverIns" DbName="archive" />
     <Setting Key="UpdateSMATurnover" SpName="Acc_SMATurnoverUpd" DbName="archive" />
     <Setting Key="CheckMaxTurnover" SpName="Acc_SMATurnoverCheckTotalTurnover" DbName="archive" />
+
+    <Setting Key="Customer_SMATurnover_CheckSMAList" SpName="Acc_SMATurnoverCheckList" DbName="DBAGE.BODB02" />
   </Function>
 </Functions>

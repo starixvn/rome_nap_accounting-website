@@ -18,6 +18,8 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
     using Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover;
     using Sunplus.Accounting.Core.Cache;
     using Sunplus.Accounting.Core.Extensions;
+    using Fanex.Tarus.Customer.Criteria.SMATurnover;
+    using System.Collections;
 
     public class SMATurnoverAccess : ISMATurnoverAccess
     {
@@ -118,7 +120,6 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
             return dtb;
         }
 
-
         public Result AddSMATurnover(int matchId, string custName, decimal maxTurnover, int userId, string ip)
         {
             var result = new Result();
@@ -147,7 +148,6 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
 
             return result;
         }
-
 
         public Result UpdateSMATurnover(int matchId, int custId, decimal maxTurnover, int userId, string ip)
         {
@@ -178,7 +178,6 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
             return result;
         }
 
-
         public Result CheckMaxTurnoverValue(int matchId, string custName, decimal maxTurnover, int mode)
         {
 
@@ -204,6 +203,106 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
                 result.ErrorCode = -1;
                 result.ErrorMessage = "Check max turnover failed!";
             }
+            return result;
+        }
+
+        public List<dynamic> GetMatchInfo_AddSMAList(GetMatchInfo_AddSMAListCriteria criteria,
+            ref Hashtable outputParams)
+        {
+            DataTable dataTable = null;
+            using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AddInParameter("LeagueID", DbType.Int32, criteria.LeagueId);
+                objDb.AddInParameter("FromDate", DbType.DateTime, criteria.FromDate);
+                objDb.AddInParameter("ToDate", DbType.DateTime, criteria.ToDate);
+                //objDb.AddOutParameter("errcode", DbType.Int32, sizeof(int));
+                //objDb.AddOutParameter("errmsg", DbType.String, 1000);
+
+                var ds = objDb.ExecuteDataSet();
+                outputParams = objDb.GetOuputParams();
+                if (ds != null)
+                {
+                    dataTable = ds.Tables[0];
+                }
+            }
+
+            var result = new List<dynamic>();
+            if (dataTable != null && dataTable.Rows.Count > 0)
+            {
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    result.Add(new
+                    {
+                        matchid = row["matchid"],
+                        eventdate = row["eventdate"],
+                        leagueid = criteria.LeagueId,
+                        homeid = row["homeid"],
+                        awayid = row["awayid"]
+                    });
+                }
+            }
+
+            return result;
+        }
+
+        public List<dynamic> CheckSMAList(CheckSMAListCriteria criteria,
+         ref Hashtable outputParams)
+        {
+            DataSet ds = null;
+            using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AddInParameter("UserID", DbType.Int32, criteria.UserID);
+                objDb.AddInParameter("ListSMA", DbType.String, criteria.ListSMA);
+                objDb.AddOutParameter("errcode", DbType.Int32, sizeof(int));
+                objDb.AddOutParameter("errmsg", DbType.String, 1000);
+
+                ds = objDb.ExecuteDataSet();
+                outputParams = objDb.GetOuputParams();
+            }
+
+            var result = new List<dynamic>();
+            if (ds != null)
+            {
+                DataTable dataTable = null;
+                var succeededTable = new List<dynamic>();
+                if (ds.Tables.Count >= 1)
+                {
+                    dataTable = ds.Tables[0];
+                    foreach (DataRow row in dataTable.Rows)
+                    {
+                        succeededTable.Add(new
+                        {
+                            Seq = row["Seq"],
+                            SMAName = row["SMAName"],
+                            CustID = row["CustID"],
+                            MatchID = row["MatchID"],
+                            MaxTurnover = row["MaxTurnover"]
+                        });
+                    }
+                }
+
+                result.Add(succeededTable);
+                var failedTable = new List<dynamic>();
+                if (ds.Tables.Count >= 2)
+                {
+                    dataTable = ds.Tables[1];
+                    foreach (DataRow row in dataTable.Rows)
+                    {
+                        failedTable.Add(new
+                        {
+                            Seq = row["Seq"],
+                            SMAName = row["SMAName"],
+                            CustID = row["CustID"],
+                            MatchID = row["MatchID"],
+                            MaxTurnover = row["MaxTurnover"],
+                            Reason = row["Reason"]
+                        });
+                    }
+                }
+
+                result.Add(failedTable);
+            }
+
             return result;
         }
     }

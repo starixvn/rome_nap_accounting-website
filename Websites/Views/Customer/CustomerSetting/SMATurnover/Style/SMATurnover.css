@@ -1,4 +1,5 @@
-﻿.marginContent
+﻿
+.marginContent
 {
     margin-top: 10px;
     margin-left: 10px;
@@ -267,4 +268,40 @@ input.btnSave[disabled]
 .countDownOption:hover
 {
     background-color: #C0C0C0;
+}
+
+#ddlSport_AddSMAList, #ddlLeague_AddSMAList
+{
+    width: 250px;
+}
+
+#txtfromdate_AddSMAList, #txttodate_AddSMAList
+{
+    width: 100px;
+}
+
+.lblCheckAllMatch_AddSMAList
+{
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.lblmatchInfoOption
+{
+    cursor: pointer;
+}
+
+.colmatchInfoOption
+{
+    width: 300px;
+}
+
+.color-red
+{
+    color: #FF0000;
+}
+
+.color-green
+{
+    color: #00FF00;
 }
