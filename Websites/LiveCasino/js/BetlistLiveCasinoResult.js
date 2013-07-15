@@ -21,9 +21,13 @@ var resultbetlist = {
                 success: function (rs) {
                     var bettypeName = '';
                     if (parseInt(bettype) == 1101)
-                        bettypeName = "Baccarat"
+                        bettypeName = "Party Baccarat"
                     else if (parseInt(bettype) == 1102)
-                        bettypeName = "Live Roulette"
+                        bettypeName = "Party Roulette"
+                    else if (parseInt(bettype) == 1103)
+                        bettypeName = "Live Baccarat";
+                    else if (parseInt(bettype) == 1104)
+                        bettypeName = "Live Roulette";
                     resultbetlist.title = bettypeName + " " + rs[0].GameType + " - Result";
                     $("#gridtitle").html(resultbetlist.title);
                     var arr = [];
@@ -66,7 +70,7 @@ var resultbetlist = {
         //var gametype = bettypeName + ' ' + row.GameType;
         var FinalScore = '';
         var arr = [];
-        if (parseInt(bettype) == 1101) {
+        if (parseInt(bettype) == 1101 || parseInt(bettype) == 1103) {
             FinalScore = row.FinalHomeScore + ' - ' + row.FinalAwayScore;
             html = '<tr>\
                 <td><div class="col140 c ">' + row.KickoffTime + '</div></td>\
@@ -76,7 +80,7 @@ var resultbetlist = {
                 <td><div class="col80 c">' + row.Status + '</div></td>\
             </tr>';
         }
-        else if (parseInt(bettype) == 1102) {
+        else if (parseInt(bettype) == 1102 || parseInt(bettype) == 1104) {
             FinalScore = row.FinalHomeScore;
             var html = '';
             var result = '';

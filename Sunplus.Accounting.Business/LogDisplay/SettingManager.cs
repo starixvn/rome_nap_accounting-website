@@ -399,6 +399,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         trackingVal = trackingVal.Replace("BetTypeId=\"1101\"", string.Format("BetTypeId=\"{0}\"", ResourceExtension.GetResourceValue(ResourceExtension.Resources.ViewlogV2, "g1101")));
                         trackingVal = trackingVal.Replace("BetTypeId=\"1102\"", string.Format("BetTypeId=\"{0}\"", ResourceExtension.GetResourceValue(ResourceExtension.Resources.ViewlogV2, "g1102")));
                         trackingVal = trackingVal.Replace("BetTypeId=\"1103\"", string.Format("BetTypeId=\"{0}\"", ResourceExtension.GetResourceValue(ResourceExtension.Resources.ViewlogV2, "g1103")));
+                        trackingVal = trackingVal.Replace("BetTypeId=\"1104\"", string.Format("BetTypeId=\"{0}\"", ResourceExtension.GetResourceValue(ResourceExtension.Resources.ViewlogV2, "g1104")));
 
                         trackingVal = trackingVal.Replace("AddFrom=\"1\"", string.Format("AddFrom=\"{0}\"", ResourceExtension.GetResourceValue(ResourceExtension.Resources.ViewlogV2, "addfrom01")));
                         trackingVal = trackingVal.Replace("AddFrom=\"2\"", string.Format("AddFrom=\"{0}\"", ResourceExtension.GetResourceValue(ResourceExtension.Resources.ViewlogV2, "addfrom02")));

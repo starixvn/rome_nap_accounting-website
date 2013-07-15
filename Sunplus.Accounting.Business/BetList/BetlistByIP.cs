@@ -247,7 +247,7 @@ namespace Sunplus.Accounting.Business.BetList
                             var _listBetlistEvt = new List<BetlistEvent>();
                             DataTable dtEvent = ds.Tables[1];
                             //check refno have not exist in event datatable
-                            if (_bettype == 1101 || _bettype == 1102 || _bettype == 1103)
+                            if (_bettype == 1101 || _bettype == 1102 || _bettype == 1103 || _bettype == 1104)
                             {
                                 if (dtEvent != null && dtEvent.Rows.Count > 0)
                                 {
@@ -260,7 +260,7 @@ namespace Sunplus.Accounting.Business.BetList
 
                                     foreach (DataRow rowEvt in query)
                                     {
-                                        if (_bettype == 1101)
+                                        if (_bettype == 1101 || _bettype == 1103)
                                         {
                                             _listBetlistEvt.Add(new BetlistEvent()
                                             {
@@ -269,7 +269,7 @@ namespace Sunplus.Accounting.Business.BetList
                                                 Odds = IBCUtils.FormatHandler.FormatNumber2(CastAide.AsDouble(rowEvt["odds"]))
                                             });
                                         }
-                                        else if (_bettype == 1102)
+                                        else if (_bettype == 1102 || _bettype == 1104)
                                         {
                                             _listBetlistEvt.Add(new BetlistEvent()
                                             {
@@ -339,7 +339,7 @@ namespace Sunplus.Accounting.Business.BetList
                             string eventItem = (string)eventTpl.Clone();
 
                           
-                            if (_bettype == 1101 || _bettype == 1102 || _bettype == 1103)
+                            if (_bettype == 1101 || _bettype == 1102 || _bettype == 1103 || _bettype == 1104)
                             {
                                 eventItem = (string)eventTplLC.Clone();
                                 GenEventLiveCasino(ref eventItem, _listBetlistEvt, 1);
