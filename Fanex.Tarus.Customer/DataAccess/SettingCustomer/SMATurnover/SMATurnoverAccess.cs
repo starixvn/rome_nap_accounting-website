@@ -10,16 +10,16 @@
 namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Data;
     using DNAide.Core;
     using Fanex.Data;
+    using Fanex.Tarus.Customer.Criteria.SMATurnover;
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover;
     using Sunplus.Accounting.Core.Cache;
     using Sunplus.Accounting.Core.Extensions;
-    using Fanex.Tarus.Customer.Criteria.SMATurnover;
-    using System.Collections;
 
     public class SMATurnoverAccess : ISMATurnoverAccess
     {
@@ -246,7 +246,7 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
         }
 
         public List<dynamic> CheckSMAList(CheckSMAListCriteria criteria,
-         ref Hashtable outputParams)
+            ref Hashtable outputParams)
         {
             DataSet ds = null;
             using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
@@ -272,11 +272,14 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
                     {
                         succeededTable.Add(new
                         {
-                            Seq = row["Seq"],
+                            //Seq = row["Seq"],
                             SMAName = row["SMAName"],
                             CustID = row["CustID"],
-                            MatchID = row["MatchID"],
-                            MaxTurnover = row["MaxTurnover"]
+                            MatchID = row["matchid"],
+                            MaxTurnover = row["MaxTurnover"],
+                            eventdate = row["eventdate"],
+                            homeid = row["homeid"],
+                            awayid = row["awayid"]
                         });
                     }
                 }
@@ -290,10 +293,10 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
                     {
                         failedTable.Add(new
                         {
-                            Seq = row["Seq"],
+                            //Seq = row["Seq"],
                             SMAName = row["SMAName"],
                             CustID = row["CustID"],
-                            MatchID = row["MatchID"],
+                            //MatchID = row["MatchID"],
                             MaxTurnover = row["MaxTurnover"],
                             Reason = row["Reason"]
                         });
@@ -301,6 +304,41 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
                 }
 
                 result.Add(failedTable);
+            }
+
+            return result;
+        }
+
+        public List<dynamic> AddValidSMAList(AddSMAListCriteria criteria, ref Hashtable outputParams)
+        {
+            DataSet ds = null;
+            using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AddInParameter("UserID", DbType.Int32, criteria.UserID);
+                objDb.AddInParameter("ListSMA", DbType.String, criteria.ListSMA);
+                objDb.AddInParameter("IP", DbType.String, criteria.IP);
+                objDb.AddOutParameter("errcode", DbType.Int32, sizeof(int));
+                objDb.AddOutParameter("errmsg", DbType.String, 1000);
+                ds = objDb.ExecuteDataSet();
+                outputParams = objDb.GetOuputParams();
+            }
+
+            var result = new List<dynamic>();
+            if (ds != null)
+            {
+                DataTable dataTable = null;
+                if (ds.Tables.Count >= 1)
+                {
+                    dataTable = ds.Tables[0];
+                    foreach (DataRow row in dataTable.Rows)
+                    {
+                        result.Add(new
+                        {
+                            username = row["username"],
+                            matchid = row["matchid"]
+                        });
+                    }
+                }
             }
 
             return result;

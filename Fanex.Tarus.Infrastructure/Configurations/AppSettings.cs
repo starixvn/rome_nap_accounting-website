@@ -81,6 +81,15 @@ namespace Fanex.Tarus.Infrastructure.Configurations
             }
         }
 
+        private static int _admin_SMATurnover_FunctionId;
+        public static int Admin_SMATurnover_FunctionId
+        {
+            get
+            {
+                return _admin_SMATurnover_FunctionId;
+            }
+        }
+
         static AppSettings()
         {
             try
@@ -90,6 +99,7 @@ namespace Fanex.Tarus.Infrastructure.Configurations
                 _noteViewCountToCollapse = Convert.ToInt32(ConfigurationManager.AppSettings["NoteViewCountToCollapse"]);
                 _isLegendEnable = Convert.ToBoolean(ConfigurationManager.AppSettings["IsLegendEnable"]);
                 _liveCasinoFinancialReport_MinDate = Convert.ToDateTime(ConfigurationManager.AppSettings["LiveCasinoFinancialReport_MinDate"]);
+                _admin_SMATurnover_FunctionId = Convert.ToInt32(ConfigurationManager.AppSettings["Admin_SMATurnover_FunctionId"]);
 
                 GetLiveCasinoFinancialReport_Licensee();
                 GetLiveCasinoFinancialReport_Currency();

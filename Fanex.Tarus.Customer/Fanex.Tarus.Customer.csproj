@@ -132,6 +132,7 @@
     <Compile Include="Business\SettingCustomer\SMATurnover\ISMATurnoverService.cs" />
     <Compile Include="Business\SettingCustomer\SMATurnover\SMATurnoverService.cs" />
     <Compile Include="Criteria\SMATurnover\AddSMAListCriteria.cs" />
+    <Compile Include="Criteria\SMATurnover\UploadSMAListCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\CheckSMAListCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\GetMatchInfo_AddSMAListCriteria.cs" />
     <Compile Include="DataAccess\SettingCustomer\SMATurnover\ISMATurnoverAccess.cs" />

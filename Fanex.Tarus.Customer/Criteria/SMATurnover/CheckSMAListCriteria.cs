@@ -15,13 +15,7 @@ namespace Fanex.Tarus.Customer.Criteria.SMATurnover
     [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class CheckSMAListCriteria
     {
-        public int UserID
-        {
-            get
-            {
-                return AppSession.AccId;
-            }
-        }
+        public int UserID { get; set; }
 
         public string ListSMA { get; set; }
 

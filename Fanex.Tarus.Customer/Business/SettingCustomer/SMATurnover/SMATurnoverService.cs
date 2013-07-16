@@ -34,6 +34,7 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
     {
         public ISMATurnoverAccess _SMATurnoverAccess;
         private Dictionary<object, string> _teamNameCache;
+        private const decimal MAX_TURNOVER_PERCENT = 100;
 
         public SMATurnoverService()
             : this(null)
@@ -82,7 +83,10 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
             return matchInfo;
         }
 
-        public List<CustomerTurnoverDetail> GetSMATurnoverList(int sportId, int leagueId, DateTime fromDate, DateTime toDate)
+        public List<CustomerTurnoverDetail> GetSMATurnoverList(int sportId,
+            int leagueId,
+            DateTime fromDate,
+            DateTime toDate)
         {
             var leagueList = new List<CustomerTurnoverDetail>();
             try
@@ -115,6 +119,13 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
                                 Match.AwayTeam = CacheRef.GetTeamName(detail["awayid"]);
                                 Match.EventStatus = CastAide.AsString(detail["eventstatus"]);
                             }
+
+                            var percentageUsed = CastAide.AsDecimal(detail["PercentageUsed"]);
+                            if (percentageUsed >= MAX_TURNOVER_PERCENT)
+                            {
+                                percentageUsed = MAX_TURNOVER_PERCENT;
+                            }
+
                             var Customer = new CustomerTurnoverDetail()
                             {
                                 Username = detail["username"].ToString(),
@@ -122,8 +133,9 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
                                 Currency = detail["currency"].ToString(),
                                 SMATurnover = NumberFormat.DecFormat(detail["TotalTurnover"], 2),
                                 MaxTurnover = NumberFormat.DecFormat(detail["MaxTurnover"], 0),
-                                PercentageUsed = NumberFormat.DecFormat(detail["PercentageUsed"], 0)
+                                PercentageUsed = NumberFormat.DecFormat(percentageUsed, 0)
                             };
+
                             i++;
                             customerList.Add(Customer);
                         }
@@ -160,15 +172,15 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
             return _SMATurnoverAccess.CheckMaxTurnoverValue(matchId, custName, maxTurnover, mode);
         }
 
-        public AddSMAListResult UploadSMAList(HttpPostedFileBase fileUploaded,
-            AddSMAListCriteria criteria)
+        public UploadSMAListResult UploadSMAList(HttpPostedFileBase fileUploaded,
+            UploadSMAListCriteria criteria)
         {
             try
             {
-                var addResult = new AddSMAListResult
+                var addResult = new UploadSMAListResult
                 {
-                    FailedInfoList = new List<AddSMAListResult>(),
-                    SucceededInfoList = new List<AddSMAListResult>()
+                    FailedInfoList = new List<UploadSMAListResult>(),
+                    SucceededInfoList = new List<UploadSMAListResult>()
                 };
 
                 var smaList = this.ReadSMAList(fileUploaded);
@@ -178,46 +190,84 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
                 Hashtable outputParams = new Hashtable();
                 var rawData = this._SMATurnoverAccess.CheckSMAList(new CheckSMAListCriteria
                 {
-                    ListSMA = smaListXMLString
+                    ListSMA = smaListXMLString,
+                    UserID = criteria.UserID
                 }, ref outputParams);
 
                 var succeededTable = rawData[0];
+                var failedTable = rawData[1];
                 var smaListLength = smaList.Count;
                 var matchIdListLength = matchIdList.Length;
 
-                var matchGroups = rawData.GroupBy(data => data.MatchID);
+                var succeededRows = new List<UploadSMAListResult>();
+                foreach (var data in succeededTable)
+                {
+                    succeededRows.Add(new UploadSMAListResult
+                    {
+                        Username = CastAide.AsString(data.SMAName),
+                        CustId = CastAide.AsString(data.CustID),
+                        MatchId = CastAide.AsString(data.MatchID),
+                        MaxTurnover = NumberFormat.DecFormat(CastAide.AsDecimal(data.MaxTurnover), 2),
+                        HomeTeam = CastAide.AsInt32(data.homeid),
+                        AwayTeam = CastAide.AsInt32(data.awayid),
+                        EventDate = string.Format("{0:MM/dd/yyyy}", data.eventdate)
+                    });
+                }
+
+                var homeIdList = succeededRows.Select(data => data.HomeTeam as object)
+                                              .ToList();
+                this.SaveCacheRefReponse(homeIdList, CacheRef.GetTeamName, ref this._teamNameCache);
+                var awayIdList = succeededRows.Select(data => data.AwayTeam as object)
+                                               .ToList();
+                this.SaveCacheRefReponse(awayIdList, CacheRef.GetTeamName, ref this._teamNameCache);
+
+                var matchGroups = succeededRows.GroupBy(data => new
+                {
+                    data.MatchId,
+                    data.HomeTeam,
+                    data.AwayTeam,
+                    data.EventDate
+                });
+
                 foreach (var matchGroup in matchGroups)
                 {
-                    var succeededMatchInfo = new AddSMAListResult
+                    var succeededMatchInfo = new UploadSMAListResult
                     {
-                        SucceededInfoList = new List<AddSMAListResult>(),
-                        MatchId = CastAide.AsInt32(matchGroup.Key)
+                        SucceededInfoList = new List<UploadSMAListResult>(),
+                        MatchId = CastAide.AsString(matchGroup.Key.MatchId),
+                        HomeTeam = CastAide.AsInt32(matchGroup.Key.HomeTeam),
+                        AwayTeam = CastAide.AsInt32(matchGroup.Key.AwayTeam),
+                        EventDate = CastAide.AsString(matchGroup.Key.EventDate)
                     };
 
+                    succeededMatchInfo.HomeTeamName = this._teamNameCache[succeededMatchInfo.HomeTeam];
+                    succeededMatchInfo.AwayTeamName = this._teamNameCache[succeededMatchInfo.AwayTeam];
                     var matchGroupListInfo = matchGroup.ToList();
                     var matchGroupsLength = matchGroupListInfo.Count;
                     for (var j = 0; j < matchGroupsLength; j++)
                     {
                         var smaInfo = matchGroupListInfo[j];
-                        succeededMatchInfo.SucceededInfoList.Add(new AddSMAListResult
+                        var data = new UploadSMAListResult
                         {
-                            Username = CastAide.AsString(smaInfo.SMAName),
-                            MaxTurnover = CastAide.AsDecimal(smaInfo.MaxTurnover),
-                            MatchId = CastAide.AsString(smaInfo.MatchID)
-                        });
+                            Username = CastAide.AsString(smaInfo.Username),
+                            MaxTurnover = NumberFormat.DecFormat(CastAide.AsDecimal(smaInfo.MaxTurnover), 2),
+                            MatchId = CastAide.AsString(smaInfo.MatchId),
+                            CustId = CastAide.AsString(smaInfo.CustId)
+                        };
+
+                        succeededMatchInfo.SucceededInfoList.Add(data);
                     }
 
                     addResult.SucceededInfoList.Add(succeededMatchInfo);
                 }
 
-                var failedTable = rawData[1];
                 foreach (var data in failedTable)
                 {
-                    addResult.FailedInfoList.Add(new AddSMAListResult
+                    addResult.FailedInfoList.Add(new UploadSMAListResult
                     {
                         Username = CastAide.AsString(data.SMAName),
-                        MaxTurnover = CastAide.AsDecimal(data.MaxTurnover),
-                        MatchId = CastAide.AsString(data.MatchID),
+                        MaxTurnover = NumberFormat.DecFormat(CastAide.AsDecimal(data.MaxTurnover), 2),
+                        //MatchId = CastAide.AsString(data.MatchID),
                         AddResultMessage = CastAide.AsString(data.Reason)
                     });
                 }
@@ -232,9 +282,9 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
             return null;
         }
 
-        private List<AddSMAListResult> ReadSMAList(HttpPostedFileBase fileUploaded)
+        private List<UploadSMAListResult> ReadSMAList(HttpPostedFileBase fileUploaded)
         {
-            var smaList = new List<AddSMAListResult>();
+            var smaList = new List<UploadSMAListResult>();
 
             var dtSMAs = new DataTable();
             HSSFWorkbook hssfworkbook = new HSSFWorkbook(fileUploaded.InputStream);
@@ -288,10 +338,10 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
                 if (count != row.LastCellNum && row.RowNum > 0)
                 {
                     dtSMAs.Rows.Add(dr);
-                    smaList.Add(new AddSMAListResult
+                    smaList.Add(new UploadSMAListResult
                     {
                         Username = CastAide.AsString(dr[0]),
-                        MaxTurnover = CastAide.AsDecimal(dr[1])
+                        MaxTurnover = NumberFormat.DecFormat(CastAide.AsDecimal(dr[1]), 2)
                     });
                 }
             }
@@ -377,7 +427,7 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
             return currentStorage;
         }
 
-        private string GetSMAListXMLString(List<AddSMAListResult> smaList,
+        private string GetSMAListXMLString(List<UploadSMAListResult> smaList,
             string[] matchIdList)
         {
             var smaListXMLString = string.Empty;
@@ -495,6 +545,76 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
             {
                 LogExtensions.ExceptionHandler(ex);
             }
+        }
+
+        private string GetSMAListXMLString_AddSMAList(UploadSMAListResult[] validSMAList)
+        {
+            var smaListXMLString = string.Empty;
+            smaListXMLString += "<ListSMA>";
+            var smaListLength = validSMAList.Length;
+            var smaIndex = 1;
+            for (var i = 0; i < smaListLength; i++)
+            {
+                var smaInfo = validSMAList[i];
+                var custId_Encode = HttpUtility.HtmlEncode(
+                       string.IsNullOrEmpty(smaInfo.CustId) ?
+                       string.Empty :
+                       smaInfo.CustId.Trim());
+                var matchId_Encode = HttpUtility.HtmlEncode(
+                       string.IsNullOrEmpty(smaInfo.MatchId) ?
+                       string.Empty :
+                       smaInfo.MatchId.Trim());
+                var maxTurnover_Encode = HttpUtility.HtmlEncode(
+                       string.IsNullOrEmpty(smaInfo.MaxTurnover.ToString()) ?
+                       string.Empty :
+                       smaInfo.MaxTurnover.ToString().Trim());
+
+                smaListXMLString += "<SMA ";
+                smaListXMLString += "CustID=\"" + custId_Encode + "\" ";
+                smaListXMLString += "MatchID=\"" + matchId_Encode + "\" ";
+                smaListXMLString += "MaxTurnover=\"" + maxTurnover_Encode + "\" ";
+                smaListXMLString += "></SMA>";
+                smaIndex++;
+            }
+
+            smaListXMLString += "</ListSMA>";
+            return smaListXMLString;
+        }
+
+        public Result AddValidSMAList(UploadSMAListResult[] validSMAList)
+        {
+            try
+            {
+                Hashtable outputParams = new Hashtable();
+                AddSMAListCriteria criteria = new AddSMAListCriteria
+                {
+                    ListSMA = this.GetSMAListXMLString_AddSMAList(validSMAList)
+                };
+
+                var addResult = new Result();
+                var errorTable = this._SMATurnoverAccess.AddValidSMAList(criteria, ref outputParams);
+                var errorLength = errorTable.Count;
+                if (errorLength > 0)
+                {
+                    var errorMessage = new List<string>();
+                    for (var i = 0; i < errorLength; i++)
+                    {
+                        var errorInfo = errorTable[i];
+                        errorMessage.Add(CastAide.AsString(errorInfo.matchid) + "-" + CastAide.AsString(errorInfo.username));
+                    }
+
+                    addResult.ErrorCode = 1;
+                    addResult.ErrorMessage = string.Format("Error! The SMA already exists in match: {0}.", string.Join(", ", errorMessage));
+                }
+
+                return addResult;
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return null;
         }
     }
 }

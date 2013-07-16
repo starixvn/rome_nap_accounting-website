@@ -32,5 +32,7 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
 
         List<dynamic> CheckSMAList(CheckSMAListCriteria criteria,
             ref Hashtable outputParams);
+
+        List<dynamic> AddValidSMAList(AddSMAListCriteria criteria, ref Hashtable outputParams);
     }
 }

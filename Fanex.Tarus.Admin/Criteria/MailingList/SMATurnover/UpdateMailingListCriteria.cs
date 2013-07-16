@@ -11,6 +11,7 @@ namespace Fanex.Tarus.Admin.Criteria.MailingList.SMATurnover
 {
     using System.Diagnostics.CodeAnalysis;
     using Fanex.Tarus.Admin.Entities.MailingList;
+    using Fanex.Tarus.Infrastructure.Configurations;
 
     [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class UpdateMailingListCriteria
@@ -21,7 +22,7 @@ namespace Fanex.Tarus.Admin.Criteria.MailingList.SMATurnover
         {
             get
             {
-                return 328;
+                return AppSettings.Admin_SMATurnover_FunctionId;
             }
         }
 

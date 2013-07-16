@@ -106,7 +106,7 @@ namespace Fanex.Tarus.Customer.Controller.Setting
             if (HttpContext.Request.Files != null && HttpContext.Request.Files.Count > 0)
             {
                 var excelFile = HttpContext.Request.Files[0];
-                var criteria = new AddSMAListCriteria
+                var criteria = new UploadSMAListCriteria
                 {
                     SportId = HttpContext.Request.Params["SportId"],
                     SportName = HttpContext.Request.Params["SportName"],
@@ -140,6 +140,15 @@ namespace Fanex.Tarus.Customer.Controller.Setting
             this._SMATurnover.DownloadTemplate_AddSMAList();
             int exportResult = 1;
             var jsonResult = Json(exportResult);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public ActionResult AddValidSMAList(UploadSMAListResult[] validSMAList)
+        {
+            var addResult = this._SMATurnover.AddValidSMAList(validSMAList);
+            var jsonResult = Json(addResult);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;
         }

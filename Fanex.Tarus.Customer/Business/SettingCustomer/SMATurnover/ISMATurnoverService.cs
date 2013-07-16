@@ -26,11 +26,13 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
         Result UpdateSMATurnover(int matchId, int custId, decimal maxTurnover);
         Result CheckMaxTurnoverValue(int matchId, string custName, decimal maxTurnover, int mode);
 
-        AddSMAListResult UploadSMAList(HttpPostedFileBase fileUploaded,
-            AddSMAListCriteria criteria);
+        UploadSMAListResult UploadSMAList(HttpPostedFileBase fileUploaded,
+            UploadSMAListCriteria criteria);
 
         MatchInfo GetMatchInfo_AddSMAList(GetMatchInfo_AddSMAListCriteria criteria);
 
         void DownloadTemplate_AddSMAList();
+
+        Result AddValidSMAList(UploadSMAListResult[] validSMAList);
     }
 }

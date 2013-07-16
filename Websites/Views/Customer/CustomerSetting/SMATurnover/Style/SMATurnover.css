@@ -34,7 +34,6 @@
 {
     border: none;
     border-bottom: solid 1px #7C98A4;
-    background-color: #FDE9D9;
     font-weight: bold;
 }
 
@@ -201,7 +200,6 @@ input.btnSave[disabled]
 .lblLeagueHeadline
 {
     font-family: Tahoma, Geneva, sans-serif;
-    background-color: #fde4d0;
     font-size: 12px;
     color: #a74c00;
 }
@@ -238,6 +236,7 @@ input.btnSave[disabled]
     background-color: #ffb981;
     display: inline-block;
     line-height: 17px;
+    float: right;
 }
 
 .countDownOptionContainer
@@ -270,9 +269,14 @@ input.btnSave[disabled]
     background-color: #C0C0C0;
 }
 
-#ddlSport_AddSMAList, #ddlLeague_AddSMAList
+#ddlSport_AddSMAList
 {
-    width: 250px;
+    width: 105px;
+}
+
+#ddlLeague_AddSMAList
+{
+    width: 300px;
 }
 
 #txtfromdate_AddSMAList, #txttodate_AddSMAList
@@ -293,7 +297,7 @@ input.btnSave[disabled]
 
 .colmatchInfoOption
 {
-    width: 300px;
+    width: 50%;
 }
 
 .color-red
@@ -304,4 +308,239 @@ input.btnSave[disabled]
 .color-green
 {
     color: #00FF00;
+}
+
+.colReason
+{
+    width: 525px;
+}
+
+.col80
+{
+    width: 80px;
+}
+
+.tbllayout.failedRecordsTable, .tbllayout.succeededRecordsTable
+{
+    width: 100%;
+}
+
+.tbllayout.failedRecordsTable td, .tbllayout.succeededRecordsTable td, .tbllayout.failedRecordsTable th, .tbllayout.succeededRecordsTable th
+{
+    padding: 2px;
+}
+
+.succeededRecordsTable .rowLeague
+{
+    font-weight: bold;
+    text-align: left;
+}
+
+.succeededRecordsTable .rowLeague .lblTeamInfo
+{
+    font-size: 12px;
+}
+
+.failedRecordsTableContainer
+{
+    overflow: auto;
+    height: 300px;
+    width: 920px;
+    border: 1px solid #8494A1;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.selectMatchFilterBox
+{
+    width: 932px;
+    border: 1px solid #8494A1;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.selectMatchFilterBox td, .selectMatchFilterBox th, .selectMatchInfoBox td, .selectMatchInfoBox th
+{
+    padding: 0px;
+}
+
+.selectMatchFilterBox .title, .selectMatchInfoBox .title
+{
+    background: url("Images/choose-league-title-background.png") repeat-x scroll 0 0 transparent;
+    color: #FFFFFF;
+    font-size: 12px;
+    height: 22px;
+    line-height: 22px;
+    padding-left: 15px;
+    text-transform: uppercase;
+}
+
+.row-selectMatchFilter
+{
+    width: 930px;
+    background: url("../../../../../App_Themes/Images/banner/bg_head_tb.jpg") repeat-x scroll left bottom #FFFFFF;
+}
+
+.selectMatchFilter .box-padding-left, .matchInfoContainer .box-padding-left, .uploadFileContainer .box-padding-left
+{
+    padding-left: 15px;
+}
+
+.selectMatchFilter th, .selectMatchFilter td
+{
+    padding: 2px;
+}
+
+
+.selectMatchInfoBox
+{
+    width: 100%;
+    border: 1px solid #8494A1;
+    background: url("../../../../../App_Themes/Images/banner/bg_head_tb.jpg") repeat-x scroll left bottom #FFFFFF;
+    cursor: pointer;
+}
+
+.matchInfo_TableContainer
+{
+    overflow: auto;
+    height: 250px;
+    border: 1px solid #8494A1;
+    width: 890px;
+}
+
+.matchInfo_Table
+{
+    width: 862px;
+    border-collapse: collapse;
+    margin: 5px;
+    padding: 5px;
+}
+
+.matchInfo_Table th, .matchInfo_Table td
+{
+    border: 1px solid #8494A1;
+    padding: 2px;
+}
+
+.matchInfo_Table .match-headline
+{
+    background: #dce6f1;
+    font-weight: bold;
+}
+
+#AddSMAContent .filter
+{
+    margin: 5px 0px;
+}
+
+.failedRecordsTable
+{
+    border-collapse: collapse;
+}
+
+.failedRecordsTable th, .failedRecordsTable td, .succeededRecordsTable th, .succeededRecordsTable td
+{
+    border: 1px solid #8494A1;
+}
+
+.failedRecordsTable .error-title
+{
+    color: #B71313;
+    border: 1px solid #b71313;
+}
+
+.failedRecordsTable .error-title .error-icon
+{
+    background: url('Images/error-icon.png') no-repeat scroll left top #FFFFFF;
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.failedRecordsTable .error-title .error-label
+{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.succeededRecordsTable .success-title
+{
+    color: #27740F;
+    border: 1px solid #27740F;
+}
+
+.succeededRecordsTableContainer
+{
+    overflow: auto;
+    height: 300px;
+    width: 920px;
+    border: 1px solid #8494A1;
+    padding: 5px;
+}
+
+.succeededRecordsTable
+{
+    border-collapse: collapse;
+}
+
+input[type="checkbox"]
+{
+    margin: 0px;
+}
+
+.collapse
+{
+    background: url("Images/expand.png") no-repeat scroll 0 -1px transparent;
+    cursor: pointer;
+    display: inline-block;
+    height: 10px;
+    margin-bottom: 2px;
+    vertical-align: middle;
+    width: 16px;
+}
+
+.expand
+{
+    background: url("Images/expand.png") no-repeat scroll 0 -12px transparent;
+    cursor: pointer;
+    display: inline-block;
+    height: 10px;
+    margin-bottom: 2px;
+    vertical-align: middle;
+    width: 16px;
+}
+
+.title-icon, .title-label
+{
+    display: inline-block;
+}
+
+
+.btnDelete
+{
+    background: url("Images/delete-icon.png") no-repeat scroll center center transparent;
+    border: 0 solid red;
+    cursor: pointer;
+    font-size: 11px;
+    height: 20px;
+    margin: 0 2px;
+    overflow: visible;
+    padding-left: 6px;
+    padding-right: 6px;
+    width: 20px;
+}
+
+#fileUpload
+{
+}
+
+#btnUploadFile
+{ 
+    height: 14px;
+    width: 60px;
+}
+body
+{
+    line-height: auto !important;
 }
