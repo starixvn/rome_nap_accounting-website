@@ -30,6 +30,11 @@
     width: 160px;
 }
 
+.grid-fixed-table, .matchInfo_Table, .selectMatchInfoBox
+{
+    line-height: 17px;
+}
+
 .freegrid td.rowLeague, .grid-fixed-table td.rowLeague
 {
     border: none;
@@ -206,7 +211,7 @@ input.btnSave[disabled]
 
 .lblTeamInfo
 {
-    font-size: 14px;
+    font-size: 12px;
     display: inline-block;
 }
 
@@ -381,6 +386,11 @@ input.btnSave[disabled]
     background: url("../../../../../App_Themes/Images/banner/bg_head_tb.jpg") repeat-x scroll left bottom #FFFFFF;
 }
 
+.uploadFileContainer
+{
+    padding: 2px 0px;
+}
+
 .selectMatchFilter .box-padding-left, .matchInfoContainer .box-padding-left, .uploadFileContainer .box-padding-left
 {
     padding-left: 15px;
@@ -536,11 +546,12 @@ input[type="checkbox"]
 }
 
 #btnUploadFile
-{ 
+{
     height: 14px;
     width: 60px;
 }
+
 body
 {
-    line-height: auto !important;
+    line-height: 11px !important;
 }
