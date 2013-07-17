@@ -353,13 +353,12 @@ input.btnSave[disabled]
     height: 300px;
     width: 920px;
     border: 1px solid #8494A1;
-    padding: 5px;
     margin-bottom: 10px;
 }
 
 .selectMatchFilterBox
 {
-    width: 932px;
+    width: 922px;
     border: 1px solid #8494A1;
     cursor: pointer;
     margin-bottom: 5px;
@@ -416,14 +415,13 @@ input.btnSave[disabled]
     overflow: auto;
     height: 250px;
     border: 1px solid #8494A1;
-    width: 890px;
+    width: 862px;
 }
 
 .matchInfo_Table
 {
     width: 862px;
     border-collapse: collapse;
-    margin: 5px;
     padding: 5px;
 }
 
@@ -487,7 +485,6 @@ input.btnSave[disabled]
     height: 300px;
     width: 920px;
     border: 1px solid #8494A1;
-    padding: 5px;
     margin-bottom: 10px;
 }
 

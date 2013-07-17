@@ -341,7 +341,7 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
                     smaList.Add(new UploadSMAListResult
                     {
                         Username = CastAide.AsString(dr[0]),
-                        MaxTurnover = NumberFormat.DecFormat(CastAide.AsDecimal(dr[1]), 2)
+                        MaxTurnover = CastAide.AsString(dr[1])
                     });
                 }
             }

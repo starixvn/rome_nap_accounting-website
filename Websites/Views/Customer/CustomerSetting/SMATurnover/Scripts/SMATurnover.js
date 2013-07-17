@@ -370,7 +370,7 @@
             }
 
             if (tableHeight > 0) {
-                SMATurnover.cachedData.failedRecordsTableContainer.css("height", (tableHeight + 20) + "px");
+                SMATurnover.cachedData.failedRecordsTableContainer.css("height", (tableHeight + 1) + "px");
             } else {
                 SMATurnover.cachedData.failedRecordsTableContainer.addClass("hidden");
             }
@@ -433,7 +433,7 @@
         }
 
         if (tableHeight > 0) {
-            SMATurnover.cachedData.succeededRecordsTableContainer.css("height", (tableHeight + 20) + "px");
+            SMATurnover.cachedData.succeededRecordsTableContainer.css("height", (tableHeight + 1) + "px");
         } else {
             SMATurnover.cachedData.succeededRecordsTableContainer.addClass("hidden");
         }
@@ -623,7 +623,7 @@
             }
 
             if (tableHeight > 0) {
-                SMATurnover.cachedData.matchInfo_TableContainer.css("height", (tableHeight + 20) + "px");
+                SMATurnover.cachedData.matchInfo_TableContainer.css("height", (tableHeight + 1) + "px");
             } else {
                 SMATurnover.cachedData.matchInfo_TableContainer.addClass("hidden");
             }
