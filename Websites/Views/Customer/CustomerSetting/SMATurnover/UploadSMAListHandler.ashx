@@ -59,30 +59,33 @@ public class UploadSMAListHandler : IHttpHandler
             }
         }
 
-        HttpPostedFileBase filebase =
-            new HttpPostedFileWrapper(HttpContext.Current.Request.Files["file_UploadFile"]);
-        if (isValidParams && filebase.ContentLength > 0)
+        if (isValidParams)
         {
-            var addResult = smaService.UploadSMAList(filebase, new UploadSMAListCriteria
+            HttpPostedFileBase filebase =
+                new HttpPostedFileWrapper(HttpContext.Current.Request.Files["file_UploadFile"]);
+            if (filebase.ContentLength > 0)
             {
-                UserID = CastAide.AsInt32(context.Request.Form["AccId"]),
-                SportId = CastAide.AsString(context.Request.Form["SportId"]),
-                LeagueId = CastAide.AsString(context.Request.Form["LeagueId"]),
-                FromDate = CastAide.AsString(context.Request.Form["FromDate"]),
-                ToDate = CastAide.AsString(context.Request.Form["ToDate"]),
-                SportName = CastAide.AsString(context.Request.Form["SportName"]),
-                LeagueName = CastAide.AsString(context.Request.Form["LeagueName"]),
-                MatchIds = CastAide.AsString(context.Request.Form["MatchIds"])
-            });
+                var addResult = smaService.UploadSMAList(filebase, new UploadSMAListCriteria
+                {
+                    UserID = CastAide.AsInt32(context.Request.Form["AccId"]),
+                    SportId = CastAide.AsString(context.Request.Form["SportId"]),
+                    LeagueId = CastAide.AsString(context.Request.Form["LeagueId"]),
+                    FromDate = CastAide.AsString(context.Request.Form["FromDate"]),
+                    ToDate = CastAide.AsString(context.Request.Form["ToDate"]),
+                    SportName = CastAide.AsString(context.Request.Form["SportName"]),
+                    LeagueName = CastAide.AsString(context.Request.Form["LeagueName"]),
+                    MatchIds = CastAide.AsString(context.Request.Form["MatchIds"])
+                });
 
-            if (addResult != null)
-            {
-                addResult_Str = "{" +
-                   "\"ErrorCode\":\"" + 0 + "\"" +
-                   ",\"ErrorMessage\":\"\"" +
-                   ",\"ActionResult\":\"" + JsonConvert.SerializeObject(addResult).Replace("\"", "\\\"") + "\"" +
-                   "}";
-                isValidParams = true;
+                if (addResult != null)
+                {
+                    addResult_Str = "{" +
+                       "\"ErrorCode\":\"" + 0 + "\"" +
+                       ",\"ErrorMessage\":\"\"" +
+                       ",\"ActionResult\":\"" + JsonConvert.SerializeObject(addResult).Replace("\"", "\\\"") + "\"" +
+                       "}";
+                    isValidParams = true;
+                }
             }
         }
 
