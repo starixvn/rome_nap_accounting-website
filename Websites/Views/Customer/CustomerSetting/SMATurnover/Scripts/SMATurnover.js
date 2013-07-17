@@ -50,7 +50,10 @@
         selectMatchInfoBox_Title: null,
         selectMatchFilterBox_Title: null,
         matchInfo_Table: null,
-        matchInfo_TableContainer: null
+        matchInfo_TableContainer: null,
+
+        _100ReachedBox: null,
+        refreshBox: null
     },
     InitPage: function () {
         var fromdate_opts = { minDate: new Date(balanceUpDay) };
@@ -325,13 +328,18 @@
         }
     },
     RenderAddResult: function (addResult) {
-        SMATurnover.cachedData.selectMatchInfoBox_TitleIcon.removeClass("expand")
+        SMATurnover.cachedData.btnSubmit_AddSMAList.removeClass("hidden");
+        if (addResult != null &&
+                (addResult.FailedInfoList.length != 0 ||
+                addResult.SucceededInfoList.length != 0)) {
+            SMATurnover.cachedData.selectMatchInfoBox_TitleIcon.removeClass("expand")
                                                            .addClass("collapse");
-        SMATurnover.cachedData.selectMatchFilterBox_TitleIcon.removeClass("expand")
+            SMATurnover.cachedData.selectMatchFilterBox_TitleIcon.removeClass("expand")
                                                              .addClass("collapse");
-        SMATurnover.cachedData.selectMatchFilter.addClass("hidden");
-        SMATurnover.cachedData.matchInfoContainer.addClass("hidden");
-        SMATurnover.cachedData.uploadFileContainer.addClass("hidden");
+            SMATurnover.cachedData.selectMatchFilter.addClass("hidden");
+            SMATurnover.cachedData.matchInfoContainer.addClass("hidden");
+            SMATurnover.cachedData.uploadFileContainer.addClass("hidden");
+        }
 
         SMATurnover.cachedData.failedRecordsTableContainer.addClass("hidden");
         if (addResult && addResult.FailedInfoList.length) {
@@ -688,6 +696,9 @@
 
         SMATurnover.cachedData.selectMatchFilter = $('.selectMatchFilter');
         SMATurnover.cachedData.uploadFileContainer = $('.uploadFileContainer');
+
+        SMATurnover.cachedData._100ReachedBox = $('._100ReachedBox');
+        SMATurnover.cachedData.refreshBox = $('.refreshBox');
     },
     getValidSMAListInfo: function () {
         var succeededSMAList = $(".succeededSMA");
@@ -704,30 +715,54 @@
 
         return validSMAListParams;
     },
+    validAddParams: function (addParams) {
+        var addParamsLength = addParams.length;
+        var isValid = true;
+        for (var i = 0; i < addParamsLength; i++) {
+            var smaInfo = addParams[i];
+            var maxTurnover = addParams[i].MaxTurnover.replace(/,/g, '');
+            if (parseFloat(maxTurnover).toString() != maxTurnover.toString()) {
+                isValid = false;
+                break;
+            }
+        }
+
+        if (isValid) {
+            SMATurnover.cachedData.msgErrorAdd.addClass("hidden");
+        } else {
+            showAlertMessage("msgErrorAdd", "Please review all Max Turnover values!", 1);
+            SMATurnover.cachedData.msgErrorAdd.removeClass("hidden");
+        }
+    },
     AddValidSMAList: function () {
         try { parent.BlockUI(); } catch (e) { }
         var validSMAListParams = SMATurnover.getValidSMAListInfo();
-        $.ajax({
-            type: "POST",
-            url: "AddValidSMAList",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: JSON.stringify(validSMAListParams),
-            success: function (rs) {
-                if (rs && rs.ErrorCode > 0) {
-                    showAlertMessage("msgErrorAdd", rs.ErrorMessage, 1);
-                    SMATurnover.cachedData.msgErrorAdd.removeClass("hidden");
-                } else {
-                    showAlertMessage("msgErrorAdd", "Add SMA List successfully!", 0);
-                    SMATurnover.cachedData.msgErrorAdd.removeClass("hidden");
-                    setTimeout(function () {
-                        SMATurnover.cachedData.msgErrorAdd.addClass("hidden");
-                    }, 4000);
-                }
 
-                try { parent.jQuery.unblockUI(); } catch (e) { }
-            }
-        });
+        if (SMATurnover.validAddParams(validSMAListParams)) {
+            $.ajax({
+                type: "POST",
+                url: "AddValidSMAList",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(validSMAListParams),
+                success: function (rs) {
+                    if (rs && rs.ErrorCode > 0) {
+                        showAlertMessage("msgErrorAdd", rs.ErrorMessage, 1);
+                        SMATurnover.cachedData.msgErrorAdd.removeClass("hidden");
+                    } else {
+                        showAlertMessage("msgErrorAdd", "Add SMA List successfully!", 0);
+                        SMATurnover.cachedData.msgErrorAdd.removeClass("hidden");
+                        setTimeout(function () {
+                            SMATurnover.cachedData.msgErrorAdd.addClass("hidden");
+                        }, 4000);
+                    }
+
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                }
+            });
+        } else {
+            try { parent.jQuery.unblockUI(); } catch (e) { }
+        }
     },
     FindPosition: function (oElement) {
         if (typeof (oElement.offsetParent()) != 'undefined') {
@@ -1001,6 +1036,9 @@
             dataType: "json",
             data: JSON.stringify(SMATurnover.cachedData.reportParams),
             success: function (rs) {
+                SMATurnover.cachedData._100ReachedBox.removeClass("hidden");
+                SMATurnover.cachedData.refreshBox.removeClass("hidden");
+
                 SMATurnover.cachedData.lastReport = rs;
                 var arr = [];
                 SMATurnover.cachedData.tblSMATurnoverBody = $("#tblSMATurnover tbody");

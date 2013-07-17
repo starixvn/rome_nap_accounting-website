@@ -31,14 +31,32 @@ public class UploadSMAListHandler : IHttpHandler
                 "}";
             isValidParams = false;
         }
-        else if (uploadedFile.ContentLength / (1024 * 1024) > 0)
+        else
         {
-            addResult_Str = "{" +
-                "\"ErrorCode\":\"" + 1 + "\"" +
-                ",\"ErrorMessage\":\"" + "File Size limit 1MB!" + "\"" +
-                ",\"ActionResult\":\"\"" +
-                "}";
-            isValidParams = false;
+            var beginExtension = uploadedFile.FileName.LastIndexOf(".");
+            var fileExtension = beginExtension != -1 ?
+                uploadedFile.FileName.Substring(beginExtension) :
+                string.Empty;
+            if (beginExtension == -1 ||
+                (fileExtension != ".xls" &&
+                fileExtension != ".xlsx"))
+            {
+                addResult_Str = "{" +
+                    "\"ErrorCode\":\"" + 1 + "\"" +
+                    ",\"ErrorMessage\":\"" + "File type is not support!" + "\"" +
+                    ",\"ActionResult\":\"\"" +
+                    "}";
+                isValidParams = false;
+            }
+            else if (uploadedFile.ContentLength / (1024 * 1024) > 0)
+            {
+                addResult_Str = "{" +
+                    "\"ErrorCode\":\"" + 1 + "\"" +
+                    ",\"ErrorMessage\":\"" + "File Size limit 1MB!" + "\"" +
+                    ",\"ActionResult\":\"\"" +
+                    "}";
+                isValidParams = false;
+            }
         }
 
         HttpPostedFileBase filebase =
