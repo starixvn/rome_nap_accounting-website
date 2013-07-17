@@ -329,16 +329,20 @@
     },
     RenderAddResult: function (addResult) {
         SMATurnover.cachedData.btnSubmit_AddSMAList.removeClass("hidden");
-        if (addResult != null &&
-                (addResult.FailedInfoList.length != 0 ||
-                addResult.SucceededInfoList.length != 0)) {
-            SMATurnover.cachedData.selectMatchInfoBox_TitleIcon.removeClass("expand")
+        if (addResult != null) {
+            if (addResult.SucceededInfoList.length != 0) {
+                SMATurnover.cachedData.selectMatchInfoBox_TitleIcon.removeClass("expand")
                                                            .addClass("collapse");
-            SMATurnover.cachedData.selectMatchFilterBox_TitleIcon.removeClass("expand")
+                SMATurnover.cachedData.matchInfoContainer.addClass("hidden");
+                SMATurnover.cachedData.uploadFileContainer.addClass("hidden");
+            }
+
+            if (addResult.FailedInfoList.length != 0 ||
+                addResult.SucceededInfoList.length != 0) {
+                SMATurnover.cachedData.selectMatchFilterBox_TitleIcon.removeClass("expand")
                                                              .addClass("collapse");
-            SMATurnover.cachedData.selectMatchFilter.addClass("hidden");
-            SMATurnover.cachedData.matchInfoContainer.addClass("hidden");
-            SMATurnover.cachedData.uploadFileContainer.addClass("hidden");
+                SMATurnover.cachedData.selectMatchFilter.addClass("hidden");
+            }
         }
 
         SMATurnover.cachedData.failedRecordsTableContainer.addClass("hidden");
@@ -721,7 +725,7 @@
         for (var i = 0; i < addParamsLength; i++) {
             var smaInfo = addParams[i];
             var maxTurnover = addParams[i].MaxTurnover.replace(/,/g, '');
-            if (parseFloat(maxTurnover).toString() != maxTurnover.toString()) {
+            if (parseFloat(maxTurnover) != maxTurnover) {
                 isValid = false;
                 break;
             }
@@ -733,6 +737,8 @@
             showAlertMessage("msgErrorAdd", "Please review all Max Turnover values!", 1);
             SMATurnover.cachedData.msgErrorAdd.removeClass("hidden");
         }
+
+        return isValid;
     },
     AddValidSMAList: function () {
         try { parent.BlockUI(); } catch (e) { }
