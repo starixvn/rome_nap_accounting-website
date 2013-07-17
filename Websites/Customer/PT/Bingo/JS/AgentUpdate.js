@@ -63,7 +63,7 @@ function IsSyncData(obj)
 {
     if (obj.checked)
     {
-        $("#tblUpdate").css("opacity","1");
+        $("#tblUpdate").css({ "opacity": "1", "filter": "alpha(opacity=100)" });
         $("#tblUpdate").click(function(){
             updatePT();
         });
@@ -71,7 +71,7 @@ function IsSyncData(obj)
     }
     else
     {
-        $("#tblUpdate").css("opacity","0.5");
+        $("#tblUpdate").css({ "opacity": "0.5", "filter": "alpha(opacity=50)" });
         $('#tblUpdate').unbind('click');
 
     }
