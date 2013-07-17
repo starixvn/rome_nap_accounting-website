@@ -266,7 +266,7 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
                     addResult.FailedInfoList.Add(new UploadSMAListResult
                     {
                         Username = CastAide.AsString(data.SMAName),
-                        MaxTurnover = NumberFormat.DecFormat(CastAide.AsDecimal(data.MaxTurnover), 2),
+                        MaxTurnover = CastAide.AsString(data.MaxTurnover),
                         //MatchId = CastAide.AsString(data.MatchID),
                         AddResultMessage = CastAide.AsString(data.Reason)
                     });
