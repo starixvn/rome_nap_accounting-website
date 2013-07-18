@@ -540,7 +540,7 @@
             SMATurnover.cachedData.uploadFileContainer.addClass("hidden");
             SMATurnover.cachedData.selectMatchInfoBox.addClass("hidden");
             SMATurnover.cachedData.matchInfo_TableContainer.addClass("hidden");
-
+        
             try { parent.jQuery.unblockUI(); } catch (e) { }
         }
     },
