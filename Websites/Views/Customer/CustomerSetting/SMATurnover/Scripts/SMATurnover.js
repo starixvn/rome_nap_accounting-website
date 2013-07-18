@@ -222,6 +222,8 @@
         });
     },
     BackToFilter_AddSMAList: function () {
+        SMATurnover.cachedData.btnSubmit_AddSMAList.addClass("hidden");
+        SMATurnover.cachedData.btnBackToFilter_AddSMAList.addClass("hidden");
         SMATurnover.cachedData.failedRecordsTableContainer.addClass("hidden");
         SMATurnover.cachedData.succeededRecordsTableContainer.addClass("hidden");
 
@@ -518,6 +520,11 @@
                 }
             });
         } else {
+            SMATurnover.cachedData.matchInfoContainer.addClass("hidden");
+            SMATurnover.cachedData.uploadFileContainer.addClass("hidden");
+            SMATurnover.cachedData.selectMatchInfoBox.addClass("hidden");
+            SMATurnover.cachedData.matchInfo_TableContainer.addClass("hidden");
+        
             try { parent.jQuery.unblockUI(); } catch (e) { }
         }
     },
@@ -525,7 +532,7 @@
         if (report && report.ChildsInfo.length > 0) {
             SMATurnover.cachedData.selectMatchInfoBox_Title.attr("title", "Hide Choose match(es) and upload file box.");
             SMATurnover.cachedData.selectMatchInfoBox_TitleIcon.removeClass("collapse")
-                                                                     .addClass("expand");
+                                                               .addClass("expand");
             SMATurnover.cachedData.matchInfoContainer.removeClass("hidden");
             SMATurnover.cachedData.uploadFileContainer.removeClass("hidden");
             SMATurnover.cachedData.chbxCheckAllMatch_AddSMAList.prop("disabled", null)
