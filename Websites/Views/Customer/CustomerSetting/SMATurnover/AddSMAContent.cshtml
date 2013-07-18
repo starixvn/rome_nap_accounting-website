@@ -4,7 +4,7 @@
     <table class="selectMatchFilterBox" cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th colspan="4" class="title showHideBox l" title="Hide Choose league box">
+                <th colspan="4" class="title showHideBox l" title="Hide Choose league box.">
                     <div class="title-icon expand">
                         &nbsp;
                     </div>
@@ -72,7 +72,7 @@
     <table class="selectMatchInfoBox hidden" cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th colspan="4" class="title showHideBox l" title="Hide Choose match(es) and upload file box">
+                <th colspan="4" class="title showHideBox l" title="Hide Choose match(es) and upload file box.">
                     <div class="title-icon expand">
                         &nbsp;
                     </div>
@@ -110,11 +110,35 @@
                             <td class="box-padding-left">
                             </td>
                             <td>
-                                <div class="matchInfo_TableContainer hidden">
-                                    <table class="matchInfo_Table" cellpadding="0" cellspacing="0">
-                                        <tbody>
-                                        </tbody>
-                                    </table>
+                                <div class="matchInfo_TableContainer freegrid hidden">
+                                    <div class="col_header row-headers-background scroll-y">
+                                        <div class="header-container">
+                                            <table class="grid-fixed-table col_header_content">
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="2" class="match-info-title" style="width: 880px; height: 29px">
+                                                            Match Info
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="grid-container container">
+                                        <div class="content-container">
+                                            <table id="matchInfo_Table" class="matchInfo_Table grid-fixed-table col_header_content">
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="2" class="match-info-title" style="width: 880px; height: 29px">
+                                                            Match Info
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
@@ -161,55 +185,140 @@
         </tbody>
     </table>
 </div>
-<div class="failedRecordsTableContainer hidden">
-    <table class="failedRecordsTable tbllayout hidden">
-        <thead>
-            <tr>
-                <th colspan="3" class="l b color-red error-title">
-                    <div class="error-icon">
-                    </div>
-                    <div class="error-label">
-                        Failed records, please check!</div>
-                </th>
-            </tr>
-            <tr class="title">
-                <th class="col200">
-                    SMA Name
-                </th>
-                <th class="col160">
-                    Max Turnover
-                </th>
-                <th>
-                    Reason
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+<div class="failedRecordsTableContainer freegrid hidden">
+    <div class="col_header row-headers-background scroll-y">
+        <div class="header-container">
+            <table class="grid-fixed-table col_header_content">
+                <thead>
+                    <tr>
+                        <th colspan="3" class="l b error-title">
+                            <div class="error-icon">
+                            </div>
+                            <div class="error-label">
+                                Failed records, please check!</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class="table-cell" style="width: 200px; height: 34px">
+                                SMA Name
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 160px; height: 34px">
+                                Max Turnover
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 555px; height: 34px">
+                                Reason
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div class="grid-container container">
+        <div class="content-container">
+            <table id="failedRecordsTable" class="failedRecordsTable grid-fixed-table col_header_content">
+                <thead>
+                    <tr>
+                        <th colspan="3" class="l b error-title">
+                            <div class="error-icon">
+                            </div>
+                            <div class="error-label">
+                                Failed records, please check!</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class="table-cell" style="width: 200px; height: 34px">
+                                SMA Name
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 160px; height: 34px">
+                                Max Turnover
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 555px; height: 34px">
+                                Reason
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-<div class="succeededRecordsTableContainer hidden">
-    <table class="succeededRecordsTable tbllayout hidden">
-        <thead>
-            <tr>
-                <th colspan="3" class="l b success-title">
-                    Please review valid records below and click Submit button to save data.
-                </th>
-            </tr>
-            <tr class="title">
-                <th class="col200">
-                    SMA Name
-                </th>
-                <th style="width: 635px;">
-                    Max Turnover
-                </th>
-                <th class="col80">
-                    Remove
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+<div class="succeededRecordsTableContainer freegrid hidden">
+    <div class="col_header row-headers-background scroll-y">
+        <div class="header-container">
+            <table class="grid-fixed-table col_header_content">
+                <thead>
+                    <tr>
+                        <th colspan="3" class="l b success-title">
+                            Please review valid records below and click Submit button to save data.
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class="table-cell" style="width: 200px; height: 34px">
+                                SMA Name
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 635px; height: 34px">
+                                Max Turnover
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 80px; height: 34px">
+                                Remove
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div class="grid-container container">
+        <div class="content-container">
+            <table id="succeededRecordsTable" class="succeededRecordsTable grid-fixed-table col_header_content">
+                <thead>
+                    <tr>
+                        <th colspan="3" class="l b success-title">
+                            Please review valid records below and click Submit button to save data.
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class="table-cell" style="width: 200px; height: 34px">
+                                SMA Name
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 635px; height: 34px">
+                                Max Turnover
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell" style="width: 80px; height: 34px">
+                                Remove
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-<input id="btnSubmit_AddSMAList" class="btn hidden" type="submit" value="Submit" disabled="disabled" />
+<input id="btnSubmit_AddSMAList" class="btn hidden" type="submit" value="Submit"
+    disabled="disabled" />
+<input id="btnBackToFilter_AddSMAList" class="btn hidden" type="submit" value="Back to Filter" />

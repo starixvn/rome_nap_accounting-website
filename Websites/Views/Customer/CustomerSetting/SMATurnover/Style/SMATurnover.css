@@ -306,11 +306,6 @@ input.btnSave[disabled]
     width: 50%;
 }
 
-.color-red
-{
-    color: #FF0000;
-}
-
 .color-green
 {
     color: #00FF00;
@@ -326,17 +321,7 @@ input.btnSave[disabled]
     width: 80px;
 }
 
-.tbllayout.failedRecordsTable, .tbllayout.succeededRecordsTable
-{
-    width: 100%;
-}
-
-.tbllayout.failedRecordsTable td, .tbllayout.succeededRecordsTable td, .tbllayout.failedRecordsTable th, .tbllayout.succeededRecordsTable th
-{
-    padding: 2px;
-}
-
-.succeededRecordsTable .rowLeague
+.freegrid .succeededRecordsTable td.rowLeague
 {
     font-weight: bold;
     text-align: left;
@@ -349,10 +334,7 @@ input.btnSave[disabled]
 
 .failedRecordsTableContainer
 {
-    overflow: auto;
-    height: 300px;
-    width: 920px;
-    border: 1px solid #8494A1;
+    margin-top: 10px;
     margin-bottom: 10px;
 }
 
@@ -362,11 +344,6 @@ input.btnSave[disabled]
     border: 1px solid #8494A1;
     cursor: pointer;
     margin-bottom: 5px;
-}
-
-.selectMatchFilterBox td, .selectMatchFilterBox th, .selectMatchInfoBox td, .selectMatchInfoBox th
-{
-    padding: 0px;
 }
 
 .selectMatchFilterBox .title, .selectMatchInfoBox .title
@@ -410,27 +387,6 @@ input.btnSave[disabled]
     cursor: pointer;
 }
 
-.matchInfo_TableContainer
-{
-    overflow: auto;
-    height: 250px;
-    border: 1px solid #8494A1;
-    width: 862px;
-}
-
-.matchInfo_Table
-{
-    width: 862px;
-    border-collapse: collapse;
-    padding: 5px;
-}
-
-.matchInfo_Table th, .matchInfo_Table td
-{
-    border: 1px solid #8494A1;
-    padding: 2px;
-}
-
 .matchInfo_Table .match-headline
 {
     background: #dce6f1;
@@ -442,23 +398,15 @@ input.btnSave[disabled]
     margin: 5px 0px;
 }
 
-.failedRecordsTable
+.freegrid .error-title
 {
-    border-collapse: collapse;
-}
-
-.failedRecordsTable th, .failedRecordsTable td, .succeededRecordsTable th, .succeededRecordsTable td
-{
-    border: 1px solid #8494A1;
-}
-
-.failedRecordsTable .error-title
-{
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: #b71313;
     color: #B71313;
-    border: 1px solid #b71313;
+    text-align: left;
 }
 
-.failedRecordsTable .error-title .error-icon
+.freegrid .error-title .error-icon
 {
     background: url('Images/error-icon.png') no-repeat scroll left top #FFFFFF;
     width: 14px;
@@ -467,30 +415,23 @@ input.btnSave[disabled]
     vertical-align: middle;
 }
 
-.failedRecordsTable .error-title .error-label
+.freegrid .error-title .error-label
 {
     display: inline-block;
     vertical-align: middle;
 }
 
-.succeededRecordsTable .success-title
+.freegrid th.success-title
 {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: #27740F;
     color: #27740F;
-    border: 1px solid #27740F;
+    text-align: left;
 }
 
 .succeededRecordsTableContainer
 {
-    overflow: auto;
-    height: 300px;
-    width: 920px;
-    border: 1px solid #8494A1;
     margin-bottom: 10px;
-}
-
-.succeededRecordsTable
-{
-    border-collapse: collapse;
 }
 
 input[type="checkbox"]
@@ -547,7 +488,7 @@ input[type="checkbox"]
 #btnUploadFile
 {
     height: 14px;
-    width: 60px;
+    width: 40px;
 }
 
 body
@@ -560,4 +501,9 @@ body
     width: 0;
     height: 0;
     border: 0px solid #fff;
+}
+
+.matchInfo_TableContainer th.match-info-title
+{
+    text-align: left;
 }

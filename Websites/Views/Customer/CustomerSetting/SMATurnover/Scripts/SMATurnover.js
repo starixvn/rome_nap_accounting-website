@@ -40,7 +40,10 @@
         succeededRecordsTableBody: null,
         lnkDownloadTemplate_AddSMAList: null,
         downloadFrm: null,
+
         btnSubmit_AddSMAList: null,
+        btnBackToFilter_AddSMAList: null,
+
         succeededRecordsTableContainer: null,
         failedRecordsTableContainer: null,
         selectMatchInfoBox: null,
@@ -53,7 +56,8 @@
         matchInfo_TableContainer: null,
 
         _100ReachedBox: null,
-        refreshBox: null
+        refreshBox: null,
+        filter: null
     },
     InitPage: function () {
         var fromdate_opts = { minDate: new Date(balanceUpDay) };
@@ -166,14 +170,21 @@
             SMATurnover.AddValidSMAList();
         });
 
+        SMATurnover.cachedData.btnBackToFilter_AddSMAList.unbind("click");
+        SMATurnover.cachedData.btnBackToFilter_AddSMAList.click(function () {
+            SMATurnover.BackToFilter_AddSMAList();
+        });
+
         SMATurnover.cachedData.selectMatchFilterBox_Title.unbind("click");
         SMATurnover.cachedData.selectMatchFilterBox_Title.click(function () {
             var isShowBox = SMATurnover.cachedData.selectMatchFilter.hasClass("hidden");
             if (isShowBox) {
+                $(this).attr("title", "Hide Choose league box.");
                 SMATurnover.cachedData.selectMatchFilterBox_TitleIcon.removeClass("collapse")
                                                                      .addClass("expand");
                 SMATurnover.cachedData.selectMatchFilter.removeClass("hidden");
             } else {
+                $(this).attr("title", "Show Choose league box.");
                 SMATurnover.cachedData.selectMatchFilterBox_TitleIcon.removeClass("expand")
                                                                      .addClass("collapse");
                 SMATurnover.cachedData.selectMatchFilter.addClass("hidden");
@@ -184,17 +195,48 @@
         SMATurnover.cachedData.selectMatchInfoBox_Title.click(function () {
             var isShowBox = SMATurnover.cachedData.matchInfoContainer.hasClass("hidden");
             if (isShowBox) {
+                $(this).attr("title", "Hide Choose match(es) and upload file box.");
                 SMATurnover.cachedData.selectMatchInfoBox_TitleIcon.removeClass("collapse")
-                                                                     .addClass("expand");
+                                                                   .addClass("expand");
                 SMATurnover.cachedData.matchInfoContainer.removeClass("hidden");
                 SMATurnover.cachedData.uploadFileContainer.removeClass("hidden");
             } else {
+                $(this).attr("title", "Show Choose match(es) and upload file box.");
                 SMATurnover.cachedData.selectMatchInfoBox_TitleIcon.removeClass("expand")
-                                                                     .addClass("collapse");
+                                                                   .addClass("collapse");
                 SMATurnover.cachedData.matchInfoContainer.addClass("hidden");
                 SMATurnover.cachedData.uploadFileContainer.addClass("hidden");
             }
         });
+
+        SMATurnover.cachedData.matchInfo_TableContainer.initGrid({
+            isShowPager: false
+        });
+
+        SMATurnover.cachedData.failedRecordsTableContainer.initGrid({
+            isShowPager: false
+        });
+
+        SMATurnover.cachedData.succeededRecordsTableContainer.initGrid({
+            isShowPager: false
+        });
+    },
+    BackToFilter_AddSMAList: function () {
+        SMATurnover.cachedData.failedRecordsTableContainer.addClass("hidden");
+        SMATurnover.cachedData.succeededRecordsTableContainer.addClass("hidden");
+
+        SMATurnover.cachedData.selectMatchInfoBox_Title.attr("title", "Hide Choose match(es) and upload file box.");
+        SMATurnover.cachedData.selectMatchInfoBox_TitleIcon.removeClass("collapse")
+                                                           .addClass("expand");
+        SMATurnover.cachedData.matchInfoContainer.removeClass("hidden");
+        SMATurnover.cachedData.uploadFileContainer.removeClass("hidden");
+
+        SMATurnover.cachedData.selectMatchFilterBox_Title.attr("title", "Hide Choose league box.");
+        SMATurnover.cachedData.selectMatchFilterBox_TitleIcon.removeClass("collapse")
+                                                             .addClass("expand");
+        SMATurnover.cachedData.selectMatchFilter.removeClass("hidden");
+
+        SMATurnover.cachedData.filter.removeClass("hidden");
     },
     uploadSMAList_ByAjaxForm: function () {
         try { parent.BlockUI(); } catch (e) { }
@@ -245,8 +287,12 @@
     },
     RenderAddResult: function (addResult) {
         SMATurnover.cachedData.btnSubmit_AddSMAList.removeClass("hidden");
+        SMATurnover.cachedData.btnBackToFilter_AddSMAList.removeClass("hidden");
+        SMATurnover.cachedData.msgErrorAdd.addClass("hidden");
         if (addResult != null) {
+            SMATurnover.cachedData.filter.addClass("hidden");
             if (addResult.SucceededInfoList.length != 0) {
+                SMATurnover.cachedData.selectMatchInfoBox_Title.attr("title", "Show Choose match(es) and upload file box.");
                 SMATurnover.cachedData.selectMatchInfoBox_TitleIcon.removeClass("expand")
                                                            .addClass("collapse");
                 SMATurnover.cachedData.matchInfoContainer.addClass("hidden");
@@ -255,6 +301,7 @@
 
             if (addResult.FailedInfoList.length != 0 ||
                 addResult.SucceededInfoList.length != 0) {
+                SMATurnover.cachedData.selectMatchFilterBox_Title.attr("title", "Show Choose league box.");
                 SMATurnover.cachedData.selectMatchFilterBox_TitleIcon.removeClass("expand")
                                                              .addClass("collapse");
                 SMATurnover.cachedData.selectMatchFilter.addClass("hidden");
@@ -280,16 +327,18 @@
                                                          .removeClass("hidden");
             SMATurnover.cachedData.failedRecordsTable.removeClass("hidden");
 
-            var tableHeight = SMATurnover.cachedData.failedRecordsTable.height();
-            if (tableHeight > 288) {
-                tableHeight = 288;
-            }
+            var gridOpts = {
+                tblContentId: 'failedRecordsTable',
+                manualCopyHeader: true,
+                fullWidth: true,
+                fullHeight: false,
+                gridWidth: 900,
+                gridHeight: 300,
+                freezeWidth: 0,
+                numberFreezeCol: 0
+            };
 
-            if (tableHeight > 0) {
-                SMATurnover.cachedData.failedRecordsTableContainer.css("height", (tableHeight + 1) + "px");
-            } else {
-                SMATurnover.cachedData.failedRecordsTableContainer.addClass("hidden");
-            }
+            SMATurnover.cachedData.failedRecordsTableContainer.removeClass("hidden").gridScroller(gridOpts);
         }
 
         SMATurnover.cachedData.succeededRecordsTableContainer.addClass("hidden");
@@ -303,7 +352,7 @@
                 var smaListLength = succeededMatchInfo.SucceededInfoList.length;
 
                 htmlContent += '<tr id="succeededSMA_' + succeededMatchInfo.MatchId + '">\
-                                    <td class="rowLeague" colspan="3">' +
+                                    <td class="rowLeague" colspan="3"  style="height:17px">' +
                                         '<div class="lblTeamInfo">' + succeededMatchInfo.HomeTeamName +
                                             ' -vs- ' + succeededMatchInfo.AwayTeamName + '</div>' +
                                         '<div class="rightArrow_LeagueInfo"></div>' +
@@ -324,7 +373,7 @@
                     htmlContent += '<tr id="succeededSMA_' + succeededMatchInfo.MatchId + '_' +
                                         smaInfo.CustId + '" matchid="' + succeededMatchInfo.MatchId +
                                         '" custid="' + smaInfo.CustId + '" class="succeededSMA">\
-                                            <td>' + smaInfo.Username + '</td>\
+                                            <td class="c" style="height:17px">' + smaInfo.Username + '</td>\
                                             <td class="c">' + tbxMaxTurnover + '</td>\
                                             <td class="c">' + btnDeleteSMAInfoRow + '</td>\
                                         </tr>';
@@ -334,24 +383,21 @@
             SMATurnover.cachedData.succeededRecordsTableBody.empty()
                                                             .append(htmlContent)
                                                             .removeClass("hidden");
-            SMATurnover.cachedData.succeededRecordsTable.removeClass("hidden");
-            SMATurnover.Resize_SucceededRecordsTableContainer();
-        } else {
-            SMATurnover.cachedData.succeededRecordsTableContainer.addClass("hidden");
-            //            SMATurnover.cachedData.btnSubmit_AddSMAList.attr("disabled", "disabled");
-            SMATurnover.cachedData.succeededRecordsTableBody.empty().addClass("hidden");
-        }
-    },
-    Resize_SucceededRecordsTableContainer: function () {
-        var tableHeight = SMATurnover.cachedData.succeededRecordsTable.height();
-        if (tableHeight > 288) {
-            tableHeight = 288;
-        }
+            var gridOpts = {
+                tblContentId: 'succeededRecordsTable',
+                manualCopyHeader: true,
+                fullWidth: true,
+                fullHeight: true,
+                gridWidth: 877,
+                gridHeight: 400,
+                freezeWidth: 0,
+                numberFreezeCol: 0
+            };
 
-        if (tableHeight > 0) {
-            SMATurnover.cachedData.succeededRecordsTableContainer.css("height", (tableHeight + 1) + "px");
+            SMATurnover.cachedData.succeededRecordsTableContainer.removeClass("hidden").gridScroller(gridOpts);
         } else {
             SMATurnover.cachedData.succeededRecordsTableContainer.addClass("hidden");
+            SMATurnover.cachedData.succeededRecordsTableBody.empty().addClass("hidden");
         }
     },
     DeletSMAInfoRow: function (matchId, custId) {
@@ -368,7 +414,18 @@
             SMATurnover.cachedData.succeededRecordsTable.addClass("hidden");
         }
 
-        SMATurnover.Resize_SucceededRecordsTableContainer();
+        var gridOpts = {
+            tblContentId: 'succeededRecordsTable',
+            manualCopyHeader: true,
+            fullWidth: true,
+            fullHeight: true,
+            gridWidth: 877,
+            gridHeight: 400,
+            freezeWidth: 0,
+            numberFreezeCol: 0
+        };
+
+        SMATurnover.cachedData.succeededRecordsTableContainer.gridScroller(gridOpts);
     },
     ChangeSport_AddSMAList: function () {
         SMATurnover.RenderLeague_AddSMAList({
@@ -466,6 +523,7 @@
     },
     RenderMatchInfoList_AddSMAList: function (report) {
         if (report && report.ChildsInfo.length > 0) {
+            SMATurnover.cachedData.selectMatchInfoBox_Title.attr("title", "Hide Choose match(es) and upload file box.");
             SMATurnover.cachedData.selectMatchInfoBox_TitleIcon.removeClass("collapse")
                                                                      .addClass("expand");
             SMATurnover.cachedData.matchInfoContainer.removeClass("hidden");
@@ -533,16 +591,18 @@
                 SMATurnover.cachedData.chbxCheckAllMatch_AddSMAList.prop("checked", isCheckAll);
             });
 
-            var tableHeight = SMATurnover.cachedData.matchInfo_Table.height();
-            if (tableHeight > 238) {
-                tableHeight = 238;
-            }
+            var gridOpts = {
+                tblContentId: 'matchInfo_Table',
+                manualCopyHeader: true,
+                fullWidth: true,
+                fullHeight: true,
+                gridWidth: 877,
+                gridHeight: 300,
+                freezeWidth: 0,
+                numberFreezeCol: 0
+            };
 
-            if (tableHeight > 0) {
-                SMATurnover.cachedData.matchInfo_TableContainer.css("height", (tableHeight + 1) + "px");
-            } else {
-                SMATurnover.cachedData.matchInfo_TableContainer.addClass("hidden");
-            }
+            SMATurnover.cachedData.matchInfo_TableContainer.gridScroller(gridOpts);
         } else {
             SMATurnover.cachedData.matchInfo_TableBody.empty();
             SMATurnover.cachedData.selectMatchInfoBox.addClass("hidden");
@@ -601,6 +661,7 @@
         SMATurnover.cachedData.lnkDownloadTemplate_AddSMAList = $('.lnkDownloadTemplate_AddSMAList');
         SMATurnover.cachedData.downloadFrm = $('#downloadFrm');
         SMATurnover.cachedData.btnSubmit_AddSMAList = $('#btnSubmit_AddSMAList');
+        SMATurnover.cachedData.btnBackToFilter_AddSMAList = $('#btnBackToFilter_AddSMAList');
 
         SMATurnover.cachedData.matchInfo_TableContainer = $('.matchInfo_TableContainer');
         SMATurnover.cachedData.succeededRecordsTableContainer = $('.succeededRecordsTableContainer');
@@ -619,6 +680,7 @@
 
         SMATurnover.cachedData._100ReachedBox = $('._100ReachedBox');
         SMATurnover.cachedData.refreshBox = $('.refreshBox');
+        SMATurnover.cachedData.filter = $('.filter');
     },
     getValidSMAListInfo: function () {
         var succeededSMAList = $(".succeededSMA");
