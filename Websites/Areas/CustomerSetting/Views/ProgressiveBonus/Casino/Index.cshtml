@@ -1,0 +1,42 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Areas/CustomerSetting/Views/ProgressiveBonus/Shared/_Layout.cshtml";
+    
+}
+
+<div class="span5">
+   <div class="filter-bar">
+       <div class="filter-row tick-list progressive-box" ng-controller="ProgressiveBonusController" ng-app="ProgressiveBonus" id="ng-app">
+           <table class="tbl-progressive">
+               <thead>
+                   <tr ng-show="{{1==1}}">
+                       <th colspan="2" class="row-title">
+                           {{userName}}                             
+                       </th>
+                   </tr>
+               </thead>
+               <tbody>
+                   <tr ng-repeat="product in products">
+                       <td class="col-left">
+                           <input type="checkbox" name="BetTypes" ng-model="product.Enable" id="chk-bettype-{{product.Id}}" class="chkbettype"/><label
+                               for="chk-bettype-{{product.Id}}">{{product.Name}}</label>
+                       </td>
+                       <td colspan="col-right">
+                           <input type="checkbox" name="BetTypes" ng-model="product.EnableDownlines"  id="chk-bettype-1" class="chkbettype"/><label
+                               for="chk-bettype-1">Enable downlines</label>
+                       </td>                    
+                   </tr>           
+                   <tr>
+                    <td colspan="2" align="center">
+                        <input type="button" value="Update" ng-click="update()" />
+                        <input type="button" value="Cancel" />
+                    </td>
+                   </tr>
+                
+               </tbody>
+           </table>
+       </div>
+   </div>
+</div>

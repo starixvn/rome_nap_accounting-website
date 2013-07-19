@@ -1,0 +1,116 @@
+﻿@import "bootstrap.less";
+@import "responsive.less";
+
+/* Common */
+.width-auto {
+	width: auto;
+}
+
+body {
+	font-family: Tahoma,Arial,helvetica,sans-serif;
+    font-size: @body-font-size;
+    line-height: @body-line-height;
+}
+
+/* Filter */
+.filter-bar {
+	background-color: @filterBarBackground;
+	margin: 0 10px;
+
+	.filter-bar-inner {		
+		padding: 10px 10px;
+		float: left;
+	}
+	
+	.filter-row {
+		margin-bottom: 0px;
+		.clearfix;
+		&:last-child { margin-bottom: 0 }
+	}
+
+	.filter-cell, .lbl-field, .edit-field {
+		float: left;
+		vertical-align: top;
+	}
+
+	.lbl-field {
+		text-align: right;
+		label {
+			padding: 0 4px 0 0;
+			margin: 0;
+		}
+	}
+
+	input[type=checkbox], input[type=radio], select {
+		outline: 0 none;
+		float:left;
+	}
+
+	input[type=text], select {
+		padding: 2px 6px;
+		color: @textColor;
+		width: 100px;
+		height: 16px;
+		line-height: 16px;
+		font-size: .85em;
+		border: 0;
+		.border-radius(0);
+
+		&:focus, &:active { .box-shadow(inset 0 0 3px @black) }
+	}
+
+	select {
+		height: 20px;
+	}
+
+	input[type=checkbox], input[type=radio] {
+		margin: 4px 4px 0 0;
+	}
+
+	.tick-list {
+		label, input[type=checkbox], input[type=radio] { float: left }
+		label {
+			margin: 0;			
+			&:hover { text-decoration: underline }
+		}
+	}
+
+	label {
+		font-size: 12px;
+		line-height: 18px;
+	}
+}
+
+/* ProgressiveBox */
+.progressive-box {
+		background-color: lighten(@filterBarBackground, 10%);		
+		margin-bottom: 10px;
+		padding: 5px 10px;
+
+		.tbl-progressive {
+			width:100%;
+			border-collapse: collapse;
+
+			th, td { 
+				border: 1px solid @border-color;
+				padding: @table-padding;
+			}
+
+			th { 
+				border-bottom: 1px solid darken(@filterBarBackground, 10%); 
+			}
+
+			th.row-title {
+				background-color: @table-header-title-background-color;
+				color: @table-header-title-text-color;
+			}
+
+			.col-left {
+				width: auto;
+			}
+
+			.col-right {
+				width: auto;
+			}
+		}
+	}

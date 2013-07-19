@@ -25,6 +25,8 @@
 
     void Application_Start(object sender, EventArgs e) 
     {
+        AreaRegistration.RegisterAllAreas();
+        
         // Code that runs on application startup    
         BootStrapperManager.Initialize(new UnityBootStrapper());
         //For Data Replication System
@@ -44,7 +46,8 @@
         
         RegisterRoutes(RouteTable.Routes);
         // ViewEngines.Engines.Add(new CustomView());
-        //AreaRegistration.RegisterAllAreas();
+        
+        
     }
 
 
