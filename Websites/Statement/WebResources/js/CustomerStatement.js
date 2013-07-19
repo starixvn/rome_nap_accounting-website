@@ -305,8 +305,7 @@ jQuery(document).ready(function () {
 
 
 function viewDetail(fdate, transtypeid) {
-    url = 'BetList/BetList.aspx?bltype=2&fdate=' + fdate
-    + "&custname=" + encodeURIComponent($("#txtCustName").attr("value"))+ "&transtypeid=" + transtypeid;
-    //ibcWnd.open(url, '', 20, 20, 920, 700, 'class1', 'class2');
-    parent.OpenPopup(url, "Bet list", 950, 700, true, true, window, 2000, null, null);
+    url = 'BetList/GetBetListStatement?CustID=1176092&TransType=' + transtypeid + '&FromDate=' + fdate;
+    parent.OpenPopup(url, "Bet list", 1050, 700, true, false, window, 2000, null, null);
+
 }

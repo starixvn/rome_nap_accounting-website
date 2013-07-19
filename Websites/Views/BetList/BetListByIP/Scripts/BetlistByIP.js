@@ -90,7 +90,7 @@ var BetListByIP_SportType = {
         fullWidth: true,
         fullHeight: true,
         gridWidth: 980, //=totalColumnWidth + totalColumn*4 +totalColumn
-        gridHeight: 60,
+        gridHeight: 80,
         freezeWidth: 510, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
         numberFreezeCol: 3
     },

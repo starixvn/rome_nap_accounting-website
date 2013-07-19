@@ -60,5 +60,5 @@ else
 <br />
 @if (ip != "-")
 {
-    <a href="../BetList/BetListByIP.aspx?bltype=3&fdate=@betdetail.Ticket.TransDate.ToShortDateString()&ip=@betdetail.Ticket.IP">@ip</a>
+    <a href="../BetList/BetListByIP.aspx?bltype=3&fdate=@betdetail.Ticket.WinlostDate.ToShortDateString()&ip=@betdetail.Ticket.IP">@ip</a>
 }
