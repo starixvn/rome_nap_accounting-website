@@ -121,7 +121,8 @@
                 <br />
                 @if (ip != "-")
                 {
-                    <a href="../BetList/BetListByIP.aspx?bltype=3&fdate=@betdetail.Ticket.WinlostDate.ToShortDateString()&ip=@betdetail.Ticket.IP">@ip</a>
+                    <a href="@Url.Action("BetListByIP","TarusBetList", new { IsLink = true, FromDate= betdetail.Ticket.WinlostDate.ToShortDateString(), IP=betdetail.Ticket.IP })">@ip</a>
+                   @* <a href="../BetList/BetListByIP.aspx?bltype=3&fdate=@betdetail.Ticket.WinlostDate.ToShortDateString()&ip=@betdetail.Ticket.IP">@ip</a>*@
                 }
             </div>
         </td>

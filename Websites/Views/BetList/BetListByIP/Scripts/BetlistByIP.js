@@ -25,9 +25,11 @@
         PageSize: 100,
         IsCache: false
     },
-    getBetListByIP_Username: function () {
-        var ipTmp = $("#txtIP").val();
-        var fromDateTmp = $("#txtfromdate").val();
+    getBetListByIP_Username: function (isLink, ip, fromdate) {
+        if (fromdate == 'nodate') { return false; }
+
+        var ipTmp = isLink == "True" ? ip : $("#txtIP").val();
+        var fromDateTmp = isLink == "True" ? fromdate : $("#txtfromdate").val();
 
         if (BetListByIP.params_UsernameBetlist.ip == ipTmp && BetListByIP.params_UsernameBetlist.fromDate == fromDateTmp) {
             BetListByIP.params_UsernameBetlist.IsCache = true;
@@ -263,5 +265,7 @@ function showCombMP(transid, custid, refno) {
 
 head.ready(function (event) {
     Helper.renderCalendar();
+    if (_fromDate != 'nodate') { $("#txtIP").val(_ip) }
+    BetListByIP.getBetListByIP_Username(_isLink, _ip, _fromDate);
 });
 

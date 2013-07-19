@@ -86,8 +86,11 @@ namespace Fanex.Tarus.BetList.Controller
 
 
  
-        public ActionResult BetListByIP()
+        public ActionResult BetListByIP(bool IsLink, string FromDate, string IP)
         {
+            ViewBag.FromDate = FromDate;
+            ViewBag.Ip= IP;
+            ViewBag.IsLink = IsLink;
             return View("~/Views/BetList/BetListByIP/Index.cshtml");
         }
     }
