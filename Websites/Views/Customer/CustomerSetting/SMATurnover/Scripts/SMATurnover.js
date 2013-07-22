@@ -279,24 +279,24 @@
         $("#MatchIds_UploadFile").val(matchList.join(","));
         $('#file_upload_form').ajaxSubmit({
             success: function (rs) {
-                if ($.browser.msie) {
-                    var prefix = "<pre>";
-                    var suffix = "</pre>";
-                    if (rs.toLowerCase().indexOf(prefix) == 0) {
-                        rs = rs.substring(5, rs.length);
-                    }
-
-                    if (rs.toLowerCase().indexOf(suffix) == rs.length - suffix.length) {
-                        rs = rs.substring(0, rs.length - suffix.length);
-                    }
+                var prefix = "<pre>";
+                var suffix = "</pre>";
+                if (rs.toLowerCase().indexOf(prefix) == 0) {
+                    rs = rs.substring(5, rs.length);
                 }
 
-                var objRs = JSON.parse(rs);
-                if (objRs && objRs.ErrorCode > 0) {
-                    showAlertMessage("msgErrorAdd", objRs.ErrorMessage, 1);
-                    SMATurnover.cachedData.msgErrorAdd.removeClass("hidden");
-                } else {
-                    SMATurnover.RenderAddResult($.parseJSON(objRs.ActionResult));
+                if (rs.toLowerCase().indexOf(suffix) == rs.length - suffix.length) {
+                    rs = rs.substring(0, rs.length - suffix.length);
+                }
+
+                if (rs && rs != "") {
+                    var objRs = JSON.parse(rs);
+                    if (objRs && objRs.ErrorCode > 0) {
+                        showAlertMessage("msgErrorAdd", objRs.ErrorMessage, 1);
+                        SMATurnover.cachedData.msgErrorAdd.removeClass("hidden");
+                    } else {
+                        SMATurnover.RenderAddResult($.parseJSON(objRs.ActionResult));
+                    }
                 }
 
                 try { parent.jQuery.unblockUI(); } catch (e) { }
@@ -429,7 +429,6 @@
         if (SMATurnover.cachedData.succeededRecordsTableBody.find('tr').length == 0) {
             SMATurnover.cachedData.btnSubmit_AddSMAList.attr("disabled", "disabled");
             SMATurnover.cachedData.succeededRecordsTableContainer.addClass("hidden");
-            SMATurnover.cachedData.succeededRecordsTable.addClass("hidden");
         }
 
         var gridOpts = {
@@ -540,7 +539,7 @@
             SMATurnover.cachedData.uploadFileContainer.addClass("hidden");
             SMATurnover.cachedData.selectMatchInfoBox.addClass("hidden");
             SMATurnover.cachedData.matchInfo_TableContainer.addClass("hidden");
-        
+
             try { parent.jQuery.unblockUI(); } catch (e) { }
         }
     },
@@ -580,7 +579,7 @@
                                     matchInfo.AwayTeamId;
                     var teamInfo = matchInfo.HomeTeam + " -vs- " + matchInfo.AwayTeam;
                     matchInfoOptions += '<td class="colmatchInfoOption">\
-                                            <input id="' + chbxId + '" class="chbxMatchInfoOption" type="checkbox" checked="checked" matchId="' + matchInfo.Id + '" />\
+                                            <input id="' + chbxId + '" class="chbxMatchInfoOption matchId_' + matchInfo.Id + '" type="checkbox" checked="checked" matchId="' + matchInfo.Id + '" />\
                                             <label class="lblmatchInfoOption" for="' + chbxId + '">' + teamInfo + '</label>\
                                          </td>';
 
@@ -1093,13 +1092,26 @@
             for (var i = 0; i < matchLength; i++) {
                 var match = matchList[i];
                 html += '<tr>';
-                html += '<td class="rowLeague" colspan="6">\
+                html += '<td class="rowLeague" colspan="5">\
                             <div class="lblLeagueHeadline">' + row.LeagueName + '</div>' +
                             '<div class="lblTeamInfo">' + match.HomeTeam + ' -vs- ' + match.AwayTeam + '</div>' +
                             '<div class="rightArrow_LeagueInfo"></div>' +
                             '<div class="eventDate_LeagueInfo">Event Date: ' + match.EventDate + '</div>' +
                             '<div class="matchIdBox_LeagueInfo">Match ID: ' + match.MatchId + '</div>' +
                          '</td>';
+                if (match.EventStatus &&
+                    match.EventStatus.toLowerCase() != "completed") {
+                    html += '<td class="rowLeague"><div class="col60" ><input type="button" class="colEdit btnAddSMA" value="Add SMA" onclick="SMATurnover.RedirectToAddSMA(\'' +
+                    match.MatchId +
+                    '\',\'' + SMATurnover.cachedData.reportParams.fromDate +
+                    '\',\'' + SMATurnover.cachedData.reportParams.toDate +
+                    '\',\'' + SMATurnover.cachedData.reportParams.sportId +
+                    '\',\'' + row.LeagueId +
+                    '\')"></div></td>';
+                } else {
+                    html += '<td></td>';
+                }
+
                 html += '</tr>';
                 var customerLength = match.CustomerList.length;
                 var customerList = match.CustomerList;
@@ -1167,16 +1179,99 @@
         }
         return html;
     },
+    RedirectToAddSMA_RenderLeague: function (matchId,
+        fromDate,
+        toDate,
+        sportId,
+        leagueId) {
+        $.ajax({
+            type: "POST",
+            url: "GetLeague",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify({
+                sport: SMATurnover.cachedData.ddlSport_AddSMAList.val(),
+                fromDate: SMATurnover.cachedData.txtfromdate_AddSMAList.val(),
+                toDate: SMATurnover.cachedData.txttodate_AddSMAList.val()
+            }),
+            success: function (rs) {
+                SMATurnover.cachedData.ddlLeague_AddSMAList.empty();
+                SMATurnover.cachedData.ddlLeague_AddSMAList.append('<option value="0">Choose League</option>')
+                for (var i = 0; i < rs.length; i++) {
+                    var leagueOption = '<option value="' + rs[i].Id + '" title="' + rs[i].Name + '">' + rs[i].Name + '</option>';
+                    SMATurnover.cachedData.ddlLeague_AddSMAList.append(leagueOption);
+                }
 
-    RedirectToAddSMA: function (matchId) {
+                SMATurnover.cachedData.ddlLeague_AddSMAList.val(leagueId).attr("selected", "selected");
+                SMATurnover.RedirectToAddSMA_RenderMatchInfo(matchId,
+                    fromDate,
+                    toDate,
+                    sportId,
+                    leagueId);
+            }
+        });
+    },
+    RedirectToAddSMA_RenderMatchInfo: function (matchId,
+        fromDate,
+        toDate,
+        sportId,
+        leagueId) {
+        var selectParams = {
+            SportId: SMATurnover.cachedData.ddlSport_AddSMAList.val(),
+            SportName: SMATurnover.cachedData.ddlSport_AddSMAList.find("option:checked").html(),
+            LeagueId: SMATurnover.cachedData.ddlLeague_AddSMAList.val(),
+            LeagueName: SMATurnover.cachedData.ddlLeague_AddSMAList.find("option:checked").html(),
+            FromDate: SMATurnover.cachedData.txtfromdate_AddSMAList.val(),
+            ToDate: SMATurnover.cachedData.txttodate_AddSMAList.val()
+        };
+
+        if (SMATurnover.ValidParams_GetMatchInfo_AddSMAList(selectParams)) {
+            SMATurnover.cachedData.selectMatchInfoParams = selectParams;
+            $.ajax({
+                type: "POST",
+                url: "GetMatchInfo_AddSMAList",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(SMATurnover.cachedData.selectMatchInfoParams),
+                success: function (rs) {
+                    SMATurnover.RenderMatchInfoList_AddSMAList(rs);
+                    SMATurnover.cachedData.chbxCheckAllMatch_AddSMAList.prop("checked", false);
+                    if (SMATurnover.cachedData.chbxMatchInfoOptions &&
+                        SMATurnover.cachedData.chbxMatchInfoOptions.length > 0) {
+                        SMATurnover.cachedData.chbxMatchInfoOptions.prop("checked", false);
+                        $(".chbxMatchInfoOption.matchId_" + matchId).prop("checked", true);
+                    }
+
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                }
+            });
+        } else {
+            SMATurnover.cachedData.matchInfoContainer.addClass("hidden");
+            SMATurnover.cachedData.uploadFileContainer.addClass("hidden");
+            SMATurnover.cachedData.selectMatchInfoBox.addClass("hidden");
+            SMATurnover.cachedData.matchInfo_TableContainer.addClass("hidden");
+            try { parent.jQuery.unblockUI(); } catch (e) { }
+        }
+    },
+    RedirectToAddSMA: function (matchId,
+        fromDate,
+        toDate,
+        sportId,
+        leagueId) {
+        try { parent.BlockUI(); } catch (e) { }
         $('#ListSMAContent').hide();
         $('#AddSMAContent').show();
         $('#ListSMATab').removeAttr('class');
         $('#AddSMATab').attr('class', 'current');
-        $('#txtMatchId').val(matchId);
-        $('#txtSuperName').val('');
-        $('#txtTurnover').val('');
-        SMATurnover.GetInfoByMatch();
+
+        SMATurnover.cachedData.txtfromdate_AddSMAList.datepicker("setDate", fromDate);
+        SMATurnover.cachedData.txttodate_AddSMAList.datepicker("setDate", toDate);
+        SMATurnover.cachedData.ddlSport_AddSMAList.val(sportId).attr("selected", "selected");
+        SMATurnover.RedirectToAddSMA_RenderLeague(matchId,
+            fromDate,
+            toDate,
+            sportId,
+            leagueId);
     },
 
     AddSMATurnoverProccess: function () {

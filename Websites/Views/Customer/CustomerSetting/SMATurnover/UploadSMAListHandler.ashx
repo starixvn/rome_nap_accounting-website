@@ -22,7 +22,20 @@ public class UploadSMAListHandler : IHttpHandler
         var addResult_Str = string.Empty;
         var uploadedFile = HttpContext.Current.Request.Files["file_UploadFile"];
         var isValidParams = true;
-        if (uploadedFile == null)
+        var matchIds = CastAide.AsString(context.Request.Form["MatchIds"]);
+        if (string.IsNullOrEmpty(matchIds))
+        {
+            addResult_Str = "{" +
+                "\"ErrorCode\":\"" + 1 + "\"" +
+                ",\"ErrorMessage\":\"" + "Please choose at least one match!" + "\"" +
+                ",\"ActionResult\":\"\"" +
+                "}";
+            isValidParams = false;
+            context.Response.Write(addResult_Str);
+            return;
+        }
+
+        if (uploadedFile == null || string.IsNullOrEmpty(uploadedFile.FileName))
         {
             addResult_Str = "{" +
                 "\"ErrorCode\":\"" + 1 + "\"" +
@@ -43,7 +56,7 @@ public class UploadSMAListHandler : IHttpHandler
             {
                 addResult_Str = "{" +
                     "\"ErrorCode\":\"" + 1 + "\"" +
-                    ",\"ErrorMessage\":\"" + "File type is not support!" + "\"" +
+                    ",\"ErrorMessage\":\"" + "File type is not supported!" + "\"" +
                     ",\"ActionResult\":\"\"" +
                     "}";
                 isValidParams = false;

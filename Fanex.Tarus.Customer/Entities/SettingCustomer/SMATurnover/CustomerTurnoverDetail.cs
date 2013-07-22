@@ -25,6 +25,8 @@ namespace Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover
 
         public string LeagueName { get; set; }
 
+        public string LeagueId { get; set; }
+
         public string MatchId { get; set; }
 
         public string EventStatus { get; set; }

@@ -241,7 +241,6 @@ input.btnSave[disabled]
     background-color: #ffb981;
     display: inline-block;
     line-height: 17px;
-    float: right;
 }
 
 .countDownOptionContainer
@@ -332,9 +331,13 @@ input.btnSave[disabled]
     font-size: 12px;
 }
 
-.failedRecordsTableContainer
+#msgErrorAdd .alertboxerr
 {
     margin-top: 10px;
+}
+
+.failedRecordsTableContainer
+{
     margin-bottom: 10px;
 }
 
@@ -506,4 +509,9 @@ body
 .matchInfo_TableContainer th.match-info-title
 {
     text-align: left;
+}
+
+#matchInfo_Table .match-headline td
+{
+    background-color: #CDDEF3;
 }

@@ -93,16 +93,22 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
             {
                 var dtb = _SMATurnoverAccess.GetSMATurnoverList(sportId, leagueId, fromDate, toDate);
                 var query = from league in dtb.AsEnumerable()
-                            group league by league.Field<string>("leaguename") into dtbLeague
-                            from match in
-                                (from league in dtbLeague.AsEnumerable()
-                                 group league by league.Field<int>("matchid"))
-                            group match by dtbLeague.Key;
+                            group league by new
+                            {
+                                leaguename = league.Field<string>("leaguename"),
+                                leagueid = league.Field<Int32>("leagueid")
+                            }
+                                into dtbLeague
+                                from match in
+                                    (from league in dtbLeague.AsEnumerable()
+                                     group league by league.Field<int>("matchid"))
+                                group match by dtbLeague.Key;
 
                 foreach (var leagueGroup in query)
                 {
                     var League = new CustomerTurnoverDetail();
-                    League.LeagueName = leagueGroup.Key;
+                    League.LeagueName = leagueGroup.Key.leaguename;
+                    League.LeagueId = leagueGroup.Key.leagueid.ToString();
                     var matchList = new List<CustomerTurnoverDetail>();
                     foreach (var matchGroup in leagueGroup)
                     {
