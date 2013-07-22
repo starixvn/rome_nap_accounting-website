@@ -421,13 +421,12 @@ fanexLegendManager = {
             resizable: false
         });
 
-        fanexLegendManager.updateScrollbar();
         fanexLegendManager._tables.previewReportLegendDialog.scrollbars();
+        fanexLegendManager._tabManager.initPage(fanexLegendManager._tables.previewReportLegendDialog);
+        fanexLegendManager.updateScrollbar();
         fanexLegendManager._tables.previewReportLegendDialog.find(".scrollcontent").resize(function () {
             fanexLegendManager.updateScrollbar();
         });
-
-        fanexLegendManager._tabManager.initPage(fanexLegendManager._tables.previewReportLegendDialog);
     },
     updateScrollbar: function () {
         if (fanexLegendManager._tables.previewReportLegendDialog.hasClass("no_scroll_h")) {
