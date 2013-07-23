@@ -37,13 +37,13 @@
                                                         <input id="txtIP" type="text" style="background-color: #fff; width: 100px;" autocomplete="off" />
                                                     </div>
                                                 </td>
-                                                 <td>
+                                                <td>
                                                     <div>
                                                         <span style="width: 50px; font-weight: bold; text-align: right;">Date:</span></div>
                                                 </td>
                                                 <td>
                                                     <div>
-                                                       <input id="txtfromdate" class="txtdate" readonly="readonly" />
+                                                        <input id="txtfromdate" class="txtdate" readonly="readonly" />
                                                     </div>
                                                 </td>
                                                 <td>
@@ -61,6 +61,8 @@
                         </div>
                         <div id="betListContent" style="margin-top: 10px;">
                         </div>
+                        <div id="Popup" style="display: none">
+                        </div>
                     </div>
                 </td>
             </tr>
@@ -72,15 +74,16 @@
   var _isLink = '@ViewBag.IsLink';
   var _ip  = '@ViewBag.Ip';
   var _fromDate  ='@ViewBag.FromDate';
+
   head.js("@Url.Content("~/js/jQuery/jquery.js")",
             "@Url.Content("~/js/json2.js")", 
             "@Url.Content("~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js?ver=1")",
             "@Url.Content("~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js")",
             "@Url.Content("~/js/IBCWnd/IBCWnd.js")", 
             "@Url.Content("~/js/dialogbox.js")",
+            "@Url.Content("~/js/jQuery/Pager/jpager.js")",
             "@Url.Content("~/js/jQuery/jquery.blockUI.1.33.js")",
             "@Url.Content("~/js/BlockUI.js")", 
-            "@Url.Content("~/js/jQuery/Pager/jpager.js")",
             "@Url.Content("~/js/common.js")", 
             "@Url.Content("~/js/BetList.js")",
              "@Url.Content("~/Views/BetList/BetListByIP/Scripts/BetlistByIP.js?ver=34")",
