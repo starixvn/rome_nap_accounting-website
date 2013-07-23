@@ -1,4 +1,8 @@
 ﻿head.ready(function (event) {
+    $('#btnExport').click(function () {
+        exportExcel();
+    });
+
     var gridOpts = {
         tblContentId: 'tblContent',
         manualCopyHeader: true,
@@ -21,6 +25,11 @@
         }
     }
 });
+
+function exportExcel(){
+    url = window.rootUrl + 'BetList/ExportBetlistStatement?CustID=' + _custidMember + '&TransType=' + _transType + '&FromDate=' + _fromDate ;
+    $('#frm').attr('src', url);
+}
 
 
 function showMP(transid, refno) {

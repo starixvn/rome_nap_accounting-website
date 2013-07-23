@@ -142,11 +142,12 @@ var BetListByIP_SportType = {
                 $('#BetlistByIP_Soccer').removeClass("display-none").gridScroller(BetListByIP_SportType.gridOpts_Soccer);
                 BetListByIP_SportType.initPager(_lengthSprortype, BetListByIP_SportType.params_SportType.PageSize, BetListByIP_SportType.params_SportType.PageIndex - 1);
 
+//                $("#filter").css("width", "").attr('style', 'width:' + $("#betListContent").width() + 'px !important;');
                 for (var i = 0; i < _arrayTransID.length; i++) {
                     var heightChoice = $("#choice_left_" + _arrayTransID[i]).height();
                     var heightStatus = $("#stautus_" + _arrayTransID[i]).height();
                     if (heightStatus > heightChoice) {
-                        $("#choice_left_" + _arrayTransID[i]).attr('style', 'height:' + heightStatus + 'px');
+                        $("#choice_left_" + _arrayTransID[i]).attr('style', 'height:' + heightStatus + 'px ');
                     }
                 }
             },
@@ -265,7 +266,11 @@ function showCombMP(transid, custid, refno) {
 
 head.ready(function (event) {
     Helper.renderCalendar();
-    if (_fromDate != 'nodate') { $("#txtIP").val(_ip) }
+    if (_fromDate != 'nodate') {
+        $("#txtIP").val(_ip);
+        $("#txtfromdate").val(_fromDate)
+     }
+
     BetListByIP.getBetListByIP_Username(_isLink, _ip, _fromDate);
 });
 

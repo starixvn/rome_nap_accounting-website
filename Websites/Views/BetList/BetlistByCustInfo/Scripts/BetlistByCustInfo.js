@@ -172,7 +172,8 @@
                 }
             },
             error: function (event, jqXHR, ajaxSettings) {
-                BetListByCustInfo.renderBettypesDropdown([]);
+               
+                try { parent.jQuery.unblockUI(); } catch (e) { }
             },
             complete: function () {
                 try { parent.jQuery.unblockUI(); } catch (e) { }
