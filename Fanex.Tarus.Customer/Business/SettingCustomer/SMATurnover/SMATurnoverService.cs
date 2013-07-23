@@ -13,6 +13,7 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
+    using System.Drawing;
     using System.Linq;
     using System.Web;
     using DNAide.Core;
@@ -22,13 +23,11 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
     using Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover;
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover;
-    using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using Sunplus.Accounting.Core.Cache;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.Core.Helper;
-    using System.Drawing;
 
     public class SMATurnoverService : ISMATurnoverService
     {
@@ -283,18 +282,17 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+                throw;
             }
-
-            return null;
         }
 
         private List<UploadSMAListResult> ReadSMAList(HttpPostedFileBase fileUploaded)
         {
             var smaList = new List<UploadSMAListResult>();
-
             var dtSMAs = new DataTable();
-            HSSFWorkbook hssfworkbook = new HSSFWorkbook(fileUploaded.InputStream);
-            ISheet sheet = hssfworkbook.GetSheetAt(0);
+            IWorkbook workbook = WorkbookFactory.Create(fileUploaded.InputStream);
+            //HSSFWorkbook hssfworkbook = new HSSFWorkbook(fileUploaded.InputStream);
+            ISheet sheet = workbook.GetSheetAt(0);
             IEnumerator rows = sheet.GetRowEnumerator();
             dtSMAs.Columns.Add("SMA Name");
             dtSMAs.Columns.Add("Max Turnover");
@@ -303,7 +301,7 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
 
             while (rows.MoveNext())
             {
-                IRow row = (HSSFRow)rows.Current;
+                IRow row = (NPOI.SS.UserModel.IRow)rows.Current;
                 DataRow dr = dtSMAs.NewRow();
                 var count = 0;
                 for (int i = 0; i < row.LastCellNum; i++)
@@ -314,7 +312,8 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
                         switch (cell.CellType)
                         {
                             case CellType.NUMERIC:
-                                dr[i] = cell.NumericCellValue;
+                                //dr[i] = cell.NumericCellValue;
+                                dr[i] = cell.ToString();
                                 break;
                             default:
                                 try

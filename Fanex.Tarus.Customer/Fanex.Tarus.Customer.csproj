@@ -79,6 +79,12 @@
     <Reference Include="NPOI">
       <HintPath>..\Dependency\NPoi\NPOI.dll</HintPath>
     </Reference>
+    <Reference Include="NPOI.OOXML">
+      <HintPath>..\Dependency\NPoi\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net">
+      <HintPath>..\Dependency\NPoi\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
     <Reference Include="Sunplus.Libraries.AOP">
       <HintPath>..\Dependency\Sunplus.Libraries.AOP.dll</HintPath>
     </Reference>

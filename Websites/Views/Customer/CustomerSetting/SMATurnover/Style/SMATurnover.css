@@ -515,3 +515,8 @@ body
 {
     background-color: #CDDEF3;
 }
+
+#succeededRecordsTable .matchIdBox_LeagueInfo
+{
+    float: right;
+}
