@@ -268,8 +268,9 @@ head.ready(function (event) {
     Helper.renderCalendar();
     if (_fromDate != 'nodate') {
         $("#txtIP").val(_ip);
-        $("#txtfromdate").val(_fromDate)
-     }
+        $("#txtfromdate").val(_fromDate);
+        $("#viewIP").show();
+    }
 
     BetListByIP.getBetListByIP_Username(_isLink, _ip, _fromDate);
 });
