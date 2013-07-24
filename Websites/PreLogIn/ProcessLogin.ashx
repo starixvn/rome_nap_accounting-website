@@ -113,6 +113,10 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
                 {
                     LogUserInfo(context, username);
                 }
+				
+				// Progressive Bonus
+				Fanex.CustomerSetting.Module.Core.Web.AppSession.AdminId = custId;
+				Fanex.CustomerSetting.Module.Core.Web.AppSession.AdminUsername = username;
             }
             else
             {

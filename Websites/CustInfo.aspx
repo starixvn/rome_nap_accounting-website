@@ -258,15 +258,20 @@
             var height = 360;
             parent.OpenPopup(url, title, width, height, true, true, window, 2000, null, null);
         }
-         function showhideP2PStatus(id, roleids) {
+        function showhideP2PStatus(id, roleids) {
             var title = 'Update Poker Status';
             var url = 'Customer/PT/Poker/P2PStatusUpdate.aspx?custId=' + id + '&roleId=' + roleid;
             var width = 400;
             var height = 300;
             parent.OpenPopup(url, title, width, height, true, true, window, 2000, null, null);
         }
-
-       
+        function showhideCasinoBonus(id, roleid, username) {
+        	var title = 'Update Progressive Bonus';
+        	var url = 'CustomerSetting/ProgressiveBonus/Casino';
+        	var width = 500;
+        	var height = 220;
+        	parent.OpenPopup(url, title, width, height, true, false, window, 2000, null, null);
+        }
     </script>
 </head>
 <body>

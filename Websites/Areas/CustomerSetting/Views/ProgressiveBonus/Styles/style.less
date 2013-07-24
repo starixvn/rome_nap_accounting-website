@@ -112,5 +112,35 @@ body {
 			.col-right {
 				width: auto;
 			}
+
+			.submitbutton {
+				background: url("images/btnUpdateSetting.jpg") no-repeat scroll center center transparent;
+				border: 0 none;
+				color: #FFFFFF;
+				cursor: pointer;
+				font-size: 11px;
+				font-weight: bold;
+				height: 24px;
+				//margin-top: 6px;
+				text-align: center;
+				width: 122px;
+			}
 		}
+		.alertboxerr, .alertboxscc{margin-top: 2px;margin-bottom: 2px;  font-weight:bold;}
+		.alertboxerr div, .alertboxscc div,.alertboxwrn div, .msgerror, .msgcorrect, .msgwarning
+		{padding:2px 4px 2px 21px;margin-left:5px;text-align:left;}
+
+		.alertboxerr div, .msgerror{background:#f6f5f2 url(images/error.gif) no-repeat center left;color:#f40000;  }
+		.alertboxscc div, .msgcorrect{background:#f6f5f2 url(images/sucess.gif) no-repeat center left;color:#618e11; }
+		.alertboxwrn div, .msgwarning{background:#f6f5f2 url(images/error.gif) no-repeat center left;color:#c28f06; }
+		.msgdenied{position: absolute; top:50%; left:50%; margin-top:45px; margin-left:60px;}
+
+		.alertboxerr{background:#f6f5f2; border:solid 1px #f40000; font-family: Tahoma; font-size:8pt}
+		.alertboxscc{background:#f6f5f2; border:solid 1px #618e11; font-family: Tahoma; font-size:8pt}
+		.alertboxwrn{background:#f6f5f2; border:solid 1px #c28f06; font-family: Tahoma; font-size:8pt}
+
+		.boxerr{background:#f6f5f2; border:solid 1px #f40000; padding:2px; }
+		.boxscc{background:#f6f5f2; border:solid 1px #618e11; padding:2px; }
+
+		.alertbox{background:#f6f5f2; border:solid 1px #c28f06; padding:2px;}
 	}

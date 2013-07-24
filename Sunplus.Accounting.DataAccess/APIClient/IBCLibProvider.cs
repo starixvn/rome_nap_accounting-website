@@ -378,8 +378,6 @@ namespace Sunplus.Accounting.DataAccess.APIClient
 
                 _cust.LimitPerIP = CastAide.AsInt32(drCustomer.ResultSet.Tables[0].Rows[0]["LimitPerIP"]);
 
-                
-
                 _cust.IsLiveCasinoSync = WebSettings.EnableLiveCasino
                                              ? CastAide.AsBoolean(
                                                  drCustomer.ResultSet.Tables[0].Rows[0]["SyncLiveCasino"], false)
@@ -394,6 +392,9 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                 _cust.IsDisableVirtualSports = WebSettings.EnableVirtualSports ?
                     CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["disablevirtualsports"], false) : false;
                 _cust.IsEnableDoubleCommLosing = WebSettings.OfferDoubleComm ? (CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DoubleCommLosing"],false)): false;
+
+				_cust.IsDisableCasinoBonus = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["disablecasinobonus"], false);
+
                 return _cust;
             }
             catch (Exception ex)

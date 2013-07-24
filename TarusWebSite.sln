@@ -97,9 +97,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Tarus.SpecialDelete.S
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Progressive", "Progressive", "{C4ADD069-F7FE-425E-BF9B-0C6B6F9B31AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Module.ProgressiveModule", "..\..\MAIN\customer-setting\Fanex.Toco\Module\ProgressiveBonus\Fanex.CustomerSetting.Module.ProgressiveModule.csproj", "{5EFF254F-0DEE-41BD-9D90-3FF4489D077F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Module.Core", "..\customer-setting\Fanex.Toco\Module\Fanex.Toco.Module.Core\Fanex.CustomerSetting.Module.Core.csproj", "{5EFF254F-0DEE-41BD-9D90-3FF4489D077F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Module.Core", "..\..\MAIN\customer-setting\Fanex.Toco\Module\Fanex.Toco.Module.Core\Fanex.CustomerSetting.Module.Core.csproj", "{AF2E11AA-2A92-47AC-86FA-4D48B0AEB5D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.CustomerSetting.Module.ProgressiveModule", "..\customer-setting\Fanex.Toco\Module\ProgressiveBonus\Fanex.CustomerSetting.Module.ProgressiveModule.csproj", "{AF2E11AA-2A92-47AC-86FA-4D48B0AEB5D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
