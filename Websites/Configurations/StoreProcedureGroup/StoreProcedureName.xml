@@ -831,4 +831,6 @@
     <Setting Key="UpdateSMATurnover" SpName="Acc_SMATurnoverUpd" DbName="archive" />
     <Setting Key="CheckMaxTurnover" SpName="Acc_SMATurnoverCheckTotalTurnover" DbName="archive" />
   </Function>
+  
+  
 </Functions>
