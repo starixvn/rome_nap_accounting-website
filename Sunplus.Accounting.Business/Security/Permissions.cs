@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Data;
 using DNAide.Core;
 using DNAide.Data;
-using Fanex.CustomerSetting.Module.ProgressiveModule.Configurations;
 using Sunplus.Accounting.Business.PositionTaking;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
@@ -396,22 +395,6 @@ namespace Sunplus.Accounting.Business.Security
 			if (!WebSettings.EnableVirtualSports || hideVirtualSports)
 				return false;
 			return true;
-		}
-
-		public static bool IsAllowEditProgressiveBonus(int parentId, bool disableProgressiveBonus)
-		{
-			bool webSetting = ProgressiveSection.Instance.Active;
-			if (!webSetting)
-			{
-				return false;
-			}
-
-			if (parentId == 0) // Super
-			{
-				return true;
-			}
-
-			return !disableProgressiveBonus;
 		}
 
 		#region Settlement
