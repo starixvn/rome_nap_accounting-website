@@ -50,6 +50,7 @@
     getBetListSystemParlay: function () {
         BetListByCustInfo.paramGetBetlistSystemParlay.CustID = _custID;
         BetListByCustInfo.paramGetBetlistSystemParlay.TransID = $('#txtRefNoSystemParaly').val();
+      
         try { parent.BlockUI(); } catch (e) { }
         $.ajax({
             type: "POST",
@@ -80,8 +81,9 @@
     },
 
 
-    getBetListByCustInfo: function () {
+    getBetListByCustInfo: function (isCache) {
         var params = BetListByCustInfo.getParams();
+        BetListByCustInfo.paramGetBetBetlist.IsCache = isCache;
         try { parent.BlockUI(); } catch (e) { }
         $.ajax({
             type: "POST",
@@ -172,7 +174,7 @@
                 }
             },
             error: function (event, jqXHR, ajaxSettings) {
-               
+
                 try { parent.jQuery.unblockUI(); } catch (e) { }
             },
             complete: function () {
@@ -210,7 +212,7 @@
 
         BetListByCustInfo.paramGetBetBetlist.PageIndex = page_index + 1;
         BetListByCustInfo.paramGetBetBetlist.PageSize = _items_per_page;
-        BetListByCustInfo.getBetListByCustInfo();
+        BetListByCustInfo.getBetListByCustInfo(true);
         return false;
     },
     viewSystemParlayTab: function () {
