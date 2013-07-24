@@ -25,9 +25,11 @@
         PageSize: 100,
         IsCache: false
     },
-    getBetListByIP_Username: function () {
-        var ipTmp = $("#txtIP").val();
-        var fromDateTmp = $("#txtfromdate").val();
+    getBetListByIP_Username: function (isLink, ip, fromdate) {
+        if (fromdate == 'nodate') { return false; }
+
+        var ipTmp = isLink == "True" ? ip : $("#txtIP").val();
+        var fromDateTmp = isLink == "True" ? fromdate : $("#txtfromdate").val();
 
         if (BetListByIP.params_UsernameBetlist.ip == ipTmp && BetListByIP.params_UsernameBetlist.fromDate == fromDateTmp) {
             BetListByIP.params_UsernameBetlist.IsCache = true;
@@ -90,7 +92,7 @@ var BetListByIP_SportType = {
         fullWidth: true,
         fullHeight: true,
         gridWidth: 980, //=totalColumnWidth + totalColumn*4 +totalColumn
-        gridHeight: 60,
+        gridHeight: 80,
         freezeWidth: 510, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
         numberFreezeCol: 3
     },
@@ -140,11 +142,12 @@ var BetListByIP_SportType = {
                 $('#BetlistByIP_Soccer').removeClass("display-none").gridScroller(BetListByIP_SportType.gridOpts_Soccer);
                 BetListByIP_SportType.initPager(_lengthSprortype, BetListByIP_SportType.params_SportType.PageSize, BetListByIP_SportType.params_SportType.PageIndex - 1);
 
+//                $("#filter").css("width", "").attr('style', 'width:' + $("#betListContent").width() + 'px !important;');
                 for (var i = 0; i < _arrayTransID.length; i++) {
                     var heightChoice = $("#choice_left_" + _arrayTransID[i]).height();
                     var heightStatus = $("#stautus_" + _arrayTransID[i]).height();
                     if (heightStatus > heightChoice) {
-                        $("#choice_left_" + _arrayTransID[i]).attr('style', 'height:' + heightStatus + 'px');
+                        $("#choice_left_" + _arrayTransID[i]).attr('style', 'height:' + heightStatus + 'px ');
                     }
                 }
             },
@@ -263,5 +266,12 @@ function showCombMP(transid, custid, refno) {
 
 head.ready(function (event) {
     Helper.renderCalendar();
+    if (_fromDate != 'nodate') {
+        $("#txtIP").val(_ip);
+        $("#txtfromdate").val(_fromDate);
+        $("#viewIP").show();
+    }
+
+    BetListByIP.getBetListByIP_Username(_isLink, _ip, _fromDate);
 });
 

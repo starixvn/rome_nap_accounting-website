@@ -12,8 +12,8 @@
     <link rel="Stylesheet" type="text/css" href="~/App_Themes/Report/Statement.css?v=2.1" />
     <link type="text/css" rel="Stylesheet" href="~/js/jQuery/autocomplete/styles.css" />
     <%--<link href="../js/IBCWnd/IBCWnd.css" rel="stylesheet" type="text/css" />--%>
-    <link href="../js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" rel="stylesheet"
-        type="text/css" />
+    <%--<link href="../js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" rel="stylesheet"
+        type="text/css" />--%>
 </head>
 <body>
     <div class="main">
@@ -37,10 +37,13 @@
                     <%--Loading...--%>
                     </div>
             </div>
+            <div id="popup" style="display: none;">
+        </div>
         </div>
     </div>
 
-    
+      <div id="betListContent" style="margin-top: 10px;">
+                        </div>
     <script src="../js/jQuery/jquery.js" type="text/javascript"></script>
     <script src="WebResources/js/CustomerStatement.js?ver=<%=WebSettings.Version%>" type="text/javascript"></script>        
     <script src="../js/jQuery/scrolltable/webtoolkit.jscrollable.js" type="text/javascript"></script>
@@ -53,5 +56,7 @@
     <script src="../js/jQuery/UI/jquery-ui-1.8.10.custom.min.js" type="text/javascript"></script>
     <script src="../js/jQuery/jquery-jtemplates.js" type="text/javascript"></script>
     <script src="../js/showhidepopup.js" type="text/javascript"></script>
+     <script src="../js/jQuery/Pager/jpager.js" type="text/javascript"></script>
+    <script src="../js/jQuery/GridScroller/jquery.gridscroller.1.0.js" type="text/javascript"></script>
 </body>
 </html>
