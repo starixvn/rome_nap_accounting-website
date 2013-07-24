@@ -738,20 +738,19 @@
             var maxTurnover = addParams[i].MaxTurnover.replace(/,/g, '');
             if (parseFloat(maxTurnover) != maxTurnover) {
                 isValid = false;
-                break;
             }
 
-            if (parseInt(maxTurnover) > 999999999999) {
-                errorMessage = "Max Turnover should be less than or equal 999,999,999,999";
+            if (parseInt(maxTurnover) > 999999999999 && errorMessage == "") {
+                errorMessage = "Max Turnover should be less than or equal 999,999,999,999.";
                 isValid = false;
-                break;
             }
         }
 
         if (isValid) {
             SMATurnover.cachedData.msgErrorAdd.addClass("hidden");
         } else {
-            showAlertMessage("msgErrorAdd", "Please review all Max Turnover values!", 1);
+            showAlertMessage("msgErrorAdd", "Please review all Max Turnover values!" +
+                (errorMessage != "" ? " (" + errorMessage + " )" : ""), 1);
             SMATurnover.cachedData.msgErrorAdd.removeClass("hidden");
         }
 

@@ -588,6 +588,7 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
 
         public Result AddValidSMAList(UploadSMAListResult[] validSMAList)
         {
+            var addResult = new Result();
             try
             {
                 Hashtable outputParams = new Hashtable();
@@ -596,7 +597,6 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
                     ListSMA = this.GetSMAListXMLString_AddSMAList(validSMAList)
                 };
 
-                var addResult = new Result();
                 var errorTable = this._SMATurnoverAccess.AddValidSMAList(criteria, ref outputParams);
                 var errorLength = errorTable.Count;
                 if (errorLength > 0)
@@ -611,15 +611,15 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
                     addResult.ErrorCode = 1;
                     addResult.ErrorMessage = string.Format("Error! The SMA already exists in match: {0}.", string.Join(", ", errorMessage));
                 }
-
-                return addResult;
             }
             catch (Exception ex)
             {
+                addResult.ErrorCode = 1;
+                addResult.ErrorMessage = "Sorry, an error occurred while processing your request, please notify the administrators!";
                 LogExtensions.ExceptionHandler(ex);
             }
 
-            return null;
+            return addResult;
         }
     }
 }
