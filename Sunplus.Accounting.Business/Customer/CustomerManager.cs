@@ -712,10 +712,26 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.Assign(ref htmlcontent, "{ThemePath}", WebSettings.ThemePath);
                                     TemplateHandler.Assign(ref htmlcontent, "{dangerousCustomer}", GetSettingControlDangerous(roleId, isManageCustomerAccess, dangeruostype, currentlevels, isBA));
                                 }
-                            }
+							}
 
-                            #region Abnormal
-                            if (WebSettings.EnableAbnormal)
+							#region Progressive Bonus
+
+							bool isAllowProgressiveBonus = isManageCustomerAccess && Permissions.IsAllowEditProgressiveBonus(parentId, _custparent.IsDisableCasinoBonus);
+							if (isAllowProgressiveBonus)
+							{
+								Fanex.CustomerSetting.Module.Core.Web.AppSession.RequestUsername = userName;
+								Fanex.CustomerSetting.Module.Core.Web.AppSession.RequestRoleId = roleId;
+							}
+							else
+							{
+								TemplateHandler.RemoveBlock(ref htmlcontent, "ProgressiveBonus");
+							}
+
+							#endregion
+
+
+							#region Abnormal
+							if (WebSettings.EnableAbnormal)
                             {
                                 if (roleId > 2)
                                 {

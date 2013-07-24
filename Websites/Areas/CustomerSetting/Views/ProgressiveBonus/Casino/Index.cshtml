@@ -3,12 +3,14 @@
 @{
     ViewBag.Title = "title";
     Layout = "~/Areas/CustomerSetting/Views/ProgressiveBonus/Shared/_Layout.cshtml";
-    
 }
 
 <div class="span5">
    <div class="filter-bar">
        <div class="filter-row tick-list progressive-box" ng-controller="ProgressiveBonusController" ng-app="ProgressiveBonus" id="ng-app">
+			<div id="err">
+				<div ng-class="getClass()"><div>{{error.ErrorMessage}}</div></div>
+			</div>
            <table class="tbl-progressive">
                <thead>
                    <tr ng-show="{{1==1}}">
@@ -20,21 +22,19 @@
                <tbody>
                    <tr ng-repeat="product in products">
                        <td class="col-left">
-                           <input type="checkbox" name="BetTypes" ng-model="product.Enable" id="chk-bettype-{{product.Id}}" class="chkbettype"/><label
+                           <input type="checkbox" name="BetTypes" ng-model="product.Enable" id="chk-bettype-{{product.Id}}" class="chkbettype" ng-change="parentChange(product)"/><label
                                for="chk-bettype-{{product.Id}}">{{product.Name}}</label>
                        </td>
-                       <td colspan="col-right">
-                           <input type="checkbox" name="BetTypes" ng-model="product.EnableDownlines"  id="chk-bettype-1" class="chkbettype"/><label
-                               for="chk-bettype-1">Enable downlines</label>
+                       <td colspan="col-right" ng-hide="hideEnableDownlineLink()">
+                           <input type="checkbox" name="BetTypes" ng-model="product.EnableDownlines" id="chk-downline-{{product.Id}}" class="chkbettype" ng-disabled="!product.Enable"/><label
+                               for="chk-downline-{{product.Id}}">Enable downlines</label>
                        </td>                    
                    </tr>           
                    <tr>
-                    <td colspan="2" align="center">
-                        <input type="button" value="Update" ng-click="update()" />
-                        <input type="button" value="Cancel" />
+                    <td colspan="2" align="left">
+                        <input type="button" value="Update" ng-click="update()" class="submitbutton"/>
                     </td>
                    </tr>
-                
                </tbody>
            </table>
        </div>
