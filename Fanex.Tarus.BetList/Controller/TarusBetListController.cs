@@ -14,11 +14,11 @@ namespace Fanex.Tarus.BetList.Controller
     using System.Reflection;
     using System.Web;
     using System.Web.Mvc;
+    using Fanex.BetList.Accounting;
     using Fanex.BetList.Accounting.Criteria;
     using Fanex.BetList.Accounting.Models;
     using Fanex.BetList.Accounting.Services;
     
-    using Fanex.BetList.Accounting;
     using Sunplus.Accounting.Core.Common;
 
     using DNAide.Core;
