@@ -17,7 +17,6 @@ namespace Fanex.Tarus.BetList.Controller
     using Fanex.BetList.Accounting.Criteria;
     using Fanex.BetList.Accounting.Models;
     using Fanex.BetList.Accounting.Services;
-    
     using Fanex.BetList.Accounting;
     using Sunplus.Accounting.Core.Common;
 
@@ -35,7 +34,7 @@ namespace Fanex.Tarus.BetList.Controller
         }
 
         /// <summary>
-        /// Betlist by refno
+        /// Betlist by refno`
         /// </summary>
         /// <returns></returns>
         
