@@ -350,7 +350,7 @@ function showCombMP(transid, custid, refno) {
 head.ready(function (event) {
     Helper.renderCalendarFromTo("#txtfromdate, #txttodate");
     Helper.range_date();
-    BetListByCustInfo.getBetListByCustInfo();
+    BetListByCustInfo.getBetListByCustInfo(false);
     BetListByCustInfo.getBettyes();
     $("#txtRefNo").attr("disabled", "disabled");
 });
