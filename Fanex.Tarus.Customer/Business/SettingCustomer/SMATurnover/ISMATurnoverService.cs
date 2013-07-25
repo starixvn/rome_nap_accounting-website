@@ -1,12 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover;
-using Fanex.Tarus.Customer.Entities;
+﻿// --------------------------------------------------------------------------
+// <copyright file="ISMATurnoverService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
 
 namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Web;
+    using Fanex.Tarus.Customer.Criteria.SMATurnover;
+    using Fanex.Tarus.Customer.Entities;
+    using Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover;
+
     public interface ISMATurnoverService
     {
         List<Sport> GetSportType(int mode);
@@ -16,5 +25,14 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
         Result AddSMATurnover(int matchId, string custName, decimal maxTurnover);
         Result UpdateSMATurnover(int matchId, int custId, decimal maxTurnover);
         Result CheckMaxTurnoverValue(int matchId, string custName, decimal maxTurnover, int mode);
+
+        UploadSMAListResult UploadSMAList(HttpPostedFileBase fileUploaded,
+            UploadSMAListCriteria criteria);
+
+        MatchInfo GetMatchInfo_AddSMAList(GetMatchInfo_AddSMAListCriteria criteria);
+
+        void DownloadTemplate_AddSMAList();
+
+        Result AddValidSMAList(UploadSMAListResult[] validSMAList);
     }
 }

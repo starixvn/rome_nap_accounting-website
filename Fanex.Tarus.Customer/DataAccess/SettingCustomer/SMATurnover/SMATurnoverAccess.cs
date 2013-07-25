@@ -1,17 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data;
-using Fanex.Data;
-using DNAide.Core;
-using Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover;
-using Sunplus.Accounting.Core.Cache;
-using Fanex.Tarus.Customer.Entities;
-using Sunplus.Accounting.Core.Extensions;
+﻿// --------------------------------------------------------------------------
+// <copyright file="SMATurnoverAccess.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
 
 namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using DNAide.Core;
+    using Fanex.Data;
+    using Fanex.Tarus.Customer.Criteria.SMATurnover;
+    using Fanex.Tarus.Customer.Entities;
+    using Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover;
+    using Sunplus.Accounting.Core.Cache;
+    using Sunplus.Accounting.Core.Extensions;
+
     public class SMATurnoverAccess : ISMATurnoverAccess
     {
         public static Dictionary<string, DateTime> SelBalanceUpMovebetDays()
@@ -92,7 +101,6 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
             return matchInfo;
         }
 
-
         public DataTable GetSMATurnoverList(int sportId, int leagueId, DateTime fromDate, DateTime toDate)
         {
             var dtb = new DataTable();
@@ -111,7 +119,6 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
             }
             return dtb;
         }
-
 
         public Result AddSMATurnover(int matchId, string custName, decimal maxTurnover, int userId, string ip)
         {
@@ -138,10 +145,9 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
                 result.ErrorCode = -1;
                 result.ErrorMessage = "Add failed!";
             }
-          
+
             return result;
         }
-
 
         public Result UpdateSMATurnover(int matchId, int custId, decimal maxTurnover, int userId, string ip)
         {
@@ -172,7 +178,6 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
             return result;
         }
 
-
         public Result CheckMaxTurnoverValue(int matchId, string custName, decimal maxTurnover, int mode)
         {
 
@@ -198,6 +203,144 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
                 result.ErrorCode = -1;
                 result.ErrorMessage = "Check max turnover failed!";
             }
+            return result;
+        }
+
+        public List<dynamic> GetMatchInfo_AddSMAList(GetMatchInfo_AddSMAListCriteria criteria,
+            ref Hashtable outputParams)
+        {
+            DataTable dataTable = null;
+            using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AddInParameter("LeagueID", DbType.Int32, criteria.LeagueId);
+                objDb.AddInParameter("FromDate", DbType.DateTime, criteria.FromDate);
+                objDb.AddInParameter("ToDate", DbType.DateTime, criteria.ToDate);
+                //objDb.AddOutParameter("errcode", DbType.Int32, sizeof(int));
+                //objDb.AddOutParameter("errmsg", DbType.String, 1000);
+
+                var ds = objDb.ExecuteDataSet();
+                outputParams = objDb.GetOuputParams();
+                if (ds != null)
+                {
+                    dataTable = ds.Tables[0];
+                }
+            }
+
+            var result = new List<dynamic>();
+            if (dataTable != null && dataTable.Rows.Count > 0)
+            {
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    result.Add(new
+                    {
+                        matchid = row["matchid"],
+                        eventdate = row["eventdate"],
+                        leagueid = criteria.LeagueId,
+                        homeid = row["homeid"],
+                        awayid = row["awayid"]
+                    });
+                }
+            }
+
+            return result;
+        }
+
+        public List<dynamic> CheckSMAList(CheckSMAListCriteria criteria,
+            ref Hashtable outputParams)
+        {
+            DataSet ds = null;
+            using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AddInParameter("UserID", DbType.Int32, criteria.UserID);
+                objDb.AddInParameter("ListSMA", DbType.String, criteria.ListSMA);
+                objDb.AddOutParameter("errcode", DbType.Int32, sizeof(int));
+                objDb.AddOutParameter("errmsg", DbType.String, 1000);
+
+                ds = objDb.ExecuteDataSet();
+                outputParams = objDb.GetOuputParams();
+            }
+
+            var result = new List<dynamic>();
+            if (ds != null)
+            {
+                DataTable dataTable = null;
+                var succeededTable = new List<dynamic>();
+                if (ds.Tables.Count >= 1)
+                {
+                    dataTable = ds.Tables[0];
+                    foreach (DataRow row in dataTable.Rows)
+                    {
+                        succeededTable.Add(new
+                        {
+                            //Seq = row["Seq"],
+                            SMAName = row["SMAName"],
+                            CustID = row["CustID"],
+                            MatchID = row["matchid"],
+                            MaxTurnover = row["MaxTurnover"],
+                            eventdate = row["eventdate"],
+                            homeid = row["homeid"],
+                            awayid = row["awayid"]
+                        });
+                    }
+                }
+
+                result.Add(succeededTable);
+                var failedTable = new List<dynamic>();
+                if (ds.Tables.Count >= 2)
+                {
+                    dataTable = ds.Tables[1];
+                    foreach (DataRow row in dataTable.Rows)
+                    {
+                        failedTable.Add(new
+                        {
+                            //Seq = row["Seq"],
+                            SMAName = row["SMAName"],
+                            CustID = row["CustID"],
+                            //MatchID = row["MatchID"],
+                            MaxTurnover = row["MaxTurnover"],
+                            Reason = row["Reason"]
+                        });
+                    }
+                }
+
+                result.Add(failedTable);
+            }
+
+            return result;
+        }
+
+        public List<dynamic> AddValidSMAList(AddSMAListCriteria criteria, ref Hashtable outputParams)
+        {
+            DataSet ds = null;
+            using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AddInParameter("UserID", DbType.Int32, criteria.UserID);
+                objDb.AddInParameter("ListSMA", DbType.String, criteria.ListSMA);
+                objDb.AddInParameter("IP", DbType.String, criteria.IP);
+                objDb.AddOutParameter("errcode", DbType.Int32, sizeof(int));
+                objDb.AddOutParameter("errmsg", DbType.String, 1000);
+                ds = objDb.ExecuteDataSet();
+                outputParams = objDb.GetOuputParams();
+            }
+
+            var result = new List<dynamic>();
+            if (ds != null)
+            {
+                DataTable dataTable = null;
+                if (ds.Tables.Count >= 1)
+                {
+                    dataTable = ds.Tables[0];
+                    foreach (DataRow row in dataTable.Rows)
+                    {
+                        result.Add(new
+                        {
+                            username = row["username"],
+                            matchid = row["matchid"]
+                        });
+                    }
+                }
+            }
+
             return result;
         }
     }
