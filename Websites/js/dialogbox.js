@@ -70,6 +70,7 @@ function OpenNextPopup(popupId, url, title, width, height, modal, resizable, cur
         width: width,
         height: height,
         autoOpen: false,
+        zIndex: 9999999,
         open: function (event, ui) {
             jQuery("#innerFrame" + popupId).attr({ "src": url }).css({ "height": jQuery(this).css("height"), "width": jQuery(this).css("width") });
         },
@@ -101,7 +102,6 @@ function OpenNextPopup(popupId, url, title, width, height, modal, resizable, cur
         if (fnOnClose) currentExecFrame.onclose = fnOnClose;
     }
 }
-
 
 
 function ClosePopup() {

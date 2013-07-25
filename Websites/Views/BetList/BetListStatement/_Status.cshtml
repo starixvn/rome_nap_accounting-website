@@ -48,12 +48,3 @@ else
         @betdetail.Ticket.Status
     </div>
 }
-@{
-    var result = betlistHelper.Result(betdetail);
-    var ip = @Sunplus.Accounting.Business.IpManagement.ReplaceVNIP(betdetail.Ticket.IP);
-}
-@if (!String.IsNullOrEmpty(result))
-{
-    <br />
-    <a id="result_@betdetail.Ticket.TransId" onclick="@result">Result</a><br />
-}

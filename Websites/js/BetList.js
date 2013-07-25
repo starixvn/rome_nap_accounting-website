@@ -121,8 +121,9 @@ function ViewMixParlayResult(refno, matchid, bettype, betid) {
 
 function ViewCombinationMixParlayResult(refno, matchid, bettype, betid) {
     var width = 800;
-    OpenPopup('../Report/ViewMixParlayResult.aspx?refno=' + refno + '&matchid=' + matchid + '&bettype=' + bettype + '&betid=' + betid, 'System Parlay', width, 500, true, false, window, 0, null, null);
-
+    //OpenPopup('../Report/ViewMixParlayResult.aspx?refno=' + refno + '&matchid=' + matchid + '&bettype=' + bettype + '&betid=' + betid, 'System Parlay', width, 500, true, false, window, 0, null, null);
+    var url = 'Report/ViewMixParlayResult.aspx?refno=' + refno + '&matchid=' + matchid + '&bettype=' + bettype + '&betid=' + betid;
+    parent.OpenNextPopup("ViewCombinationMixParlayResult", url, "System Parlay", width, 500, true, false, window, 1000, null, null);
 //    if (parent.ibcWnd) {
 //        parent.ibcWnd.open('Report/ViewMixParlayResult.aspx?refno=' + refno, 'System Parlay', 100, 100, width, 400, 'class1', 'class2')        
 //    }
@@ -133,7 +134,7 @@ function ViewCombinationMixParlayResult(refno, matchid, bettype, betid) {
 
 function ViewResult(matchid, bettype, betid) {
     var width = 750;
-    OpenPopup('../Report/ViewResult.aspx?matchid=' + matchid + (bettype ? '&bettype=' + bettype : '') + '&betid=' + betid, '', width, 500, true, false, window, 0, null, null);
+    parent.OpenPopup('Report/ViewResult.aspx?matchid=' + matchid + (bettype ? '&bettype=' + bettype : '') + '&betid=' + betid, '', width, 500, true, false, window, 0, null, null);
 //    
 //    if (parent.ibcWnd) {
 //        parent.ibcWnd.open('Report/ViewResult.aspx?matchid=' + matchid + (bettype ? '&bettype=' + bettype : ''), '', 50, 100, width, 400, 'class1', 'class2');
