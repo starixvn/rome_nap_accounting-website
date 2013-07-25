@@ -33,7 +33,7 @@
             $("#Popup").dialog({
                 title: title,
                 autoOpen: false,
-                resizable: false,
+                resizable: true,
                 height: heightTmp,
                 width: widthTmp,
                 modal: true,

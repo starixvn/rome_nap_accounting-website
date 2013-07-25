@@ -307,6 +307,6 @@ jQuery(document).ready(function () {
 function viewDetail(fdate, transtypeid) {
     var custid = parent.frames['leftPanel'].document.getElementById('custid').value;
     url = 'BetList/GetBetListStatement?CustID=' + custid + '&TransType=' + transtypeid + '&FromDate=' + fdate;
-    parent.OpenPopup(url, "Bet list", 1050, 700, true, true, window, 2000, null, null);
+    parent.OpenNextPopup("popup",url, "Bet list", 1050, 700, true, true, window, 2000, null, null);
 
 }
