@@ -44,14 +44,6 @@ function showMP(transid, refno) {
                 var idTdParent = $(this).parent().parent().attr('id');
                 $("#" + idTdParent).addClass("isShow");
                 $("#BetlistStatement").gridScroller(gridOpts);
-
-                var heightChoice = $("#choice_left_" + transid).height();
-                var heightStatus = $("#stautus_" + transid).height();
-                var heightComm = $("#comm_" + transid).height();
-                var heightRight = heightStatus > heightComm ? heightStatus : heightComm;
-                if (heightRight > heightChoice) {
-                    $("#choice_left_" + transid).attr('style', 'height:' + heightRight + 'px');
-                }
             });
         }
         else {
