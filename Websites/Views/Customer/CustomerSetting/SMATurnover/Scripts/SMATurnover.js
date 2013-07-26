@@ -1173,13 +1173,22 @@
             for (var i = 0; i < matchLength; i++) {
                 var match = matchList[i];
                 html += '<tr>';
-                html += '<td class="rowLeague" colspan="5">\
-                            <div class="lblLeagueHeadline">' + row.LeagueName + '</div>' +
-                            '<div class="lblTeamInfo">' + match.HomeTeam + ' -vs- ' + match.AwayTeam + '</div>' +
-                            '<div class="rightArrow_LeagueInfo"></div>' +
-                            '<div class="eventDate_LeagueInfo">Event Date: ' + match.EventDate + '</div>' +
-                            '<div class="matchIdBox_LeagueInfo">Match ID: ' + match.MatchId + '</div>' +
-                         '</td>';
+                html += '<td class="rowLeague" colspan="5">' +
+                            '<table class="normalTable" style="width: 100%;">' +
+                                '<tr>' +
+                                    '<td>' +
+                                        '<div class="lblLeagueHeadline">' + row.LeagueName + '</div>' +
+                                        '<div class="lblTeamInfo">' + match.HomeTeam + ' -vs- ' + match.AwayTeam + '</div>' +
+                                        '<div class="rightArrow_LeagueInfo"></div>' +
+                                        '<div class="eventDate_LeagueInfo">Event Date: ' + match.EventDate + '</div>' +
+                                    '</td>' +
+                                    '<td>' +
+                                        '<div class="matchIdBox_LeagueInfo">Match ID: ' + match.MatchId + '</div>' +
+                                    '</td>' +
+                                '</tr>' +
+                             '</table>' +
+                          '</td>';
+
                 if (match.EventStatus &&
                     match.EventStatus.toLowerCase() != "completed") {
                     html += '<td class="rowLeague"><div class="col60" ><input type="button" class="colEdit btnAddSMA" value="Add SMA" onclick="SMATurnover.RedirectToAddSMA(\'' +

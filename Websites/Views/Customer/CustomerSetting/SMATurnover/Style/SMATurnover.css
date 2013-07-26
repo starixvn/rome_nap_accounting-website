@@ -241,6 +241,10 @@ input.btnSave[disabled]
     background-color: #ffb981;
     display: inline-block;
     line-height: 17px;
+    
+    float: right;
+    min-width: 120px;
+    text-align: center;
 }
 
 .countDownOptionContainer
@@ -520,3 +524,10 @@ body
 {
     float: right;
 }
+
+
+.freegrid .normalTable td, .grid-fixed-table .normalTable td 
+{
+    border: none;
+}
+
