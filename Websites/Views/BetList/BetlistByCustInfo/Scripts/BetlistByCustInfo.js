@@ -5,7 +5,7 @@
         CustID: null,
         Bettype: 0,
         PageIndex: 1,
-        PageSize: 30,
+        PageSize: 100,
         IsCache: false
     },
     paramGetBetBetlistbyRefno: {
@@ -42,8 +42,9 @@
         callback: null,
         start_per_page: 10,
         step_per_page: 10,
-        max_items_per_page: 100,
-        items_per_page: 30,
+        item_per_page_arr: [50, 100, 150, 200],
+        max_items_per_page: 200,
+        items_per_page: 50,
         current_page: 1
     },
 
@@ -116,7 +117,7 @@
             else {
                 BetListByCustInfo.paramGetBetBetlist.IsCache = false;
                 BetListByCustInfo.paramGetBetBetlist.PageIndex = 1;
-                BetListByCustInfo.paramGetBetBetlist.PageSize = 30;
+                BetListByCustInfo.paramGetBetBetlist.PageSize = 100;
             }
             BetListByCustInfo.paramGetBetBetlist.FromDate = fromDateTmp;
             BetListByCustInfo.paramGetBetBetlist.ToDate = toDateTmp;

@@ -98,8 +98,9 @@ var BetListByIP_SportType = {
     },
     pagerOpts: {
         callback: null,
-        start_per_page: 50,
-        step_per_page: 50,
+        start_per_page: 10,
+        step_per_page: 10,
+        item_per_page_arr: [50, 100, 150, 200],
         max_items_per_page: 200,
         items_per_page: 50,
         current_page: 1
