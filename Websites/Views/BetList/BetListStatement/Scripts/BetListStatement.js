@@ -17,13 +17,6 @@
 
     $("#BetlistStatement").initGrid(gridOpts);
     $('#BetlistStatement').removeClass("display-none").gridScroller(gridOpts);
-    for (var i = 0; i < _arrayTransID.length; i++) {
-        var heightChoice = $("#choice_left_" + _arrayTransID[i]).height();
-        var heightStatus = $("#stautus_" + _arrayTransID[i]).height();
-        if (heightStatus > heightChoice) {
-            $("#choice_left_" + _arrayTransID[i]).attr('style', 'height:' + heightStatus + 'px');
-        }
-    }
 });
 
 function exportExcel(){

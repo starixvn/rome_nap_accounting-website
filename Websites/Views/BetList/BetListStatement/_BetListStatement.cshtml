@@ -46,41 +46,12 @@
             {
                 betdetail.Ticket.TransId = DNAide.Core.CastAide.AsInt64(betdetail.Ticket.RefNo);
             }
-            result[0] += renderRowHeader(betdetail, NumberBegining);
             result[1] += renderContent(betdetail, NumberBegining);
             arrTransID[i++] = betdetail.Ticket.TransId;
             NumberBegining++;
         }
         return result;
     }
-}
-@helper renderRowHeader(TicketDetail betdetail, int NumberBegining)
-    {
-    <tr class="c">
-        <td>
-            <div class="c width30">
-                @NumberBegining
-            </div>
-        </td>
-        <td class="c">
-            <div class="width120">
-                <div class="refno ">
-                    Ref No: @betdetail.Ticket.TransId</div>
-                <div class="c">
-                    @betdetail.Ticket.TransDate</div>
-            </div>
-        </td>
-        <td id ="td_left_@betdetail.Ticket.TransId"  class='r bl_evt'>
-            <div id="choice_left_@betdetail.Ticket.TransId" class="width350">
-                @Html.Raw(betdetail.ChoiceHtml)
-                @if (betdetail.Ticket.BetTypeId == 9 || betdetail.Ticket.BetTypeId == 29)
-                {
-                    <div class="parlay_@betdetail.Ticket.TransId">
-                    </div>
-                }
-            </div>
-        </td>
-    </tr>
 }
 @helper renderContent(TicketDetail betdetail, int NumberBegining)
     {
@@ -158,65 +129,6 @@
                <div class="grid-toolbox">
                 <input type="button" id="btnExport" class="btnExcel" title="Export to Excel"/>
             </div>
-        </div>
-    </div>
-    <div class="free-cell free-top-left">
-        <table class="grid-fixed-table free-cell-top-left">
-            <thead>
-                <tr>
-                    <th>
-                        <div class="width30 height34 table-cell">
-                            No</div>
-                    </th>
-                    <th>
-                        <div class="width120 height34 table-cell">
-                            Trans.Time</div>
-                    </th>
-                    <th>
-                        <div class="width350 height34 table-cell">
-                            Choice</div>
-                    </th>
-                </tr>
-            </thead>
-        </table>
-    </div>
-    <div class="row_header_wrapper">
-        <div class="row_header row-headers-background">
-            <table class="grid-fixed-table row_header_content" id="tblContentHeader">
-                <thead>
-                    <tr>
-                        <th>
-                            <div class="width30 height34 table-cell">
-                                No</div>
-                        </th>
-                        <th>
-                            <div class="width120 height34 table-cell">
-                                Trans.Time</div>
-                        </th>
-                        <th>
-                            <div class="width350 height34 table-cell">
-                                Choice</div>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Model.Count > 0)
-                    {
-                        @MvcHtmlString.Create(renderResult[0])
-                        
-                    }
-                    else
-                    { 
-                        <tr class="c">
-                            <td colspan="3" class="none-border-right">
-                                <div class="c b">
-                                    &nbsp;
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
         </div>
     </div>
     <div class="col_header row-headers-background scroll-y">
@@ -320,30 +232,6 @@
                 </tbody>
             </table>
         </div>
-    </div>
-    <div class="row_footer row-footer-background z999">
-        <table id="GridFooterRow" class="grid-fixed-table row_footer_content">
-            <thead>
-                <tr class="event">
-                    <th class="none-border-right">
-                        <div class=" height17 table-cell" style="width: 511px;">
-                            &nbsp;</div>
-                    </th>
-                </tr>
-                <tr class="event">
-                    <th class="none-border-right">
-                        <div class=" height17 table-cell" style="width: 510px;">
-                            &nbsp;</div>
-                    </th>
-                </tr>
-                <tr>
-                    <th class="none-border-right">
-                        <div class=" height17 table-cell" style="width: 510px;">
-                            &nbsp;</div>
-                    </th>
-                </tr>
-            </thead>
-        </table>
     </div>
     <div class="col_footer row-footer-background scroll-y">
         <div class="footer-container">
