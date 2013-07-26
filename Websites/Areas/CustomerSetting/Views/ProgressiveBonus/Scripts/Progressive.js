@@ -1,5 +1,44 @@
 ﻿var ProgressiveBonus = angular.module("ProgressiveBonus", []);
 
+function PTBlockUI() {
+
+    if (parent.BlockUI) {
+        try { parent.BlockUI(); } catch (e) { }
+    }
+    //Called inside a frame set (#centerFr)
+    else {
+        if (parent.parent.BlockUI) {
+            parent.parent.BlockUI();
+        }
+    }
+    //Called from popup
+    if (opener) {
+        if (opener.BlockUI) {
+            opener.BlockUI();
+        }
+        opener.parent.BlockUI();
+    }
+}
+function PTUnBlockUI() {
+
+    if (parent.jQuery && parent.jQuery.unblockUI) {
+        parent.jQuery.unblockUI();
+    }
+    //Called inside a frame set (#centerFr)
+    if (parent.parent.jQuery && parent.parent.jQuery.unblockUI) {
+
+        parent.parent.jQuery.unblockUI();
+    }
+    //Called from popup
+
+    if (opener) {
+        if (opener.parent.jQuery.unblockUI) {
+            opener.parent.jQuery.unblockUI();
+        }
+        //parent.jQuery.unblockUI();
+    }
+}
+
 ProgressiveBonus.controller(
     "ProgressiveBonusController",
     function ($scope) {
@@ -14,6 +53,9 @@ ProgressiveBonus.controller(
         });
 
         $scope.load = function () {
+
+            PTBlockUI();
+
             $.ajax({
                 type: "POST",
                 url: "Casino/GetProducts",
@@ -32,7 +74,7 @@ ProgressiveBonus.controller(
                 },
                 error: function (e) { },
                 complete: function (e) {
-
+                    PTUnBlockUI();
                 }
             });
         },
@@ -85,6 +127,9 @@ ProgressiveBonus.controller(
         };
 
         $scope.update = function () {
+
+            PTBlockUI();
+
             $.ajax({
                 type: "POST",
                 url: "Casino/UpdateProgressive",
@@ -98,12 +143,19 @@ ProgressiveBonus.controller(
                     if (rs && rs.length > 0) {
                         $scope.$apply(function () {
                             $scope.error = rs[0];
+
+                            var isSuccess = $scope.error.ErrorCode == 0;
+                            if (isSuccess) {
+                                window.setTimeout(function () {
+                                    try { parent.ClosePopup(); } catch (e) { }
+                                }, 3000);
+                            }
                         });
                     }
                 },
                 error: function (e) { },
                 complete: function (e) {
-
+                    PTUnBlockUI();
                 }
             });
         }
