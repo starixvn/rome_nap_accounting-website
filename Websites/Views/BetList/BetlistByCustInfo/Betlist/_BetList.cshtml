@@ -37,9 +37,17 @@
         </td>
         <td class="c">
             <div class="width120 table-cell">
-                <div class="refno">
-                    Ref No: @betdetail.Ticket.TransId</div>
-                <div class="c ">
+                 <div class="refno ">
+                    @if (betdetail.Ticket.BetTypeId == 71)
+                    {
+                        <span>No: @betdetail.Ticket.RefNo </span>
+                    }
+                    else
+                    {
+                        <span>Ref No: @betdetail.Ticket.TransId </span>
+                    }
+                </div>
+                <div class="c">
                     @betdetail.Ticket.TransDate</div>
                     </div>
         </td>
