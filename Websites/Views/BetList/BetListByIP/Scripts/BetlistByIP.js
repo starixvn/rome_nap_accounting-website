@@ -93,8 +93,8 @@ var BetListByIP_SportType = {
         fullHeight: true,
         gridWidth: 980, //=totalColumnWidth + totalColumn*4 +totalColumn
         gridHeight: 80,
-        freezeWidth: 510, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
-        numberFreezeCol: 3
+        freezeWidth: 0, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
+        numberFreezeCol: 0
     },
     pagerOpts: {
         callback: null,
@@ -143,13 +143,6 @@ var BetListByIP_SportType = {
                 BetListByIP_SportType.initPager(_lengthSprortype, BetListByIP_SportType.params_SportType.PageSize, BetListByIP_SportType.params_SportType.PageIndex - 1);
 
 //                $("#filter").css("width", "").attr('style', 'width:' + $("#betListContent").width() + 'px !important;');
-                for (var i = 0; i < _arrayTransID.length; i++) {
-                    var heightChoice = $("#choice_left_" + _arrayTransID[i]).height();
-                    var heightStatus = $("#stautus_" + _arrayTransID[i]).height();
-                    if (heightStatus > heightChoice) {
-                        $("#choice_left_" + _arrayTransID[i]).attr('style', 'height:' + heightStatus + 'px ');
-                    }
-                }
             },
             error: function () {
                 try { parent.jQuery.unblockUI(); } catch (e) { }

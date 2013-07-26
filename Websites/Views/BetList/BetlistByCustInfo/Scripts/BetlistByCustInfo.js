@@ -25,8 +25,8 @@
         fullHeight: true,
         gridWidth: 980, //=totalColumnWidth + totalColumn*4 +totalColumn
         gridHeight: 120,
-        freezeWidth: 410, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
-        numberFreezeCol: 3
+        freezeWidth: 0, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
+        numberFreezeCol: 0
     },
     eventGridOpts: {
         tblContentId: 'tblContent',
@@ -94,17 +94,7 @@
                 $("#betListContent").html(result);
                 $("#BetlistByCustInfo").initGrid(BetListByCustInfo.gridOpts);
                 $('#BetlistByCustInfo').removeClass("display-none").gridScroller(BetListByCustInfo.gridOpts);
-                BetListByCustInfo.initPager(_length, BetListByCustInfo.paramGetBetBetlist.PageSize, BetListByCustInfo.paramGetBetBetlist.PageIndex - 1);
-
-                for (var i = 0; i < _arrayTransID.length; i++) {
-                    var heightChoice = $("#choice_left_" + _arrayTransID[i]).height();
-                    var heightStatus = $("#stautus_" + _arrayTransID[i]).height();
-                    var heightComm = $("#comm_" + _arrayTransID[i]).height();
-                    var heightRight = heightStatus > heightComm ? heightStatus : heightComm;
-                    if (heightRight > heightChoice) {
-                        $("#choice_left_" + _arrayTransID[i]).attr('style', 'height:' + heightRight + 'px');
-                    }
-                }
+                BetListByCustInfo.initPager(_length, BetListByCustInfo.paramGetBetBetlist.PageSize, BetListByCustInfo.paramGetBetBetlist.PageIndex - 1);    
             },
             error: function () {
                 try { parent.jQuery.unblockUI(); } catch (e) { }

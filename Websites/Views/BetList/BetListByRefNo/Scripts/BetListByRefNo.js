@@ -7,8 +7,8 @@
         fullHeight: true,
         gridWidth: 1000, //=totalColumnWidth + totalColumn*4 +totalColumn
         gridHeight: 100,
-        freezeWidth: 460, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
-        numberFreezeCol: 3
+        freezeWidth: 0, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
+        numberFreezeCol: 0
     },
     GetBetListByRefNo: function () {
         var refno = BetList.trim($('#txtRefNo').val());
@@ -28,16 +28,6 @@
                 if ($('#choice_left a:first').html() == 'Mix Parlay') {
                     var divReplace = '<span style="color: #0066CC;">' + $('#choice_left a:first').html() + '</span>';
                     $('#choice_left a:first').replaceWith(divReplace);
-                }
-
-                var heightChoice = $("#choice_left").height();
-                var heightStatus = $("#stautus").height();
-                var heightComm = $("#comm").height();
-                var heightOdd = $("#odd").height();
-                var heightTemp = heightStatus > heightComm ? heightStatus : heightComm
-                var heightRight = heightTemp > heightOdd ? heightTemp : heightOdd;
-                if (heightRight > heightChoice) {
-                    $("#choice_left").attr('style', 'height:' + heightRight + 'px');
                 }
 
 
