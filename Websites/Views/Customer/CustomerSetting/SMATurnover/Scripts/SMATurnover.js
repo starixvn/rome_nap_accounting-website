@@ -70,7 +70,8 @@
         SMATurnover.RenderLeague_AddSMAList({
             sport: "1",
             fromDate: currDay,
-            toDate: currDay
+            toDate: currDay,
+            isGetList: false
         });
 
         $("#SMATurnover").initGrid({
@@ -462,7 +463,8 @@
         SMATurnover.RenderLeague_AddSMAList({
             sport: SMATurnover.cachedData.ddlSport_AddSMAList.val(),
             fromDate: SMATurnover.cachedData.txtfromdate_AddSMAList.val(),
-            toDate: SMATurnover.cachedData.txttodate_AddSMAList.val()
+            toDate: SMATurnover.cachedData.txttodate_AddSMAList.val(),
+            isGetList: false
         });
     },
     RenderLeague_AddSMAList: function (selectParams) {
@@ -964,7 +966,13 @@
     },
 
     RenderLeague: function (sportId, fromDate, toDate) {
-        var data = { sport: sportId, fromDate: fromDate, toDate: toDate };
+        var data = {
+            sport: sportId,
+            fromDate: fromDate,
+            toDate: toDate,
+            isGetList: true
+        };
+
         $.ajax({
             type: "POST",
             url: "GetLeague",
@@ -1265,7 +1273,8 @@
             data: JSON.stringify({
                 sport: SMATurnover.cachedData.ddlSport_AddSMAList.val(),
                 fromDate: SMATurnover.cachedData.txtfromdate_AddSMAList.val(),
-                toDate: SMATurnover.cachedData.txttodate_AddSMAList.val()
+                toDate: SMATurnover.cachedData.txttodate_AddSMAList.val(),
+                isGetList: true
             }),
             success: function (rs) {
                 SMATurnover.cachedData.ddlLeague_AddSMAList.empty();

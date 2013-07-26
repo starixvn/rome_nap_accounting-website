@@ -20,7 +20,10 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
     public interface ISMATurnoverAccess
     {
         DataTable GetSportType(int mode);
-        DataTable GetLeague(int sport, DateTime fromDate, DateTime toDate);
+        DataTable GetLeague(int sport,
+            DateTime fromDate, 
+            DateTime toDate,
+            bool isGetList);
         MatchInfo GetInfoByMatchId(int matchId);
         DataTable GetSMATurnoverList(int sportId, int leagueId, DateTime fromDate, DateTime toDate);
         Result AddSMATurnover(int matchId, string custName, decimal maxTurnover, int userId, string ip);

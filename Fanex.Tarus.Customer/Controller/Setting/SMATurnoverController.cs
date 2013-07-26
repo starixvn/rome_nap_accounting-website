@@ -46,10 +46,16 @@ namespace Fanex.Tarus.Customer.Controller.Setting
             return jsonResult;
         }
 
-        public JsonResult GetLeague(string sport, string fromDate, string toDate)
+        public JsonResult GetLeague(string sport,
+            string fromDate,
+            string toDate,
+            bool isGetList)
         {
             var result = new List<League>();
-            result = _SMATurnover.GetLeague(CastAide.AsInt32(sport), CastAide.AsDateTime(fromDate), CastAide.AsDateTime(toDate));
+            result = _SMATurnover.GetLeague(CastAide.AsInt32(sport),
+                CastAide.AsDateTime(fromDate),
+                CastAide.AsDateTime(toDate),
+                isGetList);
             var jsonResult = Json(result);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;

@@ -60,10 +60,16 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
             return sportList;
         }
 
-        public List<League> GetLeague(int sportType, DateTime fromDate, DateTime toDate)
+        public List<League> GetLeague(int sportType, 
+            DateTime fromDate,
+            DateTime toDate,
+            bool isGetList)
         {
             var leagueList = new List<League>();
-            var dtb = _SMATurnoverAccess.GetLeague(sportType, fromDate, toDate);
+            var dtb = _SMATurnoverAccess.GetLeague(sportType,
+                fromDate,
+                toDate,
+                isGetList);
             foreach (DataRow row in dtb.Rows)
             {
                 var league = new League()

@@ -61,7 +61,10 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
             return datatable;
         }
 
-        public DataTable GetLeague(int sport, DateTime fromDate, DateTime toDate)
+        public DataTable GetLeague(int sport,
+            DateTime fromDate,
+            DateTime toDate,
+            bool isGetList)
         {
             var datatable = new DataTable();
             using (ObjectDb objDB = new ObjectDb("GetLeague"))
@@ -69,7 +72,15 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
                 objDB.AddInParameter("sporttype", DbType.Int32, sport);
                 objDB.AddInParameter("fromdate", DbType.DateTime, fromDate);
                 objDB.AddInParameter("todate", DbType.DateTime, toDate);
-                objDB.AddInParameter("movebetsday", DbType.DateTime, MoveBetDay());
+                if (isGetList)
+                {
+                    objDB.AddInParameter("movebetsday", DbType.DateTime, MoveBetDay());
+                }
+                else
+                {
+                    objDB.AddInParameter("movebetsday", DbType.DateTime, null);
+                }
+
                 var ds = objDB.ExecuteDataSet();
                 datatable = ds.Tables[0];
             }
