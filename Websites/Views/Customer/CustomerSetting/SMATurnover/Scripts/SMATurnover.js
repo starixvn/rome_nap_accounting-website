@@ -1372,11 +1372,10 @@
             async: false,
             data: JSON.stringify(data),
             success: function (rs) {
-                var isKeepMessage = false;
+                var isKeepMessage = true;
                 if (parseInt(rs.ErrorCode) == 0) {
                     showAlertMessage("msgError", "Update successfully!", 0);
                     $('#msgError').show();
-                    isKeepMessage = true;
                     setTimeout(function () { $('#msgError').hide(); }, 4000);
                 }
                 else {

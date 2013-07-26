@@ -199,82 +199,88 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
                     UserID = criteria.UserID
                 }, ref outputParams);
 
-                var succeededTable = rawData[0];
-                var failedTable = rawData[1];
-                var smaListLength = smaList.Count;
-                var matchIdListLength = matchIdList.Length;
-
-                var succeededRows = new List<UploadSMAListResult>();
-                foreach (var data in succeededTable)
+                addResult.ErrorCode = CastAide.AsInt32(outputParams["errcode"]);
+                addResult.ErrorMesage = CastAide.AsString(outputParams["errmsg"]);
+                if (addResult.ErrorCode == 0)
                 {
-                    succeededRows.Add(new UploadSMAListResult
+
+                    var succeededTable = rawData[0];
+                    var failedTable = rawData[1];
+                    var smaListLength = smaList.Count;
+                    var matchIdListLength = matchIdList.Length;
+
+                    var succeededRows = new List<UploadSMAListResult>();
+                    foreach (var data in succeededTable)
                     {
-                        Username = CastAide.AsString(data.SMAName),
-                        CustId = CastAide.AsString(data.CustID),
-                        MatchId = CastAide.AsString(data.MatchID),
-                        MaxTurnover = NumberFormat.DecFormat(CastAide.AsDecimal(data.MaxTurnover), 2),
-                        HomeTeam = CastAide.AsInt32(data.homeid),
-                        AwayTeam = CastAide.AsInt32(data.awayid),
-                        EventDate = string.Format("{0:MM/dd/yyyy}", data.eventdate)
-                    });
-                }
-
-                var homeIdList = succeededRows.Select(data => data.HomeTeam as object)
-                                              .ToList();
-                this.SaveCacheRefReponse(homeIdList, CacheRef.GetTeamName, ref this._teamNameCache);
-                var awayIdList = succeededRows.Select(data => data.AwayTeam as object)
-                                               .ToList();
-                this.SaveCacheRefReponse(awayIdList, CacheRef.GetTeamName, ref this._teamNameCache);
-
-                var matchGroups = succeededRows.GroupBy(data => new
-                {
-                    data.MatchId,
-                    data.HomeTeam,
-                    data.AwayTeam,
-                    data.EventDate
-                });
-
-                foreach (var matchGroup in matchGroups)
-                {
-                    var succeededMatchInfo = new UploadSMAListResult
-                    {
-                        SucceededInfoList = new List<UploadSMAListResult>(),
-                        MatchId = CastAide.AsString(matchGroup.Key.MatchId),
-                        HomeTeam = CastAide.AsInt32(matchGroup.Key.HomeTeam),
-                        AwayTeam = CastAide.AsInt32(matchGroup.Key.AwayTeam),
-                        EventDate = CastAide.AsString(matchGroup.Key.EventDate)
-                    };
-
-                    succeededMatchInfo.HomeTeamName = this._teamNameCache[succeededMatchInfo.HomeTeam];
-                    succeededMatchInfo.AwayTeamName = this._teamNameCache[succeededMatchInfo.AwayTeam];
-                    var matchGroupListInfo = matchGroup.ToList();
-                    var matchGroupsLength = matchGroupListInfo.Count;
-                    for (var j = 0; j < matchGroupsLength; j++)
-                    {
-                        var smaInfo = matchGroupListInfo[j];
-                        var data = new UploadSMAListResult
+                        succeededRows.Add(new UploadSMAListResult
                         {
-                            Username = CastAide.AsString(smaInfo.Username),
-                            MaxTurnover = NumberFormat.DecFormat(CastAide.AsDecimal(smaInfo.MaxTurnover), 2),
-                            MatchId = CastAide.AsString(smaInfo.MatchId),
-                            CustId = CastAide.AsString(smaInfo.CustId)
-                        };
-
-                        succeededMatchInfo.SucceededInfoList.Add(data);
+                            Username = CastAide.AsString(data.SMAName),
+                            CustId = CastAide.AsString(data.CustID),
+                            MatchId = CastAide.AsString(data.MatchID),
+                            MaxTurnover = NumberFormat.DecFormat(CastAide.AsDecimal(data.MaxTurnover), 2),
+                            HomeTeam = CastAide.AsInt32(data.homeid),
+                            AwayTeam = CastAide.AsInt32(data.awayid),
+                            EventDate = string.Format("{0:MM/dd/yyyy}", data.eventdate)
+                        });
                     }
 
-                    addResult.SucceededInfoList.Add(succeededMatchInfo);
-                }
+                    var homeIdList = succeededRows.Select(data => data.HomeTeam as object)
+                                                  .ToList();
+                    this.SaveCacheRefReponse(homeIdList, CacheRef.GetTeamName, ref this._teamNameCache);
+                    var awayIdList = succeededRows.Select(data => data.AwayTeam as object)
+                                                   .ToList();
+                    this.SaveCacheRefReponse(awayIdList, CacheRef.GetTeamName, ref this._teamNameCache);
 
-                foreach (var data in failedTable)
-                {
-                    addResult.FailedInfoList.Add(new UploadSMAListResult
+                    var matchGroups = succeededRows.GroupBy(data => new
                     {
-                        Username = CastAide.AsString(data.SMAName),
-                        MaxTurnover = CastAide.AsString(data.MaxTurnover),
-                        //MatchId = CastAide.AsString(data.MatchID),
-                        AddResultMessage = CastAide.AsString(data.Reason)
+                        data.MatchId,
+                        data.HomeTeam,
+                        data.AwayTeam,
+                        data.EventDate
                     });
+
+                    foreach (var matchGroup in matchGroups)
+                    {
+                        var succeededMatchInfo = new UploadSMAListResult
+                        {
+                            SucceededInfoList = new List<UploadSMAListResult>(),
+                            MatchId = CastAide.AsString(matchGroup.Key.MatchId),
+                            HomeTeam = CastAide.AsInt32(matchGroup.Key.HomeTeam),
+                            AwayTeam = CastAide.AsInt32(matchGroup.Key.AwayTeam),
+                            EventDate = CastAide.AsString(matchGroup.Key.EventDate)
+                        };
+
+                        succeededMatchInfo.HomeTeamName = this._teamNameCache[succeededMatchInfo.HomeTeam];
+                        succeededMatchInfo.AwayTeamName = this._teamNameCache[succeededMatchInfo.AwayTeam];
+                        var matchGroupListInfo = matchGroup.ToList();
+                        var matchGroupsLength = matchGroupListInfo.Count;
+                        for (var j = 0; j < matchGroupsLength; j++)
+                        {
+                            var smaInfo = matchGroupListInfo[j];
+                            var data = new UploadSMAListResult
+                            {
+                                Username = CastAide.AsString(smaInfo.Username),
+                                MaxTurnover = NumberFormat.DecFormat(CastAide.AsDecimal(smaInfo.MaxTurnover), 2),
+                                MatchId = CastAide.AsString(smaInfo.MatchId),
+                                CustId = CastAide.AsString(smaInfo.CustId)
+                            };
+
+                            succeededMatchInfo.SucceededInfoList.Add(data);
+                        }
+
+                        addResult.SucceededInfoList.Add(succeededMatchInfo);
+                    }
+
+                    foreach (var data in failedTable)
+                    {
+                        addResult.FailedInfoList.Add(new UploadSMAListResult
+                        {
+                            Username = CastAide.AsString(data.SMAName),
+                            MaxTurnover = CastAide.AsString(data.MaxTurnover),
+                            //MatchId = CastAide.AsString(data.MatchID),
+                            AddResultMessage = CastAide.AsString(data.Reason)
+                        });
+                    }
                 }
 
                 return addResult;
@@ -358,13 +364,13 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
 
         public MatchInfo GetMatchInfo_AddSMAList(GetMatchInfo_AddSMAListCriteria criteria)
         {
+            var result = new MatchInfo
+            {
+                ChildsInfo = new List<MatchInfo>()
+            };
+
             try
             {
-                var result = new MatchInfo
-                {
-                    ChildsInfo = new List<MatchInfo>()
-                };
-
                 Hashtable outputParams = new Hashtable();
 
                 var rawData = this._SMATurnoverAccess.GetMatchInfo_AddSMAList(criteria,
@@ -405,15 +411,13 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
 
                     result.ChildsInfo.Add(dateInfo);
                 }
-
-                return result;
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
 
-            return null;
+            return result;
         }
 
         public Dictionary<object, string> SaveCacheRefReponse(List<object> idList,

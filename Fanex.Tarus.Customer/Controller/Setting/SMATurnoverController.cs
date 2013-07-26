@@ -145,6 +145,7 @@ namespace Fanex.Tarus.Customer.Controller.Setting
         }
 
         [HttpPost]
+        [AuthenticateHost]
         public ActionResult AddValidSMAList(UploadSMAListResult[] validSMAList)
         {
             var addResult = this._SMATurnover.AddValidSMAList(validSMAList);

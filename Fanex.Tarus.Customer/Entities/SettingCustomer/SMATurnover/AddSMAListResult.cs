@@ -49,6 +49,10 @@ namespace Fanex.Tarus.Customer.Entities.SettingCustomer.SMATurnover
 
         public string AddResultMessage { get; set; }
 
+        public int ErrorCode { get; set; }
+
+        public string ErrorMesage { get; set; }
+
         public List<UploadSMAListResult> FailedInfoList;
 
         public List<UploadSMAListResult> SucceededInfoList;

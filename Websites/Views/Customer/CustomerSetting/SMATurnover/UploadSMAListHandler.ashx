@@ -95,19 +95,29 @@ public class UploadSMAListHandler : IHttpHandler
 
                     if (addResult != null)
                     {
-                        addResult_Str = JsonConvert.SerializeObject(new
+                        if (addResult.ErrorCode == 0)
                         {
-                            ErrorCode = 0,
-                            ErrorMessage = string.Empty,
-                            ActionResult = JsonConvert.SerializeObject(addResult)
-                        });
-
-                        isValidParams = true;
+                            addResult_Str = JsonConvert.SerializeObject(new
+                            {
+                                ErrorCode = 0,
+                                ErrorMessage = string.Empty,
+                                ActionResult = JsonConvert.SerializeObject(addResult)
+                            });
+                        }
+                        else
+                        {
+                            addResult_Str = JsonConvert.SerializeObject(new
+                            {
+                                ErrorCode = addResult.ErrorCode,
+                                ErrorMessage = addResult.ErrorMesage,
+                                ActionResult = string.Empty
+                            });
+                        }
                     }
                 }
             }
         }
-        catch (Exception exp)
+        catch (Exception)
         {
             addResult_Str = "{" +
                            "\"ErrorCode\":\"" + 1 + "\"" +
