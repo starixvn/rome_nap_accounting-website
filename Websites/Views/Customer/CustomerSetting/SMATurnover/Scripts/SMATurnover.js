@@ -1077,21 +1077,20 @@
     refreshSMATurnoverList: function (getNewParams) {
         if (!SMATurnover.cachedData.isAddSMATab) {
             try { parent.BlockUI(); } catch (e) { }
+            SMATurnover.getReportParams(getNewParams);
+
+            $.ajax({
+                type: "POST",
+                url: "GetSMATurnoverList",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(SMATurnover.cachedData.reportParams),
+                success: function (rs) {
+                    SMATurnover.RenderReport(rs);
+                    try { parent.jQuery.unblockUI(); } catch (e) { }
+                }
+            });
         }
-
-        SMATurnover.getReportParams(getNewParams);
-
-        $.ajax({
-            type: "POST",
-            url: "GetSMATurnoverList",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: JSON.stringify(SMATurnover.cachedData.reportParams),
-            success: function (rs) {
-                SMATurnover.RenderReport(rs);
-                try { parent.jQuery.unblockUI(); } catch (e) { }
-            }
-        });
     },
     RenderReport: function (report) {
         var arr = [];
@@ -1193,8 +1192,8 @@
                     match.EventStatus.toLowerCase() != "completed") {
                     html += '<td class="rowLeague"><div class="col60" ><input type="button" class="colEdit btnAddSMA" value="Add SMA" onclick="SMATurnover.RedirectToAddSMA(\'' +
                     match.MatchId +
-                    '\',\'' + SMATurnover.cachedData.reportParams.fromDate +
-                    '\',\'' + SMATurnover.cachedData.reportParams.toDate +
+                    '\',\'' + match.EventDate +
+                    '\',\'' + match.EventDate +
                     '\',\'' + SMATurnover.cachedData.reportParams.sportId +
                     '\',\'' + row.LeagueId +
                     '\')"></div></td>';
@@ -1350,6 +1349,7 @@
         sportId,
         leagueId) {
         try { parent.BlockUI(); } catch (e) { }
+        SMATurnover.cachedData.isAddSMATab = true;
         $('#ListSMAContent').hide();
         $('#AddSMAContent').show();
         $('#ListSMATab').removeAttr('class');
@@ -1363,6 +1363,8 @@
             toDate,
             sportId,
             leagueId);
+
+        SMATurnover.BackToFilter_AddSMAList();
     },
     UpdateSMATurnoverProccess: function (custId, matchId, custName) {
         var maxTurnover = $("#txtMaxTurnover_" + matchId + "_" + custId).val();
