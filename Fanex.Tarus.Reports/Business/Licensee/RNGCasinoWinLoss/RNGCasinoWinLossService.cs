@@ -124,7 +124,7 @@ namespace Fanex.Tarus.Reports.Business.Licensee.RNGCasinoWinLoss
                 winlossResult.LicenseesGroup = new List<RNGCasinoWinLossGroup>();
                 #region local varialbles
                 var liceneeIndex = 0;
-                var casinoLibrary = new CasinoLibrary.SBAgent.Report();
+                var casinoLibrary = new CasinoLibrary.SBAgent.Report1();
 
                 var licenseesWinLoss = new RNGCasinoWinLossGroup();
                 licenseesWinLoss.RevenueInfo = new RNGCasinoWinLossDetail();
@@ -136,7 +136,7 @@ namespace Fanex.Tarus.Reports.Business.Licensee.RNGCasinoWinLoss
                              
                 foreach (Licensee licensee in licensees)
                 {
-                    var dtWinLoss = new DataTable();// casinoLibrary.SumTSTWinLossBySite(licensee.Id, CastAide.AsDateTime(fromDate), CastAide.AsDateTime(toDate), gameTypes);
+                    var dtWinLoss = casinoLibrary.SumTSTWinLossBySite(licensee.Id, CastAide.AsDateTime(fromDate), CastAide.AsDateTime(toDate), gameTypes);
                     
                     if (dtWinLoss != null && dtWinLoss.Rows.Count > 0)
                     {
