@@ -75,6 +75,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.NAP.Framework">
+      <HintPath>..\Dependency\Fanex\Fanex.NAP.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\IBCCrypt.dll</HintPath>
@@ -451,11 +454,11 @@
     <None Include="Report\Winlost\MatchWinLossSingle.cs.exclude" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\customer-setting\Fanex.Toco\Module\Fanex.Toco.Module.Core\Fanex.CustomerSetting.Module.Core.csproj">
+    <ProjectReference Include="..\..\..\MAIN\customer-setting\Fanex.Toco\Module\ProgressiveBonus\Fanex.CustomerSetting.Module.ProgressiveModule.csproj">
       <Project>{5EFF254F-0DEE-41BD-9D90-3FF4489D077F}</Project>
       <Name>Fanex.CustomerSetting.Module.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\customer-setting\Fanex.Toco\Module\ProgressiveBonus\Fanex.CustomerSetting.Module.ProgressiveModule.csproj">
+    <ProjectReference Include="..\..\..\MAIN\customer-setting\Fanex.Toco\Module\Fanex.Toco.Module.Core\_Core.csproj">
       <Project>{AF2E11AA-2A92-47AC-86FA-4D48B0AEB5D7}</Project>
       <Name>Fanex.CustomerSetting.Module.ProgressiveModule</Name>
     </ProjectReference>

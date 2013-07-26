@@ -15,7 +15,7 @@
     <link href="js/jQuery/message/jquery.msg.css" rel="stylesheet" type="text/css" />
 
     <script src="js/jQuery/jquery.js" type="text/javascript"></script>
-    <script src="js/jQuery/jquery.json-1.3.js" type="text/javascript"></script>
+    <script src="js/jQuery/jquery.json-1.3.js" type="text/javascript"></script>        
     <script type="text/javascript" src="js/jQuery/scrollbar/jquery.mousewheel.js"></script>
     <script type="text/javascript" src="js/jQuery/scrollbar/jScrollPane.js"></script>
     <script type="text/javascript" src="js/common.js?v=<%=AccCommon.Version() %>"></script>

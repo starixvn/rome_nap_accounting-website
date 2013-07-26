@@ -22,16 +22,17 @@
                <tbody>
                    <tr ng-repeat="product in products">
                        <td class="col-left">
-                           <input type="checkbox" name="BetTypes" ng-model="product.Enable" id="chk-bettype-{{product.Id}}" class="chkbettype" ng-change="parentChange(product)"/><label
+                           <input ng-init="product.preVal = product.Enable" type="checkbox" name="BetTypes" ng-model="product.Enable" ng-disabled="!product.EnableButton" id="chk-bettype-{{product.Id}}" class="chkbettype" ng-change="parentChange(product)"/><label
                                for="chk-bettype-{{product.Id}}">{{product.Name}}</label>
+                            <input type="hidden" id="hidden-bettype-{{product.Id}}" value="{{product.Enable}}" />
                        </td>
                        <td colspan="col-right" ng-hide="hideEnableDownlineLink()">
-                           <input type="checkbox" name="BetTypes" ng-model="product.EnableDownlines" id="chk-downline-{{product.Id}}" class="chkbettype" ng-disabled="!product.Enable"/><label
+                           <input type="checkbox" name="BetTypes" ng-model="product.EnableDownlines" ng-disabled="!product.EnableDownlinesButton" id="chk-downline-{{product.Id}}" class="chkbettype" /><label
                                for="chk-downline-{{product.Id}}">Enable downlines</label>
                        </td>                    
                    </tr>           
                    <tr>
-                    <td colspan="2" align="left">
+                    <td colspan="2" align="center">
                         <input type="button" value="Update" ng-click="update()" class="submitbutton"/>
                     </td>
                    </tr>

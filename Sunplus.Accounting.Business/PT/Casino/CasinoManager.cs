@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.Entities.Casino;
+using Fanex.CustomerSetting.Module.ProgressiveModule.Criteria;
+using Fanex.CustomerSetting.Module.ProgressiveModule.Repositories.Impl;
 
 namespace Sunplus.Accounting.Business.PT.Casino
 {
@@ -21,9 +23,20 @@ namespace Sunplus.Accounting.Business.PT.Casino
             {
                 Task.Factory.StartNew(() =>
                 {
-                      
+
                     bool EnableBonus = false;
                     bool EnableJackpot = false;
+
+                    var criteria = new GetAccProductCriteria();
+                    criteria.Username = userName;
+                    var progressive = new ProgressiveRepository();
+                    var progressiveStatus = progressive.GetStatusOfProgressiveBonus(criteria);
+
+                    if (progressiveStatus != null)
+                    {
+                        EnableBonus = !progressiveStatus.DisableCasinoBonus;
+                        EnableJackpot = !progressiveStatus.DisableCasinoJackpot;
+                    }
  
                     var isSuccess = casinoLibray.AutoInsertAccount(customerInfo.CasinoNo, customerInfo.IBCCustID,
                                                                     customerInfo.UserName, customerInfo.UserName2,

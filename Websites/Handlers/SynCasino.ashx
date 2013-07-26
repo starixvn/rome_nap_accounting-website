@@ -18,7 +18,8 @@ using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Core.LoggingLib;
-
+using Fanex.CustomerSetting.Module.ProgressiveModule.Repositories.Impl;
+using Fanex.CustomerSetting.Module.ProgressiveModule.Criteria;
 
 
 public class UpdateCSSetting : BaseHandler
@@ -228,6 +229,11 @@ public class UpdateCSSetting : BaseHandler
                 {
                     bPTByGameType = !bGameKindGroup;
                 }
+
+                var criteria = new GetAccProductCriteria();
+                criteria.Username = custInfo.UserName;
+                var progressive = new ProgressiveRepository();
+                var progressiveStatus = progressive.GetStatusOfProgressiveBonus(criteria);
                 
                 status = csCustomer.InsertCustSetting(
                      Globals.CASINO_GROUP1,
@@ -255,7 +261,12 @@ public class UpdateCSSetting : BaseHandler
                      custInfo.RoleId.ToString(),
                      DateTime.Now,
                      r.ServerVariables["REMOTE_ADDR"],
-                     AppSession.AccId, AppSession.Username, 3, bAutoReset
+                     AppSession.AccId,
+                     AppSession.Username,
+                     3, 
+                     bAutoReset,
+                     !progressiveStatus.DisableCasinoBonus,
+                     !progressiveStatus.DisableCasinoJackpot
                      );
 
                 if (!status)

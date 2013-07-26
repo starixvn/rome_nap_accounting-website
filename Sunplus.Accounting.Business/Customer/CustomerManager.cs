@@ -29,6 +29,7 @@ using Sunplus.Accounting.Entities.Customer;
 using Sunplus.Bingo.Core;
 using Result = Sunplus.Accounting.Entities.Result;
 
+
 /// <summary>
 /// Summary description for CustomerManager
 /// </summary>
@@ -2397,7 +2398,8 @@ namespace Sunplus.Accounting.Business.Customer
 			{
 				//System.Threading.Thread.Sleep(2000);
 				var csService = new PT.Casino.CasinoManager();
-				//custInfo.SiteName = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(custInfo.IBCCustID);
+				//custInfo.SiteName = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(custInfo.IBCCustID);                
+
 				csService.AutoInsertCasinoAccount(custInfo, userId, userName, ip);
 			}
 			if (uplineInfo.IsUplineSyncBingo)
