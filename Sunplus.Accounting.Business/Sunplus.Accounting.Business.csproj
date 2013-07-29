@@ -71,6 +71,12 @@
     <Reference Include="ExcelUtil">
       <HintPath>..\Dependency\ExcelUtil.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.CustomerSetting.Module.Core">
+      <HintPath>..\Dependency\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.CustomerSetting.Module.ProgressiveModule">
+      <HintPath>..\Dependency\Fanex.CustomerSetting.Module.ProgressiveModule.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Data, Version=1.0.111.9, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
@@ -454,14 +460,6 @@
     <None Include="Report\Winlost\MatchWinLossSingle.cs.exclude" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\MAIN\customer-setting\Fanex.Toco\Module\ProgressiveBonus\Fanex.CustomerSetting.Module.ProgressiveModule.csproj">
-      <Project>{5EFF254F-0DEE-41BD-9D90-3FF4489D077F}</Project>
-      <Name>Fanex.CustomerSetting.Module.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\MAIN\customer-setting\Fanex.Toco\Module\Fanex.Toco.Module.Core\_Core.csproj">
-      <Project>{AF2E11AA-2A92-47AC-86FA-4D48B0AEB5D7}</Project>
-      <Name>Fanex.CustomerSetting.Module.ProgressiveModule</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.BetList\Fanex.Tarus.BetList.csproj">
       <Project>{3C9E433C-4C0D-4CED-8FE7-26BC80894B0F}</Project>
       <Name>Fanex.Tarus.BetList</Name>
@@ -568,7 +566,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
+      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
