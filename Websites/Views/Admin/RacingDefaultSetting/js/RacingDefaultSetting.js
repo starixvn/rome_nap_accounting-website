@@ -1,27 +1,4 @@
-﻿$(document).ready(function () {
-    $("#selectSport").change(function () {
-        var index = $("#selectSport").val();
-        $("#selectTote").empty();
-        var sport = null;
-
-        $.each(sportListModel, function (i, item) {
-            if (item.SportID == index) {
-                sport = item;
-                return item;
-            }
-        });
-
-        $.each(sport.ToteList, function (i, item) {
-            $('#selectTote').append('<option value="'
-                                 + item.ToteID
-                                 + '">'
-                                 + item.ToteName
-                                 + '</option>');
-        });
-    });
-
-    racingDefaultSetting.selRacingDefaultSetting();
-});
+﻿
 
 var racingDefaultSetting = {
     params: {
@@ -50,6 +27,9 @@ var racingDefaultSetting = {
             data: racingDefaultSetting.params,
             success: function (result) {
                 $("#racingContent").html(result);
+                if ($.browser.msie && parseInt($.browser.version, 10) === 9) {
+                    $("#racingContent").html(racingDefaultSetting.removeSpecialCharactersForIE9($("#racingContent").html()));
+                }
                 $("#Rarcing").initGrid(racingDefaultSetting.gridOpts);
                 $('#Rarcing').removeClass("display-none").gridScroller(racingDefaultSetting.gridOpts);
             },
@@ -110,7 +90,7 @@ var racingDefaultSetting = {
                     showAlertMessage("err", "Updated successful.", 0);
                     setTimeout("racingDefaultSetting.selRacingDefaultSetting()", 2000);
                 }
-                else{
+                else {
                     $('#err').show();
                     showAlertMessage("err", "Updated fail.", 1);
                 }
@@ -177,5 +157,35 @@ var racingDefaultSetting = {
             }
         });
 
+    },
+    removeSpecialCharactersForIE9: function (content) {
+        var expr = new RegExp('>[ \t\r\n\v\f]*<', 'g');
+        var html = content.replace(expr, '><');
+        return html;
     }
-}
+};
+
+$(document).ready(function () {
+    $("#selectSport").change(function () {
+        var index = $("#selectSport").val();
+        $("#selectTote").empty();
+        var sport = null;
+
+        $.each(sportListModel, function (i, item) {
+            if (item.SportID == index) {
+                sport = item;
+                return item;
+            }
+        });
+
+        $.each(sport.ToteList, function (i, item) {
+            $('#selectTote').append('<option value="'
+                                 + item.ToteID
+                                 + '">'
+                                 + item.ToteName
+                                 + '</option>');
+        });
+    });
+
+    racingDefaultSetting.selRacingDefaultSetting();
+});
