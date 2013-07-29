@@ -674,7 +674,7 @@
         SMATurnover.cachedData.txtfromdate = $('#txtfromdate');
         SMATurnover.cachedData.txttodate = $('#txttodate');
 
-        SMATurnover.cachedData.fileUpload = $('#fileUpload');
+        SMATurnover.cachedData.fileUpload = $('#file_UploadFile');
         SMATurnover.cachedData.btnUploadFile = $('#btnUploadFile');
         SMATurnover.cachedData.msgErrorAdd = $('#msgErrorAdd');
         SMATurnover.cachedData.ddlSport_AddSMAList = $('#ddlSport_AddSMAList');
@@ -1354,6 +1354,10 @@
         $('#AddSMAContent').show();
         $('#ListSMATab').removeAttr('class');
         $('#AddSMATab').attr('class', 'current');
+        SMATurnover.cachedData.fileUpload.val("");
+        var fileUploader = SMATurnover.cachedData.fileUpload;
+        fileUploader.after('<input id="file_UploadFile" name="file_UploadFile" size="85" type="file" />').remove();
+        SMATurnover.cachedData.fileUpload = $('#file_UploadFile');
 
         SMATurnover.cachedData.txtfromdate_AddSMAList.datepicker("setDate", fromDate);
         SMATurnover.cachedData.txttodate_AddSMAList.datepicker("setDate", toDate);
