@@ -74,7 +74,7 @@
                                             style="margin-left: 25px">
                                         </select>
                                         <span style="padding-left: 22px"></span><b>Bet type</b>
-                                        <select class="ddl w120 LeagueControl" id="ddlbettype" onchange="filterManager.getSelectLeagues();"
+                                        <select class="ddl w220 LeagueControl" id="ddlbettype" onchange="filterManager.getSelectLeagues();"
                                             style="margin-left: 8px">
                                         </select>
                                         <span style="padding-left: 22px"></span><b>Currency</b>

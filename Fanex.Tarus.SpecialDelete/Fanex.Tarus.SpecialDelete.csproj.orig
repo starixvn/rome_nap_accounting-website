@@ -59,12 +59,8 @@
     <Reference Include="Fanex.MailDeliver.MailClient">
       <HintPath>..\Dependency\Fanex\Fanex.MailDeliver.MailClient.dll</HintPath>
     </Reference>
-<<<<<<< HEAD
     <Reference Include="IBCUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-=======
-    <Reference Include="IBCUtils">
->>>>>>> ref dlls
       <HintPath>..\Dependency\IBCUtils.dll</HintPath>
     </Reference>
     <Reference Include="LVAPIDBLibrary">

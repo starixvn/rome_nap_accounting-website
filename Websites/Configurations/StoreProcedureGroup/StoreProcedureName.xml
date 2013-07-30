@@ -29,7 +29,7 @@
     <Setting Key="DailyWLDirectRacing_14" SpName="Acc_Rpt_DailyWLDirect_Racing14" DbName="warehouse" />
     <Setting Key="DailyWLDirectRacing_WH" SpName="Acc_Rpt_DailyWLDirect_Racing" DbName="punter" />
     <Setting Key="DailyWLDirectRacingBySport" SpName="Acc_Rpt_DailyWLDirect_RacingBySport" DbName="warehouse" />
-    <Setting Key="DailyWLDirectRacingBySport_14" SpName="Acc_Rpt_DailyWLDirect_RacingBySport14" DbName="warehouse" />
+    <Setting Key="DailyWLDirectRacingBySport_14" SpName="Acc_Rpt_DailyFWLDirect_RacingBySport14" DbName="warehouse" />
     <Setting Key="DailyWLDirectRacingBySport_WH" SpName="Acc_Rpt_DailyWLDirect_RacingBySport" DbName="punter" />
     <Setting Key="DailyWLDirectRacingBySportDetails" SpName="Acc_Rpt_DailyWLDirect_RacingBySport_Details" DbName="warehouse" />
     <Setting Key="DailyWLDirectRacingBySportDetails_14" SpName="Acc_Rpt_DailyWLDirect_RacingBySport_Details14" DbName="warehouse" />
@@ -154,13 +154,13 @@
   </Function>
 
   <Function Name="Live Casino - Special Delete - Recover Bet">
-    <Setting Key="Acc_BettransSelSpecialDel_LiveCS" SpName="Acc_BettransSelSpecialDel_LiveCS_xtest" DbName="db053" />
+    <Setting Key="Acc_BettransSelSpecialDel_LiveCS" SpName="Acc_BettransSelSpecialDel_LiveCS" DbName="db053" />
     <Setting Key="Acc_BettransCheckNegativeBetCredit" SpName="Acc_BettransCheckNegativeBetCredit" DbName="main" />
     <Setting Key="Acc_BettransDelSpecial_LiveCS" SpName="Acc_BettransDelSpecial_LiveCS" DbName="DBTXN.BODB02" />
     <Setting Key="TP_Controller_MiniBac_SpecialDelete" SpName="TP_Game_MiniBac_SpecialDelete" DbName="LV_MainDB" Plain="1"/>
     <Setting Key="Acc_SpecialDel_CheckMatchIDwithRefno" SpName="Acc_SpecialDel_CheckMatchIDwithRefno" DbName="db053" />
 
-    <Setting Key="Acc_Get_LiveCasino_RecoverBet" SpName="Acc_BettransSelRecoverBet_LiveCS_xtest" DbName="db053" />
+    <Setting Key="Acc_Get_LiveCasino_RecoverBet" SpName="Acc_BettransSelRecoverBet_LiveCS" DbName="db053" />
     <Setting Key="Acc_Get_LiveCasinoGameByID" SpName="Acc_LiveCS_SelGameByID" DbName="db053" />
     <Setting Key="Acc_Set_LiveCasino_RecoverBet" SpName="Acc_BettransRecoverBet_LiveCS" DbName="DBTXN.BODB02" />
     <Setting Key="TP_Controller_MiniBac_RecoverBet" SpName="TP_Game_MiniBac_RecoverBet" DbName="LV_MainDB" Plain="1"/>
@@ -557,12 +557,13 @@
 
   </Function>
   <Function Name="Report - Licensee">
+    <Setting Key="GetGameType" SpName="Acc_LiveCasinoGetGameType" DbName="archive"  />
+    <Setting Key="GetLicenseesByResellers" SpName="Acc_LicenseeByResellerSel" DbName="licensee"  />
     <Setting Key="GetLicenseesByResellers" SpName="Acc_LicenseeByResellerSel" DbName="licensee"  />
     <Setting Key="GetLiveCasinoWLByLicensee" SpName="Acc_Rpt_LicLiveCasinoWinloss" DbName="archive"  />
     <Setting Key="NumberGameWinlossByLicensee" SpName="Acc_Rpt_LicNumberGameWinloss" DbName="archive"  />
     <Setting Key="GetSportTypeVirtualSport" SpName="Acc_SporttypeGetVirtualSport" DbName="archive"  />
     <Setting Key="VirtualSportWinlossByLicensee" SpName="Acc_Rpt_LicVirtualSportWinloss" DbName="archive"  />
-
     <Setting Key="OA_Get_ResellerProductCharge" SpName="OA_Get_ResellerProductCharge" DbName="archive"  />
   </Function>
 

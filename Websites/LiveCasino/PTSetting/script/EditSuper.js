@@ -194,7 +194,7 @@ var editSuper = {
             }
         }
         if (ok) {
-            //editSuper.updateCustomerSyncInfo();
+            editSuper.updateCustomerSyncInfo();
             var t = setTimeout(function () {
                 editSuper.getSettings();
             }, 3000);
