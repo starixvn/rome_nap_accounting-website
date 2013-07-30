@@ -28,6 +28,8 @@ using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Accounting.Entities.Customer;
 using Sunplus.Bingo.Core;
 using Result = Sunplus.Accounting.Entities.Result;
+using Fanex.CustomerSetting.Module.ProgressiveModule.Repositories.Impl;
+using Fanex.CustomerSetting.Module.ProgressiveModule.Criteria;
 
 
 /// <summary>
@@ -612,11 +614,7 @@ namespace Sunplus.Accounting.Business.Customer
 							//Limit per IP
 							if (roleId < 2) //Member
 							{
-								TemplateHandler.Assign(ref htmlcontent, "{LimitPerIP}", "");
-								//TemplateHandler.RemoveBlock(ref strLimitPerIP, "IsUpdateDL");
-								//TemplateHandler.Assign(ref strLimitPerIP, "{disabledDL}", currentLimitPerIP > 0 ? " disabled='true' " : "");
-								//TemplateHandler.Assign(ref strLimitPerIP, "{jsonclick}", "");
-								//TemplateHandler.Assign(ref strLimitPerIP, "{classname}", "");
+								TemplateHandler.Assign(ref htmlcontent, "{LimitPerIP}", "");								
 							}
 							else
 							{
@@ -713,7 +711,7 @@ namespace Sunplus.Accounting.Business.Customer
 
 							#region Progressive Bonus
 
-							bool isAllowProgressiveBonus = isManageCustomerAccess && IsAllowEditProgressiveBonus(parentId, _custparent.IsDisableCasinoBonus);
+                            bool isAllowProgressiveBonus = isManageCustomerAccess && IsAllowEditProgressiveBonus(parentId, custId);
 							if (isAllowProgressiveBonus)
 							{
 								Fanex.CustomerSetting.Module.Core.Web.AppSession.RequestUsername = userName;
@@ -2443,7 +2441,7 @@ namespace Sunplus.Accounting.Business.Customer
 			}
 		}
 
-		private static bool IsAllowEditProgressiveBonus(int parentId, bool disableProgressiveBonus)
+		private static bool IsAllowEditProgressiveBonus(int parentId, int custId)
 		{
 			bool webSetting = ProgressiveSection.Instance.Active;
 			if (!webSetting)
@@ -2455,8 +2453,11 @@ namespace Sunplus.Accounting.Business.Customer
 			{
 				return true;
 			}
+            var progressiveStatus = new ProgressiveRepository().GetStatusProgressiveBonus(new GetProductCriteria() {
+                CustId = custId
+            });
 
-			return !disableProgressiveBonus;
+            return !progressiveStatus.DisableUplinesCasinoBonus;
 		}
 	}
 }

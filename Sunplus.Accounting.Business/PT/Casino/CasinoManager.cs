@@ -26,19 +26,6 @@ namespace Sunplus.Accounting.Business.PT.Casino
 
                     bool EnableBonus = false;
                     bool EnableJackpot = false;
-
-					var criteria = new GetProductCriteria
-					{
-						CustId = userId
-					};
-                    var progressive = new ProgressiveRepository();
-                    var progressiveStatus = progressive.GetStatusProgressiveBonus(criteria);
-
-                    if (progressiveStatus != null)
-                    {
-                        EnableBonus = !progressiveStatus.DisableCasinoBonus;
-                        EnableJackpot = !progressiveStatus.DisableCasinoJackpot;
-                    }
  
                     var isSuccess = casinoLibray.AutoInsertAccount(customerInfo.CasinoNo, customerInfo.IBCCustID,
                                                                     customerInfo.UserName, customerInfo.UserName2,

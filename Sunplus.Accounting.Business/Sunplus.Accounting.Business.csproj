@@ -454,12 +454,12 @@
     <None Include="Report\Winlost\MatchWinLossSingle.cs.exclude" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\customer-setting\Fanex.Toco\Module\ProgressiveBonus\Fanex.CustomerSetting.Module.ProgressiveModule.csproj">
-      <Project>{5EFF254F-0DEE-41BD-9D90-3FF4489D077F}</Project>
-      <Name>Fanex.CustomerSetting.Module.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\customer-setting\Fanex.Toco\Module\Fanex.Toco.Module.Core\Fanex.CustomerSetting.Module.Core.csproj">
+    <ProjectReference Include="..\..\..\MAIN\customer-setting\Fanex.Toco\Module\Fanex.Toco.Module.Core\_Core.csproj">
       <Project>{AF2E11AA-2A92-47AC-86FA-4D48B0AEB5D7}</Project>
+      <Name>_Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\MAIN\customer-setting\Fanex.Toco\Module\ProgressiveBonus\Fanex.CustomerSetting.Module.ProgressiveModule.csproj">
+      <Project>{5EFF254F-0DEE-41BD-9D90-3FF4489D077F}</Project>
       <Name>Fanex.CustomerSetting.Module.ProgressiveModule</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.BetList\Fanex.Tarus.BetList.csproj">
@@ -568,7 +568,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -229,11 +229,6 @@ public class UpdateCSSetting : BaseHandler
                 {
                     bPTByGameType = !bGameKindGroup;
                 }
-
-                var criteria = new GetProductCriteria();
-                criteria.Username = custInfo.UserName;
-                var progressive = new ProgressiveRepository();
-                var progressiveStatus = progressive.GetStatusProgressiveBonus(criteria);
                 
                 status = csCustomer.InsertCustSetting(
                      Globals.CASINO_GROUP1,
@@ -265,8 +260,8 @@ public class UpdateCSSetting : BaseHandler
                      AppSession.Username,
                      3, 
                      bAutoReset,
-                     !progressiveStatus.DisableCasinoBonus,
-                     !progressiveStatus.DisableCasinoJackpot
+                     false,//EnableCasinoBonus
+                     false//EnableCasinoJackpot
                      );
 
                 if (!status)

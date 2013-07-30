@@ -393,8 +393,6 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                     CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["disablevirtualsports"], false) : false;
                 _cust.IsEnableDoubleCommLosing = WebSettings.OfferDoubleComm ? (CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DoubleCommLosing"],false)): false;
 
-				_cust.IsDisableCasinoBonus = CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["disablecasinobonus"], false);
-
                 return _cust;
             }
             catch (Exception ex)
