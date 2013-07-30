@@ -712,12 +712,7 @@ namespace Sunplus.Accounting.Business.Customer
 							#region Progressive Bonus
 
                             bool isAllowProgressiveBonus = isManageCustomerAccess && IsAllowEditProgressiveBonus(parentId, custId);
-							if (isAllowProgressiveBonus)
-							{
-								Fanex.CustomerSetting.Module.Core.Web.AppSession.RequestUsername = userName;
-								Fanex.CustomerSetting.Module.Core.Web.AppSession.RequestRoleId = roleId;
-							}
-							else
+							if (!isAllowProgressiveBonus)							
 							{
 								TemplateHandler.RemoveBlock(ref htmlcontent, "ProgressiveBonus");
 							}
