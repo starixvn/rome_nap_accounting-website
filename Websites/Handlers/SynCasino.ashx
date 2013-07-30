@@ -230,10 +230,10 @@ public class UpdateCSSetting : BaseHandler
                     bPTByGameType = !bGameKindGroup;
                 }
 
-                var criteria = new GetAccProductCriteria();
+                var criteria = new GetProductCriteria();
                 criteria.Username = custInfo.UserName;
                 var progressive = new ProgressiveRepository();
-                var progressiveStatus = progressive.GetStatusOfProgressiveBonus(criteria);
+                var progressiveStatus = progressive.GetStatusProgressiveBonus(criteria);
                 
                 status = csCustomer.InsertCustSetting(
                      Globals.CASINO_GROUP1,
