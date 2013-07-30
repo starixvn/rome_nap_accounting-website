@@ -1,4 +1,4 @@
-﻿@model dynamic
+﻿@model int?
 
 @{
     ViewBag.Title = "title";
@@ -7,6 +7,7 @@
 
 <div class="span5">
    <div class="filter-bar">
+		<input id="txtCustId" type="hidden" value="@(Model.HasValue ? Model.Value : 0)"/>
        <div class="filter-row tick-list progressive-box" ng-controller="ProgressiveBonusController" ng-app="ProgressiveBonus" id="ng-app">
 			<div id="err">
 				<div ng-class="getClass()"><div>{{error.ErrorMessage}}</div></div>
