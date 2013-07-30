@@ -53,6 +53,57 @@ function OpenPopup(url, title, width, height, modal, resizable, currWindow, dura
 
 }
 
+
+function OpenNextPopup(popupId, url, title, width, height, modal, resizable, currWindow, duration, fnRecall, fnOnClose) {
+
+    var dialoghtml = jQuery('<div id="dialog-modal' + popupId + '" title="' + title + '" style=" overflow:hidden"></div>');
+    if (url != "") {
+        var iframe = jQuery('<iframe id="innerFrame' + popupId + '" />').attr({ "frameborder": "0", "scrolling": "auto" }).appendTo(dialoghtml);
+    }
+
+    dialoghtml.appendTo(jQuery("body"));
+
+
+    jQuery('#dialog-modal' + popupId).dialog({
+        resizable: resizable,
+        modal: modal,
+        width: width,
+        height: height,
+        autoOpen: false,
+        zIndex: 9999999,
+        open: function (event, ui) {
+            jQuery("#innerFrame" + popupId).attr({ "src": url }).css({ "height": jQuery(this).css("height"), "width": jQuery(this).css("width") });
+        },
+        dragStart: function (event, ui) {
+            jQuery("#innerFrame" + popupId).hide();
+        },
+        dragStop: function (event, ui) {
+            jQuery("#innerFrame" + popupId).css({ "height": jQuery(this).css("height"), "width": jQuery(this).css("width") }).show();
+        },
+        resizeStart: function (event, ui) {
+            jQuery("#innerFrame" + popupId).hide();
+        },
+        resizeStop: function (event, ui) {
+            jQuery("#innerFrame" + popupId).css({ "height": jQuery(this).css("height"), "width": jQuery(this).css("width") }).show();
+        },
+        close: function (event, ui) {
+            if (currentExecFrame != null && currentExecFrame.onclose) {
+                currentExecFrame.onclose();
+                setTimeout('currentExecFrame=null;', 500);
+            }
+        }
+    });
+
+    jQuery("#dialog-modal" + popupId).dialog("open");
+    if (currWindow != null) {
+        currentExecFrame = currWindow;
+        currentExecFrame.duration = duration;
+        if (fnRecall) currentExecFrame.callback = fnRecall;
+        if (fnOnClose) currentExecFrame.onclose = fnOnClose;
+    }
+}
+
+
 function ClosePopup() {
     //$("#dialog-modal").dialog("destroy").remove();
     $("#dialog-modal").dialog('close');

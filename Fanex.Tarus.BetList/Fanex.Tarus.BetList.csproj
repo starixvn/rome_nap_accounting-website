@@ -43,7 +43,17 @@
       <HintPath>..\Dependency\DNAide.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.BetList.Accounting, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex\Fanex.BetList.Accounting.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.BetList.Age">
+      <HintPath>..\Dependency\Fanex\Fanex.BetList.Age.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.BetList.Core">
+      <HintPath>..\Dependency\Fanex\Fanex.BetList.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.BetList.Core.TicketHelper">
+      <HintPath>..\Dependency\Fanex\Fanex.BetList.Core.TicketHelper.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -80,27 +90,15 @@
   <ItemGroup>
     <Compile Include="Business\NumberGame\INumberWheelService.cs" />
     <Compile Include="Business\NumberGame\NumberWheelService.cs" />
-    <Compile Include="Business\ScoreInformation\IScoreInformationService.cs" />
-    <Compile Include="Business\ScoreInformation\ScoreInformationService.cs" />
     <Compile Include="Business\SportingSolutions\ISportingSolutionsService.cs" />
     <Compile Include="Business\SportingSolutions\SportingSolutionsService.cs" />
     <Compile Include="Constants\BetListContants.cs" />
-    <Compile Include="Controller\ScoreInformationController.cs" />
     <Compile Include="Controller\TarusBetListController.cs" />
-    <Compile Include="Criteria\ScoreInformation\GetScoreInformationCriteria.cs" />
     <Compile Include="Criteria\SportingSolutions\GetSportingSolutionsResultCriteria.cs" />
     <Compile Include="DataAccess\ReportDataAccess.cs" />
-    <Compile Include="DataAccess\ScoreInformation\IScoreInformationDataAccess.cs" />
-    <Compile Include="DataAccess\ScoreInformation\ScoreInformationDataAccess.cs" />
     <Compile Include="DataAccess\SportingSolutions\ISportingSolutionsDataAccess.cs" />
     <Compile Include="DataAccess\SportingSolutions\SportingSolutionsDataAccess.cs" />
     <Compile Include="Entities\NumberGame\NumberWheelChoice.cs" />
-    <Compile Include="Entities\ScoreInformation\BadmintonInfo.cs" />
-    <Compile Include="Entities\ScoreInformation\BaseballInfo.cs" />
-    <Compile Include="Entities\ScoreInformation\BasketballInfo.cs" />
-    <Compile Include="Entities\ScoreInformation\ScoreInfo.cs" />
-    <Compile Include="Entities\ScoreInformation\TennisInfo.cs" />
-    <Compile Include="Entities\ScoreInformation\TwoTimesMatchInfo.cs" />
     <Compile Include="Entities\SportingSolutions\SetX_Info.cs" />
     <Compile Include="Helper\ChoiceHelper.cs" />
     <Compile Include="Helper\ReportServices.cs" />

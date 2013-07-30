@@ -5,7 +5,7 @@
         CustID: null,
         Bettype: 0,
         PageIndex: 1,
-        PageSize: 30,
+        PageSize: 100,
         IsCache: false
     },
     paramGetBetBetlistbyRefno: {
@@ -25,8 +25,8 @@
         fullHeight: true,
         gridWidth: 980, //=totalColumnWidth + totalColumn*4 +totalColumn
         gridHeight: 120,
-        freezeWidth: 410, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
-        numberFreezeCol: 3
+        freezeWidth: 0, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
+        numberFreezeCol: 0
     },
     eventGridOpts: {
         tblContentId: 'tblContent',
@@ -42,14 +42,16 @@
         callback: null,
         start_per_page: 10,
         step_per_page: 10,
-        max_items_per_page: 100,
-        items_per_page: 30,
+        item_per_page_arr: [50, 100, 150, 200],
+        max_items_per_page: 200,
+        items_per_page: 50,
         current_page: 1
     },
 
     getBetListSystemParlay: function () {
         BetListByCustInfo.paramGetBetlistSystemParlay.CustID = _custID;
         BetListByCustInfo.paramGetBetlistSystemParlay.TransID = $('#txtRefNoSystemParaly').val();
+      
         try { parent.BlockUI(); } catch (e) { }
         $.ajax({
             type: "POST",
@@ -80,8 +82,9 @@
     },
 
 
-    getBetListByCustInfo: function () {
+    getBetListByCustInfo: function (isCache) {
         var params = BetListByCustInfo.getParams();
+        BetListByCustInfo.paramGetBetBetlist.IsCache = isCache;
         try { parent.BlockUI(); } catch (e) { }
         $.ajax({
             type: "POST",
@@ -92,17 +95,7 @@
                 $("#betListContent").html(result);
                 $("#BetlistByCustInfo").initGrid(BetListByCustInfo.gridOpts);
                 $('#BetlistByCustInfo').removeClass("display-none").gridScroller(BetListByCustInfo.gridOpts);
-                BetListByCustInfo.initPager(_length, BetListByCustInfo.paramGetBetBetlist.PageSize, BetListByCustInfo.paramGetBetBetlist.PageIndex - 1);
-
-                for (var i = 0; i < _arrayTransID.length; i++) {
-                    var heightChoice = $("#choice_left_" + _arrayTransID[i]).height();
-                    var heightStatus = $("#stautus_" + _arrayTransID[i]).height();
-                    var heightComm = $("#comm_" + _arrayTransID[i]).height();
-                    var heightRight = heightStatus > heightComm ? heightStatus : heightComm;
-                    if (heightRight > heightChoice) {
-                        $("#choice_left_" + _arrayTransID[i]).attr('style', 'height:' + heightRight + 'px');
-                    }
-                }
+                BetListByCustInfo.initPager(_length, BetListByCustInfo.paramGetBetBetlist.PageSize, BetListByCustInfo.paramGetBetBetlist.PageIndex - 1);    
             },
             error: function () {
                 try { parent.jQuery.unblockUI(); } catch (e) { }
@@ -124,7 +117,7 @@
             else {
                 BetListByCustInfo.paramGetBetBetlist.IsCache = false;
                 BetListByCustInfo.paramGetBetBetlist.PageIndex = 1;
-                BetListByCustInfo.paramGetBetBetlist.PageSize = 30;
+                BetListByCustInfo.paramGetBetBetlist.PageSize = 100;
             }
             BetListByCustInfo.paramGetBetBetlist.FromDate = fromDateTmp;
             BetListByCustInfo.paramGetBetBetlist.ToDate = toDateTmp;
@@ -172,7 +165,8 @@
                 }
             },
             error: function (event, jqXHR, ajaxSettings) {
-                BetListByCustInfo.renderBettypesDropdown([]);
+
+                try { parent.jQuery.unblockUI(); } catch (e) { }
             },
             complete: function () {
                 try { parent.jQuery.unblockUI(); } catch (e) { }
@@ -209,7 +203,7 @@
 
         BetListByCustInfo.paramGetBetBetlist.PageIndex = page_index + 1;
         BetListByCustInfo.paramGetBetBetlist.PageSize = _items_per_page;
-        BetListByCustInfo.getBetListByCustInfo();
+        BetListByCustInfo.getBetListByCustInfo(true);
         return false;
     },
     viewSystemParlayTab: function () {
@@ -294,14 +288,6 @@ function showMP(transid, refno) {
                 var idTdParent = $(this).parent().parent().attr('id');
                 $("#" + idTdParent).addClass("isShow");
                 $("#BetlistByCustInfo").gridScroller(BetListByCustInfo.gridOpts);
-
-                var heightChoice = $("#choice_left_" + transid).height();
-                var heightStatus = $("#stautus_" + transid).height();
-                var heightComm = $("#comm_" + transid).height();
-                var heightRight = heightStatus > heightComm ? heightStatus : heightComm;
-                if (heightRight > heightChoice) {
-                    $("#choice_left_" + transid).attr('style', 'height:' + heightRight + 'px');
-                }
             });
         }
         else {
@@ -347,7 +333,7 @@ function showCombMP(transid, custid, refno) {
 head.ready(function (event) {
     Helper.renderCalendarFromTo("#txtfromdate, #txttodate");
     Helper.range_date();
-    BetListByCustInfo.getBetListByCustInfo();
+    BetListByCustInfo.getBetListByCustInfo(false);
     BetListByCustInfo.getBettyes();
     $("#txtRefNo").attr("disabled", "disabled");
 });

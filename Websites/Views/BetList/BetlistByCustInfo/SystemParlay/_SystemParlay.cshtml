@@ -14,49 +14,12 @@
         int i = 0;
         foreach (var betdetail in Model.TicketsDetailList)
         {
-            result[0] += renderRowHeader(betdetail, NumberBegining);
             result[1] += renderContent(betdetail, NumberBegining);
             arrTransID[i++] = betdetail.Ticket.TransId;
             NumberBegining++;
         }
         return result;
     }
-}
-@helper renderRowHeader(TicketDetail betdetail, int NumberBegining)
-    {
-    <tr class="c">
-        <td>
-            <div class="c width30 table-cell">
-                @NumberBegining
-            </div>
-        </td>
-        <td class="c">
-            <div class="width120 table-cell">
-                <div class="refno ">
-                    @if (betdetail.Ticket.BetTypeId == 71)
-                    {
-                        <span>No: @betdetail.Ticket.RefNo </span>
-                    }
-                    else
-                    {
-                        <span>Ref No: @betdetail.Ticket.TransId </span>
-                    }
-                </div>
-                <div class="c">
-                    @betdetail.Ticket.TransDate</div>
-            </div>
-        </td>
-        <td id ="td_left_@betdetail.Ticket.TransId"  class='r bl_evt'>
-            <div id="choice_left_@betdetail.Ticket.TransId" class="width270 table-cell">
-                @Html.Raw(betdetail.ChoiceHtml)
-                @if (betdetail.Ticket.BetTypeId == 9 || betdetail.Ticket.BetTypeId == 29)
-                {
-                    <div class="parlay_@betdetail.Ticket.TransId">
-                    </div>
-                }
-            </div>
-        </td>
-    </tr>
 }
 @helper renderContent(TicketDetail betdetail, int NumberBegining)
     {
@@ -68,9 +31,17 @@
         </td>
         <td class="c">
             <div class="width120">
-                <div class="refno table-cell">
-                    Ref No: @betdetail.Ticket.TransId</div>
-                <div class="c table-cell">
+                  <div class="refno ">
+                    @if (betdetail.Ticket.BetTypeId == 71)
+                    {
+                        <span>No: @betdetail.Ticket.RefNo </span>
+                    }
+                    else
+                    {
+                        <span>Ref No: @betdetail.Ticket.TransId </span>
+                    }
+                </div>
+                <div class="c">
                     @betdetail.Ticket.TransDate</div>
             </div>
         </td>
@@ -135,124 +106,6 @@
  
 }
 <div id="BetlistSystemParlay" class="freegrid display-none">
-    <div class="free-cell free-top-left">
-        <table class="grid-fixed-table free-cell-top-left">
-            <thead>
-                <tr>
-                    <th>
-                        <div class="width30 height34 table-cell">
-                            No</div>
-                    </th>
-                    <th>
-                        <div class="width120 height34 table-cell">
-                            Date</div>
-                    </th>
-                    <th>
-                        <div class="width270 height34 table-cell">
-                            Choice</div>
-                    </th>
-                </tr>
-            </thead>
-        </table>
-    </div>
-    <div class="row_header_wrapper">
-        <div class="row_header row-headers-background">
-            <table class="grid-fixed-table row_header_content" id="tblContentHeader">
-                <thead>
-                    <tr>
-                        <th>
-                            <div class="width30 height34 table-cell">
-                                No</div>
-                        </th>
-                        <th>
-                            <div class="width120 height34 table-cell">
-                                Date</div>
-                        </th>
-                        <th>
-                            <div class="width270 height34 table-cell">
-                                Choice</div>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Model.TicketsDetailList.Count > 0)
-                    {
-                        @MvcHtmlString.Create(renderResult[0])
-                    }
-                    else
-                    { 
-                        <tr class="c">
-                            <td colspan="3" class="none-border-right">
-                                <div class="c b">
-                                    &nbsp;
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="col_header row-headers-background scroll-y">
-        <div class="header-container">
-            <table class="grid-fixed-table col_header_content">
-                <thead>
-                    <tr>
-                        <th>
-                            <div class="width30 height34 table-cell">
-                                No</div>
-                        </th>
-                        <th>
-                            <div class="width120 height34 table-cell">
-                                Date</div>
-                        </th>
-                        <th>
-                            <div class="width270 height34 table-cell">
-                                Choice</div>
-                        </th>
-                        <th>
-                            <div class="width60 height34 table-cell">
-                                Odds</div>
-                        </th>
-                        <th>
-                            <div class="width50 height34 table-cell">
-                                Stake</div>
-                        </th>
-                        <th>
-                            <div class="width60 height34 table-cell">
-                                Win Loss</div>
-                        </th>
-                        <th>
-                            <div class="width100 height34 table-cell">
-                                Status</div>
-                        </th>
-                        <th>
-                            <div class="width60 height34 table-cell">
-                                Super
-                                <br />
-                                PT/Comm</div>
-                        </th>
-                        <th>
-                            <div class="width60 height34 table-cell">
-                                Master
-                                <br />
-                                PT/Comm</div>
-                        </th>
-                        <th>
-                            <div class="width60 height34 table-cell">
-                                Agent
-                                <br />
-                                PT/Comm</div>
-                        </th>
-                        <th>
-                            <div class="width30 height34 table-cell">
-                                Del</div>
-                        </th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
-    </div>
     <div class="grid-container container">
         <div class="content-container">
             <table id="tblContent" class="grid-fixed-table col_header_content ">
@@ -339,4 +192,5 @@
 <script type="text/javascript">
 
    var _arrayTransID = @serializer.Serialize(arrTransID);
+    var _length = @ViewBag.Quantity;
 </script>

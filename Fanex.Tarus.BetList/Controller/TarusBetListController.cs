@@ -14,11 +14,11 @@ namespace Fanex.Tarus.BetList.Controller
     using System.Reflection;
     using System.Web;
     using System.Web.Mvc;
+    using Fanex.BetList.Accounting;
     using Fanex.BetList.Accounting.Criteria;
     using Fanex.BetList.Accounting.Models;
     using Fanex.BetList.Accounting.Services;
     
-    using Fanex.BetList.Accounting;
     using Sunplus.Accounting.Core.Common;
 
     using DNAide.Core;
@@ -86,8 +86,11 @@ namespace Fanex.Tarus.BetList.Controller
 
 
  
-        public ActionResult BetListByIP()
+        public ActionResult BetListByIP(bool IsLink, string FromDate, string IP)
         {
+            ViewBag.FromDate = FromDate;
+            ViewBag.Ip= IP;
+            ViewBag.IsLink = IsLink;
             return View("~/Views/BetList/BetListByIP/Index.cshtml");
         }
     }
