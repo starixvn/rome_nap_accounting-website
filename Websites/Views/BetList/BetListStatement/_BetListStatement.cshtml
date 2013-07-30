@@ -55,7 +55,8 @@
 }
 @helper renderContent(TicketDetail betdetail, int NumberBegining)
     {
-    <tr class="c">
+        var liveRow = betdetail.Ticket.IsLive ? "event-live" : string.Empty;
+    <tr class="c @liveRow">
         <td>
             <div class="c width30">
                 @NumberBegining

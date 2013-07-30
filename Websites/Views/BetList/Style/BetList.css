@@ -385,3 +385,7 @@ table#tbl-content td {
 
 div.ticketList div.void span, div.ticketList div.void div{text-decoration: line-through;}
 div.ticketList div.void > div.match, div.ticketList div.void div.firstGoal, div.ticketList div.void div.lastGoal{text-decoration: none;}
+
+.event-live {
+    background: none repeat scroll 0 0 #FFFFCC;
+}
