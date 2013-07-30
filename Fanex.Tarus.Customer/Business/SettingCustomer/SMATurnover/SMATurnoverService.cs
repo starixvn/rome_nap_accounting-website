@@ -60,7 +60,7 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
             return sportList;
         }
 
-        public List<League> GetLeague(int sportType, 
+        public List<League> GetLeague(int sportType,
             DateTime fromDate,
             DateTime toDate,
             bool isGetList)
@@ -585,6 +585,7 @@ namespace Fanex.Tarus.Customer.Business.SettingCustomer.SMATurnover
                        smaInfo.MaxTurnover.ToString().Trim());
 
                 smaListXMLString += "<SMA ";
+                smaListXMLString += "Seq=\"" + smaIndex + "\" ";
                 smaListXMLString += "CustID=\"" + custId_Encode + "\" ";
                 smaListXMLString += "MatchID=\"" + matchId_Encode + "\" ";
                 smaListXMLString += "MaxTurnover=\"" + maxTurnover_Encode + "\" ";
