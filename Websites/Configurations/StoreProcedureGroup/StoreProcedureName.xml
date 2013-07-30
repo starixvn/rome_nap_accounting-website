@@ -833,7 +833,7 @@
   </Function>
 
   <Function Name="Progressive Bonus">
-	<Setting Key="GetStatusOfProgressiveBonus" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.BODB02" />
-	<Setting Key="UpdateStatusOfProgressiveBonus" SpName="Acc_CustomerUpdDisableCasinoBonus" DbName="DBTXN.BODB02" />
+	<Setting Key="CustomerSelCasinoBonusStatus" SpName="Acc_CustomerSelCasinoBonusStatus" DbName="DBAGE.BODB02" />
+	<Setting Key="CustomerUpdDisableCasinoBonus" SpName="Acc_CustomerUpdDisableCasinoBonus" DbName="DBTXN.BODB02" />
   </Function>
 </Functions>

@@ -56,11 +56,16 @@ ProgressiveBonus.controller(
 
             PTBlockUI();
 
+            var p = {
+                CustId: 11789650
+            };
+
             $.ajax({
                 type: "POST",
                 url: "Casino/GetProducts",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
+                data: JSON.stringify(p),
                 beforeSend: function () {
 
                 },
