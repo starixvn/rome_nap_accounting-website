@@ -134,7 +134,7 @@ function ViewCombinationMixParlayResult(refno, matchid, bettype, betid) {
 
 function ViewResult(matchid, bettype, betid) {
     var width = 750;
-    parent.OpenPopup('Report/ViewResult.aspx?matchid=' + matchid + (bettype ? '&bettype=' + bettype : '') + '&betid=' + betid, '', width, 500, true, false, window, 0, null, null);
+    parent.OpenNextPopup("VirtualResult",'Report/ViewResult.aspx?matchid=' + matchid + (bettype ? '&bettype=' + bettype : '') + '&betid=' + betid, '', width, 500, true, false, window, 0, null, null);
 //    
 //    if (parent.ibcWnd) {
 //        parent.ibcWnd.open('Report/ViewResult.aspx?matchid=' + matchid + (bettype ? '&bettype=' + bettype : ''), '', 50, 100, width, 400, 'class1', 'class2');
