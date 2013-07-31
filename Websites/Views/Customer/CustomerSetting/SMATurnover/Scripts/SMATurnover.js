@@ -58,7 +58,9 @@
         _100ReachedBox: null,
         refreshBox: null,
         filter: null,
-        isAddSMATab: false
+        isAddSMATab: false,
+        lbl100ReachedCounter: null,
+        msgError: null
     },
     InitPage: function () {
         var fromdate_opts = { minDate: new Date(balanceUpDay) };
@@ -244,6 +246,7 @@
         SMATurnover.cachedData.btnBackToFilter_AddSMAList.addClass("hidden");
         SMATurnover.cachedData.failedRecordsTableContainer.addClass("hidden");
         SMATurnover.cachedData.succeededRecordsTableContainer.addClass("hidden");
+        SMATurnover.cachedData.msgErrorAdd.addClass("hidden");
 
         SMATurnover.cachedData.selectMatchInfoBox_Title.attr("title", "Hide Choose match(es) and upload file box.");
         SMATurnover.cachedData.selectMatchInfoBox_TitleIcon.removeClass("collapse")
@@ -715,6 +718,9 @@
         SMATurnover.cachedData._100ReachedBox = $('._100ReachedBox');
         SMATurnover.cachedData.refreshBox = $('.refreshBox');
         SMATurnover.cachedData.filter = $('.filter');
+        SMATurnover.cachedData.lbl100ReachedCounter = $('.lbl100ReachedCounter');
+        SMATurnover.cachedData.msgError = $('#msgError');
+        SMATurnover.cachedData.tblSMATurnoverBody = $("#tblSMATurnover tbody");
     },
     getValidSMAListInfo: function () {
         var succeededSMAList = $(".succeededSMA");
@@ -1106,10 +1112,10 @@
     GetSMATurnoverList: function (isKeepMessage) {
         try { parent.BlockUI(); } catch (e) { }
         SMATurnover.cachedData.reportParams = {
-            sportId: $('#ddlSport').val(),
-            leagueId: $('#ddlLeague').val(),
-            fromDate: $('#txtfromdate').val(),
-            toDate: $('#txttodate').val()
+            sportId: SMATurnover.cachedData.ddlSport.val(),
+            leagueId: SMATurnover.cachedData.ddlLeague.val(),
+            fromDate: SMATurnover.cachedData.txtfromdate.val(),
+            toDate: SMATurnover.cachedData.txttodate.val()
         };
 
         $.ajax({
@@ -1122,22 +1128,18 @@
                 SMATurnover.cachedData._100ReachedBox.removeClass("hidden");
                 SMATurnover.cachedData.refreshBox.removeClass("hidden");
                 if (!isKeepMessage) {
-                    $('#msgError').hide();
+                    SMATurnover.cachedData.msgError.hide();
                 }
 
                 SMATurnover.cachedData.lastReport = rs;
                 var arr = [];
-                SMATurnover.cachedData.tblSMATurnoverBody = $("#tblSMATurnover tbody");
                 if (rs != null && rs.length > 0) {
-                    //$("#tblContentHeader tbody").empty().append(SMATurnover.renderFrozenRow(rs));
                     SMATurnover.cachedData.tblSMATurnoverBody.empty().append(SMATurnover.renderRow(rs));
                     SMATurnover.cachedData.reportRows = SMATurnover.cachedData.tblSMATurnoverBody.find(">tr");
                 }
                 else {
-                    //$("#tblContentHeader tbody").empty().append('<tr><td><div class="">&nbsp;</div></td></tr>');
-                    //$("#tblSMATurnover tbody").empty().append('<tr><td><div class="">&nbsp;</div></td><td colspan="4"><div class="c">There is no data.</div></td></tr>');
                     SMATurnover.cachedData.tblSMATurnoverBody.empty().append('<tr><td colspan="6"><div class="c">There is no data.</div></td></tr>');
-                    $(".lbl100ReachedCounter").html(0);
+                    SMATurnover.cachedData.lbl100ReachedCounter.html(0);
                 }
 
                 SMATurnover.initGrid();
@@ -1191,12 +1193,12 @@
                 if (match.EventStatus &&
                     match.EventStatus.toLowerCase() != "completed") {
                     html += '<td class="rowLeague"><div class="col60" ><input type="button" class="colEdit btnAddSMA" value="Add SMA" onclick="SMATurnover.RedirectToAddSMA(\'' +
-                    match.MatchId +
-                    '\',\'' + match.EventDate +
-                    '\',\'' + match.EventDate +
-                    '\',\'' + SMATurnover.cachedData.reportParams.sportId +
-                    '\',\'' + row.LeagueId +
-                    '\')"></div></td>';
+                        match.MatchId +
+                        '\',\'' + match.EventDate +
+                        '\',\'' + match.EventDate +
+                        '\',\'' + SMATurnover.cachedData.reportParams.sportId +
+                        '\',\'' + row.LeagueId +
+                        '\')"></div></td>';
                 } else {
                     html += '<td></td>';
                 }
@@ -1206,12 +1208,6 @@
                 var customerList = match.CustomerList;
                 for (var j = 0; j < customerLength; j++) {
                     var customer = customerList[j];
-                    var percentageUsed = customer.PercentageUsed;
-                    if (percentageUsed >= SMATurnover.constants.MaxPercentageUsed) {
-                        _100PercentageUsedCounter++;
-                        percentageUsed = SMATurnover.constants.MaxPercentageUsed;
-                    }
-
                     html += '<tr class="match_' + customer.CustId + '_' + match.MatchId + '">';
                     html += '<td><div class="col200 c">' + customer.Username + '</div></td>';
                     html += '<td><div class="col100 c ">' + customer.Currency + '</div></td>';
@@ -1223,6 +1219,7 @@
                         html += '<td><div class="col160 r" style="height:17px">' + customer.MaxTurnover + '</div></td>';
                     }
 
+                    var percentageUsed = customer.PercentageUsed;
                     if (percentageUsed == SMATurnover.constants.MaxPercentageUsed) {
                         html += '<td class="c colPercentUsed">\
                                     <div class="col160 c boxPercentUsed_100Percent ">' + percentageUsed + '%</div>\
@@ -1239,7 +1236,7 @@
             }
         }
 
-        $(".lbl100ReachedCounter").html(_100PercentageUsedCounter);
+        SMATurnover.cachedData.lbl100ReachedCounter.html(_100PercentageUsedCounter);
         return html;
     },
 
@@ -1375,12 +1372,12 @@
         SMATurnover.BackToFilter_AddSMAList();
     },
     UpdateSMATurnoverProccess: function (custId, matchId, custName) {
-        var maxTurnover = $("#txtMaxTurnover_" + matchId + "_" + custId).val();
         try { parent.BlockUI(); } catch (e) { }
+        var maxTurnover = $("#txtMaxTurnover_" + matchId + "_" + custId).val();
         var maxturnover = Helper.SeparateNumricByThousand(maxTurnover);
         if (parseInt(maxturnover) > 999999999999) {
             showAlertMessage("msgError", "Max Turnover should be less than or equal 999,999,999,999", 1);
-            $('#msgError').show();
+            SMATurnover.cachedData.msgError.show();
         }
         else {
             SMATurnover.UpdateSuperTurnoverValue(matchId, custId, maxTurnover);
@@ -1390,7 +1387,7 @@
     },
 
     UpdateSuperTurnoverValue: function (matchId, custId, maxTurnover) {
-        $('#msgError').hide();
+        SMATurnover.cachedData.msgError.hide();
         var data = { matchId: matchId, custId: custId, maxTurnover: maxTurnover };
         $.ajax({
             type: "POST",
@@ -1403,12 +1400,12 @@
                 var isKeepMessage = true;
                 if (parseInt(rs.ErrorCode) == 0) {
                     showAlertMessage("msgError", "Update successfully!", 0);
-                    $('#msgError').show();
+                    SMATurnover.cachedData.msgError.show();
                     setTimeout(function () { $('#msgError').hide(); }, 4000);
                 }
                 else {
                     showAlertMessage("msgError", rs.ErrorMessage, 1);
-                    $('#msgError').show();
+                    SMATurnover.cachedData.msgError.show();
                 }
 
                 SMATurnover.GetSMATurnoverList(isKeepMessage);
