@@ -500,8 +500,8 @@
 
         var new_opts = $.extend(true, defaults, opts);
         var dates = $(ids).datepicker(new_opts);
-        $(ids.split(',')[0]).datepicker("setDate", new Date());
-        $(ids.split(',')[1]).datepicker("setDate", new Date());
+        $(ids.split(',')[0]).datepicker("setDate", new Date(currDay));
+        $(ids.split(',')[1]).datepicker("setDate", new Date(currDay));
     },
     ValidParams_GetMatchInfo_AddSMAList: function (selectParams) {
         var isValid = true;
@@ -868,8 +868,8 @@
         };
         var new_opts = $.extend(true, defaults, opts);
         var dates = $(ids).datepicker(new_opts);
-        $(ids.split(',')[0]).datepicker("setDate", new Date());
-        $(ids.split(',')[1]).datepicker("setDate", new Date());
+        $(ids.split(',')[0]).datepicker("setDate", new Date(currDay));
+        $(ids.split(',')[1]).datepicker("setDate", new Date(currDay));
     },
     ChangeTab: function () {
         $('#ListSMATab').click(function () {
