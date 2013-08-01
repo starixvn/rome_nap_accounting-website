@@ -109,7 +109,7 @@ function OpenByIP(custid, fdate, ip, type) {
 
 function ViewMixParlayResult(refno, matchid, bettype, betid) {
     var width = 750;
-    OpenPopup('../Report/ViewMixParlayResult.aspx?refno=' + refno + '&matchid=' + matchid + '&bettype=' + bettype + '&betid=' + betid, 'Mix Parlay', width, 500, true, false, window, 0, null, null);
+    parent.OpenNextPopup("ViewMixParlayResult", 'Report/ViewMixParlayResult.aspx?refno=' + refno + '&matchid=' + matchid + '&bettype=' + bettype + '&betid=' + betid, 'Mix Parlay', width, 500, true, false, window, 0, null, null);
 
 //    if (parent.ibcWnd) {
 //        parent.ibcWnd.open('Report/ViewMixParlayResult.aspx?refno=' + refno, 'Mix Parlay', 100, 100, width, 400, 'class1', 'class2')        
@@ -153,18 +153,18 @@ function ViewResultHR(url) {
 }
 
 function openHRresult(url, title, width, heigh) {
-    OpenPopup(url, title, 420, heigh, true, false, window, 0, null, null);
+     parent.OpenNextPopup("HRPopup",url, title, 420, heigh, true, false, window, 0, null, null);
 }
 
 
 function ViewResultNumberGame(url) {
     //ibcWnd.open(url, '', 100, 100, 710, 200, 'class1', 'class2');
 
-    OpenPopup(url, '', 750, 200, true, false, window, 0, null, null);
+    parent.OpenNextPopup("NumberGamePopup", url, '', 750, 200, true, false, window, 0, null, null);
 }
 function ViewResultLiveCasino(url) {
     //ibcWnd.open(url, '', 100, 100, 740, 200, 'class1', 'class2');
-    OpenPopup(url, '', 760, 200, true, false, window, 0, null, null);
+    parent.OpenNextPopup("LiveCasinoPopup", url, '', 760, 200, true, false, window, 0, null, null);
 }
 function viewFinanceResult(transid) {
     var width = 420;
