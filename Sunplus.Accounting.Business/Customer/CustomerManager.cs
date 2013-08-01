@@ -178,7 +178,10 @@ namespace Sunplus.Accounting.Business.Customer
 
 		public Hashtable GetHtmlCustInfoContent(string userName)
 		{
-			Hashtable arrcontent = new Hashtable();
+            Hashtable arrcontent = new Hashtable();
+            try
+			{
+			
 			string htmlcontent = "";
 			if (string.IsNullOrEmpty(userName))
 			{
@@ -955,8 +958,14 @@ namespace Sunplus.Accounting.Business.Customer
 			}
 
 			arrcontent.Add("strcontent", htmlcontent);
-
-			return arrcontent;
+            return arrcontent;
+            }
+            catch (Exception ex)
+            {
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                return arrcontent;
+            }
+			
 		}
 
 		private string GetSettingAbnormal(int roleId, bool isManageCustomerAccess, int currentLevel)
