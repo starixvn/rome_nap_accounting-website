@@ -71,9 +71,18 @@
     <Reference Include="ExcelUtil">
       <HintPath>..\Dependency\ExcelUtil.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Dependency\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.CustomerSetting.Module.ProgressiveModule, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Dependency\Fanex.CustomerSetting.Module.ProgressiveModule.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Data, Version=1.0.111.9, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.NAP.Framework">
+      <HintPath>..\Dependency\Fanex\Fanex.NAP.Framework.dll</HintPath>
     </Reference>
     <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

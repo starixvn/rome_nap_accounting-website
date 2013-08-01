@@ -1,7 +1,12 @@
-<?xml version="1.0"?>                                                                        
-<configuration>                            
-  <configSections>       
-    <!--SSL--> 
+<?xml version="1.0"?>
+<configuration>
+  <configSections>
+<<<<<<< HEAD
+=======
+    <section name="dotless" type="dotless.Core.configuration.DotlessConfigurationSectionHandler, dotless.Core" />
+
+>>>>>>> 336cb84df7cc5276ac4bb8e695d4a7e3658b1bf2
+    <!--SSL-->
     <!--<section name="secureWebPages" type="Ventaur.Web.Security.Configuration.SecureWebPageSettings, WebPageSecurity"/>-->
     <!--End SSL-->
     <!--Bingo-->
@@ -31,7 +36,7 @@
       <section name="P2P" type="Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.P2PSession, Sunplus.Accounting.Core, Version=1.0.0.0, Culture=neutral"/>
       <section name="Transaction" type="Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.TransactionGroupSection, Sunplus.Accounting.Core, Version=1.0.0.0, Culture=neutral"/>
     </sectionGroup>
-    <!--End Store Procedure--> 
+    <!--End Store Procedure-->
     <!--Mail-->
     <section name="MailSection" type="Sunplus.Accounting.Core.Configurations.MailSection, Sunplus.Accounting.Core, Version=1.0.0.0, Culture=neutral"/>
     <!--End Mail-->
@@ -43,7 +48,7 @@
     <section name="LogSection" type="Sunplus.Accounting.Core.Configurations.LogSection, Sunplus.Accounting.Core, Version=1.0.0.0, Culture=neutral"/>
     <!--End Log Section-->
     <!--SpecialDeleteSection-->
-    <section name="SpecialDeleteSection" type="Sunplus.Accounting.Core.Configurations.SpecialDeleteSection, Sunplus.Accounting.Core, Version=1.0.0.0, Culture=neutral"/>    
+    <section name="SpecialDeleteSection" type="Sunplus.Accounting.Core.Configurations.SpecialDeleteSection, Sunplus.Accounting.Core, Version=1.0.0.0, Culture=neutral"/>
     <!--SpecialDeleteSection-->
     <!--HelperSection-->
     <section name="HelperSection" type="Sunplus.Accounting.Core.Configurations.HelperSection, Sunplus.Accounting.Core, Version=1.0.0.0, Culture=neutral"/>
@@ -98,7 +103,14 @@
     <!--LicenseeReportSection-->
     <section name="LicenseeReportSection" type="Fanex.Tarus.Reports.Core.Configurations.LicenseeReportSection, Fanex.Tarus.Reports, Version=1.0.0.0, Culture=neutral"/>
     <!--LicenseeReportSection-->
- 
+
+<<<<<<< HEAD
+=======
+    <!--Progressive-->
+    <section name="ProgressiveSection" type="Fanex.CustomerSetting.Module.ProgressiveModule.Configurations.ProgressiveSection, Fanex.CustomerSetting.Module.ProgressiveModule, Version=1.0.0.0, Culture=neutral"/>
+    <!--/Progressive-->
+
+>>>>>>> 336cb84df7cc5276ac4bb8e695d4a7e3658b1bf2
     <!--Fanex-->
     <section name="Fanex.Data.DbSettingProvider" type="Fanex.Data.Configuration.DbSettingProviderConfigurationSection, Fanex.Data"/>
     <section name="Fanex.Logging" type="Fanex.Logging.Configuration.LoggingSettings, Fanex.Logging"/>
@@ -110,15 +122,17 @@
     <section name="PTMappingSection" type="Fanex.PTEngine.XmlMapping.PTMappingSection"  allowLocation="true" allowDefinition="Everywhere"/>
     <section name="BettingLimitMappingSection" type="Fanex.PTEngine.XmlMapping.BettingLimitMappingSection"  allowLocation="true" allowDefinition="Everywhere"/>
 
-<<<<<<< HEAD
-    <!--mapping report-->    
-    <section name="MappingReportUrlSection" type="Fanex.Tarus.Reports.Core.Configurations.MappingReportUrlSection, Fanex.Tarus.Reports, Version=1.0.0.0, Culture=neutral"/>
-    <!--/mapping report-->
-
     <!--racing pt setting-->
     <section name="PTRacingMappingSection" type="Fanex.PTRacing.XmlMapping.PTRacingMappingSection"  allowLocation="true" allowDefinition="Everywhere"/>
     <section name="RacingBettingCommSettingMappingSection" type="Fanex.PTRacing.XmlMapping.RacingBettingCommSettingMappingSection"  allowLocation="true" allowDefinition="Everywhere"/>
     <!--/racing pt setting-->
+    <!--mapping report-->
+    <section name="MappingReportUrlSection" type="Fanex.Tarus.Reports.Core.Configurations.MappingReportUrlSection, Fanex.Tarus.Reports, Version=1.0.0.0, Culture=neutral"/>
+    <!--/mapping report-->
+    <!--mapping special delete-->
+    <section name="MappingSpecialDeleteUrlSection" type="Fanex.Tarus.SpecialDelete.Core.Configurations.MappingSpecialDeleteUrlSection, Fanex.Tarus.SpecialDelete, Version=1.0.0.0, Culture=neutral"/>
+    <!--/mapping special delete-->
+
   </configSections>
   <!--MVC-->
   <!--MVC-->
@@ -171,7 +185,7 @@
   <MailSection configSource="Configurations\MailSection.config"/>
   <RacingSection configSource="Configurations\RacingSection.config"/>
   <SportsSection configSource="Configurations\SportsSection.config"/>
-  <SpecialDeleteSection configSource="Configurations\SpecialDeleteSection.config"/>  
+  <SpecialDeleteSection configSource="Configurations\SpecialDeleteSection.config"/>
   <HelperSection configSource="Configurations\HelperSection.config"/>
   <UserControl configSource="Configurations\UserControlSection.config"/>
   <BAConfiguration configSource="Configurations\BASection.config"/>
@@ -190,16 +204,21 @@
   <!--customer setting-->
   <PTMappingSection configSource="Configurations\CustomerSetting\PTMappingSection.config"/>
   <BettingLimitMappingSection configSource="Configurations\CustomerSetting\BettingLimitMappingSection.config"/>
-
-  <!--mapping report-->
-  <MappingReportUrlSection configSource="Configurations\MappingReportUrlSection.config"/>
-  <!--/mapping report-->
-
   <!--racing pt setting-->
   <PTRacingMappingSection configSource="Configurations\CustomerSetting\PTRacingMappingSection.config"/>
   <RacingBettingCommSettingMappingSection configSource="Configurations\CustomerSetting\RacingBettingCommSettingMappingSection.config"/>
+  <!--mapping report-->
+  <MappingReportUrlSection configSource="Configurations\MappingReportUrlSection.config"/>
+  <!--/mapping report-->
+  <!--mapping SpecialDelete-->
+  <MappingSpecialDeleteUrlSection configSource="Configurations\MappingSpecialDeletetUrlSection.config"/>
+  <!--/mapping SpecialDelete-->
+
+  <!--Progressive-->
+  <ProgressiveSection configSource="Configurations\ProgressiveSection.config"/>
+  <!--/Progressive-->
+
   <!--/racing pt setting-->
->>>>>>> new racing setting
   <!--Bingo-->
   <Sunplus.Bingo MaxPt="0.9" MinPt="0.0" MaxCommission="0.0025" MaxBall="75">
     <BingoGame EnabledMaxTransfer="true" Enabled="true" CodeGameNo="01"/>
@@ -359,9 +378,16 @@
         <add name="SystemFunctions" type="System.Web.XmlSiteMapProvider" siteMapFile="~/App_Data/System.sitemap"/>
       </providers>
     </siteMap>
+<<<<<<< HEAD
     <!--<httpHandlers>
       <add path="*.htm" verb="*" type="System.Web.StaticFileHandler"/>
     </httpHandlers>-->
+=======
+    <httpHandlers>
+      <!--<add path="*.htm" verb="*" type="System.Web.StaticFileHandler"/>-->
+      <add path="*.less" verb="GET" type="dotless.Core.LessCssHttpHandler, dotless.Core" />
+    </httpHandlers>
+>>>>>>> 336cb84df7cc5276ac4bb8e695d4a7e3658b1bf2
     <customErrors mode="Off" defaultRedirect="~/ErrorPage.aspx"/>
     <compilation debug="true" targetFramework="4.0">
       <assemblies>
@@ -448,6 +474,12 @@
   <system.webServer>
     <validation validateIntegratedModeConfiguration="false"/>
     <modules runAllManagedModulesForAllRequests="true"/>
+    <staticContent>
+      <mimeMap fileExtension=".less" mimeType="text/css" />
+    </staticContent >
+    <handlers>
+      <add name="dotless" path="*.less" verb="GET" type="dotless.Core.LessCssHttpHandler,dotless.Core" resourceType="File" preCondition="" />
+    </handlers>
   </system.webServer>
   <!--WCF Service-->
   <system.serviceModel>
@@ -457,4 +489,11 @@
     <bindings configSource="Configurations\Wcf\Bindings.config"/>
     <client configSource="Configurations\Wcf\Clients.config"/>
   </system.serviceModel>
+  <system.web.extensions>
+    <scripting>
+      <webServices>
+        <jsonSerialization maxJsonLength="50000000"/>
+      </webServices>
+    </scripting>
+  </system.web.extensions>
 </configuration>

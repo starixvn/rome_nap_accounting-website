@@ -610,8 +610,7 @@ namespace Sunplus.Accounting.Entities
 
         public bool IsDisableVirtualSports { get; set; }
         public bool IsHideVirtualSports { get; set; }
+            		
         #endregion
-
-
     }
 }

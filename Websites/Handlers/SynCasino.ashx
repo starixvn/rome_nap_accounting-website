@@ -18,7 +18,8 @@ using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Core.LoggingLib;
-
+using Fanex.CustomerSetting.Module.ProgressiveModule.Repositories.Impl;
+using Fanex.CustomerSetting.Module.ProgressiveModule.Criteria;
 
 
 public class UpdateCSSetting : BaseHandler
@@ -255,7 +256,12 @@ public class UpdateCSSetting : BaseHandler
                      custInfo.RoleId.ToString(),
                      DateTime.Now,
                      r.ServerVariables["REMOTE_ADDR"],
-                     AppSession.AccId, AppSession.Username, 3, bAutoReset
+                     AppSession.AccId,
+                     AppSession.Username,
+                     3, 
+                     bAutoReset,
+                     false,//EnableCasinoBonus
+                     false//EnableCasinoJackpot
                      );
 
                 if (!status)
