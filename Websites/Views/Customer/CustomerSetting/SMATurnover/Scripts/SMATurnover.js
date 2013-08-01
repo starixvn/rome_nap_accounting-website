@@ -1175,7 +1175,7 @@
                 var match = matchList[i];
                 html += '<tr>';
                 html += '<td class="rowLeague" colspan="5">' +
-                            '<table class="normalTable" style="width: 100%;">' +
+                            '<table class="normalTable" style="width: 800px;">' +
                                 '<tr>' +
                                     '<td>' +
                                         '<div class="lblLeagueHeadline">' + row.LeagueName + '</div>' +
@@ -1183,7 +1183,7 @@
                                         '<div class="rightArrow_LeagueInfo"></div>' +
                                         '<div class="eventDate_LeagueInfo">Event Date: ' + match.EventDate + '</div>' +
                                     '</td>' +
-                                    '<td>' +
+                                    '<td class="col160">' +
                                         '<div class="matchIdBox_LeagueInfo">Match ID: ' + match.MatchId + '</div>' +
                                     '</td>' +
                                 '</tr>' +
