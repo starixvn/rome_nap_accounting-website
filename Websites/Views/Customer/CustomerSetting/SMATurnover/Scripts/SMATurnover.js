@@ -1208,6 +1208,12 @@
                 var customerList = match.CustomerList;
                 for (var j = 0; j < customerLength; j++) {
                     var customer = customerList[j];
+                    var percentageUsed = customer.PercentageUsed;
+                    if (percentageUsed >= SMATurnover.constants.MaxPercentageUsed) {
+                        _100PercentageUsedCounter++;
+                        percentageUsed = SMATurnover.constants.MaxPercentageUsed;
+                    }
+
                     html += '<tr class="match_' + customer.CustId + '_' + match.MatchId + '">';
                     html += '<td><div class="col200 c">' + customer.Username + '</div></td>';
                     html += '<td><div class="col100 c ">' + customer.Currency + '</div></td>';
@@ -1219,7 +1225,6 @@
                         html += '<td><div class="col160 r" style="height:17px">' + customer.MaxTurnover + '</div></td>';
                     }
 
-                    var percentageUsed = customer.PercentageUsed;
                     if (percentageUsed == SMATurnover.constants.MaxPercentageUsed) {
                         html += '<td class="c colPercentUsed">\
                                     <div class="col160 c boxPercentUsed_100Percent ">' + percentageUsed + '%</div>\
