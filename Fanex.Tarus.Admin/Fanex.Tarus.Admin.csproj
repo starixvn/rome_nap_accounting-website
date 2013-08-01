@@ -74,6 +74,8 @@
     <Compile Include="Business\BACustomer\BACustomerService.cs" />
     <Compile Include="Business\BACustomer\IBACustomerService.cs" />
     <Compile Include="Business\MailingList\ISpecialDeleteService.cs" />
+    <Compile Include="Business\MailingList\SMATurnover\Admin_SMATurnoverMailingListService.cs" />
+    <Compile Include="Business\MailingList\SMATurnover\IAdmin_SMATurnoverMailingListService.cs" />
     <Compile Include="Business\MailingList\SpecialDeleteService.cs" />
     <Compile Include="Business\RacingDefaultSetting\IRacingDefaultSettingService.cs" />
     <Compile Include="Business\RacingDefaultSetting\RacingDefaultSettingService.cs" />
@@ -81,12 +83,15 @@
     <Compile Include="Business\SecurityCode\IAdminSecurityCodeService.cs" />
     <Compile Include="Business\SMAManagement\ISMAManagementService.cs" />
     <Compile Include="Business\SMAManagement\SMAManagementService.cs" />
+    <Compile Include="Controller\MailingList\Admin_SMATurnoverMailingListController.cs" />
     <Compile Include="Controller\AutoFollowBetController.cs" />
     <Compile Include="Controller\BACustomerController.cs" />
     <Compile Include="Controller\MailingList\SpecialDeleteController.cs" />
     <Compile Include="Controller\RacingDefaultSettingController.cs" />
     <Compile Include="Controller\SecurityCode\AdminSecurityCodeController.cs" />
     <Compile Include="Controller\SMAManagement\SMAManagementController.cs" />
+    <Compile Include="Criteria\MailingList\SMATurnover\GetMailingListCriteria.cs" />
+    <Compile Include="Criteria\MailingList\SMATurnover\UpdateMailingListCriteria.cs" />
     <Compile Include="Criteria\SecurityCode\GetUserListCriteria.cs" />
     <Compile Include="Criteria\SecurityCode\ResetSecurityCodeCriteria.cs" />
     <Compile Include="DataAccess\AutoFollowBet\AutoFollowBetAccess.cs" />
@@ -94,6 +99,8 @@
     <Compile Include="DataAccess\BACustomer\BACustomerAccess.cs" />
     <Compile Include="DataAccess\BACustomer\IBACustomerAccess.cs" />
     <Compile Include="DataAccess\MailingList\ISpecialDeleteAccess.cs" />
+    <Compile Include="DataAccess\MailingList\SMATurnover\Admin_SMATurnoverMailingListDataAccess.cs" />
+    <Compile Include="DataAccess\MailingList\SMATurnover\IAdmin_SMATurnoverMailingListDataAccess.cs" />
     <Compile Include="DataAccess\MailingList\SpecialDeleteAccess.cs" />
     <Compile Include="DataAccess\RacingDefaultSetting\IRacingDefaultSettingAccess.cs" />
     <Compile Include="DataAccess\RacingDefaultSetting\RacingDefaultSettingAccess.cs" />

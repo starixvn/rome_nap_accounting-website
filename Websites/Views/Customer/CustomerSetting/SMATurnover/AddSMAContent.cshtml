@@ -1,0 +1,326 @@
+﻿<div id="msgErrorAdd" class="errMsg hidden">
+</div>
+<div class="filter">
+    <table class="selectMatchFilterBox" cellpadding="0" cellspacing="0">
+        <thead>
+            <tr>
+                <th colspan="4" class="title showHideBox l" title="Hide Choose league box.">
+                    <div class="title-icon expand">
+                        &nbsp;
+                    </div>
+                    <div class="title-label">
+                        1.Choose League</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="row-selectMatchFilter">
+                    <table class="selectMatchFilter">
+                        <tr>
+                            <td class="box-padding-left">
+                            </td>
+                            <td>
+                                <div class="b">
+                                    From Date</div>
+                            </td>
+                            <td>
+                                <input id="txtfromdate_AddSMAList" type="text" class="txtdate" />
+                            </td>
+                            <td class="box-padding-left">
+                            </td>
+                            <td>
+                                <div class="b">
+                                    To Date</div>
+                            </td>
+                            <td>
+                                <input id="txttodate_AddSMAList" type="text" class="txtdate" />
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="box-padding-left">
+                            </td>
+                            <td>
+                                <div class="b">
+                                    Sport Game</div>
+                            </td>
+                            <td>
+                                <select id="ddlSport_AddSMAList">
+                                </select>
+                            </td>
+                            <td class="box-padding-left">
+                            </td>
+                            <td>
+                                <div class="b">
+                                    League</div>
+                            </td>
+                            <td>
+                                <select id="ddlLeague_AddSMAList">
+                                </select>
+                            </td>
+                            <td>
+                                <input id="btnSearch_AddSMAList" class="btn" type="submit" value="Search" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="selectMatchInfoBox hidden" cellpadding="0" cellspacing="0">
+        <thead>
+            <tr>
+                <th colspan="4" class="title showHideBox l" title="Hide Choose match(es) and upload file box.">
+                    <div class="title-icon expand">
+                        &nbsp;
+                    </div>
+                    <div class="title-label">
+                        2.Choose Match(es) and upload file</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <table class="matchInfoContainer">
+                        <tr>
+                            <td class="box-padding-left">
+                            </td>
+                            <td>
+                                <div>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <input id="chbxCheckAllMatch_AddSMAList" type="checkbox" value="Check All Matches"
+                                                        disabled="disabled" />
+                                                    <label for="chbxCheckAllMatch_AddSMAList" class="lblCheckAllMatch_AddSMAList">
+                                                        Select All
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="box-padding-left">
+                            </td>
+                            <td>
+                                <div class="matchInfo_TableContainer freegrid hidden">
+                                    <div class="col_header row-headers-background scroll-y">
+                                        <div class="header-container">
+                                            <table class="grid-fixed-table col_header_content">
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="2" class="match-info-title" style="width: 880px; height: 34px">
+                                                            Match Info
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="grid-container container">
+                                        <div class="content-container">
+                                            <table id="matchInfo_Table" class="matchInfo_Table grid-fixed-table col_header_content">
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="2" class="match-info-title" style="width: 880px; height: 34px">
+                                                            Match Info
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="uploadFileContainer" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td class="box-padding-left">
+                            </td>
+                            <td class="b l">
+                                File Size limit 1MB
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="box-padding-left">
+                            </td>
+                            <td class="l">
+                                @*<input id="fileUpload" type="file" />*@ @*<input id="btnUploadFile" class="btn" type="submit" value="Go" disabled="disabled" />*@
+                                <form id="file_upload_form" method="post" enctype="multipart/form-data" action="../Views/Customer/CustomerSetting/SMATurnover/UploadSMAListHandler.ashx"
+                                target="upload_iframe">
+                                    <input id="file_UploadFile" name="file_UploadFile" size="85" type="file" />
+                                    <input id="btnUploadFile" class="btn" type="btn" name="action" value="Go" disabled="disabled" />
+                                    <input id="AccId_UploadFile" name="AccId" type="hidden" />
+                                    <input id="SportId_UploadFile" name="SportId" type="hidden" />
+                                    <input id="LeagueId_UploadFile" name="LeagueId" type="hidden" />
+                                    <input id="FromDate_UploadFile" name="FromDate" type="hidden" />
+                                    <input id="ToDate_UploadFile" name="ToDate" type="hidden" />
+                                    <input id="SportName_UploadFile" name="SportName" type="hidden" />
+                                    <input id="LeagueName_UploadFile" name="LeagueName" type="hidden" />
+                                    <input id="MatchIds_UploadFile" name="MatchIds" type="hidden" />
+                                    <iframe id="upload_target" name="upload_iframe"></iframe>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="box-padding-left">
+                            </td>
+                            <td class="b l">
+                                <a class="lnkDownloadTemplate_AddSMAList">Click here to download template</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div style="margin-top: 10px;">
+    <div class="failedRecordsTableContainer freegrid hidden">
+        <div class="col_header row-headers-background scroll-y">
+            <div class="header-container">
+                <table class="grid-fixed-table col_header_content">
+                    <thead>
+                        <tr>
+                            <th colspan="3" class="l b error-title">
+                                <div class="error-icon">
+                                </div>
+                                <div class="error-label">
+                                    Failed records, please check!</div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <div class="table-cell" style="width: 200px; height: 34px">
+                                    SMA Name
+                                </div>
+                            </th>
+                            <th>
+                                <div class="table-cell" style="width: 160px; height: 34px">
+                                    Max Turnover
+                                </div>
+                            </th>
+                            <th>
+                                <div class="table-cell" style="width: 555px; height: 34px">
+                                    Reason
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="grid-container container">
+            <div class="content-container">
+                <table id="failedRecordsTable" class="failedRecordsTable grid-fixed-table col_header_content">
+                    <thead>
+                        <tr>
+                            <th colspan="3" class="l b error-title">
+                                <div class="error-icon">
+                                </div>
+                                <div class="error-label">
+                                    Failed records, please check!</div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <div class="table-cell" style="width: 200px; height: 34px">
+                                    SMA Name
+                                </div>
+                            </th>
+                            <th>
+                                <div class="table-cell" style="width: 160px; height: 34px">
+                                    Max Turnover
+                                </div>
+                            </th>
+                            <th>
+                                <div class="table-cell" style="width: 555px; height: 34px">
+                                    Reason
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="succeededRecordsTableContainer freegrid hidden">
+        <div class="col_header row-headers-background scroll-y">
+            <div class="header-container">
+                <table class="grid-fixed-table col_header_content">
+                    <thead>
+                        <tr>
+                            <th colspan="3" class="l b success-title">
+                                Please review valid records below and click Submit button to save data.
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <div class="table-cell" style="width: 200px; height: 34px">
+                                    SMA Name
+                                </div>
+                            </th>
+                            <th>
+                                <div class="table-cell" style="width: 635px; height: 34px">
+                                    Max Turnover
+                                </div>
+                            </th>
+                            <th>
+                                <div class="table-cell" style="width: 80px; height: 34px">
+                                    Remove
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="grid-container container">
+            <div class="content-container">
+                <table id="succeededRecordsTable" class="succeededRecordsTable grid-fixed-table col_header_content">
+                    <thead>
+                        <tr>
+                            <th colspan="3" class="l b success-title">
+                                Please review valid records below and click Submit button to save data.
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <div class="table-cell" style="width: 200px; height: 34px">
+                                    SMA Name
+                                </div>
+                            </th>
+                            <th>
+                                <div class="table-cell" style="width: 635px; height: 34px">
+                                    Max Turnover
+                                </div>
+                            </th>
+                            <th>
+                                <div class="table-cell" style="width: 80px; height: 34px">
+                                    Remove
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<input id="btnSubmit_AddSMAList" class="btn hidden" type="submit" value="Submit"
+    disabled="disabled" />
+<input id="btnBackToFilter_AddSMAList" class="btn hidden" type="submit" value="Back to Filter" />

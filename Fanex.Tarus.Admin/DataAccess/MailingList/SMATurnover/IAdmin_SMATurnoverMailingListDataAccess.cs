@@ -1,0 +1,25 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="IAdmin_SMATurnoverMailingListDataAccess.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
+
+namespace Fanex.Tarus.Admin.DataAccess.MailingList.SMATurnover
+{
+    using System.Collections;
+    using System.Data;
+    using System.Diagnostics.CodeAnalysis;
+    using Fanex.Tarus.Admin.Criteria.MailingList.SMATurnover;
+
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    public interface IAdmin_SMATurnoverMailingListDataAccess
+    {
+        DataTable GetMailingList(GetMailingListCriteria criteria);
+
+        void UpdateInsertMailing(UpdateMailingListCriteria criteria,
+            ref Hashtable outputParams);
+    }
+}

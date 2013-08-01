@@ -224,15 +224,23 @@ function CheckInputNumber(e)
 //Check for integer
 function CheckIntNumber(e)
 {
-    if (!e) e = window.event;
+    if (!e) {
+        e = window.event;
+    }
+
     var code = (e.keyCode) ? e.keyCode : e.which;
     if (code == 9) {
         return code;
-    }			
-    if ( (code < 48 || code > 57) && code != 8 && code != 13 && code!=0)
+    }
+
+    if ((code < 48 || code > 57) &&
+        code != 8 &&
+        code != 13 && 
+        code !=0)
     {		
         return false;
     }
+
     return true;		
 }
 //Check for decimal number
