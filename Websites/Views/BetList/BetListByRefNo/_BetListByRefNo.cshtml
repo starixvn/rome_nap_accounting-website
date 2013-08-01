@@ -28,8 +28,6 @@
 
 @helper renderContent(TicketDetail betdetail)
     {
-        BetListHelper betlistHelper = new BetListHelper();
-        var result = betlistHelper.Result(betdetail);
     <tr class="c">
         <td>
             <div class="c width100" >
@@ -75,7 +73,7 @@
         </td>
         <td class="c">
             <div id="stautus" class="width100 table-cell">
-              @MvcHtmlString.Create(result)
+              @Html.Raw(betdetail.StatusHtml)
             </div>
         </td>
         <td class="r">

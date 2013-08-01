@@ -49,7 +49,7 @@ else
     </div>
 }
 @{
-    var result = betlistHelper.Result(betdetail);
+    var result = betlistHelper.StatusRefNo(betdetail);
     var ip = @Sunplus.Accounting.Business.IpManagement.ReplaceVNIP(betdetail.Ticket.IP);
 }
 @if (!String.IsNullOrEmpty(result))

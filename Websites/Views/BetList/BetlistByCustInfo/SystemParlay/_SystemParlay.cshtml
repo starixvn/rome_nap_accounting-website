@@ -1,5 +1,6 @@
 ﻿@using Fanex.BetList.Accounting.Models
 @using Fanex.BetList.Core.Entities;
+@using Fanex.BetList.Accounting.Core;
 @{
     var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
     TicketDetail betdetail = new TicketDetail();
@@ -72,7 +73,7 @@
         </td>
         <td class="c">
             <div id="stautus_@betdetail.Ticket.TransId" class="width100 table-cell">
-               @MvcHtmlString.Create(result)
+             @Html.Raw(betdetail.StatusHtml)
             </div>
         </td>
         <td class="r">
