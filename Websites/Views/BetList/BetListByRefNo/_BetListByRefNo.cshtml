@@ -1,5 +1,6 @@
 ﻿@using Fanex.BetList.Accounting.Models
 @using Fanex.BetList.Core.Entities;
+@using Fanex.BetList.Accounting.Core;
 @{
     TicketDetail betdetail = new TicketDetail();
     if (Model != null && Model.Count > 0)
@@ -27,6 +28,8 @@
 
 @helper renderContent(TicketDetail betdetail)
     {
+        BetListHelper betlistHelper = new BetListHelper();
+        var result = betlistHelper.Result(betdetail);
     <tr class="c">
         <td>
             <div class="c width100" >
@@ -72,7 +75,7 @@
         </td>
         <td class="c">
             <div id="stautus" class="width100 table-cell">
-                @Html.Partial("~/Views/BetList/_Status.cshtml", betdetail)
+              @MvcHtmlString.Create(result)
             </div>
         </td>
         <td class="r">

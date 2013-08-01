@@ -1,5 +1,6 @@
 ﻿@using Fanex.BetList.Accounting.Models
 @using Fanex.BetList.Core.Entities;
+@using Fanex.BetList.Accounting.Core;
 @using DNAide.Core;
 @{
     var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
@@ -29,6 +30,8 @@
 }
 @helper renderContent(TicketDetail betdetail, int NumberBegining)
     {
+        BetListHelper betlistHelper = new BetListHelper();
+        var result = betlistHelper.Result(betdetail);
     <tr class="c">
         <td>
             <div class="c width30 table-cell">
@@ -78,7 +81,8 @@
         </td>
         <td class="c">
             <div id="stautus_@betdetail.Ticket.TransId" class="width100 table-cell">
-                @Html.Partial("~/Views/BetList/_Status.cshtml", betdetail)
+              @*  @Html.Partial("~/Views/BetList/_Status.cshtml", betdetail)*@
+              @MvcHtmlString.Create(result)
             </div>
         </td>
         <td class="r">
