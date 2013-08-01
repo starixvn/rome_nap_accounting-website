@@ -74,6 +74,14 @@
         <td class="c">
             <div id="stautus" class="width100 table-cell">
               @Html.Raw(betdetail.StatusHtml)
+                  @{
+                    var ip = @Sunplus.Accounting.Business.IpManagement.ReplaceVNIP(betdetail.Ticket.IP);
+                }
+                @if (ip != "-")
+                {
+                    <br />
+                    <a href="@Url.Action("BetListByIP", "TarusBetList", new { IsLink = true, FromDate = betdetail.Ticket.WinlostDate.ToString("MM/dd/yyyy"), IP = betdetail.Ticket.IP })">@ip</a>
+                }
             </div>
         </td>
         <td class="r">

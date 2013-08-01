@@ -38,7 +38,7 @@
         </td>
         <td class="c">
             <div class="width120 table-cell">
-                 <div class="refno ">
+                <div class="refno ">
                     @if (betdetail.Ticket.BetTypeId == 71)
                     {
                         <span>No: @betdetail.Ticket.RefNo </span>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="c">
                     @betdetail.Ticket.TransDate</div>
-                    </div>
+            </div>
         </td>
         <td id ="td_right_@betdetail.Ticket.TransId"  class='r bl_evt'>
             <div id="choice_right_@betdetail.Ticket.TransId" class="width270 table-cell">
@@ -79,7 +79,15 @@
         </td>
         <td class="c">
             <div id="stautus_@betdetail.Ticket.TransId" class="width100 table-cell">
-            @Html.Raw(betdetail.StatusHtml)
+                @Html.Raw(betdetail.StatusHtml)
+                @{
+                    var ip = @Sunplus.Accounting.Business.IpManagement.ReplaceVNIP(betdetail.Ticket.IP);
+                }
+                @if (ip != "-")
+                {
+                    <br />
+                    <a href="@Url.Action("BetListByIP", "TarusBetList", new { IsLink = true, FromDate = betdetail.Ticket.WinlostDate.ToString("MM/dd/yyyy"), IP = betdetail.Ticket.IP })">@ip</a>
+                }
             </div>
         </td>
         <td class="r">
