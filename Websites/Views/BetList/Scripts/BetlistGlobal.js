@@ -13,13 +13,13 @@
             URL = "BetList/GetVirtualHRPopup?MatchID=" + matchID + "&RaceNo=" + raceNo;
             title = "Virtual Horse Racing";
             heightTmp = 200;
-            widthTmp = 750;
+            widthTmp = 850;
             break;
         case 186:
             URL = "BetList/GetVirtualTennisPopup?MatchID=" + matchID + "&RaceNo=" + raceNo;
             title = "Tennis - Virtual Tennis";
             heightTmp = 180;
-            widthTmp = 680;
+            widthTmp = 750;
             break;
     }
 

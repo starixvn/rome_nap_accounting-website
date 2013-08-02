@@ -1,6 +1,7 @@
-﻿@using Fanex.BetList.Accounting.Models
+﻿<link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css" />
+@using Fanex.BetList.Accounting.Models
 @using Fanex.BetList.Accounting.Core
-<link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css" />
+
 @{
     VirtualHRPopupModel virtualPopupModel = new VirtualHRPopupModel();
 }
@@ -56,7 +57,7 @@ public string Placing(int number)
                 @if (i == 0)
                 {
                     <td rowspan ="@Model.Count" class="c" >
-                        <div class="width120">
+                        <div class="width200">
                             @virtualPopupModel.EventTime</div>
                     </td>
                 }
