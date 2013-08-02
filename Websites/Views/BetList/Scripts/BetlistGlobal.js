@@ -23,7 +23,7 @@
             break;
     }
 
-    parent.OpenNextPopup("popup", window.rootUrl + URL, title, widthTmp, heightTmp, true, true, window, 2000, null, null);
+    parent.OpenNextPopup("popupVirtualHR", window.rootUrl + URL, title, widthTmp, heightTmp, true, true, window, 2000, null, null);
 
      try { parent.jQuery.unblockUI(); } catch (e) { }
 }

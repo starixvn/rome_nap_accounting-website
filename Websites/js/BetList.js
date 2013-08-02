@@ -160,11 +160,11 @@ function openHRresult(url, title, width, heigh) {
 function ViewResultNumberGame(url) {
     //ibcWnd.open(url, '', 100, 100, 710, 200, 'class1', 'class2');
 
-    parent.OpenNextPopup("NumberGamePopup", url, '', 750, 200, true, false, window, 0, null, null);
+    parent.OpenNextPopup("NumberGamePopup", url, 'Number Game', 750, 200, true, false, window, 0, null, null);
 }
 function ViewResultLiveCasino(url) {
     //ibcWnd.open(url, '', 100, 100, 740, 200, 'class1', 'class2');
-    parent.OpenNextPopup("LiveCasinoPopup", url, '', 760, 200, true, false, window, 0, null, null);
+    parent.OpenNextPopup("LiveCasinoPopup", url, 'Live Casino', 760, 200, true, false, window, 0, null, null);
 }
 function viewFinanceResult(transid) {
     var width = 420;

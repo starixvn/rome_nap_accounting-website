@@ -58,7 +58,7 @@ function OpenNextPopup(popupId, url, title, width, height, modal, resizable, cur
         var iframe = jQuery('<iframe id="innerFrame' + popupId + '" />').attr({ "frameborder": "0", "scrolling": "auto" }).appendTo(dialoghtml);
     }
     dialoghtml.appendTo(jQuery("body"));
-    jQuery('.ui-dialog-title').text(title);
+   
     jQuery('#dialog-modal' + popupId).dialog({
         resizable: resizable,
         modal: modal,
