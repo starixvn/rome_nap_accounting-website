@@ -19,7 +19,7 @@
             URL = "BetList/GetVirtualTennisPopup?MatchID=" + matchID + "&RaceNo=" + raceNo;
             title = "Tennis - Virtual Tennis";
             heightTmp = 180;
-            widthTmp = 650;
+            widthTmp = 700;
             break;
     }
 
