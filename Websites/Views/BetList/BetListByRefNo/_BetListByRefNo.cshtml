@@ -29,8 +29,17 @@
     {
     <tr class="c">
         <td>
-            <div class="c width100" >
-              @betdetail.Ticket.UserName 
+            <div class="c width100 table-cell" >
+            @if(betdetail.Ticket.UserName.Length > 13)
+            {
+                string usernameTmp = betdetail.Ticket.UserName;
+                string firstSubstring = usernameTmp.Substring(0, 13);
+                string secondSubstring = usernameTmp.Substring(13, betdetail.Ticket.UserName.Length - 13);
+                <div>@firstSubstring<br />@secondSubstring </div>
+            }
+            else{
+                <div>@betdetail.Ticket.UserName</div>
+                }
             </div>
         </td>
         <td class="c">
