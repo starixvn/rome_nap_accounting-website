@@ -133,7 +133,7 @@ ProgressiveBonus.controller(
 
             $.ajax({
                 type: "POST",
-                url: "Casino/UpdateProgressive",
+                url: rootUrl + "Casino/UpdateProgressive",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 data: JSON.stringify($scope.module),
