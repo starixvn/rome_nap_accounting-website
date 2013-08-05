@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel.Activation;
-using System.Text;
+using ExcelUtil.Spreadsheet;
 using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business.CreditTerm;
-using Sunplus.Accounting.Entities.CreditTerm;
 using Sunplus.Accounting.Entities;
+using Sunplus.Accounting.Entities.CreditTerm;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.CreditTerm
 {
@@ -24,5 +23,23 @@ namespace Sunplus.Accounting.WcfServiceLibrary.CreditTerm
             var creditManager = CommonBootStrapper.Locator.GetInstance<ICreditTermManager>();
             return creditManager.UpdateConsolidationReportAllowStatus(custId, isViewReport);
         }
-    }
+
+		public void ExportAllGroup()
+		{
+			var creditManager = CommonBootStrapper.Locator.GetInstance<ICreditTermManager>();
+			creditManager.ExportExcelAllGroup();
+		}
+
+		public List<GroupEditing> GetMemberByGroupId(int groupId)
+		{
+			var creditManager = CommonBootStrapper.Locator.GetInstance<ICreditTermManager>();
+			return creditManager.GetMemberByGroupId(groupId);
+		}
+
+		public void ExportExcelMemberByGroupId(int groupId)
+		{
+			var creditManager = CommonBootStrapper.Locator.GetInstance<ICreditTermManager>();
+			creditManager.ExportExcelMemberByGroupId(groupId);
+		}
+	}
 }
