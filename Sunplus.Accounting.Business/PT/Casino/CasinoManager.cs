@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.Entities.Casino;
-using Fanex.CustomerSetting.Module.ProgressiveModule.Criteria;
-using Fanex.CustomerSetting.Module.ProgressiveModule.Repositories.Impl;
+using Fanex.CustomerSetting.Module.ProgressiveBonus.Criteria;
+using Fanex.CustomerSetting.Module.ProgressiveBonus.Repositories.Impl;
 
 namespace Sunplus.Accounting.Business.PT.Casino
 {

@@ -74,8 +74,8 @@
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\Dependency\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.ProgressiveModule, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Dependency\Fanex.CustomerSetting.Module.ProgressiveModule.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.ProgressiveBonus">
+      <HintPath>..\Dependency\Fanex.CustomerSetting.Module.ProgressiveBonus.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Data, Version=1.0.111.9, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -566,7 +566,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

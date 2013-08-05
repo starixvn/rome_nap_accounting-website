@@ -9,7 +9,7 @@ using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
 using DNAide.Web;
-using Fanex.CustomerSetting.Module.ProgressiveModule.Configurations;
+using Fanex.CustomerSetting.Module.ProgressiveBonus.Configurations;
 using Fanex.Tarus.LiveCasino.Distributor;
 using Fanex.Tarus.LiveCasino.Entities;
 using IBCUtils.Objects;
@@ -28,8 +28,8 @@ using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Accounting.Entities.Customer;
 using Sunplus.Bingo.Core;
 using Result = Sunplus.Accounting.Entities.Result;
-using Fanex.CustomerSetting.Module.ProgressiveModule.Repositories.Impl;
-using Fanex.CustomerSetting.Module.ProgressiveModule.Criteria;
+using Fanex.CustomerSetting.Module.ProgressiveBonus.Repositories.Impl;
+using Fanex.CustomerSetting.Module.ProgressiveBonus.Criteria;
 
 
 /// <summary>
