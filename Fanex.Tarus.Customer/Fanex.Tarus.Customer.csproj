@@ -75,8 +75,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NPOI, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="NPOI">
       <HintPath>..\Dependency\NPoi\NPOI.dll</HintPath>
     </Reference>
     <Reference Include="NPOI.OOXML">
@@ -105,7 +104,6 @@
       <HintPath>..\packages\System.Net.Http.2.0.20126.16343\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\AspNetWebApi.Core.4.0.20126.16343\lib\net40\System.Web.Http.dll</HintPath>
@@ -138,9 +136,9 @@
     <Compile Include="Business\SettingCustomer\SMATurnover\ISMATurnoverService.cs" />
     <Compile Include="Business\SettingCustomer\SMATurnover\SMATurnoverService.cs" />
     <Compile Include="Criteria\SMATurnover\AddSMAListCriteria.cs" />
-    <Compile Include="Criteria\SMATurnover\UploadSMAListCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\CheckSMAListCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\GetMatchInfo_AddSMAListCriteria.cs" />
+    <Compile Include="Criteria\SMATurnover\UploadSMAListCriteria.cs" />
     <Compile Include="DataAccess\SettingCustomer\SMATurnover\ISMATurnoverAccess.cs" />
     <Compile Include="DataAccess\SettingCustomer\SMATurnover\SMATurnoverAccess.cs" />
     <Compile Include="Controller\Credit\AddNewAgentController.cs" />
