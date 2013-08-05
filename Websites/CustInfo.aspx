@@ -269,7 +269,7 @@
         	var title = 'Update Progressive Bonus';
         	var url = 'CustomerSetting/ProgressiveBonus/Casino/index?custId=' + id;
         	var width = 500;
-        	var height = 220;
+        	var height = 190;
         	parent.OpenPopup(url, title, width, height, true, false, window, 2000, null, null);
         }
     </script>
