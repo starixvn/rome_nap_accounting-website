@@ -1,4 +1,11 @@
-﻿@using Fanex.BetList.Accounting.Models
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <link rel="stylesheet" type="text/css" href="~/Views/BetList/Style/BetList.css" />
+</head>
+<body>
+@using Fanex.BetList.Accounting.Models
+
 @{
     VirtualTennisModel virtualPopupModel = new VirtualTennisModel();
     virtualPopupModel = Model;
@@ -63,3 +70,5 @@
 <script type="text/javascript">
    var _leagueName = '@virtualPopupModel.LeageName';
 </script>
+</body>
+</html>

@@ -1,4 +1,5 @@
 ﻿head.ready(function (event) {
+    try { parent.BlockUI(); } catch (e) { }
     $('#btnExport').click(function () {
         exportExcel();
     });
@@ -17,6 +18,8 @@
 
     $("#BetlistStatement").initGrid(gridOpts);
     $('#BetlistStatement').removeClass("display-none").gridScroller(gridOpts);
+
+    try { parent.jQuery.unblockUI(); } catch (e) { }
 });
 
 function exportExcel(){

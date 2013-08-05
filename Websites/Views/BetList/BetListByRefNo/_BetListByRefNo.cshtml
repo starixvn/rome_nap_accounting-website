@@ -1,5 +1,6 @@
 ﻿@using Fanex.BetList.Accounting.Models
 @using Fanex.BetList.Core.Entities;
+@using Fanex.BetList.Accounting.Core;
 @{
     TicketDetail betdetail = new TicketDetail();
     if (Model != null && Model.Count > 0)
@@ -29,8 +30,17 @@
     {
     <tr class="c">
         <td>
-            <div class="c width100" >
-              @betdetail.Ticket.UserName 
+            <div class="c width100 table-cell" >
+            @if(betdetail.Ticket.UserName.Length > 13)
+            {
+                string usernameTmp = betdetail.Ticket.UserName;
+                string firstSubstring = usernameTmp.Substring(0, 13);
+                string secondSubstring = usernameTmp.Substring(13, betdetail.Ticket.UserName.Length - 13);
+                <div>@firstSubstring<br />@secondSubstring </div>
+            }
+            else{
+                <div>@betdetail.Ticket.UserName</div>
+                }
             </div>
         </td>
         <td class="c">
@@ -72,7 +82,15 @@
         </td>
         <td class="c">
             <div id="stautus" class="width100 table-cell">
-                @Html.Partial("~/Views/BetList/_Status.cshtml", betdetail)
+              @Html.Raw(betdetail.StatusHtml)
+                  @{
+                    var ip = @Sunplus.Accounting.Business.IpManagement.ReplaceVNIP(betdetail.Ticket.IP);
+                }
+                @if (ip != "-")
+                {
+                    <br />
+                    <a href="@Url.Action("BetListByIP", "TarusBetList", new { IsLink = true, FromDate = betdetail.Ticket.WinlostDate.ToString("MM/dd/yyyy"), IP = betdetail.Ticket.IP })">@ip</a>
+                }
             </div>
         </td>
         <td class="r">

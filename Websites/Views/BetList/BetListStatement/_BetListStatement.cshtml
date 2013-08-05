@@ -56,6 +56,7 @@
 @helper renderContent(TicketDetail betdetail, int NumberBegining)
     {
         var liveRow = betdetail.Ticket.IsLive ? "event-live" : string.Empty;
+        BetListHelper _betlistHelper = new BetListHelper();
     <tr class="c @liveRow">
         <td>
             <div class="c width30">
@@ -105,7 +106,7 @@
         </td>
         <td class="c">
             <div id="stautus_@betdetail.Ticket.TransId" class="width80">
-                @Html.Raw(betdetail.StatusHtml)
+                 @Html.Raw(betdetail.StatusHtml)
             </div>
         </td>
         <td class="r">
@@ -117,7 +118,7 @@
                 <br />
                 @if (ip != "-")
                 {
-                    <a href="@Url.Action("BetListByIP","TarusBetList", new { IsLink = true, FromDate= betdetail.Ticket.WinlostDate.ToString("MM/dd/yyyy"), IP=betdetail.Ticket.IP })">@ip</a>
+                    <a href="@Url.Action("BetListByIP", "TarusBetList", new { IsLink = true, FromDate = betdetail.Ticket.WinlostDate.ToString("MM/dd/yyyy"), IP = betdetail.Ticket.IP })">@ip</a>
                    @* <a href="../BetList/BetListByIP.aspx?bltype=3&fdate=@betdetail.Ticket.WinlostDate.ToShortDateString()&ip=@betdetail.Ticket.IP">@ip</a>*@
                 }
             </div>
@@ -321,8 +322,6 @@
             "@Url.Content("~/js/json2.js")", 
             "@Url.Content("~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js?ver=1")",
             "@Url.Content("~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js")",
-            "@Url.Content("~/js/IBCWnd/IBCWnd.js")", 
-            "@Url.Content("~/js/dialogbox.js")",
             "@Url.Content("~/js/jQuery/jquery.blockUI.1.33.js")",
             "@Url.Content("~/js/BlockUI.js")", 
             "@Url.Content("~/js/jQuery/Pager/jpager.js")",
