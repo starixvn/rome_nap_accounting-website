@@ -1,4 +1,5 @@
-﻿.marginContent
+﻿
+.marginContent
 {
     margin-top: 10px;
     margin-left: 10px;
@@ -29,11 +30,15 @@
     width: 160px;
 }
 
+.grid-fixed-table, .matchInfo_Table, .selectMatchInfoBox
+{
+    line-height: 17px;
+}
+
 .freegrid td.rowLeague, .grid-fixed-table td.rowLeague
 {
-    border: none;
+    border: solid 1px #FFFFFF;
     border-bottom: solid 1px #7C98A4;
-    background-color: #FDE9D9;
     font-weight: bold;
 }
 
@@ -62,3 +67,467 @@ input.btnSave[disabled]
 .smaTurnover-matchInfo tr
 {
 }
+
+
+.maincontent_box
+{
+    background: none;
+}
+
+.filterBox
+{
+    width: 882px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background: url("../../../../../App_Themes/Images/banner/bg_head_tb.jpg") repeat-x scroll left bottom #FFFFFF;
+}
+
+._100ReachedBox
+{
+    display: inline-block;
+}
+
+.lbl100Reached
+{
+    padding: 4px 7px 4px 7px;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 12px;
+    color: #2678cf;
+    background: url(Images/1.jpg) repeat-x;
+    border: solid #7a97a4;
+    border-width: 1px 1px 1px 5px;
+}
+
+.lbl100ReachedCounter
+{
+    border: solid 1px #7a97a4;
+    width: 30px;
+    box-shadow: inset 1px 1px 3px #CCC;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 12px;
+    color: #F00;
+    text-align: right;
+    padding: 3px;
+}
+
+.refreshBox
+{
+    display: inline-block;
+    border: solid 1px #7c98a4;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 12px;
+    width: 110px;
+    height: 18px;
+    box-shadow: inset 1px 1px 3px #CCC;
+    float: right;
+    margin-top: 5px;
+}
+
+.refreshIcon
+{
+    background: url(Images/refresh.png) no-repeat;
+    float: left;
+    line-height: 18px;
+    cursor: pointer;
+    padding-left: 8px;
+    width: 85px;
+}
+
+.refreshDropdownIcon
+{
+    background: url(Images/dropdown.png) no-repeat;
+    width: 17px;
+    float: left;
+    height: 18px;
+    line-height: 15px;
+    cursor: pointer;
+}
+
+.box100PercentageUsedContainer
+{
+    padding: 0px;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 10px;
+    width: 100px;
+    border: 1px solid #7c98a4;
+    line-height: 15px;
+}
+
+.boxPercentUsed_100Percent
+{
+    padding: 0px;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 10px;
+    width: 100px;
+    border: 1px solid #7c98a4;
+    line-height: 15px;
+    background: url(Images/2.jpg) repeat-x;
+    text-align: center;
+    color: #FFFFFF;
+    font-weight: bold;
+    margin-left: 30px;
+}
+
+.boxPercentUsed_Low
+{
+    padding: 0px;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 10px;
+    width: 100px;
+    border: 1px solid #7c98a4;
+    line-height: 15px;
+    text-align: center;
+    color: #000000;
+    font-weight: bold;
+    margin-left: 30px;
+}
+
+.btnAddSMA
+{
+    border: solid 1px #a7510a;
+    font-size: 10px;
+    font-family: Tahoma, Geneva, sans-serif;
+    background: url(Images/4.jpg) repeat-x;
+    color: #FFF;
+    padding: 1px;
+    text-align: center;
+    width: 50px;
+    line-height: 13px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.btnAddSMA:hover
+{
+    color: #FFB981;
+}
+
+.lblLeagueHeadline
+{
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 12px;
+    color: #a74c00;
+}
+
+.lblTeamInfo
+{
+    font-size: 12px;
+    display: inline-block;
+}
+
+.rightArrow_LeagueInfo
+{
+    background: url(Images/arrow.png) no-repeat;
+    height: 8px;
+    width: 5px;
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.eventDate_LeagueInfo
+{
+    font-size: 12px;
+    display: inline-block;
+    font-weight: normal;
+    margin-right: 5px;
+}
+
+.matchIdBox_LeagueInfo
+{
+    border: solid 1px #f99e55;
+    padding: 0px 3px 0px 3px;
+    font-size: 10px;
+    background-color: #ffb981;
+    display: inline-block;
+    line-height: 17px;
+    
+    float: right;
+    min-width: 120px;
+    text-align: center;
+}
+
+.countDownOptionContainer
+{
+    left: 2px;
+    top: 53px;
+    display: none;
+    float: right;
+    position: absolute;
+    background-color: #DFDFDF;
+    border: 1px solid #D4D4D4;
+    cursor: default;
+    width: 110px;
+    z-index: 10;
+}
+
+.countDownOptionCheck
+{
+    background: url("Images/countdownCheck.png") no-repeat scroll 3px 8px transparent;
+}
+
+.countDownOption
+{
+    border-bottom: 1px solid white;
+    padding: 1px 0 1px 15px;
+    line-height: 21px;
+}
+
+.countDownOption:hover
+{
+    background-color: #C0C0C0;
+}
+
+#ddlSport_AddSMAList
+{
+    width: 105px;
+}
+
+#ddlLeague_AddSMAList
+{
+    width: 350px;
+}
+
+#txtfromdate_AddSMAList, #txttodate_AddSMAList
+{
+    width: 100px;
+}
+
+.lblCheckAllMatch_AddSMAList
+{
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.lblmatchInfoOption
+{
+    cursor: pointer;
+}
+
+.colmatchInfoOption
+{
+    width: 50%;
+}
+
+.color-green
+{
+    color: #00FF00;
+}
+
+.colReason
+{
+    width: 525px;
+}
+
+.col80
+{
+    width: 80px;
+}
+
+.freegrid .succeededRecordsTable td.rowLeague
+{
+    font-weight: bold;
+    text-align: left;
+}
+
+.succeededRecordsTable .rowLeague .lblTeamInfo
+{
+    font-size: 12px;
+}
+
+#msgErrorAdd .alertboxerr
+{
+    margin-top: 10px;
+}
+
+.failedRecordsTableContainer
+{
+    margin-bottom: 10px;
+}
+
+.selectMatchFilterBox
+{
+    width: 922px;
+    border: 1px solid #8494A1;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.selectMatchFilterBox .title, .selectMatchInfoBox .title
+{
+    background: url("Images/choose-league-title-background.png") repeat-x scroll 0 0 transparent;
+    color: #FFFFFF;
+    font-size: 12px;
+    height: 22px;
+    line-height: 22px;
+    padding-left: 15px;
+    text-transform: uppercase;
+}
+
+.row-selectMatchFilter
+{
+    width: 930px;
+    background: url("../../../../../App_Themes/Images/banner/bg_head_tb.jpg") repeat-x scroll left bottom #FFFFFF;
+}
+
+.uploadFileContainer
+{
+    padding: 2px 0px;
+}
+
+.selectMatchFilter .box-padding-left, .matchInfoContainer .box-padding-left, .uploadFileContainer .box-padding-left
+{
+    padding-left: 15px;
+}
+
+.selectMatchFilter th, .selectMatchFilter td
+{
+    padding: 2px;
+}
+
+
+.selectMatchInfoBox
+{
+    width: 100%;
+    border: 1px solid #8494A1;
+    background: url("../../../../../App_Themes/Images/banner/bg_head_tb.jpg") repeat-x scroll left bottom #FFFFFF;
+    cursor: pointer;
+}
+
+.matchInfo_Table .match-headline
+{
+    background: #dce6f1;
+    font-weight: bold;
+}
+
+#AddSMAContent .filter
+{
+    margin: 5px 0px;
+}
+
+.freegrid .error-title
+{
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: #b71313;
+    color: #B71313;
+    text-align: left;
+}
+
+.freegrid .error-title .error-icon
+{
+    background: url('Images/error-icon.png') no-repeat scroll left top #FFFFFF;
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.freegrid .error-title .error-label
+{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.freegrid th.success-title
+{
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: #27740F;
+    color: #27740F;
+    text-align: left;
+}
+
+.succeededRecordsTableContainer
+{
+    margin-bottom: 10px;
+}
+
+input[type="checkbox"]
+{
+    margin: 0px;
+}
+
+.collapse
+{
+    background: url("Images/expand.png") no-repeat scroll 0 -1px transparent;
+    cursor: pointer;
+    display: inline-block;
+    height: 10px;
+    margin-bottom: 2px;
+    vertical-align: middle;
+    width: 16px;
+}
+
+.expand
+{
+    background: url("Images/expand.png") no-repeat scroll 0 -12px transparent;
+    cursor: pointer;
+    display: inline-block;
+    height: 10px;
+    margin-bottom: 2px;
+    vertical-align: middle;
+    width: 16px;
+}
+
+.title-icon, .title-label
+{
+    display: inline-block;
+}
+
+
+.btnDelete
+{
+    background: url("Images/delete-icon.png") no-repeat scroll center center transparent;
+    border: 0 solid red;
+    cursor: pointer;
+    font-size: 11px;
+    height: 20px;
+    margin: 0 2px;
+    overflow: visible;
+    padding-left: 6px;
+    padding-right: 6px;
+    width: 20px;
+}
+
+#fileUpload
+{
+}
+
+#btnUploadFile
+{
+    height: 14px;
+    width: 40px;
+}
+
+body
+{
+    line-height: 11px !important;
+}
+
+#upload_target
+{
+    width: 0;
+    height: 0;
+    border: 0px solid #fff;
+}
+
+.matchInfo_TableContainer th.match-info-title
+{
+    text-align: left;
+}
+
+#matchInfo_Table .match-headline td
+{
+    background-color: #CDDEF3;
+}
+
+#succeededRecordsTable .matchIdBox_LeagueInfo
+{
+    float: right;
+}
+
+
+.freegrid .normalTable td, .grid-fixed-table .normalTable td 
+{
+    border: none;
+}
+

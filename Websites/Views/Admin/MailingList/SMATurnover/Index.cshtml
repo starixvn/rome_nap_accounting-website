@@ -1,0 +1,106 @@
+﻿@using System.Web.Mvc
+@model  Fanex.Tarus.Admin.Entities.MailingList.SpecialDeleteMailing
+@{
+    System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/Message.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/Pager/pagination.css" />
+    <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/commonIOM.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/jQuery/GridScroller/gridscroller.css" />
+    <link rel="stylesheet" type="text/css" href="~/Views/Admin/MailingList/Style/MailingList.css" />
+    <link rel="stylesheet" type="text/css" href="~/Views/Admin/MailingList/Script/TokenInput/token-input-facebook.css" />
+</head>
+<body>
+    <div class="main">
+        <table style="width: 100%" border="0" cellpadding="0px" cellspacing="0px">
+            <tr>
+                <td>
+                    <div id="divMainHeader" class="">
+                        <div id="left_tab1">
+                            <ul>
+                                <li class="lefticon"></li>
+                                <li class="current"><span>Mailing List</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="maincontent" style="">
+                        <div id="err" style="display: none">
+                        </div>
+                        <div id="content" class="content">
+                            <table style="width: 100%;">
+                                <tr id="trToList">
+                                    <td style="width: 70px; font-weight: bold;">
+                                        <div style="margin: -55px 0 0 10px;">
+                                            To List
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id='divToList' style="margin-top: 20px;">
+                                            <select id="tbxToList" name="tbxCCList">
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="trCCList">
+                                    <td style="width: 70px; font-weight: bold;">
+                                        <div style="margin: -55px 0 0 10px;">
+                                            CC List
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="margin-top: 20px;">
+                                            <select id="tbxCCList" name="tbxCCList">
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="trBCCList" style="display: none">
+                                    <td style="width: 70px; font-weight: bold">
+                                        <div style="margin: -55px 0 0 10px;">
+                                            BCC List
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="margin-top: 20px;">
+                                            <select id="tbxBCCList" name="tbxCCList">
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div style="margin: 20px 0 20px 77px;">
+                                <input class="btn" type="button" id="btnSubmit" value="Submit" onclick="MailingList.Submit()" />
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="dialogConfirm" style="display: none;">
+        <table border="0px" id="tblconfirm">
+        </table>
+    </div>
+    <script type="text/javascript">
+     var _model = @Html.Raw(serializer.Serialize(Model)); 
+     var _isReload = '@ViewBag.Reload'; 
+     var _groupId = @Sunplus.Accounting.Core.Common.AppSession.GroupID;
+    window.rootUrl = '@Url.Content("~")';
+   
+    head.js("@Url.Content("~/js/jQuery/jquery-1.7.js")",
+            "@Url.Content("~/js/json2.js")", 
+            "@Url.Content("~/js/common.js")", 
+            "@Url.Content("~/js/jQuery/GridScroller/jquery.gridscroller.1.0.js?ver=1")",
+            "@Url.Content("~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js")",
+            "@Url.Content("~/js/IBCWnd/IBCWnd.js")",
+             "@Url.Content("~/js/dialogbox.js")",
+            "@Url.Content("~/js/BetList.js")",
+            "@Url.Content("~/Views/Admin/MailingList/Script/TokenInput/jquery.tokeninput.js")",
+            "@Url.Content("~/Views/Admin/MailingList/SMATurnover/Scripts/MailingList.js")");
+    </script>
+</body>
+</html>

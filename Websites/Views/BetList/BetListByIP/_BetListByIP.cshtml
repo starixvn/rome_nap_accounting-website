@@ -81,7 +81,7 @@
         </td>
         <td class="c">
             <div id="stautus_@betdetail.Ticket.TransId" class="width80">
-                @Html.Partial("~/Views/BetList/BetListByIP/_Status.cshtml", betdetail)
+               @Html.Raw(betdetail.StatusHtml)
             </div>
         </td>
         <td class="r">

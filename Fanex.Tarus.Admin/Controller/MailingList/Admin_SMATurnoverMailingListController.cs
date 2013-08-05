@@ -1,0 +1,70 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="Admin_SMATurnoverMailingListController.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
+
+namespace Fanex.Tarus.Admin.Controller.MailingList
+{
+    using System.Diagnostics.CodeAnalysis;
+    using System.Web.Mvc;
+    using Fanex.Tarus.Admin.Business.MailingList.SMATurnover;
+    using Fanex.Tarus.Admin.Entities;
+    using Fanex.Tarus.Admin.Entities.MailingList;
+    using Fanex.Tarus.Web.Controllers;
+
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    public class Admin_SMATurnoverMailingListController : BaseController
+    {
+        private readonly IAdmin_SMATurnoverMailingListService _admin_SMATurnoverMailingListService;
+        public Admin_SMATurnoverMailingListController()
+            : this(null)
+        {
+        }
+
+        public Admin_SMATurnoverMailingListController(IAdmin_SMATurnoverMailingListService admin_SMATurnoverMailingListService)
+        {
+            _admin_SMATurnoverMailingListService = admin_SMATurnoverMailingListService ?? new Admin_SMATurnoverMailingListService();
+        }
+
+        [HttpGet]
+        public ActionResult Index(int? selectId)
+        {
+            var model = this._admin_SMATurnoverMailingListService.GetMailingList();
+            int tempId;
+            if (selectId.HasValue)
+            {
+                tempId = selectId.Value;
+                ViewBag.Reload = true;
+            }
+            else
+            {
+                tempId = -1;
+                ViewBag.Reload = false;
+            }
+
+            foreach (var mailing in model.LicenseeList)
+            {
+                if (tempId == mailing.SiteID)
+                {
+                    break;
+                }
+            }
+
+            ViewBag.LicensseSiteList = new SelectList(model.LicenseeList, "SiteID", "SiteName", tempId);
+            return View("~/Views/Admin/MailingList/SMATurnover/Index.cshtml", model);
+        }
+
+        [HttpPost]
+        public JsonResult UpdateInsertMailingList(MailLicensee mailLicensee, bool isUpdate)
+        {
+            Result result = this._admin_SMATurnoverMailingListService.UpdateInsertMailing(mailLicensee, isUpdate);
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+    }
+}
