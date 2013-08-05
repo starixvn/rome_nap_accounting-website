@@ -24,10 +24,10 @@ namespace Sunplus.Accounting.WcfServiceLibrary.CreditTerm
             return creditManager.UpdateConsolidationReportAllowStatus(custId, isViewReport);
         }
 
-		public void ExportAllGroup()
+		public void ExportAllGroup(string searchKey, string sortOrder, string sortName)
 		{
 			var creditManager = CommonBootStrapper.Locator.GetInstance<ICreditTermManager>();
-			creditManager.ExportExcelAllGroup();
+			creditManager.ExportExcelAllGroup(searchKey, sortOrder, sortName);
 		}
 
 		public List<GroupEditing> GetMemberByGroupId(int groupId)

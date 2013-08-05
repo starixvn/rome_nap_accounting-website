@@ -8,7 +8,7 @@ namespace Sunplus.Accounting.Business.CreditTerm
     {
         List<Group> GetAllGroup();
         Result UpdateConsolidationReportAllowStatus(int custId, bool isViewReport);
-		void ExportExcelAllGroup();
+		void ExportExcelAllGroup(string searchKey, string sortOrder, string sortName);
 
 		List<GroupEditing> GetMemberByGroupId(int groupId);
 		void ExportExcelMemberByGroupId(int groupId);

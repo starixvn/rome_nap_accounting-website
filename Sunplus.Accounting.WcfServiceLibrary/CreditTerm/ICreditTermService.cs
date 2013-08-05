@@ -20,7 +20,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.CreditTerm
 
 		[OperationContract]
 		[WebGet(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-		void ExportAllGroup();
+		void ExportAllGroup(string searchKey, string sortOrder, string sortName);
 
 		[OperationContract]
 		[WebGet(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]

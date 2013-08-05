@@ -18,7 +18,7 @@
 
 </head>
 <body>
-    <div class="main">
+    <div class="main" style="width: 608px">
         <div class="maincontent">
              <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
                 <tr>

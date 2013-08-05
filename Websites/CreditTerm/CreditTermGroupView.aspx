@@ -75,6 +75,9 @@
     </div>
 	<form id="form" method="post" action="CreditTermGroupView.aspx">
         <input type="hidden" id="IsExport" name="IsExport" value="0" />
+		<input type="hidden" id="Query" name="Query" value="" />
+		<input type="hidden" id="SortOrder" name="SortOrder" value="" />
+		<input type="hidden" id="SortName" name="SortName" value="" />
     </form>
 	<script type="text/javascript">
 		function ExportToExcel() {

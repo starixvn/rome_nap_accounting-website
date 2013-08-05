@@ -19,8 +19,12 @@ public partial class CreditTermGroupView : PageBase
 	{
 		if (Request["IsExport"] == "1")
 		{
+			string query = Request["Query"];
+			string sortOrder = Request["SortOrder"];
+			string sortName = Request["SortName"];
+			
 			ICreditTermService creditTermService = new CreditTermService();
-			creditTermService.ExportAllGroup();
+			creditTermService.ExportAllGroup(query, sortOrder, sortName);
 		}
 	}    
 }

@@ -13,6 +13,7 @@ using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Accounting.DataAccess.ICreditTermDAO;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.CreditTerm;
+using System.Web.UI.WebControls;
 
 namespace Sunplus.Accounting.Business.CreditTerm
 {
@@ -72,7 +73,7 @@ namespace Sunplus.Accounting.Business.CreditTerm
             return result;
         }
 
-		public void ExportExcelAllGroup()
+		public void ExportExcelAllGroup(string searchKey, string sortOrder, string sortName)
 		{
 			List<Group> listGroup = (List<Group>)SessionExtension.GetSession(HttpContext.Current.Session, ALL_GROUPS_SESSION_KEY);
 			if (listGroup == null)
@@ -81,6 +82,37 @@ namespace Sunplus.Accounting.Business.CreditTerm
 				if (listGroup == null)
 				{
 					return;
+				}
+			}
+
+			// clone new list for seaching and sorting
+			List<Group> newListGroup = listGroup.GetRange(0, listGroup.Count);
+
+			// searching
+			if (!string.IsNullOrEmpty(searchKey))
+			{
+				newListGroup = newListGroup.Where(g => g.HeadUsername.IndexOf(searchKey, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+			}
+
+			// sorting ...
+			if (!string.IsNullOrEmpty(sortOrder) && !string.IsNullOrEmpty(sortName))
+			{
+				SortDirection sortDirection = string.Equals(sortOrder, "asc", StringComparison.OrdinalIgnoreCase)
+					? SortDirection.Ascending
+					: SortDirection.Descending;
+				string propertyName = string.Equals(sortName, "group", StringComparison.OrdinalIgnoreCase)
+					? "GroupId"
+					: "HeadUsername";
+
+				if (sortDirection == SortDirection.Ascending)
+				{
+					newListGroup = newListGroup.OrderBy(g => g.GetType().GetProperty(propertyName).GetValue(g, null))
+						.ToList();
+				}
+				else
+				{
+					newListGroup = newListGroup.OrderByDescending(g => g.GetType().GetProperty(propertyName).GetValue(g, null))
+						.ToList();
 				}
 			}
 
@@ -180,13 +212,13 @@ namespace Sunplus.Accounting.Business.CreditTerm
 			#region Body
 
 			Group group = null;
-			int reportLen = listGroup.Count;
+			int reportLen = newListGroup.Count;
 			for (int i = 0; i < reportLen; i++)
 			{
 				currentRow++;
 				currentColumn = startColumn;
 
-				group = listGroup[i];
+				group = newListGroup[i];
 
 				// style
 				var textStyle = i % 2 == 0 ? evenTextStyle : oddTextStyle;
