@@ -48,9 +48,6 @@ function OpenPopup(url, title, width, height, modal, resizable, currWindow, dura
         if (fnRecall) currentExecFrame.callback = fnRecall;
         if (fnOnClose) currentExecFrame.onclose = fnOnClose;
     }
-
-
-
 }
 
 
@@ -60,10 +57,8 @@ function OpenNextPopup(popupId, url, title, width, height, modal, resizable, cur
     if (url != "") {
         var iframe = jQuery('<iframe id="innerFrame' + popupId + '" />').attr({ "frameborder": "0", "scrolling": "auto" }).appendTo(dialoghtml);
     }
-
     dialoghtml.appendTo(jQuery("body"));
-
-
+    $('#ui-dialog-title-dialog-modal' + popupId).text(title);
     jQuery('#dialog-modal' + popupId).dialog({
         resizable: resizable,
         modal: modal,
@@ -91,6 +86,7 @@ function OpenNextPopup(popupId, url, title, width, height, modal, resizable, cur
                 currentExecFrame.onclose();
                 setTimeout('currentExecFrame=null;', 500);
             }
+            jQuery("#innerFrame" + popupId).empty();
         }
     });
 
