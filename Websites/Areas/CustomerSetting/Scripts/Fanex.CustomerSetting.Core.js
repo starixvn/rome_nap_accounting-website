@@ -514,9 +514,9 @@ Fanex.CustomerSetting.Core = {
     },
 
     BlockUI: function () {
-        if (!$this.BlockedUI) {
+        if (!$this.BlockedUI) {        
             $.blockUI({
-                message: '<img src="/Areas/CustomerSetting/Images/Loading.gif" />',
+                message: '<div class="loading">&nbsp;</div>',
                 onBlock: function () {
                     $this.BlockedUI = true;
                 },

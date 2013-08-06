@@ -866,7 +866,7 @@ namespace Sunplus.Accounting.Business.Customer
                             //customersetting/betsetting/sportsbook/index/id/uplineId/userId/siteName
                             //string bettingSetting = WebSettings.ExternalBettingLimitConfig;
                             //AppSession.GroupID
-                            TemplateHandler.Assign(ref htmlcontent, "{bettingLimitLinkSetting}", string.Format("/customersetting/betsetting/sportsbook/index/{0}/{1}/{2}/{3}", custId, custId, AppSession.AccId.ToString(), AppSession.SYSTEM));
+                            TemplateHandler.Assign(ref htmlcontent, "{bettingLimitLinkSetting}", string.Format("customersetting/betsetting/sportsbook/index/{0}/{1}/{2}/{3}", custId, custId, AppSession.AccId.ToString(), AppSession.SYSTEM));
 
                             //---- for menu details -----------
                             AssignEditFinance(ref htmlcontent, roleId);
