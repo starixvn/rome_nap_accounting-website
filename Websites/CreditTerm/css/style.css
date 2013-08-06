@@ -24,6 +24,10 @@ div#credit_content div
     text-align: center;
     float: left;
 }
+div#credit_content div div.btngroup
+{
+	float: right;
+}
 div.header
 {
     background-color: #B5C4D0;
