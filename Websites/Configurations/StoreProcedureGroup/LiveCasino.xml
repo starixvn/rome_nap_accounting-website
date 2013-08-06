@@ -32,10 +32,10 @@
     <Setting Key="TP_Admin_Exchange_UpdateExchange" SpName="TP_Admin_Exchange_UpdateExchange" DbName="LV_BackupDB" Plain="1" />    
   </Function>
     <Function Name="Live Casino - Settlement">
-      <Setting Key="Acc_Set_LeagueSel" SpName="Acc_Set_LeagueSel" DbName="prod" />
-      <Setting Key="Acc_Set_GameSel" SpName="Acc_Get_LiveCasinoGameList" DbName="prod" />
+      <Setting Key="Acc_Set_LeagueSel" SpName="Acc_Set_LeagueSel" DbName="main" />
+      <Setting Key="Acc_Set_GameSel" SpName="Acc_Get_LiveCasinoGameList" DbName="main" />
       <Setting Key="TP_Game_GameDetail_ByMatchId" SpName="TP_Game_GameDetail_ByMatchId" DbName="LV_MainDB" Plain="1"/>
-      <Setting Key="Acc_Set_LiveCSGameSelScore" SpName="Acc_Get_LiveCasinoGameResult" DbName="prod" />
+      <Setting Key="Acc_Set_LiveCSGameSelScore" SpName="Acc_Get_LiveCasinoGameResult" DbName="main" />
       <Setting Key="TP_Controller_MiniBac_VoidFromAct" SpName="TP_Game_MiniBac_VoidFromAct" DbName="LV_MainDB" Plain="1"/>
       <Setting Key="Admin_Settlement_s162" SpName="Admin_Settlement_s162" DbName="main" />
       <Setting Key="Dot_Member_LiveCasino_UpdResult" SpName="Dot_Member_LiveCasino_UpdResult" DbName="prod" />
@@ -48,8 +48,8 @@
     <Setting Key="Acc_SpecialDel_CheckMatchIDwithRefno" SpName="Acc_SpecialDel_CheckMatchIDwithRefno" DbName="db053" />
     
     <Setting Key="Acc_Get_LiveCasino_RecoverBet" SpName="Acc_Get_LiveCasino_RecoverBet" DbName="db053" />
-    <Setting Key="Acc_Get_LiveCasinoGameByID" SpName="Acc_LiveCS_SelGameByID" DbName="db053" />
-    <Setting Key="Acc_Set_LiveCasino_RecoverBet" SpName="Acc_BettransRecoverBet_LiveCS" DbName="main" />
+    <Setting Key="Acc_Get_LiveCasinoGameByID" SpName="Acc_Get_LiveCasinoGameByID" DbName="db053" />
+    <Setting Key="Acc_Set_LiveCasino_RecoverBet" SpName="Acc_Set_LiveCasino_RecoverBet" DbName="main" />
     <Setting Key="TP_Controller_MiniBac_RecoverBet" SpName="TP_Game_MiniBac_RecoverBet" DbName="LV_MainDB" Plain="1"/>
     <Setting Key="Acc_Msg_Remove" SpName="Acc_Msg_Remove" DbName="message" />
   </Function>
