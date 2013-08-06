@@ -14,6 +14,8 @@ using Sunplus.Bingo.Core;
 using Sunplus.Bingo.Entities;
 using Sunplus.Bingo.Services;
 using Result = Sunplus.Bingo.Entities.Result;
+using System.Threading.Tasks;
+using Sunplus.Accounting.DataAccess;
 
 /// <summary>
 /// Bingo Controller
@@ -80,6 +82,37 @@ namespace Sunplus.Accounting.Business.PT.Bingo
                 result =
                     customerService.UpdateCustomerSetting(customer, updatedByRoleID, fromIP, modifyBy, modifyUserName, 3) as
                     Result;
+
+                #region update status
+                if (result.ErrorCode == 0 && !customer.SyncBingo)
+                {
+                    var disableBingo = false;                    
+                    var custInfo = IBCProvider.IBCCustomer.GetBasicCustInfoIBC(customer.ID);
+                    disableBingo = custInfo.DisableBingo;
+                    CSCustomerDetail uplineInfo = null;
+
+                    if (customer.RoleId == (int)Sunplus.Accounting.Core.Common.Enumerations.Role.Member)
+                    {
+                        uplineInfo = IBCProvider.IBCCustomer.GetBasicCustInfoIBC(custInfo.AIBCCustID);
+                        disableBingo = uplineInfo.DisableBingo;
+                    }
+                    else if (customer.RoleId == (int)Sunplus.Accounting.Core.Common.Enumerations.Role.Agent)
+                    {
+                        uplineInfo = IBCProvider.IBCCustomer.GetBasicCustInfoIBC(custInfo.MIBCCustID);
+                        disableBingo = uplineInfo.DisableBingo;
+                    }
+                    else if (customer.RoleId == (int)Sunplus.Accounting.Core.Common.Enumerations.Role.Master)
+                    {
+                        uplineInfo = IBCProvider.IBCCustomer.GetBasicCustInfoIBC(custInfo.SIBCCustID);
+                        disableBingo = uplineInfo.DisableBingo;
+                    }
+
+                    Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateDisabledBingoGame(modifyBy, customer.ID, disableBingo, fromIP, disableBingo, true);
+
+
+                }
+                #endregion
+                
             }
             catch (Exception ex)
             {
@@ -112,96 +145,32 @@ namespace Sunplus.Accounting.Business.PT.Bingo
 
         public string ResourcesExtension { get; set; }
 
-        #region Auto insert Bingo account - background worker
-        private static BackgroundWorker _worker = null;
-        private static Queue<CSCustomerDetail> _queueCsCustomer = new Queue<CSCustomerDetail>();
-        private static Queue<int> _queueUserId = new Queue<int>();
-        private static Queue<string> _queueUserName = new Queue<string>();
-        private static Queue<string> _queueIp = new Queue<string>();
-        private static Queue<bool > _queueEnableBingo = new Queue<bool>();
+        #region Auto insert Bingo account - background worker        
         public void AutoInsertBingoAccount(CSCustomerDetail customerInfo, int userId, string userName, string ip, bool enabledBingo)
         {
             try
-            {
-                #region assign data
-                _queueCsCustomer.Enqueue(customerInfo);
-                _queueUserId.Enqueue(userId);
-                _queueUserName.Enqueue(userName);
-                _queueIp.Enqueue(ip);
-                _queueEnableBingo.Enqueue(enabledBingo);
-                #endregion
-                using (_worker = new BackgroundWorker())
+            {                
+                Task.Factory.StartNew(() =>
                 {
-                    _worker.WorkerSupportsCancellation = true;
-                    _worker.DoWork += new DoWorkEventHandler(WorkerRunning);
-                    _worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(WorkerCompleted);
-                    if(!_worker.IsBusy)
-                        _worker.RunWorkerAsync();
-                }
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex);
-            }
-        }
-
-        #region background worker
-        /**
-         * Function: Backgroundworker running
-         */
-        private static void WorkerRunning(object sender, DoWorkEventArgs e)
-        {
-            if (_queueCsCustomer.Count > 0)
-            {
-                Thread.Sleep(100);
-                InsertNewCustomerAccount();
-            }
-            else
-            {
-                _worker.CancelAsync();
-            }
-        }
-        /**
-         * Function: Backgroundworker commpleted
-         */
-        private static void WorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            //_worker.Dispose();
-            //TODO
-        }
-        #endregion
-
-        #region priavate methods
-        private static void InsertNewCustomerAccount()
-        {
-            try
-            {
-                var enableBingo = _queueEnableBingo.Dequeue();
-                if (enableBingo)
-                {
-                    var bingoLibray = new LiveCasinoLibrary.SBAgent.Customer();
-                    var custInfo = _queueCsCustomer.Dequeue();
-                    var ip = _queueIp.Dequeue();
-                    var userId = _queueUserId.Dequeue();
-                    var userName = _queueUserName.Dequeue();
-                    //Thread.Sleep(6000);
-                    //var recalIndex = 0;
-                    var isSuccess = true;
-
-                    isSuccess = bingoLibray.AutoInsertAccount(custInfo.CasinoNo, custInfo.IBCCustID, custInfo.UserName,
-                                                              custInfo.SIBCCustID, custInfo.MIBCCustID,
-                                                              custInfo.AIBCCustID, custInfo.RoleId.ToString(),
-                                                              custInfo.ExchangeID, DateTime.Now, ip, userId, userName, 3);
-
-                    Thread.Sleep(2000);
-                    if (isSuccess)
+                    if (enabledBingo)
                     {
-                        Sunplus.Bingo.Entities.IResult iResult = null;
-                        var bingoDao = BingoContainer.Current.Resolve<Sunplus.Bingo.Data.ICustomerDAO>();
-                        bingoDao.UpdateSyncBingo(custInfo.IBCCustID, true, ip, userId, ref iResult);
-                    }
-                }
+                        var bingoLibray = new LiveCasinoLibrary.SBAgent.Customer();
+                        var isSuccess = true;
 
+                        isSuccess = bingoLibray.AutoInsertAccount(customerInfo.CasinoNo, customerInfo.IBCCustID, customerInfo.UserName,
+                                                                  customerInfo.SIBCCustID, customerInfo.MIBCCustID,
+                                                                  customerInfo.AIBCCustID, customerInfo.RoleId.ToString(),
+                                                                  customerInfo.ExchangeID, DateTime.Now, ip, userId, userName, 3);
+
+                        Thread.Sleep(2000);
+                        if (isSuccess)
+                        {
+                            Sunplus.Bingo.Entities.IResult iResult = null;
+                            var bingoDao = BingoContainer.Current.Resolve<Sunplus.Bingo.Data.ICustomerDAO>();
+                            bingoDao.UpdateSyncBingo(customerInfo.IBCCustID, true, ip, userId, ref iResult);
+                        }
+                    }
+                });
             }
             catch (Exception ex)
             {
@@ -209,7 +178,6 @@ namespace Sunplus.Accounting.Business.PT.Bingo
             }
         }
 
-        #endregion
         #endregion
     }
 }

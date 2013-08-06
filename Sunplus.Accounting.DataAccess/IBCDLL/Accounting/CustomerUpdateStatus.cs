@@ -357,7 +357,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// Create date: <2010-04-16>
         /// </summary>
         ///<param name="accid"></param>
-        public static void CustomerUpdateDisabledBingoGame(int accid, int custid, bool disabledBingo, string Ip, bool isEnabledDownline)
+        public static void CustomerUpdateDisabledBingoGame(int accid, int custid, bool disabledBingo, string Ip, bool isEnabledDownline, bool isSync)
         {
             try
             {               
@@ -367,7 +367,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     param.Add("userid", accid);
                     param.Add("custid", custid);
                     param.Add("disabledbingo", disabledBingo);
-                    param.Add("syncbg", AppSession.IsSyncBingoCurrentCust);
+                    param.Add("syncbg", isSync);
                     param.Add("language", "E");
                     param.Add("errcode", 0);
                     param.Add("errmsg", string.Empty);
