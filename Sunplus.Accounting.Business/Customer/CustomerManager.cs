@@ -864,7 +864,9 @@ namespace Sunplus.Accounting.Business.Customer
                             TemplateHandler.Assign(ref htmlcontent, "{livecasinoLinkSetting}", liveCasinoSetting + "&roleId=" + roleId.ToString());
                             TemplateHandler.Assign(ref htmlcontent, "{virtualSportLinkSetting}", VirtualSportsSetting + "&roleId=" + roleId.ToString());
                             //customersetting/betsetting/sportsbook/index/id/uplineId/userId/siteName
-                            TemplateHandler.Assign(ref htmlcontent, "{bettingLimitLinkSetting}", string.Format("~/customersetting/betsetting/sportsbook/index/{0}/{1}/{2}/{3}", custId, custId, AppSession.AccId.ToString(), AppSession.SYSTEM));
+                            //string bettingSetting = WebSettings.ExternalBettingLimitConfig;
+                            //AppSession.GroupID
+                            TemplateHandler.Assign(ref htmlcontent, "{bettingLimitLinkSetting}", string.Format("/customersetting/betsetting/sportsbook/index/{0}/{1}/{2}/{3}", custId, custId, AppSession.AccId.ToString(), AppSession.SYSTEM));
 
                             //---- for menu details -----------
                             AssignEditFinance(ref htmlcontent, roleId);
