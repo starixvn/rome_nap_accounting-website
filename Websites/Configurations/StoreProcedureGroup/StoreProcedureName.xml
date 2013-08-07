@@ -525,9 +525,7 @@
 	<Function Name="RNG Casino - Customer">
 		<Setting Key="Acc_SiteSel_RNGCS" SpName="Acc_SiteSel_RNGCS" DbName="DBAGE.BODB02"  />
 	</Function>
-	<Function Name="Customer - Login">
-		<Setting Key="Acc_LoginAdmin" SpName="Acc_LoginAdmin" DbName="DBTXN.BODB02"  />
-	</Function>
+	
 	<Function Name="Admin-Mailing">
 		<Setting Key="Acc_MailingListIns" SpName="Acc_MailingListIns" DbName="DBACC.BODB_ACC" />
 		<Setting Key="Acc_MailingListSel" SpName="Acc_MailingListSel" DbName="DBACC.BODB_ACC" />

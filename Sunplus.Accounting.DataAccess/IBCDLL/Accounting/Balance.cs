@@ -410,19 +410,23 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <returns></returns>
         public static DbResult ExchangeSelCurrency()
         {
-            DbResult dbr = null;
+            DbResult dbResult = null; 
             try
             {
-                var spElement = GetExchangeStoreProcedure("ExchangeSel");
-
-                dbr = DbHelper.Execute(spElement.Name, spElement.DbName);
+                using (ObjectDb objDB = new ObjectDb("Acc_ExchangeSel", 600))
+                {
+                    var dataset = objDB.ExecuteDataSet();
+                    dbResult = new DbResult(objDB.GetOuputParams(), dataset);
+                    return dbResult;
+                }   
+            
             }
             catch (Exception ex)
             {
                 
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
-            return dbr;
+            return dbResult;
         }
     }
 

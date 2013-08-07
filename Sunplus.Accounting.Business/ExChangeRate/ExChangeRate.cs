@@ -412,8 +412,11 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 rs = IBCProvider.ExChangeRate.ExchangeSelByID(exid);// get info to send email
                 DataRow[] Rows = rs.ResultSet.Tables[0].Select();
 
-                rs = IBCProvider.ExChangeRate.ExchangeUpd(hash);
-                msg = CastAide.AsString(rs.Outputs["errmsg"]);
+                int errcode = 0;
+                string errmsg = "";
+
+                IBCProvider.ExChangeRate.ExchangeUpd(hash, ref errcode, ref errmsg);
+                msg = errmsg;
 
                 if (msg.Length == 0)
                 {
