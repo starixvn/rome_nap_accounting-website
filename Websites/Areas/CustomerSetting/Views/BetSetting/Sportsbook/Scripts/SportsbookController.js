@@ -9,7 +9,7 @@ function SportsbookController($scope, $http) {
     $scope.$watch("model.bettingLimitItems[0].minBetFormated", function (newValue, oldValue, _model) {
         if (_model.bettingLimits[0].checked) {
             for (var i = 1; i < length - 1; i++) {
-                _model.bettingLimits[i].minBetFormated = Fanex.CustomerSetting.Core.ReplaceAll(newValue, ',', '').formatNumber();
+                _model.bettingLimits[i].minBetFormated = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((newValue == '' ? '0' : newValue), ',', '')).formatNumber();
             }
         }
     });
@@ -17,7 +17,7 @@ function SportsbookController($scope, $http) {
     $scope.$watch("model.bettingLimitItems[0].maxBetFormated", function (newValue, oldValue, _model) {
         if (_model.bettingLimits[0].checked) {
             for (var i = 1; i < length - 1; i++) {
-                _model.bettingLimits[i].maxBetFormated = Fanex.CustomerSetting.Core.ReplaceAll(newValue, ',', '').formatNumber();
+                _model.bettingLimits[i].maxBetFormated = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((newValue == '' ? '0' : newValue), ',', '')).formatNumber();
             }
         }
     });
@@ -25,7 +25,7 @@ function SportsbookController($scope, $http) {
     $scope.$watch("model.bettingLimitItems[0].maxPerMatchFormated", function (newValue, oldValue, _model) {
         if (_model.bettingLimits[0].checked) {
             for (var i = 1; i < length - 1; i++) {
-                _model.bettingLimits[i].maxPerMatchFormated = Fanex.CustomerSetting.Core.ReplaceAll(newValue, ',', '').formatNumber();
+                _model.bettingLimits[i].maxPerMatchFormated = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((newValue == '' ? '0' : newValue), ',', '')).formatNumber();
             }
         }
     });
@@ -33,7 +33,7 @@ function SportsbookController($scope, $http) {
     $scope.$watch("model.bettingLimitItems[1].minBetFormated", function (newValue, oldValue, _model) {
         if (_model.bettingLimits[1].checked) {
             for (var i = 2; i < length - 1; i++) {
-                _model.bettingLimits[i].minBetFormated = Fanex.CustomerSetting.Core.ReplaceAll(newValue, ',', '').formatNumber();
+                _model.bettingLimits[i].minBetFormated = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((newValue == '' ? '0' : newValue), ',', '')).formatNumber();
             }
         }
     });
@@ -41,7 +41,7 @@ function SportsbookController($scope, $http) {
     $scope.$watch("model.bettingLimitItems[1].maxBetFormated", function (newValue, oldValue, _model) {
         if (_model.bettingLimits[1].checked) {
             for (var i = 2; i < length - 1; i++) {
-                _model.bettingLimits[i].maxBetFormated = Fanex.CustomerSetting.Core.ReplaceAll(newValue, ',', '').formatNumber();
+                _model.bettingLimits[i].maxBetFormated = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((newValue == '' ? '0' : newValue), ',', '')).formatNumber();
             }
         }
     });
@@ -49,7 +49,7 @@ function SportsbookController($scope, $http) {
     $scope.$watch("model.bettingLimitItems[1].maxPerMatchFormated", function (newValue, oldValue, _model) {
         if (_model.bettingLimits[1].checked) {
             for (var i = 2; i < length - 1; i++) {
-                _model.bettingLimits[i].maxPerMatchFormated = Fanex.CustomerSetting.Core.ReplaceAll(newValue, ',', '').formatNumber();
+                _model.bettingLimits[i].maxPerMatchFormated = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((newValue == '' ? '0' : newValue), ',', '')).formatNumber();
             }
         }
     });
@@ -78,9 +78,9 @@ function SportsbookController($scope, $http) {
                     $(element).addClass('copyActive');
                     $scope.model.bettingLimitItems[0].checked = true;
 
-                    var minBet = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll(soccerBetting.minBetFormated, ',', ''));
-                    var maxBet = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll(soccerBetting.maxBetFormated, ',', ''));
-                    var maxPerMatch = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll(soccerBetting.maxPerMatchFormated, ',', ''));
+                    var minBet = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((soccerBetting.minBetFormated == '' ? '0' : soccerBetting.minBetFormated), ',', ''));
+                    var maxBet = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((soccerBetting.maxBetFormated == '' ? '0' : soccerBetting.maxBetFormated), ',', ''));
+                    var maxPerMatch = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((soccerBetting.maxPerMatchFormated == '' ? '0' : soccerBetting.maxPerMatchFormated), ',', ''));
 
                     for (var i = 1; i < len - 1; i++) {
                         $scope.model.bettingLimitItems[i].bgClass = 'inactive';
@@ -163,9 +163,9 @@ function SportsbookController($scope, $http) {
                     $scope.model.bettingLimitItems[1].bgClass = '';
                     $scope.model.bettingLimitItems[1].checked = true;
 
-                    var minBet = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll(basketballBetting.minBetFormated, ',', ''));
-                    var maxBet = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll(basketballBetting.maxBetFormated, ',', ''));
-                    var maxPerMatch = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll(basketballBetting.maxPerMatchFormated, ',', ''));
+                    var minBet = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((basketballBetting.minBetFormated == '' ? '0' : basketballBetting.minBetFormated), ',', ''));
+                    var maxBet = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((basketballBetting.maxBetFormated == '' ? '0' : basketballBetting.maxBetFormated), ',', ''));
+                    var maxPerMatch = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((basketballBetting.maxPerMatchFormated == '' ? '0' : basketballBetting.maxPerMatchFormated), ',', ''));
 
                     for (var i = 2; i < len - 1; i++) {
                         $scope.model.bettingLimitItems[i].bgClass = 'inactive';
