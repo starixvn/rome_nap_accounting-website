@@ -307,7 +307,8 @@ function Update(ondone) {
             ondone(data);
         }
     }).error(function (data) {
-        console.log(data);
+        if (typeof console != 'undefined')
+            console.log(data);
 
         Fanex.CustomerSetting.Core.UnBlockUI();
 
