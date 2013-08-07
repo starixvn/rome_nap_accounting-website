@@ -2,7 +2,7 @@
     font-family: Tahoma,Arial,helvetica,sans-serif;
     font-size: 11px;
     line-height: 18px;
-    padding: 8px 0;
+    padding: 0;
     margin: 1px;    
 }
 input[type="text"], input[type="password"] {
