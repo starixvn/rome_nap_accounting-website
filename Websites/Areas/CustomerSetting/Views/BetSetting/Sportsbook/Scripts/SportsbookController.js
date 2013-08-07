@@ -67,6 +67,7 @@ function SportsbookController($scope, $http) {
     $scope.Copy = function (scope) {
         switch (scope.betting.resourceKey) {
             case 'Soccer':
+                $scope.model.bettingLimitItems[1].checked = false;
                 var element = $('#_' + scope.betting.resourceKey);
                 var unchecked = element.hasClass('true');
                 var len = $scope.model.bettingLimitItems.length;
@@ -77,7 +78,7 @@ function SportsbookController($scope, $http) {
                     $(element).addClass('copied');
                     $(element).addClass('copyActive');
                     $scope.model.bettingLimitItems[0].checked = true;
-
+                   
                     var minBet = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((soccerBetting.minBetFormated == '' ? '0' : soccerBetting.minBetFormated), ',', ''));
                     var maxBet = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((soccerBetting.maxBetFormated == '' ? '0' : soccerBetting.maxBetFormated), ',', ''));
                     var maxPerMatch = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((soccerBetting.maxPerMatchFormated == '' ? '0' : soccerBetting.maxPerMatchFormated), ',', ''));
@@ -98,7 +99,7 @@ function SportsbookController($scope, $http) {
                     $(element).removeClass('copied');
                     $(element).removeClass('copyActive');
                     $(element).addClass('true');
-                    $scope.model.bettingLimitItems[0].checked = false;
+                    $scope.model.bettingLimitItems[0].checked = false;                    
 
                     for (var i = 1; i < len - 1; i++) {
                         $scope.model.bettingLimitItems[i].bgClass = '';
@@ -130,6 +131,8 @@ function SportsbookController($scope, $http) {
 
                 break;
             case 'Basketball':
+                $scope.model.bettingLimitItems[0].checked = false;
+
                 var len = $scope.model.bettingLimitItems.length;
                 var soccerElement = $('#_Soccer');
                 var soccerChecked = $(soccerElement).hasClass('copied');
@@ -158,10 +161,10 @@ function SportsbookController($scope, $http) {
                 var element1 = $('#_' + scope.betting.resourceKey);
                 var unchecked = element1.hasClass('true');                
                 var basketballBetting = $scope.model.bettingLimitItems[1];
-
+                
                 if (unchecked) {
                     $scope.model.bettingLimitItems[1].bgClass = '';
-                    $scope.model.bettingLimitItems[1].checked = true;
+                    $scope.model.bettingLimitItems[1].checked = true;                    
 
                     var minBet = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((basketballBetting.minBetFormated == '' ? '0' : basketballBetting.minBetFormated), ',', ''));
                     var maxBet = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((basketballBetting.maxBetFormated == '' ? '0' : basketballBetting.maxBetFormated), ',', ''));
