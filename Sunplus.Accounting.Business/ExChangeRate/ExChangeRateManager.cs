@@ -495,13 +495,30 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             }
             try
             {
+                List<string> listMsg = new List<string>();
                 foreach (ExchangeRate exrate in ExRateList)
                 {
                     ExchangeRateDAO exratedao = new ExchangeRateDAO();
-                    exratedao.ExChangeRateUpdateOpenTote(exrate.Currency, exrate.GBPRate, exrate.AUDRate, exrate.ZARRate, exrate.EURORate, exrate.USDRate);
+                    int errcode = 0;
+                    string errmsg = string.Empty;
+
+                    exratedao.ExChangeRateUpdateOpenTote(exrate.Currency, exrate.GBPRate, exrate.AUDRate, exrate.ZARRate, exrate.EURORate, exrate.USDRate, ref errcode, ref errmsg);
+                    if (errcode > 0 && !string.IsNullOrEmpty(errmsg))
+                    {
+                        listMsg.Add(errmsg);
+                    }
                 }
-                result.ErrorCode = 0;
-                result.ErrorMessage = "Update Exchange Rate Open Tote successful.";
+                if (listMsg.Count > 0)
+                {
+                    result.ErrorCode = 100;
+                    var listMsgDistinct = listMsg.Distinct().ToList();
+                    result.ErrorMessage = string.Join(", ", listMsgDistinct); 
+                }
+                else
+                {
+                    result.ErrorCode = 0;
+                    result.ErrorMessage = "Update Exchange Rate Open Tote successful.";
+                }
             }
             catch (Exception ex)
             {

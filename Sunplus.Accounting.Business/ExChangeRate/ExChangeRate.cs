@@ -179,9 +179,14 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 hash.Add("description", Description);
                 hash.Add("multipliedby", Convert.ToInt32(MultipliedBy.Trim()));
 
-                DbResult rs = IBCProvider.ExChangeRate.ExchangeIns(hash);
-                msg = CastAide.AsString(rs.Outputs["errmsg"]);
-                int exid = CastAide.AsInt32(rs.Outputs["exchangeid"]);
+                int errcode = 0;
+                string errmsg = "";
+                int exchangeid = 0;
+
+                IBCProvider.ExChangeRate.ExchangeIns(hash, ref errcode, ref errmsg, ref exchangeid);
+
+                msg = errmsg;
+                int exid = exchangeid;
                 if (msg.Length == 0)
                 {
                    

@@ -10,6 +10,7 @@ using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.Entities;
 using System.Collections.Generic;
 using Fanex.Data;
+using DNAide.Core;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
@@ -277,26 +278,36 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 #region DNAide lib
 
                 DbResult ds = null;
+                string spName = "";
                 switch (roleId)
                 {
                     case 1:
-                        ds = DbHelper.ExecuteCmd("Acc_CustomerUpdMember_CommissionHR", hParams, DBType.MAIN, 600);
+                        spName = "Acc_CustomerUpdMember_CommissionHR";
                         break;
                     case 2:
-                        ds = DbHelper.ExecuteCmd("Acc_CustomerUpdAgent_CommissionHR", hParams, DBType.MAIN, 600);
+                        spName = "Acc_CustomerUpdAgent_CommissionHR";
                         break;
                     case 3:
-                        ds = DbHelper.ExecuteCmd("Acc_CustomerUpdMaster_CommissionHR", hParams, DBType.MAIN, 600);
+                        spName = "Acc_CustomerUpdMaster_CommissionHR";
                         break;
                     case 4:
-                        ds = DbHelper.ExecuteCmd("Acc_CustomerUpdSuper_CommissionHR", hParams, DBType.MAIN, 600);
+                        spName = "Acc_CustomerUpdSuper_CommissionHR";
                         break;
                 }
 
-                if (ds != null)
+                if (!string.IsNullOrEmpty(spName))
                 {
-                    hResult.Add("errCode", ds.Outputs["errcode"]);
-                    hResult.Add("errMsg", ds.Outputs["errmsg"]);
+                    using (ObjectDb objDB = new ObjectDb(spName, 600))
+                    {
+                        objDB.AssignParamValues(hParams);
+                        objDB.ExecuteNonQuery();
+                        var errcode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                        var errmsg = CastAide.AsString(objDB.GetParameterValue("errmsg"));
+                        hResult.Add("errCode", errcode);
+                        hResult.Add("errMsg", errmsg);
+                    }
+
+                   
                 }
 
                 #endregion

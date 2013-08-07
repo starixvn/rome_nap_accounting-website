@@ -25,7 +25,7 @@ namespace Sunplus.Accounting.DataAccess.Provider.ExchangeRate
             throw new NotImplementedException();
         }
 
-        public virtual DbResult ExchangeIns(Hashtable param)
+        public virtual void ExchangeIns(Hashtable param, ref int errcode, ref string errmsg, ref int exchangeid)
         {
             throw new NotImplementedException();
         }

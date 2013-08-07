@@ -5,6 +5,9 @@ using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.PositionTaking.Racing;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.PositionTaking.Racing;
+using Fanex.Data;
+using System;
+using DNAide.Core;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking.Racing
 {
@@ -80,12 +83,31 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking.Racing
         {
             var result = new Result();
             string spMaping = "UpdateStatus";
+            int errcode = 0;
+            string errmsg = "";
+
             if (!string.IsNullOrEmpty(spMaping))
             {
-                //var spElement = GetStoreProcedure(StoreProcedureSection.StoreCollection.Racing, spMaping);
-                var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.RacingSession.StoreCollection.RacingControl, spMaping);
-                var ds = DbHelper.Execute(spElement.Name, settingParams, spElement.DbName, 2000);
-                result.HandleError(ref result, ds, ResourceExtension.Resources.ErrorMsg.ToString());
+                try
+                {
+                    using (ObjectDb objDB = new ObjectDb(spMaping, 600))
+                    {
+                        objDB.AssignParamValues(settingParams);
+                        objDB.ExecuteNonQuery();
+                        errcode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                        errmsg = CastAide.AsString(objDB.GetParameterValue("errmsg"));
+                        result.HandleError(ref result, errcode, errmsg, ResourceExtension.Resources.ErrorMsg.ToString());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    errcode = 100;
+                    errmsg = ex.Message;
+                    result.HandleError(ref result, errcode, errmsg, ResourceExtension.Resources.ErrorMsg.ToString());                    
+
+                    LogExtensions.ExceptionHandler(ex);
+                }
+
             }
             return result;
         }
@@ -95,33 +117,36 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking.Racing
 
             var result = new Result();
             string spMaping = null;
+            int errcode = 0;
+            string errmsg = string.Empty;
+
             switch (roleId)
             {
                 case (int)CustInfo.Roles.Super:
-                    spMaping = "UpdateSuperSetting";
+                    spMaping = "Racing_UpdateSuperSetting";
                     break;
 
                 case (int)CustInfo.Roles.Master:
-                    spMaping = "UpdateMasterSetting";
+                    spMaping = "Racing_UpdateMasterSetting";
                     break;
 
                 case (int)CustInfo.Roles.Agent:
-                    spMaping = "UpdateAgentSetting";
+                    spMaping = "Racing_UpdateAgentSetting";
                     break;
 
                 case (int)CustInfo.Roles.Member:
-                    spMaping = "UpdateMemberSetting";
+                    spMaping = "Racing_UpdateMemberSetting";
                     break;
                 case (int)CustInfo.Roles.SuperOnMember: //*******Super on Member params*****
-                    spMaping = "UpdateSuperOnMember";
+                    spMaping = "Racing_UpdateSuperOnMember";
                     break;
                 case (int)CustInfo.Roles.MasterOnMember: //*******Master on Member params*****
-                    spMaping = "UpdateMasterOnMember";
+                    spMaping = "Racing_UpdateMasterOnMember";
                     break;
                 case (int)CustInfo.Roles.SuperMin: //*******Super Min params*****
                 case (int)CustInfo.Roles.MasterMinMax: //*******Master Min/Max params*****
                 case (int)CustInfo.Roles.AgentMinMax: //*******Agent Min/Max params*****
-                    spMaping = "UpdateMinMaxPt";
+                    spMaping = "Racing_UpdateMinMaxPt";
                     break;
 
                 default:
@@ -129,10 +154,25 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking.Racing
             }
             if (!string.IsNullOrEmpty(spMaping))
             {
-                //var spElement = GetStoreProcedure(StoreProcedureSection.StoreCollection.Racing, spMaping);
-                var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.RacingSession.StoreCollection.RacingControl, spMaping);
-                var ds = DbHelper.Execute(spElement.Name, settingParams, spElement.DbName, 2000);
-                result.HandleError(ref result, ds, ResourceExtension.Resources.ErrorMsg.ToString());
+                try
+                {
+                    using (ObjectDb objDB = new ObjectDb(spMaping, 600))
+                    {
+                        objDB.AssignParamValues(settingParams);
+                        objDB.ExecuteNonQuery();
+                        errcode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                        errmsg = CastAide.AsString(objDB.GetParameterValue("errmsg"));
+                        result.HandleError(ref result, errcode, errmsg, ResourceExtension.Resources.ErrorMsg.ToString());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    errcode = 100;
+                    errmsg = ex.Message;
+                    result.HandleError(ref result, errcode, errmsg, ResourceExtension.Resources.ErrorMsg.ToString());
+                    
+                    LogExtensions.ExceptionHandler(ex);
+                }
             }
             return result;
         }

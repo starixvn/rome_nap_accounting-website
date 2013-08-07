@@ -24,13 +24,15 @@ public class UpdateVirtualRateMain : IHttpHandler, IRequiresSessionState
             if (CastAide.AsString(context.Request["bolUnLoadPage"])=="0")
             {
                 int Index = CastAide.AsInt32(context.Request["Index"]);
-                DbResult dbr=null;
+                int errcode = 0;
+                string errmsg = "";
+                
                 for (int i=1; i<=Index; i++)
                 {
-                    dbr = VirtualRate.UpdateVirtualRateIntoCustinfo(CastAide.AsString(context.Request["FileName"]), CastAide.AsInt32(context.Request["FileSize"]), i);
-                    if (dbr.Outputs["errcode"].ToString() != "0")
+                    VirtualRate.UpdateVirtualRateIntoCustinfo(CastAide.AsString(context.Request["FileName"]), CastAide.AsInt32(context.Request["FileSize"]), i, ref errcode, ref errmsg);
+                    if (errcode>0)
                     {
-                        context.Response.Write(AlertMessage.GetMsg(dbr.Outputs["errmsg"].ToString(), AlertMessage.MsgType.Error));
+                        context.Response.Write(AlertMessage.GetMsg(errmsg, AlertMessage.MsgType.Error));
                         return;
                     }                    
                 }
