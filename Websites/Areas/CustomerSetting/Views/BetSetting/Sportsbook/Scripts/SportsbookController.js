@@ -10,6 +10,7 @@ function SportsbookController($scope, $http) {
         if (_model.bettingLimits[0].checked) {
             for (var i = 1; i < length - 1; i++) {
                 _model.bettingLimits[i].minBetFormated = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((newValue == '' ? '0' : newValue), ',', '')).formatNumber();
+                _model.bettingLimits[i].minBet = _model.bettingLimits[i].minBetFormated;
             }
         }
     });
@@ -18,6 +19,7 @@ function SportsbookController($scope, $http) {
         if (_model.bettingLimits[0].checked) {
             for (var i = 1; i < length - 1; i++) {
                 _model.bettingLimits[i].maxBetFormated = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((newValue == '' ? '0' : newValue), ',', '')).formatNumber();
+                _model.bettingLimits[i].maxBet = _model.bettingLimits[i].maxBetFormated;
             }
         }
     });
@@ -26,6 +28,7 @@ function SportsbookController($scope, $http) {
         if (_model.bettingLimits[0].checked) {
             for (var i = 1; i < length - 1; i++) {
                 _model.bettingLimits[i].maxPerMatchFormated = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((newValue == '' ? '0' : newValue), ',', '')).formatNumber();
+                _model.bettingLimits[i].maxPerMatch = _model.bettingLimits[i].maxPerMatchFormated;
             }
         }
     });
@@ -34,6 +37,7 @@ function SportsbookController($scope, $http) {
         if (_model.bettingLimits[1].checked) {
             for (var i = 2; i < length - 1; i++) {
                 _model.bettingLimits[i].minBetFormated = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((newValue == '' ? '0' : newValue), ',', '')).formatNumber();
+                _model.bettingLimits[i].minBet = _model.bettingLimits[i].minBetFormated;
             }
         }
     });
@@ -42,6 +46,7 @@ function SportsbookController($scope, $http) {
         if (_model.bettingLimits[1].checked) {
             for (var i = 2; i < length - 1; i++) {
                 _model.bettingLimits[i].maxBetFormated = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((newValue == '' ? '0' : newValue), ',', '')).formatNumber();
+                _model.bettingLimits[i].maxBet = _model.bettingLimits[i].maxBetFormated;
             }
         }
     });
@@ -50,6 +55,7 @@ function SportsbookController($scope, $http) {
         if (_model.bettingLimits[1].checked) {
             for (var i = 2; i < length - 1; i++) {
                 _model.bettingLimits[i].maxPerMatchFormated = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((newValue == '' ? '0' : newValue), ',', '')).formatNumber();
+                _model.bettingLimits[i].maxPerMatch = _model.bettingLimits[i].maxPerMatchFormated;
             }
         }
     });
