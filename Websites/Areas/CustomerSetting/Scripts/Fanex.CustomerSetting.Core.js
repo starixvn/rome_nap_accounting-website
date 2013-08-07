@@ -514,9 +514,9 @@ Fanex.CustomerSetting.Core = {
     },
 
     BlockUI: function () {
-        if (!$this.BlockedUI) {        
+        if (!$this.BlockedUI) {
             $.blockUI({
-                message: '<div class="loading">&nbsp;</div>',
+                message: '<div class="loading"></div>',
                 onBlock: function () {
                     $this.BlockedUI = true;
                 },

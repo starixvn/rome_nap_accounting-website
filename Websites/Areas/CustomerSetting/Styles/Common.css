@@ -26,12 +26,12 @@
 }
 .uncopied, .true
 {
-    background: url("images/uncopied.png") no-repeat scroll 100px 2px transparent;
+    background: url("/Areas/CustomerSetting/Styles/images/uncopied.png") no-repeat scroll 100px 2px transparent;
     cursor: pointer;
 }
 .copied
 {
-    background: url("images/copied.png") no-repeat scroll 100px 2px transparent;
+    background: url("/Areas/CustomerSetting/Styles/images/copied.png") no-repeat scroll 100px 2px transparent;
     cursor: pointer;
 }
 .collapse
@@ -341,4 +341,45 @@ select,.select
 	padding-top: 5px;
 	max-height: 180px;
 	overflow: auto;
+}
+.ui-widget
+{
+    font-size: 10px;
+    font-family: Tahoma,Helvetica,Arial,sans-serif;
+}
+.ui-widget-header
+{
+    background: none;
+    border: none;
+}
+.ui-tabs .ui-tabs-panel
+{
+    padding: 2px;
+    max-height: 300px;
+    border: 1px solid #ccc;
+}
+.ui-tabs-anchor
+{
+    font-weight: bold;
+    color: #2489CE !important;
+    height: 8px;
+    vertical-align: middle;    
+    margin: 0;
+}
+.ui-helper-reset
+{
+    line-height: 0.4;
+    padding: 0;
+}
+.ui-tabs .ui-tabs-nav
+{
+    padding: 0;
+}
+.ui-tabs .ui-tabs-nav li
+{
+    margin: 0;
+}
+.hidden
+{
+    display: none;
 }
