@@ -16,18 +16,31 @@ namespace Fanex.Tarus.Web.Controllers
     using Fanex.Tarus.Business.Implement;
     using Fanex.Tarus.Business.Interface;
     using Sunplus.Accounting.Core.Common;
+    using DNAide.Core;
+    using Sunplus.Accounting.Core.Configurations;
 
     public class CustomerSettingAuthenticate : IAuthenticate
     {
         private readonly IPermissionService _permissionService = new PermissionService();
+        private int groupId = CastAide.AsInt32(WebSettings.ExternalBettingLimitConfig.Split(new char[] { '|' })[0], 0);
 
         public bool AllowRead(string action)
         {
+            if (groupId != AppSession.GroupID)
+            {
+                return false;
+            }
+
             return this._permissionService.HasPermission(action, AppSession.PageAccess);
         }
 
         public bool AllowUpdate(string action)
         {
+            if (groupId != AppSession.GroupID)
+            {
+                return false;
+            }
+
             return this._permissionService.GetHostPermission(action, AppSession.PageAccess);
         }
 
