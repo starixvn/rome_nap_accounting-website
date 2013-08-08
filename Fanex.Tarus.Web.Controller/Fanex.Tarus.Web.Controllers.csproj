@@ -54,6 +54,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex\Fanex.Common.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.CustomerSetting.Security">
+      <HintPath>..\Dependency\BetSetting\Fanex.CustomerSetting.Security.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -146,6 +149,7 @@
       <DependentUpon>ErrorMsg.resx</DependentUpon>
     </Compile>
     <Compile Include="Areas\RouteCollectionExtensions.cs" />
+    <Compile Include="Authenticate.cs" />
     <Compile Include="Balance\ResetWinningController.cs" />
     <Compile Include="BaseController.cs" />
     <Compile Include="CommonController.cs" />
