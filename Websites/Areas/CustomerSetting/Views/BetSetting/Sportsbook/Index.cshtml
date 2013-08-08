@@ -20,7 +20,7 @@
     <link href="@Url.Content("~/Areas/CustomerSetting/Views/BetSetting/Sportsbook/Styles/Sportsbook.css")" rel="stylesheet" type="text/css" />
 }
 @section Sportsbook{
-    <div id="ng-app" ng-app="sportsBookApp" ng-controller="SportsbookController" ng-init="Init()" style="width: 815px">
+    <div id="ng-app" ng-app="sportsBookApp" ng-controller="Fanex.CustomerSetting.Betting.Sportsbook" ng-init="Init()" style="width: 815px">
         <div id="errMsg" style="display: none" class="errMsg">
         </div>
         <table class="tableInfo" border="1" cellpadding="0" cellspacing="0">
@@ -96,7 +96,7 @@
 
         $(document).ready(function () {
             $('.buttonPopup').bind('click', function () {
-                Update(function (data) {
+                Fanex.CustomerSetting.Betting.Sportsbook.Update(function (data) {
                 });
             });
         });
