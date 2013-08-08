@@ -181,12 +181,7 @@
     <Setting Key="Acc_OperatorUpd" SpName="Acc_OperatorUpd" DbName="DBCUST.CustDB"/>
   </Function>
 
-  <Function Name="Exchange Daily">
-    <Setting Key="Acc_ExchangeUpdateOpenToteRate" SpName="Acc_ExchangeUpdateOpenToteRate" DbName="DBCUST.CustDB"/>
-    <Setting Key="Acc_ExchangeIns" SpName="Acc_ExchangeIns" DbName="DBCUST.CustDB"/>
-    <Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel" DbName="DBCUST.CustDB" />
-    <Setting Key="EchangeUpd" SpName="Acc_ExchangeUpd" DbName="DBCUST.CustDB" />    
-  </Function>
+  
 
   <Function Name="Customer - Login">
     <Setting Key="Acc_LoginAdmin" SpName="Acc_LoginAdmin" DbName="DBCUST.CustDB"  />    

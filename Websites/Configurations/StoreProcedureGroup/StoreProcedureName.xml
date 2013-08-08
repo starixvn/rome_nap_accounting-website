@@ -692,4 +692,11 @@
 		<Setting Key="Customer_SMATurnover_CheckSMAList" SpName="Acc_SMATurnoverCheckList" DbName="DBAGE.BODB02" />
 		<Setting Key="Customer_SMATurnover_AddSMAList" SpName="Acc_SMATurnoverIns" DbName="DBAGE.BODB02" />
 	</Function>
+
+  <Function Name="Exchange Daily">
+    <Setting Key="Acc_ExchangeUpdateOpenToteRate" SpName="Acc_ExchangeUpdateOpenToteRate" DbName="DBTXN.BODB02"/>
+    <Setting Key="Acc_ExchangeIns" SpName="Acc_ExchangeIns" DbName="DBTXN.BODB02"/>
+    <Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel" DbName="DBTXN.BODB02" />
+    <Setting Key="EchangeUpd" SpName="Acc_ExchangeUpd" DbName="DBTXN.BODB02" />
+  </Function>
 </Functions>
