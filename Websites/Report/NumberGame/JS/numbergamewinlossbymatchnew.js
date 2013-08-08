@@ -341,7 +341,7 @@ var numberGameWinLossByMatch = {
                     var matchwinlost = $("#matchwinlost");
                     matchwinlost.show();
 
-                    $('#matchwinlost').removeClass("hidden").reRenderScroller(987, 563, true);
+                    $('#matchwinlost').removeClass("hidden").reRenderScroller(781, 563, true);
                     try { parent.jQuery.unblockUI(); } catch (e) { }
 
                 }
@@ -362,8 +362,6 @@ var numberGameWinLossByMatch = {
         strrow += '<td><div class="col100 r b' + (parseFloat(n.Position) < 0 ? ' red' : '') + '">' + n.Position + '</div></td>';
         strrow += '<td><div class="col100 r b' + (parseFloat(n.Commission) < 0 ? ' red' : '') + '">' + n.Commission + '</div></td>';
         strrow += '<td><div class="col100 r b' + (parseFloat(n.LineTotal) < 0 ? ' red' : '') + '">' + n.LineTotal + '</div></td>';
-        strrow += '<td><div class="col100 r b' + (parseFloat(n.VirtualLineTotal) < 0 ? ' red' : '') + '">' + n.VirtualLineTotal + '</div></td>';
-        strrow += '<td><div class="col100 r b' + (parseFloat(n.Variance) < 0 ? ' red' : '') + '">' + n.Variance + '</div></td>';
         strrow += '<td><div class="col100 r b' + (parseFloat(n.TurnOver) < 0 ? ' red' : '') + '">' + n.TurnOver + '</div></td>';
         strrow += '<td><div class="col100 r b' + (parseFloat(n.Margin) < 0 ? ' red' : '') + '">' + n.Margin + '</div></td>';
         strrow += '</tr>';
@@ -377,8 +375,6 @@ var numberGameWinLossByMatch = {
         strrow += '<td><div class="col100 r' + (parseFloat(n.Position) < 0 ? ' red' : '') + '">' + n.Position + '</div></td>';
         strrow += '<td><div class="col100 r' + (parseFloat(n.Commission) < 0 ? ' red' : '') + '">' + n.Commission + '</div></td>';
         strrow += '<td><div class="col100 r' + (parseFloat(n.LineTotal) < 0 ? ' red' : '') + '">' + n.LineTotal + '</div></td>';
-        strrow += '<td><div class="col100 r' + (parseFloat(n.VirtualLineTotal) < 0 ? ' red' : '') + '">' + n.VirtualLineTotal + '</div></td>';
-        strrow += '<td><div class="col100 r' + (parseFloat(n.Variance) < 0 ? ' red' : '') + '">' + n.Variance + '</div></td>';
         strrow += '<td><div class="col100 r' + (parseFloat(n.TurnOver) < 0 ? ' red' : '') + '">' + n.TurnOver + '</div></td>';
         strrow += '<td><div class="col100 r' + (parseFloat(n.Margin) < 0 ? ' red' : '') + '">' + n.Margin + '</div></td>';
         strrow += '</tr>';
@@ -392,8 +388,6 @@ var numberGameWinLossByMatch = {
         strrow += '<td><div class="col100 r' + (parseFloat(n.Position) < 0 ? ' red' : '') + '">' + n.Position + '</div></td>';
         strrow += '<td><div class="col100 r' + (parseFloat(n.Commission) < 0 ? ' red' : '') + '">' + n.Commission + '</div></td>';
         strrow += '<td><div class="col100 r' + (parseFloat(n.LineTotal) < 0 ? ' red' : '') + '">' + n.LineTotal + '</div></td>';
-        strrow += '<td><div class="col100 r' + (parseFloat(n.VirtualLineTotal) < 0 ? ' red' : '') + '">' + n.VirtualLineTotal + '</div></td>';
-        strrow += '<td><div class="col100 r' + (parseFloat(n.Variance) < 0 ? ' red' : '') + '">' + n.Variance + '</div></td>';
         strrow += '<td><div class="col100 r' + (parseFloat(n.TurnOver) < 0 ? ' red' : '') + '">' + n.TurnOver + '</div></td>';
         strrow += '<td><div class="col100 r' + (parseFloat(n.Margin) < 0 ? ' red' : '') + '">' + n.Margin + '</div></td>';
         strrow += '</tr>';
@@ -428,19 +422,19 @@ var numberGameWinLossByMatch = {
             $("#totalLineTotal").html(row.LineTotal);
         }
 
-        if (parseFloat(row.VirtualLineTotal) < 0) {
-            $("#totalVirtualLineTotal").html('<span style="color:red;">' + row.VirtualLineTotal + '</span>');
-        }
-        else {
-            $("#totalVirtualLineTotal").html(row.VirtualLineTotal);
-        }
+//        if (parseFloat(row.VirtualLineTotal) < 0) {
+//            $("#totalVirtualLineTotal").html('<span style="color:red;">' + row.VirtualLineTotal + '</span>');
+//        }
+//        else {
+//            $("#totalVirtualLineTotal").html(row.VirtualLineTotal);
+//        }
 
-        if (parseFloat(row.Variance) < 0) {
-            $("#totalVariance").html('<span style="color:red;">' + row.Variance + '</span>');
-        }
-        else {
-            $("#totalVariance").html(row.Variance);
-        }
+//        if (parseFloat(row.Variance) < 0) {
+//            $("#totalVariance").html('<span style="color:red;">' + row.Variance + '</span>');
+//        }
+//        else {
+//            $("#totalVariance").html(row.Variance);
+//        }
 
         if (parseFloat(row.TurnOver) < 0) {
             $("#totalTurnOver").html('<span style="color:red;">' + row.TurnOver + '</span>');
