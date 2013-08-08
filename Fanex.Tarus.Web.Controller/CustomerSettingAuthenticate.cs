@@ -13,19 +13,23 @@
 namespace Fanex.Tarus.Web.Controllers
 {
     using Fanex.CustomerSetting.Security.Authenticate;
+    using Fanex.Tarus.Web.Controllers.Filters;
+    using Fanex.Tarus.Business.Interface;
+    using Fanex.Tarus.Business.Implement;
+    using Sunplus.Accounting.Core.Common;
 
-    public class Authenticate : IAuthenticate
+    public class CustomerSettingAuthenticate : IAuthenticate
     {
+        private readonly IPermissionService _permissionService = new PermissionService();
+
         public bool AllowRead(string action)
         {
-            // Implement permission Read here
-            return true;
+            return this._permissionService.HasPermission(action, AppSession.PageAccess);
         }
 
         public bool AllowUpdate(string action)
         {
-            // Implement permission Host here
-            return true;
+            return this._permissionService.GetHostPermission(action, AppSession.PageAccess);
         }
 
         public string Function
