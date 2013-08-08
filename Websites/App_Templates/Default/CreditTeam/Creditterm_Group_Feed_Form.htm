@@ -1,10 +1,11 @@
 {msg}
 <!--Filter-->
-<table>
+<table style="float:left;">
     <tr>
         <td class="l b" style="width:120px;">GroupID:</td>
         <td>{groupid}</td>
         <td></td>
+		<td></td>
     </tr>
     <tr>    
         <td class="b">User Name:</td>
@@ -12,6 +13,9 @@
         <td><input class="btn" type="button" onclick="ExecuteCreditTerm('1');" value="Add to Group" name="btnadd"></input>  </td>
     </tr>
 </table>
+<div style="float:right;padding-top:24px;>
+	<div class="btngroup"><input type="button" title="Export to Excel" class="btnExcel" id="btnExport" name="btnExport" value="  " onclick="ExportToExcel({groupid});" /></div>
+</div>
 <!--/Filter-->
 <div id="dvcontent">
 <table class="tbllayout" cellspacing="1">

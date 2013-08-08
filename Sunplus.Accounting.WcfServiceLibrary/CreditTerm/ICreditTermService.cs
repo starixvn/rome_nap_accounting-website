@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Web;
-using Sunplus.Accounting.Entities.CreditTerm;
+using ExcelUtil.Spreadsheet;
 using Sunplus.Accounting.Entities;
+using Sunplus.Accounting.Entities.CreditTerm;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.CreditTerm
 {
@@ -16,5 +17,16 @@ namespace Sunplus.Accounting.WcfServiceLibrary.CreditTerm
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         Result UpdateConsolidationReportAllowStatus(int custId, bool isViewReport);
+
+		[OperationContract]
+		[WebGet(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+		void ExportAllGroup(string searchKey, string sortOrder, string sortName);
+
+		[OperationContract]
+		[WebGet(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
+		List<GroupEditing> GetMemberByGroupId(int groupId);
+
+		[OperationContract]
+		void ExportExcelMemberByGroupId(int groupId);
     }
 }
