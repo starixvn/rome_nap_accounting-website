@@ -335,5 +335,7 @@ namespace Sunplus.Accounting.Entities.Casino
         public bool IsHideVirtualSports { get; set; }
         public bool IsDisableVirtualSports { get; set; }
         public string SiteName { get; set; }
+
+        public bool DisableBingo { get; set; }
     }
 }

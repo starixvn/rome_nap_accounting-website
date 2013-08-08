@@ -64,7 +64,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                     _custSetting.LiveCasinoDisabled =  WebSettings.EnableLiveCasino ? CastAide.AsBoolean(row["disablelivecasino"]):true;
                     _custSetting.LiveCasinoSync = WebSettings.EnableLiveCasino ? CastAide.AsBoolean(row["synclivecasino"]) : false;
 
-                    
+                    _custSetting.DisableBingo = row.Table.Columns.Contains("disablebingo") ? CastAide.AsBoolean(row["disablebingo"]) : true;
                     _custSetting.NoIBCData = false;
                 }
                 Globals.IBCSetting.Casino.UseWebConfigProviderType = true;
