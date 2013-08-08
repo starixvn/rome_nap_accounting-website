@@ -13,9 +13,8 @@
 namespace Fanex.Tarus.Web.Controllers
 {
     using Fanex.CustomerSetting.Security.Authenticate;
-    using Fanex.Tarus.Web.Controllers.Filters;
-    using Fanex.Tarus.Business.Interface;
     using Fanex.Tarus.Business.Implement;
+    using Fanex.Tarus.Business.Interface;
     using Sunplus.Accounting.Core.Common;
 
     public class CustomerSettingAuthenticate : IAuthenticate
