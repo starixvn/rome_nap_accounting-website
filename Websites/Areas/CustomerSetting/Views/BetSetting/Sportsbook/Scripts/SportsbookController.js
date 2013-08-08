@@ -61,9 +61,7 @@ function SportsbookController($scope, $http) {
     });
 
     $scope.Init = function () {
-        var len = $scope.model.bettingLimitItems.length;
-
-        for (var i = 0; i < len - 1; i++) {
+        for (var i = 0; i < length - 1; i++) {
             $scope.model.bettingLimitItems[i].title = $scope.model.bettingLimitItems[i].resourceKey == 'Soccer' ?
             'Copy all below bet settings from Soccer (excluding Number Game)' : $scope.model.bettingLimitItems[i].resourceKey == 'Basketball' ?
             'Copy all below bet settings from Basketball (excluding Number Game)' : '';
@@ -74,22 +72,23 @@ function SportsbookController($scope, $http) {
         switch (scope.betting.resourceKey) {
             case 'Soccer':
                 $scope.model.bettingLimitItems[1].checked = false;
+
                 var element = $('#_' + scope.betting.resourceKey);
                 var unchecked = element.hasClass('true');
-                var len = $scope.model.bettingLimitItems.length;
                 var soccerBetting = $scope.model.bettingLimitItems[0];
 
                 if (unchecked) {
                     $(element).removeClass('true');
                     $(element).addClass('copied');
                     $(element).addClass('copyActive');
+
                     $scope.model.bettingLimitItems[0].checked = true;
                    
                     var minBet = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((soccerBetting.minBetFormated == '' ? '0' : soccerBetting.minBetFormated), ',', ''));
                     var maxBet = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((soccerBetting.maxBetFormated == '' ? '0' : soccerBetting.maxBetFormated), ',', ''));
                     var maxPerMatch = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((soccerBetting.maxPerMatchFormated == '' ? '0' : soccerBetting.maxPerMatchFormated), ',', ''));
 
-                    for (var i = 1; i < len - 1; i++) {
+                    for (var i = 1; i < length - 1; i++) {
                         $scope.model.bettingLimitItems[i].bgClass = 'inactive';
 
                         $scope.model.bettingLimitItems[i].minBetFormated = minBet.formatNumber();
@@ -105,9 +104,10 @@ function SportsbookController($scope, $http) {
                     $(element).removeClass('copied');
                     $(element).removeClass('copyActive');
                     $(element).addClass('true');
+
                     $scope.model.bettingLimitItems[0].checked = false;                    
 
-                    for (var i = 1; i < len - 1; i++) {
+                    for (var i = 1; i < length - 1; i++) {
                         $scope.model.bettingLimitItems[i].bgClass = '';
 
                         var minBet = $scope.model.bettingLimitItems[i].preValMinBet;
@@ -139,7 +139,6 @@ function SportsbookController($scope, $http) {
             case 'Basketball':
                 $scope.model.bettingLimitItems[0].checked = false;
 
-                var len = $scope.model.bettingLimitItems.length;
                 var soccerElement = $('#_Soccer');
                 var soccerChecked = $(soccerElement).hasClass('copied');
                 $(soccerElement).removeClass('copied');
@@ -147,7 +146,7 @@ function SportsbookController($scope, $http) {
                 $(soccerElement).addClass('true');
 
                 if (soccerChecked) {
-                    for (var i = 1; i < len - 1; i++) {
+                    for (var i = 1; i < length - 1; i++) {
                         $scope.model.bettingLimitItems[i].bgClass = '';
 
                         var minBet = $scope.model.bettingLimitItems[i].preValMinBet;
@@ -176,7 +175,7 @@ function SportsbookController($scope, $http) {
                     var maxBet = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((basketballBetting.maxBetFormated == '' ? '0' : basketballBetting.maxBetFormated), ',', ''));
                     var maxPerMatch = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((basketballBetting.maxPerMatchFormated == '' ? '0' : basketballBetting.maxPerMatchFormated), ',', ''));
 
-                    for (var i = 2; i < len - 1; i++) {
+                    for (var i = 2; i < length - 1; i++) {
                         $scope.model.bettingLimitItems[i].bgClass = 'inactive';
 
                         $scope.model.bettingLimitItems[i].minBetFormated = minBet.formatNumber();
@@ -201,9 +200,10 @@ function SportsbookController($scope, $http) {
                     $(element1).removeClass('copied');
                     $(element1).removeClass('copyActive');
                     $(element1).addClass('true');
+
                     $scope.model.bettingLimitItems[1].checked = false;
 
-                    for (var i = 2; i < len - 1; i++) {
+                    for (var i = 2; i < length - 1; i++) {
                         $scope.model.bettingLimitItems[i].bgClass = '';
 
                         var minBet = $scope.model.bettingLimitItems[i].preValMinBet;
@@ -332,7 +332,18 @@ function Update(ondone) {
     }
 
     Fanex.CustomerSetting.Core.BlockUI();
-    $.ajax({ dataType: 'json', type: 'post', url: toUrl('Sportsbook/EditBetSettingPost'), data: { id: custId, uplineId: uplineId, userId: userId, txtCustomerObject: JSON.stringify(model)} }).success(function (data) {
+
+    $.ajax({
+        dataType: 'json',
+        type: 'post',
+        url: toUrl('Sportsbook/EditBetSettingPost'),
+        data: {
+            id: custId,
+            uplineId: uplineId,
+            userId: userId,
+            txtCustomerObject: JSON.stringify(model)
+    }})
+    .success(function (data) {
         if (data.errorCode == "0") {
             $('#errMsg').attr('class', 'successMsg');
             $('#errMsg').html('<font color="Blue">Updated successfully</font>');
@@ -348,7 +359,8 @@ function Update(ondone) {
         if (typeof ondone == 'function') {
             ondone(data);
         }
-    }).error(function (data) {
+    })
+    .error(function (data) {
         if (typeof console != 'undefined')
             console.log(data);
 
