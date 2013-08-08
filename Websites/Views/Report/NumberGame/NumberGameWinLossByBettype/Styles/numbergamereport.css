@@ -38,3 +38,13 @@
 }
 
 
+#numbergamewinloss .col_header,
+#numbergamewinlossdetail .col_header {
+	height:22px;
+}
+
+
+.w100h17 {
+    width: 100px;
+    height: 17px;
+}

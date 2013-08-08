@@ -2475,9 +2475,9 @@ namespace Sunplus.Accounting.Business.Report
             try
             {
                 #region assign Header
-                wsNumberGameReport.Cells.GetSubrangeAbsolute(0, startColumnIndex, 0, startColumnIndex + (8)).Merged = true;
-                wsNumberGameReport.Cells.GetSubrangeAbsolute(0, startColumnIndex, 0, startColumnIndex + (8)).Style = bgHeader;
-                wsNumberGameReport.Cells.GetSubrangeAbsolute(0, startColumnIndex, 0, startColumnIndex + (8)).Value = string.Format("Number Game Win Loss By Match - Date {0}", date);
+                wsNumberGameReport.Cells.GetSubrangeAbsolute(0, startColumnIndex, 0, startColumnIndex + (6)).Merged = true;
+                wsNumberGameReport.Cells.GetSubrangeAbsolute(0, startColumnIndex, 0, startColumnIndex + (6)).Style = bgHeader;
+                wsNumberGameReport.Cells.GetSubrangeAbsolute(0, startColumnIndex, 0, startColumnIndex + (6)).Value = string.Format("Number Game Win Loss By Match - Date {0}", date);
 
                 wsNumberGameReport.Columns[startColumnIndex].Width = 20 * 256;
                 wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + nextColumn].Style = bgHeader;
@@ -2490,10 +2490,6 @@ namespace Sunplus.Accounting.Business.Report
                 wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + (nextColumn++)].Value = commHeader;
                 wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + nextColumn].Style = bgHeader;
                 wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + (nextColumn++)].Value = lineTotalHeader;
-                wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + nextColumn].Style = bgHeader;
-                wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + (nextColumn++)].Value = virutalTotalHeader;
-                wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + nextColumn].Style = bgHeader;
-                wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + (nextColumn++)].Value = varianceHeader;
                 wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + nextColumn].Style = bgHeader;
                 wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + (nextColumn++)].Value = turnOverHeader;
                 wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + nextColumn].Style = bgHeader;
@@ -2518,10 +2514,6 @@ namespace Sunplus.Accounting.Business.Report
                 wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + (nextColumn++)].Value = CastAide.AsDecimal(data.totalrow.Commission);
                 wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + nextColumn].Style = bgFooter;
                 wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + (nextColumn++)].Value = CastAide.AsDecimal(data.totalrow.LineTotal);
-                wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + nextColumn].Style = bgFooter;
-                wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + (nextColumn++)].Value = CastAide.AsDecimal(data.totalrow.VirtualLineTotal);
-                wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + nextColumn].Style = bgFooter;
-                wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + (nextColumn++)].Value = CastAide.AsDecimal(data.totalrow.Variance);
                 wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + nextColumn].Style = bgFooter;
                 wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + (nextColumn++)].Value = CastAide.AsDecimal(data.totalrow.TurnOver);
                 wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + nextColumn].Style = bgPercentFooter;
@@ -2572,9 +2564,9 @@ namespace Sunplus.Accounting.Business.Report
             try
             {
                 #region assign Header
-                wsNumberGameReport.Cells.GetSubrangeAbsolute(0, startColumnIndex, 0, startColumnIndex + (8)).Merged = true;
-                wsNumberGameReport.Cells.GetSubrangeAbsolute(0, startColumnIndex, 0, startColumnIndex + (8)).Style = bgHeader;
-                wsNumberGameReport.Cells.GetSubrangeAbsolute(0, startColumnIndex, 0, startColumnIndex + (8)).Value = string.Format("Number Game Win Loss By Date - From {0} To {1}", fromdate, todate);
+                wsNumberGameReport.Cells.GetSubrangeAbsolute(0, startColumnIndex, 0, startColumnIndex + (6)).Merged = true;
+                wsNumberGameReport.Cells.GetSubrangeAbsolute(0, startColumnIndex, 0, startColumnIndex + (6)).Style = bgHeader;
+                wsNumberGameReport.Cells.GetSubrangeAbsolute(0, startColumnIndex, 0, startColumnIndex + (6)).Value = string.Format("Number Game Win Loss By Date - From {0} To {1}", fromdate, todate);
 
                 wsNumberGameReport.Columns[startColumnIndex].Width = 20 * 256;
 
@@ -2588,10 +2580,6 @@ namespace Sunplus.Accounting.Business.Report
                 wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + (nextColumn++)].Value = commHeader;
                 wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + nextColumn].Style = bgHeader;
                 wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + (nextColumn++)].Value = lineTotalHeader;
-                wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + nextColumn].Style = bgHeader;
-                wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + (nextColumn++)].Value = virutalTotalHeader;
-                wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + nextColumn].Style = bgHeader;
-                wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + (nextColumn++)].Value = varianceHeader;
                 wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + nextColumn].Style = bgHeader;
                 wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + (nextColumn++)].Value = turnOverHeader;
                 wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + nextColumn].Style = bgHeader;
@@ -2616,10 +2604,6 @@ namespace Sunplus.Accounting.Business.Report
                 wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + (nextColumn++)].Value = CastAide.AsDecimal(data.totalrow.Commission);
                 wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + nextColumn].Style = bgFooter;
                 wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + (nextColumn++)].Value = CastAide.AsDecimal(data.totalrow.LineTotal);
-                wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + nextColumn].Style = bgFooter;
-                wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + (nextColumn++)].Value = CastAide.AsDecimal(data.totalrow.VirtualLineTotal);
-                wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + nextColumn].Style = bgFooter;
-                wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + (nextColumn++)].Value = CastAide.AsDecimal(data.totalrow.Variance);
                 wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + nextColumn].Style = bgFooter;
                 wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + (nextColumn++)].Value = CastAide.AsDecimal(data.totalrow.TurnOver);
                 wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + nextColumn].Style = bgPercentFooter;
@@ -2676,10 +2660,6 @@ namespace Sunplus.Accounting.Business.Report
                     wsNumberGameReport.Cells[nextRow + startRow, startCol + (nextColumn)].Style = row.children != null ? bgDecFormat : bgNormalDecFormat;
                     wsNumberGameReport.Cells[nextRow + startRow, startCol + (nextColumn++)].Value = CastAide.AsDecimal(row.LineTotal);
                     wsNumberGameReport.Cells[nextRow + startRow, startCol + (nextColumn)].Style = row.children != null ? bgDecFormat : bgNormalDecFormat;
-                    wsNumberGameReport.Cells[nextRow + startRow, startCol + (nextColumn++)].Value = CastAide.AsDecimal(row.VirtualLineTotal);
-                    wsNumberGameReport.Cells[nextRow + startRow, startCol + (nextColumn)].Style = row.children != null ? bgDecFormat : bgNormalDecFormat;
-                    wsNumberGameReport.Cells[nextRow + startRow, startCol + (nextColumn++)].Value = CastAide.AsDecimal(row.Variance);
-                    wsNumberGameReport.Cells[nextRow + startRow, startCol + (nextColumn)].Style = row.children != null ? bgDecFormat : bgNormalDecFormat;
                     wsNumberGameReport.Cells[nextRow + startRow, startCol + (nextColumn++)].Value = CastAide.AsDecimal(row.TurnOver);
                     wsNumberGameReport.Cells[nextRow + startRow, startCol + (nextColumn)].Style = row.children != null ? bgPercentFormat : bgNormalPercentFormat;
                     wsNumberGameReport.Cells[nextRow + startRow, startCol + (nextColumn++)].Value = CastAide.AsDecimal(row.Margin.Replace("%", null)) / 100;
@@ -2723,10 +2703,6 @@ namespace Sunplus.Accounting.Business.Report
                     wsNumberGameReport.Cells[nextRow + startRow, startCol + (nextColumn++)].Value = CastAide.AsDecimal(row.Commission);
                     wsNumberGameReport.Cells[nextRow + startRow, startCol + (nextColumn)].Style = row.children != null ? bgDecFormat : bgNormalDecFormat;
                     wsNumberGameReport.Cells[nextRow + startRow, startCol + (nextColumn++)].Value = CastAide.AsDecimal(row.LineTotal);
-                    wsNumberGameReport.Cells[nextRow + startRow, startCol + (nextColumn)].Style = row.children != null ? bgDecFormat : bgNormalDecFormat;
-                    wsNumberGameReport.Cells[nextRow + startRow, startCol + (nextColumn++)].Value = CastAide.AsDecimal(row.VirtualLineTotal);
-                    wsNumberGameReport.Cells[nextRow + startRow, startCol + (nextColumn)].Style = row.children != null ? bgDecFormat : bgNormalDecFormat;
-                    wsNumberGameReport.Cells[nextRow + startRow, startCol + (nextColumn++)].Value = CastAide.AsDecimal(row.Variance);
                     wsNumberGameReport.Cells[nextRow + startRow, startCol + (nextColumn)].Style = row.children != null ? bgDecFormat : bgNormalDecFormat;
                     wsNumberGameReport.Cells[nextRow + startRow, startCol + (nextColumn++)].Value = CastAide.AsDecimal(row.TurnOver);
                     wsNumberGameReport.Cells[nextRow + startRow, startCol + (nextColumn)].Style = row.children != null ? bgPercentFormat : bgNormalPercentFormat;

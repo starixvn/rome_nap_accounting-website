@@ -124,15 +124,6 @@
                                                 <td style="border-bottom: none 0px;">
                                                     <div class="col100 r">
                                                         Line Total</div>
-                                                </td>
-                                                <td style="border-bottom: none 0px;">
-                                                    <div class="col100 r">
-                                                        Virtual Total</div>
-                                                </td>
-                                                <td style="border-bottom: none 0px;">
-                                                    <div class="col100 r">
-                                                        Variance</div>
-                                                </td>
                                                 <td style="border-bottom: none 0px;">
                                                     <div class="col100 r">
                                                         Turnover</div>
@@ -173,14 +164,6 @@
                                                 </td>
                                                 <td>
                                                     <div id="totalLineTotal" class="col100 r">
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div id="totalVirtualLineTotal" class="col100 r">
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div id="totalVariance" class="col100 r">
                                                     </div>
                                                 </td>
                                                 <td>
