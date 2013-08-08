@@ -170,7 +170,7 @@ div#settingContainer,div.custInfo
 }
 td
 {
-    border: 1px solid #ccc;
+    border: 1px solid #7C98A4;
     font-size: 11px;
     text-indent: 3px;
 }
@@ -190,7 +190,7 @@ td
 .tableInfo
 {
     border: none;
-    border-color: #ccc; 
+    border-color: #7C98A4; 
     border-collapse: collapse;
     border-style: none; 
     width: 100%;
@@ -356,7 +356,7 @@ select,.select
 {
     padding: 2px;
     max-height: 300px;
-    border: 1px solid #ccc;
+    border: 1px solid #7C98A4 !important;
 }
 .ui-tabs-anchor
 {
