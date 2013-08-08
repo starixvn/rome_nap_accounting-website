@@ -110,7 +110,7 @@
     <section name="PTMappingSection" type="Fanex.PTEngine.XmlMapping.PTMappingSection"  allowLocation="true" allowDefinition="Everywhere"/>
     <section name="BettingLimitMappingSection" type="Fanex.PTEngine.XmlMapping.BettingLimitMappingSection"  allowLocation="true" allowDefinition="Everywhere"/>
 
-<<<<<<< HEAD
+
     <!--mapping report-->    
     <section name="MappingReportUrlSection" type="Fanex.Tarus.Reports.Core.Configurations.MappingReportUrlSection, Fanex.Tarus.Reports, Version=1.0.0.0, Culture=neutral"/>
     <!--/mapping report-->
