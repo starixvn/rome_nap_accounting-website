@@ -97,6 +97,13 @@
         $(document).ready(function () {
             $('.buttonPopup').bind('click', function () {
                 Fanex.CustomerSetting.Betting.Sportsbook.Update(function (data) {
+                    if(data.errorCode == "0"){
+                        var timeout = setTimeout(function(){
+                            clearTimeout(timeout);
+
+                            document.location.reload(true);
+                        }, 2000);
+                    }
                 });
             });
         });
