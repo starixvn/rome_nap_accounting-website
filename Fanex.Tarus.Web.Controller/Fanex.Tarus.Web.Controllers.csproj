@@ -149,7 +149,6 @@
       <DependentUpon>ErrorMsg.resx</DependentUpon>
     </Compile>
     <Compile Include="Areas\RouteCollectionExtensions.cs" />
-    <Compile Include="CustomerSettingAuthenticate.cs" />
     <Compile Include="Balance\ResetWinningController.cs" />
     <Compile Include="BaseController.cs" />
     <Compile Include="CommonController.cs" />
