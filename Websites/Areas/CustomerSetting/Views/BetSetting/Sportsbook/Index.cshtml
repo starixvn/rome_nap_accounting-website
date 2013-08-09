@@ -77,9 +77,18 @@
                 </td>            
             </tr>
         </table>
-        <div style="text-align: right" >
-            <input class="buttonPopup" type="button" value="Submit" />
-        </div>
+       
+        <table cellspacing="0" cellpadding="0" border="0" style="margin-top:6px;">
+        <tbody>
+            <tr>
+                <td class="custBtn1">
+                </td>
+                <td class="custBtn2 hand">
+                    Update
+                </td>
+            </tr>
+        </tbody>
+        </table>
     </div>
 }
 @section Scripts{
@@ -95,7 +104,7 @@
         }
 
         $(document).ready(function () {
-            $('.buttonPopup').bind('click', function () {
+            $('.custBtn2').bind('click', function () {
                 Fanex.CustomerSetting.Betting.Sportsbook.Update(function (data) {
                     if(data.errorCode == "0"){
                         var timeout = setTimeout(function(){

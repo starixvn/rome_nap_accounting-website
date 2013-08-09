@@ -361,7 +361,7 @@ select,.select
 .ui-tabs-anchor
 {
     font-weight: bold;
-    color: #2489CE !important;
+    color: #2678C5  !important;
     height: 8px;
     vertical-align: middle;    
     margin: 0;
@@ -382,4 +382,29 @@ select,.select
 .hidden
 {
     display: none;
+}
+
+.custBtn1 {
+    background: url("images/btUpdateL.gif") no-repeat scroll left top transparent;
+    cursor: pointer;
+    height: 24px;
+    width: 26px;
+    border: none 0px;
+    
+}
+
+.custBtn2 {
+    background: url("images/btUpdateR.gif") no-repeat scroll left top transparent;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 10pt;
+    font-weight: bold;
+    height: 24px;
+    padding-left: 12px;
+    text-align: left;
+    width: 96px;
+    border: none 0px;
+}
+.hand {
+    cursor: pointer;
 }
