@@ -10,38 +10,25 @@
 //   <change who="Andy.Nguyen" date="2013.8.8">Created</change>
 // </history>
 
-namespace Fanex.Tarus.Web.Controllers
-{
-    using Fanex.CustomerSetting.Security.Authenticate;
-    using Fanex.Tarus.Business.Implement;
-    using Fanex.Tarus.Business.Interface;
-    using Sunplus.Accounting.Core.Common;
-    using DNAide.Core;
-    using Sunplus.Accounting.Core.Configurations;
+using Fanex.CustomerSetting.Security.Authenticate;
+using Fanex.Tarus.Security.Web;
+using IPermissionService = Fanex.Tarus.Security.Permission.IPermissionService;
+using PermissionService = Fanex.Tarus.Security.Permission.PermissionService;
 
-    public class CustomerSettingAuthenticate : IAuthenticate
+
+namespace Fanex.Tarus.Security.Authenticate
+{
+    public class CustomerSetting : IAuthenticate
     {
         private readonly IPermissionService _permissionService = new PermissionService();
-        private int groupId = CastAide.AsInt32(WebSettings.ExternalBettingLimitConfig.Split(new char[] { '|' })[0], 0);
-
         public bool AllowRead(string action)
         {
-            if (groupId != AppSession.GroupID)
-            {
-                return false;
-            }
-
-            return this._permissionService.HasPermission(action, AppSession.PageAccess);
+            return _permissionService.HasPermission(action, AppSessions.PageAccess);
         }
 
         public bool AllowUpdate(string action)
         {
-            if (groupId != AppSession.GroupID)
-            {
-                return false;
-            }
-
-            return this._permissionService.GetHostPermission(action, AppSession.PageAccess);
+            return _permissionService.GetHostPermission(action, AppSessions.PageAccess);
         }
 
         public string Function
@@ -55,5 +42,6 @@ namespace Fanex.Tarus.Web.Controllers
             get;
             set;
         }
+       
     }
 }
