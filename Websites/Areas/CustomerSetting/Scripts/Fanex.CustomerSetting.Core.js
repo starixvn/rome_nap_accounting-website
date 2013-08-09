@@ -578,9 +578,9 @@ Fanex.CustomerSetting.Core = {
                 ele.value = Fanex.CustomerSetting.Core.FormatNumber(Fanex.CustomerSetting.Core.ReplaceAll(ele.value, ',', ''));
             }
         }
-        else if (ele && ele.value.length == 0) {
-            ele.value = '0';
-        }
+//        else if (ele && ele.value.length == 0) {
+//            ele.value = '0';
+//        }
 
         return ret;
     },
