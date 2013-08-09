@@ -18,13 +18,13 @@ namespace Fanex.Tarus.Infrastructure.Extensions
         public static void ExceptionHandler(Exception ex)
         {
             string message = ex.Message +
-                        "\r\nSOURCE: " + ex.Source +
-                        "\r\nDOMAIN: " + HttpContext.Current.Request.Headers["Host"] +
-                         "\r\nREFERRER: " + HttpContext.Current.Request.UrlReferrer +
-                        "\r\nFORM: " + HttpContext.Current.Request.Form.ToString() +
-                        "\r\nQUERYSTRING: " + HttpContext.Current.Request.QueryString.ToString() +
-                        "\r\nTARGETSITE: " + ex.TargetSite +
-                        "\r\nSTACKTRACE: " + ex.StackTrace;
+                             "<br>\r\nSOURCE: " + ex.Source +
+                             "<br>\r\nDOMAIN: " + HttpContext.Current.Request.Headers["Host"] +
+                             "<br>\r\nREFERRER: " + HttpContext.Current.Request.UrlReferrer +
+                             "<br>\r\nFORM: " + HttpContext.Current.Request.Form.ToString() +
+                             "<br>\r\nQUERYSTRING: " + HttpContext.Current.Request.QueryString.ToString() +
+                             "<br>\r\nTARGETSITE: " + ex.TargetSite +
+                             "<br>\r\nSTACKTRACE: " + ex.StackTrace;
             Fanex.Logging.Logger.Log.Error(message);
         }
     }
