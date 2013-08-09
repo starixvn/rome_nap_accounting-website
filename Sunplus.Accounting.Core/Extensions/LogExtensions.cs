@@ -27,44 +27,16 @@ namespace Sunplus.Accounting.Core.Extensions
         public static void ExceptionHandler(Exception ex)
         {
             string timeFrom = "", timeTo = "";
-
-            //var umCtrl = new UMBusiness();
-
-            //var isDownTime = umCtrl.isUnderMaintainence(Sites.AccountSite, WebSettings.LbServiceUrl, ref timeFrom,
-            //                                            ref timeTo); //Get Agnet Site UM Status.
-            //if (!isDownTime)
-                Fanex.Logging.Logger.Log.Error(ex.Message, ex);
+            string message = ex.Message +
+                             "\r\nSOURCE: " + ex.Source +
+                             "\r\nDOMAIN: " + HttpContext.Current.Request.Headers["Host"] +
+                             "\r\nREFERRER: " + HttpContext.Current.Request.UrlReferrer +
+                             "\r\nFORM: " + HttpContext.Current.Request.Form.ToString() +
+                             "\r\nQUERYSTRING: " + HttpContext.Current.Request.QueryString.ToString() +
+                             "\r\nTARGETSITE: " + ex.TargetSite +
+                             "\r\nSTACKTRACE: " + ex.StackTrace;
+            Fanex.Logging.Logger.Log.Error(message);
         }
 
-        /**
-         * Function: BackgroundWorker running
-         */
-        private static void WorkerRunning(object sender, DoWorkEventArgs e)
-        {
-            if (_queueEx.Count > 0)
-            {
-                var ex = _queueEx.Dequeue();
-                
-                Fanex.Logging.Logger.Log.Error(ex.Message, ex);
-            }
-            else
-            {
-                _worker.CancelAsync();
-            }
-        }
-        /**
-         * Function: BackgroundWorker commpleted
-         */
-        private static void WorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            //TODO
-        }
-
-        private static string GetName<T>(T item) where T : class
-        {
-            var properties = typeof(T).GetProperties();
-            //Enforce.That(properties.Length == 1);
-            return properties[0].Name;
-        }
     }
 }

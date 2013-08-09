@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Web;
+
 namespace Fanex.Tarus.Infrastructure.Extensions
 {
     using System;
@@ -14,9 +16,16 @@ namespace Fanex.Tarus.Infrastructure.Extensions
     public class LogExtensions
     {
         public static void ExceptionHandler(Exception ex)
-        {           
-
-            Fanex.Logging.Logger.Log.Error(ex.Message, ex);
+        {
+            string message = ex.Message +
+                        "\r\nSOURCE: " + ex.Source +
+                        "\r\nDOMAIN: " + HttpContext.Current.Request.Headers["Host"] +
+                         "\r\nREFERRER: " + HttpContext.Current.Request.UrlReferrer +
+                        "\r\nFORM: " + HttpContext.Current.Request.Form.ToString() +
+                        "\r\nQUERYSTRING: " + HttpContext.Current.Request.QueryString.ToString() +
+                        "\r\nTARGETSITE: " + ex.TargetSite +
+                        "\r\nSTACKTRACE: " + ex.StackTrace;
+            Fanex.Logging.Logger.Log.Error(message);
         }
     }
 }
