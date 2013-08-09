@@ -62,5 +62,10 @@ input[type="text"], input[type="password"] {
     border: none 0px;
 	
 }
-
+.header
+{
+     height: 25px; 
+     border: 1px solid #7C98A4; 
+     border-bottom: none;
+}
 
