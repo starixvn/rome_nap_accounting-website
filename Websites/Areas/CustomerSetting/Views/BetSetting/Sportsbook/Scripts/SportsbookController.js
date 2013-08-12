@@ -348,7 +348,8 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
             uplineId: uplineId,
             userId: userId,
             txtCustomerObject: JSON.stringify(model)
-    }})
+        }
+    })
     .success(function (data) {
         if (data.errorCode == "0") {
             $('#errMsg').attr('class', 'successMsg');
@@ -369,6 +370,11 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
     .error(function (data) {
         if (typeof console != 'undefined')
             console.log(data);
+
+        if (JSON.parse(data.responseText).ErrorCode) {
+            $('#errMsg').html(JSON.parse(data.responseText).ErrorMessage.formatErrorMessage());
+            $('#errMsg').show();
+        }
 
         Fanex.CustomerSetting.Core.UnBlockUI();
 
