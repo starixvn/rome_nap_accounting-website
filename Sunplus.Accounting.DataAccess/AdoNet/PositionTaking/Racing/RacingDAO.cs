@@ -83,7 +83,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking.Racing
         {
             var result = new Result();
             string spMaping = "UpdateStatus";
-            int errcode = 0;
+            string errcode = "";
             string errmsg = "";
 
             if (!string.IsNullOrEmpty(spMaping))
@@ -94,14 +94,14 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking.Racing
                     {
                         objDB.AssignParamValues(settingParams);
                         objDB.ExecuteNonQuery();
-                        errcode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                        errcode = CastAide.AsString(objDB.GetParameterValue("errcode")); 
                         errmsg = CastAide.AsString(objDB.GetParameterValue("errmsg"));
                         result.HandleError(ref result, errcode, errmsg, ResourceExtension.Resources.ErrorMsg.ToString());
                     }
                 }
                 catch (Exception ex)
                 {
-                    errcode = 100;
+                    errcode = "100";
                     errmsg = ex.Message;
                     result.HandleError(ref result, errcode, errmsg, ResourceExtension.Resources.ErrorMsg.ToString());                    
 
@@ -117,7 +117,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking.Racing
 
             var result = new Result();
             string spMaping = null;
-            int errcode = 0;
+            string errcode = "0";
             string errmsg = string.Empty;
 
             switch (roleId)
@@ -160,14 +160,14 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking.Racing
                     {
                         objDB.AssignParamValues(settingParams);
                         objDB.ExecuteNonQuery();
-                        errcode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
+                        errcode = CastAide.AsString(objDB.GetParameterValue("errcode"));
                         errmsg = CastAide.AsString(objDB.GetParameterValue("errmsg"));
                         result.HandleError(ref result, errcode, errmsg, ResourceExtension.Resources.ErrorMsg.ToString());
                     }
                 }
                 catch (Exception ex)
                 {
-                    errcode = 100;
+                    errcode = "100";
                     errmsg = ex.Message;
                     result.HandleError(ref result, errcode, errmsg, ResourceExtension.Resources.ErrorMsg.ToString());
                     

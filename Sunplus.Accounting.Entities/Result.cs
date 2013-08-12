@@ -75,7 +75,7 @@ namespace Sunplus.Accounting.Entities
             }
         }
 
-        public void HandleError(ref Result result, int errcode, string errmsg, string fileResource)
+        public void HandleError(ref Result result, string errcode, string errmsg, string fileResource)
         {
             try
             {
