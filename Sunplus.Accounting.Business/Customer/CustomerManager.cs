@@ -869,13 +869,13 @@ namespace Sunplus.Accounting.Business.Customer
                             if (!String.IsNullOrEmpty(bettingSetting) && bettingSetting.Contains("|"))
                             {
                                 int groupId = CastAide.AsInt32(bettingSetting.Split(new char[] { '|' })[0], 0);
-                                if (groupId == AppSession.GroupID)
+                                if (groupId != AppSession.GroupID && roleId==4 )
                                 {
-                                    TemplateHandler.Assign(ref htmlcontent, "{bettingLimitLinkSetting}", string.Format("customersetting/betsetting/sportsbook/index/{0}/{1}/{2}/{3}", custId, custId, AppSession.AccId.ToString(), AppSession.SYSTEM));
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-BetSetting");
                                 }
                                 else
                                 {
-                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-BetSetting");
+                                    TemplateHandler.Assign(ref htmlcontent, "{bettingLimitLinkSetting}", string.Format("customersetting/betsetting/sportsbook/index/{0}/{1}/{2}/{3}", custId, custId, AppSession.AccId.ToString(), AppSession.SYSTEM));
                                 }
                             }
                             else
