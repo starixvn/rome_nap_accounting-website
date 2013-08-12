@@ -568,7 +568,7 @@ Fanex.CustomerSetting.Core = {
         var charCode = (evt.which) ? evt.which : evt.keyCode;
         var ret = true;
 
-        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode != 37 && charCode != 39 && charCode != 46) {
             ret = false;
         }
 
