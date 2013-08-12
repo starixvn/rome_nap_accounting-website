@@ -561,6 +561,8 @@ Fanex.CustomerSetting.Core = {
     },
 
     CheckNumber: function (evt, ele) {
+        var caret = getCaret(ele);
+
         if (!evt) return false;
 
         ele.value = Fanex.CustomerSetting.Core.FormatNumber(Fanex.CustomerSetting.Core.ReplaceAll(ele.value, ',', ''));
@@ -578,9 +580,12 @@ Fanex.CustomerSetting.Core = {
                 ele.value = Fanex.CustomerSetting.Core.FormatNumber(Fanex.CustomerSetting.Core.ReplaceAll(ele.value, ',', ''));
             }
         }
-//        else if (ele && ele.value.length == 0) {
-//            ele.value = '0';
-//        }
+
+        setCaret(ele, caret);
+
+        //        else if (ele && ele.value.length == 0) {
+        //            ele.value = '0';
+        //        }
 
         return ret;
     },
@@ -620,7 +625,46 @@ Fanex.CustomerSetting.Core = {
             $('#names').attr('title', usernames.substring(0, usernames.length - 2));
         }
     }
-}
+};
+
+function setCaret(elem, caretPos) {
+    if (elem != null) {
+        if (elem.createTextRange) {
+            var range = elem.createTextRange();
+            range.move('character', caretPos);
+            range.select();
+        }
+        else {
+            if (elem.selectionStart) {
+                elem.focus();
+                elem.setSelectionRange(caretPos, caretPos);
+            }
+            else
+                elem.focus();
+        }
+    }
+};
+
+function getCaret(el) {
+    if (el.selectionStart) {
+        return el.selectionStart;
+    } else if (document.selection) {
+        el.focus();
+
+        var r = document.selection.createRange();
+        if (r == null) {
+            return 0;
+        }
+
+        var re = el.createTextRange(),
+        rc = re.duplicate();
+        re.moveToBookmark(r.getBookmark());
+        rc.setEndPoint('EndToStart', re);
+
+        return rc.text.length;
+    }
+    return 0;
+};
 
 String.prototype.formatNumber = function () {
     var number = this;
