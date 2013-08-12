@@ -10,17 +10,20 @@
 //   <change who="Andy.Nguyen" date="2013.8.8">Created</change>
 // </history>
 
-using Fanex.CustomerSetting.Security.Authenticate;
-using Fanex.Tarus.Security.Web;
-using IPermissionService = Fanex.Tarus.Security.Permission.IPermissionService;
-using PermissionService = Fanex.Tarus.Security.Permission.PermissionService;
-
-
 namespace Fanex.Tarus.Security.Authenticate
 {
-    public class CustomerSetting : IAuthenticate
+    using Fanex.CustomerSetting.Security.Authenticate;
+    using Fanex.Tarus.Security.Permission;
+    using Fanex.Tarus.Security.Web;
+
+    public class CustomerSettingAttribute : IAuthenticate
     {
         private readonly IPermissionService _permissionService = new PermissionService();
+
+        public CustomerSettingAttribute()
+        {
+        }
+
         public bool AllowRead(string action)
         {
             return _permissionService.HasPermission(action, AppSessions.PageAccess);
@@ -41,7 +44,6 @@ namespace Fanex.Tarus.Security.Authenticate
         {
             get;
             set;
-        }
-       
+        }       
     }
 }
