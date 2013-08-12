@@ -83,6 +83,7 @@
     <Setting Key="Acc_CustomerUpdNGEnableBetSetting" SpName="Acc_CustomerUpdNGEnableBetSetting" DbName="DBCUST.CustDB"  />
     <Setting Key="Acc_CustomerUpdSuper_All" SpName="Acc_CustomerUpdSuper_All" DbName="DBCUST.CustDB"/>
     <Setting Key="Acc_CustomerUpdSuspended" SpName="Acc_CustomerUpdSuspended" DbName="DBCUST.CustDB" />
+    <Setting Key="Acc_CustomerUpdUserInfo" SpName="Acc_CustomerUpdUserInfo" DbName="DBCUST.CustDB" />
   </Function>
 
   <Function Name="Bingo">

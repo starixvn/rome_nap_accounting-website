@@ -547,7 +547,7 @@
 		<Setting Key="Acc_CustomerSelSAgList" SpName="Acc_CustomerSelSAgList" DbName="DBAGE.BODB02"  />
 		<Setting Key="Acc_CustomerSelNGUpline" SpName="Acc_CustomerSelNGUpline" DbName="DBAGE.BODB02"  />
 		<Setting Key="Acc_CustomerSelByUserName" SpName="Acc_CustomerSelByUserName" DbName="DBAGE.BODB02"  />
-		<Setting Key="Acc_CustomerUpdUserInfo" SpName="Acc_CustomerUpdUserInfo" DbName="DBTXN.BODB02" />
+		
 		
 	</Function>
 	
