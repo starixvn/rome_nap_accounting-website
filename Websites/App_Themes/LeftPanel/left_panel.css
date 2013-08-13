@@ -309,7 +309,7 @@ body
 #de_left a:hover{background-position:0% -18px}
 #de_left a:hover span{background-position:100% -18px}
 
-.detail_tab_content{height:200px; line-height:18px;}
+.detail_tab_content{height:212px; line-height:18px;}
 
 /*scrollbar*/
 .osX .jScrollPaneTrack{        background:url(../images/scrollbar/osx_track.png) repeat-y}

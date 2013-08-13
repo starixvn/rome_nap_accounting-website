@@ -36,7 +36,16 @@ public partial class ExcelData1234 : System.Web.UI.Page
       }
         catch(Exception ex)
         {
-            LogExtensions.ExceptionHandler(ex);
+            string message = ex.Message +
+                             "<br>\r\nSOURCE: " + ex.Source +
+                             "<br>\r\nDOMAIN: " + HttpContext.Current.Request.Headers["Host"] +
+                             "<br>\r\nREFERRER: " + HttpContext.Current.Request.UrlReferrer +
+                             "<br>\r\nFORM: " + HttpContext.Current.Request.Form.ToString() +
+                             "<br>\r\nQUERYSTRING: " + HttpContext.Current.Request.QueryString.ToString() +
+                             "<br>\r\nTARGETSITE: " + ex.TargetSite +
+                             "<br>\r\nSTACKTRACE: " + ex.StackTrace;
+
+            Response.Write(message);
         }
 
     }
