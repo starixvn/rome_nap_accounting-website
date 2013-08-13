@@ -10,10 +10,10 @@ td
     border-color:1px solid #7C98A4;
     }
 input[type="text"], input[type="password"] {
-    line-height: 18px;
     border: 1px solid #818181;
     text-align: right;
     width: 110px;
+    padding: 1px;
 }
 .title
 {

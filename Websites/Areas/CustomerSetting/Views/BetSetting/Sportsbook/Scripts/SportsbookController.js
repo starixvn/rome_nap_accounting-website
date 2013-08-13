@@ -21,8 +21,8 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $http) {
                 var indexOfNumber = this.exp.indexOf('[');
                 var index = this.exp.substring(indexOfNumber + 1, indexOfNumber + 2);
 
-                _model.bettingLimits[index].minBetFormated = newValue;
-                _model.bettingLimits[index].minBet = newValue;
+
+                Fanex.CustomerSetting.Core.CheckNumber(window.event, document.getElementById('txt' + _model.bettingLimits[index].resourceKey + 'Min'));
             });
 
             $scope.$watch("model.bettingLimitItems[" + i + "].maxBetFormated", function (newValue, oldValue, _model) {
