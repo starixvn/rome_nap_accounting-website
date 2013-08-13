@@ -569,8 +569,9 @@ Fanex.CustomerSetting.Core = {
 
         var charCode = (evt.which) ? evt.which : evt.keyCode;
         var ret = true;
+        var exceptKeyCodes = [35, 36, 37, 39, 46];
 
-        if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode != 37 && charCode != 39 && charCode != 46) {
+        if ((charCode > 31 && (charCode < 48 || charCode > 57)) && exceptKeyCodes.indexOf(charCode) == -1) {
             ret = false;
         }
 
@@ -581,11 +582,12 @@ Fanex.CustomerSetting.Core = {
             }
         }
 
-        setCaret(ele, caret);
-
-        //        else if (ele && ele.value.length == 0) {
-        //            ele.value = '0';
-        //        }
+        if (ele.value.indexOf(',') != -1 && caret == ele.value.indexOf(',')) {
+            setCaret(ele, (caret + 1 > ele.value.length ? caret : caret + 1));
+        }
+        else {
+            setCaret(ele, caret);
+        }
 
         return ret;
     },
