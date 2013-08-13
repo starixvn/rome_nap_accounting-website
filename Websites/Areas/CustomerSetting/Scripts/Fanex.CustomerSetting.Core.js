@@ -583,7 +583,12 @@ Fanex.CustomerSetting.Core = {
         }
 
         if (ele.value.indexOf(',') != -1 && caret == ele.value.indexOf(',')) {
-            setCaret(ele, (caret + 1 > ele.value.length ? caret : caret + 1));
+            if (charCode == 8) { // Backspace is pressed
+                setCaret(ele, caret);
+            }
+            else {
+                setCaret(ele, (caret + 1 > ele.value.length ? caret : caret + 1));
+            }
         }
         else {
             setCaret(ele, caret);
