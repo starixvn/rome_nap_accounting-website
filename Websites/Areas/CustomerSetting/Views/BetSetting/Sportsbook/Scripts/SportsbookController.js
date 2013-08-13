@@ -12,7 +12,7 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $http) {
 
     var length = $scope.model.bettingLimitItems.length;
 
-    // Watch changing values if user user mouse to right-click and delete number
+    // Watch changing values if user use mouse to right-click and delete number
     var timeout = setTimeout(function () {
         clearTimeout(timeout);
 
@@ -21,24 +21,24 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $http) {
                 var indexOfNumber = this.exp.indexOf('[');
                 var index = this.exp.substring(indexOfNumber + 1, indexOfNumber + 2);
 
-                _model.bettingLimits[index].minBetFormated = newValue.formatNumber();
-                _model.bettingLimits[index].minBet = newValue.formatNumber();
+                _model.bettingLimits[index].minBetFormated = newValue;
+                _model.bettingLimits[index].minBet = newValue;
             });
 
             $scope.$watch("model.bettingLimitItems[" + i + "].maxBetFormated", function (newValue, oldValue, _model) {
                 var indexOfNumber = this.exp.indexOf('[');
                 var index = this.exp.substring(indexOfNumber + 1, indexOfNumber + 2);
 
-                _model.bettingLimits[index].maxBetFormated = newValue.formatNumber();
-                _model.bettingLimits[index].maxBet = newValue.formatNumber();
+                _model.bettingLimits[index].maxBetFormated = newValue;
+                _model.bettingLimits[index].maxBet = newValue;
             });
 
             $scope.$watch("model.bettingLimitItems[" + i + "].maxPerMatchFormated", function (newValue, oldValue, _model) {
                 var indexOfNumber = this.exp.indexOf('[');
                 var index = this.exp.substring(indexOfNumber + 1, indexOfNumber + 2);
 
-                _model.bettingLimits[index].maxPerMatchFormated = newValue.formatNumber();
-                _model.bettingLimits[index].maxPerMatch = newValue.formatNumber();
+                _model.bettingLimits[index].maxPerMatchFormated = newValue;
+                _model.bettingLimits[index].maxPerMatch = newValue;
             });
 
             if (typeof $scope.bettingLimits[i].maxPerBall != 'undefined') {
@@ -46,8 +46,8 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $http) {
                     var indexOfNumber = this.exp.indexOf('[');
                     var index = this.exp.substring(indexOfNumber + 1, indexOfNumber + 2);
 
-                    _model.bettingLimits[index].maxPerBallFormated = newValue.formatNumber();
-                    _model.bettingLimits[index].maxPerBall = newValue.formatNumber();
+                    _model.bettingLimits[index].maxPerBallFormated = newValue;
+                    _model.bettingLimits[index].maxPerBall = newValue;
                 });
             }
         }

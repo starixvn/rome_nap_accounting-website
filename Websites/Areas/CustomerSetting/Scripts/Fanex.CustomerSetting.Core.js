@@ -560,41 +560,49 @@ Fanex.CustomerSetting.Core = {
         return src;
     },
 
-    CheckNumber: function (evt, ele) {
-        var caret = getCaret(ele);
+    CheckNumber: function (event, ele) {
+        var value = ele.value;
 
-        if (!evt) return false;
+        var evt = event ? event : window.event; // Fix for IE7
+        if (evt.keyCode === 9) return true; // Ignore TAB key
+        var obj = evt.currentTarget ? evt.currentTarget : evt.srcElement; // Fix for IE7
+        var value = obj.value;
 
-        ele.value = Fanex.CustomerSetting.Core.FormatNumber(Fanex.CustomerSetting.Core.ReplaceAll(ele.value, ',', ''));
+        if (value == '') return true;
 
-        var charCode = (evt.which) ? evt.which : evt.keyCode;
-        var ret = true;
-        var exceptKeyCodes = [35, 36, 37, 39, 46]; // Home, End, Left, Right, Delete
+        var num;
+        var dotPosition = 0;
+        var afterDot;
+        var caretPosition = getCaret(obj);
 
-        if ((charCode > 31 && (charCode < 48 || charCode > 57)) && exceptKeyCodes.indexOf(charCode) == -1) {
-            ret = false;
+        num = value.toString().replace(/\$|\,/g, '');
+        dotPosition = num.indexOf(".");
+
+        if ((typeof (isFloat) != 'undefined') && isFloat && dotPosition > 0) {
+            afterDot = num.substring(dotPosition + 1, num.length).replace(/[^0-9]/g, '');
+            num = num.substring(0, dotPosition);
         }
 
-        if (ele && ele.value.length > 1 && ele.value.indexOf('0') == 0) {
-            while (ele.value.indexOf('0') == 0 && ele.value.length > 1) {
-                ele.value = ele.value.substring(1);
-                ele.value = Fanex.CustomerSetting.Core.FormatNumber(Fanex.CustomerSetting.Core.ReplaceAll(ele.value, ',', ''));
-            }
+        num = num.formatFloat();
+
+        if ((typeof (isFloat) != 'undefined') && isFloat && dotPosition > 0) {
+            eval(obj).value = num + "." + afterDot;
+            num = obj.value;
+        } else {
+            eval(obj).value = num;
+        }
+        if (num.length > value.length) {
+            caretPosition = caretPosition + 1;
         }
 
-        if (ele.value.indexOf(',') != -1 && caret == ele.value.indexOf(',')) {
-            if (charCode == 8) { // Backspace is pressed
-                setCaret(ele, caret);
-            }
-            else {
-                setCaret(ele, (caret + 1 > ele.value.length ? caret : caret + 1));
-            }
+        if (evt.keyCode == 8 && num.substring(caretPosition - 1, caretPosition) == ',') {
+            setCaret(obj, caretPosition - 1);
         }
         else {
-            setCaret(ele, caret);
+            setCaret(obj, caretPosition);
         }
 
-        return ret;
+        return true;
     },
 
     ProcessDisplayMultiple: function (length, usernames) {
@@ -648,43 +656,41 @@ Number.prototype.replaceAll = function (args, replace) {
     return this;
 };
 
-function setCaret(elem, caretPos) {
-    if (elem != null) {
-        if (elem.createTextRange) {
-            var range = elem.createTextRange();
-            range.move('character', caretPos);
-            range.select();
-        }
-        else {
-            if (elem.selectionStart) {
-                elem.focus();
-                elem.setSelectionRange(caretPos, caretPos);
-            }
-            else
-                elem.focus();
-        }
+function setCaret(oField, iCaretPos) {
+    // IE Support
+    if (document.selection) {
+        oField.focus();
+        // Create empty selection range
+        var oSel = document.selection.createRange();
+        // Move selection start and end to desired position
+        oSel.moveStart('character', iCaretPos);
+        oSel.moveEnd('character', iCaretPos - oField.value.length);
+        oSel.select();
+    }
+    // Firefox support
+    else if (oField.selectionStart || oField.selectionStart == '0') {
+        oField.selectionStart = iCaretPos;
+        oField.selectionEnd = iCaretPos;
+        oField.focus();
     }
 };
 
-function getCaret(el) {
-    if (el.selectionStart) {
-        return el.selectionStart;
-    } else if (document.selection) {
-        el.focus();
-
-        var r = document.selection.createRange();
-        if (r == null) {
-            return 0;
-        }
-
-        var re = el.createTextRange(),
-        rc = re.duplicate();
-        re.moveToBookmark(r.getBookmark());
-        rc.setEndPoint('EndToStart', re);
-
-        return rc.text.length;
+function getCaret(oField) {
+    var iCaretPos = 0;
+    // IE Support
+    if (document.selection) {
+        oField.focus();
+        // To get cursor position, get empty selection range
+        var oSel = document.selection.createRange();
+        // Move selection start to 0 position
+        oSel.moveStart('character', -oField.value.length);
+        iCaretPos = oSel.text.length;
     }
-    return 0;
+    // Firefox support
+    else if (oField.selectionStart || oField.selectionStart == '0')
+        iCaretPos = oField.selectionStart;
+    // Return results
+    return (iCaretPos);
 };
 
 String.prototype.formatNumber = function () {
@@ -714,6 +720,26 @@ Number.prototype.formatNumber = function () {
     }
     return x1 + x2;
 }
+
+String.prototype.formatFloat = function () {
+    var number = this;
+
+    if (number == '') return 0;
+    var sign;
+    if (isNaN(number)) {
+        number = String.Empty;
+    }
+
+    sign = (number == (number = Math.abs(number)));
+    number = Math.floor(number * 100 + 0.50000000001);
+    number = Math.floor(number / 100).toString();
+
+    for (var i = 0; i < Math.floor((number.length - (1 + i)) / 3); i++) {
+        number = number.substring(0, number.length - (4 * i + 3)) + ',' + number.substring(number.length - (4 * i + 3));
+    }
+
+    return (((sign) ? '' : '-') + number);
+};
 
 String.prototype.toFixed = function (precision, optionals) {
     var value = parseFloat(this);
