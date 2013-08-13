@@ -634,6 +634,20 @@ Fanex.CustomerSetting.Core = {
     }
 };
 
+String.prototype.replaceAll = function (args, replace) {
+    var src = this;
+
+    while (src.indexOf(args) != -1) {
+        src = src.replace(args, replace);
+    }
+
+    return src;
+};
+
+Number.prototype.replaceAll = function (args, replace) {    
+    return this;
+};
+
 function setCaret(elem, caretPos) {
     if (elem != null) {
         if (elem.createTextRange) {
@@ -674,7 +688,7 @@ function getCaret(el) {
 };
 
 String.prototype.formatNumber = function () {
-    var number = this;
+    var number = this.replaceAll(',', '');
     number += '';
 
     x = number.split('.');
@@ -688,7 +702,7 @@ String.prototype.formatNumber = function () {
 }
 
 Number.prototype.formatNumber = function () {
-    var number = this;
+    var number = this.replaceAll(',', '');
     number += '';
 
     x = number.split('.');

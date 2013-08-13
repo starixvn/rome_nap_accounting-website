@@ -12,6 +12,47 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $http) {
 
     var length = $scope.model.bettingLimitItems.length;
 
+    // Watch changing values if user user mouse to right-click and delete number
+    var timeout = setTimeout(function () {
+        clearTimeout(timeout);
+
+        for (var i = 0; i < length; i++) {
+            $scope.$watch("model.bettingLimitItems[" + i + "].minBetFormated", function (newValue, oldValue, _model) {
+                var indexOfNumber = this.exp.indexOf('[');
+                var index = this.exp.substring(indexOfNumber + 1, indexOfNumber + 2);
+
+                _model.bettingLimits[index].minBetFormated = newValue.formatNumber();
+                _model.bettingLimits[index].minBet = newValue.formatNumber();
+            });
+
+            $scope.$watch("model.bettingLimitItems[" + i + "].maxBetFormated", function (newValue, oldValue, _model) {
+                var indexOfNumber = this.exp.indexOf('[');
+                var index = this.exp.substring(indexOfNumber + 1, indexOfNumber + 2);
+
+                _model.bettingLimits[index].maxBetFormated = newValue.formatNumber();
+                _model.bettingLimits[index].maxBet = newValue.formatNumber();
+            });
+
+            $scope.$watch("model.bettingLimitItems[" + i + "].maxPerMatchFormated", function (newValue, oldValue, _model) {
+                var indexOfNumber = this.exp.indexOf('[');
+                var index = this.exp.substring(indexOfNumber + 1, indexOfNumber + 2);
+
+                _model.bettingLimits[index].maxPerMatchFormated = newValue.formatNumber();
+                _model.bettingLimits[index].maxPerMatch = newValue.formatNumber();
+            });
+
+            if (typeof $scope.bettingLimits[i].maxPerBall != 'undefined') {
+                $scope.$watch("model.bettingLimitItems[" + i + "].maxPerBallFormated", function (newValue, oldValue, _model) {
+                    var indexOfNumber = this.exp.indexOf('[');
+                    var index = this.exp.substring(indexOfNumber + 1, indexOfNumber + 2);
+
+                    _model.bettingLimits[index].maxPerBallFormated = newValue.formatNumber();
+                    _model.bettingLimits[index].maxPerBall = newValue.formatNumber();
+                });
+            }
+        }
+    }, 2000);
+
     $scope.$watch("model.bettingLimitItems[0].minBetFormated", function (newValue, oldValue, _model) {
         if (_model.bettingLimits[0].checked) {
             for (var i = 1; i < length - 1; i++) {
