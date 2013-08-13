@@ -569,7 +569,7 @@ Fanex.CustomerSetting.Core = {
 
         var charCode = (evt.which) ? evt.which : evt.keyCode;
         var ret = true;
-        var exceptKeyCodes = [35, 36, 37, 39, 46];
+        var exceptKeyCodes = [35, 36, 37, 39, 46]; // Home, End, Left, Right, Delete
 
         if ((charCode > 31 && (charCode < 48 || charCode > 57)) && exceptKeyCodes.indexOf(charCode) == -1) {
             ret = false;
