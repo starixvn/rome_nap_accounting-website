@@ -246,17 +246,12 @@ namespace Fanex.Tarus.Reports.Business.NumberGameWinLoss.NumberGameWinLossByBett
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = CastAide.AsDouble(row.LineTotalReal) != 0 ? bgOtherFormat : bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.LineTotalReal);
 
-                //wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = CastAide.AsDouble(row.LineTotalVirtual) != 0 ? bgOtherFormat : bgFormat;
-                //wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.LineTotalVirtual);
-
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.Turnover);
 
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = CastAide.AsDouble(row.Margin) != 0 ? bgPercentFormat : bgPercentNormalFormat;
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.Margin) / 100;
 
-                //wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = CastAide.AsDouble(row.Variance) != 0 ? bgOtherFormat : bgFormat;
-                //wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.Variance);
                 nextRow++;
             }
         }
@@ -272,7 +267,7 @@ namespace Fanex.Tarus.Reports.Business.NumberGameWinLoss.NumberGameWinLossByBett
             var nextCol = 0;
             wsReport.Cells[startRow + nextRow, startCol].Style = bgFormat;
             wsReport.Cells[startRow + nextRow, startCol].Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
-            wsReport.Cells[startRow + nextRow, startCol].Value = row.Bettype;
+            wsReport.Cells[startRow + nextRow, startCol].Value = "Total";
 
             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = CastAide.AsDouble(row.WinLoss) != 0 ? bgOtherFormat : bgFormat;
             wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.WinLoss);
@@ -286,17 +281,12 @@ namespace Fanex.Tarus.Reports.Business.NumberGameWinLoss.NumberGameWinLossByBett
             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = CastAide.AsDouble(row.LineTotalReal) != 0 ? bgOtherFormat : bgFormat;
             wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.LineTotalReal);
 
-            //wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = CastAide.AsDouble(row.LineTotalVirtual) != 0 ? bgOtherFormat : bgFormat;
-            //wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.LineTotalVirtual);
-
             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
             wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.Turnover);
 
             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = CastAide.AsDouble(row.Margin) != 0 ? bgPercentFormat : bgPercentNormalFormat;
             wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.Margin) / 100;
 
-            //wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = CastAide.AsDouble(row.Variance) != 0 ? bgOtherFormat : bgFormat;
-            //wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.Variance);
             nextRow++;
         }
         #endregion
