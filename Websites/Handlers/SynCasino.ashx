@@ -18,9 +18,6 @@ using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Core.LoggingLib;
-using Fanex.CustomerSetting.Module.ProgressiveModule.Repositories.Impl;
-using Fanex.CustomerSetting.Module.ProgressiveModule.Criteria;
-
 
 public class UpdateCSSetting : BaseHandler
 {
