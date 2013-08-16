@@ -755,6 +755,7 @@ namespace Sunplus.Accounting.Business.Customer
                             var liveCasinoSetting = "";
                             string RacingUpdateURL = "";
                             var VirtualSportsSetting = "";
+                            string bettingLimitURL = "";
                             switch (roleId)
                             {
                                 case 1: // member
@@ -862,6 +863,27 @@ namespace Sunplus.Accounting.Business.Customer
                             TemplateHandler.Assign(ref htmlcontent, "{pokerLinkSetting}", pokerLinkSetting + "&roleId=" + roleId.ToString());
                             TemplateHandler.Assign(ref htmlcontent, "{livecasinoLinkSetting}", liveCasinoSetting + "&roleId=" + roleId.ToString());
                             TemplateHandler.Assign(ref htmlcontent, "{virtualSportLinkSetting}", VirtualSportsSetting + "&roleId=" + roleId.ToString());
+                           
+                            string bettingSetting = WebSettings.ExternalBettingLimitConfig;
+                            //AppSession.GroupID
+                            if (!String.IsNullOrEmpty(bettingSetting) && bettingSetting.Contains("|"))
+                            {
+                                int groupId = CastAide.AsInt32(bettingSetting.Split(new char[] { '|' })[0], 0);
+                                if (groupId != AppSession.GroupID && roleId==4 )
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-BetSetting");
+                                }
+                                else
+                                {
+                                    TemplateHandler.Assign(ref htmlcontent, "{bettingLimitLinkSetting}", string.Format("customersetting/betsetting/sportsbook/index/{0}/{1}/{2}/{3}", custId, custId, AppSession.AccId.ToString(), AppSession.SYSTEM));
+                                }
+                            }
+                            else
+                            {
+                                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-BetSetting");
+                            }
+                            
+
                             //---- for menu details -----------
                             AssignEditFinance(ref htmlcontent, roleId);
                             TemplateHandler.Assign(ref htmlcontent, "{ParentId}", parentId.ToString());

@@ -283,6 +283,11 @@
                 , "VirtualSportSuperPT/EditSuper?custId=" + custId + "&uplineId=" + uplineId + "&roleId=" + roleId
                 , 0, 0, 860, 480, false, 2000, null);
     },
+    bettingSetting: function (custId, uplineId, accId, groupName) {
+        showPopup(" Edit Betting Limit"
+                , "customersetting/betsetting/sportsbook/index/" + custId + "/" + uplineId + "/" + accId + "/" + groupName
+                , 0, 0, 860, 480, false, 2000, null);
+    },
     reCalculateGrid: function () {
         var initWidth = 1385;
         if (_IsVisibleMaxExposure == "True") {

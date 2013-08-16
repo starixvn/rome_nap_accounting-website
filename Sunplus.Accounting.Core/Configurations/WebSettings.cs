@@ -452,6 +452,13 @@ namespace Sunplus.Accounting.Core.Configurations
                 return (ConfigurationManager.AppSettings["OfferDoubleCommission"] == "1");
             }
         }
-      
+
+       public static string ExternalBettingLimitConfig
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["ExternalBettingLimitConfig"].ToString());
+            }
+        }
     }
 }
