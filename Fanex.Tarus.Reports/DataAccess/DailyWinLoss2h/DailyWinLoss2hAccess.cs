@@ -54,9 +54,9 @@ namespace Fanex.Tarus.Reports.DataAccess.DailyWinLoss2h
             DataTable dt = new DataTable();
             try
             {
-                string strMapping = "DailyWLDirect_MixParlay";
-                if (param.ReportDate <= Fanex.Tarus.Reports.DataAccess.BaseDataAccess.BalanceUp.MoveBetDay)
-                    strMapping += "_WH";
+                string strMapping = "DailyWLDirect_MixParlay" + GetStoreMappingSubfix(CastAide.AsDateTime(param.ReportDate));
+                //if (param.ReportDate <= Fanex.Tarus.Reports.DataAccess.BaseDataAccess.BalanceUp.MoveBetDay)
+                //    strMapping += "_WH";
                 using (ObjectDb objDB = new ObjectDb(strMapping))
                 {
                     objDB.AddInParameter("winlostdate", DbType.DateTime, param.ReportDate);
