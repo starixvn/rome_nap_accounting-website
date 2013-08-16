@@ -31,6 +31,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
         private readonly IGameSettingService _gameSettingService;
         private readonly ILogWriterService _logService;
         private readonly ILimitSettingManager _limitSettingManager;
+        private readonly string functionName="[Customer]";
         bool IsUpdatedStatus = false;
         
         public SettingManager():this(null, null, null, null)
@@ -728,6 +729,17 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
+                if (!GetHostPermission(functionName))
+                {
+                    resultDto.ErrorHandler.Add(new Result()
+                    {
+                        IsSuccess = false,
+                        Key = "500",
+                        Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "_500")
+                    });
+                    return resultDto;
+                }
+
                 IRequestContext requestContext = new RequestContext();
                 SuperPTSetting ptSetting = (SuperPTSetting)_settingService.GetSuperPTSetting(setting.requestContext.CustId);
 
