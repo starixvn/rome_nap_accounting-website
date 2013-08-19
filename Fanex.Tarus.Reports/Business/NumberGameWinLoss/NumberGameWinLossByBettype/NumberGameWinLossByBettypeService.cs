@@ -120,7 +120,7 @@ namespace Fanex.Tarus.Reports.Business.NumberGameWinLoss.NumberGameWinLossByBett
             var nextRow = 0;
 
             #region Header
-            var headerMergeCols = 8;
+            var headerMergeCols = 6;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + headerMergeCols).
                 Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + headerMergeCols).
@@ -154,9 +154,9 @@ namespace Fanex.Tarus.Reports.Business.NumberGameWinLoss.NumberGameWinLossByBett
                 }
                 else
                 {
-                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 8).
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 6).
                         Merged = true;
-                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 8).Value =
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 6).Value =
                     "No information is available.";
                 }
                 nextRow++;
@@ -181,77 +181,41 @@ namespace Fanex.Tarus.Reports.Business.NumberGameWinLoss.NumberGameWinLossByBett
             var headerFormart = new ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
             var nextCol = 0;
 
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 8).
+            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 6).
                 Merged = true;
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 8).Style
+            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 6).Style
                 = headerFormart;
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 8).Value
+            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 6).Value
                 = title;
-
             nextRow += 1;
 
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow + 1, startCol).Merged =
-                true;
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow + 1, startCol).Style =
-                headerFormart;
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow + 1, startCol).Value =
-                "Bettype";
+            wsReport.Cells[startRow + nextRow, startCol].Style = headerFormart;
+            wsReport.Cells[startRow + nextRow, startCol].Value = "Bettype";
 
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol += 1), startRow + nextRow + 1,
-                                               startCol + (nextCol)).Merged = true;
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), startRow + nextRow + 1,
-                                               startCol + (nextCol)).Style = headerFormart;
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), startRow + nextRow + 1,
-                                               startCol + (nextCol)).Value = "WinLoss";
+            startCol++;
+            wsReport.Cells[startRow + nextRow, startCol].Style = headerFormart;
+            wsReport.Cells[startRow + nextRow, startCol].Value = "WinLoss";
 
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol += 1), startRow + nextRow + 1,
-                                               startCol + (nextCol)).Merged = true;
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), startRow + nextRow + 1,
-                                               startCol + (nextCol)).Style = headerFormart;
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), startRow + nextRow + 1,
-                                               startCol + (nextCol)).Value = "Position";
+            startCol++;
+            wsReport.Cells[startRow + nextRow, startCol].Style = headerFormart;
+            wsReport.Cells[startRow + nextRow, startCol].Value = "Position";
 
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol += 1), startRow + nextRow + 1,
-                                               startCol + (nextCol)).Merged = true;
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), startRow + nextRow + 1,
-                                               startCol + (nextCol)).Style = headerFormart;
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), startRow + nextRow + 1,
-                                               startCol + (nextCol)).Value = "Comm";
+            startCol++;
+            wsReport.Cells[startRow + nextRow, startCol].Style = headerFormart;
+            wsReport.Cells[startRow + nextRow, startCol].Value = "Comm";
 
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol += 1), startRow + nextRow,
-                                               startCol + (nextCol + 1)).Merged = true;
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), startRow + nextRow,
-                                               startCol + (nextCol + 1)).Style = headerFormart;
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), startRow + nextRow,
-                                               startCol + (nextCol + 1)).Value = "Line Total";
+            startCol++;
+            wsReport.Cells[startRow + nextRow, startCol].Style = headerFormart;
+            wsReport.Cells[startRow + nextRow, startCol].Value = "Line Total";
 
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol += 2), startRow + nextRow + 1,
-                                               startCol + (nextCol)).Merged = true;
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), startRow + nextRow + 1,
-                                               startCol + (nextCol)).Style = headerFormart;
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), startRow + nextRow + 1,
-                                               startCol + (nextCol)).Value = "Turnover";
+            startCol++;
+            wsReport.Cells[startRow + nextRow, startCol].Style = headerFormart;
+            wsReport.Cells[startRow + nextRow, startCol].Value = "Turnover";
 
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol += 1), startRow + nextRow + 1,
-                                               startCol + (nextCol)).Merged = true;
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), startRow + nextRow + 1,
-                                               startCol + (nextCol)).Style = headerFormart;
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), startRow + nextRow + 1,
-                                               startCol + (nextCol)).Value = "Margin";
-
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol += 1), startRow + nextRow + 1,
-                                               startCol + (nextCol)).Merged = true;
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), startRow + nextRow + 1,
-                                               startCol + (nextCol)).Style = headerFormart;
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), startRow + nextRow + 1,
-                                               startCol + (nextCol)).Value = "Variance";
-
-            wsReport.Cells[startRow + nextRow + 1, startCol + 4].Style = headerFormart;
-            wsReport.Cells[startRow + nextRow + 1, startCol + 4].Value = "Real";
-
-            wsReport.Cells[startRow + nextRow + 1, startCol + 5].Style = headerFormart;
-            wsReport.Cells[startRow + nextRow + 1, startCol + 5].Value = "Virtual";
-            nextRow += 2;
+            startCol++;
+            wsReport.Cells[startRow + nextRow, startCol].Style = headerFormart;
+            wsReport.Cells[startRow + nextRow, startCol].Value = "Margin";
+            nextRow++;
 
         }
 
@@ -282,17 +246,12 @@ namespace Fanex.Tarus.Reports.Business.NumberGameWinLoss.NumberGameWinLossByBett
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = CastAide.AsDouble(row.LineTotalReal) != 0 ? bgOtherFormat : bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.LineTotalReal);
 
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = CastAide.AsDouble(row.LineTotalVirtual) != 0 ? bgOtherFormat : bgFormat;
-                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.LineTotalVirtual);
-
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.Turnover);
 
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = CastAide.AsDouble(row.Margin) != 0 ? bgPercentFormat : bgPercentNormalFormat;
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.Margin) / 100;
 
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = CastAide.AsDouble(row.Variance) != 0 ? bgOtherFormat : bgFormat;
-                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.Variance);
                 nextRow++;
             }
         }
@@ -308,7 +267,7 @@ namespace Fanex.Tarus.Reports.Business.NumberGameWinLoss.NumberGameWinLossByBett
             var nextCol = 0;
             wsReport.Cells[startRow + nextRow, startCol].Style = bgFormat;
             wsReport.Cells[startRow + nextRow, startCol].Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
-            wsReport.Cells[startRow + nextRow, startCol].Value = row.Bettype;
+            wsReport.Cells[startRow + nextRow, startCol].Value = "Total";
 
             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = CastAide.AsDouble(row.WinLoss) != 0 ? bgOtherFormat : bgFormat;
             wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.WinLoss);
@@ -322,17 +281,12 @@ namespace Fanex.Tarus.Reports.Business.NumberGameWinLoss.NumberGameWinLossByBett
             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = CastAide.AsDouble(row.LineTotalReal) != 0 ? bgOtherFormat : bgFormat;
             wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.LineTotalReal);
 
-            wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = CastAide.AsDouble(row.LineTotalVirtual) != 0 ? bgOtherFormat : bgFormat;
-            wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.LineTotalVirtual);
-
             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
             wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.Turnover);
 
             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = CastAide.AsDouble(row.Margin) != 0 ? bgPercentFormat : bgPercentNormalFormat;
             wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.Margin) / 100;
 
-            wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = CastAide.AsDouble(row.Variance) != 0 ? bgOtherFormat : bgFormat;
-            wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.Variance);
             nextRow++;
         }
         #endregion
@@ -510,7 +464,7 @@ namespace Fanex.Tarus.Reports.Business.NumberGameWinLoss.NumberGameWinLossByBett
             var nextRow = 0;
 
             #region Header
-            var headerMergeCols = 8;
+            var headerMergeCols = 6;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + headerMergeCols).
                 Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + headerMergeCols).
@@ -534,12 +488,12 @@ namespace Fanex.Tarus.Reports.Business.NumberGameWinLoss.NumberGameWinLossByBett
                 ExportToExcelNumberGameWinLossByBettypeAssignHeader(ref wsReport, startCol, startRow, ref nextRow, bettypeName);
                 foreach (var items in getData.WinLoss)
                 {
-                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 8).
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 6).
                         Merged = true;
-                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 8).
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 6).
                         Style.Font.Weight = ExcelFont.BoldWeight;
-                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 8).Style.Borders.SetBorders(MultipleBorders.Outside, Color.Gray, LineStyle.Thin);
-                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 8).
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 6).Style.Borders.SetBorders(MultipleBorders.Outside, Color.Gray, LineStyle.Thin);
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 6).
                         Value = items.Name;
                     nextRow++;
                     ExportToExcelNumberGameWinLossByBettypeAssignContent(ref wsReport, startCol, startRow, ref nextRow,

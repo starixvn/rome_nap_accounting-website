@@ -249,7 +249,8 @@
             fullHeight: true,
             gridHeight: 140,
             freezeWidth: 415,
-            numberFreezeCol: 4
+            numberFreezeCol: 4,
+            gridWidth:730
         };
         $('#numbergamewinloss').removeClass("hidden").gridScroller(gridOpts);
     },
@@ -261,10 +262,8 @@
                     <td><div style="width: 100px; height: 17px" class="r ">&nbsp;</div></td>\
                     <td><div style="width: 100px; height: 17px" class="r ">&nbsp;</div></td>\
                     <td><div style="width: 100px; height: 17px" class="r ' + (parseFloat(row.LineTotalReal) > 0 ? 'red' : '') + '">' + row.LineTotalReal + '</div></td>\
-                    <td><div style="width: 100px; height: 17px" class="r ' + (parseFloat(row.LineTotalVirtual) > 0 ? 'red' : '') + '">' + row.LineTotalVirtual + '</div></td>\
                     <td><div style="width: 100px; height: 17px" class="r ">' + row.Turnover + '</div></td>\
                     <td><div style="width: 100px; height: 17px" class="r ' + (parseFloat(row.Margin) > 0 ? 'red' : '') + '">' + row.Margin + '%</div></td>\
-                    <td><div style="width: 100px; height: 17px" class="r ' + (parseFloat(row.Variance) > 0 ? 'red' : '') + '">' + row.Variance + '</div></td>\
                 </tr>';
         return html;
     },
@@ -286,10 +285,8 @@
                     <th><div style="width: 100px; height: 17px" class="r ">&nbsp;</div></th>\
                     <th><div style="width: 100px; height: 17px" class="r ">&nbsp;</div></th>\
                     <th><div style="width: 100px; height: 17px" class="r ' + (parseFloat(row.LineTotalReal) > 0 ? 'red' : '') + '">' + row.LineTotalReal + '</div></th>\
-                    <th><div style="width: 100px; height: 17px" class="r ' + (parseFloat(row.LineTotalVirtual) > 0 ? 'red' : '') + '">' + row.LineTotalVirtual + '</div></th>\
                     <th><div style="width: 100px; height: 17px" class="r ">' + row.Turnover + '</div></th>\
                     <th><div style="width: 100px; height: 17px" class="r ' + (parseFloat(row.Margin) > 0 ? 'red' : '') + '">' + row.Margin + '%</div></th>\
-                    <th><div style="width: 100px; height: 17px" class="r ' + (parseFloat(row.Variance) > 0 ? 'red' : '') + '">' + row.Variance + '</div></th>\
                 </tr>';
         return html;
     },
@@ -438,10 +435,8 @@ var numberGameEventWinLossDetail = {
                     <td><div style="width: 100px; height: 17px" class="r ">&nbsp;</div></td>\
                     <td><div style="width: 100px; height: 17px" class="r ">&nbsp;</div></td>\
                     <td><div style="width: 100px; height: 17px" class="r ' + (parseFloat(row.LineTotalReal) > 0 ? 'red' : '') + '">' + row.LineTotalReal + '</div></td>\
-                    <td><div style="width: 100px; height: 17px" class="r ' + (parseFloat(row.LineTotalVirtual) > 0 ? 'red' : '') + '">' + row.LineTotalVirtual + '</div></td>\
                     <td><div style="width: 100px; height: 17px" class="r ">' + row.Turnover + '</div></td>\
                     <td><div style="width: 100px; height: 17px" class="r ' + (parseFloat(row.Margin) > 0 ? 'red' : '') + '">' + row.Margin + '%</div></td>\
-                    <td><div style="width: 100px; height: 17px" class="r ' + (parseFloat(row.Variance) > 0 ? 'red' : '') + '">' + row.Variance + '</div></td>\
                 </tr>';
         return html;
     },
@@ -465,10 +460,8 @@ var numberGameEventWinLossDetail = {
                     <th><div style="width: 100px; height: 17px" class=" r ">&nbsp;</div></th>\
                     <th><div style="width: 100px; height: 17px" class=" r ">&nbsp;</div></th>\
                     <th><div style="width: 100px; height: 17px" class=" r ' + (parseFloat(row.LineTotalReal) > 0 ? 'red' : '') + '">' + row.LineTotalReal + '</div></th>\
-                    <th><div style="width: 100px; height: 17px" class=" r ' + (parseFloat(row.LineTotalVirtual) > 0 ? 'red' : '') + '">' + row.LineTotalVirtual + '</div></th>\
                     <th><div style="width: 100px; height: 17px" class=" r ">' + row.Turnover + '</div></th>\
                     <th><div style="width: 100px; height: 17px" class=" r ' + (parseFloat(row.Margin) > 0 ? 'red' : '') + '">' + row.Margin + '%</div></th>\
-                    <th><div style="width: 100px; height: 17px" class="r ' + (parseFloat(row.Variance) > 0 ? 'red' : '') + '">' + row.Variance + '</div></th>\
                 </tr>';
         }
         return html;
@@ -532,7 +525,7 @@ $(document).ready(function () {
         title: "",
         autoOpen: false,
         height: 570,
-        width: 990,
+        width: 775,
         modal: true,
         resizable: false
     });
