@@ -38,7 +38,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Websites", "Websites\", "{7
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "53667"
+		VWDPort = "3102"
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Tarus.SpecialDelete", "Fanex.Tarus.SpecialDelete\Fanex.Tarus.SpecialDelete.csproj", "{6F5889CA-CC0E-4A4D-9824-C811AEFCEC4E}"
