@@ -64,7 +64,7 @@ eda.initCustomer = function () {
             eda.initPtGrid();
             eda.initForKnockout();
             eda.initCommission();
-            storeOldPTSetting = customer.ptSetting.clone();
+            storeOldPTSetting = Fanex.copy(customer.ptSetting);
             //format max credit
             $('#txtCreditMax').text(''.FormatNumber(customer.maxCredit));
             $('#txtCreditMin').text(''.FormatNumber(customer.minCredit));
