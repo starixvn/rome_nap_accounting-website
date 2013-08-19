@@ -427,7 +427,7 @@ namespace Sunplus.Accounting.Business
             {
                 TemplateHandler.RemoveBlock(ref tplPT, "inserting");
             }
-            if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
+            if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL) && _cust.RoleId == (int)Globals.AccountType.Super)
             {
                 TemplateHandler.RemoveBlock(ref tplPT, "HideUpdate");
             }
