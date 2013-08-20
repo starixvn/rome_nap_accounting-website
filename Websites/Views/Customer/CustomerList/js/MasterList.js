@@ -198,13 +198,34 @@
             dataType: "json",
             data: JSON.stringify(masterList.paramsUpdate),
             success: function (ResultCustomerlist) {
+
+                if (ResultCustomerlist && ResultCustomerlist.ErrorCode == 1008) {
+                    $('#tblconfirm').empty().append(ResultCustomerlist.ErrorMessage).css({color: 'red'});
+                    $("#tblconfirm").dialog({
+                        title: "Confirm Update Fail",
+                        autoOpen: false,
+                        height: 180,
+                        width: 400,
+                        modal: true,
+                        buttons: {
+                            "OK": function () {
+                                $(this).dialog("close");
+                            }
+                        },
+                        close: function (event, ui) {
+                        }
+                    });
+                    $('a.ui-dialog-titlebar-close').show();
+                    $("#tblconfirm").dialog("open");
+                    return;
+                }
                 if (ResultCustomerlist.length > 0) {
                     var errorFlag = false;
                     var length = ResultCustomerlist.length;
                     var arr = [];
                     for (var i = 0; i < length; i++) {
                         if (ResultCustomerlist[i].Result.ErrorCode != 0) {
-                            var error = '<tr><td><span class="username">' + ResultCustomerlist[i].UserName + '</span><span class="fail"> :'+ (ResultCustomerlist[i].Result.ErrorMessage != "" ? ResultCustomerlist[i].Result.ErrorMessage : " Update fail .") +'</span></tr></tr>';
+                            var error = '<tr><td><span class="username">' + ResultCustomerlist[i].UserName + '</span><span class="fail"> :' + (ResultCustomerlist[i].Result.ErrorMessage != "" ? ResultCustomerlist[i].Result.ErrorMessage : " Update fail .") + '</span></tr></tr>';
                             arr.push(error)
                             errorFlag = true;
                         }
@@ -214,7 +235,7 @@
                         setTimeout('$("#tblconfirm").dialog("close")', 2000);
 
                         var htmlsuccess = '';
-                            htmlsuccess = '<tr><td><span class="successful">Update successful</span></tr></tr>';
+                        htmlsuccess = '<tr><td><span class="successful">Update successful</span></tr></tr>';
 
                         var title = "";
                         if (!isMultiple) {
@@ -263,6 +284,7 @@
                         $("#tblconfirm").dialog("open");
                     }
                 }
+
             },
             error: function () {
                 showAlertMessage("err", "There is no data.", 1);

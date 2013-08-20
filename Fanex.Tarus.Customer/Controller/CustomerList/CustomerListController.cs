@@ -3,12 +3,11 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
-    using Fanex.Tarus.Web.Controllers;
-
-    using Sunplus.Accounting.Core.Common;
     using Fanex.Tarus.Customer.Business.CustomerList;
     using Fanex.Tarus.Customer.Entities.CustomerList;
-    using DNAide.Core;
+    using Fanex.Tarus.Web.Controllers;
+    using Fanex.Tarus.Web.Controllers.Filters;
+    using Sunplus.Accounting.Core.Common;
 
     public class CustomerListController : BaseController
     {
@@ -167,7 +166,7 @@ namespace Fanex.Tarus.Customer.Controller.CustomerList
            
         }
 
-        [HttpPost]
+        [HttpPost, AuthenticateHost]
         public JsonResult UpdateDoubleComm(int userId, string custDetail, bool isDoubleComm)
         {
             List<ResultCustomerlist> result;
