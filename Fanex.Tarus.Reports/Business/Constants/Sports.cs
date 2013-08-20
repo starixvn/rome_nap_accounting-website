@@ -26,8 +26,8 @@ namespace Fanex.Tarus.Reports.Business.Constants
         public const int KickOff = 18999;
 
         public const int _2hReport_SystemParlay_Soccer = 1;
-        public const int _2hReport_SystemParlay_MultiSport = 2;
-        public const int _2hReport_SystemParlay_OtherSports = 3;
+        public const int _2hReport_SystemParlay_OtherSports = 2;
+        public const int _2hReport_SystemParlay_MultiSport = 3;
     }
 
     #endregion SportConstance
