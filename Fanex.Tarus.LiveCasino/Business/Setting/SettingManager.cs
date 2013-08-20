@@ -792,6 +792,17 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
+                if (!GetHostPermission(functionName))
+                {
+                    result.ErrorHandler.Add(new Result()
+                    {
+                        IsSuccess = false,
+                        Key = "500",
+                        Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "_500")
+                    });
+                    return result;
+                }
+
                 int custid = setting.requestContext.CustId;
 
                 #region Get Setting Info
@@ -959,6 +970,17 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
+                if (!GetHostPermission(functionName))
+                {
+                    resultDto.ErrorHandler.Add(new Result()
+                    {
+                        IsSuccess = false,
+                        Key = "500",
+                        Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "_500")
+                    });
+                    return resultDto;
+                }
+
                 IRequestContext requestContext = new RequestContext();
 
                 var ptSetting = (Fanex.LiveCasinoSetting.Model.PTSetting)_settingService.GetMasterPTSeting(setting.requestContext.CustId, setting.requestContext.UplineId);
@@ -1035,6 +1057,17 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
+                if (!GetHostPermission(functionName))
+                {
+                    resultDto.ErrorHandler.Add(new Result()
+                    {
+                        IsSuccess = false,
+                        Key = "500",
+                        Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "_500")
+                    });
+                    return resultDto;
+                }
+
                 IRequestContext requestContext = new RequestContext();
                 Fanex.LiveCasinoSetting.Model.PTSetting ptSetting = new Fanex.LiveCasinoSetting.Model.PTSetting();
 
@@ -1113,6 +1146,17 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
+                if (!GetHostPermission(functionName))
+                {
+                    resultDto.ErrorHandler.Add(new Result()
+                    {
+                        IsSuccess = false,
+                        Key = "500",
+                        Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "_500")
+                    });
+                    return resultDto;
+                }
+
                 IRequestContext requestContext = new RequestContext();
                 Fanex.LiveCasinoSetting.Model.PTSetting ptSetting = new Fanex.LiveCasinoSetting.Model.PTSetting();
 
@@ -1191,6 +1235,17 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
+                if (!GetHostPermission(functionName))
+                {
+                    resultDto.ErrorHandler.Add(new Result()
+                    {
+                        IsSuccess = false,
+                        Key = "500",
+                        Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "_500")
+                    });
+                    return resultDto;
+                }
+
                 IRequestContext requestContext = new RequestContext();
                 Fanex.LiveCasinoSetting.Model.PTSetting ptSetting = new Fanex.LiveCasinoSetting.Model.PTSetting();
 
@@ -1260,6 +1315,17 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
+                if (!GetHostPermission(functionName))
+                {
+                    resultDto.ErrorHandler.Add(new Result()
+                    {
+                        IsSuccess = false,
+                        Key = "500",
+                        Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "_500")
+                    });
+                    return resultDto;
+                }
+
                 IRequestContext requestContext = new RequestContext();
                 Fanex.LiveCasinoSetting.Model.PTSetting ptSetting = (Fanex.LiveCasinoSetting.Model.PTSetting)_settingService.MasterGetMemberPTSetting(setting.requestContext.CustId, setting.requestContext.UplineId);
                 #region tracking values
@@ -1621,6 +1687,17 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
             ResultDTO resultDto = new ResultDTO();
             try
             {
+                if (!GetHostPermission(functionName))
+                {
+                    resultDto.ErrorHandler.Add(new Result()
+                    {
+                        IsSuccess = false,
+                        Key = "500",
+                        Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "_500")
+                    });
+                    return resultDto;
+                }
+
                 InsertAccountRequest insertAccount = new InsertAccountRequest();
                 UpdateLiveCasinoStatusRequest request = new UpdateLiveCasinoStatusRequest(insertAccount);
 
@@ -1674,6 +1751,17 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
+                if (!GetHostPermission(functionName))
+                {
+                    result.ErrorHandler.Add(new Result()
+                    {
+                        IsSuccess = false,
+                        Key = "500",
+                        Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "_500")
+                    });
+                    return result;
+                }
+
                 if (setting.isAllowUpdatePtSetting)
                 {
                     result.ErrorHandler.AddRange(UpdateSuperPTSetting(setting).ErrorHandler);
@@ -1702,6 +1790,16 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
             resultDto.ErrorHandler = new List<Result>();
             try
             {
+                if (!GetHostPermission(functionName))
+                {
+                    resultDto.ErrorHandler.Add(new Result()
+                    {
+                        IsSuccess = false,
+                        Key = "500",
+                        Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "_500")
+                    });
+                    return resultDto;
+                }
 
                 Result result = _limitSettingManager.UpdateWinLimit(setting.CustomerInfo.CustomerId, setting.WinLimitSetting.MaxWinLiveCasino, setting.WinLimitSetting.IsAutoResetLiveCasino);
                 if (result.Key == "0")
@@ -1730,6 +1828,17 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
+                if (!GetHostPermission(functionName))
+                {
+                    result.ErrorHandler.Add(new Result()
+                    {
+                        IsSuccess = false,
+                        Key = "500",
+                        Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "_500")
+                    });
+                    return result;
+                }
+
                 if (!setting.CustomerInfo.IsSyncLiveCasino)
                 {
                     var rsPT = UpdateMasterPTSetting(setting);
@@ -1782,6 +1891,17 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
+                if (!GetHostPermission(functionName))
+                {
+                    result.ErrorHandler.Add(new Result()
+                    {
+                        IsSuccess = false,
+                        Key = "500",
+                        Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "_500")
+                    });
+                    return result;
+                }
+
                 if (!setting.CustomerInfo.IsSyncLiveCasino)
                 {
                     var rsPT = UpdateAgentPTSetting(setting);
@@ -1834,6 +1954,17 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
+                if (!GetHostPermission(functionName))
+                {
+                    result.ErrorHandler.Add(new Result()
+                    {
+                        IsSuccess = false,
+                        Key = "500",
+                        Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "_500")
+                    });
+                    return result;
+                }
+
                 if (!setting.CustomerInfo.IsSyncLiveCasino)
                 {
                     var rsPT = UpdatememberPTSetting(setting);
@@ -1901,6 +2032,17 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
+                if (!GetHostPermission(functionName))
+                {
+                    result.ErrorHandler.Add(new Result()
+                    {
+                        IsSuccess = false,
+                        Key = "500",
+                        Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "_500")
+                    });
+                    return result;
+                }
+
                 if (setting.isAllowUpdatePtSetting)
                 {
                     result.ErrorHandler.AddRange(MasterUpdateMemberPTSetting(setting).ErrorHandler);
@@ -1932,6 +2074,17 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
+                if (!GetHostPermission(functionName))
+                {
+                    result.ErrorHandler.Add(new Result()
+                    {
+                        IsSuccess = false,
+                        Key = "500",
+                        Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "_500")
+                    });
+                    return result;
+                }
+
                 if (setting.isAllowUpdatePtSetting)
                 {
                     result.ErrorHandler.AddRange(SuperUpdateMemberPTSetting(setting).ErrorHandler);

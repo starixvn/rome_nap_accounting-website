@@ -1,7 +1,7 @@
 ﻿using System;
 using DNAide.Core;
 
-public partial class LiveCasino_PTSetting_EditSuper : System.Web.UI.Page
+public partial class LiveCasino_PTSetting_EditSuper : PageBase
 {
     protected int CustId, ExchangeId, IsAddNew;
     protected void Page_Load(object sender, EventArgs e)
