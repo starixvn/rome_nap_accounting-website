@@ -90,8 +90,46 @@ public class LoginFailedHandler
         return CacheService.Get<LogFailedInformation>(GetKey(username));
     }
 
+
+    private static char[] ForbiddenChars()
+    {
+        var forbiddenChars = new char[]
+            {
+                '\u0000', '\u0001', '\u0002', '\u0003', '\u0004', '\u0005', '\u0006', '\u0007', '\u0008', '\u0009',
+                '\u000a', '\u000b', '\u000c', '\u000d', '\u000e', '\u000f', '\u0010', '\u0011', '\u0012', '\u0013',
+                '\u0014', '\u0015', '\u0016', '\u0017', '\u0018', '\u0019', '\u001a', '\u001b', '\u001c', '\u001d',
+                '\u001e', '\u001f', '\u0020'
+            };
+        return forbiddenChars;
+
+    }
+
+    private static string ReplaceForbiddenChars(string key)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(key)) return key;
+
+            var forbiddenChars = ForbiddenChars();
+
+            foreach (var forbiddenChar in forbiddenChars)
+            {
+                key = key.Replace(forbiddenChar, '/');
+            }
+
+        }
+        catch (Exception ex)
+        {
+            return key;
+        }
+
+        return key;
+
+    }
+
     private static string GetKey(string username)
     {
+        username = ReplaceForbiddenChars(username);
         return "login_failed_" + username.ToLower();
     }
 
