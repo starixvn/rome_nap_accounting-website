@@ -144,8 +144,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// </summary>
         /// <param name="_superId"></param>
         /// <returns></returns>
-        public static IDataReader SelectSuperCredit(int _superId)
+        public static DataTable SelectSuperCredit(int _superId)
         {
+            DataTable dt = new DataTable();
             try
             {
                 using (ObjectDb objDB = new ObjectDb("Acc_CustomerSelUsedCredit_SAg", 600))
@@ -154,7 +155,11 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     param.Add("superid", _superId);
 
                     objDB.AssignParamValues(param);
-                    return objDB.ExecuteReader();
+                    var ds = objDB.ExecuteDataSet();
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        dt = ds.Tables[0];
+                    }
                 }
             }
             catch (Exception ex)
@@ -163,6 +168,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
+            return dt;
         }
 
         /// <summary>
