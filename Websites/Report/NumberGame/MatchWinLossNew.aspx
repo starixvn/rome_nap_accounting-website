@@ -126,14 +126,6 @@
                                                 </td>
                                                 <td style="border-bottom: none 0px;">
                                                     <div class="col100 c">
-                                                        Virtual Total</div>
-                                                </td>
-                                                <td style="border-bottom: none 0px;">
-                                                    <div class="col100 c">
-                                                        Variance</div>
-                                                </td>
-                                                <td style="border-bottom: none 0px;">
-                                                    <div class="col100 c">
                                                         Turnover</div>
                                                 </td>
                                                 <td style="border-bottom: none 0px;">
@@ -172,14 +164,6 @@
                                                 </td>
                                                 <td>
                                                     <div id="totalLineTotal" class="col100 r">
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div id="totalVirtualLineTotal" class="col100 r">
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div id="totalVariance" class="col100 r">
                                                     </div>
                                                 </td>
                                                 <td>
@@ -354,19 +338,19 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="border-bottom: none 0px;">
+                                            <td>
                                                 <div class="col40">
                                                     &nbsp;</div>
                                             </td>
-                                            <td style="border-bottom: none 0px;">
+                                            <td>
                                                 <div class="col160">
                                                     Total</div>
                                             </td>
-                                            <td style="border-bottom: none 0px;">
+                                            <td>
                                                 <div id="detailtotalTurnover" class="col100 r">
                                                     &nbsp;</div>
                                             </td>
-                                            <td style="border-bottom: none 0px;">
+                                            <td>
                                                 <div id="detailtotalComm" class="col100 r">
                                                     &nbsp;</div>
                                             </td>

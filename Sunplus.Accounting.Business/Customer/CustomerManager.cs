@@ -2272,8 +2272,6 @@ namespace Sunplus.Accounting.Business.Customer
         public Result UpdateCustomerSite(int custId, string newSite)
         {
             Result result;
-            if (!Permissions.GetHostPermission(Enumerations.Functions.Customer.MoveSite))
-                return new Result { ErrorCode = 500, ErrorMessage = ResourceExtension.GetResourceValue(Sunplus.Accounting.Core.Extensions.ResourceExtension.Resources.ErrorMsg, "_500") };
             if (string.IsNullOrEmpty(newSite))
             {
                 result = new Result { ErrorCode = 1, ErrorMessage = "Site is empty" };

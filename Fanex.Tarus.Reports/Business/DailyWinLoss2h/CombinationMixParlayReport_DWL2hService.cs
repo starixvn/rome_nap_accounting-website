@@ -506,17 +506,20 @@ namespace Fanex.Tarus.Reports.Business.DailyWinLoss2h
 
         private string GetSportTotalName(int sporttype)
         {
-            var sportTotalName = "";
+            var sportTotalName = string.Empty;
             switch (sporttype)
             {
-                case Sports.Soccer:
+                case Sports._2hReport_SystemParlay_Soccer:
                     sportTotalName = "Soccer Sport";
                     break;
-                case Sports.CombinationMixParlay:
+                case Sports._2hReport_SystemParlay_MultiSport:
                     sportTotalName = "Multi-Sport";
                     break;
-                default:
+                case Sports._2hReport_SystemParlay_OtherSports:
                     sportTotalName = "Others Sport";
+                    break;
+                default:
+                    sportTotalName = string.Empty;
                     break;
             }
 
