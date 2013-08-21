@@ -89,8 +89,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// </summary>        
         /// <param name="_agentId"></param>
         /// <returns></returns>
-        public static IDataReader SelectAgentCredit(int _agentId)
+        public static DataTable SelectAgentCredit(int _agentId)
         {
+            DataTable dt = new DataTable();
             try
             {
                 using (ObjectDb objDB = new ObjectDb("Acc_CustomerSelUsedCredit_Ag", 600))
@@ -99,7 +100,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     param.Add("agentid", _agentId);
 
                     objDB.AssignParamValues(param);
-                    return objDB.ExecuteReader();
+
+                    var ds = objDB.ExecuteDataSet();
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        dt = ds.Tables[0];
+                    }
+
                 }
             }
             catch (Exception ex)
@@ -107,6 +114,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
+            return dt;
         }
 
         /// <summary>
@@ -116,17 +124,24 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// </summary>
         /// <param name="_masterId"></param>
         /// <returns></returns>
-        public static IDataReader SelectMasterCredit(int _masterId)
+        public static DataTable SelectMasterCredit(int _masterId)
         {
+            DataTable dt = new DataTable();
             try
             {
+               
                 using (ObjectDb objDB = new ObjectDb("Acc_CustomerSelUsedCredit_MAg", 600))
                 {
                     var param = new Hashtable();
                     param.Add("masterid", _masterId);
 
                     objDB.AssignParamValues(param);
-                    return objDB.ExecuteReader();
+
+                    var ds = objDB.ExecuteDataSet();
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        dt = ds.Tables[0];
+                    }
                 }
             }
             catch (Exception ex)
@@ -135,6 +150,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
+            return dt;
         }
 
         /// <summary>

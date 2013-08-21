@@ -96,9 +96,9 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
             bool hasInactive = false;
             double _activeSum = 0.0, _inactiveSum = 0.0;
             string odd_even = "";
-            using (IDataReader dr = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.SelectAgentCredit(_custid))
+            using (DataTable dt = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.SelectAgentCredit(_custid))
             {                
-                while (dr.Read())
+                foreach(DataRow dr in dt.Rows)
                 {
                     string _s = _sRow;                                                
                     _hasClosed =Convert.ToBoolean(dr["closed"]);
@@ -170,9 +170,9 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
             string _sRow = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("UserCredit/MasterRow.htm");
             double _SumGiven = 0.0, _SumUsed = 0.0;
             string odd_even = "";
-            using (IDataReader dr = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.SelectMasterCredit(_custid))
+            using (DataTable dt = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.SelectMasterCredit(_custid))
             {                
-                while (dr.Read())
+                foreach(DataRow dr in dt.Rows)
                 {
                     hasData = true;
                     string _s = _sRow;                    
