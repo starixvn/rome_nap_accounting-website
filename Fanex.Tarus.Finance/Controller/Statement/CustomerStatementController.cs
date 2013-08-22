@@ -51,10 +51,7 @@ namespace Fanex.Tarus.Finance.Controller.Statement
             List<StatementDetail>  result;
             if(CastAide.AsDateTime(fromdate) != CastAide.AsDateTime(balanceUpDay) && refNo == "-1"){
                 includeAccBall = 1;
-            }
-
-            LogExtensions.ExceptionHandler(new Exception(balanceUpDay));
-
+            } 
             result = _financeStatemenetService.GetFinanceStatementBusiness(refNo, custName, filterBy, fromdate, toDay, balanceUpDay, includeAccBall);
             var jsonResult = Json(result);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
