@@ -227,7 +227,7 @@ var ff16 = ub.mozilla && parseInt(ub.version, 10) >= 16;
             container.css("height", containerHeight + "px");
             rowHeaderWarpper.css("height", containerHeight + "px");
             yscrollbar.css("height", (containerHeight - freezeHeight) + "px");
-            o.find(".free-cell-top-right").css("height", freezeHeight - ((ub.msie || ff16 || ub.chrome) ? (options.padding * 2 + (ub.chrome ? 0:1)) : 0) + "px");
+            o.find(".free-cell-top-right div").css("height", freezeHeight - ((ub.msie || ff16 || ub.chrome) ? (options.padding * 2 + (ub.chrome ? 0:1)) : 0) + "px");
             if (isShowFooter) {
                 o.find(".free-cell-bottom-right").css("height", (freezeFooterHeight + (isScrollX ? bar : 0) + 1) + "px");
             }
