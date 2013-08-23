@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+  <Function Name="Report">
+    
+  </Function>
+
+  <Function Name="UserControl">    
+    <Setting Key="AdminSel" SpName="Acc_AccAdminSel" DbName="DBTXN.BODB02"/><!--not use-->
+    <Setting Key="AdminUpdPageAccess" SpName="Acc_AccAdminUpdPageAccess" DbName="DBTXN.BODB02"/>
+    <Setting Key="AdminIns" SpName="Acc_AccAdminIns" DbName="DBTXN.BODB02"/>
+    <Setting Key="AdminInsFromExisted" SpName="Acc_AccAdminInsFromExisted" DbName="DBTXN.BODB02"/>
+    <Setting Key="AdminUpd" SpName="Acc_AccAdminUpd" DbName="DBTXN.BODB02"/>
+    <Setting Key="AdminSelByID" SpName="Acc_AccAdminSelByID" DbName="DBTXN.BODB02"/>
+  </Function>
+
+  <Function Name="Live Casino">
+    <Setting Key="Acc_CustomerSelWinLimitLiveCS" SpName="Acc_CustomerSelWinLimitLiveCS" DbName="DBTXN.BODB02"  />
+    <Setting Key="Acc_CustomerUpdMemberLiveCS_Master" SpName="Acc_CustomerUpdMemberLiveCS_Master" DbName="DBTXN.BODB02"  />
+    <Setting Key="Acc_BettransCheckNegativeBetCredit" SpName="Acc_BettransCheckNegativeBetCredit" DbName="DBTXN.BODB02" />
+  </Function>
+
+  <Function Name="Finance">
+    <Setting Key="Acc_CustomerSelForexAccount" SpName="Acc_CustomerSelForexAccount" DbName="DBTXN.BODB02"  />    
+  </Function>
+
+  <Function Name="Virtual Sports">
+    <Setting Key="NewLicensee_AdNewSuper_VirtualSports" SpName="Acc_Dep_CustomerInsMemberVirtualSports_Com" DbName="DBTXN.BODB02" />
+    <Setting Key="Licensee_UpdSuper_VirtualSports" SpName="Acc_Dep_CustomerUpdMemberVirtualSports_Com" DbName="DBTXN.BODB02" />
+    <Setting Key="NewLicensee_AdNewMaster_VirtualSports" SpName="Acc_Dep_CustomerInsMemberVirtualSports_SAg" DbName="DBTXN.BODB02" />
+    <Setting Key="Licensee_UpdMaster_VirtualSports" SpName="Acc_Dep_CustomerUpdMemberVirtualSports_SAg" DbName="DBTXN.BODB02" />
+    <Setting Key="NewLicensee_AdNewAgent_VirtualSports" SpName="Acc_Dep_CustomerInsMemberVirtualSports_MAg" DbName="DBTXN.BODB02" />
+    <Setting Key="Licensee_UpdAgent_VirtualSports" SpName="Acc_Dep_CustomerUpdMemberVirtualSports_MAg" DbName="DBTXN.BODB02" />
+    <Setting Key="NewLicensee_AdNewMember_VirtualSports" SpName="Acc_Dep_CustomerInsMemberVirtualSports_Ag" DbName="DBTXN.BODB02" />
+    <Setting Key="Licensee_UpdMember_VirtualSports" SpName="Acc_Dep_CustomerUpdMemberVirtualSports_Ag" DbName="DBTXN.BODB02" />
+  </Function>
+</Functions>

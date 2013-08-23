@@ -27,15 +27,14 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
             try
             {
-                Hashtable param = null;
-                //return DbHelper.ExecuteReader("Acc_AccAdminSel", param, DBType.MAIN);
-                var spElement = GetStoreInfo(UserControlSession.StoreCollection.AccountInfo, "AdminSel");
-                return DbHelper.ExecuteReader(spElement.Name, param, spElement.DbName);
+                using (ObjectDb db = new ObjectDb("AdminSel"))
+                {
+                    return db.ExecuteReader();                    
+                }
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
         }
@@ -152,10 +151,19 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 param.Add("errcode", 0);
                 param.Add("errmsg", string.Empty);
 
-                //DbResult dr = DbHelper.ExecuteCmd("Acc_AccAdminUpdPageAccess", param, DBType.MAIN);
-                var spElement = GetStoreInfo(UserControlSession.StoreCollection.AccountInfo, "AdminUpdPageAccess");
-                DbResult dr = DbHelper.ExecuteCmd(spElement.Name, param, spElement.DbName);
-                if ((int) dr.Outputs["errcode"] > 0) throw new AccException(dr.Outputs["errmsg"].ToString());
+                using (ObjectDb db = new ObjectDb("AdminUpdPageAccess", 180))
+                {
+                    db.AssignParamValues(param);
+                    db.ExecuteNonQuery();
+
+                    int errcode = CastAide.AsInt32(db.GetParameterValue("errcode"));
+                    string errmsg = CastAide.AsString(db.GetParameterValue("errmsg"));
+
+                    if (errcode > 0)
+                    {
+                        throw new AccException(errmsg);
+                    }
+                }
             }
             catch (AccException accException)
             {
@@ -198,11 +206,19 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 param.Add("errcode", 0);
                 param.Add("errmsg", string.Empty);
 
-                //DbResult dr = DbHelper.ExecuteCmd("Acc_AccAdminIns", param, DBType.MAIN);
-                var spElement = GetStoreInfo(UserControlSession.StoreCollection.AccountInfo, "AdminIns");
-                DbResult dr = DbHelper.ExecuteCmd(spElement.Name, param, spElement.DbName);
-                if ((int) dr.Outputs["errcode"] > 0)
-                    throw new AccException(dr.Outputs["errmsg"].ToString());
+                using(ObjectDb db = new ObjectDb("AdminIns", 180))
+                {
+                    db.AssignParamValues(param);
+                    db.ExecuteNonQuery();
+
+                    int errcode = CastAide.AsInt32(db.GetParameterValue("errcode"));
+                    string errmsg = CastAide.AsString(db.GetParameterValue("errmsg"));
+
+                    if (errcode > 0)
+                    {
+                        throw new AccException(errmsg);
+                    }
+                }           
             }
             catch (AccException accException)
             {
@@ -210,8 +226,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
 
@@ -227,19 +242,27 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 param.Add("errmsg", string.Empty);
                 param.Add("language", "E");
 
-                //DbResult dr = DbHelper.ExecuteCmd("Acc_AccAdminInsFromExisted", param, DBType.MAIN);
-                var spElement = GetStoreInfo(UserControlSession.StoreCollection.AccountInfo, "AdminInsFromExisted");
-                DbResult dr = DbHelper.ExecuteCmd(spElement.Name, param, spElement.DbName);
-                if ((int) dr.Outputs["errcode"] > 0) throw new AccException(dr.Outputs["errmsg"].ToString());
+                using (ObjectDb db = new ObjectDb("AdminInsFromExisted", 180))
+                {
+                    db.AssignParamValues(param);
+                    db.ExecuteNonQuery();
+
+                    int errcode = CastAide.AsInt32(db.GetParameterValue("errcode"));
+                    string errmsg = CastAide.AsString(db.GetParameterValue("errmsg"));
+
+                    if (errcode > 0)
+                    {
+                        throw new AccException(errmsg);
+                    }
+                }     
             }
             catch (AccException accException)
             {
                 throw accException;
             }
             catch (Exception ex)
-            {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            {                
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
 
@@ -269,11 +292,20 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 param.Add("errcode", 0);
                 param.Add("errmsg", string.Empty);
 
-                //DbResult dr = DbHelper.ExecuteCmd("Acc_AccAdminUpd", param, DBType.MAIN);
-                var spElement = GetStoreInfo(UserControlSession.StoreCollection.AccountInfo, "AdminUpd");
-                DbResult dr = DbHelper.ExecuteCmd(spElement.Name, param, spElement.DbName);
-                if ((int) dr.Outputs["errcode"] > 0)
-                    throw new AccException(dr.Outputs["errmsg"].ToString());
+                using (ObjectDb db = new ObjectDb("AdminUpd", 180))
+                {
+                    db.AssignParamValues(param);
+                    db.ExecuteNonQuery();
+
+                    int errcode = CastAide.AsInt32(db.GetParameterValue("errcode"));
+                    string errmsg = CastAide.AsString(db.GetParameterValue("errmsg"));
+
+                    if (errcode > 0)
+                    {
+                        throw new AccException(errmsg);
+                    }
+                }    
+
             }
             catch (AccException accException)
             {
@@ -281,8 +313,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
 
@@ -302,14 +333,16 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 var param = new Hashtable();
                 param.Add("custid", custId);
 
-                //return DbHelper.ExecuteReader("Acc_AccAdminSelByID", param, DBType.MAIN);
-                var spElement = GetStoreInfo(UserControlSession.StoreCollection.AccountInfo, "AdminSelByID");
-                return DbHelper.ExecuteReader(spElement.Name, param, spElement.DbName);
+                using (ObjectDb db = new ObjectDb("AdminSelByID", 180))
+                {
+                    db.AssignParamValues(param);
+                    return db.ExecuteReader();
+                }   
             }
             catch (Exception ex)
             {
                 
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
         }
