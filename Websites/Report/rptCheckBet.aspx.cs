@@ -1,17 +1,11 @@
 using System;
 using System.Collections;
-using DNAide.Web;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Accounting.DataAccess;
-using Sunplus.Core.LoggingLib;
 using DNAide.Data;
-
-
+using DNAide.Web;
+using Sunplus.Accounting.DataAccess;
 
 public partial class Report_rptCheckBet : PageBase
 {
-
     protected void Page_Load(object sender, EventArgs e)
     {
         try

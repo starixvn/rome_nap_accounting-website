@@ -36,7 +36,6 @@ namespace Sunplus.Accounting.Business.PT.MiniGame
                {"spt", spt},
                {"comm", comm},
                {"ip", CurrentUserIp}
-               
            };
         var miniGame = new SettingManager();
         try
@@ -80,7 +79,6 @@ namespace Sunplus.Accounting.Business.PT.MiniGame
                {"minpt", minpt},
                {"comm", comm},
                {"ip", CurrentUserIp}
-               
            };
         var miniGame = new SettingManager();
         try
@@ -94,7 +92,7 @@ namespace Sunplus.Accounting.Business.PT.MiniGame
     }
 
     public string GetAgentPTSetting(string username)
-    { 
+    {
         var miniGame = new SettingManager();
         try{
         DataTable dt = miniGame.SelectAgent(username);
@@ -120,7 +118,6 @@ namespace Sunplus.Accounting.Business.PT.MiniGame
                {"minpt", minpt},
                {"comm", comm},
                {"ip", CurrentUserIp}
-               
            };
         var miniGame = new SettingManager();
         try
@@ -147,7 +144,6 @@ namespace Sunplus.Accounting.Business.PT.MiniGame
         }
     }
 
-
     public string UpdateMember(int custid, double apt, double comm)
     {
         var data = new Dictionary<string, object>
@@ -160,7 +156,6 @@ namespace Sunplus.Accounting.Business.PT.MiniGame
                {"apt", apt},
                {"comm", comm},
                {"ip", CurrentUserIp}
-               
            };
         var miniGame = new SettingManager();
         try
@@ -199,7 +194,6 @@ namespace Sunplus.Accounting.Business.PT.MiniGame
                {"isautopt", isautopt},
                {"sautopt", sautopt},
                {"ip", CurrentUserIp}
-               
            };
         var miniGame = new SettingManager();
         try
@@ -236,7 +230,6 @@ namespace Sunplus.Accounting.Business.PT.MiniGame
                {"system", 3},
                {"mpt", mpt},
                {"ip", CurrentUserIp}
-               
            };
         var miniGame = new SettingManager();
         try

@@ -7,7 +7,7 @@ namespace Sunplus.Accounting.Entities.ViewModel
     /// <summary>
     /// Summary description for DailyTransaction
     /// </summary>
-    /// 
+    ///
 
     [Serializable]
     [DataContract]
@@ -51,8 +51,8 @@ namespace Sunplus.Accounting.Entities.ViewModel
         {
             get
             {
-                //by default data return CheckerName 0 for null checkerid 
-                //I do not know why 
+                //by default data return CheckerName 0 for null checkerid
+                //I do not know why
                 return (_checkerName == "0") ? string.Empty : _checkerName;
             }
             set { _checkerName = value; }
@@ -74,7 +74,5 @@ namespace Sunplus.Accounting.Entities.ViewModel
 
         [DataMember]
         public int totalRows { get; set; }
-
-
     }
 }

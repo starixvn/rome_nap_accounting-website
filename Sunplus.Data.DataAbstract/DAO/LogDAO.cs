@@ -1,12 +1,9 @@
-﻿using System;
-using Sunplus.Data.DataAbstract.Storage;
-using Sunplus.Data.DataAbstract.BootStrappers;
-
-namespace Sunplus.Data.DataAbstract.DAO
+﻿namespace Sunplus.Data.DataAbstract.DAO
 {
     public class LogDAO : DataAccess
     {
-        public LogDAO():base()
+        public LogDAO()
+            : base()
         {
         }
 

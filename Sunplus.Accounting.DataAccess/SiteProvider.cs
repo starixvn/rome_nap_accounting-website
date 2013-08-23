@@ -21,8 +21,6 @@ namespace Sunplus.Accounting.DataAccess
             get { return BetlistProvider.Instance; }
         }
 
-       
-
         #region Customer Provider
 
         public static CustomerProvider Customer()
@@ -35,7 +33,7 @@ namespace Sunplus.Accounting.DataAccess
             return CustomerProvider.Instance(client, source);
         }
 
-        #endregion
+        #endregion Customer Provider
 
         #region Log Provider
 
@@ -49,6 +47,6 @@ namespace Sunplus.Accounting.DataAccess
             return LogProvider.Instance(client, source);
         }
 
-        #endregion
+        #endregion Log Provider
     }
 }

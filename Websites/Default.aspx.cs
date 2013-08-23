@@ -1,13 +1,12 @@
 ﻿using System;
-//using IBC.Core.LoggingLib;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Business.Security;
 using System.Configuration;
+using Sunplus.Accounting.Core.Common;
 
 public partial class _Default : System.Web.UI.Page
 {
     public string accUsername = "";
     public string listMenuIgnore = string.Empty;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!Page.IsPostBack)
@@ -29,7 +28,6 @@ public partial class _Default : System.Web.UI.Page
             }
             catch (Exception ex)
             {
-               
             }
             //News news = new News();
             //LastestNewsList = news.ShowLastNewsRotaion();

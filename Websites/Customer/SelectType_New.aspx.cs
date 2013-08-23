@@ -1,17 +1,11 @@
 using System;
 using System.Data;
 using System.Text;
-using DNAide.Data;
 using DNAide.Web;
 using Sunplus.Accounting.Business.Customer;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
-
-using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
-
-using Sunplus.Core.LoggingLib;
 
 public partial class NewCustomer_SelectType_New : PageBase
 {
@@ -53,15 +47,19 @@ public partial class NewCustomer_SelectType_New : PageBase
                     case "member":
                         strMember = "member\" selected=\"true";
                         break;
+
                     case "agent":
                         strAgent = "agent\" selected=\"true";
                         break;
+
                     case "master":
                         strMaster = "master\" selected=\"true";
                         break;
+
                     case "super":
                         strSuper = "super\" selected=\"true";
                         break;
+
                     default:
                         break;
                 }
@@ -79,15 +77,19 @@ public partial class NewCustomer_SelectType_New : PageBase
                     case "4":
                         valueBtn = "Add New Master to ";
                         break;
+
                     case "3":
                         valueBtn = "Add New Agent to ";
                         break;
+
                     case "2":
                         valueBtn = "Add New Member to ";
                         break;
+
                     case "1":
                         TemplateHandler.Assign(ref content, "{curnone}", "none");
                         break;
+
                     default:
                         break;
                 }
@@ -126,11 +128,13 @@ public partial class NewCustomer_SelectType_New : PageBase
                     TemplateHandler.Assign(ref content, "{fInput}", "");
                     TemplateHandler.Assign(ref content, "{accUsername}", Resources.Language.AgUsername);
                     break;
+
                 case "agent":
                     TemplateHandler.Assign(ref content, "{fSuper}", "none");
                     TemplateHandler.Assign(ref content, "{fInput}", "");
                     TemplateHandler.Assign(ref content, "{accUsername}", Resources.Language.MAgUsername);
                     break;
+
                 case "master":
                     TemplateHandler.Assign(ref content, "{fSuper}", "");
                     TemplateHandler.Assign(ref content, "{fInput}", "none");
@@ -142,6 +146,7 @@ public partial class NewCustomer_SelectType_New : PageBase
                     TemplateHandler.Assign(ref content, "{site}", Resources.Language.Site);
                     TemplateHandler.Assign(ref content, "{companydirect}", Resources.Language.CompanyDirect);
                     break;
+
                 default:
                     TemplateHandler.Assign(ref content, "{fSuper}", "none");
                     TemplateHandler.Assign(ref content, "{fInput}", "none");

@@ -10,8 +10,10 @@ namespace Sunplus.Accounting.Entities.Report.LeagueWL
     {
         [DataMember]
         public string Code { get; set; }
+
         [DataMember]
         public string Event { get; set; }
+
         [DataMember]
         public string WinLoss { get; set; }
 
@@ -31,17 +33,19 @@ namespace Sunplus.Accounting.Entities.Report.LeagueWL
         public string Margin { get; set; }
     }
 
-
     [Serializable]
     [DataContract]
     public class LeagueWLBettypeDetailBO
     {
         [DataMember]
         public bool IsNeutral { get; set; }
+
         [DataMember]
         public List<LeagueWLBettypeDetailRow> Items { get; set; }
+
         [DataMember]
         public LeagueWLBettypeDetailRow GrandTotal { get; set; }
+
         [DataMember]
         public string GrandTotal8RM { get; set; }
 

@@ -7,10 +7,10 @@ using IBCUtils;
 using Sunplus.Accounting.Business.CacheManager;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.Entity.SqlServer.SpecialDelete;
-using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.Provider.SpecialDelete;
 
 /// <summary>
@@ -52,7 +52,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             int index = 0;
             int countTbl = 0;
             int cntNormalBet = 0, cntDeposit = 0, cntBetDaq = 0, cnt12EU = 0, cntMasterMHC = 0;
-            foreach (List<SpecialDeleteRow> item  in lst)
+            foreach (List<SpecialDeleteRow> item in lst)
             {
                 foreach (SpecialDeleteRow row in item)
                 {
@@ -76,6 +76,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                     case 0: //Normal
                         cntNormalBet = index;
                         break;
+
                     case 1: //Deposit
                         if (index > 0)
                         {
@@ -85,6 +86,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         }
                         cntDeposit = index;
                         break;
+
                     case 2: //BetDaq
                         if (index > 0)
                         {
@@ -94,6 +96,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         }
                         cntBetDaq = index;
                         break;
+
                     case 3: //12EU
                         if (index > 0)
                         {
@@ -103,6 +106,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         }
                         cnt12EU = index;
                         break;
+
                     case 4: //member of master: MHCEU (105181), MHCRM (118473), MHCUS(105183)
                         if (index > 0)
                         {
@@ -115,7 +119,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         break;
                 }
 
-                #endregion
+                #endregion Add title
 
                 index = 0;
                 countTbl++;
@@ -146,7 +150,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             return ContentHtml;
         }
 
-        #endregion
+        #endregion GetSpecialDelete
 
         #region GetMatchInfoById
 
@@ -177,7 +181,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             return tpl;
         }
 
-        #endregion
+        #endregion GetMatchInfoById
 
         #region AssignDatarow
 
@@ -202,6 +206,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 case 22:
                     TemplateHandler.Assign(ref transRow, "{Hdp}", FormatHandler.FormatNumber2(row.hdp2 - row.hdp1));
                     break;
+
                 default:
                     TemplateHandler.Assign(ref transRow, "{Hdp}", "--");
                     break;
@@ -216,7 +221,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             return transRow;
         }
 
-        #endregion
+        #endregion AssignDatarow
 
         #region AssignDatarow
 
@@ -242,6 +247,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 case 22:
                     TemplateHandler.Assign(ref transRow, "{Hdp}", FormatHandler.FormatNumber2(row.hdp2 - row.hdp1));
                     break;
+
                 default:
                     TemplateHandler.Assign(ref transRow, "{Hdp}", "--");
                     break;
@@ -262,6 +268,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             return transRow;
         }
 
-        #endregion
+        #endregion AssignDatarow
     }
 }

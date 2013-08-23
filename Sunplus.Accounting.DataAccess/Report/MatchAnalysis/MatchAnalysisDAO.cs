@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
+﻿using System.Data;
 using Fanex.Data;
 using Sunplus.Accounting.Entities.Report.MatchAnalysis;
 
 namespace Sunplus.Accounting.DataAccess.Report.MatchAnalysis
 {
-    public class MatchAnalysisDAO:IMatchAnalysisDAO
+    public class MatchAnalysisDAO : IMatchAnalysisDAO
     {
         public System.Data.DataTable SelMatchAnalysisByType(int matchId, int statusId, ReportType reportType)
         {
@@ -19,15 +15,19 @@ namespace Sunplus.Accounting.DataAccess.Report.MatchAnalysis
                 case ReportType.Currency:
                     spName = "Acc_Rpt_MatchAnalysisByCurrency";
                     break;
+
                 case ReportType.Bettype:
                     spName = "Acc_Rpt_MatchAnalysisByBettype";
                     break;
+
                 case ReportType.Super:
                     spName = "Acc_Rpt_MatchAnalysisBySuper";
                     break;
+
                 case ReportType.Member:
                     spName = "Acc_Rpt_MatchAnalysisByMember";
                     break;
+
                 case ReportType.Country:
                     spName = "Acc_Rpt_MatchAnalysisByCountry";
                     break;
@@ -41,13 +41,9 @@ namespace Sunplus.Accounting.DataAccess.Report.MatchAnalysis
                 var result = db.ExecuteDataSet();
                 if (result.Tables.Count == 0)
                     return dt;
-                return  result.Tables[0];
+                return result.Tables[0];
             }
         }
 
-
-
-
-       
     }
 }

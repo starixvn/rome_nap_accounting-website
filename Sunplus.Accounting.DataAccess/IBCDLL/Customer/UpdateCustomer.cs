@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Data.SqlClient;
-using System.Globalization;
 using System.Web;
-using DNAide.Data;
-using IBCUtils;
-
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 using DNAide.Core;
+using DNAide.Data;
 using Fanex.Data;
+using IBCUtils;
+using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Entities;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
@@ -30,19 +24,18 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         {
             var hashUpdated = new Hashtable();
             try
-            {                
+            {
                 using (ObjectDb objDb = new ObjectDb("Acc_CustomerInsMember_Com", 600))
                 {
                     objDb.AssignParamValues(hash);
 
                     objDb.ExecuteNonQuery();
-                    
+
                     hashUpdated = objDb.GetOuputParams();
                 }
             }
             catch (Exception ex)
             {
-                
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return hashUpdated;
@@ -71,8 +64,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return hashUpdated;
         }
@@ -88,7 +80,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         {
             IbcError error = IbcError.SuccessResult;
             try
-            {                
+            {
                 using (ObjectDb objdb = new ObjectDb("Acc_CustomerUpdPwdReset", 600))
                 {
                     var p = new Hashtable();
@@ -110,7 +102,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 }
             }
             catch (Exception ex)
-            {                
+            {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
@@ -127,7 +119,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         {
             var hashUpdated = new Hashtable();
             try
-            {                
+            {
                 using (ObjectDb objDb = new ObjectDb("Acc_CustomerInsMember_MAg", 600))
                 {
                     objDb.AssignParamValues(param);
@@ -136,11 +128,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
 
                     hashUpdated = objDb.GetOuputParams();
                 }
-
             }
             catch (Exception ex)
             {
-                
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return hashUpdated;
@@ -158,7 +148,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         {
             var hashUpdated = new Hashtable();
             try
-            {               
+            {
                 using (ObjectDb objDb = new ObjectDb("Acc_CustomerInsMember_SAg", 600))
                 {
                     objDb.AssignParamValues(param);
@@ -170,14 +160,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return hashUpdated;
         }
 
         /// <summary>
-        /// Nguyen Thi Minh Thu 
+        /// Nguyen Thi Minh Thu
         /// 05/12/2006
         /// insert new member
         /// Phuong.Nguyen updated
@@ -188,7 +177,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         {
             var hashUpdated = new Hashtable();
             try
-            {                
+            {
                 using (ObjectDb objDb = new ObjectDb("Acc_CustomerInsMember_Ag", 600))
                 {
                     objDb.AssignParamValues(param);
@@ -216,7 +205,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             var hashUpdated = new Hashtable();
             try
             {
-                
                 using (ObjectDb objDb = new ObjectDb("Acc_OperatorIns"))
                 {
                     objDb.AssignParamValues(hash);
@@ -229,8 +217,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw;
             }
             return hashUpdated;
@@ -259,8 +246,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw;
             }
             return hashUpdated;
@@ -279,7 +265,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             var hashUpdated = new Hashtable();
             try
             {
-
                 using (ObjectDb objDB = new ObjectDb("Acc_OperatorDel"))
                 {
                     var hash = new Hashtable();
@@ -292,13 +277,11 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
 
                     hashUpdated.Add("errCode", objDB.GetParameterValue("errcode"));
                     hashUpdated.Add("errMsg", objDB.GetParameterValue("errmsg"));
-
                 }
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return hashUpdated;
         }
@@ -351,9 +334,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         {
             IbcError error = IbcError.SuccessResult;
             try
-            {                                
+            {
                 using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdSuper_All", 600))
-                {                    
+                {
                     objDb.AssignParamValues(hash);
 
                     objDb.ExecuteNonQuery();
@@ -369,7 +352,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 error = IbcError.InternalError;
                 error.ErrorMsg = ex.Message.Replace("'", "");
 
-                
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return error;
@@ -377,7 +359,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
 
         //Writer: Hanh
         /// <summary>
-        /// call SP CustomerUpdMatchLimit to update MatchLimit  
+        /// call SP CustomerUpdMatchLimit to update MatchLimit
         /// Using DNAide's Library
         /// Tho.Nguyen updated: 11/29/2008
         /// </summary>
@@ -419,8 +401,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         }
 
         //Writer: Hanh
-        /// <summary>        
-        /// execute sp Acc_CustomerUpdUserInfo to update Customer Information       
+        /// <summary>
+        /// execute sp Acc_CustomerUpdUserInfo to update Customer Information
         /// Using DNAide's library
         /// Tho.Nguyen updated: 11/29/2008
         /// </summary>
@@ -429,7 +411,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         {
             IbcError error = IbcError.SuccessResult;
             try
-            {               
+            {
                 using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdUserInfo"))
                 {
                     objDb.AssignParamValues(hash);
@@ -445,7 +427,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             catch (Exception ex)
             {
-                
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 error.ErrorCode = 100;
                 error.ErrorMsg = ex.Message;
@@ -478,8 +459,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return error;
         }
@@ -509,8 +489,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return error;
         }
@@ -531,7 +510,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 throw new Exception();
             }
             try
-            {                
+            {
                 using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdAgent_All", 600))
                 {
                     objDb.AssignParamValues(param);
@@ -573,7 +552,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         {
             IbcError error = IbcError.SuccessResult;
             try
-            {                
+            {
                 using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdMaster_All", 600))
                 {
                     hash.Add("errcode", string.Empty);
@@ -591,7 +570,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             {
                 error.ErrorCode = IbcError.INTERNAL_ERROR;
                 error.ErrorMsg = IbcError.INTERNAL_ERROR_MSG;
-                
+
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return error;
@@ -607,10 +586,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         /// <returns></returns>
         public static Hashtable CustomerUpdEditCustomerAgRpt(Hashtable param)
         {
-           
             try
             {
-                
                 using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdMember_All", 600))
                 {
                     objDb.AssignParamValues(param);
@@ -621,7 +598,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 }
             }
             catch (Exception ex)
-            {                
+            {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return null;
@@ -639,7 +616,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         {
             IbcError error = IbcError.SuccessResult;
             try
-            {                
+            {
                 using (ObjectDb objdb = new ObjectDb("Acc_CustomerUpdUserName", 600))
                 {
                     var hash = new Hashtable();
@@ -705,7 +682,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 error.ErrorCode = IbcError.INTERNAL_ERROR;
                 error.ErrorMsg = IbcError.INTERNAL_ERROR_MSG;
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                
             }
             return error;
         }
@@ -743,9 +719,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                
+
                 error.ErrorCode = 100;
-                error.ErrorMsg = ex.Message;                
+                error.ErrorMsg = ex.Message;
             }
             return error;
         }
@@ -774,13 +750,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 hash.Add("ip", ip);
                 hash.Add("errcode", 0);
                 hash.Add("errmsg", "");
-                
-                if (type == "master") {
+
+                if (type == "master")
+                {
                     spName = "Acc_CustomerUpdMoveMaster";
                     hash.Add("supername", recommendId);
                     hash.Add("mastername", custId);
                 }
-                else {
+                else
+                {
                     spName = "Acc_CustomerUpdMoveAgent";
                     hash.Add("agentname", custId);
                     hash.Add("mastername", recommendId);
@@ -860,7 +838,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         {
             IbcError error = IbcError.SuccessResult;
             try
-            {                
+            {
                 using (var objDb = new Fanex.Data.ObjectDb("Acc_CustomerUpdUserGroup", 600))
                 {
                     var hash = new Hashtable();
@@ -929,7 +907,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 }
             }
             catch (Exception ex)
-            {                
+            {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
@@ -946,9 +924,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         /// <returns></returns>
         public static IbcError AgentInsUdpMember(Hashtable hash, bool IsInsert, ref string custid)
         {
-            IbcError error = IbcError.SuccessResult;            
+            IbcError error = IbcError.SuccessResult;
             try
-            {  
+            {
                 var spName = IsInsert ? "Acc_CustomerInsMember_Ag" : "Acc_CustomerUpdMember_All";
                 using (ObjectDb objDb = new ObjectDb(spName, 600))
                 {
@@ -998,8 +976,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return ds;
         }
@@ -1016,7 +993,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             {
                 using (ObjectDb db = new ObjectDb("Acc_CustomerUpdTransferOption", 600))
                 {
-
                     db.AssignParamValues(hash);
                     db.ExecuteNonQuery();
 
@@ -1034,7 +1010,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="hash"></param>
         /// <returns></returns>
@@ -1042,13 +1018,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         {
             IbcError error = IbcError.SuccessResult;
             try
-            {   
+            {
                 using (ObjectDb objdb = new ObjectDb("Acc_CustomerUpdVirtualMultiplier", 600))
                 {
                     var hash = new Hashtable();
                     hash.Add("custid", custId); //int
                     hash.Add("virtualmultiplier", virtualRate); //bit
-                    hash.Add("userid", userId); //int                
+                    hash.Add("userid", userId); //int
                     hash.Add("errcode", 0);
                     hash.Add("errmsg", "");
                     hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
@@ -1083,7 +1059,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         {
             IbcError error = IbcError.SuccessResult;
             try
-            {                
+            {
                 using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdMember_Super", 600))
                 {
                     objDb.AssignParamValues(hash);
@@ -1157,8 +1133,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
     }

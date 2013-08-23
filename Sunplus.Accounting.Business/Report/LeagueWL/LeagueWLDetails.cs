@@ -10,12 +10,10 @@ using DNAide.Web;
 
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.Provider.Report;
 using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
 
 /// <summary>
 /// Summary description for LeagueWLBettype
@@ -63,7 +61,7 @@ namespace BLL.Report.LeagueWL
                 if (wldate <= movebetsday)
                     rs = SiteProvider.Report.LeagueWL().LeagueWL_Details14(wldate, sporttype, leagueid, bettype,
                                                                            liveindicator, IsHedge);
-                    //rs = SiteProvider.Report.LeagueWL().LeagueWL_Details(wldate, sporttype, leagueid, bettype, liveindicator, IsHedge);
+                //rs = SiteProvider.Report.LeagueWL().LeagueWL_Details(wldate, sporttype, leagueid, bettype, liveindicator, IsHedge);
                 else
                     rs = SiteProvider.Report.LeagueWL().LeagueWL_Details(wldate, sporttype, leagueid, bettype,
                                                                          liveindicator, IsHedge);
@@ -104,7 +102,7 @@ namespace BLL.Report.LeagueWL
                         row.Turnover == 0)
                         continue;
 
-                    #endregion
+                    #endregion Mapping Data
 
                     strHeader = CacheRef.GetBettype(row.Bettype);
                     strHeader += " " + ((row.IsNeutral) ? "(N)" : "");
@@ -113,7 +111,6 @@ namespace BLL.Report.LeagueWL
                     AssignRow(ref strRow, row, strHeader, ref GrandTotal);
                     html.Append(strRow);
                 }
-
 
                 strRow = tplFooter;
                 strHeader = "All Total";
@@ -133,7 +130,6 @@ namespace BLL.Report.LeagueWL
                                        NumberFormat.DecFormat(GrandTotal.LineTotal + WinLost_8RM, 2));
                 AssignRow(ref strRow, GrandTotal, strHeader, ref GrandTotal);
 
-
                 if (count == 0)
                 {
                     html.Append("<tr><td bgcolor='white'  colspan='8'>There is no information</td></tr>");
@@ -145,8 +141,7 @@ namespace BLL.Report.LeagueWL
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
 
                 html = new StringBuilder();
                 html.Append(tplHeader);
@@ -160,7 +155,7 @@ namespace BLL.Report.LeagueWL
             return html.ToString();
         }
 
-        #endregion
+        #endregion RenderHTML
 
         #region AssignRow
 
@@ -196,7 +191,7 @@ namespace BLL.Report.LeagueWL
             Total.Turnover += row.Turnover;
         }
 
-        #endregion
+        #endregion AssignRow
 
         #region Export2Excel
 
@@ -220,7 +215,7 @@ namespace BLL.Report.LeagueWL
             }
         }
 
-        #endregion
+        #endregion Export2Excel
 
         public LeagueWLDetails()
         {

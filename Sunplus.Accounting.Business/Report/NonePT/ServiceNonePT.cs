@@ -49,6 +49,6 @@ namespace Sunplus.Accounting.Business.Report.NonePT
             return s.GenCurrency();
         }
 
-        #endregion
+        #endregion IServiceNonePT Members
     }
 }

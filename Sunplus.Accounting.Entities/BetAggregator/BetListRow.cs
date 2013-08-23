@@ -45,7 +45,7 @@ namespace Sunplus.Accounting.Entities.BetAggregator
 
         [DataMember]
         public string LeagueName { get; set; }
-        
+
         [DataMember]
         public string Odd { get; set; }
 
@@ -72,13 +72,11 @@ namespace Sunplus.Accounting.Entities.BetAggregator
 
         [DataMember]
         public string AgentWinLoss { get; set; }
-        
+
         [DataMember]
-        public string CommPercent  { get; set; }
+        public string CommPercent { get; set; }
 
         [DataMember]
         public string Comm { get; set; }
-
     }
-
 }

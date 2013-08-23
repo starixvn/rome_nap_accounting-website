@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Web;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using Sunplus.Accounting.Entities;
@@ -73,7 +72,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         Mails GetDefaultToEmailAddress(string horseId);
-       
+
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         RacingDailyBySiteBO WinlostRacingLicensee_SiteSel();
@@ -81,7 +80,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         RacingDailyBySiteBO WinlostRacingLicensee_Details(string winlossdate, string site);
-
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]

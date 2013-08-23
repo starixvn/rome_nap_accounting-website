@@ -1,28 +1,20 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
+using System.Data;
 using System.Linq;
 using System.Text;
-using System.Web.SessionState;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
 using ExcelUtil.Spreadsheet;
-
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.Report;
 using Sunplus.Accounting.DataAccess.Report.MatchWL;
 using Sunplus.Accounting.Entities.Report.MatchWL;
-using System.Data;
-using Sunplus.Core.LoggingLib;
-using System.Threading;
 
 namespace Sunplus.Accounting.Business.Report.MatchWL
 {
@@ -52,22 +44,21 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
             _keyListWLbyBettypeTotal = "ReportListWLbyBettypeTotal." + AppSession.Username;
             _keyListMatchWL3rd = "ReportListMatchWL3rd." + AppSession.Username;
             _keyListGrandTotal = "ReportListGrandTotal." + AppSession.Username;
-
         }
 
-        DataTable dataTable1 = new DataTable();
-        DataTable dataTable2 = new DataTable();
-        DataTable dtWLbyBettype = new DataTable();
+        private DataTable dataTable1 = new DataTable();
+        private DataTable dataTable2 = new DataTable();
+        private DataTable dtWLbyBettype = new DataTable();
 
-        string wl8rm = "";
+        private string wl8rm = "";
 
         private DbResult rs = null, rsWLbyBettype = null;
         private List<IEnumerable<MatchWL2aBO>> listMatchWL = new List<IEnumerable<MatchWL2aBO>>();
 
         #region ParallelCalc
+
         private void ParallelCalc(DateTime wldate, int currpage)
         {
-
             bool IsGetFromSession = false;
             IsGetFromSession =
                 (AppSession.GetSession(System.Web.HttpContext.Current.Session, _keyMatchWL2a) != null
@@ -86,32 +77,29 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                 dataTable2 = AppSession.GetSession(System.Web.HttpContext.Current.Session, _keyMatchWL3rd) as DataTable;
 
                 dtWLbyBettype = AppSession.GetSession(System.Web.HttpContext.Current.Session, _keyWLbyBettype) as DataTable;
-
             }
             else
             {
                 System.Threading.Tasks.Parallel.Invoke(
                     delegate()
-                        {
-                            if (wldate > ReportUtils.BalanceUp.MoveBetsDay)
-                                rs = _matchWl2aDao.MatchWL(wldate);
-                            else if (wldate >= ReportUtils.BalanceUp.BalanceUpDay)
-                                rs = _matchWl2aDao.MatchWL14(wldate);
-                            else
-                                rs = _matchWl2aDao.MatchWL_WH(wldate);
-
-                        },
+                    {
+                        if (wldate > ReportUtils.BalanceUp.MoveBetsDay)
+                            rs = _matchWl2aDao.MatchWL(wldate);
+                        else if (wldate >= ReportUtils.BalanceUp.BalanceUpDay)
+                            rs = _matchWl2aDao.MatchWL14(wldate);
+                        else
+                            rs = _matchWl2aDao.MatchWL_WH(wldate);
+                    },
                     delegate()
-                        {
-                            if (wldate > ReportUtils.BalanceUp.MoveBetsDay)
-                                rsWLbyBettype = _matchWl2aDao.WinLossByBettype(wldate);
-                            else if (wldate >= ReportUtils.BalanceUp.BalanceUpDay)
-                                rsWLbyBettype = _matchWl2aDao.WinLossByBettype14(wldate);
-                            else
-                                rsWLbyBettype = _matchWl2aDao.WinLossByBettype_WH(wldate);
-                        }
+                    {
+                        if (wldate > ReportUtils.BalanceUp.MoveBetsDay)
+                            rsWLbyBettype = _matchWl2aDao.WinLossByBettype(wldate);
+                        else if (wldate >= ReportUtils.BalanceUp.BalanceUpDay)
+                            rsWLbyBettype = _matchWl2aDao.WinLossByBettype14(wldate);
+                        else
+                            rsWLbyBettype = _matchWl2aDao.WinLossByBettype_WH(wldate);
+                    }
                     );
-
 
                 dataTable1 = rs.ResultSet.Tables[0];
                 dataTable2 = rs.ResultSet.Tables[1];
@@ -132,18 +120,18 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                 dv.Sort = "index asc";
                 dtWLbyBettype = dv.ToTable();
 
-
                 AppSession.AddSession(System.Web.HttpContext.Current.Session, _keyMatchWL2a, dataTable1);
                 AppSession.AddSession(System.Web.HttpContext.Current.Session, _keyWL8RM, wl8rm);
                 AppSession.AddSession(System.Web.HttpContext.Current.Session, _keyMatchWL3rd, dataTable2);
 
                 AppSession.AddSession(System.Web.HttpContext.Current.Session, _keyWLbyBettype, dtWLbyBettype);
-
             }
         }
-        #endregion
+
+        #endregion ParallelCalc
 
         #region MatchWL
+
         private MatchWL2aBO CalcTotal(string expression, int typeTotal, DataTable dataTable1)
         {
             MatchWL2aBO data = new MatchWL2aBO();
@@ -157,14 +145,13 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
             return data;
         }
 
-        List<string> profiler = new List<string>();
+        private List<string> profiler = new List<string>();
+
         public MatchWL2aDTO SelMatchWL2a(DateTime wldate, int currpage)
         {
             MatchWL2aDTO matchWl2aDto = new MatchWL2aDTO();
             try
             {
-
-
                 matchWl2aDto.currpage = currpage + 1;
                 matchWl2aDto.IsFinish = false;
 
@@ -173,9 +160,9 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                 ParallelCalc(wldate, currpage);
 
                 #region MatchWL
+
                 List<MatchWL2aBO> Rows = new List<MatchWL2aBO>();
                 List<MatchWL2aBO> Rows3rd = new List<MatchWL2aBO>();
-
 
                 int beginrow = (currpage - 1) * _pageSize;
                 int endrow = currpage * _pageSize - 1;
@@ -184,7 +171,6 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                     endrow = dataTable1.Rows.Count - 1;
                     matchWl2aDto.IsFinish = true;
                 }
-
 
                 int index = 0;
                 int oldbettype = 0;
@@ -197,7 +183,6 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                 for (int i = beginrow; i <= endrow; i++)
                 {
                     DataRow dataRow = dataTable1.Rows[i];
-
 
                     #region bettype or live
 
@@ -227,11 +212,10 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                         oldleague = CastAide.AsString(dataRow["leaguenametc"]);
                     }
 
-                    #endregion
+                    #endregion bettype or live
 
                     data = new MatchWL2aBO();
                     index++;
-
 
                     data.matchcode = CastAide.AsString(dataRow["matchcode"]);
                     data.eventdate = CastAide.AsDateTime(dataRow["eventdate"]).ToShortDateString();
@@ -252,7 +236,6 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
 
                     Rows.Add(data);
                     index++;
-
                 }
 
                 StringBuilder builder = new StringBuilder();
@@ -262,11 +245,10 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                     builder.Append(msg + "<br/>");
                 }
 
-
-
                 if (matchWl2aDto.IsFinish)
                 {
                     #region bettype or live or sport
+
                     data = new MatchWL2aBO();
                     expression = "bettype = " + oldbettype + " and liveindicator=" + oldlive + " and leaguenametc= '" + oldleague + "' ";
                     data = CalcTotal(expression, 1, dataTable1);
@@ -278,18 +260,20 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                     data.leaguenametc = oldleague;
                     Rows.Add(data);
 
-                    #endregion
+                    #endregion bettype or live or sport
 
                     #region calc grand total
+
                     data = new MatchWL2aBO();
                     expression = "";
                     data = CalcTotal(expression, 3, dataTable1);
                     data.leaguenametc = "GRAND ";
                     Rows.Add(data);
-                    #endregion
 
+                    #endregion calc grand total
                 }
-                #endregion
+
+                #endregion MatchWL
 
                 if (currpage == 1)
                 {
@@ -315,7 +299,6 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                             data.variance = "N/A";
                         }
 
-
                         if (wldate < ReportUtils.BalanceUp.BalanceUpDay)
                         {
                             if (data.bettype.ToLower().Equals("racing"))
@@ -325,13 +308,14 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                         }
 
                         Rows3rd.Add(data);
-
                     }
 
                     AppSession.AddSession(System.Web.HttpContext.Current.Session, _keyListMatchWL3rd, Rows3rd);
-                    #endregion
+
+                    #endregion WL3rd
 
                     #region Grand Total
+
                     expression = "";
                     var grandTotalMatchWL = new MatchWL2aBO();
                     grandTotalMatchWL = CalcTotal(expression, 3, dataTable1);
@@ -354,21 +338,16 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                     matchWl2aDto.rowsMatchWLTotal = grandTotal;
 
                     AppSession.AddSession(System.Web.HttpContext.Current.Session, _keyListGrandTotal, grandTotal);
-                    #endregion
+
+                    #endregion Grand Total
                 }
-
-
 
                 matchWl2aDto.wl8rm = wl8rm;
                 matchWl2aDto.rows = Rows;
                 matchWl2aDto.rows3rd = Rows3rd;
 
-
-
                 if (currpage == 1)
                 {
-
-
                     List<WLbyBettype> listWLbyBettypes = new List<WLbyBettype>();
                     List<WLbyBettype> listWLbyBettypesTotal = new List<WLbyBettype>();
 
@@ -392,7 +371,6 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                     listMatchWL.Add(matchWl2aDto.rows);
                     AppSession.AddSession(System.Web.HttpContext.Current.Session, _keyMatchWL, listMatchWL);
                 }
-
             }
             catch (Exception ex)
             {
@@ -400,19 +378,17 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
             }
             return matchWl2aDto;
         }
-        #endregion
+
+        #endregion MatchWL
 
         #region WLbyBettype
+
         private void getWLbyBettype(ref List<WLbyBettype> wLbyBettypes, ref DataTable dtLastestOrder, ref List<WLbyBettype> listWLbyBettypesTotal, bool IsLastest)
         {
             try
             {
 
-
-
                 WLbyBettype data = new WLbyBettype();
-
-
 
                 foreach (DataRow dataRow in dtWLbyBettype.Rows)
                 {
@@ -432,7 +408,7 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                             case 400: //8rm
                             case 150: //3rdparty
                             case 200: //12bet
-                            case 71: //CASINO- 71 
+                            case 71: //CASINO- 71
                             case 72: //P2P-72
                                 DataRow dr2 = dtLastestOrder.NewRow();
                                 for (int i = 0; i < dataRow.ItemArray.Length; i++)
@@ -465,15 +441,15 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                         case 63: //30 min OE
                         case 64: //45 min OE
                         case 65: //60 min OE
-                        case 66: //End of day OE  
+                        case 66: //End of day OE
 
                         case 31: //win Tote Odds
                         case 32: //place Tote Odds
-                        case 33: //win-place Tote Odds                       
+                        case 33: //win-place Tote Odds
                         case 41: //win Fixed Odds
                         case 42: //place Fixed Odds
-                        case 43: //win-place Fixed Odds                        
-                        case 150: //3rdparty 
+                        case 43: //win-place Fixed Odds
+                        case 150: //3rdparty
                         case 71: //casino
                         case 72: //p2p
                             data.VirtualLineTotal_soccer_live = "N/A";
@@ -489,6 +465,7 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                             data.LineTotalVirtual = "N/A";
                             data.Variance = "N/A";
                             break;
+
                         default:
                             data.VirtualLineTotal_soccer_live =
                                 NumberFormat.DecFormat(dataRow["VirtualLineTotal_soccer_live"], 2);
@@ -513,7 +490,6 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                                     CastAide.AsDecimal(data.LineTotalReal) - CastAide.AsDecimal(data.LineTotalVirtual),
                                     2);
                             break;
-
                     }
 
                     string typename = "";
@@ -522,18 +498,22 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                         case 150:
                             typename = "FI 3rd-Party";
                             break;
+
                         case 400:
                             typename = "8RM";
                             break;
+
                         case 71:
                             typename = "CASINO";
-                            break; //CASINO- 71 
+                            break; //CASINO- 71
                         case 1001:
                             typename = "Kick Off";
                             break;
+
                         case 29:
                             typename = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "systemParlay");
                             break;
+
                         default:
                             if (CastAide.AsInt32(dataRow["bettype"]) == 85 || CastAide.AsInt32(dataRow["bettype"]) == 86)
                                 typename = CacheRef.GetBettype(dataRow["bettype"]) + " (NumberGame)";
@@ -543,7 +523,6 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                     }
                     typename += " " + dataRow["Hedge"];
                     data.bettype = typename;
-
 
                     wLbyBettypes.Add(data);
                 }
@@ -602,18 +581,17 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                     }
                 }
 
-                #endregion
-
+                #endregion Total
             }
             catch (Exception ex)
             {
-
             }
         }
 
-        #endregion
+        #endregion WLbyBettype
 
         #region ExportMatchWL
+
         private void AssignWLbyBettypeExport(ref ExcelWorksheet ws, ref int indexRow, List<WLbyBettype> list, bool IsTotal, int r, int g, int b)
         {
             var gembox = new ExcelGemboxUtils();
@@ -701,6 +679,7 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                 indexRow++;
             }
         }
+
         public ExcelFile ExportMatchWL(ref bool hasData)
         {
             hasData = true;
@@ -718,7 +697,9 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
             int indexRow = 0;
 
             #region WLbyBettype
+
             #region header
+
             ws.Cells.GetSubrangeAbsolute(0, 0, 1, 0).Value = "Bet Type";
             ws.Cells.GetSubrangeAbsolute(0, 0, 1, 0).Style = gembox.GetStyleTitle(181, 196, 208);
             ws.Cells.GetSubrangeAbsolute(0, 0, 1, 0).Merged = true;
@@ -766,9 +747,11 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
             ws.Cells.GetSubrangeAbsolute(0, 11, 1, 11).Value = "Variance";
             ws.Cells.GetSubrangeAbsolute(0, 11, 1, 11).Style = gembox.GetStyleTitle(181, 196, 208);
             ws.Cells.GetSubrangeAbsolute(0, 11, 1, 11).Merged = true;
-            #endregion
+
+            #endregion header
 
             #region content
+
             indexRow = 2;
             List<WLbyBettype> listWLbyBettype = new List<WLbyBettype>();
             listWLbyBettype = AppSession.GetSession(System.Web.HttpContext.Current.Session, _keyListWLbyBettype) as List<WLbyBettype>;
@@ -780,14 +763,16 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
             r = 136; g = 170; b = 255;
             AssignWLbyBettypeExport(ref ws, ref indexRow, listWLbyBettypeTotal, true, r, g, b);
 
+            #endregion content
 
-            #endregion
-            #endregion
+            #endregion WLbyBettype
 
             indexRow = indexRow + 2;
 
             #region MatchWL
+
             #region header
+
             ws.Cells[indexRow, 0].Value = "Bet Type";
             ws.Cells[indexRow, 0].Style = gembox.GetStyleTitle(181, 196, 208);
 
@@ -819,7 +804,8 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
             ws.Cells[indexRow, 11].Value = "Variance";
             ws.Cells[indexRow, 11].Style = gembox.GetStyleTitle(181, 196, 208);
             indexRow++;
-            #endregion
+
+            #endregion header
 
             #region content
 
@@ -923,9 +909,10 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                 }
             }
 
-            #endregion
+            #endregion content
 
             #region 8RM
+
             r = 124; g = 152; b = 164;
             ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 8).Value = "Total 8RM:";
             ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 8).Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Right, true);
@@ -940,8 +927,7 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
             ws.Cells[indexRow, 11].Value = 0;
             ws.Cells[indexRow, 11].Style = gembox.GetStyleNumber(0, "", r, g, b, false);
 
-
-            #endregion
+            #endregion 8RM
 
             #region 3rd
 
@@ -993,15 +979,13 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                     ws.Cells[indexRow, 11].Style = gembox.GetStyleNumber(0, "", r, g, b);
                 }
 
-
                 ws.Cells[indexRow, 9].Value = CastAide.AsDecimal(matchWl2aBo.LineTotal);
                 ws.Cells[indexRow, 9].Style = gembox.GetStyleNumber(0, "", r, g, b);
 
-
-
                 indexRow++;
             }
-            #endregion
+
+            #endregion 3rd
 
             #region Grand Total
 
@@ -1032,12 +1016,9 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                 indexRow++;
             }
 
-            #endregion
-            #endregion)))))
+            #endregion Grand Total
 
-
-
-
+            #endregion MatchWL
 
             for (int i = 0; i <= 11; i++)
             {
@@ -1048,8 +1029,7 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
             }
             return excelFile;
         }
-        #endregion
 
-
+        #endregion ExportMatchWL
     }
 }

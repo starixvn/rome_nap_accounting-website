@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Sunplus.Accounting.Entities.Report.Monitor;
 
 namespace Sunplus.Accounting.Business.Report.Monitor
@@ -13,12 +9,12 @@ namespace Sunplus.Accounting.Business.Report.Monitor
 
         List<Items> GetBettypes(List<Items> option, int sporttype);
 
-        List<Items> GetSelectLeagues(List<Items> option, int sportId, string fromdate, string todate, int currency, int bettype,int live);
+        List<Items> GetSelectLeagues(List<Items> option, int sportId, string fromdate, string todate, int currency, int bettype, int live);
 
         MAMonitorDTO GetMAMonitorReport(Param param, bool fromcache);
 
         bool CheckMAMonitorReportFromSession(Param param);
 
         void ExportToExcelMAMonitorReport(int reportBy, string reportTitle);
-    } 
+    }
 }

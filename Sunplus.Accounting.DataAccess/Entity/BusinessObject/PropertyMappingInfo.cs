@@ -14,7 +14,7 @@ namespace Sunplus.Accounting.DataAccess.Entity.BusinessObject
         private readonly PropertyInfo _propInfo;
         private string _dataFieldName;
 
-        #endregion
+        #endregion Private Variables
 
         #region Constructors
 
@@ -30,7 +30,7 @@ namespace Sunplus.Accounting.DataAccess.Entity.BusinessObject
             _propInfo = info;
         }
 
-        #endregion
+        #endregion Constructors
 
         #region Public Properties
 
@@ -56,6 +56,6 @@ namespace Sunplus.Accounting.DataAccess.Entity.BusinessObject
             get { return _propInfo; }
         }
 
-        #endregion
+        #endregion Public Properties
     }
 }

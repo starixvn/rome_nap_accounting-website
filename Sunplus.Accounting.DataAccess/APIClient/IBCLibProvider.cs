@@ -12,6 +12,7 @@ using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Casino;
+
 /// <summary>
 /// Summary description for IBCLibProvider
 /// </summary>
@@ -61,7 +62,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                     _custSetting.UserPwd = CastAide.AsString(row["userpwd"]);
                     _custSetting.CurrencyName = CastAide.AsString(row["currencyname"]);
                     _custSetting.SyncBingo = CastAide.AsBoolean(row["syncbingo"]);
-                    _custSetting.LiveCasinoDisabled =  WebSettings.EnableLiveCasino ? CastAide.AsBoolean(row["disablelivecasino"]):true;
+                    _custSetting.LiveCasinoDisabled = WebSettings.EnableLiveCasino ? CastAide.AsBoolean(row["disablelivecasino"]) : true;
                     _custSetting.LiveCasinoSync = WebSettings.EnableLiveCasino ? CastAide.AsBoolean(row["synclivecasino"]) : false;
 
                     _custSetting.DisableBingo = row.Table.Columns.Contains("disablebingo") ? CastAide.AsBoolean(row["disablebingo"]) : true;
@@ -84,7 +85,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
         /// </summary>
         /// <param name="_IBCCustId"></param>
         /// <returns></returns>
-        /// 
+        ///
         public override CSCustomerDetail GetCustInfoIBC(int _IBCCustId)
         {
             var _custSetting = new CSCustomerDetail();
@@ -128,12 +129,15 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                     _custSetting.CurrencyName = CastAide.AsString(row["currencyname"]);
 
                     DataTable dt = null;
+
                     #region rng site name
+
                     _custSetting.SiteName = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(_IBCCustId);
                     var _cust = new Customer();
                     _cust.SiteName = _custSetting.SiteName;
-                    #endregion
-                    
+
+                    #endregion rng site name
+
                     if (_custSetting.RoleId != 4)
                     {
                         dt = _cust.GetDefaultMaxTransfer(_custSetting.UpperCustID, 0, false);
@@ -174,7 +178,6 @@ namespace Sunplus.Accounting.DataAccess.APIClient
         {
             var _custSetting = new CSCustomerDetail();
 
-
             _custSetting.UserName = CastAide.AsString(r["username"]);
             _custSetting.UserPwd = CastAide.AsString(r["userpwd"]);
             _custSetting.FirstName = CastAide.AsString(r["firstname"]);
@@ -197,16 +200,18 @@ namespace Sunplus.Accounting.DataAccess.APIClient
             _custSetting.IBCCustID = CastAide.AsInt32(custid);
 
             #region rng site name
-            _custSetting.SiteName = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(_custSetting.IBCCustID);            
-            #endregion
+
+            _custSetting.SiteName = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(_custSetting.IBCCustID);
+
+            #endregion rng site name
+
             return _custSetting;
         }
 
         public override bool UpdateCSStatus(int custid, bool bSyncCS, bool bDisabledCS, string rngSite)
-        {            
+        {
             try
             {
-                
                 using (ObjectDb db = new ObjectDb("Acc_UpdCSStatus", 300))
                 {
                     var param = new Hashtable();
@@ -244,11 +249,10 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                                                AppSession.AccId, AppSession.Username, 3);
         }
 
-
         public override bool UpdateCSStatus(int custid, bool bSyncCS, bool bDisabledCS, bool isUpdDownline, string rngSite)
         {
             try
-            {               
+            {
                 using (ObjectDb db = new ObjectDb("Acc_UpdCSStatus", 300))
                 {
                     var param = new Hashtable();
@@ -285,7 +289,6 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                                                HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"],
                                                AppSession.AccId, AppSession.Username, 3);
         }
-
 
         public override bool IsDisabledCasino(int custId)
         {
@@ -329,9 +332,9 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                                                : false;
                     _cust.LiveCasinoDisabled =
                         WebSettings.EnableLiveCasino
-                        ? CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableLiveCasino"], true): true;
+                        ? CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableLiveCasino"], true) : true;
                 }
-                
+
                 return _cust;
             }
             catch (Exception ex)
@@ -378,8 +381,6 @@ namespace Sunplus.Accounting.DataAccess.APIClient
 
                 _cust.LimitPerIP = CastAide.AsInt32(drCustomer.ResultSet.Tables[0].Rows[0]["LimitPerIP"]);
 
-                
-
                 _cust.IsLiveCasinoSync = WebSettings.EnableLiveCasino
                                              ? CastAide.AsBoolean(
                                                  drCustomer.ResultSet.Tables[0].Rows[0]["SyncLiveCasino"], false)
@@ -393,7 +394,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                     CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["hidevirtualsports"], false) : false;
                 _cust.IsDisableVirtualSports = WebSettings.EnableVirtualSports ?
                     CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["disablevirtualsports"], false) : false;
-                _cust.IsEnableDoubleCommLosing = WebSettings.OfferDoubleComm ? (CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DoubleCommLosing"],false)): false;
+                _cust.IsEnableDoubleCommLosing = WebSettings.OfferDoubleComm ? (CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DoubleCommLosing"], false)) : false;
                 return _cust;
             }
             catch (Exception ex)
@@ -442,6 +443,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                 return GetStoreProcedure(storeCollection, aliasName);
             }
         }
+
         private class StoreCustomerProcedureConfiguration : DataAccess
         {
             public StoreProcedureElement GetStoreProcedureInfo(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.CustomerSession.StoreCollection storeCollection, string aliasName)
@@ -450,6 +452,4 @@ namespace Sunplus.Accounting.DataAccess.APIClient
             }
         }
     }
-
-    
 }

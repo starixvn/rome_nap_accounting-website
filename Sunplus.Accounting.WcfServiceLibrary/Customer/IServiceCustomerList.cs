@@ -1,7 +1,5 @@
 ﻿using System.ServiceModel;
 using System.ServiceModel.Web;
-using System.Data;
-using System.Collections.Generic;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.Customer
 {

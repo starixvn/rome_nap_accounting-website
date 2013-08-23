@@ -8,7 +8,7 @@ using DNAide.Core;
 using DNAide.Data;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
+
 
 
 public partial class Report_GoalHistory : System.Web.UI.Page

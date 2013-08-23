@@ -7,16 +7,13 @@
 namespace Sunplus.Accounting.Business.Customer
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Collections;
+    using System.Collections.Generic;
+    using System.Text;
     using System.Web;
     using System.Xml;
-    using Sunplus.Accounting.Core.Web;
     using DNAide.Web;
-    using Sunplus.Accounting.Business.BootStrappers;
-    using Sunplus.Accounting.DataAccess;
+    using Sunplus.Accounting.Core.Web;
 
     /// <summary>
     /// TODO: Update summary.
@@ -57,7 +54,6 @@ namespace Sunplus.Accounting.Business.Customer
                         }
                         else
                         {
-
                             TemplateHandler.Assign(ref row, "{level_onclick}", "return ChangeAbnormalLevelAgent('" + st.id + "');");
                         }
                         content.Append(row);
@@ -72,19 +68,21 @@ namespace Sunplus.Accounting.Business.Customer
                 throw ex;
             }
         }
+
         public string GetAbnormalLevelColor(int level)
         {
             string color = "White";
-            color =  abnormalSetting[Convert.ToInt32(idxAbnormalSetting[Convert.ToString(level)])].color;
+            color = abnormalSetting[Convert.ToInt32(idxAbnormalSetting[Convert.ToString(level)])].color;
             return color;
         }
+
         public string GetAbnormalLevelName(int level)
         {
             string name = "";
             name = abnormalSetting[Convert.ToInt32(idxAbnormalSetting[Convert.ToString(level)])].name;
             return name;
         }
-     
+
         private void GetAbnormalSetting()
         {
             try
@@ -96,10 +94,10 @@ namespace Sunplus.Accounting.Business.Customer
                 int i = 0;
                 foreach (XmlNode level in levelList)
                 {
-                        idxAbnormalSetting.Add(level.Attributes["id"].Value, i++);
-                        abnormalSetting.Add(
-                            new AbnormalDetail(Convert.ToInt32(level.Attributes["id"].Value),
-                                                 level.Attributes["name"].Value, level.Attributes["color"].Value));
+                    idxAbnormalSetting.Add(level.Attributes["id"].Value, i++);
+                    abnormalSetting.Add(
+                        new AbnormalDetail(Convert.ToInt32(level.Attributes["id"].Value),
+                                             level.Attributes["name"].Value, level.Attributes["color"].Value));
                 }
             }
             catch (Exception ex)

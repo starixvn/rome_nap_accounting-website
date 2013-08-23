@@ -1,12 +1,9 @@
 ﻿using System;
+using System.Configuration;
 using DNAide.Data;
-using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
-using Microsoft.Practices.EnterpriseLibrary.Data;
 using Microsoft.Practices.EnterpriseLibrary.Data.Sql;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
-using System.Data.SqlClient;
-using System.Configuration;
 
 /// <summary>
 /// Summary description for DataAccess
@@ -28,7 +25,7 @@ namespace Sunplus.Accounting.DataAccess
             Entity = 4
         }
 
-        #endregion
+        #endregion DAOClient enum
 
         #region DataSource enum
 
@@ -40,7 +37,7 @@ namespace Sunplus.Accounting.DataAccess
             Oracle = 4
         }
 
-        #endregion
+        #endregion DataSource enum
 
         protected static string _AdoNet = "AdoNet";
         protected static string _Linq = "Linq";
@@ -49,6 +46,7 @@ namespace Sunplus.Accounting.DataAccess
 
         //Data Source
         protected static string _SqlServer = "SqlServer";
+
         protected static string _Access = "Access";
         protected static string _DB2 = "DB2";
         protected static string _Oracle = "Oracle";
@@ -102,11 +100,9 @@ namespace Sunplus.Accounting.DataAccess
 
         protected SqlDatabase GetDatabase(string dbName, bool isEncrypted)
         {
-            var db = isEncrypted ? new SqlDatabase(ConString(dbName)) :  new SqlDatabase(ConfigurationManager.ConnectionStrings[dbName].ConnectionString);
+            var db = isEncrypted ? new SqlDatabase(ConString(dbName)) : new SqlDatabase(ConfigurationManager.ConnectionStrings[dbName].ConnectionString);
             return db;
-
         }
-                     
 
         protected static string ConString(string dbtype)
         {
@@ -180,7 +176,6 @@ namespace Sunplus.Accounting.DataAccess
             return sps != null ? sps[aliasName] : null;
         }
 
-
         protected virtual StoreProcedureElement GetStoreProcedure(ReportSession.StoreCollection storeCollection, string aliasName)
         {
             var sps = ReportSession.Instance[storeCollection];
@@ -205,13 +200,11 @@ namespace Sunplus.Accounting.DataAccess
             return sps != null ? sps[aliasName] : null;
         }
 
-
         protected virtual StoreProcedureElement GetStoreProcedure(BetAggregatorSection.StoreCollection storeCollection, string aliasName)
         {
             var sps = BetAggregatorSection.Instance[storeCollection];
             return sps != null ? sps[aliasName] : null;
         }
-
 
         protected virtual StoreProcedureElement GetStoreProcedure(BetListSection.StoreCollection storeCollection, string aliasName)
         {

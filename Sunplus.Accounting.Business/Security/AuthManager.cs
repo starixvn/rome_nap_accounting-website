@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Web;
 using System.Web.Security;
 using DNAide.Core;
@@ -10,9 +9,7 @@ using DNAide.Data;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.DataAccess.IBCDLL;
-using Sunplus.Core.LoggingLib;
 
 //using Sunplus.Core.LoggingLib;
 
@@ -47,7 +44,7 @@ namespace Sunplus.Accounting.Business.Security
             catch (Exception ex)
             {
                 //Logs.Write(ex.Message);
-                
+
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }

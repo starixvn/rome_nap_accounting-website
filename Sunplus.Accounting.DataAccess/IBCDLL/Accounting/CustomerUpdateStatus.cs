@@ -2,19 +2,15 @@
 using System.Collections;
 using DNAide.Core;
 using DNAide.Data;
-
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Entities;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Entities;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
     using Fanex.Data;
 
-    public sealed class CustomerUpdateStatus:DataAccess
+    public sealed class CustomerUpdateStatus : DataAccess
     {
         private StoreProcedureElement GetCustomerStoreProcedure(string aliasName)
         {
@@ -62,8 +58,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
-
         }
+
         public static void CustomerUpdateAutoMPT(int accid, int custid, bool isEnabled, string Ip)
         {
             try
@@ -81,25 +77,24 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 {
                     objDB.AssignParamValues(param);
                     objDB.ExecuteNonQuery();
-                    
+
                     if (CastAide.AsInt32(objDB.GetParameterValue("errcode")) > 0)
                     {
                         throw new AccException(CastAide.AsString(objDB.GetParameterValue("errmsg")));
                     }
                 }
-                
             }
             catch (AccException accException)
             {
                 throw accException;
             }
             catch (Exception ex)
-            {                
+            {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
-
         }
+
         /// <summary>
         /// Update suspended status for customer
         /// sp: Acc_CustomerUpdClosed
@@ -111,7 +106,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         public static void CustomerUpdateSuspend(int accid, int custid, bool isSpecial, string Ip)
         {
             try
-            {               
+            {
                 using (ObjectDb objDB = new ObjectDb("Acc_CustomerUpdSuspended"))
                 {
                     var param = new Hashtable();
@@ -137,7 +132,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 throw accException;
             }
             catch (Exception ex)
-            {                
+            {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
@@ -180,7 +175,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
@@ -221,7 +215,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 throw accException;
             }
             catch (Exception ex)
-            {                
+            {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
@@ -262,7 +256,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                         throw new AccException(string.Format("{0}", objdb.GetParameterValue("errmsg")));
                     isBA = CastAide.AsInt32(objdb.GetParameterValue("isba")) == 0 ? false : true;
                 }
-                
             }
             catch (AccException accException)
             {
@@ -275,11 +268,10 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             return isBA;
         }
 
-
         /// <summary>
         /// Update disableHR status for customer
         /// sp: Acc_CustomerUpdDisableHR
-        /// @phuong.nguyen 
+        /// @phuong.nguyen
         /// Create date: <2008-10-22>
         /// </summary>
         ///<param name="accid"></param>
@@ -307,9 +299,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
 
@@ -344,9 +334,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
 
@@ -360,7 +348,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         public static void CustomerUpdateDisabledBingoGame(int accid, int custid, bool disabledBingo, string Ip, bool isEnabledDownline, bool isSync)
         {
             try
-            {               
+            {
                 using (ObjectDb objDb = new ObjectDb("Acc_UpdBingoStatus", 600))
                 {
                     Hashtable param = new Hashtable();
@@ -430,11 +418,11 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
         }
+
         /// <summary>
         /// Update Limit Per IP
         /// @huynguyen
@@ -482,7 +470,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <summary>
         /// Update disableFinancial status for customer
         /// sp: Acc_CustomerUpdDisableFincancial
-        /// @phuong.nguyen 
+        /// @phuong.nguyen
         /// Create date: <2008-10-22>
         /// </summary>
         ///<param name="accid"></param>
@@ -510,9 +498,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
 
@@ -550,13 +536,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 throw accException;
             }
             catch (Exception ex)
-            {                
+            {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
-
             }
-            
         }
+
         public static void CustomerUpdateSelectedBetting(int accid, int custid, bool selectedBetting, string Ip, bool isUpdDownline)
         {
             try
@@ -586,7 +571,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
@@ -598,7 +582,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         public static Result UpdateLevelDangerous(int custId, int updateDownline, int dangerType, int dangerLevel, int userId, string ip)
         {
             try
-            {               
+            {
                 using (ObjectDb objdb = new ObjectDb("Acc_CustomerUpdDangercust", 300))
                 {
                     var param = new Hashtable();
@@ -623,7 +607,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return new Result()
                 {
@@ -637,7 +620,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
             try
             {
-                
                 using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableLiveCS", 300))
                 {
                     Hashtable param = new Hashtable();
@@ -681,7 +663,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 param.Add("disabledownlines", isDisableDownlines);
                 param.Add("errcode", 0);
                 param.Add("errmsg", string.Empty);
-                
+
                 using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableVS", 120))
                 {
                     db.AssignParamValues(param);
@@ -690,7 +672,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     if (CastAide.AsInt32(db.GetParameterValue("errcode")) > 0)
                         throw new AccException(CastAide.AsString(db.GetParameterValue("errmsg")));
                 }
-                
             }
             catch (AccException accException)
             {
@@ -699,7 +680,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
-
             }
         }
     }

@@ -27,8 +27,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report.Licensee
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        LicenseeDTO SelReportByLicensee(int LicenseeID, int Currency, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter,int excludeTest,int BAFilter, int pageIndex, int pageSize, int fromCache);
-
+        LicenseeDTO SelReportByLicensee(int LicenseeID, int Currency, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter, int excludeTest, int BAFilter, int pageIndex, int pageSize, int fromCache);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
@@ -36,8 +35,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report.Licensee
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        LicenseeDTO SelReportByLicenseeDetail_Ag(int LicenseeID, int Currency, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter,int excludeTest,int BAFilter, int pageIndex, int pageSize, int fromCache);
-
+        LicenseeDTO SelReportByLicenseeDetail_Ag(int LicenseeID, int Currency, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter, int excludeTest, int BAFilter, int pageIndex, int pageSize, int fromCache);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
@@ -49,7 +47,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report.Licensee
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        LicenseeDTOV2 SelReportLicenseeDetail_AgV2(int LicenseeID, int Currency, int CustId, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG,int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache);
+        LicenseeDTOV2 SelReportLicenseeDetail_AgV2(int LicenseeID, int Currency, int CustId, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
@@ -57,7 +55,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report.Licensee
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        LicenseeDTO SelReportByLicenseeDetail(int LicenseeID, int Currency, int baseCurrency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter,int excludeTest,int BAFilter, int pageIndex, int pageSize, int fromCache);
+        LicenseeDTO SelReportByLicenseeDetail(int LicenseeID, int Currency, int baseCurrency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter, int excludeTest, int BAFilter, int pageIndex, int pageSize, int fromCache);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
@@ -80,6 +78,4 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report.Licensee
         void PeakExport2Excel(string siteName, string fromDate, string toDate);
     }
 
-
-   
 }

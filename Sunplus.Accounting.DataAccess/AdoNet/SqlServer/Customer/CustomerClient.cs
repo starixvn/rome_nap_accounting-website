@@ -9,7 +9,7 @@ using Sunplus.Accounting.DataAccess.Provider.Customer;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Customer
 {
-    public class CustomerClient :CustomerProvider
+    public class CustomerClient : CustomerProvider
     {
         public override DbResult GetDownLineList(int custid, int pageSize, int pageIndex)
         {
@@ -33,7 +33,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Customer
             return rs.ResultSet.Tables[0].Rows;
         }
 
-        public class SpConfig: DataAccess
+        public class SpConfig : DataAccess
         {
             public Core.Configurations.StoreProcedureElement GetStoreProcedure(string aliasName)
             {

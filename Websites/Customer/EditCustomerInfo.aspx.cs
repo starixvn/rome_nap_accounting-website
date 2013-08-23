@@ -1,28 +1,20 @@
 using System;
 using System.Data;
+using System.Text;
 using System.Web.UI;
+using DNAide.Data;
 using DNAide.Web;
-using Sunplus.Accounting.Core.Common;
+using IBCUtils;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web.Controls;
-using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
-using IBCUtils.Web;
-using IBCUtils;
-using System.Text;
-using DNAide.Data;
-
-using DNAide.Core;
-
-using Sunplus.Accounting.Core.Web;
 
 public partial class Customer_EditCustomerInfo : RequiredAuthorizationPage
 {
-
-
     public string username = "";
+
     protected void Page_Load(object sender, EventArgs e)
     {
         Page.Title = "Edit Customer Info";
@@ -31,6 +23,7 @@ public partial class Customer_EditCustomerInfo : RequiredAuthorizationPage
             EditCustInfoContentHtml.Text = GenEditCustInfoContent();
         }
     }
+
     private string GenEditCustInfoContent()
     {
         string strHtml = string.Empty;
@@ -44,7 +37,7 @@ public partial class Customer_EditCustomerInfo : RequiredAuthorizationPage
                 DataTable tbl = ds.ResultSet.Tables[0];
                 if (tbl.Rows.Count > 0)
                 {
-                    if (WebSettings.disableCS && DNAide.Core.CastAide.AsBoolean(tbl.Rows[0]["synccasino"],false))
+                    if (WebSettings.disableCS && DNAide.Core.CastAide.AsBoolean(tbl.Rows[0]["synccasino"], false))
                     {
                         return AlertMessage.GetMsg(string.Format(Resources.ErrorMsg.error_LockUpdateStatus, "USER INFO"), AlertMessage.MsgType.Error);
                     }
@@ -74,7 +67,7 @@ public partial class Customer_EditCustomerInfo : RequiredAuthorizationPage
                     TemplateHandler.Assign(ref strHtml, "{hidSynCS}", tbl.Rows[0]["synccasino"].ToString());
                     TemplateHandler.Assign(ref strHtml, "{hidCur}", tbl.Rows[0]["exchangeid"].ToString());
                     if (FormatHandler.GetBool(tbl.Rows[0]["important"]))
-                    {                        
+                    {
                         TemplateHandler.Assign(ref strHtml, "{vchecked}", "checked");
                     }
                     else
@@ -87,13 +80,13 @@ public partial class Customer_EditCustomerInfo : RequiredAuthorizationPage
                 }
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             LogExtensions.ExceptionHandler(ex);
-
         }
         return strHtml;
     }
+
     private string GenListData(int from, int to, int currrent)
     {
         StringBuilder listContent = new StringBuilder();

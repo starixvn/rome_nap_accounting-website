@@ -1,16 +1,16 @@
-﻿ /// <summary>
+﻿/// <summary>
 /// Summary description for LeagueWLSporttypeRow
 /// </summary>
 
 namespace BLL.Report.LeagueWL
 {
-
     #region LeagueWLRow
 
     public class LeagueWLRow
     {
         private string _Header = string.Empty;
         private string _matchcode = string.Empty;
+
         public int sporttype { get; set; }
 
         public int leagueid { get; set; }
@@ -33,7 +33,7 @@ namespace BLL.Report.LeagueWL
                 if (Turnover == 0)
                     rs = 0;
                 else
-                    rs = (LineTotal/Turnover)*100;
+                    rs = (LineTotal / Turnover) * 100;
 
                 return rs;
             }
@@ -64,5 +64,5 @@ namespace BLL.Report.LeagueWL
         public bool IsNeutral { get; set; }
     }
 
-    #endregion
+    #endregion LeagueWLRow
 }

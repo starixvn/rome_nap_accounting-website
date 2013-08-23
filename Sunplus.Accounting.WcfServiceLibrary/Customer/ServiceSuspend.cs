@@ -1,12 +1,11 @@
-﻿using System;
-using System.ServiceModel.Activation;
+﻿using System.ServiceModel.Activation;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.Customer
 {
     /// <summary>
     /// Summary description for ServiceCustomerList
     /// </summary>
-    /// 
+    ///
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class ServiceSuspend : IServiceSuspend
     {

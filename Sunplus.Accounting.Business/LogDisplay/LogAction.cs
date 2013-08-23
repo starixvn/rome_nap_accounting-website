@@ -6,7 +6,6 @@ using DNAide.Web;
 
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Web;
-using Sunplus.Core.LoggingLib;
 using Sunplus.Shared.ViewLogLib;
 using Sunplus.Shared.ViewLogLib.Model;
 using Sunplus.Shared.ViewLogLib.ServiceLayger;
@@ -15,7 +14,6 @@ using Sunplus.Shared.ViewLogLib.ServiceLayger;
 //using IBC.Shared.ViewLogLib.ServiceLayger;
 //using IBC.Shared.ViewLogLib.Model;
 //using Sunplus.Core.LoggingLib;
-
 
 namespace Sunplus.Accounting.Business.LogDisplay
 {
@@ -77,13 +75,13 @@ namespace Sunplus.Accounting.Business.LogDisplay
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return ex.Message;
             }
 
             return string.Empty;
         }
+
         public static string GetActionTypeContent()
         {
             try
@@ -125,12 +123,12 @@ namespace Sunplus.Accounting.Business.LogDisplay
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return ex.Message;
             }
             return string.Empty;
         }
+
         public static string GetActionTypeOptions()
         {
             var stringBuilder = new StringBuilder();
@@ -152,27 +150,34 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 case LanguageCode.EN:
                     actionName = logAction.ActionNameEN;
                     break;
+
                 case LanguageCode.CH:
                     actionName = logAction.ActionNameCH;
                     break;
+
                 case LanguageCode.CS:
                     actionName = logAction.ActionNameCS;
                     break;
+
                 case LanguageCode.JP:
                     actionName = logAction.ActionNameJP;
                     break;
+
                 case LanguageCode.TH:
                     actionName = logAction.ActionNameTH;
                     break;
+
                 case LanguageCode.KO:
                     actionName = logAction.ActionNameKO;
                     break;
+
                 case LanguageCode.IT:
                     actionName = logAction.ActionNameIT;
                     break;
             }
             return actionName;
         }
+
         public static string SetLanguageTitle(string templateBody, LanguageCode languageCode)
         {
             switch (languageCode)
@@ -180,21 +185,27 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 case LanguageCode.EN:
                     TemplateHandler.Assign(ref templateBody, "{lang}", "English");
                     break;
+
                 case LanguageCode.CH:
                     TemplateHandler.Assign(ref templateBody, "{lang}", "Chinese Traditional");
                     break;
+
                 case LanguageCode.CS:
                     TemplateHandler.Assign(ref templateBody, "{lang}", "Chinese Simplified");
                     break;
+
                 case LanguageCode.JP:
                     TemplateHandler.Assign(ref templateBody, "{lang}", "Japanese");
                     break;
+
                 case LanguageCode.TH:
                     TemplateHandler.Assign(ref templateBody, "{lang}", "Thai");
                     break;
+
                 case LanguageCode.KO:
                     TemplateHandler.Assign(ref templateBody, "{lang}", "Korean");
                     break;
+
                 case LanguageCode.IT:
                     TemplateHandler.Assign(ref templateBody, "{lang}", "Italian");
                     break;
@@ -202,6 +213,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
             return templateBody;
         }
+
         public static string GetActionTypeEditForm(string id)
         {
             int actionTypeID = CastAide.AsInt32(id);
@@ -226,12 +238,12 @@ namespace Sunplus.Accounting.Business.LogDisplay
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return ex.Message;
             }
             return string.Empty;
         }
+
         public static string GetActionEditForm(string aID)
         {
             int actionID = CastAide.AsInt32(aID);
@@ -294,7 +306,6 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     }
                     TemplateHandler.Assign(ref template, "{ActionTypeOptions}", stringBuilder.ToString());
 
-
                     return template;
                 }
                 else
@@ -307,6 +318,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             }
             return string.Empty;
         }
+
         public static string GetActionTypeName(List<LogActionType> list, LanguageCode languageCode, int id)
         {
             string logActionTypeName = string.Empty;
@@ -323,21 +335,27 @@ namespace Sunplus.Accounting.Business.LogDisplay
                             case LanguageCode.EN:
                                 logActionTypeName = l.ActionTypeNameEN;
                                 break;
+
                             case LanguageCode.CH:
                                 logActionTypeName = l.ActionTypeNameCH;
                                 break;
+
                             case LanguageCode.CS:
                                 logActionTypeName = l.ActionTypeNameCS;
                                 break;
+
                             case LanguageCode.JP:
                                 logActionTypeName = l.ActionTypeNameJP;
                                 break;
+
                             case LanguageCode.TH:
                                 logActionTypeName = l.ActionTypeNameTH;
                                 break;
+
                             case LanguageCode.KO:
                                 logActionTypeName = l.ActionTypeNameKO;
                                 break;
+
                             case LanguageCode.IT:
                                 logActionTypeName = l.ActionTypeNameIT;
                                 break;
@@ -349,6 +367,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             }
             return string.Empty;
         }
+
         public static LanguageCode ToLanguageCode(string langKey)
         {
             switch (langKey)

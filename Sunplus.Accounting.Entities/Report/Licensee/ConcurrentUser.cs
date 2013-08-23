@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Sunplus.Accounting.Entities.Report.Deposit
 {
@@ -11,10 +9,10 @@ namespace Sunplus.Accounting.Entities.Report.Deposit
     public class ConcurrentUser
     {
         [DataMember]
-        public string  Date { get; set; }
+        public string Date { get; set; }
 
         [DataMember]
-        public int TotalUser { get; set;}
+        public int TotalUser { get; set; }
     }
 
     [Serializable]

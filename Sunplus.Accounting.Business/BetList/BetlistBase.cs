@@ -5,7 +5,6 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using DNAide.Core;
-using DNAide.Data;
 using DNAide.Utils;
 using DNAide.Web;
 using Fanex.Tarus.LiveCasino.Entities.Betlist;
@@ -15,8 +14,8 @@ using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
-//using Fanex.Tarus.LiveCasino.Entities.Betlist;
 
+//using Fanex.Tarus.LiveCasino.Entities.Betlist;
 
 //using Sunplus.Core.LoggingLib;
 
@@ -28,6 +27,7 @@ namespace Sunplus.Accounting.Business.BetList
     public abstract class BetlistBase : BaseManager
     {
         #region global variables
+
         protected string _NoShowOdds = "-";
 
         protected string _OddsTypeName;
@@ -91,9 +91,10 @@ namespace Sunplus.Accounting.Business.BetList
         protected int _liveindicator = 0;
         protected string _showtime = "";
 
-        #endregion
+        #endregion global variables
 
         public abstract string RenderHTML(Hashtable input);
+
         public virtual void Export2Excel(Hashtable input)
         {
             throw new NotImplementedException();
@@ -115,15 +116,17 @@ namespace Sunplus.Accounting.Business.BetList
                 case 20:
                 case 22: //Next Goal bet type
                 case 21: //Next Goal bet type
-                case 1201://HDP               
+                case 1201://HDP
                     GenHdpRow(ref rowHtml);
                     GenHdpEvent(ref eventItem, _home, _away, _betteam, listType, false);
                     break;
+
                 case 2:
                 case 12:
                     GenOERow(ref rowHtml);
                     GenOEEvent(ref eventItem, _home, _away, listType, false);
                     break;
+
                 case 3:
                 case 8:
                 case 1203:
@@ -131,22 +134,26 @@ namespace Sunplus.Accounting.Business.BetList
                     GenOURow(ref rowHtml);
                     GenOUEvent(ref eventItem, _home, _away, listType, false);
                     break;
+
                 case 4:
                 case 30:
                 case 1204:
                     GenCSRow(ref rowHtml);
                     GenCSEvent(ref eventItem, _home, _away, listType, false);
                     break;
+
                 case 5://FT 1x2
-                case 1205://FT 1x2                
+                case 1205://FT 1x2
                     Gen1x2Row(ref rowHtml, true);
                     Gen1x2Event(ref eventItem, _home, _away, listType, false, true);
                     break;
+
                 case 15://1st 1x2
 
                     Gen1x2Row(ref rowHtml, false);
                     Gen1x2Event(ref eventItem, _home, _away, listType, false, false);
                     break;
+
                 case 6:
                 case 14:
                 case 16:
@@ -154,9 +161,11 @@ namespace Sunplus.Accounting.Business.BetList
                     GenTGRow(ref rowHtml);
                     GenTGEvent(ref eventItem, _home, _away, listType, false);
                     break;
+
                 case 10:
                     GenOutrightRow(ref eventItem, listType);
                     break;
+
                 case 121:
                 case 122:
                 case 123:
@@ -171,12 +180,14 @@ namespace Sunplus.Accounting.Business.BetList
                 case 43:
                     GenHREvent(ref eventItem);
                     break;
+
                 case 9:
                     //GenMPRow(ref eventItem, listType);
                     eventItem = "<div id='spEvent_" + _refno +
                                 "' class='hide'></div><a class='lnk' href='javascript:void(\"\");' onclick='showMP(\"" +
                                 _refno + "\",\"" + listType + "\");' id='hidden0'>Mix Parlay</a>";
                     break;
+
                 case 51: //Betting of Finance
                 case 52:
                 case 53:
@@ -192,6 +203,7 @@ namespace Sunplus.Accounting.Business.BetList
                     _home = CacheRef.GetFncIndexName(row["homeid"]);
                     GenFinancialRow(ref eventItem);
                     break;
+
                 case 71:
                 case 72:
                 case 73:
@@ -201,6 +213,7 @@ namespace Sunplus.Accounting.Business.BetList
                     //GenCasino(ref eventItem, bettype, CastAide.AsString(row["betid"]));
                     GenCasino(ref eventItem, _bettype, _transId);
                     break;
+
                 case 81://Number Game
                 case 82:
                 case 83:
@@ -213,31 +226,40 @@ namespace Sunplus.Accounting.Business.BetList
                 case 90:
                     GenEvent_NumberGame(ref eventItem, listType, false);
                     break;
+
                 case 24:
                 case 1224:
                     GenDoubleChanceEvent(ref eventItem, listType, false);
                     break;
+
                 case 25:
                     GenDrawNoBetEvent(ref eventItem, listType, false);
                     break;
+
                 case 26:
                     GenBothOneNeitherEvent(ref eventItem, listType, false);
                     break;
+
                 case 27:
                     GenToWinToNilEvent(ref eventItem, listType, false);
                     break;
+
                 case 13:
                     GenCleanSheetEvent(ref eventItem, listType, false);
                     break;
+
                 case 28:
                     GenThreeWayHandicap(ref eventItem, listType, false);
                     break;
+
                 case 29://Combination
                     GenEventCombination(ref eventItem, listType);
                     break;
+
                 case 1000:
                     GenP2PGames(ref eventItem);
                     break;
+
                 case 1301:
                 case 1302:
                 case 1303:
@@ -274,12 +296,12 @@ namespace Sunplus.Accounting.Business.BetList
                 case 1334:
                     GenEvenSportingSolutions(ref eventItem, _home, _away, _betteam);
                     break;
+
                 default:
                     break;
             }
             //if (_bettype == 1101 || _bettype == 1102 || _bettype == 1103)
             //{
-
             //    TemplateHandler.Assign(ref rowHtml, "{sporttype}",_sportypeName);
             //    string leagueName = _bettypeName + " " + _showtime;
             //    TemplateHandler.Assign(ref rowHtml, "{leaguename}", leagueName);
@@ -291,8 +313,6 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref eventItem, "{MoreBetInfo}", string.Empty);
             TemplateHandler.Assign(ref rowHtml, "{Event}", eventItem);
             //}
-
-
         }
 
         private void GenEvenSportingSolutions(ref string eventItem, string _home, string _away, string _betteam)
@@ -308,7 +328,6 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref eventItem, "{sporttype}", _sportypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", _leagueName);
         }
-
 
         private void GenHomeAwayDrawNoBet(ref string eventItem, int bettype, bool isMP)
         {
@@ -352,7 +371,6 @@ namespace Sunplus.Accounting.Business.BetList
 
         protected void GenEventLiveCasino(ref string eventItem, List<BetlistEvent> betlistEvent, int listType)
         {
-
             string Event = "";
             for (int i = 0; i < betlistEvent.Count; i++)
             {
@@ -364,6 +382,7 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref eventItem, "{bettype}", _bettypeName);
             TemplateHandler.Assign(ref eventItem, "{showtime}", _showtime);
         }
+
         protected void GenEventCombination(ref string eventItem, int listType)
         {
             var strCombinationName = CacheRef.GetCombinationName(_betteam);
@@ -391,6 +410,7 @@ namespace Sunplus.Accounting.Business.BetList
         {
             return "<span class='style_12BB'><b> @ " + IBCUtils.FormatHandler.FormatNumber30(_odds) + "</b></span>";
         }
+
         protected void GenHdpRow(ref string row)
         {
             string liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty : "<br />@" + _liveHomeScore + "-" + _liveAwayScore;
@@ -412,7 +432,6 @@ namespace Sunplus.Accounting.Business.BetList
             }
             TemplateHandler.Assign(ref row, "{color}", "blue");
         }
-
 
         protected void GenHdpEvent(ref string eventItem, string home, string away, string betteam, int listType, bool isMP)
         {
@@ -437,7 +456,6 @@ namespace Sunplus.Accounting.Business.BetList
             {
                 choice = string.Format("<s>{0}</s>", choice.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
                 Event = string.Format("<s>{0}</s>", Event);
-
             }
             TemplateHandler.Assign(ref eventItem, "{choice}", choice);
             TemplateHandler.Assign(ref eventItem, "{bettype}", _bettypeName);
@@ -446,8 +464,6 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref eventItem, "{leaguename}", _leagueName);
         }
 
-
-
         //Odd/Even
         protected void GenOERow(ref string row)
         {
@@ -455,6 +471,7 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref row, "{Choice}", ((_betteam == "h") ? "Odd" : "Even"));
             TemplateHandler.Assign(ref row, "{color}", "blue");
         }
+
         protected void GenOEEvent(ref string eventItem, string home, string away, int listType, bool isMP)
         {
             var choice = string.Empty;
@@ -483,6 +500,7 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref eventItem, "{sporttype}", _sportypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", _leagueName);
         }
+
         //Over/Under
         protected void GenOURow(ref string row)
         {
@@ -491,6 +509,7 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref row, "{Choice}", ((_betteam == "h") ? "Over" : "Under"));
             TemplateHandler.Assign(ref row, "{color}", "blue");
         }
+
         protected void GenOUEvent(ref string eventItem, string home, string away, int listType, bool isMP)
         {
             //string liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty : " <span class='bl-bettype'>[" + _liveHomeScore + "-" + _liveAwayScore + "]</span>";
@@ -515,16 +534,15 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref eventItem, "{leaguename}", _leagueName);
         }
 
-
         //Number Game
         protected void GenEvent_NumberGame(ref string eventItem, int listType, bool isMP)
         {
-
             var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty :
                     string.Format(" [{0}]", _betId);
             var choice = string.Empty;
 
             #region check bettype & apply betty name
+
             if (_bettype == 81 || _bettype == 82 || _bettype == 85)
             {
                 var maxBall = (double.Parse(Bingo.Core.BingoSettings.MaxBall.ToString()) / 2);
@@ -543,30 +561,37 @@ namespace Sunplus.Accounting.Business.BetList
                 choice = _betteam.ToLower() == "h" ? "HIGH " : "LOW ";
                 choice += liveScore;
             }
-            else if (_bettype == Constants.BetType.Warrior)//warrior            
+            else if (_bettype == Constants.BetType.Warrior)//warrior
                 choice = _betteam.ToLower() == "h" ? "2nd ball to win " : "3rd ball to win ";
             else if (_bettype == Constants.BetType.NextCombo)//next combo
             {
                 #region number group - bettypes
+
                 switch (_betteam.ToLower())
                 {
                     case "1:1":
                         choice = "Over/Odd ";
                         break;
+
                     case "1:2":
                         choice = "Over/Even ";
                         break;
+
                     case "2:1":
                         choice = "Under/Odd ";
                         break;
+
                     case "2:2":
                         choice = "Under/Even ";
                         break;
+
                     default:
                         choice = "Over/Odd ";
                         break;
                 }
-                #endregion
+
+                #endregion number group - bettypes
+
                 var maxBall = (double.Parse(Bingo.Core.BingoSettings.MaxBall.ToString()) / 2);
                 choice += string.IsNullOrEmpty(_liveStyle) ? string.Empty : string.Format("<span class='bl-bettype'>{0}</span>", maxBall);
                 choice += liveScore;
@@ -591,7 +616,8 @@ namespace Sunplus.Accounting.Business.BetList
                 }
                 choice += liveScore;
             }
-            #endregion
+
+            #endregion check bettype & apply betty name
 
             TemplateHandler.Assign(ref eventItem, "{choice}", choice);
 
@@ -604,12 +630,14 @@ namespace Sunplus.Accounting.Business.BetList
                 case 90:
                     bettypeFormat = _bettypeName;
                     break;
+
                 case 81:
                 case 82:
                 case 83:
                 case 84:
                     bettypeFormat = (string.IsNullOrEmpty(_liveStyle) ? string.Empty : "Next ") + _bettypeName;
                     break;
+
                 default:
                     bettypeFormat = (string.IsNullOrEmpty(_liveStyle) ? "FT. " : "Next ") + _bettypeName;
                     break;
@@ -630,6 +658,7 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref row, "{Hdp_Score}", IBCUtils.FormatHandler.FormatNumber1(_hdp1) + ":" + IBCUtils.FormatHandler.FormatNumber1(_hdp2));
             TemplateHandler.Assign(ref row, "{color}", "black");
         }
+
         protected void GenCSEvent(ref string eventItem, string home, string away, int listType, bool isMP)
         {
             var Event = home + " -VS- " + away;
@@ -641,7 +670,6 @@ namespace Sunplus.Accounting.Business.BetList
                 choice = (_betteam == "4:0" || _betteam == "0:4") ? _betteam + " UP" : _betteam;
             }
             if (isMP) choice += oddMP();
-
 
             if (_statusId == 102)
             {
@@ -658,6 +686,7 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref eventItem, "{sporttype}", _sportypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", _leagueName);
         }
+
         //one x two
         protected void Gen1x2Row(ref string row, bool isFT)
         {
@@ -665,6 +694,7 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref row, "{Hdp_Score}", "");
             TemplateHandler.Assign(ref row, "{color}", "black");
         }
+
         protected void Gen1x2Event(ref string eventItem, string home, string away, int listType, bool isMP, bool isFT)
         {
             var Event = home + " -VS- " + away;
@@ -689,6 +719,7 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref eventItem, "{sporttype}", _sportypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", _leagueName);
         }
+
         //Total goal
         protected void GenTGRow(ref string row)
         {
@@ -696,6 +727,7 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref row, "{Hdp_Score}", "-");
             TemplateHandler.Assign(ref row, "{color}", "black");
         }
+
         protected void GenTGEvent(ref string eventItem, string home, string away, int listType, bool isMP)
         {
             string choice = _betteam;
@@ -729,6 +761,7 @@ namespace Sunplus.Accounting.Business.BetList
         }
 
         #region GenCasino -- Simon:20090508
+
         protected void GenCasino(ref string eventItem, int betType, string sessionid)
         {
             string choice = "";
@@ -752,7 +785,8 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.RemoveBlock(ref eventItem, "<span class=\"r\">{MasterCommRate}%</span><br/>");
             TemplateHandler.RemoveBlock(ref eventItem, "<span class=\"r\">{AgentCommRate}%</span><br/>");
         }
-        #endregion
+
+        #endregion GenCasino -- Simon:20090508
 
         //phuong.nguyen, get HR
         protected void GenHREvent(ref string eventItem)
@@ -764,20 +798,19 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref eventItem, "{sporttype}", _sportypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", _leagueName);
             TemplateHandler.Assign(ref eventItem, "style_11B", "hidden");
-
         }
-        //gen FI 
+
+        //gen FI
         protected void GenFinancialRow(ref string eventItem)
         {
             //@Update App_GlobalResources lblFIPut=lblUnder; lblFICall=lblOver
             string choice = GetFIBettypeName(_betteam, _bettype) + " <font color='#606060'>" + IBCUtils.FormatHandler.FormatNumber4(_hdp1) + "</font>";
             TemplateHandler.Assign(ref eventItem, "{choice}", choice);
             TemplateHandler.Assign(ref eventItem, "{bettype}", _bettypeName);
-            TemplateHandler.Assign(ref eventItem, "{event}", _home);//matchcode as FI Index        
+            TemplateHandler.Assign(ref eventItem, "{event}", _home);//matchcode as FI Index
             TemplateHandler.Assign(ref eventItem, "{sporttype}", _sportypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", _leagueName);
             TemplateHandler.Assign(ref eventItem, "bl_match", "hidden");
-
         }
 
         public string GenMPRow(string refno, int listType)
@@ -785,6 +818,7 @@ namespace Sunplus.Accounting.Business.BetList
             try
             {
                 #region DNAide
+
                 string eventTpl = WebUtils.LoadTemplate("BetList\\Event2.htm");
 
                 var ds = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.Betlist.BetList_SelMixParlay(refno);
@@ -840,62 +874,76 @@ namespace Sunplus.Accounting.Business.BetList
                                 GenHdpEvent(ref mpItem, mpHome, mpAway, mpBetteam, listType, true);
                                 //   moreBetInfo += "<br>" + ((mpBetteam == "h") ? mpHome : mpAway) + "@" + FormatHandler.FormatNumber3(mpHdp) + "/" + FormatHandler.FormatNumber3(mpOdds);
                                 break;
+
                             case 2:
                             case 12:
                                 GenOEEvent(ref mpItem, mpHome, mpAway, listType, true);
                                 //  moreBetInfo += "<br>" + ((mpBetteam == "h") ? "Odd" : "Even") + "@" + FormatHandler.FormatNumber40(mpOdds);
                                 break;
+
                             case 3:
                             case 8:
                             case 1203:
                                 GenOUEvent(ref mpItem, mpHome, mpAway, listType, true);
                                 // moreBetInfo += "<br>" + ((mpBetteam == "h") ? "Over" : "Under") + "@" + FormatHandler.FormatNumber3(mpHdp1) + "/" + FormatHandler.FormatNumber3(mpOdds);
                                 break;
+
                             case 4:
                             case 14:
                             case 30:
                                 GenCSEventMP(ref mpItem, mpHome, mpAway, mpBettype, listType, true);
                                 //  moreBetInfo += "<br>" + FormatHandler.FormatNumber3(mpHdp1) + ":" + FormatHandler.FormatNumber3(mpHdp1) + "/" + FormatHandler.FormatNumber3(mpOdds);
                                 break;
+
                             case 5:
                             case 1205:
                                 Gen1x2Event(ref mpItem, mpHome, mpAway, listType, true, true);
                                 break;
+
                             case 15:
 
                                 Gen1x2Event(ref mpItem, mpHome, mpAway, listType, true, false);
                                 //  moreBetInfo += "<br>" + mpBetteam + "@" + FormatHandler.FormatNumber3(mpOdds);
                                 break;
+
                             case 6:
                             case 16:
                             case 1206:
                                 GenTGEvent(ref mpItem, mpHome, mpAway, listType, true);
                                 //  moreBetInfo += "<br>" + mpBetteam + "@" + FormatHandler.FormatNumber3(mpOdds);
                                 break;
+
                             case 24:
                             case 1224:
                                 GenDoubleChanceEvent(ref mpItem, listType, true);
                                 break;
+
                             case 25:
                                 GenDrawNoBetEvent(ref mpItem, listType, true);
                                 break;
+
                             case 26:
                                 GenBothOneNeitherEvent(ref mpItem, listType, true);
                                 break;
+
                             case 27:
                                 GenToWinToNilEvent(ref mpItem, listType, true);
                                 break;
+
                             case 28:
                                 GenThreeWayHandicap(ref mpItem, listType, true);
                                 break;
+
                             case 13:
                                 GenCleanSheetEvent(ref mpItem, listType, true);
                                 break;
+
                             case 121:
                             case 122:
                             case 123:
                                 GenHomeAwayDrawNoBet(ref mpItem, mpBettype, true);
                                 break;
+
                             default:
                                 mpItem = string.Empty;
                                 break;
@@ -920,7 +968,7 @@ namespace Sunplus.Accounting.Business.BetList
 
                 return eventItems;
 
-                #endregion
+                #endregion DNAide
             }
             catch (Exception ex)
             {
@@ -940,7 +988,6 @@ namespace Sunplus.Accounting.Business.BetList
                 choice = (_betteam == "4:0" || _betteam == "0:4") ? _betteam + " UP" : _betteam;
             }
             if (isMP) choice += oddMP();
-
 
             if (_statusId == 102)
             {
@@ -983,12 +1030,14 @@ namespace Sunplus.Accounting.Business.BetList
             var dateRange =
                 (from q in tblMaster.AsEnumerable().Cast<DataRow>() select q["winlostdate"]).Distinct().ToList();
 
-
             #region header
+
             TemplateHandler.Assign(ref container, "{header}", header);
-            #endregion
+
+            #endregion header
 
             #region body
+
             StringBuilder strBody = new StringBuilder();
             var winlostdate = DateTime.MinValue;
             decimal totalWin = 0;
@@ -1004,6 +1053,7 @@ namespace Sunplus.Accounting.Business.BetList
                 var isFirstRows = true;
 
                 #region won
+
                 foreach (DataRow rowMaster in selTrans)
                 {
                     totalWin += CastAide.AsDecimal(rowMaster["winlost"]);
@@ -1017,6 +1067,7 @@ namespace Sunplus.Accounting.Business.BetList
                     rowTemp = CastAide.AsString(row.Clone());
 
                     #region date
+
                     if (isFirstRows)
                     {
                         winlostdate = CastAide.AsDateTime(rowMaster["winlostdate"]);
@@ -1028,9 +1079,11 @@ namespace Sunplus.Accounting.Business.BetList
                     {
                         TemplateHandler.RemoveBlock(ref rowTemp, "wldate");
                     }
-                    #endregion
+
+                    #endregion date
 
                     #region event
+
                     var listRow = this.GetCombinationMPDetailRow(tblDetail, CastAide.AsInt32(rowMaster["serial"]));
                     List<string> lstEvent = new List<string>();
                     foreach (DataRow rowDetail in listRow)
@@ -1041,9 +1094,11 @@ namespace Sunplus.Accounting.Business.BetList
                         lstEvent.Add("<span>" + homename + " -vs- " + awayname + "</span>");
                     }
                     TemplateHandler.Assign(ref rowTemp, "{Event}", string.Join("<br/>", lstEvent.ToArray()));
-                    #endregion
+
+                    #endregion event
 
                     #region odds
+
                     if (status.ToLower().Contains("running"))
                     {
                         TemplateHandler.Assign(ref rowTemp, "{Odds}", "-");
@@ -1052,34 +1107,46 @@ namespace Sunplus.Accounting.Business.BetList
                     {
                         TemplateHandler.Assign(ref rowTemp, "{Odds}", CastAide.AsDouble(rowMaster["modds"]));
                     }
-                    #endregion
+
+                    #endregion odds
 
                     #region stake
+
                     TemplateHandler.Assign(ref rowTemp, "{Stake}", IBCUtils.FormatHandler.FormatNumber20(CastAide.AsDouble(rowMaster["stake"])));
-                    #endregion
+
+                    #endregion stake
 
                     #region win/lost
+
                     TemplateHandler.Assign(ref rowTemp, "{Win/Lost}", IBCUtils.FormatHandler.FormatNumber20((CastAide.AsDouble(rowMaster["winlost"]))));
                     TemplateHandler.Assign(ref rowTemp, "{wl-color}", "");
                     TemplateHandler.Assign(ref rowTemp, "{Comm}", IBCUtils.FormatHandler.FormatNumber20((CastAide.AsDouble(rowMaster["playercomm"]))));
-                    #endregion
+
+                    #endregion win/lost
 
                     #region status
+
                     TemplateHandler.Assign(ref rowTemp, "{Status}", status.ToUpper());
-                    #endregion
+
+                    #endregion status
+
                     //----------------------------------------------------
                     strBody.Append(rowTemp);
                 }
-                #endregion
+
+                #endregion won
 
                 #region lose
+
                 foreach (DataRow rowMaster in selTrans)
                 {
                     if (CastAide.AsInt32(rowMaster["serial"]) != 0) continue;
 
                     status = CastAide.AsString(rowMaster["status"]);
                     rowTemp = CastAide.AsString(row.Clone());
+
                     #region date
+
                     if (isFirstRows)
                     {
                         winlostdate = CastAide.AsDateTime(rowMaster["winlostdate"]);
@@ -1091,13 +1158,17 @@ namespace Sunplus.Accounting.Business.BetList
                     {
                         TemplateHandler.RemoveBlock(ref rowTemp, "wldate");
                     }
-                    #endregion
+
+                    #endregion date
 
                     #region event
+
                     TemplateHandler.Assign(ref rowTemp, "{Event}", "Total of losing tickets");
-                    #endregion
+
+                    #endregion event
 
                     #region odds
+
                     if (status.ToLower().Contains("running") || status.ToLower().Contains("lose"))
                     {
                         TemplateHandler.Assign(ref rowTemp, "{Odds}", "-");
@@ -1106,45 +1177,58 @@ namespace Sunplus.Accounting.Business.BetList
                     {
                         TemplateHandler.Assign(ref rowTemp, "{Odds}", CastAide.AsDouble(rowMaster["modds"]));
                     }
-                    #endregion
+
+                    #endregion odds
 
                     #region stake
+
                     TemplateHandler.Assign(ref rowTemp, "{Stake}", IBCUtils.FormatHandler.FormatNumber20(CastAide.AsDouble(rowMaster["stake"])));
-                    #endregion
+
+                    #endregion stake
 
                     #region win/lost
+
                     TemplateHandler.Assign(ref rowTemp, "{Win/Lost}", IBCUtils.FormatHandler.FormatNumber20((CastAide.AsDouble(rowMaster["winlost"]))));
                     TemplateHandler.Assign(ref rowTemp, "{wl-color}", "color:red");
                     TemplateHandler.Assign(ref rowTemp, "{Comm}", IBCUtils.FormatHandler.FormatNumber20((CastAide.AsDouble(rowMaster["playercomm"]))));
-                    #endregion
+
+                    #endregion win/lost
 
                     #region status
+
                     TemplateHandler.Assign(ref rowTemp, "{Status}", status.ToUpper());
-                    #endregion
+
+                    #endregion status
+
                     strBody.Append(rowTemp);
                 }
-                #endregion
+
+                #endregion lose
 
                 #region subtotal
+
                 TemplateHandler.Assign(ref subtotalTemp, "{subtotal-val}", IBCUtils.FormatHandler.FormatNumber20(subTotalVal));
                 TemplateHandler.Assign(ref subtotalTemp, "{wl-color}", CastAide.AsDouble(subTotalVal) >= 0 ? "" : "color:red");
 
                 strBody.Append(subtotalTemp);
 
-                #endregion
+                #endregion subtotal
             }
-
 
             TemplateHandler.Assign(ref body, "{rows}", strBody);
             TemplateHandler.Assign(ref container, "{body}", body);
-            #endregion
+
+            #endregion body
 
             #region footer
+
             TemplateHandler.Assign(ref footer, "{total}", IBCUtils.FormatHandler.FormatNumber20(totalWin));
             TemplateHandler.Assign(ref footer, "{wl-color}", CastAide.AsDouble(totalWin) >= 0 ? "" : "color:red");
             TemplateHandler.Assign(ref footer, "{footer}", IBCUtils.FormatHandler.FormatNumber20(outStanding));
             TemplateHandler.Assign(ref container, "{footer}", footer);
-            #endregion
+
+            #endregion footer
+
             return container;
         }
 
@@ -1161,10 +1245,12 @@ namespace Sunplus.Accounting.Business.BetList
             return listRow;
         }
 
-        #endregion
+        #endregion combination mp
 
         #region Soccer - new bettypes
+
         #region Double Chance (bettype = 24)
+
         protected void GenDoubleChanceEvent(ref string eventItem, int listType, bool isMP)
         {
             //var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty : " <span class='bl-bettype'>[" + _liveHomeScore + "-" + _liveAwayScore + "]</span>";
@@ -1173,6 +1259,7 @@ namespace Sunplus.Accounting.Business.BetList
             var choice = string.Empty;
 
             #region assign value for choice parameter
+
             if (_betteam.ToLower().Equals("1x"))
                 choice = string.Format("{0} <span style='color: #000; font-weight: normal;'>or</span> Draw", _home.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
             else if (_betteam.ToLower().Equals("2x"))
@@ -1182,15 +1269,20 @@ namespace Sunplus.Accounting.Business.BetList
                     _away.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
 
             if (isMP) choice += oddMP();
-            #endregion
+
+            #endregion assign value for choice parameter
 
             #region assign template
+
             AssignDataForEventColumn(ref eventItem, listType, isMP, choice, liveScore);
-            #endregion
+
+            #endregion assign template
         }
-        #endregion
+
+        #endregion Double Chance (bettype = 24)
 
         #region Draw no bet (bettype = 25)
+
         protected void GenDrawNoBetEvent(ref string eventItem, int listType, bool isMP)
         {
             //var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty : " <span class='bl-bettype'>[" + _liveHomeScore + "-" + _liveAwayScore + "]</span>";
@@ -1199,21 +1291,27 @@ namespace Sunplus.Accounting.Business.BetList
             var choice = string.Empty;
 
             #region assign value for choice parameter
+
             if (_betteam.ToLower().Equals("h"))
                 choice = string.Format("{0}", _home.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
             else if (_betteam.ToLower().Equals("a"))
                 choice = string.Format("{0}", _away.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
 
             if (isMP) choice += oddMP();
-            #endregion
+
+            #endregion assign value for choice parameter
 
             #region assign template
+
             AssignDataForEventColumn(ref eventItem, listType, isMP, choice, liveScore);
-            #endregion
+
+            #endregion assign template
         }
-        #endregion
+
+        #endregion Draw no bet (bettype = 25)
 
         #region Both/One/Neither team to score (bettype = 26)
+
         protected void GenBothOneNeitherEvent(ref string eventItem, int listType, bool isMP)
         {
             //var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty : " <span class='bl-bettype'>[" + _liveHomeScore + "-" + _liveAwayScore + "]</span>";
@@ -1222,6 +1320,7 @@ namespace Sunplus.Accounting.Business.BetList
             var choice = string.Empty;
 
             #region assign value for choice parameter
+
             if (_betteam.ToLower().Equals("b"))
                 choice = "Both";
             else if (_betteam.ToLower().Equals("o"))
@@ -1230,15 +1329,20 @@ namespace Sunplus.Accounting.Business.BetList
                 choice = "No Goal";
 
             if (isMP) choice += oddMP();
-            #endregion
+
+            #endregion assign value for choice parameter
 
             #region assign template
+
             AssignDataForEventColumn(ref eventItem, listType, isMP, choice, liveScore);
-            #endregion
+
+            #endregion assign template
         }
-        #endregion
+
+        #endregion Both/One/Neither team to score (bettype = 26)
 
         #region To win to nil (bettype = 27)
+
         protected void GenToWinToNilEvent(ref string eventItem, int listType, bool isMP)
         {
             //var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty : " <span class='bl-bettype'>[" + _liveHomeScore + "-" + _liveAwayScore + "]</span>";
@@ -1247,21 +1351,27 @@ namespace Sunplus.Accounting.Business.BetList
             var choice = string.Empty;
 
             #region assign value for choice parameter
+
             if (_betteam.ToLower().Equals("h"))
                 choice = string.Format("{0}", _home.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
             else if (_betteam.ToLower().Equals("a"))
                 choice = string.Format("{0}", _away.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
 
             if (isMP) choice += oddMP();
-            #endregion
+
+            #endregion assign value for choice parameter
 
             #region assign template
+
             AssignDataForEventColumn(ref eventItem, listType, isMP, choice, liveScore);
-            #endregion
+
+            #endregion assign template
         }
-        #endregion
+
+        #endregion To win to nil (bettype = 27)
 
         #region Clean sheet (bettype = 13)
+
         protected void GenCleanSheetEvent(ref string eventItem, int listType, bool isMP)
         {
             //var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty : " <span class='bl-bettype'>[" + _liveHomeScore + "-" + _liveAwayScore + "]</span>";
@@ -1270,6 +1380,7 @@ namespace Sunplus.Accounting.Business.BetList
             var choice = string.Empty;
 
             #region assign value for choice parameter
+
             if (_betteam.ToLower().Equals("hy"))
                 choice = string.Format("{0} <span style='color:#000;'>{1}</span>", _home.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""), "YES");
             else if (_betteam.ToLower().Equals("hn"))
@@ -1280,15 +1391,20 @@ namespace Sunplus.Accounting.Business.BetList
                 choice = string.Format("{0} <span style='color:#000;'>{1}</span>", _away.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""), "NO");
 
             if (isMP) choice += oddMP();
-            #endregion
+
+            #endregion assign value for choice parameter
 
             #region assign template
+
             AssignDataForEventColumn(ref eventItem, listType, isMP, choice, liveScore);
-            #endregion
+
+            #endregion assign template
         }
-        #endregion
+
+        #endregion Clean sheet (bettype = 13)
 
         #region 3-way handicap (bettype = 28)
+
         protected void GenThreeWayHandicap(ref string eventItem, int listType, bool isMP)
         {
             //var liveScore = string.IsNullOrEmpty(_liveStyle) ? string.Empty : " <span class='bl-bettype'>[" + _liveHomeScore + "-" + _liveAwayScore + "]</span>";
@@ -1298,6 +1414,7 @@ namespace Sunplus.Accounting.Business.BetList
             var hdpResult = 0;
 
             #region assign value for choice parameter
+
             if (_betteam.ToLower().Equals("1"))
             {
                 hdpResult = (int)(_hdp1 - _hdp2 > 0 ? -(_hdp1 - _hdp2) : Math.Abs(_hdp1 - _hdp2));
@@ -1323,15 +1440,20 @@ namespace Sunplus.Accounting.Business.BetList
                 choice = string.Format("Draw <span style='color:#000'>(<span style='color:#ff0000;'>{0}</span> +{1})</span>", _hdp1 - _hdp2 > 0 ? "A" : "H", (int)(Math.Abs(_hdp1 - _hdp2)));
 
             if (isMP) choice += oddMP();
-            #endregion
+
+            #endregion assign value for choice parameter
 
             #region assign template
+
             AssignDataForEventColumn(ref eventItem, listType, isMP, choice, liveScore);
-            #endregion
+
+            #endregion assign template
         }
-        #endregion
+
+        #endregion 3-way handicap (bettype = 28)
 
         #region assign event column
+
         protected void AssignDataForEventColumn(ref string eventItem, int listType, bool isMP, string choice, string liveScore)
         {
             string Event = _home + " -VS- " + _away;
@@ -1348,8 +1470,10 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref eventItem, "{sporttype}", _sportypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", _leagueName);
         }
-        #endregion
-        #endregion
+
+        #endregion assign event column
+
+        #endregion Soccer - new bettypes
 
         protected bool IsFIBettype(int bettype)
         {
@@ -1388,6 +1512,7 @@ namespace Sunplus.Accounting.Business.BetList
                     return false;
             }
         }
+
         protected bool IsFIOE(int bettype)
         {
             switch (bettype)
@@ -1403,6 +1528,7 @@ namespace Sunplus.Accounting.Business.BetList
                     return false;
             }
         }
+
         protected string GetFIBettypeName(string betteam, int bettype)
         {
             if (IsFIOU(bettype))
@@ -1415,10 +1541,12 @@ namespace Sunplus.Accounting.Business.BetList
             }
             return "";
         }
+
         protected bool IsSportBook(int bettype)
         {
             return (bettype == 1 || bettype == 2 || bettype == 3 || bettype == 7 || bettype == 8 || bettype == 12 || bettype == 20);
         }
+
         protected bool IsHRBettype(int bettype)
         {
             switch (bettype)
@@ -1434,6 +1562,7 @@ namespace Sunplus.Accounting.Business.BetList
                     return false;
             }
         }
+
         //Kiet Mai
         protected bool IsNumberGame(int betType)
         {
@@ -1451,7 +1580,6 @@ namespace Sunplus.Accounting.Business.BetList
                     return false;
             }
         }
-
 
         protected bool IsHRFixOdds(int bettype)
         {
@@ -1481,15 +1609,16 @@ namespace Sunplus.Accounting.Business.BetList
         {
             return (status.Equals(Status.VOID) || status.Equals(Status.REJECT) || status.Equals(Status.LOSE) || status.Equals(Status.Refund.ToUpper())); //Because it is "Refund" text.
         }
+
         protected bool IsRunningWaiting(string status)
         {
             return (status.Equals(Status.RUNNING) || status.Equals(Status.WAITING));
         }
 
-
-
         #region View Result Detail
+
         #region SoccerHTML
+
         public string SoccerHTML(DataRow r, bool isExistFGLG, string sporttype)
         {
             try
@@ -1532,7 +1661,6 @@ namespace Sunplus.Accounting.Business.BetList
 
             string strHome = CacheRef.GetTeamName(r["homeid"]) + (CastAide.AsBoolean(r["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : "");
             string strAway = CacheRef.GetTeamName(r["awayid"]);
-
 
             TemplateHandler.Assign(ref _s, "{hometeam}", strHome);
             TemplateHandler.Assign(ref _s, "{awayteam}", strAway);
@@ -1647,9 +1775,9 @@ namespace Sunplus.Accounting.Business.BetList
                             isHTcal = DNAide.Core.CastAide.AsBoolean(Convert.ToInt16(options[0].Trim()));
                             calculate = DNAide.Core.CastAide.AsBoolean(Convert.ToInt16(options[1].Trim()));
                         }
-                        if (isHTcal) //isHTcal 
+                        if (isHTcal) //isHTcal
                             return ResourceExtension.GetResourceValue(ResourceExtension.Resources.CategorizeStatus, "FTPending");
-                        else if (calculate) //calculate 
+                        else if (calculate) //calculate
                             return ResourceExtension.GetResourceValue(ResourceExtension.Resources.CategorizeStatus, "HTPending");
                         else
                             return ResourceExtension.GetResourceValue(ResourceExtension.Resources.CategorizeStatus, "Pending");
@@ -1666,8 +1794,10 @@ namespace Sunplus.Accounting.Business.BetList
             }
         }
 
-        #endregion
+        #endregion SoccerHTML
+
         #region VirtualSoccerHTML
+
         public string VirtualSoccerHTML(DataRow r, bool isExistFGLG, string sporttype)
         {
             try
@@ -1686,6 +1816,7 @@ namespace Sunplus.Accounting.Business.BetList
                 throw ex;
             }
         }
+
         public void FillHeaderVirtualSoccer(ref string _s, DataRow r, string sporttype)
         {
             TemplateHandler.Assign(ref _s, "lblLeague", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "league").ToUpper());
@@ -1709,7 +1840,6 @@ namespace Sunplus.Accounting.Business.BetList
 
             string strHome = CacheRef.GetTeamName(r["homeid"]) + (CastAide.AsBoolean(r["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : "");
             string strAway = CacheRef.GetTeamName(r["awayid"]);
-
 
             TemplateHandler.Assign(ref _s, "{hometeam}", strHome);
             TemplateHandler.Assign(ref _s, "{awayteam}", strAway);
@@ -1774,7 +1904,6 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref _s, "afgoal", string.Empty);
             TemplateHandler.Assign(ref _s, "algoal", string.Empty);
 
-
             string betstatus = r["betstatus"].ToString().Trim();
             if (betstatus.StartsWith("Refund HT"))
             {
@@ -1807,7 +1936,9 @@ namespace Sunplus.Accounting.Business.BetList
         }
 
         #endregion VirtualSoccerHTML
+
         #region BasketballHTML
+
         protected string BasketballHTML(DataRow r, string sporttype)
         {
             int totalSets = 4; // for Basketball & footballl
@@ -1902,8 +2033,11 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref _s, "{homeFScore}", CastAide.AsString(r["finalhomescore"]));
             TemplateHandler.Assign(ref _s, "{awayFScore}", CastAide.AsString(r["finalawayscore"]));
         }
-        #endregion
+
+        #endregion BasketballHTML
+
         #region HockeyHTML
+
         public string HockeyHTML(DataRow r, string sporttype)
         {
             try
@@ -1920,6 +2054,7 @@ namespace Sunplus.Accounting.Business.BetList
                 throw ex;
             }
         }
+
         public void FillDataHocKey(ref string _s, DataRow r)
         {
             int totalSets = 3; // for Hockey [1 Period, 2 Period, 3 Period]
@@ -1979,15 +2114,13 @@ namespace Sunplus.Accounting.Business.BetList
                 TemplateHandler.Assign(ref _s, "astyle", "");
                 TemplateHandler.Assign(ref _s, "{homeFScore}", CastAide.AsString(r["finalhomescore"]));
                 TemplateHandler.Assign(ref _s, "{awayFScore}", CastAide.AsString(r["finalawayscore"]));
-
-
             }
             catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
             }
         }
+
         public void FillHeaderHockey(ref string _s, DataRow r, string sporttype)
         {
             try
@@ -2009,8 +2142,10 @@ namespace Sunplus.Accounting.Business.BetList
             }
         }
 
-        #endregion
+        #endregion HockeyHTML
+
         #region TennisHTML
+
         public string TennisHTML(DataRow r, string sporttype, int matchid, int bettype, string betid)
         {
             int totalSets = 5; // for Tennis
@@ -2144,7 +2279,6 @@ namespace Sunplus.Accounting.Business.BetList
                         TemplateHandler.Assign(ref _s, "{setCss}", "hidden");
                         TemplateHandler.Assign(ref _s, "{contenttblSet}", string.Empty);
                     }
-
                 }
                 else
                 {
@@ -2156,11 +2290,12 @@ namespace Sunplus.Accounting.Business.BetList
             {
                 LogExtensions.ExceptionHandler(ex);
             }
-
         }
 
-        #endregion
+        #endregion TennisHTML
+
         #region BilliardHTML
+
         public void FillHeaderBillard(ref string _s, DataRow r, string sporttype)
         {
             TemplateHandler.Assign(ref _s, "lblKickOffTime", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "kickofftime"));
@@ -2170,6 +2305,7 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref _s, "lblSportName", sporttype);
             TemplateHandler.Assign(ref _s, "lblEventStatus", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEventStatus"));
         }
+
         public void FillDataForBillard(ref string _s, DataRow r)
         {
             var settle = CommonBootStrapper.Locator.GetInstance<ISettlement>();
@@ -2201,6 +2337,7 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref _s, "homeFScore", r["finalhomescore"].ToString());
             TemplateHandler.Assign(ref _s, "awayFScore", r["finalawayscore"].ToString());
         }
+
         public string BilliardHTML(DataRow r, string sporttype)
         {
             try
@@ -2219,11 +2356,10 @@ namespace Sunplus.Accounting.Business.BetList
             }
         }
 
-        #endregion
-
-
+        #endregion BilliardHTML
 
         #region BadmintonHTML
+
         public void FillHeaderBadminton(ref string _s, DataRow r, string sporttype)
         {
             TemplateHandler.Assign(ref _s, "lblLeague", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "league").ToUpper());
@@ -2241,6 +2377,7 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref _s, "{leaguename}", CacheRef.GetLeagueName(r["leagueid"]));
             TemplateHandler.Assign(ref _s, "lblEventStatus", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEventStatus"));
         }
+
         public void FillDataForBadminton(ref string _s, DataRow r)
         {
             var settle = CommonBootStrapper.Locator.GetInstance<ISettlement>();
@@ -2295,6 +2432,7 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref _s, "{valueTSHome}", CastAide.AsString(r["finalhomescore"]));
             TemplateHandler.Assign(ref _s, "{valueTSAway}", CastAide.AsString(r["finalawayscore"]));
         }
+
         public string BadmintonHTML(DataRow r, string sporttype)
         {
             try
@@ -2313,9 +2451,10 @@ namespace Sunplus.Accounting.Business.BetList
             }
         }
 
-        #endregion
+        #endregion BadmintonHTML
 
         #region BaseballHTML
+
         protected string BaseballHTML(DataRow r, string sporttype)
         {
             int totalSets = 9; // for Hockey [1 Period, 2 Period, 3 Period]
@@ -2418,9 +2557,10 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref _s, "{awayFScore}", CastAide.AsString(r["finalawayscore"]));
         }
 
-        #endregion
+        #endregion BaseballHTML
 
         #region Cricket
+
         public void FillHeaderCricket(ref string _s, DataRow r)
         {
             TemplateHandler.Assign(ref _s, "lblKickOffTime", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "kickofftime"));
@@ -2433,6 +2573,7 @@ namespace Sunplus.Accounting.Business.BetList
 
             TemplateHandler.Assign(ref _s, "lblEventStatus", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEventStatus"));
         }
+
         public void FillDataForCricket(ref string _s, DataRow r)
         {
             var settle = CommonBootStrapper.Locator.GetInstance<ISettlement>();
@@ -2460,9 +2601,11 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref _s, "{homeFScore}", CastAide.AsString(r["finalhomescore"]));
             TemplateHandler.Assign(ref _s, "{awayFScore}", CastAide.AsString(r["finalawayscore"]));
         }
-        #endregion
+
+        #endregion Cricket
 
         #region CommonHTML
+
         public void FillHeaderCommon(ref string _s, DataRow r)
         {
             TemplateHandler.Assign(ref _s, "lblKickOffTime", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "kickofftime"));
@@ -2539,9 +2682,10 @@ namespace Sunplus.Accounting.Business.BetList
             }
         }
 
-        #endregion
+        #endregion CommonHTML
 
         #region Number Game
+
         public string NumberGameHTML(DataTable tb, string sporttype)
         {
             string _s = string.Empty;
@@ -2552,6 +2696,7 @@ namespace Sunplus.Accounting.Business.BetList
 
             return _s;
         }
+
         public void FillHeaderNumberGame(ref string _s, DataTable dt, string sporttype)
         {
             TemplateHandler.Assign(ref _s, "lblKickOffTime", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "kickofftime"));
@@ -2561,6 +2706,7 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref _s, "{leaguename}", CacheRef.GetLeagueName(dt.Rows[0]["leagueid"]));
             TemplateHandler.Assign(ref _s, "lblEventStatus", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEventStatus"));
         }
+
         public void FillDataForNumberGame(ref string _s, DataTable dt)
         {
             string rowHandler = TemplateHandler.CopyBlock(_s, "row");
@@ -2582,11 +2728,12 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref _s, "{firstIndex}", "1");
             TemplateHandler.Assign(ref _s, "{firstBall}", new Random().Next(1, 75));
             TemplateHandler.Assign(ref _s, "{content}", html.ToString());
-
         }
-        #endregion
+
+        #endregion Number Game
 
         #region LoadCalHTML
+
         public string LoadCalHTML(int matchid, int bettype, string betid)
         {
             string html = "";
@@ -2594,7 +2741,6 @@ namespace Sunplus.Accounting.Business.BetList
             string sportName = string.Empty;
             try
             {
-
                 DataTable dbt = null;
                 DataRow r = null;
                 var dr = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.Betlist.BetList_SBResults(matchid);
@@ -2612,18 +2758,22 @@ namespace Sunplus.Accounting.Business.BetList
                         sportName = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Soccer");
                         html = SoccerHTML(r, CastAide.AsString(r["betstatus"] + string.Empty).Contains("FL"), sportName);
                         break;
+
                     case 2: //basket ball
                         sportName = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Basketball");
                         html = BasketballHTML(r, sportName);
                         break;
+
                     case 32: //netball
                         sportName = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Netball");
                         html = BasketballHTML(r, sportName);
                         break;
+
                     case 3: //foot ball
                         sportName = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblFootball");
                         html = BasketballHTML(r, sportName);
                         break;
+
                     case 26: //rugby
                         sportName = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "rugby");
                         html = BasketballHTML(r, sportName);
@@ -2686,13 +2836,16 @@ namespace Sunplus.Accounting.Business.BetList
                         sportName = CacheRef.GetSportName(r["sporttype"]);
                         html = NumberGameHTML(dbt, sportName);
                         break;
+
                     case 27:
                         html = CricketHTML(r);
                         break;
+
                     case 180: // VirtualSoccer
                         sportName = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "virtualSports");
                         html = VirtualSoccerHTML(r, CastAide.AsString(r["betstatus"] + string.Empty).Contains("FL"), sportName);
                         break;
+
                     default:
                         html = CommonHTML(r);
                         break;
@@ -2706,7 +2859,8 @@ namespace Sunplus.Accounting.Business.BetList
 
             return html;
         }
-        #endregion
+
+        #endregion LoadCalHTML
 
         public string GetScore(Char[] goal, string tpl)
         {
@@ -2735,8 +2889,7 @@ namespace Sunplus.Accounting.Business.BetList
             return row.ToString();
         }
 
-        #endregion
-
+        #endregion View Result Detail
 
         #region combination mp
 
@@ -2762,15 +2915,20 @@ namespace Sunplus.Accounting.Business.BetList
             var tblDetail = ds.Tables[1];
 
             #region header
+
             TemplateHandler.Assign(ref container, "{header}", header);
-            #endregion
+
+            #endregion header
 
             #region body
+
             StringBuilder strBody = new StringBuilder();
             var winlostdate = DateTime.MinValue;
             decimal totalWin = 0;
             string status = string.Empty;
+
             #region won
+
             foreach (DataRow rowMaster in tblMaster.Rows)
             {
                 totalWin += CastAide.AsDecimal(rowMaster["winlost"]);
@@ -2781,11 +2939,14 @@ namespace Sunplus.Accounting.Business.BetList
                 rowTemp = CastAide.AsString(row.Clone());
 
                 #region date
+
                 winlostdate = CastAide.AsDateTime(rowMaster["winlostdate"]);
                 TemplateHandler.Assign(ref rowTemp, "{Date}", winlostdate.Month.ToString() + "/" + winlostdate.Day.ToString() + "/" + winlostdate.Year.ToString());
-                #endregion
+
+                #endregion date
 
                 #region event
+
                 var listRow = this.GetCombinationMPDetailRow(tblDetail, CastAide.AsInt32(rowMaster["serial"]));
                 List<string> lstEvent = new List<string>();
                 foreach (DataRow rowDetail in listRow)
@@ -2796,9 +2957,11 @@ namespace Sunplus.Accounting.Business.BetList
                     lstEvent.Add("<span>" + homename + " -vs- " + awayname + "</span>");
                 }
                 TemplateHandler.Assign(ref rowTemp, "{Event}", string.Join("<br/>", lstEvent.ToArray()));
-                #endregion
+
+                #endregion event
 
                 #region odds
+
                 if (status.ToLower().Contains("running"))
                 {
                     TemplateHandler.Assign(ref rowTemp, "{Odds}", "-");
@@ -2807,43 +2970,59 @@ namespace Sunplus.Accounting.Business.BetList
                 {
                     TemplateHandler.Assign(ref rowTemp, "{Odds}", CastAide.AsDouble(rowMaster["modds"]));
                 }
-                #endregion
+
+                #endregion odds
 
                 #region stake
+
                 TemplateHandler.Assign(ref rowTemp, "{Stake}", IBCUtils.FormatHandler.FormatNumber20(CastAide.AsDouble(rowMaster["stake"])));
-                #endregion
+
+                #endregion stake
 
                 #region win/lost
+
                 TemplateHandler.Assign(ref rowTemp, "{Win/Lost}", IBCUtils.FormatHandler.FormatNumber20((CastAide.AsDouble(rowMaster["winlost"]))));
                 TemplateHandler.Assign(ref rowTemp, "{wl-color}", "");
                 TemplateHandler.Assign(ref rowTemp, "{Comm}", IBCUtils.FormatHandler.FormatNumber20((CastAide.AsDouble(rowMaster["playercomm"]))));
-                #endregion
+
+                #endregion win/lost
 
                 #region status
+
                 TemplateHandler.Assign(ref rowTemp, "{Status}", status.ToUpper());
-                #endregion
+
+                #endregion status
+
                 //----------------------------------------------------
                 strBody.Append(rowTemp);
             }
-            #endregion
+
+            #endregion won
 
             #region lose
+
             foreach (DataRow rowMaster in tblMaster.Rows)
             {
                 if (CastAide.AsInt32(rowMaster["serial"]) != 0) continue;
 
                 status = CastAide.AsString(rowMaster["status"]);
                 rowTemp = CastAide.AsString(row.Clone());
+
                 #region date
+
                 winlostdate = CastAide.AsDateTime(rowMaster["winlostdate"]);
                 TemplateHandler.Assign(ref rowTemp, "{Date}", winlostdate.Month.ToString() + "/" + winlostdate.Day.ToString() + "/" + winlostdate.Year.ToString());
-                #endregion
+
+                #endregion date
 
                 #region event
+
                 TemplateHandler.Assign(ref rowTemp, "{Event}", "Total of losing tickets");
-                #endregion
+
+                #endregion event
 
                 #region odds
+
                 if (status.ToLower().Contains("running") || status.ToLower().Contains("lose"))
                 {
                     TemplateHandler.Assign(ref rowTemp, "{Odds}", "-");
@@ -2852,40 +3031,51 @@ namespace Sunplus.Accounting.Business.BetList
                 {
                     TemplateHandler.Assign(ref rowTemp, "{Odds}", CastAide.AsDouble(rowMaster["modds"]));
                 }
-                #endregion
+
+                #endregion odds
 
                 #region stake
+
                 TemplateHandler.Assign(ref rowTemp, "{Stake}", IBCUtils.FormatHandler.FormatNumber20(CastAide.AsDouble(rowMaster["stake"])));
-                #endregion
+
+                #endregion stake
 
                 #region win/lost
+
                 TemplateHandler.Assign(ref rowTemp, "{Win/Lost}", IBCUtils.FormatHandler.FormatNumber20((CastAide.AsDouble(rowMaster["winlost"]))));
                 TemplateHandler.Assign(ref rowTemp, "{wl-color}", "color:red");
                 TemplateHandler.Assign(ref rowTemp, "{Comm}", IBCUtils.FormatHandler.FormatNumber20((CastAide.AsDouble(rowMaster["playercomm"]))));
-                #endregion
+
+                #endregion win/lost
 
                 #region status
+
                 TemplateHandler.Assign(ref rowTemp, "{Status}", status.ToUpper());
-                #endregion
+
+                #endregion status
+
                 strBody.Append(rowTemp);
             }
-            #endregion
+
+            #endregion lose
 
             TemplateHandler.Assign(ref body, "{rows}", strBody);
             TemplateHandler.Assign(ref container, "{body}", body);
-            #endregion
+
+            #endregion body
 
             #region footer
+
             TemplateHandler.Assign(ref footer, "{total}", IBCUtils.FormatHandler.FormatNumber20(totalWin));
             TemplateHandler.Assign(ref footer, "{wl-color}", CastAide.AsDouble(totalWin) >= 0 ? "" : "color:red");
             TemplateHandler.Assign(ref footer, "{footer}", IBCUtils.FormatHandler.FormatNumber20(outStanding));
             TemplateHandler.Assign(ref container, "{footer}", footer);
-            #endregion
+
+            #endregion footer
+
             return container;
         }
 
-
-
-        #endregion
+        #endregion combination mp
     }
 }

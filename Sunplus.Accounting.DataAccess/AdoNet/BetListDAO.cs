@@ -26,7 +26,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             return spElement;
         }
 
-
         public List<BetListDetail> GetLatestBetList(int totalRow)
         {
             throw new NotImplementedException();
@@ -37,7 +36,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             var betList = new List<BetMonitor>();
             var spElement = GetBetListStoreProcedure("BALatestBetlist");
             var db = GetDatabase(spElement.DbName);
-
 
             using (var dbCommand = db.GetStoredProcCommand(spElement.Name))
             {
@@ -79,8 +77,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                                               CurrencyName = CastAide.AsString(data["CurrencyName"]),
                                               UserName = CastAide.AsString(data["UserName"]),
                                               MatchCode = CastAide.AsString(data["matchcode"])
-
-
                                           };
                         var betMonitor = new BetMonitor
                                              {
@@ -95,10 +91,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 }
 
                 return betList;
-
             }
-
-
         }
 
         public BABetList GetBABetList(int pagesize, int pageindex, string fromdate, string todate, string username, List<IPVNBean> IPVNList, int currency, int bettype, int fromStake, int toStake, int excludeTest)
@@ -106,7 +99,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             var betList = new List<BetListDetail>();
             var spElement = GetBetListStoreProcedure("BABetlist");
             var db = GetDatabase(spElement.DbName);
-
 
             using (var dbCommand = db.GetStoredProcCommand(spElement.Name))
             {
@@ -213,8 +205,8 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
             if (!fromCache || _ticketsListing == null)
             {
-
                 #region getDataFromDB
+
                 //SessionExtension.AddSession(HttpContext.Current.Session, sessionName, null);
                 CacheExtension.Delete(sessionName);
                 ticketsListing.Items = new List<TicketsListingBetlist>();
@@ -231,17 +223,15 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                     if (Type == 0)//sport book
                     {
                         if (HomeScore.Length > 0 && AwayScore.Length > 0)
-                        {                               
+                        {
                             p.Add("livehomescore", CastAide.AsInt32(HomeScore));
                             p.Add("liveawayscore", CastAide.AsInt32(AwayScore));
-
                         }
                         if (FromTransDate.Length > 0 && ToTransDate.Length > 0)
-                        {                               
+                        {
                             p.Add("fromtransdate", CastAide.AsDateTime(FromTransDate).AddHours(-12));
                             p.Add("totransdate", CastAide.AsDateTime(ToTransDate).AddHours(-12));
                         }
-
                     }
 
                     objDb.AssignParamValues(p);
@@ -252,6 +242,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                         var dtMBetTrans = ds.Tables[1];
 
                         #region none MP bettype
+
                         foreach (DataRow data in dtBetTrans.Rows)
                         {
                             var bettran = new Bettran
@@ -278,10 +269,8 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                                 Livehomescore = CastAide.AsString(data["livehomescore"]),
                                 Liveawayscore = CastAide.AsString(data["liveawayscore"]),
 
-
                                 IsNeutral = CastAide.AsBoolean(data["isNeutral"]),
                                 SATicket = CastAide.AsInt32(data["secacceptflag"])
-
                             };
 
                             if (bettran.Bettype < 1201 || 1299 < bettran.Bettype)
@@ -294,13 +283,14 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                                 Transid = bettran.Transid,
                                 BettranDetail = bettran,
                                 MBettranDetail = new Bettran()
-
                             };
                             ticketsListing.Items.Add(tkBetlist);
                         }
-                        #endregion
+
+                        #endregion none MP bettype
 
                         #region MP bettype
+
                         foreach (DataRow mdata in dtMBetTrans.Rows)
                         {
                             var bettran = new Bettran()
@@ -328,7 +318,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                                 Liveawayscore = CastAide.AsString(mdata["liveawayscore"]),
                                 IsNeutral = CastAide.AsBoolean(mdata["isNeutral"]),
                                 SATicket = CastAide.AsInt32(mdata["secacceptflag"])
-
                             };
 
                             if (bettran.Bettype < 1201 || 1299 < bettran.Bettype)
@@ -355,7 +344,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                                 Liveawayscore = CastAide.AsString(mdata["liveawayscore"]),
                                 Modds = CastAide.AsString(mdata["oddsm"]),
                                 IsNeutral = CastAide.AsBoolean(mdata["isNeutral"])
-
                             };
 
                             if (bettran.Bettype < 1201 || 1299 < bettran.Bettype)
@@ -368,15 +356,17 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                                 Transid = bettran.Transid,
                                 BettranDetail = bettran,
                                 MBettranDetail = mbetTrans
-
                             };
                             ticketsListing.Items.Add(tkBetlist);
                         }
-                        #endregion
+
+                        #endregion MP bettype
                     }
                     ticketsListing.totalItem = ticketsListing.Items.Count;
                 }
-                #endregion
+
+                #endregion getDataFromDB
+
                 //SessionExtension.AddSession(HttpContext.Current.Session, sessionName, ticketsListing);
                 CacheExtension.Set(sessionName, ticketsListing, DateTime.Now.AddMinutes(30));
             }
@@ -392,7 +382,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             var betList = new List<BetListDetail>();
             var spElement = GetBetListStoreProcedure("BABetlistByTransID");
             var db = GetDatabase(spElement.DbName);
-
 
             using (var dbCommand = db.GetStoredProcCommand(spElement.Name))
             {
@@ -467,11 +456,11 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
         public List<BetListDetail> GetMixParlayTickets(string refNo)
         {
-            var betList = new List<BetListDetail>();           
+            var betList = new List<BetListDetail>();
             using (ObjectDb objDb = new ObjectDb("Acc_BetsSelBetCheckM_All"))
             {
                 objDb.AssignParamValues(new Hashtable() { { "refno", refNo } });
-                
+
                 var listMpTicket = new List<BetListDetail>();
                 var data = objDb.ExecuteReader();
                 if (data != null)
@@ -547,7 +536,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             return dataTable;
         }
 
-        #endregion
+        #endregion IBetListDAO Members
 
         public List<CombinationDetalDTO> GenDetailMP(string serial, DataTable dataTable)
         {
@@ -561,13 +550,12 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                     betlistDto.HomeName = SportBookUtils.GetTeamName(CastAide.AsString(row["homeid"]));
                     tableDetailMP.Add(betlistDto);
                 }
-
             }
             return tableDetailMP;
         }
 
         public CombinationDetailMP GetCombinationDetailMP(string refNo)
-        {            
+        {
             using (ObjectDb db = new ObjectDb("Acc_BetlistCombinationParlay_Details"))
             {
                 var combinationDetailMP = new CombinationDetailMP();
@@ -604,7 +592,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                     betlistDetail.CombinationDetails = combinationdetail;
                     combinationMP.Add(betlistDetail);
                     totalWLComm += CastAide.AsDouble(row["winlost"]);
-
                 }
                 combinationDetailMP.TotalWLComm = FormatHandler.FormatNumber2(totalWLComm, "en-EN");
                 combinationDetailMP.items = combinationMP;
@@ -614,7 +601,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
         public DataSet GetBetListSystemParlayByTransId(string transId, int custId, DateTime moveBetDay, DateTime balaceUpDay)
         {
-            DataSet result = null;           
+            DataSet result = null;
 
             using (ObjectDb db = new ObjectDb("Acc_BetlistCombinationParlay_ByTransID", 180))
             {
@@ -624,7 +611,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             }
 
             return result;
-
         }
     }
 }

@@ -9,10 +9,7 @@ using DNAide.Utils;
 using DNAide.Web;
 
 using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Core.Constant;
-using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
-using Sunplus.Core.LoggingLib;
 
 namespace Sunplus.Accounting.Core.Common
 {
@@ -25,7 +22,6 @@ namespace Sunplus.Accounting.Core.Common
 
         private static string vers = string.Empty;
 
-
         public static string FuncMgr
         {
             get { return CastAide.AsString(ConfigurationManager.AppSettings["funcMgr"]); }
@@ -35,7 +31,6 @@ namespace Sunplus.Accounting.Core.Common
         {
             get { return (CastAide.AsString(ConfigurationManager.AppSettings["LocalTest"]) == "1"); }
         }
-
 
         /// <summary>
         /// return version of js and css file
@@ -51,7 +46,6 @@ namespace Sunplus.Accounting.Core.Common
         {
             return (custid < 100);
         }
-   
 
         public static string GenReportFooter(string url, int pageNum, int cpage, int colsNo)
         {
@@ -65,7 +59,7 @@ namespace Sunplus.Accounting.Core.Common
 
                 for (int i = 0; i < pageNum; ++i)
                 {
-                    var pageIndex = (string) pageIndexTpl.Clone();
+                    var pageIndex = (string)pageIndexTpl.Clone();
 
                     TemplateHandler.Assign(ref pageIndex, "{Url}", url);
                     if (cpage == (i + 1))
@@ -78,7 +72,7 @@ namespace Sunplus.Accounting.Core.Common
                         TemplateHandler.Assign(ref pageIndex, "{CurrentPage}", string.Empty);
                         TemplateHandler.Assign(ref pageIndex, "{Page}", "" + (i + 1));
                     }
-                    if (i%20 == 0 && i > 0)
+                    if (i % 20 == 0 && i > 0)
                         pageList += "<br />" + pageIndex;
                     else
                         pageList += pageIndex;
@@ -91,7 +85,6 @@ namespace Sunplus.Accounting.Core.Common
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -130,7 +123,7 @@ namespace Sunplus.Accounting.Core.Common
 
                 if (cpage >= 4)
                 {
-                    var pageIndex = (string) pageIndexTpl.Clone();
+                    var pageIndex = (string)pageIndexTpl.Clone();
                     TemplateHandler.Assign(ref pageIndex, "{Url}", url);
                     TemplateHandler.Assign(ref pageIndex, "{CurrentPage}", string.Empty);
                     TemplateHandler.Assign(ref pageIndex, "{PageText}", "1");
@@ -146,7 +139,7 @@ namespace Sunplus.Accounting.Core.Common
 
                 for (int i = startpage; i < endpage; ++i)
                 {
-                    var pageIndex = (string) pageIndexTpl.Clone();
+                    var pageIndex = (string)pageIndexTpl.Clone();
 
                     TemplateHandler.Assign(ref pageIndex, "{Url}", url);
                     if (cpage == (i + 1))
@@ -164,7 +157,7 @@ namespace Sunplus.Accounting.Core.Common
 
                 if ((endpage + 1) < pageNum)
                 {
-                    var pageIndex = (string) pageIndexTpl.Clone();
+                    var pageIndex = (string)pageIndexTpl.Clone();
                     TemplateHandler.Assign(ref pageIndex, "{Url}", url);
                     TemplateHandler.Assign(ref pageIndex, "{CurrentPage}", string.Empty);
                     TemplateHandler.Assign(ref pageIndex, "{PageText}", " " + pageNum);
@@ -187,7 +180,6 @@ namespace Sunplus.Accounting.Core.Common
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -231,7 +223,7 @@ namespace Sunplus.Accounting.Core.Common
 
                 if (cpage >= 4)
                 {
-                    pageIndex = (string) pageItem.Clone();
+                    pageIndex = (string)pageItem.Clone();
                     TemplateHandler.Assign(ref pageIndex, "{jsonclick}", jsonclick);
                     TemplateHandler.Assign(ref pageIndex, "{CurrentPage}", string.Empty);
                     TemplateHandler.Assign(ref pageIndex, "{PageText}", "1");
@@ -246,7 +238,7 @@ namespace Sunplus.Accounting.Core.Common
 
                 for (int i = startpage; i < endpage; ++i)
                 {
-                    pageIndex = (string) pageItem.Clone();
+                    pageIndex = (string)pageItem.Clone();
 
                     TemplateHandler.Assign(ref pageIndex, "{jsonclick}", jsonclick);
                     if (cpage == (i + 1))
@@ -263,7 +255,7 @@ namespace Sunplus.Accounting.Core.Common
 
                 if ((endpage + 1) < pageNum)
                 {
-                    pageIndex = (string) pageItem.Clone();
+                    pageIndex = (string)pageItem.Clone();
                     TemplateHandler.Assign(ref pageIndex, "{jsonclick}", jsonclick);
                     TemplateHandler.Assign(ref pageIndex, "{CurrentPage}", string.Empty);
                     TemplateHandler.Assign(ref pageIndex, "{PageText}", "" + pageNum);
@@ -282,7 +274,6 @@ namespace Sunplus.Accounting.Core.Common
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -306,21 +297,20 @@ namespace Sunplus.Accounting.Core.Common
             {
                 startIndex = 0;
                 endIndex = 0;
-                pageNum = rowNo/pageSize;
-                int rowLastPage = rowNo%pageSize;
+                pageNum = rowNo / pageSize;
+                int rowLastPage = rowNo % pageSize;
                 if (rowLastPage > 0)
                     pageNum++;
                 if (page < 1 || page > pageNum)
                 {
                     page = 1;
                 }
-                startIndex = (page - 1)*pageSize;
+                startIndex = (page - 1) * pageSize;
                 if (pageNum != 0)
                     endIndex = startIndex + ((rowLastPage > 0 && page == pageNum) ? rowLastPage : pageSize);
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -341,7 +331,6 @@ namespace Sunplus.Accounting.Core.Common
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -438,10 +427,12 @@ namespace Sunplus.Accounting.Core.Common
                     html += "<option selected=\"true\" value=\"0\">Active</option>";
                     html += "<option value=\"1\">Closed</option>";
                     break;
+
                 case "1":
                     html += "<option value=\"0\">Active</option>";
                     html += "<option selected=\"true\" value=\"1\">Closed</option>";
                     break;
+
                 default:
                     html += "<option value=\"0\">Active</option>";
                     html += "<option value=\"1\">Closed</option>";
@@ -459,21 +450,23 @@ namespace Sunplus.Accounting.Core.Common
                 switch (userType)
                 {
                     case Globals.UserType.Betting:
-                        html += "<option selected=\"true\" value=\"" + (int) Globals.UserType.Betting + "\">" +
-                                HttpContext.GetGlobalResourceObject(Constants.Resources.LanguageResources, Constants.Resources.Language.UserBetting)  + "</option>";
-                        html += "<option value=\"" + (int) Globals.UserType.Internal + "\">" + HttpContext.GetGlobalResourceObject(Constants.Resources.LanguageResources, Constants.Resources.Language.UserInternal)  +
+                        html += "<option selected=\"true\" value=\"" + (int)Globals.UserType.Betting + "\">" +
+                                HttpContext.GetGlobalResourceObject(Constants.Resources.LanguageResources, Constants.Resources.Language.UserBetting) + "</option>";
+                        html += "<option value=\"" + (int)Globals.UserType.Internal + "\">" + HttpContext.GetGlobalResourceObject(Constants.Resources.LanguageResources, Constants.Resources.Language.UserInternal) +
                                 "</option>";
                         break;
+
                     case Globals.UserType.Internal:
-                        html += "<option value=\"" + (int) Globals.UserType.Betting + "\">" + HttpContext.GetGlobalResourceObject(Constants.Resources.LanguageResources, Constants.Resources.Language.UserBetting)  +
+                        html += "<option value=\"" + (int)Globals.UserType.Betting + "\">" + HttpContext.GetGlobalResourceObject(Constants.Resources.LanguageResources, Constants.Resources.Language.UserBetting) +
                                 "</option>";
-                        html += "<option selected=\"true\" value=\"" + (int) Globals.UserType.Internal + "\">" +
-                                HttpContext.GetGlobalResourceObject(Constants.Resources.LanguageResources, Constants.Resources.Language.UserInternal)  + "</option>";
+                        html += "<option selected=\"true\" value=\"" + (int)Globals.UserType.Internal + "\">" +
+                                HttpContext.GetGlobalResourceObject(Constants.Resources.LanguageResources, Constants.Resources.Language.UserInternal) + "</option>";
                         break;
+
                     default:
-                        html += "<option value=\"" + (int) Globals.UserType.Betting + "\">" + HttpContext.GetGlobalResourceObject(Constants.Resources.LanguageResources, Constants.Resources.Language.UserBetting)  +
+                        html += "<option value=\"" + (int)Globals.UserType.Betting + "\">" + HttpContext.GetGlobalResourceObject(Constants.Resources.LanguageResources, Constants.Resources.Language.UserBetting) +
                                 "</option>";
-                        html += "<option value=\"" + (int) Globals.UserType.Internal + "\">" + HttpContext.GetGlobalResourceObject(Constants.Resources.LanguageResources, Constants.Resources.Language.UserInternal)  +
+                        html += "<option value=\"" + (int)Globals.UserType.Internal + "\">" + HttpContext.GetGlobalResourceObject(Constants.Resources.LanguageResources, Constants.Resources.Language.UserInternal) +
                                 "</option>";
                         break;
                 }
@@ -481,14 +474,12 @@ namespace Sunplus.Accounting.Core.Common
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
                 throw ex;
             }
         }
-
 
         public static string GetSportType(int sportID)
         {
@@ -561,7 +552,6 @@ namespace Sunplus.Accounting.Core.Common
             return noDataTpl;
         }
 
-
         public static string GetBetTypeName(int bettype)
         {
             string typename = "";
@@ -570,42 +560,55 @@ namespace Sunplus.Accounting.Core.Common
                 case 1:
                     typename = "Handicap";
                     break;
+
                 case 2:
                     typename = "Odd/Even";
                     break;
+
                 case 12:
                     typename = "1st Odds/Even";
                     break;
+
                 case 3:
                     typename = "Over/Under";
                     break;
+
                 case 4:
                     typename = "Correct Score";
                     break;
+
                 case 5:
                     typename = "1X2";
                     break;
+
                 case 6:
                     typename = "Total Goal";
                     break;
+
                 case 7:
                     typename = "1st Handicap";
                     break;
+
                 case 8:
                     typename = "1st Over/Under";
                     break;
+
                 case 14:
                     typename = " First Goal/Last Goal";
                     break;
+
                 case 15:
                     typename = "1st 1X2";
                     break;
+
                 case 16:
                     typename = "HT/FT";
                     break;
+
                 case 20:
                     typename = "Money Line";
                     break;
+
                 default:
                     typename = "N/A";
                     break;
@@ -615,28 +618,31 @@ namespace Sunplus.Accounting.Core.Common
 
         /* add LiveType and SportType
          By Faisall*/
+
         public static string GetLiveName(int livetype)
         {
             string liveName = "";
             switch (livetype)
-            { 
+            {
                 case 0:
                     liveName = "Non Live";
                     break;
+
                 case 1:
                     liveName = "Live";
                     break;
+
                 case 2:
                     liveName = "Mix Live and Non Live";
                     break;
+
                 default:
                     break;
-
             }
             return liveName;
         }
 
-        public  static string GetSportName(int sportType)
+        public static string GetSportName(int sportType)
         {
             string sportName = "";
             switch (sportType)
@@ -644,15 +650,17 @@ namespace Sunplus.Accounting.Core.Common
                 case 1:
                     sportName = "Soccer Sport";
                     break;
+
                 case 2:
                     sportName = "Other Sports";
                     break;
+
                 case 3:
                     sportName = "Multi Sports";
                     break;
+
                 default:
                     break;
-
             }
             return sportName;
         }
@@ -677,7 +685,7 @@ namespace Sunplus.Accounting.Core.Common
         {
             if (value == 0)
                 return "";
-            value = 100*value;
+            value = 100 * value;
             if (value > 0)
             {
                 return NumberFormat.DecFormat(value, decDigits) + "%";
@@ -695,7 +703,7 @@ namespace Sunplus.Accounting.Core.Common
             decimal ds = CastAide.AsDecimal(divisor, 0);
             if (ds == 0)
                 return "";
-            decimal value = 100*dv/ds;
+            decimal value = 100 * dv / ds;
             if (value == 0)
                 return "";
             if (value > 0)
@@ -709,7 +717,6 @@ namespace Sunplus.Accounting.Core.Common
             }
         }
 
-
         //Phuong.Nguyen <2008-12-30>
         public static string GetPlaceFormat(int placeNo)
         {
@@ -720,11 +727,12 @@ namespace Sunplus.Accounting.Core.Common
                 case 2:
                     return HttpContext.GetGlobalResourceObject(Sunplus.Accounting.Core.Common.Constants.Resources.LanguageResources, "No2").ToString();
                 case 3:
-                    return  HttpContext.GetGlobalResourceObject(Sunplus.Accounting.Core.Common.Constants.Resources.LanguageResources, "No3").ToString();;
+                    return HttpContext.GetGlobalResourceObject(Sunplus.Accounting.Core.Common.Constants.Resources.LanguageResources, "No3").ToString(); ;
                 default:
                     return placeNo + HttpContext.GetGlobalResourceObject(Sunplus.Accounting.Core.Common.Constants.Resources.LanguageResources, "NoOthers").ToString();
             }
         }
+
         public static string GenPager_Betlist(int pageNum, int cpage, int colsNo)
         {
             string footerHtml = WebUtils.LoadTemplate("BetlistFooterPaging.htm");
@@ -733,6 +741,7 @@ namespace Sunplus.Accounting.Core.Common
             TemplateHandler.Assign(ref footerHtml, "{Pager}", pageList);
             return footerHtml;
         }
+
         public static void GetDatetimeOption(string dateOption, ref DateTime fromdate, ref DateTime todate)
         {
             //Get FromDate, ToDate
@@ -742,36 +751,42 @@ namespace Sunplus.Accounting.Core.Common
                 case "1": //today
                     fromdate = todate = DateTime.Now;
                     break;
+
                 case "2": //Yesterday
                     fromdate = DateTime.Now.AddDays(-1);
                     todate = DateTime.Now.AddDays(-1);
                     break;
+
                 case "3": //current week
-                    fromdate = DateTime.Now.AddDays(-1*Convert.ToInt32(DateTime.Now.DayOfWeek));
+                    fromdate = DateTime.Now.AddDays(-1 * Convert.ToInt32(DateTime.Now.DayOfWeek));
                     todate = DateTime.Now;
                     break;
+
                 case "4": //last week
-                    fromdate = DateTime.Now.AddDays(-1*Convert.ToInt32(DateTime.Now.DayOfWeek) - 7);
+                    fromdate = DateTime.Now.AddDays(-1 * Convert.ToInt32(DateTime.Now.DayOfWeek) - 7);
                     todate = fromdate.AddDays(6);
                     break;
+
                 case "5": //Current Month
-                    fromdate = DateTime.Now.AddDays(-1*(DateTime.Now.Day - 1));
+                    fromdate = DateTime.Now.AddDays(-1 * (DateTime.Now.Day - 1));
                     todate = DateTime.Now;
                     break;
+
                 case "6": //Last Month
-                    fromdate = DateTime.Now.AddDays(-1*(DateTime.Now.Day - 1)).AddMonths(-1);
-                    todate = DateTime.Now.AddDays(-1*(DateTime.Now.Day));
+                    fromdate = DateTime.Now.AddDays(-1 * (DateTime.Now.Day - 1)).AddMonths(-1);
+                    todate = DateTime.Now.AddDays(-1 * (DateTime.Now.Day));
                     break;
+
                 case "7": //Since Last Month
-                    fromdate = DateTime.Now.AddDays(-1*(DateTime.Now.Day - 1)).AddMonths(-1);
+                    fromdate = DateTime.Now.AddDays(-1 * (DateTime.Now.Day - 1)).AddMonths(-1);
                     todate = DateTime.Now;
                     break;
-                    /*
-            case "8": //Specific Date
-                fromdate = CastAide.AsDateTime(fdate, DateTime.Now);
-                todate = CastAide.AsDateTime(tdate, DateTime.Now);
-                break;
-             */
+                /*
+        case "8": //Specific Date
+            fromdate = CastAide.AsDateTime(fdate, DateTime.Now);
+            todate = CastAide.AsDateTime(tdate, DateTime.Now);
+            break;
+         */
                 default:
                     fromdate = todate = DateTime.Now;
                     break;
@@ -798,8 +813,8 @@ namespace Sunplus.Accounting.Core.Common
             {
                 excelCon.Close();
                 excelCon.Dispose();
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
             return null;

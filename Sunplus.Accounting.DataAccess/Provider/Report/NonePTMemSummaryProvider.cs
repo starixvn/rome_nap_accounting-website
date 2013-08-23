@@ -5,7 +5,7 @@ using Sunplus.Accounting.Core.Common;
 
 namespace Sunplus.Accounting.DataAccess.Provider.Report
 {
-    public abstract class NonePTMemSummaryProvider : DataAccess 
+    public abstract class NonePTMemSummaryProvider : DataAccess
     {
         public static NonePTMemSummaryProvider Instance()
         {
@@ -16,6 +16,5 @@ namespace Sunplus.Accounting.DataAccess.Provider.Report
         {
             throw new NotImplementedException();
         }
-
     }
 }

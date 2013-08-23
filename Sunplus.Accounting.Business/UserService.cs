@@ -1,19 +1,18 @@
-﻿using System.Linq;
-using System;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using DNAide.Core;
 using DNAide.Data;
-
 using Sunplus.Accounting.Business.BootStrappers;
-using Sunplus.Accounting.Entities;
-using Sunplus.Accounting.Entities.ViewModel;
 using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess;
+using Sunplus.Accounting.Entities;
+using Sunplus.Accounting.Entities.ViewModel;
 using Sunplus.Core.LoggingLib;
-using System.Data;
-using System.Collections;
-using Sunplus.Accounting.Core.Extensions;
 
 namespace Sunplus.Accounting.Business
 {
@@ -31,8 +30,6 @@ namespace Sunplus.Accounting.Business
         {
             _userDAO = userDAO;
         }
-              
-
 
         #region IUserService Members
 
@@ -48,7 +45,7 @@ namespace Sunplus.Accounting.Business
             //    isResetSuccess = _userDAO.ResetWinning(dateTime);
             //}
             //catch (Exception ex)
-            //{                
+            //{
             //    isResetSuccess = false;
             //}
 
@@ -60,7 +57,6 @@ namespace Sunplus.Accounting.Business
             }
             catch (Exception ex)
             {
-                
                 {
                     _logger = CommonBootStrapper.Locator.GetInstance<Sunplus.Core.LoggingLib.ILogger>();
                     _logger.Error(ex.Message, ex);
@@ -85,13 +81,11 @@ namespace Sunplus.Accounting.Business
             return list;
         }
 
-
         public List<FinanceTransaction> GetResetWinning_ByDate(DateTime transDate, bool isReset)
         {
             List<FinanceTransaction> list = _userDAO.GetResetWinning_ByDate(transDate, isReset);
             return list;
         }
-
 
         public DataSet InsDataTmpExcel(int userId, string arrFromCust, string arrToCust, string arrAmount,
                                         string arrExRate, string arrDescription, ref Hashtable error)
@@ -109,7 +103,6 @@ namespace Sunplus.Accounting.Business
 
             return _userDAO.InsDataTmpExcel(userId, arrFromCust, arrToCust, arrAmount, arrExRate, arrDescription, ref error);
         }
-
 
         public DataSet InsDataTmpExcel(int userId, string xml, ref Hashtable error)
         {
@@ -137,12 +130,12 @@ namespace Sunplus.Accounting.Business
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
-                return new Result() { 
+                return new Result()
+                {
                     ErrorCode = 100,
                     ErrorMessage = ex.Message
                 };
             }
-            
         }
 
         public bool DelDataTmpExcel(int userId)
@@ -164,7 +157,7 @@ namespace Sunplus.Accounting.Business
                 error.Add("errmsg", "Param input is invalid!");
                 return null;
             }
-                
+
             return _userDAO.UpdFinanceTransferMul(userId, fileName, fileSize, IP, ref error);
         }
 
@@ -202,7 +195,7 @@ namespace Sunplus.Accounting.Business
             Check.Argument.IsNotNegative(pageSize, "pageSize");
             Check.Argument.IsNotOutOfRange(status, 0, 2, "status");
             Check.Argument.IsNotInvalidDate(transDate, "transDate");
-           // Check.Argument.IsNotInFuture(transDate, "transDate");
+            // Check.Argument.IsNotInFuture(transDate, "transDate");
 
             var entityList = new List<DailyTransaction>();
             try
@@ -217,7 +210,6 @@ namespace Sunplus.Accounting.Business
             }
             catch (Exception ex)
             {
-                
                 {
                     //will refactor later
                     // _logger = new EntLibLogger();
@@ -225,7 +217,6 @@ namespace Sunplus.Accounting.Business
                     _logger.Error(ex.Message, ex);
                 }
             }
-
 
             return entityList;
         }
@@ -253,7 +244,7 @@ namespace Sunplus.Accounting.Business
         public Dictionary<string, int> GetListTotalTransPerGroup(List<DailyTransaction> transList)
         {
             Check.Argument.IsNotNull(transList, "transList");
-            var  items = new Dictionary<string, int>();
+            var items = new Dictionary<string, int>();
             items = transList.AsQueryable().GroupBy(entity => entity.RefNo).Select(entityGroup => new
                                                                                                       {
                                                                                                           RefNo = entityGroup.Key,
@@ -282,7 +273,6 @@ namespace Sunplus.Accounting.Business
             }
             catch (Exception ex)
             {
-                
                 {
                     _logger = CommonBootStrapper.Locator.GetInstance<Sunplus.Core.LoggingLib.ILogger>();
                     _logger.Error(ex.Message, ex);
@@ -310,7 +300,6 @@ namespace Sunplus.Accounting.Business
             }
             catch (Exception ex)
             {
-                
                 {
                     _logger = CommonBootStrapper.Locator.GetInstance<Sunplus.Core.LoggingLib.ILogger>();
                     _logger.Error(ex.Message, ex);
@@ -335,7 +324,7 @@ namespace Sunplus.Accounting.Business
             Check.Argument.IsNotNull(customer, "customer");
             //Check.Argument.IsNotInFuture(fromDate, "fromDate");
             //Check.Argument.IsNotInFuture(toDate, "toDate");
-            
+
             Check.Argument.IsNotInFuture(balanceUpDay, "balanceUpDay");
 
             var entityList = new List<Entities.Statement>();
@@ -360,7 +349,6 @@ namespace Sunplus.Accounting.Business
             }
             catch (Exception ex)
             {
-                
                 {
                     _logger = CommonBootStrapper.Locator.GetInstance<Sunplus.Core.LoggingLib.ILogger>();
                     _logger.Error(ex.Message, ex);
@@ -383,7 +371,6 @@ namespace Sunplus.Accounting.Business
             }
             catch (Exception ex)
             {
-                
                 {
                     _logger = CommonBootStrapper.Locator.GetInstance<Sunplus.Core.LoggingLib.ILogger>();
                     _logger.Error(ex.Message, ex);
@@ -402,7 +389,6 @@ namespace Sunplus.Accounting.Business
             }
             catch (Exception ex)
             {
-                
                 {
                     _logger = CommonBootStrapper.Locator.GetInstance<Sunplus.Core.LoggingLib.ILogger>();
                     _logger.Error(ex.Message, ex);
@@ -412,7 +398,7 @@ namespace Sunplus.Accounting.Business
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="custId"></param>
         /// <param name="roleId"></param>
@@ -430,79 +416,73 @@ namespace Sunplus.Accounting.Business
             Check.Argument.IsNotNegative(pageIndex, "pageIndex");
             Check.Argument.IsNotNegative(pageSize, "pageSize");
             Check.Argument.IsNotInvalidDate(transDate, "transDate");
-            //Check.Argument.IsNotInFuture(transDate, "transDate");            
+            //Check.Argument.IsNotInFuture(transDate, "transDate");
 
             var entityList = new List<DailyTransaction>();
 
             try
             {
                 //always get valid transactions
-                if (transDate <= DateTime.Now)                
+                if (transDate <= DateTime.Now)
                     entityList = _userDAO.GetDailyAllTransaction(transDate, pageIndex, pageSize, type, creator, ref totalPage);
-                
             }
             catch (Exception ex)
             {
-                
                 {
                     _logger = CommonBootStrapper.Locator.GetInstance<Sunplus.Core.LoggingLib.ILogger>();
                     _logger.Error(ex.Message, ex);
                 }
             }
-           
+
             return entityList;
         }
 
-       /* public DailyTransactionDTO GetDailyAllTransaction(DateTime transDate, string type, string creator, int pageIndex, int pageSize, ref int totalPage)
-        {
-            Check.Argument.IsNotNegative(pageIndex, "pageIndex");
-            Check.Argument.IsNotNegative(pageSize, "pageSize");
-            Check.Argument.IsNotInvalidDate(transDate, "transDate");
-            //Check.Argument.IsNotInFuture(transDate, "transDate");            
+        /* public DailyTransactionDTO GetDailyAllTransaction(DateTime transDate, string type, string creator, int pageIndex, int pageSize, ref int totalPage)
+         {
+             Check.Argument.IsNotNegative(pageIndex, "pageIndex");
+             Check.Argument.IsNotNegative(pageSize, "pageSize");
+             Check.Argument.IsNotInvalidDate(transDate, "transDate");
+             //Check.Argument.IsNotInFuture(transDate, "transDate");
 
-            var entityList = new DailyTransactionDTO();
+             var entityList = new DailyTransactionDTO();
 
-            try
-            {
-                //always get valid transactions
-                if (transDate <= DateTime.Now)
-                {
-                    DbResult dbResult = _userDAO.GetDailyAllTransaction(transDate, pageIndex, pageSize, type, creator, ref totalPage);
-                    if (dbResult != null && dbResult.ResultSet.Tables[0].Rows.Count > 0)
-                    {
-                        foreach (DataRow dr in dbResult.ResultSet.Tables[0].Rows)
-                        {
-                            var entity = new DailyTransaction();
-                            entity.Username = (string)dr["username"];
-                            entity.Date = (DateTime)dr["transdate"];
-                            entity.Amount = Convert.ToDouble(dr["amount"]);
-                            entity.Description = (string)dr["transdesc"];
-                            entity.Type = (string)dr["typenamee"];
-                            entity.Creator = (string)dr["creator"];
-                            entity.RowIndex = Convert.ToInt32(dr["rownumber"]);
-                            entityList.items.Add(entity);
-                        }
+             try
+             {
+                 //always get valid transactions
+                 if (transDate <= DateTime.Now)
+                 {
+                     DbResult dbResult = _userDAO.GetDailyAllTransaction(transDate, pageIndex, pageSize, type, creator, ref totalPage);
+                     if (dbResult != null && dbResult.ResultSet.Tables[0].Rows.Count > 0)
+                     {
+                         foreach (DataRow dr in dbResult.ResultSet.Tables[0].Rows)
+                         {
+                             var entity = new DailyTransaction();
+                             entity.Username = (string)dr["username"];
+                             entity.Date = (DateTime)dr["transdate"];
+                             entity.Amount = Convert.ToDouble(dr["amount"]);
+                             entity.Description = (string)dr["transdesc"];
+                             entity.Type = (string)dr["typenamee"];
+                             entity.Creator = (string)dr["creator"];
+                             entity.RowIndex = Convert.ToInt32(dr["rownumber"]);
+                             entityList.items.Add(entity);
+                         }
 
-                        //get total record                
-                        entityList.totalRows = dbResult.ResultSet.Tables[0].Rows.Count;
-                    }     
-                }
+                         //get total record
+                         entityList.totalRows = dbResult.ResultSet.Tables[0].Rows.Count;
+                     }
+                 }
+             }
+             catch (Exception ex)
+             {
+                 {
+                     _logger = CommonBootStrapper.Locator.GetInstance<Sunplus.Core.LoggingLib.ILogger>();
+                     _logger.Error(ex.Message, ex);
+                 }
+             }
 
-            }
-            catch (Exception ex)
-            {
-                
-                {
-                    _logger = CommonBootStrapper.Locator.GetInstance<Sunplus.Core.LoggingLib.ILogger>();
-                    _logger.Error(ex.Message, ex);
-                }
-            }
+             return entityList;
+         }*/
 
-            return entityList;
-        }*/
-
-        #endregion
-
-       
+        #endregion IUserService Members
     }
 }

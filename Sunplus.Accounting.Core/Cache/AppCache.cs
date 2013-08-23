@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web;
 
 namespace Sunplus.Accounting.Core.Cache
 {
     public class AppCache
     {
-
         public static Dictionary<string, string> AccessPermission
         {
             get

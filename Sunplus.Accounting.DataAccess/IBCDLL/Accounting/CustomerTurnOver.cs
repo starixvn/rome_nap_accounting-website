@@ -3,9 +3,6 @@ using System.Collections;
 using DNAide.Data;
 using IBCUtils;
 
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
-
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
     /// <summary>
@@ -37,8 +34,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }

@@ -7,21 +7,20 @@ using Sunplus.Accounting.Entities.Casino;
 
 namespace Sunplus.Accounting.Business.PT.Casino
 {
-    public class CasinoManager:ICasinoManager
+    public class CasinoManager : ICasinoManager
     {
         public CasinoManager()
         {
         }
-      
+
         public void AutoInsertCasinoAccount(CSCustomerDetail customerInfo, int userId, string userName, string ip)
         {
             var casinoLibray = new CasinoLibrary.SBAgent.Customer();
-            //casinoLibray.SiteName = customerInfo.SiteName;                  
+            //casinoLibray.SiteName = customerInfo.SiteName;
             try
             {
                 Task.Factory.StartNew(() =>
                 {
-                      
                     var isSuccess = casinoLibray.AutoInsertAccount(customerInfo.CasinoNo, customerInfo.IBCCustID,
                                                                     customerInfo.UserName, customerInfo.UserName2,
                                                                     customerInfo.FirstName, customerInfo.LastName,
@@ -43,12 +42,10 @@ namespace Sunplus.Accounting.Business.PT.Casino
                         casinoLibray.RemoveAccount(customerInfo.UserName, ip, userId, userName, 3);
                     }
                 });
-
-                
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);                
+                LogExtensions.ExceptionHandler(ex);
                 casinoLibray.RemoveAccount(customerInfo.UserName, ip, userId, userName, 3);
             }
         }

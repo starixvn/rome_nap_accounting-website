@@ -1,70 +1,63 @@
-﻿using Microsoft.Practices.ServiceLocation;
+﻿using Fanex.Tarus.LiveCasino.Business;
+using Fanex.Tarus.LiveCasino.Business.Report;
+using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Sunplus.Accounting.Business.Admin;
 using Sunplus.Accounting.Business.BetAggregator;
 using Sunplus.Accounting.Business.BetList;
 using Sunplus.Accounting.Business.CreditTerm;
 using Sunplus.Accounting.Business.Customer;
+using Sunplus.Accounting.Business.Customer.ConsolidatedGroup;
 using Sunplus.Accounting.Business.ExChangeRate;
-
+using Sunplus.Accounting.Business.LogDisplay;
+using Sunplus.Accounting.Business.PT.Poker;
 using Sunplus.Accounting.Business.PT.Racing;
 using Sunplus.Accounting.Business.PT.ViewPT;
 using Sunplus.Accounting.Business.Report;
+using Sunplus.Accounting.Business.Report.DailyTurnover;
 using Sunplus.Accounting.Business.Report.DailyWL;
 using Sunplus.Accounting.Business.Report.Deposit;
-using Sunplus.Accounting.Business.Report.LeagueWL;
 using Sunplus.Accounting.Business.Report.External;
+using Sunplus.Accounting.Business.Report.LeagueWL;
 using Sunplus.Accounting.Business.Report.MatchAnalysis;
 using Sunplus.Accounting.Business.Report.MatchWL;
+using Sunplus.Accounting.Business.Report.MemberStatistics;
 using Sunplus.Accounting.Business.Report.Monitor;
 using Sunplus.Accounting.Business.Report.Other;
 using Sunplus.Accounting.Business.Report.Other.DuplicateTickets;
 using Sunplus.Accounting.Business.Report.Poker;
 using Sunplus.Accounting.Business.Report.Racing;
+using Sunplus.Accounting.Business.Report.ResetWinning;
 using Sunplus.Accounting.Business.Settle;
 using Sunplus.Accounting.Business.SpecialDelete.NumberGame;
 using Sunplus.Accounting.Business.SpecialDelete.TicketsListing;
+using Sunplus.Accounting.Business.Transaction;
 using Sunplus.Accounting.DataAccess;
-using Sunplus.Accounting.DataAccess.AdoNet.BetAggregatorDAO;
-using Sunplus.Accounting.DataAccess.AdoNet.ReportDAO;
-using Sunplus.Accounting.DataAccess.IBetAggregatorDAO;
-using Sunplus.Accounting.DataAccess.IReportDAO;
-using Sunplus.Accounting.DataAccess.AdoNet.CreditTermDAO;
-using Sunplus.Accounting.DataAccess.AdoNet.PositionTaking.Racing;
-using Sunplus.Accounting.DataAccess.ICreditTermDAO;
-
-using Sunplus.Accounting.DataAccess.PositionTaking.Racing;
 using Sunplus.Accounting.DataAccess.AdoNet;
 using Sunplus.Accounting.DataAccess.AdoNet.Admin;
+using Sunplus.Accounting.DataAccess.AdoNet.BetAggregatorDAO;
 using Sunplus.Accounting.DataAccess.AdoNet.CreditTermDAO;
+using Sunplus.Accounting.DataAccess.AdoNet.LogDisplayDAO;
+using Sunplus.Accounting.DataAccess.AdoNet.PositionTaking;
+using Sunplus.Accounting.DataAccess.AdoNet.PositionTaking.Racing;
 using Sunplus.Accounting.DataAccess.AdoNet.ReportDAO;
 using Sunplus.Accounting.DataAccess.IAdmin;
+using Sunplus.Accounting.DataAccess.IBetAggregatorDAO;
 using Sunplus.Accounting.DataAccess.ICreditTermDAO;
+using Sunplus.Accounting.DataAccess.ILogDisplay;
 using Sunplus.Accounting.DataAccess.IReportDAO;
-using Sunplus.Accounting.DataAccess.Report;
+using Sunplus.Accounting.DataAccess.PositionTaking;
+using Sunplus.Accounting.DataAccess.PositionTaking.Racing;
+using Sunplus.Accounting.DataAccess.Report.DailyTurnoverDAO;
 using Sunplus.Accounting.DataAccess.Report.MatchAnalysis;
 using Sunplus.Accounting.DataAccess.Report.MatchWL;
+using Sunplus.Accounting.DataAccess.Report.ResetWinning;
 using Sunplus.Accounting.DataAccess.Settlement;
 using Sunplus.Accounting.DataAccess.SpecialDelete;
 using Sunplus.Accounting.DataAccess.SpecialDelete.TicketsListing;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.Report.Mixparlay;
-using Sunplus.Accounting.Business.Report.MemberStatistics;
-using Sunplus.Accounting.DataAccess.PositionTaking;
-using Sunplus.Accounting.DataAccess.AdoNet.PositionTaking;
-using Sunplus.Accounting.Business.PT.Poker;
-using Sunplus.Accounting.DataAccess.ILogDisplay;
-using Sunplus.Accounting.DataAccess.AdoNet.LogDisplayDAO;
-using Sunplus.Accounting.Business.LogDisplay;
 using Sunplus.Accounting.Report.CombinationMixparlay;
-using Sunplus.Accounting.Business.Customer.ConsolidatedGroup;
-using Sunplus.Accounting.Business.Transaction;
-using Sunplus.Accounting.Business.Report.DailyTurnover;
-using Sunplus.Accounting.DataAccess.Report.DailyTurnoverDAO;
-using Fanex.Tarus.LiveCasino.Business.Report;
-using Fanex.Tarus.LiveCasino.Business;
-using Sunplus.Accounting.Business.Report.ResetWinning;
-using Sunplus.Accounting.DataAccess.Report.ResetWinning;
+using Sunplus.Accounting.Report.Mixparlay;
+using Sunplus.Core.LoggingLib;
 
 namespace Sunplus.Accounting.Business.BootStrappers
 {
@@ -81,7 +74,7 @@ namespace Sunplus.Accounting.Business.BootStrappers
         }
 
         /// <summary>
-        /// Register all type to resolve 
+        /// Register all type to resolve
         /// </summary>
         /// <param name="container"></param>
         private static void Register(IUnityContainer container)
@@ -103,7 +96,7 @@ namespace Sunplus.Accounting.Business.BootStrappers
                 .RegisterType<IMatchWL2aDAO, MatchWL2aDAO>()
                 .RegisterType<IMatchWL2aService, MatchWL2aService>()
                 .RegisterType<IGamesActiveMembersManager, GamesActiveMembersManager>()
-               
+
                 .RegisterType<IHelperDAO, HelperDAO>()
                 .RegisterType<IHelper, Helper>()
                 .RegisterType<ICustomerDAO, CustomerDAO>()
@@ -115,7 +108,7 @@ namespace Sunplus.Accounting.Business.BootStrappers
                 .RegisterType<IRacingManager, RacingManager>()
                 .RegisterType<IViewPtManager, ViewPTManager>()
                 .RegisterType<IRacingDAO, RacingDAO>()
-              
+
                 .RegisterType<IMeetingCommDAO, MeetingCommDAO>()
                 .RegisterType<IMeetingCommManager, MeetingCommManager>()
                 .RegisterType<IReportRacingDAO, ReportRacingDAO>()
@@ -221,8 +214,6 @@ namespace Sunplus.Accounting.Business.BootStrappers
                 .RegisterType<ISettlementDAO, SettlementDAO>()
 
                 ;
-
         }
-
     }
 }

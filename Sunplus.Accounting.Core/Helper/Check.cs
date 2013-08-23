@@ -36,7 +36,6 @@ namespace Sunplus.Accounting.Core.Helper
                 }
             }
 
-
             [DebuggerStepThrough]
             public static void IsNotEmpty(string argument, string argumentName)
             {
@@ -180,7 +179,7 @@ namespace Sunplus.Accounting.Core.Helper
                     //throw new ArgumentOutOfRangeException(argumentName);
                     return false;
                 }
-                return true;    
+                return true;
             }
 
             [DebuggerStepThrough]
@@ -259,6 +258,6 @@ namespace Sunplus.Accounting.Core.Helper
             }
         }
 
-        #endregion
+        #endregion Nested type: Argument
     }
 }

@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Web;
 using System.Collections;
-using DNAide.Data;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Core.LoggingLib;
-
 
 public partial class Customer_V2_UpdateTransferTime : RequiredAuthorizationPage
 {
@@ -13,6 +8,7 @@ public partial class Customer_V2_UpdateTransferTime : RequiredAuthorizationPage
     {
         return true;
     }
+
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -21,19 +17,17 @@ public partial class Customer_V2_UpdateTransferTime : RequiredAuthorizationPage
         }
         catch (Exception ex)
         {
-
-
             LogExtensions.ExceptionHandler(ex);
 
             Response.Write("<script type=\"text/javascript\">parent.showAlertMessage('err','" + IBCUtils.Encryption.RemoveSpecialChars(ex.Message) + "',1); parent.afterUpdate(false, 2000);</script>");
-
-
         }
     }
+
     protected override void RedirectError()
     {
         Response.Write("<script type=\"text/javascript\">parent.showAlertMessage('err','" + Resources.ErrorMsg.error_InvalidRequest + "',1);</script>");
     }
+
     protected void UpdateData()
     {
         try
@@ -119,7 +113,6 @@ public partial class Customer_V2_UpdateTransferTime : RequiredAuthorizationPage
             var ipClient = Sunplus.Accounting.Core.Helper.Utils.GetClientIP();
             param.Add("ip", ipClient);
 
-            
             var rs = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.UpdTransferOption(param);
             if (rs.ErrorCode != 0)
             {
@@ -134,9 +127,7 @@ public partial class Customer_V2_UpdateTransferTime : RequiredAuthorizationPage
             }
             else
             {
-
                 Response.Write("<script type=\"text/javascript\">parent.showAlertMessage('err','Update transfer condition successfully.',0); parent.afterUpdate(true, 2000); </script>");
-
             }
         }
         catch (Exception ex)

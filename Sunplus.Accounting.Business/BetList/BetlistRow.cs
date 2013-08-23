@@ -6,13 +6,14 @@
 namespace Sunplus.Accounting.Business.BetList
 {
     #region BetlistRow
+
     public class BetlistRow
     {
-        
         private string _Betteam = string.Empty;
-       
+
         private string _Race = string.Empty;
         private string _Status = string.Empty;
+
         public int Sporttype { get; set; }
 
         public long TransID { get; set; }
@@ -73,7 +74,8 @@ namespace Sunplus.Accounting.Business.BetList
 
         public int Liveawayscore { get; set; }
 
-        string _IP = string.Empty;
+        private string _IP = string.Empty;
+
         public string IP
         {
             get { return _IP; }
@@ -82,10 +84,10 @@ namespace Sunplus.Accounting.Business.BetList
 
         public int LeagueID { get; set; }
 
-
         public int MatchID { get; set; }
 
-        string _MatchCode = string.Empty;
+        private string _MatchCode = string.Empty;
+
         public string MatchCode
         {
             get { return _MatchCode; }
@@ -102,7 +104,8 @@ namespace Sunplus.Accounting.Business.BetList
 
         public int AwayID { get; set; }
 
-        string _Betstatus = string.Empty;
+        private string _Betstatus = string.Empty;
+
         public string Betstatus
         {
             get { return _Betstatus; }
@@ -141,12 +144,11 @@ namespace Sunplus.Accounting.Business.BetList
 
         public decimal AcommEUR { get; set; }
 
-
         public bool IsMixParlay
         {
             get { return Bettype == 9; }
         }
     }
 
-    #endregion
+    #endregion BetlistRow
 }

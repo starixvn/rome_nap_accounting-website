@@ -1,23 +1,22 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Web;
 using System.Collections.Specialized;
+using System.Data;
+using System.Linq;
+using System.Web;
 using DNAide.Core;
 using DNAide.Data;
 using IBCUtils;
 using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business.CacheManager;
-using Sunplus.Accounting.Entities.Casino;
-using Sunplus.Accounting.Entities.Customer;
-using System.Data;
-using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
+using Sunplus.Accounting.Entities.Casino;
+using Sunplus.Accounting.Entities.Customer;
 using Sunplus.Core.CachingLib;
-using System.Linq;
-using Sunplus.Accounting.DataAccess.AdoNet;
+
 namespace Sunplus.Accounting.Business.Customer
 {
     /// <summary>
@@ -26,17 +25,19 @@ namespace Sunplus.Accounting.Business.Customer
     public class CustomerService
     {
         private ICustomerDAO _customerDAO;
-        
+
         /// <summary>
         /// Cache key
         /// </summary>
-        /// 
+        ///
         private const string ListSystemUsernameKey = "ListSystemUsername";
+
         private const string ListSystemUserIdKey = "ListSystemUserid";
         private const string ListSystemCurrencyIdKey = "ListSystemCurrencyId";
         private static readonly ICache Cache = CacheService.CreateInstance(CacheType.ShareCached);
         private static Dictionary<string, StringCollection> _listSystemUser;
         private static Dictionary<string, StringCollection> _listSystemCurrency;
+
         public CustomerService(ICustomerDAO customerDao)
         {
             //
@@ -69,10 +70,9 @@ namespace Sunplus.Accounting.Business.Customer
             return null;
         }
 
-  
         /// <summary>
         /// Check currency of a user whether match the site currency
-        /// the result will be contain in session, 
+        /// the result will be contain in session,
         /// b/c change currency function seldom happens,
         /// and DBA also do this
         /// Lewin
@@ -105,7 +105,6 @@ namespace Sunplus.Accounting.Business.Customer
                 }
             }
 
-
             return isValid;
         }
 
@@ -132,7 +131,6 @@ namespace Sunplus.Accounting.Business.Customer
             return error;
         }
 
-    
         /// <summary>
         /// check user (by Username) is belong to current system
         /// </summary>
@@ -141,7 +139,7 @@ namespace Sunplus.Accounting.Business.Customer
         /// <returns></returns>
         public static bool IsBelongSystem(string userName, string accountingSystem)
         {
-            if (accountingSystem.ToLower().Equals(Enumerations.AccountingSystem.Accounting.ToString().ToLower() ))
+            if (accountingSystem.ToLower().Equals(Enumerations.AccountingSystem.Accounting.ToString().ToLower()))
                 return true;
 
             if (string.IsNullOrEmpty(userName))
@@ -156,13 +154,11 @@ namespace Sunplus.Accounting.Business.Customer
             {
                 listSystemUser = new Dictionary<string, StringCollection>();
                 listUser = new StringCollection();
-
             }
             else
             {
                 listUser = listSystemUser.ContainsKey(listUserKey) ? listSystemUser[listUserKey] : new StringCollection();
             }
-
 
             isValidUser = listUser.Contains(userName);
             //if user does not existed in cache
@@ -179,18 +175,17 @@ namespace Sunplus.Accounting.Business.Customer
                 {
                     listUser.Add(userName);
                     //save cache in 5 hours
-                    if(listSystemUser.ContainsKey(listUserKey))
-                        listSystemUser[listUserKey] =  listUser;
+                    if (listSystemUser.ContainsKey(listUserKey))
+                        listSystemUser[listUserKey] = listUser;
                     else
                         listSystemUser.Add(listUserKey, listUser);
-                
+
                     SystemUsernames = listSystemUser;
                 }
-            }       
-       
+            }
+
             return isValidUser;
         }
-
 
         /// <summary>
         /// check user (by custid) is belong to current system
@@ -215,13 +210,11 @@ namespace Sunplus.Accounting.Business.Customer
             {
                 listSystemUser = new Dictionary<string, StringCollection>();
                 listUser = new StringCollection();
-
             }
             else
             {
                 listUser = listSystemUser.ContainsKey(listUserKey) ? listSystemUser[listUserKey] : new StringCollection();
             }
-
 
             isValidUser = listUser.Contains(custId.ToString());
             //if user does not existed in cache
@@ -250,7 +243,6 @@ namespace Sunplus.Accounting.Business.Customer
             return isValidUser;
         }
 
-
         /// <summary>
         /// check user (by currency) is belong to current system
         /// </summary>
@@ -258,7 +250,7 @@ namespace Sunplus.Accounting.Business.Customer
         /// <param name="accountingSystem"></param>
         /// <param name="checkCurrency"></param>
         /// <returns></returns>
-        public static bool IsBelongSystem(int currencyId, string accountingSystem,  bool checkCurrency)
+        public static bool IsBelongSystem(int currencyId, string accountingSystem, bool checkCurrency)
         {
             if (accountingSystem.Equals(Enumerations.AccountingSystem.Accounting))
                 return true;
@@ -275,13 +267,11 @@ namespace Sunplus.Accounting.Business.Customer
             {
                 listSystemCurrency = new Dictionary<string, StringCollection>();
                 listCurrency = new StringCollection();
-
             }
             else
             {
                 listCurrency = listSystemCurrency.ContainsKey(listCurrencyKey) ? listSystemCurrency[listCurrencyKey] : new StringCollection();
             }
-
 
             isValidCurrency = listCurrency.Contains(currencyId.ToString());
             //if user does not existed in cache
@@ -311,6 +301,7 @@ namespace Sunplus.Accounting.Business.Customer
 
             return isValidCurrency;
         }
+
         /// <summary>
         /// Clear all system users
         /// </summary>
@@ -325,7 +316,6 @@ namespace Sunplus.Accounting.Business.Customer
         /// </summary>
         private static Dictionary<string, StringCollection> SystemUsernames
         {
-
             get
             {
                 return Cache.Get(ListSystemUsernameKey) as Dictionary<string, StringCollection>;
@@ -341,11 +331,9 @@ namespace Sunplus.Accounting.Business.Customer
         /// </summary>
         private static Dictionary<string, StringCollection> SystemUserIds
         {
-
             get
             {
                 return Cache.Get(ListSystemUserIdKey) as Dictionary<string, StringCollection>;
-            
             }
             set
             {
@@ -358,7 +346,6 @@ namespace Sunplus.Accounting.Business.Customer
         /// </summary>
         private static Dictionary<string, StringCollection> SystemCurrencyIds
         {
-
             get
             {
                 return Cache.Get(ListSystemCurrencyIdKey) as Dictionary<string, StringCollection>;
@@ -368,7 +355,6 @@ namespace Sunplus.Accounting.Business.Customer
                 Cache.Add(ListSystemCurrencyIdKey, value, 1000 * 3600 * 5);
             }
         }
-
 
         public static CustDetail GetCustInfo(HttpRequest data)
         {
@@ -396,9 +382,7 @@ namespace Sunplus.Accounting.Business.Customer
                 customer.IsUplineSyncBingo = uplineDetail.SyncBingo;
                 customer.IsUplineSyncLiveCasino = uplineDetail.LiveCasinoSync;
                 customer.IsUplineDisableLiveCasino = uplineDetail.LiveCasinoDisabled;
-
             }
-
 
             customer.FirstName = data["txtFirstname"] ?? data["txtFName"];
             customer.LastName = data["txtLastname"] ?? data["txtLName"];
@@ -427,6 +411,5 @@ namespace Sunplus.Accounting.Business.Customer
 
             return customer;
         }
-
     }
 }

@@ -1,32 +1,31 @@
 using System;
 using System.Data;
 using System.Text;
-using Sunplus.Accounting.Business;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Entities.Casino;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Core.LoggingLib;
-using IBCUtils;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using DNAide.Data;
 using DNAide.Core;
-
+using DNAide.Data;
+using IBCUtils;
+using Sunplus.Accounting.Business;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using Sunplus.Accounting.Entities.Casino;
 
 public partial class CustomerBalance : PageBase
 {
     private System.Globalization.CultureInfo cult = System.Globalization.CultureInfo.CurrentCulture;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         this.sTitle.Text = "Customer Balance";
         string _s = string.Empty;
         try
-        {            
-            int _custid =CastAide.AsInt32(Request["agentid"]);
+        {
+            int _custid = CastAide.AsInt32(Request["agentid"]);
             if (_custid == -1) throw new AccException(IbcError.USERNAME_UNAVAILABLE_MSG);
-            
+
             string _custIdList = Request["memberIdList"] as string ?? string.Empty;
-            string errmsg="";
+            string errmsg = "";
             if (string.IsNullOrEmpty(_custIdList)) // select
             {
                 _s = SelectCustomerBalance(_custid);
@@ -70,7 +69,6 @@ public partial class CustomerBalance : PageBase
                     }
                     if (_syncedlist != "")
                     {
-
                         if (_syncedlist.IndexOf(",") >= 0)
                         {
                             _syncedlist = _syncedlist.Substring(0, _syncedlist.Length - 1);
@@ -84,20 +82,18 @@ public partial class CustomerBalance : PageBase
                         else
                         {
                             _s += "<br />" + AlertMessage.GetMsg(Resources.Language.casinoFullResetUnSuccessful, AlertMessage.MsgType.Error);
-
                         }
                     }
                 }
             }
-            
         }
         catch (AccException ex)
         {
             _s = AlertMessage.GetMsg(ex.Message, AlertMessage.MsgType.Error);
             string nl = Environment.NewLine;
-            _s+="<script type='text/javascript'>" + nl;
-            _s+="setTimeout(\"this.location.replace(this.location);\",3000);" + nl;
-            _s+="</script>" + nl;
+            _s += "<script type='text/javascript'>" + nl;
+            _s += "setTimeout(\"this.location.replace(this.location);\",3000);" + nl;
+            _s += "</script>" + nl;
             Logs.Write(ex.Message);
         }
         catch (Exception ex)
@@ -116,17 +112,16 @@ public partial class CustomerBalance : PageBase
     {
         StringBuilder strcontent = new StringBuilder();
         try
-        {            
+        {
             Boolean isDisCheckAll = false;
             DbResult ds = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerBalance.CustomerSelectClearBalance(_custid);
             strcontent.Append("<script>datarows=[");
-            int cnt = 0;      
-            DataRowCollection rows=ds.ResultSet.Tables[0].Rows;
+            int cnt = 0;
+            DataRowCollection rows = ds.ResultSet.Tables[0].Rows;
             int cntSyncCasino = 0;
 
             foreach (DataRow dr in rows)
             {
-
                 if (CastAide.AsBoolean(dr["SyncCasino"]))
                 {
                     cntSyncCasino++;
@@ -136,7 +131,7 @@ public partial class CustomerBalance : PageBase
                 strcontent.Append("'" + string.Format(cult, "{0:#,##0.00}", (Convert.IsDBNull(dr["credit"]) ? "0.00" : dr["credit"])) + "',");
                 double balance = (Convert.IsDBNull(dr["balance"]) ? 0.00 : Convert.ToDouble(dr["balance"]));
                 double yesterdayBalance = (Convert.IsDBNull(dr["yesterday_balance"]) ? 0.00 : Convert.ToDouble(dr["yesterday_balance"]));
-                
+
                 string balanceColor = (balance < 0) ? "#ff0000" : "#0000ff";
                 string yesterdayBalanceColor = (yesterdayBalance < 0) ? "#ff0000" : "#0000ff";
                 strcontent.Append("'" + balanceColor + "',");
@@ -146,9 +141,8 @@ public partial class CustomerBalance : PageBase
                 strcontent.Append("'" + string.Format(cult, "{0:#,##0.00}", (Convert.IsDBNull(dr["outstanding"]) ? "0.00" : dr["outstanding"])) + "',");
                 strcontent.Append("'" + dr["custid"].ToString() + "',");
                 strcontent.Append("'" + yesterdayBalance.ToString() + "',");
-                
-                strcontent.Append("'" + dr["username"].ToString().Replace("'","&#39;") + "',");
 
+                strcontent.Append("'" + dr["username"].ToString().Replace("'", "&#39;") + "',");
 
                 strcontent.Append("'" + StringUtils.ToHTMLString(dr["firstname"].ToString()) + "',");
                 strcontent.Append("'" + StringUtils.ToHTMLString(dr["lastname"].ToString()) + "',");
@@ -177,7 +171,7 @@ public partial class CustomerBalance : PageBase
                 else
                     strcontent.Append("'0',");
 
-                if (cnt < rows.Count-1)
+                if (cnt < rows.Count - 1)
                 {
                     strcontent.Append("],");
                 }
@@ -192,11 +186,11 @@ public partial class CustomerBalance : PageBase
             strcontent.Append("total=" + rows.Count.ToString() + ";");
             if (isDisCheckAll)
             {
-                strcontent.Append("isDisableAll=false;"); 
+                strcontent.Append("isDisableAll=false;");
             }
             else
             {
-                strcontent.Append("isDisableAll=true;"); 
+                strcontent.Append("isDisableAll=true;");
             }
 
             //strcontent.Append("var cntSyncCasino=" + cntSyncCasino + ";" );
@@ -207,29 +201,27 @@ public partial class CustomerBalance : PageBase
         catch (Exception ex)
         {
             throw ex;
-        }        
+        }
         return strcontent.ToString();
     }
 
-    private string UpdateCustomerBalance(int _accId, int _custId, string _custIdList,bool isCheckAll,ref string errmsg)
-    {        
+    private string UpdateCustomerBalance(int _accId, int _custId, string _custIdList, bool isCheckAll, ref string errmsg)
+    {
         try
         {
             Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerBalance.CustomerInsertClearBalance(_accId, _custId, _custIdList, isCheckAll, ref errmsg, Request.UserHostAddress);
-           
+
             string str = AlertMessage.GetMsg("Customer Balance Update Successfully. Please wait...", AlertMessage.MsgType.Success);
             StringBuilder s = new StringBuilder();
             string nl = Environment.NewLine;
             s.Append("<script type='text/javascript'>" + nl);
             s.Append("setTimeout(\"this.location.replace(this.location);\",3000);" + nl);
             s.Append("</script>" + nl);
-            return str + s.ToString();                   
+            return str + s.ToString();
         }
-        catch 
+        catch
         {
             throw;
-        }        
+        }
     }
-
-
 }

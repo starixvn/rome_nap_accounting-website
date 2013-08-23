@@ -1,29 +1,14 @@
 using System;
 using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using DNAide.Web;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Core.LoggingLib;
-using IBCUtils.DAL;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using System.Text;
+using DNAide.Web;
 using IBCUtils;
-using IBCUtils.Web;
-
-
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
 public partial class Report_MarginReport : PageBase
 {
-
     public double actual_stake = 0;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         Title = Resources.Language.MarginReport;
@@ -34,9 +19,9 @@ public partial class Report_MarginReport : PageBase
             else content.Text = "<b><font color='red'>" + Resources.Language.InvalidFormatNumber + "</b></font><br>" + getcontent(0);
         }
         else content.Text = getcontent(actual_stake);
-        
     }
-    string getcontent(double actual_stake)
+
+    private string getcontent(double actual_stake)
     {
         StringBuilder html = new StringBuilder();
         string norow = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("NoInformation.htm");
@@ -82,14 +67,15 @@ public partial class Report_MarginReport : PageBase
         }
         catch (Exception ex)
         {
-            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex); 
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             html.Append(norow);
             html.Append("</table>");
         }
         html.Append("</table>");
         return html.ToString();
     }
-    bool isNumber(string input)
+
+    private bool isNumber(string input)
     {
         string str = "0123456789";
         int count = 0;

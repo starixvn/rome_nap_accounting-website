@@ -36,12 +36,15 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
             string sortDataType)
         {
             #region get data
+
             var traderPerformanceDetail = new TraderPerfomanceManager();
             var traderResult = new TraderPerformanceDetailDTO();
             traderResult = traderPerformanceDetail.GetTraderPerformanceDetail(fromDate, toDate, isSoccer, getNewData);
-            #endregion
+
+            #endregion get data
 
             #region assign and return
+
             if (traderResult != null && traderResult.rows != null)
             {
                 var traderPaging = new TraderPerformanceDetailDTO();
@@ -62,7 +65,8 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
             }
             else
                 return traderResult;
-            #endregion
+
+            #endregion assign and return
         }
 
         public void TraderPerformanceDetailExport2Excel(string fromDate, string toDate, int isSoccer)

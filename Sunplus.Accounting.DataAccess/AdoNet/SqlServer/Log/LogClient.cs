@@ -5,7 +5,7 @@
 /// </summary>
 namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Log
 {
-    public class LogClient:LogProvider
+    public class LogClient : LogProvider
     {
         public override System.Data.DataRowCollection GeneralLog(int custId)
         {

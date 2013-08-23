@@ -9,16 +9,13 @@ using CasinoLibrary.Model.Common;
 using DNAide.Data;
 using JSoft.Utility;
 
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
-using Sunplus.Core.LoggingLib;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
     public static class CasinoSynchronise
     {
-        
         private static CultureInfo cult = CultureInfo.CurrentCulture;
 
         /// <summary>
@@ -39,8 +36,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
@@ -77,14 +73,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dtb;
         }
 
         /// <summary>
-        /// Update SyncCasino = 1.	
+        /// Update SyncCasino = 1.
         /// Simon@20090704
         /// </summary>
         public static DbResult Acc_CustomerSyncUpd(int accid, int custid)
@@ -99,13 +94,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
 
-        private class SpConfig: DataAccess
+        private class SpConfig : DataAccess
         {
             public static StoreProcedureElement GetCasinoStoreProcedure(string alias)
             {

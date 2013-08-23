@@ -3,14 +3,13 @@ using System.Data;
 using System.Text;
 using DNAide.Core;
 using DNAide.Data;
+using DNAide.Utils;
 using Sunplus.Accounting.Business.CacheManager;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Web.TplCore.App_Templates.SpecialDelete.App_Templates.SpecialDelete;
 using Sunplus.Accounting.DataAccess.Entity.SqlServer.SpecialDelete;
 using Sunplus.Accounting.DataAccess.Provider.SpecialDelete;
-using IBCUtils;
-using DNAide.Utils;
 
 /// <summary>
 /// Summary description for SpecialDelete_Outright
@@ -39,7 +38,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             return Options.ToString();
         }
 
-        #endregion
+        #endregion GetOutrightByLeagueID
 
         #region GetSpecialDelete
 
@@ -48,7 +47,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             return GeneralBets(param);
         }
 
-        #endregion
+        #endregion GetSpecialDelete
 
         #region GeneralBets
 
@@ -159,14 +158,13 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                     }
                 }
 
-
                 index = 0;
                 countTbl++;
             }
             return orlist.ToString();
         }
 
-        #endregion
+        #endregion GeneralBets
 
         #region Mapping
 
@@ -187,7 +185,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             return row;
         }
 
-        #endregion
+        #endregion Mapping
 
         #region AssignDatarow
 
@@ -207,7 +205,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             transrow_normal.Amount = NumberFormat.DecFormat(row.StakePositiontaking, 2);
         }
 
-        #endregion
+        #endregion AssignDatarow
 
         #region AssignDatarow
 
@@ -235,7 +233,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             transRowTpl_SB.IsDelete = IsDelete;
         }
 
-        #endregion
+        #endregion AssignDatarow
 
         #region _OutrightList_bets_SpecialContent_Header
 
@@ -247,6 +245,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             header.SB = GetSpecialBettype(type);
         }
 
-        #endregion
+        #endregion _OutrightList_bets_SpecialContent_Header
     }
 }

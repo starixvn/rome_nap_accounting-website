@@ -1,6 +1,5 @@
 ﻿namespace Sunplus.Accounting.Entities
 {
-
     /// <summary>
     /// Summary description for IUser
     /// </summary>
@@ -18,5 +17,4 @@
         string Fullname
         { get; set; }
     }
-
 }

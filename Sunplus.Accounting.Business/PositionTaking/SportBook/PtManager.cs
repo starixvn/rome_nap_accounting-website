@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Web;
 
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
-
 //using Sunplus.Core.LoggingLib;
 
 namespace Sunplus.Accounting.Business.PositionTaking.SportBook
@@ -23,7 +20,7 @@ namespace Sunplus.Accounting.Business.PositionTaking.SportBook
             Member = 1
         }
 
-        #endregion
+        #endregion Level enum
 
         #region PtType enum
 
@@ -41,7 +38,7 @@ namespace Sunplus.Accounting.Business.PositionTaking.SportBook
             AddNewMember = 9
         }
 
-        #endregion
+        #endregion PtType enum
 
         #region IPtService Members
 
@@ -49,7 +46,7 @@ namespace Sunplus.Accounting.Business.PositionTaking.SportBook
         /// Insert New Super, Master, Agent or Member
         /// </summary>
         /// <param name="level">Super=4, Master=3, Agent=2 or Member=1</param>
-        /// <param name="ptType"> EditSuper = 0, EditMaster = 1, EditAgent = 2, EditSuperOnMember = 3, EditMasterOnMember =4, EditAgentOnMember = 5, 
+        /// <param name="ptType"> EditSuper = 0, EditMaster = 1, EditAgent = 2, EditSuperOnMember = 3, EditMasterOnMember =4, EditAgentOnMember = 5,
         ///AddNewSuper = 6, AddNewMaster = 7, AddNewAgent = 8, AddNewMember = 9</param>
         /// <param name="httpRequest"></param>
         /// <returns></returns>
@@ -62,7 +59,6 @@ namespace Sunplus.Accounting.Business.PositionTaking.SportBook
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return string.Empty;
             }
@@ -77,12 +73,10 @@ namespace Sunplus.Accounting.Business.PositionTaking.SportBook
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return string.Empty;
             }
         }
-
 
         public string Select(Level level, PtType ptType)
         {
@@ -94,12 +88,15 @@ namespace Sunplus.Accounting.Business.PositionTaking.SportBook
                     case Level.Super:
                         basePt = new SuperPT();
                         break;
+
                     case Level.Master:
                         basePt = new MasterPT();
                         break;
+
                     case Level.Agent:
                         basePt = new AgentPT();
                         break;
+
                     case Level.Member:
                         basePt = new MemberPT();
                         break;
@@ -108,12 +105,11 @@ namespace Sunplus.Accounting.Business.PositionTaking.SportBook
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return string.Empty;
             }
         }
 
-        #endregion
+        #endregion IPtService Members
     }
 }

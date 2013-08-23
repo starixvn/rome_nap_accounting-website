@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Sunplus.Accounting.Entities.Report.Others
 {
@@ -10,7 +8,7 @@ namespace Sunplus.Accounting.Entities.Report.Others
     [DataContract]
     public class DuplicateTicketsDTO
     {
-         [DataMember]
+        [DataMember]
         public List<DuplicateTickets> Items { get; set; }
     }
 

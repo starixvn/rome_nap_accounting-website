@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ServiceModel.Activation;
 using ExcelUtil.Spreadsheet;
 using Sunplus.Accounting.Business.ExChangeRate;
-using Sunplus.Accounting.Business.Transaction;
 using Sunplus.Accounting.Entities;
 
 //using Sunplus.Core.LoggingLib;
@@ -24,7 +22,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.ExRate
 
         public List<ExchangeRate> LoadExchangeRateOpenTote()
         {
-
             var exRateMng = new ExchangeRateManager();
             return exRateMng.LoadExchangeRateOpenTote();
         }

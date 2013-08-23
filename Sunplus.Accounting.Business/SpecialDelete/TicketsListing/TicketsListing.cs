@@ -14,7 +14,6 @@ using Sunplus.Accounting.DataAccess.SpecialDelete.TicketsListing;
 using Sunplus.Accounting.Entities.SpecialDelete.TicketsListing;
 using Sunplus.Data.DataAbstract.Entity;
 
-
 namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
 {
     public class TicketsListing : ITicketsListing
@@ -32,6 +31,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
         }
 
         #region SelAllLicensee
+
         public LicenseeDTO SelAllLicensee()
         {
             LicenseeDTO licensee = new LicenseeDTO();
@@ -63,9 +63,11 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
 
             return licensee;
         }
-        #endregion
+
+        #endregion SelAllLicensee
 
         #region SelBettype
+
         public BettypeDTO SelBettype()
         {
             BettypeDTO bettype = new BettypeDTO();
@@ -98,6 +100,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
                                 LiveIndicator = 0
                             });
                             break;
+
                         case 1:
                             int bt = CastAide.AsInt32(row["typeid"]);
                             int liveIndicator = CastAide.AsInt32(row["liveindicator"]);
@@ -122,6 +125,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
                                 });
                             }
                             break;
+
                         case 2:
                             bettype.ItemsVS.Add(new Bettype()
                             {
@@ -141,7 +145,8 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
 
             return bettype;
         }
-        #endregion
+
+        #endregion SelBettype
 
         #region SelTicketsListing
 
@@ -183,7 +188,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
                     }
                     return product;
                 }
-
             }
             catch (Exception ex)
             {
@@ -193,7 +197,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
 
             return product;
         }
-
 
         private List<ProductListing> assignTicketsListingGroupByLicensee(DataTable tb)
         {
@@ -283,9 +286,9 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
             ticketListingPaging.Items = ticketListing.Items.Select(c => c).Skip(pageSize * (pageIndex - 1)).Take(pageSize).ToList();
             ticketListingPaging.totalItem = ticketListing.totalItem;
             return ticketListingPaging;
-
         }
-        #endregion
+
+        #endregion SelTicketsListing
 
         private string GetBettypeName(int bettype, bool liveIndicator)
         {
@@ -314,7 +317,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
             else
             {
                 return tb.AsEnumerable().Select(s => CastAide.AsString(s["bettype"])).Distinct().ToList();
-
             }
         }
 
@@ -329,11 +331,12 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
                 }
             }
             return list;
-
         }
+
         public class NGBettype
         {
             public string ID { get; set; }
+
             public int LiveIndicator { get; set; }
         }
 
@@ -343,9 +346,11 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
             var response = HttpContext.Current.Response;
 
             #region getdata
+
             var betListManager = new Sunplus.Accounting.Business.BetList.BetListManager();
             var ticketsListingBetlistDTO = betListManager.GetTicketsListingBetlist(isMain, _type, matchID, Licensees, bettypes, bettypesLive, groupBy, Language, LiveType, HomeScore, AwayScore, FromTransDate, ToTransDate, SAFilter);
-            #endregion
+
+            #endregion getdata
 
             response.Clear();
             response.AddHeader("content-disposition", "attachment;filename=ticketlist_" + Licensees + ".xls");
@@ -353,6 +358,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
             response.ContentType = "application/vnd.xls";
 
             #region excel
+
             var excelFile = new ExcelUtil.Spreadsheet.ExcelFile();
 
             int currentSheetIndex = 1;
@@ -363,6 +369,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
             int currentIndexRow = 0;
 
             #region title
+
             currentIndexColumn = 5;
             wsReport.Rows[currentIndexRow].Height = 255 * 2;
             wsReport.Cells.GetSubrangeAbsolute(currentIndexRow, 0, currentIndexRow, currentIndexColumn).Merged = true;
@@ -381,11 +388,13 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
             {
                 wsReport.Columns[8].Width += 255 * 4;
             }
-            #endregion
+
+            #endregion title
 
             #region section 1
 
             #region header
+
             currentIndexRow += 2;
             currentIndexColumn = 0;
 
@@ -418,7 +427,8 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
             wsReport.Rows[currentIndexRow].Cells[currentIndexColumn].Style.VerticalAlignment = VerticalAlignmentStyle.Center;
             wsReport.Rows[currentIndexRow].Cells[currentIndexColumn].Style.FillPattern.SetSolid(System.Drawing.Color.FromArgb(220, 230, 241));
             wsReport.Rows[currentIndexRow].Cells[currentIndexColumn].Value = "EVENT DATE";
-            #endregion
+
+            #endregion header
 
             #region body
 
@@ -450,14 +460,14 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
             wsReport.Rows[currentIndexRow].Cells[currentIndexColumn].Style.VerticalAlignment = VerticalAlignmentStyle.Center;
             wsReport.Rows[currentIndexRow].Cells[currentIndexColumn].Value = eventDate;
 
-            #endregion
+            #endregion body
 
-            #endregion
-
+            #endregion section 1
 
             #region section 2
 
             #region header
+
             currentIndexRow += 2;
             currentIndexColumn = 0;
             wsReport.Rows[currentIndexRow].Cells[currentIndexColumn].SetBorders(MultipleBorders.Top | MultipleBorders.Left | MultipleBorders.Right
@@ -571,9 +581,11 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
                 wsReport.Rows[currentIndexRow].Cells[currentIndexColumn].Style.FillPattern.SetSolid(System.Drawing.Color.FromArgb(220, 230, 241));
                 wsReport.Rows[currentIndexRow].Cells[currentIndexColumn].Value = "S.A";
             }
-            #endregion
+
+            #endregion header
 
             #region body
+
             if (ticketsListingBetlistDTO == null || ticketsListingBetlistDTO.Items.Count <= 0)
             {
                 ++currentIndexRow;
@@ -608,20 +620,24 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
                     break;
                 }
             }
-            #endregion
 
-            #endregion
+            #endregion body
+
+            #endregion section 2
 
         end:
             excelFile.SaveXls(response.OutputStream);
             response.End();
-            #endregion
+
+            #endregion excel
         }
 
         #region export excel ticket listing
+
         private void BuildRow(ref ExcelWorksheet wsReport, ref int currentIndexColumn, ref int currentIndexRow, Sunplus.Data.DataAbstract.Entity.TicketsListingBetlist ticket, int _type)
         {
             #region collapse
+
             Sunplus.Data.DataAbstract.Entity.Bettran bettran = ticket.BettranDetail;
             ++currentIndexRow;
             currentIndexColumn = 0;
@@ -826,7 +842,8 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
                     wsReport.Rows[currentIndexRow].Cells[currentIndexColumn].Style.FillPattern.SetSolid(System.Drawing.Color.LightPink);
                 }
             }
-            #endregion
+
+            #endregion collapse
         }
 
         private void NewSheet(Sunplus.Data.DataAbstract.Entity.TicketsListingBetlistDTO ticketsListingBetlistDTO, int currentSheetIndex, int currentRowIndex, ExcelFile excelFile, int _type)
@@ -848,6 +865,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
             }
 
             #region header
+
             currentIndexColumn = 0;
             wsReport.Rows[currentIndexRow].Cells[currentIndexColumn].SetBorders(MultipleBorders.Top | MultipleBorders.Left | MultipleBorders.Right
                 , System.Drawing.Color.FromArgb(124, 152, 164), LineStyle.Thin);
@@ -960,9 +978,11 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
                 wsReport.Rows[currentIndexRow].Cells[currentIndexColumn].Style.FillPattern.SetSolid(System.Drawing.Color.FromArgb(220, 230, 241));
                 wsReport.Rows[currentIndexRow].Cells[currentIndexColumn].Value = "S.A";
             }
-            #endregion
+
+            #endregion header
 
             #region body
+
             int count = 0;
             for (int i = currentRowIndex; i < ticketsListingBetlistDTO.Items.Count; ++i)
             {
@@ -978,7 +998,8 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
                     break;
                 }
             }
-            #endregion
+
+            #endregion body
         }
 
         private bool IsHRBettype(int bettype)
@@ -1049,9 +1070,9 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
             else
             {
                 #region HR bettype
+
                 if (IsHRBettype(_bettype))
                 {
-
                     if (IsHRWinPlaceBettype(_bettype)) // is 33, 43
                     {
                         if (!bettran.Status.Equals(Status.WIN) && !bettran.Status.Equals(Status.LOSE))
@@ -1089,6 +1110,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
                                 case "0":
                                     windOdds = FormatNumber4(bettran.Hdp1);
                                     break;
+
                                 case "4":
                                     if (_bettype == 33)
                                         windOdds = "0.00";
@@ -1101,6 +1123,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
                                 case "2":
                                     placeOdds = FormatNumber4(bettran.Hdp2);
                                     break;
+
                                 case "0":
                                 case "4":
                                     if (_bettype == 33)
@@ -1139,7 +1162,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
                                     TemplateHandler.RemoveBlock(ref HTMLwin, "winOdds43");
                                 }
 
-                                // PLACE Odds: liveAwayScore=2: WON                                     
+                                // PLACE Odds: liveAwayScore=2: WON
                                 TemplateHandler.Assign(ref HTMLplace, "{placeOddsSet}", (bettran.Liveawayscore != "2") ? "0.00" : placeOdds);
                                 if (_finalodds2 != CastAide.AsDecimal(placeOdds) && bettran.Liveawayscore == "2")
                                 {
@@ -1193,7 +1216,9 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
                         }
                     }
                 }
-                #endregion
+
+                #endregion HR bettype
+
                 else
                 {
                     return string.Format("{0}({1})", FormatNumber4(_odds), _OddsTypeName);
@@ -1311,7 +1336,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
                 choice = (_betteam == "4:0" || _betteam == "0:4") ? _betteam + " UP" : _betteam;
             }
             if (isMP) choice += oddMP(_odds);
-           
 
             return choice + GetBettypeName(_oddsM, _bettype);
         }
@@ -1372,6 +1396,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
                     return false;
             }
         }
+
         private bool IsFIOE(int bettype)
         {
             switch (bettype)
@@ -1427,6 +1452,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
             var choice = string.Empty;
 
             #region check bettype & apply betty name
+
             if (_bettype == 81 || _bettype == 82 || _bettype == 85)
             {
                 var maxBall = (double.Parse(Sunplus.Bingo.Core.BingoSettings.MaxBall.ToString()) / 2);
@@ -1445,30 +1471,37 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
                 choice = _betteam.ToLower() == "h" ? "HIGH " : "LOW ";
                 choice += liveScore;
             }
-            else if (_bettype == Constants.BetType.Warrior)//warrior            
+            else if (_bettype == Constants.BetType.Warrior)//warrior
                 choice = _betteam.ToLower() == "h" ? "2nd ball to win " : "3rd ball to win ";
             else if (_bettype == Constants.BetType.NextCombo)//next combo
             {
                 #region number group - bettypes
+
                 switch (_betteam.ToLower())
                 {
                     case "1:1":
                         choice = "Over/Odd ";
                         break;
+
                     case "1:2":
                         choice = "Over/Even ";
                         break;
+
                     case "2:1":
                         choice = "Under/Odd ";
                         break;
+
                     case "2:2":
                         choice = "Under/Even ";
                         break;
+
                     default:
                         choice = "Over/Odd ";
                         break;
                 }
-                #endregion
+
+                #endregion number group - bettypes
+
                 var maxBall = (double.Parse(Sunplus.Bingo.Core.BingoSettings.MaxBall.ToString()) / 2);
                 choice += string.IsNullOrEmpty(_liveStyle) ? string.Empty : string.Format("{0}", maxBall);
                 choice += liveScore;
@@ -1478,7 +1511,9 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
                 choice = "Group " + _hdp1 + "-" + _betteam + " ";
                 choice += liveScore;
             }
-            #endregion
+
+            #endregion check bettype & apply betty name
+
             return choice + GetBettypeName(_oddsM, _bettype);
         }
 
@@ -1539,21 +1574,27 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
                     case "110":
                         selection = "Trixie";
                         break;
+
                     case "1110":
                         selection = "Yankee";
                         break;
+
                     case "11110":
                         selection = "Canadian";
                         break;
+
                     case "111110":
                         selection = "Heinz";
                         break;
+
                     case "1111110":
                         selection = "Super Heinz";
                         break;
+
                     case "11111110":
                         selection = "Goliath";
                         break;
+
                     default:
                         selection = "Trixie";
                         break;
@@ -1570,6 +1611,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
             var choice = string.Empty;
 
             #region assign value for choice parameter
+
             if (_betteam.ToLower().Equals("1x"))
                 choice = string.Format("{0} or Draw", home.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
             else if (_betteam.ToLower().Equals("2x"))
@@ -1579,7 +1621,9 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
                     away.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
 
             if (isMP) choice += oddMP(_odds);
-            #endregion
+
+            #endregion assign value for choice parameter
+
             return choice + GetBettypeName(_oddsM, _bettype);
         }
 
@@ -1590,13 +1634,16 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
             var choice = string.Empty;
 
             #region assign value for choice parameter
+
             if (_betteam.ToLower().Equals("h"))
                 choice = string.Format("{0}", home.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
             else if (_betteam.ToLower().Equals("a"))
                 choice = string.Format("{0}", away.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
 
             if (isMP) choice += oddMP(_odds);
-            #endregion
+
+            #endregion assign value for choice parameter
+
             return choice + GetBettypeName(_oddsM, _bettype);
         }
 
@@ -1607,6 +1654,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
             var choice = string.Empty;
 
             #region assign value for choice parameter
+
             if (_betteam.ToLower().Equals("b"))
                 choice = "Both";
             else if (_betteam.ToLower().Equals("o"))
@@ -1615,7 +1663,9 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
                 choice = "No Goal";
 
             if (isMP) choice += oddMP(_odds);
-            #endregion
+
+            #endregion assign value for choice parameter
+
             return choice + liveScore + GetBettypeName(_oddsM, _bettype);
         }
 
@@ -1626,13 +1676,16 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
             var choice = string.Empty;
 
             #region assign value for choice parameter
+
             if (_betteam.ToLower().Equals("h"))
                 choice = string.Format("{0}", home.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
             else if (_betteam.ToLower().Equals("a"))
                 choice = string.Format("{0}", away.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
 
             if (isMP) choice += oddMP(_odds);
-            #endregion
+
+            #endregion assign value for choice parameter
+
             return choice + GetBettypeName(_oddsM, _bettype);
         }
 
@@ -1643,6 +1696,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
             var choice = string.Empty;
 
             #region assign value for choice parameter
+
             if (_betteam.ToLower().Equals("hy"))
                 choice = string.Format("{0} {1}", home.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""), "YES");
             else if (_betteam.ToLower().Equals("hn"))
@@ -1653,7 +1707,9 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
                 choice = string.Format("{0} {1}", away.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""), "NO");
 
             if (isMP) choice += oddMP(_odds);
-            #endregion
+
+            #endregion assign value for choice parameter
+
             return choice + GetBettypeName(_oddsM, _bettype);
         }
 
@@ -1665,6 +1721,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
             var hdpResult = 0;
 
             #region assign value for choice parameter
+
             if (_betteam.ToLower().Equals("1"))
             {
                 hdpResult = (int)(_hdp1 - _hdp2 > 0 ? -(_hdp1 - _hdp2) : Math.Abs(_hdp1 - _hdp2));
@@ -1684,7 +1741,9 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
                 choice = string.Format("Draw ({0} +{1})", _hdp1 - _hdp2 > 0 ? "A" : "H", (int)(Math.Abs(_hdp1 - _hdp2)));
 
             if (isMP) choice += oddMP(_odds);
-            #endregion
+
+            #endregion assign value for choice parameter
+
             return choice + GetBettypeName(_oddsM, _bettype);
         }
 
@@ -1837,26 +1896,24 @@ namespace Sunplus.Accounting.Business.SpecialDelete.TicketsListing
             if (_bettype == 121)
             {
                 if (_betteam == "x") choice = "Draw";
-                else if(_betteam == "a") choice = away;
+                else if (_betteam == "a") choice = away;
             }
             else if (_bettype == 122)
             {
                 if (_betteam == "h") choice = home;
-                else if(_betteam == "x") choice = "Draw";
+                else if (_betteam == "x") choice = "Draw";
             }
             else if (_bettype == 123)
             {
                 if (_betteam == "h") choice = "Draw";
-                else if(_betteam == "a") choice = "No Draw";
+                else if (_betteam == "a") choice = "No Draw";
             }
 
             if (isMP) choice += oddMP(_odds);
             return choice.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), "") + GetBettypeName(_oddsM, _bettype);
         }
-        #endregion
+
+        #endregion export excel ticket listing
     }
-
-
-
 
 }

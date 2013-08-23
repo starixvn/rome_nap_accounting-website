@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace Sunplus.Accounting.Core.Configurations
 {
@@ -67,13 +66,11 @@ namespace Sunplus.Accounting.Core.Configurations
 
     public class LiveCasinoTemplate : ConfigurationElement
     {
-        
         [ConfigurationProperty("name", DefaultValue = "", IsRequired = false)]
         public string Name
         {
             get { return (string)this["name"]; }
         }
-
 
         [ConfigurationProperty("GameSearch", IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(FilterCollection),
@@ -101,7 +98,6 @@ namespace Sunplus.Accounting.Core.Configurations
         {
             get { return (LimitCollection)this["Limits"]; }
         }
-
     }
 
     [ConfigurationCollection(typeof(FilterElement), AddItemName = "filter")]
@@ -137,6 +133,7 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return "filter"; }
         }
     }
+
     public class FilterElement : ConfigurationElement
     {
         [ConfigurationProperty("id", IsRequired = true, IsKey = true)]
@@ -187,7 +184,7 @@ namespace Sunplus.Accounting.Core.Configurations
 
         public int IndexOf(LimitElement limitElement)
         {
-            return BaseIndexOf(limitElement); 
+            return BaseIndexOf(limitElement);
         }
 
         public override ConfigurationElementCollectionType CollectionType
@@ -210,6 +207,7 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return "limit"; }
         }
     }
+
     public class LimitElement : ConfigurationElement
     {
         [ConfigurationProperty("id", IsRequired = true, IsKey = true)]
@@ -224,7 +222,7 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return this["text"].ToString(); }
         }
 
-        [ConfigurationProperty("value" , IsRequired = false)]
+        [ConfigurationProperty("value", IsRequired = false)]
         public decimal Value
         {
             get { return (decimal)this["value"]; }
@@ -236,8 +234,5 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return (bool)this["active"]; }
         }
 
-        
-
-       
     }
 }

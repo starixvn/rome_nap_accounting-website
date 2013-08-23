@@ -3,9 +3,7 @@ using System.Collections;
 using System.ServiceModel.Activation;
 
 using Sunplus.Accounting.Business.Customer;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
-using Sunplus.Core.LoggingLib;
 
 // NOTE: If you change the class name "ServiceCustomerInfo" here, you must also update the reference to "ServiceCustomerInfo" in Web.config.
 namespace Sunplus.Accounting.Business
@@ -28,7 +26,6 @@ namespace Sunplus.Accounting.Business
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -45,7 +42,6 @@ namespace Sunplus.Accounting.Business
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -54,6 +50,6 @@ namespace Sunplus.Accounting.Business
             return result;
         }
 
-        #endregion
+        #endregion IServiceCustomerInfo Members
     }
 }

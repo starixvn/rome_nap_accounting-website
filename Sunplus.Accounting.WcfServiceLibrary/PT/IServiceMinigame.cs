@@ -7,7 +7,7 @@ public interface IServiceMiniGame
     [OperationContract]
     [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
     string GetSuperPTSetting(string username);
-    
+
     [OperationContract]
     [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
     string UpdateSuper(int custid, double spt, double minpt, double comm);

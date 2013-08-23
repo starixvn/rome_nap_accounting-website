@@ -1,14 +1,14 @@
-﻿using System.Web;
-using Sunplus.Accounting.Core.Common;
+﻿using System.Collections;
+using System.Web;
 using DNAide.Data;
-using System.Collections;
+using Sunplus.Accounting.Core.Common;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet
 {
     /// <summary>
     /// Summary description for ExchangeRateDAO
     /// </summary>
-    public class ExchangeRateDAO: IExchangeRateDAO
+    public class ExchangeRateDAO : IExchangeRateDAO
     {
         public ExchangeRateDAO()
         {
@@ -31,6 +31,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
             return DbHelper.Execute("Acc_ExchangeUpdateBaseRate", hash, DBType.MAIN, 300);
         }
+
         public DbResult ExChangeRateUpdateOpenTote(string currency, string GBPRate, string AUDRate, string ZARRate, string EURORate, string USDRate)
         {
             Hashtable hash = new Hashtable();

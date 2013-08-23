@@ -1,35 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Linq;
 using DNAide.Core;
+using Sunplus.Accounting.Business.BootStrappers;
+using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.IBetAggregatorDAO;
 using Sunplus.Accounting.Entities;
-using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Entities.BetAggregator;
-using Sunplus.Accounting.Business.BootStrappers;
-
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.Core.Common;
-using DNAide.Data;
 
 namespace Sunplus.Accounting.Business.BetAggregator
 {
     public class LicenseeConfigManager : ILicenseeConfigManager
     {
-
         private readonly ILicenseeConfigDAO _licenseeConfigDao;
 
         public LicenseeConfigManager()
         {
         }
+
         public LicenseeConfigManager(ILicenseeConfigDAO licenseeConfigDAO)
         {
             _licenseeConfigDao = licenseeConfigDAO;
         }
-
 
         public List<LicenseeConfig> SelAllLicensee()
         {
@@ -45,14 +39,13 @@ namespace Sunplus.Accounting.Business.BetAggregator
             }
 
             return listLicensee;
-           
         }
 
         public List<LicenseeConfig> SelBaLicenseeList()
         {
             var listLicensee = new List<LicenseeConfig>();
             var dbResult = _licenseeConfigDao.SelectLicenseeConfigList();
-         
+
             if (dbResult != null || dbResult.Rows.Count > 0)
             {
                 foreach (DataRow row in dbResult.Rows)
@@ -83,9 +76,8 @@ namespace Sunplus.Accounting.Business.BetAggregator
         public List<LicenseeLog> SelBaLicenseeLogList(int licenseeId)
         {
             var LicenseeLogs = new List<LicenseeLog>();
-            
-            var dt = _licenseeConfigDao.SelLicenseeConfigCommLog(licenseeId);
 
+            var dt = _licenseeConfigDao.SelLicenseeConfigCommLog(licenseeId);
 
             if (dt != null && dt.Rows.Count > 0)
             {
@@ -93,7 +85,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
                 foreach (string licensee in licensees)
                 {
-                    var LicenseeLog = new LicenseeLog {Items = new List<LicenseeConfigLog>()};
+                    var LicenseeLog = new LicenseeLog { Items = new List<LicenseeConfigLog>() };
                     DataRow[] rows = dt.Select("LicenseeName='" + licensee + "'");
                     LicenseeLog.Name = licensee;
                     foreach (DataRow row in rows)
@@ -115,8 +107,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                                       Description = CastAide.AsString(row["description"]),
                                                       // IP = CastAide.AsString(row["IP"])
                                                       IP = IpManagement.ReplaceVNIP(CastAide.AsString(row["IP"]))
-                                                      
-                        };
+                                                  };
                         LicenseeLog.Items.Add(licenseeCommLog);
                     }
                     LicenseeLogs.Add(LicenseeLog);
@@ -139,7 +130,6 @@ namespace Sunplus.Accounting.Business.BetAggregator
             result = _licenseeConfigDao.UpdateLicenseeConfig(licenseeId, groupa, groupb, groupc, groupd, oneXtwoComm, otherComm,
                                                              enableBa);
             return result;
-
         }
 
         public Result DeleteConfig(int licenseeId)
@@ -148,8 +138,6 @@ namespace Sunplus.Accounting.Business.BetAggregator
             result = _licenseeConfigDao.DeleteLicenseeConfig(licenseeId);
             return result;
         }
-
-      
 
         public int CheckDownlineBA(int licenseeId)
         {
@@ -164,7 +152,8 @@ namespace Sunplus.Accounting.Business.BetAggregator
             var listResult = new List<Sunplus.Accounting.Entities.BetAggregator.AmtLimitLicensee>();
             foreach (DataRow row in dataTable.Rows)
             {
-                listResult.Add(new Sunplus.Accounting.Entities.BetAggregator.AmtLimitLicensee { 
+                listResult.Add(new Sunplus.Accounting.Entities.BetAggregator.AmtLimitLicensee
+                {
                     LicenseeID = DNAide.Core.CastAide.AsInt32(row["LicenseeID"]),
                     LicenseeName = DNAide.Core.CastAide.AsString(row["LicenseeName"]),
                     LimitAmt = DNAide.Core.CastAide.AsDouble(row["LimitAmt"])
@@ -176,18 +165,16 @@ namespace Sunplus.Accounting.Business.BetAggregator
         public Result BALimitWarning(int licenseeID, string licenseeName, double limitAmt)
         {
             var licenseeConfigDAO = CommonBootStrapper.Locator.GetInstance<ILicenseeConfigDAO>();
-            var retValue = new Result() {ErrorCode = 0, ErrorMessage = string.Empty};
+            var retValue = new Result() { ErrorCode = 0, ErrorMessage = string.Empty };
             var result = licenseeConfigDAO.BALimitWarning(licenseeID, licenseeName, limitAmt);
-            if(result != null )
+            if (result != null)
             {
-
-                
 
                 var errMessage = DNAide.Core.CastAide.AsString(result.Outputs["errmsg"]);
 
-                if(!string.IsNullOrEmpty(errMessage))
+                if (!string.IsNullOrEmpty(errMessage))
                 {
-                    if(result.ResultSet != null && result.ResultSet.Tables.Count > 0 && result.ResultSet.Tables[0].Rows.Count > 0)
+                    if (result.ResultSet != null && result.ResultSet.Tables.Count > 0 && result.ResultSet.Tables[0].Rows.Count > 0)
                     {
                         var dataRow = result.ResultSet.Tables[0].Rows[0];
                         return new Result
@@ -198,16 +185,12 @@ namespace Sunplus.Accounting.Business.BetAggregator
                     }
                 }
 
-               
-               
-                
             }
             return retValue;
-            
         }
 
-
         #region select currency group
+
         public BACurrenyGroupDTO SelBACurrencyGroupBy(int licenseeId)
         {
             var result = new BACurrenyGroupDTO();
@@ -218,7 +201,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
                 var groupsSetting = BASection.Instance[BASection.StoreCollection.CurrencyGroupSetting];
                 var licenseeConfigDAO = CommonBootStrapper.Locator.GetInstance<ILicenseeConfigDAO>();
                 var rs = licenseeConfigDAO.SelGroupCurrencyByLicensee(licenseeId);
-                if(rs!= null && rs.ResultSet.Tables!= null && rs.ResultSet.Tables.Count >0)
+                if (rs != null && rs.ResultSet.Tables != null && rs.ResultSet.Tables.Count > 0)
                 {
                     var dtCurrency = rs.ResultSet.Tables[0];
                     var dtSetting = rs.ResultSet.Tables[1];
@@ -244,8 +227,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
                             currencyGroupInfo.Add(currencyInfo);
                         }
 
-                        #endregion
-
+                        #endregion assign all currencies of licensee
 
                         #region get all groups and assign settign data
 
@@ -258,7 +240,6 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                                        GroupName = group.Title,
                                                        Currencies = new List<CurrencyInfo>()
                                                    };
-
 
                             var mappingSetting =
                                 (from s in dtSetting.AsEnumerable()
@@ -307,31 +288,29 @@ namespace Sunplus.Accounting.Business.BetAggregator
                             groupSetting.Currencies = new List<CurrencyInfo>();
                         }
 
-                        #endregion
+                        #endregion get all groups and assign settign data
                     }
                 }
-
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
 
-
             return result;
         }
-        #endregion
 
+        #endregion select currency group
 
         public Result BAUpdateGroupSetting(int licenseeId, string setting)
         {
             var licenseeConfigDAO = CommonBootStrapper.Locator.GetInstance<ILicenseeConfigDAO>();
-            var result = new Result(){ErrorCode = 1, ErrorMessage = "Update Fail"};
+            var result = new Result() { ErrorCode = 1, ErrorMessage = "Update Fail" };
             try
             {
                 result = licenseeConfigDAO.UpdateGroupSettingByLicensee(licenseeId, setting);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }

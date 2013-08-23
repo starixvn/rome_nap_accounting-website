@@ -3,31 +3,30 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Web;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
 using ExcelUtil.Spreadsheet;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.Entities.Report.Poker;
 
 namespace Sunplus.Accounting.Business.Report.Poker
 {
-    public class PokerReport:IPokerReport
+    public class PokerReport : IPokerReport
     {
         private IPokerReportDAO _pokerReportDao;
         private string _winlostP2PSessionKey = "winlostp2psession";
         private string _winlostP2PDetailSessionKey = "winlostp2pdetailsession";
-        
+
         public PokerReport(IPokerReportDAO iPokerReportDao)
         {
             _pokerReportDao = iPokerReportDao;
         }
 
         #region SelWinlostP2P
+
         public PokerMainBO SelWinlostP2P(string FromDate, string ToDate)
         {
             PokerMainBO main = new PokerMainBO();
@@ -36,124 +35,7 @@ namespace Sunplus.Accounting.Business.Report.Poker
             main.Total = new List<PokerRow>();
             try
             {
-                    DbResult result = _pokerReportDao.SelWinlostP2P(FromDate, ToDate);
-                    if (result == null)
-                        return main;
-
-                    DataTable dataTable = new DataTable();
-                    dataTable = result.ResultSet.Tables[0];
-                    DataRow[] rows = dataTable.Select();
-
-                    main.TotalRows = rows.Length;
-
-                    List<string> currencies =
-                        dataTable.AsEnumerable().Select(s => CastAide.AsString(s["CurrencyName"])).Distinct().ToList();
-
-                    #region foeach
-
-                    foreach (DataRow row in rows)
-                    {
-                        main.Items.Add(new PokerRow()
-                                           {
-                                               Date = CastAide.AsDateTime(row["Winlossdate"]).ToShortDateString(),
-                                               CurrencyName = CastAide.AsString(row["CurrencyName"]),
-                                               Currency = CastAide.AsString(row["currency"]),
-                                               GrossComm = NumberFormat.DecFormat(row["CommGross"], 2),
-
-                                               MWinLoss = NumberFormat.DecFormat(row["Winloss"], 2),
-                                               MComm = NumberFormat.DecFormat(row["CommPlayer"], 2),
-                                               MTotal =
-                                                   NumberFormat.DecFormat(
-                                                       CastAide.AsDecimal(row["Winloss"]) +
-                                                       CastAide.AsDecimal(row["CommPlayer"]), 2),
-
-                                               AgentComm = NumberFormat.DecFormat(row["CommAgent"], 2),
-                                               MasterComm = NumberFormat.DecFormat(row["CommMaster"], 2),
-                                               SuperComm = NumberFormat.DecFormat(row["CommSuper"], 2),
-                                               CompanyComm = NumberFormat.DecFormat(row["CommCompany"], 2),
-
-                                               GrossCommBase = NumberFormat.DecFormat(row["CommGrossVSRM"], 2),
-                                               CompanyCommBase = NumberFormat.DecFormat(row["CommCompanyVSRM"], 2),
-                                           });
-                    }
-
-                    #endregion
-
-                    #region Total
-
-                    foreach (string currency in currencies)
-                    {
-                        main.Total.Add(new PokerRow()
-                                           {
-                                               CurrencyName = currency,
-
-                                               GrossComm =
-                                                   NumberFormat.DecFormat(
-                                                       main.Items.Where(s=>s.CurrencyName == currency).Sum(s => CastAide.AsDecimal(s.GrossComm)), 2),
-
-                                               MWinLoss =
-                                                   NumberFormat.DecFormat(
-                                                       main.Items.Where(s => s.CurrencyName == currency).Sum(s => CastAide.AsDecimal(s.MWinLoss)), 2),
-                                               MComm =
-                                                   NumberFormat.DecFormat(
-                                                       main.Items.Where(s => s.CurrencyName == currency).Sum(s => CastAide.AsDecimal(s.MComm)), 2),
-                                               MTotal =
-                                                   NumberFormat.DecFormat(
-                                                       main.Items.Where(s => s.CurrencyName == currency).Sum(s => CastAide.AsDecimal(s.MWinLoss)) +
-                                                       main.Items.Where(s => s.CurrencyName == currency).Sum(s => CastAide.AsDecimal(s.MComm)), 2),
-
-                                               AgentComm =
-                                                   NumberFormat.DecFormat(
-                                                       main.Items.Where(s => s.CurrencyName == currency).Sum(s => CastAide.AsDecimal(s.AgentComm)), 2),
-                                               MasterComm =
-                                                   NumberFormat.DecFormat(
-                                                       main.Items.Where(s => s.CurrencyName == currency).Sum(s => CastAide.AsDecimal(s.MasterComm)), 2),
-                                               SuperComm =
-                                                   NumberFormat.DecFormat(
-                                                       main.Items.Where(s => s.CurrencyName == currency).Sum(s => CastAide.AsDecimal(s.SuperComm)), 2),
-                                               CompanyComm =
-                                                   NumberFormat.DecFormat(
-                                                       main.Items.Where(s => s.CurrencyName == currency).Sum(s => CastAide.AsDecimal(s.CompanyComm)), 2),
-
-                                               GrossCommBase =
-                                                   NumberFormat.DecFormat(
-                                                       main.Items.Where(s => s.CurrencyName == currency).Sum(s => CastAide.AsDecimal(s.GrossCommBase)), 2),
-                                               CompanyCommBase =
-                                                   NumberFormat.DecFormat(
-                                                       main.Items.Where(s => s.CurrencyName == currency).Sum(s => CastAide.AsDecimal(s.CompanyCommBase)), 2),
-                                           });
-                    }
-
-                    #endregion
-
-                    #region GrandTotal
-
-                    main.GrandTotal.GrossCommBase =
-                        NumberFormat.DecFormat(main.Items.Sum(s => CastAide.AsDecimal(s.GrossCommBase)), 2);
-                    main.GrandTotal.CompanyCommBase =
-                        NumberFormat.DecFormat(main.Items.Sum(s => CastAide.AsDecimal(s.CompanyCommBase)), 2);
-
-                    #endregion
-                
-                //add session
-                SessionExtension.AddSession(HttpContext.Current.Session, _winlostP2PSessionKey, main);
-            }
-            catch (Exception ex)
-            {
-                LogExtensions.ExceptionHandler(ex); 
-            }
-            return main;
-        }
-        
-        public PokerMainBO SelWinlostP2PDetail(int currency, string date)
-        {
-            PokerMainBO main = new PokerMainBO();
-            main.GrandTotal = new PokerRow();
-            main.Items = new List<PokerRow>();
-            try
-            {
-              
-                DbResult result = _pokerReportDao.SelWinlostP2PDetail(currency, date);
+                DbResult result = _pokerReportDao.SelWinlostP2P(FromDate, ToDate);
                 if (result == null)
                     return main;
 
@@ -163,7 +45,121 @@ namespace Sunplus.Accounting.Business.Report.Poker
 
                 main.TotalRows = rows.Length;
 
-               
+                List<string> currencies =
+                    dataTable.AsEnumerable().Select(s => CastAide.AsString(s["CurrencyName"])).Distinct().ToList();
+
+                #region foeach
+
+                foreach (DataRow row in rows)
+                {
+                    main.Items.Add(new PokerRow()
+                                       {
+                                           Date = CastAide.AsDateTime(row["Winlossdate"]).ToShortDateString(),
+                                           CurrencyName = CastAide.AsString(row["CurrencyName"]),
+                                           Currency = CastAide.AsString(row["currency"]),
+                                           GrossComm = NumberFormat.DecFormat(row["CommGross"], 2),
+
+                                           MWinLoss = NumberFormat.DecFormat(row["Winloss"], 2),
+                                           MComm = NumberFormat.DecFormat(row["CommPlayer"], 2),
+                                           MTotal =
+                                               NumberFormat.DecFormat(
+                                                   CastAide.AsDecimal(row["Winloss"]) +
+                                                   CastAide.AsDecimal(row["CommPlayer"]), 2),
+
+                                           AgentComm = NumberFormat.DecFormat(row["CommAgent"], 2),
+                                           MasterComm = NumberFormat.DecFormat(row["CommMaster"], 2),
+                                           SuperComm = NumberFormat.DecFormat(row["CommSuper"], 2),
+                                           CompanyComm = NumberFormat.DecFormat(row["CommCompany"], 2),
+
+                                           GrossCommBase = NumberFormat.DecFormat(row["CommGrossVSRM"], 2),
+                                           CompanyCommBase = NumberFormat.DecFormat(row["CommCompanyVSRM"], 2),
+                                       });
+                }
+
+                #endregion foeach
+
+                #region Total
+
+                foreach (string currency in currencies)
+                {
+                    main.Total.Add(new PokerRow()
+                                       {
+                                           CurrencyName = currency,
+
+                                           GrossComm =
+                                               NumberFormat.DecFormat(
+                                                   main.Items.Where(s => s.CurrencyName == currency).Sum(s => CastAide.AsDecimal(s.GrossComm)), 2),
+
+                                           MWinLoss =
+                                               NumberFormat.DecFormat(
+                                                   main.Items.Where(s => s.CurrencyName == currency).Sum(s => CastAide.AsDecimal(s.MWinLoss)), 2),
+                                           MComm =
+                                               NumberFormat.DecFormat(
+                                                   main.Items.Where(s => s.CurrencyName == currency).Sum(s => CastAide.AsDecimal(s.MComm)), 2),
+                                           MTotal =
+                                               NumberFormat.DecFormat(
+                                                   main.Items.Where(s => s.CurrencyName == currency).Sum(s => CastAide.AsDecimal(s.MWinLoss)) +
+                                                   main.Items.Where(s => s.CurrencyName == currency).Sum(s => CastAide.AsDecimal(s.MComm)), 2),
+
+                                           AgentComm =
+                                               NumberFormat.DecFormat(
+                                                   main.Items.Where(s => s.CurrencyName == currency).Sum(s => CastAide.AsDecimal(s.AgentComm)), 2),
+                                           MasterComm =
+                                               NumberFormat.DecFormat(
+                                                   main.Items.Where(s => s.CurrencyName == currency).Sum(s => CastAide.AsDecimal(s.MasterComm)), 2),
+                                           SuperComm =
+                                               NumberFormat.DecFormat(
+                                                   main.Items.Where(s => s.CurrencyName == currency).Sum(s => CastAide.AsDecimal(s.SuperComm)), 2),
+                                           CompanyComm =
+                                               NumberFormat.DecFormat(
+                                                   main.Items.Where(s => s.CurrencyName == currency).Sum(s => CastAide.AsDecimal(s.CompanyComm)), 2),
+
+                                           GrossCommBase =
+                                               NumberFormat.DecFormat(
+                                                   main.Items.Where(s => s.CurrencyName == currency).Sum(s => CastAide.AsDecimal(s.GrossCommBase)), 2),
+                                           CompanyCommBase =
+                                               NumberFormat.DecFormat(
+                                                   main.Items.Where(s => s.CurrencyName == currency).Sum(s => CastAide.AsDecimal(s.CompanyCommBase)), 2),
+                                       });
+                }
+
+                #endregion Total
+
+                #region GrandTotal
+
+                main.GrandTotal.GrossCommBase =
+                    NumberFormat.DecFormat(main.Items.Sum(s => CastAide.AsDecimal(s.GrossCommBase)), 2);
+                main.GrandTotal.CompanyCommBase =
+                    NumberFormat.DecFormat(main.Items.Sum(s => CastAide.AsDecimal(s.CompanyCommBase)), 2);
+
+                #endregion GrandTotal
+
+                //add session
+                SessionExtension.AddSession(HttpContext.Current.Session, _winlostP2PSessionKey, main);
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return main;
+        }
+
+        public PokerMainBO SelWinlostP2PDetail(int currency, string date)
+        {
+            PokerMainBO main = new PokerMainBO();
+            main.GrandTotal = new PokerRow();
+            main.Items = new List<PokerRow>();
+            try
+            {
+                DbResult result = _pokerReportDao.SelWinlostP2PDetail(currency, date);
+                if (result == null)
+                    return main;
+
+                DataTable dataTable = new DataTable();
+                dataTable = result.ResultSet.Tables[0];
+                DataRow[] rows = dataTable.Select();
+
+                main.TotalRows = rows.Length;
 
                 #region foeach
 
@@ -192,7 +188,7 @@ namespace Sunplus.Accounting.Business.Report.Poker
                     });
                 }
 
-                #endregion
+                #endregion foeach
 
                 #region GrandTotal
 
@@ -201,10 +197,9 @@ namespace Sunplus.Accounting.Business.Report.Poker
                 main.GrandTotal.CompanyCommBase =
                     NumberFormat.DecFormat(main.Items.Sum(s => CastAide.AsDecimal(s.CompanyCommBase)), 2);
 
-                #endregion
-                
-                SessionExtension.AddSession(HttpContext.Current.Session, _winlostP2PDetailSessionKey, main);
+                #endregion GrandTotal
 
+                SessionExtension.AddSession(HttpContext.Current.Session, _winlostP2PDetailSessionKey, main);
             }
             catch (Exception ex)
             {
@@ -213,13 +208,14 @@ namespace Sunplus.Accounting.Business.Report.Poker
             return main;
         }
 
-        #endregion 
+        #endregion SelWinlostP2P
 
         #region export 2 excel
+
         public void ExportExcelWinlostP2P(string fromDate, string toDate, string reportTitle)
         {
             var getData = SessionExtension.GetSession(HttpContext.Current.Session, _winlostP2PSessionKey) != null ?
-                (PokerMainBO)SessionExtension.GetSession(HttpContext.Current.Session, _winlostP2PSessionKey)  : SelWinlostP2P(fromDate, toDate);
+                (PokerMainBO)SessionExtension.GetSession(HttpContext.Current.Session, _winlostP2PSessionKey) : SelWinlostP2P(fromDate, toDate);
 
             const int startCol = 0;
             const int startRow = 2;
@@ -227,20 +223,23 @@ namespace Sunplus.Accounting.Business.Report.Poker
             var reportName = string.Format("{0}", "P2PWinLoss");
             var excelFile = new ExcelFile();
             var wsReport = excelFile.Worksheets.Add(string.Format("{0}", reportName));
+
             #region header
 
             wsReport.Cells[startRow - 2, startCol].Style.Font.Weight = ExcelFont.BoldWeight;
             wsReport.Cells[startRow - 2, startCol].Value = reportTitle;
             ExportExcelWinlostP2PAssignHeader(startCol, startRow, ref wsReport);
-            #endregion
-            if(getData!= null && getData.Items!= null && getData.Items.Count > 0)
+
+            #endregion header
+
+            if (getData != null && getData.Items != null && getData.Items.Count > 0)
             {
                 //content
                 ExportExcelWinlostP2PAssignContent(startCol, startRow, ref wsReport, ref nextRow, false, getData.Items);
                 //total
                 ExportExcelWinlostP2PAssignContent(startCol, startRow, ref wsReport, ref nextRow, true, getData.Total);
                 //grand total
-                if(getData.GrandTotal!= null)
+                if (getData.GrandTotal != null)
                 {
                     var bgFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", Color.FromArgb(211, 225, 200), true, false);
                     var bgFormatNegative = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", Color.FromArgb(211, 225, 200), true, false, true);
@@ -260,13 +259,15 @@ namespace Sunplus.Accounting.Business.Report.Poker
             }
 
             #region response file
+
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
 
             excelFile.SaveXls(response.OutputStream);
-            #endregion
+
+            #endregion response file
         }
 
         private void ExportExcelWinlostP2PAssignHeader(int startCol, int startRow, ref ExcelWorksheet wsReport)
@@ -274,7 +275,9 @@ namespace Sunplus.Accounting.Business.Report.Poker
             var bgHeaderNormalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
             var nextCol = 0;
             var nextCol2 = 0;
+
             #region first row
+
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol, startRow, startCol).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol, startRow, startCol).Style = bgHeaderNormalFormat;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol, startRow, startCol).Value =
@@ -291,7 +294,7 @@ namespace Sunplus.Accounting.Business.Report.Poker
                 ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "grosscomm");
             nextCol2 = nextCol + 1;
 
-            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol += 1), startRow -1, startCol + nextCol + 2).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol += 1), startRow - 1, startCol + nextCol + 2).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + nextCol, startRow - 1, startCol + nextCol + 2).Style = bgHeaderNormalFormat;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + nextCol, startRow - 1, startCol + nextCol + 2).Value =
                 ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Member");
@@ -311,14 +314,14 @@ namespace Sunplus.Accounting.Business.Report.Poker
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + nextCol, startRow, startCol + nextCol).Value =
                 ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "companycommbase");
 
-            #endregion
+            #endregion first row
 
             #region second row
 
             wsReport.Cells[startRow, startCol + nextCol2].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow, startCol + nextCol2].Value =
                 ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblWinLoss");
-            wsReport.Cells[startRow, startCol + (nextCol2+=1)].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow, startCol + (nextCol2 += 1)].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow, startCol + nextCol2].Value =
                 ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblComm");
             wsReport.Cells[startRow, startCol + (nextCol2 += 1)].Style = bgHeaderNormalFormat;
@@ -337,14 +340,15 @@ namespace Sunplus.Accounting.Business.Report.Poker
             wsReport.Cells[startRow, startCol + nextCol2].Value =
                 ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Company");
 
-            #endregion
+            #endregion second row
         }
+
         private void ExportExcelWinlostP2PAssignContent(int startCol, int startRow, ref ExcelWorksheet wsReport, ref int nextRow, bool isTotal, List<PokerRow> pokerRows)
         {
             var bgColor = isTotal ? Color.FromArgb(255, 238, 221) : Color.FromArgb(255, 255, 255);
             var bgFormatNegative = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", bgColor, isTotal, false, true);
             var bgFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", bgColor, isTotal, false);
-            if(pokerRows!= null && pokerRows.Count > 0)
+            if (pokerRows != null && pokerRows.Count > 0)
             {
                 if (isTotal)
                 {
@@ -366,7 +370,7 @@ namespace Sunplus.Accounting.Business.Report.Poker
                         wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = pokerRow.Date;
                     }
 
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol+=1)].Style = bgFormat;
+                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
                     wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = pokerRow.CurrencyName;
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
                     wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(pokerRow.GrossComm);
@@ -405,12 +409,15 @@ namespace Sunplus.Accounting.Business.Report.Poker
             var reportName = string.Format("{0}", "P2PWinLoss");
             var excelFile = new ExcelFile();
             var wsReport = excelFile.Worksheets.Add(string.Format("{0}", reportName));
+
             #region header
 
             wsReport.Cells[startRow - 2, startCol].Style.Font.Weight = ExcelFont.BoldWeight;
             wsReport.Cells[startRow - 2, startCol].Value = reportTitle;
             ExportExcelWinlostP2PDetailAssignHeader(startCol, startRow, ref wsReport);
-            #endregion
+
+            #endregion header
+
             if (getData != null && getData.Items != null && getData.Items.Count > 0)
             {
                 //content
@@ -436,13 +443,15 @@ namespace Sunplus.Accounting.Business.Report.Poker
             }
 
             #region response file
+
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
 
             excelFile.SaveXls(response.OutputStream);
-            #endregion
+
+            #endregion response file
         }
 
         private void ExportExcelWinlostP2PDetailAssignHeader(int startCol, int startRow, ref ExcelWorksheet wsReport)
@@ -450,7 +459,9 @@ namespace Sunplus.Accounting.Business.Report.Poker
             var bgHeaderNormalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
             var nextCol = 0;
             var nextCol2 = 0;
+
             #region first row
+
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol, startRow, startCol).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol, startRow, startCol).Style = bgHeaderNormalFormat;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol, startRow, startCol).Value =
@@ -482,7 +493,7 @@ namespace Sunplus.Accounting.Business.Report.Poker
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + nextCol, startRow, startCol + nextCol).Value =
                 ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "companycommbase");
 
-            #endregion
+            #endregion first row
 
             #region second row
 
@@ -508,8 +519,9 @@ namespace Sunplus.Accounting.Business.Report.Poker
             wsReport.Cells[startRow, startCol + nextCol2].Value =
                 ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Company");
 
-            #endregion
+            #endregion second row
         }
+
         private void ExportExcelWinlostP2PDetailAssignContent(int startCol, int startRow, ref ExcelWorksheet wsReport, ref int nextRow, List<PokerRow> pokerRows)
         {
             var bgColor = Color.FromArgb(255, 255, 255);
@@ -517,7 +529,6 @@ namespace Sunplus.Accounting.Business.Report.Poker
             var bgFormatNegative = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", bgColor, false, false, true);
             if (pokerRows != null && pokerRows.Count > 0)
             {
-                
                 foreach (var pokerRow in pokerRows)
                 {
                     var nextCol = 0;
@@ -549,6 +560,6 @@ namespace Sunplus.Accounting.Business.Report.Poker
             }
         }
 
-        #endregion
+        #endregion export 2 excel
     }
 }

@@ -1,25 +1,23 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.ServiceModel.Activation;
 using System.Web;
 using BLL.Report.DownLineBalance;
+using DNAide.Core;
+using DNAide.Data;
+using DNAide.Utils;
 using ExcelUtil.Spreadsheet;
+using Sunplus.Accounting.Business.CacheManager;
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.DataAccess;
+using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 using Sunplus.Accounting.DataAccess.Report;
 using Sunplus.Accounting.Entities.Report.DownLinceBalance;
-using DNAide.Data;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
-using System.Data;
-using System.Collections.Generic;
-using DNAide.Core;
-using System.Collections;
-
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.DataAccess;
-using DNAide.Utils;
-using Sunplus.Accounting.Business.CacheManager;
-using Sunplus.Accounting.Core.Helper;
 
 /// <summary>
 /// Summary description for DailyTransManager
@@ -58,14 +56,12 @@ public class ServiceDownLineBalance : IServiceDownLineBalance
         return s.GetCompanyBalanceHistory();
     }
 
-
     public ExcelFile ExportToExcel()
     {
         throw new NotImplementedException();
     }
 
-    #endregion
-
+    #endregion IServiceDownLineBalance Members
 
     public CurrencyDTO GetCurrenciesBySystem()
     {
@@ -76,7 +72,8 @@ public class ServiceDownLineBalance : IServiceDownLineBalance
         {
             foreach (DataRow dr in ds.ResultSet.Tables[0].Rows)
             {
-                var currency = new Currency() {
+                var currency = new Currency()
+                {
                     Id = CastAide.AsString(dr["exchangeid"]),
                     Value = CastAide.AsString(dr["currency"])
                 };
@@ -85,7 +82,6 @@ public class ServiceDownLineBalance : IServiceDownLineBalance
         }
         return currencies;
     }
-
 
     public DownLineBalanceDTO GetSuperBalance(string db, bool isYesterday, string usernameSearch, string firstletter, string currency, bool isViewTotalOnly)
     {
@@ -137,17 +133,14 @@ public class ServiceDownLineBalance : IServiceDownLineBalance
             }
             else
             {
-
                 string total = IBCProvider.ReportProvider.DownLineBalance().RptSABalance(db, isYesterday, param).Outputs["total"].ToString();
                 result.BaseTotal.BaseBalance = NumberFormat.DecFormat(total, 2);
             }
             SessionExtension.AddSession(HttpContext.Current.Session, _superBalanceSessionKey, result);
-            
         }
         catch (Exception ex)
         {
-            
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
 
         return result;
@@ -197,8 +190,7 @@ public class ServiceDownLineBalance : IServiceDownLineBalance
         }
         catch (Exception ex)
         {
-            
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
 
         return result;
@@ -248,8 +240,7 @@ public class ServiceDownLineBalance : IServiceDownLineBalance
         }
         catch (Exception ex)
         {
-            
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
 
         return result;
@@ -300,20 +291,21 @@ public class ServiceDownLineBalance : IServiceDownLineBalance
         }
         catch (Exception ex)
         {
-            
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
 
         return result;
     }
 
     #region export 2 excel downline balance
+
     public void ExportExcelDownLineBalance(int roleid, int custid, bool isYesterday, string usernameSearch, string firstletter, string currency, string reportTitle, bool isViewTotalOnly)
     {
         try
         {
             var getData = new DownLineBalanceDTO();
             string level = "";
+
             #region get data
 
             switch (roleid)
@@ -325,6 +317,7 @@ public class ServiceDownLineBalance : IServiceDownLineBalance
                                   : GetSuperBalance("", isYesterday, usernameSearch, firstletter, currency, isViewTotalOnly);
                     level = "Super";
                     break;
+
                 case 3:
                     getData = SessionExtension.GetSession(HttpContext.Current.Session, _masterBalanceSessionKey) != null
                                   ? (DownLineBalanceDTO)
@@ -333,6 +326,7 @@ public class ServiceDownLineBalance : IServiceDownLineBalance
                                                      currency);
                     level = "Master";
                     break;
+
                 case 2:
                     getData = SessionExtension.GetSession(HttpContext.Current.Session, _agentBalanceSessionKey) != null
                                   ? (DownLineBalanceDTO)
@@ -341,6 +335,7 @@ public class ServiceDownLineBalance : IServiceDownLineBalance
                                                     currency);
                     level = "Agent";
                     break;
+
                 case 1:
                     getData = SessionExtension.GetSession(HttpContext.Current.Session, _memberBalanceSessionKey) != null
                                   ? (DownLineBalanceDTO)
@@ -349,11 +344,12 @@ public class ServiceDownLineBalance : IServiceDownLineBalance
                                                      currency);
                     level = "Member";
                     break;
+
                 default:
                     break;
             }
 
-            #endregion
+            #endregion get data
 
             var startRow = 2;
             var startCol = 0;
@@ -363,6 +359,7 @@ public class ServiceDownLineBalance : IServiceDownLineBalance
             var nextRow = 0;
 
             #region Header
+
             const int headerMergeCols = 4;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + headerMergeCols).
                 Merged = true;
@@ -377,7 +374,7 @@ public class ServiceDownLineBalance : IServiceDownLineBalance
                 reportTitle;
             ExportExcelDownLineBalanceAssignHeader(ref wsReport, startCol, startRow, level);
 
-            #endregion
+            #endregion Header
 
             if (getData != null && getData.DownLineBalane != null && getData.DownLineBalane.Count > 0)
             {
@@ -397,19 +394,19 @@ public class ServiceDownLineBalance : IServiceDownLineBalance
             }
 
             #region response file
+
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
             excelFile.SaveXls(response.OutputStream);
-            #endregion
+
+            #endregion response file
         }
         catch (Exception ex)
         {
-            
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
-
     }
 
     private static void ExportExcelDownLineBalanceAssignHeader(ref ExcelWorksheet wsReport, int startCol, int startRow, string level)
@@ -419,7 +416,7 @@ public class ServiceDownLineBalance : IServiceDownLineBalance
         wsReport.Cells[startRow - 1, startCol].Style = headerFormart;
         wsReport.Cells[startRow - 1, startCol].Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "No");
         wsReport.Columns[startCol].Width = 5 * 255;
-        wsReport.Cells[startRow - 1, startCol + (nextCol+=1)].Style = headerFormart;
+        wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = headerFormart;
         wsReport.Cells[startRow - 1, startCol + nextCol].Value = level;
         wsReport.Columns[startCol + nextCol].Width = 20 * 255;
         wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = headerFormart;
@@ -478,10 +475,9 @@ public class ServiceDownLineBalance : IServiceDownLineBalance
         wsReport.Cells[startRow + nextRow, startCol + (mergCols + 1)].Style = bgFormat;
         wsReport.Cells[startRow + nextRow, startCol + (mergCols + 1)].Style.NumberFormat = "#,##0.00";
         wsReport.Cells[startRow + nextRow, startCol + (mergCols + 1)].Value = CastAide.AsDouble(downlineBalance.BaseBalance);
-
     }
 
-    #endregion
+    #endregion export 2 excel downline balance
 
     public DifferenceBalanceInfo GetDifferenceBalance()
     {
@@ -497,10 +493,9 @@ public class ServiceDownLineBalance : IServiceDownLineBalance
                 result.DiffDate = ReportUtils.BalanceUp.BalanceUpDay.ToString("MMMM dd");
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
         return result;
     }

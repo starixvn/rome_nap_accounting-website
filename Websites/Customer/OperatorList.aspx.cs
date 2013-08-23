@@ -1,28 +1,26 @@
 using System;
-using System.Web;
 using System.Text;
+using System.Web;
 using DNAide.Web;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Core.LoggingLib;
-
 
 public partial class NewCustomer_OperatorList : PageBase
 {
-
-    private string searchText="All", selectAlpha = "All";
+    private string searchText = "All", selectAlpha = "All";
     private string strQuery = "";
-    int PageIndex = 1, TotalPages = 0;
+    private int PageIndex = 1, TotalPages = 0;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         Response.Cache.SetCacheability(HttpCacheability.NoCache);
         if (Session["AccId"] != null)
         {
             OperatorListHeaderStr.Text = "Operator List";
-            OperatorListContentHtml.Text = GenOpertorListContent();          
+            OperatorListContentHtml.Text = GenOpertorListContent();
         }
     }
+
     private string GenOpertorListContent()
     {
         StringBuilder html = new StringBuilder();
@@ -39,7 +37,7 @@ public partial class NewCustomer_OperatorList : PageBase
         }
         catch (Exception ex)
         {
-            LogExtensions.ExceptionHandler(ex); 
+            LogExtensions.ExceptionHandler(ex);
         }
         return html.ToString();
     }

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Sunplus.Data.DataAbstract.Utils;
 using DNAide.Core;
 using DNAide.Utils;
+using Sunplus.Data.DataAbstract.Utils;
 
 namespace Sunplus.Data.DataAbstract.Entity
 {
@@ -16,7 +13,6 @@ namespace Sunplus.Data.DataAbstract.Entity
         {
             _bettran = bettran;
         }
-
 
         public SportEventDTO GetSportEvent()
         {
@@ -33,36 +29,44 @@ namespace Sunplus.Data.DataAbstract.Entity
                 case 1201:
                     AssignHdp(ref sportEvent);
                     break;
+
                 case 2:
                 case 12:
                     AssignOE(ref sportEvent);
                     break;
+
                 case 3:
                 case 8:
                 case 1203:
                     AssignOU(ref sportEvent);
                     break;
+
                 case 4:
                 case 30:
                 case 1204:
                     AssignCS(ref sportEvent);
                     break;
+
                 case 5:
                 case 1205:
                     Assign1x2(ref sportEvent, true);
                     break;
+
                 case 15:
                     Assign1x2(ref sportEvent, false);
                     break;
+
                 case 6:
                 case 14:
                 case 16:
                 case 1206:
                     AssignTG(ref sportEvent);
                     break;
+
                 case 10:
                     AssignOutRight(ref sportEvent);
                     break;
+
                 case 121:
                 case 122:
                 case 123:
@@ -77,12 +81,15 @@ namespace Sunplus.Data.DataAbstract.Entity
                 case 43:
                     //GenHREvent(ref eventItem);
                     break;
+
                 case 9:
                     AssignMP(ref sportEvent);
                     break;
+
                 case 29:
                     AssignCombinationMP(ref sportEvent);
                     break;
+
                 case 51: //Betting of Finance
                 case 52:
                 case 53:
@@ -98,6 +105,7 @@ namespace Sunplus.Data.DataAbstract.Entity
                     //_home = CacheRef.GetFncIndexName(row["homeid"]);
                     //GenFinancialRow(ref eventItem);
                     break;
+
                 case 71:
                 case 72:
                 case 73:
@@ -110,53 +118,69 @@ namespace Sunplus.Data.DataAbstract.Entity
                 case 81://Number Game
                     Assign1stBallOU(ref sportEvent);
                     break;
+
                 case 82:
                     AssignLastBallOU(ref sportEvent);
                     break;
+
                 case 83:
                     Assign1stBallOE(ref sportEvent);
                     break;
+
                 case 84:
                     AssignLastBallOE(ref sportEvent);
                     break;
+
                 case 85:
                     AssignOverUnder(ref sportEvent);
                     break;
+
                 case 86:
                     AssignOddEven(ref sportEvent);
                     break;
+
                 case 87:
                     //GenEvent_NumberGame(ref eventItem, listType, false);
                     AssignNextHighLow(ref sportEvent);
                     break;
+
                 case 88:
                     AssignWarrior(ref sportEvent);
                     break;
+
                 case 89:
                     AssignNextCombo(ref sportEvent);
                     break;
+
                 case 90:
                     AssignNumberWheel(ref sportEvent);
                     break;
+
                 case 24:
                 case 1224:
                     AssignDoubleChance(ref sportEvent);
                     break;
+
                 case 25:
                     AssignDrawNoBet(ref sportEvent);
                     break;
+
                 case 26:
                     AssignBothOneNeither(ref sportEvent);
                     break;
+
                 case 27:
                     AssignToWinToNil(ref sportEvent);
                     break;
+
                 case 13:
                     AssignCleanSheet(ref sportEvent);
                     break;
+
                 case 28:
                     AssignThreeWayHandicap(ref sportEvent);
                     break;
+
                 default:
                     break;
             }
@@ -171,7 +195,6 @@ namespace Sunplus.Data.DataAbstract.Entity
             //sportEvent.Hdp = "&nbsp;" + (double.Parse(Bingo.Core.BingoSettings.MaxBall.ToString()) / 2);
             sportEvent.LiveScore = !_bettran.Liveindicator ? string.Empty : "&nbsp;[" + _bettran.Betid + "]";
             sportEvent.BetType = "<br />" + SportBookUtils.GetBetTypeName(_bettran.Bettype.ToString());
-
         }
 
         private void AssignHomeAwayDrawNoBet(ref SportEventDTO sportEvent)
@@ -192,11 +215,10 @@ namespace Sunplus.Data.DataAbstract.Entity
             else if (_bettran.Bettype == 123)
             {
                 if (_bettran.Betteam == "h") sportEvent.Choice = "Draw";
-                else if(_bettran.Betteam == "a") sportEvent.Choice = "No Draw";
+                else if (_bettran.Betteam == "a") sportEvent.Choice = "No Draw";
             }
             sportEvent.Hdp = "";
             sportEvent.BetType = SportBookUtils.GetBetTypeName(_bettran.Bettype.ToString());
-
         }
 
         private void AssignHdp(ref SportEventDTO sportEvent)
@@ -224,7 +246,6 @@ namespace Sunplus.Data.DataAbstract.Entity
             }
 
             sportEvent.BetType = SportBookUtils.GetBetTypeName(_bettran.Bettype.ToString());
-
         }
 
         private void AssignOE(ref SportEventDTO sportEvent)
@@ -251,7 +272,6 @@ namespace Sunplus.Data.DataAbstract.Entity
 
             sportEvent.Hdp = "";
             sportEvent.BetType = SportBookUtils.GetBetTypeName(_bettran.Bettype.ToString());
-
         }
 
         private void AssignTG(ref SportEventDTO sportEvent)
@@ -264,7 +284,6 @@ namespace Sunplus.Data.DataAbstract.Entity
 
             sportEvent.Hdp = "";
             sportEvent.BetType = SportBookUtils.GetBetTypeName(_bettran.Bettype.ToString());
-
         }
 
         private void AssignCS(ref SportEventDTO sportEvent)
@@ -281,7 +300,6 @@ namespace Sunplus.Data.DataAbstract.Entity
 
             sportEvent.Hdp = "";
             sportEvent.BetType = SportBookUtils.GetBetTypeName(_bettran.Bettype.ToString());
-
         }
 
         private void AssignOutRight(ref SportEventDTO sportEvent)
@@ -295,7 +313,6 @@ namespace Sunplus.Data.DataAbstract.Entity
 
             sportEvent.Hdp = "";
             sportEvent.BetType = SportBookUtils.GetBetTypeName(_bettran.Bettype.ToString());
-
         }
 
         private void AssignOU(ref SportEventDTO sportEvent)
@@ -314,7 +331,6 @@ namespace Sunplus.Data.DataAbstract.Entity
             }
             sportEvent.Hdp = FormatHandler.FormatNumber2(Math.Abs(CastAide.AsDecimal(_bettran.Hdp1)), "en-EN");
             sportEvent.BetType = SportBookUtils.GetBetTypeName(_bettran.Bettype.ToString());
-
         }
 
         private void AssignDoubleChance(ref SportEventDTO sportEvent)
@@ -332,8 +348,8 @@ namespace Sunplus.Data.DataAbstract.Entity
 
             sportEvent.Hdp = string.Empty;// FormatHandler.FormatNumber2(Math.Abs(CastAide.AsDecimal(_bettran.Hdp1)), "en-EN");
             sportEvent.BetType = SportBookUtils.GetBetTypeName(_bettran.Bettype.ToString());
-
         }
+
         private void AssignDrawNoBet(ref SportEventDTO sportEvent)
         {
             sportEvent.LiveScore = !_bettran.Liveindicator ? string.Empty : "&nbsp;[" + _bettran.Livehomescore + "-" + _bettran.Liveawayscore + "]";
@@ -351,7 +367,6 @@ namespace Sunplus.Data.DataAbstract.Entity
 
             sportEvent.Hdp = string.Empty;
             sportEvent.BetType = SportBookUtils.GetBetTypeName(_bettran.Bettype.ToString());
-
         }
 
         private void AssignBothOneNeither(ref SportEventDTO sportEvent)
@@ -369,7 +384,6 @@ namespace Sunplus.Data.DataAbstract.Entity
 
             sportEvent.Hdp = string.Empty;
             sportEvent.BetType = SportBookUtils.GetBetTypeName(_bettran.Bettype.ToString());
-
         }
 
         private void AssignToWinToNil(ref SportEventDTO sportEvent)
@@ -389,7 +403,6 @@ namespace Sunplus.Data.DataAbstract.Entity
 
             sportEvent.Hdp = string.Empty;
             sportEvent.BetType = SportBookUtils.GetBetTypeName(_bettran.Bettype.ToString());
-
         }
 
         private void AssignCleanSheet(ref SportEventDTO sportEvent)
@@ -409,7 +422,6 @@ namespace Sunplus.Data.DataAbstract.Entity
 
             sportEvent.Hdp = string.Empty;
             sportEvent.BetType = SportBookUtils.GetBetTypeName(_bettran.Bettype.ToString());
-
         }
 
         private void AssignThreeWayHandicap(ref SportEventDTO sportEvent)
@@ -425,7 +437,6 @@ namespace Sunplus.Data.DataAbstract.Entity
                 sportEvent.Choice = home;
                 //sportEvent.Hdp = "<span style='color:#000;'>" + (hdpResult > 0 ? "+&nbsp;" : string.Empty) + FormatHandler.FormatNumber2(hdpResult,"en-EN") + "</span>)";
                 sportEvent.Hdp = string.Format("<span style='color:#000;'>({0}{1})</span>", (hdpResult > 0 ? "+" : string.Empty), FormatHandler.FormatNumber2(hdpResult, "en-EN"));
-
             }
             else if (_bettran.Betteam.ToLower().Equals("2"))
             {
@@ -433,7 +444,6 @@ namespace Sunplus.Data.DataAbstract.Entity
                 sportEvent.Choice = away;
                 //sportEvent.Hdp = "<span style='color:#000;'>" + (hdpResult > 0 ? "+&nbsp;" : string.Empty) + FormatHandler.FormatNumber2(hdpResult, "en-EN") + "</span>";
                 sportEvent.Hdp = string.Format("<span style='color:#000;'>({0}{1})</span>", (hdpResult > 0 ? "+" : string.Empty), FormatHandler.FormatNumber2(hdpResult, "en-EN"));
-
             }
             else if (_bettran.Betteam.ToLower().Equals("x"))
             {
@@ -443,8 +453,8 @@ namespace Sunplus.Data.DataAbstract.Entity
             }
 
             sportEvent.BetType = SportBookUtils.GetBetTypeName(_bettran.Bettype.ToString());
-
         }
+
         private void AssignMP(ref SportEventDTO sportEvent)
         {
             sportEvent.LiveScore = "";
@@ -464,21 +474,27 @@ namespace Sunplus.Data.DataAbstract.Entity
                 case "110":
                     selection = "Trixie ";
                     break;
+
                 case "1110":
                     selection = "Yankee";
                     break;
+
                 case "11110":
                     selection = "Canadian";
                     break;
+
                 case "111110":
                     selection = "Heinz";
                     break;
+
                 case "1111110":
                     selection = "Super Heinz";
                     break;
+
                 case "11111110":
                     selection = "Goliath";
                     break;
+
                 default:
                     selection = "Trixie!";
                     break;
@@ -503,7 +519,6 @@ namespace Sunplus.Data.DataAbstract.Entity
 
         private void AssignNextCombo(ref SportEventDTO sportEvent)
         {
-
             if (_bettran.Betteam == "1:1")
                 sportEvent.Choice = "Over/Odd";
             else if (_bettran.Betteam == "1:2")
@@ -515,8 +530,6 @@ namespace Sunplus.Data.DataAbstract.Entity
             sportEvent.Hdp = (double.Parse(Bingo.Core.BingoSettings.MaxBall.ToString()) / 2).ToString();
             sportEvent.LiveScore = !_bettran.Liveindicator ? string.Empty : "&nbsp;[" + _bettran.Betid + "]";
             sportEvent.BetType = SportBookUtils.GetBetTypeName(_bettran.Bettype.ToString());
-
-
         }
 
         private void Assign1stBallOU(ref SportEventDTO sportEvent)
@@ -524,7 +537,6 @@ namespace Sunplus.Data.DataAbstract.Entity
             sportEvent.Choice = _bettran.Betteam.ToLower() == "h" ? "OVER" : "UNDER";
             sportEvent.Hdp = (double.Parse(Bingo.Core.BingoSettings.MaxBall.ToString()) / 2).ToString();
             sportEvent.BetType = SportBookUtils.GetBetTypeName(_bettran.Bettype.ToString());
-
         }
 
         private void AssignLastBallOU(ref SportEventDTO sportEvent)
@@ -533,7 +545,6 @@ namespace Sunplus.Data.DataAbstract.Entity
             sportEvent.Hdp = (double.Parse(Bingo.Core.BingoSettings.MaxBall.ToString()) / 2).ToString();
             sportEvent.LiveScore = string.Empty;
             sportEvent.BetType = SportBookUtils.GetBetTypeName(_bettran.Bettype.ToString());
-
         }
 
         private void Assign1stBallOE(ref SportEventDTO sportEvent)
@@ -542,7 +553,6 @@ namespace Sunplus.Data.DataAbstract.Entity
             sportEvent.Hdp = string.Empty;
             sportEvent.LiveScore = string.Empty;
             sportEvent.BetType = SportBookUtils.GetBetTypeName(_bettran.Bettype.ToString());
-
         }
 
         private void AssignLastBallOE(ref SportEventDTO sportEvent)
@@ -551,7 +561,6 @@ namespace Sunplus.Data.DataAbstract.Entity
             sportEvent.Hdp = string.Empty;
             sportEvent.LiveScore = string.Empty;
             sportEvent.BetType = SportBookUtils.GetBetTypeName(_bettran.Bettype.ToString());
-
         }
 
         private void AssignOverUnder(ref SportEventDTO sportEvent)
@@ -560,7 +569,6 @@ namespace Sunplus.Data.DataAbstract.Entity
             sportEvent.Hdp = (double.Parse(Bingo.Core.BingoSettings.MaxBall.ToString()) / 2).ToString();
             sportEvent.LiveScore = !_bettran.Liveindicator ? string.Empty : "&nbsp;[" + _bettran.Betid + "]";
             sportEvent.BetType = (_bettran.Liveindicator ? "Next " : "") + SportBookUtils.GetBetTypeName(_bettran.Bettype.ToString());
-
         }
 
         private void AssignOddEven(ref SportEventDTO sportEvent)
@@ -569,7 +577,6 @@ namespace Sunplus.Data.DataAbstract.Entity
             sportEvent.Hdp = string.Empty;
             sportEvent.LiveScore = !_bettran.Liveindicator ? string.Empty : "&nbsp;[" + _bettran.Betid + "]";
             sportEvent.BetType = (_bettran.Liveindicator ? "Next " : "FT. ") + SportBookUtils.GetBetTypeName(_bettran.Bettype.ToString());
-
         }
 
         private void AssignNextHighLow(ref SportEventDTO sportEvent)
@@ -578,7 +585,6 @@ namespace Sunplus.Data.DataAbstract.Entity
             sportEvent.Hdp = string.Empty;//(double.Parse(Bingo.Core.BingoSettings.MaxBall.ToString()) / 2).ToString();
             sportEvent.LiveScore = !_bettran.Liveindicator ? string.Empty : "&nbsp;[" + _bettran.Betid + "]";
             sportEvent.BetType = SportBookUtils.GetBetTypeName(_bettran.Bettype.ToString());
-
         }
 
         /*private void AssignCasino(ref SportEventDTO sportEvent, int betType)
@@ -594,7 +600,6 @@ namespace Sunplus.Data.DataAbstract.Entity
                 //choice = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblIBCbetBingo");
                 choice = "IBCbet Bingo";
             sportEvent.Choice = choice;
-
         }*/
     }
 }

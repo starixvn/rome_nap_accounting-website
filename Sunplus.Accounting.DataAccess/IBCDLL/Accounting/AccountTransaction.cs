@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Collections;
 using System.Web;
+using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
-
-using Sunplus.Accounting.Core.Common;
+using Fanex.Data;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
-using Sunplus.Core.LoggingLib;
-using Fanex.Data;
-using Sunplus.Accounting.Entities.SpecialDelete;
 using Sunplus.Accounting.Entities;
-using DNAide.Core;
+using Sunplus.Accounting.Entities.SpecialDelete;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
-    public sealed class AccountTransaction: DataAccess
+    public sealed class AccountTransaction : DataAccess
     {
         /// <summary>
         /// call store BettransIns_Admin, return transid
@@ -32,13 +29,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <param name="creator">creator</param>
         /// <param name="matchDate">matchDate</param>
         /// <param name="userId">userId</param>
-        /// <returns></returns>        
+        /// <returns></returns>
         public static string[] BettransInsTransaction(int custId, DateTime transDate, double amount, string transDesc,
                                                       int userId, string lang, string ip)
         {
-            string[] res = {"", "", ""};
+            string[] res = { "", "", "" };
             try
-            {   
+            {
                 using (ObjectDb db = new ObjectDb("Acc_BettransInsTransaction", 300))
                 {
                     var hash = new Hashtable();
@@ -62,7 +59,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 }
             }
             catch (Exception ex)
-            {  
+            {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 res[0] = "0";
                 res[1] = "100";
@@ -78,7 +75,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <param name="matchId"></param>
         /// <returns></returns>
         /// Phuong.Nguyen modified <2008-12-02>
-        //public static DataResult BetTransSelSpecialDel(int matchId, long fromRefNo, long toRefNo, int bettype,string betteam,string hdp, bool isLiveIndicator)        
+        //public static DataResult BetTransSelSpecialDel(int matchId, long fromRefNo, long toRefNo, int bettype,string betteam,string hdp, bool isLiveIndicator)
         public static DbResult BetTransSelSpecialDel(int matchId, long fromRefNo, long toRefNo, string bettypes,
                                                      string betteam1378, string betteam515, string betteam4, string hdp,
                                                      int liveindicator, string username)
@@ -104,8 +101,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
@@ -123,8 +119,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
@@ -145,8 +140,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
@@ -163,14 +157,14 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <param name="pass"></param>
         /// <param name="uid"></param>
         /// <returns></returns>
-        /// Phuong.Nguyen modified <2008-12-02>        
+        /// Phuong.Nguyen modified <2008-12-02>
         public static DeleteResult DeleteSpecialTransaction(string matchId, string frefno, string trefno, string bettype,
                                                         string betteam1378, string betteam515, string hdp, string uname,
                                                         object userId, string pass, string DelOption, string transids,
                                                         int liveindicator, string DelOption_BD, string transids_BD,
                                                         string DelOption_12EU, string transids_12EU,
                                                         string DelOption_MHC, string transids_MHC, string betteam4)
-        {               
+        {
             try
             {
                 using (ObjectDb objDb = new ObjectDb("Acc_BettransDelSpecial", 300))
@@ -213,13 +207,11 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                             ErrorMessage = CastAide.AsString(objDb.GetParameterValue("errmsg"))
                         },
                         PrivateMessage = privateMessage
-
                     };
                 }
             }
             catch (Exception ex)
             {
-                
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return new DeleteResult()
                 {
@@ -232,7 +224,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 };
             }
         }
-
 
         /// <summary>
         /// @KhoaTran
@@ -251,8 +242,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
@@ -277,8 +267,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
@@ -301,8 +290,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
@@ -314,6 +302,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 return GetStoreProcedure(storeCollection, aliasName);
             }
         }
+
         private class SportbookPtStoreProcedure : DataAccess
         {
             public Core.Configurations.StoreProcedureElement GetSportbookPtStoreProcedure(SportbookPtSession.StoreCollection storeCollection, string aliasName)
@@ -322,7 +311,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
         }
 
-        private class TransactionStoreProcedure: DataAccess
+        private class TransactionStoreProcedure : DataAccess
         {
             public StoreProcedureElement GetTransactionStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.TransactionGroupSection.StoreCollection transType, string storeAlias)
             {
@@ -330,8 +319,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 return spElement;
             }
         }
-
-        
 
     }
 }

@@ -9,7 +9,6 @@ namespace Sunplus.Accounting.Core.Email
     {
         public SendMailBugSystem()
         {
-        
         }
 
         public static void NotificationBugSystem(string msgContent)

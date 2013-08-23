@@ -23,15 +23,14 @@ using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
+using Sunplus.Accounting.DataAccess.SpecialDelete;
 using Sunplus.Accounting.Entities.SpecialDelete;
 using Sunplus.Accounting.Entities.SpecialDelete.LiveCasino;
-using Sunplus.Accounting.DataAccess.SpecialDelete;
 
 namespace Sunplus.Accounting.Business.SpecialDelete
 {
     public class SpecialDeleteBase
     {
-
         #region SpecialBettype enum
 
         public enum SpecialBettype
@@ -43,8 +42,10 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             BetMasterMHC = 4
         }
 
-        #endregion
+        #endregion SpecialBettype enum
+
         #region GetSpecialBettype
+
         public string GetSpecialBettype(SpecialBettype type)
         {
             string str = "";
@@ -53,24 +54,30 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 case SpecialBettype.BetNormal:
                     str = "BetNormal";
                     break;
+
                 case SpecialBettype.BetDeposit:
                     str = "Deposit";
                     break;
+
                 case SpecialBettype.Betdaq:
                     str = "BD";
                     break;
+
                 case SpecialBettype.Bet12EU:
                     str = "12EU";
                     break;
+
                 case SpecialBettype.BetMasterMHC:
                     str = "MasterMHC";
                     break;
             }
             return str;
         }
-        #endregion
+
+        #endregion GetSpecialBettype
 
         #region AssignData
+
         protected string getBettypeName(string bettypeId, bool liveindicator)
         {
             string name = "";
@@ -115,23 +122,25 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 specialDeleteBo.Currency = CacheUtils.GetExchangeName(CastAide.AsInt32(dataRow["currency"]));
                 switch (CastAide.AsInt32(dataRow["bettype"]))
                 {
-                    case 1:                    
-                    case 7:                    
+                    case 1:
+                    case 7:
                     case 22:
                         betteam = CastAide.AsString(dataRow["betteam"]).ToLower();
                         if (betteam == "h")
                         {
                             specialDeleteBo.Hdp = NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["hdp2"]) - CastAide.AsDecimal(dataRow["hdp1"]), 2);
                         }
-                        else 
+                        else
                         {
                             specialDeleteBo.Hdp = NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["hdp1"]) - CastAide.AsDecimal(dataRow["hdp2"]), 2);
-                        }                        
+                        }
                         break;
+
                     case 3:
                     case 8:
                         specialDeleteBo.Hdp = NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["hdp1"]), 2);
                         break;
+
                     default:
                         specialDeleteBo.Hdp = "";
                         break;
@@ -154,7 +163,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
                 index++;
             }
-
         }
 
         protected void AssignDataEarlyKO(IEnumerable<DataRow> Rows, string type, ref List<SpecialDeleteBetEarlyKO> list, string isMP, ref int mergeIndex)
@@ -195,21 +203,23 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 {
                     case 1:
                     case 7:
-                    case 22:                        
+                    case 22:
                         betteam = CastAide.AsString(dataRow["betteam"]).ToLower();
                         if (betteam == "h")
                         {
                             specialDeleteBo.Hdp = NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["hdp2"]) - CastAide.AsDecimal(dataRow["hdp1"]), 2);
                         }
-                        else 
+                        else
                         {
                             specialDeleteBo.Hdp = NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["hdp1"]) - CastAide.AsDecimal(dataRow["hdp2"]), 2);
                         }
                         break;
+
                     case 3:
                     case 8:
-                        specialDeleteBo.Hdp = NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["hdp1"]),2);
+                        specialDeleteBo.Hdp = NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["hdp1"]), 2);
                         break;
+
                     default:
                         specialDeleteBo.Hdp = "";
                         break;
@@ -232,17 +242,19 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
                 mergeIndex++;
             }
-
         }
-        #endregion
+
+        #endregion AssignData
 
         #region SendPrivateMsgToUsers
+
         protected bool SendPrivateMsgToUsers(DataSet rs, int matchId, Message pmsg)
         {
             bool result = false;
             try
             {
                 #region send private message to users
+
                 if (rs.Tables.Count > 0)
                 {
                     DataTable dtMsg = null;
@@ -257,7 +269,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
                         for (int i = 0; i < dtMsg.Rows.Count; i++)
                         {
-
                             string[] ArrColumnsNameDownLineID = { "custid", "recommend", "mrecommend", "srecommend" };
                             string[] ArrColumnsNameDownLineUserName = { "CustUserName", "AgUserName", "MagUserName", "SagUserName" };
 
@@ -296,7 +307,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         {
                             int custid = CastAide.AsInt32(Key.Key.ToString().Split('^')[0]); // This is a CustID of ticket that is deleted [TargetID Field]
                             string uname = Key.Key.ToString().Split('^')[1];//This is a UserName of ticket that is deleted [TargetName Field]
-
                             DataRow dr = dtDeletedBet.NewRow();
                             dr["custid"] = custid;
                             dr["username"] = uname;
@@ -321,14 +331,13 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             strTransID_Current = CastAide.AsString(dtBets.Rows[0]["transids"]);
                         int CountBetsBelong1Member = CastAide.AsInt32(dtBets.Compute("count(transids)", "transids='" + strTransID_Current + "'"));
 
-                        // send private message to users for cancel their transactions                                                                                                                
+                        // send private message to users for cancel their transactions
                         int MessageId = 0;
                         foreach (DataRow dr in dtBets.Rows)
                         {
                             int[] custid = { CastAide.AsInt32(dr["custid"]) }; // This is a CustID of ticket that is deleted [TargetID Field]
                             string[] uname = { CastAide.AsString(dr["username"]) };//This is a UserName of ticket that is deleted [TargetName Field]
-
-                            if (CastAide.AsInt32(dr["custid"]) < 100) continue;//SRecommend < 100 and roleid=3 
+                            if (CastAide.AsInt32(dr["custid"]) < 100) continue;//SRecommend < 100 and roleid=3
                             string[] bettransid = { CastAide.AsString(dr["transids"]) };
 
                             if (MessageId == 0)
@@ -338,7 +347,8 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         }
                     }
                 }
-                #endregion
+
+                #endregion send private message to users
 
                 result = true;
             }
@@ -372,7 +382,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
                         for (int i = 0; i < dtMsg.Rows.Count; i++)
                         {
-
                             string[] ArrColumnsNameDownLineID = { "custid", "recommend", "mrecommend", "srecommend" };
                             string[] ArrColumnsNameDownLineUserName = { "CustUserName", "AgUserName", "MagUserName", "SagUserName" };
 
@@ -411,7 +420,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         {
                             int custid = CastAide.AsInt32(Key.Key.ToString().Split('^')[0]); // This is a CustID of ticket that is deleted [TargetID Field]
                             string uname = Key.Key.ToString().Split('^')[1];//This is a UserName of ticket that is deleted [TargetName Field]
-
                             DataRow dr = dtDeletedBet.NewRow();
                             dr["custid"] = custid;
                             dr["username"] = uname;
@@ -436,14 +444,13 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             strTransID_Current = CastAide.AsString(dtBets.Rows[0]["transids"]);
                         int CountBetsBelong1Member = CastAide.AsInt32(dtBets.Compute("count(transids)", "transids='" + strTransID_Current + "'"));
 
-                        // send private message to users for cancel their transactions                                                                                                                
+                        // send private message to users for cancel their transactions
                         int MessageId = 0;
                         foreach (DataRow dr in dtBets.Rows)
                         {
                             int[] custid = { CastAide.AsInt32(dr["custid"]) }; // This is a CustID of ticket that is deleted [TargetID Field]
                             string[] uname = { CastAide.AsString(dr["username"]) };//This is a UserName of ticket that is deleted [TargetName Field]
-
-                            if (CastAide.AsInt32(dr["custid"]) < 100) continue;//SRecommend < 100 and roleid=3 
+                            if (CastAide.AsInt32(dr["custid"]) < 100) continue;//SRecommend < 100 and roleid=3
                             string[] bettransid = { CastAide.AsString(dr["transids"]) };
 
                             if (MessageId == 0)
@@ -453,7 +460,8 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         }
                     }
                 }
-                #endregion
+
+                #endregion send private message to users
 
                 result = true;
             }
@@ -464,15 +472,16 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
             return result;
         }
-        #endregion
+
+        #endregion SendPrivateMsgToUsers
 
         #region SendEmailToCSD_Old
+
         protected string SendEmailToCSD_Old(int errcode, string errmsg, DbResult rs, bool IsNumberGame, bool IsRecoverBets, string transid)
         {
             string ErrMsg = "";
             try
             {
-
                 if (errcode == 0)
                 {
                     if (IsRecoverBets)
@@ -516,13 +525,12 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             tplUser = tplUser.Replace("Bets", "Bet");
                         }
 
-
-
                         #region send mail
 
                         if (dtMatch.Rows.Count > 0 && dtUser.Rows.Count > 0)
                         {
                             #region send mail to CSD
+
                             string strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + (CastAide.AsBoolean(dtMatch.Rows[0]["isNeutral"]) ? "(N)" : string.Empty);
                             if (CastAide.AsInt32(dtUser.Rows[0]["bettype"]) == 10)
                             {
@@ -546,10 +554,10 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                 TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "hdp");
 
                                 strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + " - " + CacheRef.GetLeagueName(dtMatch.Rows[0]["leagueid"]);
-
                             }
 
                             #region Create Dataset dsUser
+
                             DataSet dsUser = new DataSet();
 
                             DataTable dt12Bet = dtUser.Clone();
@@ -599,7 +607,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                 }
                                 else
                                 {
-
                                     if (DNAide.Core.CastAide.AsString(drAll["site"], "").ToLower().Equals("12bet")) // for 12Bet
                                     {
                                         DataRow dr12Bet = dt12Bet.NewRow();
@@ -691,8 +698,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                         dtAsiaBet.Rows.Add(drAsiaBet);
                                     }
                                 }
-
-
                             }
                             dsUser.Tables.Add(dt12Bet);
                             dsUser.Tables.Add(dtAsiaBet);
@@ -705,8 +710,8 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             dsUser.Tables.Add(dtZzun88);
                             dsUser.Tables.Add(dtMayfair);
                             dsUser.Tables.Add(dtSuncity);
-                            #endregion
 
+                            #endregion Create Dataset dsUser
 
                             foreach (DataTable dtBet in dsUser.Tables)
                             {
@@ -811,7 +816,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                     TemplateHandler.Assign(ref tplMatch, "UserName", AppSession.Username);
                                     TemplateHandler.Assign(ref tplMatch, "time", Convert.ToDateTime(drMatch["datetime"]));
 
-
                                     foreach (DataRow drBet in dtBet.Rows)
                                     {
                                         site = drBet["site"].ToString();
@@ -851,8 +855,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                         TemplateHandler.Assign(ref row, "bgcolor", bgColor);
                                         TemplateHandler.Assign(ref row, "username", drBet["username"]);
 
-
-
                                         TemplateHandler.Assign(ref row, "refno", drBet["refno"]);
                                         bool IsLive = false;
                                         if (IsNumberGame)
@@ -876,10 +878,12 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                                 else
                                                     TemplateHandler.Assign(ref row, "{hdp}", IBCUtils.FormatHandler.FormatNumber2(hdp1 - hdp2));
                                                 break;
+
                                             case 3:
                                             case 8:
                                                 TemplateHandler.Assign(ref row, "{hdp}", IBCUtils.FormatHandler.FormatNumber2(CastAide.AsDecimal(drBet["hdp1"])));
                                                 break;
+
                                             default:
                                                 TemplateHandler.Assign(ref row, "{hdp}", "--");
                                                 break;
@@ -911,6 +915,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                     else
                                     {
                                         #region delete bet
+
                                         if (Is12EU)
                                         {
                                             ToMailCSD = MailSection.ToMail12EUCSD;
@@ -988,9 +993,9 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                             CC = MailSection.CCMailAsiaBetCSD;
                                             BCC = MailSection.BCCMailAsiaBetCSD;
                                         }
-                                        #endregion
-                                    }
 
+                                        #endregion delete bet
+                                    }
 
                                     Subject = Subject.Replace("{site}", site);
                                     Subject = Subject.Replace("{site_name}", siteName);
@@ -1006,7 +1011,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                     bool result = false;
                                     try
                                     {
-
                                         WriteLogMail(LogMail.ToString());
                                         if (MailSection.CCMail.Length > 0)
                                         {
@@ -1026,12 +1030,9 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                         }
                                         result = DNAide.Utils.SendMailService.SendMail2(MailSection.MailServer, ToMailCSD, MailSection.FromMail, CC, BCC, Subject, tplMatch, MailSection.MailPwd);
 
-                                       
-
                                     }
                                     catch (Exception ex)
                                     {
-
                                         {
                                             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                                         }
@@ -1073,31 +1074,31 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                     }
                                 }
                             }
-                            #endregion
+
+                            #endregion send mail to CSD
                         }
-                        #endregion
+
+                        #endregion send mail
                     }
                 }
                 else
                 {
                     ErrMsg = AlertMessage.GetMsg(errmsg, AlertMessage.MsgType.Error);
                 }
-
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
             }
             return ErrMsg;
         }
-        #endregion
 
-
+        #endregion SendEmailToCSD_Old
 
         #region GetSitesAndUsers
+
         protected string GetSitesAndUsers()
         {
             var collections = SpecialDeleteSection.Instance.DeleteBet;
@@ -1115,7 +1116,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 }
             }
 
-
             if (sites.Length > 1)
                 sites = sites.Substring(0, sites.Length - 1);
             if (users.Length > 1)
@@ -1126,14 +1126,14 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
             return expression;
         }
-        #endregion
+
+        #endregion GetSitesAndUsers
 
         protected string SendEmailToCSD(int errcode, string errmsg, DataSet rs, bool IsNumberGame, string reason)
         {
             string ErrMsg = "";
             try
             {
-
                 if (errcode == 0)
                 {
                     ErrMsg = AlertMessage.GetMsg("Bet transactions deleted!", AlertMessage.MsgType.Success);
@@ -1158,8 +1158,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
                         //string tplUser_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow_SpecialBet.htm");
 
-
-
                         #region send mail
 
                         if (dtMatch.Rows.Count > 0 && dtUsers.Rows.Count > 0)
@@ -1167,6 +1165,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             #region send mail to CSD
 
                             #region template
+
                             string strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + (CastAide.AsBoolean(dtMatch.Rows[0]["isNeutral"]) ? "(N)" : string.Empty);
                             if (CastAide.AsInt32(dtUsers.Rows[0]["bettype"]) == 10)
                             {
@@ -1190,9 +1189,9 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                 //TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "hdp");
 
                                 strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + " - " + CacheRef.GetLeagueName(dtMatch.Rows[0]["leagueid"]);
-
                             }
-                            #endregion
+
+                            #endregion template
 
                             #region Create Dataset dsUser
 
@@ -1204,10 +1203,10 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             string users = string.Empty;
                             foreach (SpecialDeleteElement collection in collections)
                             {
-
                                 if (collection.Alias.ToLower().Equals("deposit"))
                                 {
-                                    #region deposit        
+                                    #region deposit
+
                                     ISpecialDeleteDAO _specialDAO = new SpecialDeleteDAO();
                                     DataTable dtMail = _specialDAO.SelMailingList();
 
@@ -1215,9 +1214,9 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                     {
                                         DataTable dtUser = dtUsers.Clone();
 
-                                        var _rows = dtUsers.AsEnumerable().Where(s=>s["site"].ToString().ToLower() == dr["site"].ToString().ToLower());
+                                        var _rows = dtUsers.AsEnumerable().Where(s => s["site"].ToString().ToLower() == dr["site"].ToString().ToLower());
 
-                                        if(_rows.Count() == 0)
+                                        if (_rows.Count() == 0)
                                             continue;
 
                                         SpecialDeleteDataforMailing mailing = new SpecialDeleteDataforMailing()
@@ -1228,27 +1227,25 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                             Name = "site",
                                             Alias = dr["site"].ToString()
                                         };
-                                        mailing.Items = new DataTable();                                        
-                                        
+                                        mailing.Items = new DataTable();
+
                                         foreach (DataRow row in _rows)
-                                        {                                           
+                                        {
                                             dtUser.ImportRow(row);
                                         }
-                                        
+
                                         mailing.Items = dtUser;
                                         maillings.Items.Add(mailing);
-
                                     }
 
-                                    #endregion
+                                    #endregion deposit
                                 }
                                 else
                                 {
-                                    #region others group                                    
+                                    #region others group
+
                                     foreach (SpecialDeleteElement store in collection.Stores)
                                     {
-                                   
-                                   
                                         SpecialDeleteDataforMailing mailing = new SpecialDeleteDataforMailing()
                                         {
                                             To = store.To,
@@ -1262,24 +1259,23 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                         DataTable dtUser = dtUsers.Clone();
                                         string expression = string.Empty;
 
-                                       
                                         expression = "" + store.Name + "='" + store.Alias + "'";
-                                      
 
                                         DataRow[] rows = dtUsers.Select(expression);
                                         foreach (DataRow row in rows)
-                                        {                                            
+                                        {
                                             dtUser.ImportRow(row);
                                         }
 
                                         mailing.Items = dtUser;
                                         maillings.Items.Add(mailing);
                                     }
-                                    #endregion
+
+                                    #endregion others group
                                 }
                             }
 
-                            #endregion
+                            #endregion Create Dataset dsUser
 
                             string betteam = string.Empty;
                             foreach (SpecialDeleteDataforMailing dataforMailing in maillings.Items)
@@ -1287,6 +1283,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                 if (dataforMailing.Items.Rows.Count > 0)
                                 {
                                     #region MatchInfo
+
                                     DataRow drMatch = dtMatch.Rows[0];
                                     string Subject = string.Empty;
 
@@ -1309,14 +1306,15 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                     string site = string.Empty;
                                     string bgColor = string.Empty;
                                     string isMP = string.Empty;
-                                    #endregion
+
+                                    #endregion MatchInfo
 
                                     #region AssignRow
+
                                     StringBuilder body = new StringBuilder();
                                     StringBuilder body_mix = new StringBuilder();
                                     foreach (DataRow drBet in dataforMailing.Items.Rows)
                                     {
-
                                         site = drBet["site"].ToString();
                                         bgColor = (bgColor == "#FCFCFC") ? "#F2F2F2" : "#FCFCFC";
                                         string row = tplUser.Clone().ToString();
@@ -1324,8 +1322,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                         TemplateHandler.Assign(ref row, "bgcolor", bgColor);
                                         TemplateHandler.Assign(ref row, "username", drBet["username"]);
                                         TemplateHandler.Assign(ref row, "username1", drBet["username2"]);
-
-
 
                                         TemplateHandler.Assign(ref row, "refno", drBet["refno"]);
                                         bool IsLive = false;
@@ -1353,10 +1349,12 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                                     hdp = hdp1 - hdp2;
                                                 TemplateHandler.Assign(ref row, "{hdp}", IBCUtils.FormatHandler.FormatNumber2(hdp));
                                                 break;
+
                                             case 3:
                                             case 8:
                                                 TemplateHandler.Assign(ref row, "{hdp}", IBCUtils.FormatHandler.FormatNumber2(drBet["hdp1"]));
                                                 break;
+
                                             default:
                                                 TemplateHandler.Assign(ref row, "{hdp}", "--");
                                                 break;
@@ -1375,7 +1373,8 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                         TemplateHandler.Assign(ref row, "BetFrom", BetForm);
                                         body.Append(row);
                                     }
-                                    #endregion
+
+                                    #endregion AssignRow
 
                                     TemplateHandler.Assign(ref tplMatch, "Rows", body.ToString());
 
@@ -1396,7 +1395,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                     Subject = Subject.Replace("{site}", site);
                                     Subject = Subject.Replace("{site_name}", dataforMailing.Name);
 
-
                                     // send mail via gmail system
                                     bool result = SendMailExtension.AccSendMail(MailSection.HostName.Gmail, ToMailCSD, CC, BCC, Subject, Subject, tplMatch, null);
 
@@ -1405,7 +1403,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
                                     if (result)
                                     {
-
                                         msg = "Details of deleted " + site + " ticket(s) are sent successfully to " + ToMailCSD;
 
                                         ErrMsg += AlertMessage.GetMsg(msg, AlertMessage.MsgType.Success);
@@ -1417,18 +1414,17 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                     }
                                 }
                             }
-                            #endregion
+
+                            #endregion send mail to CSD
                         }
-                        #endregion
 
-
+                        #endregion send mail
                     }
                 }
                 else
                 {
                     ErrMsg = AlertMessage.GetMsg(errmsg, AlertMessage.MsgType.Error);
                 }
-
             }
             catch (Exception ex)
             {
@@ -1495,7 +1491,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             string ErrMsg = "";
             try
             {
-
                 if (errcode == 0)
                 {
                     ErrMsg = AlertMessage.GetMsg("Bet transactions deleted!", AlertMessage.MsgType.Success);
@@ -1520,6 +1515,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         int cnt = drTicketsDeleted.Count();
 
                         #region Template
+
                         string tplpath = "";
                         if (IsNumberGame)
                             tplpath = "NumberGame/";
@@ -1536,13 +1532,15 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         //TemplateHandler.Assign(ref tplMatchAll_SpecialBet, "ActionType", "Deleted");
 
                         //string tplUser_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow_SpecialBet.htm");
-                        #endregion
+
+                        #endregion Template
 
                         #region send mail
 
                         if (dtMatch.Rows.Count > 0 && cnt > 0)
                         {
                             #region Template
+
                             string strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + (CastAide.AsBoolean(dtMatch.Rows[0]["isNeutral"]) ? "(N)" : string.Empty);
                             if (CastAide.AsInt32(dtUsers.Rows[0]["bettype"]) == 10)
                             {
@@ -1566,16 +1564,14 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                 //TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "hdp");
 
                                 strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + " - " + CacheRef.GetLeagueName(dtMatch.Rows[0]["leagueid"]);
-
                             }
-                            #endregion
+
+                            #endregion Template
 
                             #region Create Dataset dsUser
 
                             string ToMailCSD = "";
                             string CC = "", BCC = "";
-
-
 
                             SpecialDeleteElement mailling = new SpecialDeleteElement();
 
@@ -1588,8 +1584,8 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                 mailling = SpecialDeleteSection.Instance.NotificationTestCurrency["EmailNotification"];
                             }
 
-
                             #region MatchInfo
+
                             DataRow drMatch = dtMatch.Rows[0];
                             string Subject = string.Empty;
 
@@ -1601,7 +1597,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             {
                                 Subject = "Deleted Bets Report for {site} (" + Convert.ToDateTime(drMatch["datetime"]) + ")";
                             }
-
 
                             string tplMatch = tplMatchAll.Clone().ToString();
 
@@ -1631,12 +1626,12 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             string site = string.Empty;
                             string bgColor = string.Empty;
                             string isMP = string.Empty;
-                            #endregion
+
+                            #endregion MatchInfo
 
                             #region AssignRow
+
                             StringBuilder body = new StringBuilder();
-
-
 
                             var sites = drTicketsDeleted.AsEnumerable().Select(s => CastAide.AsString(s["site"])).Distinct().ToList();
                             int i = 0;
@@ -1652,15 +1647,12 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             string betteam = string.Empty;
                             foreach (DataRow drBet in drTicketsDeleted)
                             {
-
                                 bgColor = (bgColor == "#FCFCFC") ? "#F2F2F2" : "#FCFCFC";
                                 string row = tplUser.Clone().ToString();
 
                                 TemplateHandler.Assign(ref row, "bgcolor", bgColor);
                                 TemplateHandler.Assign(ref row, "username", drBet["username"]);
                                 TemplateHandler.Assign(ref row, "username1", drBet["username2"]);
-
-
 
                                 TemplateHandler.Assign(ref row, "refno", drBet["refno"]);
                                 bool IsLive = false;
@@ -1707,7 +1699,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                 {
                                     case 1:
                                     case 7:
-                                    case 22:                                     
+                                    case 22:
 
                                         betteam = CastAide.AsString(drBet["betteam"]).ToLower();
                                         Decimal hdp1 = Convert.IsDBNull(drBet["hdp1"]) ? 0 : Convert.ToDecimal(drBet["hdp1"]);
@@ -1719,10 +1711,12 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                             hdp = hdp1 - hdp2;
                                         TemplateHandler.Assign(ref row, "{hdp}", IBCUtils.FormatHandler.FormatNumber2(hdp));
                                         break;
+
                                     case 3:
                                     case 8:
                                         TemplateHandler.Assign(ref row, "{hdp}", IBCUtils.FormatHandler.FormatNumber2(drBet["hdp1"]));
                                         break;
+
                                     default:
                                         TemplateHandler.Assign(ref row, "{hdp}", "--");
                                         break;
@@ -1751,7 +1745,8 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
                                 body.Append(row);
                             }
-                            #endregion
+
+                            #endregion AssignRow
 
                             TemplateHandler.Assign(ref tplMatch, "Rows", body.ToString());
 
@@ -1774,18 +1769,16 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             // send mail via gmail system
                             bool result = SendMailExtension.AccSendMail(MailSection.HostName.Gmail, ToMailCSD, CC, BCC, Subject, Subject, tplMatch, null);
 
-                            #endregion
+                            #endregion Create Dataset dsUser
                         }
-                        #endregion
 
-
+                        #endregion send mail
                     }
                 }
                 else
                 {
                     ErrMsg = AlertMessage.GetMsg(errmsg, AlertMessage.MsgType.Error);
                 }
-
             }
             catch (Exception ex)
             {
@@ -1800,7 +1793,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             string ErrMsg = "";
             try
             {
-
                 if (errcode == 0)
                 {
                     ErrMsg = AlertMessage.GetMsg("Transaction " + transid + " was recovered.", AlertMessage.MsgType.Success);
@@ -1853,6 +1845,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         if (dtMatch.Rows.Count > 0 && cnt > 0)
                         {
                             #region Template
+
                             string strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + (CastAide.AsBoolean(dtMatch.Rows[0]["isNeutral"]) ? "(N)" : string.Empty);
                             int bettype = CastAide.AsInt32(dtUsers.Rows[0]["bettype"]);
                             if (bettype == 10 || (bettype >= 81 && bettype <= 90))
@@ -1884,21 +1877,20 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                 {
                                     strHome = CacheRef.GetLeagueName(dtMatch.Rows[0]["leagueid"]) + " No " + CastAide.AsString(dtMatch.Rows[0]["matchcode"]);
                                 }
-
                             }
-                            #endregion
+
+                            #endregion Template
 
                             #region Create Dataset dsUser
 
                             #region MatchInfo
+
                             DataRow drMatch = dtMatch.Rows[0];
                             string Subject = string.Empty;
-
 
                             Subject = "Recovered Bet Report for {site} (" + Convert.ToDateTime(drMatch["datetime"]) + ")";
                             if (IsRealCurrency)
                                 Subject = "Real Currency - " + Subject;
-
 
                             string tplMatch = tplMatchAll.Clone().ToString();
 
@@ -1928,15 +1920,16 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             string site = string.Empty;
                             string bgColor = string.Empty;
                             string isMP = string.Empty;
-                            #endregion
+
+                            #endregion MatchInfo
 
                             #region AssignRow
+
                             StringBuilder body = new StringBuilder();
                             StringBuilder body_mix = new StringBuilder();
                             string betteam = string.Empty;
                             foreach (DataRow drBet in drTicketsRecovered)
                             {
-
                                 site = drBet["site"].ToString();
                                 bgColor = (bgColor == "#FCFCFC") ? "#F2F2F2" : "#FCFCFC";
                                 string row = tplUser.Clone().ToString();
@@ -1954,7 +1947,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                     TemplateHandler.Assign(ref row, "refno", drBet["refno"]);
                                 }
                                 string bettypeName = CacheRef.GetBettype(drBet["bettype"]);
-                               
+
                                 if (IsLiveCasino)
                                 {
                                     var refNo = CastAide.AsDecimal(drBet["refno"]);
@@ -1997,10 +1990,12 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                             hdp = hdp1 - hdp2;
                                         TemplateHandler.Assign(ref row, "{hdp}", IBCUtils.FormatHandler.FormatNumber2(hdp));
                                         break;
+
                                     case 3:
                                     case 8:
                                         TemplateHandler.Assign(ref row, "{hdp}", IBCUtils.FormatHandler.FormatNumber2(drBet["hdp1"]));
                                         break;
+
                                     default:
                                         TemplateHandler.Assign(ref row, "{hdp}", "--");
                                         break;
@@ -2029,13 +2024,13 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
                                 body.Append(row);
                             }
-                            #endregion
+
+                            #endregion AssignRow
 
                             TemplateHandler.Assign(ref tplMatch, "Rows", body.ToString());
 
                             string ToMailCSD = "";
                             string CC = "", BCC = "";
-
 
                             var usernames = SpecialDeleteSection.Instance[SpecialDeleteSection.StoreCollection.NotificationRealCurrency]["usernames"];
                             bool IsDeveloperRecovered = false;
@@ -2087,9 +2082,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
                             Regex regx = new Regex("12eu", RegexOptions.IgnoreCase);
 
-
                             Subject = Subject.Replace("{site}", site);
-
 
                             // send mail via gmail system
                             bool result = SendMailExtension.AccSendMail(MailSection.HostName.Gmail, ToMailCSD, CC, BCC, Subject, Subject, tplMatch, null);
@@ -2111,20 +2104,16 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                 ErrMsg += AlertMessage.GetMsg(msg, AlertMessage.MsgType.Error);
                             }
 
-
-
-                            #endregion
+                            #endregion Create Dataset dsUser
                         }
-                        #endregion
 
-
+                        #endregion send mail
                     }
                 }
                 else
                 {
                     ErrMsg = AlertMessage.GetMsg(errmsg, AlertMessage.MsgType.Error);
                 }
-
             }
             catch (Exception ex)
             {
@@ -2218,6 +2207,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         //string tplUser_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow_SpecialBet.htm");
 
                         #region send mail to CSD
+
                         string strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + (CastAide.AsBoolean(dtMatch.Rows[0]["isNeutral"]) ? "(N)" : string.Empty);
                         if (CastAide.AsInt32(dtUsers.Rows[0]["bettype"]) == 10)
                         {
@@ -2241,7 +2231,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             //TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "hdp");
 
                             strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + " - " + CacheRef.GetLeagueName(dtMatch.Rows[0]["leagueid"]);
-
                         }
 
                         #region Create Dataset dsUser
@@ -2257,6 +2246,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             if (collection.Alias.ToLower().Equals("deposit"))
                             {
                                 #region deposit
+
                                 ISpecialDeleteDAO _specialDAO = new SpecialDeleteDAO();
                                 DataTable dtMail = _specialDAO.SelMailingList();
 
@@ -2286,10 +2276,9 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
                                     mailing.Items = dtUser;
                                     maillings.Items.Add(mailing);
-
                                 }
 
-                                #endregion
+                                #endregion deposit
                             }
                             else
                             {
@@ -2319,7 +2308,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
                                     DataRow[] rows = dtUsers.Select(expression);
                                     foreach (DataRow row in rows)
-                                    {                                        
+                                    {
                                         dtUser.ImportRow(row);
                                     }
 
@@ -2329,20 +2318,18 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             }
                         }
 
-                        #endregion
+                        #endregion Create Dataset dsUser
 
                         foreach (SpecialDeleteDataforMailing dataforMailing in maillings.Items)
                         {
                             if (dataforMailing.Items.Rows.Count > 0)
                             {
                                 #region MatchInfo
+
                                 DataRow drMatch = dtMatch.Rows[0];
                                 string Subject = string.Empty;
 
-
                                 Subject = "Deleted Bets report (Early Kick-Off) for {site} {site_name} (" + Convert.ToDateTime(drMatch["datetime"]) + ")";
-
-
 
                                 string tplMatch = tplMatchAll.Clone().ToString();
 
@@ -2361,16 +2348,17 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                 string site = string.Empty;
                                 string bgColor = string.Empty;
                                 string isMP = string.Empty;
-                                #endregion
+
+                                #endregion MatchInfo
 
                                 #region AssignRow
+
                                 StringBuilder body = new StringBuilder();
                                 StringBuilder body_mix = new StringBuilder();
                                 bool hasSingle = false; bool hasMP = false;
                                 string betteam = string.Empty;
                                 foreach (DataRow drBet in dataforMailing.Items.Rows)
                                 {
-
                                     isMP = drBet["ismp"].ToString();
                                     if (isMP.Equals("1"))
                                     {
@@ -2401,8 +2389,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                         TemplateHandler.Assign(ref row, "username", drBet["username"]);
                                         TemplateHandler.Assign(ref row, "username1", drBet["username2"]);
 
-
-
                                         TemplateHandler.Assign(ref row, "refno", drBet["transid"]);
                                         bool IsLive = false;
                                         TemplateHandler.Assign(ref row, "bettype", getBettypeName(drBet["bettype"].ToString(), IsLive));
@@ -2425,12 +2411,14 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                                     hdp = hdp2 - hdp1;
                                                 else
                                                     hdp = hdp1 - hdp2;
-                                                TemplateHandler.Assign(ref row, "{hdp}", IBCUtils.FormatHandler.FormatNumber2(hdp));                                             
+                                                TemplateHandler.Assign(ref row, "{hdp}", IBCUtils.FormatHandler.FormatNumber2(hdp));
                                                 break;
+
                                             case 3:
                                             case 8:
-                                                TemplateHandler.Assign(ref row, "{hdp}", IBCUtils.FormatHandler.FormatNumber2(drBet["hdp1"]));                                             
+                                                TemplateHandler.Assign(ref row, "{hdp}", IBCUtils.FormatHandler.FormatNumber2(drBet["hdp1"]));
                                                 break;
+
                                             default:
                                                 TemplateHandler.Assign(ref row, "{hdp}", "--");
                                                 break;
@@ -2450,8 +2438,8 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                         body.Append(row);
                                     }
                                 }
-                                #endregion
 
+                                #endregion AssignRow
 
                                 if (hasSingle)
                                 {
@@ -2483,7 +2471,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                 Subject = Subject.Replace("{site}", site);
                                 Subject = Subject.Replace("{site_name}", dataforMailing.Name);
 
-                               
                                 // send mail via gmail system
                                 bool result = SendMailExtension.AccSendMail(MailSection.HostName.Gmail, ToMailCSD, CC, BCC, Subject, Subject, tplMatch, null);
 
@@ -2502,7 +2489,8 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                 }
                             }
                         }
-                        #endregion
+
+                        #endregion send mail to CSD
                     }
                 }
             }
@@ -2513,7 +2501,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             }
             return ErrMsg;
         }
-
 
         protected string SendEmailWhenDeleteBetToInternalGroupEarlyKO(DataSet rs, string transid, bool IsRealCurrency, string reason)
         {
@@ -2553,6 +2540,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         //string tplUser_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow_SpecialBet.htm");
 
                         #region send mail to CSD
+
                         string strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + (CastAide.AsBoolean(dtMatch.Rows[0]["isNeutral"]) ? "(N)" : string.Empty);
                         if (CastAide.AsInt32(dtUsers.Rows[0]["bettype"]) == 10)
                         {
@@ -2576,19 +2564,16 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             //TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "hdp");
 
                             strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + " - " + CacheRef.GetLeagueName(dtMatch.Rows[0]["leagueid"]);
-
                         }
 
-
                         #region MatchInfo
+
                         DataRow drMatch = dtMatch.Rows[0];
                         string Subject = string.Empty;
-
 
                         Subject = "Deleted Bets report (Early Kick-Off) for {site} {site_name} (" + Convert.ToDateTime(drMatch["datetime"]) + ")";
                         if (IsRealCurrency)
                             Subject = "Real Currency - " + Subject;
-
 
                         string tplMatch = tplMatchAll.Clone().ToString();
 
@@ -2619,16 +2604,16 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                 site += s + ", ";
                         }
 
-                        #endregion
+                        #endregion MatchInfo
 
                         #region AssignRow
+
                         StringBuilder body = new StringBuilder();
                         StringBuilder body_mix = new StringBuilder();
                         bool hasSingle = false; bool hasMP = false;
                         string betteam = string.Empty;
                         foreach (DataRow drBet in rows)
                         {
-
                             isMP = drBet["ismp"].ToString();
                             if (isMP.Equals("1"))
                             {
@@ -2660,8 +2645,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                 TemplateHandler.Assign(ref row, "username", drBet["username"]);
                                 TemplateHandler.Assign(ref row, "username1", drBet["username2"]);
 
-
-
                                 TemplateHandler.Assign(ref row, "refno", drBet["transid"]);
                                 bool IsLive = false;
                                 TemplateHandler.Assign(ref row, "bettype", getBettypeName(drBet["bettype"].ToString(), IsLive));
@@ -2684,12 +2667,14 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                             hdp = hdp2 - hdp1;
                                         else
                                             hdp = hdp1 - hdp2;
-                                        TemplateHandler.Assign(ref row, "{hdp}", IBCUtils.FormatHandler.FormatNumber2(hdp));                                             
+                                        TemplateHandler.Assign(ref row, "{hdp}", IBCUtils.FormatHandler.FormatNumber2(hdp));
                                         break;
+
                                     case 3:
                                     case 8:
-                                        TemplateHandler.Assign(ref row, "{hdp}", IBCUtils.FormatHandler.FormatNumber2(drBet["hdp1"]));                                             
+                                        TemplateHandler.Assign(ref row, "{hdp}", IBCUtils.FormatHandler.FormatNumber2(drBet["hdp1"]));
                                         break;
+
                                     default:
                                         TemplateHandler.Assign(ref row, "{hdp}", "--");
                                         break;
@@ -2709,8 +2694,8 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                 body.Append(row);
                             }
                         }
-                        #endregion
 
+                        #endregion AssignRow
 
                         if (hasSingle)
                         {
@@ -2747,15 +2732,13 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         CC = mailling.CC;
                         BCC = mailling.BCC;
 
-
                         Subject = Subject.Replace("{site}", site);
                         Subject = Subject.Replace("{site_name}", "");
 
                         // send mail via gmail system
                         bool result = SendMailExtension.AccSendMail(MailSection.HostName.Gmail, ToMailCSD, CC, BCC, Subject, Subject, tplMatch, null);
 
-
-                        #endregion
+                        #endregion send mail to CSD
                     }
                 }
             }
@@ -2768,6 +2751,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
         }
 
         #region WriteLogMail
+
         protected void WriteLogMail(string content)
         {
             try
@@ -2796,13 +2780,16 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 LogExtensions.ExceptionHandler(ex);
             }
         }
-        #endregion
+
+        #endregion WriteLogMail
 
         #region MixParlay
+
         protected decimal odds = 0, hdp1 = 0, hdp2 = 0;
         protected string bettypeName = "", sportypeName = "", leagueName = "", betteam = "";
         protected int bettype = 0;
         protected bool IsSearchResult = false;
+
         protected string GenMPRow(string refno, string transid)
         {
             string tplEvent = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("SpecialDelete/SendMailRowMPEvent.htm");
@@ -2870,36 +2857,43 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             case 1201:
                                 GenHdpEvent(ref mpItem, mpHome, mpAway, betteam, statusId, true);
                                 break;
+
                             case 2:
                             case 12:
                                 GenOEEvent(ref mpItem, mpHome, mpAway, statusId, true);
                                 break;
+
                             case 3:
                             case 8:
                             case 1203:
                                 GenOUEvent(ref mpItem, mpHome, mpAway, statusId, true);
                                 break;
+
                             case 4:
                             case 14:
                             case 30:
                             case 1204:
                                 GenCSEvent(ref mpItem, mpHome, mpAway, statusId, true);
                                 break;
+
                             case 5:
                             case 15:
                             case 1205:
                                 Gen1x2Event(ref mpItem, mpHome, mpAway, statusId, true);
                                 break;
+
                             case 6:
                             case 16:
                             case 1206:
                                 GenTGEvent(ref mpItem, mpHome, mpAway, statusId, true);
                                 break;
+
                             case 121:
                             case 122:
                             case 123:
                                 GenHomeAwayDrawNoBet(ref mpItem, mpHome, mpAway, statusId, betteam, true);
                                 break;
+
                             default:
                                 mpItem = string.Empty;
                                 break;
@@ -2909,7 +2903,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         ind++;
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -2917,11 +2910,13 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             }
             return strData;
         }
+
         protected string oddMP()
         {
             string cls = (IsSearchResult) ? "" : "MP";
             return "<span class='style_12BB" + cls + "'><b> @ " + NumberFormat.DecFormat(odds, 3) + "</b></span>";
         }
+
         protected void GenHdpEvent(ref string eventItem, string home, string away, string betteam, bool isMP)
         {
             string liveScore = "";
@@ -2984,17 +2979,17 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             if (bettype == 121)
             {
                 if (betteam == "x") choice = "Draw";
-                else if(betteam == "a") choice = away;
+                else if (betteam == "a") choice = away;
             }
             else if (bettype == 122)
             {
                 if (betteam == "h") choice = home;
-                else if(betteam == "x") choice = "Draw";
+                else if (betteam == "x") choice = "Draw";
             }
             else if (bettype == 123)
             {
                 if (betteam == "h") choice = "Draw";
-                else if(betteam == "a") choice = "No Draw";
+                else if (betteam == "a") choice = "No Draw";
             }
             if (isMP) choice += oddMP();
             string Event = home + " -VS- " + away;
@@ -3005,6 +3000,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             TemplateHandler.Assign(ref eventItem, "{sporttype}", sportypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", leagueName);
         }
+
         protected void GenHomeAwayDrawNoBet(ref string eventItem, string home, string away, int statusId, string betteam, bool isMP)
         {
             string liveScore = "";
@@ -3012,17 +3008,17 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             if (bettype == 121)
             {
                 if (betteam == "x") choice = "Draw";
-                else if(betteam == "a") choice = away;
+                else if (betteam == "a") choice = away;
             }
             else if (bettype == 122)
             {
                 if (betteam == "h") choice = home;
-                else if(betteam == "x") choice = "Draw";
+                else if (betteam == "x") choice = "Draw";
             }
             else if (bettype == 123)
             {
                 if (betteam == "h") choice = "Draw";
-                else if(betteam == "a") choice = "No Draw";
+                else if (betteam == "a") choice = "No Draw";
             }
             if (isMP) choice += oddMP();
             string Event = home + " -VS- " + away;
@@ -3040,6 +3036,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             TemplateHandler.Assign(ref eventItem, "{sporttype}", sportypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", leagueName);
         }
+
         protected void GenOEEvent(ref string eventItem, string home, string away, bool isMP)
         {
             string choice = "";
@@ -3053,7 +3050,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             TemplateHandler.Assign(ref eventItem, "{sporttype}", sportypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", leagueName);
         }
-
 
         protected void GenOEEvent(ref string eventItem, string home, string away, int statusId, bool isMP)
         {
@@ -3121,10 +3117,10 @@ namespace Sunplus.Accounting.Business.SpecialDelete
         protected void GenCSEvent(ref string eventItem, string home, string away, bool isMP)
         {
             string choice = "";
-            choice = (betteam == "5:0" || betteam == "0:5") ? betteam + " UP"  : betteam;
+            choice = (betteam == "5:0" || betteam == "0:5") ? betteam + " UP" : betteam;
             if (bettype == 30)
                 choice = (betteam == "4:0" || betteam == "0:4") ? betteam + " UP" : betteam;
-            
+
             if (isMP) choice += oddMP();
 
             TemplateHandler.Assign(ref eventItem, "{choice}", choice);
@@ -3136,12 +3132,11 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
         protected void GenCSEvent(ref string eventItem, string home, string away, int statusId, bool isMP)
         {
-
             string choice = "";
-            choice = (betteam == "5:0" || betteam == "0:5") ? betteam +" UP" : betteam;
-            if(bettype == 30)
+            choice = (betteam == "5:0" || betteam == "0:5") ? betteam + " UP" : betteam;
+            if (bettype == 30)
                 choice = (betteam == "4:0" || betteam == "0:4") ? betteam + " UP" : betteam;
-            
+
             if (isMP) choice += oddMP();
             string Event = home + " -VS- " + away;
             if (statusId == 102)
@@ -3228,11 +3223,11 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             TemplateHandler.Assign(ref eventItem, "{leaguename}", leagueName);
         }
 
-        #endregion
+        #endregion MixParlay
 
         protected string SplitMailList(string mailList)
         {
-            if (mailList.Length > 0 && mailList.Substring(mailList.Length-1,1) == ";")
+            if (mailList.Length > 0 && mailList.Substring(mailList.Length - 1, 1) == ";")
                 mailList = mailList.Substring(0, mailList.Length - 1);
 
             return mailList;

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Sunplus.Accounting.Entities.Report.Poker
 {
@@ -53,7 +51,6 @@ namespace Sunplus.Accounting.Entities.Report.Poker
         public string CompanyCommBase { get; set; }
     }
 
-    
     [Serializable]
     [DataContract]
     public class PokerMainBO
@@ -69,6 +66,5 @@ namespace Sunplus.Accounting.Entities.Report.Poker
 
         [DataMember]
         public int TotalRows { get; set; }
-
     }
 }

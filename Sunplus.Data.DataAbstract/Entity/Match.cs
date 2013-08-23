@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Runtime.Serialization;
-using Norm;
 
 namespace Sunplus.Data.DataAbstract.Entity
 {
@@ -8,6 +6,7 @@ namespace Sunplus.Data.DataAbstract.Entity
     public class Match
     {
         #region public properties
+
         public string Matchid { get; set; }
 
         public string Leagueid { get; set; }
@@ -84,12 +83,7 @@ namespace Sunplus.Data.DataAbstract.Entity
 
         public string MatchCode { get; set; }
 
-        #endregion
+        #endregion public properties
 
-        
-      
-
-       
-        
     }
 }

@@ -10,7 +10,6 @@
 <%@ Import Namespace="System.Security.Principal"%>
 
 <%@ Import Namespace="Sunplus.Accounting.Core.Common" %>
-<%@ Import Namespace="Sunplus.Core.LoggingLib" %>
 <%@ Import Namespace="System.Linq" %>
 <%@ Import Namespace="Microsoft.Practices.Unity" %>
 <%@ Import Namespace="Microsoft.Practices.Unity.Configuration" %>
@@ -95,8 +94,6 @@
         //Phuong.Nguyen, handler system error
         // Code that runs when an unhandled error occurs
         Exception ex = Server.GetLastError().GetBaseException();
-        //Lewin
-        //(new Sunplus.Core.LoggingLib.EntLibLogger()).Error(ex.Message, ex);
 
         if (ex.GetType() != typeof(HttpException))
         {
@@ -116,16 +113,7 @@
         
 
         #region MyRegion
-        //string message = ex.Message +
-        //                "\n SOURCE: " + ex.Source +
-        //                "\n FORM: " + Request.Form.ToString() +
-        //                "\n QUERYSTRING: " + Request.QueryString.ToString() +
-        //                "\n TARGETSITE: " + ex.TargetSite +
-        //                "\n STACKTRACE: " + ex.StackTrace;
-
-        //SendMailBugSystem.NotificationBugSystem(message);
-        //Logger.Write(message);
-        //END 
+       
         #endregion
        
     }   

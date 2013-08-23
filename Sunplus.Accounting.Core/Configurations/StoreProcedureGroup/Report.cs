@@ -144,7 +144,6 @@ namespace Sunplus.Accounting.Core.Configurations.StoreProcedureGroup
             }
         }
 
-
         [ConfigurationProperty("DailyTurnover", IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(StoreProcedureCollection),
             AddItemName = "add",
@@ -160,7 +159,6 @@ namespace Sunplus.Accounting.Core.Configurations.StoreProcedureGroup
             }
         }
 
-
         [ConfigurationProperty("ResetWinning", IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(StoreProcedureCollection),
             AddItemName = "add",
@@ -175,6 +173,7 @@ namespace Sunplus.Accounting.Core.Configurations.StoreProcedureGroup
                 return spCollection;
             }
         }
+
         public static ReportSession Instance
         {
             get
@@ -183,7 +182,6 @@ namespace Sunplus.Accounting.Core.Configurations.StoreProcedureGroup
                 return reportSession;
             }
         }
-
 
         public StoreProcedureCollection this[StoreCollection name]
         {

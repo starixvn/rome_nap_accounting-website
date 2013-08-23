@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace Sunplus.Accounting.Entities.PositionTaking.Poker
 {
@@ -11,7 +7,7 @@ namespace Sunplus.Accounting.Entities.PositionTaking.Poker
     {
         [DataMember]
         public string _Name { get; set; }
-      
+
         [DataMember]
         public string Comm { get; set; }
 
@@ -20,6 +16,5 @@ namespace Sunplus.Accounting.Entities.PositionTaking.Poker
 
         [DataMember]
         public string UplineComm { get; set; }
-
     }
 }

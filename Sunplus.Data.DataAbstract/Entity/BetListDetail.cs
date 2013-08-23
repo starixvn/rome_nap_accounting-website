@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using DNAide.Core;
+using DNAide.Utils;
 using Norm.Attributes;
 using Sunplus.Data.DataAbstract.Utils;
-using System.Collections.Generic;
-using DNAide.Utils;
 
 namespace Sunplus.Data.DataAbstract.Entity
 {
@@ -16,7 +16,7 @@ namespace Sunplus.Data.DataAbstract.Entity
         public List<BetListDetail> Items { get; set; }
 
         [DataMember]
-        public int totalItem{get;set;}
+        public int totalItem { get; set; }
     }
 
     [Serializable]
@@ -32,6 +32,7 @@ namespace Sunplus.Data.DataAbstract.Entity
         #region TransDate
 
         private string _code;
+
         [MongoIgnore, DataMember]
         public string Code
         {
@@ -47,6 +48,7 @@ namespace Sunplus.Data.DataAbstract.Entity
         }
 
         private string _username;
+
         [MongoIgnore, DataMember]
         public string Username
         {
@@ -56,7 +58,9 @@ namespace Sunplus.Data.DataAbstract.Entity
             }
             set { _username = value; }
         }
+
         private string _transDate;
+
         [MongoIgnore, DataMember]
         public string TransDate
         {
@@ -65,24 +69,25 @@ namespace Sunplus.Data.DataAbstract.Entity
                 DateTime transDate = CastAide.AsDateTime(_bettran.Transdate);
                 return transDate.ToShortDateString() + "&nbsp;" +
                         transDate.ToShortTimeString();
-
             }
             set { _transDate = value; }
         }
 
         private string _transShortDate;
+
         [MongoIgnore, DataMember]
         public string TransShortDate
         {
-            get {
+            get
+            {
                 DateTime transDate = CastAide.AsDateTime(_bettran.Transdate);
                 return transDate.ToShortDateString();
             }
             set { _transShortDate = value; }
         }
 
-        #endregion
-       
+        #endregion TransDate
+
         #region Choice
 
         private SportEventDTO _sportEventDTO;
@@ -98,186 +103,204 @@ namespace Sunplus.Data.DataAbstract.Entity
             set { _sportEventDTO = value; }
         }
 
-
-        #endregion
+        #endregion Choice
 
         #region Combination Detail
 
         [DataMember]
         public List<CombinationDetalDTO> CombinationDetails { get; set; }
 
-        #endregion
+        #endregion Combination Detail
 
         #region Odds
-            private string _odds;
-            [MongoIgnore, DataMember]
-            public string Odds
-            {
-                get
-                {
-                    _odds = _bettran.Odds;
-                    var result = string.Empty;
-                    if (_bettran.Bettype == 9)
-                    {
-                        result = FormatHandler.FormatNumber4(CastAide.AsDecimal(_odds),"en-EN");
-                        return result;
-                    }
-                    if (_bettran.Bettype == 71 || _bettran.Bettype == 72 || _bettran.Bettype == 73 || _bettran.Bettype == 113 || _bettran.Bettype == 114 || _bettran.Bettype == 112)
-                    {
-                        return "";
-                    }
-                    //Lack case of HR bettype
-                    result = FormatHandler.FormatNumber3(CastAide.AsDecimal(_odds),"en-EN");
 
+        private string _odds;
+
+        [MongoIgnore, DataMember]
+        public string Odds
+        {
+            get
+            {
+                _odds = _bettran.Odds;
+                var result = string.Empty;
+                if (_bettran.Bettype == 9)
+                {
+                    result = FormatHandler.FormatNumber4(CastAide.AsDecimal(_odds), "en-EN");
                     return result;
                 }
-                set { _odds = value; }
-            }
-
-
-            [MongoIgnore]
-            public string OddType { get; set; }
-            
-            private string _oddName;
-            [MongoIgnore, DataMember]
-            public string OddName
-            {
-                get
+                if (_bettran.Bettype == 71 || _bettran.Bettype == 72 || _bettran.Bettype == 73 || _bettran.Bettype == 113 || _bettran.Bettype == 114 || _bettran.Bettype == 112)
                 {
-                    return SportBookUtils.GetOddName(_bettran.OddsType.ToString());
+                    return "";
                 }
-                set { _oddName = value; }
-            }   
-          
-        #endregion
+                //Lack case of HR bettype
+                result = FormatHandler.FormatNumber3(CastAide.AsDecimal(_odds), "en-EN");
+
+                return result;
+            }
+            set { _odds = value; }
+        }
+
+        [MongoIgnore]
+        public string OddType { get; set; }
+
+        private string _oddName;
+
+        [MongoIgnore, DataMember]
+        public string OddName
+        {
+            get
+            {
+                return SportBookUtils.GetOddName(_bettran.OddsType.ToString());
+            }
+            set { _oddName = value; }
+        }
+
+        #endregion Odds
 
         #region mOdds
-            private string _modds;
-            [MongoIgnore, DataMember]
-            public string Modds
-            { 
-                get{
-                    return FormatHandler.FormatNumber4(CastAide.AsDecimal(_bettran.Modds), "en-EN");
-                }
-                set { _modds = value; }
-                
+
+        private string _modds;
+
+        [MongoIgnore, DataMember]
+        public string Modds
+        {
+            get
+            {
+                return FormatHandler.FormatNumber4(CastAide.AsDecimal(_bettran.Modds), "en-EN");
             }
-            #endregion
+            set { _modds = value; }
+        }
+
+        #endregion mOdds
 
         #region Stake
-            private string _stake;
-            [MongoIgnore, DataMember]
-            public string Stake
-            {
-                get { return FormatHandler.FormatNumber2(CastAide.AsDecimal(_bettran.Stake),"en-EN"); }
-                set { _stake = value; }
-            }
-        #endregion
+
+        private string _stake;
+
+        [MongoIgnore, DataMember]
+        public string Stake
+        {
+            get { return FormatHandler.FormatNumber2(CastAide.AsDecimal(_bettran.Stake), "en-EN"); }
+            set { _stake = value; }
+        }
+
+        #endregion Stake
 
         #region Actual Stake
-            private string _actualStake;
-            [MongoIgnore, DataMember]
-            public string actualStake
+
+        private string _actualStake;
+
+        [MongoIgnore, DataMember]
+        public string actualStake
+        {
+            get { return FormatHandler.FormatNumber2(CastAide.AsDecimal(_bettran.actualStake), "en-EN"); }
+            set { _actualStake = value; }
+        }
+
+        #endregion Actual Stake
+
+        #region Vitual
+
+        private string _virtualrate;
+
+        [MongoIgnore, DataMember]
+        public string Virtualrate
+        {
+            get
             {
-                get { return FormatHandler.FormatNumber2(CastAide.AsDecimal(_bettran.actualStake), "en-EN"); }
-                set { _actualStake = value; }
+                var virtualrate = "";
+                if (_bettran.Status != "running")
+                    virtualrate = FormatHandler.FormatNumber2(CastAide.AsDouble(_bettran.Virtualrate, 0), "en-EN");
+                return virtualrate;
             }
-        #endregion
+            set { _virtualrate = value; }
+        }
 
-            #region Vitual
-            private string _virtualrate;
-            [MongoIgnore, DataMember]
-            public string Virtualrate
+        private string _virtual;
+
+        [MongoIgnore, DataMember]
+        public string Virtual
+        {
+            get
             {
-                get {
-                    var virtualrate = "";
-                    if(_bettran.Status != "running")
-                        virtualrate = FormatHandler.FormatNumber2(CastAide.AsDouble(_bettran.Virtualrate, 0), "en-EN");
-                    return virtualrate;
-                }
-                set { _virtualrate = value; }
+                var virtualVal = "";
+                if (_bettran.Status != "running")
+                    virtualVal = FormatHandler.FormatNumber2(CastAide.AsDecimal(_bettran.Virtual), "en-EN");
+                return virtualVal;
             }
+            set { _virtual = value; }
+        }
 
-            private string _virtual;
-            [MongoIgnore, DataMember]
-            public string Virtual
+        #endregion Vitual
+
+        #region Real
+
+        private string _real;
+
+        [MongoIgnore, DataMember]
+        public string Real
+        {
+            get
             {
-                get {
-                    var virtualVal = "";
-                    if(_bettran.Status != "running")
-                        virtualVal =  FormatHandler.FormatNumber2(CastAide.AsDecimal(_bettran.Virtual), "en-EN");
-                    return virtualVal;
-                }
-                set { _virtual = value; }
+                var real = "";
+                if (_bettran.Status != "running")
+                    real = FormatHandler.FormatNumber2(CastAide.AsDecimal(_bettran.Real), "en-EN");
+                return real;
             }
-            #endregion
+            set { _real = value; }
+        }
 
+        #endregion Real
 
-            #region Real
-            private string _real;
-            [MongoIgnore, DataMember]
-            public string Real
-            {
-                get {
-                    var real = "";
-                    if(_bettran.Status != "running")
-                        real = FormatHandler.FormatNumber2(CastAide.AsDecimal(_bettran.Real), "en-EN");
-                    return real;
-                }
-                set { _real = value; }
-            }
+        #region Status
 
-            #endregion
+        //Status get from BettranDetail
+        private string _ip;
 
-            #region Status
-            //Status get from BettranDetail
-            private string _ip;
-            [MongoIgnore, DataMember]
-            public string Ip
-            {
-                get { return _bettran.Ip; } //View IPVN
-                set { _ip = value; }
-            }
+        [MongoIgnore, DataMember]
+        public string Ip
+        {
+            get { return _bettran.Ip; } //View IPVN
+            set { _ip = value; }
+        }
 
-            private int _statusId;
-            [MongoIgnore, DataMember]
-            public int statusId
-            {
-                get { return _bettran.StatusId; }
-                set { _statusId = value; }
-            }
-        #endregion
+        private int _statusId;
+
+        [MongoIgnore, DataMember]
+        public int statusId
+        {
+            get { return _bettran.StatusId; }
+            set { _statusId = value; }
+        }
+
+        #endregion Status
 
         #region Comm Winloss
 
+        private string _playerwinlost;
 
-          
-            private string _playerwinlost;
-            [MongoIgnore, DataMember]
-            public string PlayerWinloss
-            {
-
-                get { return FormatHandler.FormatNumber2(CastAide.AsDecimal(_bettran.PlayerWinloss),"en-EN"); }
-                set { _playerwinlost = value; }
-            }
-
-          
-
+        [MongoIgnore, DataMember]
+        public string PlayerWinloss
+        {
+            get { return FormatHandler.FormatNumber2(CastAide.AsDecimal(_bettran.PlayerWinloss), "en-EN"); }
+            set { _playerwinlost = value; }
+        }
 
         private string _agentDiscount;
+
         [MongoIgnore, DataMember]
         public string AgentDiscount
         {
-            get { return FormatHandler.FormatNumber2(CastAide.AsDouble(_bettran.Adiscount, 0) * 100,"en-EN") + "%"; }
+            get { return FormatHandler.FormatNumber2(CastAide.AsDouble(_bettran.Adiscount, 0) * 100, "en-EN") + "%"; }
             set { _agentDiscount = value; }
         }
 
         private string _awinlost;
+
         [MongoIgnore, DataMember]
         public string AgentWinloss
-         {
-            
-            get 
+        {
+            get
             {
                 var winloss = "";
                 if (_bettran.Status != "running" && _bettran.Status != "waiting")
@@ -288,22 +311,24 @@ namespace Sunplus.Data.DataAbstract.Entity
         }
 
         private string _agentComm;
+
         [MongoIgnore, DataMember]
         public string AgentComm
         {
-            get { return FormatHandler.FormatNumber2(CastAide.AsDecimal(_bettran.Acomm),"en-EN"); }
+            get { return FormatHandler.FormatNumber2(CastAide.AsDecimal(_bettran.Acomm), "en-EN"); }
             set { _agentComm = value; }
         }
 
         private string _companywinlost;
+
         [MongoIgnore, DataMember]
         public string CompanyWinloss
         {
-            get { return FormatHandler.FormatNumber2(CastAide.AsDecimal(_bettran.CompanyWinloss),"en-EN"); }
+            get { return FormatHandler.FormatNumber2(CastAide.AsDecimal(_bettran.CompanyWinloss), "en-EN"); }
             set { _companywinlost = value; }
         }
 
-        #endregion
+        #endregion Comm Winloss
 
         protected Bettran _bettran;
 
@@ -367,7 +392,6 @@ namespace Sunplus.Data.DataAbstract.Entity
         public string TotalWLComm { get; set; }
     }
 
-
     [Serializable]
     [DataContract]
     public class BetListSystemParlayDetail
@@ -376,77 +400,97 @@ namespace Sunplus.Data.DataAbstract.Entity
         public string Transid { get; set; }
 
         #region TransDate
+
         [DataMember]
-        public string TransDate { get; set; }        
-        #endregion
+        public string TransDate { get; set; }
+
+        #endregion TransDate
 
         #region Choice
+
         [DataMember]
         public string Choice { get; set; }
+
         [DataMember]
         public string Event { get; set; }
-        #endregion
+
+        #endregion Choice
 
         #region Odds
+
         private string _odds;
+
         [DataMember]
         public string Odds { get; set; }
-       #endregion
+
+        #endregion Odds
 
         #region Stake
-        [DataMember] 
+
+        [DataMember]
         public string Stake { get; set; }
-        #endregion
+
+        #endregion Stake
 
         #region Actual Stake
-        public string ActualStake { get; set; }
-        #endregion
 
-        #region Status        
+        public string ActualStake { get; set; }
+
+        #endregion Actual Stake
+
+        #region Status
+
         [DataMember]
         public string IP { get; set; }
 
         [DataMember]
         public string Status { get; set; }
-        #endregion
 
-        #region Comm - Winloss        
+        #endregion Status
+
+        #region Comm - Winloss
+
         [DataMember]
         public string PlayerWinLoss { get; set; }
 
         [DataMember]
         public string SuperPT { get; set; }
+
         [DataMember]
         public string SuperWinLost { get; set; }
+
         [DataMember]
         public string SuperComm { get; set; }
+
         [DataMember]
         public string SuperDiscount { get; set; }
 
         [DataMember]
         public string MasterPT { get; set; }
+
         [DataMember]
         public string MasterWinLost { get; set; }
+
         [DataMember]
         public string MasterComm { get; set; }
+
         [DataMember]
         public string MasterDiscount { get; set; }
 
         [DataMember]
         public string AgentPT { get; set; }
+
         [DataMember]
         public string AgentWinLost { get; set; }
+
         [DataMember]
         public string AgentComm { get; set; }
+
         [DataMember]
         public string AgentDiscount { get; set; }
 
-        
-        #endregion
-
+        #endregion Comm - Winloss
     }
-
-
 
     [Serializable]
     [DataContract]
@@ -461,7 +505,7 @@ namespace Sunplus.Data.DataAbstract.Entity
         [DataMember]
         public List<SystemParlayDetailGroup> SystemParlayCombinationDetailList { get; set; }
     }
-    
+
     //class the hien object tra ve thong tin SystemParlayCombinationDetail
     [Serializable]
     [DataContract]
@@ -492,8 +536,10 @@ namespace Sunplus.Data.DataAbstract.Entity
     {
         [DataMember]
         public List<SystemParlayCombinationDetail> Items { get; set; }
+
         [DataMember]
         public SystemParlayCombinationDetail SubTotal { get; set; }
+
         [DataMember]
         public int TotalItems { get; set; }
     }

@@ -11,7 +11,6 @@ namespace Sunplus.Accounting.DataAccess.Report.DailyTurnoverDAO
             return GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.DailyTurnover, key);
         }
 
-
         public DbResult SelDailyTurnover(string date, bool isActual, string key)
         {
             var element = getSPMapping(key);
@@ -19,9 +18,8 @@ namespace Sunplus.Accounting.DataAccess.Report.DailyTurnoverDAO
             hashtable.Add("fromdate", date);
             hashtable.Add("isactual", isActual);
 
-            return DbHelper.Execute(element.Name, hashtable, element.DbName,1800);
+            return DbHelper.Execute(element.Name, hashtable, element.DbName, 1800);
         }
-
 
         public DbResult SelDailyChangeDetial(string date)
         {
@@ -30,7 +28,6 @@ namespace Sunplus.Accounting.DataAccess.Report.DailyTurnoverDAO
             hashtable.Add("fromdate", date);
 
             return DbHelper.Execute(element.Name, hashtable, element.DbName, 1800);
-            
         }
     }
 }

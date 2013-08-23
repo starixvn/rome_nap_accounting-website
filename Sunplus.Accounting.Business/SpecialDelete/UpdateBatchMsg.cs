@@ -2,18 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using DNAide.Core;
-using DNAide.Data;
-using Fanex.Tarus.LiveCasino.Entities;
+using Sunplus.Accounting.Business.Security;
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.DataAccess.SpecialDelete;
 using Sunplus.Accounting.Entities.SpecialDelete;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.DataAccess.Provider.SpecialDelete;
-using Sunplus.Core.LoggingLib;
-using System.Linq;
 
 /// <summary>
 /// Summary description for UpdateBatchMsg
@@ -24,7 +20,9 @@ namespace Sunplus.Accounting.Business.SpecialDelete
     public class UpdateBatchMsg : IUpdateBatchMsg
     {
         private ISpecialDeleteDAO _specialDeleteDao;
-        public UpdateBatchMsg() : this (null)
+
+        public UpdateBatchMsg()
+            : this(null)
         {
         }
 
@@ -33,10 +31,9 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             _specialDeleteDao = specialDeleteDao ?? new SpecialDeleteDAO();
         }
 
-
         public Dictionary<string, string> UploadMsg(Message pmsg, string TransIds)
         {
-             Dictionary<string, string> resultDto = new Dictionary<string, string>();
+            Dictionary<string, string> resultDto = new Dictionary<string, string>();
 
             if (!Permissions.GetHostPermission(Enumerations.Functions.SpecialDelete.SpecialDeleteSportBook))
             {
@@ -56,14 +53,14 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 //    str += id + (cnt < transIdDistinct.Count - 1 ? ", " : string.Empty);
                 //}
                 TransIds = String.Join(",", transIdDistinct);
-                
+
                 var batches = GetTransIdsByBatch(TransIds);
                 List<string> listTransIdDone = new List<string>();
                 foreach (var batch in batches)
                 {
                     SendPrivateMessageToUsers(pmsg, batch, ref listTransIdDone);
                 }
-                
+
                 List<string> listTransIdFail = new List<string>();
 
                 listTransIdFail = TransIds.Replace(" ", "").Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Except(listTransIdDone).ToList();
@@ -75,18 +72,17 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
                 strTransIdDone = String.Join(",", idsDone);
                 strTransIdFail = String.Join(",", listTransIdFail);
-                
-                #endregion
+
+                #endregion send private message to users
 
                 if (strTransIdDone.Length > 0)
                 {
-                    resultDto.Add("-100", "Update Batch Msg successfully with TransId: " + strTransIdDone +".");
+                    resultDto.Add("-100", "Update Batch Msg successfully with TransId: " + strTransIdDone + ".");
                 }
-                if (strTransIdFail.Length>0)
+                if (strTransIdFail.Length > 0)
                 {
                     resultDto.Add("100", "Update Batch Msg unsuccessfully with TransId: " + strTransIdFail + ".");
                 }
-                
             }
             catch (Exception ex)
             {
@@ -107,7 +103,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 if (arrTransids.Length % transIdPerBatch > 0)
                     num++;
 
-
                 for (int i = 0; i < num; i++)
                 {
                     var transidsPerBatch = arrTransids.Select(s => s).Skip(transIdPerBatch * (i)).Take(transIdPerBatch).ToList();
@@ -120,7 +115,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         }
                         catch (Exception ex)
                         {
-                            
                         }
                     }
                     batches.Add(batch);
@@ -128,19 +122,18 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             }
             catch (Exception ex)
             {
-                
             }
 
             return batches;
         }
 
-        private bool SendPrivateMessageToUsers(Message pmsg, string TransIds, ref List<string> listTransIdDone )
+        private bool SendPrivateMessageToUsers(Message pmsg, string TransIds, ref List<string> listTransIdDone)
         {
             bool IsSuccess = false;
             try
             {
                 DataTable dtMsg = _specialDeleteDao.SelBetBatchMsg(TransIds);
-                
+
                 if (dtMsg.Rows.Count > 0)
                 {
                     var list = new Hashtable();
@@ -189,7 +182,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         // This is a CustID of ticket that is deleted [TargetID Field]
                         string uname = Key.Key.ToString().Split('^')[1];
                         //This is a UserName of ticket that is deleted [TargetName Field]
-
                         DataRow dr = dtDeletedBet.NewRow();
                         dr["custid"] = custid;
                         dr["username"] = uname;
@@ -211,8 +203,8 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
                     pmsg.CreatorId = Convert.ToInt32(AppSession.AccId);
                     pmsg.CreatorName = AppSession.AccUserName;
-                        
-                    // send private message to users for cancel their transactions                                                                                                                
+
+                    // send private message to users for cancel their transactions
                     int MessageId = 0;
                     int matchId = 0;
                     foreach (DataRow dr in dtBets.Rows)
@@ -221,10 +213,9 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         // This is a CustID of ticket that is deleted [TargetID Field]
                         string[] uname = { CastAide.AsString(dr["username"]) };
                         //This is a UserName of ticket that is deleted [TargetName Field]
-
-                        if (CastAide.AsInt32(dr["custid"]) < 100) continue; //SRecommend < 100 and roleid=3 
+                        if (CastAide.AsInt32(dr["custid"]) < 100) continue; //SRecommend < 100 and roleid=3
                         string[] bettransid = { CastAide.AsString(dr["transids"]) };
-                            
+
                         if (MessageId == 0)
                             MessageId = Messenger.SetMessage(pmsg, custid, uname, matchId, bettransid);
                         else
@@ -232,9 +223,8 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
                         foreach (string transid in CastAide.AsString(dr["transids"]).Split(','))
                         {
-                            listTransIdDone.Add(transid.Trim());    
+                            listTransIdDone.Add(transid.Trim());
                         }
-                        
 
                         IsSuccess = true;
                     }

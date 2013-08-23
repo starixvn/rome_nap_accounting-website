@@ -8,7 +8,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Menu
     /// <summary>
     /// Summary description for IMenuManager
     /// </summary>
-    /// 
+    ///
     [ServiceContract]
     public interface IMenuService
     {

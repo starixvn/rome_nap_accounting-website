@@ -1,29 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Data;
 using System.Text;
-using Sunplus.Accounting.Core.Cache;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using DNAide.Web;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
-
-using RemotingRef;
-
-
+using DNAide.Web;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using Sunplus.Accounting.DataAccess.Report;
 
 public partial class Report_HRBL : PageBase
 {
-
     public StringBuilder html = new StringBuilder();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         Title = Sunplus.Accounting.Business.Report.Reports.Title;
@@ -32,8 +22,8 @@ public partial class Report_HRBL : PageBase
 
     /// <summary>
     /// Generate report body
-    /// </summary>    
-    void GenReport()
+    /// </summary>
+    private void GenReport()
     {
         DbResult ds = null;
 
@@ -147,13 +137,10 @@ public partial class Report_HRBL : PageBase
                 }
             }
             html.Append(tpl);
-
         }
         catch (Exception ex)
         {
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
-
-
     }
 }

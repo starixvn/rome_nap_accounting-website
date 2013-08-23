@@ -1,6 +1,5 @@
 using System.Data;
 using DNAide.Data;
-using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Customer;
 
@@ -16,8 +15,11 @@ namespace Sunplus.Accounting.DataAccess
                                     string ip);
 
         DbResult GetAllCustInfo(string username);
+
         BetSettingNG CheckEnableNGDownline(string username);
+
         Result UpdateBetSettingNGDownline(string username, int isEnable, string maxBet, string minBet, string maxMatch, string maxBall);
+
         string GetRNGSiteNameByCustId(int custId);
     }
 }

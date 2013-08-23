@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using DNAide.Core;
 using DNAide.Data;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.DataAccess.IReportDAO;
 using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Accounting.Entities.Report.External;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 {
@@ -17,7 +13,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
     {
         private StoreProcedureElement getSPMapping(string key)
         {
-            return GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.External , key);
+            return GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.External, key);
         }
 
         public DbResult SelWinLossDailyByCom(string winlostdate)
@@ -31,7 +27,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             return DbHelper.Execute(element.Name, hashtable, element.DbName, 600);
         }
 
-
         public DbResult SelWinLossDailyBySuper(string winlostdate, int custid)
         {
             Hashtable hashtable = new Hashtable();
@@ -42,7 +37,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
             return DbHelper.Execute(element.Name, hashtable, element.DbName, 600);
         }
-
 
         public DbResult SelWinLossDailyByMaster(string winlostdate, int custid)
         {
@@ -55,7 +49,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             return DbHelper.Execute(element.Name, hashtable, element.DbName, 600);
         }
 
-
         public DbResult SelWinLossDailyByAgent(string winlostdate, int custid)
         {
             Hashtable hashtable = new Hashtable();
@@ -66,7 +59,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
             return DbHelper.Execute(element.Name, hashtable, element.DbName, 600);
         }
-
 
         public DbResult SelWinLossDetailByCom(string param)
         {
@@ -87,7 +79,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
             return DbHelper.Execute(element.Name, hashtable, element.DbName, 600);
         }
-
 
         public DbResult SelWinLossDetailBySuper(int custid, string param, int pageIndex, int pageSize)
         {
@@ -111,7 +102,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
             return DbHelper.Execute(element.Name, hashtable, element.DbName, 600);
         }
-
 
         public DbResult SelWinLossDetailByMaster(int custid, string param, int pageIndex, int pageSize)
         {

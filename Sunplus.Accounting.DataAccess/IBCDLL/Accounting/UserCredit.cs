@@ -2,12 +2,9 @@ using System;
 using System.Collections;
 using System.Data;
 using System.Web;
-using DNAide.Data;
-
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
-using Fanex.Data;
 using DNAide.Core;
+using DNAide.Data;
+using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
@@ -31,8 +28,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
         }
@@ -49,7 +45,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         public static void CustomerUpdateCredit(int _accId, int _custId, decimal _newCredit)
         {
             try
-            {                
+            {
                 using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdCredit", 600))
                 {
                     var param = new Hashtable();
@@ -86,7 +82,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// Select Agent Credit --
         /// store procedure: Acc_CustomerSelUsedCredit_Ag --
         /// @viet hoang
-        /// </summary>        
+        /// </summary>
         /// <param name="_agentId"></param>
         /// <returns></returns>
         public static IDataReader SelectAgentCredit(int _agentId)
@@ -100,8 +96,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
         }
@@ -124,8 +119,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
         }
@@ -148,8 +142,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
         }
@@ -180,7 +173,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     objDb.AssignParamValues(param);
 
                     objDb.ExecuteNonQuery();
-                    if(CastAide.AsInt32(objDb.GetParameterValue("errcode")) > 0)
+                    if (CastAide.AsInt32(objDb.GetParameterValue("errcode")) > 0)
                         throw new AccException(string.Format("{0}", objDb.GetParameterValue("errmsg")));
                 }
             }

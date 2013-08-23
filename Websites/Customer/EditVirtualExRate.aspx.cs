@@ -2,21 +2,16 @@ using System;
 using System.Data;
 using DNAide.Data;
 using DNAide.Web;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 using IBCUtils;
-
-
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 
 public partial class Customer_EditVirtualExRate : PageBase
 {
-
     public string strArrExRate = string.Empty;
-    public int current = 0;    
+    public int current = 0;
     protected string isCustInfo = string.Empty;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!Page.IsPostBack)
@@ -30,6 +25,7 @@ public partial class Customer_EditVirtualExRate : PageBase
             editVirtualRateContent.Text = GetVirtualRate();
         }
     }
+
     private string GetVirtualRate()
     {
         string editTpl = string.Empty;

@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using System.Configuration;
+﻿using System.Configuration;
+using System.Linq;
 
 namespace Sunplus.Data.DataAbstract.Configurations
 {
@@ -55,7 +55,6 @@ namespace Sunplus.Data.DataAbstract.Configurations
         {
             get { return (NoSQLType)base["NoSQLType"]; }
         }
-        
 
         [ConfigurationProperty("NoSQL", IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(NoSQLCollection),
@@ -82,7 +81,6 @@ namespace Sunplus.Data.DataAbstract.Configurations
             }
         }
 
-
         public NoSQLElement this[NoSQLType name]
         {
             get
@@ -91,12 +89,10 @@ namespace Sunplus.Data.DataAbstract.Configurations
                 return NoSQLElement;
             }
         }
-
     }
 
     public class NoSQLCollection : ConfigurationElementCollection
     {
-
         public NoSQLCollection()
         {
         }
@@ -140,7 +136,6 @@ namespace Sunplus.Data.DataAbstract.Configurations
             BaseClear();
         }
 
-
         public NoSQLElement this[int index]
         {
             get
@@ -162,7 +157,6 @@ namespace Sunplus.Data.DataAbstract.Configurations
             return BaseIndexOf(NoSQLElement);
         }
 
-
         protected override sealed ConfigurationElement CreateNewElement()
         {
             return new NoSQLElement();
@@ -176,10 +170,8 @@ namespace Sunplus.Data.DataAbstract.Configurations
 
     public class NoSQLElement : ConfigurationElement
     {
-
         public NoSQLElement()
         {
-
         }
 
         [ConfigurationProperty("dbname", IsRequired = false)]
@@ -266,7 +258,6 @@ namespace Sunplus.Data.DataAbstract.Configurations
             }
         }
 
-
         [ConfigurationProperty("password", IsRequired = false)]
         //[RegexStringValidator(@"\w+:\/\/[\w.]+\S*")]
         public string Password
@@ -279,6 +270,6 @@ namespace Sunplus.Data.DataAbstract.Configurations
             {
                 this["password"] = value;
             }
-        }        
+        }
     }
 }

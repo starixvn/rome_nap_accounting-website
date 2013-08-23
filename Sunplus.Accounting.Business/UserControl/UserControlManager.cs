@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using DNAide.Core;
 using DNAide.Data;
-using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Entities;
 
 /// <summary>
 /// Summary description for UserControlManager
@@ -60,7 +59,6 @@ namespace Sunplus.Accounting.Business.UserControl
         {
             if (dt == null || dt.Rows.Count == 0) return;
 
-
             DataRow[] rows = dt.Select("parentid=" + parentId, "[System], [DisplayOrder] ASC");
             foreach (DataRow row in rows)
             {
@@ -80,7 +78,7 @@ namespace Sunplus.Accounting.Business.UserControl
             }
         }
 
-        #endregion
+        #endregion Function Management
 
         #region User control management
 
@@ -96,7 +94,6 @@ namespace Sunplus.Accounting.Business.UserControl
         private static void GroupPolicyListById(DataTable dt, ref List<UserControlBO> listPolicy, int parentId)
         {
             if (dt == null || dt.Rows.Count == 0) return;
-
 
             DataRow[] rows = dt.Select("parentid=" + parentId, "[DisplayOrder] ASC");
             foreach (DataRow row in rows)
@@ -121,7 +118,6 @@ namespace Sunplus.Accounting.Business.UserControl
         private static void UserPolicyListById(DataTable dt, ref List<UserControlBO> listPolicy, int parentId)
         {
             if (dt == null || dt.Rows.Count == 0) return;
-
 
             DataRow[] rows = dt.Select("parentid=" + parentId, "[DisplayOrder] ASC");
             foreach (DataRow row in rows)
@@ -154,6 +150,6 @@ namespace Sunplus.Accounting.Business.UserControl
             return listPolicy;
         }
 
-        #endregion
+        #endregion User control management
     }
 }

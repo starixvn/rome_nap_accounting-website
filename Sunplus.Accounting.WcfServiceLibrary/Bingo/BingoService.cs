@@ -1,11 +1,6 @@
-﻿using System;
-using System.ServiceModel.Activation;
-using Sunplus.Accounting.Business;
+﻿using System.ServiceModel.Activation;
 using Sunplus.Accounting.Business.PT.Bingo;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Bingo.Entities;
 
@@ -15,7 +10,7 @@ using Sunplus.Bingo.Entities;
 namespace Sunplus.Accounting.WcfServiceLibrary.Bingo
 {
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
-    public class BingoService: IBingoService
+    public class BingoService : IBingoService
     {
         public Sunplus.Bingo.Entities.Customer GetCustomerSetting(int custID, int updatedByRoleID)
         {

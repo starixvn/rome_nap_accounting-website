@@ -6,11 +6,6 @@
 
 namespace Sunplus.Accounting.DataAccess.Report.ResetWinning
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using DNAide.Data;
     using Sunplus.Accounting.Entities.Report.ResetWinning;
 
     /// <summary>

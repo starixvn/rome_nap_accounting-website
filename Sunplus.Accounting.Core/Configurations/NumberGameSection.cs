@@ -1,6 +1,4 @@
 ﻿using System.Configuration;
-using DNAide.Core;
-using DNAide.Utils;
 
 namespace Sunplus.Accounting.Core.Configurations
 {
@@ -13,11 +11,12 @@ namespace Sunplus.Accounting.Core.Configurations
         {
             Bettype, PTSetting
         }
-        public enum BallCollectionType 
-        { 
+
+        public enum BallCollectionType
+        {
             Deadball, Liveball
         }
-        
+
         public enum Level
         {
             Super, Master, Agent, Member, SuperOnMember, MasterOnMember, MinMaxPT
@@ -53,7 +52,6 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-
         public static NumberGameSection Instance
         {
             get
@@ -64,22 +62,18 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-
         public NumberGameCollection this[NumberGameCollectionType name]
         {
             get
             {
-
                 var spCollection = (NumberGameCollection)this.GetType().GetProperty(name.ToString()).GetValue(this, System.Reflection.BindingFlags.GetField, null, null, null);
                 return spCollection;
             }
         }
     }
 
-
     public class NumberGameCollection : ConfigurationElementCollection
     {
-
         public NumberGameCollection()
         {
             //var storeProcedure = (StoreProcedureElement) CreateNewElement();
@@ -125,7 +119,6 @@ namespace Sunplus.Accounting.Core.Configurations
             BaseClear();
         }
 
-
         public NumberGameElement this[int index]
         {
             get
@@ -155,7 +148,6 @@ namespace Sunplus.Accounting.Core.Configurations
             return BaseIndexOf(numberGameElement);
         }
 
-
         protected override sealed ConfigurationElement CreateNewElement()
         {
             return new NumberGameElement();
@@ -171,9 +163,7 @@ namespace Sunplus.Accounting.Core.Configurations
     {
         public NumberGameElement()
         {
-
         }
-
 
         [ConfigurationProperty("name", IsRequired = false)]
         //[RegexStringValidator(@"\w+:\/\/[\w.]+\S*")]

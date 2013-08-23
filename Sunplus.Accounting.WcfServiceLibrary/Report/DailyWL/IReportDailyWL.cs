@@ -31,6 +31,4 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report.DailyWL
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         void Export2ExcelDailyWLDirectRacingBySportDetails(string sporttype, string bettype, string winlossDate);
     }
-
-   
 }

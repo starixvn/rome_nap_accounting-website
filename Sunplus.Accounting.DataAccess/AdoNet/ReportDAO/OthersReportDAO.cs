@@ -7,7 +7,7 @@ using Sunplus.Accounting.DataAccess.IReportDAO;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 {
-    public class OthersReportDAO: DataAccess, IOthersReportDAO
+    public class OthersReportDAO : DataAccess, IOthersReportDAO
     {
         public DataTable SelectNumberOfBetsForCreditSites(DateTime fromDate, DateTime toDate)
         {
@@ -26,7 +26,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
         {
             return GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.Others, site);
         }
-
 
         public DbResult SelDuplicateTickets(string wldate)
         {

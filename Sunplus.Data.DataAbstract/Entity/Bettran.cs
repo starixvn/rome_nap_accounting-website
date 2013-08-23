@@ -1,7 +1,7 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using DNAide.Core;
 using Norm;
-using System;
 
 namespace Sunplus.Data.DataAbstract.Entity
 {
@@ -10,10 +10,11 @@ namespace Sunplus.Data.DataAbstract.Entity
     public class Bettran
     {
         #region public properties
+
         public string SystemParlaySelection_Bettran { get; set; }
 
         #region User
-        
+
         public int Custid { get; set; }
 
         public int Creator { get; set; }
@@ -24,7 +25,8 @@ namespace Sunplus.Data.DataAbstract.Entity
 
         [DataMember]
         public string UserName { get; set; }
-        #endregion
+
+        #endregion User
 
         #region Trans
 
@@ -35,52 +37,50 @@ namespace Sunplus.Data.DataAbstract.Entity
         public string Transid { get; set; }
 
         public string Transdate { get; set; }
-               
+
         public string Transdesc { get; set; }
-        #endregion
+
+        #endregion Trans
 
         #region Bettype
 
         public string Betfrom { get; set; }
 
         public string Betcheck { get; set; }
-  
+
         public string Betid { get; set; }
-      
+
         [DataMember]
         public int Bettype { get; set; }
-        #endregion
+
+        #endregion Bettype
 
         #region Match
+
         public int Matchid { get; set; }
-        
+
         public string MatchCode { get; set; }
-        
+
         public string Hdp1 { get; set; }
 
-        public string Hdp2  { get; set; }
-     
+        public string Hdp2 { get; set; }
+
         public string Livehomescore { get; set; }
 
         public string Liveawayscore { get; set; }
 
         public string EventDate { get; set; }
 
-        [DataMember]  
+        [DataMember]
         public bool Liveindicator { get; set; }
-
 
         public string Betteam { get; set; }
 
-
         public string LeagueId { get; set; }
 
-       
         public string HomeId { get; set; }
 
-      
         public string AwayId { get; set; }
-
 
         public string SportId { get; set; }
 
@@ -90,8 +90,7 @@ namespace Sunplus.Data.DataAbstract.Entity
             set;
         }
 
-
-        #endregion
+        #endregion Match
 
         #region Odds
 
@@ -104,38 +103,41 @@ namespace Sunplus.Data.DataAbstract.Entity
         public int OddsType { get; set; }
 
         public string Modds { get; set; }
-        #endregion
+
+        #endregion Odds
 
         #region WinLost
 
-        public string Stake{get; set;}
+        public string Stake { get; set; }
 
         public string actualStake { get; set; }
 
-        public string Winlost{get; set; }
+        public string Winlost { get; set; }
 
         public int Statuswinlost { get; set; }
 
-
         public string Winlostdate { get; set; }
-     
-       public int Currency { get; set; }
 
-       [DataMember]
-       public string CurrencyName { get; set; }
+        public int Currency { get; set; }
 
-       public int Currency2 { get; set; }
+        [DataMember]
+        public string CurrencyName { get; set; }
+
+        public int Currency2 { get; set; }
 
         public string Virtualrate
         {
-            get; set; }
+            get;
+            set;
+        }
 
         public string Virtual
         { get; set; }
 
         public string Real { get; set; }
+
         //isnumeric(odds.programID)
-        //b.matchid=odds.orid  
+        //b.matchid=odds.orid
 
         public bool IsShowOtExRate
         {
@@ -143,14 +145,15 @@ namespace Sunplus.Data.DataAbstract.Entity
             set;
         }
 
-
         public int StatusId { get; set; }
 
         [DataMember]
         public string Status { get; set; }
-        #endregion
+
+        #endregion WinLost
 
         #region Super
+
         private string _sdiscount;
 
         public string Sdiscount
@@ -183,9 +186,9 @@ namespace Sunplus.Data.DataAbstract.Entity
             set { _swinlost = value; }
         }
 
-
         public int Srecommend { get; set; }
-        #endregion
+
+        #endregion Super
 
         #region Master
 
@@ -221,43 +224,49 @@ namespace Sunplus.Data.DataAbstract.Entity
             set { _mwinlost = value; }
         }
 
-
         public int Mrecommend { get; set; }
-        #endregion
+
+        #endregion Master
 
         #region Agent
+
         private string _awinlost;
+
         public string Awinlost
         {
             get { return CastAide.AsDecimal(_awinlost).ToString(); }
             set { _awinlost = value; }
         }
-     
+
         public string Discount { get; set; }
 
         public string Comm { get; set; }
 
         private string _apositiontaking;
+
         public string Apositiontaking
         {
             get { return (CastAide.AsDecimal(this._apositiontaking) * 100).ToString(); }
             set { _apositiontaking = value; }
         }
-        #endregion
+
+        #endregion Agent
 
         #region Member
 
-        public string Playercomm { get; set;}
+        public string Playercomm { get; set; }
 
         public string Playerdiscount { get; set; }
 
         public string PlayerWinloss { get; set; }
-       
-        #endregion
-            public string CompanyWinloss { get; set; }
+
+        #endregion Member
+
+        public string CompanyWinloss { get; set; }
+
         #region Company
 
-        #endregion
+        #endregion Company
 
         #region Other
 
@@ -269,14 +278,15 @@ namespace Sunplus.Data.DataAbstract.Entity
 
         public int Ruben { get; set; }
 
-        #endregion
+        #endregion Other
 
         #region SA Ticket
+
         [DataMember]
         public int SATicket { get; set; }
-        #endregion
+
+        #endregion SA Ticket
 
         #endregion public properties
-
     }
 }

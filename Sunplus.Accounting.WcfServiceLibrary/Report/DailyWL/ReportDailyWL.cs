@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel.Activation;
-using System.Text;
+﻿using System.ServiceModel.Activation;
 using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Entities.Report.DailyWL;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.Report.DailyWL
 {
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
-    public class ReportDailyWL:IReportDailyWL
+    public class ReportDailyWL : IReportDailyWL
     {
         public DailyWLBO GetWinlossRacingReport(string winlossdate)
         {
@@ -17,13 +13,11 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report.DailyWL
             return dailyWL.DailyWLDirectRacing(winlossdate);
         }
 
-
         public DailyWLBO DailyWLDirectRacingBySport(string sporttype, string winlossdate)
         {
             var dailyWL = CommonBootStrapper.Locator.GetInstance<Business.Report.DailyWL.IReportDailyWL>();
             return dailyWL.DailyWLDirectRacingBySport(sporttype, winlossdate);
         }
-
 
         public DailyWLDTO DailyWLDirectRacingBySportDetails(string winlossdate, string sporttype, string bettype)
         {

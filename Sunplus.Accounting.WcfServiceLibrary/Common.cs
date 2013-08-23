@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
+﻿using System.ServiceModel;
 using System.ServiceModel.Channels;
-using System.Text;
 
 namespace Sunplus.Accounting.WcfServiceLibrary
 {
@@ -20,7 +16,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary
             RemoteEndpointMessageProperty endpointProperty =
 
                 messageProperties[RemoteEndpointMessageProperty.Name]
-
                 as RemoteEndpointMessageProperty;
             return endpointProperty.Address;
         }

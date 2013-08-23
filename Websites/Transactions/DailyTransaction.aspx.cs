@@ -1,24 +1,16 @@
 using System;
 using System.Collections.Generic;
+using DNAide.Core;
 using Sunplus.Accounting.Business;
 using Sunplus.Accounting.Business.BootStrappers;
-using Sunplus.Accounting.Entities.ViewModel;
-using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Business.Transaction;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web.Controls;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-
-
-using Sunplus.Accounting.Services;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.Business.Transaction;
-using DNAide.Core;
+using Sunplus.Accounting.Entities.ViewModel;
 
 public partial class DailyTransaction : PageBase
 {
-    
-   
     private System.Globalization.CultureInfo cult = System.Globalization.CultureInfo.CurrentCulture;
     public string sTitle = "";
     public string strCalendar = "";
@@ -26,8 +18,8 @@ public partial class DailyTransaction : PageBase
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        string _s = string.Empty;        
-        try 
+        string _s = string.Empty;
+        try
         {
             sTitle = Resources.Language.DailyFinanceTitle;
 
@@ -43,15 +35,16 @@ public partial class DailyTransaction : PageBase
                 _date.ToString("yyyyMMdd"),
                 "txndate",
                 "../",
-                "btndate", 
-                string.Format(cult, "{0:MM/dd/yyyy}", _date.AddDays(-1)), 
-                false, 
+                "btndate",
+                string.Format(cult, "{0:MM/dd/yyyy}", _date.AddDays(-1)),
+                false,
                 false,
                 string.Empty,
                 string.Empty,
                 string.Empty);
 
             #region get bettyles
+
             var userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
             List<FinanceBettype> entityList = userService.GetFinanceBettyles();
             foreach (FinanceBettype fb in entityList)
@@ -63,7 +56,8 @@ public partial class DailyTransaction : PageBase
                 var DailyAllTxn = CommonBootStrapper.Locator.GetInstance<IServiceDailyTran>();
                 DailyAllTxn.ExportToExcelDailyFinance(CastAide.AsString(Request["transDate"]), CastAide.AsInt32(Request["status"]), CastAide.AsString(Request["type"]), CastAide.AsString(Request["creator"]), CastAide.AsString(Request["verifyBy"]));
             }
-            #endregion
+
+            #endregion get bettyles
         }
         catch (AccException ex)
         {
@@ -75,5 +69,4 @@ public partial class DailyTransaction : PageBase
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
     }
-
 }

@@ -1,11 +1,11 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
 using System.Collections.Generic;
-using System;
+using System.Runtime.Serialization;
 
 /// <summary>
 /// Summary description for NumberGameWinLostByMatchBO
 /// </summary>
-/// 
+///
 
 namespace Sunplus.Accounting.Entities.ViewModel
 {
@@ -13,7 +13,6 @@ namespace Sunplus.Accounting.Entities.ViewModel
     [DataContract]
     public class NumberGameWinLostByMatchBO
     {
-
         [DataMember]
         public string Id { get; set; }
 
@@ -34,13 +33,13 @@ namespace Sunplus.Accounting.Entities.ViewModel
 
         [DataMember]
         public string BetTypeName { get; set; }
-        
+
         [DataMember]
         public string Winlost { get; set; }
-        
+
         [DataMember]
         public string Position { get; set; }
-        
+
         [DataMember]
         public string Commission { get; set; }
 

@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using DNAide.Core;
 using RemotingRef;
 
@@ -19,9 +17,10 @@ namespace Sunplus.Accounting.Core.Cache
                 case "zh-CN": return "cs"; // Simplified
                 case "ja-JP": return "jp";
                 case "th-TH": return "th"; // Thai
-                default: return "en"; 
+                default: return "en";
             }
         }
+
         public static string GetBettype(object bettypeID)
         {
             return RefData.GetBetTypeName(bettypeID.ToString(), TWLang("en-US"), string.Empty);
@@ -65,18 +64,23 @@ namespace Sunplus.Accounting.Core.Cache
                 case "110":
                     name = "Trixie";
                     break;
+
                 case "1110":
                     name = "Yankee";
                     break;
+
                 case "11110":
                     name = "Canadian";
                     break;
+
                 case "111110":
                     name = "Heinz";
                     break;
+
                 case "1111110":
                     name = "Super Heinz";
                     break;
+
                 case "11111110":
                     name = "Goliath";
                     break;
@@ -92,21 +96,27 @@ namespace Sunplus.Accounting.Core.Cache
                 case 1:
                     result = "Banker";
                     break;
+
                 case 2:
                     result = "Player";
                     break;
+
                 case 3:
                     result = "Tie";
                     break;
+
                 case 4:
                     result = "Big";
                     break;
+
                 case 5:
                     result = "Small";
                     break;
+
                 case 6:
                     result = "B.Pair";
                     break;
+
                 case 7:
                     result = "P.Pair";
                     break;
@@ -116,17 +126,14 @@ namespace Sunplus.Accounting.Core.Cache
 
         public static string GetRouletteBetItem(int itemId)
         {
-
             return RemotingRef.RefData.GetRouletteBetItem(itemId.ToString(), TWLang("en-US"));
         }
 
         public static string GetBettypeNameSportingSolution(object betypeId, string resourceId)
         {
             string bettypeName = "";
-            bettypeName =  RemotingRef.RefData.GetBetTypeName(betypeId.ToString(), TWLang("en-US"), string.Empty, resourceId);
+            bettypeName = RemotingRef.RefData.GetBetTypeName(betypeId.ToString(), TWLang("en-US"), string.Empty, resourceId);
             return bettypeName;
-           
         }
-
     }
 }

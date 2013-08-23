@@ -1,9 +1,9 @@
-﻿using Sunplus.Accounting.DataAccess.PositionTaking;
-using DNAide.Data;
-using System.Collections;
-using Sunplus.Accounting.Entities;
-using Fanex.Data;
+﻿using System.Collections;
 using DNAide.Core;
+using DNAide.Data;
+using Fanex.Data;
+using Sunplus.Accounting.DataAccess.PositionTaking;
+using Sunplus.Accounting.Entities;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking
 {
@@ -14,7 +14,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking
             DbResult dbResult = null;
             string spMaping = "SelectDisableP2P";
             var param = new Hashtable { { "custid", custId } };
-          
+
             if (!string.IsNullOrEmpty(spMaping))
             {
                 var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.P2PSession.StoreCollection.P2PControl, spMaping);
@@ -34,15 +34,19 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking
                 case (int)Roles.Super:
                     spMaping = "GetSuperSetting";
                     break;
+
                 case (int)Roles.Master:
                     spMaping = "GetMasterSetting";
                     break;
+
                 case (int)Roles.Agent:
                     spMaping = "GetAgentSetting";
                     break;
+
                 case (int)Roles.Member:
                     spMaping = "GetMemberSetting";
                     break;
+
                 default:
                     break;
             }
@@ -63,39 +67,51 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking
                 case 41:
                     spMaping = "Acc_CustomerUpdP2PSuper_Commission";
                     break;
+
                 case 42:
                     spMaping = "Acc_CustomerUpdP2PSuper_GameSetting";
                     break;
+
                 case 43:
                     spMaping = "Acc_CustomerUpdP2PSuper_MaxTransfer";
                     break;
+
                 case 31:
                     spMaping = "Acc_CustomerUpdP2PMaster_Commission";
                     break;
+
                 case 32:
                     spMaping = "Acc_CustomerUpdP2PMaster_GameSetting";
                     break;
+
                 case 33:
                     spMaping = "Acc_CustomerUpdP2PMaster_MaxTransfer";
                     break;
+
                 case 21:
                     spMaping = "Acc_CustomerUpdP2PAgent_Commission";
                     break;
+
                 case 22:
                     spMaping = "Acc_CustomerUpdP2PAgent_GameSetting";
                     break;
+
                 case 23:
                     spMaping = "Acc_CustomerUpdP2PAgent_MaxTransfer";
                     break;
+
                 case 11:
                     spMaping = "Acc_CustomerUpdP2PMember_Commission";
                     break;
+
                 case 12:
                     spMaping = "Acc_CustomerUpdP2PMember_GameSetting";
                     break;
+
                 case 13:
                     spMaping = "Acc_CustomerUpdP2PMember_MaxTransfer";
                     break;
+
                 default:
                     break;
             }
@@ -144,23 +160,21 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking
 
         public Result UpdateDefaultSettingP2P(Hashtable Params)
         {
-
             using (ObjectDb objDb = new ObjectDb("Acc_P2PUpdDefaultSetting", 2000))
             {
                 objDb.AssignParamValues(Params);
                 objDb.ExecuteNonQuery();
 
-                return new Result() {
+                return new Result()
+                {
                     ErrorCode = CastAide.AsInt32(objDb.GetParameterValue("errcode")),
                     ErrorMessage = string.Format("{0}", objDb.GetParameterValue("errmsg"))
                 };
             }
-    
         }
 
         public DbResult SelectEnableCustomer(int custId)
         {
-
             DbResult dbResult = null;
             Hashtable Params = new Hashtable();
             Params.Add("custid", custId);
@@ -185,5 +199,4 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking
             Member = 1
         }
     }
-    
 }

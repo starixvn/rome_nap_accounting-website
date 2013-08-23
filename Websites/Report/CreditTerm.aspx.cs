@@ -1,31 +1,24 @@
 using System;
 using System.Data;
+using System.Text;
 using System.Web;
+using DNAide.Core;
 using DNAide.Web;
+using IBCUtils;
 using Sunplus.Accounting.Business.CacheManager;
 using Sunplus.Accounting.Business.Report;
-using Sunplus.Accounting.Core.Cache;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using System.Text;
-using IBCUtils;
-using DNAide.Core;
-
 
 /// <summary>
 /// CITS
 /// </summary>
 public partial class Report_CreditTerm : PageBase
 {
-
     public StringBuilder sData = new StringBuilder();
     public string display = "";
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
         Response.Cache.SetCacheability(HttpCacheability.NoCache);
 
         string strHeaderAmt, bMember = "", bAgent = "", bMaster = "", bSuper = "";
@@ -69,18 +62,23 @@ public partial class Report_CreditTerm : PageBase
                 case "pre":
                     TitleExportExcel = "CREDIT TERM (PRE AGREE REPORT)";
                     break;
+
                 case "install":
                     TitleExportExcel += " : " + "MEMBER)";
                     break;
+
                 case "1"://member
                     TitleExportExcel += " : " + "MEMBER)";
                     break;
+
                 case "2"://agent
                     TitleExportExcel += " : " + "AGENT)";
                     break;
+
                 case "3"://master
                     TitleExportExcel += " : " + "MASTER)";
                     break;
+
                 case "4"://super
                     TitleExportExcel += " : " + "SUPER)";
                     break;
@@ -91,7 +89,8 @@ public partial class Report_CreditTerm : PageBase
     }
 
     #region string datevalue(object value)
-    string datevalue(object value)
+
+    private string datevalue(object value)
     {
         DateTime date = Convert.ToDateTime(value);
         int mm = date.Month;
@@ -100,10 +99,12 @@ public partial class Report_CreditTerm : PageBase
         int mn = date.Minute;
         return mm.ToString() + "/" + dd.ToString() + " " + hh.ToString() + ":" + mn.ToString();
     }
-    #endregion
+
+    #endregion string datevalue(object value)
 
     #region string InstallAmount (int roleid)
-    string InstallAmount(int roleid)
+
+    private string InstallAmount(int roleid)
     {
         StringBuilder html = new StringBuilder();
         string norow = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("NoInformation.htm");
@@ -147,5 +148,6 @@ public partial class Report_CreditTerm : PageBase
 
         return html.ToString();
     }
-    #endregion
+
+    #endregion string InstallAmount (int roleid)
 }

@@ -1,7 +1,5 @@
 ﻿namespace Sunplus.Accounting.Entities
 {
-    
-    
 
     /// <summary>
     /// Summary description for IExchangRate
@@ -13,7 +11,6 @@
 
         string Currency
         { get; set; }
-
 
         string ActualRate
         { get; set; }
@@ -35,7 +32,7 @@
 
         string EURORate
         { get; set; }
-        
+
         string USDRate
         { get; set; }
 

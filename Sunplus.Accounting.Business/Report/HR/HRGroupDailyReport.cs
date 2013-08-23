@@ -6,10 +6,9 @@ using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
 using DNAide.Web;
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.Core.Common;
 
 /// <summary>
 /// Summary description for HRGroupDailyReport
@@ -64,7 +63,7 @@ public partial class ReportHTML
                 }
             }
 
-            #endregion
+            #endregion Combine group daily into group
         }
 
         #region for each row
@@ -104,7 +103,7 @@ public partial class ReportHTML
             rows.Append(row);
         }
 
-        #endregion
+        #endregion for each row
 
         #region Total
 
@@ -141,7 +140,7 @@ public partial class ReportHTML
 
         rows.Append(row);
 
-        #endregion
+        #endregion Total
 
         TemplateHandler.ReplaceBlock(ref tpl, "content", rows.ToString());
 
@@ -213,7 +212,7 @@ public partial class ReportHTML
                 }
             }
 
-            #endregion
+            #endregion Combine group daily into group
         }
 
         #region for each row
@@ -292,7 +291,6 @@ public partial class ReportHTML
                 TemplateHandler.RemoveBlock(ref row, "date");
             }
 
-
             TemplateHandler.Assign(ref row, "style", "class='" + bgcolor + "'");
             TemplateHandler.Assign(ref row, "Date", CastAide.AsDateTime(dr["winlostdate"]).ToShortDateString());
             TemplateHandler.Assign(ref row, "Bettype", bettype);
@@ -316,7 +314,7 @@ public partial class ReportHTML
             countdate++;
         }
 
-        #endregion
+        #endregion for each row
 
         #region Sub total
 
@@ -362,7 +360,7 @@ public partial class ReportHTML
             rows = rows.Replace("{rowspan}", countdate.ToString());
         }
 
-        #endregion
+        #endregion Sub total
 
         rows.Append("<tr height='20' bgcolor='white'><td colspan='13'></td></tr>");
 
@@ -405,10 +403,9 @@ public partial class ReportHTML
         if (context.Request["Export"] == null)
             rows.Append("<tfoot>");
 
-
         rows.Append(rowtotal);
 
-        #endregion
+        #endregion Sub total TOTE
 
         TemplateHandler.ReplaceBlock(ref tpl, "content", rows.ToString());
 
@@ -424,7 +421,7 @@ public partial class ReportHTML
             TemplateHandler.RemoveBlock(ref tpl, "footer-send-email");
         }
 
-        #endregion
+        #endregion Send Email
 
         return tpl;
     }
@@ -484,7 +481,7 @@ public partial class ReportHTML
                 }
             }
 
-            #endregion
+            #endregion Combine group daily into group
         }
 
         #region for each row
@@ -561,7 +558,6 @@ public partial class ReportHTML
                 TemplateHandler.RemoveBlock(ref row, "date");
             }
 
-
             TemplateHandler.Assign(ref row, "style", "class='" + bgcolor + "'");
             TemplateHandler.Assign(ref row, "Date", CastAide.AsDateTime(dr["winlostdate"]).ToShortDateString());
             TemplateHandler.Assign(ref row, "Bettype", bettype);
@@ -585,7 +581,7 @@ public partial class ReportHTML
             countdate++;
         }
 
-        #endregion
+        #endregion for each row
 
         #region Sub total
 
@@ -631,7 +627,7 @@ public partial class ReportHTML
             rows = rows.Replace("{rowspan}", countdate.ToString());
         }
 
-        #endregion
+        #endregion Sub total
 
         rows.Append("<tr height='20' bgcolor='white'><td colspan='13'></td></tr>");
 
@@ -678,7 +674,7 @@ public partial class ReportHTML
             rows.Append(rowtotal);
         }
 
-        #endregion
+        #endregion Sub total TOTE
 
         #region Sub total FIXED
 
@@ -719,7 +715,7 @@ public partial class ReportHTML
         if (countFixed > 0)
             rows.Append(rowtotal);
 
-        #endregion
+        #endregion Sub total FIXED
 
         #region Grand total
 
@@ -761,7 +757,7 @@ public partial class ReportHTML
         if (context.Request["Export"] == null)
             rows.Append("</tfoot>");
 
-        #endregion
+        #endregion Grand total
 
         TemplateHandler.ReplaceBlock(ref tpl, "content", rows.ToString());
 
@@ -777,10 +773,10 @@ public partial class ReportHTML
             TemplateHandler.RemoveBlock(ref tpl, "footer-send-email");
         }
 
-        #endregion
+        #endregion Send Email
 
         return tpl;
     }
 
-    #endregion
+    #endregion HR Group Daily Report
 }

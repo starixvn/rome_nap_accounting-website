@@ -1,6 +1,4 @@
-﻿
-
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace Sunplus.Accounting.Core.Configurations
 {
@@ -41,8 +39,6 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-     
-
         public static BASection Instance
         {
             get
@@ -53,23 +49,18 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-
         public BACollection this[StoreCollection name]
         {
             get
             {
-
                 var spCollection = (BACollection)this.GetType().GetProperty(name.ToString()).GetValue(this, System.Reflection.BindingFlags.GetField, null, null, null);
                 return spCollection;
             }
         }
-
-
     }
 
     public class BACollection : ConfigurationElementCollection
     {
-
         public BACollection()
         {
             //var BA = (BAElement) CreateNewElement();
@@ -115,7 +106,6 @@ namespace Sunplus.Accounting.Core.Configurations
             BaseClear();
         }
 
-
         public BAElement this[int index]
         {
             get
@@ -145,7 +135,6 @@ namespace Sunplus.Accounting.Core.Configurations
             return BaseIndexOf(BAElement);
         }
 
-
         protected override sealed ConfigurationElement CreateNewElement()
         {
             return new BAElement();
@@ -160,11 +149,8 @@ namespace Sunplus.Accounting.Core.Configurations
     public class BAElement : ConfigurationElement
     {
 
-
-
         public BAElement()
         {
-
         }
 
         [ConfigurationProperty("name", IsRequired = true, IsKey = true)]
@@ -248,7 +234,6 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-       
         [ConfigurationProperty("stores", IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(BACollection),
             AddItemName = "add",

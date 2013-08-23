@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.ServiceModel.Activation;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using Microsoft.Practices.Unity;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Bingo.Core;
 using Sunplus.Bingo.Entities;
 using Sunplus.Bingo.Services;
 using Result = Sunplus.Bingo.Entities.Result;
-using System.Threading.Tasks;
-using Sunplus.Accounting.DataAccess;
 
 /// <summary>
 /// Bingo Controller
@@ -23,9 +20,9 @@ using Sunplus.Accounting.DataAccess;
 namespace Sunplus.Accounting.Business.PT.Bingo
 {
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
-    public class BingoManager:BaseManager, IBingoService
+    public class BingoManager : BaseManager, IBingoService
     {
-        private string GetClientIP() 
+        private string GetClientIP()
         {
             string ip = string.Empty;
             try
@@ -37,7 +34,6 @@ namespace Sunplus.Accounting.Business.PT.Bingo
             }
             catch (Exception ex)
             {
-               
             }
             return ip;
         }
@@ -62,9 +58,8 @@ namespace Sunplus.Accounting.Business.PT.Bingo
             {
                 customer.Result = new Result(1, ex.Message);
             }
-            
+
             return customer;
-            
         }
 
         public Result UpdateCustomerSetting(Sunplus.Bingo.Entities.Customer customer, int updatedByRoleID)
@@ -84,9 +79,10 @@ namespace Sunplus.Accounting.Business.PT.Bingo
                     Result;
 
                 #region update status
+
                 if (result.ErrorCode == 0 && !customer.SyncBingo)
                 {
-                    var disableBingo = false;                    
+                    var disableBingo = false;
                     var custInfo = IBCProvider.IBCCustomer.GetBasicCustInfoIBC(customer.ID);
                     disableBingo = custInfo.DisableBingo;
                     CSCustomerDetail uplineInfo = null;
@@ -108,15 +104,12 @@ namespace Sunplus.Accounting.Business.PT.Bingo
                     }
 
                     Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateDisabledBingoGame(modifyBy, customer.ID, disableBingo, fromIP, disableBingo, true);
-
-
                 }
-                #endregion
-                
+
+                #endregion update status
             }
             catch (Exception ex)
             {
-                
                 result = new Result(1, ex.Message);
             }
             return (result as Result);
@@ -145,11 +138,12 @@ namespace Sunplus.Accounting.Business.PT.Bingo
 
         public string ResourcesExtension { get; set; }
 
-        #region Auto insert Bingo account - background worker        
+        #region Auto insert Bingo account - background worker
+
         public void AutoInsertBingoAccount(CSCustomerDetail customerInfo, int userId, string userName, string ip, bool enabledBingo)
         {
             try
-            {                
+            {
                 Task.Factory.StartNew(() =>
                 {
                     if (enabledBingo)
@@ -178,6 +172,6 @@ namespace Sunplus.Accounting.Business.PT.Bingo
             }
         }
 
-        #endregion
+        #endregion Auto insert Bingo account - background worker
     }
 }

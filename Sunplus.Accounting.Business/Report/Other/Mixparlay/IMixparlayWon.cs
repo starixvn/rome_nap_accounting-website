@@ -2,7 +2,6 @@
 
 namespace Sunplus.Accounting.Report.Mixparlay
 {
- 
     public interface IMixparlayWon
     {
         MixparlayDataGridBO GetList_MixparlayWon(bool isSoccer, string date, int pageIndex, int pageSize, bool fromcache, int sortType);

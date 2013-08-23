@@ -1,26 +1,22 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using DNAide.Core;
 using DNAide.Data;
-using DNAide.Utils;
-using DNAide.Web;
+using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Cache.Extension;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.DataAccess.SpecialDelete;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.SpecialDelete;
-using System.Data;
-using DNAide.Core;
 using Sunplus.Accounting.Entities.SpecialDelete.EarlyKO;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using System.Linq;
 using Sunplus.Accounting.Entities.SpecialDelete.Mixparlay;
-using Sunplus.Accounting.Business.CacheManager;
-using Sunplus.Accounting.Core.Cache.Extension;
 
 namespace Sunplus.Accounting.Business.SpecialDelete
 {
@@ -28,13 +24,13 @@ namespace Sunplus.Accounting.Business.SpecialDelete
     {
         protected readonly ISpecialDeleteDAO _specialDeleteDao;
 
-
         public SpecialDeleteService(ISpecialDeleteDAO specialDeleteDao)
         {
             _specialDeleteDao = specialDeleteDao;
         }
 
         #region DeleteSpecialTransaction
+
         public Result DeleteSpecialTransaction(string matchId, string frefno, string trefno, string bettype,
                                           string betteam1378, string betteam515, string hdp, string uname,
                                           string userId, string pass, string DelOption, string transids,
@@ -60,14 +56,13 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                           DelOption_MHC, transids_MHC, betteam430, betteam6, betteam14, betteam16, homescore, awayscore, fromtransdate, totransdate, SAFilter,
                                           message.Reason);
 
-
             if (delResult.Error.ErrorCode > 0)
             {
                 result.ErrorCode = delResult.Error.ErrorCode;
                 result.ErrorMessage = AlertMessage.GetMsg(delResult.Error.ErrorMessage, AlertMessage.MsgType.Error);
             }
             else
-            {                
+            {
                 //send private message to users
                 bool send = SendPrivateMsgToUsers(delResult.PrivateMessage, CastAide.AsInt32(matchId), message);
                 if (!send)
@@ -78,13 +73,14 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
                 SendEmailWhenDeleteBetToInternalGroup(delResult.Error.ErrorCode, delResult.Error.ErrorMessage, delResult.PrivateMessage, false, false, true, message.Reason); // for real currency
                 SendEmailWhenDeleteBetToInternalGroup(delResult.Error.ErrorCode, delResult.Error.ErrorMessage, delResult.PrivateMessage, false, false, false, message.Reason); // for test currency
-                
             }
             return result;
         }
-        #endregion
+
+        #endregion DeleteSpecialTransaction
 
         #region SelRecoverBets
+
         public SpecialDeleteDTO SelRecoverBets(string transid)
         {
             SpecialDeleteDTO specialDeleteDto = new SpecialDeleteDTO();
@@ -108,19 +104,23 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             dbResult = _specialDeleteDao.SelRecoverSpecialBets(transid);
 
             specialDeleteDto.ErrorCode = CastAide.AsInt32(dbResult.Outputs["errcode"]);
-            if(specialDeleteDto.ErrorCode == 0) {
+            if (specialDeleteDto.ErrorCode == 0)
+            {
                 dataTable = dbResult.ResultSet.Tables[0];
                 AssignData(dataTable, "RecoverBets", ref bets);
                 specialDeleteDto.rows = bets;
             }
-            else {
+            else
+            {
                 specialDeleteDto.ErrorMessage = CastAide.AsString(dbResult.Outputs["errmsg"]);
             }
             return specialDeleteDto;
         }
-        #endregion
+
+        #endregion SelRecoverBets
 
         #region RecoverBets
+
         public Result RecoverBets(string transid, int UserID)
         {
             Result result = new Result(0, string.Empty);
@@ -141,9 +141,11 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
             return result;
         }
-        #endregion
+
+        #endregion RecoverBets
 
         #region EarlyKOBet
+
         /// <summary>
         /// SelectEarlyKOBet
         /// </summary>
@@ -210,21 +212,19 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                     }
                 }
 
-
                 if (!IsHasData)
                 {
                     specialDeleteDto.ErrorCode = 100;
                     specialDeleteDto.ErrorMessage = "NO MATCH WITH SUCH MATCH ID";
                 }
-
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
             return specialDeleteDto;
-
         }
+
         /// <summary>
         /// SelectEarlyKOMixparlay
         /// </summary>
@@ -251,6 +251,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             }
             return choice;
         }
+
         /// <summary>
         /// DeleteSpecialEarlyKO
         /// </summary>
@@ -301,7 +302,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                               DelOption_MHC, transids_MHC, betteam430, betteam6, betteam14, betteam16, SAFilter,
                                               message.Reason);
 
-
                 if (delResult.Error.ErrorCode > 0)
                 {
                     result.ErrorCode = delResult.Error.ErrorCode;
@@ -332,7 +332,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             return result;
         }
 
-
         public Dictionary<int, string> GetAllBettype(int type)
         {
             Dictionary<int, string> bettypes = new Dictionary<int, string>();
@@ -361,8 +360,8 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
             return bettypes;
         }
-        #endregion
 
+        #endregion EarlyKOBet
 
         private string GetBettypeName(int bettype, bool liveIndicator)
         {
@@ -379,7 +378,9 @@ namespace Sunplus.Accounting.Business.SpecialDelete
         }
 
         #region Mixparlay
+
         private static readonly string _keyMatchCache = "MatchTable_{0}";
+
         public MixParlayBO GetMPList(SpecialDeleteParam param)
         {
             MixParlayBO mixParlayBO = new MixParlayBO();
@@ -438,6 +439,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             }
             return mixParlayBO;
         }
+
         /// <summary>
         /// GetMPTicket
         /// </summary>
@@ -454,6 +456,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             }
             return mpTickets;
         }
+
         public Result DeleteMPTicket(string matchId, int Type, string HomeScore, string AwayScore, string bettypes,
                                           string betteam1378, string betteam515, string hdp, string uname,
                                           string userId, string pass,
@@ -473,7 +476,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             }
             try
             {
-
                 var transLength = WebSettings.MaxTransLength;
                 Result deleteResult = null;
 
@@ -525,7 +527,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                                    ? GetListTransNeedToDel(lengths["transids_MHC"].ToString(), ref transids_MHCLastIndex, transLength)
                                                    : lengths["transids_MHC"].ToString();
 
-
                         deleteResult = DeleteMixPalayTickets(matchId, Type, HomeScore, AwayScore, bettypes,
                                            betteam1378, betteam515, hdp, uname,
                                            userId, pass,
@@ -538,7 +539,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         result.ErrorCode += CastAide.AsInt32(deleteResult.ErrorCode);
                         result.ErrorMessage += string.Format("{0}<br>", deleteResult.ErrorMessage);
                     }
-
                 }
                 else
                 {
@@ -742,7 +742,8 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             }
             return mixParlayBO;
         }
-        #endregion
+
+        #endregion Mixparlay
 
         public Dictionary<int, string> CheckRefno(string matchid, string fromRefno, string toRefno, string type)
         {
@@ -764,10 +765,8 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 listMessage.Add(101, AlertMessage.GetMsg(ex.Message, AlertMessage.MsgType.Error));
             }
 
-
             return listMessage;
         }
-
 
         public List<Bettype> SelAllBettype(int type)
         {
@@ -802,5 +801,4 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             return list;
         }
     }
-
 }

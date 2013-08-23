@@ -1,25 +1,22 @@
 using System;
-using System.Data;
 using System.Collections;
-using System.Web;
+using System.Data;
 using System.Text;
-using DNAide.Web;
-using Sunplus.Accounting.Business.Settlement;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Core.Web.Controls;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using System.Web;
 using DNAide.Core;
 using DNAide.Data;
-
-using Sunplus.Accounting.Core.Web;
+using DNAide.Web;
+using Sunplus.Accounting.Business.Settlement;
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Web.Controls;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
 public partial class Settle_Result : PageBase
 {
     private System.Globalization.CultureInfo cult = System.Globalization.CultureInfo.CurrentCulture;
     private string nl = Environment.NewLine;
     private string fromDate;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -27,7 +24,7 @@ public partial class Settle_Result : PageBase
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             this.sTitle.Text = "Result";
             DateTime fDate = DateTime.Now.AddDays(-1);
-            fromDate = IBCUtils.FormatHandler.FormatDateEn(fDate);            
+            fromDate = IBCUtils.FormatHandler.FormatDateEn(fDate);
 
             string s = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Settle/Result.htm");
             TemplateHandler.Assign(ref s, "{fromdate}", Calendar.GenCalendarControl("fdate", "../", "fdateTrigger", fromDate, false, false, 0, 0, "DateSubmit()"));//PHuong.Nguyen, show others day of next month
@@ -61,7 +58,7 @@ public partial class Settle_Result : PageBase
             DbResult dr = Settle.SettleSelectMatch(0, fDate, fDate, 0, false, false);
             //TemplateHandler.Assign(ref s, "{content}", GenerateResultHTML.GenerateHTML(dr,_sportList, _sport, fromDate));
             this.sSearch.Text = s;
-            this.sContent.Text = GenerateResultHTML.GenerateHTML(dr, _sportList,0, _sport, fromDate);
+            this.sContent.Text = GenerateResultHTML.GenerateHTML(dr, _sportList, 0, _sport, fromDate);
         }
         catch (Exception ex)
         {

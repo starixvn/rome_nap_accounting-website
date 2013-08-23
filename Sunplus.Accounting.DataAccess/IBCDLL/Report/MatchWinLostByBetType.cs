@@ -2,11 +2,10 @@
 using System.Collections;
 using DNAide.Data;
 using DNAide.Utils;
+
 //using IBCUtils;
 
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
 {
@@ -14,12 +13,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
 
     using Fanex.Data;
 
-    public  class MatchWinLostByBetType
+    public class MatchWinLostByBetType
     {
         /// <summary>
         /// @Author: Simon20091210
-        /// Content: 
-        /// </summary>       
+        /// Content:
+        /// </summary>
         public static DataSet RptMatchWinLostByBettype(DateTime fromdate, DateTime todate)
         {
             //DataResult rs = null;
@@ -34,7 +33,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
                     obj.AssignParamValues(param);
                     rs = obj.ExecuteDataSet();
                 }
-                
             }
             catch (InvalidOperationException InvalidOEx)
             {
@@ -46,7 +44,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
             }
             return rs;
         }
-
 
         public static DbResult NumberGameDailyBettypeWinloss(DateTime wldate)
         {
@@ -61,9 +58,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
@@ -81,9 +76,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
@@ -101,13 +94,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
-
-        
     }
 }

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel.Activation;
-using System.Text;
 using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business.LogDisplay;
-using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.LogDisplay;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.LogDisplay
@@ -17,11 +13,12 @@ namespace Sunplus.Accounting.WcfServiceLibrary.LogDisplay
         {
             var result = new ResultLog();
             var service = CommonBootStrapper.Locator.GetInstance<ISettingManager>();
-            var logParam = new LogParam() { 
+            var logParam = new LogParam()
+            {
                 CustName = custName,
-                FromDate = fromDate, 
-                ToDate= toDate,
-                ViewBy = viewBy, 
+                FromDate = fromDate,
+                ToDate = toDate,
+                ViewBy = viewBy,
                 Page = page,
                 PageSize = pageSize,
                 Type = (int)ELogType.Setting
@@ -49,7 +46,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.LogDisplay
             return result;
         }
 
-        public Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogLogin( string custName, DateTime fromDate, DateTime toDate, int page, int pageSize)
+        public Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogLogin(string custName, DateTime fromDate, DateTime toDate, int page, int pageSize)
         {
             var result = new ResultLog();
             var service = CommonBootStrapper.Locator.GetInstance<ISettingManager>();
@@ -67,7 +64,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.LogDisplay
             return result;
         }
 
-        public Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogCredit( string custName, DateTime fromDate, DateTime toDate, int page, int pageSize)
+        public Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogCredit(string custName, DateTime fromDate, DateTime toDate, int page, int pageSize)
         {
             var result = new ResultLog();
             var service = CommonBootStrapper.Locator.GetInstance<ISettingManager>();

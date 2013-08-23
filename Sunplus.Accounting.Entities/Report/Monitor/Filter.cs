@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Sunplus.Accounting.Entities.Report.Monitor
 {
@@ -12,7 +10,7 @@ namespace Sunplus.Accounting.Entities.Report.Monitor
     {
         [DataMember]
         public string FromDate { get; set; }
-        
+
         [DataMember]
         public string ToDate { get; set; }
 
@@ -50,15 +48,13 @@ namespace Sunplus.Accounting.Entities.Report.Monitor
         public string UserName { get; set; }
 
         [DataMember]
-        public List <Items> Leagues{ get; set; }
+        public List<Items> Leagues { get; set; }
 
         [DataMember]
         public List<Items> ReportBy { get; set; }
 
         [DataMember]
         public string BeforeBalanceUpDay { get; set; }
-
-        
     }
 
     [Serializable]
@@ -69,7 +65,7 @@ namespace Sunplus.Accounting.Entities.Report.Monitor
         public int Id { get; set; }
 
         [DataMember]
-        public string Name{ get; set; }
+        public string Name { get; set; }
 
         [DataMember]
         public string Key { get; set; }
@@ -130,5 +126,4 @@ namespace Sunplus.Accounting.Entities.Report.Monitor
         [DataMember]
         public string Winloss2 { get; set; }
     }
-
 }

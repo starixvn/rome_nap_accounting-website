@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ServiceModel.Activation;
 using Sunplus.Accounting.Business;
 using Sunplus.Accounting.Business.BootStrappers;
-using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Entities;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.Menu
 {
@@ -13,7 +12,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Menu
     /// <summary>
     /// Summary description for MenuManager
     /// </summary>
-    /// 
+    ///
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class MenuService : IMenuService
     {
@@ -56,7 +55,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Menu
         public void GetUserMenu()
         {
             var menuService = CommonBootStrapper.Locator.GetInstance<IMenuManager>();
-             menuService.GetUserMenu();
+            menuService.GetUserMenu();
         }
 
         public List<MenuBO> GetReportMenu()

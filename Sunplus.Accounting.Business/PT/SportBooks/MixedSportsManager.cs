@@ -5,42 +5,44 @@ using System.Text;
 using System.Web;
 using DNAide.Core;
 using DNAide.Web;
+using IBCUtils;
 using Sunplus.Accounting.Business.Customer;
+using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Web;
-using Sunplus.Core.LoggingLib;
-using IBCUtils;
-
-using Sunplus.Accounting.Core.Helper;
 
 namespace Sunplus.Accounting.Business.PT.SportBooks
 {
     public class MixedSportsManager : SportBooksBase
     {
         #region varialbes
-        bool _isUpdated = false;
-        const int SportType = Constants.Sport.OtherSports;
+
+        private bool _isUpdated = false;
+        private const int SportType = Constants.Sport.OtherSports;
         private static readonly int BetType = Constants.BetType.MixParlay;
-        const string Disabled = "disabled='disabled'";
-        const string Check = "checked='checked'";
-        const string BetTypeName = "MixParlay";
-        #endregion
+        private const string Disabled = "disabled='disabled'";
+        private const string Check = "checked='checked'";
+        private const string BetTypeName = "MixParlay";
+
+        #endregion varialbes
 
         public MixedSportsManager()
         {
         }
 
         #region private methods
-        static string GetPt(string pt)
+
+        private static string GetPt(string pt)
         {
             return pt ?? "0";
         }
-        #endregion
+
+        #endregion private methods
 
         #region Get Header
+
         //this function for Edit PT
         private static string GetGameHeader()
         {
@@ -61,31 +63,37 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             return html.ToString();
         }
 
-        #endregion
+        #endregion Get Header
 
         #region GetBetSetting
+
         public override string GetBetSetting(int sporttype, DataRow data, bool isEditMem)
         {
             #region private variables
+
             var html = new StringBuilder();
             var tpl = WebUtils.LoadTemplate("Customer/v2/BetSetting.htm");
             var min = "0";
             var max = "0";
             var maxpermatch = "0";
             var msSportType = string.Format("{0}_{1}", sporttype, BetType);
-            #endregion
+
+            #endregion private variables
 
             try
             {
                 #region assign header
+
                 TemplateHandler.Assign(ref tpl, "sporttype", msSportType);
                 TemplateHandler.Assign(ref tpl, "{minbet-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMinBet"));
                 TemplateHandler.Assign(ref tpl, "{maxbet-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMaxBet"));
                 TemplateHandler.Assign(ref tpl, "{maxpermatch-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMaxPerMatch"));
                 TemplateHandler.Assign(ref tpl, "{bet-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblBetSetting"));
-                #endregion
+
+                #endregion assign header
 
                 #region get values
+
                 if (data != null)
                 {
                     if (_isUpdated)
@@ -98,18 +106,17 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                     }
                     else
                     {
-
                         min = DataFormat.FormatNumber1(data["minbetv" + sporttype + "mp_max"]);
                         max = DataFormat.FormatNumber1(data["maxbetv" + sporttype + "mp_min"]);
                         maxpermatch = DataFormat.FormatNumber1(data["maxpermatchv" + sporttype + "mp_max"]);
                     }
                 }
                 GetLimitMinMaxBet(data, ref tpl, sporttype.ToString());
-                #endregion
+
+                #endregion get values
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -127,12 +134,14 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
         public override void GetLimitMinMaxBet(DataRow dr, ref string tpl, string sportTypeId)
         {
             #region private variables
+
             var minbetMin = "0";
             var maxbetMax = "0";
             var maxpermatchMin = "0";
             var maxpermatchMax = "0";
             var msSportType = string.Format("{0}_{1}", SportType, BetType);
-            #endregion
+
+            #endregion private variables
 
             try
             {
@@ -146,7 +155,6 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -164,12 +172,15 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 TemplateHandler.Assign(ref tpl, "{maxpermatch-max-" + msSportType + "}", maxpermatchMax);
             }
         }
-        #endregion
+
+        #endregion GetBetSetting
 
         #region Super
+
         public override string GetSuperPtSetting(DataRow data, int custId)
         {
             #region private varialbes
+
             var html = new StringBuilder();
             var tplGameHeader = GetGameHeader();
             _isUpdated = true;
@@ -179,10 +190,13 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             double sMin = 0, sMax = 0.9, sB = 0.9;
             double mMin = 0, mMax = 0.9, mB = 0.9;
             double aMin = 0, aMax = 0.9, aB = 0.9;
-            #endregion
+
+            #endregion private varialbes
+
             try
             {
                 #region assign info for header & betsetting
+
                 TemplateHandler.Assign(ref tpl, "{ptheader}", tplGameHeader);
                 TemplateHandler.Assign(ref tpl, "{betsetting}", tplBetSetting);
 
@@ -191,7 +205,8 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 TemplateHandler.Assign(ref tpl, "{agent-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "AgentMaxPosition"));
                 TemplateHandler.Assign(ref tpl, "{colTitleSpan}", string.Empty);
                 TemplateHandler.Assign(ref tpl, "{tblWidth}", "width:550px");
-                #endregion
+
+                #endregion assign info for header & betsetting
 
                 if (data != null && custId > 0)
                 {
@@ -215,7 +230,6 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -231,17 +245,20 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
         public void AddParamSuperPT(ref Hashtable param, HttpContext context)
         {
             #region private varialbes
+
             var sPT = "0";
             var mPT = "0";
             var aPT = "0";
             var minbet = "0";
             var maxbet = "0";
             var maxpermatch = "0";
-            #endregion
+
+            #endregion private varialbes
 
             try
             {
                 #region get values
+
                 if (!string.IsNullOrEmpty(context.Request["chkCopyAll"])) // copy all from soccer handicap
                 {
                     minbet = context.Request["txtMinbet1"];
@@ -274,11 +291,11 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                     mPT = context.Request["listMMixParlay"];//master
                     aPT = context.Request["listAMixParlay"];//agent
                 }
-                #endregion
+
+                #endregion get values
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -286,25 +303,29 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             finally
             {
                 #region assign data
-                param.Add(string.Format("minbetv{0}mp", SportType), minbet);//money  
-                param.Add(string.Format("maxbetv{0}mp", SportType), maxbet);//money  
-                param.Add(string.Format("maxpermatchv{0}mp", SportType), maxpermatch);//money 
 
+                param.Add(string.Format("minbetv{0}mp", SportType), minbet);//money
+                param.Add(string.Format("maxbetv{0}mp", SportType), maxbet);//money
+                param.Add(string.Format("maxpermatchv{0}mp", SportType), maxpermatch);//money
 
-                param.Add("v" + SportType + "spositiontaking_" + BetType, sPT);//smallmoney                             
-                param.Add("v" + SportType + "mpositiontaking_" + BetType, mPT);//smallmoney                  
-                param.Add("v" + SportType + "apositiontaking_" + BetType, aPT);//smallmoney 
-                #endregion
+                param.Add("v" + SportType + "spositiontaking_" + BetType, sPT);//smallmoney
+                param.Add("v" + SportType + "mpositiontaking_" + BetType, mPT);//smallmoney
+                param.Add("v" + SportType + "apositiontaking_" + BetType, aPT);//smallmoney
+
+                #endregion assign data
             }
         }
 
-        #endregion
+        #endregion Super
 
         #region Master
+
         #region Master Add new
+
         public override string GetMasterPtSetting_AddNew(DataRow data, ref string strHidden)
         {
             #region private variables
+
             _isUpdated = false;
 
             var html = new StringBuilder();
@@ -318,11 +339,13 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             double sAuto = 0;
 
             var hiddenHash = new Hashtable();
-            #endregion
+
+            #endregion private variables
 
             try
             {
                 #region assign header and betsetting
+
                 TemplateHandler.Assign(ref tpl, "{ptheader}", tplGameHeader);
                 TemplateHandler.Assign(ref tpl, "{betsetting}", tplBetSetting);
                 //
@@ -331,9 +354,11 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 TemplateHandler.Assign(ref tpl, "{auto-super-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAutoSuperPresetPosition"));
                 TemplateHandler.Assign(ref tpl, "{tblWidth}", "width:550px");
                 TemplateHandler.Assign(ref tpl, "{colTitleSpan}", string.Empty);
-                #endregion
+
+                #endregion assign header and betsetting
 
                 #region assign data
+
                 if (data != null)
                 {
                     //super
@@ -363,11 +388,11 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 TemplateHandler.Assign(ref tpl, "{statuslstSAutoMixParlay}", Disabled);
 
                 strHidden = CustomerUtils.AssignMultipleHidden(hiddenHash);
-                #endregion
+
+                #endregion assign data
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -379,12 +404,15 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
 
             return html.ToString();
         }
-        #endregion
+
+        #endregion Master Add new
 
         #region Master Edit
+
         public override string GetMasterPtSetting_Edit(DataRow data, ref string strHidden)
         {
             #region private variables
+
             _isUpdated = true;
             var html = new StringBuilder();
             var tpl = WebUtils.LoadTemplate("Customer/v2/MixedSports/MasterPTRow.htm");
@@ -398,11 +426,13 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             var isAuto = false;
 
             var hiddenHash = new Hashtable();
-            #endregion
+
+            #endregion private variables
 
             try
             {
                 #region assign info for header & betsetting
+
                 TemplateHandler.Assign(ref tpl, "{ptheader}", tplGameHeader);
                 TemplateHandler.Assign(ref tpl, "{betsetting}", tplBetSetting);
 
@@ -411,9 +441,11 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 TemplateHandler.Assign(ref tpl, "{auto-super-position}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAutoSuperPresetPosition"));
                 TemplateHandler.Assign(ref tpl, "{tblWidth}", "width:700px");
                 TemplateHandler.Assign(ref tpl, "{colTitleSpan}", string.Empty);
-                #endregion
+
+                #endregion assign info for header & betsetting
 
                 #region assign data
+
                 if (data != null)
                 {
                     isAuto = CastAide.AsBoolean(data["isauto_v" + SportType + "spositiontaking_" + BetType]);
@@ -466,11 +498,11 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 TemplateHandler.Assign(ref tpl, "{listSAutoMixParlayValue}", CustomerUtils.GetListPositionTaking(0, sAutoMax, sAuto));
 
                 strHidden = CustomerUtils.AssignMultipleHidden(hiddenHash);
-                #endregion
+
+                #endregion assign data
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -479,11 +511,13 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
 
             return html.ToString();
         }
-        #endregion
+
+        #endregion Master Edit
 
         public void AddParamMasterPT(ref Hashtable param, HttpContext context)
         {
             #region private varialbes
+
             var minbet = "0";
             var maxbet = "0";
             var maxpermatch = "0";
@@ -492,10 +526,13 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             var mPresetPosition = "0";
             var sAutoPrestPosition = "0";
             var isAuto = 0;
-            #endregion
+
+            #endregion private varialbes
+
             try
             {
                 #region get data
+
                 if (string.IsNullOrEmpty(context.Request["chkUpdPT" + SportType]))
                 {
                     param.Add(string.Format("updatepositiontakingv{0}mp", SportType), 1);
@@ -506,9 +543,9 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                         maxbet = context.Request["txtMaxbet1"];
                         maxpermatch = context.Request["txtMaxPerMatch1"];
 
-                        mPresetPosition = context.Request["listM1HdpD"];//master preset                                       
+                        mPresetPosition = context.Request["listM1HdpD"];//master preset
                         isAuto = string.IsNullOrEmpty(context.Request["chkAuto1HdpD"]) ? 0 : 1;
-                        sPresetPosition = isAuto == 0 ? context.Request["listS1HdpD"] : "0";//super preset 
+                        sPresetPosition = isAuto == 0 ? context.Request["listS1HdpD"] : "0";//super preset
                         sAutoPrestPosition = isAuto == 0 ? "0" : context.Request["autoS1HdpD"];//super auto preset
                     }
                     else if (!string.IsNullOrEmpty(context.Request["chkCopyBasket"]))//copy from basketball
@@ -517,9 +554,9 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                         maxbet = context.Request["txtMaxbet2"];
                         maxpermatch = context.Request["txtMaxPerMatch2"];
 
-                        mPresetPosition = context.Request["listM2Hdp"];//master preset                                       
+                        mPresetPosition = context.Request["listM2Hdp"];//master preset
                         isAuto = string.IsNullOrEmpty(context.Request["chkAuto2Hdp"]) ? 0 : 1;
-                        sPresetPosition = isAuto == 0 ? context.Request["listS2Hdp"] : "0";//super preset 
+                        sPresetPosition = isAuto == 0 ? context.Request["listS2Hdp"] : "0";//super preset
                         sAutoPrestPosition = isAuto == 0 ? "0" : context.Request["autoS2Hdp"]; //super auto preset
                     }
                     else
@@ -528,9 +565,9 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                         maxbet = context.Request["txtMaxbet99_9"];
                         maxpermatch = context.Request["txtMaxPerMatch99_9"];
 
-                        mPresetPosition = context.Request["listMMixParlay"];//master preset                                       
+                        mPresetPosition = context.Request["listMMixParlay"];//master preset
                         isAuto = string.IsNullOrEmpty(context.Request["chkMixParlay"]) ? 0 : 1;
-                        sPresetPosition = isAuto == 0 ? context.Request["listSMixParlay"] : "0";//super preset 
+                        sPresetPosition = isAuto == 0 ? context.Request["listSMixParlay"] : "0";//super preset
                         sAutoPrestPosition = isAuto == 0 ? "0" : context.Request["autoSMixParlay"];//super auto preset
                     }
                 }
@@ -538,11 +575,11 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 {
                     param.Add(string.Format("updatepositiontakingv{0}mp", SportType), 0);
                 }
-                #endregion
+
+                #endregion get data
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -550,29 +587,33 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             finally
             {
                 #region assign data for param
+
                 param.Add(string.Format("updateminmaxbetv{0}mp", SportType),
                           string.IsNullOrEmpty(context.Request["chkUpdInfo" + SportType]) ? 1 : 0);
 
-                param.Add(string.Format("minbetv{0}mp", SportType), minbet);//money  
-                param.Add(string.Format("maxbetv{0}mp", SportType), maxbet);//money  
+                param.Add(string.Format("minbetv{0}mp", SportType), minbet);//money
+                param.Add(string.Format("maxbetv{0}mp", SportType), maxbet);//money
                 param.Add(string.Format("maxpermatchv{0}mp", SportType), maxpermatch);//money
-
 
                 param.Add(string.Format("v{0}spositiontaking_{1}", SportType, BetType), sPresetPosition);
                 param.Add(string.Format("v{0}mpositiontaking_{1}", SportType, BetType), mPresetPosition);
                 param.Add(string.Format("auto_v{0}spositiontaking_{1}", SportType, BetType), sAutoPrestPosition);
                 param.Add(string.Format("isauto_v{0}spositiontaking_{1}", SportType, BetType), isAuto);
-                #endregion
+
+                #endregion assign data for param
             }
         }
 
-        #endregion
+        #endregion Master
 
         #region Agent
+
         #region Agent Add New
+
         public override string GetAgentPtSetting_AddNew(DataRow data, ref string strHidden)
         {
             #region private varialbes
+
             _isUpdated = false;
             var html = new StringBuilder();
             var tpl = WebUtils.LoadTemplate("Customer/v2/MixedSports/AgentPTRow.htm");
@@ -584,11 +625,13 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             double mMin = 0, mMax = 0, m = 0;
 
             var hiddenHash = new Hashtable();
-            #endregion
+
+            #endregion private varialbes
 
             try
             {
                 #region assign header and betsetting
+
                 TemplateHandler.Assign(ref tpl, "{ptheader}", tplGameHeader);
                 TemplateHandler.Assign(ref tpl, "{betsetting}", tplBetSetting);
                 //
@@ -599,7 +642,7 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 TemplateHandler.Assign(ref tpl, "{tblWidth}", "width:700px");
                 TemplateHandler.Assign(ref tpl, "{colTitleSpan}", string.Empty);
 
-                #endregion
+                #endregion assign header and betsetting
 
                 if (data != null)
                 {
@@ -613,7 +656,9 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                     aMax = mMax - m > aMax2 ? aMax2 : mMax - m;
                     a = aMax;
                 }
+
                 #region assign data and setting properties of Super/Master/Agent
+
                 //add hidden values
                 hiddenHash.Add("minM" + BetTypeName, maMin);
                 hiddenHash.Add("maxA" + BetTypeName, ((mMax > aMax2) ? aMax2 : mMax));
@@ -627,11 +672,11 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 TemplateHandler.Assign(ref tpl, "{statuslstSAutoMixParlay}", "disabled='disabled'");
 
                 strHidden = CustomerUtils.AssignMultipleHidden(hiddenHash);
-                #endregion
+
+                #endregion assign data and setting properties of Super/Master/Agent
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -642,12 +687,15 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             }
             return html.ToString();
         }
-        #endregion
+
+        #endregion Agent Add New
 
         #region Agent Edit
+
         public override string GetAgentPtSetting_Edit(DataRow data, bool isEnabledAutoMaster, ref string strHidden)
         {
             #region private varialbes
+
             _isUpdated = true;
             var html = new StringBuilder();
             var tpl = WebUtils.LoadTemplate("Customer/v2/MixedSports/AgentPTRow.htm");
@@ -661,11 +709,12 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
 
             var hiddenHash = new Hashtable();
 
-            #endregion
+            #endregion private varialbes
 
             try
             {
                 #region assign header and betsetting
+
                 TemplateHandler.Assign(ref tpl, "{ptheader}", tplGameHeader);
                 TemplateHandler.Assign(ref tpl, "{betsetting}", tplBetSetting);
                 //
@@ -676,9 +725,10 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 TemplateHandler.Assign(ref tpl, "{tblWidth}", "width:700px");
                 TemplateHandler.Assign(ref tpl, "{colTitleSpan}", string.Empty);
 
-                #endregion
+                #endregion assign header and betsetting
 
                 #region get data
+
                 if (data != null)
                 {
                     //Master preset position
@@ -710,9 +760,11 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 hiddenHash.Add("maxA" + BetTypeName, (aMax2 > maMax) ? maMax : aMax2);
                 hiddenHash.Add("maxM" + BetTypeName, maMax);
                 hiddenHash.Add("isAuto" + BetTypeName, isAuto);
-                #endregion
+
+                #endregion get data
 
                 #region assign data
+
                 //agent
                 TemplateHandler.Assign(ref tpl, "{listAMixParlayValue}", CustomerUtils.GetListPositionTaking(aMin, aMax, a));
                 //master
@@ -733,13 +785,13 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                     TemplateHandler.Assign(ref tpl, "{statuschkMixParlay}", string.Empty);
                     TemplateHandler.Assign(ref tpl, "{statuslstSAutoMixParlay}", Disabled);
                 }
-                #endregion
+
+                #endregion assign data
 
                 strHidden = CustomerUtils.AssignMultipleHidden(hiddenHash);
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -750,11 +802,13 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             }
             return html.ToString();
         }
-        #endregion
+
+        #endregion Agent Edit
 
         public void AddParamAgentPT(ref Hashtable param, HttpContext context)
         {
             #region private varialbes
+
             var minbet = "0";
             var maxbet = "0";
             var maxpermatch = "0";
@@ -763,10 +817,13 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             var mPT = "0";
             var mAuto = "0";
             var isAuto = 0;
-            #endregion
+
+            #endregion private varialbes
+
             try
             {
                 #region get data
+
                 if (string.IsNullOrEmpty(context.Request["chkUpdPT" + SportType]))
                 {
                     param.Add(string.Format("updatepositiontakingv{0}mp", SportType), 1);
@@ -809,11 +866,11 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 {
                     param.Add(string.Format("updatepositiontakingv{0}mp", SportType), 0);
                 }
-                #endregion
+
+                #endregion get data
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -821,17 +878,17 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             finally
             {
                 #region assign values for parameters
+
                 param.Add(string.Format("updateminmaxbetv{0}mp", SportType),
                           !string.IsNullOrEmpty(context.Request["chkUpdInfo" + SportType]) ? 0 : 1);
 
-
-                param.Add(string.Format("minbetv{0}mp", SportType), minbet);//money  
-                param.Add(string.Format("maxbetv{0}mp", SportType), maxbet);//money  
+                param.Add(string.Format("minbetv{0}mp", SportType), minbet);//money
+                param.Add(string.Format("maxbetv{0}mp", SportType), maxbet);//money
                 param.Add(string.Format("maxpermatchv{0}mp", SportType), maxpermatch);//money
 
                 param.Add(string.Format("v{0}apositiontaking_{1}", SportType, BetType), aPT);
                 param.Add(string.Format("v{0}mpositiontaking_{1}", SportType, BetType), mPT);
-                //check 
+                //check
                 if (!WebSettings.disableAutoM)
                 {
                     param.Add(string.Format("auto_v{0}mpositiontaking_{1}", SportType, BetType), mAuto);
@@ -843,15 +900,19 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                     param.Add("discountnumber", 0);
                     new NumberGameManager().AddParamAgentPT(ref param, context, false, false);
                 }
-                #endregion
+
+                #endregion assign values for parameters
             }
         }
-        #endregion
+
+        #endregion Agent
 
         #region Member
+
         public override string GetMemberPtSetting(DataRow data, bool isAddNew)
         {
             #region private varialbes
+
             _isUpdated = isAddNew ? false : true;
             var html = new StringBuilder();
             var tpl = WebUtils.LoadTemplate("Customer/v2/MixedSports/MemberPTRow.htm");
@@ -859,16 +920,20 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             double mMin = 0, mMax = 0, m = 0;
             var tplGameHeader = GetGameHeader();
             var tplBetSetting = GetBetSetting(SportType, data, !isAddNew);
-            #endregion
+
+            #endregion private varialbes
+
             try
             {
                 #region assign header and betsetting
+
                 TemplateHandler.Assign(ref tpl, "{ptheader}", tplGameHeader);
                 TemplateHandler.Assign(ref tpl, "{betsetting}", tplBetSetting);
                 TemplateHandler.Assign(ref tpl, "{tblWidth}", "width:700px");
                 TemplateHandler.RemoveBlock(ref tpl, "tdLeft");
                 TemplateHandler.Assign(ref tpl, "{colTitleSpan}", "colspan='2'");
-                #endregion
+
+                #endregion assign header and betsetting
 
                 if (data != null)
                 {
@@ -890,7 +955,6 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -910,28 +974,29 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 param.Add(string.Format("updatepositiontakingv{0}mp", SportType), updatePt);
                 param.Add(string.Format("updateminmaxbetv{0}mp", SportType), updateMinMax);
 
-                param.Add(string.Format("minbetv{0}mp", SportType), minBet);//money  
-                param.Add(string.Format("maxbetv{0}mp", SportType), maxBet);//money  
+                param.Add(string.Format("minbetv{0}mp", SportType), minBet);//money
+                param.Add(string.Format("maxbetv{0}mp", SportType), maxBet);//money
                 param.Add(string.Format("maxpermatchv{0}mp", SportType), maxPerMatch);//money
                 param.Add(string.Format("v{0}apositiontaking_{1}", SportType, BetType), agentPt);
-
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
             }
         }
 
-        #endregion
+        #endregion Member
 
         #region Min/Max PT; Update Super/Master PT on Member
+
         #region super pt on member
+
         public string GetSuperEditOnMemberInfo(DataRow data, ref string hiddenMixedSports)
         {
             #region private variables
+
             var html = new StringBuilder();
             var hidden = new Hashtable();
             var tplHeader = GetPTHeaderForEdit();
@@ -940,15 +1005,18 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             double m = 0, a = 0;
             double sAuto = 0, sAutoMax = 0;
             bool isAutoMember = false, isAutoMaster = false;
-            #endregion
+
+            #endregion private variables
 
             #region assign info for header
+
             TemplateHandler.Assign(ref tpl, "{ptheader}", tplHeader);
             TemplateHandler.Assign(ref tpl, "{agent-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Agent"));
             TemplateHandler.Assign(ref tpl, "{master-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Master"));
             TemplateHandler.Assign(ref tpl, "{super-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Super"));
             TemplateHandler.Assign(ref tpl, "{superauto-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "SuperAuto"));
-            #endregion
+
+            #endregion assign info for header
 
             try
             {
@@ -1010,11 +1078,10 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 TemplateHandler.Assign(ref tpl, "{listSAutoMixParlayValue}",
                                        CustomerUtils.GetListPositionTaking(0, sAutoMax, sAuto));
 
-                #endregion
+                #endregion assign detail info
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -1030,34 +1097,37 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 param.Add(string.Format("v{0}spositiontaking_{1}", SportType, BetType), s);
                 param.Add(string.Format("auto_v{0}spositiontaking_{1}", SportType, BetType), auto);
                 param.Add(string.Format("isauto_v{0}spositiontaking_{1}", SportType, BetType), isAuto);
-
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
             }
         }
-        #endregion
+
+        #endregion super pt on member
 
         #region min/max pt
+
         public string GetMinMaxPtForEdit(DataRow data, string prefix, ref string hiddenMixedSports)
         {
             #region private varialbes
+
             var html = new StringBuilder();
             var tplHeader = GetPTHeaderForEdit();
             var tpl = WebUtils.LoadTemplate("Customer/v2/MixedSports/EditMinMaxPTRow.htm");
             double mpMin = 0, mpMax = 0, mp = 0;
             var hidden = new Hashtable();
-            #endregion
+
+            #endregion private varialbes
 
             TemplateHandler.Assign(ref tpl, "{ptheader}", tplHeader);
             TemplateHandler.Assign(ref tpl, "{wPT}", "wPT70");
             try
             {
                 #region assign data
+
                 if (data != null)
                 {
                     mpMax =
@@ -1095,13 +1165,12 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
 
                         hiddenMixedSports = CustomerUtils.AssignMultipleHidden(hidden);
                     }
-
                 }
-                #endregion
+
+                #endregion assign data
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -1128,19 +1197,20 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
             }
-
         }
-        #endregion
+
+        #endregion min/max pt
 
         #region master pt on member
+
         public string GetMasterEditOnMemberInfo(DataRow data, ref string hiddenMixedSports, bool isEnableAutoMaster)
         {
             #region priavate variables
+
             var html = new StringBuilder();
             var tplHeader = GetPTHeaderForEdit();
             var tpl = WebUtils.LoadTemplate("Customer/v2/MixedSports/EditMasterOnMemberRow.htm");
@@ -1149,17 +1219,21 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             double mMin = 0, mMax = 0, m = 0;
             double mAutoMax = 0, mAuto = 0;
             bool isAutoMember = false, isAutoAgent = false;
-            #endregion
+
+            #endregion priavate variables
 
             #region assign header
+
             TemplateHandler.Assign(ref tpl, "{ptheader}", tplHeader);
             TemplateHandler.Assign(ref tpl, "{agent-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Agent"));
             TemplateHandler.Assign(ref tpl, "{master-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Master"));
-            #endregion
+
+            #endregion assign header
 
             try
             {
                 #region get and assign data
+
                 if (data != null)
                 {
                     m = CastAide.AsDouble(data[string.Format("v{0}mpositiontaking_{1}", SportType, BetType)]);
@@ -1193,7 +1267,6 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                     TemplateHandler.Assign(ref tpl, "{statuslstMAutoMixParlay}", isAutoMember ? string.Empty : Disabled);
                     TemplateHandler.Assign(ref tpl, "{m-mp-val}", m);
                     TemplateHandler.RemoveBlock(ref tpl, "none-mauto");
-
                 }
 
                 else if (isAutoMember)
@@ -1221,11 +1294,11 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                                        string.Format(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAuto"), ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Master")));
                 TemplateHandler.Assign(ref tpl, "{listMAutoMixParlayValue}",
                                        CustomerUtils.GetListPositionTaking(0, mAutoMax, mAuto));
-                #endregion
+
+                #endregion get and assign data
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -1241,17 +1314,16 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 param.Add(string.Format("v{0}mpositiontaking_{1}", SportType, BetType), m);
                 param.Add(string.Format("auto_v{0}mpositiontaking_mem_{1}", SportType, BetType), auto);
                 param.Add(string.Format("isauto_v{0}mpositiontaking_mem_{1}", SportType, BetType), isAuto);
-
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
             }
         }
-        #endregion
+
+        #endregion master pt on member
 
         public static void GetEditMinMaxValue(DataRow data, ref string tpl)
         {
@@ -1266,12 +1338,12 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
             }
         }
-        #endregion
+
+        #endregion Min/Max PT; Update Super/Master PT on Member
     }
 }

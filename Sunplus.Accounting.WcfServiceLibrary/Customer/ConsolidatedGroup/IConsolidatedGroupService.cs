@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Sunplus.Accounting.Entities.Customer.ConsolidatedGroup;
-using System.ServiceModel.Web;
+﻿using System.Collections.Generic;
 using System.ServiceModel;
+using System.ServiceModel.Web;
+using Sunplus.Accounting.Entities.Customer.ConsolidatedGroup;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.Customer.ConsolidatedGroup
 {
@@ -26,7 +23,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Customer.ConsolidatedGroup
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         Sunplus.Accounting.Entities.Result AddUserToGroup(int GroupID, string UserName);
-
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]

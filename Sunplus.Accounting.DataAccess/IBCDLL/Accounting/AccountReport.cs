@@ -30,7 +30,7 @@
         {
         }
 
-        #endregion
+        #endregion Constructors and Destructors
 
         //Phuong.Nguyen Modified <2008-12-02>
 
@@ -162,7 +162,7 @@
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="TransID"></param>
         /// <param name="Creator"></param>
@@ -1252,9 +1252,9 @@
         /// <param name="uid"></param>
         /// <returns></returns>
         public static DeleteResult BetTransDel(long transno, string uname, string pwd, int custid, int uid, string reason)
-        {                         
+        {
             try
-            {                 
+            {
                 using (ObjectDb objDb = new ObjectDb("Acc_BettransDelBet"))
                 {
                     var p = new Hashtable();
@@ -1268,10 +1268,10 @@
                     p.Add("ip", HttpContext.Current.Request.UserHostAddress);
                     p.Add("reason", reason);
 
-                    objDb.AssignParamValues(p);                    
+                    objDb.AssignParamValues(p);
 
                     var privateMessage = objDb.ExecuteDataSet();
-                    
+
                     return new DeleteResult()
                     {
                         Error = new Result()
@@ -1280,13 +1280,12 @@
                             ErrorMessage = CastAide.AsString(objDb.GetParameterValue("errmsg"))
                         },
                         PrivateMessage = privateMessage
-
                     };
                 }
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);                
+                LogExtensions.ExceptionHandler(ex);
             }
 
             return new DeleteResult();
@@ -1296,7 +1295,7 @@
         {
             var error = new IbcError();
             try
-            {                
+            {
                 using (ObjectDb objDb = new ObjectDb("Acc_BettransDelBet_Parlay"))
                 {
                     var p = new Hashtable();
@@ -1310,8 +1309,8 @@
                     p.Add("ip", HttpContext.Current.Request.UserHostAddress);
                     p.Add("reason", reason);
 
-                    objDb.AssignParamValues(p);                    
-                    
+                    objDb.AssignParamValues(p);
+
                     var privateMessage = objDb.ExecuteDataSet();
 
                     return new DeleteResult()
@@ -1322,13 +1321,12 @@
                             ErrorMessage = CastAide.AsString(objDb.GetParameterValue("errmsg"))
                         },
                         PrivateMessage = privateMessage
-
                     };
                 }
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);                
+                LogExtensions.ExceptionHandler(ex);
             }
 
             return new DeleteResult();
@@ -1618,7 +1616,7 @@
         public static DataSet HRRaceResult(int leagueid, string raceno, string eventdate)
         {
             try
-            {                
+            {
                 using (ObjectDb objDB = new ObjectDb("Acc_BetList_HRResults", 180))
                 {
                     var p = new Hashtable();
@@ -1921,18 +1919,21 @@
                             ReportSession.StoreCollection.Main, "BalanceWithDate_Master");
                         rs = DbHelper.Execute(spElementM.Name, p, spElementM.DbName, 180);
                         break;
+
                     case 2: // agent
                         p.Add("masterid", custid);
                         StoreProcedureElement spElementA = GetReportStoreProcedure(
                             ReportSession.StoreCollection.Main, "BalanceWithDate_Agent");
                         rs = DbHelper.Execute(spElementA.Name, p, spElementA.DbName, 180);
                         break;
+
                     case 1: // member
                         p.Add("agentid", custid);
                         StoreProcedureElement spElementMe = GetReportStoreProcedure(
                             ReportSession.StoreCollection.Main, "BalanceWithDate_Member");
                         rs = DbHelper.Execute(spElementMe.Name, p, spElementMe.DbName, 180);
                         break;
+
                     default: // super agent
                         StoreProcedureElement spElementS = GetReportStoreProcedure(
                             ReportSession.StoreCollection.Main, "BalanceWithDate_Super");
@@ -1957,7 +1958,7 @@
             DbResult result = null;
             try
             {
-                //string spNameSuffix = ((isYesterday) ? "_Yesterday_1" : "_1");                
+                //string spNameSuffix = ((isYesterday) ? "_Yesterday_1" : "_1");
                 var p = new Hashtable();
 
                 if (!string.IsNullOrEmpty(username) && !username.Equals("All"))
@@ -2059,7 +2060,6 @@
                     StoreProcedureElement spElement = GetReportStoreProcedure(
                         ReportSession.StoreCollection.Balance, "superbalanceyesterday");
                     result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 120);
-                    
                 }
                 else
                 {
@@ -2070,11 +2070,10 @@
             }
             catch (Exception ex)
             {
-                    LogExtensions.ExceptionHandler(ex);
+                LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
-
 
         //public static string RptSABalance_AddTotal(string db, bool isYesterday, Hashtable p)
         //{
@@ -2088,7 +2087,7 @@
         //                ReportSession.StoreCollection.Balance, "superbalanceyesterday");
         //            result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 120);
         //            resultstr = result.Outputs["Total"].ToString();
-                    
+
         //        }
         //        else
         //        {
@@ -2134,7 +2133,6 @@
                 StoreProcedureElement spElement = GetReportStoreProcedure(
                     ReportSession.StoreCollection.Others, "TreeWinLoss");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 600);
-               
             }
             catch (Exception ex)
             {
@@ -2205,7 +2203,7 @@
             return result;
         }
 
-        #endregion
+        #endregion Public Methods and Operators
 
         #region Methods
 
@@ -2216,6 +2214,6 @@
             return sps != null ? sps[aliasName] : null;
         }
 
-        #endregion
+        #endregion Methods
     }
 }

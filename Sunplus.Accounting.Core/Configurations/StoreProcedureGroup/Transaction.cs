@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace Sunplus.Accounting.Core.Configurations.StoreProcedureGroup
 {
@@ -40,7 +37,7 @@ namespace Sunplus.Accounting.Core.Configurations.StoreProcedureGroup
                     (StoreProcedureCollection)base["Bettrans"];
                 return spCollection;
             }
-        }    
+        }
 
         public static TransactionGroupSection Instance
         {

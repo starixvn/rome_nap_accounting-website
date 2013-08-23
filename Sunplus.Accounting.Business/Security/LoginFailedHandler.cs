@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Data;
 using System.Configuration;
-using System.Linq;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Xml.Linq;
-using System.Runtime.Serialization;
-using Sunplus.Data.DataAbstract.Storage.Cache;
 using DNAide.Core;
 using Sunplus.Accounting.Entities.Security;
+using Sunplus.Data.DataAbstract.Storage.Cache;
 
 namespace Sunplus.Accounting.Business.Security
 {
@@ -21,7 +11,6 @@ namespace Sunplus.Accounting.Business.Security
     /// </summary>
     public class LoginFailedHandler
     {
-
         public static Manager MemClient = new Manager();
 
         /// <summary>
@@ -79,7 +68,6 @@ namespace Sunplus.Accounting.Business.Security
             }
             else if (ErrorCode == 101) //User is not exist in database
             {
-
             }
         }
 

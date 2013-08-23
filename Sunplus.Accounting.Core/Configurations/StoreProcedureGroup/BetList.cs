@@ -33,7 +33,6 @@ namespace Sunplus.Accounting.Core.Configurations.StoreProcedureGroup
             }
         }
 
-
         public StoreProcedureCollection this[StoreCollection name]
         {
             get

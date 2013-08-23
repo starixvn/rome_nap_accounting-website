@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Configuration;
-using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.Core.Common;
-
-
 
 namespace Sunplus.Accounting.Core.Extensions
 {
@@ -17,6 +11,7 @@ namespace Sunplus.Accounting.Core.Extensions
      * @Author: bobby.nguyen
      * @Date: 11012011
      **/
+
     public static class LogExtensions
     {
         private static BackgroundWorker _worker = null;
@@ -24,6 +19,7 @@ namespace Sunplus.Accounting.Core.Extensions
         /**
          * Function: Exception Handler
          */
+
         public static void ExceptionHandler(Exception ex)
         {
             string message = ex.Message +
@@ -36,6 +32,5 @@ namespace Sunplus.Accounting.Core.Extensions
                              "<br>\r\nSTACKTRACE: " + ex.StackTrace;
             Fanex.Logging.Logger.Log.Error(message);
         }
-
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Sunplus.Accounting.Entities.Report.Racebook
 {
@@ -41,8 +39,7 @@ namespace Sunplus.Accounting.Entities.Report.Racebook
         public string AgCommIncome { get; set; }
 
         [DataMember]
-        public string AgPTWL{ get; set; }
-
+        public string AgPTWL { get; set; }
 
         [DataMember]
         public string IBCWinTO { get; set; }
@@ -52,7 +49,6 @@ namespace Sunplus.Accounting.Entities.Report.Racebook
 
         [DataMember]
         public string IBCWPTO { get; set; }
-
 
         [DataMember]
         public string IBCTotal { get; set; }
@@ -88,13 +84,13 @@ namespace Sunplus.Accounting.Entities.Report.Racebook
         public string PhuDividendWon { get; set; }
 
         [DataMember]
-        public string PhuAmountDue{ get; set; }
+        public string PhuAmountDue { get; set; }
 
         [DataMember]
         public string PhuCommExpense { get; set; }
 
         [DataMember]
-        public string PhuAmountFee{ get; set; }
+        public string PhuAmountFee { get; set; }
     }
 
     [Serializable]
@@ -106,8 +102,6 @@ namespace Sunplus.Accounting.Entities.Report.Racebook
 
         [DataMember]
         public List<RacingDailyWinLossRow> Totals { get; set; }
-
-
     }
 
     [Serializable]
@@ -122,7 +116,6 @@ namespace Sunplus.Accounting.Entities.Report.Racebook
 
         [DataMember]
         public List<RacingDailyWinLossRow> GroupTotals { get; set; }
-
     }
 
     [Serializable]

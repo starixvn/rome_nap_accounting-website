@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace Sunplus.Accounting.Core.Common
 {
     /// <summary>
@@ -16,7 +15,7 @@ namespace Sunplus.Accounting.Core.Common
             EXTERNAL = 2,
         }
 
-        #endregion
+        #endregion AccountingSystem enum
 
         #region MemberType enum
 
@@ -26,7 +25,7 @@ namespace Sunplus.Accounting.Core.Common
             Internal = 2
         }
 
-        #endregion
+        #endregion MemberType enum
 
         #region Role enum
 
@@ -38,12 +37,10 @@ namespace Sunplus.Accounting.Core.Common
             Member = 1
         }
 
-
-
-        #endregion
+        #endregion Role enum
 
         /// <summary>
-        /// Get name accounting system 
+        /// Get name accounting system
         /// </summary>
         /// <param name="accountingSystem"></param>
         /// <returns>string</returns>
@@ -81,7 +78,7 @@ namespace Sunplus.Accounting.Core.Common
                 Dangerous = 2,
                 Internal = 3,
                 AutoSuspend = 4,
-                SelectedBetting = 5, 
+                SelectedBetting = 5,
                 Abnormal = 6
             }
 
@@ -119,7 +116,6 @@ namespace Sunplus.Accounting.Core.Common
                 SpecialMatchAnalysis
             }
 
-
             /// <summary>
             /// Ex460Rate = Ex.Rate
             /// </summary>
@@ -129,10 +125,7 @@ namespace Sunplus.Accounting.Core.Common
                 MinMaxExRate,
                 ExchangeRate,
                 UpdateExchangeRateOpenTote
-
-
             }
-
 
             public enum Customer
             {
@@ -173,7 +166,7 @@ namespace Sunplus.Accounting.Core.Common
                 BALatestBet
             }
 
-        #endregion
+        #endregion Nested type: Functions
 
             #region FinancialManagement enum
 
@@ -189,7 +182,7 @@ namespace Sunplus.Accounting.Core.Common
                 DailyFinanceTxn
             }
 
-            #endregion
+            #endregion FinancialManagement enum
 
             #region Others enum
 
@@ -218,6 +211,7 @@ namespace Sunplus.Accounting.Core.Common
                 SettlementLog,
                 UndecidedSettleMatch
             }
+
             public enum SpecialDelete
             {
                 SpecialDeleteNumberGame,
@@ -228,16 +222,14 @@ namespace Sunplus.Accounting.Core.Common
                 SpecialDeleteVirtualSports
             }
 
-
-
             public const string ViewIPVN = "ViewIPVN";
             public const string UploadVR = "UploadVR";
+
             //public const string SpecialDelete = "SpecialDelete";
             public const string UserControl = "UserControl";
 
-
             /// <summary>
-            /// Get enum name, 
+            /// Get enum name,
             /// Replace 200 to '/', 300 to ' ' (space)
             /// </summary>
             /// <typeparam name="T"></typeparam>
@@ -251,8 +243,7 @@ namespace Sunplus.Accounting.Core.Common
             }
         }
 
-            #endregion
-
+            #endregion Others enum
 
         public enum ReportType
         {
@@ -278,5 +269,4 @@ namespace Sunplus.Accounting.Core.Common
             P2PDefaultSetting = 3
         }
     }
-
 }

@@ -1,27 +1,24 @@
 using System;
-using System.Web.Security;
 using System.Text;
-using Sunplus.Accounting.Business;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Entities.Casino;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Core.LoggingLib;
+using System.Web.Security;
 using IBCUtils;
+using Sunplus.Accounting.Business;
 using Sunplus.Accounting.Business.Customer;
-
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.Entities.Casino;
 
 /// <summary>
 /// CITS
 /// </summary>
 public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
 {
-
-    string str = "";
-    string errMsg = "";
+    private string str = "";
+    private string errMsg = "";
     public string msg = "";
     public string strscript = "";
+
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -30,7 +27,6 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
             StringBuilder html = new StringBuilder();
             if (Session["AccId"] == null || (Session["CustId"] == null && Request["custId"] == null))
             {
-
                 html.Append(AlertMessage.GetMsg("Session is expired, please re log-in ", AlertMessage.MsgType.Error));
                 content.Text = html.ToString();
                 return;
@@ -38,21 +34,21 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
 
             int custid = DNAide.Core.CastAide.AsInt32(Request["custId"]);
             int userid = Convert.ToInt32(Session["AccId"]);
-            string strUsername=Convert.ToString(Session["CustUname"]);
+            string strUsername = Convert.ToString(Session["CustUname"]);
             bool isRequest = false;
-            
+
             string strCustID = "";
-            if (Request["custId"] !=null)
+            if (Request["custId"] != null)
             {
                 custid = Convert.ToInt32(Request["custId"]);
-                strCustID +=Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("Hidden.htm", new string[] { "{name}", "{strValue}" }, new string[] { "custId", custid.ToString() });                                
+                strCustID += Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("Hidden.htm", new string[] { "{name}", "{strValue}" }, new string[] { "custId", custid.ToString() });
             }
-            if(Request["uname"] !=null)
+            if (Request["uname"] != null)
             {
-                strUsername=Convert.ToString(Request["uname"]);
+                strUsername = Convert.ToString(Request["uname"]);
                 strCustID += Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("Hidden.htm", new string[] { "{name}", "{strValue}" }, new string[] { "uname", strUsername });
                 isRequest = true;
-            }                       
+            }
             string language = "E";
             string txtPass = Request["txtPass"];
             string txtConfirmPass = Request["txtConfirmPass"];
@@ -66,9 +62,9 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
             if (txtPass.Length == 0)
                 str = AlertMessage.GetMsg("Sorry, password cannot be empty.", AlertMessage.MsgType.Error);
             else if (txtPass.Length < 4)
-                str = AlertMessage.GetMsg("Password must have at least 4 characters.",AlertMessage.MsgType.Error);
-            else if(!txtPass.Equals(txtConfirmPass))
-                str = AlertMessage.GetMsg("Password was not correctly confirmed.",AlertMessage.MsgType.Error);
+                str = AlertMessage.GetMsg("Password must have at least 4 characters.", AlertMessage.MsgType.Error);
+            else if (!txtPass.Equals(txtConfirmPass))
+                str = AlertMessage.GetMsg("Password was not correctly confirmed.", AlertMessage.MsgType.Error);
             else if (changePWD(custid, encodepwd, userid, language))
             {
                 if (!isRequest)
@@ -90,17 +86,16 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
                         script += "parent.window.top.leftPanel.document.getElementById('chalengeStr').value='" + rndStr + "';";
                         script += "window.close();";
                         script += "</script>";
-                        strscript=script;
+                        strscript = script;
                     }
                     else
                     {
                         str = AlertMessage.GetMsg("Password has been changed successfully.", AlertMessage.MsgType.Success);
-                        strscript="<script type=\"text/javascript\">afterUpdate(false,null);</script>";
-
+                        strscript = "<script type=\"text/javascript\">afterUpdate(false,null);</script>";
                     }
                 }
             }
-            else if(errMsg !="")
+            else if (errMsg != "")
             {
                 str = AlertMessage.GetMsg(errMsg, AlertMessage.MsgType.Error);
                 str += "<script>afterUpdate(false,2000);</script>";
@@ -116,8 +111,8 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
         }
     }
 
-    bool changePWD(int custid, string userpwd, int userid, string language)
-    {        
+    private bool changePWD(int custid, string userpwd, int userid, string language)
+    {
         try
         {
             CSCustomerDetail custcs = Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider.Instance.GetBasicCustInfoIBC(custid);
@@ -135,7 +130,6 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
 
                 if (Request["type"] != "User" && custcs.CasinoSync)
                 {
-                   
                     try // Casino cheat
                     {
                         var rngSiteName = new CustomerManager().GetRNGSiteNameByCustId(custid);
@@ -151,7 +145,6 @@ public partial class ChangePassword_ChangePassword : RequiredAuthorizationPage
                 }
                 else
                 {
-                    
                     return true;
                 }
             }

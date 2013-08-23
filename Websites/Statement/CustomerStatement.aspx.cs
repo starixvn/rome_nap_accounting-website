@@ -23,7 +23,6 @@ using DNAide.Web;
 using DNAide.Core; 
 using DNAide.Data;
 using Sunplus.Core.CachingLib;
-using Sunplus.Core.LoggingLib;
 
 public partial class Statement_CustomerStatement : PageBase
 {

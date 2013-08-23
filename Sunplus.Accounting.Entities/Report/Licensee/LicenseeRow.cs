@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Runtime.Serialization;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Sunplus.Accounting.Entities.Report.Licensee
 {
@@ -37,14 +37,13 @@ namespace Sunplus.Accounting.Entities.Report.Licensee
 
         [DataMember]
         public string Winlost { get; set; }
-        
+
         [DataMember]
         public string Comm { get; set; }
 
         [DataMember]
         public string Total { get; set; }
 
-        
         [DataMember]
         public string AWinlost { get; set; }
 
@@ -56,14 +55,12 @@ namespace Sunplus.Accounting.Entities.Report.Licensee
 
         [DataMember]
         public string Company { get; set; }
-
     }
-
 
     [Serializable]
     [DataContract]
     public class LicenseeRowV2
-    { 
+    {
         [DataMember]
         public int index { get; set; }
 
@@ -126,10 +123,7 @@ namespace Sunplus.Accounting.Entities.Report.Licensee
 
         [DataMember]
         public int TotalRow { get; set; }
-
-       
     }
-
 
     [Serializable]
     [DataContract]
@@ -140,7 +134,6 @@ namespace Sunplus.Accounting.Entities.Report.Licensee
 
         [DataMember]
         public List<LicenseeRowV2> LicenseeByDateList { get; set; }
-
     }
 
     [Serializable]

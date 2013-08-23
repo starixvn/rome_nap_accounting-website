@@ -43,7 +43,7 @@ namespace Sunplus.Accounting.Core.Web
             //parallel work arround
             if (HttpContext.Current != null)
             {
-                if(AppSession.CurrentSystemNAME.ToString().ToLower().Equals(Enumerations.AccountingSystem.Accounting.ToString().ToLower()))
+                if (AppSession.CurrentSystemNAME.ToString().ToLower().Equals(Enumerations.AccountingSystem.Accounting.ToString().ToLower()))
                     templateFolder = HttpContext.Current.Session["TemplateFolderDefault"] as string;
                 else
                 {
@@ -52,7 +52,6 @@ namespace Sunplus.Accounting.Core.Web
                     else
                         templateFolder = HttpContext.Current.Session["TemplateFolderDefault"] as string;
                 }
-
             }
 
             if (string.IsNullOrEmpty(templateFolder))
@@ -78,13 +77,9 @@ namespace Sunplus.Accounting.Core.Web
                         }
 
                         break;
-                        
                 }
 
-                
-
                 //parallel work arround
-               
             }
 
             return templateFolder;
@@ -99,7 +94,7 @@ namespace Sunplus.Accounting.Core.Web
             return GetTemplateFolder(AppSession.SYSTEM);
         }
 
-        #endregion
+        #endregion Common
 
         #region Load template
 
@@ -157,7 +152,7 @@ namespace Sunplus.Accounting.Core.Web
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="templateName"></param>
         /// <param name="tags"></param>
@@ -230,6 +225,6 @@ namespace Sunplus.Accounting.Core.Web
             return (returnValue == null) ? defaultValue : returnValue;
         }
 
-        #endregion
+        #endregion Load template
     }
 }

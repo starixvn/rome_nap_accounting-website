@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace Sunplus.Accounting.Entities.PositionTaking.Poker
 {
@@ -11,8 +7,10 @@ namespace Sunplus.Accounting.Entities.PositionTaking.Poker
     {
         [DataMember]
         public string Name { get; set; }
+
         [DataMember]
         public bool IsChecked { get; set; }
+
         [DataMember]
         public bool IsAllow { get; set; }
     }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
@@ -12,7 +10,7 @@ using Sunplus.Accounting.Entities.Report.Others;
 
 namespace Sunplus.Accounting.Business.Report.Other.DuplicateTickets
 {
-    public class DuplicateTickets:IDuplicateTickets
+    public class DuplicateTickets : IDuplicateTickets
     {
         private IOthersReportDAO _othersReportDao;
 
@@ -42,8 +40,8 @@ namespace Sunplus.Accounting.Business.Report.Other.DuplicateTickets
                                                 CustId = CastAide.AsString(row["custid"]),
                                                 Bettype = CastAide.AsString(row["typenamee"]),
                                                 WinLostDate = CastAide.AsDateTime(row["winlostdate"]).ToShortDateString(),
-                                                BalanceBeforePlaceBet = NumberFormat.DecFormat(row["balance"],2),
-                                                Stake = NumberFormat.DecFormat(row["stake"],2),
+                                                BalanceBeforePlaceBet = NumberFormat.DecFormat(row["balance"], 2),
+                                                Stake = NumberFormat.DecFormat(row["stake"], 2),
                                                 Odds = NumberFormat.DecFormat(row["odds"], 3),
                                                 Status = CastAide.AsString(row["status"]),
                                                 RefNo1stTicket = CastAide.AsString(row["refno1"]),

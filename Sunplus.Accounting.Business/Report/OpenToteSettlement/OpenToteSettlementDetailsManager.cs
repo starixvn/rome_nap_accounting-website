@@ -11,11 +11,9 @@ using DNAide.Web;
 using Sunplus.Accounting.Business.CacheManager;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
 
 namespace BLL.Report.OpenToteSettlement
 {
@@ -60,7 +58,6 @@ namespace BLL.Report.OpenToteSettlement
                         rs = IBCProvider.ReportProvider.OpenToteSettlement().WinlostHR_OpenTote_Details(hashtable);
                 }
 
-
                 DataTable dtWL = rs.ResultSet.Tables[0];
                 DataView dv = dtWL.DefaultView;
                 dv.Sort = "currency asc, meetingid asc ";
@@ -84,15 +81,15 @@ namespace BLL.Report.OpenToteSettlement
                        bgcolorCurrency = "#d3e1c8",
                        bgcolorCurrency_sub = "#ffffc4";
                 string condition_Meeting = "", strTitleMeeting = "", strTotalMeeting = "", bgcolorMeeting = "#ffeedd";
-                    // #d0e3ca
-                string trBlank = "<tr><td colspan='29' class='l fontbold white'></td></tr>"; //#efefef            
+                // #d0e3ca
+                string trBlank = "<tr><td colspan='29' class='l fontbold white'></td></tr>"; //#efefef
                 string meeting_currency = "",
                        strConditionSubTotalGroupCurrencyUSD = "",
                        strConditionSubTotalGroupCurrencyTHB = "",
                        strConditionSubTotalGroupCurrencyIN = "";
                 int cid_p = 0, cid = 0;
 
-                #endregion
+                #endregion Declare Variable
 
                 // for testing loop
                 // for (int i = 0; i < 30; i++)
@@ -124,7 +121,7 @@ namespace BLL.Report.OpenToteSettlement
                                                                           condition_Meeting);
                                 rows.Append(strTotalMeeting);
 
-                                #endregion
+                                #endregion Total Meeting
 
                                 #region Total Currency
 
@@ -150,7 +147,7 @@ namespace BLL.Report.OpenToteSettlement
                                 rows.Replace("{rowspan}", (m_index).ToString());
                                 rows.Append(trBlank);
 
-                                #endregion
+                                #endregion Total Currency
 
                                 c_index = 0;
                                 meetingid = 0;
@@ -161,7 +158,7 @@ namespace BLL.Report.OpenToteSettlement
                             m_index = 0;
                         }
 
-                        #endregion
+                        #endregion Each Currency
 
                         #region Each Meeting
 
@@ -182,7 +179,6 @@ namespace BLL.Report.OpenToteSettlement
                                                                           condition_Meeting);
                                 rows.Append(strTotalMeeting);
 
-
                                 rows.Append(trBlank);
 
                                 meeting_currency = CacheRef.GetLeagueName(meetingid_p) + " - " + currency_p;
@@ -196,10 +192,9 @@ namespace BLL.Report.OpenToteSettlement
                             TemplateHandler.RemoveBlock(ref row, "Blank2");
                         }
 
-
                         m_index++;
 
-                        #endregion
+                        #endregion Each Meeting
 
                         #region Assign Each Row
 
@@ -261,11 +256,11 @@ namespace BLL.Report.OpenToteSettlement
 
                         rows.Append(row);
 
-                        #endregion
+                        #endregion Assign Each Row
                     }
                     rows.Replace("{rowspan}", m_index.ToString());
 
-                    #endregion
+                    #endregion foreach
                 }
 
                 #region Total
@@ -280,7 +275,7 @@ namespace BLL.Report.OpenToteSettlement
                 //TemplateHandler.RemoveComment(ref strTotalMeeting);
                 rows.Append(strTotalMeeting);
 
-                #endregion
+                #endregion Total Meeting
 
                 #region Total Currency
 
@@ -303,7 +298,7 @@ namespace BLL.Report.OpenToteSettlement
                     rows.Append(trBlank);
                 }
 
-                #endregion
+                #endregion Total Currency
 
                 #region Grand Total
 
@@ -311,23 +306,22 @@ namespace BLL.Report.OpenToteSettlement
                 strGrandTotal = OpenToteRowGrandTotalBaseRM(dt, PoolCurrency);
                 rows.Append(strGrandTotal);
 
-                #endregion
+                #endregion Grand Total
 
-                #endregion
+                #endregion Total
 
                 TemplateHandler.ReplaceBlock(ref tpl, "content", rows.ToString());
                 html.Append(tpl);
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 html.Append(ex.Message);
             }
             return html.ToString();
         }
 
-        #endregion
+        #endregion WinlostHR_OpenTote_Details
 
         #region ToteRowTotalMeeting
 
@@ -359,12 +353,12 @@ namespace BLL.Report.OpenToteSettlement
 
             strGrandTotal.Append("</tr>");
 
-            #endregion
+            #endregion GrandTotal
 
             return strGrandTotal.ToString();
         }
 
-        #endregion
+        #endregion ToteRowTotalMeeting
 
         #region OpenToteRowTotalCurrency
 
@@ -402,7 +396,7 @@ namespace BLL.Report.OpenToteSettlement
 
             strGrandTotal.Append("</tr>");
 
-            #endregion
+            #endregion Total Currency
 
             #region Total Base (RM)
 
@@ -416,19 +410,18 @@ namespace BLL.Report.OpenToteSettlement
                                      "</b></td>");
             }
 
-
             strGrandTotal.Append("<td class='c'><b>Base (RM)</b></td>");
 
             strGrandTotal.Append("</tr>");
 
-            #endregion
+            #endregion Total Base (RM)
 
-            #endregion
+            #endregion GrandTotal
 
             return strGrandTotal.ToString();
         }
 
-        #endregion
+        #endregion OpenToteRowTotalCurrency
 
         #region OpenToteRowGrandTotalBaseRM
 
@@ -447,7 +440,6 @@ namespace BLL.Report.OpenToteSettlement
                                "commIncomeIBC", "FeeDue2", "AmountDue"
                            };
 
-
             strGrandTotal.Append("<tfoot>");
             strGrandTotal.Append("<tr class='report-footer bg' style='font-weight:bold;'>");
             strGrandTotal.Append("<td class='c report-footer' colspan='2'></td>");
@@ -463,7 +455,6 @@ namespace BLL.Report.OpenToteSettlement
             }
             strGrandTotal.Append("<td style='text-align:center' class='report-footer'><b>" +
                                  CacheUtils.GetExchangeName(CastAide.AsInt32(poolCurr)) + "</b></td>");
-
 
             strGrandTotal.Append("<td class='c report-footer' colspan='2'></td>");
             strGrandTotal.Append("</tr>");
@@ -483,12 +474,12 @@ namespace BLL.Report.OpenToteSettlement
 
             strGrandTotal.Append("</tfoot>");
 
-            #endregion
+            #endregion Grand Total Base (RM)
 
             return strGrandTotal.ToString();
         }
 
-        #endregion
+        #endregion OpenToteRowGrandTotalBaseRM
 
         public override string RenderHTML(Hashtable input)
         {

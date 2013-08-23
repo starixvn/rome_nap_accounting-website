@@ -13,12 +13,12 @@ namespace Sunplus.Accounting.DataAccess.Provider.Log
 
         public static LogProvider Instance()
         {
-            return (LogProvider) CreateInstance(_ProviderType, DAOClient.AdoNet, DataSource.SqlServer);
+            return (LogProvider)CreateInstance(_ProviderType, DAOClient.AdoNet, DataSource.SqlServer);
         }
 
         public static LogProvider Instance(DAOClient client, DataSource source)
         {
-            return (LogProvider) CreateInstance(_ProviderType, client, source);
+            return (LogProvider)CreateInstance(_ProviderType, client, source);
         }
 
         public virtual DataRowCollection GeneralLog(int custId)

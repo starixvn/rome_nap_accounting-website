@@ -12,7 +12,6 @@
             //
         }
 
-
         public SportDetail(string name, int id, string bettype)
         {
             Name = name;

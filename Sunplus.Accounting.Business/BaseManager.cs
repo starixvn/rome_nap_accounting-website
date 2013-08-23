@@ -4,6 +4,7 @@ using DNAide.Core;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Core.CachingLib;
 using SCCACHE = SharedCache.WinServiceCommon.Provider.Cache.IndexusDistributionCache;
+
 /// <summary>
 /// Summary description for BaseManager
 /// </summary>
@@ -36,7 +37,7 @@ namespace Sunplus.Accounting.Business
 
         protected virtual void CacheData(string key, object value, int minutesExpire)
         {
-            long expire = minutesExpire*60*1000;
+            long expire = minutesExpire * 60 * 1000;
             CacheService.CreateInstance(CacheType.ShareCached).Add(key, value, expire);
         }
 

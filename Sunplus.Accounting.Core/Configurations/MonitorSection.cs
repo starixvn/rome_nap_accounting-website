@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace Sunplus.Accounting.Core.Configurations
 {
-    public class MonitorSection:ConfigurationSection
+    public class MonitorSection : ConfigurationSection
     {
-        
         public static MonitorSection Instance
         {
             get
@@ -25,7 +20,7 @@ namespace Sunplus.Accounting.Core.Configurations
             RemoveItemName = "remove")]
         public MonitorCollection LeaguesType
         {
-            get 
+            get
             {
                 var spCollection =
                     (MonitorCollection)base["LeaguesType"];
@@ -62,12 +57,10 @@ namespace Sunplus.Accounting.Core.Configurations
                 return spCollection;
             }
         }
-      
     }
 
     public class MonitorCollection : ConfigurationElementCollection
     {
-
         public MonitorCollection()
         {
             //var Monitor = (MonitorElement) CreateNewElement();
@@ -113,7 +106,6 @@ namespace Sunplus.Accounting.Core.Configurations
             BaseClear();
         }
 
-
         public MonitorElement this[int index]
         {
             get
@@ -143,7 +135,6 @@ namespace Sunplus.Accounting.Core.Configurations
             return BaseIndexOf(MonitorElement);
         }
 
-
         protected override sealed ConfigurationElement CreateNewElement()
         {
             return new MonitorElement();
@@ -157,10 +148,8 @@ namespace Sunplus.Accounting.Core.Configurations
 
     public class MonitorElement : ConfigurationElement
     {
-
         public MonitorElement()
         {
-
         }
 
         [ConfigurationProperty("id", IsRequired = true, IsKey = true)]
@@ -217,7 +206,6 @@ namespace Sunplus.Accounting.Core.Configurations
                 this["active"] = value;
             }
         }
-        
 
         [ConfigurationProperty("stores", IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(MonitorCollection),

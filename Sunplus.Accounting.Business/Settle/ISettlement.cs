@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Settle;
 
@@ -23,7 +20,7 @@ namespace Sunplus.Accounting.Business.Settle
         void UpdBallNoByMatchID(int matchid, string ballNo, string siteNo, int adminid, string adminname, string ip);
 
         string RefundRunningBetDaqTickets(int Matchid, int Creator, string IP);
-        
+
         void AssignDataUnDecided(ref string tpl, string permission, DataRow dr);
 
         bool IsHasPermissionUnDecided(string permission);

@@ -10,7 +10,6 @@ using Sunplus.Accounting.Business.CacheManager;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess;
-using Sunplus.Core.LoggingLib;
 
 /// <summary>
 /// Summary description for OpenToteSettlementExportExceManager
@@ -29,7 +28,7 @@ namespace BLL.Report.NonePT
             {
                 var dataTable = new DataTable();
 
-                dataTable = (DataTable) GetCachedObjData("accrptnoneptmemsummary." + AppSession.Username);
+                dataTable = (DataTable)GetCachedObjData("accrptnoneptmemsummary." + AppSession.Username);
                 if (dataTable == null)
                 {
                     var param = new Hashtable();
@@ -69,7 +68,7 @@ namespace BLL.Report.NonePT
                     ws.Cells[1, i].Style = gembox.GetStyleTitle(181, 196, 208);
                 }
 
-                #endregion
+                #endregion Header
 
                 #region content
 
@@ -85,13 +84,13 @@ namespace BLL.Report.NonePT
 
                 currpage = (currpage.Length == 0) ? "1" : currpage;
 
-                int order = (CastAide.AsInt32(currpage) - 1)*1000 + 1;
+                int order = (CastAide.AsInt32(currpage) - 1) * 1000 + 1;
                 foreach (DataRow dr in Rows)
                 {
                     supername_p = dr["super"].ToString();
                     if (supername != supername_p)
                     {
-                        if (countsuper%2 == 0)
+                        if (countsuper % 2 == 0)
                         {
                             red = 255;
                             green = 255;
@@ -132,7 +131,7 @@ namespace BLL.Report.NonePT
                     order++;
                 }
 
-                #endregion
+                #endregion content
 
                 #region footer
 
@@ -147,16 +146,15 @@ namespace BLL.Report.NonePT
                 ws.Cells.GetSubrangeAbsolute(indexrow, 7, indexrow, 8).Style = gembox.GetStyleTextTotal(196, 208, 215);
                 ws.Cells.GetSubrangeAbsolute(indexrow, 7, indexrow, 8).Merged = true;
 
-                #endregion
+                #endregion footer
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return excelFile;
         }
 
-        #endregion
+        #endregion Export2Excel
     }
 }

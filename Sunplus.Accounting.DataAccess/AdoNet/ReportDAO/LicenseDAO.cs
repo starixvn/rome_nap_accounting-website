@@ -4,10 +4,8 @@ using System.Data;
 using DNAide.Core;
 using DNAide.Data;
 
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.DataAccess.IReportDAO;
-using Sunplus.Core.LoggingLib;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 {
@@ -58,14 +56,12 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
             }
             return dbResult;
         }
-
 
         public DbResult SelReportByLicensee(int LicenseeID, int Currency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, string MoveBetsDay, bool IsOld, int drawfilter, int excludeTest, int BAFilter)
         {
@@ -97,7 +93,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -130,14 +125,12 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
             }
             return dbResult;
         }
-
 
         public DataTable SelConcurrentUser(DateTime fromDate, DateTime toDate, string licenseSite)
         {
@@ -152,9 +145,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                 dtResult = ds.ResultSet.Tables[0];
             return dtResult;
         }
-
-
-
 
         public DbResult SelReportByLicenseeDetail_Ag(int LicenseeID, int Currency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, string MoveBetsDay, bool IsOld, int drawfilter, int excludeTest, int BAFilter)
         {
@@ -186,14 +176,12 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
             }
             return dbResult;
         }
-
 
         public DbResult SelReportByLicenseeDetail(int LicenseeID, int Currency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, string MoveBetsDay, bool IsOld, int drawfilter, int excludeTest, int BAFilter)
         {
@@ -226,14 +214,12 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
             }
             return dbResult;
         }
-
 
         public DbResult SelBetlistByLicensee(int CustId, string FromDate, string ToDate, string MoveBetsDay, string BalanceUpDay, bool ShowSB, bool ShowRB, bool ShowNG, int drawFilter, int baFilter)
         {
@@ -271,14 +257,10 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                 h.Add("sumawinlosteur", 0);
                 h.Add("sumcommeur", 0);
 
-
-
                 dbResult = DbHelper.Execute(sp, h, db);
-
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -302,11 +284,9 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                 DbResult dbResult = DbHelper.Execute(sp, db);
                 if (dbResult != null && dbResult.ResultSet.Tables.Count > 0)
                     dataTable = dbResult.ResultSet.Tables[0];
-
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -346,11 +326,9 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                 DbResult dbResult = DbHelper.Execute(sp, h, db, 6000);
                 if (dbResult != null && dbResult.ResultSet.Tables.Count > 0)
                     dataTable = dbResult.ResultSet.Tables[0];
-
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -358,13 +336,11 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             return dataTable;
         }
 
-
         public DataTable GetRates(string date)
         {
             DataTable dataTable = null;
             try
             {
-
                 var spElement = GetStoreProcedure("LicGetResellerRates");
 
                 var param = new Hashtable { { "inputdate", date } };
@@ -372,11 +348,9 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                 var dbResult = DbHelper.Execute(spElement.Name, param, spElement.DbName);
 
                 if (dbResult != null && dbResult.ResultSet.Tables.Count > 0) dataTable = dbResult.ResultSet.Tables[0];
-
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dataTable;
@@ -403,19 +377,15 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                 DbResult dbResult = DbHelper.Execute(sp, h, db);
                 if (dbResult != null && dbResult.ResultSet.Tables.Count > 0)
                     dataTable = dbResult.ResultSet.Tables[0];
-
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
             }
             return dataTable;
         }
-
-
 
         public DbResult SelReportByLicenseeV2(int LicenseeID, int Currency, string FromDate, string ToDate, int ShowSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, string MoveBetsDay, bool IsOld, int drawfilter, int excludeTest)
         {
@@ -451,7 +421,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -494,7 +463,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -537,7 +505,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -583,21 +550,16 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                 h.Add("sumcommusd", 0);
                 h.Add("sumcommeur", 0);
 
-
-
                 dbResult = DbHelper.Execute(sp, h, db, 1000);
-
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
             }
             return dbResult;
         }
-
 
         public DbResult SelBABetListByLicensee(int custId, string fromDate, string toDate, string moveBetsDay, string balanceUpDay, int drawFilter)
         {
@@ -632,11 +594,9 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                 h.Add("sumcommeur", 0);
 
                 dbResult = DbHelper.Execute(sp, h, db, 1000);
-
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -669,7 +629,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -703,7 +662,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -745,7 +703,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -788,14 +745,11 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
             }
             return dbResult;
         }
-
-       
     }
 }

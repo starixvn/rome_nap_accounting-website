@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace Sunplus.Accounting.Core.Configurations
 {
@@ -15,7 +9,6 @@ namespace Sunplus.Accounting.Core.Configurations
             Currency
         }
 
-       
         [ConfigurationProperty("Currency", IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(HelperCollection),
             AddItemName = "add",
@@ -31,9 +24,6 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-
-      
-
         public static HelperSection Instance
         {
             get
@@ -44,23 +34,18 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-
         public HelperCollection this[HelperCollectionType name]
         {
             get
             {
-
                 var spCollection = (HelperCollection)this.GetType().GetProperty(name.ToString()).GetValue(this, System.Reflection.BindingFlags.GetField, null, null, null);
                 return spCollection;
             }
         }
-
-
     }
 
     public class HelperCollection : ConfigurationElementCollection
     {
-
         public HelperCollection()
         {
             //var storeProcedure = (HelperElement) CreateNewElement();
@@ -106,7 +91,6 @@ namespace Sunplus.Accounting.Core.Configurations
             BaseClear();
         }
 
-
         public HelperElement this[int index]
         {
             get
@@ -136,7 +120,6 @@ namespace Sunplus.Accounting.Core.Configurations
             return BaseIndexOf(HelperElement);
         }
 
-
         protected override sealed ConfigurationElement CreateNewElement()
         {
             return new HelperElement();
@@ -151,14 +134,9 @@ namespace Sunplus.Accounting.Core.Configurations
     public class HelperElement : ConfigurationElement
     {
 
-
-
         public HelperElement()
         {
-
         }
-
-       
 
         [ConfigurationProperty("name", IsRequired = true)]
         //[RegexStringValidator(@"\w+:\/\/[\w.]+\S*")]
@@ -202,6 +180,5 @@ namespace Sunplus.Accounting.Core.Configurations
                 return items;
             }
         }
-
     }
 }

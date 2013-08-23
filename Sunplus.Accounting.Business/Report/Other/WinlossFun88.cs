@@ -12,7 +12,6 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.Core.Web.Controls;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using Sunplus.Core.LoggingLib;
 
 /// <summary>
 /// Summary description for Winloss12Bet
@@ -36,6 +35,7 @@ namespace BLL.Report
         private int reportDetail = 0;
         private string currencyName = string.Empty;
         private int isBack = 0;
+
         private DataTable GetCurrency()
         {
             DataTable dt = null;
@@ -45,13 +45,10 @@ namespace BLL.Report
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dt;
         }
-
-
 
         public override string CreateHeader(Hashtable input)
         {
@@ -98,23 +95,18 @@ namespace BLL.Report
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 strHeader = ex.Message;
             }
 
-
-
             return strHeader;
         }
-
 
         private string ReportFun88WinlossDetail()
         {
             DateTime fromdate, todate;
             fromdate = CastAide.AsDateTime(fdate, DateTime.Now);
             todate = CastAide.AsDateTime(tdate, DateTime.Now);
-
 
             bool showSB = true;
             bool showHR = true;
@@ -125,10 +117,12 @@ namespace BLL.Report
                     showSB = true;
                     showHR = false;
                     break;
+
                 case "151": //Horse Racing
                     showSB = false;
                     showHR = true;
                     break;
+
                 default:
                     showSB = true;
                     showHR = true;
@@ -139,9 +133,6 @@ namespace BLL.Report
             baseCurrency = 0;
             custid = 0;
 
-
-
-
             //Get Currency
             switch (currencyOption)
             {
@@ -149,14 +140,17 @@ namespace BLL.Report
                     baseCurrency = 0;
                     custid = 0;
                     break;
+
                 case "-1":
                     baseCurrency = 3; //USD
                     custid = 0;
                     break;
+
                 case "-2":
                     baseCurrency = 2; //RM
                     custid = 0;
                     break;
+
                 default:
                     custid = CastAide.AsInt32(currencyOption);
                     baseCurrency = 0;
@@ -193,34 +187,23 @@ namespace BLL.Report
             TemplateHandler.Assign(ref tpl, "cellspacing", cellspacing);
             TemplateHandler.Assign(ref tpl, "class", cssClass);
 
-
             TemplateHandler.Assign(ref rowheaderTpl, "ReportByHead", "Username");
             TemplateHandler.Assign(ref rowtpl, "ReportByAlign", "align='left'");
             TemplateHandler.Assign(ref rowtpl, "CurrLink", "");
 
-
             StringBuilder html = new StringBuilder();
             html.Append(rowheaderTpl);
 
-
             //get balanceup day
             DateTime BalanceUpDay = Sunplus.Accounting.DataAccess.Report.ReportUtils.BalanceUp.BalanceUpDay;
-
-
 
             DataTable dt = null;
             //get content
             dt = AccountReport.Acc_Rpt_WinLoss_Fun88_Detail(custid, fromdate, todate, showSB, showHR, baseCurrency, BalanceUpDay).ResultSet.Tables[0];
 
-
-
             Hashtable totalHash = new Hashtable();
             int count = 0;
             int rowCount = dt.Rows.Count;
-
-
-
-
 
             if (rowCount > 0)
             {
@@ -262,8 +245,6 @@ namespace BLL.Report
                     sumAgentTotalUS = sumAgentTotalUS + CastAide.AsDecimal(row["awinlostusd"]) + CastAide.AsDecimal(row["acommusd"]);
                     sumCompanyUS = sumCompanyUS + CastAide.AsDecimal(row["companyusd"]);
 
-
-
                     if (baseCurrency == 0) //not choose any base currency
                     {
                         turnover = CastAide.AsDecimal(row["turnover"]);
@@ -275,7 +256,6 @@ namespace BLL.Report
                         agentComm = CastAide.AsDecimal(row["acomm"]);
                         agentTotal = agentWinloss + agentComm;
                         company = CastAide.AsDecimal(row["company"]);
-
                     }
                     else if (baseCurrency == 2) //RM
                     {
@@ -313,14 +293,12 @@ namespace BLL.Report
                     sumAgentTotal = sumAgentTotal + agentTotal;
                     sumCompany = sumCompany + company;
 
-
                     //TemplateHandler.Assign(ref r, "ReportByValue", username);
                     TemplateHandler.Assign(ref r, "ReportByValue", username);
                     TemplateHandler.Assign(ref r, "UserLink", "class='lnk' onclick=\"getBL('" + CastAide.AsString(row["custid"]) + "','" + username + "')\"");
 
                     //assign currency
                     TemplateHandler.Assign(ref r, "currency", currencyName);
-
 
                     TemplateHandler.Assign(ref r, "turnover", FormatHandler.FormatNumber20(turnover));
                     TemplateHandler.Assign(ref r, "grosscomm", FormatHandler.FormatNumber20(grossComm));
@@ -331,8 +309,6 @@ namespace BLL.Report
                     TemplateHandler.Assign(ref r, "agentcomm", FormatHandler.FormatNumber20(agentComm));
                     TemplateHandler.Assign(ref r, "agenttotal", FormatHandler.FormatNumber20(agentTotal));
                     TemplateHandler.Assign(ref r, "company", FormatHandler.FormatNumber20(company));
-
-
 
                     html.Append(r);
                 }
@@ -353,11 +329,9 @@ namespace BLL.Report
                 TemplateHandler.Assign(ref rowTotal, "company", FormatHandler.FormatNumber20(sumCompany));
                 html.Append(rowTotal);
 
-
                 //assign sub total
                 //USD base currency
                 string footerRow = rowfooterTpl;
-
 
                 TemplateHandler.Assign(ref footerRow, "turnovertotalus", FormatHandler.FormatNumber20(sumTurnoverUS));
                 TemplateHandler.Assign(ref footerRow, "grosscommtotalus", FormatHandler.FormatNumber20(sumGrossCommUS));
@@ -368,8 +342,6 @@ namespace BLL.Report
                 TemplateHandler.Assign(ref footerRow, "agentcommtotalus", FormatHandler.FormatNumber20(sumAgentCommUS));
                 TemplateHandler.Assign(ref footerRow, "agenttotaltotalus", FormatHandler.FormatNumber20(sumAgentTotalUS));
                 TemplateHandler.Assign(ref footerRow, "companytotalus", FormatHandler.FormatNumber20(sumCompanyUS));
-
-
 
                 //RM base currency
                 TemplateHandler.Assign(ref footerRow, "turnovertotalrm", FormatHandler.FormatNumber20(sumTurnoverRM));
@@ -392,7 +364,6 @@ namespace BLL.Report
                 TemplateHandler.Assign(ref tpl, "ReportContent", html.ToString());
             }
 
-
             //AppCache.REPORT_Fun88WINLOSS_DETAIL = tpl;
             SetCacheReport(REPORT_Fun88WINLOSS_DETAIL, html.ToString(), DateTime.Now.AddMinutes(20));
 
@@ -408,7 +379,6 @@ namespace BLL.Report
             baseCurrency = 0;
             custid = 0;
 
-
             DateTime fromdate, todate;
             fromdate = CastAide.AsDateTime(fdate, DateTime.Now);
             todate = CastAide.AsDateTime(tdate, DateTime.Now);
@@ -420,10 +390,12 @@ namespace BLL.Report
                     showSB = true;
                     showHR = false;
                     break;
+
                 case "151": //Horse Racing
                     showSB = false;
                     showHR = true;
                     break;
+
                 default:
                     showSB = true;
                     showHR = true;
@@ -436,12 +408,15 @@ namespace BLL.Report
                 case "1": //Daily
                     reportType = 1;
                     break;
+
                 case "2": //Monthly
                     reportType = 2;
                     break;
+
                 case "3": //Sport
                     reportType = 3;
                     break;
+
                 default:
                     reportType = 1;
                     break;
@@ -454,14 +429,17 @@ namespace BLL.Report
                     baseCurrency = 0;
                     custid = 0;
                     break;
+
                 case "-1":
                     baseCurrency = 3; //USD
                     custid = 0;
                     break;
+
                 case "-2":
                     baseCurrency = 2; //RM
                     custid = 0;
                     break;
+
                 default:
                     custid = CastAide.AsInt32(currencyOption);
                     baseCurrency = 0;
@@ -498,28 +476,20 @@ namespace BLL.Report
             TemplateHandler.Assign(ref tpl, "cellspacing", cellspacing);
             TemplateHandler.Assign(ref tpl, "class", cssClass);
 
-
-
-
             if (reportType == 1 || reportType == 2)//Daily or Monthly
             {
                 TemplateHandler.Assign(ref rowheaderTpl, "ReportByHead", "Date");
                 TemplateHandler.Assign(ref rowtpl, "ReportByAlign", "align='center'");
-
             }
             else
             {
                 TemplateHandler.Assign(ref rowheaderTpl, "ReportByHead", "Sport");
                 TemplateHandler.Assign(ref rowtpl, "ReportByAlign", "align='left'");
-
             }
             TemplateHandler.Assign(ref rowtpl, "UserLink", "");
 
-
-
             StringBuilder html = new StringBuilder();
             html.Append(rowheaderTpl);
-
 
             //get balanceup day
             DateTime BalanceUpDay = Sunplus.Accounting.DataAccess.Report.ReportUtils.BalanceUp.BalanceUpDay;
@@ -527,8 +497,6 @@ namespace BLL.Report
             DataTable dt = null;
             //get content
             dt = AccountReport.Acc_Rpt_WinLoss_Fun88(custid, fromdate, todate, showSB, showHR, reportType, baseCurrency, BalanceUpDay).ResultSet.Tables[0];
-
-
 
             Hashtable totalHash = new Hashtable();
             ArrayList currencyList = new ArrayList();
@@ -554,7 +522,6 @@ namespace BLL.Report
                         TemplateHandler.Assign(ref r, "odd_even", "");
 
                     string reportTypeCol = CastAide.AsString(row["reporttype"]);
-
 
                     //currency
                     //RM BASE SUM
@@ -641,9 +608,6 @@ namespace BLL.Report
                         TemplateHandler.Assign(ref r, "CurrLink", "class='lnk' onclick=\"viewDetail('" + currencyName + "','" + currencyID + "','" + reportTypeCol + "')\"");
                     }
 
-
-
-
                     TemplateHandler.Assign(ref r, "currency", currencyName);
                     TemplateHandler.Assign(ref r, "turnover", FormatHandler.FormatNumber20(turnover));
                     TemplateHandler.Assign(ref r, "grosscomm", FormatHandler.FormatNumber20(grossComm));
@@ -706,7 +670,6 @@ namespace BLL.Report
                 //USD base currency
                 string footerRow = rowfooterTpl;
 
-
                 TemplateHandler.Assign(ref footerRow, "turnovertotalus", FormatHandler.FormatNumber20(sumTurnoverUS));
                 TemplateHandler.Assign(ref footerRow, "grosscommtotalus", FormatHandler.FormatNumber20(sumGrossCommUS));
                 TemplateHandler.Assign(ref footerRow, "memwinlosstotalus", FormatHandler.FormatNumber20(sumMemWinlossUS));
@@ -716,8 +679,6 @@ namespace BLL.Report
                 TemplateHandler.Assign(ref footerRow, "agentcommtotalus", FormatHandler.FormatNumber20(sumAgentCommUS));
                 TemplateHandler.Assign(ref footerRow, "agenttotaltotalus", FormatHandler.FormatNumber20(sumAgentTotalUS));
                 TemplateHandler.Assign(ref footerRow, "companytotalus", FormatHandler.FormatNumber20(sumCompanyUS));
-
-
 
                 //RM base currency
                 TemplateHandler.Assign(ref footerRow, "turnovertotalrm", FormatHandler.FormatNumber20(sumTurnoverRM));
@@ -739,9 +700,6 @@ namespace BLL.Report
                 html.Append(AccCommon.GenNoInformation("11"));
                 TemplateHandler.Assign(ref tpl, "ReportContent", html.ToString());
             }
-
-
-
 
             //cache the report data
             if (reportType == 1)//daily
@@ -814,11 +772,9 @@ namespace BLL.Report
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 data = ex.Message;
             }
-
 
             return data;
         }
@@ -836,12 +792,10 @@ namespace BLL.Report
             isBack = CastAide.AsInt32(input["isback"], 0);
         }
 
-
         public override void Export2Excel(Hashtable input)
         {
             inputParameter(input);
             string data = string.Empty;
-
 
             if (reportDetail == 1)
             {
@@ -852,7 +806,6 @@ namespace BLL.Report
                     data = GetCachedReport(this.REPORT_Fun88WINLOSS_DETAIL);
                 }
                 data = "<table border='1' cellspacing='0' cellpadding='0'>" + data + "</table>";
-
             }
             else
             {
@@ -892,10 +845,8 @@ namespace BLL.Report
 
             base.Export2Excel(input);
 
-
-
-
         }
+
         private string GetSportName(int id)
         {
             if (id == 0)
@@ -935,6 +886,7 @@ namespace BLL.Report
 
             return arr;
         }
+
         private string formatFullDate(string date) //format yyyymmdd to mm/dd/yyyy
         {
             if (date.Length == 8)
@@ -949,6 +901,7 @@ namespace BLL.Report
                 return date;
             }
         }
+
         private string formatMonthYear(string date) //format yyyymm to mm/yyyy
         {
             if (date.Length == 6)
@@ -962,6 +915,5 @@ namespace BLL.Report
                 return date;
             }
         }
-
     }
 }

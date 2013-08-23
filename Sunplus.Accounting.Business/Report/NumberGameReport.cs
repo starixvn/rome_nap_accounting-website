@@ -20,26 +20,26 @@ using Sunplus.Accounting.DataAccess.Report;
 using Sunplus.Accounting.Entities.Report.Licensee;
 using Sunplus.Accounting.Entities.Report.NumberGame;
 using Sunplus.Accounting.Entities.ViewModel;
-using Sunplus.Core.LoggingLib;
 
 namespace Sunplus.Accounting.Business.Report
 {
     public class NumberGameReport : BaseManager, IRequiresSessionState, INumberGameReport
     {
         #region private varialbes
+
         private static string NumberGameWinlossByMatch_SessionKey = "NumberGameWinlossByMatch";
         private static string NumgerGameWinLossByMatchDetail_SessionKey = "NumberGameWinlossByMatchDetail";
         private static string NumberGameWinlossByDate_SessionKey = "NumberGameWinlossByDate";
         private static string NumberGameMonthlyWinloss_SessionKey = "NumberGameMonthlyWinloss";
         private static string _NumberGameWinLossByBettypeSessionKey = "NumberGameWinLossByBettypeSessionKey";
         private static string _NumberGameWinLossDetailByBettypeSessionKey = "NumberGameWinLossDetailByBettypeSessionKey";
-        #endregion
+
+        #endregion private varialbes
 
         private INumberGameReportDAO _numberGameDAO;
 
         public NumberGameReport()
         {
-
         }
 
         public NumberGameReport(INumberGameReportDAO numberGameDao)
@@ -48,9 +48,9 @@ namespace Sunplus.Accounting.Business.Report
         }
 
         #region Winloss by date
+
         public NumberGameByDateTreeGridBO WinLoss_ByDate_NumberGame(string fromdate, string todate)
         {
-
             NumberGameByDateTreeGridBO numbergametreegrid = new NumberGameByDateTreeGridBO();
             var lsrow = new List<NumberGameWinLostByDateBO>();
             NumberGameWinLostByDateBO granditem = new NumberGameWinLostByDateBO();
@@ -80,7 +80,6 @@ namespace Sunplus.Accounting.Business.Report
                         decimal totalpositionbymatch = 0;
                         decimal totalpositionbylive = 0;
 
-
                         decimal totalcommissionbymatch = 0;
                         decimal totalcommissionbylive = 0;
 
@@ -93,8 +92,6 @@ namespace Sunplus.Accounting.Business.Report
                         decimal totalturnoverbymatch = 0;
                         decimal totalturnoverbylive = 0;
 
-
-
                         decimal winloss = 0;
                         decimal position = 0;
                         decimal commission = 0;
@@ -103,13 +100,11 @@ namespace Sunplus.Accounting.Business.Report
                         decimal turnover = 0;
                         decimal margin = 0;
 
-
-
                         #region get by matchid, islive
+
                         DataRow[] rows = dt.Select("date='" + _date.ToString() + "' and islive=1");
                         if (rows.Length > 0)
                         {
-
                             var itemlive = new NumberGameWinLostByDateBO();
                             itemlive.children = new List<NumberGameWinLostByDateBO>();
                             itemlive.Id = CastAide.AsDateTime(rows[0]["date"]).ToShortDateString().Replace("/", "") + "_" + "Live";
@@ -153,8 +148,6 @@ namespace Sunplus.Accounting.Business.Report
                                 totallinetotalbylive += linetotal;
                                 totalvirtuallinetotalbylive += virtuallinetotal;
                                 totalturnoverbylive += turnover;
-
-
                             }
 
                             itemlive.Winlost = NumberFormat.DecFormat(totalwinlossbylive, 2); ;
@@ -166,7 +159,6 @@ namespace Sunplus.Accounting.Business.Report
                             itemlive.Margin = totalturnoverbylive != 0 ? NumberFormat.DecFormat(totallinetotalbylive * 100 / totalturnoverbylive, 2) + "%" : "n/a";
                             itemlive.Variance = NumberFormat.DecFormat(totallinetotalbylive - totalvirtuallinetotalbylive, 2);
 
-
                             itemdate.children.Add(itemlive);
 
                             totalwinlossbymatch += totalwinlossbylive;
@@ -175,12 +167,12 @@ namespace Sunplus.Accounting.Business.Report
                             totallinetotalbymatch += totallinetotalbylive;
                             totalvirtuallinetotalbymatch += totalvirtuallinetotalbylive;
                             totalturnoverbymatch += totalturnoverbylive;
-
-
                         }
-                        #endregion
+
+                        #endregion get by matchid, islive
 
                         #region get by matchid, islive=false
+
                         totalwinlossbylive = 0;
                         totalpositionbylive = 0;
                         totalcommissionbylive = 0;
@@ -235,9 +227,7 @@ namespace Sunplus.Accounting.Business.Report
                                 totallinetotalbylive += linetotal;
                                 totalvirtuallinetotalbylive += virtuallinetotal;
                                 totalturnoverbylive += turnover;
-
                             }
-
 
                             itemlive.Winlost = NumberFormat.DecFormat(totalwinlossbylive, 2); ;
                             itemlive.Position = NumberFormat.DecFormat(totalpositionbylive, 2); ;
@@ -248,7 +238,6 @@ namespace Sunplus.Accounting.Business.Report
                             itemlive.Margin = Math.Round(totalturnoverbylive, 2) != 0 ? NumberFormat.DecFormat(totallinetotalbylive * 100 / totalturnoverbylive, 2) + "%" : "n/a";
                             itemlive.Variance = NumberFormat.DecFormat(totallinetotalbylive - totalvirtuallinetotalbylive, 2);
 
-
                             itemdate.children.Add(itemlive);
 
                             totalwinlossbymatch += totalwinlossbylive;
@@ -257,9 +246,9 @@ namespace Sunplus.Accounting.Business.Report
                             totallinetotalbymatch += totallinetotalbylive;
                             totalvirtuallinetotalbymatch += totalvirtuallinetotalbylive;
                             totalturnoverbymatch += totalturnoverbylive;
-
                         }
-                        #endregion
+
+                        #endregion get by matchid, islive=false
 
                         itemdate.Winlost = NumberFormat.DecFormat(totalwinlossbymatch, 2);
                         itemdate.Position = NumberFormat.DecFormat(totalpositionbymatch, 2);
@@ -277,8 +266,6 @@ namespace Sunplus.Accounting.Business.Report
                         grandvirtuallinetotal += totalvirtuallinetotalbymatch;
                         grandturnover += totalturnoverbymatch;
 
-
-
                         lsrow.Add(itemdate);
                     }
                     granditem.Name = "Grand Total";
@@ -290,15 +277,12 @@ namespace Sunplus.Accounting.Business.Report
                     granditem.TurnOver = NumberFormat.DecFormat(grandturnover, 2);
                     granditem.Margin = grandturnover != 0 ? NumberFormat.DecFormat(grandlinetotal * 100 / grandturnover, 2) + "%" : "n/a";
                     granditem.Variance = NumberFormat.DecFormat(grandlinetotal - grandvirtuallinetotal, 2);
-
                 }
                 numbergametreegrid.rows = lsrow;
                 numbergametreegrid.totalrow = granditem;
-
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             SessionExtension.AddSession(HttpContext.Current.Session, NumberGameWinlossByDate_SessionKey, numbergametreegrid);
@@ -308,7 +292,6 @@ namespace Sunplus.Accounting.Business.Report
 
         public NumberGameByDateTreeGridBO WinLoss_ByDate_NumberGame(string fromdate, string todate, int SiteID, int Currency)
         {
-
             NumberGameByDateTreeGridBO numbergametreegrid = new NumberGameByDateTreeGridBO();
             var lsrow = new List<NumberGameWinLostByDateBO>();
             NumberGameWinLostByDateBO granditem = new NumberGameWinLostByDateBO();
@@ -338,7 +321,6 @@ namespace Sunplus.Accounting.Business.Report
                         decimal totalpositionbymatch = 0;
                         decimal totalpositionbylive = 0;
 
-
                         decimal totalcommissionbymatch = 0;
                         decimal totalcommissionbylive = 0;
 
@@ -351,8 +333,6 @@ namespace Sunplus.Accounting.Business.Report
                         decimal totalturnoverbymatch = 0;
                         decimal totalturnoverbylive = 0;
 
-
-
                         decimal winloss = 0;
                         decimal position = 0;
                         decimal commission = 0;
@@ -361,13 +341,11 @@ namespace Sunplus.Accounting.Business.Report
                         decimal turnover = 0;
                         decimal margin = 0;
 
-
-
                         #region get by matchid, islive
+
                         DataRow[] rows = dt.Select("date='" + _date.ToString() + "' and islive=1");
                         if (rows.Length > 0)
                         {
-
                             var itemlive = new NumberGameWinLostByDateBO();
                             itemlive.children = new List<NumberGameWinLostByDateBO>();
                             itemlive.Id = CastAide.AsDateTime(rows[0]["date"]).ToShortDateString().Replace("/", "") + "_" + "Live";
@@ -411,8 +389,6 @@ namespace Sunplus.Accounting.Business.Report
                                 totallinetotalbylive += linetotal;
                                 totalvirtuallinetotalbylive += virtuallinetotal;
                                 totalturnoverbylive += turnover;
-
-
                             }
 
                             itemlive.Winlost = NumberFormat.DecFormat(totalwinlossbylive, 2); ;
@@ -424,7 +400,6 @@ namespace Sunplus.Accounting.Business.Report
                             itemlive.Margin = Math.Round(totalturnoverbylive, 2) != 0 ? NumberFormat.DecFormat(totallinetotalbylive * 100 / totalturnoverbylive, 2) + "%" : "n/a";
                             itemlive.Variance = NumberFormat.DecFormat(totallinetotalbylive - totalvirtuallinetotalbylive, 2);
 
-
                             itemdate.children.Add(itemlive);
 
                             totalwinlossbymatch += totalwinlossbylive;
@@ -433,12 +408,12 @@ namespace Sunplus.Accounting.Business.Report
                             totallinetotalbymatch += totallinetotalbylive;
                             totalvirtuallinetotalbymatch += totalvirtuallinetotalbylive;
                             totalturnoverbymatch += totalturnoverbylive;
-
-
                         }
-                        #endregion
+
+                        #endregion get by matchid, islive
 
                         #region get by matchid, islive=false
+
                         totalwinlossbylive = 0;
                         totalpositionbylive = 0;
                         totalcommissionbylive = 0;
@@ -493,9 +468,7 @@ namespace Sunplus.Accounting.Business.Report
                                 totallinetotalbylive += linetotal;
                                 totalvirtuallinetotalbylive += virtuallinetotal;
                                 totalturnoverbylive += turnover;
-
                             }
-
 
                             itemlive.Winlost = NumberFormat.DecFormat(totalwinlossbylive, 2); ;
                             itemlive.Position = NumberFormat.DecFormat(totalpositionbylive, 2); ;
@@ -506,7 +479,6 @@ namespace Sunplus.Accounting.Business.Report
                             itemlive.Margin = Math.Round(totalturnoverbylive, 2) != 0 ? NumberFormat.DecFormat(totallinetotalbylive * 100 / totalturnoverbylive, 2) + "%" : "n/a";
                             itemlive.Variance = NumberFormat.DecFormat(totallinetotalbylive - totalvirtuallinetotalbylive, 2);
 
-
                             itemdate.children.Add(itemlive);
 
                             totalwinlossbymatch += totalwinlossbylive;
@@ -515,9 +487,9 @@ namespace Sunplus.Accounting.Business.Report
                             totallinetotalbymatch += totallinetotalbylive;
                             totalvirtuallinetotalbymatch += totalvirtuallinetotalbylive;
                             totalturnoverbymatch += totalturnoverbylive;
-
                         }
-                        #endregion
+
+                        #endregion get by matchid, islive=false
 
                         itemdate.Winlost = NumberFormat.DecFormat(totalwinlossbymatch, 2);
                         itemdate.Position = NumberFormat.DecFormat(totalpositionbymatch, 2);
@@ -535,8 +507,6 @@ namespace Sunplus.Accounting.Business.Report
                         grandvirtuallinetotal += totalvirtuallinetotalbymatch;
                         grandturnover += totalturnoverbymatch;
 
-
-
                         lsrow.Add(itemdate);
                     }
                     granditem.Name = "Grand Total";
@@ -548,15 +518,12 @@ namespace Sunplus.Accounting.Business.Report
                     granditem.TurnOver = NumberFormat.DecFormat(grandturnover, 2);
                     granditem.Margin = Math.Round(grandturnover, 2) != 0 ? NumberFormat.DecFormat(grandlinetotal * 100 / grandturnover, 2) + "%" : "n/a";
                     granditem.Variance = NumberFormat.DecFormat(grandlinetotal - grandvirtuallinetotal, 2);
-
                 }
                 numbergametreegrid.rows = lsrow;
                 numbergametreegrid.totalrow = granditem;
-
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             SessionExtension.AddSession(HttpContext.Current.Session, NumberGameWinlossByDate_SessionKey, numbergametreegrid);
@@ -598,7 +565,6 @@ namespace Sunplus.Accounting.Business.Report
                         decimal totalpositionbymatch = 0;
                         decimal totalpositionbylive = 0;
 
-
                         decimal totalcommissionbymatch = 0;
                         decimal totalcommissionbylive = 0;
 
@@ -620,10 +586,10 @@ namespace Sunplus.Accounting.Business.Report
                         decimal margin = 0;
 
                         #region get by matchid, islive
+
                         DataRow[] rows = dt.Select(string.Format("date='{0}' and islive=1", _date));
                         if (rows.Length > 0)
                         {
-
                             var itemlive = new NumberGameWinLostByDateBO();
                             itemlive.children = new List<NumberGameWinLostByDateBO>();
                             itemlive.Id = CastAide.AsDateTime(rows[0]["date"]).ToShortDateString().Replace("/", "") + "_" + "Live";
@@ -667,8 +633,6 @@ namespace Sunplus.Accounting.Business.Report
                                 totallinetotalbylive += linetotal;
                                 totalvirtuallinetotalbylive += virtuallinetotal;
                                 totalturnoverbylive += turnover;
-
-
                             }
 
                             itemlive.Winlost = NumberFormat.DecFormat(totalwinlossbylive, 2); ;
@@ -680,7 +644,6 @@ namespace Sunplus.Accounting.Business.Report
                             itemlive.Margin = Math.Round(totalturnoverbylive, 2) != 0 ? NumberFormat.DecFormat(totallinetotalbylive * 100 / totalturnoverbylive, 2) + "%" : "n/a";
                             itemlive.Variance = NumberFormat.DecFormat(totallinetotalbylive - totalvirtuallinetotalbylive, 2);
 
-
                             itemdate.children.Add(itemlive);
 
                             totalwinlossbymatch += totalwinlossbylive;
@@ -689,12 +652,12 @@ namespace Sunplus.Accounting.Business.Report
                             totallinetotalbymatch += totallinetotalbylive;
                             totalvirtuallinetotalbymatch += totalvirtuallinetotalbylive;
                             totalturnoverbymatch += totalturnoverbylive;
-
-
                         }
-                        #endregion
+
+                        #endregion get by matchid, islive
 
                         #region get by matchid, islive=false
+
                         totalwinlossbylive = 0;
                         totalpositionbylive = 0;
                         totalcommissionbylive = 0;
@@ -749,9 +712,7 @@ namespace Sunplus.Accounting.Business.Report
                                 totallinetotalbylive += linetotal;
                                 totalvirtuallinetotalbylive += virtuallinetotal;
                                 totalturnoverbylive += turnover;
-
                             }
-
 
                             itemlive.Winlost = NumberFormat.DecFormat(totalwinlossbylive, 2); ;
                             itemlive.Position = NumberFormat.DecFormat(totalpositionbylive, 2); ;
@@ -762,7 +723,6 @@ namespace Sunplus.Accounting.Business.Report
                             itemlive.Margin = Math.Round(totalturnoverbylive, 2) != 0 ? NumberFormat.DecFormat(totallinetotalbylive * 100 / totalturnoverbylive, 2) + "%" : "n/a";
                             itemlive.Variance = NumberFormat.DecFormat(totallinetotalbylive - totalvirtuallinetotalbylive, 2);
 
-
                             itemdate.children.Add(itemlive);
 
                             totalwinlossbymatch += totalwinlossbylive;
@@ -771,9 +731,9 @@ namespace Sunplus.Accounting.Business.Report
                             totallinetotalbymatch += totallinetotalbylive;
                             totalvirtuallinetotalbymatch += totalvirtuallinetotalbylive;
                             totalturnoverbymatch += totalturnoverbylive;
-
                         }
-                        #endregion
+
+                        #endregion get by matchid, islive=false
 
                         itemdate.Winlost = NumberFormat.DecFormat(totalwinlossbymatch, 2);
                         itemdate.Position = NumberFormat.DecFormat(totalpositionbymatch, 2);
@@ -791,8 +751,6 @@ namespace Sunplus.Accounting.Business.Report
                         grandvirtuallinetotal += totalvirtuallinetotalbymatch;
                         grandturnover += totalturnoverbymatch;
 
-
-
                         lsrow.Add(itemdate);
                     }
                     granditem.Name = "Grand Total";
@@ -804,28 +762,25 @@ namespace Sunplus.Accounting.Business.Report
                     granditem.TurnOver = NumberFormat.DecFormat(grandturnover, 2);
                     granditem.Margin = Math.Round(grandturnover, 2) != 0 ? NumberFormat.DecFormat(grandlinetotal * 100 / grandturnover, 2) + "%" : "n/a";
                     granditem.Variance = NumberFormat.DecFormat(grandlinetotal - grandvirtuallinetotal, 2);
-
                 }
                 numbergametreegrid.rows = lsrow;
                 numbergametreegrid.totalrow = granditem;
-
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             SessionExtension.AddSession(HttpContext.Current.Session, NumberGameWinlossByDate_SessionKey, numbergametreegrid);
             return numbergametreegrid;
             // return dt;
         }
-        #endregion
+
+        #endregion Winloss by date
 
         #region Match winloss
 
         public NumberGameTreeGridBO WinLoss_ByMatch_NumberGame(string date)
         {
-
             NumberGameTreeGridBO numbergametreegrid = new NumberGameTreeGridBO();
             var lsrow = new List<NumberGameWinLostByMatchBO>();
             NumberGameWinLostByMatchBO granditem = new NumberGameWinLostByMatchBO();
@@ -862,7 +817,6 @@ namespace Sunplus.Accounting.Business.Report
                         decimal totalpositionbymatch = 0;
                         decimal totalpositionbylive = 0;
 
-
                         decimal totalcommissionbymatch = 0;
                         decimal totalcommissionbylive = 0;
 
@@ -875,9 +829,6 @@ namespace Sunplus.Accounting.Business.Report
                         decimal totalturnoverbymatch = 0;
                         decimal totalturnoverbylive = 0;
 
-
-
-
                         decimal winloss = 0;
                         decimal position = 0;
                         decimal commission = 0;
@@ -886,13 +837,11 @@ namespace Sunplus.Accounting.Business.Report
                         decimal turnover = 0;
                         decimal margin = 0;
 
-
-
                         #region get by matchid, islive
+
                         DataRow[] rows = dt.Select("matchid=" + matchid + " and islive=1");
                         if (rows.Length > 0)
                         {
-
                             var itemlive = new NumberGameWinLostByMatchBO();
                             itemlive.children = new List<NumberGameWinLostByMatchBO>();
                             itemlive.Id = CastAide.AsInt32(rows[0]["matchcode"]) + "_" + "Live";
@@ -949,7 +898,6 @@ namespace Sunplus.Accounting.Business.Report
                             itemlive.Margin = Math.Round(totalturnoverbylive, 2) != 0 ? NumberFormat.DecFormat(totallinetotalbylive * 100 / totalturnoverbylive, 2) + "%" : "n/a";
                             itemlive.Variance = NumberFormat.DecFormat(totallinetotalbylive - totalvirtuallinetotalbylive, 2);
 
-
                             itemmatch.children.Add(itemlive);
 
                             totalwinlossbymatch += totalwinlossbylive;
@@ -958,11 +906,12 @@ namespace Sunplus.Accounting.Business.Report
                             totallinetotalbymatch += totallinetotalbylive;
                             totalvirtuallinetotalbymatch += totalvirtuallinetotalbylive;
                             totalturnoverbymatch += totalturnoverbylive;
-
                         }
-                        #endregion
+
+                        #endregion get by matchid, islive
 
                         #region get by matchid, islive=false
+
                         totalwinlossbylive = 0;
                         totalpositionbylive = 0;
                         totalcommissionbylive = 0;
@@ -1018,9 +967,7 @@ namespace Sunplus.Accounting.Business.Report
                                 totallinetotalbylive += linetotal;
                                 totalvirtuallinetotalbylive += virtuallinetotal;
                                 totalturnoverbylive += turnover;
-
                             }
-
 
                             itemlive.Winlost = NumberFormat.DecFormat(totalwinlossbylive, 2); ;
                             itemlive.Position = NumberFormat.DecFormat(totalpositionbylive, 2); ;
@@ -1031,7 +978,6 @@ namespace Sunplus.Accounting.Business.Report
                             itemlive.Margin = Math.Round(totalturnoverbylive, 2) != 0 ? NumberFormat.DecFormat(totallinetotalbylive * 100 / totalturnoverbylive, 2) + "%" : "n/a";
                             itemlive.Variance = NumberFormat.DecFormat(totallinetotalbylive - totalvirtuallinetotalbylive, 2);
 
-
                             itemmatch.children.Add(itemlive);
 
                             totalwinlossbymatch += totalwinlossbylive;
@@ -1040,9 +986,9 @@ namespace Sunplus.Accounting.Business.Report
                             totallinetotalbymatch += totallinetotalbylive;
                             totalvirtuallinetotalbymatch += totalvirtuallinetotalbylive;
                             totalturnoverbymatch += totalturnoverbylive;
-
                         }
-                        #endregion
+
+                        #endregion get by matchid, islive=false
 
                         itemmatch.Winlost = NumberFormat.DecFormat(totalwinlossbymatch, 2);
                         itemmatch.Position = NumberFormat.DecFormat(totalpositionbymatch, 2);
@@ -1074,11 +1020,9 @@ namespace Sunplus.Accounting.Business.Report
                 }
                 numbergametreegrid.rows = lsrow;
                 numbergametreegrid.totalrow = granditem;
-
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             SessionExtension.AddSession(HttpContext.Current.Session, NumberGameWinlossByMatch_SessionKey, numbergametreegrid);
@@ -1088,7 +1032,6 @@ namespace Sunplus.Accounting.Business.Report
 
         public NumberGameTreeGridBO WinLoss_ByMatch_NumberGame(string date, int SiteID, int Currency)
         {
-
             NumberGameTreeGridBO numbergametreegrid = new NumberGameTreeGridBO();
             var lsrow = new List<NumberGameWinLostByMatchBO>();
             NumberGameWinLostByMatchBO granditem = new NumberGameWinLostByMatchBO();
@@ -1117,7 +1060,6 @@ namespace Sunplus.Accounting.Business.Report
                         decimal totalpositionbymatch = 0;
                         decimal totalpositionbylive = 0;
 
-
                         decimal totalcommissionbymatch = 0;
                         decimal totalcommissionbylive = 0;
 
@@ -1130,9 +1072,6 @@ namespace Sunplus.Accounting.Business.Report
                         decimal totalturnoverbymatch = 0;
                         decimal totalturnoverbylive = 0;
 
-
-
-
                         decimal winloss = 0;
                         decimal position = 0;
                         decimal commission = 0;
@@ -1141,13 +1080,11 @@ namespace Sunplus.Accounting.Business.Report
                         decimal turnover = 0;
                         decimal margin = 0;
 
-
-
                         #region get by matchid, islive
+
                         DataRow[] rows = dt.Select("matchid=" + matchid + " and islive=1");
                         if (rows.Length > 0)
                         {
-
                             var itemlive = new NumberGameWinLostByMatchBO();
                             itemlive.children = new List<NumberGameWinLostByMatchBO>();
                             itemlive.Id = CastAide.AsInt32(rows[0]["matchcode"]) + "_" + "Live";
@@ -1204,7 +1141,6 @@ namespace Sunplus.Accounting.Business.Report
                             itemlive.Margin = Math.Round(totalturnoverbylive, 2) != 0 ? NumberFormat.DecFormat(totallinetotalbylive * 100 / totalturnoverbylive, 2) + "%" : "n/a";
                             itemlive.Variance = NumberFormat.DecFormat(totallinetotalbylive - totalvirtuallinetotalbylive, 2);
 
-
                             itemmatch.children.Add(itemlive);
 
                             totalwinlossbymatch += totalwinlossbylive;
@@ -1213,11 +1149,12 @@ namespace Sunplus.Accounting.Business.Report
                             totallinetotalbymatch += totallinetotalbylive;
                             totalvirtuallinetotalbymatch += totalvirtuallinetotalbylive;
                             totalturnoverbymatch += totalturnoverbylive;
-
                         }
-                        #endregion
+
+                        #endregion get by matchid, islive
 
                         #region get by matchid, islive=false
+
                         totalwinlossbylive = 0;
                         totalpositionbylive = 0;
                         totalcommissionbylive = 0;
@@ -1273,9 +1210,7 @@ namespace Sunplus.Accounting.Business.Report
                                 totallinetotalbylive += linetotal;
                                 totalvirtuallinetotalbylive += virtuallinetotal;
                                 totalturnoverbylive += turnover;
-
                             }
-
 
                             itemlive.Winlost = NumberFormat.DecFormat(totalwinlossbylive, 2); ;
                             itemlive.Position = NumberFormat.DecFormat(totalpositionbylive, 2); ;
@@ -1286,7 +1221,6 @@ namespace Sunplus.Accounting.Business.Report
                             itemlive.Margin = Math.Round(totalturnoverbylive, 2) != 0 ? NumberFormat.DecFormat(totallinetotalbylive * 100 / totalturnoverbylive, 2) + "%" : "n/a";
                             itemlive.Variance = NumberFormat.DecFormat(totallinetotalbylive - totalvirtuallinetotalbylive, 2);
 
-
                             itemmatch.children.Add(itemlive);
 
                             totalwinlossbymatch += totalwinlossbylive;
@@ -1295,9 +1229,9 @@ namespace Sunplus.Accounting.Business.Report
                             totallinetotalbymatch += totallinetotalbylive;
                             totalvirtuallinetotalbymatch += totalvirtuallinetotalbylive;
                             totalturnoverbymatch += totalturnoverbylive;
-
                         }
-                        #endregion
+
+                        #endregion get by matchid, islive=false
 
                         itemmatch.Winlost = NumberFormat.DecFormat(totalwinlossbymatch, 2);
                         itemmatch.Position = NumberFormat.DecFormat(totalpositionbymatch, 2);
@@ -1329,11 +1263,9 @@ namespace Sunplus.Accounting.Business.Report
                 }
                 numbergametreegrid.rows = lsrow;
                 numbergametreegrid.totalrow = granditem;
-
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             SessionExtension.AddSession(HttpContext.Current.Session, NumberGameWinlossByMatch_SessionKey, numbergametreegrid);
@@ -1400,8 +1332,6 @@ namespace Sunplus.Accounting.Business.Report
                 supertotal = CastAide.AsDecimal(row["supertotal"]);
                 companytotal = CastAide.AsDecimal(row["company"]);
 
-
-
                 sumturnover += turnover;
                 sumcommission += commission;
                 summemberwinloss += memberwinloss;
@@ -1459,8 +1389,6 @@ namespace Sunplus.Accounting.Business.Report
             //    supertotal = 1000000 + n;
             //    companytotal = 1000000 + n;
 
-
-
             //    sumturnover += turnover;
             //    sumcommission += commission;
             //    summemberwinloss += memberwinloss;
@@ -1517,14 +1445,12 @@ namespace Sunplus.Accounting.Business.Report
             totalitem.SuperTotal = NumberFormat.DecFormat(sumsupertotal, 2);
             totalitem.CompanyTotal = NumberFormat.DecFormat(sumcompanytotal, 2);
 
-
             numbergamedatagrid.rows = lsrow;
             numbergamedatagrid.footer = new List<NumberGameWinLostDetailBO>();
             numbergamedatagrid.footer.Add(totalitem);
 
             SessionExtension.AddSession(HttpContext.Current.Session, NumgerGameWinLossByMatchDetail_SessionKey, numbergamedatagrid);
             return numbergamedatagrid;
-
         }
 
         public NumberGameDataGridBO Acc_Rpt_NumberGameMemberWinlossByMatch_details(string date, bool islive, int bettype, int matchid, int SiteID, int Currency)
@@ -1586,8 +1512,6 @@ namespace Sunplus.Accounting.Business.Report
                 supertotal = CastAide.AsDecimal(row["supertotal"]);
                 companytotal = CastAide.AsDecimal(row["company"]);
 
-
-
                 sumturnover += turnover;
                 sumcommission += commission;
                 summemberwinloss += memberwinloss;
@@ -1645,8 +1569,6 @@ namespace Sunplus.Accounting.Business.Report
             //    supertotal = 1000000 + n;
             //    companytotal = 1000000 + n;
 
-
-
             //    sumturnover += turnover;
             //    sumcommission += commission;
             //    summemberwinloss += memberwinloss;
@@ -1703,14 +1625,12 @@ namespace Sunplus.Accounting.Business.Report
             totalitem.SuperTotal = NumberFormat.DecFormat(sumsupertotal, 2);
             totalitem.CompanyTotal = NumberFormat.DecFormat(sumcompanytotal, 2);
 
-
             numbergamedatagrid.rows = lsrow;
             numbergamedatagrid.footer = new List<NumberGameWinLostDetailBO>();
             numbergamedatagrid.footer.Add(totalitem);
 
             SessionExtension.AddSession(HttpContext.Current.Session, NumgerGameWinLossByMatchDetail_SessionKey, numbergamedatagrid);
             return numbergamedatagrid;
-
         }
 
         public NumberGameDataGridBO Acc_Rpt_NumberGameMemberWinlossByMatch_Details_Paging(string date, bool islive, int bettype, int matchid, int pageIndex, int pageSize, bool fromcache)
@@ -1719,8 +1639,8 @@ namespace Sunplus.Accounting.Business.Report
             var numbergamedatagrid_session = SessionExtension.GetSession(HttpContext.Current.Session, NumgerGameWinLossByMatchDetail_SessionKey);
             if (numbergamedatagrid_session == null || fromcache == false)
             {
-
                 #region get data
+
                 DataTable dt = null;
                 DateTime _date = CastAide.AsDateTime(date, DateTime.Today);
                 dt = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.AccountReport.Acc_Rpt_NumberGameMemberWinlossByMatch_details(_date, islive, bettype, matchid).ResultSet.Tables[0];
@@ -1778,8 +1698,6 @@ namespace Sunplus.Accounting.Business.Report
                     supertotal = CastAide.AsDecimal(row["supertotal"]);
                     companytotal = CastAide.AsDecimal(row["company"]);
 
-
-
                     sumturnover += turnover;
                     sumcommission += commission;
                     summemberwinloss += memberwinloss;
@@ -1836,21 +1754,21 @@ namespace Sunplus.Accounting.Business.Report
                 totalitem.SuperTotal = NumberFormat.DecFormat(sumsupertotal, 2);
                 totalitem.CompanyTotal = NumberFormat.DecFormat(sumcompanytotal, 2);
 
-
                 numbergamedatagrid.rows = lsrow;
                 numbergamedatagrid.footer = new List<NumberGameWinLostDetailBO>();
                 numbergamedatagrid.footer.Add(totalitem);
 
                 SessionExtension.AddSession(HttpContext.Current.Session, NumgerGameWinLossByMatchDetail_SessionKey, numbergamedatagrid);
 
-
-                #endregion
+                #endregion get data
             }
             else
             {
                 numbergamedatagrid = (NumberGameDataGridBO)numbergamedatagrid_session;
             }
+
             #region paging
+
             int from = pageSize * (pageIndex - 1) + 1;
             int to = pageSize * pageIndex;
 
@@ -1871,7 +1789,8 @@ namespace Sunplus.Accounting.Business.Report
             numbergamedatagridpaging.total = numbergamedatagrid.total;
             numbergamedatagridpaging.footer = numbergamedatagrid.footer;
 
-            #endregion
+            #endregion paging
+
             return numbergamedatagridpaging;
         }
 
@@ -1909,7 +1828,6 @@ namespace Sunplus.Accounting.Business.Report
                         decimal totalpositionbymatch = 0;
                         decimal totalpositionbylive = 0;
 
-
                         decimal totalcommissionbymatch = 0;
                         decimal totalcommissionbylive = 0;
 
@@ -1930,13 +1848,11 @@ namespace Sunplus.Accounting.Business.Report
                         decimal turnover = 0;
                         decimal margin = 0;
 
-
-
                         #region get by matchid, islive
+
                         DataRow[] rows = dt.Select("matchid=" + matchid + " and islive=1");
                         if (rows.Length > 0)
                         {
-
                             var itemlive = new NumberGameWinLostByMatchBO();
                             itemlive.children = new List<NumberGameWinLostByMatchBO>();
                             itemlive.Id = CastAide.AsInt32(rows[0]["matchcode"]) + "_" + "Live";
@@ -1993,7 +1909,6 @@ namespace Sunplus.Accounting.Business.Report
                             itemlive.Margin = Math.Round(totalturnoverbylive, 2) != 0 ? NumberFormat.DecFormat(totallinetotalbylive * 100 / totalturnoverbylive, 2) + "%" : "n/a";
                             itemlive.Variance = NumberFormat.DecFormat(totallinetotalbylive - totalvirtuallinetotalbylive, 2);
 
-
                             itemmatch.children.Add(itemlive);
 
                             totalwinlossbymatch += totalwinlossbylive;
@@ -2002,11 +1917,12 @@ namespace Sunplus.Accounting.Business.Report
                             totallinetotalbymatch += totallinetotalbylive;
                             totalvirtuallinetotalbymatch += totalvirtuallinetotalbylive;
                             totalturnoverbymatch += totalturnoverbylive;
-
                         }
-                        #endregion
+
+                        #endregion get by matchid, islive
 
                         #region get by matchid, islive=false
+
                         totalwinlossbylive = 0;
                         totalpositionbylive = 0;
                         totalcommissionbylive = 0;
@@ -2062,7 +1978,6 @@ namespace Sunplus.Accounting.Business.Report
                                 totallinetotalbylive += linetotal;
                                 totalvirtuallinetotalbylive += virtuallinetotal;
                                 totalturnoverbylive += turnover;
-
                             }
 
                             itemlive.Winlost = NumberFormat.DecFormat(totalwinlossbylive, 2); ;
@@ -2074,7 +1989,6 @@ namespace Sunplus.Accounting.Business.Report
                             itemlive.Margin = Math.Round(totalturnoverbylive, 2) != 0 ? NumberFormat.DecFormat(totallinetotalbylive * 100 / totalturnoverbylive, 2) + "%" : "n/a";
                             itemlive.Variance = NumberFormat.DecFormat(totallinetotalbylive - totalvirtuallinetotalbylive, 2);
 
-
                             itemmatch.children.Add(itemlive);
 
                             totalwinlossbymatch += totalwinlossbylive;
@@ -2083,9 +1997,9 @@ namespace Sunplus.Accounting.Business.Report
                             totallinetotalbymatch += totallinetotalbylive;
                             totalvirtuallinetotalbymatch += totalvirtuallinetotalbylive;
                             totalturnoverbymatch += totalturnoverbylive;
-
                         }
-                        #endregion
+
+                        #endregion get by matchid, islive=false
 
                         itemmatch.Winlost = NumberFormat.DecFormat(totalwinlossbymatch, 2);
                         itemmatch.Position = NumberFormat.DecFormat(totalpositionbymatch, 2);
@@ -2117,11 +2031,9 @@ namespace Sunplus.Accounting.Business.Report
                 }
                 numbergametreegrid.rows = lsrow;
                 numbergametreegrid.totalrow = granditem;
-
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             SessionExtension.AddSession(HttpContext.Current.Session, NumberGameWinlossByMatch_SessionKey, numbergametreegrid);
@@ -2191,8 +2103,6 @@ namespace Sunplus.Accounting.Business.Report
                 supertotal = CastAide.AsDecimal(row["supertotal"]);
                 companytotal = CastAide.AsDecimal(row["company"]);
 
-
-
                 sumturnover += turnover;
                 sumcommission += commission;
                 summemberwinloss += memberwinloss;
@@ -2248,7 +2158,6 @@ namespace Sunplus.Accounting.Business.Report
             totalitem.SuperTotal = NumberFormat.DecFormat(sumsupertotal, 2);
             totalitem.CompanyTotal = NumberFormat.DecFormat(sumcompanytotal, 2);
 
-
             numbergamedatagrid.rows = lsrow;
             numbergamedatagrid.footer = new List<NumberGameWinLostDetailBO>();
             numbergamedatagrid.footer.Add(totalitem);
@@ -2256,7 +2165,8 @@ namespace Sunplus.Accounting.Business.Report
             SessionExtension.AddSession(HttpContext.Current.Session, NumgerGameWinLossByMatchDetail_SessionKey, numbergamedatagrid);
             return numbergamedatagrid;
         }
-        #endregion
+
+        #endregion Match winloss
 
         #region Monthly Winloss
 
@@ -2272,11 +2182,9 @@ namespace Sunplus.Accounting.Business.Report
             try
             {
                 monthlyWinloss = _numberGameDAO.MonthlyWinloss(month, year);
-
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
 
@@ -2298,13 +2206,9 @@ namespace Sunplus.Accounting.Business.Report
                                          ? (MonthlyWinloss)objMonthlyWinloss
                                          : MonthlyWinloss(month, year);
 
-
                 ExcelWorksheet wsNumberGameReport = excelFile.Worksheets.Add("NumberGameReport");
                 var bgHeader = ExcelFormat(Color.FromArgb(159, 183, 213), HorizontalAlignmentStyle.Center,
                                            ExcelFont.BoldWeight, false, false);
-
-
-
 
                 #region assign Header
 
@@ -2329,8 +2233,7 @@ namespace Sunplus.Accounting.Business.Report
                 wsNumberGameReport.Cells[1, indexHeader].Style = bgHeader;
                 wsNumberGameReport.Cells[1, indexHeader++].Value = "Margin";
 
-                #endregion
-
+                #endregion assign Header
 
                 var indexBody = 0;
 
@@ -2358,30 +2261,27 @@ namespace Sunplus.Accounting.Business.Report
                 wsNumberGameReport.Cells[2, indexBody].Style.Borders.SetBorders(MultipleBorders.Outside, Color.Black, LineStyle.Thin);
                 wsNumberGameReport.Cells[2, indexBody++].Value = monthlyWinloss.Margin;
 
-
-
             }
             catch (Exception ex)
             {
-
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             finally
             {
-
                 #region response excel file
+
                 //excelFile.Worksheets.Add(reportName);
                 var response = HttpContext.Current.Response;
                 response.Clear();
                 response.ContentType = "application/vnd.ms-excel";
                 response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
                 excelFile.SaveXls(response.OutputStream);
-                #endregion
+
+                #endregion response excel file
             }
         }
 
-        #endregion
+        #endregion Monthly Winloss
 
         public void ExportToExcel_WinLoss_ByMatch_NumberGame(string date)
         {
@@ -2445,14 +2345,16 @@ namespace Sunplus.Accounting.Business.Report
             }
 
             Export2ExcelNumberGameWinlossByDate(fromdate, todate, numbergame);
-
         }
 
         #region export 2 excel
+
         private void Export2Excel(string date, NumberGameTreeGridBO data)
         {
             #region local variables
+
             #region Header
+
             const string matchBetTypeHeader = "Match - Bet Type";
             const string winLostHeader = "Winloss";
             const string positionHeader = "Position";
@@ -2462,7 +2364,9 @@ namespace Sunplus.Accounting.Business.Report
             const string varianceHeader = "Variance";
             const string turnOverHeader = "Turnover";
             const string marginHeader = "Margin";
-            #endregion
+
+            #endregion Header
+
             var reportName = string.Format("MatchWinLostByMatch-NumberGame-{0}", date);
             const int startRowIndex = 2;
             const int startColumnIndex = 0;
@@ -2470,11 +2374,13 @@ namespace Sunplus.Accounting.Business.Report
             ExcelFile excelFile = new ExcelFile();
             ExcelWorksheet wsNumberGameReport = excelFile.Worksheets.Add("MatchWinLostByMatch");
             var bgHeader = ExcelFormat(Color.FromArgb(159, 183, 213), HorizontalAlignmentStyle.Center, ExcelFont.BoldWeight, false, false);
-            #endregion
+
+            #endregion local variables
 
             try
             {
                 #region assign Header
+
                 wsNumberGameReport.Cells.GetSubrangeAbsolute(0, startColumnIndex, 0, startColumnIndex + (6)).Merged = true;
                 wsNumberGameReport.Cells.GetSubrangeAbsolute(0, startColumnIndex, 0, startColumnIndex + (6)).Style = bgHeader;
                 wsNumberGameReport.Cells.GetSubrangeAbsolute(0, startColumnIndex, 0, startColumnIndex + (6)).Value = string.Format("Number Game Win Loss By Match - Date {0}", date);
@@ -2494,13 +2400,17 @@ namespace Sunplus.Accounting.Business.Report
                 wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + (nextColumn++)].Value = turnOverHeader;
                 wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + nextColumn].Style = bgHeader;
                 wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + (nextColumn++)].Value = marginHeader;
-                #endregion
+
+                #endregion assign Header
 
                 #region assign Body
+
                 AssignExcelData(ref wsNumberGameReport, data.rows, startRowIndex, startColumnIndex, ref nextRow);
-                #endregion
+
+                #endregion assign Body
 
                 #region assign footer
+
                 var bgFooter = ExcelFormat(Color.FromArgb(159, 183, 213), HorizontalAlignmentStyle.Right, ExcelFont.BoldWeight, true, false);
                 var bgPercentFooter = ExcelFormat(Color.FromArgb(159, 183, 213), HorizontalAlignmentStyle.Right, ExcelFont.BoldWeight, false, true);
                 nextColumn = 0;
@@ -2518,30 +2428,33 @@ namespace Sunplus.Accounting.Business.Report
                 wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + (nextColumn++)].Value = CastAide.AsDecimal(data.totalrow.TurnOver);
                 wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + nextColumn].Style = bgPercentFooter;
                 wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + (nextColumn++)].Value = CastAide.AsDecimal(data.totalrow.Margin.Replace("%", null)) / 100;
-                #endregion
+
+                #endregion assign footer
             }
             catch
             {
             }
             finally
             {
-
                 #region response excel file
+
                 //excelFile.Worksheets.Add(reportName);
                 var response = HttpContext.Current.Response;
                 response.Clear();
                 response.ContentType = "application/vnd.ms-excel";
                 response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
                 excelFile.SaveXls(response.OutputStream);
-                #endregion
-            }
 
+                #endregion response excel file
+            }
         }
 
         private void Export2ExcelNumberGameWinlossByDate(string fromdate, string todate, NumberGameByDateTreeGridBO data)
         {
             #region local variables
+
             #region Header
+
             const string matchBetTypeHeader = "Date - Bet Type";
             const string winLostHeader = "Winloss";
             const string positionHeader = "Position";
@@ -2551,7 +2464,9 @@ namespace Sunplus.Accounting.Business.Report
             const string varianceHeader = "Variance";
             const string turnOverHeader = "Turnover";
             const string marginHeader = "Margin";
-            #endregion
+
+            #endregion Header
+
             var reportName = string.Format("MatchWinLost-NumberGame-From-{0}To-{1}", new string[] { fromdate, todate });
             const int startRowIndex = 2;
             const int startColumnIndex = 0;
@@ -2559,11 +2474,13 @@ namespace Sunplus.Accounting.Business.Report
             ExcelFile excelFile = new ExcelFile();
             ExcelWorksheet wsNumberGameReport = excelFile.Worksheets.Add("NumberGameReport");
             var bgHeader = ExcelFormat(Color.FromArgb(159, 183, 213), HorizontalAlignmentStyle.Center, ExcelFont.BoldWeight, false, false);
-            #endregion
+
+            #endregion local variables
 
             try
             {
                 #region assign Header
+
                 wsNumberGameReport.Cells.GetSubrangeAbsolute(0, startColumnIndex, 0, startColumnIndex + (6)).Merged = true;
                 wsNumberGameReport.Cells.GetSubrangeAbsolute(0, startColumnIndex, 0, startColumnIndex + (6)).Style = bgHeader;
                 wsNumberGameReport.Cells.GetSubrangeAbsolute(0, startColumnIndex, 0, startColumnIndex + (6)).Value = string.Format("Number Game Win Loss By Date - From {0} To {1}", fromdate, todate);
@@ -2584,13 +2501,17 @@ namespace Sunplus.Accounting.Business.Report
                 wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + (nextColumn++)].Value = turnOverHeader;
                 wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + nextColumn].Style = bgHeader;
                 wsNumberGameReport.Cells[startRowIndex - 1, startColumnIndex + (nextColumn++)].Value = marginHeader;
-                #endregion
+
+                #endregion assign Header
 
                 #region assign Body
+
                 AssignExcelDataByDate(ref wsNumberGameReport, data.rows, startRowIndex, startColumnIndex, ref nextRow);
-                #endregion
+
+                #endregion assign Body
 
                 #region assign footer
+
                 var bgFooter = ExcelFormat(Color.FromArgb(159, 183, 213), HorizontalAlignmentStyle.Right, ExcelFont.BoldWeight, true, false);
                 var bgPercentFooter = ExcelFormat(Color.FromArgb(159, 183, 213), HorizontalAlignmentStyle.Right, ExcelFont.BoldWeight, false, true);
                 nextColumn = 0;
@@ -2608,27 +2529,29 @@ namespace Sunplus.Accounting.Business.Report
                 wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + (nextColumn++)].Value = CastAide.AsDecimal(data.totalrow.TurnOver);
                 wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + nextColumn].Style = bgPercentFooter;
                 wsNumberGameReport.Cells[startRowIndex + nextRow, startColumnIndex + (nextColumn++)].Value = CastAide.AsDouble(data.totalrow.Margin.Replace("%", null)) / 100;
-                #endregion
+
+                #endregion assign footer
             }
             catch
             {
             }
             finally
             {
-
                 #region response excel file
+
                 //excelFile.Worksheets.Add(reportName);
                 var response = HttpContext.Current.Response;
                 response.Clear();
                 response.ContentType = "application/vnd.ms-excel";
                 response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
                 excelFile.SaveXls(response.OutputStream);
-                #endregion
-            }
 
+                #endregion response excel file
+            }
         }
 
         #region assign body excel   function
+
         private void AssignExcelData(ref ExcelWorksheet wsNumberGameReport, List<NumberGameWinLostByMatchBO> data, int startRow, int startCol, ref int nextRow)
         {
             if (data != null)
@@ -2642,7 +2565,9 @@ namespace Sunplus.Accounting.Business.Report
 
                 var idLength = 0;
                 var spaceTotal = "";
+
                 #region assign data for each row
+
                 foreach (NumberGameWinLostByMatchBO row in data)
                 {
                     var nextColumn = 0;
@@ -2668,7 +2593,8 @@ namespace Sunplus.Accounting.Business.Report
                     if (row.children != null)
                         AssignExcelData(ref wsNumberGameReport, row.children, startRow, startCol, ref nextRow);
                 }
-                #endregion
+
+                #endregion assign data for each row
             }
         }
 
@@ -2690,8 +2616,6 @@ namespace Sunplus.Accounting.Business.Report
                     var nextColumn = 0;
                     idLength = row.Id.Split('_').Length;
                     spaceTotal = idLength == 1 ? "  " : (idLength == 2 ? "    " : "");
-
-
 
                     wsNumberGameReport.Cells[nextRow + startRow, startCol + (nextColumn)].Style = row.children != null ? bgTextFormat : bgNormalText;
                     wsNumberGameReport.Cells[nextRow + startRow, startCol + (nextColumn++)].Value = spaceTotal + row.Name;
@@ -2721,13 +2645,16 @@ namespace Sunplus.Accounting.Business.Report
             }
         }
 
-        #endregion
+        #endregion assign body excel   function
 
         #region winloss by Match Detail
+
         private void Export2ExcelWinLossByMatchDetail(string date, NumberGameDataGridBO data, bool isLive, int bettype, int matchId)
         {
             #region local variables
+
             #region Header title
+
             var userNameHeader = "Username";
             var turnOverHeader = "Turnover";
             var totalComHeader = "Comm.";
@@ -2739,7 +2666,9 @@ namespace Sunplus.Accounting.Business.Report
             var winlossGroupHeader = "Win/Loss";
             var commGroupHeader = "Comm.";
             var totalGroupHeader = "Total";
-            #endregion
+
+            #endregion Header title
+
             var reportName = string.Format("MatchWinLostDetailByMatch-NumberGame-{0}", date);
             const int startRowIndex = 3;
             const int startColIndex = 0;
@@ -2750,11 +2679,13 @@ namespace Sunplus.Accounting.Business.Report
             int nextCol = 0, nextRow = 0;
 
             var bettypeName = CacheRef.GetBettype(bettype);
-            #endregion
+
+            #endregion local variables
 
             try
             {
                 #region assign Header
+
                 wsNGReport.Cells.GetSubrangeAbsolute(0, startColIndex, 0, startColIndex + (14)).Merged = true;
                 wsNGReport.Cells.GetSubrangeAbsolute(0, startColIndex, 0, startColIndex + (14)).Style = bgHeader;
                 wsNGReport.Cells.GetSubrangeAbsolute(0, startColIndex, 0, startColIndex + (14)).Value = string.Format("Number Game Win Loss By Match - {0} - {1} - {2} - Date {3}", matchId, isLive ? "Live" : "No Live", bettypeName, date);
@@ -2821,16 +2752,21 @@ namespace Sunplus.Accounting.Business.Report
                 //wsNGReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColIndex + (15), startRowIndex - 1, startColIndex + (15)).Merged = true;
                 //wsNGReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColIndex + (15), startRowIndex - 1, startColIndex + (15)).Style = bgHeader;
                 //wsNGReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColIndex + (15), startRowIndex - 1, startColIndex + (15)).Value = totalGroupHeader;
-                #endregion
+
+                #endregion assign Header
 
                 #region assign Body
+
                 AssignExcelDataWinLossByMatchDetail(ref wsNGReport, data.rows, startRowIndex, startColIndex, ref nextRow, false);
-                #endregion
+
+                #endregion assign Body
 
                 #region assign Footer
+
                 var footerData = data.footer;
                 AssignExcelDataWinLossByMatchDetail(ref wsNGReport, data.footer, startRowIndex, startColIndex, ref nextRow, true);
-                #endregion
+
+                #endregion assign Footer
             }
             catch
             {
@@ -2838,14 +2774,17 @@ namespace Sunplus.Accounting.Business.Report
             finally
             {
                 #region response excel file
+
                 var response = HttpContext.Current.Response;
                 response.Clear();
                 response.ContentType = "application/vnd.ms-excel";
                 response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
                 excelFile.SaveXls(response.OutputStream);
-                #endregion
+
+                #endregion response excel file
             }
         }
+
         private void AssignExcelDataWinLossByMatchDetail(ref ExcelWorksheet ws, List<NumberGameWinLostDetailBO> data, int startRow, int startCol, ref int nextRow, bool isFooter)
         {
             if (data != null)
@@ -2892,7 +2831,9 @@ namespace Sunplus.Accounting.Business.Report
                 }
             }
         }
-        #endregion
+
+        #endregion winloss by Match Detail
+
         private static CellStyle ExcelFormat(Color backgroundColor, HorizontalAlignmentStyle alignmentStyle, int font, bool isDecFormat, bool isPercent)
         {
             var excelFormat = new CellStyle();
@@ -2912,7 +2853,7 @@ namespace Sunplus.Accounting.Business.Report
             return excelFormat;
         }
 
-        #endregion
+        #endregion export 2 excel
 
         private List<int> GetDistinctMatch(DataTable tb)
         {
@@ -2954,7 +2895,6 @@ namespace Sunplus.Accounting.Business.Report
             var result = new List<Item>();
             try
             {
-
                 var rs = NumberGameWinLoss.SellAllBettypes();
 
                 if (rs != null && rs.ResultSet.Tables != null && rs.ResultSet.Tables.Count > 0)
@@ -2972,7 +2912,6 @@ namespace Sunplus.Accounting.Business.Report
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
@@ -2999,19 +2938,18 @@ namespace Sunplus.Accounting.Business.Report
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
 
         #region winloss by bettype
+
         public BettypesWinLossDTO NumberGameWinLossByBettype(string companies, string currencies, string date)
         {
             var result = new BettypesWinLossDTO();
             try
             {
-
                 DbResult rs = null;
                 if (CastAide.AsDateTime(date) > ReportUtils.BalanceUp.MoveBetsDay)
                     rs = NumberGameWinLoss.WinlossByBetType(CastAide.AsDateTime(date), currencies, companies);
@@ -3061,7 +2999,6 @@ namespace Sunplus.Accounting.Business.Report
                                            LineTotalReal = NumberFormat.DecFormat(realLineReal, 2),
                                            Variance = NumberFormat.DecFormat(realLineReal - CastAide.AsDouble(dr["VirtualLineTotal"]), 2),
                                            Margin = NumberFormat.DecFormat(margin, 2)
-
                                        };
                         if (CastAide.AsBoolean(dr["liveindicator"]))
                         {
@@ -3117,7 +3054,6 @@ namespace Sunplus.Accounting.Business.Report
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
 
@@ -3173,7 +3109,9 @@ namespace Sunplus.Accounting.Business.Report
                                        };
 
                         result.BettypesWinLossRows.Add(item);
+
                         #region assign total
+
                         winlossTotal += CastAide.AsDouble(dr["WinLost"]);
                         positionTotal += CastAide.AsDouble(dr["Position"]);
                         commTotal += CastAide.AsDouble(dr["Commission"]);
@@ -3181,7 +3119,8 @@ namespace Sunplus.Accounting.Business.Report
                         lVirtualTotal += CastAide.AsDouble(dr["VirtualLineTotal"]);
                         turnoverTotal += CastAide.AsDouble(dr["TurnOver"]);
                         varianceTotal += CastAide.AsDouble(CastAide.AsDouble(item.Variance));
-                        #endregion
+
+                        #endregion assign total
                     }
                     result.Total = new BettypesWinLossRow()
                                        {
@@ -3196,11 +3135,9 @@ namespace Sunplus.Accounting.Business.Report
                                            Margin = NumberFormat.DecFormat((lRealTotal / turnoverTotal) * 100, 2)
                                        };
                 }
-
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
 
@@ -3262,6 +3199,7 @@ namespace Sunplus.Accounting.Business.Report
                         leagueId = CastAide.AsInt32(dr["leagueid"]);
 
                         #region each row
+
                         bWinlossTotal = CastAide.AsDouble(dr["WinLost"]);
                         bPositionTotal = CastAide.AsDouble(dr["Position"]);
                         bCommTotal = CastAide.AsDouble(dr["Commission"]);
@@ -3269,7 +3207,9 @@ namespace Sunplus.Accounting.Business.Report
                         bLVirtualTotal = CastAide.AsDouble(dr["VirtualLineTotal"]);
                         bTurnoverTotal = CastAide.AsDouble(dr["TurnOver"]);
                         bVarianceTotal = realLineReal - CastAide.AsDouble(dr["VirtualLineTotal"]);
-                        #endregion
+
+                        #endregion each row
+
                         if (leagueId != pLeagueId && pLeagueId > 0)
                         {
                             items.Name = CacheRef.GetLeagueName(pLeagueId);
@@ -3284,7 +3224,6 @@ namespace Sunplus.Accounting.Business.Report
                                                   Turnover = NumberFormat.DecFormat(leagueTurnoverTotal, 2),
                                                   Variance = NumberFormat.DecFormat(leagueVarianceTotal, 2),
                                                   WinLoss = NumberFormat.DecFormat(leagueWinlossTotal, 2)
-
                                               };
                             result.Items.Add(items);
                             items = new BettypeWinLossDetail();
@@ -3300,6 +3239,7 @@ namespace Sunplus.Accounting.Business.Report
                         }
 
                         #region assign league total
+
                         leagueWinlossTotal += bWinlossTotal;
                         leaguePositionTotal += bPositionTotal;
                         leagueCommTotal += bCommTotal;
@@ -3307,9 +3247,11 @@ namespace Sunplus.Accounting.Business.Report
                         leagueLVirtualTotal += bLVirtualTotal;
                         leagueTurnoverTotal += bTurnoverTotal;
                         leagueVarianceTotal += bVarianceTotal;
-                        #endregion
+
+                        #endregion assign league total
 
                         #region assign bettype total
+
                         winlossTotal += bWinlossTotal;
                         positionTotal += bPositionTotal;
                         commTotal += bCommTotal;
@@ -3317,9 +3259,11 @@ namespace Sunplus.Accounting.Business.Report
                         lVirtualTotal += bLVirtualTotal;
                         turnoverTotal += bTurnoverTotal;
                         varianceTotal += bVarianceTotal;
-                        #endregion
+
+                        #endregion assign bettype total
 
                         #region assign each row
+
                         var item = new BettypesWinLossRow()
                         {
                             BettypeId = CastAide.AsString(dr["matchcode"]),
@@ -3334,11 +3278,14 @@ namespace Sunplus.Accounting.Business.Report
                             Margin = NumberFormat.DecFormat(margin, 2)
                         };
                         items.BettypesWinLossRows.Add(item);
-                        #endregion
+
+                        #endregion assign each row
 
                         pLeagueId = leagueId;
                     }
+
                     #region assign to last league
+
                     items.Name = CacheRef.GetLeagueName(pLeagueId);
                     items.Total = new BettypesWinLossRow()
                     {
@@ -3351,10 +3298,11 @@ namespace Sunplus.Accounting.Business.Report
                         Turnover = NumberFormat.DecFormat(leagueTurnoverTotal, 2),
                         Variance = NumberFormat.DecFormat(leagueVarianceTotal, 2),
                         WinLoss = NumberFormat.DecFormat(leagueWinlossTotal, 2)
-
                     };
                     result.Items.Add(items);
-                    #endregion
+
+                    #endregion assign to last league
+
                     result.Total = new BettypesWinLossRow()
                     {
                         Bettype = string.Format("{0}{1}", isLive == 1 ? "Live! " : "", "Total"),
@@ -3368,11 +3316,9 @@ namespace Sunplus.Accounting.Business.Report
                         Margin = NumberFormat.DecFormat((Math.Round(turnoverTotal, 2) != 0 ? (lRealTotal / turnoverTotal) : 0) * 100, 2)
                     };
                 }
-
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
 
@@ -3381,6 +3327,7 @@ namespace Sunplus.Accounting.Business.Report
         }
 
         #region export 2 excel
+
         public void ExportToExcelNumberGameWinLossByBettype(string companies, string currencies, string date)
         {
             var startRow = 2;
@@ -3391,6 +3338,7 @@ namespace Sunplus.Accounting.Business.Report
             var nextRow = 0;
 
             #region Header
+
             var headerMergeCols = 8;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + headerMergeCols).
                 Merged = true;
@@ -3402,7 +3350,8 @@ namespace Sunplus.Accounting.Business.Report
                 HorizontalAlignment = HorizontalAlignmentStyle.Center;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + headerMergeCols).
                 Value = "Number Game Win Loss by Bet Type";
-            #endregion
+
+            #endregion Header
 
             #region content
 
@@ -3432,9 +3381,11 @@ namespace Sunplus.Accounting.Business.Report
                     "No information is available.";
                 }
                 nextRow++;
-                #endregion
+
+                #endregion none live
 
                 #region live
+
                 ExportToExcelNumberGameWinLossByBettypeAssignHeader(ref wsReport, startCol, startRow, ref nextRow,
                                                                     "NUMBER GAME \"LIVE\" PRODUCT WIN/LOSS REPORT ");
                 if (getData.Live != null && getData.Live.BettypesWinLossRows != null && getData.Live.BettypesWinLossRows.Count > 0)
@@ -3451,19 +3402,21 @@ namespace Sunplus.Accounting.Business.Report
                     wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 8).Value =
                     "No information is available.";
                 }
-                #endregion
+
+                #endregion live
             }
 
-            #endregion
+            #endregion content
 
             #region response file
+
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", string.Format("{0}_{1}", reportName, date)));
             excelFile.SaveXls(response.OutputStream);
 
-            #endregion
+            #endregion response file
         }
 
         private void ExportToExcelNumberGameWinLossByBettypeAssignHeader(ref ExcelWorksheet wsReport, int startCol, int startRow, ref int nextRow, string title)
@@ -3542,7 +3495,6 @@ namespace Sunplus.Accounting.Business.Report
             wsReport.Cells[startRow + nextRow + 1, startCol + 5].Style = headerFormart;
             wsReport.Cells[startRow + nextRow + 1, startCol + 5].Value = "Virtual";
             nextRow += 2;
-
         }
 
         private void ExportToExcelNumberGameWinLossByBettypeAssignContent(ref ExcelWorksheet wsReport, int startCol, int startRow, ref int nextRow, BettypeWinLossDetail rows)
@@ -3636,6 +3588,7 @@ namespace Sunplus.Accounting.Business.Report
             var nextRow = 0;
 
             #region Header
+
             var headerMergeCols = 8;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + headerMergeCols).
                 Merged = true;
@@ -3647,7 +3600,8 @@ namespace Sunplus.Accounting.Business.Report
                 HorizontalAlignment = HorizontalAlignmentStyle.Center;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + headerMergeCols).
                 Value = "Number Game Event Win/Loss Report";
-            #endregion
+
+            #endregion Header
 
             #region content
 
@@ -3676,23 +3630,23 @@ namespace Sunplus.Accounting.Business.Report
 
                 ExportToExcelNumberGameWinLossByBettypeAssignFooter(ref wsReport, startCol, startRow, ref nextRow,
                                                                      getData.Total, false);
-
             }
 
-            #endregion
+            #endregion content
 
             #region response file
+
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
             excelFile.SaveXls(response.OutputStream);
 
-            #endregion
+            #endregion response file
         }
-        #endregion
 
-        #endregion
+        #endregion export 2 excel
 
+        #endregion winloss by bettype
     }
 }

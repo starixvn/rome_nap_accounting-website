@@ -1,21 +1,21 @@
-﻿using System.Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Text;
 using DNAide.Core;
 using DNAide.Utils;
 using DNAide.Web;
+using Microsoft.Practices.Unity;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Bingo.Core;
 using Sunplus.Bingo.Entities;
 using Sunplus.Bingo.Services;
-using Microsoft.Practices.Unity;
 
 namespace Sunplus.Accounting.Business.PT.ViewPT
 {
     /// <summary>
     /// Summary description for BingoViewPT
     /// </summary>
-    public class BingoViewPT: IBingoViewPT
+    public class BingoViewPT : IBingoViewPT
     {
         public BingoViewPT()
         {
@@ -31,7 +31,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             string ListGameKind = string.Empty;
             string ListGameType = string.Empty;
             var customerService = BingoContainer.Current.Resolve<ICustomerService>();
-            IResult result= new Result();
+            IResult result = new Result();
             List<GameKind> tblGameKind = customerService.GetListGameKind(BingoSettings.BingoGame.CodeGameNo, ref  result);
 
             if (tblGameKind != null && tblGameKind.Count > 0)
@@ -64,7 +64,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             if (gameType < 0)
                 dtb = customerService.GetCustomerPt(username, gameType * (-1), 0);
             else
-                dtb =customerService.GetCustomerPt(username, 0, gameType);
+                dtb = customerService.GetCustomerPt(username, 0, gameType);
 
             if (dtb == null) return "<b><br/>There is no information available.</b>";
             if (dtb.Rows.Count == 0) return "<b><br/>There is no information available.</b>";
@@ -150,7 +150,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     TemplateHandler.Assign(ref _sTable, "Com3", IBCUtils.FormatHandler.FormatNumber4(r["RollingRate"]));
                 }
 
-                // agent                                                            
+                // agent
                 if (curRoleID == 2)
                 {
                     TemplateHandler.Assign(ref _sTable, "s2", NumberFormat.DecFormat(r["sPT"], 2));
@@ -162,7 +162,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     TemplateHandler.Assign(ref _sTable, "Com2", IBCUtils.FormatHandler.FormatNumber4(r["RollingRate"]));
                 }
 
-                // member                                                           
+                // member
                 if (curRoleID == 1)
                 {
                     TemplateHandler.Assign(ref _sTable, "s1", NumberFormat.DecFormat(r["sPT"], 2));
@@ -181,6 +181,6 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             return _s;
         }
 
-        #endregion
+        #endregion IBingoViewPT Members
     }
 }

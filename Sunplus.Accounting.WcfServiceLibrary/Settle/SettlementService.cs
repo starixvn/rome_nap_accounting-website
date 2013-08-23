@@ -2,14 +2,14 @@
 using System.ServiceModel.Activation;
 using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business.Settle;
-using Sunplus.Accounting.Entities.Settle;
-using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Entities;
+using Sunplus.Accounting.Entities.Settle;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.Settle
 {
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
-    public class SettlementService:ISettlementService
+    public class SettlementService : ISettlementService
     {
         #region ISettlementService Members
 
@@ -20,8 +20,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Settle
             return result;
         }
 
-        #endregion
-
+        #endregion ISettlementService Members
 
         public Result UdpMatch_Pending(string matchid, bool ispending)
         {
@@ -55,7 +54,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Settle
             var ip = Sunplus.Accounting.Core.Helper.Utils.GetClientIP();
             return settle.RefundRunningBetDaqTickets(Matchid, AppSession.AccId, ip);
         }
-
 
         public string SetMatchIsUndecided(int matchId, bool isUndecided, int userId)
         {

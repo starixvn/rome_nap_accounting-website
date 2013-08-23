@@ -13,9 +13,3 @@ namespace Sunplus.Accounting.Business.BetList
         NumbergameResult GetBetListNumberGame(int matchId);
     }
 }
-
-
-
-
-
-

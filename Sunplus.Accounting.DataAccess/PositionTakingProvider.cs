@@ -2,8 +2,8 @@
 using System.Collections;
 using DNAide.Data;
 using IBCUtils;
-using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Entities;
 
 /// <summary>
 /// Summary description for PositionTakingProvider
@@ -37,7 +37,6 @@ namespace Sunplus.Accounting.DataAccess
             }
             set { _InstanceHR = value; }
         }
-
 
         public virtual DbResult GetPT(int custId, Globals.AccountType accountType, int uplineId)
         {

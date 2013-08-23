@@ -1,28 +1,25 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Web;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
 using ExcelUtil.Spreadsheet;
 using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business.CacheManager;
-using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess.IReportDAO;
 using Sunplus.Accounting.DataAccess.Report;
 using Sunplus.Accounting.Entities.Report.Deposit;
-using System.Linq;
-using System.Collections;
-using System.Web;
 using Sunplus.Accounting.Entities.Report.Licensee;
 
 namespace Sunplus.Accounting.Business.Report.Deposit
 {
-
     public partial class ReportWLBySiteService : IReportWLBySiteService
     {
         private readonly ILicenseDAO _licenseReportDAO;
@@ -34,12 +31,14 @@ namespace Sunplus.Accounting.Business.Report.Deposit
         private string _keySelReportByLicenseeDetail = AppSession.Username + ".SelReportByLicenseeDetails";
         private string _keySelTotalTransction = AppSession.Username + ".SelTotalTransction";
         private double eurCost = 0.13;
+
         public ReportWLBySiteService(ILicenseDAO licenseDAO)
         {
             _licenseReportDAO = licenseDAO;
         }
 
         #region SelCurrency
+
         public LicenseeDTO SelCurrency(string siteId)
         {
             DbResult dbResult = _licenseReportDAO.SelCurrencyByLicensee(siteId);
@@ -56,16 +55,17 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 {
                     currencyId = CastAide.AsInt32(dataRow["currency"]),
                     currency = CacheUtils.GetExchangeName(CastAide.AsInt32(dataRow["currency"])),
-
                 };
                 list.Add(deposit);
             }
             depositDto.currency = list;
             return depositDto;
         }
-        #endregion
+
+        #endregion SelCurrency
 
         #region GetDatetimeOption
+
         public LicenseeDTO GetDatetimeOption(string dateOption)
         {
             //Get FromDate, ToDate
@@ -76,26 +76,32 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 case "1": //today
                     fromdate = todate = DateTime.Now;
                     break;
+
                 case "2": //Yesterday
                     fromdate = DateTime.Now.AddDays(-1);
                     todate = DateTime.Now.AddDays(-1);
                     break;
+
                 case "3": //current week
                     fromdate = DateTime.Now.AddDays(-1 * Convert.ToInt32(DateTime.Now.DayOfWeek));
                     todate = DateTime.Now;
                     break;
+
                 case "4": //last week
                     fromdate = DateTime.Now.AddDays(-1 * Convert.ToInt32(DateTime.Now.DayOfWeek) - 7);
                     todate = fromdate.AddDays(6);
                     break;
+
                 case "5": //Current Month
                     fromdate = DateTime.Now.AddDays(-1 * (DateTime.Now.Day - 1));
                     todate = DateTime.Now;
                     break;
+
                 case "6": //Last Month
                     fromdate = DateTime.Now.AddDays(-1 * (DateTime.Now.Day - 1)).AddMonths(-1);
                     todate = DateTime.Now.AddDays(-1 * (DateTime.Now.Day));
                     break;
+
                 case "7": //Since Last Month
                     fromdate = DateTime.Now.AddDays(-1 * (DateTime.Now.Day - 1)).AddMonths(-1);
                     todate = DateTime.Now;
@@ -110,9 +116,11 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             depositDto.tdate = todate.ToShortDateString();
             return depositDto;
         }
-        #endregion
+
+        #endregion GetDatetimeOption
 
         #region formatReportType
+
         private string formatReportType(string value, string reportType)
         {
             if (string.IsNullOrEmpty(value))
@@ -131,6 +139,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                         str = mm + "/" + dd + "/" + yy;
                     }
                     break;
+
                 case "2":
                     if (value.Length == 6)
                     {
@@ -140,26 +149,29 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                         str = mm + "/" + yy;
                     }
                     break;
+
                 case "3":
                     switch (value)
                     {
                         case "0":
                             str = "Sportsbook";
                             break;
+
                         case "151":
                             str = "Racebook";
                             break;
                     }
                     break;
-
             }
 
             return str;
         }
-        #endregion
+
+        #endregion formatReportType
 
         #region SelReportByLicenseeFromDB
-        LicenseeDTO SelReportByLicenseeFromDB(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, string MoveBetsDay, int drawfilter, int excludeTest, int BAFilter)
+
+        private LicenseeDTO SelReportByLicenseeFromDB(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, string MoveBetsDay, int drawfilter, int excludeTest, int BAFilter)
         {
             LicenseeDTO licenseDto = new LicenseeDTO();
             bool IsOld = CastAide.AsDateTime(FromDate) < new DateTime(2009, 01, 01);
@@ -193,12 +205,15 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 case 3:
                     _subfixByBaseCurrency = "USD";
                     break;
+
                 case 2:
                     _subfixByBaseCurrency = "MYR";
                     break;
+
                 case 6:
                     _subfixByBaseCurrency = "EUR";
                     break;
+
                 default:
                     _subfixByBaseCurrency = string.Empty;
                     break;
@@ -209,6 +224,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 index++;
 
                 #region AssignRow
+
                 LicenseeRow licenseeRow = new LicenseeRow()
                 {
                     index = index,
@@ -230,17 +246,19 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     ATotal = NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["AWinlost" + _subfixByBaseCurrency]) + CastAide.AsDecimal(dataRow["AComm" + _subfixByBaseCurrency]), 2),
 
                     Company = NumberFormat.DecFormat(dataRow["Company" + _subfixByBaseCurrency], 2),
-
                 };
-                #endregion
+
+                #endregion AssignRow
 
                 licenseDto.Items.Add(licenseeRow);
                 string currency = CacheUtils.GetExchangeName(CastAide.AsInt32(dataRow["currency"]));
             }
             licenseDto.totalrow = licenseDto.Items.Count;
-            #endregion
+
+            #endregion foreach row content
 
             string exp = string.Empty;
+
             #region Total by currency
 
             foreach (var currency in lstCurrency)
@@ -265,10 +283,10 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 });
             }
 
-
-            #endregion
+            #endregion Total by currency
 
             #region Grand Total By Base Currency
+
             Hashtable baseCurrency = new Hashtable();
 
             baseCurrency.Add(2, "MYR");
@@ -296,21 +314,19 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 });
             }
 
-
-            #endregion
-
+            #endregion Grand Total By Base Currency
 
             AppSession.AddSession(System.Web.HttpContext.Current.Session, _keySelReportByLicensee, licenseDto);
 
             return licenseDto;
-
         }
-        #endregion
+
+        #endregion SelReportByLicenseeFromDB
 
         #region SelReportByLicenseeDetail_AgFromDB
-        LicenseeDTO SelReportByLicenseeDetail_AgFromDB(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter, int excludeTest, int BAFilter)
-        {
 
+        private LicenseeDTO SelReportByLicenseeDetail_AgFromDB(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter, int excludeTest, int BAFilter)
+        {
             bool IsOld = CastAide.AsDateTime(FromDate) < new DateTime(2009, 01, 01);
             LicenseeDTO licenseDto = new LicenseeDTO();
             try
@@ -334,6 +350,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 licenseDto.totalrow = dataTable.Rows.Count;
 
                 #region foreach row content
+
                 int from = 0;
                 int to = dataTable.Rows.Count;
 
@@ -347,16 +364,18 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     case 3:
                         _subfixByBaseCurrency = "USD";
                         break;
+
                     case 2:
                         _subfixByBaseCurrency = "MYR";
                         break;
+
                     case 6:
                         _subfixByBaseCurrency = "EUR";
                         break;
+
                     default:
                         _subfixByBaseCurrency = string.Empty;
                         break;
-
                 }
 
                 string ReportTypeId = string.Empty;
@@ -371,6 +390,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     DataRow dataRow = dataTable.Rows[i];
 
                     #region AssignRow
+
                     LicenseeRow licenseeRow = new LicenseeRow()
                     {
                         index = index,
@@ -393,16 +413,17 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                         ATotal = NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["AWinlost" + _subfixByBaseCurrency]) + CastAide.AsDecimal(dataRow["AComm" + _subfixByBaseCurrency]), 2),
 
                         Company = NumberFormat.DecFormat(dataRow["Company" + _subfixByBaseCurrency], 2),
-
                     };
-                    #endregion
+
+                    #endregion AssignRow
 
                     licenseDto.Items.Add(licenseeRow);
                 }
 
-                #endregion
+                #endregion foreach row content
 
                 string exp = string.Empty;
+
                 #region Total by currency
 
                 foreach (var currency in lstCurrency)
@@ -427,10 +448,10 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     });
                 }
 
-
-                #endregion
+                #endregion Total by currency
 
                 #region Grand Total By Base Currency
+
                 Hashtable baseCurrency = new Hashtable();
 
                 baseCurrency.Add(2, "MYR");
@@ -458,12 +479,10 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     });
                 }
 
-
-                #endregion
+                #endregion Grand Total By Base Currency
             }
             catch (Exception ex)
             {
-
                 LogExtensions.ExceptionHandler(ex);
             }
 
@@ -471,14 +490,15 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
             return licenseDto;
         }
-        #endregion
+
+        #endregion SelReportByLicenseeDetail_AgFromDB
 
         #region SelReportByLicenseeDetailFromDB
-        LicenseeDTO SelReportByLicenseeDetailFromDB(int LicenseeID, int Currency, int BaseCurrency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, string MoveBetsDay, int drawfilter, int excludeTest, int BAFilter)
+
+        private LicenseeDTO SelReportByLicenseeDetailFromDB(int LicenseeID, int Currency, int BaseCurrency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, string MoveBetsDay, int drawfilter, int excludeTest, int BAFilter)
         {
             LicenseeDTO licenseDto = new LicenseeDTO();
             bool IsOld = CastAide.AsDateTime(FromDate) < new DateTime(2009, 01, 01);
-
 
             DbResult dbResult = _licenseReportDAO.SelReportByLicenseeDetail(LicenseeID, Currency, CustId, FromDate, ToDate, showSB,
                                                                           ShowRB, ShowNG, ReportType, MoveBetsDay, IsOld,
@@ -508,16 +528,18 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 case 3:
                     _subfixByBaseCurrency = "USD";
                     break;
+
                 case 2:
                     _subfixByBaseCurrency = "MYR";
                     break;
+
                 case 6:
                     _subfixByBaseCurrency = "EUR";
                     break;
+
                 default:
                     _subfixByBaseCurrency = string.Empty;
                     break;
-
             }
 
             string ReportTypeId = string.Empty;
@@ -531,6 +553,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 index++;
 
                 #region AssignRow
+
                 LicenseeRow licenseeRow = new LicenseeRow()
                 {
                     index = index,
@@ -553,16 +576,17 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     ATotal = NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["AWinlost" + _subfixByBaseCurrency]) + CastAide.AsDecimal(dataRow["AComm" + _subfixByBaseCurrency]), 2),
 
                     Company = NumberFormat.DecFormat(dataRow["Company" + _subfixByBaseCurrency], 2),
-
                 };
-                #endregion
+
+                #endregion AssignRow
 
                 licenseDto.Items.Add(licenseeRow);
             }
 
-            #endregion
+            #endregion foreach row content
 
             string exp = string.Empty;
+
             #region Total by currency
 
             foreach (var currency in lstCurrency)
@@ -587,10 +611,10 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 });
             }
 
-
-            #endregion
+            #endregion Total by currency
 
             #region Grand Total By Base Currency
+
             Hashtable baseCurrency = new Hashtable();
 
             baseCurrency.Add(2, "MYR");
@@ -619,20 +643,19 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 });
             }
 
-
-            #endregion
+            #endregion Grand Total By Base Currency
 
             AppSession.AddSession(System.Web.HttpContext.Current.Session, _keySelReportByLicenseeDetail, licenseDto);
 
             return licenseDto;
-
         }
-        #endregion
+
+        #endregion SelReportByLicenseeDetailFromDB
 
         #region SelReportByLicensee
+
         public LicenseeDTO SelReportByLicensee(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter, int excludeTest, int BAFilter, int pageIndex, int pageSize, int fromCache)
         {
-
             LicenseeDTO licenseDto = new LicenseeDTO();
             LicenseeDTO licenseDtoPaging = new LicenseeDTO();
 
@@ -652,7 +675,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 licenseDtoPaging.Totals = licenseDto.Totals;
                 licenseDtoPaging.TotalsBaseCurrency = licenseDto.TotalsBaseCurrency;
                 licenseDtoPaging.totalrow = licenseDto.totalrow;
-
             }
             catch (Exception ex)
             {
@@ -661,10 +683,12 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
             return licenseDtoPaging;
         }
-        #endregion
+
+        #endregion SelReportByLicensee
 
         #region ExportDepositReport
-        ExcelWorksheet AssignDataExcel(string level, string currency, string baseCurrency, ref ExcelWorksheet ws, int indexRow, DataRow dataRow, string reportType, int r, int g, int b)
+
+        private ExcelWorksheet AssignDataExcel(string level, string currency, string baseCurrency, ref ExcelWorksheet ws, int indexRow, DataRow dataRow, string reportType, int r, int g, int b)
         {
             var gembox = new ExcelGemboxUtils();
 
@@ -692,7 +716,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 ws.Cells[indexRow, 1].Value = CacheUtils.GetExchangeName(CastAide.AsInt32(currency));
                 ws.Cells[indexRow, 1].Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
             }
-
 
             ws.Cells[indexRow, 2].Value = CastAide.AsDecimal(dataRow["Turnover" + curr]);
             ws.Cells[indexRow, 2].Style = gembox.GetStyleNumber(0, "", r, g, b);
@@ -723,7 +746,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             return ws;
         }
 
-        ExcelWorksheet AssignDataTotalCurrencyExcel(string level, ref ExcelWorksheet ws, ref int indexRow, ArrayList arrCurrency, string baseCurrency, DataTable dataTable, int r, int g, int b)
+        private ExcelWorksheet AssignDataTotalCurrencyExcel(string level, ref ExcelWorksheet ws, ref int indexRow, ArrayList arrCurrency, string baseCurrency, DataTable dataTable, int r, int g, int b)
         {
             var gembox = new ExcelGemboxUtils();
             string strCurr = "";
@@ -737,8 +760,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 string filler = "currency = " + curr;
                 if (level == "2" || level == "3")
                     filler = "";
-
-
 
                 ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 1).Value = "Total " + CacheUtils.GetExchangeName(curr);
                 ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 1).Style = gembox.GetStyleTextTotal(r, g, b);
@@ -776,11 +797,10 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 indexRow++;
             }
 
-
             return ws;
         }
 
-        ExcelWorksheet AssignDataGrandTotalCurrencyExcel(ref ExcelWorksheet ws, ref int indexRow, DataTable dataTable, int r, int g, int b)
+        private ExcelWorksheet AssignDataGrandTotalCurrencyExcel(ref ExcelWorksheet ws, ref int indexRow, DataTable dataTable, int r, int g, int b)
         {
             var gembox = new ExcelGemboxUtils();
             ArrayList arrCurrency = new ArrayList();
@@ -826,9 +846,9 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 indexRow++;
             }
 
-
             return ws;
         }
+
         public ExcelFile ExportLicenseeReport(string site, string fdate, string tdate, ref bool hasData, string reportType, string level, string currency, string baseCurrency)
         {
             hasData = true;
@@ -851,6 +871,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             int indexRow = 0;
 
             #region header
+
             ws.Cells.GetSubrangeAbsolute(0, 0, 1, 10).Value = "Deposit report for site " + site + " from " + fdate + " to " + tdate;
             ws.Cells.GetSubrangeAbsolute(0, 0, 1, 10).Style = gembox.GetStyleTitle(205, 222, 243);
             ws.Cells.GetSubrangeAbsolute(0, 0, 1, 10).Merged = true;
@@ -900,7 +921,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
             ws.Cells[3, 9].Value = "Total";
             ws.Cells[3, 9].Style = gembox.GetStyleTitle(205, 222, 243);
-            #endregion
+
+            #endregion header
 
             #region content
 
@@ -938,7 +960,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 indexRow++;
             }
-            #endregion
+
+            #endregion content
 
             #region footer
 
@@ -951,7 +974,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             g = 222;
             b = 243;
             AssignDataGrandTotalCurrencyExcel(ref ws, ref indexRow, dataTable, r, g, b);
-            #endregion
+
+            #endregion footer
 
             for (int i = 0; i <= 11; i++)
             {
@@ -960,7 +984,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
             return excelFile;
         }
-        #endregion
+
+        #endregion ExportDepositReport
 
         #region GetConcurrentUser
 
@@ -986,7 +1011,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 countRow++;
             }
 
-
             var concurrentUserDto = new ConcurrentUserDTO();
             concurrentUserDto.ListConcurrentUser = listConcurrent;
             if (countRow > 0)
@@ -1001,11 +1025,10 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             return concurrentUserDto;
         }
 
-
-
-        #endregion
+        #endregion GetConcurrentUser
 
         #region PeakUserExport2Excel
+
         public void PeakUserExport2Excel(DateTime dateFrom, DateTime dateTo, string licenseSite)
         {
             var objListPeakUser = SessionExtension.GetSession(HttpContext.Current.Session, SessionPeakUser);
@@ -1058,7 +1081,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     ws.Cells[j, 1].Value = con.ListConcurrentUser[j - 2].TotalUser;
                     ws.Cells[j, 1].Style = peakGembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
                     i = j;
-
                 }
 
                 ws.Cells[++i, 0].Value = "Total Peak Concurrent User";
@@ -1105,9 +1127,10 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             throw new NotImplementedException();
         }
 
-        #endregion
+        #endregion PeakUserExport2Excel
 
         #region SelLicensees
+
         public List<Item> SelLicensees(bool IsAll)
         {
             List<Item> lstSite = new List<Item>();
@@ -1130,34 +1153,24 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                         licensee.Level = "3";
                     lstSite.Add(licensee);
                 }
-
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
-
             }
             return lstSite;
         }
 
         public List<Item> SelLicensees(bool IsAll, bool Checkauthentication)
         {
-
             List<Item> lstSite = new List<Item>();
 
             try
             {
-
-
                 DataTable dataTable = _licenseReportDAO.GetLicenseeList();
-
-
-
 
                 foreach (DataRow row in dataTable.Rows)
                 {
-
-
                     lstSite.Add(new Item()
                     {
                         Id = CastAide.AsString(row["LicenseeID"]),
@@ -1165,18 +1178,18 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                         EnableBA = CastAide.AsBoolean(row["EnableBA"]),
                     });
                 }
-
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
-
             }
             return lstSite;
         }
-        #endregion
+
+        #endregion SelLicensees
 
         #region SelReportByLicenseeDetail_Ag
+
         public LicenseeDTO SelReportByLicenseeDetail_Ag(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter, int excludeTest, int BAFilter, int pageIndex, int pageSize, int fromCache)
         {
             LicenseeDTO licenseDto = new LicenseeDTO();
@@ -1184,10 +1197,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             var sessionLicenseDto = AppSession.GetSession(System.Web.HttpContext.Current.Session,
                                                           _keySelReportByLicenseeDetail_Ag);
 
-
             try
             {
-
                 DataTable dataTable = null;
 
                 if (sessionLicenseDto == null || fromCache == 0)
@@ -1208,9 +1219,11 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
             return licenseDtoPaging;
         }
-        #endregion
+
+        #endregion SelReportByLicenseeDetail_Ag
 
         #region SelReportByLicenseeDetail
+
         public LicenseeDTO SelReportByLicenseeDetail(int LicenseeID, int Currency, int BaseCurrency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter, int excludeTest, int BAFilter, int pageIndex, int pageSize, int fromCache)
         {
             LicenseeDTO licenseDto = new LicenseeDTO();
@@ -1219,7 +1232,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                                                           _keySelReportByLicenseeDetail);
             try
             {
-
                 DataTable dataTable = null;
                 string MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay.ToShortDateString();
 
@@ -1228,7 +1240,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 else
                 {
                     licenseDto = (LicenseeDTO)sessionLicenseDto;
-
                 }
                 licenseDtoPaging.Items = licenseDto.Items.Select(c => c).Skip(pageSize * (pageIndex - 1)).Take(pageSize).ToList();
                 licenseDtoPaging.Totals = licenseDto.Totals;
@@ -1237,15 +1248,16 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             }
             catch (Exception ex)
             {
-
                 LogExtensions.ExceptionHandler(ex);
             }
 
             return licenseDtoPaging;
         }
-        #endregion
+
+        #endregion SelReportByLicenseeDetail
 
         #region SelDateTotalTransction
+
         public LicenseeTotalTransctionDTO SelDateTotalTransction()
         {
             LicenseeTotalTransctionDTO transctionDto = new LicenseeTotalTransctionDTO();
@@ -1255,7 +1267,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
             try
             {
-
             }
             catch (Exception ex)
             {
@@ -1263,7 +1274,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             }
             return transctionDto;
         }
-        #endregion
+
+        #endregion SelDateTotalTransction
 
         #region SelTotalTransction
 
@@ -1304,7 +1316,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             }
 
             return result;
-
         }
 
         public LicenseeTotalTransctionDTO SelTotalTransction(int resellerid, int licenseeid, string date, bool showSB, bool showNG, bool showRB, bool showLC, bool showVS, bool showCS)
@@ -1318,7 +1329,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 string MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay.ToShortDateString();
                 string BalanceUpDay = ReportUtils.BalanceUp.BalanceUpDay.ToShortDateString();
 
-
                 DataTable rates = _licenseReportDAO.GetRates(date);
                 DataTable tb = _licenseReportDAO.SelTotalTicket(resellerid, licenseeid, date, MoveBetsDay, BalanceUpDay, showSB, showNG, showRB, showLC, showVS, showCS);
                 if (tb == null)
@@ -1328,7 +1338,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 double total = CastAide.AsDouble(tb.Compute("sum(BetCount)", string.Empty));
                 DataRow[] resellerRows = tb.DefaultView.ToTable(true, "ResellerName", "ResellerID").Select();
                 var totalEuro = 0.0;
-
 
                 foreach (DataRow row in resellerRows)
                 {
@@ -1392,13 +1401,11 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             return transctionDto;
         }
 
-
         private double GetResellerRate(DataTable rates, int resellerId, double betCount)
         {
             try
             {
                 if (rates == null || rates.Rows.Count == 0) return 0;
-
 
                 var result =
                     rates.Select(
@@ -1406,24 +1413,20 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                 var rate = CastAide.AsDouble(result.First()["rate"]);
                 return rate;
-
-
             }
             catch (Exception ex)
             {
-
                 LogExtensions.ExceptionHandler(ex);
             }
             return 0;
         }
 
-        #endregion
-
+        #endregion SelTotalTransction
 
         public LicenseeCurrency SelReportByLicenseeV2FromDB(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, string MoveBetsDay, int drawfilter, int excludeTest)
         {
             LicenseeCurrency licenseDto = new LicenseeCurrency();
-           // bool IsOld = CastAide.AsDateTime(FromDate) < new DateTime(2009, 01, 01);
+            // bool IsOld = CastAide.AsDateTime(FromDate) < new DateTime(2009, 01, 01);
 
             if (BaseCurrency > 0)
                 Currency = 0;
@@ -1454,16 +1457,18 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 case 3:
                     _subfixByBaseCurrency = "USD";
                     break;
+
                 case 2:
                     _subfixByBaseCurrency = "MYR";
                     break;
+
                 case 6:
                     _subfixByBaseCurrency = "EUR";
                     break;
+
                 default:
                     _subfixByBaseCurrency = string.Empty;
                     break;
-
             }
             var query = from q in dataTable.AsEnumerable()
                         group q by q.Field<string>("ReportType") into dtb
@@ -1513,8 +1518,11 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 licenseDto.Items.Add(licenseeByDate);
             }
             licenseDto.totalrow = licenseDto.Items.Count;
-            #endregion
+
+            #endregion foreach row content
+
             string exp = string.Empty;
+
             #region Total by currency
 
             foreach (var currency in lstCurrency)
@@ -1544,14 +1552,13 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     Total = NumberFormat.DecFormat(CastAide.AsDecimal(dataTable.Compute("sum(CommRB" + _subfixByBaseCurrency + ")", exp)) + CastAide.AsDecimal(dataTable.Compute("sum(WinlossRB" + _subfixByBaseCurrency + ")", exp)), 2),
                     AmtDuetoBA = NumberFormat.DecFormat(dataTable.Compute("sum(AmtDuetoBA" + _subfixByBaseCurrency + ")", exp), 2),
                     AmtDuetoRB = NumberFormat.DecFormat(dataTable.Compute("sum(AmtDuetoRB" + _subfixByBaseCurrency + ")", exp), 2),
-
                 });
             }
 
-
-            #endregion
+            #endregion Total by currency
 
             #region Grand Total By Base Currency
+
             Hashtable baseCurrency = new Hashtable();
 
             baseCurrency.Add(2, "MYR");
@@ -1589,20 +1596,17 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             }
             licenseDto.TotalsBaseCurrency[0].BetCount = NumberFormat.DecFormat(dataTable.Compute("sum(BetCount)", string.Empty), 0);
 
-            #endregion
-
+            #endregion Grand Total By Base Currency
 
             AppSession.AddSession(System.Web.HttpContext.Current.Session, _keySelReportByLicensee, licenseDto);
 
             return licenseDto;
         }
 
-
         public LicenseeDTOV2 SelReportByLicenseeDetailV2FromDB(int LicenseeID, int Currency, int BaseCurrency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, string MoveBetsDay, int drawfilter, int excludeTest)
         {
             LicenseeDTOV2 licenseDto = new LicenseeDTOV2();
             //bool IsOld = CastAide.AsDateTime(FromDate) < new DateTime(2009, 01, 01);
-
 
             DbResult dbResult = _licenseReportDAO.SelReportByLicenseeDetailV2(LicenseeID, Currency, CustId, FromDate, ToDate, showSB,
                                                                           ShowRB, ShowNG, ShowBA, ShowLC, ShowVS, ShowCS, ReportType, MoveBetsDay, false,
@@ -1632,16 +1636,18 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 case 3:
                     _subfixByBaseCurrency = "USD";
                     break;
+
                 case 2:
                     _subfixByBaseCurrency = "MYR";
                     break;
+
                 case 6:
                     _subfixByBaseCurrency = "EUR";
                     break;
+
                 default:
                     _subfixByBaseCurrency = string.Empty;
                     break;
-
             }
 
             string ReportTypeId = string.Empty;
@@ -1655,6 +1661,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 index++;
 
                 #region AssignRow
+
                 var memberWinloss = CastAide.AsDecimal(dataRow["Winlost" + _subfixByBaseCurrency]);
                 var memberComm = CastAide.AsDecimal(dataRow["PlayerComm" + _subfixByBaseCurrency]);
                 var memberWLTotal = memberComm + memberWinloss;
@@ -1686,17 +1693,17 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     AmtDuetoRB = NumberFormat.DecFormat(dataRow["AmtDuetoRB" + _subfixByBaseCurrency], 2),
                     Total = NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["CommRB" + _subfixByBaseCurrency]) + CastAide.AsDecimal(dataRow["WinlossRB" + _subfixByBaseCurrency]), 2),
 
-
-
                 };
-                #endregion
+
+                #endregion AssignRow
 
                 licenseDto.Items.Add(licenseeRow);
             }
 
-            #endregion
+            #endregion foreach row content
 
             string exp = string.Empty;
+
             #region Total by currency
 
             foreach (var currency in lstCurrency)
@@ -1726,14 +1733,13 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     AmtDuetoRB = NumberFormat.DecFormat(dataTable.Compute("sum(AmtDuetoRB" + _subfixByBaseCurrency + ")", exp), 2),
                     BetCount = NumberFormat.DecFormat(dataTable.Compute("sum(BetCount)", exp), 0),
                     Total = NumberFormat.DecFormat(CastAide.AsDecimal(dataTable.Compute("sum(CommRB" + _subfixByBaseCurrency + ")", exp)) + CastAide.AsDecimal(dataTable.Compute("sum(WinlossRB" + _subfixByBaseCurrency + ")", exp)), 2),
-
                 });
             }
 
-
-            #endregion
+            #endregion Total by currency
 
             #region Grand Total By Base Currency
+
             Hashtable baseCurrency = new Hashtable();
 
             baseCurrency.Add(2, "MYR");
@@ -1766,13 +1772,11 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     AmtDuetoBA = NumberFormat.DecFormat(dataTable.Compute("sum(AmtDuetoBA" + curr.Value + ")", exp), 2),
                     AmtDuetoRB = NumberFormat.DecFormat(dataTable.Compute("sum(AmtDuetoRB" + curr.Value + ")", exp), 2),
                     Total = NumberFormat.DecFormat(CastAide.AsDecimal(dataTable.Compute("sum(CommRB" + curr.Value + ")", exp)) + CastAide.AsDecimal(dataTable.Compute("sum(WinlossRB" + curr.Value + ")", exp)), 2),
-
-
                 });
             }
             licenseDto.TotalsBaseCurrency[0].BetCount = NumberFormat.DecFormat(dataTable.Compute("sum(BetCount)", string.Empty), 0);
 
-            #endregion
+            #endregion Grand Total By Base Currency
 
             AppSession.AddSession(System.Web.HttpContext.Current.Session, _keySelReportByLicenseeDetail, licenseDto);
 
@@ -1804,6 +1808,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 licenseDto.totalrow = dataTable.Rows.Count;
 
                 #region foreach row content
+
                 int from = 0;
                 int to = dataTable.Rows.Count;
 
@@ -1817,16 +1822,18 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     case 3:
                         _subfixByBaseCurrency = "USD";
                         break;
+
                     case 2:
                         _subfixByBaseCurrency = "MYR";
                         break;
+
                     case 6:
                         _subfixByBaseCurrency = "EUR";
                         break;
+
                     default:
                         _subfixByBaseCurrency = string.Empty;
                         break;
-
                 }
 
                 string ReportTypeId = string.Empty;
@@ -1841,6 +1848,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     DataRow dataRow = dataTable.Rows[i];
 
                     #region AssignRow
+
                     var memberWinloss = CastAide.AsDecimal(dataRow["Winlost" + _subfixByBaseCurrency]);
                     var memberComm = CastAide.AsDecimal(dataRow["PlayerComm" + _subfixByBaseCurrency]);
                     var memberWLTotal = memberComm + memberWinloss;
@@ -1871,17 +1879,17 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                         BetCount = NumberFormat.DecFormat(dataRow["BetCount"], 0),
                         Total = NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["CommRB" + _subfixByBaseCurrency]) + CastAide.AsDecimal(dataRow["WinlossRB" + _subfixByBaseCurrency]), 2),
 
-
-
                     };
-                    #endregion
+
+                    #endregion AssignRow
 
                     licenseDto.Items.Add(licenseeRow);
                 }
 
-                #endregion
+                #endregion foreach row content
 
                 string exp = string.Empty;
+
                 #region Total by currency
 
                 foreach (var currency in lstCurrency)
@@ -1912,15 +1920,13 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                         WinlossRB = NumberFormat.DecFormat(dataTable.Compute("sum(WinlossRB" + _subfixByBaseCurrency + ")", exp), 2),
                         AmtDuetoBA = NumberFormat.DecFormat(dataTable.Compute("sum(AmtDuetoBA" + _subfixByBaseCurrency + ")", exp), 2),
                         AmtDuetoRB = NumberFormat.DecFormat(dataTable.Compute("sum(AmtDuetoRB" + _subfixByBaseCurrency + ")", exp), 2),
-
-
                     });
                 }
 
-
-                #endregion
+                #endregion Total by currency
 
                 #region Grand Total By Base Currency
+
                 Hashtable baseCurrency = new Hashtable();
 
                 baseCurrency.Add(2, "MYR");
@@ -1957,11 +1963,10 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 }
                 licenseDto.TotalsBaseCurrency[0].BetCount = NumberFormat.DecFormat(dataTable.Compute("sum(BetCount)", string.Empty), 0);
 
-                #endregion
+                #endregion Grand Total By Base Currency
             }
             catch (Exception ex)
             {
-
                 LogExtensions.ExceptionHandler(ex);
             }
 
@@ -1970,10 +1975,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             return licenseDto;
         }
 
-
         public LicenseeCurrency SelReportByLicenseeV2(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache)
         {
-
             var licenseDto = new LicenseeCurrency();
             var licenseDtoPaging = new LicenseeCurrency();
 
@@ -2001,7 +2004,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 licenseDtoPaging.Totals = licenseDto.Totals;
                 licenseDtoPaging.TotalsBaseCurrency = licenseDto.TotalsBaseCurrency;
                 licenseDtoPaging.totalrow = licenseDto.totalrow;
-
             }
             catch (Exception ex)
             {
@@ -2018,10 +2020,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             var sessionLicenseDto = AppSession.GetSession(System.Web.HttpContext.Current.Session,
                                                           _keySelReportByLicenseeDetail_Ag);
 
-
             try
             {
-
                 DataTable dataTable = null;
 
                 if (sessionLicenseDto == null || fromCache == 0)
@@ -2060,7 +2060,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                                                           _keySelReportByLicenseeDetail);
             try
             {
-
                 DataTable dataTable = null;
                 string MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay.ToShortDateString();
 
@@ -2069,7 +2068,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 else
                 {
                     licenseDto = (LicenseeDTOV2)sessionLicenseDto;
-
                 }
 
                 if (pageSize != -1)
@@ -2087,7 +2085,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             }
             catch (Exception ex)
             {
-
                 LogExtensions.ExceptionHandler(ex);
             }
 
@@ -2119,6 +2116,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 licenseDto.totalrow = dataTable.Rows.Count;
 
                 #region foreach row content
+
                 int from = 0;
                 int to = dataTable.Rows.Count;
 
@@ -2132,16 +2130,18 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     case 3:
                         _subfixByBaseCurrency = "USD";
                         break;
+
                     case 2:
                         _subfixByBaseCurrency = "MYR";
                         break;
+
                     case 6:
                         _subfixByBaseCurrency = "EUR";
                         break;
+
                     default:
                         _subfixByBaseCurrency = string.Empty;
                         break;
-
                 }
 
                 string ReportTypeId = string.Empty;
@@ -2156,6 +2156,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     DataRow dataRow = dataTable.Rows[i];
 
                     #region AssignRow
+
                     var memberWinloss = CastAide.AsDecimal(dataRow["Winlost" + _subfixByBaseCurrency]);
                     var memberComm = CastAide.AsDecimal(dataRow["PlayerComm" + _subfixByBaseCurrency]);
                     var memberWLTotal = memberComm + memberWinloss;
@@ -2186,17 +2187,17 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                         BetCount = NumberFormat.DecFormat(dataRow["BetCount"], 0),
                         Total = NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["CommRB" + _subfixByBaseCurrency]) + CastAide.AsDecimal(dataRow["WinlossRB" + _subfixByBaseCurrency]), 2),
 
-
-
                     };
-                    #endregion
+
+                    #endregion AssignRow
 
                     licenseDto.Items.Add(licenseeRow);
                 }
 
-                #endregion
+                #endregion foreach row content
 
                 string exp = string.Empty;
+
                 #region Total by currency
 
                 foreach (var currency in lstCurrency)
@@ -2227,15 +2228,13 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                         WinlossRB = NumberFormat.DecFormat(dataTable.Compute("sum(WinlossRB" + _subfixByBaseCurrency + ")", exp), 2),
                         AmtDuetoBA = NumberFormat.DecFormat(dataTable.Compute("sum(AmtDuetoBA" + _subfixByBaseCurrency + ")", exp), 2),
                         AmtDuetoRB = NumberFormat.DecFormat(dataTable.Compute("sum(AmtDuetoRB" + _subfixByBaseCurrency + ")", exp), 2),
-
-
                     });
                 }
 
-
-                #endregion
+                #endregion Total by currency
 
                 #region Grand Total By Base Currency
+
                 Hashtable baseCurrency = new Hashtable();
 
                 baseCurrency.Add(2, "MYR");
@@ -2272,11 +2271,10 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 }
                 licenseDto.TotalsBaseCurrency[0].BetCount = NumberFormat.DecFormat(dataTable.Compute("sum(BetCount)", string.Empty), 0);
 
-                #endregion
+                #endregion Grand Total By Base Currency
             }
             catch (Exception ex)
             {
-
                 LogExtensions.ExceptionHandler(ex);
             }
 
@@ -2292,10 +2290,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             var sessionLicenseDto = AppSession.GetSession(System.Web.HttpContext.Current.Session,
                                                           _keySelReportByLicenseeDetail_SAg);
 
-
             try
             {
-
                 DataTable dataTable = null;
 
                 if (sessionLicenseDto == null || fromCache == 0)
@@ -2329,7 +2325,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
         public LicenseeDTOV2 SelReportByLicenseeDetail_MAgV2FromDB(int LicenseeID, int Currency, int CustId, int BaseCurrency, string FromDate, string ToDate, int ShowSB, int ShowRB, int ShowNG, int ShowBA, int ShowLC, int ShowVS, int ShowCS, int ReportType, int drawfilter, int excludeTest)
         {
             LicenseeDTOV2 licenseDto = new LicenseeDTOV2();
-           // bool IsOld = CastAide.AsDateTime(FromDate) < new DateTime(2009, 01, 01);
+            // bool IsOld = CastAide.AsDateTime(FromDate) < new DateTime(2009, 01, 01);
 
             DataTable dataTable = null;
             string MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay.ToShortDateString();
@@ -2361,16 +2357,18 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 case 3:
                     _subfixByBaseCurrency = "USD";
                     break;
+
                 case 2:
                     _subfixByBaseCurrency = "MYR";
                     break;
+
                 case 6:
                     _subfixByBaseCurrency = "EUR";
                     break;
+
                 default:
                     _subfixByBaseCurrency = string.Empty;
                     break;
-
             }
 
             string ReportTypeId = string.Empty;
@@ -2384,6 +2382,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 index++;
 
                 #region AssignRow
+
                 var memberWinloss = CastAide.AsDecimal(dataRow["Winlost" + _subfixByBaseCurrency]);
                 var memberComm = CastAide.AsDecimal(dataRow["PlayerComm" + _subfixByBaseCurrency]);
                 var memberWLTotal = memberComm + memberWinloss;
@@ -2415,17 +2414,17 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     AmtDuetoRB = NumberFormat.DecFormat(dataRow["AmtDuetoRB" + _subfixByBaseCurrency], 2),
                     Total = NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["CommRB" + _subfixByBaseCurrency]) + CastAide.AsDecimal(dataRow["WinlossRB" + _subfixByBaseCurrency]), 2),
 
-
-
                 };
-                #endregion
+
+                #endregion AssignRow
 
                 licenseDto.Items.Add(licenseeRow);
             }
 
-            #endregion
+            #endregion foreach row content
 
             string exp = string.Empty;
+
             #region Total by currency
 
             foreach (var currency in lstCurrency)
@@ -2455,14 +2454,13 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     AmtDuetoRB = NumberFormat.DecFormat(dataTable.Compute("sum(AmtDuetoRB" + _subfixByBaseCurrency + ")", exp), 2),
                     BetCount = NumberFormat.DecFormat(dataTable.Compute("sum(BetCount)", exp), 0),
                     Total = NumberFormat.DecFormat(CastAide.AsDecimal(dataTable.Compute("sum(CommRB" + _subfixByBaseCurrency + ")", exp)) + CastAide.AsDecimal(dataTable.Compute("sum(WinlossRB" + _subfixByBaseCurrency + ")", exp)), 2),
-
                 });
             }
 
-
-            #endregion
+            #endregion Total by currency
 
             #region Grand Total By Base Currency
+
             Hashtable baseCurrency = new Hashtable();
 
             baseCurrency.Add(2, "MYR");
@@ -2495,13 +2493,11 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     AmtDuetoBA = NumberFormat.DecFormat(dataTable.Compute("sum(AmtDuetoBA" + curr.Value + ")", exp), 2),
                     AmtDuetoRB = NumberFormat.DecFormat(dataTable.Compute("sum(AmtDuetoRB" + curr.Value + ")", exp), 2),
                     Total = NumberFormat.DecFormat(CastAide.AsDecimal(dataTable.Compute("sum(CommRB" + curr.Value + ")", exp)) + CastAide.AsDecimal(dataTable.Compute("sum(WinlossRB" + curr.Value + ")", exp)), 2),
-
-
                 });
             }
             licenseDto.TotalsBaseCurrency[0].BetCount = NumberFormat.DecFormat(dataTable.Compute("sum(BetCount)", string.Empty), 0);
 
-            #endregion
+            #endregion Grand Total By Base Currency
 
             AppSession.AddSession(System.Web.HttpContext.Current.Session, _keySelReportByLicenseeDetail_MAg, licenseDto);
 
@@ -2515,10 +2511,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             var sessionLicenseDto = AppSession.GetSession(System.Web.HttpContext.Current.Session,
                                                           _keySelReportByLicenseeDetail_MAg);
 
-
             try
             {
-
                 DataTable dataTable = null;
 
                 if (sessionLicenseDto == null || fromCache == 0)
@@ -2548,7 +2542,5 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
             return licenseDtoPaging;
         }
-
-
     }
 }

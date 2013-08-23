@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
+using System.Data;
 using System.Linq;
-using System.Text;
-using System.Web.SessionState;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
@@ -13,15 +9,10 @@ using ExcelUtil.Spreadsheet;
 using Sunplus.Accounting.Business.Report.Common;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.DataAccess;
-using Sunplus.Accounting.DataAccess.Report;
 using Sunplus.Accounting.DataAccess.Report.MatchWL;
 using Sunplus.Accounting.Entities.Report.MatchWL;
-using System.Data;
-using Sunplus.Core.LoggingLib;
 
 namespace Sunplus.Accounting.Business.Report.MatchWL
 {
@@ -37,6 +28,7 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
         private string keySelMatchWL8RM = string.Empty;
         private string keySelMatchWLBARM = string.Empty;
         private RMReportUtils utilsBARM = null;
+
         public MatchWL2aServiceNEW(IMatchWL2aDAO imaMatchWl2aDao)
         {
             _matchWl2aDao = imaMatchWl2aDao;
@@ -51,8 +43,8 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
             utilsBARM = new RMReportUtils(RMReportUtils.ReportName.Report2a, RMReportUtils.RMType.BARM);
         }
 
-
         #region SelWLbyBettype
+
         public WLbyBettypeDTO SelWLbyBettype(DateTime wldate)
         {
             WLbyBettypeDTO wLbyBettype = new WLbyBettypeDTO();
@@ -65,7 +57,6 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                 if (dbResult == null)
                     return wLbyBettype;
 
-                
                 string typename = "";
 
                 DataTable dataTable = dbResult.ResultSet.Tables[0];
@@ -79,7 +70,6 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                     dataRow["index"] = dataRow["bettype"];
                     if (CastAide.AsInt32(dataRow["bettype"]) == 29)
                         dataRow["index"] = 9.5;
-                    
                 }
 
                 DataView dv = dataTable.DefaultView;
@@ -87,25 +77,28 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                 dataTable = dv.ToTable();
 
                 DataRow[] rows = dataTable.Select();
-                
+
                 WLbyBettype data = new WLbyBettype();
 
                 foreach (DataRow dataRow in rows)
                 {
                     bettype = CastAide.AsInt32(dataRow["bettype"]);
                     data = new WLbyBettype();
-                    
-                    if(bettype == 401 && !utilsBARM.IsActive)
+
+                    if (bettype == 401 && !utilsBARM.IsActive)
                         continue;
-                                       
+
                     #region LineTotal_soccer
+
                     data.LineTotal_soccer_live = NumberFormat.DecFormat(dataRow["LineTotal_soccer_live"], 2);
                     data.LineTotal_soccer = NumberFormat.DecFormat(dataRow["LineTotal_soccer"], 2);
                     data.LineTotal_others_live = NumberFormat.DecFormat(dataRow["LineTotal_others_live"], 2);
                     data.LineTotal_others = NumberFormat.DecFormat(dataRow["LineTotal_others"], 2);
-                    #endregion
+
+                    #endregion LineTotal_soccer
 
                     #region VirtualLineTotal
+
                     switch (CastAide.AsInt32(dataRow["bettype"]))
                     {
                         case 51: //5 min
@@ -120,15 +113,15 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                         case 63: //30 min OE
                         case 64: //45 min OE
                         case 65: //60 min OE
-                        case 66: //End of day OE  
+                        case 66: //End of day OE
 
                         case 31: //win Tote Odds
                         case 32: //place Tote Odds
-                        case 33: //win-place Tote Odds                       
+                        case 33: //win-place Tote Odds
                         case 41: //win Fixed Odds
                         case 42: //place Fixed Odds
-                        case 43: //win-place Fixed Odds                        
-                        case 150: //3rdparty 
+                        case 43: //win-place Fixed Odds
+                        case 150: //3rdparty
                         case 71: //casino
                         case 72: //p2p
                         case 1000:
@@ -147,6 +140,7 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                             data.LineTotalVirtual = "N/A";
                             data.Variance = "N/A";
                             break;
+
                         case 1201:
                         case 1203:
                         case 1204:
@@ -161,7 +155,7 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                             data.VirtualLineTotal_others_live = "N/A";
                             data.Variance = "N/A";
                             data.LineTotalVirtual = "N/A";
-                            data.LineTotalReal = NumberFormat.DecFormat( CastAide.AsDecimal(dataRow["LineTotal_others_live"])
+                            data.LineTotalReal = NumberFormat.DecFormat(CastAide.AsDecimal(dataRow["LineTotal_others_live"])
                                                        + CastAide.AsDecimal(dataRow["LineTotal_others"]), 2);
 
                             break;
@@ -190,34 +184,41 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                                     CastAide.AsDecimal(data.LineTotalReal) - CastAide.AsDecimal(data.LineTotalVirtual),
                                     2);
                             break;
-
                     }
-                    #endregion
+
+                    #endregion VirtualLineTotal
 
                     #region 3rd
+
                     switch (bettype)
                     {
                         case 150:
                             typename = "FI 3rd-Party";
                             break;
+
                         case 400:
                             typename = "8RM";
                             break;
+
                         case 401:
                             typename = utilsBARM.DisplayName;
                             break;
+
                         case 71:
                             typename = "CASINO";
-                            break; //CASINO- 71 
+                            break; //CASINO- 71
                         case 18999:
                             typename = "Kick Off";
                             break;
+
                         case 1000:
                             typename = "P2P";
                             break;
+
                         case 29:
                             typename = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "systemParlay");
                             break;
+
                         default:
                             if (CastAide.AsInt32(dataRow["bettype"]) == 85 || CastAide.AsInt32(dataRow["bettype"]) == 86)
                                 typename = CacheRef.GetBettype(dataRow["bettype"]) + " (NumberGame)";
@@ -230,12 +231,14 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                     data.bettypeId = dataRow["bettype"].ToString();
                     typename += " " + dataRow["Hedge"];
                     data.bettype = typename;
-                    #endregion
+
+                    #endregion 3rd
 
                     wLbyBettype.Items.Add(data);
                 }
 
                 #region Total
+
                 data = new WLbyBettype();
                 data.bettype = "Grand Total";
 
@@ -278,26 +281,26 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
 
                 data.IsTotal = true;
                 wLbyBettype.Total = data;
-                #endregion
 
+                #endregion Total
             }
             catch (Exception)
             {
-            
             }
 
             AppSession.AddSession(System.Web.HttpContext.Current.Session, keySelObjMatchWLByBettype, wLbyBettype);
             return wLbyBettype;
         }
-        #endregion
+
+        #endregion SelWLbyBettype
 
         #region SelDataFromDB
+
         private void SelDataFromDB(DateTime wldate, ref DataTable dataTable1, ref DataTable dataTable2)
         {
             DbResult result = _matchWl2aDao.MatchWLNEW(wldate);
             if (result != null)
             {
-
                 dataTable1 = result.ResultSet.Tables[0];
                 dataTable2 = result.ResultSet.Tables[1];
                 string _8rm = NumberFormat.DecFormat(result.Outputs["winlost_8rm"], 2);
@@ -309,12 +312,14 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                 AppSession.AddSession(System.Web.HttpContext.Current.Session, keySelMatchWLBARM, _barm);
             }
         }
-        #endregion
+
+        #endregion SelDataFromDB
 
         #region SelDataMatchWLBySportAndFooter
+
         private void SelDataMatchWLBySportAndFooter(DateTime wldate, bool IsFromCache, ref DataTable dataTable1, ref DataTable dataTable2)
         {
-            if(!IsFromCache)
+            if (!IsFromCache)
             {
                 SelDataFromDB(wldate, ref dataTable1, ref dataTable2);
             }
@@ -323,15 +328,17 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                 dataTable1 = AppSession.GetSession(System.Web.HttpContext.Current.Session, keySelDataMatchWLBySport) as DataTable;
                 dataTable2 = AppSession.GetSession(System.Web.HttpContext.Current.Session, keySelDataMatchWL3rd_Footer) as DataTable;
 
-                if(dataTable1 == null || dataTable2 == null)
+                if (dataTable1 == null || dataTable2 == null)
                 {
-                    SelDataFromDB(wldate, ref dataTable1, ref dataTable2); 
+                    SelDataFromDB(wldate, ref dataTable1, ref dataTable2);
                 }
             }
         }
-        #endregion
+
+        #endregion SelDataMatchWLBySportAndFooter
 
         #region SelObjMatchWLBySport
+
         private MatchWLBySportDTO SelObjMatchWLBySport(DateTime wldate, bool IsFromCache)
         {
             MatchWLBySportDTO wlBySport = new MatchWLBySportDTO();
@@ -346,7 +353,6 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                 List<string> sports =
                     dataTable1.AsEnumerable().Select(s => CastAide.AsString(s["leaguenametc"])).Distinct().ToList();
 
-
                 foreach (string sport in sports)
                 {
                     MatchWL2aBySport matchWl2ABySport = new MatchWL2aBySport();
@@ -355,6 +361,7 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                     MatchWL2aBONEWCalc TotalBySport = new MatchWL2aBONEWCalc();
 
                     #region each sport
+
                     matchWl2ABySport.Items = new List<MatchWL2aByBettype>();
                     matchWl2ABySport.Total = new MatchWL2aBONEW();
 
@@ -362,27 +369,27 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                         dataTable1.AsEnumerable().Where(s => CastAide.AsString(s["leaguenametc"]) == sport).Select(
                             s => CastAide.AsInt32(s["bettype"])).Distinct().ToList();
 
-
                     foreach (int bettype in bettypes)
                     {
                         MatchWL2aByBettype matchWl2AByBettype = new MatchWL2aByBettype();
 
                         #region each bettype
+
                         matchWl2AByBettype.Items = new List<MatchWL2aByLiveIndicator>();
                         matchWl2AByBettype.TotalRow = dataTable1.AsEnumerable().Where(
                             s =>
                             CastAide.AsString(s["leaguenametc"]) == sport &&
                             CastAide.AsInt32(s["bettype"]) == bettype).Count();
-                                    
 
                         List<int> liveindicators = new List<int>(new int[] { 1, 0 });
-                        
+
                         foreach (int liveindicator in liveindicators)
                         {
                             MatchWL2aByLiveIndicator matchWl2AByLiveIndicator = new MatchWL2aByLiveIndicator();
                             MatchWL2aBONEWCalc TotalByLiveindicator = new MatchWL2aBONEWCalc();
 
                             #region each liveindicator
+
                             matchWl2AByLiveIndicator.Items = new List<MatchWL2aBONEW>();
 
                             var rows =
@@ -391,11 +398,11 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                                     CastAide.AsString(s["leaguenametc"]) == sport &&
                                     CastAide.AsInt32(s["bettype"]) == bettype &&
                                     CastAide.AsInt32(s["liveindicator"]) == liveindicator).Select(s => s);
-                            
+
                             foreach (DataRow dataRow in rows)
                             {
-                                
                                 #region earch row
+
                                 MatchWL2aBONEW data = new MatchWL2aBONEW();
                                 data.matchcode = CastAide.AsString(dataRow["matchcode"]);
                                 data.eventdate = CastAide.AsDateTime(dataRow["eventdate"]).ToShortDateString();
@@ -425,12 +432,12 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                                 TotalBySport.VirtualComm += CastAide.AsDecimal(data.VirtualComm);
                                 TotalBySport.LineTotal += CastAide.AsDecimal(data.LineTotal);
                                 TotalBySport.VirtualLineTotal += CastAide.AsDecimal(data.VirtualLineTotal);
-                                
 
-                                #endregion
+                                #endregion earch row
                             }
-                            
-                            #endregion
+
+                            #endregion each liveindicator
+
                             if (rows.Count() > 0)
                             {
                                 #region Total matchWl2AByLiveIndicator
@@ -444,18 +451,22 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                                     VirtualLineTotal = NumberFormat.DecFormat(TotalByLiveindicator.VirtualLineTotal, 2),
                                     variance = NumberFormat.DecFormat(CastAide.AsDecimal(TotalByLiveindicator.LineTotal) - CastAide.AsDecimal(TotalByLiveindicator.VirtualLineTotal), 2)
                                 };
-                                #endregion
+
+                                #endregion Total matchWl2AByLiveIndicator
+
                                 matchWl2AByBettype.Items.Add(matchWl2AByLiveIndicator);
                             }
                         }
-                        #endregion
+
+                        #endregion each bettype
 
                         matchWl2ABySport.Items.Add(matchWl2AByBettype);
-
                     }
-                    #endregion
+
+                    #endregion each sport
 
                     #region Total on each Sport
+
                     matchWl2ABySport.Total = new MatchWL2aBONEW()
                     {
                         homename = sport + " TOTAL",
@@ -465,25 +476,25 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                         VirtualLineTotal = NumberFormat.DecFormat(TotalBySport.VirtualLineTotal, 2),
                         variance = NumberFormat.DecFormat(TotalBySport.LineTotal - TotalBySport.VirtualLineTotal, 2)
                     };
-                    #endregion
+
+                    #endregion Total on each Sport
 
                     wlBySport.Items.Add(matchWl2ABySport);
                 }
 
-
-
             }
             catch (Exception ex)
             {
-
             }
 
             AppSession.AddSession(System.Web.HttpContext.Current.Session, keySelObjMatchWLBySport, wlBySport);
             return wlBySport;
         }
-        #endregion
+
+        #endregion SelObjMatchWLBySport
 
         #region SelMatchWLBySport
+
         public MatchWLBySportDTO SelMatchWLBySport(DateTime wldate, int currIndex, int currIndexBtype)
         {
             MatchWLBySportDTO objReturn = new MatchWLBySportDTO();
@@ -491,9 +502,8 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
             bool IsFromCache = true;
             if (currIndex == 0 && currIndexBtype == 0)
                 IsFromCache = false;
-            int maxRows = CastAide.AsInt32( System.Configuration.ConfigurationManager.AppSettings["MaxRowPerRequest"],1000);
-            
-            
+            int maxRows = CastAide.AsInt32(System.Configuration.ConfigurationManager.AppSettings["MaxRowPerRequest"], 1000);
+
             MatchWLBySportDTO wlBySport = new MatchWLBySportDTO();
             var obj =
                 AppSession.GetSession(System.Web.HttpContext.Current.Session, keySelObjMatchWLBySport);
@@ -505,22 +515,21 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
             {
                 wlBySport = obj as MatchWLBySportDTO;
             }
-            if ( currIndex < 0 || currIndex >= wlBySport.Items.Count)
+            if (currIndex < 0 || currIndex >= wlBySport.Items.Count)
             {
                 objReturn.NextIndex = -1;// if NextIndex < 0 then stop calling this service
             }
             else
             {
                 var sport = wlBySport.Items[currIndex];
-                
+
                 List<MatchWL2aByBettype> bettypes = new List<MatchWL2aByBettype>();
                 MatchWL2aBySport _sport = new MatchWL2aBySport();
                 _sport.Items = new List<MatchWL2aByBettype>();
-                
 
                 int totalRow = 0;
-                
-                for (int i = currIndexBtype; i < sport.Items.Count;i++ )
+
+                for (int i = currIndexBtype; i < sport.Items.Count; i++)
                 {
                     MatchWL2aByBettype bettype = sport.Items[i];
                     totalRow += bettype.TotalRow;
@@ -537,7 +546,7 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                             _sport.Total = new MatchWL2aBONEW();
                             _sport.Total = sport.Total;
 
-                            if(currIndex == wlBySport.Items.Count -1)
+                            if (currIndex == wlBySport.Items.Count - 1)
                             {
                                 objReturn.NextIndex = -1;// if NextIndex < 0 then stop calling this service
                             }
@@ -550,18 +559,16 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                         break;
                     }
                 }
-                
+
                 objReturn.Item = _sport;
             }
 
-
             return objReturn;
         }
-        #endregion
 
+        #endregion SelMatchWLBySport
 
         #region SelMatchWl3RdFooter Members
-
 
         public MatchWLFooterDTO SelMatchWl3RdFooter(DateTime wldate)
         {
@@ -569,7 +576,7 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
             matchWl3RdFooter.GrandTotal1 = new MatchWL2aBONEW();
             matchWl3RdFooter.GrandTotal2 = new MatchWL2aBONEW();
             matchWl3RdFooter.Items = new List<MatchWL2aBONEW>();
-            
+
             try
             {
                 DataTable dataTable1 = new DataTable();
@@ -577,7 +584,7 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                 var obj1 = AppSession.GetSession(System.Web.HttpContext.Current.Session, keySelDataMatchWLBySport);
                 var obj2 = AppSession.GetSession(System.Web.HttpContext.Current.Session, keySelDataMatchWL3rd_Footer);
 
-                if(obj1 == null || obj2 == null)
+                if (obj1 == null || obj2 == null)
                 {
                     SelDataMatchWLBySportAndFooter(wldate, true, ref dataTable1, ref dataTable2);
                 }
@@ -588,23 +595,28 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                 }
 
                 #region Comm	Virtual Comm	Line Total	Virtual Line Total	Variance
+
                 matchWl3RdFooter.GrandTotal1 = new MatchWL2aBONEW()
                                                    {
                                                        homename = "GRAND TOTAL:",
-                                                       comm = NumberFormat.DecFormat( dataTable1.AsEnumerable().Sum(s => CastAide.AsDecimal( s["comm"])),2),
+                                                       comm = NumberFormat.DecFormat(dataTable1.AsEnumerable().Sum(s => CastAide.AsDecimal(s["comm"])), 2),
                                                        VirtualComm = NumberFormat.DecFormat(dataTable1.AsEnumerable().Sum(s => CastAide.AsDecimal(s["virtualcomm"])), 2),
                                                        LineTotal = NumberFormat.DecFormat(dataTable1.AsEnumerable().Sum(s => CastAide.AsDecimal(s["linetotal"])), 2),
                                                        VirtualLineTotal = NumberFormat.DecFormat(dataTable1.AsEnumerable().Sum(s => CastAide.AsDecimal(s["VirtualLineTotal"])), 2),
                                                        variance = NumberFormat.DecFormat(dataTable1.AsEnumerable().Sum(s => CastAide.AsDecimal(s["linetotal"])) - dataTable1.AsEnumerable().Sum(s => CastAide.AsDecimal(s["VirtualLineTotal"])), 2),
                                                    };
-                #endregion
+
+                #endregion Comm	Virtual Comm	Line Total	Virtual Line Total	Variance
 
                 #region 8rm
+
                 matchWl3RdFooter.wl8rm = AppSession.GetSession(System.Web.HttpContext.Current.Session, keySelMatchWL8RM) as string;
                 matchWl3RdFooter.wlBARM = AppSession.GetSession(System.Web.HttpContext.Current.Session, keySelMatchWLBARM) as string;
-                #endregion
+
+                #endregion 8rm
 
                 #region list 3rd
+
                 foreach (DataRow dataRow in dataTable2.Rows)
                 {
                     MatchWL2aBONEW data = new MatchWL2aBONEW();
@@ -637,31 +649,32 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                     }
                     matchWl3RdFooter.Items.Add(data);
                 }
-                #endregion
+
+                #endregion list 3rd
 
                 #region grand Total
+
                 matchWl3RdFooter.GrandTotal2 = new MatchWL2aBONEW()
                                                    {
                                                        homename = "GRAND TOTAL:",
-                                                       comm = NumberFormat.DecFormat( CastAide.AsDecimal(matchWl3RdFooter.GrandTotal1.comm) + matchWl3RdFooter.Items.Sum(s=>CastAide.AsDecimal( s.comm)),2),
+                                                       comm = NumberFormat.DecFormat(CastAide.AsDecimal(matchWl3RdFooter.GrandTotal1.comm) + matchWl3RdFooter.Items.Sum(s => CastAide.AsDecimal(s.comm)), 2),
                                                        VirtualComm = NumberFormat.DecFormat(CastAide.AsDecimal(matchWl3RdFooter.GrandTotal1.VirtualComm) + matchWl3RdFooter.Items.Sum(s => CastAide.AsDecimal(s.VirtualComm)), 2),
                                                        LineTotal = NumberFormat.DecFormat(CastAide.AsDecimal(matchWl3RdFooter.GrandTotal1.LineTotal) + matchWl3RdFooter.Items.Sum(s => CastAide.AsDecimal(s.LineTotal)) + (utilsBARM.IsActive ? CastAide.AsDecimal(matchWl3RdFooter.wlBARM) : 0) + CastAide.AsDecimal(matchWl3RdFooter.wl8rm), 2),
                                                        VirtualLineTotal = NumberFormat.DecFormat(CastAide.AsDecimal(matchWl3RdFooter.GrandTotal1.VirtualLineTotal) + matchWl3RdFooter.Items.Sum(s => CastAide.AsDecimal(s.VirtualLineTotal)) + (utilsBARM.IsActive ? CastAide.AsDecimal(matchWl3RdFooter.wlBARM) : 0) + CastAide.AsDecimal(matchWl3RdFooter.wl8rm), 2),
-                                                       variance = NumberFormat.DecFormat(CastAide.AsDecimal(matchWl3RdFooter.GrandTotal1.variance) + matchWl3RdFooter.Items.Sum(s=>CastAide.AsDecimal( s.variance)), 2),
-  
+                                                       variance = NumberFormat.DecFormat(CastAide.AsDecimal(matchWl3RdFooter.GrandTotal1.variance) + matchWl3RdFooter.Items.Sum(s => CastAide.AsDecimal(s.variance)), 2),
                                                    };
-                #endregion
+
+                #endregion grand Total
             }
             catch (Exception exception)
             {
-                
             }
 
             AppSession.AddSession(System.Web.HttpContext.Current.Session, keySelObjMatchWl3RdFooter, matchWl3RdFooter);
             return matchWl3RdFooter;
         }
 
-        #endregion
+        #endregion SelMatchWl3RdFooter Members
 
         #region ExportMatchWL Members
 
@@ -672,7 +685,7 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
             {
                 if (CastAide.AsInt32(data.bettypeId) == 1201 || CastAide.AsInt32(data.bettypeId) == 1203 || CastAide.AsInt32(data.bettypeId) == 1204 || CastAide.AsInt32(data.bettypeId) == 1205 || CastAide.AsInt32(data.bettypeId) == 1206 || CastAide.AsInt32(data.bettypeId) == 1224)
                 {
-                    ws.Cells[indexRow, 0].Value = data.bettype +" (Virtual Sports)";
+                    ws.Cells[indexRow, 0].Value = data.bettype + " (Virtual Sports)";
                 }
                 else
                     ws.Cells[indexRow, 0].Value = data.bettype;
@@ -757,6 +770,7 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                 indexRow++;
             }
         }
+
         public ExcelFile ExportMatchWL(ref bool hasData)
         {
             ExcelFile excelFile = new ExcelFile();
@@ -771,7 +785,9 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                 int indexRow = 0;
 
                 #region WLbyBettype
+
                 #region header
+
                 ws.Cells.GetSubrangeAbsolute(0, 0, 1, 0).Value = "Bet Type";
                 ws.Cells.GetSubrangeAbsolute(0, 0, 1, 0).Style = gembox.GetStyleTitle(181, 196, 208);
                 ws.Cells.GetSubrangeAbsolute(0, 0, 1, 0).Merged = true;
@@ -819,14 +835,16 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                 ws.Cells.GetSubrangeAbsolute(0, 11, 1, 11).Value = "Variance";
                 ws.Cells.GetSubrangeAbsolute(0, 11, 1, 11).Style = gembox.GetStyleTitle(181, 196, 208);
                 ws.Cells.GetSubrangeAbsolute(0, 11, 1, 11).Merged = true;
-                #endregion
+
+                #endregion header
 
                 #region content
+
                 indexRow = 2;
                 WLbyBettypeDTO wLbyBettypeDto =
                     AppSession.GetSession(System.Web.HttpContext.Current.Session, keySelObjMatchWLByBettype) as
                     WLbyBettypeDTO;
-                
+
                 int r = 230, g = 233, b = 240;
                 AssignWLbyBettypeExport(ref ws, ref indexRow, wLbyBettypeDto.Items, false, r, g, b);
 
@@ -835,14 +853,16 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                 r = 136; g = 170; b = 255;
                 AssignWLbyBettypeExport(ref ws, ref indexRow, listWLbyBettypeTotal, true, r, g, b);
 
+                #endregion content
 
-                #endregion
-                #endregion
+                #endregion WLbyBettype
 
                 indexRow = indexRow + 2;
 
                 #region MatchWL
+
                 #region header
+
                 ws.Cells[indexRow, 0].Value = "Bet Type";
                 ws.Cells[indexRow, 0].Style = gembox.GetStyleTitle(181, 196, 208);
 
@@ -874,7 +894,8 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                 ws.Cells[indexRow, 11].Value = "Variance";
                 ws.Cells[indexRow, 11].Style = gembox.GetStyleTitle(181, 196, 208);
                 indexRow++;
-                #endregion
+
+                #endregion header
 
                 #region content
 
@@ -889,6 +910,7 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                             foreach (MatchWL2aBONEW item in matchWl2AByLiveIndicator.Items)
                             {
                                 #region each iteam
+
                                 r = 230; g = 233; b = 240;
                                 if (item.liveindicator)
                                 {
@@ -924,12 +946,14 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
 
                                 ws.Cells[indexRow, 11].Value = CastAide.AsDecimal(item.variance);
                                 ws.Cells[indexRow, 11].Style = gembox.GetStyleNumber(0, "", r, g, b);
-                                #endregion
+
+                                #endregion each iteam
 
                                 indexRow++;
                             }
 
                             #region Total of each bettype - liveindicator
+
                             r = 255; g = 238; b = 211;
                             ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 6).Value = "TOTAL:";
                             ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 6).Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Right, true);
@@ -952,11 +976,12 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
 
                             indexRow++;
 
-                            #endregion
+                            #endregion Total of each bettype - liveindicator
                         }
                     }
 
                     #region Total of each sport
+
                     r = 211; g = 255; b = 200;
                     ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 6).Value = matchWl2aBos.Total.homename + ":";
                     ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 6).Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Right, true);
@@ -979,12 +1004,13 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
 
                     indexRow++;
 
-                    #endregion
+                    #endregion Total of each sport
                 }
 
                 MatchWLFooterDTO matchWlFooterDto = AppSession.GetSession(System.Web.HttpContext.Current.Session, keySelObjMatchWl3RdFooter) as MatchWLFooterDTO;
-                
+
                 #region grand total1
+
                 r = 136; g = 170; b = 255;
                 ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 6).Value = "GRAND TOTAL:";
                 ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 6).Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Right, true);
@@ -1007,11 +1033,10 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
 
                 indexRow++;
 
-                
-
-                #endregion
+                #endregion grand total1
 
                 #region 8rm
+
                 r = 124; g = 152; b = 164;
                 ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 8).Value = "Total 8RM:";
                 ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 8).Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Right, true);
@@ -1025,12 +1050,13 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
 
                 ws.Cells[indexRow, 11].Value = 0;
                 ws.Cells[indexRow, 11].Style = gembox.GetStyleNumber(0, "", r, g, b, false);
-                
+
                 indexRow++;
 
-                #endregion
+                #endregion 8rm
 
                 #region BARM
+
                 if (utilsBARM.IsActive)
                 {
                     r = 124;
@@ -1052,9 +1078,10 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                     indexRow++;
                 }
 
-                #endregion
+                #endregion BARM
 
                 #region 3rd
+
                 foreach (MatchWL2aBONEW item in matchWlFooterDto.Items)
                 {
                     r = 230; g = 233; b = 240;
@@ -1101,17 +1128,16 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                         ws.Cells[indexRow, 11].Style = gembox.GetStyleNumber(0, "", r, g, b);
                     }
 
-
                     ws.Cells[indexRow, 9].Value = CastAide.AsDecimal(item.LineTotal);
                     ws.Cells[indexRow, 9].Style = gembox.GetStyleNumber(0, "", r, g, b);
 
-
-
                     indexRow++;
                 }
-                #endregion
+
+                #endregion 3rd
 
                 #region grand total2
+
                 r = 136; g = 170; b = 255;
                 ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 6).Value = "GRAND TOTAL:";
                 ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 6).Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Right, true);
@@ -1134,13 +1160,11 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
 
                 indexRow++;
 
+                #endregion grand total2
 
+                #endregion content
 
-                #endregion
-                #endregion
-
-
-                #endregion
+                #endregion MatchWL
 
                 for (int i = 0; i <= 11; i++)
                 {
@@ -1152,11 +1176,10 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
             }
             catch (Exception ex)
             {
-                
             }
             return excelFile;
         }
 
-        #endregion
+        #endregion ExportMatchWL Members
     }
 }

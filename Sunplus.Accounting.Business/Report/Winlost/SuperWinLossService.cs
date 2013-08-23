@@ -1,5 +1,4 @@
-﻿
-using Sunplus.Accounting.Entities.Report;
+﻿using Sunplus.Accounting.Entities.Report;
 
 namespace Sunplus.Accounting.Services.ReportServices
 {

@@ -1,7 +1,5 @@
 ﻿using System.ServiceModel;
 using System.ServiceModel.Web;
-using Microsoft.Office.Interop.Excel;
-using System.Collections.Generic;
 
 namespace Sunplus.Accounting.Business.Customer
 {

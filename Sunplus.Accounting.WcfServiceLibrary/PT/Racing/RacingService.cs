@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.ServiceModel.Activation;
-using System.Text;
 using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business.PT.Racing;
 using Sunplus.Accounting.Entities;
@@ -18,6 +15,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.PT.Racing
             var racingService = CommonBootStrapper.Locator.GetInstance<IRacingManager>();
             return racingService.GetStatusRacebook(custId);
         }
+
         public Setting GetCustomerSetting(int custId, int roleId)
         {
             var racingService = CommonBootStrapper.Locator.GetInstance<IRacingManager>();

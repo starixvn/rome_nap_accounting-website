@@ -21,7 +21,9 @@ namespace Sunplus.Accounting.WcfServiceLibrary.ExRate
         ResultBO UpdateExRateOpenTote(List<ExchangeRate> ExRateList);
 
         string GenHeader();
+
         string GenNewRate();
+
         ExcelFile ExportExRate();
     }
 }

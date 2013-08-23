@@ -17,7 +17,6 @@ using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.Core.Web.TplCore.App_Templates.Report.Punter.App_Templates.Report.Punter;
 using Sunplus.Accounting.DataAccess;
-using Sunplus.Core.LoggingLib;
 
 namespace BLL.Report.Punter
 {
@@ -53,7 +52,7 @@ namespace BLL.Report.Punter
             return tpl;
         }
 
-        #endregion
+        #endregion LoadHeader
 
         #region GenMonthCalendar
 
@@ -76,7 +75,7 @@ namespace BLL.Report.Punter
             return html.ToString();
         }
 
-        #endregion
+        #endregion GenMonthCalendar
 
         #region GenYearCalendar
 
@@ -115,7 +114,7 @@ namespace BLL.Report.Punter
             return html.ToString();
         }
 
-        #endregion
+        #endregion GenYearCalendar
 
         #region negativenumber
 
@@ -126,14 +125,14 @@ namespace BLL.Report.Punter
             decimal n = CastAide.AsDecimal(num);
 
             if (spec == "%")
-                n = n*100;
+                n = n * 100;
 
             string str = "";
             if (n >= 0)
                 str = NumberFormat.DecFormat(n, 2) + spec;
             else
             {
-                n = n*(-1);
+                n = n * (-1);
                 str = "<span class='negnum'>(" + NumberFormat.DecFormat(n, 2) + ")" + spec + "</span>";
             }
             return str;
@@ -149,13 +148,13 @@ namespace BLL.Report.Punter
                 str = NumberFormat.DecFormat(n, 2);
             else
             {
-                n = n*(-1);
+                n = n * (-1);
                 str = "<span class='negnum'>(" + NumberFormat.DecFormat(n, 2) + ")</span>";
             }
             return str;
         }
 
-        #endregion
+        #endregion negativenumber
 
         #region GeneratePeriodLongRange
 
@@ -193,7 +192,7 @@ namespace BLL.Report.Punter
             return longrange.ToString();
         }
 
-        #endregion
+        #endregion GeneratePeriodLongRange
 
         #region GetMaxDayByMonth
 
@@ -211,9 +210,11 @@ namespace BLL.Report.Punter
                 case 12:
                     day = 31;
                     break;
+
                 case 2:
                     day = 28;
                     break;
+
                 case 4:
                 case 6:
                 case 9:
@@ -224,7 +225,7 @@ namespace BLL.Report.Punter
             return day;
         }
 
-        #endregion
+        #endregion GetMaxDayByMonth
 
         #region DirectCustomerReport
 
@@ -244,8 +245,7 @@ namespace BLL.Report.Punter
             if (username.Length > 0)
                 hash.Add("username", username);
 
-
-            DataRow[] dataRows = {};
+            DataRow[] dataRows = { };
             int totalColumn = 0;
             try
             {
@@ -258,8 +258,8 @@ namespace BLL.Report.Punter
                 else
                     TemplateHandler.Assign(ref msg, "content", ex.Message);
                 hashError = true;
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
@@ -295,11 +295,13 @@ namespace BLL.Report.Punter
                 case "7":
                     rowspan = 3;
                     break;
+
                 case "4":
                 case "2":
                 case "1":
                     rowspan = 1;
                     break;
+
                 default:
                     rowspan = 2;
                     break;
@@ -320,7 +322,6 @@ namespace BLL.Report.Punter
 
             int totalColumn = dataTable.Columns.Count;
             DataRow[] dataRows = dataTable.Select();
-
 
             for (int i = 5; i < totalColumn; i++)
             {
@@ -399,7 +400,7 @@ namespace BLL.Report.Punter
                 }
             }
 
-            #endregion
+            #endregion foreach
 
             strRows.Append(row);
             strRows.Append(builderColumn.ToString());
@@ -486,12 +487,12 @@ namespace BLL.Report.Punter
                 }
                 strRows.Append("</tfoot>");
 
-                #endregion
+                #endregion Total
 
                 TemplateHandler.ReplaceBlock(ref tpl, "Content", strRows.ToString());
             }
 
-            #endregion
+            #endregion Nodata
 
             var h = new Hashtable();
             h.Add("data", tpl);
@@ -499,12 +500,12 @@ namespace BLL.Report.Punter
 
             return JsonUtil.ToJson(h);
 
-            #endregion
+            #endregion generate data
 
             return tpl;
         }
 
-        #endregion
+        #endregion DirectCustomerReport
 
         #region DirectCustomerReportExport
 
@@ -515,18 +516,18 @@ namespace BLL.Report.Punter
             var gem = new ExcelGemboxUtils();
 
             DataTable dataTable = new DataTable(), dtTotal = new DataTable();
-            DataRow[] dataRows = {};
+            DataRow[] dataRows = { };
             string title = "";
             int rowspan = 0;
 
-            var hashCache = (Hashtable) GetCachedObjData(keyDirectCustomerReport);
+            var hashCache = (Hashtable)GetCachedObjData(keyDirectCustomerReport);
 
             if (hashCache != null)
             {
-                dataTable = (DataTable) hashCache["mainTbl"];
-                dtTotal = (DataTable) hashCache["totalTbl"];
-                title = (string) hashCache["title"];
-                rowspan = (int) hashCache["rowspan"];
+                dataTable = (DataTable)hashCache["mainTbl"];
+                dtTotal = (DataTable)hashCache["totalTbl"];
+                title = (string)hashCache["title"];
+                rowspan = (int)hashCache["rowspan"];
             }
             else
             {
@@ -548,11 +549,13 @@ namespace BLL.Report.Punter
                 case "7":
                     rowspan = 3;
                     break;
+
                 case "4":
                 case "2":
                 case "1":
                     rowspan = 1;
                     break;
+
                 default:
                     rowspan = 2;
                     break;
@@ -563,7 +566,7 @@ namespace BLL.Report.Punter
             {
                 ExcelWorksheetCollection worksheets = excelFile.Worksheets;
                 string strTitle = "";
-                string[] ROLES = {"Super", "Master", "Agent"};
+                string[] ROLES = { "Super", "Master", "Agent" };
 
                 foreach (string role in ROLES)
                 {
@@ -595,22 +598,22 @@ namespace BLL.Report.Punter
                     celltitle.Font.Color = Color.White;
                     celltitle.WrapText = true;
 
-                    #endregion
+                    #endregion declare format cell
 
                     #region columnwidth
 
-                    ws.Columns[0].Width = 8*256;
-                    ws.Columns[1].Width = 12*256;
-                    ws.Columns[2].Width = 15*256;
-                    ws.Columns[3].Width = 15*256;
-                    ws.Columns[4].Width = 15*256;
+                    ws.Columns[0].Width = 8 * 256;
+                    ws.Columns[1].Width = 12 * 256;
+                    ws.Columns[2].Width = 15 * 256;
+                    ws.Columns[3].Width = 15 * 256;
+                    ws.Columns[4].Width = 15 * 256;
 
                     for (int j = 5; j < TotalColumn; j++)
                     {
-                        ws.Columns[j].Width = 18*256;
+                        ws.Columns[j].Width = 18 * 256;
                     }
 
-                    #endregion
+                    #endregion columnwidth
 
                     #region Header
 
@@ -631,7 +634,7 @@ namespace BLL.Report.Punter
 
                     ws.Cells.GetSubrangeAbsolute(1, 0, 1, TotalColumn - 1).Style = celltitle;
 
-                    #endregion
+                    #endregion Header
 
                     #region Content
 
@@ -653,7 +656,7 @@ namespace BLL.Report.Punter
                         if (custid != custid_p)
                         {
                             countmember++;
-                            IsEvenRow = countmember%2 == 0;
+                            IsEvenRow = countmember % 2 == 0;
 
                             ws.Cells.GetSubrangeAbsolute(i, 0, i + rowspan, 0).Value = countmember;
                             ws.Cells.GetSubrangeAbsolute(i, 0, i + rowspan, 0).Style = gem.GetStyleText(IsEvenRow);
@@ -679,7 +682,6 @@ namespace BLL.Report.Punter
                         if (IsMarginRow) symbol = "%";
                         else symbol = "";
 
-
                         for (int j = 4; j < TotalColumn; j++)
                         {
                             num = CastAide.AsDecimal(dr[j]);
@@ -691,7 +693,7 @@ namespace BLL.Report.Punter
                         if (count == rowspan) count = 0;
                     }
 
-                    #endregion
+                    #endregion Content
 
                     #region Total
 
@@ -732,7 +734,7 @@ namespace BLL.Report.Punter
 
                                         if (totalTO != 0)
                                         {
-                                            num = totalWL/totalTO;
+                                            num = totalWL / totalTO;
                                             ws.Cells[i, j].Value = num;
                                         }
                                         else
@@ -753,7 +755,7 @@ namespace BLL.Report.Punter
                         }
                     }
 
-                    #endregion
+                    #endregion Total
                 }
 
                 base.excelFile = excelFile;
@@ -761,12 +763,11 @@ namespace BLL.Report.Punter
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
 
-        #endregion
+        #endregion DirectCustomerReportExport
 
         public override string RenderHTML(Hashtable input)
         {

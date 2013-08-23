@@ -13,7 +13,7 @@ namespace Sunplus.Accounting.Entities.Report.LeagueWL
 
         [DataMember]
         public string LeagueName { get; set; }
-        
+
         [DataMember]
         public string WinLoss { get; set; }
 
@@ -48,7 +48,6 @@ namespace Sunplus.Accounting.Entities.Report.LeagueWL
 
         [DataMember]
         public LeagueWLRow Total { get; set; }
-        
     }
 
     [Serializable]
@@ -57,8 +56,10 @@ namespace Sunplus.Accounting.Entities.Report.LeagueWL
     {
         [DataMember]
         public List<LeagueWLBySportsBO> Items { get; set; }
+
         [DataMember]
         public LeagueWLRow GrandTotal { get; set; }
+
         [DataMember]
         public string GrandTotal8RM { get; set; }
 

@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Report.Racebook;
-using Sunplus.Accounting.Core.Common;
-using System;
 
 namespace Sunplus.Accounting.Business.Report.Racing
 {
-
     public interface IReportRacing
     {
         RacingWinlossBO GetWinlossRacingReport(Enumerations.ReportType reportType, string winlossDate);

@@ -11,10 +11,7 @@ using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
-using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.Core.Common;
 
 /// <summary>
 /// Summary description for ToteHRAB88WLDetail
@@ -65,7 +62,7 @@ public partial class ReportHTML
 
             DataTable dtWL = rs.ResultSet.Tables[0];
 
-            dtWL.Columns.Add("Order", typeof (int));
+            dtWL.Columns.Add("Order", typeof(int));
             int cid_p = 0;
             foreach (DataRow dr in dtWL.Rows)
             {
@@ -98,14 +95,14 @@ public partial class ReportHTML
             string row = "";
             string strConditionCurrency = "", strTitleCurrency = "", strTotalCurrency = "", bgcolorCurrency = "#d3e1c8";
             string condition_Meeting = "", strTitleMeeting = "", strTotalMeeting = "", bgcolorMeeting = "#ffeedd";
-                // #d0e3ca
+            // #d0e3ca
             string trBlank = "<tr><td colspan='10' class='l white fontbold'>&nbsp;</td></tr>";
             string meeting_currency = "";
 
             var CurrencyIDs = new ArrayList();
             var CurrencyNames = new ArrayList();
 
-            #endregion
+            #endregion Declare Variable
 
             // for testing the loop
             meetingid_p = 0;
@@ -144,7 +141,7 @@ public partial class ReportHTML
                                                                          condition_Meeting, ref TotalRowsWrongSetting);
                             rows.Append(strTotalMeeting);
 
-                            #endregion
+                            #endregion Total Meeting
 
                             #region Total Currency
 
@@ -168,10 +165,9 @@ public partial class ReportHTML
                             rows.Append(strTotalCurrency);
                             rows.Replace("{rowspan}", (m_index).ToString());
 
-
                             rows.Append(trBlank);
 
-                            #endregion
+                            #endregion Total Currency
 
                             c_index = 0;
                             meetingid = 0;
@@ -181,7 +177,7 @@ public partial class ReportHTML
                         m_index = 0;
                     }
 
-                    #endregion
+                    #endregion Each Currency
 
                     #region Each Meeting
 
@@ -213,10 +209,9 @@ public partial class ReportHTML
                         TemplateHandler.RemoveBlock(ref row, "Blank");
                     }
 
-
                     m_index++;
 
-                    #endregion
+                    #endregion Each Meeting
 
                     #region Assign Each Row
 
@@ -249,7 +244,7 @@ public partial class ReportHTML
                                            NumberFormat.DecFormat(dr["AmountDue2IBC_Origin"], 2));
 
                     if (CastAide.AsDecimal(dr["commIncomeAgency_Origin"], 0) !=
-                        CastAide.AsDecimal(0.04)*CastAide.AsDecimal(dr["totalTOMem_Origin"], 0))
+                        CastAide.AsDecimal(0.04) * CastAide.AsDecimal(dr["totalTOMem_Origin"], 0))
                     {
                         TotalRowsWrongSetting++;
                         TemplateHandler.Assign(ref row, "wrongsetting", "ws");
@@ -263,11 +258,11 @@ public partial class ReportHTML
 
                     rows.Append(row);
 
-                    #endregion
+                    #endregion Assign Each Row
                 }
                 rows.Replace("{rowspan}", m_index.ToString());
 
-                #endregion
+                #endregion foreach
             }
 
             #region Total
@@ -281,12 +276,11 @@ public partial class ReportHTML
             strTotalMeeting = TemplateHandler.RemoveComment(strTotalMeeting);
             rows.Append(strTotalMeeting);
 
-            #endregion
+            #endregion Total Meeting
 
             #region Total Currency
 
             strConditionCurrency = "currencyname = '" + currency + "'";
-
 
             if (currency == "RM") // Base RM
             {
@@ -303,7 +297,7 @@ public partial class ReportHTML
 
             rows.Append(strTotalCurrency);
 
-            #endregion
+            #endregion Total Currency
 
             #region Grand Total
 
@@ -312,17 +306,16 @@ public partial class ReportHTML
             strGrandTotal = TOddsHRAB88RowGrandTotalBaseRM(dt, "#8ac9db", "", ref TotalRowsWrongSetting);
             rows.Append(strGrandTotal);
 
-            #endregion
+            #endregion Grand Total
 
-            #endregion
+            #endregion Total
 
             TemplateHandler.ReplaceBlock(ref tpl, "content", rows.ToString());
             html.Append(tpl);
         }
         catch (Exception ex)
         {
-            
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             html.Append(ex.Message);
         }
         if (TotalRowsWrongSetting > 1)
@@ -338,7 +331,7 @@ public partial class ReportHTML
         return html.ToString();
     }
 
-    #endregion
+    #endregion FOddsHRAB88WLReport
 
     #region FOddsHRAB88RowTotalMeeting
 
@@ -370,7 +363,7 @@ public partial class ReportHTML
         strGrandTotal += "</tr>";
 
         if (CastAide.AsDecimal(dt.Compute("sum(commIncomeAgency_Origin)", condition), 0) !=
-            CastAide.AsDecimal(0.04)*CastAide.AsDecimal(dt.Compute("sum(totalTOMem_Origin)", condition), 0))
+            CastAide.AsDecimal(0.04) * CastAide.AsDecimal(dt.Compute("sum(totalTOMem_Origin)", condition), 0))
         {
             TotalWrongSetting++;
             TemplateHandler.Assign(ref strGrandTotal, "wrongsetting", "ws");
@@ -380,12 +373,12 @@ public partial class ReportHTML
             TemplateHandler.Assign(ref strGrandTotal, "wrongsetting", "");
         }
 
-        #endregion
+        #endregion GrandTotal
 
         return strGrandTotal;
     }
 
-    #endregion
+    #endregion FOddsHRAB88RowTotalMeeting
 
     #region FOddsHRAB88RowTotalCurrency
 
@@ -404,7 +397,6 @@ public partial class ReportHTML
                          " Total</b></td>";
         strGrandTotal += "<td bgcolor='" + bgcolor + "' class='c'><b>" + CurrencyName + "</b></td>";
 
-
         strGrandTotal += "<td bgcolor='" + bgcolor + "' class='r'><b>" +
                          NumberFormat.DecFormat(dt.Compute("sum(winTOMem_Origin)", condition), 2) + "</b></td>";
         strGrandTotal += "<td bgcolor='" + bgcolor + "' class='r'><b>" +
@@ -422,11 +414,10 @@ public partial class ReportHTML
         strGrandTotal += "<td bgcolor='" + bgcolor + "' class='r rspace rborder'><b>" +
                          NumberFormat.DecFormat(dt.Compute("sum(AmountDue2IBC_Origin)", condition), 2) + "</b></td>";
 
-
         strGrandTotal += "</tr>";
 
         if (CastAide.AsDecimal(dt.Compute("sum(commIncomeAgency_Origin)", condition), 0) !=
-            CastAide.AsDecimal(0.04)*CastAide.AsDecimal(dt.Compute("sum(totalTOMem_Origin)", condition), 0))
+            CastAide.AsDecimal(0.04) * CastAide.AsDecimal(dt.Compute("sum(totalTOMem_Origin)", condition), 0))
         {
             TotalWrongSetting++;
             TemplateHandler.Assign(ref strGrandTotal, "wrongsetting", "ws");
@@ -436,7 +427,7 @@ public partial class ReportHTML
             TemplateHandler.Assign(ref strGrandTotal, "wrongsetting", "");
         }
 
-        #endregion
+        #endregion Total Currency
 
         #region Total Base (RM)
 
@@ -463,7 +454,7 @@ public partial class ReportHTML
         strGrandTotal += "</tr>";
 
         if (CastAide.AsDecimal(dt.Compute("sum(commIncomeAgency)", condition), 0) !=
-            CastAide.AsDecimal(0.04)*CastAide.AsDecimal(dt.Compute("sum(totalTOMem)", condition), 0))
+            CastAide.AsDecimal(0.04) * CastAide.AsDecimal(dt.Compute("sum(totalTOMem)", condition), 0))
         {
             TotalWrongSetting++;
             TemplateHandler.Assign(ref strGrandTotal, "wrongsetting", "ws");
@@ -473,14 +464,14 @@ public partial class ReportHTML
             TemplateHandler.Assign(ref strGrandTotal, "wrongsetting", "");
         }
 
-        #endregion
+        #endregion Total Base (RM)
 
-        #endregion
+        #endregion GrandTotal
 
         return strGrandTotal;
     }
 
-    #endregion
+    #endregion FOddsHRAB88RowTotalCurrency
 
     #region FOddsHRAB88RowGrandTotalBaseRM
 
@@ -519,7 +510,7 @@ public partial class ReportHTML
             strGrandTotal += "</tfoot>";
 
         if (CastAide.AsDecimal(dt.Compute("sum(commIncomeAgency)", condition), 0) !=
-            CastAide.AsDecimal(0.04)*CastAide.AsDecimal(dt.Compute("sum(totalTOMem)", condition), 0))
+            CastAide.AsDecimal(0.04) * CastAide.AsDecimal(dt.Compute("sum(totalTOMem)", condition), 0))
         {
             TotalWrongSetting++;
             TemplateHandler.Assign(ref strGrandTotal, "wrongsetting", "ws");
@@ -529,12 +520,12 @@ public partial class ReportHTML
             TemplateHandler.Assign(ref strGrandTotal, "wrongsetting", "");
         }
 
-        #endregion
+        #endregion Grand Total Base (RM)
 
         return strGrandTotal;
     }
 
-    #endregion
+    #endregion FOddsHRAB88RowGrandTotalBaseRM
 
-    #endregion
+    #endregion FOdds HR AB88 WL Report HTML
 }

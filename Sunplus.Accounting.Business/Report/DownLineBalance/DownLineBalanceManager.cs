@@ -10,15 +10,12 @@ using DNAide.Utils;
 using DNAide.Web;
 
 using Sunplus.Accounting.Business.CacheManager;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
-//using Sunplus.Core.LoggingLib;
 
+//using Sunplus.Core.LoggingLib;
 
 namespace BLL.Report.DownLineBalance
 {
@@ -89,8 +86,7 @@ namespace BLL.Report.DownLineBalance
                         TemplateHandler.RemoveBlock(ref tpl, "DiffMessage");
                     }
 
-
-                    //replace rows 
+                    //replace rows
                     TemplateHandler.ReplaceBlock(ref tpl, "Rows", stringBuilder.ToString());
                 }
                 else
@@ -104,8 +100,7 @@ namespace BLL.Report.DownLineBalance
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return ex.Message;
             }
             return tpl;
@@ -141,14 +136,14 @@ namespace BLL.Report.DownLineBalance
                 if (roleid == 3)
                 {
                     username = "Master";
-                    title = WebUtils.LoadHtml("Balance/MasterBalanceTitle.htm", new[] {"{super_master}"},
-                                              new[] {username});
+                    title = WebUtils.LoadHtml("Balance/MasterBalanceTitle.htm", new[] { "{super_master}" },
+                                              new[] { username });
                 }
                 else if (roleid == 2) username = "AGENT";
                 else if (roleid == 1) username = "Member";
 
                 html.Append(WebUtils.LoadHtml("Balance/MasterBalanceAllHeader.htm",
-                                              new[] {"{user}", "{currentcy}", "{balance}", "{base}", "{title}"},
+                                              new[] { "{user}", "{currentcy}", "{balance}", "{base}", "{title}" },
                                               new[] { username, ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Currency"), ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Balance"), ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Base"), title }));
                 string rows = WebUtils.LoadTemplate("Balance/MasterBalanceAllRow.htm");
                 DataTable dt =
@@ -168,7 +163,6 @@ namespace BLL.Report.DownLineBalance
                     foreach (DataRow dr in dataRow)
                     {
                         isBalExclude = false;
-
 
                         string row = rows.Clone().ToString();
 
@@ -227,15 +221,14 @@ namespace BLL.Report.DownLineBalance
                     string bal = "";
                     if (!string.IsNullOrEmpty(HttpContext.Current.Request["page"]) && roleid == 3)
                         bal = NumberFormat.DecFormat(totalbal, 2);
-                    html.Append(WebUtils.LoadHtml("Balance/MasterBalanceTotalRow.htm", new[] {"{total}", "{totalbal}"},
-                                                  new[] {NumberFormat.DecFormat(total, 2), bal}));
+                    html.Append(WebUtils.LoadHtml("Balance/MasterBalanceTotalRow.htm", new[] { "{total}", "{totalbal}" },
+                                                  new[] { NumberFormat.DecFormat(total, 2), bal }));
                 }
                 else html.Append(norow);
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 string s = ex.Message;
                 html.Append(norow);
                 html.Append("</table>");
@@ -244,7 +237,7 @@ namespace BLL.Report.DownLineBalance
             return html.ToString();
         }
 
-        #endregion
+        #endregion MasterBalnce
 
         #region SuperBalance
 
@@ -263,10 +256,10 @@ namespace BLL.Report.DownLineBalance
             var html = new StringBuilder();
             try
             {
-                string title = WebUtils.LoadHtml("Balance/MasterBalanceTitle.htm", new[] {"{super_master}"},
-                                                 new[] {"Super"});
+                string title = WebUtils.LoadHtml("Balance/MasterBalanceTitle.htm", new[] { "{super_master}" },
+                                                 new[] { "Super" });
                 html.Append(WebUtils.LoadHtml("Balance/SuperBalanceAllHeader.htm",
-                                              new[] {"{username}", "{currentcy}", "{balance}", "{base}", "{title}"},
+                                              new[] { "{username}", "{currentcy}", "{balance}", "{base}", "{title}" },
                                               new[] { "Super", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Currency"), ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Balance"), ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Base"), title }));
                 string rows = WebUtils.LoadTemplate("Balance/SuperBalanceAllRow.htm");
                 var dt = new DataTable();
@@ -281,7 +274,7 @@ namespace BLL.Report.DownLineBalance
 
                 dt =
                     IBCProvider.ReportProvider.DownLineBalance().RptSABalance(db, isYesterday, hash).ResultSet.Tables[0];
-                    //super
+                //super
 
                 string odd_even = "";
                 int index = 0;
@@ -319,9 +312,8 @@ namespace BLL.Report.DownLineBalance
                         }
                     }
 
-
-                    html.Append(WebUtils.LoadHtml("Balance/SuperBalanceTotalRow.htm", new[] {"{total}"},
-                                                  new[] {NumberFormat.DecFormat(total, 2)}));
+                    html.Append(WebUtils.LoadHtml("Balance/SuperBalanceTotalRow.htm", new[] { "{total}" },
+                                                  new[] { NumberFormat.DecFormat(total, 2) }));
                 }
                 else
                 {
@@ -334,12 +326,11 @@ namespace BLL.Report.DownLineBalance
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return html.ToString();
         }
 
-        #endregion
+        #endregion SuperBalance
     }
 }

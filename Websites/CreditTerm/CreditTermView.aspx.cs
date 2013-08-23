@@ -1,41 +1,36 @@
 using System;
 using System.Data;
-using System.Web;
 using System.Text;
+using System.Web;
+using DNAide.Core;
+using DNAide.Data;
+using DNAide.Web;
+using IBCUtils;
 using Sunplus.Accounting.Business.CacheManager;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Core.LoggingLib;
-using IBCUtils.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using IBCUtils;
-using DNAide.Data;
-using DNAide.Core;
-using DNAide.Web;
-
-
 
 /// <summary>
 /// CITS
 /// </summary>
 public partial class CreditTerm_CreditTermView : PageBase
 {
-    
     public string script = "";
     public string msg = "";
+
     protected void Page_Load(object sender, EventArgs e)
     {
         Response.Cache.SetCacheability(HttpCacheability.NoCache);
         content.Text = getcontent();
     }
-    string getcontent()
+
+    private string getcontent()
     {
         StringBuilder html = new StringBuilder();
         try
         {
-            string  form = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("CreditTeam/CreditTermViewForm.htm");
+            string form = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("CreditTeam/CreditTermViewForm.htm");
             int custid = Convert.ToInt32(Session["CustId"]);
             int userid = Convert.ToInt32(Session["AccId"]);
             if (!string.IsNullOrEmpty(Request["btnsubmit"]))
@@ -45,7 +40,7 @@ public partial class CreditTerm_CreditTermView : PageBase
                     string creditgrade = Request["cbograde"];
                     double preagreeamount = 0, installmentamount = 0;
                     if (string.IsNullOrEmpty(Request["txtPreAmt"]) || string.IsNullOrEmpty(Request["txtInsAmt"]))
-                        msg=AlertMessage.GetMsg("Invalid format number.",AlertMessage.MsgType.Error);
+                        msg = AlertMessage.GetMsg("Invalid format number.", AlertMessage.MsgType.Error);
                     else if (!IBCUtils.Validator.isNumber(Request["txtPreAmt"]) || !IBCUtils.Validator.isNumber(Request["txtInsAmt"]))
                         msg = AlertMessage.GetMsg("Invalid format number.", AlertMessage.MsgType.Error);
                     else
@@ -58,23 +53,23 @@ public partial class CreditTerm_CreditTermView : PageBase
                         int IsGroupHeadline = 0; if (!string.IsNullOrEmpty(Request["groupheadline"])) IsGroupHeadline = 1;
                         int checkerid = CastAide.AsInt32(Request["ddlCheckerList"], 0);
                         var rs = AccountCredit.Acc_CreditTermUpdCustomer(custid, creditgrade, preagreeamount, installmentamount, installmentdate, accountremark, groupid, IsGroupHeadline, userid, checkerid);
-                        msg=AlertMessage.GetMsg(rs.ErrorMessage, AlertMessage.MsgType.Success);
+                        msg = AlertMessage.GetMsg(rs.ErrorMessage, AlertMessage.MsgType.Success);
                         System.Threading.Thread.Sleep(2000);
                     }
                 }
-                else msg="";
+                else msg = "";
             }
-            else msg="";
-            
+            else msg = "";
+
             DataTable dt = AccountCredit.Acc_CreditTermSelByCustID(custid).ResultSet.Tables[0];
             foreach (DataRow dr in dt.Rows)
             {
                 TemplateHandler.Assign(ref form, "{customer}", Convert.ToString(dr["username"]));
                 DataTable dtGroup = AccountCredit.Acc_CreditTermSelGroupHeadline().ResultSet.Tables[0];
                 StringBuilder strGroup = new StringBuilder();
-                strGroup.Append("<option value='0'>0 Not assign group</option>");                
-                foreach(DataRow drGroup in dtGroup.Rows)
-                {                    
+                strGroup.Append("<option value='0'>0 Not assign group</option>");
+                foreach (DataRow drGroup in dtGroup.Rows)
+                {
                     string option = "<option value='" + drGroup["groupid"] + "'";
                     option += (drGroup["groupid"].ToString() == dr["groupid"].ToString()) ? " selected " : "";
                     option += ">" + drGroup["username"] + "</option>";
@@ -104,7 +99,7 @@ public partial class CreditTerm_CreditTermView : PageBase
             if (custid == 0 || userid == 0) html.Append(AlertMessage.GetMsg("Session is expired, please re log-in ", AlertMessage.MsgType.Error));
             else html.Append(form);
         }
-        catch (Exception ex) 
+        catch (Exception ex)
         {
             LogExtensions.ExceptionHandler(ex);
         }
@@ -112,10 +107,11 @@ public partial class CreditTerm_CreditTermView : PageBase
     }
 
     #region string setoption(string value)
-    string setoption(string value)
+
+    private string setoption(string value)
     {
         string str = "";
-        str += "<option value='A'"; str += (value == "A") ? " selected ": ""; str += ">A</ontion>";
+        str += "<option value='A'"; str += (value == "A") ? " selected " : ""; str += ">A</ontion>";
         str += "<option value='B'"; str += (value == "B") ? " selected " : ""; str += ">B</ontion>";
         str += "<option value='C'"; str += (value == "C") ? " selected " : ""; str += ">C</ontion>";
         str += "<option value='D'"; str += (value == "D") ? " selected " : ""; str += ">D</ontion>";
@@ -123,22 +119,26 @@ public partial class CreditTerm_CreditTermView : PageBase
         str += "<option value='F'"; str += (value == "F") ? " selected " : ""; str += ">F</ontion>";
         return str;
     }
-    #endregion
 
-    #region  setInsDay(int value)
-    string setInsDay(int value)
+    #endregion string setoption(string value)
+
+    #region setInsDay(int value)
+
+    private string setInsDay(int value)
     {
         string str = "";
-        for(int i = 1; i<=31; i++)
+        for (int i = 1; i <= 31; i++)
         {
-            str += "<option value='"+ i +"'"; str += (value == i)? " selected ": ""; str += ">" + i + "</option>";
+            str += "<option value='" + i + "'"; str += (value == i) ? " selected " : ""; str += ">" + i + "</option>";
         }
         return str;
     }
-    #endregion
+
+    #endregion setInsDay(int value)
 
     #region CheckerList
-    string CheckerList(string CheckerId , string disabledChecker)
+
+    private string CheckerList(string CheckerId, string disabledChecker)
     {
         string str = "<select " + disabledChecker + " id='ddlCheckerList' name='ddlCheckerList'>";
         DbResult rs = AccountCredit.Acc_CreditTermSelCheckerList();
@@ -148,8 +148,8 @@ public partial class CreditTerm_CreditTermView : PageBase
 
         foreach (DataRow dr in dt.Rows)
         {
-            if(CheckerId.Equals(dr["custid"].ToString()))
-                str += "<option selected='true' value='"+ dr["custid"] +"'>"+ dr["username"] +"</option>";
+            if (CheckerId.Equals(dr["custid"].ToString()))
+                str += "<option selected='true' value='" + dr["custid"] + "'>" + dr["username"] + "</option>";
             else
                 str += "<option value='" + dr["custid"] + "'>" + dr["username"] + "</option>";
         }
@@ -163,5 +163,6 @@ public partial class CreditTerm_CreditTermView : PageBase
 
         return str;
     }
-    #endregion
+
+    #endregion CheckerList
 }

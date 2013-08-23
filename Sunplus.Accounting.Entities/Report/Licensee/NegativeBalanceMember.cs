@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Sunplus.Accounting.Entities.Report.Licensee
 {
@@ -10,10 +8,8 @@ namespace Sunplus.Accounting.Entities.Report.Licensee
     [DataContract]
     public class NegativeBalanceMemberRow
     {
-        
         public string Licensee { get; set; }
 
-        
         public string Id { get; set; }
 
         [DataMember]
@@ -26,7 +22,6 @@ namespace Sunplus.Accounting.Entities.Report.Licensee
         public string Balance { get; set; }
     }
 
-    
     [Serializable]
     [DataContract]
     public class NegativeBalanceMemberByLicensee
@@ -44,7 +39,7 @@ namespace Sunplus.Accounting.Entities.Report.Licensee
     {
         [DataMember]
         public List<NegativeBalanceMemberByLicensee> Items { get; set; }
-        
+
         [DataMember]
         public List<NegativeBalanceMemberMailFormat> MailList { get; set; }
 
@@ -60,17 +55,19 @@ namespace Sunplus.Accounting.Entities.Report.Licensee
         }
     }
 
-
     [Serializable]
     [DataContract]
-    public class NegativeBalanceMemberMailFormat 
+    public class NegativeBalanceMemberMailFormat
     {
         [DataMember]
         public string Site { get; set; }
+
         [DataMember]
         public string To { get; set; }
+
         [DataMember]
         public string Cc { get; set; }
+
         [DataMember]
         public string Bcc { get; set; }
     }
@@ -81,8 +78,10 @@ namespace Sunplus.Accounting.Entities.Report.Licensee
     {
         [DataMember]
         public string Site { get; set; }
+
         [DataMember]
         public bool IsSuccess { get; set; }
+
         [DataMember]
         public string ErrorMessage { get; set; }
     }
@@ -93,6 +92,7 @@ namespace Sunplus.Accounting.Entities.Report.Licensee
     {
         [DataMember]
         public bool IsFail { get; set; }
+
         [DataMember]
         public List<NegativeBalanceMemberSendMailResult> Licensees { get; set; }
     }

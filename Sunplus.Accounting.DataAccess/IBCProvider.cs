@@ -3,7 +3,6 @@ using Sunplus.Accounting.DataAccess.Provider.ExportStatement;
 using Sunplus.Accounting.DataAccess.Provider.Report;
 using Sunplus.Accounting.DataAccess.Provider.Settle;
 
-
 namespace Sunplus.Accounting.DataAccess
 {
     public static class IBCProvider

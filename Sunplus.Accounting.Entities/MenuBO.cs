@@ -49,6 +49,6 @@ namespace Sunplus.Accounting.Entities
         [DataMember]
         public string System { get; set; }
 
-        #endregion
+        #endregion IMenuBO Members
     }
 }

@@ -1,28 +1,14 @@
 using System;
 using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Core.LoggingLib;
-using IBCUtils.DAL;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using System.Text;
-using IBCUtils;
-using IBCUtils.Web;
 using DNAide.Data;
 using DNAide.Web;
-
+using IBCUtils;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
 public partial class Report_CompBalance : PageBase
 {
-
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -38,7 +24,7 @@ public partial class Report_CompBalance : PageBase
                 string rowTpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("CompBalance\\CompBalanceRow.htm");
                 string odd_even = "";
                 //foreach (DataRow row in ds.ResultsSet.Tables[0].Rows)
-                
+
                 foreach (DataRow row in ds.ResultSet.Tables[0].Rows)
                 {
                     hasData = true;
@@ -55,7 +41,6 @@ public partial class Report_CompBalance : PageBase
                     TemplateHandler.Assign(ref rowHtml, "{odd_even}", odd_even);
                     html.Append(rowHtml + "\n");
                 }
-
             }
             if (hasData)
             {
@@ -68,10 +53,9 @@ public partial class Report_CompBalance : PageBase
             }
             ReportHtmlContent.Text = html.ToString();
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
-       
     }
 }

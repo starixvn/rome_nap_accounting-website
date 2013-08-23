@@ -1,24 +1,20 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.ServiceModel;
-using System.ServiceModel.Activation;
-using Sunplus.Accounting.Business.Others;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Entities.Others;
-using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Core.Extensions;
 using System.Net.Mail;
 using System.Net.Mime;
-using System.Text.RegularExpressions;
-using System.Xml;
-using System.Xml.Linq;
-using System.Net.Mime;
+using System.ServiceModel.Activation;
 using System.Text;
-using Sunplus.Accounting.Core.Web;
+using System.Text.RegularExpressions;
+using System.Web;
+using System.Xml.Linq;
 using DNAide.Web;
+using Sunplus.Accounting.Business.Others;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Accounting.Entities.Others;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.Others
 {
@@ -102,10 +98,10 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Others
                 {
                     var matchTmp = match.ToString().Replace("/>", ">").Replace(">", "/>");
                     contentHtml = contentHtml.Replace(match.ToString(), matchTmp);
-                     try 
-                     {
+                    try
+                    {
                         var xmlLoad = XElement.Parse(matchTmp);
-                        var imgUrl = (from attr in xmlLoad.Attributes() 
+                        var imgUrl = (from attr in xmlLoad.Attributes()
                                       where attr.Name.ToString().IndexOf("src") != -1 && attr.Value.IndexOf("http") == -1
                                       select attr.Value).SingleOrDefault<string>();
                         if (!string.IsNullOrEmpty(imgUrl))
@@ -114,13 +110,12 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Others
                             var hashImg = System.Security.Cryptography.MD5.Create().ComputeHash(Encoding.Default.GetBytes(imgUrl));
                             var sBuilder = (from hash in hashImg select hash.ToString("x2")).ToArray<string>();
                             var contentId = string.Join("", sBuilder);
-                       
+
                             // replace image src
                             LinkedResource linkedImage = new LinkedResource(fullPath, MediaTypeNames.Image.Gif);
                             linkedImage.ContentId = contentId;
                             linkedList.Add(linkedImage);
                             contentHtml = contentHtml.Replace(matchTmp, "<img src=\"cid:" + contentId + "\"/>");
-                        
                         }
                     }
                     catch (Exception ex) { }
@@ -133,11 +128,11 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Others
                         altView.LinkedResources.Add(item);
                     }
                 }
-                SendMailExtension.AccSendMail(MailSection.HostName.Gmail, recipient, mailRelease.Cc, string.Empty, mailRelease.Title, subject, contentHtml, null , altView);
+                SendMailExtension.AccSendMail(MailSection.HostName.Gmail, recipient, mailRelease.Cc, string.Empty, mailRelease.Title, subject, contentHtml, null, altView);
             }
         }
 
-        private string FormatUnicode(string text) 
+        private string FormatUnicode(string text)
         {
             return HttpUtility.UrlDecode(text, Encoding.UTF8);
         }

@@ -1,27 +1,17 @@
 ﻿using System;
-using System.Web.UI;
-using ExcelUtil.Spreadsheet;
-
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Entities.Report;
-using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Accounting.Services.ReportServices;
 using System.Text;
-
-using Sunplus.Accounting.Core.Web;
-
-using Sunplus.Accounting.Services.ReportServices;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Accounting.Core.Web;
+using System.Web.UI;
 using System.Web.UI.WebControls;
-using Sunplus.Core.LoggingLib;
-
+using ExcelUtil.Spreadsheet;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Accounting.DataAccess.Report;
+using Sunplus.Accounting.Entities.Report;
+using Sunplus.Accounting.Services.ReportServices;
 
 public partial class Report_WinLoss_DailyWinLoss : WinLossReporPageBase
 {
-
     public enum ReportLevel
-    { 
+    {
         Company = 0,
         Super = 1,
         Master = 2,
@@ -66,10 +56,8 @@ public partial class Report_WinLoss_DailyWinLoss : WinLossReporPageBase
         }
     }
 
-    
-
     /// <summary>
-    /// report level 
+    /// report level
     /// 0: Company
     /// 1: Super
     /// 2: Maser
@@ -101,8 +89,6 @@ public partial class Report_WinLoss_DailyWinLoss : WinLossReporPageBase
             && FromDate >= ReportUtils.BalanceUp.BalanceUpDay;
     }
 
- 
-
     private WinLossDailyView _totalItem;
     private static int i;
     protected new readonly string CurrencyFormat = WinLossReporPageBase.CurrencyFormat;
@@ -131,16 +117,12 @@ public partial class Report_WinLoss_DailyWinLoss : WinLossReporPageBase
                 btnExport.Enabled = false;
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
     }
 
-    
-    
-
-   
     protected string RenderFooter()
     {
         if (_totalItem != null)
@@ -150,13 +132,14 @@ public partial class Report_WinLoss_DailyWinLoss : WinLossReporPageBase
 
         return string.Empty;
     }
+
     protected string RenderUserName(object dataItem)
     {
         var entity = (WinLossDailyView)dataItem;
         var html = new StringBuilder();
-        i++;      
+        i++;
         html.AppendFormat(WinLossReporPageBase.TemplateStyleColumn, i, "class=No");
-        if (GetCurrentReportLevel()+1 == Convert.ToInt32(ReportLevel.Member))
+        if (GetCurrentReportLevel() + 1 == Convert.ToInt32(ReportLevel.Member))
         {
             html.AppendFormat(TemplateStyleColumn, entity.Username, "align='center'");
         }
@@ -169,7 +152,7 @@ public partial class Report_WinLoss_DailyWinLoss : WinLossReporPageBase
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="dataItem"></param>
     /// <returns></returns>
@@ -177,12 +160,12 @@ public partial class Report_WinLoss_DailyWinLoss : WinLossReporPageBase
     {
         var html = new StringBuilder();
         var entity = (WinLossDailyView)dataItem;
+
         #region Turnover & Position Taking
 
-        
-        html.AppendFormat(TemplateColumn, 
+        html.AppendFormat(TemplateColumn,
             entity.TotalTO.ToString(CurrencyFormat));
-                
+
         //company
         html.AppendFormat(TemplateColumn,
             entity.Company.Turnover.ToString(CurrencyFormat));
@@ -204,23 +187,26 @@ public partial class Report_WinLoss_DailyWinLoss : WinLossReporPageBase
            entity.Agent.Turnover.ToString(CurrencyFormat));
         html.AppendFormat(TemplateColumn,
                     entity.Agent.GetPositionTaking(entity.TotalTO).ToString(CurrencyFormat));
-        #endregion
+
+        #endregion Turnover & Position Taking
 
         #region Win/Loss and Margin
+
         //Company
         html.AppendFormat(TemplateColumn, entity.Company.Winloss.ToString(CurrencyFormat));
         html.AppendFormat(TemplateStyleColumn, entity.Company.Margin.ToString(CurrencyFormat), "class='Percent'");
         //SA
         html.AppendFormat(TemplateColumn, entity.SA.Winloss.ToString(CurrencyFormat));
         html.AppendFormat(TemplateStyleColumn, entity.SA.Margin.ToString(CurrencyFormat), "class='Percent'");
-        //MA        
+        //MA
         html.AppendFormat(TemplateColumn, entity.MA.Winloss.ToString(CurrencyFormat));
         html.AppendFormat(TemplateStyleColumn, entity.MA.Margin.ToString(CurrencyFormat), "class='Percent'");
         //Agent
         html.AppendFormat(TemplateColumn, entity.Agent.Winloss.ToString(CurrencyFormat));
         html.AppendFormat(TemplateStyleColumn, entity.Agent.Margin.ToString(CurrencyFormat), "class='Percent'");
 
-        #endregion
+        #endregion Win/Loss and Margin
+
         return html.ToString();
     }
 
@@ -230,9 +216,8 @@ public partial class Report_WinLoss_DailyWinLoss : WinLossReporPageBase
         {
             int level = GetCurrentReportLevel();
             return (new WinLossService()).GetDailyReportTitle(level);
-        }       
+        }
     }
-
 
     protected void btnExport_Click(object sender, ImageClickEventArgs e)
     {

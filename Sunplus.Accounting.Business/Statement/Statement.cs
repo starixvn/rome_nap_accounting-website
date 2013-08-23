@@ -7,23 +7,17 @@ using DNAide.Core;
 using DNAide.Data;
 using DNAide.Web;
 using IBCUtils;
-
+using Microsoft.Security.Application;
 using Sunplus.Accounting.Business.BootStrappers;
-using Sunplus.Accounting.Entities;
+using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.CachingLib;
-using Sunplus.Core.LoggingLib;
-using Microsoft.Security.Application;
-
-//using Sunplus.Core.LoggingLib;
-//using Sunplus.Core.CachingLib;
+using Sunplus.Accounting.Entities;
 
 namespace Sunplus.Accounting.Business.Statement
 {
@@ -41,12 +35,11 @@ namespace Sunplus.Accounting.Business.Statement
             "<input type=\"button\" class=\"verified\" value=\"Verify\" title=\"Verify\"  onclick=\"return VerifyTrans(this);\"  id=\"{0}\"/>";
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns>html string</returns>
         public static string GetAuditStatement()
         {
-           
             if (string.IsNullOrEmpty(AppSession.CustUName)
                 || AppSession.CustID == 0)
             {
@@ -101,7 +94,7 @@ namespace Sunplus.Accounting.Business.Statement
 
                             TemplateHandler.Assign(ref rowHtml, "{Total2}", FormatHandler.FormatNumber20(total2));
 
-                            if (index%2 != 0)
+                            if (index % 2 != 0)
                                 TemplateHandler.Assign(ref rowHtml, "{odd_even}", "evenrow");
                             else
                                 TemplateHandler.Assign(ref rowHtml, "odd_even", string.Empty);
@@ -135,7 +128,6 @@ namespace Sunplus.Accounting.Business.Statement
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -166,27 +158,25 @@ namespace Sunplus.Accounting.Business.Statement
             try
             {
                 if (!Validator.ValidDateMMDDYYYYNotNull(fdate, out fdt).IsSuccess())
-                    //if (HttpContext.Current.Session["fdate"] != null)
-                    //    fdt = (DateTime)HttpContext.Current.Session["fdate"];
-                    //else
-                    //    fdt = DateTime.Now.AddDays(-1);
+                //if (HttpContext.Current.Session["fdate"] != null)
+                //    fdt = (DateTime)HttpContext.Current.Session["fdate"];
+                //else
+                //    fdt = DateTime.Now.AddDays(-1);
                 {
                     fdt = DateTime.Now;
                 }
 
-
                 if (!Validator.ValidDateMMDDYYYYNotNull(tdate, out tdt).IsSuccess())
-                    //if (HttpContext.Current.Session["tdate"] != null)
-                    //    tdt = (DateTime)HttpContext.Current.Session["tdate"];
-                    //else
-                    //    tdt = DateTime.Now;
+                //if (HttpContext.Current.Session["tdate"] != null)
+                //    tdt = (DateTime)HttpContext.Current.Session["tdate"];
+                //else
+                //    tdt = DateTime.Now;
                 {
                     tdt = DateTime.Now;
                 }
 
                 //HttpContext.Current.Session["fdate"] = fdt;
                 //HttpContext.Current.Session["tdate"] = tdt;
-
 
                 //if (HttpContext.Current.Session["fdate"] == null && HttpContext.Current.Session["tdate"] == null)
                 //    return AlertMessage.GetMsg(IbcError.DATE_INVALID_FORMAT_MSG, AlertMessage.MsgType.Error);
@@ -210,7 +200,6 @@ namespace Sunplus.Accounting.Business.Statement
                         string type = CastAide.AsString(row["transtype"]);
                         decimal totalamt = CastAide.AsDecimal(row["totalamt"]);
                         sumAmount += totalamt;
-
 
                         //just provide hyperlink for non-bet transaction
                         if (string.Compare(type.ToLower(), "bet", true) == 0)
@@ -241,11 +230,10 @@ namespace Sunplus.Accounting.Business.Statement
                         //else
                         //    TemplateHandler.Assign(ref rowHtml, "odd_even", string.Empty);
 
-                        TemplateHandler.Assign(ref rowHtml, "odd_even", (index%2 != 0) ? "evenrow" : string.Empty);
+                        TemplateHandler.Assign(ref rowHtml, "odd_even", (index % 2 != 0) ? "evenrow" : string.Empty);
 
                         TemplateHandler.Assign(ref rowHtml, "{Type}", type);
                         TemplateHandler.Assign(ref rowHtml, "{Total}", FormatHandler.FormatNumber20(totalamt));
-
 
                         htmlReport.Append(rowHtml);
                         TemplateHandler.RemoveBlock(ref rowHtml, "nobr");
@@ -265,7 +253,7 @@ namespace Sunplus.Accounting.Business.Statement
             catch (Exception ex)
             {
                 //Logs.Write(ex.Message);
-                
+
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -315,10 +303,8 @@ namespace Sunplus.Accounting.Business.Statement
                 //HttpContext.Current.Session["fdate"] = fdt;
                 //HttpContext.Current.Session["tdate"] = tdt;
 
-
                 //if (HttpContext.Current.Session["fdate"] == null && HttpContext.Current.Session["tdate"] == null)
                 //    return AlertMessage.GetMsg(IbcError.DATE_INVALID_FORMAT_MSG, AlertMessage.MsgType.Error);
-
 
                 string rowTpl = TemplateHandler.CopyBlock(tpl, "ReportContent");
 
@@ -338,7 +324,6 @@ namespace Sunplus.Accounting.Business.Statement
                     ds = AccountStatement.Acc_DetailStatement(fdt, tdt,
                                                               custId);
 
-
                     if (ds.ResultSet.Tables[0].Rows.Count > 0)
                     {
                         candelete = Permissions.GetHostPermission(Enumerations.Functions.Transfer.DeleteTrans);
@@ -352,7 +337,7 @@ namespace Sunplus.Accounting.Business.Statement
                             decimal creditAmt = CastAide.AsDecimal(row["creditamt"]);
                             decimal debitAmt = CastAide.AsDecimal(row["debitamt"]);
 
-                            if (index%2 != 0)
+                            if (index % 2 != 0)
                                 TemplateHandler.Assign(ref rowHtml, "odd_even", "evenrow");
                             else
                                 TemplateHandler.Assign(ref rowHtml, "odd_even", string.Empty);
@@ -391,7 +376,7 @@ namespace Sunplus.Accounting.Business.Statement
             catch (Exception ex)
             {
                 //Logs.Write(ex.Message);
-                
+
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -422,7 +407,6 @@ namespace Sunplus.Accounting.Business.Statement
         //        HttpContext.Current.Session["fdate"] = value;
         //    }
         //}
-
 
         //public static DateTime? ToDate
         //{
@@ -456,7 +440,6 @@ namespace Sunplus.Accounting.Business.Statement
                 return AlertMessage.GetMsg(IbcError.REPORT_NOT_AVAILABLE_MSG, AlertMessage.MsgType.Error);
             }
 
-
             //get persmission of logined user
             bool hasUpdateTransPermission = Permissions.GetHostPermission
                 (Enumerations.Functions.FinancialManagement.DailyFinanceTxn);
@@ -483,7 +466,6 @@ namespace Sunplus.Accounting.Business.Statement
                     tdt = DateTime.Now;
                 }
 
-
                 string itemTemplate = TemplateHandler.CopyBlock(contentTemplate, "ReportContent");
                 //DbResult ds = null;
                 double total2 = 0;
@@ -504,12 +486,11 @@ namespace Sunplus.Accounting.Business.Statement
                 List<Entities.Statement> entityList = userService.GetCustomerStatement(
                     customer, fdt, tdt, balanceUpDay, includeAccBal);
 
-
                 if (entityList.Count > 0)
                 {
                     int totalUnVerify = 0;
 
-                    #region foreach (Statement entity in entityList)                
+                    #region foreach (Statement entity in entityList)
 
                     foreach (Entities.Statement entity in entityList)
                     {
@@ -522,7 +503,7 @@ namespace Sunplus.Accounting.Business.Statement
                         //string remark =  entity.TransDescription.Replace("<", "&lt;");// CastAide.AsString(row["transdesc"]).Replace("<", "&lt;");
                         string remark = AntiXss.HtmlEncode(entity.TransDescription);
                         string type = entity.TransType; // CastAide.AsString(row["transtype"]);
-                        
+
                         string creator = entity.Creator.Username; // CastAide.AsString(row["creator"]);
                         double total = entity.TotalAmount; //CastAide.AsDecimal(row["totalamt"]);
                         total2 += total;
@@ -532,7 +513,6 @@ namespace Sunplus.Accounting.Business.Statement
                         bool isAccBal = string.Compare(
                             remark.ToLowerInvariant(),
                             "accumulated balance", true) == 0;
-
 
                         if (string.Compare(type.ToLowerInvariant(), "bet", true) == 0
                             && accDate >= balanceUpDay)
@@ -573,7 +553,7 @@ namespace Sunplus.Accounting.Business.Statement
                             {
                                 gotopen = 1;
                                 OpenBalance = total;
-                                if(idx == 1)
+                                if (idx == 1)
                                     linetotal = OpenBalance;
                             }
 
@@ -584,7 +564,6 @@ namespace Sunplus.Accounting.Business.Statement
                             linetotal += total;
                             IsBalance = 0;
                         }
-
 
                         if (IsBalance == 1)
                         {
@@ -617,16 +596,15 @@ namespace Sunplus.Accounting.Business.Statement
                             }
                         }
 
-
                         if (isAccBal)
                         {
                             TemplateHandler.Assign(ref rowHtml, "odd_even", "statement-accu-row");
                         }
 
-                        #endregion
+                        #endregion Processing for balance
 
                         TemplateHandler.Assign(ref rowHtml, "odd_even",
-                                               (idx%2 != 0) ? "evenrow" : string.Empty);
+                                               (idx % 2 != 0) ? "evenrow" : string.Empty);
                         TemplateHandler.Assign(ref rowHtml, "{Remark}",
                                                type.ToUpper() + " <!--nobr--><br><!--/nobr-->-" + remark);
                         TemplateHandler.Assign(ref rowHtml, "{Total}",
@@ -688,11 +666,10 @@ namespace Sunplus.Accounting.Business.Statement
                             }
                         }
 
-                        #endregion
-
+                        #endregion Processing verify status
 
                         var checkTime = string.Empty;
-                        if(entity.CheckedTime.HasValue)
+                        if (entity.CheckedTime.HasValue)
                         {
                             checkTime = Convert.ToDateTime(entity.CheckedTime).ToString();
                         }
@@ -708,7 +685,7 @@ namespace Sunplus.Accounting.Business.Statement
                         //excelRows.Append(rowHtml);
                     }
 
-                    #endregion
+                    #endregion foreach (Statement entity in entityList)
 
                     TemplateHandler.ReplaceBlock(ref contentTemplate, "ReportContent", htmlReport.ToString());
                     //if there is no transaction having status allow verify
@@ -735,14 +712,12 @@ namespace Sunplus.Accounting.Business.Statement
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
 
                 RenderNoInoSection(ref contentTemplate, ref excelTpl);
             }
-
 
             //AppCache.REPORT_STATEMENT = excelTpl;
             excelTpl = contentTemplate.Clone().ToString();
@@ -751,11 +726,10 @@ namespace Sunplus.Accounting.Business.Statement
             TemplateHandler.RemoveBlock(ref excelTpl, "action");
             TemplateHandler.RemoveComment(ref excelTpl);
 
-
             string key = "CustomerStatement" + AppSession.AccUserName;
             AppSession.AddSession(HttpContext.Current.Session, key, excelTpl);
             //TemplateHandler.RemoveComment(ref contentTemplate, );
-            
+
             //AppCache.REPORT_STATEMENT = excelTpl;
 
             //TemplateHandler.RemoveComment(ref contentTemplate);

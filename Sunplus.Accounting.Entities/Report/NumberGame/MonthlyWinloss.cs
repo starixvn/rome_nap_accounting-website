@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Sunplus.Accounting.Entities.Report.NumberGame
 {
@@ -19,14 +16,19 @@ namespace Sunplus.Accounting.Entities.Report.NumberGame
 
         [DataMember]
         public double Winlost { get; set; }
+
         [DataMember]
         public double Position { get; set; }
+
         [DataMember]
         public double Commission { get; set; }
+
         [DataMember]
         public double LineTotal { get; set; }
+
         [DataMember]
         public double TurnOver { get; set; }
+
         [DataMember]
         public double Margin { get; set; }
     }

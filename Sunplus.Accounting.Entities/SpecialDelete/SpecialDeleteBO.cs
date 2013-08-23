@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Sunplus.Accounting.Entities.SpecialDelete
 {
     #region SpecialDeleteBO
+
     [Serializable]
     [DataContract]
     public class SpecialDeleteBO
@@ -25,7 +24,7 @@ namespace Sunplus.Accounting.Entities.SpecialDelete
         public string Refno { get; set; }
 
         [DataMember]
-        public string Bettype{ get; set; }
+        public string Bettype { get; set; }
 
         [DataMember]
         public string Betteam { get; set; }
@@ -43,19 +42,19 @@ namespace Sunplus.Accounting.Entities.SpecialDelete
         public string Currency { get; set; }
 
         [DataMember]
-        public string Hdp{ get; set; }
+        public string Hdp { get; set; }
 
         [DataMember]
         public string TransTime { get; set; }
 
         [DataMember]
-        public string Score{ get; set; }
+        public string Score { get; set; }
 
         [DataMember]
-        public string Creator{ get; set; }
+        public string Creator { get; set; }
 
         [DataMember]
-        public string Status{ get; set; }
+        public string Status { get; set; }
 
         [DataMember]
         public string IsDelete { get; set; }
@@ -66,15 +65,17 @@ namespace Sunplus.Accounting.Entities.SpecialDelete
         [DataMember]
         public int SaFilter { get; set; }
     }
-    #endregion
+
+    #endregion SpecialDeleteBO
 
     #region SpecialDeleteParam
+
     [Serializable]
     [DataContract]
     public class SpecialDeleteParam
     {
         [DataMember]
-        public string MatchId { get;set; }
+        public string MatchId { get; set; }
 
         [DataMember]
         public string FromRefNo { get; set; }
@@ -132,8 +133,8 @@ namespace Sunplus.Accounting.Entities.SpecialDelete
 
         [DataMember]
         public int SAFilter { get; set; }
-        
     }
+
     /// <summary>
     /// SpecialDeleteParamEarlyKO
     /// </summary>
@@ -144,21 +145,24 @@ namespace Sunplus.Accounting.Entities.SpecialDelete
         [DataMember]
         public string KichOffDate { get; set; }
     }
+
     [DataContract]
-    public class SpecialDeleteParamPager: SpecialDeleteParam
+    public class SpecialDeleteParamPager : SpecialDeleteParam
     {
         [DataMember]
         public int Page { get; set; }
+
         [DataMember]
         public int Counter { get; set; }
+
         [DataMember]
         public bool Refresh { get; set; }
-      
-
     }
-    #endregion
+
+    #endregion SpecialDeleteParam
 
     #region DataforMailing
+
     public class SpecialDeleteDataforMailing
     {
         public DataTable Items { get; set; }
@@ -178,9 +182,11 @@ namespace Sunplus.Accounting.Entities.SpecialDelete
     {
         public List<SpecialDeleteDataforMailing> Items { get; set; }
     }
-    #endregion
+
+    #endregion DataforMailing
 
     #region SpecialDeleteBO EarlyKO
+
     [DataContract]
     public class SpecialDeleteBetEarlyKO : SpecialDeleteBO
     {
@@ -196,9 +202,11 @@ namespace Sunplus.Accounting.Entities.SpecialDelete
         [DataMember]
         public int ParlayType { get; set; }
     }
-    #endregion
 
-    #region Bettype 
+    #endregion SpecialDeleteBO EarlyKO
+
+    #region Bettype
+
     [Serializable]
     [DataContract]
     public class Bettype
@@ -207,18 +215,21 @@ namespace Sunplus.Accounting.Entities.SpecialDelete
         public int Id { get; set; }
 
         [DataMember]
-        public string Name{ get; set; }
+        public string Name { get; set; }
 
         [DataMember]
         public bool Liveindicator { get; set; }
     }
-    #endregion
+
+    #endregion Bettype
 
     [Serializable]
     [DataContract]
-    public class DeleteResult { 
+    public class DeleteResult
+    {
         [DataMember]
         public Result Error { get; set; }
+
         [DataMember]
         public DataSet PrivateMessage { get; set; }
     }

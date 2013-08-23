@@ -1,32 +1,18 @@
 using System;
 using System.Data;
-using System.Configuration;
-using System.Collections;
 using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using System.Text;
-using Sunplus.Accounting.Business.CacheManager;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Core.LoggingLib;
-using IBCUtils.Web;
-using IBCUtils.DAL;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using IBCUtils;
-
+using Sunplus.Accounting.Business.CacheManager;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
 /// <summary>
 /// CITS
 /// </summary>
 public partial class CreditTerm_TermController : PageBase
 {
-   
     public string str = "";
+
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -38,7 +24,7 @@ public partial class CreditTerm_TermController : PageBase
             if (dt.Rows.Count > 0)
             {
                 DataRow dr = dt.Rows[0];
-                string groupid = Request["groupid"];                
+                string groupid = Request["groupid"];
                 str += "var creditgrade = '" + dr["creditgrade"] + "';";
                 str += "var pre = '" + FormatHandler.FormatNumber2(dr["preagreeamount"]) + "';";
                 str += "var installamt = '" + FormatHandler.FormatNumber2(dr["installmentamount"]) + "';";
@@ -46,11 +32,9 @@ public partial class CreditTerm_TermController : PageBase
                 str += "var remark = '" + dr["accountremark"] + "';";
                 str += "var groupid = '" + dr["groupid"] + "';";
                 str += "var curr = '" + CacheUtils.GetExchangeName(DNAide.Core.CastAide.AsInt32(dr["curr"])) + "';";
-                str += "var checkerid = '" + DNAide.Core.CastAide.AsInt32(dr["checkerid"],0) + "';";
+                str += "var checkerid = '" + DNAide.Core.CastAide.AsInt32(dr["checkerid"], 0) + "';";
                 string isghl = (Convert.ToBoolean(dr["isgroupheadline"])) ? "1" : "0";
                 str += "var isgroupheadline = '" + isghl + "';";
-                
-                
             }
             else str += "var groupid = '0';";
             string check = (string.IsNullOrEmpty(Request["check"])) ? "0" : Request["check"];

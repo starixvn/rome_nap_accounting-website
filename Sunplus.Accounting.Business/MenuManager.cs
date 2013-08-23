@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ServiceModel.Activation;
-using DNAide.Web;
-using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
+using Sunplus.Accounting.Entities;
 
 namespace Sunplus.Accounting.Business
 {
@@ -14,11 +11,11 @@ namespace Sunplus.Accounting.Business
     /// <summary>
     /// Summary description for MenuManager
     /// </summary>
-    /// 
+    ///
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class MenuManager : IMenuManager
     {
-        private readonly IUserDAO _userDAO;       
+        private readonly IUserDAO _userDAO;
 
         public MenuManager(IUserDAO userDAO)
         {
@@ -41,7 +38,6 @@ namespace Sunplus.Accounting.Business
         {
             return _userDAO.ManageMenuGetMenuList(system);
         }
-
 
         public Result InsMenuItem(MenuBO menu)
         {
@@ -72,6 +68,7 @@ namespace Sunplus.Accounting.Business
         {
             AppSession.BAMenu = _userDAO.GetReportMenu(AppSession.AccId, "BA");
         }
-        #endregion
+
+        #endregion IMenuManager Members
     }
 }

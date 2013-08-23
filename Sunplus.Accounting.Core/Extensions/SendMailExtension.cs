@@ -4,14 +4,10 @@ using System.ComponentModel;
 using System.IO;
 using System.Net.Mail;
 using System.Text;
-using System.Web.Mail;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Helper;
-using Sunplus.Core.LoggingLib;
-using Newtonsoft.Json;
 using MailMessage = System.Net.Mail.MailMessage;
 using MailPriority = System.Net.Mail.MailPriority;
-
 
 namespace Sunplus.Accounting.Core.Extensions
 {
@@ -21,30 +17,36 @@ namespace Sunplus.Accounting.Core.Extensions
     public class SendMailExtension
     {
         #region private variables
+
         private static BackgroundWorker _worker = null;
         private static Queue<MailSend> _queueMail = new Queue<MailSend>();
         private static bool _sendMailStatus = true;
-        #endregion
+
+        #endregion private variables
+
         /**
          * Accounting - Send mail & notification
          **/
+
         public static bool AccSendMail(MailSection.HostName hostName, string to, string cc, string mailTitle, string subject, string body)
         {
             return AccSendMail(hostName, to, cc, mailTitle, subject, body, null);
         }
+
         public static bool AccSendMail(MailSection.HostName hostName, string to, string cc, string mailTitle, string subject, string body, MailAttachment mailAttachment)
         {
             return AccSendMail(hostName, to, cc, string.Empty, mailTitle, subject, body, mailAttachment, null);
         }
+
         public static bool AccSendMail(MailSection.HostName hostName, string to, string cc, string bcc, string mailTitle, string subject, string body, MailAttachment mailAttachment)
         {
             return AccSendMail(hostName, to, cc, bcc, mailTitle, subject, body, mailAttachment, null);
         }
+
         public static bool AccSendMail(MailSection.HostName hostName, string to, string cc, string bcc, string mailTitle, string subject, string body, MailAttachment mailAttachment, AlternateView altView)
         {
             try
             {
-
                 var mailSend = new MailSend()
                 {
                     HostName = hostName,
@@ -57,7 +59,6 @@ namespace Sunplus.Accounting.Core.Extensions
                     Attachment = mailAttachment,
                     AltView = altView
                 };
-
 
                 bool IsLocal = System.Configuration.ConfigurationManager.AppSettings["LocalTest"] == "1";
 
@@ -87,9 +88,11 @@ namespace Sunplus.Accounting.Core.Extensions
             }
             return false;
         }
+
         /**
          * Function: Backgroundworker running
          */
+
         private static void WorkerRunning(object sender, DoWorkEventArgs e)
         {
             if (_queueMail.Count > 0)
@@ -102,15 +105,18 @@ namespace Sunplus.Accounting.Core.Extensions
                 _worker.CancelAsync();
             }
         }
+
         /**
          * Function: Backgroundworker commpleted
          */
+
         private static void WorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             _sendMailStatus = (bool)e.Result;
         }
 
         #region send mail function
+
         public static bool SendMail_Old(MailSend mailSend)
         {
             try
@@ -144,15 +150,17 @@ namespace Sunplus.Accounting.Core.Extensions
                     });
                 }
 
-                #endregion
+                #endregion cc
 
                 #region bcc
+
                 if (!string.IsNullOrEmpty(mailSend.Bcc))
                 {
                     mailSend.Bcc.Split(';').ForEach<string>(bccMail => msg.Bcc.Add(bccMail));
                 }
 
-                #endregion
+                #endregion bcc
+
                 msg.Subject = mailSend.Subject;
                 msg.SubjectEncoding = Encoding.UTF8;
 
@@ -192,13 +200,14 @@ namespace Sunplus.Accounting.Core.Extensions
             }
             return false;
         }
+
         public static bool SendMail(MailSend mailSend)
         {
             try
             {
                 using (var client = new MailDeliver())
                 {
-                    var mailItem = new Fanex.MailDeliver.Model.MailRecord 
+                    var mailItem = new Fanex.MailDeliver.Model.MailRecord
                     {
                         MailTo = mailSend.To,
                         MailCc = mailSend.Cc,
@@ -251,7 +260,7 @@ namespace Sunplus.Accounting.Core.Extensions
                     // send mail
                     client.SendMail(mailItem);
                 }
-                
+
                 return true;
             }
             catch (Exception ex)
@@ -260,26 +269,37 @@ namespace Sunplus.Accounting.Core.Extensions
             }
             return false;
         }
-        #endregion
+
+        #endregion send mail function
     }
+
     public class MailSend
     {
         public MailSection.HostName HostName { get; set; }
-        public string To { get; set; }
-        public string Cc { get; set; }
-        public string Bcc { get; set; }
-        public string Title { get; set; }
-        public string Subject { get; set; }
-        public string Body { get; set; }
-        public MailAttachment Attachment { get; set; }
-        public AlternateView AltView { get; set; }
 
+        public string To { get; set; }
+
+        public string Cc { get; set; }
+
+        public string Bcc { get; set; }
+
+        public string Title { get; set; }
+
+        public string Subject { get; set; }
+
+        public string Body { get; set; }
+
+        public MailAttachment Attachment { get; set; }
+
+        public AlternateView AltView { get; set; }
     }
 
     public class MailAttachment
     {
         public MemoryStream Content { get; set; }
+
         public string ContentType { get; set; }
+
         public string FileName { get; set; }
     }
 }

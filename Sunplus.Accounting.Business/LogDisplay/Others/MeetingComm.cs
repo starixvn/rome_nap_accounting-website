@@ -12,7 +12,6 @@
         private string _Type = "Comm Type";
         private string _Win = "Win";
         private string _WinPlace = "Win Place";
-    
 
         public string CommissionPercent
         {
@@ -56,6 +55,7 @@
             set { _Type = value; }
         }
     }
+
     public class MeetingDetail
     {
         public MeetingDetail(int Num, string Meeting, string ProgramID, string PoolCurrency)

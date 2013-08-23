@@ -24,6 +24,6 @@ namespace Sunplus.Accounting.Entities.Report
 
         public double UplineTotal { get; set; }
 
-        #endregion
+        #endregion IWinLoss Members
     }
 }

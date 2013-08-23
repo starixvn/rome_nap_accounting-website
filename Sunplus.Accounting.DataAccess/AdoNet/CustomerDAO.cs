@@ -4,24 +4,22 @@ using System.Data;
 using System.Web;
 using DNAide.Core;
 using DNAide.Data;
-using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Entities;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Entities.Customer;
 using DNAide.Utils;
 using Fanex.Data;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Entities;
+using Sunplus.Accounting.Entities.Customer;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet
 {
     public class CustomerDAO : DataAccess, ICustomerDAO
     {
-
         protected Core.Configurations.StoreProcedureElement GetStoreProcedure(string aliasName)
         {
             return GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.CustomerSession.StoreCollection.CustomerControl, aliasName);
         }
-        
+
         public DataTable GetCustomerInfo(string username)
         {
             var param = new System.Collections.Hashtable();
@@ -94,7 +92,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                                 };
                 var spElement = GetStoreProcedure("SelAllInfo");
                 return DbHelper.Execute(spElement.Name, param, spElement.DbName);
-              
             }
             catch (Exception ex)
             {
@@ -107,7 +104,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
         public BetSettingNG CheckEnableNGDownline(string username)
         {
-            var betsetting = new BetSettingNG();            
+            var betsetting = new BetSettingNG();
             using (ObjectDb objDb = new ObjectDb("Acc_CustomerSelNGUpline", 600))
             {
                 var param = new Hashtable();
@@ -130,7 +127,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         }
 
         public Result UpdateBetSettingNGDownline(string username, int isEnable, string maxBet, string minBet, string maxMatch, string maxBall)
-        {            
+        {
             using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdNGEnableBetSetting", 600))
             {
                 var param = new Hashtable();
@@ -147,14 +144,15 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
                 objDb.ExecuteNonQuery();
 
-                return new Result() { 
+                return new Result()
+                {
                     ErrorCode = CastAide.AsInt32(objDb.GetParameterValue("errcode")),
                     ErrorMessage = CastAide.AsString(objDb.GetParameterValue("errmsg"))
                 };
             }
         }
 
-        #endregion
+        #endregion Enable Number Game for downlines
 
         public string GetRNGSiteNameByCustId(int custId)
         {
@@ -162,11 +160,11 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             {
                 var param = new Hashtable();
                 param.Add("custid", custId);
-                
+
                 objdb.AssignParamValues(param);
                 objdb.ExecuteNonQuery();
                 var errorCode = CastAide.AsInt32(objdb.GetParameterValue("errcode"));
-                if(errorCode == 0)
+                if (errorCode == 0)
                     return CastAide.AsString(objdb.GetParameterValue("siterng"));
                 return null;
             }

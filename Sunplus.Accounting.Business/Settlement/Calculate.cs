@@ -1,18 +1,16 @@
 using System;
+using System.Collections;
 using System.Data;
 using System.Text;
-using System.Collections;
+using DNAide.Core;
 using DNAide.Web;
-
+using IBCUtils;
 using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business.Settle;
 using Sunplus.Accounting.Core.Cache;
-using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
-using DNAide.Core;
 using Sunplus.Accounting.Core.Extensions;
-using IBCUtils;
+using Sunplus.Accounting.Core.Web;
 
 namespace Sunplus.Accounting.Business.Settlement
 {
@@ -23,8 +21,10 @@ namespace Sunplus.Accounting.Business.Settlement
     {
         private static System.Globalization.CultureInfo cult = System.Globalization.CultureInfo.CurrentCulture;
         private static string nl = Environment.NewLine;
+
         //private static string cURL = "Calculation.aspx?mid=";
         private static string displayMultiple = string.Empty;
+
         private static string calLink = WebUtils.LoadTemplate("Settle/CalculateLink.htm");
         private static string calLink2 = WebUtils.LoadTemplate("Settle/CalculateLink2.htm");
 
@@ -40,6 +40,7 @@ namespace Sunplus.Accounting.Business.Settlement
                 default: return _eventstatus;
             }
         }
+
         private static string GetStringLink(string _params, string _eventstatus, bool _isRefund, bool _isCalRefund, bool _isCalculated, bool _isMultiCaled, bool isKeyScore, string permissions)
         {
             //string _sLink = (SettleBgColor.HasHostPermission) ? calLink : calLink2;
@@ -49,7 +50,7 @@ namespace Sunplus.Accounting.Business.Settlement
             TemplateHandler.Assign(ref _sLink, "{params}", arrparams[0]);
             TemplateHandler.Assign(ref _sLink, "{params_cls}", arrparams[1]);
             TemplateHandler.Assign(ref _sLink, "{params_id}", _params.Replace("|", "_"));
-            // set background color  
+            // set background color
             string _bgCalculate = SettleBgColor.DEFAULTCOLOR;
             if (_isCalculated) // bill already
             {
@@ -82,7 +83,6 @@ namespace Sunplus.Accounting.Business.Settlement
             else
             {
                 TemplateHandler.RemoveBlock(ref _sLink, "CalcHost");
-
             }
 
             if (permissions.IndexOf("[C]") > -1)
@@ -110,7 +110,7 @@ namespace Sunplus.Accounting.Business.Settlement
                 TemplateHandler.Assign(ref _sLink, "{params_cls}", arrparams[1]);
                 TemplateHandler.Assign(ref _sLink, "{params_id}", _params.Replace("|", "_"));
                 TemplateHandler.Assign(ref _sLink, "{disabled}", isKeyScore ? "" : "disabled=\"disabled\"");
-                // set background color  
+                // set background color
                 string _bgCalculate = SettleBgColor.DEFAULTCOLOR;
                 if (_isCalculated) // bill already
                 {
@@ -135,7 +135,6 @@ namespace Sunplus.Accounting.Business.Settlement
                     TemplateHandler.RemoveBlock(ref _sLink, "KeyHost");
                 }
 
-
                 if (permissions.IndexOf("[C]") > -1 || permissions.IndexOf("[U]") > -1)
                 {
                     TemplateHandler.RemoveBlock(ref _sLink, "CalcRead");
@@ -143,7 +142,6 @@ namespace Sunplus.Accounting.Business.Settlement
                 else
                 {
                     TemplateHandler.RemoveBlock(ref _sLink, "CalcHost");
-
                 }
 
                 if (permissions.IndexOf("[C]") > -1)
@@ -161,6 +159,7 @@ namespace Sunplus.Accounting.Business.Settlement
             }
             return GetStringLink(_params, _eventstatus, _isRefund, _isCalRefund, _isCalculated, _isMultiCaled, isKeyScore, permissions); // Not calculate HT yet
         }
+
         public static string NumberGame(int sportID, DataRow[] rows, int totalColumns, string fdate, string tdate, string permissions)
         {
             try
@@ -169,7 +168,6 @@ namespace Sunplus.Accounting.Business.Settlement
                 string _strRow = WebUtils.LoadTemplate("Settle/RowNumberGame.htm");
                 string _strLeague = WebUtils.LoadTemplate("Settle/LeagueName.htm");
 
-
                 TemplateHandler.Assign(ref _sMain, "{fdate}", fdate);
                 TemplateHandler.Assign(ref _sMain, "{tdate}", tdate);
 
@@ -177,7 +175,6 @@ namespace Sunplus.Accounting.Business.Settlement
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -211,7 +208,6 @@ namespace Sunplus.Accounting.Business.Settlement
                     TemplateHandler.RemoveBlock(ref _strRow, "confirmpendinghost");
                     TemplateHandler.RemoveBlock(ref _sMain, "RefuHost");
                     TemplateHandler.RemoveBlock(ref _sMain, "MultHost");
-                    
                 }
                 TemplateHandler.Assign(ref _sMain, "{displayMul}", displayMultiple);
                 string curLeagueId = "";
@@ -262,7 +258,7 @@ namespace Sunplus.Accounting.Business.Settlement
 
                     var isPending = false;
                     TemplateHandler.Assign(ref _sRow, "{eventstatus}", settle.SelStatusConfirming(dr, ref isPending));
-                    TemplateHandler.Assign(ref _sRow, "{bgEventStatus}", (string.Compare(_eventstatus, "postponed", true) == 0) ? SettleBgColor.POSTPONED : (isPending ? SettleBgColor.PendingStatus: SettleBgColor.DEFAULTCOLOR));
+                    TemplateHandler.Assign(ref _sRow, "{bgEventStatus}", (string.Compare(_eventstatus, "postponed", true) == 0) ? SettleBgColor.POSTPONED : (isPending ? SettleBgColor.PendingStatus : SettleBgColor.DEFAULTCOLOR));
                     bool _isRefund = Convert.ToBoolean(dr["IsRefund"]);
                     bool _isCalRefund = Convert.ToBoolean(dr["IsCalRefund"]);
                     bool _isCalculated = Convert.ToBoolean(dr["IsCalculated"]);
@@ -280,7 +276,6 @@ namespace Sunplus.Accounting.Business.Settlement
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -302,7 +297,6 @@ namespace Sunplus.Accounting.Business.Settlement
                 string _strLeague = string.Empty;
                 if (permissions.IndexOf("[C]") > -1)
                 {
-
                     _strLeague = WebUtils.LoadTemplate("Settle/LeagueNameMultiple.htm");
                     TemplateHandler.Assign(ref _strLeague, "{colspan}", (totalColumns - 5).ToString());
                     TemplateHandler.RemoveBlock(ref _strRow, "confirmpendingread");
@@ -334,7 +328,7 @@ namespace Sunplus.Accounting.Business.Settlement
                     string _sRow = _strRow;
                     string _leagueid = dr["leagueid"].ToString();
                     string _eventstatus = dr["eventstatus"].ToString();
-                   
+
                     if (!curLeagueId.Equals(_leagueid))
                     {
                         leagueCount++;
@@ -344,9 +338,8 @@ namespace Sunplus.Accounting.Business.Settlement
                         TemplateHandler.Assign(ref _sleague, "{leagueCount}", leagueCount);
                         bgClass = string.Empty;
                         _s.Append(_sleague);
-                        
                     }
-                    
+
                     undecided.AssignDataUnDecided(ref _sRow, permissions, dr);
 
                     string displayPending = (_eventstatus.ToLower() == "running" || _eventstatus.ToLower() == "closed") ? "" : "disabled='disabled'";
@@ -356,7 +349,7 @@ namespace Sunplus.Accounting.Business.Settlement
 
                     TemplateHandler.Assign(ref _sRow, "{bgClass}", bgClass);
                     TemplateHandler.Assign(ref _sRow, "{code}", dr["matchcode"].ToString());
-                   
+
                     TemplateHandler.Assign(ref _sRow, "{hometeam}", CacheRef.GetTeamName(dr["homeid"]) + (CastAide.AsBoolean(dr["isNeutral"]) ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : string.Empty));
                     TemplateHandler.Assign(ref _sRow, "{awayteam}", CacheRef.GetTeamName(dr["awayid"]));
                     string _time = string.Format(cult, "{0:MM/dd/yy hh:mm:ss tt}", dr["kickofftime"]);
@@ -387,7 +380,6 @@ namespace Sunplus.Accounting.Business.Settlement
                             }
                             else
                             {
-
                                 string strhwgoal = betstatus.Substring(betstatus.IndexOf("FL:") + 3);
                                 string[] strhwgoals = strhwgoal.Split('-');
 
@@ -410,12 +402,10 @@ namespace Sunplus.Accounting.Business.Settlement
                                 }
                                 TemplateHandler.Assign(ref _sRow, "{hgoal}", hgoal);
                                 TemplateHandler.Assign(ref _sRow, "{agoal}", agoal);
-
                             }
                         }
                         catch (Exception ex)
                         {
-                            
                             {
                                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                             }
@@ -428,7 +418,7 @@ namespace Sunplus.Accounting.Business.Settlement
                     }
 
                     var isPending = false;
-                    TemplateHandler.Assign(ref _sRow, "{eventstatus}",  settle.SelStatusConfirming(dr, ref isPending));
+                    TemplateHandler.Assign(ref _sRow, "{eventstatus}", settle.SelStatusConfirming(dr, ref isPending));
                     TemplateHandler.Assign(ref _sRow, "{bgEventStatus}", (string.Compare(_eventstatus, "postponed", true) == 0) ? SettleBgColor.POSTPONED : (isPending ? SettleBgColor.PendingStatus : SettleBgColor.DEFAULTCOLOR));
 
                     bool _isCalculated = Convert.ToBoolean(dr["IsCalculated"]);
@@ -447,7 +437,6 @@ namespace Sunplus.Accounting.Business.Settlement
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -563,7 +552,6 @@ namespace Sunplus.Accounting.Business.Settlement
                         }
                         catch (Exception ex)
                         {
-                            
                             {
                                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                             }
@@ -603,7 +591,6 @@ namespace Sunplus.Accounting.Business.Settlement
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -638,7 +625,6 @@ namespace Sunplus.Accounting.Business.Settlement
                     TemplateHandler.RemoveBlock(ref _sMain, "RefuHost");
                 }
 
-
                 TemplateHandler.Assign(ref _sMain, "{displayMul}", displayMultiple);
                 string curLeagueId = "";
                 string bgClass = " rowEven";
@@ -660,7 +646,7 @@ namespace Sunplus.Accounting.Business.Settlement
                         string _sleague = _strLeague;
                         TemplateHandler.Assign(ref _sleague, "{leaguename}", CacheRef.GetLeagueName(dr["leagueid"]));
                         TemplateHandler.Assign(ref _sleague, "{leagueCount}", leagueCount);
-                      
+
                         bgClass = string.Empty;
                         _s.Append(_sleague);
                     }
@@ -689,7 +675,6 @@ namespace Sunplus.Accounting.Business.Settlement
                     {
                         try
                         {
-
                             string[] _betStatus = null;
 
                             if (dr["betstatus"].ToString().IndexOf(';') > -1)
@@ -722,7 +707,6 @@ namespace Sunplus.Accounting.Business.Settlement
                         }
                         catch (Exception ex)
                         {
-                            
                             {
                                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                             }
@@ -755,7 +739,6 @@ namespace Sunplus.Accounting.Business.Settlement
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -864,7 +847,6 @@ namespace Sunplus.Accounting.Business.Settlement
                         }
                         catch (Exception ex)
                         {
-                            
                             {
                                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                             }
@@ -898,7 +880,6 @@ namespace Sunplus.Accounting.Business.Settlement
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -945,7 +926,7 @@ namespace Sunplus.Accounting.Business.Settlement
                     string _sRow = _strRow;
                     string _leagueid = dr["leagueid"].ToString();
                     string _eventstatus = dr["eventstatus"].ToString();
-                    
+
                     if (!curLeagueId.Equals(_leagueid))
                     {
                         leagueCount++;
@@ -996,7 +977,6 @@ namespace Sunplus.Accounting.Business.Settlement
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -1110,7 +1090,6 @@ namespace Sunplus.Accounting.Business.Settlement
                         }
                         catch (Exception ex)
                         {
-                            
                             {
                                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                             }
@@ -1144,7 +1123,6 @@ namespace Sunplus.Accounting.Business.Settlement
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -1192,7 +1170,7 @@ namespace Sunplus.Accounting.Business.Settlement
                     string _sRow = _strRow;
                     string _leagueid = dr["leagueid"].ToString();
                     string _eventstatus = dr["eventstatus"].ToString();
-                   
+
                     if (!curLeagueId.Equals(_leagueid))
                     {
                         leagueCount++;
@@ -1260,7 +1238,6 @@ namespace Sunplus.Accounting.Business.Settlement
                         }
                         catch (Exception ex)
                         {
-                            
                             {
                                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                             }
@@ -1296,7 +1273,6 @@ namespace Sunplus.Accounting.Business.Settlement
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -1305,6 +1281,7 @@ namespace Sunplus.Accounting.Business.Settlement
         }
 
         #region HorseRacing
+
         public static string HorseRacing(DataRow[] rows, string fdate, string tdate, string sportID, string permissions)
         {
             var settle = CommonBootStrapper.Locator.GetInstance<ISettlement>();
@@ -1346,7 +1323,6 @@ namespace Sunplus.Accounting.Business.Settlement
             string _info2 = "";
             int limithorse = 5;
 
-
             for (int i = 0; i < arrleagueid.Count; i++) // filter by League
             {
                 _league = (string)league.Clone();
@@ -1376,6 +1352,7 @@ namespace Sunplus.Accounting.Business.Settlement
                     if (CheckNoInfoRace(hl)) // NO Info Found
                     {
                         #region no info found
+
                         _running = (string)running.Clone();
                         TemplateHandler.Assign(ref _running, "{raceNumber}", arrraceid[j].ToString().Split('|')[1].ToString());
                         TemplateHandler.Assign(ref _running, "{totalHorses}", "Total horses: " + totalhorse.ToString());
@@ -1386,7 +1363,6 @@ namespace Sunplus.Accounting.Business.Settlement
                         //Check Permission
                         if (permissions.IndexOf("[K]") > -1 || permissions.IndexOf("[C]") > -1)
                         {
-
                             TemplateHandler.RemoveBlock(ref _running, "ReadPermission");
                             TemplateHandler.Assign(ref _running, "{Params}", _params);
                         }
@@ -1395,10 +1371,10 @@ namespace Sunplus.Accounting.Business.Settlement
                             TemplateHandler.RemoveBlock(ref _running, "HostPermission");
                         }
 
-
                         //End check Permission
                         SubContent += _running;
-                        #endregion
+
+                        #endregion no info found
                     }
                     else
                     {
@@ -1430,12 +1406,10 @@ namespace Sunplus.Accounting.Business.Settlement
                                 TemplateHandler.Assign(ref _running_info, "{Status}", Status.Official);
                             }
 
-
                             //Check Permission
 
                             if (permissions.IndexOf("[K]") > -1 || permissions.IndexOf("[C]") > -1)
                             {
-
                                 TemplateHandler.RemoveBlock(ref _running_info, "ReadPermission");
                                 TemplateHandler.Assign(ref _running_info, "{Params}", _params);
                             }
@@ -1443,7 +1417,6 @@ namespace Sunplus.Accounting.Business.Settlement
                             {
                                 TemplateHandler.RemoveBlock(ref _running_info, "HostPermission");
                             }
-
 
                             //End check Permission
 
@@ -1482,7 +1455,6 @@ namespace Sunplus.Accounting.Business.Settlement
                                     //Check Permission
                                     if (permissions.IndexOf("[K]") > -1 || permissions.IndexOf("[C]") > -1)
                                     {
-
                                         TemplateHandler.RemoveBlock(ref _info1, "ReadPermission");
                                         TemplateHandler.Assign(ref _info1, "{Params}", _params);
                                     }
@@ -1490,7 +1462,6 @@ namespace Sunplus.Accounting.Business.Settlement
                                     {
                                         TemplateHandler.RemoveBlock(ref _info1, "HostPermission");
                                     }
-
 
                                     //End check Permission
                                     SubContent += _info1;
@@ -1508,7 +1479,6 @@ namespace Sunplus.Accounting.Business.Settlement
                                     //Check Permission
                                     if (permissions.IndexOf("[K]") > -1 || permissions.IndexOf("[C]") > -1)
                                     {
-
                                         TemplateHandler.RemoveBlock(ref _info2, "ReadPermission");
                                         TemplateHandler.Assign(ref _info2, "{Params}", _params);
                                     }
@@ -1520,7 +1490,6 @@ namespace Sunplus.Accounting.Business.Settlement
                                 }
                             }
                         }
-
                     }
 
                     if (even == true)
@@ -1554,7 +1523,6 @@ namespace Sunplus.Accounting.Business.Settlement
             bool check = true;
             foreach (DataRow row in rows)
             {
-
                 if (CastAide.AsInt32(row["hthomescore"], 0) != 0)
                 {
                     check = false;
@@ -1635,8 +1603,6 @@ namespace Sunplus.Accounting.Business.Settlement
                     strSCR += CastAide.AsString(row["matchcode"]) + ", ";
                 if (CastAide.AsInt32(row["hthomescore"], 0) == 1)
                     strTF += CastAide.AsString(row["matchcode"]) + ", ";
-
-
             }
             strSCR = (!string.IsNullOrEmpty(strSCR)) ? strSCR.Substring(0, strSCR.LastIndexOf(",")).Trim() : "";
             strTF = (!string.IsNullOrEmpty(strTF)) ? strTF.Substring(0, strTF.LastIndexOf(",")).Trim() : "";
@@ -1648,9 +1614,11 @@ namespace Sunplus.Accounting.Business.Settlement
             //}
             return strSCR + "|" + strTF;
         }
-        #endregion
+
+        #endregion HorseRacing
 
         #region ShowGoalHistory
+
         public static string ShowGoalHistory(string goalrecord)
         {
             string tpl = WebUtils.LoadTemplate("Settle/GoalHistory.htm");
@@ -1659,7 +1627,6 @@ namespace Sunplus.Accounting.Business.Settlement
             int homeScore = 0, awayScore = 0;
             for (int i = 0; i < goalrecord.Length; i++)
             {
-
                 string tempRow = row;
                 string teamScore = "";
                 if (goalrecord.Substring(i, 1).ToLower().Equals("h"))
@@ -1683,8 +1650,7 @@ namespace Sunplus.Accounting.Business.Settlement
             TemplateHandler.ReplaceBlock(ref tpl, "rowsGoalRecord", data);
             return tpl;
         }
-        #endregion
 
-
+        #endregion ShowGoalHistory
     }
 }

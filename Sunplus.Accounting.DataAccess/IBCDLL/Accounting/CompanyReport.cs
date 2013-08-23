@@ -4,28 +4,27 @@ using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using DNAide.Data;
-
-using Sunplus.Accounting.Core.Common;
+using Fanex.Data;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
-using Sunplus.Core.LoggingLib;
-using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
     /// <summary>
     /// @Author: Hoang, Minh Anh Tu
     /// </summary>
-    public sealed class CompanyReport:DataAccess
+    public sealed class CompanyReport : DataAccess
     {
         private CompanyReport()
         {
         }
+
         public static StoreProcedureElement GetReportStoreProcedure(ReportSession.StoreCollection storeCollection, string alias)
         {
             var sps = ReportSession.Instance[storeCollection];
             return sps != null ? sps[alias] : null;
         }
+
         //public static StoreProcedureElement GetBetListStoreProcedure(string alias)
         //{
         //    var sps = BetListSection.Instance[BetListSection.StoreCollection.BetListStores];
@@ -33,7 +32,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         //}
 
         /// <summary>
-        /// retrieve customer id and role id through 
+        /// retrieve customer id and role id through
         /// </summary>
         /// Phuong.Nguyen updated
         /// <param name="username">username string</param>
@@ -47,7 +46,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             roleid = -1;
             try
             {
-                
                 using (ObjectDb objDb = new ObjectDb("Acc_CustomerSelByUserName", 600))
                 {
                     var p = new Hashtable();
@@ -66,7 +64,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                         }
                     }
                 }
-                
             }
             catch (Exception ex)
             {
@@ -79,14 +76,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             DbResult rs = null;
             try
             {
-
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Racing, "SelHRComm_Company");
                 rs = DbHelper.Execute(spElement.Name, spElement.DbName);
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             if (rs != null)
                 return rs.ResultSet.Tables[0];
@@ -103,8 +98,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw;
             }
             if (rs != null)
@@ -124,8 +118,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw;
             }
             if (rs != null)
