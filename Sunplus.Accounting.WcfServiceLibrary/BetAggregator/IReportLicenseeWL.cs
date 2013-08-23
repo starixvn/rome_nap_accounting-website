@@ -4,6 +4,7 @@ using System.ServiceModel.Web;
 using Sunplus.Accounting.Entities.BetAggregator;
 using Sunplus.Accounting.Entities.Report.Licensee;
 using Sunplus.Data.DataAbstract.Entity;
+
 namespace Sunplus.Accounting.WcfServiceLibrary.BetAggregator
 {
     [ServiceContract]
@@ -23,15 +24,11 @@ namespace Sunplus.Accounting.WcfServiceLibrary.BetAggregator
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        Report_LicenseeWLBA_DTO SelReportByLicensee(int LicenseeID, int Currency, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter,int excludeTest, int pageIndex, int pageSize, int fromCache);
-
-      
+        Report_LicenseeWLBA_DTO SelReportByLicensee(int LicenseeID, int Currency, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        Report_LicenseeWLBA_DTO SelReportByLicenseeDetail_Ag(int LicenseeID, int Currency, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter,int excludeTest, int pageIndex, int pageSize, int fromCache);
-
-      
+        Report_LicenseeWLBA_DTO SelReportByLicenseeDetail_Ag(int LicenseeID, int Currency, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
@@ -45,6 +42,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.BetAggregator
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         LicenseeWinLossCommDTO LicenseeWinLossByCommLevel(int licenseeId, int currencyId, bool isExcludeTest,
                                                           string fromDate, string toDate, int drawFilter);
+
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         LicenseesWLBA SelReportByLicensees(int licenseeId, int currency, int baseCurrency, string fromDate, string toDate, int reportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache);
@@ -64,6 +62,4 @@ namespace Sunplus.Accounting.WcfServiceLibrary.BetAggregator
                                                                  int drawfilter, int excludeTest, int reportType,
                                                                  int pageIndex, int pageSize, int fromCache);
     }
-
-   
 }

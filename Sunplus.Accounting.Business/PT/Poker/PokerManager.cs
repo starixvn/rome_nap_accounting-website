@@ -1,41 +1,40 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Sunplus.Accounting.Business.BootStrappers;
-using Sunplus.Accounting.DataAccess.PositionTaking;
-using Sunplus.Accounting.Entities.PositionTaking.Poker;
-using Sunplus.Accounting.Core.Extensions;
-using DNAide.Data;
-using Sunplus.Accounting.Entities.Customer;
 using System.Data;
 using DNAide.Core;
+using DNAide.Data;
+using DNAide.Utils;
+using Sunplus.Accounting.Business.BootStrappers;
+using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Business.Security;
-using System.Collections;
-using Sunplus.Accounting.Entities;
-using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Configurations;
-using DNAide.Utils;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.DataAccess.PositionTaking;
+using Sunplus.Accounting.Entities;
+using Sunplus.Accounting.Entities.Customer;
+using Sunplus.Accounting.Entities.PositionTaking.Poker;
 
 namespace Sunplus.Accounting.Business.PT.Poker
 {
     public class PokerManager : IPokerManager
     {
         #region Global Setting
-        
-       
-        string[] stakeLevel = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["stakes"].Value.Split('|');
-        string[] successMsg = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["successMsg"].Value.Split('|');
-        string stakeColDBFormat = "StakeLevel{0}";
-        string stakeLevelDBFormat = "stakelevel{0}";
-        string discountDBFormat = "v253discount_{0}";
-        string maxTransferDBFormat = "maxtransfer";
-        string isDailyAutoResetDBFormat = "isdailyautoreset";
-        string disableStatusDB = "disable{0}{1}";
-        int totalBettype = 2;
-        #endregion
+
+        private string[] stakeLevel = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["stakes"].Value.Split('|');
+        private string[] successMsg = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["successMsg"].Value.Split('|');
+        private string stakeColDBFormat = "StakeLevel{0}";
+        private string stakeLevelDBFormat = "stakelevel{0}";
+        private string discountDBFormat = "v253discount_{0}";
+        private string maxTransferDBFormat = "maxtransfer";
+        private string isDailyAutoResetDBFormat = "isdailyautoreset";
+        private string disableStatusDB = "disable{0}{1}";
+        private int totalBettype = 2;
+
+        #endregion Global Setting
+
         private IPokerDAO _pokerDAO;
 
         public PokerManager()
@@ -49,6 +48,7 @@ namespace Sunplus.Accounting.Business.PT.Poker
         }
 
         #region Select
+
         public Result CheckEnableCustomer(int custId)
         {
             var result = new Result();
@@ -77,7 +77,6 @@ namespace Sunplus.Accounting.Business.PT.Poker
                 }
                 pokerStatus = GetPokerStatus(dtResult);
                 if (pokerStatus != null) pokerStatus.CustInfo.CustId = custId;
-               
             }
             catch (Exception ex)
             {
@@ -108,15 +107,14 @@ namespace Sunplus.Accounting.Business.PT.Poker
                         CurrencyID = row["CurrencyID"].ToString(),
                         Currency = row["Currency"].ToString(),
                         MinCredit = NumberFormat.DoubleFormat(row["MinCredit"], 0).Replace(",", ""),
-                        MaxCredit = NumberFormat.DoubleFormat(row["MaxCredit"], 0).Replace(",",""),
-                        Maxsdiscount = NumberFormat.DecFormat(row["Maxsdiscount"],2),
-                        Maxadiscount = NumberFormat.DecFormat(row["Maxadiscount"],2),
-                        Maxdiscount = NumberFormat.DecFormat(row["Maxdiscount"],2),
+                        MaxCredit = NumberFormat.DoubleFormat(row["MaxCredit"], 0).Replace(",", ""),
+                        Maxsdiscount = NumberFormat.DecFormat(row["Maxsdiscount"], 2),
+                        Maxadiscount = NumberFormat.DecFormat(row["Maxadiscount"], 2),
+                        Maxdiscount = NumberFormat.DecFormat(row["Maxdiscount"], 2),
                         Maxplayerdiscount = NumberFormat.DecFormat(row["Maxplayerdiscount"], 2)
                     };
                     pokerDefaultSetting.items.Add(item);
                 }
-
             }
             catch (Exception ex)
             {
@@ -132,7 +130,7 @@ namespace Sunplus.Accounting.Business.PT.Poker
             try
             {
                 var dtResult = _pokerDAO.GetCustomerSetting(custId, roleId);
-                int errCode=CastAide.AsInt32(dtResult.Outputs["errcode"],0);
+                int errCode = CastAide.AsInt32(dtResult.Outputs["errcode"], 0);
                 if (errCode > 0)
                 {
                     pokerSetting.errCode = errCode;
@@ -151,8 +149,9 @@ namespace Sunplus.Accounting.Business.PT.Poker
 
         private CustDetail getCustomerDetail(DataRow row)
         {
-            var custInfo = new CustDetail(){
-                RoleId=CastAide.AsInt16(row["roleid"],0),
+            var custInfo = new CustDetail()
+            {
+                RoleId = CastAide.AsInt16(row["roleid"], 0),
                 UserName = row["username"].ToString(),
                 FirstName = row["firstname"].ToString(),
                 LastName = row["lastname"].ToString(),
@@ -166,19 +165,20 @@ namespace Sunplus.Accounting.Business.PT.Poker
 
         private BetSetting getBetSetting(DataRow row)
         {
-            var betSetting = new BetSetting() { 
-                TransferCredit=CastAide.AsDecimal(row["transferp2p"],0),
+            var betSetting = new BetSetting()
+            {
+                TransferCredit = CastAide.AsDecimal(row["transferp2p"], 0),
                 MinTransferCredit = CastAide.AsDecimal(row["mintransferp2p"], 0),
                 MaxTransferCredit = CastAide.AsDecimal(row["MaxTransferP2P"], 0),
-                IsAutoReset= CastAide.AsBoolean(row["IsAutoResetP2P"]),
+                IsAutoReset = CastAide.AsBoolean(row["IsAutoResetP2P"]),
                 IsUplineAutoReset = CastAide.AsBoolean(row["UplineIsAutoResetP2P"])
             };
             return betSetting;
         }
 
         private List<GameTypeSetting> getGameTypeSetting(DataRowCollection rows)
-        { 
-            var listGameTypeSetting=new List<GameTypeSetting>();
+        {
+            var listGameTypeSetting = new List<GameTypeSetting>();
             int len = rows.Count;
             //Check for diffirence role: Super return 2 rows, Master, Agent, Member return 4 rows
             var start = len > totalBettype ? totalBettype : 0;
@@ -189,7 +189,7 @@ namespace Sunplus.Accounting.Business.PT.Poker
                 var gameTypeSetting = new GameTypeSetting()
                 {
                     //GameTypeId = Convert.ToInt32(row["bettype"]),
-                    ID = CastAide.AsString(row["bettype"],""),
+                    ID = CastAide.AsString(row["bettype"], ""),
                     Name = CacheRef.GetBettype(row["bettype"])
                 };
                 //get list stake levels
@@ -198,12 +198,12 @@ namespace Sunplus.Accounting.Business.PT.Poker
                 for (int j = 0; j < totalStake; j++)
                 {
                     string stakeColDbName = string.Format(stakeColDBFormat, j + 1);
-                    int index=i - totalBettype;
+                    int index = i - totalBettype;
                     var stake = new StakeLevel()
                     {
                         Name = stakeLevel[j],
                         IsAllow = (i - totalBettype) < 0 || CastAide.AsBoolean(rows[index][stakeColDbName]),
-                        IsChecked =CastAide.AsBoolean(row[stakeColDbName])
+                        IsChecked = CastAide.AsBoolean(row[stakeColDbName])
                     };
                     stake.IsChecked = stake.IsChecked && stake.IsAllow;
                     gameTypeSetting.StakeLevels.Add(stake);
@@ -218,9 +218,10 @@ namespace Sunplus.Accounting.Business.PT.Poker
             var listGameComm = new List<GameComm>();
             foreach (DataRow row in rows)
             {
-                var gameComm = new GameComm() {
+                var gameComm = new GameComm()
+                {
                     _Name = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["group_" + row["groupId"]].Value,
-                    Comm=CastAide.AsDouble(row["discount"],0).ToString(),
+                    Comm = CastAide.AsDouble(row["discount"], 0).ToString(),
                     MaxComm = CastAide.AsDouble(row["Maxdiscount"], 0).ToString(),
                     UplineComm = CastAide.AsDouble(row["Uplinediscount"], 0).ToString()
                 };
@@ -228,8 +229,6 @@ namespace Sunplus.Accounting.Business.PT.Poker
             }
             return listGameComm;
         }
-
-
 
         private PokerSetting GetPokerSetting(DbResult db)
         {
@@ -242,7 +241,6 @@ namespace Sunplus.Accounting.Business.PT.Poker
             //}
             try
             {
-
                 if (db != null && db.ResultSet.Tables.Count > 0)
                 {
                     DataRow info = db.ResultSet.Tables[0].Rows[0];
@@ -261,7 +259,6 @@ namespace Sunplus.Accounting.Business.PT.Poker
                     {
                         pokerSetting.GamesComm = getGameComm(db.ResultSet.Tables[2].Rows);
                     }
-
                 }
                 else
                 {
@@ -271,9 +268,9 @@ namespace Sunplus.Accounting.Business.PT.Poker
             }
             catch (Exception ex)
             {
-               LogExtensions.ExceptionHandler(ex);
-               pokerSetting.errCode = 100;
-               pokerSetting.errMessage = ex.ToString();
+                LogExtensions.ExceptionHandler(ex);
+                pokerSetting.errCode = 100;
+                pokerSetting.errMessage = ex.ToString();
             }
             return pokerSetting;
         }
@@ -289,18 +286,18 @@ namespace Sunplus.Accounting.Business.PT.Poker
             //}
             try
             {
-
                 if (db != null && db.ResultSet.Tables.Count > 0)
                 {
                     DataRow info = db.ResultSet.Tables[0].Rows[0];
 
-                    pokerStatus.CustInfo = new CustDetail() { 
+                    pokerStatus.CustInfo = new CustDetail()
+                    {
                         UserName = info["username"].ToString(),
-                        RoleId= CastAide.AsInt16(info["roleid"], 0)
+                        RoleId = CastAide.AsInt16(info["roleid"], 0)
                     };
-                    pokerStatus.disableP2P = CastAide.AsBoolean(info[string.Format(disableStatusDB,"","p2p")]);
-                    pokerStatus.disableDLP2P = CastAide.AsBoolean(info[string.Format(disableStatusDB,"downlines","p2p")]);
-                    pokerStatus.disableUplineP2P = CastAide.AsBoolean(info[string.Format(disableStatusDB,"uplines","p2p")]);
+                    pokerStatus.disableP2P = CastAide.AsBoolean(info[string.Format(disableStatusDB, "", "p2p")]);
+                    pokerStatus.disableDLP2P = CastAide.AsBoolean(info[string.Format(disableStatusDB, "downlines", "p2p")]);
+                    pokerStatus.disableUplineP2P = CastAide.AsBoolean(info[string.Format(disableStatusDB, "uplines", "p2p")]);
                     pokerStatus.disableFunP2P = CastAide.AsBoolean(info[string.Format(disableStatusDB, "", "funp2p")]);
                     pokerStatus.disableDLFunP2P = CastAide.AsBoolean(info[string.Format(disableStatusDB, "downlines", "funp2p")]);
                     pokerStatus.disableUplineFunP2P = CastAide.AsBoolean(info[string.Format(disableStatusDB, "uplines", "funp2p")]);
@@ -319,11 +316,13 @@ namespace Sunplus.Accounting.Business.PT.Poker
             }
             return pokerStatus;
         }
-        #endregion
+
+        #endregion Select
 
         #region Update
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="setting"></param>
         /// <param name="type">1:Commision, 2:GameSetting, 3:Transfer</param>
@@ -331,7 +330,7 @@ namespace Sunplus.Accounting.Business.PT.Poker
         public Result UpdatePoker(PokerSetting setting, int type)
         {
             var roleId = CastAide.AsInt32(setting.CustInfo.RoleId);
-            
+
             int type1 = roleId * 10 + type;
             var result = new Result();
             result.ErrorHandler = new Dictionary<int, string>();
@@ -350,8 +349,6 @@ namespace Sunplus.Accounting.Business.PT.Poker
 
                 var settingParams = new Hashtable();
 
-               
-                
                 // set cust param
                 settingParams.Add("custid", custId);
                 settingParams.Add("userid", userId);
@@ -377,14 +374,15 @@ namespace Sunplus.Accounting.Business.PT.Poker
                     case 3:
                         setBetSetting(setting.BetSetting, ref settingParams);
                         break;
+
                     default:
                         break;
-                } 
+                }
 
                 var dbResult = _pokerDAO.UpdateP2P(settingParams, type1);
 
                 string errorMsg = dbResult.ErrorMessage;
-                result.ErrorHandler.Add(dbResult.ErrorCode, errorMsg == string.Empty ? successMsg[type-1] : errorMsg);
+                result.ErrorHandler.Add(dbResult.ErrorCode, errorMsg == string.Empty ? successMsg[type - 1] : errorMsg);
             }
             catch (Exception ex)
             {
@@ -396,9 +394,8 @@ namespace Sunplus.Accounting.Business.PT.Poker
             return result;
         }
 
-        public Result UpdatePokerGameType(GameTypeSetting gameSetting,CustDetail custDetail, int type)
+        public Result UpdatePokerGameType(GameTypeSetting gameSetting, CustDetail custDetail, int type)
         {
-
             var roleId = CastAide.AsInt32(custDetail.RoleId);
 
             int type1 = roleId * 10 + type;
@@ -419,8 +416,6 @@ namespace Sunplus.Accounting.Business.PT.Poker
 
                 var settingParams = new Hashtable();
 
-
-               
                 // set cust param
                 settingParams.Add("custid", custId);
                 settingParams.Add("userid", userId);
@@ -470,7 +465,6 @@ namespace Sunplus.Accounting.Business.PT.Poker
 
                 var settingParams = new Hashtable();
 
-
                 // set cust param
                 settingParams.Add("custid", custId);
                 settingParams.Add("userid", userId);
@@ -485,13 +479,12 @@ namespace Sunplus.Accounting.Business.PT.Poker
                 settingParams.Add("errmsg", "");
                 settingParams.Add("ip", ipClient);
 
-                settingParams.Add(string.Format(disableStatusDB,"p2p",""), status.disableP2P);
-                settingParams.Add(string.Format(disableStatusDB,"p2p","downlines"), status.disableDLP2P);
-                settingParams.Add(string.Format(disableStatusDB,"funp2p",""), status.disableFunP2P);
-                settingParams.Add(string.Format(disableStatusDB,"funp2p","downlines"), status.disableDLFunP2P);
+                settingParams.Add(string.Format(disableStatusDB, "p2p", ""), status.disableP2P);
+                settingParams.Add(string.Format(disableStatusDB, "p2p", "downlines"), status.disableDLP2P);
+                settingParams.Add(string.Format(disableStatusDB, "funp2p", ""), status.disableFunP2P);
+                settingParams.Add(string.Format(disableStatusDB, "funp2p", "downlines"), status.disableDLFunP2P);
 
                 result = _pokerDAO.UpdateP2PStaus(settingParams);
-                
             }
             catch (Exception ex)
             {
@@ -516,8 +509,7 @@ namespace Sunplus.Accounting.Business.PT.Poker
                     result.ErrorHandler.Add(result.ErrorCode, result.ErrorMessage);
                     return result;
                 }
-                
-               
+
                 var settingParams = new Hashtable();
                 // static params
                 var userId = AppSession.AccId;
@@ -573,7 +565,6 @@ namespace Sunplus.Accounting.Business.PT.Poker
 
                 foreach (DefaultSettingItem item in items)
                 {
-
                     var settingParams = new Hashtable();
                     // static params
                     settingParams.Add("userid", userId);
@@ -611,7 +602,7 @@ namespace Sunplus.Accounting.Business.PT.Poker
         {
             for (int i = 0; i < gameComms.Count; i++)
             {
-                ht.Add(string.Format(discountDBFormat, i + 1), CastAide.AsDouble(gameComms[i].Comm,0));
+                ht.Add(string.Format(discountDBFormat, i + 1), CastAide.AsDouble(gameComms[i].Comm, 0));
             }
         }
 
@@ -628,13 +619,12 @@ namespace Sunplus.Accounting.Business.PT.Poker
             //  var gameType = gameTypes[i];
             for (int i = 0; i < gameType.StakeLevels.Count; i++)
             {
-                ht.Add(string.Format(stakeLevelDBFormat, i + 1), gameType.StakeLevels[i].IsChecked);    
+                ht.Add(string.Format(stakeLevelDBFormat, i + 1), gameType.StakeLevels[i].IsChecked);
             }
-            ht.Add("bettype",CastAide.AsInt32(gameType.ID));
+            ht.Add("bettype", CastAide.AsInt32(gameType.ID));
             //}
         }
 
-      
-        #endregion
+        #endregion Update
     }
 }

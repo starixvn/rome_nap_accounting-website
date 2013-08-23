@@ -18,7 +18,6 @@ public interface IServiceDirectBalance
     [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
     string GetDirectBalance_Downline(int custid, int pcustid, int roleid, string user);
 
-
     [OperationContract]
     [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
     ExcelFile ExportToExcel();

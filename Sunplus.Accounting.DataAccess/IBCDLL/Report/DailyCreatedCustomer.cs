@@ -2,9 +2,6 @@
 using System.Collections;
 using DNAide.Data;
 
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
-
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
 {
     public sealed class DailyCreatedCustomer
@@ -22,8 +19,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
@@ -41,8 +37,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }

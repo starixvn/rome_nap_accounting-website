@@ -8,10 +8,13 @@ namespace Sunplus.Accounting.Entities.Customer.PT.ViewPT
     {
         [DataMember]
         public int SportId { get; set; }
+
         [DataMember]
         public string SportName { get; set; }
+
         [DataMember]
         public List<Sport> Children { get; set; }
+
         [DataMember]
         public BettypeDTO Bettype { get; set; }
     }

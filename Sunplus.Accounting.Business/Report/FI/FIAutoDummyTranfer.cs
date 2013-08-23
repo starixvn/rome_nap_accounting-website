@@ -7,16 +7,13 @@ using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
 using DNAide.Web;
-using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.Core.Configurations;
-//using Sunplus.Core.LoggingLib;
 
-/// <summary> 
+
+/// <summary>
 /// Summary description for FIAutoDummyTranfer
 /// </summary>
 public partial class ReportHTML
@@ -51,6 +48,7 @@ public partial class ReportHTML
                         }
                     }
                     break;
+
                 case 102:
                     if (rs.ResultSet.Tables.Count > 0)
                     {
@@ -72,6 +70,7 @@ public partial class ReportHTML
                         msg += tpltable2;
                     }
                     break;
+
                 case 103:
                     if (rs.ResultSet.Tables.Count > 0)
                     {
@@ -86,7 +85,6 @@ public partial class ReportHTML
             }
 
             TemplateHandler.Assign(ref tpl, "content", msg);
-
 
             if (errcode > 0)
             {
@@ -106,11 +104,9 @@ public partial class ReportHTML
         }
         catch (Exception ex)
         {
-            
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
     }
-
 
     private static void WriteLogAutoDummyTransfer(string content)
     {
@@ -157,5 +153,5 @@ public partial class ReportHTML
         return sContent;
     }
 
-    #endregion
+    #endregion AutoDummyTransfer_Finance
 }

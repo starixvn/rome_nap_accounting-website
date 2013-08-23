@@ -5,15 +5,15 @@ using System.Text;
 using DNAide.Core;
 using DNAide.Data;
 using IBCUtils;
+using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Business.Security;
+using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web.Controls;
 using Sunplus.Accounting.Core.Web.TplCore.App_Templates.Settle.App_Templates.Settle;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Accounting.Core.Extensions;
 
 /// <summary>
 /// Summary description for MatchSettleLog
@@ -31,7 +31,7 @@ namespace Sunplus.Accounting.Business.Settle.Log
             return menu.ToString();
         }
 
-        #endregion
+        #endregion LoadMenu
 
         #region LoadHeaderForm
 
@@ -49,7 +49,7 @@ namespace Sunplus.Accounting.Business.Settle.Log
             return form.ToString();
         }
 
-        #endregion
+        #endregion LoadHeaderForm
 
         #region LoadMatchInfo
 
@@ -74,7 +74,7 @@ namespace Sunplus.Accounting.Business.Settle.Log
             if (rs.ResultSet.Tables[0].Rows.Count == 0)
             {
                 var noinfo = new ViewLogMatchDetailsNoInfo_Template();
-                noinfo.NoInfo = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata") ;
+                noinfo.NoInfo = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata");
                 html.Append(noinfo.ToString());
             }
             else
@@ -115,7 +115,7 @@ namespace Sunplus.Accounting.Business.Settle.Log
             return html.ToString();
         }
 
-        #endregion
+        #endregion LoadMatchInfo
 
         #region LoadMatchInfoDetails
 
@@ -183,7 +183,6 @@ namespace Sunplus.Accounting.Business.Settle.Log
                         content.class_ReMark = "";
                     }
 
-
                     content.IP = GetIP(CastAide.AsString(dr["ip"]), viewIpVn, iplocation);
                     details.ContentDetail.Append(content);
                 }
@@ -198,7 +197,7 @@ namespace Sunplus.Accounting.Business.Settle.Log
             return details.ToString();
         }
 
-        #endregion
+        #endregion LoadMatchInfoDetails
 
         #region GetIP
 
@@ -214,7 +213,7 @@ namespace Sunplus.Accounting.Business.Settle.Log
             return link;
         }
 
-        #endregion
+        #endregion GetIP
 
         public string ResouceExtension { get; set; }
     }

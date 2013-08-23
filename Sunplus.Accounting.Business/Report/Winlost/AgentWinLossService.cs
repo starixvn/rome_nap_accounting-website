@@ -17,10 +17,10 @@ namespace Sunplus.Accounting.Services.ReportServices
             list.Insert(list.Count, lastItem);
         }
 
-        #endregion
+        #endregion IWinLossService<AgentWinLoss> Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>
@@ -42,12 +42,12 @@ namespace Sunplus.Accounting.Services.ReportServices
                                      lastItem.Member.Comm += item.Member.Comm;
                                      lastItem.Member.WinLoss += item.Member.WinLoss;
                                      lastItem.Member.Total += item.Member.Total;
-                                     
+
                                      //agent
                                      lastItem.Agent.Comm += item.Agent.Comm;
                                      lastItem.Agent.WinLoss += item.Agent.WinLoss;
                                      lastItem.Agent.Total += item.Agent.Total;
-                                     
+
                                      //master
                                      lastItem.Master.Comm += item.Master.Comm;
                                      lastItem.Master.WinLoss += item.Master.WinLoss;

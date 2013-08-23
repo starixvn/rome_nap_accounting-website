@@ -1,16 +1,14 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Web;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
-
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Entities;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
-using System.Collections.Generic;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
@@ -34,7 +32,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// get all sport
         /// store procedure: Acc_SelSports
         /// @viet hoang
-        /// Using DNAide's Library 
+        /// Using DNAide's Library
         /// Tho.Nguyen updated: 12/2/2008
         /// </summary>
         /// <returns></returns>
@@ -42,8 +40,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
             var spElement = new GetSpConfig().GetStoreElement(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SettlementSession.StoreCollection.SettlementControl, "SelSports");
             return DbHelper.ExecuteReader(spElement.Name, spElement.DbName);
-
         }
+
         /// <summary>
         /// get league for settlement
         /// store procedure: Acc_Set_LeagueSel_1
@@ -51,7 +49,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// Using DNAide's Library
         /// Tho.Nguyen updated: 12/2/2008
         /// PHuong.Nguyen updated: 2009-01-14
-        /// </summary>        
+        /// </summary>
         public static IDataReader SettleSelectLeague(DateTime fromDate, DateTime toDate, int sporttype)
         {
             try
@@ -67,7 +65,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
@@ -80,7 +77,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// Using DNAide's library
         /// Tho.Nguyen updated: 12/2/2008
         /// Phuong.Nguyen updated: 20090206
-        /// </summary>        
+        /// </summary>
         public static DbResult SettleSelectMatch(int sporttype, DateTime fromDate, DateTime toDate, int leagueid, bool uncal, bool uncalmul)
         {
             try
@@ -99,7 +96,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
@@ -111,7 +107,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// @viet hoang
         /// Using DNAide's library
         /// Tho.Nguyen updated: 12/2/2008
-        /// </summary>       
+        /// </summary>
         public static DbResult SettleSelectCompleteMatch(int sporttype, DateTime eventdate)
         {
             try
@@ -126,7 +122,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
@@ -138,7 +133,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// @viet hoang
         /// Using DNAide's library
         /// Tho.Nguyen updated: 12/2/2008
-        /// </summary>       
+        /// </summary>
         public static DbResult SettleSelectCompleteHTMatch_soccer(DateTime eventdate, int sportID)
         {
             try
@@ -152,12 +147,10 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
         }
-
 
         /// <summary>
         /// Select match for bill in settlement
@@ -165,7 +158,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// @viet hoang
         /// Using DNAide's Library
         /// Tho.Nguyen updated: 12/2/2008
-        /// </summary>        
+        /// </summary>
         public static DbResult SelectMatchForBill(int matchID)
         {
             DbResult result = null;
@@ -184,9 +177,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
             }
             return result;
         }
@@ -197,7 +188,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// @viet hoang
         /// Using DNAide's Library
         /// Tho.Nguyen updated: 12/2/2008
-        /// </summary>        
+        /// </summary>
         public static DbResult SelectMatchForKeyScore(int matchID)
         {
             DbResult result = null;
@@ -215,9 +206,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
             }
             return result;
         }
@@ -228,7 +217,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// @viet hoang
         /// Using DNAide's library
         /// Tho.Nguyen updated: 12/2/2008
-        /// </summary>        
+        /// </summary>
         public static void Settlement(int custID, int matchID, int homeHT, int awayHT, int homeFT, int awayFT, string betStatus, string action, bool isHTCal, string goalrecord, ref int delaytime)
         {
             try
@@ -249,11 +238,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 
                 p.Add("ip", HttpContext.Current.Request.UserHostAddress);
 
-
                 var spElement = new GetSpConfig().GetStoreElement(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SettlementSession.StoreCollection.SettlementControl, "AdminSettlement1");
                 DbResult rs = DbHelper.Execute(spElement.Name, p, spElement.DbName, 1800);
                 delaytime = CastAide.AsInt16(rs.Outputs["delaytime"]);
-
             }
             catch (Exception ex)
             {
@@ -261,6 +248,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 throw ex;
             }
         }
+
         /// <summary>
         /// Using DNAide's Library
         /// Tho.Nguyen updated: 12/3/2008
@@ -285,12 +273,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-
                 Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
             }
         }
-
 
         /// <summary>
         /// Settlement Match Update Score
@@ -298,7 +283,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// @viet hoang
         /// Using DNAide's Library
         /// Tho.Nguyen updated: 12/3/2008
-        /// </summary>        
+        /// </summary>
         public static void KeyScore(int custID, int matchID, int homeHT, int awayHT, int homeFT, int awayFT, string betStatus)
         {
             try
@@ -326,13 +311,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// @viet hoang
         /// Using DNAide's library
         /// Tho.Nguyen updated: 12/2/2008
-        /// </summary>        
+        /// </summary>
         public static bool Refund(int custid, int matchid, bool IsExcludeBetdaq, bool IsSettleDeterminedTickets, ref string msg
             , string homeHScore, string awayHScore, string homeFScore, string awayFScore, string scoreConfirm_Betstatus)
         {
             try
             {
-                // ------------ refund---- 
+                // ------------ refund----
                 Hashtable pRefund = new Hashtable();
                 pRefund.Add("creator", custid);
                 pRefund.Add("matchid", matchid);
@@ -392,13 +377,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// @viet hoang
         /// Using DNAide's library
         /// Tho.Nguyen updated: 12/2/2008
-        /// </summary>                      
+        /// </summary>
         public static bool RefundFullTime(int custid, int matchid, bool IsExcludeBetdaq, bool IsSettleDeterminedTickets, ref string msg
             , string homeFScore, string awayFScore, string scoreConfirm_Betstatus)
         {
             try
             {
-                // ------------ refund---- 
+                // ------------ refund----
                 Hashtable pRefund = new Hashtable();
                 pRefund.Add("adminid", custid);
                 pRefund.Add("matchid", matchid);
@@ -424,13 +409,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 //pUpdate.Add("matchid", matchid);
                 //pUpdate.Add("command", "F");
 
-                //DbHelper.ExecuteCmd("updateMatch_remark", pUpdate, DBType.MAIN, 1800); 
+                //DbHelper.ExecuteCmd("updateMatch_remark", pUpdate, DBType.MAIN, 1800);
                 //// ---- refund logging
                 //Hashtable pLog = new Hashtable();
                 //pLog.Add("userid", custid);
                 //pLog.Add("doing", "Refund fulltime for matchid:" + matchid);
 
-                //DbHelper.ExecuteCmd("WriteLog_UserLog", pLog, DBType.MAIN, 180); 
+                //DbHelper.ExecuteCmd("WriteLog_UserLog", pLog, DBType.MAIN, 180);
 
                 if (!string.IsNullOrEmpty(msg)) return false;
                 return true;
@@ -445,13 +430,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <summary>
         /// Settlement refund halftime
         /// HuyNguyen updated: 7/21/2009
-        /// </summary>       
+        /// </summary>
         public static bool RefundHalfTime(int custid, int matchid, bool IsExcludeBetdaq, bool IsSettleDeterminedTickets, ref string msg
              , string homeHScore, string awayHScore)
         {
             try
             {
-                // ------------ refund---- 
+                // ------------ refund----
                 Hashtable pRefund = new Hashtable();
                 pRefund.Add("adminid", custid);
                 pRefund.Add("matchid", matchid);
@@ -484,7 +469,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// Using DNAide's Library
         /// Tho.Nguyen updated: 12/3/2008
         /// </summary>
-        /// <param name="custID"></param> 
+        /// <param name="custID"></param>
         /// <param name="matchID"></param>
         /// <param name="betStatus"></param>
         /// <param name="includeLG"></param>
@@ -501,14 +486,10 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 //var spElement = new GetSpConfig().GetStoreElement(StoreProcedureSection.StoreCollection.Settlement, "Admin_Settlement_Refund_FGLG");
                 var spElement = new GetSpConfig().GetStoreElement(Core.Configurations.StoreProcedureGroup.SettlementSession.StoreCollection.SettlementControl, "Admin_Settlement_Refund_FGLG");
                 DbHelper.ExecuteCmd(spElement.Name, pRefund, spElement.DbName, 1800);
-
-
             }
             catch (Exception ex)
             {
-
                 Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
             }
         }
 
@@ -525,14 +506,10 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 //var spElement = new GetSpConfig().GetStoreElement(StoreProcedureSection.StoreCollection.Settlement, "Admin_Settlement_Refund_FGLG");
                 var spElement = new GetSpConfig().GetStoreElement(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SettlementSession.StoreCollection.SettlementControl, "Admin_Settlement_Refund_FGLG");
                 DbHelper.ExecuteCmd(spElement.Name, pRefund, spElement.DbName, 1800);
-
-
             }
             catch (Exception ex)
             {
-
                 Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
             }
         }
 
@@ -542,7 +519,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// @viet hoang
         /// Using DNAide's library
         /// Tho.Nguyen updated: 12/2/2008
-        /// </summary>        
+        /// </summary>
         public static void Multiple(int custid, int matchid)
         {
             try
@@ -557,14 +534,10 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 var spElement = new GetSpConfig().GetStoreElement(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SettlementSession.StoreCollection.SettlementControl, "MultipleMixParlaySettlement");
                 DbHelper.ExecuteCmd(spElement.Name, p, spElement.DbName, 1800);
 
-
-
             }
             catch (Exception ex)
             {
-
                 Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
             }
         }
 
@@ -584,17 +557,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 //var spElement = new GetSpConfig().GetStoreElement(StoreProcedureSection.StoreCollection.Settlement, "Admin_Settlement_Parlay");
                 var spElement = new GetSpConfig().GetStoreElement(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SettlementSession.StoreCollection.SettlementControl, "MultipleMixParlaySettlement");
                 result = DbHelper.ExecuteCmd(spElement.Name, p, spElement.DbName, 1800);
-
             }
             catch (Exception ex)
             {
-
                 Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
             }
             return result;
         }
-
 
         /// <summary>
         /// Settlement update mixpalay cancel
@@ -602,13 +571,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// @viet hoang
         /// Using DNAide's library
         /// Tho.Nguyen updated: 12/2/2008
-        /// </summary>        
+        /// </summary>
         public static DbResult RefundMultiple(int custid, int matchid)
         {
             DbResult result = null;
             try
             {
-
                 Hashtable p = new Hashtable();
                 p.Add("creator", custid);
                 p.Add("matchids", matchid.ToString());
@@ -619,14 +587,10 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 var spElement = new GetSpConfig().GetStoreElement(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SettlementSession.StoreCollection.SettlementControl, "MultipleMixParlaySettlement");
                 result = DbHelper.ExecuteCmd(spElement.Name, p, spElement.DbName, 180);
 
-
-
             }
             catch (Exception ex)
             {
-
                 Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
             }
             return result;
         }
@@ -642,17 +606,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("action", "REFUND-HT");
                 p.Add("ip", HttpContext.Current.Request.UserHostAddress);
 
-
                 //var spElement = new GetSpConfig().GetStoreElement(StoreProcedureSection.StoreCollection.Settlement, "Admin_Settlement_Parlay");
                 var spElement = new GetSpConfig().GetStoreElement(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SettlementSession.StoreCollection.SettlementControl, "MultipleMixParlaySettlement");
                 result = DbHelper.ExecuteCmd(spElement.Name, p, spElement.DbName, 180);
-
             }
             catch (Exception ex)
             {
-
                 Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
             }
             return result;
         }
@@ -668,30 +628,23 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("action", "REFUND-FT");
                 p.Add("ip", HttpContext.Current.Request.UserHostAddress);
 
-
                 //var spElement = new GetSpConfig().GetStoreElement(StoreProcedureSection.StoreCollection.Settlement, "Admin_Settlement_Parlay");
                 var spElement = new GetSpConfig().GetStoreElement(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SettlementSession.StoreCollection.SettlementControl, "MultipleMixParlaySettlement");
                 result = DbHelper.ExecuteCmd(spElement.Name, p, spElement.DbName, 180);
-
             }
             catch (Exception ex)
             {
-
                 Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
             }
             return result;
         }
-
-
-
 
         /// <summary>
         /// HR Settle Get Horse by Race
         /// @huy nguyen
         /// Using DNAide's library
         /// Huy.Nguyen update: 3/13/2009
-        /// </summary>        
+        /// </summary>
         public static DbResult Acc_Set_HR_SelforBill(int leagueid, int raceno, string eventdate)
         {
             DbResult result = null;
@@ -705,17 +658,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 //var spElement = new GetSpConfig().GetStoreElement(StoreProcedureSection.StoreCollection.Settlement, "SetHRSelForBill");
                 var spElement = new GetSpConfig().GetStoreElement(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SettlementSession.StoreCollection.SettlementControl, "SetHRSelForBill");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 180);
-
             }
             catch (Exception ex)
             {
-
                 Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
             }
             return result;
         }
-
 
         /// <summary>
         /// Settlement Checking bettype Next Goal
@@ -760,9 +709,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-
                 Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
             }
             return rs;
         }
@@ -785,9 +732,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-
                 Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
             }
             return rs;
         }
@@ -811,9 +756,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-
                 Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
             }
             return rs;
         }
@@ -831,9 +774,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-
                 Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
             }
             var dtMatches = new DataTable();
             if (rs != null && rs.ResultSet != null && rs.ResultSet.Tables.Count > 0)
@@ -842,7 +783,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             return dtMatches;
         }
-
 
         public static DataTable GetNumberGameResult(DateTime fromDate, int leagueId)
         {
@@ -859,17 +799,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 {
                     dtResult = result.ResultSet.Tables[0];
                 }
-
-
             }
             catch (Exception ex)
             {
-
                 Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
             }
             return dtResult;
-
         }
 
         public static DataTable GetNumberGameSettlement(DateTime fromDate, DateTime toDate, int leagueId)
@@ -887,17 +822,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 {
                     dtResult = result.ResultSet.Tables[0];
                 }
-
-
             }
             catch (Exception ex)
             {
-
                 Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
             }
             return dtResult;
-
         }
 
         public static ErrorDetail RefundNumberGame(int matchId, int userId)
@@ -908,20 +838,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var p = new Hashtable { { "matchid", matchId }, { "adminid", userId }, { "action", "Refund" }, { "ip", HttpContext.Current.Request.UserHostAddress } };
 
-
                 //var spElement = new GetSpConfig().GetStoreElement(StoreProcedureSection.StoreCollection.Settlement, "Admin_Settlement_s161");
                 var spElement = new GetSpConfig().GetStoreElement(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SettlementSession.StoreCollection.SettlementControl, "Admin_Settlement_s161");
                 DbHelper.ExecuteCmd(spElement.Name, p, spElement.DbName, 180);
-
             }
             catch (Exception ex)
             {
-
                 Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
             }
             return result;
-
         }
 
         public static ErrorDetail RefundNumberGameFt(int matchId, int userId)
@@ -934,17 +859,14 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 var spElement = new GetSpConfig().GetStoreElement(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SettlementSession.StoreCollection.SettlementControl, "Admin_Settlement_s161");
                 DbHelper.ExecuteCmd(spElement.Name, p, spElement.DbName, 180);
                 //DbHelper.ExecuteCmd("Admin_Settlement_s161", p, DBType.MAIN, 180);
-
             }
             catch (Exception ex)
             {
-
                 Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
             }
             return result;
-
         }
+
         /// <summary>
         /// Send private message
         /// </summary>
@@ -959,7 +881,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             result.ErrorCode = 0;
             try
             {
-                var p = new Hashtable { 
+                var p = new Hashtable {
                     { "matchid", matchId }, { "adminid", userId }, { "action", action }, { "ip", HttpContext.Current.Request.UserHostAddress } ,
                     { "content_en", messageSend["EN"] }, { "content_ch", messageSend["CH"] }, { "content_cs", messageSend["CS"] }
                 };
@@ -972,12 +894,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 result.ErrorMessage = ex.Message;
 
                 Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
             }
             return result;
-
         }
-
 
         public class GetSpConfig : DataAccess
         {

@@ -1,4 +1,4 @@
-﻿ /// <summary>
+﻿/// <summary>
 /// Summary description for GameKindDetail
 /// </summary>
 
@@ -7,7 +7,6 @@ namespace Sunplus.Accounting.Entities.Casino
     public class GameKindDetail
     {
         private double _MasterMPositionTaking;
-
 
         public GameKindDetail()
         {

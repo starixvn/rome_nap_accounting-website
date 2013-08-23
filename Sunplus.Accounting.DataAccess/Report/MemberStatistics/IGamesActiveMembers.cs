@@ -1,5 +1,5 @@
-﻿using DNAide.Data;
-using System;
+﻿using System;
+using DNAide.Data;
 
 namespace Sunplus.Accounting.DataAccess.Report.MemberStatistics
 {

@@ -17,10 +17,10 @@ namespace Sunplus.Accounting.Services.ReportServices
             list.Insert(list.Count, lastItem);
         }
 
-        #endregion
+        #endregion IWinLossService<MemberWinLoss> Members
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>

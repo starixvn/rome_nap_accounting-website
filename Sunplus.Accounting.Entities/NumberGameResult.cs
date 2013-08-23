@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
+﻿using System.Runtime.Serialization;
 
 namespace Sunplus.Accounting.Entities
 {
@@ -15,36 +11,42 @@ namespace Sunplus.Accounting.Entities
             get;
             set;
         }
+
         [DataMember]
         public string Match
         {
             get;
             set;
         }
+
         [DataMember]
         public string Result
         {
             get;
             set;
         }
+
         [DataMember]
         public string FirstBall
         {
             get;
             set;
         }
+
         [DataMember]
         public string LastBall
         {
             get;
             set;
         }
+
         [DataMember]
         public string OUFT
         {
             get;
             set;
         }
+
         [DataMember]
         public string OEFT
         {

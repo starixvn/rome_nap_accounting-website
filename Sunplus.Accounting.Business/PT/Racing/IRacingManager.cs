@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.ServiceModel;
-using System.ServiceModel.Web;
-using Sunplus.Accounting.Entities;
+﻿using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.PositionTaking.Racing;
 
 namespace Sunplus.Accounting.Business.PT.Racing
 {
-    
     public interface IRacingManager
     {
         Setting GetStatusRacebook(int custId);

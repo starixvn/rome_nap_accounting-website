@@ -68,20 +68,17 @@ namespace Sunplus.Accounting.Entities.Casino
             set { _MinTransferCreditLimit = value; }
         }
 
-
         public double MaxTransferCreditLimit
         {
             get { return _MaxTransferCreditLimit; }
             set { _MaxTransferCreditLimit = value; }
         }
 
-
         public string CurrencyName
         {
             get { return _CurrencyName; }
             set { _CurrencyName = value; }
         }
-
 
         public string UserPwd
         {
@@ -209,7 +206,6 @@ namespace Sunplus.Accounting.Entities.Casino
             set { _ParentID = value; }
         }
 
-
         public int IBCCustID
         {
             get { return _IBCCustID; }
@@ -328,12 +324,19 @@ namespace Sunplus.Accounting.Entities.Casino
         }
 
         public string CasinoNo { get; set; }
+
         public bool SyncBingo { get; set; }
+
         public bool LiveCasinoSync { get; set; }
+
         public bool LiveCasinoDisabled { get; set; }
 
         public bool IsHideVirtualSports { get; set; }
+
         public bool IsDisableVirtualSports { get; set; }
+
         public string SiteName { get; set; }
+
+        public bool DisableBingo { get; set; }
     }
 }

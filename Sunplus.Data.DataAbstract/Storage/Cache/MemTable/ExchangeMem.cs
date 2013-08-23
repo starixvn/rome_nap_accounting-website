@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Sunplus.Data.DataAbstract.Entity;
+﻿using Sunplus.Data.DataAbstract.Entity;
 
 namespace Sunplus.Data.DataAbstract.Storage.Cache.MemTable
 {
@@ -10,18 +6,19 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.MemTable
     {
         private Manager _MemClient = null;
         private string _identify = "exchange_d_{0}";
-        public ExchangeMem() 
+
+        public ExchangeMem()
         {
             _MemClient = new Manager();
         }
 
-        public Exchange this[int exchangeId] 
+        public Exchange this[int exchangeId]
         {
-            get 
+            get
             {
-                return _MemClient.Get<Exchange>(string.Format(_identify, exchangeId.ToString())); 
+                return _MemClient.Get<Exchange>(string.Format(_identify, exchangeId.ToString()));
             }
-            set 
+            set
             {
                 if (value == null)
                 {
@@ -34,6 +31,10 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.MemTable
                 }
             }
         }
-        ~ExchangeMem() { _MemClient = null; }
+
+        ~ExchangeMem()
+        {
+            _MemClient = null;
+        }
     }
 }

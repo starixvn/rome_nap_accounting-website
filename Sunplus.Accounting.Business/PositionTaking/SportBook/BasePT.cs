@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Data;
 using System.Web;
-
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Sunplus.Accounting.Entities;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Business.Security;
-using Sunplus.Core.LoggingLib;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Entities;
 
-//using Sunplus.Core.LoggingLib;
+
 
 namespace Sunplus.Accounting.Business.PositionTaking.SportBook
 {
@@ -40,7 +38,6 @@ namespace Sunplus.Accounting.Business.PositionTaking.SportBook
         {
             throw new NotImplementedException();
         }
-
 
         public virtual string Select(PtManager.PtType ptType)
         {
@@ -97,6 +94,6 @@ namespace Sunplus.Accounting.Business.PositionTaking.SportBook
             throw new NotImplementedException();
         }
 
-        #endregion
+        #endregion Sports
     }
 }

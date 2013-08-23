@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using DNAide.Data;
-using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.DataAccess.ICreditTermDAO;
-using Fanex.Data;
-using System.Collections;
-using System.Data;
-using Sunplus.Accounting.Entities;
+﻿using System.Data;
 using DNAide.Core;
-using Sunplus.Accounting.Core.Common;
+using Fanex.Data;
+using Sunplus.Accounting.DataAccess.ICreditTermDAO;
+using Sunplus.Accounting.Entities;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.CreditTermDAO
 {
@@ -17,11 +10,10 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.CreditTermDAO
     {
         public DataTable GetAllGroup()
         {
-           
             using (ObjectDb objDB = new ObjectDb("GetAllGroup"))
             {
-                var ds=objDB.ExecuteDataSet();
-                if (ds.Tables.Count>0)
+                var ds = objDB.ExecuteDataSet();
+                if (ds.Tables.Count > 0)
                 {
                     return ds.Tables[0];
                 }

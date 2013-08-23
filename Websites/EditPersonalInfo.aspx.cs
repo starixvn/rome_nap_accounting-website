@@ -1,13 +1,9 @@
 using System;
 using System.Data;
 using DNAide.Web;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web.Controls;
-using Sunplus.Core.LoggingLib;
-using IBCUtils.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-
 
 public partial class EditPersonalInfo : System.Web.UI.Page
 {
@@ -22,13 +18,12 @@ public partial class EditPersonalInfo : System.Web.UI.Page
             _s = LoadTemplate(accid, accname);
         }
         catch (AccException ex)
-        {            
+        {
             Response.Write("<script type='text/javascript'>alert('" + ex.Message.ToString() + "');</script>");
-            Response.Write("<script type='text/javascript'>document.location.replace('" + Request.UrlReferrer.ToString() + "');</script>");            
+            Response.Write("<script type='text/javascript'>document.location.replace('" + Request.UrlReferrer.ToString() + "');</script>");
         }
         catch (Exception eex)
         {
-
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(eex);
         }
         this.sBody.Text = _s;
@@ -38,9 +33,9 @@ public partial class EditPersonalInfo : System.Web.UI.Page
     {
         string s = string.Empty;
         try
-        {            
+        {
             s = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplateBySystem("EditPersonalInfo.htm", true);
-            TemplateHandler.Assign(ref s, "{resetpassParam}", "uname=" +accname +"&uid=" +accid.ToString());
+            TemplateHandler.Assign(ref s, "{resetpassParam}", "uname=" + accname + "&uid=" + accid.ToString());
             using (IDataReader dr = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.AccPersonalInfo.AccInformationSelect(accid))
             {
                 dr.Read();
@@ -57,13 +52,13 @@ public partial class EditPersonalInfo : System.Web.UI.Page
                 TemplateHandler.Assign(ref s, "{mobile}", dr["mobilephone"].ToString());
                 TemplateHandler.Assign(ref s, "{fax}", dr["fax"].ToString());
                 TemplateHandler.Assign(ref s, "{city}", dr["city"].ToString());
-                TemplateHandler.Assign(ref s, "{country}", dr["country"].ToString());                
+                TemplateHandler.Assign(ref s, "{country}", dr["country"].ToString());
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            LogExtensions.ExceptionHandler(ex); 
+            LogExtensions.ExceptionHandler(ex);
         }
         return s;
-    }   
+    }
 }

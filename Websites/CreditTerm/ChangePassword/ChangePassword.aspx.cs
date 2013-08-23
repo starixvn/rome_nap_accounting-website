@@ -1,25 +1,23 @@
 using System;
-using System.Web.Security;
 using System.Text;
-using Sunplus.Accounting.Business;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Entities.Casino;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Core.LoggingLib;
+using System.Web.Security;
 using IBCUtils;
+using Sunplus.Accounting.Business;
 using Sunplus.Accounting.Business.Customer;
-
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.Entities.Casino;
 
 /// <summary>
 /// CITS
 /// </summary>
 public partial class ChangePassword_ChangePassword : System.Web.UI.Page
 {
-    string str = "";
-    string errMsg = "";
+    private string str = "";
+    private string errMsg = "";
     public string msg = "";
+
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -28,29 +26,28 @@ public partial class ChangePassword_ChangePassword : System.Web.UI.Page
             StringBuilder html = new StringBuilder();
             if (Session["AccId"] == null || (Session["CustId"] == null && Request["custId"] == null))
             {
-
                 html.Append(AlertMessage.GetMsg("Session is expired, please re log-in ", AlertMessage.MsgType.Error));
                 content.Text = html.ToString();
                 return;
             }
-            
+
             int custid = Convert.ToInt32(Session["CustId"]);
             int userid = Convert.ToInt32(Session["AccId"]);
-            string strUsername=Convert.ToString(Session["CustUname"]);
+            string strUsername = Convert.ToString(Session["CustUname"]);
             bool isRequest = false;
-            
+
             string strCustID = "";
-            if (Request["custId"] !=null)
+            if (Request["custId"] != null)
             {
                 custid = Convert.ToInt32(Request["custId"]);
-                strCustID +=Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("Hidden.htm", new string[] { "{name}", "{strValue}" }, new string[] { "custId", custid.ToString() });                                
+                strCustID += Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("Hidden.htm", new string[] { "{name}", "{strValue}" }, new string[] { "custId", custid.ToString() });
             }
-            if(Request["uname"] !=null)
+            if (Request["uname"] != null)
             {
-                strUsername=Convert.ToString(Request["uname"]);
-                strCustID +=Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("Hidden.htm", new string[] { "{name}", "{strValue}" }, new string[] { "uname", strUsername });
+                strUsername = Convert.ToString(Request["uname"]);
+                strCustID += Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("Hidden.htm", new string[] { "{name}", "{strValue}" }, new string[] { "uname", strUsername });
                 isRequest = true;
-            }                       
+            }
             string language = "E";
             string txtPass = Request["txtPass"];
             string txtConfirmPass = Request["txtConfirmPass"];
@@ -64,9 +61,9 @@ public partial class ChangePassword_ChangePassword : System.Web.UI.Page
             if (txtPass.Length == 0)
                 str = AlertMessage.GetMsg("Sorry, password cannot be empty.", AlertMessage.MsgType.Error);
             else if (txtPass.Length < 4)
-                str = AlertMessage.GetMsg("Password must have at least 4 characters.",AlertMessage.MsgType.Error);
-            else if(!txtPass.Equals(txtConfirmPass))
-                str = AlertMessage.GetMsg("Password was not correctly confirmed.",AlertMessage.MsgType.Error);
+                str = AlertMessage.GetMsg("Password must have at least 4 characters.", AlertMessage.MsgType.Error);
+            else if (!txtPass.Equals(txtConfirmPass))
+                str = AlertMessage.GetMsg("Password was not correctly confirmed.", AlertMessage.MsgType.Error);
             else if (changePWD(custid, encodepwd, userid, language))
             {
                 if (!isRequest)
@@ -76,7 +73,7 @@ public partial class ChangePassword_ChangePassword : System.Web.UI.Page
                 else
                 {
                     if (DNAide.Core.CastAide.AsInt32(Session["AccId"]) == DNAide.Core.CastAide.AsInt32(Request["custId"]))
-                    {                        
+                    {
                         Session["AccPwd"] = encodepwd;
 
                         string rndStr = Encryption.RandomString(6);
@@ -88,17 +85,17 @@ public partial class ChangePassword_ChangePassword : System.Web.UI.Page
                         script += "parent.window.top.leftPanel.document.getElementById('chalengeStr').value='" + rndStr + "';";
                         script += "window.close();";
                         script += "</script>";
-                        Response.Write(script);                        
+                        Response.Write(script);
                     }
                     else
                         Response.Write("<script type=\"text/javascript\">parent.ibcWnd.close();</script>");
                 }
             }
-            else if(errMsg !="")
+            else if (errMsg != "")
             {
                 str = AlertMessage.GetMsg(errMsg, AlertMessage.MsgType.Error);
             }
-            string strUname=Session["CustUname"] as string ?? string.Empty;
+            string strUname = Session["CustUname"] as string ?? string.Empty;
             html.Append(Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("ChangePassword/ChangePassword.htm", new string[] { "{username}", "{hidden}" }, new string[] { strUname, strCustID }));
             content.Text = html.ToString();
             msg = str;
@@ -109,8 +106,8 @@ public partial class ChangePassword_ChangePassword : System.Web.UI.Page
         }
     }
 
-    bool changePWD(int custid, string userpwd, int userid, string language)
-    {        
+    private bool changePWD(int custid, string userpwd, int userid, string language)
+    {
         try
         {
             CSCustomerDetail custcs = Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider.Instance.GetBasicCustInfoIBC(custid);
@@ -147,11 +144,10 @@ public partial class ChangePassword_ChangePassword : System.Web.UI.Page
                 }
             }
         }
-        catch (Exception ex) 
+        catch (Exception ex)
         {
             LogExtensions.ExceptionHandler(ex);
             return false;
         }
-       
     }
 }

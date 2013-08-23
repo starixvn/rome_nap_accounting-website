@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Sunplus.Accounting.Entities.SpecialDelete
 {
@@ -20,7 +18,7 @@ namespace Sunplus.Accounting.Entities.SpecialDelete
         public string AwayName { get; set; }
 
         [DataMember]
-        public string EventDate{ get; set; }
+        public string EventDate { get; set; }
 
         [DataMember]
         public int ErrorCode { get; set; }
@@ -36,9 +34,7 @@ namespace Sunplus.Accounting.Entities.SpecialDelete
 
         [DataMember]
         public List<string> TransIdNormalBet { get; set; }
-        
     }
-
 
     [Serializable]
     [DataContract]

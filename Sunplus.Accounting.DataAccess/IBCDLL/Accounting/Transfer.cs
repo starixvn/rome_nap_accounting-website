@@ -1,27 +1,24 @@
 ﻿using System;
 using System.Collections;
+using DNAide.Core;
 using DNAide.Data;
-
-using Sunplus.Accounting.Core.Common;
+using Fanex.Data;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
-using Sunplus.Core.LoggingLib;
-using Fanex.Data;
 using Sunplus.Accounting.Entities;
-using DNAide.Core;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
-    public sealed class Transfer:DataAccess
+    public sealed class Transfer : DataAccess
     {
         private static StoreProcedureElement GetCustomerStoreProcedure(string aliasName)
         {
             var sps = CustomerSession.Instance[CustomerSession.StoreCollection.CustomerControl];
             return sps != null ? sps[aliasName] : null;
-
         }
+
         /// <summary>
-        /// call SP BettransInsTransferAdmin 
+        /// call SP BettransInsTransferAdmin
         /// @author:Vu Hanh
         /// </summary>
         /// <param name="fromCustId">fromCustId</param>
@@ -65,8 +62,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return isUpdated;
         }
@@ -92,8 +88,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
@@ -144,18 +139,18 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 }
             }
             catch (Exception ex)
-            {                
+            {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                return new Result() {
+                return new Result()
+                {
                     ErrorCode = 100,
                     ErrorMessage = ex.Message
                 };
             }
-            
         }
 
         /// <summary>
-        /// Confirm Insert Bettrans Transfer 
+        /// Confirm Insert Bettrans Transfer
         /// store procedure: Acc_BettransInsTransfer_Confirm
         /// @viet hoang
         /// Using DNAide's Library
@@ -184,8 +179,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dr;
         }
@@ -212,7 +206,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 db.AssignParamValues(p);
                 db.ExecuteNonQuery();
 
-                return new Result() { 
+                return new Result()
+                {
                     ErrorCode = CastAide.AsInt32(db.GetParameterValue("errcode")),
                     ErrorMessage = string.Format("{0}", db.GetParameterValue("errmsg"))
                 };
@@ -220,7 +215,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         }
 
         public static Result TransferAllDownlines(int custID, string agentName, string ip)
-        {            
+        {
             using (ObjectDb db = new ObjectDb("Acc_ClearBalanceAllDownlines", 600))
             {
                 var p = new Hashtable();

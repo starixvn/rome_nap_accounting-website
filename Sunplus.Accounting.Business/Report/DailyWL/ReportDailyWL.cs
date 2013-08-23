@@ -3,20 +3,18 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Web;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
-using Sunplus.Accounting.Core.Cache;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.DataAccess.AdoNet.ReportDAO;
-using Sunplus.Accounting.DataAccess.IBCDLL.AgentReport;
-using Sunplus.Accounting.DataAccess.IReportDAO;
-using Sunplus.Accounting.Entities.Report.DailyWL;
 using ExcelUtil.Spreadsheet;
 using Sunplus.Accounting.Business.PositionTaking;
+using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.DataAccess.AdoNet.ReportDAO;
+using Sunplus.Accounting.DataAccess.IReportDAO;
+using Sunplus.Accounting.Entities.Report.DailyWL;
 using Sunplus.Accounting.Entities.Report.Mixparlay;
 
 namespace Sunplus.Accounting.Business.Report.DailyWL
@@ -33,7 +31,6 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
         {
             _reportRacingDao = reportRacingDao;
         }
-
 
         #region DailyWLDirectRacing
 
@@ -63,8 +60,8 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
                                             Margin = CastAide.AsDecimal(row["Turnover"]) == 0
                                                          ? "N/A"
                                                          : NumberFormat.DecFormat(
-                                                             CastAide.AsDecimal(row["LineTotal"])/
-                                                             CastAide.AsDecimal(row["Turnover"])*100, 2) + "%",
+                                                             CastAide.AsDecimal(row["LineTotal"]) /
+                                                             CastAide.AsDecimal(row["Turnover"]) * 100, 2) + "%",
                                         });
             }
 
@@ -80,18 +77,17 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
             total.Margin = CastAide.AsDecimal(total.Turnover) == 0
                                ? "N/A"
                                : NumberFormat.DecFormat(
-                                   CastAide.AsDecimal(total.LineTotal)/CastAide.AsDecimal(total.Turnover)*100, 2) + "%";
+                                   CastAide.AsDecimal(total.LineTotal) / CastAide.AsDecimal(total.Turnover) * 100, 2) + "%";
 
             dailyWlbo.Totals.Add(total);
 
-            #endregion
+            #endregion Total
 
             SessionExtension.AddSession(HttpContext.Current.Session, _dailyWlDirectRacingSessionKey, dailyWlbo);
             return dailyWlbo;
         }
 
-        #endregion
-
+        #endregion DailyWLDirectRacing
 
         #region DailyWLDirectRacingBySport
 
@@ -121,8 +117,8 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
                                             Margin = CastAide.AsDecimal(row["Turnover"]) == 0
                                                          ? "N/A"
                                                          : NumberFormat.DecFormat(
-                                                             CastAide.AsDecimal(row["LineTotal"])/
-                                                             CastAide.AsDecimal(row["Turnover"])*100, 2) + "%",
+                                                             CastAide.AsDecimal(row["LineTotal"]) /
+                                                             CastAide.AsDecimal(row["Turnover"]) * 100, 2) + "%",
                                         });
             }
 
@@ -138,18 +134,18 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
             total.Margin = CastAide.AsDecimal(total.Turnover) == 0
                                ? "N/A"
                                : NumberFormat.DecFormat(
-                                   CastAide.AsDecimal(total.LineTotal)/CastAide.AsDecimal(total.Turnover)*100, 2) + "%";
+                                   CastAide.AsDecimal(total.LineTotal) / CastAide.AsDecimal(total.Turnover) * 100, 2) + "%";
 
             dailyWlbo.Totals.Add(total);
 
-            #endregion
+            #endregion Total
 
             SessionExtension.AddSession(HttpContext.Current.Session,
                                         string.Format(_dailyWlDirectRacingBySportSessionKey, sporttype), dailyWlbo);
             return dailyWlbo;
         }
 
-        #endregion
+        #endregion DailyWLDirectRacingBySport
 
         #region DailyWLDirectRacingBySportDetails
 
@@ -190,13 +186,13 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
                     rowBo.Margin = CastAide.AsDecimal(row["Turnover"]) == 0
                                        ? "N/A"
                                        : NumberFormat.DecFormat(
-                                           CastAide.AsDecimal(row["LineTotal"])/CastAide.AsDecimal(row["Turnover"])*100,
+                                           CastAide.AsDecimal(row["LineTotal"]) / CastAide.AsDecimal(row["Turnover"]) * 100,
                                            2) + "%";
 
                     League.Items.Add(rowBo);
                     AllLeague.Add(rowBo);
 
-                    #endregion
+                    #endregion row
                 }
 
                 #region total
@@ -223,18 +219,17 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
                                           Margin = League.Items.Sum(s => CastAide.AsDecimal(s.Turnover)) == 0
                                                        ? "N/A"
                                                        : NumberFormat.DecFormat(
-                                                           League.Items.Sum(s => CastAide.AsDecimal(s.LineTotal))/
-                                                           League.Items.Sum(s => CastAide.AsDecimal(s.Turnover))*100, 2) +
+                                                           League.Items.Sum(s => CastAide.AsDecimal(s.LineTotal)) /
+                                                           League.Items.Sum(s => CastAide.AsDecimal(s.Turnover)) * 100, 2) +
                                                          "%"
                                       });
 
                 dailyWlbo.Items.Add(League);
 
-                #endregion
-
+                #endregion total
             }
 
-            #endregion
+            #endregion League
 
             #region grand Total
 
@@ -259,19 +254,19 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
                                          Margin = AllLeague.Sum(s => CastAide.AsDecimal(s.Turnover)) == 0
                                                       ? "N/A"
                                                       : NumberFormat.DecFormat(
-                                                          AllLeague.Sum(s => CastAide.AsDecimal(s.LineTotal))/
-                                                          AllLeague.Sum(s => CastAide.AsDecimal(s.Turnover))*100, 2) +
+                                                          AllLeague.Sum(s => CastAide.AsDecimal(s.LineTotal)) /
+                                                          AllLeague.Sum(s => CastAide.AsDecimal(s.Turnover)) * 100, 2) +
                                                         "%"
                                      });
 
-            #endregion
+            #endregion grand Total
 
             SessionExtension.AddSession(HttpContext.Current.Session,
                                         string.Format(_dailyWlDirectRacingBySportDetails, bettype), dailyWlbo);
             return dailyWlbo;
         }
 
-        #endregion
+        #endregion DailyWLDirectRacingBySportDetails
 
         #region export 2 excel
 
@@ -287,17 +282,17 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
             var wsReport = excelFile.Worksheets.Add("DailyWinLossRacing");
             var getSession = SessionExtension.GetSession(HttpContext.Current.Session, _dailyWlDirectRacingSessionKey);
             var wlData = getSession != null
-                             ? (DailyWLBO) getSession
+                             ? (DailyWLBO)getSession
                              : DailyWLDirectRacing(winlossDate);
 
-            #endregion
+            #endregion excel format
 
             #region Header
 
             var reportHeaderTitle = "Daily WinLoss Racing";
             RacingReportHeader(ref wsReport, startCol, startRow, true, false, false, reportHeaderTitle);
 
-            #endregion
+            #endregion Header
 
             #region Body
 
@@ -307,7 +302,7 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
                 RacingReporBody(ref wsReport, wlData.Totals, startCol, startRow, ref nextRow, true, false, false);
             }
 
-            #endregion
+            #endregion Body
 
             #region response file
 
@@ -317,7 +312,7 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
             excelFile.SaveXls(response.OutputStream);
 
-            #endregion
+            #endregion response file
         }
 
         public void Export2ExcelDailyWLDirectRacingBySport(string sporttype, string winlossDate)
@@ -334,17 +329,17 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
             var getSession = SessionExtension.GetSession(HttpContext.Current.Session,
                                                          string.Format(_dailyWlDirectRacingBySportSessionKey, sporttype));
             var wlData = getSession != null
-                             ? (DailyWLBO) getSession
+                             ? (DailyWLBO)getSession
                              : DailyWLDirectRacingBySport(sporttype, winlossDate);
 
-            #endregion
+            #endregion excel format
 
             #region Header
 
             var reportHeaderTitle = string.Format("Daily WinLoss Racing - {0}", sportName);
             RacingReportHeader(ref wsReport, startCol, startRow, false, true, false, reportHeaderTitle);
 
-            #endregion
+            #endregion Header
 
             #region Body
 
@@ -354,7 +349,7 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
                 RacingReporBody(ref wsReport, wlData.Totals, startCol, startRow, ref nextRow, true, false, false);
             }
 
-            #endregion
+            #endregion Body
 
             #region response file
 
@@ -364,7 +359,7 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
             excelFile.SaveXls(response.OutputStream);
 
-            #endregion
+            #endregion response file
         }
 
         public void Export2ExcelDailyWLDirectRacingBySportDetails(string sporttype, string bettype, string winlossDate)
@@ -385,17 +380,17 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
             var getSession = SessionExtension.GetSession(HttpContext.Current.Session,
                                                          string.Format(_dailyWlDirectRacingBySportDetails, bettype));
             var wlData = getSession != null
-                             ? (DailyWLDTO) getSession
+                             ? (DailyWLDTO)getSession
                              : DailyWLDirectRacingBySportDetails(winlossDate, sportName, bettype);
 
-            #endregion
+            #endregion excel format
 
             #region Header
 
             var reportHeaderTitle = string.Format("Daily WinLoss Racing - {0} - {1}", sportName, bettypeName);
             RacingReportHeader(ref wsReport, startCol, startRow, false, false, true, reportHeaderTitle);
 
-            #endregion
+            #endregion Header
 
             #region Body
 
@@ -418,7 +413,7 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
                 RacingReporBody(ref wsReport, wlData.Totals, startCol, startRow, ref nextRow, true, false, true);
             }
 
-            #endregion
+            #endregion Body
 
             #region response file
 
@@ -428,7 +423,7 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
             excelFile.SaveXls(response.OutputStream);
 
-            #endregion
+            #endregion response file
         }
 
         private static void RacingReportHeader(ref ExcelWorksheet wsReport, int startCol, int startRow,
@@ -457,15 +452,15 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
             wsReport.Cells[startRow - 1, startCol].Value = typeTilte;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Style = bgHeader;
             wsReport.Cells[startRow - 1, startCol + nextCol].Value = winLossTitle;
-            wsReport.Cells[startRow - 1, startCol + (nextCol+=1)].Style = bgHeader;
+            wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeader;
             wsReport.Cells[startRow - 1, startCol + nextCol].Value = positionTitle;
-            wsReport.Cells[startRow - 1, startCol + (nextCol+=1)].Style = bgHeader;
+            wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeader;
             wsReport.Cells[startRow - 1, startCol + nextCol].Value = commTitle;
-            wsReport.Cells[startRow - 1, startCol + (nextCol+=1)].Style = bgHeader;
+            wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeader;
             wsReport.Cells[startRow - 1, startCol + nextCol].Value = lineTotalTitle;
-            wsReport.Cells[startRow - 1, startCol + (nextCol+=1)].Style = bgHeader;
+            wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeader;
             wsReport.Cells[startRow - 1, startCol + nextCol].Value = turnoverTitle;
-            wsReport.Cells[startRow - 1, startCol + (nextCol+=1)].Style = bgHeader;
+            wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeader;
             wsReport.Cells[startRow - 1, startCol + nextCol].Value = marginTitle;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Style = bgHeader;
         }
@@ -499,27 +494,27 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
                                                                          : dailyWlRowRow.Name;
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style = bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDecimal(dailyWlRowRow.WinLoss);
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol+=1)].Style = bgFormat;
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDecimal(dailyWlRowRow.Position);
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol+=1)].Style = bgFormat;
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDecimal(dailyWlRowRow.Comm);
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol+=1)].Style = bgFormat;
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
 
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Value =
                     CastAide.AsDecimal(dailyWlRowRow.LineTotal);
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol+=1)].Style = isFooter || isTotal
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = isFooter || isTotal
                                                                                        ? bgLineTotalFormat
                                                                                        : bgFormat;
 
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDecimal(dailyWlRowRow.Turnover);
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol+=1)].Style = isFooter || isTotal
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = isFooter || isTotal
                                                                                        ? bgTurnoverFormat
                                                                                        : bgFormat;
 
                 if (CastAide.AsDouble(dailyWlRowRow.Turnover) != 0)
                 {
                     wsReport.Cells[startRow + nextRow, startCol + nextCol].Value =
-                        CastAide.AsDouble(dailyWlRowRow.Margin.Replace("%", ""))/100;
+                        CastAide.AsDouble(dailyWlRowRow.Margin.Replace("%", "")) / 100;
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style = bgFormatPercent;
                 }
                 else
@@ -530,12 +525,10 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
                         HorizontalAlignmentStyle.Right;
                 }
 
-
                 nextRow++;
                 rowIndex++;
             }
         }
-
 
         private static string GetRacebookName(int sportId)
         {
@@ -545,14 +538,17 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
                 case Constants.Sport.HorseRacing:
                     sportName = "Horse Racing";
                     break;
+
                 case Constants.Sport.Greyhound:
                     sportName = ResourceExtension.GetResourceValue(
                         ResourceExtension.Resources.Language, "Greyhound");
                     break;
+
                 case Constants.Sport.Harness:
                     sportName = ResourceExtension.GetResourceValue(
                         ResourceExtension.Resources.Language, "Harness");
                     break;
+
                 default:
                     break;
             }
@@ -560,8 +556,7 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
             return sportName;
         }
 
-        #endregion
-
+        #endregion export 2 excel
 
         public DNAide.Data.DbResult DailyWLDirect_Sporttype(string winlossdate)
         {
@@ -570,14 +565,12 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
 
         #region IReportDailyWL Members
 
-
         public DNAide.Data.DbResult DailyWLDirect_MixParlay(string winlossdate, int bettype)
         {
             return _reportRacingDao.DailyWLDirect_MixParlay(winlossdate, bettype);
         }
 
-        #endregion
-
+        #endregion IReportDailyWL Members
 
         public MixParlayView DailyWLDirect_MixParlayAdvance(string winlossdate, int bettype)
         {
@@ -593,7 +586,7 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
                 if (tb != null)
                 {
                     DataRow[] liveTypeRows = tb.DefaultView.ToTable(true, "LiveType").Select();
-                    //create object MixParlayView 
+                    //create object MixParlayView
                     double GrandtotalComm = 0;
                     double GrandtotalWinloss = 0;
                     double GrandtotalPosition = 0;
@@ -677,8 +670,6 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
                                 SubtotalTurnover += CastAide.AsDouble(wlDetail["Turnover"]);
                                 SubtotalLineTotal += CastAide.AsDouble(wlDetail["LineTotal"]);
 
-
-
                             }
                             sportType.TotalItems = WLDetails.Count() + 1;
                             sportType.SubTotal = new WinLossDetail
@@ -700,7 +691,6 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
                             totalWinloss += SubtotalWinloss;
                             totalLineTotal += SubtotalLineTotal;
                             totalTurnover += SubtotalTurnover;
-
                         }
                         liveType.TotalItems = TotalSport;
                         liveType.Total = new WinLossDetail
@@ -713,7 +703,6 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
                             Margin = totalTurnover == 0
                                          ? "N/A"
                                          : NumberFormat.DecFormat(totalLineTotal / totalTurnover * 100, 2)
-
                         };
                         GrandtotalComm += totalComm;
                         GrandtotalTurnover += totalTurnover;
@@ -721,7 +710,6 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
                         GrandtotalPosition += totalPosition;
                         GrandtotalLineTotal += totalLineTotal;
                         mixparlayView.ListLiveType.Add(liveType);
-
                     }
                     mixparlayView.GrandTotal = new WinLossDetail
                     {
@@ -741,13 +729,11 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
             }
             catch (Exception ex)
             {
-                
-               LogExtensions.ExceptionHandler(ex);
+                LogExtensions.ExceptionHandler(ex);
             }
-            
+
             return mixparlayView;
         }
-
 
         public void Export2ExcelDailyWLDirectMixParlayAdvance(string winlossdate, int bettype, string reportTitle)
         {
@@ -766,30 +752,32 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
             var excelFile = new ExcelFile();
             var wsReport = excelFile.Worksheets.Add(reportName);
 
-            #endregion
+            #endregion excel format
 
             #region header
 
             wsReport.Columns[0].Width = 20 * 256;
-            wsReport.Columns[1].Width = 15*256;
-            wsReport.Columns[2].Width = 15*256;
+            wsReport.Columns[1].Width = 15 * 256;
+            wsReport.Columns[2].Width = 15 * 256;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + 8).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + 8).Style.Font.Weight = ExcelFont.BoldWeight;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + 8).Style.
                 HorizontalAlignment = HorizontalAlignmentStyle.Center;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + 8).Value = reportTitle;
             Export2ExcelDailyWLDirectMixParlayAdvanceHeader(ref wsReport, startRow, startCol);
-            #endregion
+
+            #endregion header
 
             #region content
-            if(getReportData!=null && getReportData.ListLiveType.Count > 0)
+
+            if (getReportData != null && getReportData.ListLiveType.Count > 0)
             {
                 /*foreach (LiveTypeDetail liveTypeDetail in getReportData.ListLiveType)
                 {
                     Export2ExcelDailyWLDirectMixParlayAdvanceContent(ref wsReport, startRow, startCol, ref nextRow,
                                                                      liveTypeDetail);
                 }*/
-                if(getReportData.ListLiveType.Count > 2)
+                if (getReportData.ListLiveType.Count > 2)
                 {
                     Export2ExcelDailyWLDirectMixParlayAdvanceContent(ref wsReport, startRow, startCol, ref nextRow,
                                                                    getReportData.ListLiveType[1], 221, 217, 196);
@@ -800,13 +788,12 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
                 }
                 else if (getReportData.ListLiveType.Count > 1)
                 {
-                    if(getReportData.ListLiveType[0].LiveName == "Live" && getReportData.ListLiveType[1].LiveName == "Non Live")
+                    if (getReportData.ListLiveType[0].LiveName == "Live" && getReportData.ListLiveType[1].LiveName == "Non Live")
                     {
                         Export2ExcelDailyWLDirectMixParlayAdvanceContent(ref wsReport, startRow, startCol, ref nextRow,
                                                                  getReportData.ListLiveType[1], 221, 217, 196);
                         Export2ExcelDailyWLDirectMixParlayAdvanceContent(ref wsReport, startRow, startCol, ref nextRow,
                                                                             getReportData.ListLiveType[0], 202, 240, 145);
-                       
                     }
                     else
                     {
@@ -814,26 +801,22 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
                                                                 getReportData.ListLiveType[0], 221, 217, 196);
                         Export2ExcelDailyWLDirectMixParlayAdvanceContent(ref wsReport, startRow, startCol, ref nextRow,
                                                                             getReportData.ListLiveType[1], 202, 240, 145);
-                       
                     }
-                    
                 }
                 else if (getReportData.ListLiveType.Count > 0)
                 {
                     Export2ExcelDailyWLDirectMixParlayAdvanceContent(ref wsReport, startRow, startCol, ref nextRow,
                                                                 getReportData.ListLiveType[0], 221, 217, 196);
                 }
-               
+
                 #region footer
 
                 Export2ExcelDailyWLDirectMixParlayAdvanceFooter(ref wsReport, startRow, startCol, nextRow, getReportData.GrandTotal);
 
-                #endregion
+                #endregion footer
             }
 
-            
-            #endregion
-
+            #endregion content
 
             #region response file
 
@@ -843,7 +826,7 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
             excelFile.SaveXls(response.OutputStream);
 
-            #endregion
+            #endregion response file
         }
 
         private void Export2ExcelDailyWLDirectMixParlayAdvanceHeader(ref ExcelWorksheet wsReport, int startRow, int startCol)
@@ -852,11 +835,11 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
             var nextCol = 0;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = string.Empty;
-            wsReport.Cells[startRow - 1, startCol + (nextCol+=1)].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = "Sporttype";
             wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = "Bettype";
-            wsReport.Cells[startRow - 1, startCol + (nextCol+=1)].Style = bgHeaderNormalFormat;
+            wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = "WinLoss";
             wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = "Position";
@@ -868,7 +851,6 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "TurnOver");
             wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = "Margin";
-
         }
 
         private void Export2ExcelDailyWLDirectMixParlayAdvanceContent(ref ExcelWorksheet wsReport, int startRow, int startCol, ref int nextRow, LiveTypeDetail liveTypeDetail, int r, int g, int b)
@@ -888,7 +870,7 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
             var percentSubFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00%", Color.FromArgb(222, 210, 190), true, true);
             var percentTotalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumberTotal(".00%", Color.FromArgb(33, 89, 103), true, true);
 
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow + liveTypeDetail.TotalItems -1,
+            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow + liveTypeDetail.TotalItems - 1,
                                                startCol).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow + liveTypeDetail.TotalItems - 1,
                                                startCol).Style = numberLiveFormat;
@@ -898,7 +880,6 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
                                                startCol).Value = liveTypeDetail.LiveName;
             foreach (SportTypeDetail sportTypeDetail in liveTypeDetail.ListSportType)
             {
-
                 wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + 1,
                                                    startRow + nextRow + sportTypeDetail.TotalItems - 2, startCol + 1).
                     Merged = true;
@@ -910,30 +891,34 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
                     Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
                 wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + 1,
                                                    startRow + nextRow + sportTypeDetail.TotalItems - 2, startCol + 1).
-                    Value = string.Format("{0}" , sportTypeDetail.SportName);
+                    Value = string.Format("{0}", sportTypeDetail.SportName);
+
                 #region detail
+
                 foreach (WinLossDetail winLossDetail in sportTypeDetail.ListWlDetail)
                 {
                     var nextCol = 1;
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = winLossDetail.Status;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol+=1)].Style = numberFormat;
+                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winLossDetail.WinLoss);
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberDefaultFormat;
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winLossDetail.Position);
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberDefaultFormat;
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winLossDetail.Comm);
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol+=1)].Style = numberFormat;
+                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winLossDetail.LineTotal);
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberDefaultFormat;
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winLossDetail.Turnover);
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = percentFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winLossDetail.Margin.Replace("%", ""))/100;
+                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winLossDetail.Margin.Replace("%", "")) / 100;
                     nextRow++;
                 }
-                #endregion
+
+                #endregion detail
 
                 #region sub total
+
                 var subNextCol = 0;
                 wsReport.Cells[startRow + nextRow, startCol + (subNextCol += 1)].Style = numberFormat;
                 wsReport.Cells[startRow + nextRow, startCol + (subNextCol)].Value = string.Empty;
@@ -952,11 +937,14 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
                 wsReport.Cells[startRow + nextRow, startCol + (subNextCol += 1)].Style = numberDefaultSubFormat;
                 wsReport.Cells[startRow + nextRow, startCol + (subNextCol)].Value = CastAide.AsDouble(sportTypeDetail.SubTotal.Turnover);
                 wsReport.Cells[startRow + nextRow, startCol + (subNextCol += 1)].Style = percentSubFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (subNextCol)].Value = CastAide.AsDouble(sportTypeDetail.SubTotal.Margin.Replace("%", ""))/100;
+                wsReport.Cells[startRow + nextRow, startCol + (subNextCol)].Value = CastAide.AsDouble(sportTypeDetail.SubTotal.Margin.Replace("%", "")) / 100;
                 nextRow++;
-                #endregion
+
+                #endregion sub total
             }
+
             #region total
+
             var totalNextCol = 0;
             wsReport.Cells[startRow + nextRow, startCol + (totalNextCol)].Style = numberSportFormat;
             wsReport.Cells[startRow + nextRow, startCol + (totalNextCol)].Value = string.Empty;
@@ -969,7 +957,7 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
                HorizontalAlignmentStyle.Center;
             wsReport.Cells[startRow + nextRow, startCol + (totalNextCol)].Value = "Total";
             wsReport.Cells[startRow + nextRow, startCol + (totalNextCol += 1)].Style = numberTotalFormat;
-           // wsReport.Cells[startRow + nextRow, startCol + (totalNextCol += 1)].Style.Font.Color = Color.White;
+            // wsReport.Cells[startRow + nextRow, startCol + (totalNextCol += 1)].Style.Font.Color = Color.White;
             wsReport.Cells[startRow + nextRow, startCol + (totalNextCol)].Value = CastAide.AsDouble(liveTypeDetail.Total.WinLoss);
             wsReport.Cells[startRow + nextRow, startCol + (totalNextCol += 1)].Style = numberDefaultTotalFormat;
             wsReport.Cells[startRow + nextRow, startCol + (totalNextCol)].Value = CastAide.AsDouble(liveTypeDetail.Total.Position);
@@ -980,9 +968,10 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
             wsReport.Cells[startRow + nextRow, startCol + (totalNextCol += 1)].Style = numberDefaultTotalFormat;
             wsReport.Cells[startRow + nextRow, startCol + (totalNextCol)].Value = CastAide.AsDouble(liveTypeDetail.Total.Turnover);
             wsReport.Cells[startRow + nextRow, startCol + (totalNextCol += 1)].Style = percentTotalFormat;
-            wsReport.Cells[startRow + nextRow, startCol + (totalNextCol)].Value = CastAide.AsDouble(liveTypeDetail.Total.Margin.Replace("%", ""))/100;
+            wsReport.Cells[startRow + nextRow, startCol + (totalNextCol)].Value = CastAide.AsDouble(liveTypeDetail.Total.Margin.Replace("%", "")) / 100;
             nextRow++;
-            #endregion
+
+            #endregion total
         }
 
         private void Export2ExcelDailyWLDirectMixParlayAdvanceFooter(ref ExcelWorksheet wsReport, int startRow, int startCol, int nextRow, WinLossDetail grandTotal)
@@ -999,7 +988,7 @@ namespace Sunplus.Accounting.Business.Report.DailyWL
             wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 2).Style =
                 numberTotalFormat;
             wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 2).Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
-            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + (totalNextCol+=2)).Value =
+            wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + (totalNextCol += 2)).Value =
                 "Grand Total";
 
             wsReport.Cells[startRow + nextRow, startCol + (totalNextCol += 1)].Style = numberTotalFormat;

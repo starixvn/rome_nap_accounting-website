@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Sunplus.Accounting.Entities.Report.External
 {
@@ -11,7 +9,7 @@ namespace Sunplus.Accounting.Entities.Report.External
     public class ExternalWLDailyBO
     {
         [DataMember]
-        public List<ExternalWLDailyRow> Items { get;set; }
+        public List<ExternalWLDailyRow> Items { get; set; }
 
         [DataMember]
         public ExternalWLDailyRow Total { get; set; }
@@ -21,7 +19,6 @@ namespace Sunplus.Accounting.Entities.Report.External
     [DataContract]
     public class ExternalWLDailyRow
     {
-      
         [DataMember]
         public string UserName { get; set; }
 
@@ -79,5 +76,4 @@ namespace Sunplus.Accounting.Entities.Report.External
         [DataMember]
         public string AgentMargin { get; set; }
     }
-
 }

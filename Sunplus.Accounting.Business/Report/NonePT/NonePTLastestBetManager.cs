@@ -16,7 +16,6 @@ using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.Core.Web.Controls;
 using Sunplus.Accounting.DataAccess;
-using Sunplus.Core.LoggingLib;
 
 namespace BLL.Report.NonePT
 {
@@ -100,9 +99,7 @@ namespace BLL.Report.NonePT
 
                         evt.getEvent(ref row, dr);
 
-
                         //OpenTote Exchange Rate
-
 
                         bool isShowOtExRate = CastAide.AsBoolean(dr["isShowOTExRate"], false);
                         double virtualRate = CastAide.AsDouble(dr["virtualrate"], 0.0);
@@ -130,7 +127,6 @@ namespace BLL.Report.NonePT
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -144,7 +140,6 @@ namespace BLL.Report.NonePT
             return JsonUtil.ToJson(hash);
         }
 
-
         public string GenBettype()
         {
             string tpl = WebUtils.LoadTemplate("Report/NonePT/DynamicBettype.htm");
@@ -154,7 +149,7 @@ namespace BLL.Report.NonePT
             string row = tplcontent;
             DataTable dt = IBCProvider.ReportProvider.NonePT().GetBettypeList().ResultSet.Tables[0];
 
-            string[] arrBettypes = {"9", "10", "31", "32", "33"};
+            string[] arrBettypes = { "9", "10", "31", "32", "33" };
             foreach (string btype in arrBettypes)
             {
                 DataRow dataRow = dt.NewRow();

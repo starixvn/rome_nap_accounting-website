@@ -2,12 +2,9 @@ using System;
 using System.Data;
 using System.Text;
 using DNAide.Web;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Core.LoggingLib;
 using IBCUtils;
+using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-
 
 /// <summary>
 /// CITS
@@ -22,7 +19,8 @@ public partial class Report_WinLostMultipleBetOnly : System.Web.UI.Page
         if (!string.IsNullOrEmpty(Request["lang"])) lang = Request["lang"];
         content.Text = gencontent(lang);
     }
-    string gencontent(string lang)
+
+    private string gencontent(string lang)
     {
         StringBuilder html = new StringBuilder();
         string norow = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("NoInformation.htm");
@@ -44,7 +42,7 @@ public partial class Report_WinLostMultipleBetOnly : System.Web.UI.Page
 
             string rows = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("WinLost/WinLostMultipleBetOnlyAllRow.htm");
             DataTable dt = AccountReport.RptSelParlayBets(fdate, tdate).ResultSet.Tables[0];
-            double total= 0, totalcomm = 0, totalline = 0;
+            double total = 0, totalcomm = 0, totalline = 0;
             if (dt.Rows.Count != 0)
             {
                 string odd_even = "";
@@ -66,7 +64,7 @@ public partial class Report_WinLostMultipleBetOnly : System.Web.UI.Page
                     totalcomm += (getvalue(dr["comwinlost"]));
                     total += totalline;
                 }
-                string totalrow = Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("WinLost/WinLostMultipleBetOnlyFinalTotal.htm", new string[] { "{GrandTotal}", "{ComTotal}", "{LineTotal}"},
+                string totalrow = Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("WinLost/WinLostMultipleBetOnlyFinalTotal.htm", new string[] { "{GrandTotal}", "{ComTotal}", "{LineTotal}" },
                     new string[] { Resources.Language.GrandToTal, FormatHandler.FormatNumber20(totalcomm), FormatHandler.FormatNumber20(total) });
                 html.Append(totalrow);
             }
@@ -79,7 +77,7 @@ public partial class Report_WinLostMultipleBetOnly : System.Web.UI.Page
             }
             html.Append("</table>");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             TemplateHandler.Assign(ref norow, "{nodata}", AlertMessage.GetMsg(ex.Message, AlertMessage.MsgType.Error));
@@ -90,7 +88,8 @@ public partial class Report_WinLostMultipleBetOnly : System.Web.UI.Page
         }
         return html.ToString();
     }
-    static double getvalue(object value)
+
+    private static double getvalue(object value)
     {
         if (value == null) return 0;
         if (Convert.IsDBNull(value)) return 0;

@@ -1,23 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Sunplus.Accounting.Business.Customer;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Core.LoggingLib;
-using IBCUtils.DAL;
 using DNAide.Data;
 using DNAide.Web;
-
-
+using Sunplus.Accounting.Business.Customer;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Helper;
 
 public partial class Customer_v2_EditTransferTime : RequiredAuthorizationPage
 {
-
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -26,14 +15,12 @@ public partial class Customer_v2_EditTransferTime : RequiredAuthorizationPage
         }
         catch (Exception ex)
         {
-
             LogExtensions.ExceptionHandler(ex);
 
             Response.Write("<script type=\"text/javascript\">alert_err(" + AlertMessage.GetMsg(ex.Message, AlertMessage.MsgType.Error) + ",'errTransfer');</script>");
-
-
         }
     }
+
     public string GetLanguage()
     {
         string script = "";
@@ -51,6 +38,7 @@ public partial class Customer_v2_EditTransferTime : RequiredAuthorizationPage
         script += "</script>";
         return script;
     }
+
     public string LoadData()
     {
         string strHtml = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Customer/agent/EditTranferTime.htm");

@@ -3,9 +3,6 @@ using System.Web;
 using DNAide.Core;
 using DNAide.Data;
 
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
-
 namespace Sunplus.Accounting.Business.Settlement
 {
     /// <summary>
@@ -14,9 +11,10 @@ namespace Sunplus.Accounting.Business.Settlement
     public static class DoSettle
     {
         private static System.Globalization.CultureInfo cult = System.Globalization.CultureInfo.CurrentCulture;
-        public static bool Calculation(int custID, string type, int sportID, int matchID, HttpContext hc, bool isScoreDirect , ref string msg, ref int delaytime)
+
+        public static bool Calculation(int custID, string type, int sportID, int matchID, HttpContext hc, bool isScoreDirect, ref string msg, ref int delaytime)
         {
-            try  
+            try
             {
                 int _homeHT = 0, _awayHT = 0, _homeFT = 0, _awayFT = 0;
                 string _betStatus = string.Empty, goalrecord = string.Empty;
@@ -40,13 +38,13 @@ namespace Sunplus.Accounting.Business.Settlement
                 }
                 // bill
                 if (sportID == 1)
-                { 
+                {
                     goalrecord = CastAide.AsString(hc.Request.Form["GR"]);
                     bool IsFGLG = hc.Request.Form["sHasFGLG"].ToString() == "1";
                     _betStatus = BetStatusForBILL(matchID, hc, IsFGLG);
                 }
 
-                DbResult rs =null;
+                DbResult rs = null;
                 if (_action != "UNDO")
                 {
                     rs = DataAccess.IBCDLL.Accounting.Settle.SettlementChecking(matchID, _action);
@@ -56,7 +54,7 @@ namespace Sunplus.Accounting.Business.Settlement
                         return false;
                     }
                 }
-            
+
                 DataAccess.IBCDLL.Accounting.Settle.Settlement(custID, matchID, _homeHT, _awayHT, _homeFT, _awayFT, _betStatus, _action, _isHTCal, goalrecord, ref delaytime);
                 if (delaytime > 0)
                 {
@@ -69,7 +67,6 @@ namespace Sunplus.Accounting.Business.Settlement
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -79,7 +76,7 @@ namespace Sunplus.Accounting.Business.Settlement
             return false;
         }
 
-        private static string BetStatusForBILL(int matchID, HttpContext hc, bool isFGLG )
+        private static string BetStatusForBILL(int matchID, HttpContext hc, bool isFGLG)
         {
             string _betstatus = string.Empty;
             DbResult dr = DataAccess.IBCDLL.Accounting.Settle.SelectMatchForKeyScore(matchID);
@@ -88,7 +85,7 @@ namespace Sunplus.Accounting.Business.Settlement
             if (_betstatus.Contains("Refund;")) _betstatus = _betstatus.Replace("Refund;", string.Empty);
             if (_betstatus.Contains("Refund FT")) _betstatus = _betstatus.Replace("Refund FT", string.Empty);
             if (_betstatus.Contains("Refund")) _betstatus = _betstatus.Replace("Refund", string.Empty);
-        
+
             ////BetStatus
             string goalrecord = hc.Request.Form["GR"];
             string oldbetstatus = _betstatus;
@@ -124,7 +121,6 @@ namespace Sunplus.Accounting.Business.Settlement
                     }
                     else
                     {
-
                         _betstatus = oldbetstatus == "" ? "FL:" + FG + "-" + LG : oldbetstatus + ";FL:" + FG + "-" + LG;
                     }
                     _betstatus.Replace(";;", ";");
@@ -134,7 +130,7 @@ namespace Sunplus.Accounting.Business.Settlement
             {
                 _betstatus = "";
             }
-        
+
             return _betstatus;
         }
 
@@ -143,17 +139,17 @@ namespace Sunplus.Accounting.Business.Settlement
             DbResult dr = DataAccess.IBCDLL.Accounting.Settle.SelectMatchForKeyScore(matchID);
             return dr.ResultSet.Tables[0].Rows[0]["betstatus"].ToString();
         }
+
         private static void CalculationParams(int sportID, HttpContext hc, ref int homeHT, ref int awayHT, ref int homeFT, ref int awayFT, ref string betStatus, bool isScoreDirect, bool isHTCal)
         {
-            if (sportID == 1) // soccer 
+            if (sportID == 1) // soccer
             {
                 homeHT = CastAide.AsInt32(hc.Request.Form["homeH"], 0);
                 awayHT = CastAide.AsInt32(hc.Request.Form["awayH"], 0);
                 homeFT = CastAide.AsInt32(hc.Request.Form["homeF"], 0);
                 awayFT = CastAide.AsInt32(hc.Request.Form["awayF"], 0);
-            
-           
-                // betStatus = "FL:" + (hc.Request.Form["chkFg"] ?? "0") + "-" + (hc.Request.Form["chkLg"] ?? "0");            
+
+                // betStatus = "FL:" + (hc.Request.Form["chkFg"] ?? "0") + "-" + (hc.Request.Form["chkLg"] ?? "0");
             }
             else if (sportID == 2 || sportID == 3 || sportID == 26 || sportID == 32) // Basketball, football, rugby, netball
             {
@@ -171,7 +167,7 @@ namespace Sunplus.Accounting.Business.Settlement
                     {
                         _home = CastAide.AsInt32(hc.Request.Form["txt" + i.ToString() + "qHome"], 0);
                         _away = CastAide.AsInt32(hc.Request.Form["txt" + i.ToString() + "qAway"], 0);
-                        if (isHTCal) // this for betstatus when HT Calculate 
+                        if (isHTCal) // this for betstatus when HT Calculate
                         {
                             if (i < 3)
                             {
@@ -273,7 +269,7 @@ namespace Sunplus.Accounting.Business.Settlement
                 homeFT = CastAide.AsInt32(hc.Request.Form["homeF"], 0);
                 awayFT = CastAide.AsInt32(hc.Request.Form["awayF"], 0);
             }
-            else if (sportID == 8) // Baseball       
+            else if (sportID == 8) // Baseball
             {
                 if (isScoreDirect)
                 {
@@ -289,7 +285,7 @@ namespace Sunplus.Accounting.Business.Settlement
                     {
                         _home = CastAide.AsInt32(hc.Request.Form["txt" + i.ToString() + "Home"], 0);
                         _away = CastAide.AsInt32(hc.Request.Form["txt" + i.ToString() + "Away"], 0);
-                        if (isHTCal) // this for betstatus when HT Calculate 
+                        if (isHTCal) // this for betstatus when HT Calculate
                         {
                             if (i < 6)
                             {
@@ -305,15 +301,15 @@ namespace Sunplus.Accounting.Business.Settlement
                             homeHT += _home;
                             awayHT += _away;
                         }
-                    
+
                         homeFT += _home;
-                        awayFT += _away; 
+                        awayFT += _away;
                     }
                     if (!string.IsNullOrEmpty(hc.Request.Form["txtEIHome"]) || !string.IsNullOrEmpty(hc.Request.Form["txtEIAway"]))
                     {
                         int _eiHome = CastAide.AsInt32(hc.Request.Form["txtEIHome"], 0);
                         int _eiAway = CastAide.AsInt32(hc.Request.Form["txtEIAway"], 0);
-                        if(!isHTCal)
+                        if (!isHTCal)
                             betStatus += "," + _eiHome.ToString() + "-" + _eiAway.ToString();
                         homeFT += _eiHome;
                         awayFT += _eiAway;
@@ -338,7 +334,7 @@ namespace Sunplus.Accounting.Business.Settlement
                 if (!string.IsNullOrEmpty(msg)) return false;
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
@@ -356,7 +352,6 @@ namespace Sunplus.Accounting.Business.Settlement
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -376,7 +371,6 @@ namespace Sunplus.Accounting.Business.Settlement
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -393,7 +387,6 @@ namespace Sunplus.Accounting.Business.Settlement
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -411,7 +404,6 @@ namespace Sunplus.Accounting.Business.Settlement
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -429,7 +421,6 @@ namespace Sunplus.Accounting.Business.Settlement
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -443,13 +434,11 @@ namespace Sunplus.Accounting.Business.Settlement
             DbResult rs = null;
             try
             {
-               
                 rs = DataAccess.IBCDLL.Accounting.Settle.Multiple1(custID, matchID);
                 return rs;
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -457,18 +446,16 @@ namespace Sunplus.Accounting.Business.Settlement
             }
             return rs;
         }
-
 
         public static DbResult RefundMultiple(int custID, int matchID)
         {
             DbResult rs = null;
             try
             {
-                rs=DataAccess.IBCDLL.Accounting.Settle.RefundMultiple(custID, matchID);
+                rs = DataAccess.IBCDLL.Accounting.Settle.RefundMultiple(custID, matchID);
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -477,17 +464,15 @@ namespace Sunplus.Accounting.Business.Settlement
             return rs;
         }
 
-
         public static DbResult RefundMultipleHT(int custID, int matchID)
         {
             DbResult rs = null;
             try
             {
-                rs=DataAccess.IBCDLL.Accounting.Settle.RefundMultipleHT(custID, matchID);
+                rs = DataAccess.IBCDLL.Accounting.Settle.RefundMultipleHT(custID, matchID);
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -501,11 +486,10 @@ namespace Sunplus.Accounting.Business.Settlement
             DbResult rs = null;
             try
             {
-                rs=DataAccess.IBCDLL.Accounting.Settle.RefundMultipleFT(custID, matchID);              
+                rs = DataAccess.IBCDLL.Accounting.Settle.RefundMultipleFT(custID, matchID);
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -513,8 +497,6 @@ namespace Sunplus.Accounting.Business.Settlement
             }
             return rs;
         }
-
-    
 
         public static bool Settlement_BetDaq_Move(int matchid, ref string errmsg, ref string NewMatchcode)
         {
@@ -530,11 +512,9 @@ namespace Sunplus.Accounting.Business.Settlement
                     NewMatchcode = CastAide.AsString(rs.Outputs["newmatchcode"]);
                     f = true;
                 }
-
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -542,7 +522,6 @@ namespace Sunplus.Accounting.Business.Settlement
             }
             return f;
         }
-
 
         public static bool Settlement_BetDaq_Move(int matchid, int newMatchId, ref string errmsg, ref string newMatchcode)
         {
@@ -558,11 +537,9 @@ namespace Sunplus.Accounting.Business.Settlement
                     newMatchcode = CastAide.AsString(rs.Outputs["newmatchcode"]);
                     f = true;
                 }
-
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -570,7 +547,5 @@ namespace Sunplus.Accounting.Business.Settlement
             }
             return f;
         }
-
-    
     }
 }

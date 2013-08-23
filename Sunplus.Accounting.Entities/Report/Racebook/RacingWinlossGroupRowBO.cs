@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Sunplus.Accounting.Entities.Report.Racebook
 {
@@ -10,7 +7,6 @@ namespace Sunplus.Accounting.Entities.Report.Racebook
     [DataContract]
     public class RacingWinlossGroupRowBO
     {
-       
         [DataMember]
         public string WinlostDate { get; set; }
 
@@ -34,10 +30,9 @@ namespace Sunplus.Accounting.Entities.Report.Racebook
 
         [DataMember]
         public string IBCNetComm { get; set; }
-        
+
         [DataMember]
         public string IBCTotalIncome { get; set; }
-        
 
         [DataMember]
         public string One2BetPT { get; set; }

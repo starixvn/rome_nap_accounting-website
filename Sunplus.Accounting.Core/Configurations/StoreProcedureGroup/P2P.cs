@@ -25,7 +25,7 @@ namespace Sunplus.Accounting.Core.Configurations.StoreProcedureGroup
             }
         }
 
-         [ConfigurationProperty("P2PReports", IsDefaultCollection = false)]
+        [ConfigurationProperty("P2PReports", IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(StoreProcedureCollection),
             AddItemName = "add",
             ClearItemsName = "clear",
@@ -40,7 +40,6 @@ namespace Sunplus.Accounting.Core.Configurations.StoreProcedureGroup
             }
         }
 
-
         public static P2PSession Instance
         {
             get
@@ -50,16 +49,13 @@ namespace Sunplus.Accounting.Core.Configurations.StoreProcedureGroup
             }
         }
 
-
         public StoreProcedureCollection this[StoreCollection name]
         {
             get
             {
-
                 var spCollection = (StoreProcedureCollection)this.GetType().GetProperty(name.ToString()).GetValue(this, System.Reflection.BindingFlags.GetField, null, null, null);
                 return spCollection;
             }
         }
     }
-   
 }

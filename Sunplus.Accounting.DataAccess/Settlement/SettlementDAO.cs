@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DNAide.Core;
+﻿using System.Collections;
+using System.Data;
 using DNAide.Data;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Entities;
-using System.Data;
 
 namespace Sunplus.Accounting.DataAccess.Settlement
 {
-    public class SettlementDAO:DataAccessReport, ISettlementDAO
+    public class SettlementDAO : DataAccessReport, ISettlementDAO
     {
         private StoreProcedureElement getSPMapping(string key)
         {
@@ -59,8 +54,7 @@ namespace Sunplus.Accounting.DataAccess.Settlement
             return DbHelper.Execute(spElement.Name, hashtable, spElement.DbName, 600);
         }
 
-
-        public ResultNG UpdBallNoByMatchID(int matchid, string ballNo, string siteNo, int adminid, string adminname, string ip )
+        public ResultNG UpdBallNoByMatchID(int matchid, string ballNo, string siteNo, int adminid, string adminname, string ip)
         {
             var resultNG = new ResultNG();
 
@@ -78,12 +72,10 @@ namespace Sunplus.Accounting.DataAccess.Settlement
                 db.AddOutParameter(dbCommand, "errmsg", DbType.String, 500);
                 db.ExecuteNonQuery(dbCommand);
                 resultNG.ErrorCode = dbCommand.Parameters["@errcode"].Value.ToString();
-                resultNG.ErrorMessage = dbCommand.Parameters["@errmsg"].Value.ToString();  
+                resultNG.ErrorMessage = dbCommand.Parameters["@errmsg"].Value.ToString();
             }
-            
-            
-            return resultNG;
 
+            return resultNG;
         }
 
         public string RefundRunningBetDaqTickets(int Matchid, int Creator, string IP)
@@ -98,7 +90,6 @@ namespace Sunplus.Accounting.DataAccess.Settlement
             return string.Empty;
         }
 
-
         public void SetMatchIsUndecided(int matchId, bool isUndecided, int userId)
         {
             Hashtable hashtable = new Hashtable();
@@ -108,9 +99,7 @@ namespace Sunplus.Accounting.DataAccess.Settlement
 
             var spElement = getSPMapping("Acc_Set_MatchUpdIsUndecided");
             DbHelper.Execute(spElement.Name, hashtable, spElement.DbName);
-
         }
-
 
         public DataTable MatchSelHedge(int matchId)
         {
@@ -120,7 +109,7 @@ namespace Sunplus.Accounting.DataAccess.Settlement
             var spElement = getSPMapping("Acc_Set_MatchSelHedge");
             DbResult dbResult = DbHelper.Execute(spElement.Name, hashtable, spElement.DbName);
             DataTable dataTable = new DataTable();
-            if(dbResult!= null && dbResult.ResultSet.Tables.Count>0)
+            if (dbResult != null && dbResult.ResultSet.Tables.Count > 0)
             {
                 dataTable = dbResult.ResultSet.Tables[0];
             }

@@ -1,16 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using DNAide.Web;
 using DNAide.Core;
-using DNAide.Data;
-using System.Data;
 using Sunplus.Accounting.Business.BetList;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
-
 
 public partial class Report_ViewResult : System.Web.UI.Page
 {

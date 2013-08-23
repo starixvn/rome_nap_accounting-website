@@ -38,7 +38,6 @@ namespace Sunplus.Accounting.DataAccess.Provider.Report
                                                GetDataSource(source))));
         }
 
-
         public virtual ReportBean MatchWL(DateTime wldate, string db)
         {
             throw new NotImplementedException();

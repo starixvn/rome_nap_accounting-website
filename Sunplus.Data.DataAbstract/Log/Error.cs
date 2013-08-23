@@ -1,11 +1,9 @@
 ﻿using System;
-using Sunplus.Data.DataAbstract.Entity;
-using Sunplus.Data.DataAbstract.DAO;
 
 namespace Sunplus.Data.DataAbstract.Log
 {
     public class Error
-    {   
+    {
         public static void WriteLog(Exception ex)
         {
             //Write log

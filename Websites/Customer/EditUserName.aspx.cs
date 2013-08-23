@@ -1,14 +1,9 @@
 using System;
 using DNAide.Web;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Core.LoggingLib;
-
 
 public partial class Customer_EditUserName : PageBase
 {
-
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -29,5 +24,4 @@ public partial class Customer_EditUserName : PageBase
             LogExtensions.ExceptionHandler(ex);
         }
     }
- 
 }

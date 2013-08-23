@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
-using DNAide.Web;
+using System.Text;
 using DNAide.Core;
 using DNAide.Utils;
-//using Sunplus.Core.LoggingLib;
+using DNAide.Web;
+
 using Sunplus.Accounting.Business;
 using Sunplus.Accounting.Business.BootStrappers;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Entities.ViewModel;
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
-
+using Sunplus.Accounting.Entities.ViewModel;
 
 public partial class Finance_FinanceTransfer : PageBase
 {
@@ -28,7 +26,7 @@ public partial class Finance_FinanceTransfer : PageBase
     }
 
     public string GetContent()
-    {        
+    {
         StringBuilder strBuild = new StringBuilder();
         string strTpl = string.Empty;
         decimal total = 0;
@@ -41,7 +39,7 @@ public partial class Finance_FinanceTransfer : PageBase
 
             string strContent = TemplateHandler.CopyBlock(strTpl, "content");
 
-            if(isReset)
+            if (isReset)
                 TemplateHandler.RemoveBlock(ref strTpl, "isreset");
 
             IUserService userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
@@ -54,7 +52,7 @@ public partial class Finance_FinanceTransfer : PageBase
                 int rowNum = 0;
                 foreach (FinanceTransaction r in list)
                 {
-                    rowNum ++;
+                    rowNum++;
                     string strTmp = strContent;
                     TemplateHandler.Assign(ref strTmp, "type", RemotingRef.RefData.GetBetTypeName(r.BetType.ToString(), "E"));
 
@@ -66,7 +64,7 @@ public partial class Finance_FinanceTransfer : PageBase
                     total += dcAmount;
                     TemplateHandler.Assign(ref strTmp, "amount", NumberFormat.DecFormat(dcAmount, 2));
                     TemplateHandler.Assign(ref strTmp, "no", rowNum);
-                    
+
                     strBuild.Append(strTmp);
                 }
             }
@@ -75,7 +73,6 @@ public partial class Finance_FinanceTransfer : PageBase
                 strBuild.Append(AccCommon.GenNoInformation("4"));
             }
             TemplateHandler.ReplaceBlock(ref strTpl, "content", strBuild.ToString());
-            
         }
         catch (DNAide.Utils.AccException ex)
         {
@@ -90,17 +87,16 @@ public partial class Finance_FinanceTransfer : PageBase
         decimal dcBalance = CastAide.AsDecimal(Request["Amount"], 0);
         TemplateHandler.Assign(ref strTpl, "currentbalance", NumberFormat.DecFormat(dcBalance, 2));
         TemplateHandler.Assign(ref strTpl, "accumtotal", NumberFormat.DecFormat(total + dcBalance, 2));
-        
+
         return strTpl;
     }
 
-    string GetTypeName(int betType, string strDesc)
+    private string GetTypeName(int betType, string strDesc)
     {
         string strResult = string.Empty;
-        if(!string.IsNullOrEmpty(strDesc.Trim()))
+        if (!string.IsNullOrEmpty(strDesc.Trim()))
         {
             strResult = "<br />- " + strDesc;
-        
         }
         return RemotingRef.RefData.GetBetTypeName(betType.ToString(), "E") + strResult;
     }

@@ -1,19 +1,10 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DNAide.Core;
 using DNAide.Data;
-
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.DataAccess.AdoNet.ReportDAO;
-using Sunplus.Core.LoggingLib;
 
 namespace Sunplus.Accounting.DataAccess.Report.MatchWL
 {
-    public class MatchWL2aDAO: DataAccessReport, IMatchWL2aDAO
+    public class MatchWL2aDAO : DataAccessReport, IMatchWL2aDAO
     {
         public DbResult MatchWL(DateTime wldate)
         {
@@ -31,12 +22,9 @@ namespace Sunplus.Accounting.DataAccess.Report.MatchWL
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dbResult;
-
-            
         }
 
         public DbResult MatchWL_WH(DateTime wldate)
@@ -56,8 +44,7 @@ namespace Sunplus.Accounting.DataAccess.Report.MatchWL
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dbResult;
         }
@@ -79,15 +66,13 @@ namespace Sunplus.Accounting.DataAccess.Report.MatchWL
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dbResult;
         }
 
         public DbResult WinLossByBettype(DateTime wldate)
         {
-            
             DbResult dbResult = null;
             try
             {
@@ -101,8 +86,7 @@ namespace Sunplus.Accounting.DataAccess.Report.MatchWL
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dbResult;
         }
@@ -125,8 +109,7 @@ namespace Sunplus.Accounting.DataAccess.Report.MatchWL
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dbResult;
         }
@@ -147,20 +130,17 @@ namespace Sunplus.Accounting.DataAccess.Report.MatchWL
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dbResult;
         }
 
         #region IMatchWL2aDAO Members
 
-
         public DbResult MatchWLNEW(DateTime wldate)
         {
             string subfix = GetStoreMappingSubfix(wldate);
             string strMapping = "MatchWinLoss2" + subfix;
-
 
             var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.Main, strMapping);
             var param = new Hashtable();
@@ -173,10 +153,10 @@ namespace Sunplus.Accounting.DataAccess.Report.MatchWL
             else
             {
                 param.Add("winlostdate", wldate);
-                param.Add("winlost_8rm", 0);    
+                param.Add("winlost_8rm", 0);
             }
 
-            param.Add("winlost_barm",0);
+            param.Add("winlost_barm", 0);
 
             return DbHelper.Execute(spElement.Name, param, spElement.DbName, 600);
         }
@@ -194,12 +174,12 @@ namespace Sunplus.Accounting.DataAccess.Report.MatchWL
             }
             else
             {
-                param.Add("winlostdate", wldate);    
+                param.Add("winlostdate", wldate);
             }
-            
+
             return DbHelper.Execute(spElement.Name, param, spElement.DbName, 600);
         }
 
-        #endregion
+        #endregion IMatchWL2aDAO Members
     }
 }

@@ -1,29 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Xml;
-using System.Text;
 using System.Collections;
+using System.Text;
+using System.Xml;
 using DNAide.Data;
-using gwSvc;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess;
-using Sunplus.Core.LoggingLib;
-
 
 public partial class Report_HRAPI : System.Web.UI.Page
 {
-    static StringBuilder logs = new StringBuilder();
+    private static StringBuilder logs = new StringBuilder();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         LoadXMLFile();
     }
 
-    void LoadXMLFile()
+    private void LoadXMLFile()
     {
         StringBuilder str = new StringBuilder();
 
@@ -50,7 +42,8 @@ public partial class Report_HRAPI : System.Web.UI.Page
     }
 
     #region //Get turnover by node in xmldocument
-    static void GetTurnoverByCurrency(XmlNode node)
+
+    private static void GetTurnoverByCurrency(XmlNode node)
     {
         gpHeader transSec = new gpHeader();
         string strUserName = node["username"].InnerText;
@@ -65,6 +58,7 @@ public partial class Report_HRAPI : System.Web.UI.Page
         gpInitializeGateway gInit = new gpInitializeGateway();
 
         #region Init header by input us/pw/cmty and allow channel
+
         try
         {
             gInit = amtClass.AMTinitializeGateway(transSec);
@@ -84,15 +78,17 @@ public partial class Report_HRAPI : System.Web.UI.Page
         catch (Exception ex)
         {
             LogExtensions.ExceptionHandler(ex);
-            
+
             return;
         }
-        #endregion
+
+        #endregion Init header by input us/pw/cmty and allow channel
 
         string[] strListAgent = node["agent"].InnerText.Split(',');
         decimal dcBalance = 0;
 
         #region Get turnover by each agentid
+
         for (int j = 0; j < strListAgent.Length; j++)
         {
             string strAgent = strListAgent[j];
@@ -132,31 +128,34 @@ public partial class Report_HRAPI : System.Web.UI.Page
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);           
+                LogExtensions.ExceptionHandler(ex);
             }
         }
-        #endregion
+
+        #endregion Get turnover by each agentid
 
         amtClass.AMTfreeChannel(transSec);//free channel
     }
-    #endregion
 
-    
+    #endregion //Get turnover by node in xmldocument
 
     #region WriteLog
-    static void WriteLog(string AgentID, string Function, int errCode, string errMsg)
+
+    private static void WriteLog(string AgentID, string Function, int errCode, string errMsg)
     {
         string strErrMsg = errMsg;
         if (errCode != 0)
-        {            
+        {
             strErrMsg = "Error " + errCode.ToString() + ": " + errMsg;
         }
         logs.Append("- Agent: " + AgentID + "--- Function: " + Function + "--- " + strErrMsg + "<br>");
     }
-    #endregion
+
+    #endregion WriteLog
 
     #region TurnoverInsAge
-    static DbResult TurnoverInsAge(int AgentId, int Currency, double BetAmount, int BetCount, double BalanceAmount, string strDesc, bool IsDone)
+
+    private static DbResult TurnoverInsAge(int AgentId, int Currency, double BetAmount, int BetCount, double BalanceAmount, string strDesc, bool IsDone)
     {
         Hashtable hsParams = new Hashtable();
         hsParams.Add("agentid", AgentId);
@@ -168,6 +167,6 @@ public partial class Report_HRAPI : System.Web.UI.Page
         hsParams.Add("desc", strDesc);
         return DbHelper.Execute("HRAPI_TurnoverInsAg", hsParams, DBType.ARCHIVE, 300);
     }
-    #endregion
 
+    #endregion TurnoverInsAge
 }

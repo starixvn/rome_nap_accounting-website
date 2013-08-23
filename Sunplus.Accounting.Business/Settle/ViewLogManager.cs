@@ -12,11 +12,10 @@ using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.Report;
 using Sunplus.Accounting.Entities.Settle;
-using System.Threading;
 
 namespace Sunplus.Accounting.Business.Settle
 {
-    public class ViewLogManager:IViewLogManager
+    public class ViewLogManager : IViewLogManager
     {
         public SettleLogResult SelSettleLogByMachCode(string matchCode, string fDate, string tDate)
         {
@@ -33,7 +32,7 @@ namespace Sunplus.Accounting.Business.Settle
             param.Add("balanceupday", ReportUtils.BalanceUp.BalanceUpDay);
             var rs = IBCProvider.Settle.SelMatchInfo(param);
 
-            if(rs!= null && rs.ResultSet.Tables.Count > 0)
+            if (rs != null && rs.ResultSet.Tables.Count > 0)
             {
                 result.Rows = new List<SettleLog>();
                 foreach (DataRow dr in rs.ResultSet.Tables[0].Rows)
@@ -51,11 +50,9 @@ namespace Sunplus.Accounting.Business.Settle
                                             MatchId = string.Format("dv{0}", machId),
                                             SettleLogDetails = SelSettleLogDetail(machId, fDate, tDate, sportType)
                                         };
-                    if(settleLog.SettleLogDetails != null && settleLog.SettleLogDetails.Count > 0)
+                    if (settleLog.SettleLogDetails != null && settleLog.SettleLogDetails.Count > 0)
                         result.Rows.Add(settleLog);
                 }
-
-                
             }
 
             return result;
@@ -74,11 +71,11 @@ namespace Sunplus.Accounting.Business.Settle
             param.Add("fromdate", FormatHandler.ResetStartDate(CastAide.AsDateTime(fDate)));
             param.Add("todate", FormatHandler.ResetEndDate(CastAide.AsDateTime(tDate)));
             rs = IBCProvider.Settle.SelMatchSettleLog(param);
-            
+
             var viewIpVn = Permissions.HasPermission(Enumerations.Functions.ViewIPVN);
             var iplocation = WebSettings.ipLocation;
 
-            if(rs!= null && rs.ResultSet.Tables.Count >0)
+            if (rs != null && rs.ResultSet.Tables.Count > 0)
             {
                 var rows = rs.ResultSet.Tables[0].Select();
                 var index = 0;
@@ -93,7 +90,7 @@ namespace Sunplus.Accounting.Business.Settle
                     }
                     var settleLogDetail = new SettleLogDetail()
                                               {
-                                                  No =index,
+                                                  No = index,
                                                   Date = CastAide.AsString(dr["logdate"]),
                                                   UserName = CastAide.AsString(dr["username"]),
                                                   Action = CastAide.AsString(dr["ActionNameEN"]),
@@ -105,7 +102,6 @@ namespace Sunplus.Accounting.Business.Settle
                                                   Ip = GetIP(CastAide.AsString(dr["ip"]), viewIpVn, iplocation)
                                               };
                     result.Add(settleLogDetail);
-                    
                 }
             }
 

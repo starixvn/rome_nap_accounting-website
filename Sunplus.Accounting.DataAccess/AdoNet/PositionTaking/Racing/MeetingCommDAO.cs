@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using DNAide.Data;
-using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.DataAccess.PositionTaking.Racing;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking.Racing

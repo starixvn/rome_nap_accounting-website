@@ -7,7 +7,6 @@ using System.Collections;
 using BLL.Report.Punter;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
-using Sunplus.Core.LoggingLib;
 
 using Newtonsoft.Json;
 

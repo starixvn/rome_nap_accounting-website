@@ -3,9 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DNAide.Data;
 
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess.Provider.Report;
-using Sunplus.Core.LoggingLib;
 
 /// <summary>
 /// Summary description for LeagueWL
@@ -46,7 +44,7 @@ namespace Sunplus.Accounting.DataAccess.Entity.SqlServer.Report
             catch (Exception ex)
             {
                 // error assigning the datareader value to a property
-                
+
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -54,7 +52,7 @@ namespace Sunplus.Accounting.DataAccess.Entity.SqlServer.Report
             return result;
         }
 
-        #endregion
+        #endregion Acc_Rpt_LeagueWL_Sporttype14
 
         #region LeagueWL_Details14
 
@@ -80,7 +78,7 @@ namespace Sunplus.Accounting.DataAccess.Entity.SqlServer.Report
             catch (Exception ex)
             {
                 // error assigning the datareader value to a property
-                
+
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -88,7 +86,7 @@ namespace Sunplus.Accounting.DataAccess.Entity.SqlServer.Report
             return result;
         }
 
-        #endregion
+        #endregion LeagueWL_Details14
 
         #region LeagueWL_Bettype14
 
@@ -110,7 +108,7 @@ namespace Sunplus.Accounting.DataAccess.Entity.SqlServer.Report
             catch (Exception ex)
             {
                 // error assigning the datareader value to a property
-                
+
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -118,7 +116,7 @@ namespace Sunplus.Accounting.DataAccess.Entity.SqlServer.Report
             return result;
         }
 
-        #endregion
+        #endregion LeagueWL_Bettype14
     }
 
     [Serializable]

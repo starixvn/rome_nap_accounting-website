@@ -1,24 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using DNAide.Web;
-using DNAide.Core;
-using DNAide.Data;
 using System.Data;
 using System.Text;
+using System.Web.UI;
+using DNAide.Core;
+using DNAide.Data;
+using DNAide.Web;
 using Sunplus.Accounting.Business.BetList;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
-
 
 public partial class Report_ViewMixParlayResult : System.Web.UI.Page
 {
     public static string _sportType = String.Empty;
+
     protected void Page_Load(object sender, EventArgs e)
     {
-        long refno = CastAide.AsInt64(Page.Request.QueryString["refno"],-1);
+        long refno = CastAide.AsInt64(Page.Request.QueryString["refno"], -1);
         int matchid = CastAide.AsInt32(Request.QueryString["matchid"], 0);
         int bettype = CastAide.AsInt32(Request.QueryString["bettype"], 0);
         string betid = CastAide.AsString(Request.QueryString["betid"]);
@@ -32,6 +28,7 @@ public partial class Report_ViewMixParlayResult : System.Web.UI.Page
             this.lMPResult.Text = ex.Message;
         }
     }
+
     private string GenHTMLMixParlayResult(long refno, int matchid, int bettype, string betid)
     {
         string main = String.Empty;
@@ -57,7 +54,7 @@ public partial class Report_ViewMixParlayResult : System.Web.UI.Page
                 foreach (int Id in arrLeagueId)
                 {
                     DataRow[] matches = tblMatches.Select(String.Format("LeagueID={0}", Id));
-                    content += GenerateLeague(matches,  betlist, matchid, bettype, betid);
+                    content += GenerateLeague(matches, betlist, matchid, bettype, betid);
                     content += "<br>";
                 }
                 string footer = String.Format("<script>var numOfMatch={0}; var numOfLeague={1}</script>", tblMatches.Rows.Count, arrLeagueId.Count);
@@ -75,6 +72,7 @@ public partial class Report_ViewMixParlayResult : System.Web.UI.Page
         }
         return main;
     }
+
     private string GenerateLeague(DataRow[] matches, BetListMain betlist, int matchid, int bettype, string betid)
     {
         if (matches.Length == 0) return String.Empty;
@@ -104,6 +102,7 @@ public partial class Report_ViewMixParlayResult : System.Web.UI.Page
                 templateGame = beginDiv + templateGame + endDiv;
                 tempbuild.Append(templateGame);
                 break;
+
             case 2: //basket ball
             case 3: //foot ball
             case 26: //rugby
@@ -128,6 +127,7 @@ public partial class Report_ViewMixParlayResult : System.Web.UI.Page
                 templateGame = beginDiv + templateGame + endDiv;
                 tempbuild.Append(templateGame);
                 break;
+
             case 4: //ice hockey
             case 28: //field hockey
                 if (sporttype == 4)
@@ -150,6 +150,7 @@ public partial class Report_ViewMixParlayResult : System.Web.UI.Page
                 templateGame = beginDiv + templateGame + endDiv;
                 tempbuild.Append(templateGame);
                 break;
+
             case 5: //tennis
                 _sportType = Resources.Language.lblTennis;
                 templateGame = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("BetList/Tennis.htm");
@@ -168,6 +169,7 @@ public partial class Report_ViewMixParlayResult : System.Web.UI.Page
                 templateGame = beginDiv + templateGame + endDiv;
                 tempbuild.Append(templateGame);
                 break;
+
             case 7: //Billiard
             case 10: //Golf
             case 11: //Motorsports
@@ -196,6 +198,7 @@ public partial class Report_ViewMixParlayResult : System.Web.UI.Page
                 templateGame = beginDiv + templateGame + endDiv;
                 tempbuild.Append(templateGame);
                 break;
+
             case 8: //baseball
                 _sportType = Resources.Language.lblBaseball;
                 templateGame = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("BetList/Baseball.htm");
@@ -212,6 +215,7 @@ public partial class Report_ViewMixParlayResult : System.Web.UI.Page
                 templateGame = beginDiv + templateGame + endDiv;
                 tempbuild.Append(templateGame);
                 break;
+
             case 6: //volleyball
             case 9: //badminton
             case 30: //squash
@@ -236,6 +240,7 @@ public partial class Report_ViewMixParlayResult : System.Web.UI.Page
                 templateGame = beginDiv + templateGame + endDiv;
                 tempbuild.Append(templateGame);
                 break;
+
             default:
                 templateGame = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("BetList/Common.htm");
                 rowTemplate = TemplateHandler.CopyBlock(templateGame, "row");
@@ -251,7 +256,6 @@ public partial class Report_ViewMixParlayResult : System.Web.UI.Page
                 templateGame = beginDiv + templateGame + endDiv;
                 tempbuild.Append(templateGame);
                 break;
-
         }
         return tempbuild.ToString();
     }

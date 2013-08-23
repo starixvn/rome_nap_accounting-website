@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Web;
-using DNAide.Core;
-using DNAide.Utils;
-using Sunplus.Accounting.Entities.Casino;
 using System.Runtime.Serialization;
 
 namespace Sunplus.Accounting.Entities.Customer

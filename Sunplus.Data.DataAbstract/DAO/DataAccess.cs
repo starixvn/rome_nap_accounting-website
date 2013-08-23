@@ -8,7 +8,7 @@ namespace Sunplus.Data.DataAbstract.DAO
     public class DataAccess
     {
         protected IDataStorage DataStorage = null;
-        protected NoSQLElement NoSqlElement = null; 
+        protected NoSQLElement NoSqlElement = null;
         protected readonly Mongo Provider;
 
         protected readonly MongoDatabase Database;

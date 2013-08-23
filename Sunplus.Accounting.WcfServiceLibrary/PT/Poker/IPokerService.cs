@@ -1,9 +1,10 @@
-using Sunplus.Accounting.Entities.PositionTaking.Poker;
+using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using Sunplus.Accounting.Entities;
-using System.Collections.Generic;
 using Sunplus.Accounting.Entities.Customer;
+using Sunplus.Accounting.Entities.PositionTaking.Poker;
+
 namespace Sunplus.Accounting.WcfServiceLibrary.PT.Poker
 {
     [ServiceContract]
@@ -11,8 +12,8 @@ namespace Sunplus.Accounting.WcfServiceLibrary.PT.Poker
     {
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        PokerSetting GetPokerSetting(int custId,int roleId);
-        
+        PokerSetting GetPokerSetting(int custId, int roleId);
+
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         PokerStatus GetPokerStatus(int custId);
@@ -28,7 +29,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.PT.Poker
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         Result UpdatePokerStatus(PokerStatus status);
-        
+
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         Result UpdatePokerGameType(GameTypeSetting gameSetting, CustDetail custDetail, int type);
@@ -45,6 +46,4 @@ namespace Sunplus.Accounting.WcfServiceLibrary.PT.Poker
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         Result CheckEnableCustomer(int custId);
     }
-
-
 }

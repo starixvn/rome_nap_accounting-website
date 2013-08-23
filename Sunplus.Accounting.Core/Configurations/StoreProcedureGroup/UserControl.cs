@@ -1,5 +1,4 @@
-﻿using System;
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace Sunplus.Accounting.Core.Configurations.StoreProcedureGroup
 {
@@ -63,7 +62,6 @@ namespace Sunplus.Accounting.Core.Configurations.StoreProcedureGroup
                 return section;
             }
         }
-
 
         public StoreProcedureCollection this[StoreCollection name]
         {

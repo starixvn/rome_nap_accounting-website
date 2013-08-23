@@ -1,0 +1,19 @@
+﻿namespace Sunplus.Accounting.Entities.CreditTerm
+{
+    using System;
+    using System.Runtime.Serialization;
+
+    [DataContract]
+    [Serializable]
+    public class GroupEditing
+    {
+        [DataMember]
+        public int CustId { get; set; }
+
+        [DataMember]
+        public string Username { get; set; }
+
+        [DataMember]
+        public bool IsGroupHeadline { get; set; }
+    }
+}

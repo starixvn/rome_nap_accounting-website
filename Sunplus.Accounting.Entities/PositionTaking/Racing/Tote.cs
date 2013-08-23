@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Runtime.Serialization;
 
 namespace Sunplus.Accounting.Entities.PositionTaking.Racing
@@ -12,53 +10,61 @@ namespace Sunplus.Accounting.Entities.PositionTaking.Racing
     {
         [DataMember]
         public string Name { get; set; }
+
         [DataMember]
         public bool Visible { get; set; }
+
         [DataMember]
         public string Id { get; set; }
+
         [DataMember]
         public bool IsTop { get; set; }
 
-        
-
         [DataMember]
         public Decimal MaxBet { get; set; }
+
         [DataMember]
         public Decimal MinBet { get; set; }
+
         [DataMember]
         public Decimal MaxPerMatch { get; set; }
 
-
         [DataMember]
         public Decimal MaxBetMax { get; set; }
+
         [DataMember]
         public Decimal MinBetMin { get; set; }
+
         [DataMember]
         public Decimal MaxPerMatchMax { get; set; }
 
         [DataMember]
         public bool UpdateDisable { get; set; }
+
         [DataMember]
         public bool Enable { get; set; }
+
         [DataMember]
         public bool EnableDownline { get; set; }
+
         [DataMember]
         public bool EnableAutoMPT { get; set; }
 
         [DataMember]
         public bool EnableUpline { get; set; }
-        
+
         [DataMember]
         public Decimal Comm { get; set; }
+
         [DataMember]
         public bool UpdateComm { get; set; }
 
         [DataMember]
         public Decimal MasterComm { get; set; }
-        
+
         [DataMember]
         public Decimal AgentComm { get; set; }
-        
+
         [DataMember]
         public Decimal MemberComm { get; set; }
 
@@ -85,6 +91,7 @@ namespace Sunplus.Accounting.Entities.PositionTaking.Racing
 
         [DataMember]
         public bool UpdateMinMax { get; set; }
+
         [DataMember]
         public bool UpdatePT { get; set; }
     }

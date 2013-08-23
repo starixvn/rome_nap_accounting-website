@@ -11,7 +11,6 @@ using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Helper;
-using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using IBCUtils;
 using IBCUtils.Web;
@@ -232,7 +231,7 @@ public class UpdateCustomerStatus : BaseHandler
                     isUpdDownline = false;
                     if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
                         throw new AccException("Invalid isupddownline parameters");
-                    Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateDisabledBingoGame(_accid, _custid, status, context.Request.UserHostAddress, !isUpdDownline);
+                    Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateDisabledBingoGame(_accid, _custid, status, context.Request.UserHostAddress, !isUpdDownline, AppSession.IsSyncBingoCurrentCust);
                     s = "parent.changeDisplayStatus();";
                     break;
                 case "disabledNumberGame"://NumberGame

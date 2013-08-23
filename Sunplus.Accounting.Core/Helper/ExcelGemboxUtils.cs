@@ -25,7 +25,6 @@ namespace Sunplus.Accounting.Core.Helper
             return style;
         }
 
-
         public CellStyle GetStyleNumber(decimal num, string symbol, int red, int green, int blue)
         {
             var style = new CellStyle();
@@ -128,6 +127,7 @@ namespace Sunplus.Accounting.Core.Helper
 
             return style;
         }
+
         public CellStyle GetStyleIntNumberTotal(string symbol, Color bgColor, bool isBold, bool isPossitiveColor)
         {
             var style = new CellStyle();
@@ -142,6 +142,7 @@ namespace Sunplus.Accounting.Core.Helper
 
             return style;
         }
+
         public CellStyle GetStyleIntNumberMixparlayAdvance(string symbol, Color bgColor, bool isBold, bool isPossitiveColor, bool istotal)
         {
             var style = new CellStyle();
@@ -224,7 +225,6 @@ namespace Sunplus.Accounting.Core.Helper
                 style.Font.Color = Color.Red;
             return style;
         }
-
 
         public CellStyle GetStyleText(bool IsEven)
         {

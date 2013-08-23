@@ -1,41 +1,37 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Text;
+using System.Web;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
+using DNAide.Web;
 using ExcelUtil.Spreadsheet;
+using Sunplus.Accounting.Business.BetList;
+using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business.CacheManager;
 using Sunplus.Accounting.Business.Security;
+using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.Core.Helper.IP;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Accounting.DataAccess.AdoNet.ReportDAO;
+using Sunplus.Accounting.DataAccess.IBetAggregatorDAO;
 using Sunplus.Accounting.DataAccess.IReportDAO;
 using Sunplus.Accounting.DataAccess.Report;
 using Sunplus.Accounting.Entities.BetAggregator;
 using Sunplus.Accounting.Entities.Report.Deposit;
-using System.Linq;
-using System.Collections;
 using Sunplus.Accounting.Entities.Report.Licensee;
-using Sunplus.Accounting.Business.BetList;
-using Sunplus.Accounting.Core.Web;
-using DNAide.Web;
-using System.Text;
-using System.Web;
-using Sunplus.Accounting.Core.Cache;
-
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.DataAccess.IBetAggregatorDAO;
-using Sunplus.Accounting.Business.BootStrappers;
-using Sunplus.Accounting.DataAccess.AdoNet.ReportDAO;
 using Sunplus.Data.DataAbstract.Entity;
-using Sunplus.Accounting.Core.Helper.IP;
 
 namespace Sunplus.Accounting.Business.BetAggregator
-    
 {
-
     public partial class ReportWlbaBySiteService : IReportWLBABySiteService
     {
         private ILicenseDAO _licenseReportDAO;
@@ -48,7 +44,8 @@ namespace Sunplus.Accounting.Business.BetAggregator
         private string _keySelReportByLicenseeDetailV2 = "selreportbylicenseedetailv2";
         private string _keySelTotalTransction = "selecttotaltransaction";
 
-        public ReportWlbaBySiteService() {
+        public ReportWlbaBySiteService()
+        {
             _licenseReportDAO = new LicenseDAO();
         }
 
@@ -62,10 +59,11 @@ namespace Sunplus.Accounting.Business.BetAggregator
         }
 
         #region SelCurrency
+
         public Report_LicenseeWLBA_DTO SelCurrency(string siteId)
         {
             var dbResult = _licenseReportDAO.SelCurrencyByLicensee(siteId);
-            
+
             var depositDto = new Report_LicenseeWLBA_DTO();
 
             if (dbResult == null)
@@ -79,16 +77,17 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                   {
                                       currencyId = CastAide.AsInt32(dataRow["currency"]),
                                       currency = CastAide.AsString(dataRow["currencyname"]),
-                                      
                                   };
                 list.Add(deposit);
             }
             depositDto.currency = list;
             return depositDto;
         }
-        #endregion
+
+        #endregion SelCurrency
 
         #region GetDatetimeOption
+
         public Report_LicenseeWLBA_DTO GetDatetimeOption(string dateOption)
         {
             //Get FromDate, ToDate
@@ -99,26 +98,32 @@ namespace Sunplus.Accounting.Business.BetAggregator
                 case "1": //today
                     fromdate = todate = DateTime.Now;
                     break;
+
                 case "2": //Yesterday
                     fromdate = DateTime.Now.AddDays(-1);
                     todate = DateTime.Now.AddDays(-1);
                     break;
+
                 case "3": //current week
                     fromdate = DateTime.Now.AddDays(-1 * Convert.ToInt32(DateTime.Now.DayOfWeek));
                     todate = DateTime.Now;
                     break;
+
                 case "4": //last week
                     fromdate = DateTime.Now.AddDays(-1 * Convert.ToInt32(DateTime.Now.DayOfWeek) - 7);
                     todate = fromdate.AddDays(6);
                     break;
+
                 case "5": //Current Month
                     fromdate = DateTime.Now.AddDays(-1 * (DateTime.Now.Day - 1));
                     todate = DateTime.Now;
                     break;
+
                 case "6": //Last Month
                     fromdate = DateTime.Now.AddDays(-1 * (DateTime.Now.Day - 1)).AddMonths(-1);
                     todate = DateTime.Now.AddDays(-1 * (DateTime.Now.Day));
                     break;
+
                 case "7": //Since Last Month
                     fromdate = DateTime.Now.AddDays(-1 * (DateTime.Now.Day - 1)).AddMonths(-1);
                     todate = DateTime.Now;
@@ -128,7 +133,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
                     fromdate = todate = DateTime.Now;
                     break;
             }
-        
+
             Report_LicenseeWLBA_DTO depositDto = new Report_LicenseeWLBA_DTO();
             depositDto.fdate = fromdate.ToShortDateString();
             depositDto.tdate = todate.ToShortDateString();
@@ -136,10 +141,10 @@ namespace Sunplus.Accounting.Business.BetAggregator
             return depositDto;
         }
 
-        
-        #endregion
+        #endregion GetDatetimeOption
 
         #region formatReportType
+
         private string formatReportType(string value, string reportType)
         {
             if (string.IsNullOrEmpty(value))
@@ -158,6 +163,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         str = mm + "/" + dd + "/" + yy;
                     }
                     break;
+
                 case "2":
                     if (value.Length == 6)
                     {
@@ -167,33 +173,36 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         str = mm + "/" + yy;
                     }
                     break;
+
                 case "3":
                     switch (value)
                     {
                         case "0":
                             str = "Sportsbook";
                             break;
+
                         case "151":
                             str = "Racebook";
                             break;
                     }
                     break;
-
             }
-            
+
             return str;
         }
-        #endregion
+
+        #endregion formatReportType
 
         #region SelReportByLicenseeFromDB
-        Report_LicenseeWLBA_DTO SelReportByLicenseeFromDB(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, string MoveBetsDay, int drawfilter, int excludeTest, int ShowBA, int pageIndex, int pageSize)
+
+        private Report_LicenseeWLBA_DTO SelReportByLicenseeFromDB(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, string MoveBetsDay, int drawfilter, int excludeTest, int ShowBA, int pageIndex, int pageSize)
         {
             Report_LicenseeWLBA_DTO licenseDto = new Report_LicenseeWLBA_DTO();
-            bool IsOld = CastAide.AsDateTime(FromDate) < new DateTime(2009,01,01);
+            bool IsOld = CastAide.AsDateTime(FromDate) < new DateTime(2009, 01, 01);
 
             if (BaseCurrency > 0)
                 Currency = 0;
-            
+
             //DbResult dbResult = _licenseReportDAO.SelReportByLicenseeV2(LicenseeID, Currency, FromDate, ToDate, showSB, ShowRB, ShowNG, ShowBA, ReportType, MoveBetsDay, IsOld, drawfilter, excludeTest);
             DbResult dbResult = _licenseReportDAO.SelBAWinLossByLincensee(LicenseeID, Currency, FromDate, ToDate,
                                                                          ReportType, MoveBetsDay, drawfilter,
@@ -201,7 +210,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
             DataTable dataTable = new DataTable();
             if (dbResult == null)
                 return licenseDto;
-            
+
             dataTable = dbResult.ResultSet.Tables[0];
             licenseDto.Items = new List<Report_LicenseeWLBA_Row>();
             licenseDto.Totals = new List<Report_LicenseeWLBA_Row>();
@@ -221,40 +230,46 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
             string _subfixByBaseCurrency = string.Empty;
             switch (BaseCurrency)
-                {
-                    case 3:
-                        _subfixByBaseCurrency = "USD";
-                        break;
-                    case 2:
-                        _subfixByBaseCurrency = "MYR";
-                        break;
-                    case 6:
-                        _subfixByBaseCurrency = "EUR";
-                        break;
-                    default:
-                        _subfixByBaseCurrency = string.Empty;
-                        break;
-                        
-                }
+            {
+                case 3:
+                    _subfixByBaseCurrency = "USD";
+                    break;
+
+                case 2:
+                    _subfixByBaseCurrency = "MYR";
+                    break;
+
+                case 6:
+                    _subfixByBaseCurrency = "EUR";
+                    break;
+
+                default:
+                    _subfixByBaseCurrency = string.Empty;
+                    break;
+            }
 
             var dateGroup = new List<int>();
             var totalDate = 0;
-            string currReportType = string.Empty, pReportType = string.Empty;            
+            string currReportType = string.Empty, pReportType = string.Empty;
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 index++;
 
                 currReportType = CastAide.AsString(dataRow["ReportType"]);
+
                 #region check date
+
                 if (!currReportType.Equals(pReportType) && pReportType.Length > 0 && currReportType.Length > 0)
                 {
                     dateGroup.Add(totalDate);
                     totalDate = 0;
                 }
                 totalDate++;
-                #endregion
+
+                #endregion check date
 
                 #region AssignRow
+
                 Report_LicenseeWLBA_Row licenseeRow = new Report_LicenseeWLBA_Row()
                 {
                     index = index,
@@ -266,24 +281,26 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
                     Turnover = NumberFormat.DecFormat(dataRow["Turnover" + _subfixByBaseCurrency], 2),
                     Winlost = NumberFormat.DecFormat(dataRow["Winlost" + _subfixByBaseCurrency], 2),
-                    
-                    BetCount = NumberFormat.DecFormat(dataRow["BetCount" ], 0),
+
+                    BetCount = NumberFormat.DecFormat(dataRow["BetCount"], 0),
 
                     AComm = NumberFormat.DecFormat(dataRow["Comm" + _subfixByBaseCurrency], 2),
                     Company = NumberFormat.DecFormat(dataRow["AmtDuetoBA" + _subfixByBaseCurrency], 2),
-
                 };
-                #endregion
+
+                #endregion AssignRow
+
                 pReportType = currReportType;
                 licenseDto.Items.Add(licenseeRow);
                 string currencyname = CacheUtils.GetExchangeName(CastAide.AsInt32(dataRow["currency"]));
             }
 
-            #endregion
+            #endregion foreach row content
 
             string exp = string.Empty;
             dateGroup.Add(totalDate);
             licenseDto.DateGroup = dateGroup;
+
             #region Total by currency
 
             foreach (var currency in lstCurrency)
@@ -291,25 +308,24 @@ namespace Sunplus.Accounting.Business.BetAggregator
                 exp = "currency= " + currency.id;
                 licenseDto.Totals.Add(new Report_LicenseeWLBA_Row()
                 {
-                    CurrencyName =  currency.name,
+                    CurrencyName = currency.name,
                     CurrencyId = currency.id.ToString(),
 
                     Turnover = NumberFormat.DecFormat(dataTable.Compute("sum(Turnover" + _subfixByBaseCurrency + ")", exp), 2),
                     Winlost = NumberFormat.DecFormat(dataTable.Compute("sum(Winlost" + _subfixByBaseCurrency + ")", exp), 2),
-                   
+
                     BetCount = NumberFormat.DecFormat(dataTable.Compute("sum(BetCount)", exp), 0),
 
                     AComm = NumberFormat.DecFormat(dataTable.Compute("sum(Comm" + _subfixByBaseCurrency + ")", exp), 2),
-                    
 
                     Company = NumberFormat.DecFormat(dataTable.Compute("sum(AmtDuetoBA" + _subfixByBaseCurrency + ")", exp), 2),
                 });
             }
 
-
-            #endregion
+            #endregion Total by currency
 
             #region Grand Total By Base Currency
+
             Hashtable baseCurrency = new Hashtable();
 
             baseCurrency.Add(2, "MYR");
@@ -326,7 +342,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
                     Turnover = NumberFormat.DecFormat(dataTable.Compute("sum(Turnover" + curr.Value + ")", exp), 2),
                     Winlost = NumberFormat.DecFormat(dataTable.Compute("sum(Winlost" + curr.Value + ")", exp), 2),
-                    
+
                     AComm = NumberFormat.DecFormat(dataTable.Compute("sum(Comm" + curr.Value + ")", exp), 2),
 
                     Company = NumberFormat.DecFormat(dataTable.Compute("sum(AmtDuetoBA" + curr.Value + ")", exp), 2),
@@ -334,20 +350,19 @@ namespace Sunplus.Accounting.Business.BetAggregator
             }
             licenseDto.TotalsBaseCurrency[0].BetCount = NumberFormat.DecFormat(dataTable.Compute("sum(BetCount)", string.Empty), 0);
 
-            #endregion
-
+            #endregion Grand Total By Base Currency
 
             AppSession.AddSession(System.Web.HttpContext.Current.Session, _keySelReportByLicensee, licenseDto);
 
             return licenseDto;
-
         }
-        #endregion
+
+        #endregion SelReportByLicenseeFromDB
 
         #region SelReportByLicenseeDetail_AgFromDB
-        Report_LicenseeWLBA_DTO SelReportByLicenseeDetail_AgFromDB(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter, int excludeTest,int ShowBA, int pageIndex, int pageSize)
+
+        private Report_LicenseeWLBA_DTO SelReportByLicenseeDetail_AgFromDB(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter, int excludeTest, int ShowBA, int pageIndex, int pageSize)
         {
-         
             bool IsOld = CastAide.AsDateTime(FromDate) < new DateTime(2009, 01, 01);
             Report_LicenseeWLBA_DTO licenseDto = new Report_LicenseeWLBA_DTO();
             try
@@ -359,8 +374,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
                 DataTable dataTable = null;
                 string MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay.ToShortDateString();
-                
-                
+
                 //DbResult dbResult = _licenseReportDAO.SelReportByLicenseeDetail_AgV2(LicenseeID, Currency, FromDate, ToDate, showSB, ShowRB, ShowNG, ShowBA, ReportType, MoveBetsDay, IsOld, drawfilter, excludeTest);
                 var dbResult = _licenseReportDAO.SelBAWinLossReportByLicenseeAgent(LicenseeID, Currency, FromDate,
                                                                                         ToDate, MoveBetsDay, drawfilter,
@@ -376,6 +390,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
                 licenseDto.totalrow = dataTable.Rows.Count;
 
                 #region foreach row content
+
                 int from = 0;
                 int to = dataTable.Rows.Count;
 
@@ -383,7 +398,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
                 //List<int> lstCurrency = dataTable.AsEnumerable().OrderBy(s => CastAide.AsString(s["currencyName"])).Select(s => CastAide.AsInt32(s["Currency"])).Distinct().ToList();
                 var lstCurrency =
-                                (from r in dataTable.AsEnumerable()                                 
+                                (from r in dataTable.AsEnumerable()
                                  select new { id = r.Field<int>("currency"), name = r.Field<string>("currencyname") }).Distinct();
 
                 string _subfixByBaseCurrency = string.Empty;
@@ -392,16 +407,18 @@ namespace Sunplus.Accounting.Business.BetAggregator
                     case 3:
                         _subfixByBaseCurrency = "USD";
                         break;
+
                     case 2:
                         _subfixByBaseCurrency = "MYR";
                         break;
+
                     case 6:
                         _subfixByBaseCurrency = "EUR";
                         break;
+
                     default:
                         _subfixByBaseCurrency = string.Empty;
                         break;
-
                 }
 
                 string ReportTypeId = string.Empty;
@@ -410,13 +427,13 @@ namespace Sunplus.Accounting.Business.BetAggregator
                 else if (showSB == 0 && ShowRB == 1)
                     ReportTypeId = "Racebook";
 
-                
                 for (int i = from; i < to; i++)
                 {
                     index++;
                     DataRow dataRow = dataTable.Rows[i];
-                                       
+
                     #region AssignRow
+
                     Report_LicenseeWLBA_Row licenseeRow = new Report_LicenseeWLBA_Row()
                     {
                         index = index,
@@ -430,24 +447,23 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
                         Turnover = NumberFormat.DecFormat(dataRow["Turnover" + _subfixByBaseCurrency], 2),
                         Winlost = NumberFormat.DecFormat(dataRow["Winlost" + _subfixByBaseCurrency], 2),
-                       
+
                         BetCount = NumberFormat.DecFormat(dataRow["BetCount"], 0),
 
                         AComm = NumberFormat.DecFormat(dataRow["Comm" + _subfixByBaseCurrency], 2),
-                       
 
                         Company = NumberFormat.DecFormat(dataRow["AmtDuetoBA" + _subfixByBaseCurrency], 2),
-
                     };
-                    #endregion
+
+                    #endregion AssignRow
 
                     licenseDto.Items.Add(licenseeRow);
                 }
 
-                #endregion
+                #endregion foreach row content
 
                 string exp = string.Empty;
-               
+
                 #region Total by currency
 
                 foreach (var currency in lstCurrency)
@@ -460,7 +476,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
                         Turnover = NumberFormat.DecFormat(dataTable.Compute("sum(Turnover" + _subfixByBaseCurrency + ")", exp), 2),
                         Winlost = NumberFormat.DecFormat(dataTable.Compute("sum(Winlost" + _subfixByBaseCurrency + ")", exp), 2),
-                       
+
                         BetCount = NumberFormat.DecFormat(dataTable.Compute("sum(BetCount)", exp), 0),
 
                         AComm = NumberFormat.DecFormat(dataTable.Compute("sum(Comm" + _subfixByBaseCurrency + ")", exp), 2),
@@ -468,11 +484,11 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         Company = NumberFormat.DecFormat(dataTable.Compute("sum(AmtDuetoBA" + _subfixByBaseCurrency + ")", exp), 2),
                     });
                 }
-               
 
-                #endregion
+                #endregion Total by currency
 
                 #region Grand Total By Base Currency
+
                 Hashtable baseCurrency = new Hashtable();
 
                 baseCurrency.Add(2, "MYR");
@@ -490,21 +506,17 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         Turnover = NumberFormat.DecFormat(dataTable.Compute("sum(Turnover" + curr.Value + ")", exp), 2),
                         Winlost = NumberFormat.DecFormat(dataTable.Compute("sum(Winlost" + curr.Value + ")", exp), 2),
 
-
-                       
                         AComm = NumberFormat.DecFormat(dataTable.Compute("sum(Comm" + curr.Value + ")", exp), 2),
-                        
 
                         Company = NumberFormat.DecFormat(dataTable.Compute("sum(AmtDuetoBA" + curr.Value + ")", exp), 2),
                     });
                 }
                 licenseDto.TotalsBaseCurrency[0].BetCount = NumberFormat.DecFormat(dataTable.Compute("sum(BetCount)", string.Empty), 0);
 
-                #endregion
+                #endregion Grand Total By Base Currency
             }
             catch (Exception ex)
             {
-
                 LogExtensions.ExceptionHandler(ex);
             }
 
@@ -512,16 +524,16 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
             return licenseDto;
         }
-        #endregion
+
+        #endregion SelReportByLicenseeDetail_AgFromDB
 
         #region SelReportByLicenseeDetailFromDB
-        Report_LicenseeWLBA_DTO SelReportByLicenseeDetailFromDB(int LicenseeID, int Currency, int BaseCurrency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, string MoveBetsDay, int drawfilter, int excludeTest,int ShowBA, int pageIndex, int pageSize)
+
+        private Report_LicenseeWLBA_DTO SelReportByLicenseeDetailFromDB(int LicenseeID, int Currency, int BaseCurrency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, string MoveBetsDay, int drawfilter, int excludeTest, int ShowBA, int pageIndex, int pageSize)
         {
             Report_LicenseeWLBA_DTO licenseDto = new Report_LicenseeWLBA_DTO();
             bool IsOld = CastAide.AsDateTime(FromDate) < new DateTime(2009, 01, 01);
 
-            
-            
             //DbResult dbResult = _licenseReportDAO.SelReportByLicenseeDetailV2(LicenseeID, Currency, CustId, FromDate, ToDate, showSB, ShowRB, ShowNG, ShowBA, ReportType, MoveBetsDay, IsOld, drawfilter, excludeTest);
             var dbResult = _licenseReportDAO.SelBAWinLossByLicenseeDetail(LicenseeID, Currency, CustId, FromDate,
                                                                                ToDate, MoveBetsDay, drawfilter,
@@ -531,7 +543,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
                 return licenseDto;
 
             dataTable = dbResult.ResultSet.Tables[0];
-            
+
             licenseDto.Items = new List<Report_LicenseeWLBA_Row>();
             licenseDto.Totals = new List<Report_LicenseeWLBA_Row>();
             licenseDto.TotalsBaseCurrency = new List<Report_LicenseeWLBA_Row>();
@@ -554,16 +566,18 @@ namespace Sunplus.Accounting.Business.BetAggregator
                 case 3:
                     _subfixByBaseCurrency = "USD";
                     break;
+
                 case 2:
                     _subfixByBaseCurrency = "MYR";
                     break;
+
                 case 6:
                     _subfixByBaseCurrency = "EUR";
                     break;
+
                 default:
                     _subfixByBaseCurrency = string.Empty;
                     break;
-
             }
 
             string ReportTypeId = string.Empty;
@@ -572,12 +586,12 @@ namespace Sunplus.Accounting.Business.BetAggregator
             else if (showSB == 0 && ShowRB == 1)
                 ReportTypeId = "Racebook";
 
-            
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 index++;
-                             
+
                 #region AssignRow
+
                 Report_LicenseeWLBA_Row licenseeRow = new Report_LicenseeWLBA_Row()
                 {
                     index = index,
@@ -591,24 +605,23 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
                     Turnover = NumberFormat.DecFormat(dataRow["Turnover" + _subfixByBaseCurrency], 2),
                     Winlost = NumberFormat.DecFormat(dataRow["Winlost" + _subfixByBaseCurrency], 2),
-                    
+
                     BetCount = NumberFormat.DecFormat(dataRow["BetCount"], 0),
-                    
 
                     AComm = NumberFormat.DecFormat(dataRow["Comm" + _subfixByBaseCurrency], 2),
-                    
 
                     Company = NumberFormat.DecFormat(dataRow["AmtDuetoBA" + _subfixByBaseCurrency], 2),
-
                 };
-                #endregion
+
+                #endregion AssignRow
+
                 licenseDto.Items.Add(licenseeRow);
             }
 
-            #endregion
+            #endregion foreach row content
 
             string exp = string.Empty;
-          
+
             #region Total by currency
 
             foreach (var currency in lstCurrency)
@@ -621,20 +634,19 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
                     Turnover = NumberFormat.DecFormat(dataTable.Compute("sum(Turnover" + _subfixByBaseCurrency + ")", exp), 2),
                     Winlost = NumberFormat.DecFormat(dataTable.Compute("sum(Winlost" + _subfixByBaseCurrency + ")", exp), 2),
-                   
+
                     BetCount = NumberFormat.DecFormat(dataTable.Compute("sum(BetCount)", exp), 0),
 
                     AComm = NumberFormat.DecFormat(dataTable.Compute("sum(Comm" + _subfixByBaseCurrency + ")", exp), 2),
-                   
 
                     Company = NumberFormat.DecFormat(dataTable.Compute("sum(AmtDuetoBA" + _subfixByBaseCurrency + ")", exp), 2),
                 });
             }
 
-
-            #endregion
+            #endregion Total by currency
 
             #region Grand Total By Base Currency
+
             Hashtable baseCurrency = new Hashtable();
 
             baseCurrency.Add(2, "MYR");
@@ -651,29 +663,27 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
                     Turnover = NumberFormat.DecFormat(dataTable.Compute("sum(Turnover" + curr.Value + ")", exp), 2),
                     Winlost = NumberFormat.DecFormat(dataTable.Compute("sum(Winlost" + curr.Value + ")", exp), 2),
-                    
+
                     AComm = NumberFormat.DecFormat(dataTable.Compute("sum(Comm" + curr.Value + ")", exp), 2),
- 
 
                     Company = NumberFormat.DecFormat(dataTable.Compute("sum(AmtDuetoBA" + curr.Value + ")", exp), 2),
                 });
             }
             licenseDto.TotalsBaseCurrency[0].BetCount = NumberFormat.DecFormat(dataTable.Compute("sum(BetCount)", string.Empty), 0);
 
-            #endregion
-            
+            #endregion Grand Total By Base Currency
+
             AppSession.AddSession(System.Web.HttpContext.Current.Session, _keySelReportByLicenseeDetail, licenseDto);
 
             return licenseDto;
-
         }
-        #endregion
+
+        #endregion SelReportByLicenseeDetailFromDB
 
         #region SelReportByLicensee
-               
-        public Report_LicenseeWLBA_DTO SelReportByLicensee(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter, int excludeTest,int ShowBA, int pageIndex, int pageSize, int fromCache)
-        {
 
+        public Report_LicenseeWLBA_DTO SelReportByLicensee(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter, int excludeTest, int ShowBA, int pageIndex, int pageSize, int fromCache)
+        {
             Report_LicenseeWLBA_DTO licenseDto = new Report_LicenseeWLBA_DTO();
             Report_LicenseeWLBA_DTO licenseDtoPaging = new Report_LicenseeWLBA_DTO();
 
@@ -701,7 +711,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
                 var dbResult = _licenseReportDAO.SelBAWinLossByLincensee(licenseeId, currency, fromDate, toDate,
                                                                          reportType, moveBetsDay, drawfilter,
                                                                          excludeTest);
-                if(dbResult != null && dbResult.ResultSet.Tables != null && dbResult.ResultSet.Tables.Count > 0)
+                if (dbResult != null && dbResult.ResultSet.Tables != null && dbResult.ResultSet.Tables.Count > 0)
                 {
                     var lincenseesData = new DataTable();
                     var tblEmployees = dbResult.ResultSet.Tables[0];
@@ -736,16 +746,18 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         case 3:
                             subfixByBaseCurrency = "USD";
                             break;
+
                         case 2:
                             subfixByBaseCurrency = "MYR";
                             break;
+
                         case 6:
                             subfixByBaseCurrency = "EUR";
                             break;
+
                         default:
                             subfixByBaseCurrency = string.Empty;
                             break;
-
                     }
 
                     var licenseeWL = new LicenseeWLBA();
@@ -764,16 +776,16 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         currReportType = CastAide.AsString(dr["ReportType"]);
 
                         #region licensee
+
                         if (currLicenseeId != pLicenseeId && pLicenseeId != 0)
                         {
                             dateGroup.Add(totalDate);
                             licenseeWL.LicenseeId = pLicenseeId.ToString();
                             licenseeWL.Licensee = pLicenseeName;
                             licenseeWL.DateGroup = dateGroup;
-                            
 
                             #region total by currency
-                            
+
                             var currencies =
                                 (from r in lincenseesData.AsEnumerable()
                                  where r.Field<int>("LicenseeID") == pLicenseeId
@@ -783,7 +795,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
                             {
                                 var id = CastAide.AsString(item.id);
                                 var name = CastAide.AsString(item.name);
-                                var exp = "currency="+ id + " and licenseeid = " + pLicenseeId;
+                                var exp = "currency=" + id + " and licenseeid = " + pLicenseeId;
                                 licenseeWL.Totals.Add(new Report_LicenseeWLBA_Row()
                                                           {
                                                               CurrencyId = id,
@@ -795,7 +807,8 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                                               BetCount = NumberFormat.DecFormat(lincenseesData.Compute("sum(BetCount)", exp), 0)
                                                           });
                             }
-                            #endregion
+
+                            #endregion total by currency
 
                             #region total - base currencies
 
@@ -838,12 +851,13 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                                                           NumberFormat.DecFormat(licMYRLicenseeComm, 2),
                                                                       Company = NumberFormat.DecFormat(licMYRBA, 2)
                                                                   });
-                            
-                            
-                            #endregion
+
+                            #endregion total - base currencies
+
                             result.Items.Add(licenseeWL);
 
-                            #region reset 
+                            #region reset
+
                             licTotalTrans = 0;
                             licenseeWL = new LicenseeWLBA();
                             licenseeWL.Items = new List<Report_LicenseeWLBA_Row>();
@@ -863,20 +877,22 @@ namespace Sunplus.Accounting.Business.BetAggregator
                             licUSDBA = 0;
                             dateGroup = new List<int>();
                             totalDate = 0;
-                            #endregion
-                        }
-                        #region check date
-                        
 
-                        if(!currReportType.Equals(pReportType) && pReportType.Length > 0 && currReportType.Length > 0 && currLicenseeId == pLicenseeId)
+                            #endregion reset
+                        }
+
+                        #region check date
+
+                        if (!currReportType.Equals(pReportType) && pReportType.Length > 0 && currReportType.Length > 0 && currLicenseeId == pLicenseeId)
                         {
                             dateGroup.Add(totalDate);
                             totalDate = 0;
                         }
                         totalDate++;
-                        #endregion
 
-                        #endregion
+                        #endregion check date
+
+                        #endregion licensee
 
                         #region each row
 
@@ -898,52 +914,65 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                               };
 
                         licenseeWL.Items.Add(licenseeRow);
-                        #endregion
+
+                        #endregion each row
 
                         licTotalTrans += totalTrans;
                         grandTotalTrans += totalTrans;
+
                         #region licensee Total - MYR
+
                         licMYRTurnover += CastAide.AsDouble(dr["TurnoverMYR"]);
                         licMYRCustWL += CastAide.AsDouble(dr["WinlostMYR"]);
                         licMYRLicenseeComm += CastAide.AsDouble(dr["CommMYR"]);
                         licMYRBA += CastAide.AsDouble(dr["AmtDuetoBAMYR"]);
-                        #endregion
+
+                        #endregion licensee Total - MYR
 
                         #region Grand Total - MYR
+
                         totalMYRTurnover += CastAide.AsDouble(dr["TurnoverMYR"]);
                         totalMYRCustWL += CastAide.AsDouble(dr["WinlostMYR"]);
                         totalMYRLicenseeComm += CastAide.AsDouble(dr["CommMYR"]);
                         totalMYRBA += CastAide.AsDouble(dr["AmtDuetoBAMYR"]);
-                        #endregion
+
+                        #endregion Grand Total - MYR
 
                         #region licensee Total - USD
+
                         licUSDTurnover += CastAide.AsDouble(dr["TurnoverUSD"]);
                         licUSDCustWL += CastAide.AsDouble(dr["WinlostUSD"]);
                         licUSDLicenseeComm += CastAide.AsDouble(dr["CommUSD"]);
                         licUSDBA += CastAide.AsDouble(dr["AmtDuetoBAUSD"]);
-                        #endregion
+
+                        #endregion licensee Total - USD
 
                         #region Grand Total - USD
+
                         totalUSDTurnover += CastAide.AsDouble(dr["TurnoverUSD"]);
                         totalUSDCustWL += CastAide.AsDouble(dr["WinlostUSD"]);
                         totalUSDLicenseeComm += CastAide.AsDouble(dr["CommUSD"]);
                         totalUSDBA += CastAide.AsDouble(dr["AmtDuetoBAUSD"]);
-                        #endregion
+
+                        #endregion Grand Total - USD
 
                         #region licensee Total - EUR
+
                         licEURTurnover += CastAide.AsDouble(dr["TurnoverEUR"]);
                         licEURCustWL += CastAide.AsDouble(dr["WinlostEUR"]);
                         licEURLicenseeComm += CastAide.AsDouble(dr["CommEUR"]);
                         licEURBA += CastAide.AsDouble(dr["AmtDuetoBAEUR"]);
-                        #endregion
+
+                        #endregion licensee Total - EUR
 
                         #region Grand Total - EUR
+
                         totalEURTurnover += CastAide.AsDouble(dr["TurnoverEUR"]);
                         totalEURCustWL += CastAide.AsDouble(dr["WinlostEUR"]);
                         totalEURLicenseeComm += CastAide.AsDouble(dr["CommEUR"]);
                         totalEURBA += CastAide.AsDouble(dr["AmtDuetoBAEUR"]);
-                        #endregion
 
+                        #endregion Grand Total - EUR
 
                         pLicenseeId = currLicenseeId;
                         pLicenseeName = currLicenseeName;
@@ -953,6 +982,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
                     }
 
                     #region last licensee
+
                     dateGroup.Add(totalDate);
                     licenseeWL.LicenseeId = pLicenseeId.ToString();
                     licenseeWL.Licensee = pLicenseeName;
@@ -981,7 +1011,8 @@ namespace Sunplus.Accounting.Business.BetAggregator
                             BetCount = NumberFormat.DecFormat(lincenseesData.Compute("sum(BetCount)", exp), 0)
                         });
                     }
-                    #endregion
+
+                    #endregion total by currency
 
                     #region total - base currencies
 
@@ -1024,11 +1055,12 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                                                   NumberFormat.DecFormat(licMYRLicenseeComm, 2),
                                                               Company = NumberFormat.DecFormat(licMYRBA, 2)
                                                           });
-                    
-                    
-                    #endregion
+
+                    #endregion total - base currencies
+
                     result.Items.Add(licenseeWL);
-                    #endregion
+
+                    #endregion last licensee
 
                     #region grand total
 
@@ -1071,24 +1103,23 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                                               NumberFormat.DecFormat(totalMYRLicenseeComm, 2),
                                                           Company = NumberFormat.DecFormat(totalMYRBA, 2)
                                                       });
-                    
-                    
 
-                    #endregion
-
+                    #endregion grand total
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
             SessionExtension.AddSession(HttpContext.Current.Session, _keySelBAReportByLicensee, result);
             return result;
         }
-        #endregion
+
+        #endregion SelReportByLicensee
 
         #region ExportDepositReport
-        ExcelWorksheet AssignDataExcel(string level, string currency, string baseCurrency, ref ExcelWorksheet ws, int indexRow, DataRow dataRow, string reportType, int r, int g, int b)
+
+        private ExcelWorksheet AssignDataExcel(string level, string currency, string baseCurrency, ref ExcelWorksheet ws, int indexRow, DataRow dataRow, string reportType, int r, int g, int b)
         {
             var gembox = new ExcelGemboxUtils();
 
@@ -1100,13 +1131,13 @@ namespace Sunplus.Accounting.Business.BetAggregator
             if (curr.Length > 0)
                 currency = baseCurrency;
 
-            if(level == "1")
+            if (level == "1")
             {
                 ws.Cells[indexRow, 0].Value = formatReportType(CastAide.AsString(dataRow["reportType"]), reportType);
                 ws.Cells[indexRow, 0].Style = gembox.GetStyleNumber(0, "", r, g, b);
 
                 ws.Cells[indexRow, 1].Value = CacheUtils.GetExchangeName(CastAide.AsInt32(dataRow["currency"]));
-                ws.Cells[indexRow, 1].Style = gembox.GetStyleText( r, g, b,HorizontalAlignmentStyle.Center);    
+                ws.Cells[indexRow, 1].Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
             }
             else
             {
@@ -1114,9 +1145,8 @@ namespace Sunplus.Accounting.Business.BetAggregator
                 ws.Cells[indexRow, 0].Style = gembox.GetStyleNumber(0, "", r, g, b);
 
                 ws.Cells[indexRow, 1].Value = CacheUtils.GetExchangeName(CastAide.AsInt32(currency));
-                ws.Cells[indexRow, 1].Style = gembox.GetStyleText(r, g, b,HorizontalAlignmentStyle.Center);    
+                ws.Cells[indexRow, 1].Style = gembox.GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
             }
-
 
             ws.Cells[indexRow, 2].Value = CastAide.AsDecimal(dataRow["Turnover" + curr]);
             ws.Cells[indexRow, 2].Style = gembox.GetStyleNumber(0, "", r, g, b);
@@ -1147,7 +1177,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
             return ws;
         }
 
-        ExcelWorksheet AssignDataTotalCurrencyExcel(string level, ref ExcelWorksheet ws, ref int indexRow, ArrayList arrCurrency, string baseCurrency, DataTable dataTable, int r, int g, int b)
+        private ExcelWorksheet AssignDataTotalCurrencyExcel(string level, ref ExcelWorksheet ws, ref int indexRow, ArrayList arrCurrency, string baseCurrency, DataTable dataTable, int r, int g, int b)
         {
             var gembox = new ExcelGemboxUtils();
             string strCurr = "";
@@ -1161,8 +1191,6 @@ namespace Sunplus.Accounting.Business.BetAggregator
                 string filler = "currency = " + curr;
                 if (level == "2" || level == "3")
                     filler = "";
-
-                
 
                 ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 1).Value = "Total " + CacheUtils.GetExchangeName(curr);
                 ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 1).Style = gembox.GetStyleTextTotal(r, g, b);
@@ -1195,16 +1223,15 @@ namespace Sunplus.Accounting.Business.BetAggregator
                 ws.Cells[indexRow, 9].Style = gembox.GetStyleNumberTotal(0, "", r, g, b);
 
                 ws.Cells[indexRow, 10].Value = dataTable.Compute("sum(Company" + strCurr + ")", filler);
-                ws.Cells[indexRow, 10].Style = gembox.GetStyleNumberTotal (0, "", r, g, b);
+                ws.Cells[indexRow, 10].Style = gembox.GetStyleNumberTotal(0, "", r, g, b);
 
                 indexRow++;
             }
 
-            
             return ws;
         }
 
-        ExcelWorksheet AssignDataGrandTotalCurrencyExcel(ref ExcelWorksheet ws, ref int indexRow, DataTable dataTable, int r, int g, int b)
+        private ExcelWorksheet AssignDataGrandTotalCurrencyExcel(ref ExcelWorksheet ws, ref int indexRow, DataTable dataTable, int r, int g, int b)
         {
             var gembox = new ExcelGemboxUtils();
             ArrayList arrCurrency = new ArrayList();
@@ -1214,7 +1241,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
             {
                 string filler = "";
 
-                ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 1).Value = "Total " + (curr == "USD" ? "US$" : curr) ;
+                ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 1).Value = "Total " + (curr == "USD" ? "US$" : curr);
                 ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 1).Style = gembox.GetStyleTextTotal(r, g, b);
                 ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 1).Merged = true;
 
@@ -1250,9 +1277,9 @@ namespace Sunplus.Accounting.Business.BetAggregator
                 indexRow++;
             }
 
-
             return ws;
         }
+
         public ExcelFile ExportLicenseeReport(string site, string fdate, string tdate, ref bool hasData, string reportType, string level, string currency, string baseCurrency)
         {
             hasData = true;
@@ -1275,7 +1302,8 @@ namespace Sunplus.Accounting.Business.BetAggregator
             int indexRow = 0;
 
             #region header
-            ws.Cells.GetSubrangeAbsolute(0, 0, 1, 10).Value = "Deposit report for site "+ site +" from "+ fdate +" to " + tdate;
+
+            ws.Cells.GetSubrangeAbsolute(0, 0, 1, 10).Value = "Deposit report for site " + site + " from " + fdate + " to " + tdate;
             ws.Cells.GetSubrangeAbsolute(0, 0, 1, 10).Style = gembox.GetStyleTitle(205, 222, 243);
             ws.Cells.GetSubrangeAbsolute(0, 0, 1, 10).Merged = true;
 
@@ -1324,16 +1352,17 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
             ws.Cells[3, 9].Value = "Total";
             ws.Cells[3, 9].Style = gembox.GetStyleTitle(205, 222, 243);
-            #endregion
+
+            #endregion header
 
             #region content
 
             indexRow = 4;
             int r, g, b;
             ArrayList arrCurrency = new ArrayList();
-            foreach(DataRow dataRow in dataTable.Rows)
+            foreach (DataRow dataRow in dataTable.Rows)
             {
-                if(indexRow%2==0)
+                if (indexRow % 2 == 0)
                 {
                     r = g = b = 255;
                 }
@@ -1343,26 +1372,27 @@ namespace Sunplus.Accounting.Business.BetAggregator
                     g = 243;
                     b = 200;
                 }
-                if(level == "1")
+                if (level == "1")
                 {
                     if (!arrCurrency.Contains(CastAide.AsInt32(dataRow["currency"])))
                     {
                         arrCurrency.Add(dataRow["currency"]);
-                    }    
+                    }
                 }
                 else
                 {
                     if (!arrCurrency.Contains(CastAide.AsInt32(currency)))
                     {
                         arrCurrency.Add(CastAide.AsInt32(currency));
-                    }    
+                    }
                 }
 
                 AssignDataExcel(level, currency, baseCurrency, ref ws, indexRow, dataRow, reportType, r, g, b);
 
                 indexRow++;
             }
-            #endregion
+
+            #endregion content
 
             #region footer
 
@@ -1375,7 +1405,8 @@ namespace Sunplus.Accounting.Business.BetAggregator
             g = 222;
             b = 243;
             AssignDataGrandTotalCurrencyExcel(ref ws, ref indexRow, dataTable, r, g, b);
-            #endregion
+
+            #endregion footer
 
             for (int i = 0; i <= 11; i++)
             {
@@ -1384,24 +1415,22 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
             return excelFile;
         }
-        #endregion
+
+        #endregion ExportDepositReport
 
         #region SelLicensees
+
         public List<Item> SelLicensees(bool IsAll)
         {
-            
             List<Item> lstSite = new List<Item>();
 
             try
             {
-
-
                 DataTable dataTable = _licenseReportDAO.GetLicenseeList();
 
-
                 DataTable dtLicenseePermission = new DataTable();
-                dtLicenseePermission.Columns.Add("site", typeof (string));
-                dtLicenseePermission.Columns.Add("Level", typeof (string));
+                dtLicenseePermission.Columns.Add("site", typeof(string));
+                dtLicenseePermission.Columns.Add("Level", typeof(string));
                 //dtLicenseePermission.Columns.Add("To", typeof(string));
                 //dtLicenseePermission.Columns.Add("Cc", typeof(string));
                 //dtLicenseePermission.Columns.Add("Bcc", typeof(string));
@@ -1416,7 +1445,6 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         HasPermission = true;
                     if (HasPermission)
                     {
-
                         DataRow dataRow = dtLicenseePermission.NewRow();
                         dataRow["site"] = element.Site.ToLower();
                         dataRow["Level"] = element.Level;
@@ -1428,16 +1456,13 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         //dataRow["Cc"] = mailElement.Cc;
                         //dataRow["Bcc"] = mailElement.Bcc;
 
-
                         dtLicenseePermission.Rows.Add(dataRow);
                     }
                 }
 
-
                 DataRow[] rows = dataTable.Select();
                 foreach (DataRow row in rows)
                 {
-
                     DataRow[] rowPermission = dtLicenseePermission.Select("site='" + row["LicenseeName"] + "'");
                     bool HasPermission = rowPermission.Length > 0;
                     if (HasPermission)
@@ -1454,29 +1479,27 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                         });
                     }
                 }
-
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
-
             }
             return lstSite;
         }
-        #endregion
+
+        #endregion SelLicensees
 
         #region SelReportByLicenseeDetail_Ag
-        public Report_LicenseeWLBA_DTO SelReportByLicenseeDetail_Ag(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter,int excludeTest,int ShowBA, int pageIndex, int pageSize, int fromCache)
+
+        public Report_LicenseeWLBA_DTO SelReportByLicenseeDetail_Ag(int LicenseeID, int Currency, int BaseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter, int excludeTest, int ShowBA, int pageIndex, int pageSize, int fromCache)
         {
             Report_LicenseeWLBA_DTO licenseDto = new Report_LicenseeWLBA_DTO();
             Report_LicenseeWLBA_DTO licenseDtoPaging = new Report_LicenseeWLBA_DTO();
             var sessionLicenseDto = AppSession.GetSession(System.Web.HttpContext.Current.Session,
                                                           _keySelReportByLicenseeDetail_Ag);
 
-
             try
             {
-
                 DataTable dataTable = null;
                 licenseDto = SelReportByLicenseeDetail_AgFromDB(LicenseeID, Currency, BaseCurrency, FromDate, ToDate, showSB, ShowRB, ShowNG, ReportType, drawfilter, excludeTest, ShowBA, pageSize, pageIndex);
             }
@@ -1499,7 +1522,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
                 DataTable dataTable = null;
                 var moveBetsDay = ReportUtils.BalanceUp.MoveBetsDay.ToShortDateString();
-                
+
                 var dbResult = _licenseReportDAO.SelBAWinLossReportByLicenseeAgent(licenseeId, currencyId, fromDate,
                                                                                         toDate, moveBetsDay, drawfilter,
                                                                                         excludeTest);
@@ -1514,6 +1537,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
                 licenseDto.totalrow = dataTable.Rows.Count;
 
                 #region foreach row content
+
                 var from = 0;
                 var to = dataTable.Rows.Count;
 
@@ -1529,20 +1553,21 @@ namespace Sunplus.Accounting.Business.BetAggregator
                     case 3:
                         subfixByBaseCurrency = "USD";
                         break;
+
                     case 2:
                         subfixByBaseCurrency = "MYR";
                         break;
+
                     case 6:
                         subfixByBaseCurrency = "EUR";
                         break;
+
                     default:
                         subfixByBaseCurrency = string.Empty;
                         break;
-
                 }
 
                 var ReportTypeId = string.Empty;
-                
 
                 for (int i = from; i < to; i++)
                 {
@@ -1572,20 +1597,20 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
                                               AComm = NumberFormat.DecFormat(dataRow["Comm" + subfixByBaseCurrency], 2),
 
-
                                               Company =
                                                   NumberFormat.DecFormat(dataRow["AmtDuetoBA" + subfixByBaseCurrency],
                                                                          2),
-
                                           };
-                    #endregion
+
+                    #endregion AssignRow
 
                     licenseDto.Items.Add(licenseeRow);
                 }
 
-                #endregion
+                #endregion foreach row content
 
                 string exp = string.Empty;
+
                 #region Total by currency
 
                 foreach (var currency in lstCurrency)
@@ -1607,10 +1632,10 @@ namespace Sunplus.Accounting.Business.BetAggregator
                     });
                 }
 
-
-                #endregion
+                #endregion Total by currency
 
                 #region Grand Total By Base Currency
+
                 var baseCurrency = new Hashtable();
 
                 baseCurrency.Add(2, "MYR");
@@ -1628,21 +1653,17 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         Turnover = NumberFormat.DecFormat(dataTable.Compute("sum(Turnover" + curr.Value + ")", exp), 2),
                         Winlost = NumberFormat.DecFormat(dataTable.Compute("sum(Winlost" + curr.Value + ")", exp), 2),
 
-
-
                         AComm = NumberFormat.DecFormat(dataTable.Compute("sum(Comm" + curr.Value + ")", exp), 2),
-
 
                         Company = NumberFormat.DecFormat(dataTable.Compute("sum(AmtDuetoBA" + curr.Value + ")", exp), 2),
                     });
                 }
                 licenseDto.TotalsBaseCurrency[0].BetCount = NumberFormat.DecFormat(dataTable.Compute("sum(BetCount)", string.Empty), 0);
 
-                #endregion
+                #endregion Grand Total By Base Currency
             }
             catch (Exception ex)
             {
-
                 LogExtensions.ExceptionHandler(ex);
             }
 
@@ -1650,10 +1671,12 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
             return licenseDto;
         }
-        #endregion
+
+        #endregion SelReportByLicenseeDetail_Ag
 
         #region SelReportByLicenseeDetail
-        public Report_LicenseeWLBA_DTO SelReportByLicenseeDetail(int LicenseeID, int Currency, int BaseCurrency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter,int excludeTest,int ShowBA, int pageIndex, int pageSize, int fromCache)
+
+        public Report_LicenseeWLBA_DTO SelReportByLicenseeDetail(int LicenseeID, int Currency, int BaseCurrency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter, int excludeTest, int ShowBA, int pageIndex, int pageSize, int fromCache)
         {
             Report_LicenseeWLBA_DTO licenseDto = new Report_LicenseeWLBA_DTO();
             Report_LicenseeWLBA_DTO licenseDtoPaging = new Report_LicenseeWLBA_DTO();
@@ -1661,24 +1684,22 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                                           _keySelReportByLicenseeDetail);
             try
             {
-
                 DataTable dataTable = null;
                 string MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay.ToShortDateString();
                 licenseDto = SelReportByLicenseeDetailFromDB(LicenseeID, Currency, BaseCurrency, CustId, FromDate, ToDate, showSB, ShowRB, ShowNG, ReportType, MoveBetsDay, drawfilter, excludeTest, ShowBA, pageSize, pageIndex);
             }
             catch (Exception ex)
             {
-
                 LogExtensions.ExceptionHandler(ex);
             }
 
             return licenseDto;
         }
-        
+
         public Report_LicenseeWLBA_DTO SelWinLossReportByLicenseeDetail(int licenseeId, int currencyId, int baseCurrencyId, int custId, string fromDate, string toDate, int drawfilter, int excludeTest, int reportType, int pageIndex, int pageSize, int fromCache)
         {
             var licenseDto = new Report_LicenseeWLBA_DTO();
-            
+
             var moveBetsDay = ReportUtils.BalanceUp.MoveBetsDay.ToShortDateString();
             var dbResult = _licenseReportDAO.SelBAWinLossByLicenseeDetail(licenseeId, currencyId, custId, fromDate,
                                                                                toDate, moveBetsDay, drawfilter,
@@ -1710,18 +1731,19 @@ namespace Sunplus.Accounting.Business.BetAggregator
                 case 3:
                     subfixByBaseCurrency = "USD";
                     break;
+
                 case 2:
                     subfixByBaseCurrency = "MYR";
                     break;
+
                 case 6:
                     subfixByBaseCurrency = "EUR";
                     break;
+
                 default:
                     subfixByBaseCurrency = string.Empty;
                     break;
-
             }
-
 
             foreach (DataRow dataRow in dataTable.Rows)
             {
@@ -1745,16 +1767,17 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                           AComm = NumberFormat.DecFormat(dataRow["Comm" + subfixByBaseCurrency], 2),
                                           Company =
                                               NumberFormat.DecFormat(dataRow["AmtDuetoBA" + subfixByBaseCurrency], 2),
-
                                       };
-                #endregion
+
+                #endregion AssignRow
 
                 licenseDto.Items.Add(licenseeRow);
             }
 
-            #endregion
+            #endregion foreach row content
 
             var exp = string.Empty;
+
             #region Total by currency
 
             foreach (var currency in lstCurrency)
@@ -1772,15 +1795,14 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
                     AComm = NumberFormat.DecFormat(dataTable.Compute("sum(Comm" + subfixByBaseCurrency + ")", exp), 2),
 
-
                     Company = NumberFormat.DecFormat(dataTable.Compute("sum(AmtDuetoBA" + subfixByBaseCurrency + ")", exp), 2),
                 });
             }
 
-
-            #endregion
+            #endregion Total by currency
 
             #region Grand Total By Base Currency
+
             var baseCurrency = new Hashtable();
 
             baseCurrency.Add(2, "MYR");
@@ -1800,23 +1822,21 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
                     AComm = NumberFormat.DecFormat(dataTable.Compute("sum(Comm" + curr.Value + ")", exp), 2),
 
-
                     Company = NumberFormat.DecFormat(dataTable.Compute("sum(AmtDuetoBA" + curr.Value + ")", exp), 2),
                 });
             }
             licenseDto.TotalsBaseCurrency[0].BetCount = NumberFormat.DecFormat(dataTable.Compute("sum(BetCount)", string.Empty), 0);
 
-            #endregion
+            #endregion Grand Total By Base Currency
 
             AppSession.AddSession(HttpContext.Current.Session, _keySelReportByLicenseeDetailV2, licenseDto);
 
             return licenseDto;
         }
-        #endregion
 
+        #endregion SelReportByLicenseeDetail
 
         #region renderBetList
-
 
         public string RenderHTML(Hashtable input)
         {
@@ -1878,11 +1898,8 @@ namespace Sunplus.Accounting.Business.BetAggregator
                 TemplateHandler.Assign(ref tplHeader, "class", cssClass);
                 html.Append(tplHeader);
 
-
-
                 //DbResult dbResult = _licenseReportDAO.SelBetlistByLicenseeV2(custid, fdate, tdate, MoveBetsDay, BalanceUpDay, showsb, showrb, showng, baFilter, drawfilter);
                 DbResult dbResult = _licenseReportDAO.SelBABetListByLicensee(custid, fdate, tdate, MoveBetsDay, BalanceUpDay, drawfilter);
-                
 
                 DataTable dataTable = new DataTable();
                 DataTable dataTable2 = new DataTable();
@@ -1969,9 +1986,6 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         //apos = Convert.ToDecimal(dr["apositiontaking"]) * 100;
                         //adiscount = Convert.ToDecimal(dr["adiscount"]) * 100;
 
-
-
-
                         status = CastAide.AsString(dr["status"]);
 
                         TemplateHandler.Assign(ref strRow, "No", index.ToString());
@@ -1979,6 +1993,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         TemplateHandler.Assign(ref strRow, "TransID", CastAide.AsString(dr["transid"]));
 
                         #region generate event
+
                         BetlistRow blRow = BAInputBetlistRow(dr);
                         switch (betType)
                         {
@@ -2009,15 +2024,17 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                     TemplateHandler.Assign(ref strRow, "event", strEvent);
                                 }
                                 break;
+
                             default:
                                 strEvent = blEvent.GenerateEvent(strEvent, blRow);
                                 TemplateHandler.Assign(ref strRow, "event", strEvent);
                                 break;
                         }
-                        #endregion
 
+                        #endregion generate event
 
                         #region stake
+
                         string strStake = NumberFormat.DecFormat(stake, 2);
                         string strActualStake = IBCUtils.FormatHandler.FormatNumber20(actual_stake);
                         if (betType == 29)
@@ -2028,7 +2045,8 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         {
                             TemplateHandler.Assign(ref strRow, "{Stake}", strStake);
                         }
-                        #endregion
+
+                        #endregion stake
 
                         //winlost
                         TemplateHandler.Assign(ref strRow, "WinLoss", NumberFormat.DecFormat(winlost, 2));
@@ -2037,8 +2055,8 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         //TemplateHandler.Assign(ref strRow, "PlayerComm", NumberFormat.DecFormat(comm, 2));
 
                         //assign odds
-                        #region assign Odds
 
+                        #region assign Odds
 
                         string oddsTypeName = "";
                         switch (betType)
@@ -2054,10 +2072,11 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                     TemplateHandler.Assign(ref strRow, "Odds", "-");
                                 }
                                 break;
+
                             case 33:
                                 string Odds_33_win = "<span class='blue' style='font-weight:normal;'>{1}</span>";
                                 string Odds_33_place = "<span class='' style='font-weight:normal;'>{2}</span>";
-                                //get data of bettransm for bet type 33,43       
+                                //get data of bettransm for bet type 33,43
 
                                 if (dataTable2 != null && dataTable2.Rows.Count > 0)
                                 {
@@ -2066,8 +2085,6 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
                                 if (foundRows != null && foundRows.Length > 1)
                                 {
-
-
                                     for (int i = 0; i < 2; i++)
                                     {
                                         string hrStatus = CastAide.AsString(foundRows[i]["status"]);
@@ -2097,8 +2114,6 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                             }
                                             apos_Place = CastAide.AsDecimal(foundRows[i]["apositiontaking"]) * 100;
                                         }
-
-
                                     }
 
                                     if (status.ToLower() == "won" || status.ToLower() == "lose")
@@ -2112,6 +2127,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                 }
 
                                 break;
+
                             case 29:
                                 {
                                     if (status.ToLower().Contains("running"))
@@ -2124,9 +2140,11 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                     }
                                 }
                                 break;
+
                             case 9: //mix parlay
                                 TemplateHandler.Assign(ref strRow, "Odds", NumberFormat.DecFormat(CastAide.AsDecimal(dr["odds"]), 4));
                                 break;
+
                             default:
                                 TemplateHandler.Assign(ref strRow, "Odds", IBCUtils.FormatHandler.FormatNumber3(CastAide.AsDecimal(dr["odds"])));
                                 if (IsSportBook(betType))
@@ -2134,12 +2152,13 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                     oddsTypeName = CacheRef.GetOddsTypeName(dr["oddstype"]);
                                     liveStyle = (CastAide.AsBoolean(dr["liveindicator"], false) ? "event-live" : "");
                                 }
-                                if(betType > 80 && betType < 91)
+                                if (betType > 80 && betType < 91)
                                     oddsTypeName = CacheRef.GetOddsTypeName(dr["oddstype"]);
                                 break;
                         }
                         TemplateHandler.Assign(ref strRow, "OddsStype", oddsTypeName);
-                        #endregion
+
+                        #endregion assign Odds
 
                         //assign odd-even row
                         if (string.IsNullOrEmpty(liveStyle))
@@ -2155,7 +2174,9 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         }
 
                         //assign status
+
                         #region assign betlist status
+
                         string betListStatus = status.ToLower();
                         if (betType == 33 || betType == 43) //win/place || fixodds win/place
                         {
@@ -2165,15 +2186,18 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                     betListStatus = "Running";
                                     TemplateHandler.Assign(ref strRow, "PlayerComm", "");
                                     break;
+
                                 case "waiting":
                                     betListStatus = "Waiting";
                                     TemplateHandler.Assign(ref strRow, "PlayerComm", "");
                                     break;
+
                                 case "void":
                                 case "reject":
                                 case "refund":
                                     TemplateHandler.Assign(ref strRow, "PlayerComm", "");
                                     break;
+
                                 default:
                                     string Status_win = "<span class='blue' style='font-weight:normal;'>{1}</span>";
                                     string Status_place = "<span class='' style='font-weight:normal;'>{2}</span>";
@@ -2198,7 +2222,6 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                                     TemplateHandler.Assign(ref Status_place, "2", "Place: " + "<b>Refund</b>");
                                                 else if (hrStatus.ToLower() == "lose")
                                                     TemplateHandler.Assign(ref Status_place, "2", "Place: " + "<b>Lose</b>");
-
                                             }
                                         }
                                         status = Status_win + "<br>" + Status_place;
@@ -2214,16 +2237,19 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                     TemplateHandler.Assign(ref strRow, "PlayerComm", "");
                                     betListStatus = status;
                                     break;
+
                                 case "waiting":
                                     TemplateHandler.Assign(ref strRow, "PlayerComm", "");
                                     betListStatus = status;
                                     break;
+
                                 case "void":
                                 case "reject":
                                 case "refund":
                                 case "draw":
                                     betListStatus = status;
                                     break;
+
                                 case "lose":
                                 case "won":
                                     betListStatus = status;
@@ -2232,11 +2258,12 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         }
                         TemplateHandler.Assign(ref strRow, "Status", betListStatus.ToUpper());
                         TemplateHandler.Assign(ref strRow, "IP", IpManagement.ReplaceVNIP(CastAide.AsString(dr["ip"])));
-                        #endregion
+
+                        #endregion assign betlist status
 
                         //PT - Comm
-                       // TemplateHandler.Assign(ref strRow, "PTValue", "<font class='bl_underdog'>" + NumberFormat.DecFormat(awinlost, 2) + "</font><br />");
-                       // TemplateHandler.Assign(ref strRow, "Comm", NumberFormat.DecFormat(adiscount, 2));
+                        // TemplateHandler.Assign(ref strRow, "PTValue", "<font class='bl_underdog'>" + NumberFormat.DecFormat(awinlost, 2) + "</font><br />");
+                        // TemplateHandler.Assign(ref strRow, "Comm", NumberFormat.DecFormat(adiscount, 2));
                         TemplateHandler.Assign(ref strRow, "CommValue", NumberFormat.DecFormat(acomm, 2));
 
                         //TemplateHandler.Assign(ref strRow, "PT", NumberFormat.DecFormat(apos, 0));
@@ -2247,16 +2274,14 @@ namespace Sunplus.Accounting.Business.BetAggregator
                             case 43:
                                 TemplateHandler.Assign(ref strRow, "PT", "<span class='blue' style='font-weight:normal;'>Win: " + "<b>" + NumberFormat.DecFormat(apos_Win, 0) + "%</b>" + "</span><br>" + "<span class='' style='font-weight:normal;'>Place: " + "<b>" + NumberFormat.DecFormat(apos_Place, 0) + "%</b>" + "</span>" + "<br />");
                                 break;
+
                             default:
                                 TemplateHandler.Assign(ref strRow, "PT", "<font class='bl_underdog'>" + NumberFormat.DecFormat(apos, 0) + "%</font>" + "<br />");
                                 break;
                         }
 
-
                         //append row
                         html.Append(strRow);
-
-
 
                     }
                     //footer row
@@ -2275,8 +2300,6 @@ namespace Sunplus.Accounting.Business.BetAggregator
                 html.Append(ex.Message);
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
-
-
 
             return html.ToString();
         }
@@ -2341,11 +2364,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
                 TemplateHandler.Assign(ref tplHeader, "class", cssClass);
                 html.Append(tplHeader);
 
-
-
                 DbResult dbResult = _licenseReportDAO.SelBABetListByLicensee(custid, fdate, tdate, moveBetsDay, balanceUpDay, drawfilter);
-
-
 
                 var dataTable = new DataTable();
                 var dataTable2 = new DataTable();
@@ -2422,6 +2441,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         TemplateHandler.Assign(ref strRow, "TransID", CastAide.AsString(dr["transid"]));
 
                         #region generate event
+
                         BetlistRow blRow = BAInputBetlistRow(dr);
                         switch (betType)
                         {
@@ -2452,15 +2472,17 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                     TemplateHandler.Assign(ref strRow, "event", strEvent);
                                 }
                                 break;
+
                             default:
                                 strEvent = blEvent.GenerateEvent(strEvent, blRow);
                                 TemplateHandler.Assign(ref strRow, "event", strEvent);
                                 break;
                         }
-                        #endregion
 
+                        #endregion generate event
 
                         #region stake
+
                         string strStake = NumberFormat.DecFormat(stake, 2);
                         string strActualStake = IBCUtils.FormatHandler.FormatNumber20(actual_stake);
                         if (betType == 29)
@@ -2471,14 +2493,15 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         {
                             TemplateHandler.Assign(ref strRow, "{Stake}", strStake);
                         }
-                        #endregion
+
+                        #endregion stake
 
                         //winlost
                         TemplateHandler.Assign(ref strRow, "WinLoss", NumberFormat.DecFormat(winlost, 2));
 
                         //assign odds
-                        #region assign Odds
 
+                        #region assign Odds
 
                         string oddsTypeName = "";
                         switch (betType)
@@ -2494,10 +2517,11 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                     TemplateHandler.Assign(ref strRow, "Odds", "-");
                                 }
                                 break;
+
                             case 33:
                                 string Odds_33_win = "<span class='blue' style='font-weight:normal;'>{1}</span>";
                                 string Odds_33_place = "<span class='' style='font-weight:normal;'>{2}</span>";
-                                //get data of bettransm for bet type 33,43       
+                                //get data of bettransm for bet type 33,43
 
                                 if (dataTable2 != null && dataTable2.Rows.Count > 0)
                                 {
@@ -2506,8 +2530,6 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
                                 if (foundRows != null && foundRows.Length > 1)
                                 {
-
-
                                     for (int i = 0; i < 2; i++)
                                     {
                                         string hrStatus = CastAide.AsString(foundRows[i]["status"]);
@@ -2537,8 +2559,6 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                             }
                                             apos_Place = CastAide.AsDecimal(foundRows[i]["apositiontaking"]) * 100;
                                         }
-
-
                                     }
 
                                     if (status.ToLower() == "won" || status.ToLower() == "lose")
@@ -2552,6 +2572,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                 }
 
                                 break;
+
                             case 29:
                                 {
                                     if (status.ToLower().Contains("running"))
@@ -2564,9 +2585,11 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                     }
                                 }
                                 break;
+
                             case 9: //mix parlay
                                 TemplateHandler.Assign(ref strRow, "Odds", NumberFormat.DecFormat(CastAide.AsDecimal(dr["odds"]), 4));
                                 break;
+
                             default:
                                 TemplateHandler.Assign(ref strRow, "Odds", IBCUtils.FormatHandler.FormatNumber3(CastAide.AsDecimal(dr["odds"])));
                                 if (IsSportBook(betType))
@@ -2579,7 +2602,8 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                 break;
                         }
                         TemplateHandler.Assign(ref strRow, "OddsStype", oddsTypeName);
-                        #endregion
+
+                        #endregion assign Odds
 
                         //assign odd-even row
                         if (string.IsNullOrEmpty(liveStyle))
@@ -2595,7 +2619,9 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         }
 
                         //assign status
+
                         #region assign betlist status
+
                         string betListStatus = status.ToLower();
                         if (betType == 33 || betType == 43) //win/place || fixodds win/place
                         {
@@ -2605,15 +2631,18 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                     betListStatus = "Running";
                                     TemplateHandler.Assign(ref strRow, "PlayerComm", "");
                                     break;
+
                                 case "waiting":
                                     betListStatus = "Waiting";
                                     TemplateHandler.Assign(ref strRow, "PlayerComm", "");
                                     break;
+
                                 case "void":
                                 case "reject":
                                 case "refund":
                                     TemplateHandler.Assign(ref strRow, "PlayerComm", "");
                                     break;
+
                                 default:
                                     string Status_win = "<span class='blue' style='font-weight:normal;'>{1}</span>";
                                     string Status_place = "<span class='' style='font-weight:normal;'>{2}</span>";
@@ -2638,7 +2667,6 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                                     TemplateHandler.Assign(ref Status_place, "2", "Place: " + "<b>Refund</b>");
                                                 else if (hrStatus.ToLower() == "lose")
                                                     TemplateHandler.Assign(ref Status_place, "2", "Place: " + "<b>Lose</b>");
-
                                             }
                                         }
                                         status = Status_win + "<br>" + Status_place;
@@ -2654,16 +2682,19 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                     TemplateHandler.Assign(ref strRow, "PlayerComm", "");
                                     betListStatus = status;
                                     break;
+
                                 case "waiting":
                                     TemplateHandler.Assign(ref strRow, "PlayerComm", "");
                                     betListStatus = status;
                                     break;
+
                                 case "void":
                                 case "reject":
                                 case "refund":
                                 case "draw":
                                     betListStatus = status;
                                     break;
+
                                 case "lose":
                                 case "won":
                                     betListStatus = status;
@@ -2672,7 +2703,8 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         }
                         TemplateHandler.Assign(ref strRow, "Status", betListStatus.ToUpper());
                         TemplateHandler.Assign(ref strRow, "IP", IpManagement.ReplaceVNIP(CastAide.AsString(dr["ip"])));
-                        #endregion
+
+                        #endregion assign betlist status
 
                         //PT - Comm
                         // TemplateHandler.Assign(ref strRow, "PTValue", "<font class='bl_underdog'>" + NumberFormat.DecFormat(awinlost, 2) + "</font><br />");
@@ -2687,16 +2719,14 @@ namespace Sunplus.Accounting.Business.BetAggregator
                             case 43:
                                 TemplateHandler.Assign(ref strRow, "PT", "<span class='blue' style='font-weight:normal;'>Win: " + "<b>" + NumberFormat.DecFormat(apos_Win, 0) + "%</b>" + "</span><br>" + "<span class='' style='font-weight:normal;'>Place: " + "<b>" + NumberFormat.DecFormat(apos_Place, 0) + "%</b>" + "</span>" + "<br />");
                                 break;
+
                             default:
                                 TemplateHandler.Assign(ref strRow, "PT", "<font class='bl_underdog'>" + NumberFormat.DecFormat(apos, 0) + "%</font>" + "<br />");
                                 break;
                         }
 
-
                         //append row
                         html.Append(strRow);
-
-
 
                     }
                     //footer row
@@ -2714,14 +2744,13 @@ namespace Sunplus.Accounting.Business.BetAggregator
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
 
-
-
             return html.ToString();
         }
 
-        #endregion
+        #endregion renderBetList
 
         #region InputBetlistRow
+
         private BetlistRow InputBetlistRow(DataRow dr)
         {
             var row = new BetlistRow();
@@ -2833,49 +2862,59 @@ namespace Sunplus.Accounting.Business.BetAggregator
             row.AcommEUR = CastAide.AsDecimal(dr["commEUR"]);
             return row;
         }
-        #endregion
+
+        #endregion InputBetlistRow
 
         #region IsBetLoseVoidReject
+
         private bool IsBetLoseVoidReject(string betStatus)
         {
             return (String.Compare(betStatus, "lose", true) == 0
                 || String.Compare(betStatus, "void", true) == 0
                 || String.Compare(betStatus, "reject", true) == 0);
         }
-        #endregion
+
+        #endregion IsBetLoseVoidReject
 
         #region IsBetSettled
+
         private bool IsBetSettled(string betStatus)
         {
             return (String.Compare(betStatus, "running", true) != 0
                 && String.Compare(betStatus, "waiting", true) != 0
                 && String.Compare(betStatus, "reject", true) != 0);
         }
-        #endregion
+
+        #endregion IsBetSettled
 
         #region IsBetRejectVoid
+
         private bool IsBetRejectVoid(string betStatus)
         {
             return (String.Compare(betStatus, "reject", true) == 0
                 || String.Compare(betStatus, "void", true) == 0);
         }
-        #endregion
+
+        #endregion IsBetRejectVoid
 
         #region IsBetLoseRefund
+
         private bool IsBetLoseRefund(string betStatus)
         {
             return (String.Compare(betStatus, "lose", true) == 0
                 || String.Compare(betStatus, "refund", true) == 0);
         }
-        #endregion
+
+        #endregion IsBetLoseRefund
 
         #region IsSportBook
+
         private bool IsSportBook(int bettype)
         {
             return (bettype == 1 || bettype == 2 || bettype == 3 || bettype == 7 || bettype == 8 || bettype == 12 || bettype == 20);
         }
-        #endregion
-    
+
+        #endregion IsSportBook
 
         private BetlistRow InputBetlistRowV2(DataRow dr)
         {
@@ -2929,7 +2968,6 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
         #region IReportWLBABySiteService Members
 
-
         public List<BetListDetail> SelBetlistDepositReport(int custId, string fdate, string tdate, bool showsb, bool showng, bool showrb, int showba, bool showlc, int drawFilter)
         {
             var listBetlistDetail = new List<BetListDetail>();
@@ -2974,7 +3012,6 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         Ip = CastAide.AsString(row["ip"]),
                         Winlost = CastAide.AsString(row["winlost"]),
                         Acomm = CastAide.AsString(row["comm"])
-
                     };
                     var betlistDetail = new BetListDetail()
                     {
@@ -2991,10 +3028,9 @@ namespace Sunplus.Accounting.Business.BetAggregator
                 }
             }
             return listBetlistDetail;
-
         }
 
-        #endregion
+        #endregion IReportWLBABySiteService Members
 
         /// <summary>
         /// Thomas is being use this function
@@ -3124,6 +3160,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
         }
 
         #region BA Winloss by Comm level
+
         public LicenseeWinLossCommDTO LicenseeWinLossByCommLevel(int licenseeId, int currencyId, bool isExcludeTest, string fromDate, string toDate, int drawFilter)
         {
             var result = new LicenseeWinLossCommDTO();
@@ -3133,10 +3170,10 @@ namespace Sunplus.Accounting.Business.BetAggregator
                 var dt = licenseeConfigDAO.SelBAWinLossByCommLevel(licenseeId, CastAide.AsDateTime(fromDate),
                                                                    CastAide.AsDateTime(toDate), currencyId,
                                                                    drawFilter, isExcludeTest);
-                if(dt!= null && dt.Rows.Count > 0)
+                if (dt != null && dt.Rows.Count > 0)
                 {
                     result.Items = new List<LicenseeWinLossCommBO>();
-                    
+
                     double baseTurnover = 0, baseCustWL = 0, baseLicenseeComm = 0, baseAmountDue = 0;
                     double subBaseTurnover = 0, subBaseCustWL = 0, subBaseLincenseeComm = 0, subBaseAmountDue = 0;
                     double subTurnover = 0, subCustWL = 0, subLincenseeComm = 0, subAmountDue = 0;
@@ -3150,7 +3187,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
                     var pCurrencyName = string.Empty;
                     var wlCommDate = new LicenseeWinLossCommBO();
                     wlCommDate.Items = new List<LicenseeWinLossCurrency>();
-                    
+
                     var wlCommCurrency = new LicenseeWinLossCurrency();
                     wlCommCurrency.Items = new List<LicenseeWinLossCommLevel>();
                     int index = 0, totalChilds = 0;
@@ -3162,16 +3199,19 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         currencyName = CastAide.AsString(dr["CurrencyName"]);
 
                         #region winloss date
+
                         if (curDate != pDate && index > 0)
                         {
                             #region last group currency
+
                             wlCommCurrency.Currency = pCurrencyName;
                             wlCommCurrency.CurrencyId = pCurrency.ToString();
                             wlCommDate.Items.Add(wlCommCurrency);
 
                             wlCommCurrency = new LicenseeWinLossCurrency();
                             wlCommCurrency.Items = new List<LicenseeWinLossCommLevel>();
-                            #endregion
+
+                            #endregion last group currency
 
                             wlCommDate.TotalChilds = totalChilds;
                             wlCommDate.ReportDate = pDate.ToShortDateString();
@@ -3186,7 +3226,6 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                                           LicenseeComm = NumberFormat.DecFormat(subLincenseeComm, 2),
                                                           Turnover = NumberFormat.DecFormat(subTurnover, 2),
                                                           TotalTrans = NumberFormat.DecFormat(subTotalTrans, 0)
-
                                                       };
                             result.Items.Add(wlCommDate);
 
@@ -3203,42 +3242,46 @@ namespace Sunplus.Accounting.Business.BetAggregator
                             subTotalTrans = 0;
                             wlCommDate = new LicenseeWinLossCommBO();
                             wlCommDate.Items = new List<LicenseeWinLossCurrency>();
-
                         }
 
-                        #endregion
+                        #endregion winloss date
 
                         #region currency level
+
                         if (curCurrency != pCurrency && pCurrency > 0)
                         {
                             wlCommCurrency.Currency = pCurrencyName;
                             wlCommCurrency.CurrencyId = pCurrency.ToString();
                             wlCommDate.Items.Add(wlCommCurrency);
-                            
+
                             wlCommCurrency = new LicenseeWinLossCurrency();
                             wlCommCurrency.Items = new List<LicenseeWinLossCommLevel>();
                         }
-                        #endregion
+
+                        #endregion currency level
 
                         #region detail row
+
                         var item = new LicenseeWinLossCommLevel()
                                        {
                                            Comm = CastAide.AsString(dr["discount"]),
                                            Bettype = CastAide.AsString(dr["Bettype"]),
-                                           TotalTrans =NumberFormat.DecFormat(dr["Betcount"], 0),
+                                           TotalTrans = NumberFormat.DecFormat(dr["Betcount"], 0),
                                            AmountDue = NumberFormat.DecFormat(dr["AmtDueToBA"], 2),
                                            CustWinLoss = NumberFormat.DecFormat(dr["MemberWinlost"], 2),
                                            LicenseeComm = NumberFormat.DecFormat(dr["LicenseeComm"], 2),
                                            Turnover = NumberFormat.DecFormat(dr["Turnover"], 2),
-                                           BaseAmountDue = NumberFormat.DecFormat(dr["AmtDueToBA"+ baseEuroSubfix], 2),
+                                           BaseAmountDue = NumberFormat.DecFormat(dr["AmtDueToBA" + baseEuroSubfix], 2),
                                            BaseCustWinLoss = NumberFormat.DecFormat(dr["MemberWinLost" + baseEuroSubfix], 2),
                                            BaseLinceseeComm = NumberFormat.DecFormat(dr["LicenseeComm" + baseEuroSubfix], 2),
                                            BaseTurnover = NumberFormat.DecFormat(dr["Turnover" + baseEuroSubfix], 2)
                                        };
                         wlCommCurrency.Items.Add(item);
-                        #endregion
+
+                        #endregion detail row
 
                         #region subtotal
+
                         subBaseTurnover += CastAide.AsDouble(dr["Turnover" + baseEuroSubfix]);
                         subBaseCustWL += CastAide.AsDouble(dr["MemberWinLost" + baseEuroSubfix]);
                         subBaseLincenseeComm += CastAide.AsDouble(dr["LicenseeComm" + baseEuroSubfix]);
@@ -3250,29 +3293,36 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         subAmountDue += CastAide.AsDouble(dr["AmtDueToBA"]);
 
                         subTotalTrans += CastAide.AsInt32(dr["Betcount"]);
-                        #endregion
+
+                        #endregion subtotal
 
                         #region grand total
+
                         baseTurnover += CastAide.AsDouble(dr["Turnover" + baseEuroSubfix]);
                         baseCustWL += CastAide.AsDouble(dr["MemberWinLost" + baseEuroSubfix]);
                         baseLicenseeComm += CastAide.AsDouble(dr["LicenseeComm" + baseEuroSubfix]);
                         baseAmountDue += CastAide.AsDouble(dr["AmtDueToBA" + baseEuroSubfix]);
                         totalTrans += CastAide.AsInt32(dr["Betcount"]);
-                        #endregion
+
+                        #endregion grand total
 
                         pDate = curDate;
                         pCurrency = curCurrency;
                         pCurrencyName = currencyName;
                         index++;
-                        totalChilds ++;
+                        totalChilds++;
                     }
 
                     #region last date
+
                     #region last group currency
+
                     wlCommCurrency.Currency = pCurrencyName;
                     wlCommCurrency.CurrencyId = pCurrency.ToString();
                     wlCommDate.Items.Add(wlCommCurrency);
-                    #endregion
+
+                    #endregion last group currency
+
                     wlCommDate.TotalChilds = totalChilds;
                     wlCommDate.ReportDate = pDate.ToShortDateString();
                     wlCommDate.SubTotal = new LicenseeWinLossCommLevel()
@@ -3286,25 +3336,26 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         LicenseeComm = NumberFormat.DecFormat(subLincenseeComm, 2),
                         Turnover = NumberFormat.DecFormat(subTurnover, 2),
                         TotalTrans = NumberFormat.DecFormat(subTotalTrans, 0)
-
                     };
                     result.Items.Add(wlCommDate);
-                    #endregion
+
+                    #endregion last date
 
                     #region grand total
+
                     result.Total = new LicenseeWinLossCommLevel()
                                      {
-                                         TotalTrans = NumberFormat.DecFormat(totalTrans ,0),
+                                         TotalTrans = NumberFormat.DecFormat(totalTrans, 0),
                                          BaseAmountDue = NumberFormat.DecFormat(baseAmountDue, 2),
-                                         BaseCustWinLoss = NumberFormat.DecFormat(baseCustWL,2),
+                                         BaseCustWinLoss = NumberFormat.DecFormat(baseCustWL, 2),
                                          BaseLinceseeComm = NumberFormat.DecFormat(baseLicenseeComm, 2),
                                          BaseTurnover = NumberFormat.DecFormat(baseTurnover, 2)
                                      };
-                    #endregion
 
+                    #endregion grand total
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
@@ -3312,7 +3363,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
             SessionExtension.AddSession(HttpContext.Current.Session, _baWinLossByCommLevelSessionKey, result);
             return result;
         }
-        #endregion
 
+        #endregion BA Winloss by Comm level
     }
 }

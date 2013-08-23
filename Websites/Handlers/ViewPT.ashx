@@ -7,8 +7,6 @@ using Sunplus.Accounting.Business.PositionTaking;
 using Sunplus.Accounting.Business.PT.ViewPT;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
-
-using Sunplus.Core.LoggingLib;
 using DNAide.Core;
 using DNAide.Utils;
 using DNAide.Web;

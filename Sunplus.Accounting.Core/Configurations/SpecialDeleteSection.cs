@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace Sunplus.Accounting.Core.Configurations
 {
-    public class SpecialDeleteSection:ConfigurationSection
+    public class SpecialDeleteSection : ConfigurationSection
     {
         public enum StoreCollection
         {
@@ -29,7 +23,6 @@ namespace Sunplus.Accounting.Core.Configurations
                 return spCollection;
             }
         }
-
 
         [ConfigurationProperty("CC", IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(SpecialDeleteCollection),
@@ -105,7 +98,7 @@ namespace Sunplus.Accounting.Core.Configurations
                 return spCollection;
             }
         }
-        
+
         public static SpecialDeleteSection Instance
         {
             get
@@ -116,23 +109,18 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-
-        public SpecialDeleteCollection  this[StoreCollection name ]
+        public SpecialDeleteCollection this[StoreCollection name]
         {
             get
             {
-                
                 var spCollection = (SpecialDeleteCollection)this.GetType().GetProperty(name.ToString()).GetValue(this, System.Reflection.BindingFlags.GetField, null, null, null);
-                return spCollection; 
+                return spCollection;
             }
         }
-
-        
     }
 
-    public class SpecialDeleteCollection:ConfigurationElementCollection
+    public class SpecialDeleteCollection : ConfigurationElementCollection
     {
-
         public SpecialDeleteCollection()
         {
             //var SpecialDelete = (SpecialDeleteElement) CreateNewElement();
@@ -147,7 +135,7 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-        public void Add(SpecialDeleteElement  SpecialDeleteElement)
+        public void Add(SpecialDeleteElement SpecialDeleteElement)
         {
             BaseAdd(SpecialDeleteElement);
         }
@@ -178,7 +166,6 @@ namespace Sunplus.Accounting.Core.Configurations
             BaseClear();
         }
 
-
         public SpecialDeleteElement this[int index]
         {
             get
@@ -208,7 +195,6 @@ namespace Sunplus.Accounting.Core.Configurations
             return BaseIndexOf(SpecialDeleteElement);
         }
 
-
         protected override sealed ConfigurationElement CreateNewElement()
         {
             return new SpecialDeleteElement();
@@ -219,19 +205,13 @@ namespace Sunplus.Accounting.Core.Configurations
             return ((SpecialDeleteElement)element).Alias;
         }
 
-
-
-
     }
 
     public class SpecialDeleteElement : ConfigurationElement
     {
-        
-
 
         public SpecialDeleteElement()
         {
-
         }
 
         [ConfigurationProperty("alias", IsRequired = true, IsKey = true)]
@@ -328,8 +308,6 @@ namespace Sunplus.Accounting.Core.Configurations
                 this["IsAllowOptionDelete"] = value;
             }
         }
-
-      
 
         [ConfigurationProperty("stores", IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(SpecialDeleteCollection),

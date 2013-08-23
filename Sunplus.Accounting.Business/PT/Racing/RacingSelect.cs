@@ -2,24 +2,21 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using DNAide.Core;
-
+using Sunplus.Accounting.Business.CacheManager;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
-
 using Sunplus.Accounting.Entities.PositionTaking.Racing;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.Business.CacheManager;
 
 namespace Sunplus.Accounting.Business.PT.Racing
 {
     public partial class RacingManager
     {
         #region Get Cust Info
+
         public Setting GetStatusRacebook(int custId)
         {
             var setting = new Setting();
@@ -36,13 +33,13 @@ namespace Sunplus.Accounting.Business.PT.Racing
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
             }
             return setting;
         }
+
         public Setting GetCustomerSetting(int custId, int roleId)
         {
             var setting = new Setting();
@@ -77,21 +74,27 @@ namespace Sunplus.Accounting.Business.PT.Racing
                         case (int)CustInfo.Roles.Member:
                             setting = GetMemberSetting(data);
                             break;
+
                         case (int)CustInfo.Roles.SuperOnMember: //*******Super on Member params*****
                             setting = SuperOnMemberSetting(data);
                             break;
+
                         case (int)CustInfo.Roles.MasterOnMember: //*******Master on Member params*****
                             setting = MasterOnMemberSetting(data);
                             break;
+
                         case (int)CustInfo.Roles.SuperMin: //*******Super Min params*****
                             setting = GetSuperMinPt(data);
                             break;
+
                         case (int)CustInfo.Roles.MasterMinMax: //*******Master Min/Max params*****
                             setting = GetMasterMinMaxPt(data);
                             break;
+
                         case (int)CustInfo.Roles.AgentMinMax: //*******Agent Min/Max params*****
                             setting = GetAgentMinMaxPt(data);
                             break;
+
                         default:
                             break;
                     }
@@ -184,7 +187,8 @@ namespace Sunplus.Accounting.Business.PT.Racing
                 if (racing.Totes.Count > 0)
                 {
                     var totes = new List<Tote>();
-                    foreach (ToteElement tote in racing.Totes){
+                    foreach (ToteElement tote in racing.Totes)
+                    {
                         const decimal valDefault = 0;
                         // set defaultRacingSportType
                         if (racing.Active && tote.IsTop)
@@ -246,14 +250,14 @@ namespace Sunplus.Accounting.Business.PT.Racing
                         //add tote item
                         totes.Add(toteItem);
                     }
-                  
+
                     // set sport totes
                     sport.Totes = totes;
                 }
                 // add sport type
                 sports.Add(sport);
             }
-        
+
             // set racing sports
             setting.RacingSportType = sports;
 
@@ -288,7 +292,7 @@ namespace Sunplus.Accounting.Business.PT.Racing
                     var totes = new List<Tote>();
                     foreach (ToteElement tote in racing.Totes)
                     {
-                         const decimal valDefault = 0;
+                        const decimal valDefault = 0;
                         // set defaultRacingSportType
                         if (racing.Active && tote.IsTop)
                         {
@@ -353,7 +357,7 @@ namespace Sunplus.Accounting.Business.PT.Racing
                                 // add bettype
                                 betTypes.Add(betType);
                             }
-                           
+
                             // set tote bettypes
                             toteItem.Bettypes = betTypes;
                         }
@@ -366,7 +370,7 @@ namespace Sunplus.Accounting.Business.PT.Racing
                 // add sport type
                 sports.Add(sport);
             }
-          
+
             // set racing sports
             setting.RacingSportType = sports;
 
@@ -388,7 +392,7 @@ namespace Sunplus.Accounting.Business.PT.Racing
             var sports = new List<Sport>();
             foreach (RacingElement racing in racingCollection)
             {
-                 // set sport information
+                // set sport information
                 var sport = new Sport()
                 {
                     Id = CastAide.AsInt32(racing.Id),
@@ -479,7 +483,7 @@ namespace Sunplus.Accounting.Business.PT.Racing
                 // add sport type
                 sports.Add(sport);
             }
-       
+
             // set racing sports
             setting.RacingSportType = sports;
 
@@ -545,7 +549,6 @@ namespace Sunplus.Accounting.Business.PT.Racing
 
                             // master com
                             MasterComm = ColumnValue<decimal>(rowData, string.Format(_fieldMasterCom, racing.Id, tote.Id), 0)
-
                         };
                         // check allow currency
                         toteItem.Visible = CheckAllowCurrency(setting.CustInfo.Currency, tote.Currency, toteItem.Visible);
@@ -572,23 +575,22 @@ namespace Sunplus.Accounting.Business.PT.Racing
 
                                 // add bettype
                                 betTypes.Add(betType);
-
                             }
-                         
+
                             // set tote bettypes
                             toteItem.Bettypes = betTypes;
                         }
                         //add tote item
                         totes.Add(toteItem);
                     }
-                   
+
                     // set sport totes
                     sport.Totes = totes;
                 }
                 // add sport type
                 sports.Add(sport);
             }
-            
+
             // set racing sports
             setting.RacingSportType = sports;
 
@@ -615,7 +617,7 @@ namespace Sunplus.Accounting.Business.PT.Racing
         private static T ColumnValue<T>(DataRow rowData, string fieldName, T valDefault)
         {
             var dataType = typeof(T);
-            
+
             if (rowData.Table.Columns.Contains(fieldName))
             {
                 object objData = null;
@@ -625,23 +627,26 @@ namespace Sunplus.Accounting.Business.PT.Racing
                     case "decimal":
                         objData = CastAide.AsDecimal(rowData[fieldName], 0);
                         break;
+
                     case "string":
                         objData = CastAide.AsString(rowData[fieldName], string.Empty);
                         break;
+
                     case "int32":
                         objData = CastAide.AsInt32(rowData[fieldName], 0);
                         break;
+
                     case "boolean":
                         objData = CastAide.AsBoolean(rowData[fieldName], false);
                         break;
+
                     default: // default string
                         objData = CastAide.AsString(rowData[fieldName], string.Empty);
                         break;
                 }
                 return (T)objData;
             }
-            
-           
+
             return valDefault;
         }
 
@@ -970,7 +975,6 @@ namespace Sunplus.Accounting.Business.PT.Racing
                             MasterComm = ColumnValue<decimal>(rowData, string.Format(_fieldMasterAgCom, racing.Id, tote.Id), 0),
                             AgentComm = ColumnValue<decimal>(rowData, string.Format(_fieldAgentCom, racing.Id, tote.Id), 0),
                             MemberComm = 0
-
                         };
                         // check allow currency
                         toteItem.Visible = CheckAllowCurrency(setting.CustInfo.Currency, tote.Currency, toteItem.Visible);
@@ -1013,15 +1017,14 @@ namespace Sunplus.Accounting.Business.PT.Racing
                         //add tote item
                         totes.Add(toteItem);
                     }
-                   
-                   
+
                     // set sport totes
                     sport.Totes = totes;
                 }
                 // add sport type
                 sports.Add(sport);
             }
-          
+
             // set racing sports
             setting.RacingSportType = sports;
 
@@ -1085,7 +1088,6 @@ namespace Sunplus.Accounting.Business.PT.Racing
 
                             // master com
                             AgentComm = ColumnValue<decimal>(rowData, string.Format(_fieldAgentCom, racing.Id, tote.Id), 0)
-
                         };
                         // check allow currency
                         toteItem.Visible = CheckAllowCurrency(setting.CustInfo.Currency, tote.Currency, toteItem.Visible);
@@ -1115,28 +1117,27 @@ namespace Sunplus.Accounting.Business.PT.Racing
                                     AutoPt = ColumnValue<decimal>(rowData, string.Format(_fieldAutoMOnMemPt, racing.Id, betId), 0),
                                     MaxAutoPt = ColumnValue<decimal>(rowData, string.Format(_fieldAutoMOnMemMax, racing.Id, betId), 0),
                                     IsUplineAutoPt = ColumnValue<bool>(rowData, string.Format(_fieldIsAutoMpt, racing.Id, betId), false)
-
                                 };
                                 betType.PositionTaking = dataBettype;
 
                                 // add bettype
                                 betTypes.Add(betType);
                             }
-                          
+
                             // set tote bettypes
                             toteItem.Bettypes = betTypes;
                         }
                         //add tote item
                         totes.Add(toteItem);
                     }
-                  
+
                     // set sport totes
                     sport.Totes = totes;
                 }
                 // add sport type
                 sports.Add(sport);
             }
-          
+
             // set racing sports
             setting.RacingSportType = sports;
 
@@ -1159,6 +1160,7 @@ namespace Sunplus.Accounting.Business.PT.Racing
             var currencyName = CacheUtils.GetExchangeName(lsExchange, currencyId);
             return allowCurrrency.Split(',').Contains(currencyName);
         }
+
         #endregion Get Cust Info
     }
 }

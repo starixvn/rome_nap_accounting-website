@@ -64,8 +64,8 @@ namespace Sunplus.Accounting.Business.Criteria
 
         /// <summary>
         /// Gets or sets IsOld: when report time before OldTableBaseTime
-        ///  0 - query in table rptLicWinloss, 
-        ///  1 - query in table rptLicWinloss_old. 
+        ///  0 - query in table rptLicWinloss,
+        ///  1 - query in table rptLicWinloss_old.
         /// </summary>
         public bool IsOld { get; set; }
 

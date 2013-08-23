@@ -1,30 +1,18 @@
 using System;
 using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
 using System.Text;
-using DNAide.Web;
-using Sunplus.Accounting.Business;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
-using IBCUtils.Web;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using IBCUtils.DAL;
-using IBCUtils;
 using DNAide.Data;
-
+using DNAide.Web;
+using IBCUtils;
+using Sunplus.Accounting.Business;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
 public partial class Report_AllCustWinLostBySite : System.Web.UI.Page
 {
     private DateTime fDate;
     private DateTime tDate;
     private string siteStr, betFromStr;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request["fdate"] != null)
@@ -51,15 +39,17 @@ public partial class Report_AllCustWinLostBySite : System.Web.UI.Page
                 case "i":
                     betViaStr = "Internet";
                     break;
+
                 case "p":
                     betViaStr = "Phone";
                     break;
+
                 default:
                     betViaStr = "Phone+Internet";
                     break;
             }
-            string titleStr = Resources.Language.CurrentSelectSite + " <b>" + siteStr + "</b> " + Resources.Language.whichbetvia + " <b>" + betViaStr+"</b>";
-            titleStr +="<br/><b>"+ Resources.Language.CustomerWinLost +": "+ Resources.Language.From + " " + fDate + " "+ Resources.Language.To + " " + tDate +"</b>";
+            string titleStr = Resources.Language.CurrentSelectSite + " <b>" + siteStr + "</b> " + Resources.Language.whichbetvia + " <b>" + betViaStr + "</b>";
+            titleStr += "<br/><b>" + Resources.Language.CustomerWinLost + ": " + Resources.Language.From + " " + fDate + " " + Resources.Language.To + " " + tDate + "</b>";
             CustWinLostBySiteHeaderStr.Text = titleStr;
             CustWinLostBySiteContentHtml.Text = GenAllCustWinlostContent();
         }
@@ -72,47 +62,54 @@ public partial class Report_AllCustWinLostBySite : System.Web.UI.Page
         {
             string content = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("CustomerWinLost/SelectWinLostBySite.htm");
             string vIbc = "BEST-ODDS", vBEST = "BEST-ODDS3", v961i = "961i.com", vK998 = "k998", vTrojan = "trojan", vIBSBET = "IBSBET", vKING119 = "KING119";
-            string vAll="all", vBetI="i", vBetP="p", vBetAll="a";
+            string vAll = "all", vBetI = "i", vBetP = "p", vBetAll = "a";
             switch (siteStr)
             {
                 case "BEST-ODDS":
                     vIbc = "BEST-ODDS\" checked=\"true";
                     break;
+
                 case "BEST-ODDS3":
                     vBEST = "BEST-ODDS3\" checked=\"true";
                     break;
+
                 case "961i.com":
                     v961i = "961i.com\" checked=\"true";
                     break;
+
                 case "k998":
                     vK998 = "k998\" checked=\"true";
                     break;
+
                 case "trojan":
                     vTrojan = "trojan\" checked=\"true";
                     break;
+
                 case "IBSBET":
                     vIBSBET = "IBSBET\" checked=\"true";
                     break;
+
                 case "KING119":
                     vKING119 = "KING119\" checked=\"true";
-                    break;                
+                    break;
+
                 default:
                     vAll = "all\" checked=\"true";
                     break;
-
             }
             switch (betFromStr)
             {
                 case "i":
                     vBetI = "i\" checked=\"true";
                     break;
+
                 case "p":
                     vBetP = "p\" checked=\"true";
                     break;
+
                 default:
                     vBetAll = "a\" checked=\"true";
                     break;
-
             }
             TemplateHandler.Assign(ref content, "{ibc}", vIbc);
             TemplateHandler.Assign(ref content, "{ibcname}", "IBC");
@@ -144,27 +141,26 @@ public partial class Report_AllCustWinLostBySite : System.Web.UI.Page
         }
         return menuHtml.ToString();
     }
+
     private string GenAllCustWinlostContent()
     {
-        
         StringBuilder html = new StringBuilder();
         html.Append("<form method=\"post\" name=\"fGetData\">");
         try
         {
             string rowEmpty = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("NoInformation.htm");
-            html.Append(Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("CustomerWinLost/AllCustWinLostBySiteHeader.htm",new string[] {"{username}","{currency}","{+}","{-}","{base}"}, 
-                new string[] {Resources.Language.UserName,Resources.Language.Currency,"+","-",Resources.Language.Base}));
+            html.Append(Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("CustomerWinLost/AllCustWinLostBySiteHeader.htm", new string[] { "{username}", "{currency}", "{+}", "{-}", "{base}" },
+                new string[] { Resources.Language.UserName, Resources.Language.Currency, "+", "-", Resources.Language.Base }));
             DbResult ds = MatchWinLostReport.RptAllCustomerWinLossBySiteFrom(fDate, tDate, siteStr, betFromStr);
-            
+
             if (ds != null)
             {
-
                 DataTable tbl = ds.ResultSet.Tables[0];
                 if (tbl.Rows.Count > 0)
                 {
                     string content = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("CustomerWinLost/AllCustWinLostBySiteRow.htm");
                     string row = "";
-                    string curSite ="";
+                    string curSite = "";
                     double curSiteTotal = 0;
                     double allSiteTotal = 0;
                     string odd_even = "";
@@ -173,16 +169,16 @@ public partial class Report_AllCustWinLostBySite : System.Web.UI.Page
                         odd_even = (odd_even == "") ? "evenrow" : "";
                         tbl.Rows[i]["site"] = tbl.Rows[i]["site"] as string ?? string.Empty;
                         if (string.Compare(tbl.Rows[i]["site"].ToString(), curSite, true) != 0)
-                        {                            
+                        {
                             if (curSite != "")
                             {
                                 row = content;
-                                
+
                                 TemplateHandler.Assign(ref row, "{username}", "");
                                 TemplateHandler.Assign(ref row, "{currency}", "");
                                 TemplateHandler.Assign(ref row, "{+}", "");
-                                TemplateHandler.Assign(ref row, "{-}", curSite + "'s " +Resources.Language.Total);
-                                TemplateHandler.Assign(ref row, "{base}",FormatHandler.FormatNumber20(curSiteTotal));
+                                TemplateHandler.Assign(ref row, "{-}", curSite + "'s " + Resources.Language.Total);
+                                TemplateHandler.Assign(ref row, "{base}", FormatHandler.FormatNumber20(curSiteTotal));
                                 TemplateHandler.Assign(ref row, "{h5bold}", "h5bold");
                                 html.Append(row);
                             }
@@ -196,11 +192,11 @@ public partial class Report_AllCustWinLostBySite : System.Web.UI.Page
                         }
                         row = content;
                         TemplateHandler.Assign(ref row, "{odd_even}", odd_even);
-                        string strUsername=tbl.Rows[i]["username"] as string ?? string.Empty;
-                        string strCurrency= tbl.Rows[i]["currency"] as string ?? string.Empty;
+                        string strUsername = tbl.Rows[i]["username"] as string ?? string.Empty;
+                        string strCurrency = tbl.Rows[i]["currency"] as string ?? string.Empty;
                         TemplateHandler.Assign(ref row, "{username}", strUsername);
-                        TemplateHandler.Assign(ref row, "{currency}",strCurrency);
-                        double matchWinLost =tbl.Rows[i].IsNull("matchwinlost")? 0: FormatHandler.GetDouble(tbl.Rows[i]["matchwinlost"]);
+                        TemplateHandler.Assign(ref row, "{currency}", strCurrency);
+                        double matchWinLost = tbl.Rows[i].IsNull("matchwinlost") ? 0 : FormatHandler.GetDouble(tbl.Rows[i]["matchwinlost"]);
                         if (matchWinLost >= 0)
                         {
                             TemplateHandler.Assign(ref row, "{+}", FormatHandler.FormatNumber20(matchWinLost));
@@ -208,12 +204,12 @@ public partial class Report_AllCustWinLostBySite : System.Web.UI.Page
                         }
                         else
                         {
-                            TemplateHandler.Assign(ref row, "{+}","");
+                            TemplateHandler.Assign(ref row, "{+}", "");
                             TemplateHandler.Assign(ref row, "{-}", FormatHandler.FormatNumber20(matchWinLost));
                         }
                         TemplateHandler.Assign(ref row, "{base}", FormatHandler.FormatNumber20(tbl.Rows[i]["curwinlost"]));
-                        curSiteTotal += tbl.Rows[i].IsNull("curwinlost")? 0: FormatHandler.GetDouble(tbl.Rows[i]["curwinlost"]);
-                        allSiteTotal += tbl.Rows[i].IsNull("curwinlost")? 0 : FormatHandler.GetDouble(tbl.Rows[i]["curwinlost"]);
+                        curSiteTotal += tbl.Rows[i].IsNull("curwinlost") ? 0 : FormatHandler.GetDouble(tbl.Rows[i]["curwinlost"]);
+                        allSiteTotal += tbl.Rows[i].IsNull("curwinlost") ? 0 : FormatHandler.GetDouble(tbl.Rows[i]["curwinlost"]);
                         TemplateHandler.Assign(ref row, "{h5bold}", "");
                         html.Append(row);
                     }
@@ -226,7 +222,7 @@ public partial class Report_AllCustWinLostBySite : System.Web.UI.Page
                     TemplateHandler.Assign(ref row, "{h5bold}", "h5bold");
                     html.Append(row);
                     html.Append(Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("CustomerWinLost/AllCustWinLostBySiteFooter.htm", new string[] { "{total}", "{totalvalue}" },
-                        new string[] { Resources.Language.Total,FormatHandler.FormatNumber20(allSiteTotal)}));
+                        new string[] { Resources.Language.Total, FormatHandler.FormatNumber20(allSiteTotal) }));
                 }
                 else
                 {

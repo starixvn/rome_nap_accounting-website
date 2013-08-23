@@ -1,6 +1,4 @@
-﻿
-
-namespace Sunplus.Accounting.Entities
+﻿namespace Sunplus.Accounting.Entities
 {
     public class PositionTakingDetail
     {

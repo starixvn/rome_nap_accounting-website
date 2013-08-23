@@ -1,4 +1,4 @@
-﻿ /// <summary>
+﻿/// <summary>
 /// Summary description for CompanyDiffBalance
 /// </summary>
 

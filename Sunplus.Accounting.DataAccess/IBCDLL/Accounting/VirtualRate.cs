@@ -7,7 +7,6 @@ using DNAide.Data;
 
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
-using Sunplus.Core.LoggingLib;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
@@ -20,8 +19,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
             var sps = CustomerSession.Instance[CustomerSession.StoreCollection.CustomerControl];
             return sps != null ? sps[aliasName] : null;
-
         }
+
         public static DataTable GetDataFromExcel(string ExcelPath)
         {
             var dtb = new DataTable();
@@ -43,8 +42,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 excelCon.Close();
                 excelCon.Dispose();
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
             return null;
@@ -63,8 +62,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
@@ -80,8 +78,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
 
             return rs;
@@ -98,8 +95,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
@@ -119,8 +115,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
@@ -132,12 +127,10 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var spElement = GetStoreProcedure("CustomerSelVirtualRateHistory");
                 return DbHelper.Execute(spElement.Name, hash, spElement.DbName);
-                
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }

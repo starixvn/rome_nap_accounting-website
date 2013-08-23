@@ -51,7 +51,7 @@ namespace Sunplus.Accounting.Entities
                                         : HttpContext.GetGlobalResourceObject(fileResource, eCode.ToString()).ToString();
                         result.ErrorHandler.Add(eCode, eMsg);
                     }
-                    if (result.ErrorHandler.Count==0)
+                    if (result.ErrorHandler.Count == 0)
                     {
                         var msgSuccess = HttpContext.GetGlobalResourceObject(fileResource, "0").ToString();
                         result.ErrorCode = 0;
@@ -75,5 +75,4 @@ namespace Sunplus.Accounting.Entities
             }
         }
     }
-
 }

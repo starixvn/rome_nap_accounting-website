@@ -18,7 +18,6 @@ using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.IReportDAO;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Report.Racebook;
-using Sunplus.Core.LoggingLib;
 
 /// <summary>
 /// Summary description for Winloss Racing
@@ -32,22 +31,24 @@ namespace Sunplus.Accounting.Business.Report.Racing
         private string _winLossRacingReportDetailSessionKey = "winlossracingreportdetailsessionkey{0}_{1}";
         private string _winLossRacingGroupReportSessionKey = "winlossracinggroupreportsessionkey";
         private string _winLossRacingGroupForToteReportSessionKey = "winlossracinggroupfortotereportsessionkey";
+
         public ReportRacing(IReportRacingDAO reportRacingDao)
-		{
+        {
             _reportRacingDao = reportRacingDao;
-		}
+        }
 
         #region GetWinlossRacingReport
+
         public RacingWinlossBO GetWinlossRacingReport(Enumerations.ReportType reportType, string winlossDate)
         {
             var racingBO = new RacingWinlossBO();
-            racingBO.Items=new List<RacingWinlossMeetingBO>();
-            racingBO.Totals=new List<RacingWinlossRowBO>();
+            racingBO.Items = new List<RacingWinlossMeetingBO>();
+            racingBO.Totals = new List<RacingWinlossRowBO>();
 
             DataTable dt = _reportRacingDao.WinlostRacingTote(reportType, winlossDate);
-            
+
             #region variable
-            
+
             decimal AgencyWinTO;
             decimal AgencyPlaceTO;
             decimal AgencyWPTO;
@@ -127,17 +128,17 @@ namespace Sunplus.Accounting.Business.Report.Racing
             decimal PartnerCommExpense_base;
             decimal PartnerToteFee_base;
             decimal PartnerAmountDue_base;
-            #endregion
-            
+
+            #endregion variable
+
             if (dt != null)
             {
                 var listPartnerIds = GetDistinctPartner(dt);
-                var racingwinloss=new RacingWinlossBO();
-                racingwinloss.Items=new List<RacingWinlossMeetingBO>();
-                racingwinloss.Totals=new List<RacingWinlossRowBO>();
+                var racingwinloss = new RacingWinlossBO();
+                racingwinloss.Items = new List<RacingWinlossMeetingBO>();
+                racingwinloss.Totals = new List<RacingWinlossRowBO>();
                 foreach (PartnerPoolCurr partner in listPartnerIds)
                 {
-                    
                     #region assign default
 
                     AgencyWinTO_pool = 0;
@@ -191,19 +192,21 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     PartnerCommExpense_base = 0;
                     PartnerToteFee_base = 0;
                     PartnerAmountDue_base = 0;
-                    #endregion
+
+                    #endregion assign default
 
                     var partners = new RacingWinlossMeetingBO();
                     partners.Items = new List<RacingWinlossRowBO>();
                     partners.Totals = new List<RacingWinlossRowBO>();
                     DataRow[] rows = dt.Select("partnerID=" + partner.PartnerId);
-                    
+
                     foreach (DataRow row in rows)
                     {
                         var item = new RacingWinlossRowBO();
-                        
+
                         #region origin
-                        AgencyWinTO =CastAide.AsDecimal(row["winTO_Agency_Origin"].ToString());
+
+                        AgencyWinTO = CastAide.AsDecimal(row["winTO_Agency_Origin"].ToString());
                         AgencyPlaceTO = CastAide.AsDecimal(row["placeTO_Agency_Origin"].ToString());
                         AgencyWPTO = CastAide.AsDecimal(row["winplaceTO_Agency_Origin"].ToString());
                         AgencyTotalTO = CastAide.AsDecimal(row["totalTO_Agency_Origin"].ToString());
@@ -261,10 +264,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
 
                         partners.Items.Add(item);
 
-                        #endregion
+                        #endregion origin
 
                         #region PoolCurr
-                        AgencyWinTO_pool +=CastAide.AsDecimal(row["winTO_Agency_PoolCurr"].ToString());
+
+                        AgencyWinTO_pool += CastAide.AsDecimal(row["winTO_Agency_PoolCurr"].ToString());
                         AgencyPlaceTO_pool += CastAide.AsDecimal(row["placeTO_Agency_PoolCurr"].ToString());
                         AgencyWPTO_pool += CastAide.AsDecimal(row["winplaceTO_Agency_PoolCurr"].ToString());
                         AgencyTotalTO_pool += CastAide.AsDecimal(row["totalTO_Agency_PoolCurr"].ToString());
@@ -289,9 +293,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         PartnerCommExpense_pool += CastAide.AsDecimal(row["commIncome_IBC_PoolCurr"].ToString());
                         PartnerToteFee_pool += CastAide.AsDecimal(row["FeeDue2_PoolCurr"].ToString());
                         PartnerAmountDue_pool += CastAide.AsDecimal(row["AmountDue_PoolCurr"].ToString());
-                        #endregion
+
+                        #endregion PoolCurr
 
                         #region base
+
                         AgencyWinTO_base += CastAide.AsDecimal(row["winTO_Agency"].ToString()); ;
                         AgencyPlaceTO_base += CastAide.AsDecimal(row["placeTO_Agency"].ToString()); ;
                         AgencyWPTO_base += CastAide.AsDecimal(row["winplaceTO_Agency"].ToString());
@@ -316,13 +322,15 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         PartnerDividendWon_base += CastAide.AsDecimal(row["dividendWon"].ToString());
                         PartnerCommExpense_base += CastAide.AsDecimal(row["commIncome_IBC"].ToString());
                         PartnerToteFee_base += CastAide.AsDecimal(row["FeeDue2"].ToString());
-                        PartnerAmountDue_base += CastAide.AsDecimal(row["AmountDue"].ToString()); 
-                        #endregion
+                        PartnerAmountDue_base += CastAide.AsDecimal(row["AmountDue"].ToString());
+
+                        #endregion base
                     }
 
                     #region add poolcurr item
+
                     var poolcurritem = new RacingWinlossRowBO();
-                    poolcurritem.Id = partner.PartnerId.ToString();  
+                    poolcurritem.Id = partner.PartnerId.ToString();
                     poolcurritem.Name = partners.Items[0].Name + " Total";
                     poolcurritem.Currency = CacheUtils.GetExchangeName(partner.PoolCurr);
                     poolcurritem.CurrencyId = partner.PoolCurr.ToString();
@@ -354,9 +362,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     poolcurritem.PartnerAmountDue = NumberFormat.DecFormat(PartnerAmountDue_pool, 2);
 
                     partners.Totals.Add(poolcurritem);
-                    #endregion
+
+                    #endregion add poolcurr item
 
                     #region add base item
+
                     var baseitem = new RacingWinlossRowBO();
                     baseitem.Id = partner.PartnerId.ToString();
                     baseitem.Name = partners.Items[0].Name + " Total";
@@ -389,11 +399,10 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     baseitem.PartnerAmountDue = NumberFormat.DecFormat(PartnerAmountDue_base, 2);
 
                     partners.Totals.Add(baseitem);
-                    #endregion
 
-                   
+                    #endregion add base item
+
                     racingBO.Items.Add(partners);
-
                 }
 
                 #region Grand Total Pool and Base currency
@@ -409,13 +418,13 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     }
                 }
                 var listDistinctPoolCurrency =
-                    lstPoolCurrency.OrderByDescending(c =>c.CurrencyId).Select(s => s.Currency).Distinct().ToArray();
+                    lstPoolCurrency.OrderByDescending(c => c.CurrencyId).Select(s => s.Currency).Distinct().ToArray();
                 foreach (var currencyName in listDistinctPoolCurrency)
                 {
                     racingBO.Totals.Add(new RacingWinlossRowBO()
                                                    {
                                                        Currency = currencyName,
-                                                       AgencyWinTO = NumberFormat.DecFormat( lstPoolCurrency.Where(s=>s.Currency == currencyName).Sum(s=> CastAide.AsDecimal(s.AgencyWinTO)),2),
+                                                       AgencyWinTO = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.AgencyWinTO)), 2),
                                                        AgencyWPTO = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.AgencyWPTO)), 2),
                                                        AgencyTotalTO = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.AgencyTotalTO)), 2),
                                                        AgencyPlaceTO = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.AgencyPlaceTO)), 2),
@@ -425,27 +434,29 @@ namespace Sunplus.Accounting.Business.Report.Racing
                                                        IBCCommExpense = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.IBCCommExpense)), 2),
                                                        IBCCommIncome = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.IBCCommIncome)), 2),
                                                        IBCNetIncome = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.IBCNetIncome)), 2),
-                                                       IBCPTWL = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.IBCPTWL )), 2),
-                                                       IBCPlaceTO = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.IBCPlaceTO )), 2),
+                                                       IBCPTWL = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.IBCPTWL)), 2),
+                                                       IBCPlaceTO = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.IBCPlaceTO)), 2),
                                                        IBCTotalTO = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.IBCTotalTO)), 2),
-                                                       IBCToteFee = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.IBCToteFee )), 2),
+                                                       IBCToteFee = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.IBCToteFee)), 2),
                                                        IBCWPTO = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.IBCWPTO)), 2),
-                                                       IBCWinTO = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.IBCWinTO )), 2),
+                                                       IBCWinTO = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.IBCWinTO)), 2),
 
-                                                       PartnerAmountDue = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.PartnerAmountDue )), 2),
-                                                       PartnerCommExpense = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.PartnerCommExpense )), 2),
-                                                       PartnerDividendWon = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.PartnerDividendWon )), 2),
+                                                       PartnerAmountDue = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.PartnerAmountDue)), 2),
+                                                       PartnerCommExpense = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.PartnerCommExpense)), 2),
+                                                       PartnerDividendWon = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.PartnerDividendWon)), 2),
                                                        Name = "Grand Total",
-                                                       PartnerTotalTO = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.PartnerTotalTO )), 2),
-                                                       PartnerPlaceTO = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.PartnerPlaceTO )), 2),
+                                                       PartnerTotalTO = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.PartnerTotalTO)), 2),
+                                                       PartnerPlaceTO = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.PartnerPlaceTO)), 2),
                                                        PartnerToteFee = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.PartnerToteFee)), 2),
-                                                       PartnerWPTO = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.PartnerWPTO )), 2),
+                                                       PartnerWPTO = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.PartnerWPTO)), 2),
                                                        PartnerWinTO = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.PartnerWinTO)), 2),
                                                    });
                 }
-                #endregion
+
+                #endregion Grand Total Pool and Base currency
 
                 #region Comparision
+
                 //@reportType:1-UK Horse Racing ; 3-UK Greyhound
                 if (reportType == Enumerations.ReportType.Horse_Racing_Daily_Report_For_AU ||
                     reportType == Enumerations.ReportType.Horse_Racing_Daily_Report_For_UK ||
@@ -453,7 +464,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     reportType == Enumerations.ReportType.Greyhound_Daily_Report_For_AU ||
                     reportType == Enumerations.ReportType.Horse_Racing_Report_for_SA_Tote_NEW)
                 {
-                    DataTable dtDumpFile = _reportRacingDao.WinlostRacingToteDumpFiles(winlossDate,(int) reportType);
+                    DataTable dtDumpFile = _reportRacingDao.WinlostRacingToteDumpFiles(winlossDate, (int)reportType);
                     var lstComparision = new List<RacingWinlossDumpFileBO>();
                     if (dtDumpFile != null)
                     {
@@ -484,24 +495,20 @@ namespace Sunplus.Accounting.Business.Report.Racing
                                             CastAide.AsString(row["currencyName"]).ToString().ToLower()).Sum(
                                                 s => CastAide.AsDecimal(s.PartnerDividendWon)), 2);
 
-
                                 if (System.Math.Abs(CastAide.AsDecimal(item.ibcDividendWon) - CastAide.AsDecimal(item.partnerDividendWon)) < 1)
                                     item.IsMatchDividend = true;
                                 if (System.Math.Abs(CastAide.AsDecimal(item.ibcTO) - CastAide.AsDecimal(item.partnerTO)) < 1)
                                     item.IsMatchTO = true;
 
                                 lstComparision.Add(item);
-
                             }
                         }
                     }
 
-
                     racingBO.Comparision = lstComparision;
                 }
-               
 
-                #endregion
+                #endregion Comparision
             }
 
             SessionExtension.AddSession(HttpContext.Current.Session, string.Format(_winLossRacingReportSessionKey, reportType), racingBO);
@@ -597,7 +604,8 @@ namespace Sunplus.Accounting.Business.Report.Racing
             decimal PartnerCommExpense_base;
             decimal PartnerToteFee_base;
             decimal PartnerAmountDue_base;
-            #endregion
+
+            #endregion variable
 
             if (dt != null)
             {
@@ -607,7 +615,6 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 racingwinloss.Totals = new List<RacingWinlossRowBO>();
                 foreach (PartnerPoolCurr partner in listPartnerIds)
                 {
-
                     #region assign default
 
                     AgencyWinTO_pool = 0;
@@ -661,7 +668,8 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     PartnerCommExpense_base = 0;
                     PartnerToteFee_base = 0;
                     PartnerAmountDue_base = 0;
-                    #endregion
+
+                    #endregion assign default
 
                     var partners = new RacingWinlossMeetingBO();
                     partners.Items = new List<RacingWinlossRowBO>();
@@ -673,6 +681,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         var item = new RacingWinlossRowBO();
 
                         #region origin
+
                         AgencyWinTO = CastAide.AsDecimal(row["winTO_Agency_Origin"].ToString());
                         AgencyPlaceTO = CastAide.AsDecimal(row["placeTO_Agency_Origin"].ToString());
                         AgencyWPTO = CastAide.AsDecimal(row["winplaceTO_Agency_Origin"].ToString());
@@ -731,9 +740,10 @@ namespace Sunplus.Accounting.Business.Report.Racing
 
                         partners.Items.Add(item);
 
-                        #endregion
+                        #endregion origin
 
                         #region PoolCurr
+
                         AgencyWinTO_pool += CastAide.AsDecimal(row["winTO_Agency_PoolCurr"].ToString());
                         AgencyPlaceTO_pool += CastAide.AsDecimal(row["placeTO_Agency_PoolCurr"].ToString());
                         AgencyWPTO_pool += CastAide.AsDecimal(row["winplaceTO_Agency_PoolCurr"].ToString());
@@ -759,9 +769,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         PartnerCommExpense_pool += CastAide.AsDecimal(row["commIncome_IBC_PoolCurr"].ToString());
                         PartnerToteFee_pool += CastAide.AsDecimal(row["FeeDue2_PoolCurr"].ToString());
                         PartnerAmountDue_pool += CastAide.AsDecimal(row["AmountDue_PoolCurr"].ToString());
-                        #endregion
+
+                        #endregion PoolCurr
 
                         #region base
+
                         AgencyWinTO_base += CastAide.AsDecimal(row["winTO_Agency"].ToString()); ;
                         AgencyPlaceTO_base += CastAide.AsDecimal(row["placeTO_Agency"].ToString()); ;
                         AgencyWPTO_base += CastAide.AsDecimal(row["winplaceTO_Agency"].ToString());
@@ -787,10 +799,12 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         PartnerCommExpense_base += CastAide.AsDecimal(row["commIncome_IBC"].ToString());
                         PartnerToteFee_base += CastAide.AsDecimal(row["FeeDue2"].ToString());
                         PartnerAmountDue_base += CastAide.AsDecimal(row["AmountDue"].ToString());
-                        #endregion
+
+                        #endregion base
                     }
 
                     #region add poolcurr item
+
                     var poolcurritem = new RacingWinlossRowBO();
                     poolcurritem.Id = partner.PartnerId.ToString();
                     poolcurritem.Name = partners.Items[0].Name + " Total";
@@ -824,9 +838,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     poolcurritem.PartnerAmountDue = NumberFormat.DecFormat(PartnerAmountDue_pool, 2);
 
                     partners.Totals.Add(poolcurritem);
-                    #endregion
+
+                    #endregion add poolcurr item
 
                     #region add base item
+
                     var baseitem = new RacingWinlossRowBO();
                     baseitem.Id = partner.PartnerId.ToString();
                     baseitem.Name = partners.Items[0].Name + " Total";
@@ -859,11 +875,10 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     baseitem.PartnerAmountDue = NumberFormat.DecFormat(PartnerAmountDue_base, 2);
 
                     partners.Totals.Add(baseitem);
-                    #endregion
 
+                    #endregion add base item
 
                     racingBO.Items.Add(partners);
-
                 }
 
                 #region Grand Total Pool and Base currency
@@ -913,9 +928,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         PartnerWinTO = NumberFormat.DecFormat(lstPoolCurrency.Where(s => s.Currency == currencyName).Sum(s => CastAide.AsDecimal(s.PartnerWinTO)), 2),
                     });
                 }
-                #endregion
+
+                #endregion Grand Total Pool and Base currency
 
                 #region Comparision
+
                 //@reportType:1-UK Horse Racing ; 3-UK Greyhound
                 if (reportType == Enumerations.ReportType.Horse_Racing_Daily_Report_For_AU ||
                     reportType == Enumerations.ReportType.Horse_Racing_Daily_Report_For_UK ||
@@ -954,24 +971,20 @@ namespace Sunplus.Accounting.Business.Report.Racing
                                             CastAide.AsString(row["currencyName"]).ToString().ToLower()).Sum(
                                                 s => CastAide.AsDecimal(s.PartnerDividendWon)), 2);
 
-
                                 if (System.Math.Abs(CastAide.AsDecimal(item.ibcDividendWon) - CastAide.AsDecimal(item.partnerDividendWon)) < 1)
                                     item.IsMatchDividend = true;
                                 if (System.Math.Abs(CastAide.AsDecimal(item.ibcTO) - CastAide.AsDecimal(item.partnerTO)) < 1)
                                     item.IsMatchTO = true;
 
                                 lstComparision.Add(item);
-
                             }
                         }
                     }
 
-
                     racingBO.Comparision = lstComparision;
                 }
 
-
-                #endregion
+                #endregion Comparision
             }
 
             SessionExtension.AddSession(HttpContext.Current.Session, string.Format(_winLossRacingReportSessionKey, reportType), racingBO);
@@ -979,6 +992,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
         }
 
         #region GetDistinctPartner
+
         private static List<PartnerPoolCurr> GetDistinctPartner(DataTable dt)
         {
             return
@@ -992,20 +1006,23 @@ namespace Sunplus.Accounting.Business.Report.Racing
                  new PartnerPoolCurr() { PartnerId = x.PartnerId, PoolCurr = x.PoolCurr })
                  .ToList();
         }
-        #endregion
-        #endregion
+
+        #endregion GetDistinctPartner
+
+        #endregion GetWinlossRacingReport
 
         #region GetWinlossRacingReport_Details
 
         #region GetDistinctMeetingCurrency
+
         private List<MeetingCurr> GetDistinctMeetingCurrency(DataTable dataTable, int currency)
         {
             return
-           (from rows in dataTable.AsEnumerable().Where(s => CastAide.AsInt32( s["currency"]) == currency)
+           (from rows in dataTable.AsEnumerable().Where(s => CastAide.AsInt32(s["currency"]) == currency)
             select new
             {
-                CurrId = CastAide.AsInt32( rows["currency"]),
-                MeetingId =  CastAide.AsInt32(rows["MeetingId"])
+                CurrId = CastAide.AsInt32(rows["currency"]),
+                MeetingId = CastAide.AsInt32(rows["MeetingId"])
             }).Distinct().Select(x =>
                 new MeetingCurr() { CurrencyId = x.CurrId, MeetingId = x.MeetingId })
                 .ToList();
@@ -1019,7 +1036,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
             {
                 MeetingId = CastAide.AsInt32(rows["MeetingId"])
             }).Distinct().Select(x =>
-                new MeetingCurr() { MeetingId = x.MeetingId})
+                new MeetingCurr() { MeetingId = x.MeetingId })
                 .ToList();
         }
 
@@ -1031,33 +1048,32 @@ namespace Sunplus.Accounting.Business.Report.Racing
             {
                 CurrId = CastAide.AsInt32(rows["currency"])
             }).Distinct().Select(x =>
-                new MeetingCurr() { CurrencyId = x.CurrId})
+                new MeetingCurr() { CurrencyId = x.CurrId })
                 .ToList();
-            
         }
-        #endregion
+
+        #endregion GetDistinctMeetingCurrency
 
         public RacingWinlossDetailsBO GetWinlossRacingReportDetails(string winlossDate, string poolCurrency, string partnerId)
         {
-            
-            DataTable dataTable  = _reportRacingDao.WinlostRacingTote_Details(winlossDate, poolCurrency, partnerId);
+            DataTable dataTable = _reportRacingDao.WinlostRacingTote_Details(winlossDate, poolCurrency, partnerId);
 
-            if(dataTable == null)
+            if (dataTable == null)
                 return new RacingWinlossDetailsBO();
 
             #region Variable List Object
 
-           
             var arrCurrencies = GetDistinctCurrency(dataTable);
 
             var racingDetailsBo = new RacingWinlossDetailsBO();
             racingDetailsBo.Items = new List<RacingWinlossCurrencyBO>();
             racingDetailsBo.Totals = new List<RacingWinlossRowBO>();
             racingDetailsBo.GrandTotals = new List<RacingWinlossRowBO>();
-            #endregion
-            
+
+            #endregion Variable List Object
+
             #region Currency
-            
+
             #region variable
 
             decimal AgencyWinTO;
@@ -1166,49 +1182,54 @@ namespace Sunplus.Accounting.Business.Report.Racing
             decimal PartnerCommExpense_base = 0;
             decimal PartnerToteFee_base = 0;
             decimal PartnerAmountDue_base = 0;
-            #endregion
-            #endregion
+
+            #endregion variable
+
+            #endregion Currency
 
             List<RacingWinlossRowBO> grandTotal = new List<RacingWinlossRowBO>();
             foreach (MeetingCurr curr in arrCurrencies)
             {
                 #region GrandTotal
+
                 #region PoolCurr
+
                 grandTotal.Add(new RacingWinlossRowBO()
                                    {
                                        CurrencyId = poolCurrency,
-                                       Currency = CacheUtils.GetExchangeName(CastAide.AsInt32( poolCurrency)),
+                                       Currency = CacheUtils.GetExchangeName(CastAide.AsInt32(poolCurrency)),
 
-                                       AgencyWinTO =   AgencyWinTO_pool.ToString() ,
+                                       AgencyWinTO = AgencyWinTO_pool.ToString(),
                                        AgencyPlaceTO = AgencyPlaceTO_pool.ToString(),
-                                       AgencyWPTO  = AgencyWPTO_pool.ToString() ,
-                                       AgencyTotalTO = AgencyTotalTO_pool.ToString() ,
-                                       AgencyCommIncome = AgencyCommIncome_pool.ToString() ,
-                                       AgencyPTWL = AgencyPTWL_pool .ToString(),
-                
+                                       AgencyWPTO = AgencyWPTO_pool.ToString(),
+                                       AgencyTotalTO = AgencyTotalTO_pool.ToString(),
+                                       AgencyCommIncome = AgencyCommIncome_pool.ToString(),
+                                       AgencyPTWL = AgencyPTWL_pool.ToString(),
+
                                        IBCWinTO = IBCWinTO_pool.ToString(),
-                                       IBCPlaceTO  = IBCPlaceTO_pool .ToString(),
-                                       IBCWPTO  = IBCWPTO_pool .ToString(),
-                                       IBCTotalTO = IBCTotalTO_pool .ToString(),
-                                       IBCCommIncome = IBCCommIncome_pool .ToString(),
-                                       IBCToteFee  = IBCToteFee_pool .ToString(),
-                                       IBCCommExpense = IBCCommExpense_pool .ToString(),
-                                       IBCPTWL = IBCPTWL_pool .ToString(),
-                                       IBCNetIncome = IBCNetIncome_pool .ToString(),
-                
-                                       PartnerWinTO = PartnerWinTO_pool .ToString(),
-                                       PartnerPlaceTO = PartnerPlaceTO_pool .ToString(),
-                                       PartnerWPTO = PartnerWPTO_pool .ToString(),
-                                       PartnerTotalTO = PartnerTotalTO_pool .ToString(),
-                                       PartnerDividendWon = PartnerDividendWon_pool .ToString(),
-                                       PartnerCommExpense = PartnerCommExpense_pool .ToString(),
-                                       PartnerToteFee = PartnerToteFee_pool .ToString(),
-                                       PartnerAmountDue = PartnerAmountDue_pool .ToString()
+                                       IBCPlaceTO = IBCPlaceTO_pool.ToString(),
+                                       IBCWPTO = IBCWPTO_pool.ToString(),
+                                       IBCTotalTO = IBCTotalTO_pool.ToString(),
+                                       IBCCommIncome = IBCCommIncome_pool.ToString(),
+                                       IBCToteFee = IBCToteFee_pool.ToString(),
+                                       IBCCommExpense = IBCCommExpense_pool.ToString(),
+                                       IBCPTWL = IBCPTWL_pool.ToString(),
+                                       IBCNetIncome = IBCNetIncome_pool.ToString(),
+
+                                       PartnerWinTO = PartnerWinTO_pool.ToString(),
+                                       PartnerPlaceTO = PartnerPlaceTO_pool.ToString(),
+                                       PartnerWPTO = PartnerWPTO_pool.ToString(),
+                                       PartnerTotalTO = PartnerTotalTO_pool.ToString(),
+                                       PartnerDividendWon = PartnerDividendWon_pool.ToString(),
+                                       PartnerCommExpense = PartnerCommExpense_pool.ToString(),
+                                       PartnerToteFee = PartnerToteFee_pool.ToString(),
+                                       PartnerAmountDue = PartnerAmountDue_pool.ToString()
                                    });
-                
-                #endregion
+
+                #endregion PoolCurr
 
                 #region Base
+
                 grandTotal.Add(new RacingWinlossRowBO()
                 {
                     CurrencyId = "2",
@@ -1241,11 +1262,14 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     PartnerAmountDue = PartnerAmountDue_base.ToString()
                 });
 
-                #endregion
-                #endregion
+                #endregion Base
+
+                #endregion GrandTotal
 
                 #region assign default
+
                 #region origin
+
                 AgencyWinTO_origin = 0;
                 AgencyPlaceTO_origin = 0;
                 AgencyWPTO_origin = 0;
@@ -1271,8 +1295,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 PartnerCommExpense_origin = 0;
                 PartnerToteFee_origin = 0;
                 PartnerAmountDue_origin = 0;
-                #endregion
+
+                #endregion origin
+
                 #region Pool
+
                 AgencyWinTO_pool = 0;
                 AgencyPlaceTO_pool = 0;
                 AgencyWPTO_pool = 0;
@@ -1298,9 +1325,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 PartnerCommExpense_pool = 0;
                 PartnerToteFee_pool = 0;
                 PartnerAmountDue_pool = 0;
-                #endregion
+
+                #endregion Pool
 
                 #region Base
+
                 AgencyWinTO_base = 0;
                 AgencyPlaceTO_base = 0;
                 AgencyWPTO_base = 0;
@@ -1326,8 +1355,10 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 PartnerCommExpense_base = 0;
                 PartnerToteFee_base = 0;
                 PartnerAmountDue_base = 0;
-                #endregion
-                #endregion
+
+                #endregion Base
+
+                #endregion assign default
 
                 var arrDistinctMeeting = GetDistinctMeetingCurrency(dataTable, curr.CurrencyId);
 
@@ -1336,7 +1367,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 lstCurrency.Totals = new List<RacingWinlossRowBO>();
 
                 //Meeting by Currency
-                int [] arrBaseCurr = {2};
+                int[] arrBaseCurr = { 2 };
                 int currentCurr = 0;
                 foreach (MeetingCurr meetingCurr in arrDistinctMeeting)
                 {
@@ -1350,6 +1381,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     foreach (DataRow dataRow in rows)
                     {
                         #region row
+
                         var row = new RacingWinlossRowBO()
                         {
                             CurrencyId = CastAide.AsString(dataRow["currency"]),
@@ -1385,11 +1417,13 @@ namespace Sunplus.Accounting.Business.Report.Racing
                             PartnerCommExpense = NumberFormat.DecFormat(dataRow["commIncome_IBC_Origin"], 2),
                             PartnerToteFee = NumberFormat.DecFormat(dataRow["FeeDue2_Origin"], 2),
                         };
-                        #endregion
+
+                        #endregion row
 
                         lstMeeting.Items.Add(row);
 
                         #region Total Curr Origin
+
                         AgencyWinTO_origin += CastAide.AsDecimal(dataRow["winTO_Agency_Origin"].ToString());
                         AgencyPlaceTO_origin += CastAide.AsDecimal(dataRow["placeTO_Agency_Origin"].ToString());
                         AgencyWPTO_origin += CastAide.AsDecimal(dataRow["winplaceTO_Agency_Origin"].ToString());
@@ -1415,9 +1449,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         PartnerCommExpense_origin += CastAide.AsDecimal(dataRow["commIncome_IBC_Origin"].ToString());
                         PartnerToteFee_origin += CastAide.AsDecimal(dataRow["FeeDue2_Origin"].ToString());
                         PartnerAmountDue_origin += CastAide.AsDecimal(dataRow["AmountDue_Origin"].ToString());
-                        #endregion
+
+                        #endregion Total Curr Origin
 
                         #region PoolCurr
+
                         AgencyWinTO_pool += CastAide.AsDecimal(dataRow["winTO_Agency_PoolCurr"].ToString());
                         AgencyPlaceTO_pool += CastAide.AsDecimal(dataRow["placeTO_Agency_PoolCurr"].ToString());
                         AgencyWPTO_pool += CastAide.AsDecimal(dataRow["winplaceTO_Agency_PoolCurr"].ToString());
@@ -1443,9 +1479,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         PartnerCommExpense_pool += CastAide.AsDecimal(dataRow["commIncome_IBC_PoolCurr"].ToString());
                         PartnerToteFee_pool += CastAide.AsDecimal(dataRow["FeeDue2_PoolCurr"].ToString());
                         PartnerAmountDue_pool += CastAide.AsDecimal(dataRow["AmountDue_PoolCurr"].ToString());
-                        #endregion
+
+                        #endregion PoolCurr
 
                         #region base
+
                         AgencyWinTO_base += CastAide.AsDecimal(dataRow["winTO_Agency"].ToString()); ;
                         AgencyPlaceTO_base += CastAide.AsDecimal(dataRow["placeTO_Agency"].ToString()); ;
                         AgencyWPTO_base += CastAide.AsDecimal(dataRow["winplaceTO_Agency"].ToString());
@@ -1471,19 +1509,21 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         PartnerCommExpense_base += CastAide.AsDecimal(dataRow["commIncome_IBC"].ToString());
                         PartnerToteFee_base += CastAide.AsDecimal(dataRow["FeeDue2"].ToString());
                         PartnerAmountDue_base += CastAide.AsDecimal(dataRow["AmountDue"].ToString());
-                        #endregion
+
+                        #endregion base
                     }
 
                     lstCurrency.Items.Add(lstMeeting);
 
                     #region Totals Meeting Currency
+
                     lstMeeting.Totals.Add(new RacingWinlossRowBO()
                     {
-                        Currency = CacheUtils.GetExchangeName( meetingCurr.CurrencyId),
+                        Currency = CacheUtils.GetExchangeName(meetingCurr.CurrencyId),
                         Name = CacheRef.GetLeagueName(meetingCurr.MeetingId) + " - " + CacheUtils.GetExchangeName(meetingCurr.CurrencyId) + " Total",
                         MeetingID = meetingCurr.MeetingId.ToString(),
 
-                        AgencyWinTO = NumberFormat.DecFormat(lstMeeting .Items.Sum(s => CastAide.AsDecimal(s.AgencyWinTO)), 2),
+                        AgencyWinTO = NumberFormat.DecFormat(lstMeeting.Items.Sum(s => CastAide.AsDecimal(s.AgencyWinTO)), 2),
                         AgencyPlaceTO = NumberFormat.DecFormat(lstMeeting.Items.Sum(s => CastAide.AsDecimal(s.AgencyPlaceTO)), 2),
                         AgencyWPTO = NumberFormat.DecFormat(lstMeeting.Items.Sum(s => CastAide.AsDecimal(s.AgencyWPTO)), 2),
                         AgencyTotalTO = NumberFormat.DecFormat(lstMeeting.Items.Sum(s => CastAide.AsDecimal(s.AgencyTotalTO)), 2),
@@ -1510,16 +1550,13 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         PartnerAmountDue = NumberFormat.DecFormat(lstMeeting.Items.Sum(s => CastAide.AsDecimal(s.PartnerAmountDue)), 2),
                     });
 
-                      
-
-                    #endregion
-
+                    #endregion Totals Meeting Currency
                 }
-
 
                 #region Total Currency
 
                 #region origin
+
                 var originCurr = new RacingWinlossRowBO()
                 {
                     Currency = CacheUtils.GetExchangeName(curr.CurrencyId),
@@ -1550,12 +1587,13 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     PartnerCommExpense = NumberFormat.DecFormat(PartnerCommExpense_origin, 2),
                     PartnerToteFee = NumberFormat.DecFormat(PartnerToteFee_origin, 2),
                     PartnerAmountDue = NumberFormat.DecFormat(PartnerAmountDue_origin, 2),
-
                 };
                 lstCurrency.Totals.Add(originCurr);
-                #endregion
+
+                #endregion origin
 
                 #region base
+
                 if (!arrBaseCurr.Contains(currentCurr))
                 {
                     var baseCurr = new RacingWinlossRowBO()
@@ -1593,15 +1631,17 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     lstCurrency.Totals.Add(baseCurr);
                 }
 
-                #endregion
-                #endregion
+                #endregion base
+
+                #endregion Total Currency
 
                 racingDetailsBo.Items.Add(lstCurrency);
-
             }
 
             #region GrandTotal
+
             #region PoolCurr
+
             grandTotal.Add(new RacingWinlossRowBO()
             {
                 CurrencyId = poolCurrency,
@@ -1634,9 +1674,10 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 PartnerAmountDue = PartnerAmountDue_pool.ToString()
             });
 
-            #endregion
+            #endregion PoolCurr
 
             #region Base
+
             grandTotal.Add(new RacingWinlossRowBO()
             {
                 CurrencyId = "2",
@@ -1669,14 +1710,16 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 PartnerAmountDue = PartnerAmountDue_base.ToString()
             });
 
-            #endregion
-            #endregion
+            #endregion Base
+
+            #endregion GrandTotal
 
             #region grant total grouped meeting
+
             var distinctMeetings = GetDistinctMeeting(dataTable);
 
-
             #region var pool grant total grouped by meetings
+
             string CurrencyIdPoolCurr = string.Empty;
             string CurrencyPoolCurr = string.Empty;
             string NamePoolCurr = string.Empty;
@@ -1706,9 +1749,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
             decimal PartnerCommExpensePoolCurr = 0;
             decimal PartnerToteFeePoolCurr = 0;
             decimal PartnerAmountDuePoolCurr = 0;
-            #endregion
+
+            #endregion var pool grant total grouped by meetings
 
             #region var base grant total grouped by meetings
+
             string CurrencyIdBase = string.Empty;
             string CurrencyBase = string.Empty;
             string NameBase = string.Empty;
@@ -1738,7 +1783,8 @@ namespace Sunplus.Accounting.Business.Report.Racing
             decimal PartnerCommExpenseBase = 0;
             decimal PartnerToteFeeBase = 0;
             decimal PartnerAmountDueBase = 0;
-            #endregion
+
+            #endregion var base grant total grouped by meetings
 
             foreach (var meeting in distinctMeetings)
             {
@@ -1747,6 +1793,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 var meeting1 = meeting;
 
                 #region var pool grant total grouped by meetings
+
                 CurrencyIdPoolCurr = string.Empty;
                 CurrencyPoolCurr = string.Empty;
                 NamePoolCurr = string.Empty;
@@ -1776,9 +1823,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 PartnerCommExpensePoolCurr = 0;
                 PartnerToteFeePoolCurr = 0;
                 PartnerAmountDuePoolCurr = 0;
-                #endregion
+
+                #endregion var pool grant total grouped by meetings
 
                 #region var base grant total grouped by meetings
+
                 CurrencyIdBase = string.Empty;
                 CurrencyBase = string.Empty;
                 NameBase = string.Empty;
@@ -1808,12 +1857,14 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 PartnerCommExpenseBase = 0;
                 PartnerToteFeeBase = 0;
                 PartnerAmountDueBase = 0;
-                #endregion
+
+                #endregion var base grant total grouped by meetings
 
                 foreach (var dataRow in
                     dataTable.Rows.Cast<DataRow>().Where(dataRow => dataRow["MeetingId"].ToString() == meeting1.MeetingId.ToString()))
                 {
                     #region pool grant total grouped by meetings
+
                     CurrencyIdPoolCurr = poolCurrency;
                     CurrencyPoolCurr = CacheUtils.GetExchangeName(CastAide.AsInt32(poolCurrency));
                     NamePoolCurr = CacheRef.GetLeagueName(dataRow["MeetingId"]);
@@ -1843,10 +1894,13 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     PartnerCommExpensePoolCurr += CastAide.AsDecimal(dataRow["commIncome_IBC_PoolCurr"]);
                     PartnerToteFeePoolCurr += CastAide.AsDecimal(dataRow["FeeDue2_PoolCurr"]);
                     PartnerAmountDuePoolCurr += CastAide.AsDecimal(dataRow["AmountDue_PoolCurr"]);
-                    #endregion
+
+                    #endregion pool grant total grouped by meetings
 
                     //---------------------------------------------------------------------------------------------------------
+
                     #region base grant total grouped by meetings
+
                     CurrencyIdBase = "2";
                     CurrencyBase = "Base (RM)";
                     NameBase = CacheRef.GetLeagueName(dataRow["MeetingId"]);
@@ -1876,9 +1930,12 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     PartnerCommExpenseBase += CastAide.AsDecimal(dataRow["commIncome_IBC"]);
                     PartnerToteFeeBase += CastAide.AsDecimal(dataRow["FeeDue2"]);
                     PartnerAmountDueBase += CastAide.AsDecimal(dataRow["AmountDue"]);
-                    #endregion
+
+                    #endregion base grant total grouped by meetings
                 }
+
                 #region pool grant total grouped by meetings
+
                 racingWinlossRowBoPool.CurrencyId = CurrencyIdPoolCurr;
                 racingWinlossRowBoPool.Currency = CurrencyPoolCurr;
                 racingWinlossRowBoPool.Name = NamePoolCurr;
@@ -1908,9 +1965,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 racingWinlossRowBoPool.PartnerCommExpense = NumberFormat.DecFormat(PartnerCommExpensePoolCurr, 2);
                 racingWinlossRowBoPool.PartnerToteFee = NumberFormat.DecFormat(PartnerToteFeePoolCurr, 2);
                 racingWinlossRowBoPool.PartnerAmountDue = NumberFormat.DecFormat(PartnerAmountDuePoolCurr, 2);
-                #endregion
+
+                #endregion pool grant total grouped by meetings
 
                 #region base grant total grouped by meetings
+
                 racingWinlossRowBoBase.CurrencyId = CurrencyIdBase;
                 racingWinlossRowBoBase.Currency = CurrencyBase;
                 racingWinlossRowBoBase.Name = NameBase;
@@ -1940,50 +1999,54 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 racingWinlossRowBoBase.PartnerCommExpense = NumberFormat.DecFormat(PartnerCommExpenseBase, 2);
                 racingWinlossRowBoBase.PartnerToteFee = NumberFormat.DecFormat(PartnerToteFeeBase, 2);
                 racingWinlossRowBoBase.PartnerAmountDue = NumberFormat.DecFormat(PartnerAmountDueBase, 2);
-                #endregion
+
+                #endregion base grant total grouped by meetings
+
                 racingDetailsBo.Totals.Add(racingWinlossRowBoPool);
                 //racingDetailsBo.Totals.Add(racingWinlossRowBoBase);
             }
-            #endregion
+
+            #endregion grant total grouped meeting
 
             #region Calculate Grand Total
-            
-            var grand = grandTotal.OrderByDescending(s => s.Currency).Select(s=>s.Currency).Distinct().ToArray();
+
+            var grand = grandTotal.OrderByDescending(s => s.Currency).Select(s => s.Currency).Distinct().ToArray();
             foreach (string currency in grand)
             {
                 racingDetailsBo.GrandTotals.Add(new RacingWinlossRowBO()
                                                {
-                                                   Name="Grand Total",
-                                                    Currency = currency,
-                                                    
-                                                    AgencyWinTO = NumberFormat.DecFormat( grandTotal.Where(s=>s.Currency == currency).Sum(s=> CastAide.AsDecimal(s.AgencyWinTO)),2),
-                                                    AgencyPlaceTO = NumberFormat.DecFormat( grandTotal.Where(s=>s.Currency == currency).Sum(s=> CastAide.AsDecimal(s.AgencyPlaceTO)),2), 
-                                                    AgencyWPTO = NumberFormat.DecFormat( grandTotal.Where(s=>s.Currency == currency).Sum(s=> CastAide.AsDecimal(s.AgencyWPTO)),2), 
-                                                    AgencyTotalTO = NumberFormat.DecFormat( grandTotal.Where(s=>s.Currency == currency).Sum(s=> CastAide.AsDecimal(s.AgencyTotalTO)),2), 
-                                                    AgencyCommIncome = NumberFormat.DecFormat( grandTotal.Where(s=>s.Currency == currency).Sum(s=> CastAide.AsDecimal(s.AgencyCommIncome)),2), 
-                                                    AgencyPTWL = NumberFormat.DecFormat( grandTotal.Where(s=>s.Currency == currency).Sum(s=> CastAide.AsDecimal(s.AgencyPTWL)),2), 
-                                                   
-                                                    IBCWinTO = NumberFormat.DecFormat( grandTotal.Where(s=>s.Currency == currency).Sum(s=> CastAide.AsDecimal(s.IBCWinTO)),2), 
-                                                    IBCPlaceTO = NumberFormat.DecFormat( grandTotal.Where(s=>s.Currency == currency).Sum(s=> CastAide.AsDecimal(s.IBCPlaceTO)),2), 
-                                                    IBCWPTO = NumberFormat.DecFormat( grandTotal.Where(s=>s.Currency == currency).Sum(s=> CastAide.AsDecimal(s.IBCWPTO)),2), 
-                                                    IBCTotalTO = NumberFormat.DecFormat( grandTotal.Where(s=>s.Currency == currency).Sum(s=> CastAide.AsDecimal(s.IBCTotalTO)),2), 
-                                                    IBCCommIncome = NumberFormat.DecFormat( grandTotal.Where(s=>s.Currency == currency).Sum(s=> CastAide.AsDecimal(s.IBCCommIncome)),2), 
-                                                    IBCCommExpense = NumberFormat.DecFormat( grandTotal.Where(s=>s.Currency == currency).Sum(s=> CastAide.AsDecimal(s.IBCCommExpense)),2), 
-                                                    IBCNetIncome = NumberFormat.DecFormat( grandTotal.Where(s=>s.Currency == currency).Sum(s=> CastAide.AsDecimal(s.IBCNetIncome)),2), 
-                                                    IBCPTWL = NumberFormat.DecFormat( grandTotal.Where(s=>s.Currency == currency).Sum(s=> CastAide.AsDecimal(s.IBCPTWL)),2), 
-                                                    IBCToteFee = NumberFormat.DecFormat( grandTotal.Where(s=>s.Currency == currency).Sum(s=> CastAide.AsDecimal(s.IBCToteFee)),2), 
-                                                   
-                                                    PartnerWinTO = NumberFormat.DecFormat( grandTotal.Where(s=>s.Currency == currency).Sum(s=> CastAide.AsDecimal(s.PartnerWinTO)),2), 
-                                                    PartnerPlaceTO = NumberFormat.DecFormat( grandTotal.Where(s=>s.Currency == currency).Sum(s=> CastAide.AsDecimal(s.PartnerPlaceTO)),2), 
-                                                    PartnerWPTO = NumberFormat.DecFormat( grandTotal.Where(s=>s.Currency == currency).Sum(s=> CastAide.AsDecimal(s.PartnerWPTO)),2), 
-                                                    PartnerTotalTO = NumberFormat.DecFormat( grandTotal.Where(s=>s.Currency == currency).Sum(s=> CastAide.AsDecimal(s.PartnerTotalTO)),2), 
-                                                    PartnerDividendWon = NumberFormat.DecFormat( grandTotal.Where(s=>s.Currency == currency).Sum(s=> CastAide.AsDecimal(s.PartnerDividendWon)),2), 
-                                                    PartnerCommExpense =  NumberFormat.DecFormat( grandTotal.Where(s=>s.Currency == currency).Sum(s=> CastAide.AsDecimal(s.PartnerCommExpense)),2),
-                                                    PartnerToteFee = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.PartnerToteFee)), 2),
-                                                    PartnerAmountDue = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.PartnerAmountDue)), 2), 
+                                                   Name = "Grand Total",
+                                                   Currency = currency,
+
+                                                   AgencyWinTO = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.AgencyWinTO)), 2),
+                                                   AgencyPlaceTO = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.AgencyPlaceTO)), 2),
+                                                   AgencyWPTO = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.AgencyWPTO)), 2),
+                                                   AgencyTotalTO = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.AgencyTotalTO)), 2),
+                                                   AgencyCommIncome = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.AgencyCommIncome)), 2),
+                                                   AgencyPTWL = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.AgencyPTWL)), 2),
+
+                                                   IBCWinTO = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.IBCWinTO)), 2),
+                                                   IBCPlaceTO = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.IBCPlaceTO)), 2),
+                                                   IBCWPTO = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.IBCWPTO)), 2),
+                                                   IBCTotalTO = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.IBCTotalTO)), 2),
+                                                   IBCCommIncome = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.IBCCommIncome)), 2),
+                                                   IBCCommExpense = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.IBCCommExpense)), 2),
+                                                   IBCNetIncome = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.IBCNetIncome)), 2),
+                                                   IBCPTWL = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.IBCPTWL)), 2),
+                                                   IBCToteFee = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.IBCToteFee)), 2),
+
+                                                   PartnerWinTO = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.PartnerWinTO)), 2),
+                                                   PartnerPlaceTO = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.PartnerPlaceTO)), 2),
+                                                   PartnerWPTO = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.PartnerWPTO)), 2),
+                                                   PartnerTotalTO = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.PartnerTotalTO)), 2),
+                                                   PartnerDividendWon = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.PartnerDividendWon)), 2),
+                                                   PartnerCommExpense = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.PartnerCommExpense)), 2),
+                                                   PartnerToteFee = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.PartnerToteFee)), 2),
+                                                   PartnerAmountDue = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.PartnerAmountDue)), 2),
                                                });
             }
-            #endregion
+
+            #endregion Calculate Grand Total
 
             SessionExtension.AddSession(HttpContext.Current.Session, string.Format(_winLossRacingReportDetailSessionKey, poolCurrency, partnerId), racingDetailsBo);
             return racingDetailsBo;
@@ -1991,7 +2054,6 @@ namespace Sunplus.Accounting.Business.Report.Racing
 
         public RacingWinlossDetailsBO GetWinlossRacingReportDetailsNew(string winlossDate, string poolCurrency, string partnerId)
         {
-
             DataTable dataTable = _reportRacingDao.WinlostRacingTote_DetailsNew(winlossDate, poolCurrency, partnerId);
 
             if (dataTable == null)
@@ -1999,14 +2061,14 @@ namespace Sunplus.Accounting.Business.Report.Racing
 
             #region Variable List Object
 
-
             var arrCurrencies = GetDistinctCurrency(dataTable);
 
             var racingDetailsBo = new RacingWinlossDetailsBO();
             racingDetailsBo.Items = new List<RacingWinlossCurrencyBO>();
             racingDetailsBo.Totals = new List<RacingWinlossRowBO>();
             racingDetailsBo.GrandTotals = new List<RacingWinlossRowBO>();
-            #endregion
+
+            #endregion Variable List Object
 
             #region Currency
 
@@ -2118,14 +2180,18 @@ namespace Sunplus.Accounting.Business.Report.Racing
             decimal PartnerCommExpense_base = 0;
             decimal PartnerToteFee_base = 0;
             decimal PartnerAmountDue_base = 0;
-            #endregion
-            #endregion
+
+            #endregion variable
+
+            #endregion Currency
 
             List<RacingWinlossRowBO> grandTotal = new List<RacingWinlossRowBO>();
             foreach (MeetingCurr curr in arrCurrencies)
             {
                 #region GrandTotal
+
                 #region PoolCurr
+
                 grandTotal.Add(new RacingWinlossRowBO()
                 {
                     CurrencyId = poolCurrency,
@@ -2158,9 +2224,10 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     PartnerAmountDue = PartnerAmountDue_pool.ToString()
                 });
 
-                #endregion
+                #endregion PoolCurr
 
                 #region Base
+
                 grandTotal.Add(new RacingWinlossRowBO()
                 {
                     CurrencyId = "2",
@@ -2193,11 +2260,14 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     PartnerAmountDue = PartnerAmountDue_base.ToString()
                 });
 
-                #endregion
-                #endregion
+                #endregion Base
+
+                #endregion GrandTotal
 
                 #region assign default
+
                 #region origin
+
                 AgencyWinTO_origin = 0;
                 AgencyPlaceTO_origin = 0;
                 AgencyWPTO_origin = 0;
@@ -2223,8 +2293,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 PartnerCommExpense_origin = 0;
                 PartnerToteFee_origin = 0;
                 PartnerAmountDue_origin = 0;
-                #endregion
+
+                #endregion origin
+
                 #region Pool
+
                 AgencyWinTO_pool = 0;
                 AgencyPlaceTO_pool = 0;
                 AgencyWPTO_pool = 0;
@@ -2250,9 +2323,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 PartnerCommExpense_pool = 0;
                 PartnerToteFee_pool = 0;
                 PartnerAmountDue_pool = 0;
-                #endregion
+
+                #endregion Pool
 
                 #region Base
+
                 AgencyWinTO_base = 0;
                 AgencyPlaceTO_base = 0;
                 AgencyWPTO_base = 0;
@@ -2278,8 +2353,10 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 PartnerCommExpense_base = 0;
                 PartnerToteFee_base = 0;
                 PartnerAmountDue_base = 0;
-                #endregion
-                #endregion
+
+                #endregion Base
+
+                #endregion assign default
 
                 var arrDistinctMeeting = GetDistinctMeetingCurrency(dataTable, curr.CurrencyId);
 
@@ -2302,6 +2379,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     foreach (DataRow dataRow in rows)
                     {
                         #region row
+
                         var row = new RacingWinlossRowBO()
                         {
                             CurrencyId = CastAide.AsString(dataRow["currency"]),
@@ -2337,11 +2415,13 @@ namespace Sunplus.Accounting.Business.Report.Racing
                             PartnerCommExpense = NumberFormat.DecFormat(dataRow["commIncome_IBC_Origin"], 2),
                             PartnerToteFee = NumberFormat.DecFormat(dataRow["FeeDue2_Origin"], 2),
                         };
-                        #endregion
+
+                        #endregion row
 
                         lstMeeting.Items.Add(row);
 
                         #region Total Curr Origin
+
                         AgencyWinTO_origin += CastAide.AsDecimal(dataRow["winTO_Agency_Origin"].ToString());
                         AgencyPlaceTO_origin += CastAide.AsDecimal(dataRow["placeTO_Agency_Origin"].ToString());
                         AgencyWPTO_origin += CastAide.AsDecimal(dataRow["winplaceTO_Agency_Origin"].ToString());
@@ -2367,9 +2447,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         PartnerCommExpense_origin += CastAide.AsDecimal(dataRow["commIncome_IBC_Origin"].ToString());
                         PartnerToteFee_origin += CastAide.AsDecimal(dataRow["FeeDue2_Origin"].ToString());
                         PartnerAmountDue_origin += CastAide.AsDecimal(dataRow["AmountDue_Origin"].ToString());
-                        #endregion
+
+                        #endregion Total Curr Origin
 
                         #region PoolCurr
+
                         AgencyWinTO_pool += CastAide.AsDecimal(dataRow["winTO_Agency_PoolCurr"].ToString());
                         AgencyPlaceTO_pool += CastAide.AsDecimal(dataRow["placeTO_Agency_PoolCurr"].ToString());
                         AgencyWPTO_pool += CastAide.AsDecimal(dataRow["winplaceTO_Agency_PoolCurr"].ToString());
@@ -2395,9 +2477,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         PartnerCommExpense_pool += CastAide.AsDecimal(dataRow["commIncome_IBC_PoolCurr"].ToString());
                         PartnerToteFee_pool += CastAide.AsDecimal(dataRow["FeeDue2_PoolCurr"].ToString());
                         PartnerAmountDue_pool += CastAide.AsDecimal(dataRow["AmountDue_PoolCurr"].ToString());
-                        #endregion
+
+                        #endregion PoolCurr
 
                         #region base
+
                         AgencyWinTO_base += CastAide.AsDecimal(dataRow["winTO_Agency"].ToString()); ;
                         AgencyPlaceTO_base += CastAide.AsDecimal(dataRow["placeTO_Agency"].ToString()); ;
                         AgencyWPTO_base += CastAide.AsDecimal(dataRow["winplaceTO_Agency"].ToString());
@@ -2423,12 +2507,14 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         PartnerCommExpense_base += CastAide.AsDecimal(dataRow["commIncome_IBC"].ToString());
                         PartnerToteFee_base += CastAide.AsDecimal(dataRow["FeeDue2"].ToString());
                         PartnerAmountDue_base += CastAide.AsDecimal(dataRow["AmountDue"].ToString());
-                        #endregion
+
+                        #endregion base
                     }
 
                     lstCurrency.Items.Add(lstMeeting);
 
                     #region Totals Meeting Currency
+
                     lstMeeting.Totals.Add(new RacingWinlossRowBO()
                     {
                         Currency = CacheUtils.GetExchangeName(meetingCurr.CurrencyId),
@@ -2462,16 +2548,13 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         PartnerAmountDue = NumberFormat.DecFormat(lstMeeting.Items.Sum(s => CastAide.AsDecimal(s.PartnerAmountDue)), 2),
                     });
 
-
-
-                    #endregion
-
+                    #endregion Totals Meeting Currency
                 }
-
 
                 #region Total Currency
 
                 #region origin
+
                 var originCurr = new RacingWinlossRowBO()
                 {
                     Currency = CacheUtils.GetExchangeName(curr.CurrencyId),
@@ -2502,12 +2585,13 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     PartnerCommExpense = NumberFormat.DecFormat(PartnerCommExpense_origin, 2),
                     PartnerToteFee = NumberFormat.DecFormat(PartnerToteFee_origin, 2),
                     PartnerAmountDue = NumberFormat.DecFormat(PartnerAmountDue_origin, 2),
-
                 };
                 lstCurrency.Totals.Add(originCurr);
-                #endregion
+
+                #endregion origin
 
                 #region base
+
                 if (!arrBaseCurr.Contains(currentCurr))
                 {
                     var baseCurr = new RacingWinlossRowBO()
@@ -2545,15 +2629,17 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     lstCurrency.Totals.Add(baseCurr);
                 }
 
-                #endregion
-                #endregion
+                #endregion base
+
+                #endregion Total Currency
 
                 racingDetailsBo.Items.Add(lstCurrency);
-
             }
 
             #region GrandTotal
+
             #region PoolCurr
+
             grandTotal.Add(new RacingWinlossRowBO()
             {
                 CurrencyId = poolCurrency,
@@ -2586,9 +2672,10 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 PartnerAmountDue = PartnerAmountDue_pool.ToString()
             });
 
-            #endregion
+            #endregion PoolCurr
 
             #region Base
+
             grandTotal.Add(new RacingWinlossRowBO()
             {
                 CurrencyId = "2",
@@ -2621,14 +2708,16 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 PartnerAmountDue = PartnerAmountDue_base.ToString()
             });
 
-            #endregion
-            #endregion
+            #endregion Base
+
+            #endregion GrandTotal
 
             #region grant total grouped meeting
+
             var distinctMeetings = GetDistinctMeeting(dataTable);
 
-
             #region var pool grant total grouped by meetings
+
             string CurrencyIdPoolCurr = string.Empty;
             string CurrencyPoolCurr = string.Empty;
             string NamePoolCurr = string.Empty;
@@ -2658,9 +2747,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
             decimal PartnerCommExpensePoolCurr = 0;
             decimal PartnerToteFeePoolCurr = 0;
             decimal PartnerAmountDuePoolCurr = 0;
-            #endregion
+
+            #endregion var pool grant total grouped by meetings
 
             #region var base grant total grouped by meetings
+
             string CurrencyIdBase = string.Empty;
             string CurrencyBase = string.Empty;
             string NameBase = string.Empty;
@@ -2690,7 +2781,8 @@ namespace Sunplus.Accounting.Business.Report.Racing
             decimal PartnerCommExpenseBase = 0;
             decimal PartnerToteFeeBase = 0;
             decimal PartnerAmountDueBase = 0;
-            #endregion
+
+            #endregion var base grant total grouped by meetings
 
             foreach (var meeting in distinctMeetings)
             {
@@ -2699,6 +2791,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 var meeting1 = meeting;
 
                 #region var pool grant total grouped by meetings
+
                 CurrencyIdPoolCurr = string.Empty;
                 CurrencyPoolCurr = string.Empty;
                 NamePoolCurr = string.Empty;
@@ -2728,9 +2821,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 PartnerCommExpensePoolCurr = 0;
                 PartnerToteFeePoolCurr = 0;
                 PartnerAmountDuePoolCurr = 0;
-                #endregion
+
+                #endregion var pool grant total grouped by meetings
 
                 #region var base grant total grouped by meetings
+
                 CurrencyIdBase = string.Empty;
                 CurrencyBase = string.Empty;
                 NameBase = string.Empty;
@@ -2760,12 +2855,14 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 PartnerCommExpenseBase = 0;
                 PartnerToteFeeBase = 0;
                 PartnerAmountDueBase = 0;
-                #endregion
+
+                #endregion var base grant total grouped by meetings
 
                 foreach (var dataRow in
                     dataTable.Rows.Cast<DataRow>().Where(dataRow => dataRow["MeetingId"].ToString() == meeting1.MeetingId.ToString()))
                 {
                     #region pool grant total grouped by meetings
+
                     CurrencyIdPoolCurr = poolCurrency;
                     CurrencyPoolCurr = CacheUtils.GetExchangeName(CastAide.AsInt32(poolCurrency));
                     NamePoolCurr = CacheRef.GetLeagueName(dataRow["MeetingId"]);
@@ -2795,10 +2892,13 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     PartnerCommExpensePoolCurr += CastAide.AsDecimal(dataRow["commIncome_IBC_PoolCurr"]);
                     PartnerToteFeePoolCurr += CastAide.AsDecimal(dataRow["FeeDue2_PoolCurr"]);
                     PartnerAmountDuePoolCurr += CastAide.AsDecimal(dataRow["AmountDue_PoolCurr"]);
-                    #endregion
+
+                    #endregion pool grant total grouped by meetings
 
                     //---------------------------------------------------------------------------------------------------------
+
                     #region base grant total grouped by meetings
+
                     CurrencyIdBase = "2";
                     CurrencyBase = "Base (RM)";
                     NameBase = CacheRef.GetLeagueName(dataRow["MeetingId"]);
@@ -2828,9 +2928,12 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     PartnerCommExpenseBase += CastAide.AsDecimal(dataRow["commIncome_IBC"]);
                     PartnerToteFeeBase += CastAide.AsDecimal(dataRow["FeeDue2"]);
                     PartnerAmountDueBase += CastAide.AsDecimal(dataRow["AmountDue"]);
-                    #endregion
+
+                    #endregion base grant total grouped by meetings
                 }
+
                 #region pool grant total grouped by meetings
+
                 racingWinlossRowBoPool.CurrencyId = CurrencyIdPoolCurr;
                 racingWinlossRowBoPool.Currency = CurrencyPoolCurr;
                 racingWinlossRowBoPool.Name = NamePoolCurr;
@@ -2860,9 +2963,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 racingWinlossRowBoPool.PartnerCommExpense = NumberFormat.DecFormat(PartnerCommExpensePoolCurr, 2);
                 racingWinlossRowBoPool.PartnerToteFee = NumberFormat.DecFormat(PartnerToteFeePoolCurr, 2);
                 racingWinlossRowBoPool.PartnerAmountDue = NumberFormat.DecFormat(PartnerAmountDuePoolCurr, 2);
-                #endregion
+
+                #endregion pool grant total grouped by meetings
 
                 #region base grant total grouped by meetings
+
                 racingWinlossRowBoBase.CurrencyId = CurrencyIdBase;
                 racingWinlossRowBoBase.Currency = CurrencyBase;
                 racingWinlossRowBoBase.Name = NameBase;
@@ -2892,11 +2997,14 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 racingWinlossRowBoBase.PartnerCommExpense = NumberFormat.DecFormat(PartnerCommExpenseBase, 2);
                 racingWinlossRowBoBase.PartnerToteFee = NumberFormat.DecFormat(PartnerToteFeeBase, 2);
                 racingWinlossRowBoBase.PartnerAmountDue = NumberFormat.DecFormat(PartnerAmountDueBase, 2);
-                #endregion
+
+                #endregion base grant total grouped by meetings
+
                 racingDetailsBo.Totals.Add(racingWinlossRowBoPool);
                 //racingDetailsBo.Totals.Add(racingWinlossRowBoBase);
             }
-            #endregion
+
+            #endregion grant total grouped meeting
 
             #region Calculate Grand Total
 
@@ -2935,14 +3043,17 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     PartnerAmountDue = NumberFormat.DecFormat(grandTotal.Where(s => s.Currency == currency).Sum(s => CastAide.AsDecimal(s.PartnerAmountDue)), 2),
                 });
             }
-            #endregion
+
+            #endregion Calculate Grand Total
 
             SessionExtension.AddSession(HttpContext.Current.Session, string.Format(_winLossRacingReportDetailSessionKey, poolCurrency, partnerId), racingDetailsBo);
             return racingDetailsBo;
         }
-        #endregion
+
+        #endregion GetWinlossRacingReport_Details
 
         #region GetWinlossRacingBetlist
+
         public RacingWinlossBetlistBO GetWinlossRacingBetlist(string winlossdate, string leagueid, string raceNo, string currency)
         {
             RacingWinlossBetlistBO racingWinlossBetlistBo = new RacingWinlossBetlistBO();
@@ -2956,10 +3067,12 @@ namespace Sunplus.Accounting.Business.Report.Racing
             foreach (DataRow row in rows)
             {
                 index++;
+
                 #region row
+
                 var betlistRow = new RacingWinlossBetlistRowBO()
                                                      {
-                                                         No = NumberFormat.DecFormat(index,0),
+                                                         No = NumberFormat.DecFormat(index, 0),
                                                          Member = CastAide.AsString(row["username"]),
                                                          RefNo = CastAide.AsString(row["transid"]),
                                                          TransTime = CastAide.AsDateTime(row["transdate"]).ToString(),
@@ -2977,14 +3090,12 @@ namespace Sunplus.Accounting.Business.Report.Racing
 
                                                          IsShowOtExRate = CastAide.AsBoolean(row["isShowOTExRate"]),
 
-                                                         
-
                                                          HorseBet = row["HorseNo"] + " - " + CacheRef.GetHorseTeamName(row["HorseId"]),
                                                          Bettype = CacheRef.GetBettype(row["bettype"]),
                                                          BettypeId = CastAide.AsString(row["bettype"]),
                                                          ExRateName = "(Ex.Rate 2)",
                                                          ExRate = NumberFormat.DecFormat(row["virtualrate"], 2),
-                                                };
+                                                     };
 
                 if (CastAide.AsInt32(row["bettype"]) == 31 || CastAide.AsInt32(row["bettype"]) == 32)
                 {
@@ -3014,19 +3125,19 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     else
                         betlistRow.Odds = string.Empty;
                 }
-                #endregion
+
+                #endregion row
 
                 racingWinlossBetlistBo.Items.Add(betlistRow);
-
-
             }
 
             #region Total
+
             racingWinlossBetlistBo.Totals = new RacingWinlossBetlistRowBO()
                                                 {
                                                     Member = "Total",
 
-                                                    Stake = NumberFormat.DecFormat( racingWinlossBetlistBo.Items.Sum(s=> CastAide.AsDecimal( s.Stake)),2),
+                                                    Stake = NumberFormat.DecFormat(racingWinlossBetlistBo.Items.Sum(s => CastAide.AsDecimal(s.Stake)), 2),
                                                     MemberWL = NumberFormat.DecFormat(racingWinlossBetlistBo.Items.Sum(s => CastAide.AsDecimal(s.MemberWL)), 2),
                                                     AgencyWL = NumberFormat.DecFormat(racingWinlossBetlistBo.Items.Sum(s => CastAide.AsDecimal(s.AgencyWL)), 2),
                                                     IBCWL = NumberFormat.DecFormat(racingWinlossBetlistBo.Items.Sum(s => CastAide.AsDecimal(s.IBCWL)), 2),
@@ -3035,9 +3146,10 @@ namespace Sunplus.Accounting.Business.Report.Racing
                                                     AgencyCom = NumberFormat.DecFormat(racingWinlossBetlistBo.Items.Sum(s => CastAide.AsDecimal(s.AgencyCom)), 2),
                                                     IBCCom = NumberFormat.DecFormat(racingWinlossBetlistBo.Items.Sum(s => CastAide.AsDecimal(s.IBCCom)), 2),
 
-                                                    Dividend = NumberFormat.DecFormat(racingWinlossBetlistBo.Items.Sum(s => CastAide.AsDecimal(s.Dividend)), 2),  
+                                                    Dividend = NumberFormat.DecFormat(racingWinlossBetlistBo.Items.Sum(s => CastAide.AsDecimal(s.Dividend)), 2),
                                                 };
-            #endregion
+
+            #endregion Total
 
             return racingWinlossBetlistBo;
         }
@@ -3055,7 +3167,9 @@ namespace Sunplus.Accounting.Business.Report.Racing
             foreach (DataRow row in rows)
             {
                 index++;
+
                 #region row
+
                 var betlistRow = new RacingWinlossBetlistRowBO()
                 {
                     No = NumberFormat.DecFormat(index, 0),
@@ -3075,8 +3189,6 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     Dividend = NumberFormat.DecFormat(row["dividend"], 2),
 
                     IsShowOtExRate = CastAide.AsBoolean(row["isShowOTExRate"]),
-
-
 
                     HorseBet = row["HorseNo"] + " - " + CacheRef.GetHorseTeamName(row["HorseId"]),
                     Bettype = CacheRef.GetBettype(row["bettype"]),
@@ -3113,14 +3225,14 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     else
                         betlistRow.Odds = string.Empty;
                 }
-                #endregion
+
+                #endregion row
 
                 racingWinlossBetlistBo.Items.Add(betlistRow);
-
-
             }
 
             #region Total
+
             racingWinlossBetlistBo.Totals = new RacingWinlossBetlistRowBO()
             {
                 Member = "Total",
@@ -3136,11 +3248,13 @@ namespace Sunplus.Accounting.Business.Report.Racing
 
                 Dividend = NumberFormat.DecFormat(racingWinlossBetlistBo.Items.Sum(s => CastAide.AsDecimal(s.Dividend)), 2),
             };
-            #endregion
+
+            #endregion Total
 
             return racingWinlossBetlistBo;
         }
-        #endregion
+
+        #endregion GetWinlossRacingBetlist
 
         #region Export 2 excel
 
@@ -3164,9 +3278,8 @@ namespace Sunplus.Accounting.Business.Report.Racing
             return false;
         }
 
-        
-
         #region Racing Group
+
         //public void ExportToExcelWinLossRacingGroup(string fromDate, string toDate)
         //{
         //    try
@@ -3175,7 +3288,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
         //    }
         //    catch(Exception ex)
         //    {
-        //        
+        //
         //        {
         //            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         //        }
@@ -3185,22 +3298,31 @@ namespace Sunplus.Accounting.Business.Report.Racing
         private void RacingGroupMain(string fromDate, string toDate, bool isExport, bool isSendMail, string To, string Cc, string bcc, string Subject, string Content, ref bool isSendMailSuccess)
         {
             #region local variables
+
             var startCol = 0;
             var startRow = 3;
             var nextRow = 0;
             var reportName = string.Format("{0}-From-{1}-To-{2}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblRacingGroupDaily").Replace(" ", ""), fromDate, toDate);
             var excelFile = new ExcelFile();
             var wsReport = excelFile.Worksheets.Add(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblRacingGroupDaily"));
-            #endregion
+
+            #endregion local variables
 
             #region Assign Header
+
             #region report title
+
             wsReport.Cells[startRow - 3, startCol].Style.Font.Weight = ExcelFont.BoldWeight;
             wsReport.Cells[startRow - 3, startCol].Value = string.Format("{0} - From {1} To {2}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblRacingGroupDaily"), fromDate, toDate);
-            #endregion
+
+            #endregion report title
+
             RacingGroupAssignHeader(ref wsReport, startRow, startCol);
-            #endregion
+
+            #endregion Assign Header
+
             #region Assign Content
+
             var getSession = SessionExtension.GetSession(HttpContext.Current.Session, _winLossRacingGroupReportSessionKey)
                 != null ? (RacingWinlossGroupDTO)SessionExtension.GetSession(HttpContext.Current.Session, _winLossRacingGroupReportSessionKey) :
                 GetRacingWinlossGroup(fromDate, toDate);
@@ -3220,9 +3342,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     RacingGroupAssignContent(ref wsReport, startRow, startCol, ref nextRow,
                         getSession.Total, false, true);
             }
-            #endregion
+
+            #endregion Assign Content
 
             #region response
+
             if (isExport)
             {
                 var response = HttpContext.Current.Response;
@@ -3235,12 +3359,15 @@ namespace Sunplus.Accounting.Business.Report.Racing
             {
                 var memoryStream = new MemoryStream();
                 excelFile.SaveXls(memoryStream);
+
                 #region mail setting
+
                 var title = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblRacingGroupDaily");
                 var emailSubject = string.Format("{0} from {1} to {2}", title, fromDate, toDate);
                 var emailContent = string.Format("{0}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblRacingGroupDailyMailContent"));
                 var mailSetting = MailSection.Instance[MailSection.Setting.Send]["RacingGroup"].Mails["GroupDaily"];
-                #endregion
+
+                #endregion mail setting
 
                 var mailAttachment = new Sunplus.Accounting.Core.Extensions.MailAttachment()
                                          {
@@ -3251,28 +3378,38 @@ namespace Sunplus.Accounting.Business.Report.Racing
 
                 isSendMailSuccess = SendMailExtension.AccSendMail(MailSection.HostName.Gmail, To, Cc, bcc, title, Subject, Content, mailAttachment);
             }
-            #endregion
+
+            #endregion response
         }
 
-        private void RacingGroupMain(string fromDate, string toDate, bool isExport, bool isSendMail) 
+        private void RacingGroupMain(string fromDate, string toDate, bool isExport, bool isSendMail)
         {
             #region local variables
+
             var startCol = 0;
             var startRow = 3;
             var nextRow = 0;
             var reportName = string.Format("{0}-From-{1}-To-{2}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblRacingGroupDaily").Replace(" ", ""), fromDate, toDate);
             var excelFile = new ExcelFile();
             var wsReport = excelFile.Worksheets.Add(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblRacingGroupDaily"));
-            #endregion
+
+            #endregion local variables
 
             #region Assign Header
+
             #region report title
+
             wsReport.Cells[startRow - 3, startCol].Style.Font.Weight = ExcelFont.BoldWeight;
             wsReport.Cells[startRow - 3, startCol].Value = string.Format("{0} - From {1} To {2}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblRacingGroupDaily"), fromDate, toDate);
-            #endregion
+
+            #endregion report title
+
             RacingGroupAssignHeader(ref wsReport, startRow, startCol);
-            #endregion
+
+            #endregion Assign Header
+
             #region Assign Content
+
             var getSession = SessionExtension.GetSession(HttpContext.Current.Session, _winLossRacingGroupReportSessionKey)
                 != null ? (RacingWinlossGroupDTO)SessionExtension.GetSession(HttpContext.Current.Session, _winLossRacingGroupReportSessionKey) :
                 GetRacingWinlossGroup(fromDate, toDate);
@@ -3292,9 +3429,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     RacingGroupAssignContent(ref wsReport, startRow, startCol, ref nextRow,
                         getSession.Total, false, true);
             }
-            #endregion
+
+            #endregion Assign Content
 
             #region response
+
             if (isExport)
             {
                 var response = HttpContext.Current.Response;
@@ -3307,13 +3446,15 @@ namespace Sunplus.Accounting.Business.Report.Racing
             {
                 var memoryStream = new MemoryStream();
                 excelFile.SaveXls(memoryStream);
+
                 #region mail setting
+
                 var title = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblRacingGroupDaily");
                 var emailSubject = string.Format("{0} from {1} to {2}", title, fromDate, toDate);
                 var emailContent = string.Format("{0}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblRacingGroupDailyMailContent"));
                 var mailSetting = MailSection.Instance[MailSection.Setting.Send]["RacingGroup"].Mails["GroupDaily"];
-                #endregion
-                
+
+                #endregion mail setting
 
                 var mailAttachment = new Sunplus.Accounting.Core.Extensions.MailAttachment()
                 {
@@ -3324,11 +3465,14 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 SendMailExtension.AccSendMail(MailSection.HostName.Gmail, mailSetting.To, mailSetting.Cc, title, emailSubject,
                                               emailContent, mailAttachment);
             }
-            #endregion
+
+            #endregion response
         }
+
         private void RacingGroupAssignHeader(ref ExcelWorksheet wsReport, int startRow, int startCol)
         {
             #region local variables
+
             var dateTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Date");
             var partnerTypeTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "PartnerType");
             var totalInComeTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "TotalIncome");
@@ -3349,9 +3493,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
             var nextCol = 1;
             var bgHeaderNormalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
             var bgHeaderIbcFormat = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(130, 199, 255));
-            #endregion
+
+            #endregion local variables
 
             #region first row
+
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + nextCol).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + nextCol).Style = bgHeaderIbcFormat;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + nextCol).Value = string.Empty;
@@ -3368,16 +3514,18 @@ namespace Sunplus.Accounting.Business.Report.Racing
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol + 1, startRow - 2, startCol + nextCol + 3).Style = bgHeaderNormalFormat;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol + 1, startRow - 2, startCol + (nextCol += 3)).Value = string.Format("{0} (RM)", onetwoBetTitle);
 
-            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol+1, startRow -1, startCol + nextCol + 1).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol + 1, startRow - 1, startCol + nextCol + 1).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol + 1, startRow - 1, startCol + nextCol + 1).Style = bgHeaderIbcFormat;
-            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol+1, startRow -1, startCol + (nextCol += 1)).Value = string.Format("{0}", groupTotalInCome);
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol + 1, startRow - 1, startCol + (nextCol += 1)).Value = string.Format("{0}", groupTotalInCome);
 
-            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol+1, startRow - 2, startCol + nextCol + 5).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol + 1, startRow - 2, startCol + nextCol + 5).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol + 1, startRow - 2, startCol + nextCol + 5).Style = bgHeaderNormalFormat;
-            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol+1, startRow - 2, startCol + (nextCol + 5)).Value = string.Format("{0} (RM)", partnerTitle);
-            #endregion
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol + 1, startRow - 2, startCol + (nextCol + 5)).Value = string.Format("{0} (RM)", partnerTitle);
+
+            #endregion first row
 
             #region second row
+
             nextCol = 1;
             wsReport.Cells[startRow - 1, startCol].Style = bgHeaderIbcFormat;
             wsReport.Cells[startRow - 1, startCol].Value = dateTitle;
@@ -3413,20 +3561,23 @@ namespace Sunplus.Accounting.Business.Report.Racing
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = feeTitle;
             wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = amountDueTitle;
-            #endregion
 
+            #endregion second row
         }
-        private void RacingGroupAssignContent(ref ExcelWorksheet wsReport, int startRow, 
+
+        private void RacingGroupAssignContent(ref ExcelWorksheet wsReport, int startRow,
             int startCol, ref int nextRow, List<RacingWinlossGroupRowBO> reportContent, bool isTotal, bool isFooter)
         {
             #region local variables
+
             //var bgColor = isFooter ? Color.FromArgb(205, 222, 255) : isTotal ? Color.FromArgb(211, 225, 200) : Color.FromArgb(255, 255, 255);
-            var bgColor = isFooter ? Color.FromArgb(211, 225, 200) : Color.FromArgb(255, 255, 255);            
+            var bgColor = isFooter ? Color.FromArgb(211, 225, 200) : Color.FromArgb(255, 255, 255);
             var bgGrandTotalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", Color.FromArgb(205, 222, 255), true, false);
             var bgFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", bgColor, isTotal || isFooter ? true : false, false);
             var nextCol = 1;
             var currentRow = 0;
-            #endregion
+
+            #endregion local variables
 
             foreach (var item in reportContent)
             {
@@ -3434,6 +3585,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 bgFormat = (isFooter && currentRow == reportContent.Count - 1) ? bgGrandTotalFormat : bgFormat;
 
                 #region left columns
+
                 if (isFooter || isTotal)
                 {
                     wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + (nextCol)).Merged = true;
@@ -3451,9 +3603,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style = bgFormat;
                     wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = item.Name;
                 }
-                #endregion
+
+                #endregion left columns
 
                 #region right columns
+
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol++)].Style = bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(item.TurnoverAgency);
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol++)].Style = bgFormat;
@@ -3491,15 +3645,18 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol++)].Style = bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(item.PartnerAmountDueto);
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style = bgFormat;
-                #endregion
+
+                #endregion right columns
 
                 currentRow++;
                 nextRow++;
             }
         }
-        #endregion
+
+        #endregion Racing Group
 
         #region Racing Group For Tote
+
         public void ExportToExcelWinLossRacingGroupForTote(string fromDate, string toDate)
         {
             RacingGroupForToteMain(fromDate, toDate, true, false);
@@ -3508,6 +3665,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
         private void RacingGroupForToteMain(string fromDate, string toDate, bool isExport, bool isSendMail)
         {
             #region local variables
+
             var startCol = 0;
             var startRow = 3;
             var nextRow = 0;
@@ -3515,22 +3673,29 @@ namespace Sunplus.Accounting.Business.Report.Racing
             var reportName = string.Format("{0}-From-{1}-To-{2}", title.Replace(" ", ""), fromDate, toDate);
             var excelFile = new ExcelFile();
             var wsReport = excelFile.Worksheets.Add(title);
-            #endregion
+
+            #endregion local variables
 
             #region Assign Header
+
             #region report title
+
             wsReport.Cells[startRow - 3, startCol].Style.Font.Weight = ExcelFont.BoldWeight;
             wsReport.Cells[startRow - 3, startCol].Value = string.Format("{0} - From {1} To {2}", title, fromDate, toDate);
-            #endregion
+
+            #endregion report title
+
             RacingGroupForToteAssignHeader(ref wsReport, startRow, startCol);
-            #endregion
+
+            #endregion Assign Header
+
             #region Assign Content
+
             var getSession = SessionExtension.GetSession(HttpContext.Current.Session, _winLossRacingGroupReportSessionKey)
                 != null ? (RacingWinlossGroupDayBO)SessionExtension.GetSession(HttpContext.Current.Session, _winLossRacingGroupForToteReportSessionKey) :
                 GetRacingWinlossGroupForTote(fromDate, toDate);
             if (getSession != null && getSession.Items.Count > 0)
             {
-
                 RacingGroupForToteAssignContent(ref wsReport, startRow, startCol, ref nextRow, getSession.Items
                         , false, false);
 
@@ -3543,9 +3708,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                                                     total, false, true);
                 }
             }
-            #endregion
+
+            #endregion Assign Content
 
             #region response
+
             if (isExport)
             {
                 var response = HttpContext.Current.Response;
@@ -3558,12 +3725,14 @@ namespace Sunplus.Accounting.Business.Report.Racing
             {
                 var memoryStream = new MemoryStream();
                 excelFile.SaveXls(memoryStream);
+
                 #region mail setting
-                
+
                 var emailSubject = string.Format("{0} from {1} to {2}", title, fromDate, toDate);
                 var emailContent = string.Format("{0}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblRacingGroupDailyMailContent"));
                 var mailSetting = MailSection.Instance[MailSection.Setting.Send]["RacingGroup"].Mails["GroupDailyForTote"];
-                #endregion
+
+                #endregion mail setting
 
                 var mailAttachment = new Sunplus.Accounting.Core.Extensions.MailAttachment()
                 {
@@ -3574,12 +3743,14 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 SendMailExtension.AccSendMail(MailSection.HostName.Gmail, mailSetting.To, mailSetting.Cc, title,
                                               emailSubject, emailContent, mailAttachment);
             }
-            #endregion
+
+            #endregion response
         }
 
         private void RacingGroupForToteMain(string fromDate, string toDate, bool isExport, bool isSendMail, string To, string Cc, string bcc, string Subject, string Content, ref bool isSendMailSuccess)
         {
             #region local variables
+
             var startCol = 0;
             var startRow = 3;
             var nextRow = 0;
@@ -3587,22 +3758,29 @@ namespace Sunplus.Accounting.Business.Report.Racing
             var reportName = string.Format("{0}-From-{1}-To-{2}", title.Replace(" ", ""), fromDate, toDate);
             var excelFile = new ExcelFile();
             var wsReport = excelFile.Worksheets.Add(title);
-            #endregion
+
+            #endregion local variables
 
             #region Assign Header
+
             #region report title
+
             wsReport.Cells[startRow - 3, startCol].Style.Font.Weight = ExcelFont.BoldWeight;
             wsReport.Cells[startRow - 3, startCol].Value = string.Format("{0} - From {1} To {2}", title, fromDate, toDate);
-            #endregion
+
+            #endregion report title
+
             RacingGroupForToteAssignHeader(ref wsReport, startRow, startCol);
-            #endregion
+
+            #endregion Assign Header
+
             #region Assign Content
+
             var getSession = SessionExtension.GetSession(HttpContext.Current.Session, _winLossRacingGroupReportSessionKey)
                 != null ? (RacingWinlossGroupDayBO)SessionExtension.GetSession(HttpContext.Current.Session, _winLossRacingGroupForToteReportSessionKey) :
                 GetRacingWinlossGroupForTote(fromDate, toDate);
             if (getSession != null && getSession.Items.Count > 0)
             {
-
                 RacingGroupForToteAssignContent(ref wsReport, startRow, startCol, ref nextRow, getSession.Items
                         , false, false);
 
@@ -3615,9 +3793,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                                                     total, false, true);
                 }
             }
-            #endregion
+
+            #endregion Assign Content
 
             #region response
+
             if (isExport)
             {
                 var response = HttpContext.Current.Response;
@@ -3630,12 +3810,14 @@ namespace Sunplus.Accounting.Business.Report.Racing
             {
                 var memoryStream = new MemoryStream();
                 excelFile.SaveXls(memoryStream);
+
                 #region mail setting
 
                 var emailSubject = string.Format("{0} from {1} to {2}", title, fromDate, toDate);
                 var emailContent = string.Format("{0}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblRacingGroupDailyMailContent"));
                 var mailSetting = MailSection.Instance[MailSection.Setting.Send]["RacingGroup"].Mails["GroupDailyForTote"];
-                #endregion
+
+                #endregion mail setting
 
                 var mailAttachment = new Sunplus.Accounting.Core.Extensions.MailAttachment()
                 {
@@ -3646,12 +3828,14 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 isSendMailSuccess = SendMailExtension.AccSendMail(MailSection.HostName.Gmail, To, Cc, bcc, title,
                                               Subject, Content, mailAttachment);
             }
-            #endregion
+
+            #endregion response
         }
 
         private void RacingGroupForToteAssignHeader(ref ExcelWorksheet wsReport, int startRow, int startCol)
         {
             #region local variables
+
             var dateTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Date");
             var totalInComeTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "TotalIncome");
             var groupTotalInCome = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "GroupTotalInCome");
@@ -3668,9 +3852,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
             var nextCol = 1;
             var bgHeaderNormalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
             var bgHeaderIbcFormat = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(130, 199, 255));
-            #endregion
+
+            #endregion local variables
 
             #region first row
+
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + nextCol).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + nextCol).Style = bgHeaderIbcFormat;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + nextCol).Value = string.Empty;
@@ -3690,9 +3876,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol + 1, startRow - 1, startCol + nextCol + 1).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol + 1, startRow - 1, startCol + nextCol + 1).Style = bgHeaderIbcFormat;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol + 1, startRow - 1, startCol + (nextCol += 1)).Value = string.Format("{0}", groupTotalInCome);
-            #endregion
+
+            #endregion first row
 
             #region second row
+
             nextCol = 1;
             wsReport.Cells[startRow - 1, startCol].Style = bgHeaderIbcFormat;
             wsReport.Cells[startRow - 1, startCol].Value = dateTitle;
@@ -3718,25 +3906,30 @@ namespace Sunplus.Accounting.Business.Report.Racing
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = commTitle;
             wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = totalInComeTitle;
-            #endregion
 
+            #endregion second row
         }
+
         private void RacingGroupForToteAssignContent(ref ExcelWorksheet wsReport, int startRow,
             int startCol, ref int nextRow, List<RacingWinlossGroupRowBO> reportContent, bool isTotal, bool isFooter)
         {
             #region local variables
+
             var bgColor = isFooter ? Color.FromArgb(205, 222, 255) : Color.FromArgb(255, 255, 255);
             var bgFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", bgColor, isTotal || isFooter ? true : false, false);
             var nextCol = 1;
             var currentRow = 0;
             ExcelWorksheet wsWinLoss = wsReport;
             var nextrow = nextRow;
-            #endregion
+
+            #endregion local variables
 
             foreach (var item in reportContent)
             {
                 nextCol = 1;
+
                 #region left columns
+
                 if (isFooter || isTotal)
                 {
                     wsWinLoss.Cells.GetSubrangeAbsolute(startRow + nextrow, startCol, startRow + nextrow, startCol + (nextCol)).Merged = true;
@@ -3751,9 +3944,10 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     wsWinLoss.Cells[startRow + nextrow, startCol + nextCol].Value = item.Name;
                 }
 
-                #endregion
+                #endregion left columns
 
                 #region right columns
+
                 wsWinLoss.Cells[startRow + nextrow, startCol + (nextCol++)].Style = bgFormat;
                 wsWinLoss.Cells[startRow + nextrow, startCol + nextCol].Value = CastAide.AsDouble(item.TurnoverAgency);
                 wsWinLoss.Cells[startRow + nextrow, startCol + (nextCol++)].Style = bgFormat;
@@ -3770,7 +3964,6 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 wsWinLoss.Cells[startRow + nextrow, startCol + (nextCol++)].Style = bgFormat;
                 wsWinLoss.Cells[startRow + nextrow, startCol + nextCol].Value = CastAide.AsDouble(item.IBCTotalIncome);
 
-
                 wsWinLoss.Cells[startRow + nextrow, startCol + (nextCol++)].Style = bgFormat;
                 wsWinLoss.Cells[startRow + nextrow, startCol + nextCol].Value = CastAide.AsDouble(item.One2BetPT);
                 wsWinLoss.Cells[startRow + nextrow, startCol + (nextCol++)].Style = bgFormat;
@@ -3782,7 +3975,8 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 wsWinLoss.Cells[startRow + nextrow, startCol + nextCol].Value = CastAide.AsDouble(item.GroupTotalIncome);
 
                 wsWinLoss.Cells[startRow + nextrow, startCol + (nextCol)].Style = bgFormat;
-                #endregion
+
+                #endregion right columns
 
                 currentRow++;
                 nextrow++;
@@ -3792,34 +3986,36 @@ namespace Sunplus.Accounting.Business.Report.Racing
             wsReport = wsWinLoss;
         }
 
-        #endregion
-        #endregion
+        #endregion Racing Group For Tote
+
+        #endregion Export 2 excel
 
         #region GetRacingWinlossGroup
+
         public RacingWinlossGroupDTO GetRacingWinlossGroup(string fromdate, string todate)
         {
             RacingWinlossGroupDTO wl = new RacingWinlossGroupDTO();
             wl.Items = new List<RacingWinlossGroupDayBO>();
             wl.Total = new List<RacingWinlossGroupRowBO>();
-            
+
             try
             {
                 DataTable dataTable = _reportRacingDao.WinlostRacing_Group(fromdate, todate);
                 List<string> dates = dataTable.AsEnumerable().Select(s => CastAide.AsDateTime(s["winlostdate"]).ToShortDateString()).Distinct().ToList();
                 List<RacingWinlossGroupRowBO> grandTotalByPartner = new List<RacingWinlossGroupRowBO>();
-                
+
                 foreach (string date in dates)
                 {
                     var groupDate = new RacingWinlossGroupDayBO();
                     groupDate.Items = new List<RacingWinlossGroupRowBO>();
 
-                    DataRow [] partnersByDate = dataTable.Select("winlostdate='" + CastAide.AsDateTime( date )+ "'");
+                    DataRow[] partnersByDate = dataTable.Select("winlostdate='" + CastAide.AsDateTime(date) + "'");
                     foreach (DataRow row in partnersByDate)
                     {
-
                         var r = new RacingWinlossGroupRowBO()
                                                 {
                                                     #region AssginRow
+
                                                     WinlostDate = date,
                                                     Name = CastAide.AsString(row["partnerName"]),
                                                     TurnoverAgency = NumberFormat.DecFormat(row["turnoverAgents"], 2),
@@ -3841,17 +4037,20 @@ namespace Sunplus.Accounting.Business.Report.Racing
                                                     PartnerCommExpense = NumberFormat.DecFormat(row["ExpComm3rd"], 2),
                                                     PartnerFees = NumberFormat.DecFormat(row["Fees3rd"], 2),
                                                     PartnerAmountDueto = NumberFormat.DecFormat(row["AmountDue23rd"], 2),
-                                                    #endregion
+
+                                                    #endregion AssginRow
                                                 };
 
                         groupDate.Items.Add(r);
                         grandTotalByPartner.Add(r);
                     }
+
                     #region Sub Total by Date
+
                     groupDate.Total = new RacingWinlossGroupRowBO()
                                           {
                                               Name = "Total",
-                                              TurnoverAgency = NumberFormat.DecFormat( groupDate.Items.Sum(s=> CastAide.AsDecimal(s.TurnoverAgency)),2),
+                                              TurnoverAgency = NumberFormat.DecFormat(groupDate.Items.Sum(s => CastAide.AsDecimal(s.TurnoverAgency)), 2),
                                               TurnoverIBC = NumberFormat.DecFormat(groupDate.Items.Sum(s => CastAide.AsDecimal(s.TurnoverIBC)), 2),
                                               Turnover3rd = NumberFormat.DecFormat(groupDate.Items.Sum(s => CastAide.AsDecimal(s.Turnover3rd)), 2),
                                               TurnoverTotalTO = NumberFormat.DecFormat(groupDate.Items.Sum(s => CastAide.AsDecimal(s.TurnoverTotalTO)), 2),
@@ -3868,7 +4067,8 @@ namespace Sunplus.Accounting.Business.Report.Racing
                                               PartnerFees = NumberFormat.DecFormat(groupDate.Items.Sum(s => CastAide.AsDecimal(s.PartnerFees)), 2),
                                               PartnerAmountDueto = NumberFormat.DecFormat(groupDate.Items.Sum(s => CastAide.AsDecimal(s.PartnerAmountDueto)), 2),
                                           };
-                    #endregion
+
+                    #endregion Sub Total by Date
 
                     wl.Items.Add(groupDate);
                 }
@@ -3881,7 +4081,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     wl.Total.Add(new RacingWinlossGroupRowBO()
                                      {
                                          Name = partner + " Total",
-                                         TurnoverAgency = NumberFormat.DecFormat(grandTotalByPartner.Where(s=>s.Name == partner).Sum(s=> CastAide.AsDecimal( s.TurnoverAgency)), 2),
+                                         TurnoverAgency = NumberFormat.DecFormat(grandTotalByPartner.Where(s => s.Name == partner).Sum(s => CastAide.AsDecimal(s.TurnoverAgency)), 2),
                                          TurnoverIBC = NumberFormat.DecFormat(grandTotalByPartner.Where(s => s.Name == partner).Sum(s => CastAide.AsDecimal(s.TurnoverIBC)), 2),
                                          Turnover3rd = NumberFormat.DecFormat(grandTotalByPartner.Where(s => s.Name == partner).Sum(s => CastAide.AsDecimal(s.Turnover3rd)), 2),
                                          TurnoverTotalTO = NumberFormat.DecFormat(grandTotalByPartner.Where(s => s.Name == partner).Sum(s => CastAide.AsDecimal(s.TurnoverTotalTO)), 2),
@@ -3896,7 +4096,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
                                          PartnerDividendWon = NumberFormat.DecFormat(grandTotalByPartner.Where(s => s.Name == partner).Sum(s => CastAide.AsDecimal(s.PartnerDividendWon)), 2),
                                          PartnerCommExpense = NumberFormat.DecFormat(grandTotalByPartner.Where(s => s.Name == partner).Sum(s => CastAide.AsDecimal(s.PartnerCommExpense)), 2),
                                          PartnerFees = NumberFormat.DecFormat(grandTotalByPartner.Where(s => s.Name == partner).Sum(s => CastAide.AsDecimal(s.PartnerFees)), 2),
-                                         PartnerAmountDueto = NumberFormat.DecFormat(grandTotalByPartner.Where(s => s.Name == partner).Sum(s => CastAide.AsDecimal(s.PartnerAmountDueto)), 2), 
+                                         PartnerAmountDueto = NumberFormat.DecFormat(grandTotalByPartner.Where(s => s.Name == partner).Sum(s => CastAide.AsDecimal(s.PartnerAmountDueto)), 2),
                                      });
                 }
 
@@ -3918,14 +4118,13 @@ namespace Sunplus.Accounting.Business.Report.Racing
                                      PartnerDividendWon = NumberFormat.DecFormat(grandTotalByPartner.Sum(s => CastAide.AsDecimal(s.PartnerDividendWon)), 2),
                                      PartnerCommExpense = NumberFormat.DecFormat(grandTotalByPartner.Sum(s => CastAide.AsDecimal(s.PartnerCommExpense)), 2),
                                      PartnerFees = NumberFormat.DecFormat(grandTotalByPartner.Sum(s => CastAide.AsDecimal(s.PartnerFees)), 2),
-                                     PartnerAmountDueto = NumberFormat.DecFormat(grandTotalByPartner.Sum(s => CastAide.AsDecimal(s.PartnerAmountDueto)), 2), 
+                                     PartnerAmountDueto = NumberFormat.DecFormat(grandTotalByPartner.Sum(s => CastAide.AsDecimal(s.PartnerAmountDueto)), 2),
                                  });
 
-                #endregion
+                #endregion Total by Partner
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -3934,9 +4133,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
             SessionExtension.AddSession(HttpContext.Current.Session, _winLossRacingGroupReportSessionKey, wl);
             return wl;
         }
-        #endregion
+
+        #endregion GetRacingWinlossGroup
 
         #region GetRacingWinlossGroupForTote
+
         public RacingWinlossGroupDayBO GetRacingWinlossGroupForTote(string fromdate, string todate)
         {
             RacingWinlossGroupDayBO wl = new RacingWinlossGroupDayBO();
@@ -3949,10 +4150,10 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 DataRow[] partnersByDate = dataTable.Select("partnername='RACE-PHU'");
                 foreach (DataRow row in partnersByDate)
                 {
-
                     var r = new RacingWinlossGroupRowBO()
                     {
                         #region AssginRow
+
                         WinlostDate = CastAide.AsDateTime(row["winlostdate"]).ToShortDateString(),
                         Name = CastAide.AsString(row["partnerName"]),
                         TurnoverAgency = NumberFormat.DecFormat(row["turnoverAgents"], 2),
@@ -3971,50 +4172,54 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         PartnerCommExpense = NumberFormat.DecFormat(row["ExpComm3rd"], 2),
                         PartnerFees = NumberFormat.DecFormat(row["Fees3rd"], 2),
                         PartnerAmountDueto = NumberFormat.DecFormat(row["AmountDue23rd"], 2),
-                        #endregion
+
+                        #endregion AssginRow
                     };
 
                     wl.Items.Add(r);
                 }
 
                 #region Total
+
                 wl.Total = new RacingWinlossGroupRowBO()
                                {
-                                  Name = "Grand Total",
-                                  TurnoverAgency = NumberFormat.DecFormat(wl.Items.Sum(s=> CastAide.AsDecimal( s.TurnoverAgency)), 2), 
-                                  TurnoverIBC = NumberFormat.DecFormat(wl.Items.Sum(s=> CastAide.AsDecimal( s.TurnoverIBC)), 2), 
-                                  Turnover3rd = NumberFormat.DecFormat(wl.Items.Sum(s=> CastAide.AsDecimal( s.Turnover3rd)), 2), 
-                                  TurnoverTotalTO = NumberFormat.DecFormat(wl.Items.Sum(s=> CastAide.AsDecimal( s.TurnoverTotalTO)), 2), 
-                                  IBCPT = NumberFormat.DecFormat(wl.Items.Sum(s=> CastAide.AsDecimal( s.IBCPT)), 2), 
-                                  IBCNetComm = NumberFormat.DecFormat(wl.Items.Sum(s=> CastAide.AsDecimal( s.IBCNetComm)), 2), 
-                                  IBCTotalIncome = NumberFormat.DecFormat(wl.Items.Sum(s=> CastAide.AsDecimal( s.IBCTotalIncome)), 2), 
-                                  One2BetPT = NumberFormat.DecFormat(wl.Items.Sum(s=> CastAide.AsDecimal( s.One2BetPT)), 2), 
-                                  One2BetComm = NumberFormat.DecFormat(wl.Items.Sum(s=> CastAide.AsDecimal( s.One2BetComm)), 2), 
-                                  One2BetTotalIncome = NumberFormat.DecFormat(wl.Items.Sum(s=> CastAide.AsDecimal( s.One2BetTotalIncome)), 2), 
-                                  GroupTotalIncome = NumberFormat.DecFormat(wl.Items.Sum(s=> CastAide.AsDecimal( s.GroupTotalIncome)), 2), 
-                                  PartnerTurnover = NumberFormat.DecFormat(wl.Items.Sum(s=> CastAide.AsDecimal( s.PartnerTurnover)), 2), 
-                                  PartnerDividendWon = NumberFormat.DecFormat(wl.Items.Sum(s=> CastAide.AsDecimal( s.PartnerDividendWon)), 2), 
-                                  PartnerCommExpense = NumberFormat.DecFormat(wl.Items.Sum(s=> CastAide.AsDecimal( s.PartnerCommExpense)), 2),
-                                  PartnerFees = NumberFormat.DecFormat(wl.Items.Sum(s => CastAide.AsDecimal(s.PartnerFees)), 2),
-                                  PartnerAmountDueto = NumberFormat.DecFormat(wl.Items.Sum(s => CastAide.AsDecimal(s.PartnerAmountDueto)), 2), 
+                                   Name = "Grand Total",
+                                   TurnoverAgency = NumberFormat.DecFormat(wl.Items.Sum(s => CastAide.AsDecimal(s.TurnoverAgency)), 2),
+                                   TurnoverIBC = NumberFormat.DecFormat(wl.Items.Sum(s => CastAide.AsDecimal(s.TurnoverIBC)), 2),
+                                   Turnover3rd = NumberFormat.DecFormat(wl.Items.Sum(s => CastAide.AsDecimal(s.Turnover3rd)), 2),
+                                   TurnoverTotalTO = NumberFormat.DecFormat(wl.Items.Sum(s => CastAide.AsDecimal(s.TurnoverTotalTO)), 2),
+                                   IBCPT = NumberFormat.DecFormat(wl.Items.Sum(s => CastAide.AsDecimal(s.IBCPT)), 2),
+                                   IBCNetComm = NumberFormat.DecFormat(wl.Items.Sum(s => CastAide.AsDecimal(s.IBCNetComm)), 2),
+                                   IBCTotalIncome = NumberFormat.DecFormat(wl.Items.Sum(s => CastAide.AsDecimal(s.IBCTotalIncome)), 2),
+                                   One2BetPT = NumberFormat.DecFormat(wl.Items.Sum(s => CastAide.AsDecimal(s.One2BetPT)), 2),
+                                   One2BetComm = NumberFormat.DecFormat(wl.Items.Sum(s => CastAide.AsDecimal(s.One2BetComm)), 2),
+                                   One2BetTotalIncome = NumberFormat.DecFormat(wl.Items.Sum(s => CastAide.AsDecimal(s.One2BetTotalIncome)), 2),
+                                   GroupTotalIncome = NumberFormat.DecFormat(wl.Items.Sum(s => CastAide.AsDecimal(s.GroupTotalIncome)), 2),
+                                   PartnerTurnover = NumberFormat.DecFormat(wl.Items.Sum(s => CastAide.AsDecimal(s.PartnerTurnover)), 2),
+                                   PartnerDividendWon = NumberFormat.DecFormat(wl.Items.Sum(s => CastAide.AsDecimal(s.PartnerDividendWon)), 2),
+                                   PartnerCommExpense = NumberFormat.DecFormat(wl.Items.Sum(s => CastAide.AsDecimal(s.PartnerCommExpense)), 2),
+                                   PartnerFees = NumberFormat.DecFormat(wl.Items.Sum(s => CastAide.AsDecimal(s.PartnerFees)), 2),
+                                   PartnerAmountDueto = NumberFormat.DecFormat(wl.Items.Sum(s => CastAide.AsDecimal(s.PartnerAmountDueto)), 2),
                                };
-                #endregion
+
+                #endregion Total
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
             }
 
-            SessionExtension.AddSession(HttpContext.Current.Session,_winLossRacingGroupForToteReportSessionKey, wl);
+            SessionExtension.AddSession(HttpContext.Current.Session, _winLossRacingGroupForToteReportSessionKey, wl);
             return wl;
         }
-        #endregion
+
+        #endregion GetRacingWinlossGroupForTote
 
         #region Send Mail
-        public bool SendMailWinLossRacingGroup(string fromDate, string toDate) 
+
+        public bool SendMailWinLossRacingGroup(string fromDate, string toDate)
         {
             try
             {
@@ -4023,7 +4228,6 @@ namespace Sunplus.Accounting.Business.Report.Racing
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -4064,12 +4268,9 @@ namespace Sunplus.Accounting.Business.Report.Racing
                                                         IsSuccess = false
                                                     });
                 }
-                
-
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -4086,16 +4287,18 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 case 0:
                     getGroupMail = "GroupDaily";
                     break;
+
                 case (int)Constants.Sport.HorseRacing:
                     getGroupMail = "GroupDailyForTote";
                     break;
+
                 default:
                     break;
             }
 
             var mailSetting = MailSection.Instance[MailSection.Setting.Send]["RacingGroup"].Mails[getGroupMail];
             var recivers = new Mails();
-            recivers.Recivers=new List<MailFormat>();
+            recivers.Recivers = new List<MailFormat>();
             recivers.Recivers.Add(new MailFormat()
                                       {
                                           Bcc = mailSetting.Bcc,
@@ -4115,7 +4318,6 @@ namespace Sunplus.Accounting.Business.Report.Racing
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -4133,7 +4335,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 {
                     RacingGroupForToteMain(fromDate, toDate, false, true, mails[0].To, mails[0].Cc, mails[0].Bcc, Subject, Content, ref isSuccess);
                 }
-                if(!isSuccess)
+                if (!isSuccess)
                 {
                     sendMailResult.IsFail = true;
                     sendMailResult.Recivers = new List<SendMailToReciverResult>();
@@ -4154,32 +4356,31 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         IsSuccess = false
                     });
                 }
-
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
-                
             }
 
             return sendMailResult;
         }
-        
-        #endregion
 
+        #endregion Send Mail
     }
 
-    class PartnerPoolCurr
+    internal class PartnerPoolCurr
     {
         public int PartnerId { get; set; }
+
         public int PoolCurr { get; set; }
     }
-    class MeetingCurr
+
+    internal class MeetingCurr
     {
         public int CurrencyId { get; set; }
+
         public int MeetingId { get; set; }
     }
 }

@@ -5,13 +5,11 @@ using System.Web;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Web;
+using IBCUtils;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using IBCUtils;
-
-using Sunplus.Accounting.Core.Helper;
 
 /// <summary>
 /// Summary description for SuperMovement
@@ -26,7 +24,7 @@ public partial class ReportHTML
         tpl = WebUtils.LoadTemplate(@"DirectBalance\BalanceMovement.htm");
         tpl = TemplateHandler.CopyBlock(tpl, "ReportMain");
 
-        //apply style sheet 
+        //apply style sheet
         //Load CSS for freeze headline
         string styleSheet = string.Empty;
         string cellspacing = "1";
@@ -92,7 +90,6 @@ public partial class ReportHTML
                 dt = rs.ResultSet.Tables[0];
         }
 
-
         if (dt != null && dt.Rows.Count > 0)
         {
             //assign row count for Firefox
@@ -151,7 +148,6 @@ public partial class ReportHTML
                 TemplateHandler.Assign(ref row, "{bal_d" + i + "_val}",
                                        FormatHandler.FormatNumber20(dt.Compute("sum(d" + i + "bal)", "")));
             }
-
 
             html.Append(row);
 

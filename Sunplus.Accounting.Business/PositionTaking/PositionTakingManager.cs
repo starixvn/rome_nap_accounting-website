@@ -4,23 +4,20 @@ using System.Collections.Generic;
 using System.Data;
 using System.Text;
 using System.Web;
+using DNAide.Core;
 using DNAide.Data;
 using DNAide.Web;
 using IBCUtils;
+using Sunplus.Accounting.Business.Security;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
-using Sunplus.Accounting.Core.Common;
-
-using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.Entities;
-using DNAide.Core;
-using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Core.Cache;
 
-//using Sunplus.Core.LoggingLib;
 
 
 /// <summary>
@@ -35,6 +32,7 @@ namespace Sunplus.Accounting.Business.PositionTaking
 
         //path to template
         public static readonly string TPL_FINANCE_SETTING = "Customer/v2/FinanceSetting.htm";
+
         public static readonly string TPL_FINANCE_PT = "Customer/v2/FinancePTData.htm";
         public static readonly string TPL_FINANCE_PT_SUPER = "Customer/v2/FinancePTDataSuper.htm";
         public static readonly string TPL_FINANCE_PT_HEADER = "Customer/v2/FinancePTHeader.htm";
@@ -51,6 +49,7 @@ namespace Sunplus.Accounting.Business.PositionTaking
 
         //Tag name on template
         public static readonly string TAG_maxpt = "maxpt";
+
         public static readonly string TAG_minpt = "minpt";
         public static readonly string TAG_maxpt_value = "maxpt_value";
         public static readonly string TAG_minpt_value = "minpt_value";
@@ -84,6 +83,7 @@ namespace Sunplus.Accounting.Business.PositionTaking
         public static readonly string TAG_LBL_CopyPT = "copypt";
         public static readonly string TAG_PT_JS = "js";
         public static string DISCOUNT = "discount";
+
         //Style
         public static string CLASS_Select_PT = "pt";
 
@@ -103,10 +103,10 @@ namespace Sunplus.Accounting.Business.PositionTaking
         private static string JS_Var_mmPTMax = "mmPTMax";
         private static string JS_Var_disableMinPTFI = "disableMinPTFI";
 
-
         //END
-        //javascript function 
+        //javascript function
         public static readonly string FUNC_OnChangePT = "OnChangePT({0})";
+
         public static readonly string PARAMS_OnChangePT = "this";
 
         public static readonly string FUNC_ChkCopyFrom = "ChkCopyFrom({0})";
@@ -160,6 +160,7 @@ namespace Sunplus.Accounting.Business.PositionTaking
 
         //Commission
         private static double COMM_FI_MAX = 0.01;
+
         private static int COMM_FI_INTERVAL = 5;
 
         public static readonly string Delimiter = "_";
@@ -188,7 +189,7 @@ namespace Sunplus.Accounting.Business.PositionTaking
                                       ISDISABLED_Update = "disablefinancial",
                                       ISDOWNLINEDISABLED_Update = "disabledownlinefi";
 
-        #endregion
+        #endregion CONST variables
 
         #region Get Data
 
@@ -207,7 +208,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return null;
             }
@@ -221,7 +221,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return null;
             }
@@ -235,7 +234,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return null;
             }
@@ -249,13 +247,12 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return null;
             }
         }
 
-        #endregion
+        #endregion Get Data
 
         #region Update data
 
@@ -267,7 +264,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return new IbcError(-1, ex.Message);
             }
@@ -281,7 +277,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return new ErrorDetail(-1, ex.Message);
             }
@@ -295,7 +290,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return new IbcError(-1, ex.Message);
             }
@@ -309,13 +303,12 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return new IbcError(-1, ex.Message);
             }
         }
 
-        #endregion
+        #endregion Update data
 
         /// <summary>
         /// Didn't synchronize data to CS system
@@ -351,10 +344,12 @@ namespace Sunplus.Accounting.Business.PositionTaking
                         data = GetPT(custId, accountType, uplineId);
                         TemplateHandler.Assign(ref tplSetting, "{FuncOnClick}", "UpdatePT();");
                         break;
+
                     case Globals.PTType.MasterOnMember:
                         data = GetPTMasterEditMember(custId, uplineId);
                         TemplateHandler.Assign(ref tplSetting, "{FuncOnClick}", "UpdatePTFIMasterOnMember();");
                         break;
+
                     case Globals.PTType.SuperOnMember:
                         data = GetPTSuperEditMember(custId, uplineId);
                         TemplateHandler.Assign(ref tplSetting, "{FuncOnClick}", "UpdatePTFISuperOnMember();");
@@ -425,8 +420,8 @@ namespace Sunplus.Accounting.Business.PositionTaking
                 }
 
                 //assign common header
-                //AssignCommonHeader(ref htmlContent);                   
-                //assign javascript here  
+                //AssignCommonHeader(ref htmlContent);
+                //assign javascript here
                 string js = AssignJavaScript(ref tplSetting, custDetail);
                 js += string.Format(Globals.JS_VariableFormat, "insert", (isInsert) ? "true" : "false");
                 js = string.Format(Globals.JS_Block, js);
@@ -441,7 +436,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return string.Empty;
             }
@@ -486,14 +480,12 @@ namespace Sunplus.Accounting.Business.PositionTaking
                 //Assign PT
                 TemplateHandler.Assign(ref tplSetting, "{lblPositionTaking}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "PositionTaking"));
 
-
                 TemplateHandler.Assign(ref tplSetting, TAG_PT_Data,
                                        GenMinMaxPT(custPT, sporttype, listbettype, accountType));
 
-
                 //assign common header
-                //AssignCommonHeader(ref htmlContent);                   
-                //assign javascript here  
+                //AssignCommonHeader(ref htmlContent);
+                //assign javascript here
                 string js = AssignJavaScript(ref tplSetting, custDetail);
                 //js += string.Format(Globals.JS_VariableFormat, "insert", (isInsert) ? "true" : "false");
                 js = string.Format(Globals.JS_Block, js);
@@ -508,7 +500,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return string.Empty;
             }
@@ -641,7 +632,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return string.Empty;
             }
@@ -704,7 +694,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
                     TemplateHandler.Assign(ref valueHeader, TAG_Value, CacheRef.GetBettype(bettype));
                     dataHeader.Append(valueHeader);
 
-
                     sptMax = Math.Min(
                         CastAide.AsDouble(datapt[prefix + SPT + Delimiter + bettype + Delimiter + MAXPT]), maxPTFI);
                     sptMin = 0;
@@ -738,7 +727,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
 
                     if (bettype == bettypeMemberPTMaxFI)
                         lsPTData.Add(new PositionTakingDetail(JS_Var_msPTMax, sptMax));
-
 
                     isUseAuto = (isUseAuto == false) ? isAuto : isUseAuto;
 
@@ -819,7 +807,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return string.Empty;
             }
@@ -1012,7 +999,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return string.Empty;
             }
@@ -1046,7 +1032,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return string.Empty;
             }
@@ -1111,7 +1096,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
                         CastAide.AsBoolean(datapt[STR_IsAuto + Delimiter + prefix + SPT + Delimiter + bettype]);
                     TemplateHandler.Assign(ref valueHeader, TAG_Value, CacheRef.GetBettype(bettype));
                     dataHeader.Append(valueHeader);
-
 
                     sptMax = Math.Min(CastAide.AsDouble(datapt[MAXPT + prefix + "pos" + Delimiter + bettype]), maxPTFI);
                     sptMin = Math.Max(CastAide.AsDouble(datapt[MINPT + prefix + "pos" + Delimiter + bettype]), minPT);
@@ -1223,7 +1207,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return string.Empty;
             }
@@ -1300,7 +1283,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
                     //CastAide.AsBoolean(datapt[STR_IsAuto + Delimiter + prefix + MPT + Delimiter + bettype]);
                     TemplateHandler.Assign(ref valueHeader, TAG_Value, CacheRef.GetBettype(bettype));
                     dataHeader.Append(valueHeader);
-
 
                     mptMax = Math.Min(CastAide.AsDouble(datapt[MAXPT + prefix + "pos" + Delimiter + bettype]), maxPTFI);
                     mptMin = Math.Min(CastAide.AsDouble(datapt[MINPT + prefix + "pos" + Delimiter + bettype]), maxPTFI);
@@ -1413,7 +1395,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return string.Empty;
             }
@@ -1482,9 +1463,7 @@ namespace Sunplus.Accounting.Business.PositionTaking
                     aptMin = n2;
                     aptCurrent = a1; //Math.Min(a1, aptMax);
 
-
                     string _APTId = sporttype + Delimiter + bettype + Delimiter + APT;
-
 
                     string _APTValue = HtmlHelper.GenSelectOption(aptMax, aptMin, aptCurrent, Globals.INTERVAL_PT, false,
                                                               _APTId, funcOnChange, CLASS_Select_PT);
@@ -1537,7 +1516,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return string.Empty;
             }
@@ -1581,9 +1559,11 @@ namespace Sunplus.Accounting.Business.PositionTaking
                     case Globals.AccountType.Super:
                         PTType = SPT;
                         break;
+
                     case Globals.AccountType.Master:
                         PTType = MPT;
                         break;
+
                     case Globals.AccountType.Agent:
                         PTType = APT;
                         break;
@@ -1605,7 +1585,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
                         currentPTMax =
                             datapt[PREFIX_SPORT + sporttype + PTType + Delimiter + bettype + Delimiter + "max"];
                     currentPTMax = (accountType == Globals.AccountType.Super) ? maxPTFI : currentPTMax; //s4;
-
 
                     maxPTMin = Math.Min(currentPTMax, datapt[PREFIX_SPORT + sporttype + PTType + Delimiter + bettype]);
                     currentPTMin = datapt[PREFIX_SPORT + sporttype + PTType + Delimiter + bettype + Delimiter + "min"];
@@ -1679,7 +1658,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return string.Empty;
             }
@@ -1789,16 +1767,15 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
 
         /// <summary>
-        /// Common header: Customer Information, 
+        /// Common header: Customer Information,
         /// </summary>
         /// <param name="tplCSPT"></param>
-        /// 
+        ///
         /// <summary>
         /// Add pt value to javascript variable hPTData
         /// </summary>
@@ -1817,7 +1794,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return string.Empty;
             }
@@ -1842,7 +1818,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return string.Empty;
             }
@@ -1858,7 +1833,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
@@ -1935,7 +1909,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             TemplateHandler.Assign(ref fiinfo, "{mobile}", custdetail.MobilePhone);
             TemplateHandler.Assign(ref fiinfo, "{lblFax}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblFax"));
             TemplateHandler.Assign(ref fiinfo, "{fax}", custdetail.Fax);
-
 
             if (pttype == Globals.PTType.Default)
             {
@@ -2034,7 +2007,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return string.Empty;
             }
@@ -2048,7 +2020,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return null;
             }
@@ -2072,7 +2043,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
@@ -2113,7 +2083,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
@@ -2151,7 +2120,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
@@ -2170,7 +2138,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
@@ -2187,7 +2154,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
@@ -2201,7 +2167,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
@@ -2215,7 +2180,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
@@ -2236,7 +2200,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
@@ -2275,7 +2238,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
@@ -2301,7 +2263,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
@@ -2419,7 +2380,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             custDetail.MobilePhone = dt.Rows[0]["mobilephone"].ToString();
             custDetail.Fax = dt.Rows[0]["Fax"].ToString();
 
-
             try
             {
                 custDetail.IsDisabledFI = CastAide.AsBoolean(dt.Rows[0][ISDISABLED], false);
@@ -2458,7 +2418,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             catch (Exception ex)
             {
             }
-
 
             //Assign Cust Comm
         }

@@ -1,6 +1,7 @@
 ﻿@model Fanex.Tarus.Customer.Entities.CustomerList.CustomerListModel
 @using DNAide.Core
 @using Sunplus.Accounting.Core.Configurations
+@using Sunplus.Accounting.Core.Common
 @using Sunplus.Bingo.Core;
 @using System.Collections;
 
@@ -52,6 +53,23 @@
     {
         colspanCom++;
     }
+
+    string bettingSetting = WebSettings.ExternalBettingLimitConfig;
+    bool isShowBettingSetting = false;
+    if (!String.IsNullOrEmpty(bettingSetting) && bettingSetting.Contains("|"))
+    {
+        int groupId = CastAide.AsInt32(bettingSetting.Split(new char[] { '|' })[0], 0);
+        if (groupId != AppSession.GroupID)
+        {
+            isShowBettingSetting = false;
+        }
+        else
+        {
+            isShowBettingSetting=true;
+        }
+    }
+   
+    
     Hashtable hash = new Hashtable();
 
     hash.Add("p2pSetting", p2pSetting);
@@ -68,6 +86,7 @@
     hash.Add("directMaster", directMaster);
     hash.Add("allowCS", allowCS);
     hash.Add("allowLiveCS", allowLiveCS);
+    hash.Add("isShowBettingSetting", isShowBettingSetting);
 
     string[] renderResult = Render(Model, hash);
 }
@@ -176,6 +195,13 @@
                             Virtual Sports</li>
                     }
                     <!--/edit-virtualSports-->
+                     <!--edit-BettingSetting-->
+                    @if (CastAide.AsBoolean(hash["isShowBettingSetting"]))
+                    {
+                        <li class="canchange" onclick="SuperList.bettingSetting('@superItem.ChildID', '@superItem.ChildID', '@AppSession.AccId.ToString()','@AppSession.SYSTEM' );">
+                             Edit Betting Limit</li>
+                    }
+                    <!--/edit-BettingSetting-->
                 </ul>
             </div>
         </td>

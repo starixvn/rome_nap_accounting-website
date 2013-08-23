@@ -38,13 +38,14 @@ namespace Sunplus.Accounting.Core.Common
             {
                 if (HttpContext.Current.Session["UserMenu"] != null)
 
-                    return (List<MenuBO>) HttpContext.Current.Session["UserMenu"];
+                    return (List<MenuBO>)HttpContext.Current.Session["UserMenu"];
                 else
                     return null;
             }
             set { HttpContext.Current.Session["UserMenu"] = value; }
         }
-        public static List<MenuBO>BAMenu
+
+        public static List<MenuBO> BAMenu
         {
             get
             {
@@ -56,6 +57,7 @@ namespace Sunplus.Accounting.Core.Common
             }
             set { HttpContext.Current.Session["BAMenu"] = value; }
         }
+
         public static List<MenuBO> ReportMenu
         {
             get
@@ -73,8 +75,8 @@ namespace Sunplus.Accounting.Core.Common
         {
             get { return CastAide.AsBoolean(HttpContext.Current.Session["IsSyncBingoCurrentCust"], false); }
             set { HttpContext.Current.Session["IsSyncBingoCurrentCust"] = value; }
-
         }
+
         public static int CustID
         {
             get { return CastAide.AsInt32(HttpContext.Current.Session["custid"], 0); }
@@ -89,7 +91,6 @@ namespace Sunplus.Accounting.Core.Common
             get { return CastAide.AsInt32(HttpContext.Current.Session["roleId"], 0); }
             set { HttpContext.Current.Session["roleId"] = value; }
         }
-
 
         public static int AccId
         {
@@ -107,9 +108,6 @@ namespace Sunplus.Accounting.Core.Common
             set { HttpContext.Current.Session["AccId"] = value; }
         }
 
-        
-
-
         public static int OnAccId
         {
             get { return CastAide.AsInt32(HttpContext.Current.Session["OnAccId"], 0); }
@@ -124,13 +122,13 @@ namespace Sunplus.Accounting.Core.Common
 
         public static Dictionary<string, int> RoleAccess
         {
-            get { return (Dictionary<string, int>) HttpContext.Current.Session["RoleAccess"]; }
+            get { return (Dictionary<string, int>)HttpContext.Current.Session["RoleAccess"]; }
             set { HttpContext.Current.Session["RoleAccess"] = value; }
         }
 
         public static DataTable RoleAccessDL
         {
-            get { return (DataTable) HttpContext.Current.Session["RoleAccessDL"]; }
+            get { return (DataTable)HttpContext.Current.Session["RoleAccessDL"]; }
             set { HttpContext.Current.Session["RoleAccessDL"] = value; }
         }
 
@@ -142,7 +140,7 @@ namespace Sunplus.Accounting.Core.Common
 
         public static Dictionary<string, int> PageAccess
         {
-            get { return (Dictionary<string, int>) HttpContext.Current.Session["PageAccess"]; }
+            get { return (Dictionary<string, int>)HttpContext.Current.Session["PageAccess"]; }
             set { HttpContext.Current.Session["PageAccess"] = value; }
         }
 
@@ -193,12 +191,12 @@ namespace Sunplus.Accounting.Core.Common
             get { return CastAide.AsString(HttpContext.Current.Session["SusperUserName"]); }
             set { HttpContext.Current.Session["SusperUserName"] = value; }
         }
+
         public static object BalanceUpDay
         {
             get
             {
                 return HttpContext.Current.Session["BalanceUpDay"];
-
             }
             set { HttpContext.Current.Session["BalanceUpDay"] = value; }
         }
@@ -229,6 +227,7 @@ namespace Sunplus.Accounting.Core.Common
             get { return CastAide.AsInt32(HttpContext.Current.Session["GroupID"]); }
             set { HttpContext.Current.Session["GroupID"] = value; }
         }
+
         public static bool ViewIPVN
         {
             get { return CastAide.AsBoolean(HttpContext.Current.Session["ViewIPVN"], false); }
@@ -258,7 +257,7 @@ namespace Sunplus.Accounting.Core.Common
                 try
                 {
                     accountingSystem =
-                        (Enumerations.AccountingSystem) HttpContext.Current.Session["CurrentSystem"];
+                        (Enumerations.AccountingSystem)HttpContext.Current.Session["CurrentSystem"];
                     return accountingSystem;
                 }
                 catch
@@ -285,28 +284,22 @@ namespace Sunplus.Accounting.Core.Common
                 }
                 catch (Exception)
                 {
-
                     return string.Empty;
                 }
-                
             }
             set { HttpContext.Current.Session["CurrentSystemName"] = value; }
         }
-       
-        
+
         public static object GetSession(HttpSessionState sessionState, string key)
         {
-
             return sessionState[key];
-
         }
 
         public static bool IsFinishUMTime
         {
-            get { return DNAide.Core.CastAide.AsBoolean(HttpContext.Current.Session["IsFinishUMTime"] ); }
+            get { return DNAide.Core.CastAide.AsBoolean(HttpContext.Current.Session["IsFinishUMTime"]); }
             set { HttpContext.Current.Session["IsFinishUMTime"] = value; }
         }
-       
 
         public static void AddSession(HttpSessionState sessionState, string key, object value)
         {

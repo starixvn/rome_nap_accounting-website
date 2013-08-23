@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Sunplus.Accounting.Business.BootStrappers;
-using Sunplus.Accounting.Entities.PositionTaking.Poker;
-using Sunplus.Accounting.Business.PT.Poker;
+﻿using System.Collections.Generic;
 using System.ServiceModel.Activation;
+using Sunplus.Accounting.Business.BootStrappers;
+using Sunplus.Accounting.Business.PT.Poker;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Customer;
+using Sunplus.Accounting.Entities.PositionTaking.Poker;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.PT.Poker
 {
@@ -40,17 +37,19 @@ namespace Sunplus.Accounting.WcfServiceLibrary.PT.Poker
             var result = new Result();
             var pokerManager = CommonBootStrapper.Locator.GetInstance<IPokerManager>();
 
-            result = pokerManager.UpdatePokerGameType(gameSetting, custDetail , type);
-           
+            result = pokerManager.UpdatePokerGameType(gameSetting, custDetail, type);
+
             return result;
         }
+
         public Result CheckEnableCustomer(int custId)
-        { 
+        {
             var result = new Result();
             var pokerManager = CommonBootStrapper.Locator.GetInstance<IPokerManager>();
             result = pokerManager.CheckEnableCustomer(custId);
             return result;
         }
+
         public Result UpdatePoker(PokerSetting setting, int type)
         {
             var result = new Result();
@@ -68,7 +67,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.PT.Poker
             //}
             //else
             //{
-                result = pokerManager.UpdatePoker(setting, type);
+            result = pokerManager.UpdatePoker(setting, type);
             //}
             return result;
         }

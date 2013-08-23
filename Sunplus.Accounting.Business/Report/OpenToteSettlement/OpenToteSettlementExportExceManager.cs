@@ -9,16 +9,14 @@ using ExcelUtil.Spreadsheet;
 
 using Sunplus.Accounting.Business;
 using Sunplus.Accounting.Business.CacheManager;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
 
 /// <summary>
 /// Summary description for OpenToteSettlementExportExceManager
 /// </summary>
- 
+
 namespace BLL.Report.OpenToteSettlement
 {
     public class OpenToteSettlementExportExceManager : BaseManager
@@ -141,7 +139,7 @@ namespace BLL.Report.OpenToteSettlement
             ws.Cells.GetSubrangeAbsolute(indexRow, 26, indexRow + 1, 26).Style = gembox.GetStyleTitle(red, green, blue);
             ws.Cells.GetSubrangeAbsolute(indexRow, 26, indexRow + 1, 26).Merged = true;
 
-            string[] arrCurr = {"GBP", "Base (RM)"};
+            string[] arrCurr = { "GBP", "Base (RM)" };
             string suffix = "";
             for (int i = 0; i < arrCurr.Length; i++)
             {
@@ -179,10 +177,8 @@ namespace BLL.Report.OpenToteSettlement
             int rowspan = 0;
             int colspan = 0;
 
-            
-            
             string[] validPoolCurrencyArr = poolCurrency.Split(';');
-            
+
             //string[] arrCurr = { "GBP", "Base (RM)" };
             string[] arrCurr = new string[validPoolCurrencyArr.Length];
             for (int i = 0; i < validPoolCurrencyArr.Length; i++)
@@ -205,7 +201,7 @@ namespace BLL.Report.OpenToteSettlement
                 string exp = (i < validPoolCurrencyArr.Length - 1) ? "PoolCurrency = '" + validPoolCurrencyArr[i] + "'" : "";
 
                 if (i < arrCurr.Length - 1)
-                    suffix = "_PoolCurr"; 
+                    suffix = "_PoolCurr";
                 else
                     suffix = ""; //Base RM
 
@@ -226,7 +222,7 @@ namespace BLL.Report.OpenToteSettlement
         private void ExcelAssignValueforCoparision(ref ExcelWorksheet ws, string winlostdate, decimal ibcTO,
                                                    decimal ibcDividendWon, ref int indexRow, ExcelGemboxUtils gembox)
         {
-            var dt = (DataTable) GetCachedObjData(OpenToteSettlementCommon.cachekeycompare);
+            var dt = (DataTable)GetCachedObjData(OpenToteSettlementCommon.cachekeycompare);
             if (dt == null)
             {
                 var hash = new Hashtable();
@@ -328,7 +324,7 @@ namespace BLL.Report.OpenToteSettlement
                 ws.Cells[indexRow + 6, 22].Style = gembox.GetStyleNumber(comparisionDividend, "", 255, 255, 255);
             }*/
 
-            #endregion
+            #endregion temporary don't user it in excel file
         }
 
         public ExcelFile ExportToExcel_OpenTote(string winlostdate, string db, bool IsTest)
@@ -385,21 +381,17 @@ namespace BLL.Report.OpenToteSettlement
                 ws.Cells.GetSubrangeAbsolute(1, 0, 2, 0).Value = "Pool-Currency";
                 ws.Cells.GetSubrangeAbsolute(1, 0, 2, 0).Merged = true;
 
-
                 ws.Cells.GetSubrangeAbsolute(1, 1, 2, 1).Style = gembox.GetStyleTitle(181, 196, 208);
                 ws.Cells.GetSubrangeAbsolute(1, 1, 2, 1).Value = "Currency";
                 ws.Cells.GetSubrangeAbsolute(1, 1, 2, 1).Merged = true;
-
 
                 ws.Cells.GetSubrangeAbsolute(1, 2, 1, 7).Style = gembox.GetStyleTitle(208, 232, 251);
                 ws.Cells.GetSubrangeAbsolute(1, 2, 1, 7).Value = "Agency";
                 ws.Cells.GetSubrangeAbsolute(1, 2, 1, 7).Merged = true;
 
-
                 ws.Cells.GetSubrangeAbsolute(1, 8, 1, 16).Style = gembox.GetStyleTitle(181, 196, 208);
                 ws.Cells.GetSubrangeAbsolute(1, 8, 1, 16).Value = "IBC";
                 ws.Cells.GetSubrangeAbsolute(1, 8, 1, 16).Merged = true;
-
 
                 ws.Cells.GetSubrangeAbsolute(1, 17, 1, 24).Style = gembox.GetStyleTitle(208, 232, 251);
                 ws.Cells.GetSubrangeAbsolute(1, 17, 1, 24).Value = "Partner";
@@ -413,7 +405,7 @@ namespace BLL.Report.OpenToteSettlement
                 ws.Cells.GetSubrangeAbsolute(1, 26, 1, 26).Value = "Pool-Currency";
                 ws.Cells.GetSubrangeAbsolute(1, 26, 2, 26).Merged = true;
 
-                string[] arrAgency = {"Win TO", "Place TO", "W/P TO", "Total TO", "Comm Income", "PT Win/Loss"};
+                string[] arrAgency = { "Win TO", "Place TO", "W/P TO", "Total TO", "Comm Income", "PT Win/Loss" };
                 for (int i = 0; i < arrAgency.Length; i++)
                 {
                     ws.Cells.GetSubrangeAbsolute(2, i + 2, 2, i + 2).Style = gembox.GetStyleTitle(208, 232, 251);
@@ -440,13 +432,14 @@ namespace BLL.Report.OpenToteSettlement
                     ws.Cells.GetSubrangeAbsolute(2, i + 17, 2, i + 17).Value = arrPartner[i];
                 }
 
-                #endregion
+                #endregion Header
 
                 string partnertype = "", partnertype_p = "";
                 bool IsEven = false;
                 DataRow[] dataRows = dataTable.Select("");
                 int indexRow = 3, indexPartner = 0, poolcurrency = 0, poolcurrency_p = 0;
                 string poolCurrencyArr = string.Empty;
+
                 #region foreach
 
                 foreach (DataRow dataRow in dataRows)
@@ -458,7 +451,7 @@ namespace BLL.Report.OpenToteSettlement
                         int countPartner =
                             CastAide.AsInt32(dataTable.Compute("count(PartnerType)",
                                                                "PartnerType='" + partnertype_p + "'"));
-                        IsEven = indexPartner%2 == 1;
+                        IsEven = indexPartner % 2 == 1;
                         if (poolcurrency > 0)
                         {
                             //_PoolCurr
@@ -515,7 +508,7 @@ namespace BLL.Report.OpenToteSettlement
                     indexRow++;
                 }
 
-                #endregion
+                #endregion foreach
 
                 #region Lastest
 
@@ -536,14 +529,14 @@ namespace BLL.Report.OpenToteSettlement
                 ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 26).Style = gembox.GetStyleTextCenter(false);
                 indexRow++;
 
-                #endregion
+                #endregion Lastest
 
-                #region Grand Total                
+                #region Grand Total
 
                 ExcelAssignRowGrandTotal_OpenToteNew(ref ws, dataTable, "", "Grand Total", ref indexRow, gembox, 196, 208,
                                                   215, poolCurrencyArr);
 
-                #endregion
+                #endregion Grand Total
 
                 #region Comparision
 
@@ -552,12 +545,11 @@ namespace BLL.Report.OpenToteSettlement
                 //decimal ibcDividendWon = CastAide.AsDecimal(dataTable.Compute("sum(dividendWon_PoolCurr)", ""));
                 //ExcelAssignValueforCoparision(ref ws, winlostdate, ibcTO, ibcDividendWon, ref indexRow, gembox);
 
-                #endregion
+                #endregion Comparision
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return excelFile;
         }

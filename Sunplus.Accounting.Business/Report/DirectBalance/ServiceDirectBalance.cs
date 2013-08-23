@@ -28,7 +28,6 @@ public class ServiceDirectBalance : IServiceDirectBalance
         return s.GetDirectBalance_Downline(custid, pcustid, roleid, user);
     }
 
-
     public ExcelFile ExportToExcel()
     {
         throw new NotImplementedException();
@@ -40,5 +39,5 @@ public class ServiceDirectBalance : IServiceDirectBalance
         return s.getHeaderDownLine(roleid, user, custid, puser, pcustid);
     }
 
-    #endregion
+    #endregion IServiceDirectBalance Members
 }

@@ -14,7 +14,7 @@ namespace Sunplus.Accounting.DataAccess.Entity.BusinessObject
         private readonly string _dataFieldName;
         private readonly object _nullValue;
 
-        #endregion
+        #endregion Private Variables
 
         #region Constructors
 
@@ -24,11 +24,12 @@ namespace Sunplus.Accounting.DataAccess.Entity.BusinessObject
             _nullValue = nullValue;
         }
 
-        public DataMappingAttribute(object nullValue) : this(string.Empty, nullValue)
+        public DataMappingAttribute(object nullValue)
+            : this(string.Empty, nullValue)
         {
         }
 
-        #endregion
+        #endregion Constructors
 
         #region Public Properties
 
@@ -42,6 +43,6 @@ namespace Sunplus.Accounting.DataAccess.Entity.BusinessObject
             get { return _nullValue; }
         }
 
-        #endregion
+        #endregion Public Properties
     }
 }

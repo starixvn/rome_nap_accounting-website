@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-
 using SharedCache.WinServiceCommon.Provider.Cache;
-using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Helper.IP;
-using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.DataAccess;
+using Sunplus.Accounting.Entities;
 
 namespace Sunplus.Accounting.Business
 {
@@ -128,7 +126,7 @@ namespace Sunplus.Accounting.Business
         //Replace VN IP with other one or empty string
         public static string ReplaceVNIP(string IP)
         {
-            if(IsVNIP(IP))
+            if (IsVNIP(IP))
             {
                 if (AppSession.ViewIPVN || WebSettings.IPVNReplace == "1")
                     return IP;
@@ -139,25 +137,23 @@ namespace Sunplus.Accounting.Business
             {
                 return IP;
             }
-
         }
+
         public static string ReplaceCountryName(string IP)
         {
             var ipManager = new IpManager();
             string countryName = ipManager.GetCountryNameByIp(IP);
-                if (IsVNIP(IP))
-                {
-                    if (AppSession.ViewIPVN || WebSettings.IPVNReplace == "1")
-                        return countryName;
-                    else
-                        return "-";
-                }
-                else
-                {
+            if (IsVNIP(IP))
+            {
+                if (AppSession.ViewIPVN || WebSettings.IPVNReplace == "1")
                     return countryName;
-                }
-               
-
+                else
+                    return "-";
+            }
+            else
+            {
+                return countryName;
+            }
         }
 
         public static string ReplaceVNIP(string IP, List<IPVNBean> _IPVNList)
@@ -184,7 +180,7 @@ namespace Sunplus.Accounting.Business
                 if (IsValidIP(IP))
                 {
                     string[] sIP = IP.Split('.');
-                    longIP = double.Parse(sIP[0])*16777216 + double.Parse(sIP[1])*65536 + double.Parse(sIP[2])*256 +
+                    longIP = double.Parse(sIP[0]) * 16777216 + double.Parse(sIP[1]) * 65536 + double.Parse(sIP[2]) * 256 +
                              double.Parse(sIP[3]);
                 }
                 return longIP;
@@ -210,6 +206,4 @@ namespace Sunplus.Accounting.Business
             return new AccountingIPFormat("").FormatAll(content);
         }
     }
-
-    
 }

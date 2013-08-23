@@ -6,6 +6,7 @@
     public interface IBingoViewPT
     {
         string GetListBingoGameKindGameType();
+
         string GetPTBingo(string username, int gameType);
     }
 }

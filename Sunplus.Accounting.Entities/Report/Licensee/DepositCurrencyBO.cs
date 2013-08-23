@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Sunplus.Accounting.Entities.Report.Deposit
 {
@@ -17,6 +14,6 @@ namespace Sunplus.Accounting.Entities.Report.Deposit
         public int currencyId { get; set; }
 
         [DataMember]
-        public long custId{ get; set; }
+        public long custId { get; set; }
     }
 }

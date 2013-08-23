@@ -13,7 +13,7 @@ using Fanex.Caching;
 using Fanex.Data;
 using Fanex.Tarus.BetList.Helper;
 
-using RSACryptoPad;
+
 using Sunplus.Accounting.Business.BootStrappers;
 
 using Sunplus.Accounting.Core.Cache;
@@ -32,6 +32,7 @@ public partial class test : System.Web.UI.Page
         try
         {
             //_cacheManager.Set(
+            System.Web.HttpUtility.UrlDecode("VNM-CICV-CASH+INH");
 
         }
         catch (Exception ex)

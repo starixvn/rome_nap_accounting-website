@@ -8,10 +8,8 @@ using DNAide.Web;
 
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Report;
-using Sunplus.Core.LoggingLib;
 
 /// <summary>
 /// Summary description for DailyCreatedCustomer
@@ -48,7 +46,7 @@ namespace BLL.Report
                 TemplateHandler.Assign(ref tpl, "{Master}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "DirectMaster"));
                 TemplateHandler.Assign(ref tpl, "{Agent}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "DirectAgent"));
 
-                //Get data                       
+                //Get data
                 DbResult rs = DailyCreatedCustomer.GetDailyCreatedCustomer(input);
                 DataRowCollection dtRow = rs.ResultSet.Tables[0].Rows;
 
@@ -106,8 +104,7 @@ namespace BLL.Report
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
 
             SetCacheReport(REPORT_DailyCreatedCustomer, tpl, DateTime.Now.AddMinutes(5));
@@ -134,7 +131,7 @@ namespace BLL.Report
                 TemplateHandler.Assign(ref tpl, "{CreateDate}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "CreateDate"));
                 TemplateHandler.Assign(ref tpl, "{CreatedBy}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "CreatedBy"));
 
-                //Get data                       
+                //Get data
                 DbResult rs = DailyCreatedCustomer.GetDailyCreatedCustomerDetails(input);
                 DataRowCollection dtRow = rs.ResultSet.Tables[0].Rows;
 
@@ -170,8 +167,7 @@ namespace BLL.Report
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
 
             SetCacheReport(REPORT_DailyCreatedCustomerDetail, tpl, DateTime.Now.AddMinutes(5));

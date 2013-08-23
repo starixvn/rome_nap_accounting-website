@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Data;
+using System.Linq;
 using System.Text;
 using DNAide.Core;
 using DNAide.Web;
@@ -33,8 +33,6 @@ namespace Sunplus.Accounting.Business.Settlement
                 string _strLeague = TemplateHandler.CopyBlock(_sMain, "leaguename");
                 TemplateHandler.RemoveBlock(ref _sMain, "leaguename");
                 StringBuilder _s = new StringBuilder(); // content
-
-
 
                 List<int> leagueids = GetLeagues(dt);
                 foreach (int _leagueid in leagueids)
@@ -184,12 +182,14 @@ namespace Sunplus.Accounting.Business.Settlement
             return (from row in tb.AsEnumerable()
                     select row.Field<int>("leagueid")).Distinct().ToList();
         }
+
         private static List<int> GetMatchsByLeagueId(DataTable tb, int leagueId)
         {
             return (from row in tb.AsEnumerable()
                     where row.Field<int>("leagueid") == leagueId
                     select row.Field<int>("matchid")).Distinct().ToList();
         }
+
         private static DataRow[] GetSeqNumberByMatchId(DataTable tb, int matchId)
         {
             DataRow[] rows = tb.Select("matchid=" + matchId.ToString());

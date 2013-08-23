@@ -3,9 +3,9 @@ using DNAide.Core;
 
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Core.LoggingLib;
 using SCCACHE = SharedCache.WinServiceCommon.Provider.Cache.IndexusDistributionCache;
-//using Sunplus.Core.LoggingLib;
+
+
 
 /// <summary>
 /// Summary description for Report
@@ -34,6 +34,7 @@ namespace Sunplus.Accounting.Business.CacheManager
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
+
         public static string REPORT_DIRECT_BAL
         {
             get
@@ -44,7 +45,6 @@ namespace Sunplus.Accounting.Business.CacheManager
                 }
                 catch (Exception ex)
                 {
-
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     return string.Empty;
                 }
@@ -66,7 +66,6 @@ namespace Sunplus.Accounting.Business.CacheManager
                 }
                 catch (Exception ex)
                 {
-
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     return string.Empty;
                 }
@@ -77,6 +76,7 @@ namespace Sunplus.Accounting.Business.CacheManager
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
+
         public static string REPORT_TRADER_DETAIL
         {
             get
@@ -87,7 +87,6 @@ namespace Sunplus.Accounting.Business.CacheManager
                 }
                 catch (Exception ex)
                 {
-
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     return string.Empty;
                 }
@@ -109,7 +108,6 @@ namespace Sunplus.Accounting.Business.CacheManager
                 }
                 catch (Exception ex)
                 {
-
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     return string.Empty;
                 }
@@ -120,6 +118,7 @@ namespace Sunplus.Accounting.Business.CacheManager
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
+
         public static string REPORT_SUPER_MOVEMENT_ORIGINAL
         {
             get
@@ -130,7 +129,6 @@ namespace Sunplus.Accounting.Business.CacheManager
                 }
                 catch (Exception ex)
                 {
-
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     return string.Empty;
                 }
@@ -141,6 +139,7 @@ namespace Sunplus.Accounting.Business.CacheManager
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
+
         public static string REPORT_STATEMENT_COMPANY
         {
             get
@@ -151,7 +150,6 @@ namespace Sunplus.Accounting.Business.CacheManager
                 }
                 catch (Exception ex)
                 {
-
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     return string.Empty;
                 }
@@ -162,6 +160,7 @@ namespace Sunplus.Accounting.Business.CacheManager
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
+
         public static string REPORT_STATEMENT
         {
             get
@@ -172,7 +171,6 @@ namespace Sunplus.Accounting.Business.CacheManager
                 }
                 catch (Exception ex)
                 {
-
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     return string.Empty;
                 }
@@ -183,6 +181,7 @@ namespace Sunplus.Accounting.Business.CacheManager
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
+
         public static string REPORT_STATEMENT_DETAIL
         {
             get
@@ -193,7 +192,6 @@ namespace Sunplus.Accounting.Business.CacheManager
                 }
                 catch (Exception ex)
                 {
-
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     return string.Empty;
                 }
@@ -204,6 +202,7 @@ namespace Sunplus.Accounting.Business.CacheManager
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
+
         public static string REPORT_STATEMENT_AUDIT
         {
             get
@@ -214,7 +213,6 @@ namespace Sunplus.Accounting.Business.CacheManager
                 }
                 catch (Exception ex)
                 {
-
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     return string.Empty;
                 }
@@ -237,7 +235,6 @@ namespace Sunplus.Accounting.Business.CacheManager
                 }
                 catch (Exception ex)
                 {
-
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     return string.Empty;
                 }
@@ -248,6 +245,7 @@ namespace Sunplus.Accounting.Business.CacheManager
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
+
         public static string REPORT_M88WINLOSS_DAILY
         {
             get
@@ -258,7 +256,6 @@ namespace Sunplus.Accounting.Business.CacheManager
                 }
                 catch (Exception ex)
                 {
-
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     return string.Empty;
                 }
@@ -269,6 +266,7 @@ namespace Sunplus.Accounting.Business.CacheManager
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
+
         public static string REPORT_M88WINLOSS_MONTHLY
         {
             get
@@ -280,7 +278,6 @@ namespace Sunplus.Accounting.Business.CacheManager
                 }
                 catch (Exception ex)
                 {
-
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     return string.Empty;
                 }
@@ -291,6 +288,7 @@ namespace Sunplus.Accounting.Business.CacheManager
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
+
         public static string REPORT_M88WINLOSS_SPORT
         {
             get
@@ -301,7 +299,6 @@ namespace Sunplus.Accounting.Business.CacheManager
                 }
                 catch (Exception ex)
                 {
-
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     return string.Empty;
                 }
@@ -312,6 +309,7 @@ namespace Sunplus.Accounting.Business.CacheManager
                                         DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
+
         public static string REPORT_M88WINLOSS_DETAIL
         {
             get
@@ -322,7 +320,6 @@ namespace Sunplus.Accounting.Business.CacheManager
                 }
                 catch (Exception ex)
                 {
-
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     return string.Empty;
                 }

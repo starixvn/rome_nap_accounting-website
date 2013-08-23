@@ -167,6 +167,27 @@
             dataType: "json",
             data: JSON.stringify(MemberList.paramsUpdate),
             success: function (ResultCustomerlist) {
+                if (ResultCustomerlist && ResultCustomerlist.ErrorCode == 1008) {
+                    $('#tblconfirm').empty().append(ResultCustomerlist.ErrorMessage).css({ color: 'red' });
+                    $("#tblconfirm").dialog({
+                        title: "Confirm Update Fail",
+                        autoOpen: false,
+                        height: 180,
+                        width: 400,
+                        modal: true,
+                        buttons: {
+                            "OK": function () {
+                                $(this).dialog("close");
+                            }
+                        },
+                        close: function (event, ui) {
+                        }
+                    });
+                    $('a.ui-dialog-titlebar-close').show();
+                    $("#tblconfirm").dialog("open");
+                    return;
+                }
+
                 if (ResultCustomerlist.length > 0) {
                     var errorFlag = false;
                     var length = ResultCustomerlist.length;

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Sunplus.Accounting.Entities.Report.MatchWL
 {
@@ -10,7 +7,6 @@ namespace Sunplus.Accounting.Entities.Report.MatchWL
     [DataContract]
     public class MatchWL2aBONEW
     {
-
         [DataMember]
         public string matchcode { get; set; }
 
@@ -77,11 +73,8 @@ namespace Sunplus.Accounting.Entities.Report.MatchWL
         public int type3rd { get; set; }
     }
 
-
-
     public class MatchWL2aBONEWCalc
     {
-
         public decimal comm { get; set; }
 
         public decimal VirtualComm { get; set; }
@@ -91,6 +84,5 @@ namespace Sunplus.Accounting.Entities.Report.MatchWL
         public decimal VirtualLineTotal { get; set; }
 
         public decimal variance { get; set; }
-
     }
 }

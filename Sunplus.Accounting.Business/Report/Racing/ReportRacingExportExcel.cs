@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Web;
 using DNAide.Core;
 using ExcelUtil.Spreadsheet;
@@ -12,16 +11,17 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Entities.Report.Racebook;
-using Sunplus.Core.LoggingLib;
 
 namespace Sunplus.Accounting.Business.Report.Racing
 {
     public partial class ReportRacing
     {
         #region Export 2 excel
+
         public void ExportToExcelWinLossRacingReport(Enumerations.ReportType reportType, string winlossDate)
         {
             #region private variables
+
             var agencyGroupTitle = "Agency";
             var ibcGroupTitle = "IBC";
             var partnerGroupTitle = "Partner";
@@ -46,7 +46,8 @@ namespace Sunplus.Accounting.Business.Report.Racing
             var reportResult = winLossSession != null
                                    ? (RacingWinlossBO)winLossSession
                                    : GetWinlossRacingReport(reportType, winlossDate);
-            #endregion
+
+            #endregion private variables
 
             #region excel format
 
@@ -59,15 +60,21 @@ namespace Sunplus.Accounting.Business.Report.Racing
             var wsReport = excelFile.Worksheets.Add(reportType.ToString());
             var bgHeaderNormalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
             var bgHeaderIbcFormat = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(130, 199, 255));
-            #endregion
+
+            #endregion excel format
 
             #region assign Header
+
             #region title
+
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + agencyTotalColumn + ibcTotalColumn + partnerTotalColumn + 2).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + agencyTotalColumn + ibcTotalColumn + partnerTotalColumn + 2).Value =
                 string.Format("{0} - Date {1}", reportType.ToString().Replace("_", " "), winlossDate);
-            #endregion
+
+            #endregion title
+
             #region header - first row
+
             wsReport.Cells[startRow - 1, startCol + nextCol].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow - 1, startCol + (nextCol++)].Value = string.Empty;
             wsReport.Cells[startRow - 1, startCol + nextCol].Style = bgHeaderIbcFormat;
@@ -90,7 +97,9 @@ namespace Sunplus.Accounting.Business.Report.Racing
                                                startCol + nextCol + partnerTotalColumn).Style = bgHeaderNormalFormat;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + nextCol + 1, startRow - 1,
                                                startCol + (nextCol + partnerTotalColumn)).Value = partnerGroupTitle;
-            #endregion
+
+            #endregion header - first row
+
             #region header - second row
 
             nextCol = 0;
@@ -98,7 +107,9 @@ namespace Sunplus.Accounting.Business.Report.Racing
             wsReport.Cells[startRow, startCol + (nextCol++)].Value = poolCurrencyTitle;
             wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderIbcFormat;
             wsReport.Cells[startRow, startCol + (nextCol++)].Value = currencyTile;
+
             #region Agency
+
             wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow, startCol + (nextCol++)].Value = winToTitle;
             wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderNormalFormat;
@@ -111,8 +122,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
             wsReport.Cells[startRow, startCol + (nextCol++)].Value = commIncomTitle;
             wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow, startCol + (nextCol++)].Value = ptWinLossTitle;
-            #endregion
+
+            #endregion Agency
+
             #region IBC
+
             wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderIbcFormat;
             wsReport.Cells[startRow, startCol + (nextCol++)].Value = winToTitle;
             wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderIbcFormat;
@@ -131,8 +145,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
             wsReport.Cells[startRow, startCol + (nextCol++)].Value = ptWinLossTitle;
             wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderIbcFormat;
             wsReport.Cells[startRow, startCol + (nextCol++)].Value = netCommTitle;
-            #endregion
+
+            #endregion IBC
+
             #region Parner
+
             wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow, startCol + (nextCol++)].Value = winToTitle;
             wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderNormalFormat;
@@ -149,12 +166,15 @@ namespace Sunplus.Accounting.Business.Report.Racing
             wsReport.Cells[startRow, startCol + (nextCol++)].Value = toteFeeTitle;
             wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow, startCol + (nextCol++)].Value = amountDueTile;
-            #endregion
-            #endregion
 
-            #endregion
+            #endregion Parner
+
+            #endregion header - second row
+
+            #endregion assign Header
 
             #region Body
+
             if (reportResult != null && reportResult.Items.Count > 0)
             {
                 foreach (var currentPool in reportResult.Items)
@@ -168,11 +188,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 }
 
                 #region comparision
+
                 var isToteMatched = true;
                 var isDividendMatched = true;
                 if (reportResult.Comparision != null && reportResult.Comparision.Count > 0)
                 {
-                    
                     foreach (RacingWinlossDumpFileBO racingWinlossDumpFileBo in reportResult.Comparision)
                     {
                         if (racingWinlossDumpFileBo.IsMatchTO == false)
@@ -208,11 +228,13 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     nextRow++;
                 }
 
-                #endregion
+                #endregion comparision
+
                 HorseRacingDailyAssignDataForEachRow(true, ref wsReport, reportResult.Totals, ref nextRow, startCol,
                                                          startRow, true, true, false, false);
 
                 #region comparision data
+
                 if (reportResult.Comparision != null && reportResult.Comparision.Count > 0)
                 {
                     if (isDividendMatched == false || isToteMatched == false)
@@ -223,22 +245,26 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     }
                 }
 
-                #endregion
+                #endregion comparision data
             }
-            #endregion
+
+            #endregion Body
 
             #region response file
+
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
             excelFile.SaveXls(response.OutputStream);
-            #endregion
+
+            #endregion response file
         }
 
         public void ExportToExcelWinLossRacingReportDetail(string winlossDate, string poolCurrency, string partnerId, string meetingName, Enumerations.ReportType reportType)
         {
             #region private variables
+
             var agencyGroupTitle = "Agency";
             var ibcGroupTitle = "IBC";
             var partnerGroupTitle = "Partner";
@@ -264,7 +290,8 @@ namespace Sunplus.Accounting.Business.Report.Racing
             var reportResult = winLossSession != null
                                    ? (RacingWinlossDetailsBO)winLossSession
                                    : GetWinlossRacingReportDetails(winlossDate, poolCurrency, partnerId);
-            #endregion
+
+            #endregion private variables
 
             #region excel format
 
@@ -277,15 +304,21 @@ namespace Sunplus.Accounting.Business.Report.Racing
             var wsReport = excelFile.Worksheets.Add(string.Format("{0}-{1}", reportType, winlossDate));
             var bgHeaderNormalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
             var bgHeaderIbcFormat = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(130, 199, 255));
-            #endregion
+
+            #endregion excel format
 
             #region assign Header
+
             #region title
+
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + agencyTotalColumn + ibcTotalColumn + partnerTotalColumn + 2).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + agencyTotalColumn + ibcTotalColumn + partnerTotalColumn + 2).Value =
                 string.Format("{0} - {1} - Date {2}", reportType.ToString().Replace("_", " "), meetingName, winlossDate);
-            #endregion
+
+            #endregion title
+
             #region header - first row
+
             wsReport.Cells[startRow - 1, startCol + nextCol].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow - 1, startCol + (nextCol++)].Value = string.Empty;
             wsReport.Cells[startRow - 1, startCol + nextCol].Style = bgHeaderIbcFormat;
@@ -308,7 +341,9 @@ namespace Sunplus.Accounting.Business.Report.Racing
                                                startCol + nextCol + partnerTotalColumn).Style = bgHeaderNormalFormat;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + nextCol + 1, startRow - 1,
                                                startCol + (nextCol + partnerTotalColumn)).Value = partnerGroupTitle;
-            #endregion
+
+            #endregion header - first row
+
             #region header - second row
 
             nextCol = 0;
@@ -316,7 +351,9 @@ namespace Sunplus.Accounting.Business.Report.Racing
             wsReport.Cells[startRow, startCol + (nextCol++)].Value = poolCurrencyTitle;
             wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderIbcFormat;
             wsReport.Cells[startRow, startCol + (nextCol++)].Value = RaceTitle;
+
             #region Agency
+
             wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow, startCol + (nextCol++)].Value = winToTitle;
             wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderNormalFormat;
@@ -329,8 +366,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
             wsReport.Cells[startRow, startCol + (nextCol++)].Value = commIncomTitle;
             wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow, startCol + (nextCol++)].Value = ptWinLossTitle;
-            #endregion
+
+            #endregion Agency
+
             #region IBC
+
             wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderIbcFormat;
             wsReport.Cells[startRow, startCol + (nextCol++)].Value = winToTitle;
             wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderIbcFormat;
@@ -349,8 +389,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
             wsReport.Cells[startRow, startCol + (nextCol++)].Value = ptWinLossTitle;
             wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderIbcFormat;
             wsReport.Cells[startRow, startCol + (nextCol++)].Value = netCommTitle;
-            #endregion
+
+            #endregion IBC
+
             #region Parner
+
             wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow, startCol + (nextCol++)].Value = winToTitle;
             wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderNormalFormat;
@@ -367,11 +410,15 @@ namespace Sunplus.Accounting.Business.Report.Racing
             wsReport.Cells[startRow, startCol + (nextCol++)].Value = toteFeeTitle;
             wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow, startCol + (nextCol++)].Value = amountDueTile;
-            #endregion
-            #endregion
-            #endregion
+
+            #endregion Parner
+
+            #endregion header - second row
+
+            #endregion assign Header
 
             #region Body
+
             if (reportType == Enumerations.ReportType.Horse_Racing_Daily_Report_Detail_For_AU)
             {
                 if (reportResult != null && reportResult.Items.Count > 0)
@@ -423,30 +470,33 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 }
             }
             wsReport.Columns[0].Width = 6000;
-            #endregion
+
+            #endregion Body
 
             #region response file
+
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
 
             excelFile.SaveXls(response.OutputStream);
-            #endregion
+
+            #endregion response file
         }
 
         private static void ExportToExcelAssignComparisionData(ref ExcelWorksheet wsReport, List<RacingWinlossDumpFileBO> comparisionData,
             int startRow, int startCol, ref int nextRow, int agencyTotalColumn, int ibcTotalColumn)
         {
-
-
             if (comparisionData != null)
             {
                 var bgHeaderNormalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
                 var bgFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", Color.FromArgb(255, 255, 255), false, false);
                 var bgNotMatched = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", Color.FromArgb(255, 255, 255), Color.Red);
                 var bgOk = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", Color.FromArgb(255, 255, 255), Color.Blue);
+
                 #region header
+
                 wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + agencyTotalColumn + ibcTotalColumn + 3,
                                                    startRow + nextRow + 1,
                                                    startCol + agencyTotalColumn + ibcTotalColumn + 3).Merged = true;
@@ -498,7 +548,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     "Dividend WON ";
                 nextRow++;
 
-                #endregion
+                #endregion header
 
                 #region assign data
 
@@ -532,7 +582,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     nextRow++;
                 }
 
-                #endregion
+                #endregion assign data
             }
         }
 
@@ -603,12 +653,12 @@ namespace Sunplus.Accounting.Business.Report.Racing
             foreach (var currentRow in pool.ToList())
             {
                 var nextCol = 1;
+
                 #region assign data for each currency
 
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Style = normalFormat;
                 if (isReportDetail && !isTotal && !isFooter)
                 {
-
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment =
                         HorizontalAlignmentStyle.Center;
 
@@ -616,7 +666,6 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         wsReport.Cells[startRow + nextRow, startCol + (nextCol++)].Value = string.Empty;
                     else
                         wsReport.Cells[startRow + nextRow, startCol + (nextCol++)].Value = CastAide.AsInt32(currentRow.RaceNo);
-
                 }
                 else
                 {
@@ -626,6 +675,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 //wsReport.Cells[startRow + nextRow, startCol + (nextCol++)].Value = isReportDetail ? currentRow.RaceNo : currentRow.Currency;
 
                 #region Agency
+
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Style = bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol++)].Value = CastAide.AsDouble(currentRow.AgencyWinTO);
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Style = bgFormat;
@@ -638,8 +688,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol++)].Value = CastAide.AsDouble(currentRow.AgencyCommIncome);
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Style = bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol++)].Value = CastAide.AsDouble(currentRow.AgencyPTWL);
-                #endregion
+
+                #endregion Agency
+
                 #region IBC
+
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Style = bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol++)].Value = CastAide.AsDouble(currentRow.IBCWinTO);
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Style = bgFormat;
@@ -658,8 +711,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol++)].Value = CastAide.AsDouble(currentRow.IBCPTWL);
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Style = bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol++)].Value = CastAide.AsDouble(currentRow.IBCNetIncome);
-                #endregion
+
+                #endregion IBC
+
                 #region Parner
+
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Style = bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol++)].Value = CastAide.AsDouble(currentRow.PartnerWinTO);
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Style = bgFormat;
@@ -676,8 +732,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol++)].Value = CastAide.AsDouble(currentRow.PartnerToteFee);
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Style = bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(currentRow.PartnerAmountDue);
-                #endregion
-                #endregion
+
+                #endregion Parner
+
+                #endregion assign data for each currency
+
                 _nextCol = nextCol;
                 nextRow++;
             }
@@ -771,12 +830,12 @@ namespace Sunplus.Accounting.Business.Report.Racing
             foreach (var currentRow in pool.ToList())
             {
                 var nextCol = 1;
+
                 #region assign data for each currency
 
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Style = normalFormat;
                 if (isReportDetail && !isTotal && !isFooter)
                 {
-
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment =
                         HorizontalAlignmentStyle.Center;
 
@@ -784,7 +843,6 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         wsReport.Cells[startRow + nextRow, startCol + (nextCol++)].Value = string.Empty;
                     else
                         wsReport.Cells[startRow + nextRow, startCol + (nextCol++)].Value = CastAide.AsInt32(currentRow.RaceNo);
-
                 }
                 else
                 {
@@ -794,6 +852,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 //wsReport.Cells[startRow + nextRow, startCol + (nextCol++)].Value = isReportDetail ? currentRow.RaceNo : currentRow.Currency;
 
                 #region Agency
+
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Style = bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol++)].Value = CastAide.AsDouble(currentRow.AgencyWinTO);
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Style = bgFormat;
@@ -806,8 +865,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol++)].Value = CastAide.AsDouble(currentRow.AgencyCommIncome);
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Style = bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol++)].Value = CastAide.AsDouble(currentRow.AgencyPTWL);
-                #endregion
+
+                #endregion Agency
+
                 #region IBC
+
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Style = bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol++)].Value = CastAide.AsDouble(currentRow.IBCWinTO);
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Style = bgFormat;
@@ -826,8 +888,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol++)].Value = CastAide.AsDouble(currentRow.IBCPTWL);
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Style = bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol++)].Value = CastAide.AsDouble(currentRow.IBCNetIncome);
-                #endregion
+
+                #endregion IBC
+
                 #region Parner
+
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Style = bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol++)].Value = CastAide.AsDouble(currentRow.PartnerWinTO);
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Style = bgFormat;
@@ -844,8 +909,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol++)].Value = CastAide.AsDouble(currentRow.PartnerToteFee);
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Style = bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(currentRow.PartnerAmountDue);
-                #endregion
-                #endregion
+
+                #endregion Parner
+
+                #endregion assign data for each currency
+
                 _nextCol = nextCol;
                 nextRow++;
             }
@@ -864,9 +932,10 @@ namespace Sunplus.Accounting.Business.Report.Racing
             }
         }
 
-        #endregion
+        #endregion Horse Racing Daily - assign for each row
 
         #region Racing Group
+
         public void ExportToExcelWinLossRacingGroup(string fromDate, string toDate)
         {
             try
@@ -875,7 +944,6 @@ namespace Sunplus.Accounting.Business.Report.Racing
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -885,22 +953,31 @@ namespace Sunplus.Accounting.Business.Report.Racing
         private void RacingGroupMain(string fromDate, string toDate, bool isExport, bool isSendMail, string To, string Cc, string Subject, string Content)
         {
             #region local variables
+
             var startCol = 0;
             var startRow = 3;
             var nextRow = 0;
             var reportName = string.Format("{0}-From-{1}-To-{2}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblRacingGroupDaily").Replace(" ", ""), fromDate, toDate);
             var excelFile = new ExcelFile();
             var wsReport = excelFile.Worksheets.Add(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblRacingGroupDaily"));
-            #endregion
+
+            #endregion local variables
 
             #region Assign Header
+
             #region report title
+
             wsReport.Cells[startRow - 3, startCol].Style.Font.Weight = ExcelFont.BoldWeight;
             wsReport.Cells[startRow - 3, startCol].Value = string.Format("{0} - From {1} To {2}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblRacingGroupDaily"), fromDate, toDate);
-            #endregion
+
+            #endregion report title
+
             RacingGroupAssignHeader(ref wsReport, startRow, startCol);
-            #endregion
+
+            #endregion Assign Header
+
             #region Assign Content
+
             var getSession = SessionExtension.GetSession(HttpContext.Current.Session, _winLossRacingGroupReportSessionKey)
                 != null ? (RacingWinlossGroupDTO)SessionExtension.GetSession(HttpContext.Current.Session, _winLossRacingGroupReportSessionKey) :
                 GetRacingWinlossGroup(fromDate, toDate);
@@ -920,9 +997,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     RacingGroupAssignContent(ref wsReport, startRow, startCol, ref nextRow,
                         getSession.Total, false, true);
             }
-            #endregion
+
+            #endregion Assign Content
 
             #region response
+
             if (isExport)
             {
                 var response = HttpContext.Current.Response;
@@ -935,12 +1014,15 @@ namespace Sunplus.Accounting.Business.Report.Racing
             {
                 var memoryStream = new MemoryStream();
                 excelFile.SaveXls(memoryStream);
+
                 #region mail setting
+
                 var title = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblRacingGroupDaily");
                 var emailSubject = string.Format("{0} from {1} to {2}", title, fromDate, toDate);
                 var emailContent = string.Format("{0}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblRacingGroupDailyMailContent"));
                 var mailSetting = MailSection.Instance[MailSection.Setting.Send]["RacingGroup"].Mails["GroupDaily"];
-                #endregion
+
+                #endregion mail setting
 
                 //SendMailExtension.SendMail(MailSection.HostName.Gmail, mailSetting.To, mailSetting.Cc, title,
                 //                           emailSubject, emailContent, memoryStream, string.Format("{0}.xls", reportName));
@@ -954,7 +1036,8 @@ namespace Sunplus.Accounting.Business.Report.Racing
 
                 SendMailExtension.AccSendMail(MailSection.HostName.Gmail, To, Cc, title, Subject, Content, mailAttachment);
             }
-            #endregion
+
+            #endregion response
         }
 
         //private void RacingGroupMain(string fromDate, string toDate, bool isExport, bool isSendMail)
@@ -1202,9 +1285,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
         //        nextRow++;
         //    }
         //}
-        #endregion
+
+        #endregion Racing Group
 
         #region Racing Group For Tote
+
         //public void ExportToExcelWinLossRacingGroupForTote(string fromDate, string toDate)
         //{
         //    RacingGroupForToteMain(fromDate, toDate, true, false);
@@ -1235,7 +1320,6 @@ namespace Sunplus.Accounting.Business.Report.Racing
         //        GetRacingWinlossGroupForTote(fromDate, toDate);
         //    if (getSession != null && getSession.Items.Count > 0)
         //    {
-
         //        RacingGroupForToteAssignContent(ref wsReport, startRow, startCol, ref nextRow, getSession.Items
         //                , false, false);
 
@@ -1287,6 +1371,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
         private void RacingGroupForToteMain(string fromDate, string toDate, bool isExport, bool isSendMail, string To, string Cc, string Subject, string Content)
         {
             #region local variables
+
             var startCol = 0;
             var startRow = 3;
             var nextRow = 0;
@@ -1294,22 +1379,29 @@ namespace Sunplus.Accounting.Business.Report.Racing
             var reportName = string.Format("{0}-From-{1}-To-{2}", title.Replace(" ", ""), fromDate, toDate);
             var excelFile = new ExcelFile();
             var wsReport = excelFile.Worksheets.Add(title);
-            #endregion
+
+            #endregion local variables
 
             #region Assign Header
+
             #region report title
+
             wsReport.Cells[startRow - 3, startCol].Style.Font.Weight = ExcelFont.BoldWeight;
             wsReport.Cells[startRow - 3, startCol].Value = string.Format("{0} - From {1} To {2}", title, fromDate, toDate);
-            #endregion
+
+            #endregion report title
+
             RacingGroupForToteAssignHeader(ref wsReport, startRow, startCol);
-            #endregion
+
+            #endregion Assign Header
+
             #region Assign Content
+
             var getSession = SessionExtension.GetSession(HttpContext.Current.Session, _winLossRacingGroupReportSessionKey)
                 != null ? (RacingWinlossGroupDayBO)SessionExtension.GetSession(HttpContext.Current.Session, _winLossRacingGroupForToteReportSessionKey) :
                 GetRacingWinlossGroupForTote(fromDate, toDate);
             if (getSession != null && getSession.Items.Count > 0)
             {
-
                 RacingGroupForToteAssignContent(ref wsReport, startRow, startCol, ref nextRow, getSession.Items
                         , false, false);
 
@@ -1322,9 +1414,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                                                     total, false, true);
                 }
             }
-            #endregion
+
+            #endregion Assign Content
 
             #region response
+
             if (isExport)
             {
                 var response = HttpContext.Current.Response;
@@ -1337,12 +1431,15 @@ namespace Sunplus.Accounting.Business.Report.Racing
             {
                 var memoryStream = new MemoryStream();
                 excelFile.SaveXls(memoryStream);
+
                 #region mail setting
 
                 var emailSubject = string.Format("{0} from {1} to {2}", title, fromDate, toDate);
                 var emailContent = string.Format("{0}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblRacingGroupDailyMailContent"));
                 var mailSetting = MailSection.Instance[MailSection.Setting.Send]["RacingGroup"].Mails["GroupDailyForTote"];
-                #endregion
+
+                #endregion mail setting
+
                 //SendMailExtension.SendMail(MailSection.HostName.Gmail, mailSetting.To, mailSetting.Cc, title,
                 //                           emailSubject, emailContent, memoryStream, string.Format("{0}.xls", reportName));
 
@@ -1355,7 +1452,8 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 SendMailExtension.AccSendMail(MailSection.HostName.Gmail, To, Cc, title,
                                               Subject, Content, mailAttachment);
             }
-            #endregion
+
+            #endregion response
         }
 
         //private void RacingGroupForToteAssignHeader(ref ExcelWorksheet wsReport, int startRow, int startCol)
@@ -1479,7 +1577,6 @@ namespace Sunplus.Accounting.Business.Report.Racing
         //        wsWinLoss.Cells[startRow + nextrow, startCol + (nextCol++)].Style = bgFormat;
         //        wsWinLoss.Cells[startRow + nextrow, startCol + nextCol].Value = CastAide.AsDouble(item.IBCTotalIncome);
 
-
         //        wsWinLoss.Cells[startRow + nextrow, startCol + (nextCol++)].Style = bgFormat;
         //        wsWinLoss.Cells[startRow + nextrow, startCol + nextCol].Value = CastAide.AsDouble(item.One2BetPT);
         //        wsWinLoss.Cells[startRow + nextrow, startCol + (nextCol++)].Style = bgFormat;
@@ -1501,7 +1598,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
         //    wsReport = wsWinLoss;
         //}
 
-        #endregion
+        #endregion Racing Group For Tote
 
         #region Racing daily report for tote
 
@@ -1531,21 +1628,24 @@ namespace Sunplus.Accounting.Business.Report.Racing
             wsReport.Columns[13].Width = 15 * 256;
             wsReport.Columns[14].Width = 15 * 256;
             wsReport.Columns[15].Width = 15 * 256;
-            #endregion
+
+            #endregion width of cols
 
             #region Assign header
-            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol , startRow, startCol).Merged = true;
-            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol , startRow, startCol).Style = bgHeaderNormalFormat;
-            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol , startRow, startCol).Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMeetingCurrency");
-            
+
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol, startRow, startCol).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol, startRow, startCol).Style = bgHeaderNormalFormat;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol, startRow, startCol).Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMeetingCurrency");
+
             nextCol++;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Style = bgHeaderNormalFormat;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Race"); ;
 
             #region Member
+
             nextCol++;
-            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow - 1, startCol + (nextCol + 4 )).Merged = true;
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow - 1, startCol + (nextCol + 4)).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow - 1, startCol + (nextCol + 4)).Style = bgHeaderNormalFormatMember;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow - 1, startCol + (nextCol + 4)).Value =
                 ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "MemberOverall");
@@ -1560,13 +1660,15 @@ namespace Sunplus.Accounting.Business.Report.Racing
             wsReport.Cells[startRow, startCol + nextCol].Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblTotalTO");
             wsReport.Cells[startRow, startCol + (nextCol += 1)].Style = bgHeaderNormalFormatMember;
             wsReport.Cells[startRow, startCol + nextCol].Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDividendWon");
-            #endregion
+
+            #endregion Member
 
             #region Licensee
+
             nextCol++;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow - 1, startCol + (nextCol + 5)).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow - 1, startCol + (nextCol + 5)).Style = bgHeaderNormalFormatLicensee;
-            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow - 1, startCol + (nextCol + 5)).Value = "Licensee ("+ site +")";
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow - 1, startCol + (nextCol + 5)).Value = "Licensee (" + site + ")";
 
             //Begin IBC
             if (WebSettings.IsApply50PercentRacingReport)
@@ -1576,7 +1678,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol + 6), startRow - 1, startCol + (nextCol + 7)).Value = "IBC";
             }
             //End IBC
-            
+
             wsReport.Cells[startRow, startCol + nextCol].Style = bgHeaderNormalFormatLicensee;
             wsReport.Cells[startRow, startCol + nextCol].Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblWinTO");
             wsReport.Cells[startRow, startCol + (nextCol += 1)].Style = bgHeaderNormalFormatLicensee;
@@ -1585,7 +1687,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
             wsReport.Cells[startRow, startCol + nextCol].Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblWPTO");
             wsReport.Cells[startRow, startCol + (nextCol += 1)].Style = bgHeaderNormalFormatLicensee;
             wsReport.Cells[startRow, startCol + nextCol].Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblTotalTO");
-            
+
             wsReport.Cells[startRow, startCol + (nextCol += 1)].Style = bgHeaderNormalFormatLicensee;
             wsReport.Cells[startRow, startCol + nextCol].Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "PTWinloss");
             wsReport.Cells[startRow, startCol + (nextCol += 1)].Style = bgHeaderNormalFormatLicensee;
@@ -1600,15 +1702,15 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 wsReport.Cells[startRow, startCol + nextCol].Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblCommIncome");
             }
             //End IBC
-            #endregion
 
-
+            #endregion Licensee
 
             nextCol++;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Style = bgHeaderNormalFormat;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAmountduetoIBC");
-            #endregion
+
+            #endregion Assign header
         }
 
         public void ExportToExcelContentWinlossRacingLicenseeDetailsPt(ref ExcelWorksheet wsReport, int startRow, int startCol,
@@ -1623,7 +1725,9 @@ namespace Sunplus.Accounting.Business.Report.Racing
             foreach (RacingDailyBySiteRow item in racingDailyBySiteRows)
             {
                 var nextCol = 0;
+
                 #region left cols
+
                 if (isMeetingTotal || isFooter)
                 {
                     wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow,
@@ -1670,10 +1774,10 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = item.CurrencyName;
                     else
                         wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsInt32(item.Race);
-
-
                 }
-                #endregion
+
+                #endregion left cols
+
                 #region right cols
 
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgFormat;
@@ -1711,7 +1815,9 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 //End iBC
 
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsDouble(item.Amountdueto);
-                #endregion
+
+                #endregion right cols
+
                 currentRow++;
                 nextRow++;
             }
@@ -1720,6 +1826,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
         public void ExportToExcelWinlossRacingLicenseeDetailsPt(string winlossDate, string site, string reportTitle)
         {
             #region excel format
+
             const int startCol = 0;
             const int startRow = 2;
             var nextRow = 1;
@@ -1729,14 +1836,17 @@ namespace Sunplus.Accounting.Business.Report.Racing
             var excelFile = new ExcelFile();
             var wsReport = excelFile.Worksheets.Add(string.Format("{0}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language,
                                                                                 "lblRacingWinlossBySite").Replace(" ", "")));
-            #endregion
+
+            #endregion excel format
 
             #region header
+
             wsReport.Cells[startRow - 2, startCol].Style.Font.Weight = ExcelFont.BoldWeight;
             wsReport.Cells[startRow - 2, startCol].Value = reportTitle;
             ExportToExcelHeaderWinlossRacingLicenseeDetailsPt(ref wsReport, startRow, startCol, site);
-            #endregion
-            
+
+            #endregion header
+
             #region content
 
             var getReportData = SessionExtension.GetSession(HttpContext.Current.Session,
@@ -1784,37 +1894,46 @@ namespace Sunplus.Accounting.Business.Report.Racing
                                                                          listFooter);
             }
 
-            #endregion
-            
+            #endregion content
+
             #region response file
+
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
             excelFile.SaveXls(response.OutputStream);
-            #endregion
+
+            #endregion response file
         }
 
         public void ExportToExcelRacingDailyReportForTote(string reportTitle, string winlostDate)
         {
             #region local variables
+
             var startCol = 0;
             var startRow = 3;
             var nextRow = 0;
             var reportName = "RacingDailyReportForTote";
             var excelFile = new ExcelFile();
             var wsReport = excelFile.Worksheets.Add("RacingDailyReportForTote");
-            #endregion
+
+            #endregion local variables
 
             #region Assign Header
+
             #region report title
+
             wsReport.Cells.GetSubrangeAbsolute(startRow - 3, startCol, startRow - 3, startCol + 24).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 3, startCol, startRow - 3, startCol + 24).Style.Font.Weight =
                 ExcelFont.BoldWeight;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 3, startCol, startRow - 3, startCol + 24).Value = reportTitle;
-            #endregion
+
+            #endregion report title
+
             ExportToExcelRacingDailyReportForToteAssignHeader(ref wsReport, startRow, startCol);
-            #endregion
+
+            #endregion Assign Header
 
             #region content
 
@@ -1846,7 +1965,6 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         ExportToExcelRacingDailyReportForToteAssignContent(ref wsReport, startRow, startCol, ref nextRow,
                                                                                racingByCurrency.GroupTotals, false, false,
                                                                                true, false, true);
-
                 }
                 //nextRow++;
                 ExportToExcelRacingDailyReportForToteAssignContent(ref wsReport, startRow, startCol, ref nextRow,
@@ -1854,21 +1972,23 @@ namespace Sunplus.Accounting.Business.Report.Racing
                                                                            false, true, true);
             }
 
-            #endregion
+            #endregion content
 
             #region response
+
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
             excelFile.SaveXls(response.OutputStream);
 
-            #endregion
+            #endregion response
         }
 
         private static void ExportToExcelRacingDailyReportForToteAssignHeader(ref ExcelWorksheet wsReport, int startRow, int startCol)
         {
             #region local variables
+
             var meetingCurrencyTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMeetingCurrency");
             var agencyTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAgency");
             var ibcTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblIbc");
@@ -1897,7 +2017,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
             var ibcMergeCols = 8;
             var plumelelaMergeCols = 7;
 
-            #endregion
+            #endregion local variables
 
             #region set with for each col
 
@@ -1926,7 +2046,9 @@ namespace Sunplus.Accounting.Business.Report.Racing
             wsReport.Columns[startCol + 22].Width = 14 * 256;
             wsReport.Columns[startCol + 23].Width = 14 * 256;
             wsReport.Columns[startCol + 24].Width = 14 * 256;
-            #endregion
+
+            #endregion set with for each col
+
             #region first row
 
             wsReport.Cells[startRow - 2, startCol].Style = bgHeaderNormalFormat;
@@ -1957,7 +2079,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol, startRow - 2,
                                                startCol + (nextCol + plumelelaMergeCols)).Value = plumelelaTitle;
 
-            #endregion
+            #endregion first row
 
             #region second row
 
@@ -1966,7 +2088,9 @@ namespace Sunplus.Accounting.Business.Report.Racing
             wsReport.Cells[startRow - 1, startCol].Value = meetingCurrencyTitle;
             wsReport.Cells[startRow - 1, startCol + nextCol].Style = bgHeaderIbcFormat;
             wsReport.Cells[startRow - 1, startCol + nextCol].Value = raceTitle;
+
             #region Agency
+
             wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow - 1, startCol + nextCol].Value = winToTitle;
             wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeaderNormalFormat;
@@ -1979,8 +2103,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
             wsReport.Cells[startRow - 1, startCol + nextCol].Value = comincomeTitle;
             wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow - 1, startCol + nextCol].Value = ptWinLossTitle;
-            #endregion
+
+            #endregion Agency
+
             #region ibc
+
             wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeaderIbcFormat;
             wsReport.Cells[startRow - 1, startCol + nextCol].Value = winToTitle;
             wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeaderIbcFormat;
@@ -1999,8 +2126,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
             wsReport.Cells[startRow - 1, startCol + nextCol].Value = ptWinLossTitle;
             wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeaderIbcFormat;
             wsReport.Cells[startRow - 1, startCol + nextCol].Value = netCommTitle;
-            #endregion
+
+            #endregion ibc
+
             #region plumelela
+
             wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow - 1, startCol + nextCol].Value = winToTitle;
             wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeaderNormalFormat;
@@ -2017,8 +2147,10 @@ namespace Sunplus.Accounting.Business.Report.Racing
             wsReport.Cells[startRow - 1, startCol + nextCol].Value = pgiAmtoteFeeTitle;
             wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow - 1, startCol + nextCol].Value = amountDueTitle;
-            #endregion
-            #endregion
+
+            #endregion plumelela
+
+            #endregion second row
         }
 
         private static void ExportToExcelRacingDailyReportForToteAssignContent(ref ExcelWorksheet wsReport, int startRow, int startCol,
@@ -2038,7 +2170,9 @@ namespace Sunplus.Accounting.Business.Report.Racing
             foreach (RacingDailyWinLossRow racingDailyWinLossRow in racingDailyWinLossRows)
             {
                 var nextCol = 1;
+
                 #region left cols
+
                 if (isMeetingTotal)
                 {
                     wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + nextCol).Merged = true;
@@ -2050,7 +2184,6 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 }
                 else
                 {
-
                     if (currentRow == 0)
                     {
                         wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow + racingDailyWinLossRows.Count - 1,
@@ -2080,11 +2213,12 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     {
                         wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsInt32(racingDailyWinLossRow.Race);
                     }
-
-
                 }
-                #endregion
+
+                #endregion left cols
+
                 #region Agency
+
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDecimal(racingDailyWinLossRow.AgWinTO);
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
@@ -2097,8 +2231,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDecimal(racingDailyWinLossRow.AgCommIncome);
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDecimal(racingDailyWinLossRow.AgPTWL);
-                #endregion
+
+                #endregion Agency
+
                 #region IBC
+
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDecimal(racingDailyWinLossRow.IBCWinTO);
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
@@ -2117,8 +2254,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDecimal(racingDailyWinLossRow.IBCPT);
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDecimal(racingDailyWinLossRow.IBCNetIncome);
-                #endregion
+
+                #endregion IBC
+
                 #region Plumelela
+
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDecimal(racingDailyWinLossRow.PhuWinTO);
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
@@ -2135,7 +2275,8 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDecimal(racingDailyWinLossRow.PhuAmountFee);
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
                 wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDecimal(racingDailyWinLossRow.PhuAmountDue);
-                #endregion
+
+                #endregion Plumelela
 
                 currentRow++;
                 nextRow++;
@@ -2143,7 +2284,9 @@ namespace Sunplus.Accounting.Business.Report.Racing
             if (isPoolTotal || isGroupTotal)
                 nextRow++;
         }
-        #endregion
-        #endregion
+
+        #endregion Racing daily report for tote
+
+        #endregion Export 2 excel
     }
 }

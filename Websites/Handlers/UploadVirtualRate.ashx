@@ -8,7 +8,6 @@ using System.Web.SessionState;
 using DNAide.Web;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
-using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using DNAide.Data;
 using DNAide.Core;

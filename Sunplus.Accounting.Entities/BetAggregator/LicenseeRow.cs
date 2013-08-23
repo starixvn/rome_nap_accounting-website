@@ -28,20 +28,18 @@ namespace Sunplus.Accounting.Entities.BetAggregator
         [DataMember]
         public string BetCount { get; set; }
 
-
         [DataMember]
         public string Turnover { get; set; }
 
         [DataMember]
         public string Winlost { get; set; }
-        
+
         [DataMember]
         public string Comm { get; set; }
 
         [DataMember]
         public string Total { get; set; }
 
-        
         [DataMember]
         public string AWinlost { get; set; }
 
@@ -56,7 +54,6 @@ namespace Sunplus.Accounting.Entities.BetAggregator
 
         [DataMember]
         public string Company { get; set; }
-
     }
 
     [Serializable]
@@ -83,7 +80,6 @@ namespace Sunplus.Accounting.Entities.BetAggregator
         [DataMember]
         public string BetCount { get; set; }
 
-
         [DataMember]
         public string Turnover { get; set; }
 
@@ -107,7 +103,5 @@ namespace Sunplus.Accounting.Entities.BetAggregator
 
         [DataMember]
         public string AmtDuetoRB { get; set; }
-
     }
-
 }

@@ -71,7 +71,7 @@ namespace Sunplus.Accounting.Core.Common
             }
         }
 
-        #endregion
+        #endregion Nested type: Customer
 
         #region Nested type: ExchangeRate
 
@@ -83,7 +83,7 @@ namespace Sunplus.Accounting.Core.Common
             }
         }
 
-        #endregion
+        #endregion Nested type: ExchangeRate
 
         #region Nested type: Report
 
@@ -100,7 +100,7 @@ namespace Sunplus.Accounting.Core.Common
             }
         }
 
-        #endregion
+        #endregion Nested type: Report
 
         #region Nested type: Settings
 
@@ -136,10 +136,10 @@ namespace Sunplus.Accounting.Core.Common
 
             public static bool IsVisibleAbnormal
             {
-                 get { return IsVisibleFunction(Enumerations.Functions.Setting.Abnormal); }
+                get { return IsVisibleFunction(Enumerations.Functions.Setting.Abnormal); }
             }
         }
 
-        #endregion
+        #endregion Nested type: Settings
     }
 }

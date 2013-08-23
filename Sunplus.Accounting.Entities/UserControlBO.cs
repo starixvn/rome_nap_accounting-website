@@ -9,7 +9,6 @@ namespace Sunplus.Accounting.Entities
         [DataMember]
         public int ID { get; set; }
 
-
         [DataMember]
         public int ParentId { get; set; }
 

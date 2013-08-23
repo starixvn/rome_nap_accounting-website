@@ -1,19 +1,17 @@
-using DNAide.Core;
-using DNAide.Web;
 using System;
+using System.Collections;
 using System.Data;
 using System.Text;
-using Sunplus.Accounting.Entities.Customer;
+using DNAide.Core;
+using DNAide.Data;
+using DNAide.Web;
+using IBCUtils;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
-using Sunplus.Core.LoggingLib;
-using System.Collections;
-using IBCUtils;
-using DNAide.Data;
-
-using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Entities.Customer;
 
 /// <summary>
 /// Summary description for Customer
@@ -28,6 +26,7 @@ namespace Sunplus.Accounting.Business.Customer
             // TODO: Add constructor logic here
             //
         }
+
         public static string GetListSite(bool isAddNewSuper, string system)
         {
             var html = new StringBuilder();
@@ -42,7 +41,6 @@ namespace Sunplus.Accounting.Business.Customer
                     bool enableDeposit = WebSettings.IsApplySplitingDepositeCustomer;
                     foreach (DataRow dr in tbl.Rows)
                     {
-                        
                         if (CastAide.AsBoolean(dr["isLicensee"]) && enableDeposit) continue;
                         html.Append("<option value=\"" + dr["site"] + "\">" + dr["site"] + "</option>");
                     }
@@ -50,12 +48,9 @@ namespace Sunplus.Accounting.Business.Customer
             }
             catch (Exception ex)
             {
-
             }
             return html.ToString();
         }
-
-       
 
         /// <summary>
         /// Get currency list by System
@@ -75,14 +70,13 @@ namespace Sunplus.Accounting.Business.Customer
                 {
                     DataTable tbl = ds.ResultSet.Tables[0];
                     EnumerableRowCollection<DataRow> currencies = tbl.AsEnumerable();
-                  
-                    if(isSearchFilter)
+
+                    if (isSearchFilter)
                         html.Append("<option value=''>All</option>");
-                    if(isAddNewSuper)
+                    if (isAddNewSuper)
                         html.Append("<option value=''>Select</option>");
                     if (checkHorseRacing)
                     {
-                        
                         foreach (DataRow dr in currencies)
                         {
                             html.Append("<option value=\"" + dr["exchangeid"] + "_" + dr["HRAllowed"] + "\">" +
@@ -91,24 +85,19 @@ namespace Sunplus.Accounting.Business.Customer
                     }
                     else
                     {
-                        
                         foreach (DataRow dr in currencies)
                         {
                             html.Append("<option value=\"" + dr["exchangeid"] + "\">" + dr["currency"] + "</option>");
                         }
-
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
             }
             return html.ToString();
         }
 
-        
-        
         public static string GetListGroup(double maxValue, double currentVal)
         {
             StringBuilder html = new StringBuilder();
@@ -131,16 +120,17 @@ namespace Sunplus.Accounting.Business.Customer
                     groupValue = groupValue - 5;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
             }
             return html.ToString();
         }
+
         public static string GetListGroup(double maxValue)
         {
             return GetListGroup(maxValue, 0);
         }
+
         //phuong.nguyen
         //Overload with interval parameter
         public static string GetListGroup(double maxValue, double currentVal, int interval)
@@ -165,12 +155,12 @@ namespace Sunplus.Accounting.Business.Customer
                     groupValue = groupValue - interval;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-               
             }
             return html.ToString();
         }
+
         public static string GetListOtherComm(double maxValue, double currentVal)
         {
             StringBuilder html = new StringBuilder();
@@ -194,12 +184,12 @@ namespace Sunplus.Accounting.Business.Customer
                     groupValue = groupValue - 5;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-               
             }
             return html.ToString();
         }
+
         public static string GetListOtherComm(double maxValue, double currentVal, int interval)
         {
             StringBuilder html = new StringBuilder();
@@ -223,16 +213,18 @@ namespace Sunplus.Accounting.Business.Customer
                     groupValue = groupValue - interval;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return html.ToString();
         }
+
         public static string GetListOtherComm(double maxValue)
         {
             return GetListOtherComm(maxValue, 0);
         }
+
         public static string GetListPositionTaking(double fromValue, double toValue)
         {
             StringBuilder html = new StringBuilder();
@@ -247,12 +239,12 @@ namespace Sunplus.Accounting.Business.Customer
                     intToValue = intToValue - 1;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-               
             }
             return html.ToString();
         }
+
         public static string GetListPositionTaking(double fromValue, double toValue, double currentValue)
         {
             StringBuilder html = new StringBuilder();
@@ -283,9 +275,8 @@ namespace Sunplus.Accounting.Business.Customer
                 }
                 content += html.ToString();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
             }
             return content;
         }
@@ -332,22 +323,22 @@ namespace Sunplus.Accounting.Business.Customer
                 TemplateHandler.Assign(ref strHtml, "{col}", col);
                 TemplateHandler.Assign(ref strHtml, "{hdp-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "HandicapNextGoal"));
                 TemplateHandler.Assign(ref strHtml, "{ou-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "OverUnder"));
-                TemplateHandler.Assign(ref strHtml, "{1sthdp-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "FirstHdp") );
-                TemplateHandler.Assign(ref strHtml, "{1stou-text}",ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "FirstOU") );
-                TemplateHandler.Assign(ref strHtml, "{oe-text}",ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "OddEven") );
-                TemplateHandler.Assign(ref strHtml, "{1x2-text}",ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "str1x2") );
-                TemplateHandler.Assign(ref strHtml, "{cs-text}",ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "CorrectScore"));
-                TemplateHandler.Assign(ref strHtml, "{tg-text}",ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "TotalGoal") );
-                TemplateHandler.Assign(ref strHtml, "{mp-text}",ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "MixParlay") );
-                TemplateHandler.Assign(ref strHtml, "{or-text}",ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Outright"));
+                TemplateHandler.Assign(ref strHtml, "{1sthdp-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "FirstHdp"));
+                TemplateHandler.Assign(ref strHtml, "{1stou-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "FirstOU"));
+                TemplateHandler.Assign(ref strHtml, "{oe-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "OddEven"));
+                TemplateHandler.Assign(ref strHtml, "{1x2-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "str1x2"));
+                TemplateHandler.Assign(ref strHtml, "{cs-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "CorrectScore"));
+                TemplateHandler.Assign(ref strHtml, "{tg-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "TotalGoal"));
+                TemplateHandler.Assign(ref strHtml, "{mp-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "MixParlay"));
+                TemplateHandler.Assign(ref strHtml, "{or-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Outright"));
                 html.Append(strHtml);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
             }
             return html.ToString();
         }
+
         public static string LoadSoccerPTHeader_v2(bool showAutoPT, bool editMixMaxPT, string sporttype, DataRow dr, string prefix)
         {
             StringBuilder html = new StringBuilder();
@@ -365,7 +356,7 @@ namespace Sunplus.Accounting.Business.Customer
                 TemplateHandler.Assign(ref content, "{correctscore}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "CorrectScore"));
                 TemplateHandler.Assign(ref content, "{totalgoal}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "TotalGoal"));
                 TemplateHandler.Assign(ref content, "{mixparlay}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "MixParlay"));
-                TemplateHandler.Assign(ref content, "{outright}",  ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Outright"));
+                TemplateHandler.Assign(ref content, "{outright}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Outright"));
                 TemplateHandler.Assign(ref content, "{PositionTaking}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "PositionTaking"));
 
                 TemplateHandler.Assign(ref content, "{cols}", (prefix == "s") ? "1" : "2");
@@ -396,12 +387,12 @@ namespace Sunplus.Accounting.Business.Customer
                 }
                 html.Append(content);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
             }
             return html.ToString();
         }
+
         public static string LoadBasketballPTHeader_v2(bool showAutoPT, bool editMixMaxPT, string sporttype, DataRow dr, string prefix)
         {
             StringBuilder html = new StringBuilder();
@@ -460,12 +451,12 @@ namespace Sunplus.Accounting.Business.Customer
                 }
                 html.Append(content);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-               
             }
             return html.ToString();
         }
+
         public static string LoadBaseballPTHeader_v2(bool showAutoPT, bool editMixMaxPT, string sporttype, DataRow dr, string prefix)
         {
             StringBuilder html = new StringBuilder();
@@ -511,12 +502,12 @@ namespace Sunplus.Accounting.Business.Customer
                 }
                 html.Append(content);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
             }
             return html.ToString();
         }
+
         public static string LoadFinalcialPTHeader_v2(bool showAutoPT, bool editMixMaxPT, string sporttype, DataRow dr, string prefix)
         {
             StringBuilder html = new StringBuilder();
@@ -561,12 +552,12 @@ namespace Sunplus.Accounting.Business.Customer
                 }
                 html.Append(content);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
             }
             return html.ToString();
         }
+
         public static string LoadHorseRacingPTHeader_v2(bool showAutoPT, bool editMixMaxPT, string sporttype, DataRow dr, string prefix)
         {
             StringBuilder html = new StringBuilder();
@@ -598,12 +589,12 @@ namespace Sunplus.Accounting.Business.Customer
                 }
                 html.Append(content);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-               
             }
             return html.ToString();
         }
+
         public static string LoadMotosportsPTHeader_v2(bool showAutoPT, bool editMixMaxPT, string sporttype, DataRow dr, string prefix)
         {
             StringBuilder html = new StringBuilder();
@@ -617,7 +608,6 @@ namespace Sunplus.Accounting.Business.Customer
                 TemplateHandler.Assign(ref content, "{BetSetting}", AddBetSetting(BetSetting, sporttype, dr));
 
                 TemplateHandler.Assign(ref content, "{PositionTaking}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "PositionTaking"));
-
 
                 if (editMixMaxPT)
                 {
@@ -648,12 +638,12 @@ namespace Sunplus.Accounting.Business.Customer
                 }
                 html.Append(content);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
             }
             return html.ToString();
         }
+
         public static string AddBetSetting(string tpl, string sporttype, DataRow dr)
         {
             try
@@ -697,12 +687,12 @@ namespace Sunplus.Accounting.Business.Customer
                 }
                 return tpl;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
                 return string.Empty;
             }
         }
+
         public static string LoadBasketballPTHeader()
         {
             StringBuilder html = new StringBuilder();
@@ -714,12 +704,13 @@ namespace Sunplus.Accounting.Business.Customer
                 TemplateHandler.Assign(ref content, "{oddeven}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "OddEven"));
                 html.Append(content);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return html.ToString();
         }
+
         public static void LoadTitleCommon(ref string content)
         {
             try
@@ -747,11 +738,11 @@ namespace Sunplus.Accounting.Business.Customer
                 TemplateHandler.Assign(ref content, "{othercomm}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "OtherComm"));
                 TemplateHandler.Assign(ref content, "{basketballPositionTaking}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "BasketballPositionTaking"));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
             }
         }
+
         public static string AssignMultipleHidden(Hashtable p)
         {
             StringBuilder html = new StringBuilder();
@@ -767,12 +758,12 @@ namespace Sunplus.Accounting.Business.Customer
                     html.Append(content + "\n");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
             }
             return html.ToString();
         }
+
         public static void DisplayLimitMinMaxBet(ref string strContent, DataTable tbl)
         {
             try
@@ -819,14 +810,14 @@ namespace Sunplus.Accounting.Business.Customer
                     TemplateHandler.Assign(ref strContent, "{per-maxb-none}", "none");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
 
         /// <summary>
-        /// This function used for 
+        /// This function used for
         /// </summary>
         /// <param name="tpl"></param>
         /// <param name="isEditMin"></param>
@@ -857,6 +848,7 @@ namespace Sunplus.Accounting.Business.Customer
             TemplateHandler.Assign(ref tpl, "{financial-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblFinancial"));
             TemplateHandler.Assign(ref tpl, "{horseracing-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblHorseRacing"));
         }
+
         public static void GetCredit(DataRow dr, ref string tpl, bool isEdit)
         {
             if (isEdit)
@@ -874,6 +866,7 @@ namespace Sunplus.Accounting.Business.Customer
             TemplateHandler.Assign(ref tpl, "{mpmMax}", "minmaxbet");
             TemplateHandler.Assign(ref tpl, "{credit-max}", FormatHandler.FormatNumber1(dr["Credit_Max"]));
         }
+
         public static string[] GetListNumber(string currentVal, bool isMember)
         {
             string[] result = { "", "" };
@@ -895,9 +888,9 @@ namespace Sunplus.Accounting.Business.Customer
                     strNextNo2 = no2;
                     result = new string[] { "", "", "" };
                 }
-                string[] arr = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", 
-                                   "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", 
-                                   "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", 
+                string[] arr = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+                                   "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
+                                   "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
                                    "U", "V", "W", "X", "Y", "Z"};
                 int index = 0;
                 if (isMember)
@@ -975,7 +968,6 @@ namespace Sunplus.Accounting.Business.Customer
                             }
                         }
                         strNextNo2 = arr[index + 1];
-
                     }
                 }
 
@@ -1003,7 +995,6 @@ namespace Sunplus.Accounting.Business.Customer
                 result[1] = htmlNo2.ToString();
                 if (isMember)
                     result[2] = htmlNo3.ToString();
-
             }
             catch (Exception ex)
             {
@@ -1013,7 +1004,7 @@ namespace Sunplus.Accounting.Business.Customer
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="strHtml"></param>
         /// <param name="isMult"></param>
@@ -1053,7 +1044,6 @@ namespace Sunplus.Accounting.Business.Customer
             {
                 TemplateHandler.Assign(ref strHtml, "{discountcs1x2-text}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lbl1x2Comm"));
             }
-
         }
 
         /// <summary>
@@ -1115,10 +1105,10 @@ namespace Sunplus.Accounting.Business.Customer
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
+
         //this function is used to assign value for Min Bet, Max Bet, Max Per Match in Adding, Multiple Editing case(agent->acc)
         public static void GetMinMaxAddValue(ref string tpl, int sportTypeId, DataRow dr)
         {
-
             if (sportTypeId == 1)
             {
                 TemplateHandler.Assign(ref tpl, "minbet" + sportTypeId.ToString() + "-val", DataFormat.FormatNumber1(dr["minbet_max"]));
@@ -1133,13 +1123,14 @@ namespace Sunplus.Accounting.Business.Customer
                 TemplateHandler.Assign(ref tpl, "maxpermatch" + sportTypeId.ToString() + "-val", DataFormat.FormatNumber1(dr["maxpermatchv" + sportTypeId.ToString() + "_max"]));
             }
         }
+
         public static void GetMinMaxAddValue(ref string tpl, int sportTypeId, string strReplace)
         {
             TemplateHandler.Assign(ref tpl, "minbet" + sportTypeId + "-val", strReplace);
             TemplateHandler.Assign(ref tpl, "maxbet" + sportTypeId + "-val", strReplace);
             TemplateHandler.Assign(ref tpl, "maxpermatch" + sportTypeId + "-val", strReplace);
-
         }
+
         //this function is used to assign value for Min Bet, Max Bet, Max Per Match in Single Editing case
         public static void GetMinMaxEditValue(ref string tpl, int sportTypeId, DataRow dr)
         {
@@ -1147,6 +1138,7 @@ namespace Sunplus.Accounting.Business.Customer
             TemplateHandler.Assign(ref tpl, "maxbet" + sportTypeId + "-val", DataFormat.FormatNumber1(dr["maxbetv" + sportTypeId]));
             TemplateHandler.Assign(ref tpl, "maxpermatch" + sportTypeId + "-val", DataFormat.FormatNumber1(dr["maxpermatchv" + sportTypeId]));
         }
+
         // this function to assign value for Balance transfer Condition (in Add New Master page)(agent->acc)
         public static void GetTranferTime(ref string tpl, Boolean isEdit)
         {
@@ -1248,7 +1240,7 @@ namespace Sunplus.Accounting.Business.Customer
 
         #region Check Permission for Accout
         //Tho Nguyen
-        
+
         public static bool CheckPermission(int custid, string funcName)
         {
             try
@@ -1269,6 +1261,7 @@ namespace Sunplus.Accounting.Business.Customer
                 return false;
             }
         }
+
         #endregion
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
-using DNAide.Data;
 using System.Data;
+using DNAide.Data;
 
 namespace Sunplus.Accounting.DataAccess.IReportDAO
 {

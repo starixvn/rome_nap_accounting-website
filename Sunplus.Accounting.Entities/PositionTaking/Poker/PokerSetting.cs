@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Sunplus.Accounting.Entities.Customer;
 
@@ -18,7 +15,7 @@ namespace Sunplus.Accounting.Entities.PositionTaking.Poker
 
         [DataMember]
         public List<GameTypeSetting> GameSettings { get; set; }
-        
+
         [DataMember]
         public int errCode { get; set; }
 

@@ -1,88 +1,85 @@
 ﻿using System.Configuration;
-using Sunplus.Accounting.Core.Common;
 
 namespace Sunplus.Accounting.Core.Configurations
 {
     public class IBCAccounting : ConfigurationSection
     {
-        
-
         [ConfigurationProperty("Casino", IsRequired = true)]
         public CasinoElements Casino
         {
-            get { return (CasinoElements) base["Casino"]; }
+            get { return (CasinoElements)base["Casino"]; }
         }
 
         [ConfigurationProperty("IBCCustomer", IsRequired = true)]
         public IBCCustomerElements IBCCustomer
         {
-            get { return (IBCCustomerElements) base["IBCCustomer"]; }
+            get { return (IBCCustomerElements)base["IBCCustomer"]; }
         }
 
         [ConfigurationProperty("PositionTaking", IsRequired = true)]
         public PositionTakingElement PositionTaking
         {
-            get { return (PositionTakingElement) base["PositionTaking"]; }
+            get { return (PositionTakingElement)base["PositionTaking"]; }
         }
 
         [ConfigurationProperty("Utils", IsRequired = false)]
         public UtilsElements Utils
         {
-            get { return (UtilsElements) base["Utils"]; }
+            get { return (UtilsElements)base["Utils"]; }
         }
 
         [ConfigurationProperty("Report", IsRequired = false)]
         public ReportElements Report
         {
-            get { return (ReportElements) base["Report"]; }
+            get { return (ReportElements)base["Report"]; }
         }
 
         [ConfigurationProperty("Betlist", IsRequired = false)]
         public BetlistElements Betlist
         {
-            get { return (BetlistElements) base["Betlist"]; }
+            get { return (BetlistElements)base["Betlist"]; }
         }
 
         [ConfigurationProperty("Customer", IsRequired = false)]
         public CustomerElements Customer
         {
-            get { return (CustomerElements) base["Customer"]; }
+            get { return (CustomerElements)base["Customer"]; }
         }
 
         [ConfigurationProperty("SpecialDelete", IsRequired = true)]
         public SpecialDeleteElements SpecialDelete
         {
-            get { return (SpecialDeleteElements) base["SpecialDelete"]; }
+            get { return (SpecialDeleteElements)base["SpecialDelete"]; }
         }
 
         [ConfigurationProperty("CustSetting", IsRequired = true)]
         public CustSettingElements CustSetting
         {
-            get { return (CustSettingElements) base["CustSetting"]; }
+            get { return (CustSettingElements)base["CustSetting"]; }
         }
 
         [ConfigurationProperty("Settle", IsRequired = true)]
         public SettleElements Settle
         {
-            get { return (SettleElements) base["Settle"]; }
+            get { return (SettleElements)base["Settle"]; }
         }
 
         [ConfigurationProperty("ExChangeRate", IsRequired = true)]
         public ExChangeRateElements ExChangeRate
         {
-            get { return (ExChangeRateElements) base["ExChangeRate"]; }
+            get { return (ExChangeRateElements)base["ExChangeRate"]; }
         }
 
         [ConfigurationProperty("News", IsRequired = true)]
         public NewsElements News
         {
-            get { return (NewsElements) base["News"]; }
+            get { return (NewsElements)base["News"]; }
         }
 
         [ConfigurationProperty("ExportStatement", IsRequired = true)]
         public ExportStatementElements ExportStatement
         {
-            get { return (ExportStatementElements) base["ExportStatement"]; }
+            get { return (ExportStatementElements)base["ExportStatement"]; }
         }
     }
 
@@ -97,11 +94,10 @@ namespace Sunplus.Accounting.Core.Configurations
             set { _UseWebConfigProviderType = value; }
         }
 
-
         [ConfigurationProperty("providerType", DefaultValue = "Sunplus.Accounting.DataAccess.APIClient.APICasinoProvider")]
         public string ProviderType
         {
-            get { return (_UseWebConfigProviderType) ? (string) base["providerType"] : _ProviderType; }
+            get { return (_UseWebConfigProviderType) ? (string)base["providerType"] : _ProviderType; }
             set
             {
                 if (_UseWebConfigProviderType)
@@ -114,7 +110,9 @@ namespace Sunplus.Accounting.Core.Configurations
         [ConfigurationProperty("showBetSetting", DefaultValue = false)]
         public bool ShowBetSetting
         {
-            get { return true; // CastAide.AsBoolean(base["showBetSetting"], false);
+            get
+            {
+                return true; // CastAide.AsBoolean(base["showBetSetting"], false);
             }
             set { base["showBetSetting"] = value; }
         }
@@ -125,7 +123,7 @@ namespace Sunplus.Accounting.Core.Configurations
         [ConfigurationProperty("providerType", DefaultValue = "Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider")]
         public string ProviderType
         {
-            get { return (string) base["providerType"]; }
+            get { return (string)base["providerType"]; }
             set { base["providerType"] = value; }
         }
     }
@@ -135,21 +133,21 @@ namespace Sunplus.Accounting.Core.Configurations
         [ConfigurationProperty("providerType", DefaultValue = "Sunplus.Accounting.DataAccess.IBCClient.PositionTakingProviderClient")]
         public string ProviderType
         {
-            get { return (string) base["providerType"]; }
+            get { return (string)base["providerType"]; }
             set { base["providerType"] = value; }
         }
 
         [ConfigurationProperty("providerTypeHR", DefaultValue = "Sunplus.Accounting.DataAccess.IBCClient.HRPositionTakingProviderClient")]
         public string ProviderTypeHR
         {
-            get { return (string) base["providerTypeHR"]; }
+            get { return (string)base["providerTypeHR"]; }
             set { base["providerTypeHR"] = value; }
         }
 
         [ConfigurationProperty("sportBookProvider", DefaultValue = "Sunplus.Accounting.DataAccess.{0}.{1}.PositionTaking.SportBookClient")]
         public string SportBookProvider
         {
-            get { return (string) base["sportBookProvider"]; }
+            get { return (string)base["sportBookProvider"]; }
             set { base["sportBookProvider"] = value; }
         }
     }
@@ -159,11 +157,10 @@ namespace Sunplus.Accounting.Core.Configurations
         [ConfigurationProperty("providerType", DefaultValue = "Sunplus.Accounting.DataAccess.IBCClient.UtilsProviderClient")]
         public string ProviderType
         {
-            get { return (string) base["providerType"]; }
+            get { return (string)base["providerType"]; }
             set { base["providerType"] = value; }
         }
     }
-
 
     /// <summary>
     /// Report config section
@@ -173,7 +170,7 @@ namespace Sunplus.Accounting.Core.Configurations
         [ConfigurationProperty("providerType", DefaultValue = "Sunplus.Accounting.DataAccess.Report.SqlClient.ReportProviderClient")]
         public string ProviderType
         {
-            get { return (string) base["providerType"]; }
+            get { return (string)base["providerType"]; }
             set { base["providerType"] = value; }
         }
 
@@ -184,28 +181,28 @@ namespace Sunplus.Accounting.Core.Configurations
         [ConfigurationProperty("LeagueWLProviderType", DefaultValue = "Sunplus.Accounting.DataAccess.{0}.{1}.Report.LeagueWLProviderClient")]
         public string LeagueWLProviderType
         {
-            get { return (string) base["LeagueWLProviderType"]; }
+            get { return (string)base["LeagueWLProviderType"]; }
             set { base["LeagueWLProviderType"] = value; }
         }
 
         [ConfigurationProperty("WLProviderType", DefaultValue = "Sunplus.Accounting.DataAccess.{0}.{1}.Report.WLProviderClient")]
         public string WLProviderType
         {
-            get { return (string) base["WLProviderType"]; }
+            get { return (string)base["WLProviderType"]; }
             set { base["WLProviderType"] = value; }
         }
 
         [ConfigurationProperty("MatchWLProviderType", DefaultValue = "Sunplus.Accounting.DataAccess.{0}.{1}.Report.MatchWLProviderClient")]
         public string MatchWLProviderType
         {
-            get { return (string) base["MatchWLProviderType"]; }
+            get { return (string)base["MatchWLProviderType"]; }
             set { base["MatchWLProviderType"] = value; }
         }
 
         [ConfigurationProperty("FIWLProviderType", DefaultValue = "Sunplus.Accounting.DataAccess.{0}.{1}.Report.FIWLProviderClient")]
         public string FIWLProviderType
         {
-            get { return (string) base["FIWLProviderType"]; }
+            get { return (string)base["FIWLProviderType"]; }
             set { base["FIWLProviderType"] = value; }
         }
 
@@ -213,7 +210,7 @@ namespace Sunplus.Accounting.Core.Configurations
             DefaultValue = "Sunplus.Accounting.DataAccess.{0}.{1}.Report.PunterAnalysisProviderClient")]
         public string PunterAnalysisProviderType
         {
-            get { return (string) base["PunterAnalysisProviderType"]; }
+            get { return (string)base["PunterAnalysisProviderType"]; }
             set { base["PunterAnalysisProviderType"] = value; }
         }
 
@@ -221,7 +218,7 @@ namespace Sunplus.Accounting.Core.Configurations
             DefaultValue = "Sunplus.Accounting.DataAccess.{0}.{1}.Report.OpenToteSettlementProviderClient")]
         public string OpenToteSettlementProviderType
         {
-            get { return (string) base["OpenToteSettlementProviderType"]; }
+            get { return (string)base["OpenToteSettlementProviderType"]; }
             set { base["OpenToteSettlementType"] = value; }
         }
 
@@ -386,6 +383,7 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
     }
+
     public class NewsElements : ConfigurationElement
     {
         [ConfigurationProperty("NewsProviderType", DefaultValue = "Sunplus.Accounting.DataAccess.{0}.{1}.Others.NewsProviderClient")]
@@ -418,7 +416,4 @@ namespace Sunplus.Accounting.Core.Configurations
         }
     }
 
-
-   
 }
-

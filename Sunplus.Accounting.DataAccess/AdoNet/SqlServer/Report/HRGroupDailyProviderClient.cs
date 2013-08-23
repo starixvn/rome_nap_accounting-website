@@ -20,7 +20,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Report
             return DbHelper.Execute("Acc_Rpt_WinlostHR_Group_Daily", param, DBType.REPORT, 600);
         }
 
-
         /// <summary>
         /// Open Tote - new report
         /// </summary>

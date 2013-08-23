@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace Sunplus.Accounting.Core.Configurations.StoreProcedureGroup
 {
@@ -71,6 +68,7 @@ namespace Sunplus.Accounting.Core.Configurations.StoreProcedureGroup
                 return spCollection;
             }
         }
+
         [ConfigurationProperty("Mixparlay", IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(StoreProcedureCollection),
             AddItemName = "add",
@@ -85,7 +83,7 @@ namespace Sunplus.Accounting.Core.Configurations.StoreProcedureGroup
                 return spCollection;
             }
         }
-        
+
         public static SpecialDeleteGroupSection Instance
         {
             get

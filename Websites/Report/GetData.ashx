@@ -13,7 +13,6 @@ using Sunplus.Accounting.Business.Report;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Presentation;
-using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using IBCUtils.DAL ;
 using System.Web.SessionState;

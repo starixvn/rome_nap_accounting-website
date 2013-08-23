@@ -6,16 +6,13 @@ using System.Web;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Web;
+using IBCUtils;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using IBCUtils;
-
-
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.DataAccess.Report;
 
 /// <summary>
@@ -42,7 +39,6 @@ public partial class ReportHTML
         if (HttpContext.Current.Session["fdate"] == null && HttpContext.Current.Session["tdate"] == null)
             return AlertMessage.GetMsg(IbcError.DATE_INVALID_FORMAT_MSG, AlertMessage.MsgType.Error);
 
-
         var tpl = WebUtils.LoadTemplate("Report/TraderPerformance.htm");
         var html = new StringBuilder();
         //string content = tpl;
@@ -55,16 +51,12 @@ public partial class ReportHTML
             TemplateHandler.RemoveBlock(ref tpl, "OtherSportClear");
             divWidth = "4182px";
             tableWidth = "4164px";
-            
         }
-
 
         TemplateHandler.Assign(ref tpl, "colspan_title", "15");
         //AccCommon-->DecFormat/PercentFormat
 
-
         var styleSheet = string.Empty;
-
 
         var rows = TemplateHandler.CopyBlock(tpl, "normal-row");
         TemplateHandler.RemoveBlock(ref tpl, "normal-row");
@@ -77,7 +69,7 @@ public partial class ReportHTML
         {
             var dt1 = new DataTable();
             DbResult rs = null;
-          
+
             if (tdate < ReportUtils.BalanceUp.MoveBetsDay)
             {
                 return ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata");
@@ -141,7 +133,9 @@ public partial class ReportHTML
                         TemplateHandler.Assign(ref row, "{trader_value}", Convert.ToString(dr["username"]));
                         TemplateHandler.Assign(ref row, "{trader_value1}", Convert.ToString(dr["username"]));
                         TemplateHandler.Assign(ref row, "{noMatch_value}", AccCommon.DecFormat(dr["matchno"], 0));
+
                         #region win - lost
+
                         TemplateHandler.Assign(ref row, "{winloss_HDP_value}", (AccCommon.DecFormat(dr["winlost_hdp"], 0)));
                         TemplateHandler.Assign(ref row, "{winloss_HTHDP_value}",
                                                (AccCommon.DecFormat(dr["winlost_1sthdp"], 0)));
@@ -173,8 +167,11 @@ public partial class ReportHTML
                             AccCommon.DecFormat(dr.Table.Columns.Contains("winlost_oe") ? dr["winlost_oe"] : 0, 0));
 
                         TemplateHandler.Assign(ref row, "{winloss_overall_value}", AccCommon.DecFormat(dr["overall_wl"], 0));
-                        #endregion
+
+                        #endregion win - lost
+
                         #region Com
+
                         TemplateHandler.Assign(ref row, "{comm_HDP_value}", (AccCommon.DecFormat(dr["comm_hdp"], 0)));
                         TemplateHandler.Assign(ref row, "{comm_HTHDP_value}", (AccCommon.DecFormat(dr["comm_1sthdp"], 0)));
                         TemplateHandler.Assign(ref row, "{comm_HTOver-Under_value}",
@@ -201,8 +198,11 @@ public partial class ReportHTML
                            AccCommon.DecFormat(dr["comm_oe"], 0));
 
                         TemplateHandler.Assign(ref row, "{comm_overall_value}", AccCommon.DecFormat(dr["overall_com"], 0));
-                        #endregion
+
+                        #endregion Com
+
                         #region turn-over
+
                         TemplateHandler.Assign(ref row, "{turnover_HDP_value}", (AccCommon.DecFormat(dr["stake_hdp"], 0)));
                         TemplateHandler.Assign(ref row, "{turnover_HTHDP_value}",
                                                (AccCommon.DecFormat(dr["stake_1sthdp"], 0)));
@@ -234,8 +234,11 @@ public partial class ReportHTML
                                                AccCommon.DecFormat(dr["stake_oe"], 0));
 
                         TemplateHandler.Assign(ref row, "{turnover_overall_value}", AccCommon.DecFormat(dr["overall_st"], 0));
-                        #endregion
+
+                        #endregion turn-over
+
                         #region margin
+
                         TemplateHandler.Assign(ref row, "{margin1_HTHDP_value}",
                                                (AccCommon.PercentFormat(CastAide.AsDecimal(dr["margin_1sthdp"]), 2)));
                         TemplateHandler.Assign(ref row, "{margin1_FTHDP_value}",
@@ -271,8 +274,11 @@ public partial class ReportHTML
 
                         TemplateHandler.Assign(ref row, "{margin1_overall_value}",
                                                (AccCommon.PercentFormat(CastAide.AsDecimal(dr["overall_margin"]), 2)));
-                        #endregion
+
+                        #endregion margin
+
                         #region live bet count
+
                         TemplateHandler.Assign(ref row, "{livebetcount_HTHDP_value}",
                                                AccCommon.DecFormat(dr["bet_1sthdp"], 0));
                         TemplateHandler.Assign(ref row, "{livebetcount_HDP_value}",
@@ -306,7 +312,9 @@ public partial class ReportHTML
 
                         TemplateHandler.Assign(ref row, "{livebetcount_overall_value}",
                             AccCommon.DecFormat(dr.Table.Columns.Contains("overall_livebet") ? dr["overall_livebet"] : 0, 0));
-                        #endregion
+
+                        #endregion live bet count
+
                         if (Int32.Parse((dr["custid"].ToString())) != 0)
                         {
                             TemplateHandler.Assign(ref row, "{no_value}", "&nbsp;" + idx + "&nbsp;");
@@ -321,7 +329,7 @@ public partial class ReportHTML
                         }
                     }
 
-            #endregion
+            #endregion assign content
 
                     if (!string.IsNullOrEmpty(row_unassigned))
                     {
@@ -329,465 +337,480 @@ public partial class ReportHTML
                         html.Append(row_unassigned);
                     }
                 }
-                    #region assign footer
 
-                    TemplateHandler.Assign(ref tpl, "{odd_even}", "total1");
+                #region assign footer
 
-                    TemplateHandler.Assign(ref tpl, "{no_value}", null);
+                TemplateHandler.Assign(ref tpl, "{odd_even}", "total1");
 
-                    TemplateHandler.Assign(ref tpl, "{trader_value}", "<b>Grand&nbsp;Total</b>");
-                    TemplateHandler.Assign(ref tpl, "{trader_value1}", "");
-                    TemplateHandler.Assign(ref tpl, "{noMatch_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(matchno)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(matchno)", ""), 0) + "</b>"
-                                               : "");
-                    //TemplateHandler.Assign(ref row, "{noMatch_value}", "GGG");
-                    #region Footer
-                    #region turnover
-                    TemplateHandler.Assign(ref tpl, "{turnover_HDP_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(stake_hdp)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(stake_hdp)", ""), 0) + "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{turnover_HTHDP_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(stake_1sthdp)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(stake_1sthdp)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{turnover_HTOver-Under_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(stake_1stou)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(stake_1stou)", ""), 0) + "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{turnover_Over-Under_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(stake_ou)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(stake_ou)", ""), 0) + "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{turnover_1x2_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(stake_1x2)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(stake_1x2)", ""), 0) + "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{turnover_HT1x2_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(stake_1st1x2)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(stake_1st1x2)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    //TemplateHandler.Assign(ref tpl, "{turnover_Next-Goal_value}",
-                    //                       (AccCommon.DecFormat(dt.Compute("sum(stake_ng)", ""), 0) != "")
-                    //                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(stake_ng)", ""), 0) + "</b>"
-                    //                           : "");
-                    TemplateHandler.Assign(ref tpl, "{turnover_1stCorner_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(stake_1stNoOfCorners)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(stake_1stNoOfCorners)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{turnover_Corner_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(stake_NoOfCorners)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(stake_NoOfCorners)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{turnover_15mOU_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(stake_15minOU)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(stake_15minOU)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{turnover_1stYellowCard_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(stake_1stNoOfYellowCards)", ""), 0) != "")
-                                               ? "<b>" +
-                                                 AccCommon.DecFormat(dt.Compute("sum(stake_1stNoOfYellowCards)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{turnover_YellowCard_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(stake_NoOfYellowCards)", ""), 0) != "")
-                                               ? "<b>" +
-                                                 AccCommon.DecFormat(dt.Compute("sum(stake_NoOfYellowCards)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{turnover_nextCorner_value}",
-                                               (AccCommon.DecFormat(dt.Compute("sum(stake_NextCorner)", ""), 0) != "")
-                                                   ? "<b>" +
-                                                     AccCommon.DecFormat(dt.Compute("sum(stake_NextCorner)", ""), 0) +
-                                                     "</b>"
-                                                   : "");
-                    TemplateHandler.Assign(ref tpl, "{turnover_1stoe_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(stake_1stoe)", ""), 0) != "")
-                                               ? "<b>" +
-                                                 AccCommon.DecFormat(dt.Compute("sum(stake_1stoe)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{turnover_oe_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(stake_oe)", ""), 0) != "")
-                                               ? "<b>" +
-                                                 AccCommon.DecFormat(dt.Compute("sum(stake_oe)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{turnover_overall_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(overall_st)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(overall_st)", ""), 0) + "</b>"
-                                               : "");
-                    #endregion
+                TemplateHandler.Assign(ref tpl, "{no_value}", null);
 
-                    #region comm
-                    TemplateHandler.Assign(ref tpl, "{comm_HDP_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(comm_hdp)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_hdp)", ""), 0) + "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{comm_HTHDP_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(comm_1sthdp)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_1sthdp)", ""), 0) + "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{comm_HTOver-Under_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(comm_1stou)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_1stou)", ""), 0) + "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{comm_Over-Under_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(comm_ou)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_ou)", ""), 0) + "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{comm_1x2_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(comm_1x2)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_1x2)", ""), 0) + "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{comm_HT1x2_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(comm_1st1x2)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_1st1x2)", ""), 0) + "</b>"
-                                               : "");
-                    //TemplateHandler.Assign(ref tpl, "{comm_Next-Goal_value}",
-                    //                       (AccCommon.DecFormat(dt.Compute("sum(comm_ng)", ""), 0) != "")
-                    //                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_ng)", ""), 0) + "</b>"
-                    //                           : "");
-                    TemplateHandler.Assign(ref tpl, "{comm_1stCorner_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(comm_1stNoOfCorners)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_1stNoOfCorners)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{comm_Corner_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(comm_NoOfCorners)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_NoOfCorners)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{comm_15mOU_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(comm_15minOU)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_15minOU)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{comm_1stYellowCard_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(comm_1stNoOfYellowCards)", ""), 0) != "")
-                                               ? "<b>" +
-                                                 AccCommon.DecFormat(dt.Compute("sum(comm_1stNoOfYellowCards)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{comm_YellowCard_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(comm_NoOfYellowCards)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_NoOfYellowCards)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{comm_nextCorner_value}",
-                                               (AccCommon.DecFormat(dt.Compute("sum(comm_NextCorner)", ""), 0) != "")
-                                                   ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_NextCorner)", ""), 0) +
-                                                     "</b>"
-                                                   : "");
-                    TemplateHandler.Assign(ref tpl, "{comm_1stoe_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(comm_1stoe)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_1stoe)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{comm_oe_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(comm_oe)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_oe)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{comm_overall_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(overall_com)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(overall_com)", ""), 0) + "</b>"
-                                               : "");
-                    #endregion
+                TemplateHandler.Assign(ref tpl, "{trader_value}", "<b>Grand&nbsp;Total</b>");
+                TemplateHandler.Assign(ref tpl, "{trader_value1}", "");
+                TemplateHandler.Assign(ref tpl, "{noMatch_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(matchno)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(matchno)", ""), 0) + "</b>"
+                                           : "");
+                //TemplateHandler.Assign(ref row, "{noMatch_value}", "GGG");
 
-                    #region winloss
-                    TemplateHandler.Assign(ref tpl, "{winloss_HDP_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(winlost_hdp)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(winlost_hdp)", ""), 0) + "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{winloss_HTHDP_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(winlost_1sthdp)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(winlost_1sthdp)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{winloss_HTOver-Under_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(winlost_1stou)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(winlost_1stou)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{winloss_Over-Under_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(winlost_ou)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(winlost_ou)", ""), 0) + "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{winloss_HT1x2_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(winlost_1st1x2)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(winlost_1st1x2)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{winloss_1x2_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(winlost_1x2)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(winlost_1x2)", ""), 0) + "</b>"
-                                               : "");
-                    //TemplateHandler.Assign(ref tpl, "{winloss_Next-Goal_value}",
-                    //                       (AccCommon.DecFormat(dt.Compute("sum(winlost_ng)", ""), 0) != "")
-                    //                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(winlost_ng)", ""), 0) + "</b>"
-                    //                           : "");
-                    TemplateHandler.Assign(ref tpl, "{winloss_1stCorner_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(winlost_1stNoOfCorners)", ""), 0) != "")
-                                               ? "<b>" +
-                                                 AccCommon.DecFormat(dt.Compute("sum(winlost_1stNoOfCorners)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{winloss_Corner_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(winlost_NoOfCorners)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(winlost_NoOfCorners)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{winloss_15mOU_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(winlost_15minOU)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(winlost_15minOU)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{winloss_1stYellowCard_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(winlost_1stNoOfYellowCards)", ""), 0) != "")
-                                               ? "<b>" +
-                                                 AccCommon.DecFormat(dt.Compute("sum(winlost_1stNoOfYellowCards)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{winloss_YellowCard_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(winlost_NoOfYellowCards)", ""), 0) != "")
-                                               ? "<b>" +
-                                                 AccCommon.DecFormat(dt.Compute("sum(winlost_NoOfYellowCards)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{winloss_nextCorner_value}",
-                                               (AccCommon.DecFormat(dt.Compute("sum(winlost_NextCorner)", ""), 0) != "")
-                                                   ? "<b>" +
-                                                     AccCommon.DecFormat(dt.Compute("sum(winlost_NextCorner)", ""), 0) +
-                                                     "</b>"
-                                                   : "");
+                #region Footer
 
-                    TemplateHandler.Assign(ref tpl, "{winloss_1stoe_value}",
-                                            dt.Columns.Contains("winlost_1stoe") ?
-                                           ((AccCommon.DecFormat(dt.Compute("sum(winlost_1stoe)", ""), 0) != "")
-                                               ? "<b>" +
-                                                 AccCommon.DecFormat(dt.Compute("sum(winlost_1stoe)", ""), 0) +
-                                                 "</b>"
-                                                 : "") : "");
+                #region turnover
 
-                    TemplateHandler.Assign(ref tpl, "{winloss_oe_value}",
-                                            dt.Columns.Contains("winlost_oe") ?
-                                           ((AccCommon.DecFormat(dt.Compute("sum(winlost_oe)", ""), 0) != "")
+                TemplateHandler.Assign(ref tpl, "{turnover_HDP_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(stake_hdp)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(stake_hdp)", ""), 0) + "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{turnover_HTHDP_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(stake_1sthdp)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(stake_1sthdp)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{turnover_HTOver-Under_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(stake_1stou)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(stake_1stou)", ""), 0) + "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{turnover_Over-Under_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(stake_ou)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(stake_ou)", ""), 0) + "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{turnover_1x2_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(stake_1x2)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(stake_1x2)", ""), 0) + "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{turnover_HT1x2_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(stake_1st1x2)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(stake_1st1x2)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                //TemplateHandler.Assign(ref tpl, "{turnover_Next-Goal_value}",
+                //                       (AccCommon.DecFormat(dt.Compute("sum(stake_ng)", ""), 0) != "")
+                //                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(stake_ng)", ""), 0) + "</b>"
+                //                           : "");
+                TemplateHandler.Assign(ref tpl, "{turnover_1stCorner_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(stake_1stNoOfCorners)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(stake_1stNoOfCorners)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{turnover_Corner_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(stake_NoOfCorners)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(stake_NoOfCorners)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{turnover_15mOU_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(stake_15minOU)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(stake_15minOU)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{turnover_1stYellowCard_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(stake_1stNoOfYellowCards)", ""), 0) != "")
+                                           ? "<b>" +
+                                             AccCommon.DecFormat(dt.Compute("sum(stake_1stNoOfYellowCards)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{turnover_YellowCard_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(stake_NoOfYellowCards)", ""), 0) != "")
+                                           ? "<b>" +
+                                             AccCommon.DecFormat(dt.Compute("sum(stake_NoOfYellowCards)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{turnover_nextCorner_value}",
+                                           (AccCommon.DecFormat(dt.Compute("sum(stake_NextCorner)", ""), 0) != "")
                                                ? "<b>" +
-                                                 AccCommon.DecFormat(dt.Compute("sum(winlost_oe)", ""), 0) +
+                                                 AccCommon.DecFormat(dt.Compute("sum(stake_NextCorner)", ""), 0) +
                                                  "</b>"
-                                                 : "") : "");
+                                               : "");
+                TemplateHandler.Assign(ref tpl, "{turnover_1stoe_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(stake_1stoe)", ""), 0) != "")
+                                           ? "<b>" +
+                                             AccCommon.DecFormat(dt.Compute("sum(stake_1stoe)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{turnover_oe_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(stake_oe)", ""), 0) != "")
+                                           ? "<b>" +
+                                             AccCommon.DecFormat(dt.Compute("sum(stake_oe)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{turnover_overall_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(overall_st)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(overall_st)", ""), 0) + "</b>"
+                                           : "");
 
-                    TemplateHandler.Assign(ref tpl, "{winloss_overall_value}",
-                                             dt.Columns.Contains("overall_wl") ?
-                                           ((AccCommon.DecFormat(dt.Compute("sum(overall_wl)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(overall_wl)", ""), 0) + "</b>"
-                                               : "") : "");
-                    #endregion
+                #endregion turnover
 
-                    #region margin
-                    TemplateHandler.Assign(ref tpl, "{margin1_HTHDP_value}",
-                                           (AccCommon.PercentFormat(dt.Compute("sum(winlost_1sthdp)", ""),
-                                                                    dt.Compute("sum(stake_1sthdp)", ""), 2) != "")
-                                               ? "<b>" +
-                                                 AccCommon.PercentFormat(dt.Compute("sum(winlost_1sthdp)", ""),
-                                                                         dt.Compute("sum(stake_1sthdp)", ""), 2) + "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{margin1_FTHDP_value}",
-                                           (AccCommon.PercentFormat(dt.Compute("sum(winlost_hdp)", ""),
-                                                                    dt.Compute("sum(stake_hdp)", ""), 2) != "")
-                                               ? "<b>" +
-                                                 AccCommon.PercentFormat(dt.Compute("sum(winlost_hdp)", ""),
-                                                                         dt.Compute("sum(stake_hdp)", ""), 2) + "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{margin1_HTOver-Under_value}",
-                                           (AccCommon.PercentFormat(dt.Compute("sum(winlost_1stou)", ""),
-                                                                    dt.Compute("sum(stake_1stou)", ""), 2) != "")
-                                               ? "<b>" +
-                                                 AccCommon.PercentFormat(dt.Compute("sum(winlost_1stou)", ""),
-                                                                         dt.Compute("sum(stake_1stou)", ""), 2) + "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{margin1_FTOver-Under_value}",
-                                           (AccCommon.PercentFormat(dt.Compute("sum(winlost_ou)", ""),
-                                                                    dt.Compute("sum(stake_ou)", ""), 2) != "")
-                                               ? "<b>" +
-                                                 AccCommon.PercentFormat(dt.Compute("sum(winlost_ou)", ""),
-                                                                         dt.Compute("sum(stake_ou)", ""), 2) + "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{margin1_1x2_value}",
-                                           (AccCommon.PercentFormat(dt.Compute("sum(winlost_1x2)", ""),
-                                                                    dt.Compute("sum(stake_1x2)", ""), 2) != "")
-                                               ? "<b>" +
-                                                 AccCommon.PercentFormat(dt.Compute("sum(winlost_1x2)", ""),
-                                                                         dt.Compute("sum(stake_1x2)", ""), 2) + "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{margin1_HT1x2_value}",
-                                           (AccCommon.PercentFormat(dt.Compute("sum(winlost_1st1x2)", ""),
-                                                                    dt.Compute("sum(stake_1st1x2)", ""), 2) != "")
-                                               ? "<b>" +
-                                                 AccCommon.PercentFormat(dt.Compute("sum(winlost_1st1x2)", ""),
-                                                                         dt.Compute("sum(stake_1st1x2)", ""), 2) + "</b>"
-                                               : "");
-                    //TemplateHandler.Assign(ref tpl, "{margin1_Next-Goal_value}",
-                    //                       (AccCommon.PercentFormat(dt.Compute("sum(winlost_ng)", ""),
-                    //                                                dt.Compute("sum(stake_ng)", ""), 2) != "")
-                    //                           ? "<b>" +
-                    //                             AccCommon.PercentFormat(dt.Compute("sum(winlost_ng)", ""),
-                    //                                                     dt.Compute("sum(stake_ng)", ""), 2) + "</b>"
-                    //                           : "");
-                    TemplateHandler.Assign(ref tpl, "{margin1_1stCorner_value}",
-                                           (AccCommon.PercentFormat(dt.Compute("sum(winlost_1stNoOfCorners)", ""),
-                                                                    dt.Compute("sum(stake_1stNoOfCorners)", ""), 2) != "")
-                                               ? "<b>" +
-                                                 AccCommon.PercentFormat(dt.Compute("sum(winlost_1stNoOfCorners)", ""),
-                                                                         dt.Compute("sum(stake_1stNoOfCorners)", ""), 2) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{margin1_Corner_value}",
-                                           (AccCommon.PercentFormat(dt.Compute("sum(winlost_NoOfCorners)", ""),
-                                                                    dt.Compute("sum(stake_NoOfCorners)", ""), 2) != "")
-                                               ? "<b>" +
-                                                 AccCommon.PercentFormat(dt.Compute("sum(winlost_NoOfCorners)", ""),
-                                                                         dt.Compute("sum(stake_NoOfCorners)", ""), 2) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{margin1_15mOU_value}",
-                                           (AccCommon.PercentFormat(dt.Compute("sum(winlost_15minOU)", ""),
-                                                                    dt.Compute("sum(stake_15minOU)", ""), 2) != "")
-                                               ? "<b>" +
-                                                 AccCommon.PercentFormat(dt.Compute("sum(winlost_15minOU)", ""),
-                                                                         dt.Compute("sum(stake_15minOU)", ""), 2) + "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{margin1_1stYellowCard_value}",
-                                           (AccCommon.PercentFormat(dt.Compute("sum(winlost_1stNoOfYellowCards)", ""),
-                                                                    dt.Compute("sum(stake_1stNoOfYellowCards)", ""), 2) !=
-                                            "")
-                                               ? "<b>" +
-                                                 AccCommon.PercentFormat(dt.Compute("sum(winlost_1stNoOfYellowCards)", ""),
-                                                                         dt.Compute("sum(stake_1stNoOfYellowCards)", ""), 2) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{margin1_YellowCard_value}",
-                                           (AccCommon.PercentFormat(dt.Compute("sum(winlost_NoOfYellowCards)", ""),
-                                                                    dt.Compute("sum(stake_NoOfYellowCards)", ""), 2) != "")
-                                               ? "<b>" +
-                                                 AccCommon.PercentFormat(dt.Compute("sum(winlost_NoOfYellowCards)", ""),
-                                                                         dt.Compute("sum(stake_NoOfYellowCards)", ""), 2) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{margin1_nextCorner_value}",
-                                               (AccCommon.PercentFormat(dt.Compute("sum(winlost_NextCorner)", ""),
-                                                                        dt.Compute("sum(stake_NextCorner)", ""), 2) != "")
-                                                   ? "<b>" +
-                                                     AccCommon.PercentFormat(dt.Compute("sum(winlost_NextCorner)", ""),
-                                                                             dt.Compute("sum(stake_NextCorner)", ""), 2) +
-                                                     "</b>"
-                                                   : "");
-                    TemplateHandler.Assign(ref tpl, "{margin1_1stoe_value}",
-                        (AccCommon.PercentFormat((dt.Columns.Contains("winlost_1stoe") ? dt.Compute("sum(winlost_1stoe)", "") : 0),
-                                                                        dt.Compute("sum(stake_1stoe)", ""), 2) != "")
-                                                   ? "<b>" +
-                                                     AccCommon.PercentFormat(dt.Compute("sum(winlost_1stoe)", ""),
-                                                                             dt.Compute("sum(stake_1stoe)", ""), 2) +
-                                                     "</b>"
-                                                   : "");
-                    TemplateHandler.Assign(ref tpl, "{margin1_oe_value}",
-                        (AccCommon.PercentFormat((dt.Columns.Contains("winlost_oe") ? dt.Compute("sum(winlost_oe)", "") : 0),
-                                                                    dt.Compute("sum(stake_oe)", ""), 2) != "")
-                                               ? "<b>" +
-                                               AccCommon.PercentFormat((dt.Columns.Contains("winlost_oe") ? dt.Compute("sum(winlost_oe)", "") : 0),
-                                                                         dt.Compute("sum(stake_oe)", ""), 2) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{margin1_overall_value}",
-                                           (AccCommon.PercentFormat(dt.Compute("sum(overall_wl)", ""),
-                                                                    dt.Compute("sum(overall_st)", ""), 2) != "")
-                                               ? "<b>" +
-                                                 AccCommon.PercentFormat(dt.Compute("sum(overall_wl)", ""),
-                                                                         dt.Compute("sum(overall_st)", ""), 2) + "</b>"
-                                               : "");
-                    #endregion
+                #region comm
 
-                    #region livebetcount
-                    TemplateHandler.Assign(ref tpl, "{livebetcount_HDP_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(bet_hdp)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_hdp)", ""), 0) + "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{livebetcount_HTHDP_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(bet_1sthdp)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_1sthdp)", ""), 0) + "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{livebetcount_HTOver-Under_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(bet_1stou)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_1stou)", ""), 0) + "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{livebetcount_Over-Under_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(bet_ou)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_ou)", ""), 0) + "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{livebetcount_1x2_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(bet_1x2)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_1x2)", ""), 0) + "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{livebetcount_HT1x2_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(bet_1st1x2)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_1st1x2)", ""), 0) + "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{livebetcount_1stCorner_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(bet_1stNoOfCorners)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_1stNoOfCorners)", ""), 0) +
+                TemplateHandler.Assign(ref tpl, "{comm_HDP_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(comm_hdp)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_hdp)", ""), 0) + "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{comm_HTHDP_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(comm_1sthdp)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_1sthdp)", ""), 0) + "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{comm_HTOver-Under_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(comm_1stou)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_1stou)", ""), 0) + "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{comm_Over-Under_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(comm_ou)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_ou)", ""), 0) + "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{comm_1x2_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(comm_1x2)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_1x2)", ""), 0) + "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{comm_HT1x2_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(comm_1st1x2)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_1st1x2)", ""), 0) + "</b>"
+                                           : "");
+                //TemplateHandler.Assign(ref tpl, "{comm_Next-Goal_value}",
+                //                       (AccCommon.DecFormat(dt.Compute("sum(comm_ng)", ""), 0) != "")
+                //                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_ng)", ""), 0) + "</b>"
+                //                           : "");
+                TemplateHandler.Assign(ref tpl, "{comm_1stCorner_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(comm_1stNoOfCorners)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_1stNoOfCorners)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{comm_Corner_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(comm_NoOfCorners)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_NoOfCorners)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{comm_15mOU_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(comm_15minOU)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_15minOU)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{comm_1stYellowCard_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(comm_1stNoOfYellowCards)", ""), 0) != "")
+                                           ? "<b>" +
+                                             AccCommon.DecFormat(dt.Compute("sum(comm_1stNoOfYellowCards)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{comm_YellowCard_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(comm_NoOfYellowCards)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_NoOfYellowCards)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{comm_nextCorner_value}",
+                                           (AccCommon.DecFormat(dt.Compute("sum(comm_NextCorner)", ""), 0) != "")
+                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_NextCorner)", ""), 0) +
                                                  "</b>"
                                                : "");
-                    TemplateHandler.Assign(ref tpl, "{livebetcount_Corner_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(bet_NoOfCorners)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_NoOfCorners)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{livebetcount_15mOU_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(bet_15minOU)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_15minOU)", ""), 0) +
-                                                 "</b>"
-                                               : "");
-                    TemplateHandler.Assign(ref tpl, "{livebetcount_1stYellowCard_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(bet_1stNoOfYellowCards)", ""), 0) != "")
+                TemplateHandler.Assign(ref tpl, "{comm_1stoe_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(comm_1stoe)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_1stoe)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{comm_oe_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(comm_oe)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(comm_oe)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{comm_overall_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(overall_com)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(overall_com)", ""), 0) + "</b>"
+                                           : "");
+
+                #endregion comm
+
+                #region winloss
+
+                TemplateHandler.Assign(ref tpl, "{winloss_HDP_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(winlost_hdp)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(winlost_hdp)", ""), 0) + "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{winloss_HTHDP_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(winlost_1sthdp)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(winlost_1sthdp)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{winloss_HTOver-Under_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(winlost_1stou)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(winlost_1stou)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{winloss_Over-Under_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(winlost_ou)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(winlost_ou)", ""), 0) + "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{winloss_HT1x2_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(winlost_1st1x2)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(winlost_1st1x2)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{winloss_1x2_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(winlost_1x2)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(winlost_1x2)", ""), 0) + "</b>"
+                                           : "");
+                //TemplateHandler.Assign(ref tpl, "{winloss_Next-Goal_value}",
+                //                       (AccCommon.DecFormat(dt.Compute("sum(winlost_ng)", ""), 0) != "")
+                //                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(winlost_ng)", ""), 0) + "</b>"
+                //                           : "");
+                TemplateHandler.Assign(ref tpl, "{winloss_1stCorner_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(winlost_1stNoOfCorners)", ""), 0) != "")
+                                           ? "<b>" +
+                                             AccCommon.DecFormat(dt.Compute("sum(winlost_1stNoOfCorners)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{winloss_Corner_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(winlost_NoOfCorners)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(winlost_NoOfCorners)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{winloss_15mOU_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(winlost_15minOU)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(winlost_15minOU)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{winloss_1stYellowCard_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(winlost_1stNoOfYellowCards)", ""), 0) != "")
+                                           ? "<b>" +
+                                             AccCommon.DecFormat(dt.Compute("sum(winlost_1stNoOfYellowCards)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{winloss_YellowCard_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(winlost_NoOfYellowCards)", ""), 0) != "")
+                                           ? "<b>" +
+                                             AccCommon.DecFormat(dt.Compute("sum(winlost_NoOfYellowCards)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{winloss_nextCorner_value}",
+                                           (AccCommon.DecFormat(dt.Compute("sum(winlost_NextCorner)", ""), 0) != "")
                                                ? "<b>" +
-                                                 AccCommon.DecFormat(dt.Compute("sum(bet_1stNoOfYellowCards)", ""), 0) +
+                                                 AccCommon.DecFormat(dt.Compute("sum(winlost_NextCorner)", ""), 0) +
                                                  "</b>"
                                                : "");
-                    TemplateHandler.Assign(ref tpl, "{livebetcount_YellowCard_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(bet_NoOfYellowCards)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_NoOfYellowCards)", ""), 0) +
+
+                TemplateHandler.Assign(ref tpl, "{winloss_1stoe_value}",
+                                        dt.Columns.Contains("winlost_1stoe") ?
+                                       ((AccCommon.DecFormat(dt.Compute("sum(winlost_1stoe)", ""), 0) != "")
+                                           ? "<b>" +
+                                             AccCommon.DecFormat(dt.Compute("sum(winlost_1stoe)", ""), 0) +
+                                             "</b>"
+                                             : "") : "");
+
+                TemplateHandler.Assign(ref tpl, "{winloss_oe_value}",
+                                        dt.Columns.Contains("winlost_oe") ?
+                                       ((AccCommon.DecFormat(dt.Compute("sum(winlost_oe)", ""), 0) != "")
+                                           ? "<b>" +
+                                             AccCommon.DecFormat(dt.Compute("sum(winlost_oe)", ""), 0) +
+                                             "</b>"
+                                             : "") : "");
+
+                TemplateHandler.Assign(ref tpl, "{winloss_overall_value}",
+                                         dt.Columns.Contains("overall_wl") ?
+                                       ((AccCommon.DecFormat(dt.Compute("sum(overall_wl)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(overall_wl)", ""), 0) + "</b>"
+                                           : "") : "");
+
+                #endregion winloss
+
+                #region margin
+
+                TemplateHandler.Assign(ref tpl, "{margin1_HTHDP_value}",
+                                       (AccCommon.PercentFormat(dt.Compute("sum(winlost_1sthdp)", ""),
+                                                                dt.Compute("sum(stake_1sthdp)", ""), 2) != "")
+                                           ? "<b>" +
+                                             AccCommon.PercentFormat(dt.Compute("sum(winlost_1sthdp)", ""),
+                                                                     dt.Compute("sum(stake_1sthdp)", ""), 2) + "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{margin1_FTHDP_value}",
+                                       (AccCommon.PercentFormat(dt.Compute("sum(winlost_hdp)", ""),
+                                                                dt.Compute("sum(stake_hdp)", ""), 2) != "")
+                                           ? "<b>" +
+                                             AccCommon.PercentFormat(dt.Compute("sum(winlost_hdp)", ""),
+                                                                     dt.Compute("sum(stake_hdp)", ""), 2) + "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{margin1_HTOver-Under_value}",
+                                       (AccCommon.PercentFormat(dt.Compute("sum(winlost_1stou)", ""),
+                                                                dt.Compute("sum(stake_1stou)", ""), 2) != "")
+                                           ? "<b>" +
+                                             AccCommon.PercentFormat(dt.Compute("sum(winlost_1stou)", ""),
+                                                                     dt.Compute("sum(stake_1stou)", ""), 2) + "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{margin1_FTOver-Under_value}",
+                                       (AccCommon.PercentFormat(dt.Compute("sum(winlost_ou)", ""),
+                                                                dt.Compute("sum(stake_ou)", ""), 2) != "")
+                                           ? "<b>" +
+                                             AccCommon.PercentFormat(dt.Compute("sum(winlost_ou)", ""),
+                                                                     dt.Compute("sum(stake_ou)", ""), 2) + "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{margin1_1x2_value}",
+                                       (AccCommon.PercentFormat(dt.Compute("sum(winlost_1x2)", ""),
+                                                                dt.Compute("sum(stake_1x2)", ""), 2) != "")
+                                           ? "<b>" +
+                                             AccCommon.PercentFormat(dt.Compute("sum(winlost_1x2)", ""),
+                                                                     dt.Compute("sum(stake_1x2)", ""), 2) + "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{margin1_HT1x2_value}",
+                                       (AccCommon.PercentFormat(dt.Compute("sum(winlost_1st1x2)", ""),
+                                                                dt.Compute("sum(stake_1st1x2)", ""), 2) != "")
+                                           ? "<b>" +
+                                             AccCommon.PercentFormat(dt.Compute("sum(winlost_1st1x2)", ""),
+                                                                     dt.Compute("sum(stake_1st1x2)", ""), 2) + "</b>"
+                                           : "");
+                //TemplateHandler.Assign(ref tpl, "{margin1_Next-Goal_value}",
+                //                       (AccCommon.PercentFormat(dt.Compute("sum(winlost_ng)", ""),
+                //                                                dt.Compute("sum(stake_ng)", ""), 2) != "")
+                //                           ? "<b>" +
+                //                             AccCommon.PercentFormat(dt.Compute("sum(winlost_ng)", ""),
+                //                                                     dt.Compute("sum(stake_ng)", ""), 2) + "</b>"
+                //                           : "");
+                TemplateHandler.Assign(ref tpl, "{margin1_1stCorner_value}",
+                                       (AccCommon.PercentFormat(dt.Compute("sum(winlost_1stNoOfCorners)", ""),
+                                                                dt.Compute("sum(stake_1stNoOfCorners)", ""), 2) != "")
+                                           ? "<b>" +
+                                             AccCommon.PercentFormat(dt.Compute("sum(winlost_1stNoOfCorners)", ""),
+                                                                     dt.Compute("sum(stake_1stNoOfCorners)", ""), 2) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{margin1_Corner_value}",
+                                       (AccCommon.PercentFormat(dt.Compute("sum(winlost_NoOfCorners)", ""),
+                                                                dt.Compute("sum(stake_NoOfCorners)", ""), 2) != "")
+                                           ? "<b>" +
+                                             AccCommon.PercentFormat(dt.Compute("sum(winlost_NoOfCorners)", ""),
+                                                                     dt.Compute("sum(stake_NoOfCorners)", ""), 2) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{margin1_15mOU_value}",
+                                       (AccCommon.PercentFormat(dt.Compute("sum(winlost_15minOU)", ""),
+                                                                dt.Compute("sum(stake_15minOU)", ""), 2) != "")
+                                           ? "<b>" +
+                                             AccCommon.PercentFormat(dt.Compute("sum(winlost_15minOU)", ""),
+                                                                     dt.Compute("sum(stake_15minOU)", ""), 2) + "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{margin1_1stYellowCard_value}",
+                                       (AccCommon.PercentFormat(dt.Compute("sum(winlost_1stNoOfYellowCards)", ""),
+                                                                dt.Compute("sum(stake_1stNoOfYellowCards)", ""), 2) !=
+                                        "")
+                                           ? "<b>" +
+                                             AccCommon.PercentFormat(dt.Compute("sum(winlost_1stNoOfYellowCards)", ""),
+                                                                     dt.Compute("sum(stake_1stNoOfYellowCards)", ""), 2) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{margin1_YellowCard_value}",
+                                       (AccCommon.PercentFormat(dt.Compute("sum(winlost_NoOfYellowCards)", ""),
+                                                                dt.Compute("sum(stake_NoOfYellowCards)", ""), 2) != "")
+                                           ? "<b>" +
+                                             AccCommon.PercentFormat(dt.Compute("sum(winlost_NoOfYellowCards)", ""),
+                                                                     dt.Compute("sum(stake_NoOfYellowCards)", ""), 2) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{margin1_nextCorner_value}",
+                                           (AccCommon.PercentFormat(dt.Compute("sum(winlost_NextCorner)", ""),
+                                                                    dt.Compute("sum(stake_NextCorner)", ""), 2) != "")
+                                               ? "<b>" +
+                                                 AccCommon.PercentFormat(dt.Compute("sum(winlost_NextCorner)", ""),
+                                                                         dt.Compute("sum(stake_NextCorner)", ""), 2) +
                                                  "</b>"
                                                : "");
-                    TemplateHandler.Assign(ref tpl, "{livebetcount_nextCorner_value}",
-                                               (AccCommon.DecFormat(dt.Compute("sum(bet_NextCorner)", ""), 0) != "")
-                                                   ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_NextCorner)", ""), 0) +
-                                                     "</b>"
-                                                   : "");
-                    TemplateHandler.Assign(ref tpl, "{livebetcount_1stoe_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(bet_1stoe)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_1stoe)", ""), 0) +
+                TemplateHandler.Assign(ref tpl, "{margin1_1stoe_value}",
+                    (AccCommon.PercentFormat((dt.Columns.Contains("winlost_1stoe") ? dt.Compute("sum(winlost_1stoe)", "") : 0),
+                                                                    dt.Compute("sum(stake_1stoe)", ""), 2) != "")
+                                               ? "<b>" +
+                                                 AccCommon.PercentFormat(dt.Compute("sum(winlost_1stoe)", ""),
+                                                                         dt.Compute("sum(stake_1stoe)", ""), 2) +
                                                  "</b>"
                                                : "");
-                    TemplateHandler.Assign(ref tpl, "{livebetcount_oe_value}",
-                                           (AccCommon.DecFormat(dt.Compute("sum(bet_oe)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_oe)", ""), 0) +
+                TemplateHandler.Assign(ref tpl, "{margin1_oe_value}",
+                    (AccCommon.PercentFormat((dt.Columns.Contains("winlost_oe") ? dt.Compute("sum(winlost_oe)", "") : 0),
+                                                                dt.Compute("sum(stake_oe)", ""), 2) != "")
+                                           ? "<b>" +
+                                           AccCommon.PercentFormat((dt.Columns.Contains("winlost_oe") ? dt.Compute("sum(winlost_oe)", "") : 0),
+                                                                     dt.Compute("sum(stake_oe)", ""), 2) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{margin1_overall_value}",
+                                       (AccCommon.PercentFormat(dt.Compute("sum(overall_wl)", ""),
+                                                                dt.Compute("sum(overall_st)", ""), 2) != "")
+                                           ? "<b>" +
+                                             AccCommon.PercentFormat(dt.Compute("sum(overall_wl)", ""),
+                                                                     dt.Compute("sum(overall_st)", ""), 2) + "</b>"
+                                           : "");
+
+                #endregion margin
+
+                #region livebetcount
+
+                TemplateHandler.Assign(ref tpl, "{livebetcount_HDP_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(bet_hdp)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_hdp)", ""), 0) + "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{livebetcount_HTHDP_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(bet_1sthdp)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_1sthdp)", ""), 0) + "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{livebetcount_HTOver-Under_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(bet_1stou)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_1stou)", ""), 0) + "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{livebetcount_Over-Under_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(bet_ou)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_ou)", ""), 0) + "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{livebetcount_1x2_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(bet_1x2)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_1x2)", ""), 0) + "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{livebetcount_HT1x2_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(bet_1st1x2)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_1st1x2)", ""), 0) + "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{livebetcount_1stCorner_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(bet_1stNoOfCorners)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_1stNoOfCorners)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{livebetcount_Corner_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(bet_NoOfCorners)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_NoOfCorners)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{livebetcount_15mOU_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(bet_15minOU)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_15minOU)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{livebetcount_1stYellowCard_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(bet_1stNoOfYellowCards)", ""), 0) != "")
+                                           ? "<b>" +
+                                             AccCommon.DecFormat(dt.Compute("sum(bet_1stNoOfYellowCards)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{livebetcount_YellowCard_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(bet_NoOfYellowCards)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_NoOfYellowCards)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{livebetcount_nextCorner_value}",
+                                           (AccCommon.DecFormat(dt.Compute("sum(bet_NextCorner)", ""), 0) != "")
+                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_NextCorner)", ""), 0) +
                                                  "</b>"
-                               : "");
-                    TemplateHandler.Assign(ref tpl, "{livebetcount_overall_value}", dt.Columns.Contains("overall_livebet") ?
-                                           ((AccCommon.DecFormat(dt.Compute("sum(overall_livebet)", ""), 0) != "")
-                                               ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(overall_livebet)", ""), 0) + "</b>"
-                                               : "") : "");
-                    #endregion
-                    #endregion
-                    #endregion
-                
+                                               : "");
+                TemplateHandler.Assign(ref tpl, "{livebetcount_1stoe_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(bet_1stoe)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_1stoe)", ""), 0) +
+                                             "</b>"
+                                           : "");
+                TemplateHandler.Assign(ref tpl, "{livebetcount_oe_value}",
+                                       (AccCommon.DecFormat(dt.Compute("sum(bet_oe)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(bet_oe)", ""), 0) +
+                                             "</b>"
+                           : "");
+                TemplateHandler.Assign(ref tpl, "{livebetcount_overall_value}", dt.Columns.Contains("overall_livebet") ?
+                                       ((AccCommon.DecFormat(dt.Compute("sum(overall_livebet)", ""), 0) != "")
+                                           ? "<b>" + AccCommon.DecFormat(dt.Compute("sum(overall_livebet)", ""), 0) + "</b>"
+                                           : "") : "");
+
+                #endregion livebetcount
+
+                #endregion Footer
+
+                #endregion assign footer
+
                 TemplateHandler.Assign(ref tpl, "{content}", html.ToString());
             }
             else
@@ -806,13 +829,13 @@ public partial class ReportHTML
 
             //html.Append(tplex);
             TemplateHandler.Assign(ref tpl, "{content}", tplex);
-            
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
 
         TemplateHandler.Assign(ref tpl, "{divWitdh}", divWidth);
-        TemplateHandler.Assign(ref tpl, "{tableWidth}", tableWidth);       
- 
+        TemplateHandler.Assign(ref tpl, "{tableWidth}", tableWidth);
+
         ReportCache.REPORT_TRADER = tpl;
         return tpl;
     }

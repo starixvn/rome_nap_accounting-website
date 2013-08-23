@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Configuration;
 
 namespace Sunplus.Accounting.Core.Configurations
 {
-    public class RacingSection:ConfigurationSection
+    public class RacingSection : ConfigurationSection
     {
-        [ConfigurationProperty("", IsDefaultCollection = true,IsRequired = true)]
+        [ConfigurationProperty("", IsDefaultCollection = true, IsRequired = true)]
         //[RegexStringValidator(@"\w+:\/\/[\w.]+\S*")]
         public RacingCollection Racings
         {
@@ -16,9 +13,7 @@ namespace Sunplus.Accounting.Core.Configurations
             {
                 return (RacingCollection)base[""];
             }
-
         }
-
 
         [ConfigurationProperty("ptSites", DefaultValue = "12bet", IsRequired = false)]
         public string PtSites
@@ -41,7 +36,6 @@ namespace Sunplus.Accounting.Core.Configurations
             set { this["maxPT"] = value; }
         }
 
-        
         public static RacingSection Instance
         {
             get
@@ -53,9 +47,8 @@ namespace Sunplus.Accounting.Core.Configurations
         }
     }
 
-    public class RacingCollection:ConfigurationElementCollection
+    public class RacingCollection : ConfigurationElementCollection
     {
-
         public new RacingElement this[string id]
         {
             get
@@ -95,18 +88,17 @@ namespace Sunplus.Accounting.Core.Configurations
         {
             get { return "racing"; }
         }
-        
     }
 
-    public class RacingElement:ConfigurationElement
+    public class RacingElement : ConfigurationElement
     {
-
         [ConfigurationProperty("id", DefaultValue = "0", IsRequired = true, IsKey = true)]
         public string Id
         {
             get { return (string)this["id"]; }
             set { this["id"] = value; }
         }
+
         [ConfigurationProperty("name", DefaultValue = "NA", IsRequired = true, IsKey = false)]
         public string Name
         {
@@ -143,8 +135,8 @@ namespace Sunplus.Accounting.Core.Configurations
         [ConfigurationProperty("currency", DefaultValue = "*", IsRequired = false, IsKey = true)]
         public string Currency
         {
-            get{return (string)this["currency"];}
-            set{this["currency"] = value;}
+            get { return (string)this["currency"]; }
+            set { this["currency"] = value; }
         }
 
         [ConfigurationProperty("tote", IsDefaultCollection = false)]
@@ -157,9 +149,6 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return (ToteCollection)base["tote"]; }
         }
 
-
-
-        
     }
 
     public class ToteCollection : ConfigurationElementCollection
@@ -178,7 +167,7 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-        public void Add(ToteElement  toteElement)
+        public void Add(ToteElement toteElement)
         {
             BaseAdd(toteElement);
         }
@@ -209,7 +198,6 @@ namespace Sunplus.Accounting.Core.Configurations
             BaseClear();
         }
 
-
         public ToteElement this[int index]
         {
             get
@@ -239,7 +227,6 @@ namespace Sunplus.Accounting.Core.Configurations
             return BaseIndexOf(storeProcedureElement);
         }
 
-
         protected override sealed ConfigurationElement CreateNewElement()
         {
             return new ToteElement();
@@ -253,7 +240,6 @@ namespace Sunplus.Accounting.Core.Configurations
 
     public class ToteElement : ConfigurationElement
     {
-
         public ToteElement(string id, string name, string bettypes)
         {
             this.Id = id;
@@ -268,7 +254,7 @@ namespace Sunplus.Accounting.Core.Configurations
             this.BetType = "na";
         }
 
-        [ConfigurationProperty("id", DefaultValue = "0",IsRequired = true, IsKey = true)]
+        [ConfigurationProperty("id", DefaultValue = "0", IsRequired = true, IsKey = true)]
         public string Id
         {
             get
@@ -307,7 +293,7 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-        [ConfigurationProperty("name", DefaultValue = "NA",IsRequired = true)]
+        [ConfigurationProperty("name", DefaultValue = "NA", IsRequired = true)]
         //[RegexStringValidator(@"\w+:\/\/[\w.]+\S*")]
         public string Name
         {
@@ -321,7 +307,7 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-        [ConfigurationProperty("bettype", DefaultValue = "NA",IsRequired = true)]
+        [ConfigurationProperty("bettype", DefaultValue = "NA", IsRequired = true)]
         //[RegexStringValidator(@"\w+:\/\/[\w.]+\S*")]
         public string BetType
         {

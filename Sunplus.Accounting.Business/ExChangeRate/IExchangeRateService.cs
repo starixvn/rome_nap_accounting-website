@@ -1,8 +1,8 @@
-﻿using System.ServiceModel;
+﻿using System.Collections.Generic;
+using System.ServiceModel;
 using System.ServiceModel.Web;
 using ExcelUtil.Spreadsheet;
 using Sunplus.Accounting.Entities;
-using System.Collections.Generic;
 
 namespace Sunplus.Accounting.Business.ExChangeRate
 {
@@ -12,7 +12,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
     [ServiceContract]
     public interface IExchangeRateService
     {
-       
         ResultBO ReadExRateFromExcel();
 
         [OperationContract]
@@ -24,9 +23,11 @@ namespace Sunplus.Accounting.Business.ExChangeRate
         ResultBO UpdateExRateOpenTote(List<ExchangeRate> ExRateList);
 
         string GenHeader();
-        string GenNewRate();
-        string GenNewRate4Update();
-        ExcelFile ExportExRate();
 
+        string GenNewRate();
+
+        string GenNewRate4Update();
+
+        ExcelFile ExportExRate();
     }
 }

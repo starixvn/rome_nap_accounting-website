@@ -1,9 +1,9 @@
-﻿using System.ServiceModel;
+﻿using System.Collections.Generic;
+using System.ServiceModel;
 using System.ServiceModel.Web;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Accounting.Entities.Customer;
-using System.Collections.Generic;
 
 // NOTE: If you change the interface name "IServiceCustomerInfo" here, you must also update the reference to "IServiceCustomerInfo" in Web.config.
 namespace Sunplus.Accounting.WcfServiceLibrary.Customer
@@ -22,7 +22,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Customer
         //[OperationContract]
         //[WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         //string GenMenuMinMaxPT(int custId, int roleId, string currency, string userName, int agentId, int masterId, int superId );
-
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]

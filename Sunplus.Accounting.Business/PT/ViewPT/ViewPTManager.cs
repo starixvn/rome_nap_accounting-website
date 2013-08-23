@@ -26,7 +26,7 @@ using Sport = Sunplus.Accounting.Entities.Customer.PT.ViewPT.Sport;
 
 namespace Sunplus.Accounting.Business.PT.ViewPT
 {
-    public class ViewPTManager:IViewPtManager
+    public class ViewPTManager : IViewPtManager
     {
         private static string _ibcAutoPt = "v{0}_AutoIBC_pt_{1}";
         private static string _ibcPt = "ibc_pt_hr";
@@ -49,6 +49,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
         private static string _currency = "currency";
         private static string _sportGroupStatusSessionKey = "sportgroupstatussessionkey{0}";
         private static string _lcsPt = "{0}positiontaking";
+
         public SportDTO GetPtSportType(string userName)
         {
             var result = new SportDTO();
@@ -92,7 +93,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         }
                     }
 
-                    #endregion
+                    #endregion get parent sport
 
                     #region racebook to sport list
 
@@ -109,29 +110,28 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         result.SportsList.Add(racebook);
                     }
 
-                    #endregion
+                    #endregion racebook to sport list
 
                     #region add Casino, Bingo, Mixed sport
 
                     GetSportsOutOfList(ref result, userName);
 
-                    #endregion
+                    #endregion add Casino, Bingo, Mixed sport
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
 
         public BettypeDTO GetPtBetType(int sportId)
         {
-            var result = new BettypeDTO {BettypeList = new List<Bettype>()};
+            var result = new BettypeDTO { BettypeList = new List<Bettype>() };
             try
             {
-                if(sportId == Constants.Sport.LiveCasino)
+                if (sportId == Constants.Sport.LiveCasino)
                     return result;
                 var racingSetting = RacingSection.Instance;
                 var selectHorse =
@@ -146,7 +146,6 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
                     if (selectHorse.Count() > 0)
                     {
-
                         while (dr.Read())
                         {
                             var currentBettypeId = CastAide.AsInt32(dr["bettype"].ToString());
@@ -154,25 +153,28 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             var toteEnableStatus = false;
                             switch (currentBettypeId)
                             {
-                                case (int) BettypeInfo.Bettype.SAToteWin:
-                                case (int) BettypeInfo.Bettype.SATotePlace:
+                                case (int)BettypeInfo.Bettype.SAToteWin:
+                                case (int)BettypeInfo.Bettype.SATotePlace:
                                     currentBettypeName = dr["typenamee"].ToString();
-                                    toteEnableStatus = GetToteStatus(sportId, (int) BettypeInfo.Bettype.SAToteWin);
+                                    toteEnableStatus = GetToteStatus(sportId, (int)BettypeInfo.Bettype.SAToteWin);
                                     break;
-                                case (int) BettypeInfo.Bettype.UKToteWin:
-                                case (int) BettypeInfo.Bettype.UKTotePlace:
+
+                                case (int)BettypeInfo.Bettype.UKToteWin:
+                                case (int)BettypeInfo.Bettype.UKTotePlace:
                                     currentBettypeName = dr["typenamee"].ToString();
-                                    toteEnableStatus = GetToteStatus(sportId, (int) BettypeInfo.Bettype.UKToteWin);
+                                    toteEnableStatus = GetToteStatus(sportId, (int)BettypeInfo.Bettype.UKToteWin);
                                     break;
-                                case (int) BettypeInfo.Bettype.AUToteWin:
-                                case (int) BettypeInfo.Bettype.AUTotePlace:
-                                    currentBettypeName = currentBettypeId == (int) BettypeInfo.Bettype.AUToteWin
+
+                                case (int)BettypeInfo.Bettype.AUToteWin:
+                                case (int)BettypeInfo.Bettype.AUTotePlace:
+                                    currentBettypeName = currentBettypeId == (int)BettypeInfo.Bettype.AUToteWin
                                                              ? ResourceExtension.GetResourceValue(
                                                                  ResourceExtension.Resources.Language, "lblAUTote51")
                                                              : ResourceExtension.GetResourceValue(
                                                                  ResourceExtension.Resources.Language, "lblAUTote52");
-                                    toteEnableStatus = GetToteStatus(sportId, (int) BettypeInfo.Bettype.AUToteWin);
+                                    toteEnableStatus = GetToteStatus(sportId, (int)BettypeInfo.Bettype.AUToteWin);
                                     break;
+
                                 default:
                                     break;
                             }
@@ -185,26 +187,28 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                               };
                             result.BettypeList.Add(bettype);
                         }
-
                     }
-                        #endregion
+
+                    #endregion for Racebook
 
                     #region all sports
+
                     else
                     {
                         while (dr.Read())
                         {
                             #region remove mix parlay on Other sports
+
                             var bettypeId = CastAide.AsInt32(dr["bettype"].ToString());
 
                             if (sportId == Constants.Sport.OtherSports &&
                                 bettypeId == Constants.BetType.MixParlay)
                                 continue;
 
-                            #endregion
+                            #endregion remove mix parlay on Other sports
+
                             if (sportId == Constants.Sport.NumberGame && !CheckNGBettypeStatusBySport(bettypeId))
                                 continue;
-                            
 
                             var bettype = new Bettype()
                                               {
@@ -215,13 +219,12 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         }
                     }
 
-                    #endregion
+                    #endregion all sports
                 }
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
@@ -252,7 +255,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
                     result.CustomerInfo = GetCustomerRelation(data);
 
-                    #endregion
+                    #endregion assign Customer Info
 
                     #region get PT info
 
@@ -266,9 +269,9 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     }
                     result.PotionTakingDetail = PositionTakingDetail(data, roleId, sportId);
 
-                    #endregion
+                    #endregion racebook only, get auto ibc & actual
 
-                    #endregion
+                    #endregion get PT info
                 }
                 else
                 {
@@ -278,8 +281,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
@@ -306,7 +308,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
                     result.CustomerInfo = GetCustomerRelation(data);
 
-                    #endregion
+                    #endregion assign Customer Info
 
                     #region assign Comm
 
@@ -357,7 +359,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language,
                                                                                   "lblGameComm")
                                        };
-                   
+
                     //Enable P2P
                     var p2pStatus = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PStatus"];
 
@@ -377,7 +379,6 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                                "lblP2PPrivateGameComm")
                     };
 
-
                     var onexTwo = new AllowViewSport()
                                       {
                                           Status = !WebSettings.Disable1x2Comm,
@@ -394,11 +395,11 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                      "liveCasinoTitle")
                                          };
 
-                    #endregion
+                    #endregion define group
 
                     #region super
 
-                    if (roleId <= (int) CustInfo.Roles.Super)
+                    if (roleId <= (int)CustInfo.Roles.Super)
                     {
                         #region assign new data
 
@@ -412,30 +413,33 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         {
                             switch (CastAide.AsInt32(superRacingInfo.AllowViewTotes[i].Id))
                             {
-                                case (int) BettypeInfo.Bettype.SAToteWin:
+                                case (int)BettypeInfo.Bettype.SAToteWin:
                                     superRacingInfo.AllowViewTotes[i].Comm =
                                         NumberFormat.DecFormat(
-                                            rComm[string.Format(_comHorse, 151, (int) BettypeInfo.Bettype.SAToteWin, 4)],
+                                            rComm[string.Format(_comHorse, 151, (int)BettypeInfo.Bettype.SAToteWin, 4)],
                                             4);
                                     break;
-                                case (int) BettypeInfo.Bettype.UKToteWin:
+
+                                case (int)BettypeInfo.Bettype.UKToteWin:
                                     superRacingInfo.AllowViewTotes[i].Comm =
                                         NumberFormat.DecFormat(
-                                            rComm[string.Format(_comHorse, 151, (int) BettypeInfo.Bettype.UKToteWin, 4)],
+                                            rComm[string.Format(_comHorse, 151, (int)BettypeInfo.Bettype.UKToteWin, 4)],
                                             4);
                                     break;
-                                case (int) BettypeInfo.Bettype.AUToteWin:
+
+                                case (int)BettypeInfo.Bettype.AUToteWin:
                                     superRacingInfo.AllowViewTotes[i].Comm =
                                         NumberFormat.DecFormat(
-                                            rComm[string.Format(_comHorse, 151, (int) BettypeInfo.Bettype.AUToteWin, 4)],
+                                            rComm[string.Format(_comHorse, 151, (int)BettypeInfo.Bettype.AUToteWin, 4)],
                                             4);
                                     break;
+
                                 default:
                                     break;
                             }
                         }
 
-                        #endregion
+                        #endregion Horse Racing
 
                         #region Greyhound
 
@@ -447,24 +451,26 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         {
                             switch (CastAide.AsInt32(superGreyhoundInfo.AllowViewTotes[i].Id))
                             {
-                                case (int) BettypeInfo.Bettype.UKToteWin:
+                                case (int)BettypeInfo.Bettype.UKToteWin:
                                     superGreyhoundInfo.AllowViewTotes[i].Comm =
                                         NumberFormat.DecFormat(
-                                            rComm[string.Format(_comHorse, 152, (int) BettypeInfo.Bettype.UKToteWin, 4)],
+                                            rComm[string.Format(_comHorse, 152, (int)BettypeInfo.Bettype.UKToteWin, 4)],
                                             4);
                                     break;
-                                case (int) BettypeInfo.Bettype.AUToteWin:
+
+                                case (int)BettypeInfo.Bettype.AUToteWin:
                                     superGreyhoundInfo.AllowViewTotes[i].Comm =
                                         NumberFormat.DecFormat(
-                                            rComm[string.Format(_comHorse, 152, (int) BettypeInfo.Bettype.AUToteWin, 4)],
+                                            rComm[string.Format(_comHorse, 152, (int)BettypeInfo.Bettype.AUToteWin, 4)],
                                             4);
                                     break;
+
                                 default:
                                     break;
                             }
                         }
 
-                        #endregion
+                        #endregion Greyhound
 
                         #region Harness
 
@@ -476,20 +482,21 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         {
                             switch (CastAide.AsInt32(superHarnessInfo.AllowViewTotes[i].Id))
                             {
-                                case (int) BettypeInfo.Bettype.AUToteWin:
+                                case (int)BettypeInfo.Bettype.AUToteWin:
                                     superHarnessInfo.AllowViewTotes[i].Comm =
                                         NumberFormat.DecFormat(
-                                            rComm[string.Format(_comHorse, 153, (int) BettypeInfo.Bettype.AUToteWin, 4)],
+                                            rComm[string.Format(_comHorse, 153, (int)BettypeInfo.Bettype.AUToteWin, 4)],
                                             4);
                                     break;
+
                                 default:
                                     break;
                             }
                         }
 
-                        #endregion
+                        #endregion Harness
 
-                        #endregion
+                        #endregion assign new data
 
                         #region assign data to object
 
@@ -582,7 +589,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                    Name = p2pGameComm.Name,
                                                    Comm =
                                                        NumberFormat.DecFormat(
-                                                           rComm[string.Format(_comP2PGame,4)], 4)
+                                                           rComm[string.Format(_comP2PGame, 4)], 4)
                                                },
                                                P2PPrivateGameComm = new AllowViewSport()
                                                {
@@ -590,7 +597,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                    Name = p2pPrivateGameComm.Name,
                                                    Comm =
                                                        NumberFormat.DecFormat(
-                                                           rComm[string.Format(_comP2PPrivateGame,4)], 4)
+                                                           rComm[string.Format(_comP2PPrivateGame, 4)], 4)
                                                },
                                                LiveCasinoComm = new AllowViewSport()
                                                                     {
@@ -603,14 +610,14 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                            };
                         result.Comm.Add(superCom);
 
-                        #endregion
+                        #endregion assign data to object
                     }
 
-                    #endregion
+                    #endregion super
 
                     #region master
 
-                    if (roleId <= (int) CustInfo.Roles.Master)
+                    if (roleId <= (int)CustInfo.Roles.Master)
                     {
                         #region assign new data
 
@@ -624,30 +631,33 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         {
                             switch (CastAide.AsInt32(masterRacingInfo.AllowViewTotes[i].Id))
                             {
-                                case (int) BettypeInfo.Bettype.SAToteWin:
+                                case (int)BettypeInfo.Bettype.SAToteWin:
                                     masterRacingInfo.AllowViewTotes[i].Comm =
                                         NumberFormat.DecFormat(
-                                            rComm[string.Format(_comHorse, 151, (int) BettypeInfo.Bettype.SAToteWin, 3)],
+                                            rComm[string.Format(_comHorse, 151, (int)BettypeInfo.Bettype.SAToteWin, 3)],
                                             4);
                                     break;
-                                case (int) BettypeInfo.Bettype.UKToteWin:
+
+                                case (int)BettypeInfo.Bettype.UKToteWin:
                                     masterRacingInfo.AllowViewTotes[i].Comm =
                                         NumberFormat.DecFormat(
-                                            rComm[string.Format(_comHorse, 151, (int) BettypeInfo.Bettype.UKToteWin, 3)],
+                                            rComm[string.Format(_comHorse, 151, (int)BettypeInfo.Bettype.UKToteWin, 3)],
                                             4);
                                     break;
-                                case (int) BettypeInfo.Bettype.AUToteWin:
+
+                                case (int)BettypeInfo.Bettype.AUToteWin:
                                     masterRacingInfo.AllowViewTotes[i].Comm =
                                         NumberFormat.DecFormat(
-                                            rComm[string.Format(_comHorse, 151, (int) BettypeInfo.Bettype.AUToteWin, 3)],
+                                            rComm[string.Format(_comHorse, 151, (int)BettypeInfo.Bettype.AUToteWin, 3)],
                                             4);
                                     break;
+
                                 default:
                                     break;
                             }
                         }
 
-                        #endregion
+                        #endregion Horse Racing
 
                         #region Greyhound
 
@@ -659,24 +669,26 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         {
                             switch (CastAide.AsInt32(masterGreyhoundInfo.AllowViewTotes[i].Id))
                             {
-                                case (int) BettypeInfo.Bettype.UKToteWin:
+                                case (int)BettypeInfo.Bettype.UKToteWin:
                                     masterGreyhoundInfo.AllowViewTotes[i].Comm =
                                         NumberFormat.DecFormat(
-                                            rComm[string.Format(_comHorse, 152, (int) BettypeInfo.Bettype.UKToteWin, 3)],
+                                            rComm[string.Format(_comHorse, 152, (int)BettypeInfo.Bettype.UKToteWin, 3)],
                                             4);
                                     break;
-                                case (int) BettypeInfo.Bettype.AUToteWin:
+
+                                case (int)BettypeInfo.Bettype.AUToteWin:
                                     masterGreyhoundInfo.AllowViewTotes[i].Comm =
                                         NumberFormat.DecFormat(
-                                            rComm[string.Format(_comHorse, 152, (int) BettypeInfo.Bettype.AUToteWin, 3)],
+                                            rComm[string.Format(_comHorse, 152, (int)BettypeInfo.Bettype.AUToteWin, 3)],
                                             4);
                                     break;
+
                                 default:
                                     break;
                             }
                         }
 
-                        #endregion
+                        #endregion Greyhound
 
                         #region Harness
 
@@ -688,20 +700,21 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         {
                             switch (CastAide.AsInt32(masterHarnessInfo.AllowViewTotes[i].Id))
                             {
-                                case (int) BettypeInfo.Bettype.AUToteWin:
+                                case (int)BettypeInfo.Bettype.AUToteWin:
                                     masterHarnessInfo.AllowViewTotes[i].Comm =
                                         NumberFormat.DecFormat(
-                                            rComm[string.Format(_comHorse, 153, (int) BettypeInfo.Bettype.AUToteWin, 3)],
+                                            rComm[string.Format(_comHorse, 153, (int)BettypeInfo.Bettype.AUToteWin, 3)],
                                             4);
                                     break;
+
                                 default:
                                     break;
                             }
                         }
 
-                        #endregion
+                        #endregion Harness
 
-                        #endregion
+                        #endregion assign new data
 
                         #region assign data to object
 
@@ -799,25 +812,25 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                                 NumberFormat.DecFormat(
                                                                     rComm[string.Format(_comGameComm, 3)], 4)
                                                         },
-                                                        LiveCasinoComm = new AllowViewSport()
-                                                                             {
-                                                                                 Status = liveCasino.Status,
-                                                                                 Name = liveCasino.Name,
-                                                                                 Comm =
-                                                                                     NumberFormat.DecFormat(
-                                                                                         rComm[string.Format(_comGameComm, 3)], 4)
-                                                                             }
+                                                LiveCasinoComm = new AllowViewSport()
+                                                                     {
+                                                                         Status = liveCasino.Status,
+                                                                         Name = liveCasino.Name,
+                                                                         Comm =
+                                                                             NumberFormat.DecFormat(
+                                                                                 rComm[string.Format(_comGameComm, 3)], 4)
+                                                                     }
                                             };
                         result.Comm.Add(masterCom);
 
-                        #endregion
+                        #endregion assign data to object
                     }
 
-                    #endregion
+                    #endregion master
 
                     #region agent
 
-                    if (roleId <= (int) CustInfo.Roles.Agent)
+                    if (roleId <= (int)CustInfo.Roles.Agent)
                     {
                         #region assign new data
 
@@ -831,30 +844,33 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         {
                             switch (CastAide.AsInt32(agentRacingStatus.AllowViewTotes[i].Id))
                             {
-                                case (int) BettypeInfo.Bettype.SAToteWin:
+                                case (int)BettypeInfo.Bettype.SAToteWin:
                                     agentRacingStatus.AllowViewTotes[i].Comm =
                                         NumberFormat.DecFormat(
-                                            rComm[string.Format(_comHorse, 151, (int) BettypeInfo.Bettype.SAToteWin, 2)],
+                                            rComm[string.Format(_comHorse, 151, (int)BettypeInfo.Bettype.SAToteWin, 2)],
                                             4);
                                     break;
-                                case (int) BettypeInfo.Bettype.UKToteWin:
+
+                                case (int)BettypeInfo.Bettype.UKToteWin:
                                     agentRacingStatus.AllowViewTotes[i].Comm =
                                         NumberFormat.DecFormat(
-                                            rComm[string.Format(_comHorse, 151, (int) BettypeInfo.Bettype.UKToteWin, 2)],
+                                            rComm[string.Format(_comHorse, 151, (int)BettypeInfo.Bettype.UKToteWin, 2)],
                                             4);
                                     break;
-                                case (int) BettypeInfo.Bettype.AUToteWin:
+
+                                case (int)BettypeInfo.Bettype.AUToteWin:
                                     agentRacingStatus.AllowViewTotes[i].Comm =
                                         NumberFormat.DecFormat(
-                                            rComm[string.Format(_comHorse, 151, (int) BettypeInfo.Bettype.AUToteWin, 2)],
+                                            rComm[string.Format(_comHorse, 151, (int)BettypeInfo.Bettype.AUToteWin, 2)],
                                             4);
                                     break;
+
                                 default:
                                     break;
                             }
                         }
 
-                        #endregion
+                        #endregion Horse Racing
 
                         #region Greyhound
 
@@ -866,24 +882,26 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         {
                             switch (CastAide.AsInt32(agentGreyhoundInfo.AllowViewTotes[i].Id))
                             {
-                                case (int) BettypeInfo.Bettype.UKToteWin:
+                                case (int)BettypeInfo.Bettype.UKToteWin:
                                     agentGreyhoundInfo.AllowViewTotes[i].Comm =
                                         NumberFormat.DecFormat(
-                                            rComm[string.Format(_comHorse, 152, (int) BettypeInfo.Bettype.UKToteWin, 2)],
+                                            rComm[string.Format(_comHorse, 152, (int)BettypeInfo.Bettype.UKToteWin, 2)],
                                             4);
                                     break;
-                                case (int) BettypeInfo.Bettype.AUToteWin:
+
+                                case (int)BettypeInfo.Bettype.AUToteWin:
                                     agentGreyhoundInfo.AllowViewTotes[i].Comm =
                                         NumberFormat.DecFormat(
-                                            rComm[string.Format(_comHorse, 152, (int) BettypeInfo.Bettype.AUToteWin, 2)],
+                                            rComm[string.Format(_comHorse, 152, (int)BettypeInfo.Bettype.AUToteWin, 2)],
                                             4);
                                     break;
+
                                 default:
                                     break;
                             }
                         }
 
-                        #endregion
+                        #endregion Greyhound
 
                         #region Harness
 
@@ -895,20 +913,21 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         {
                             switch (CastAide.AsInt32(agentHarnessInfo.AllowViewTotes[i].Id))
                             {
-                                case (int) BettypeInfo.Bettype.AUToteWin:
+                                case (int)BettypeInfo.Bettype.AUToteWin:
                                     agentHarnessInfo.AllowViewTotes[i].Comm =
                                         NumberFormat.DecFormat(
-                                            rComm[string.Format(_comHorse, 153, (int) BettypeInfo.Bettype.AUToteWin, 2)],
+                                            rComm[string.Format(_comHorse, 153, (int)BettypeInfo.Bettype.AUToteWin, 2)],
                                             4);
                                     break;
+
                                 default:
                                     break;
                             }
                         }
 
-                        #endregion
+                        #endregion Harness
 
-                        #endregion
+                        #endregion assign new data
 
                         #region assign data to object
 
@@ -994,7 +1013,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                    Name = p2pPrivateGameComm.Name,
                                                    Comm =
                                                        NumberFormat.DecFormat(
-                                                           rComm[string.Format(_comP2PPrivateGame,2)], 4)
+                                                           rComm[string.Format(_comP2PPrivateGame, 2)], 4)
                                                },
                                                GameComm =
                                                    new AllowViewSport()
@@ -1005,25 +1024,25 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                                NumberFormat.DecFormat(
                                                                    rComm[string.Format(_comGameComm, 2)], 4)
                                                        },
-                                                       LiveCasinoComm = new AllowViewSport()
-                                                                            {
-                                                                                Status = liveCasino.Status,
-                                                                                Name = liveCasino.Name,
-                                                                                Comm =
-                                                                                    NumberFormat.DecFormat(
-                                                                                        rComm[string.Format(_comGameComm, 2)], 4)
-                                                                            }
+                                               LiveCasinoComm = new AllowViewSport()
+                                                                    {
+                                                                        Status = liveCasino.Status,
+                                                                        Name = liveCasino.Name,
+                                                                        Comm =
+                                                                            NumberFormat.DecFormat(
+                                                                                rComm[string.Format(_comGameComm, 2)], 4)
+                                                                    }
                                            };
                         result.Comm.Add(agentCom);
 
-                        #endregion
+                        #endregion assign data to object
                     }
 
-                    #endregion
+                    #endregion agent
 
                     #region member
 
-                    if (roleId == (int) CustInfo.Roles.Member)
+                    if (roleId == (int)CustInfo.Roles.Member)
                     {
                         #region assign new data
 
@@ -1041,33 +1060,36 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         {
                             switch (CastAide.AsInt32(memberRacingInfo.AllowViewTotes[i].Id))
                             {
-                                case (int) BettypeInfo.Bettype.SAToteWin:
+                                case (int)BettypeInfo.Bettype.SAToteWin:
                                     memberRacingInfo.AllowViewTotes[i].Comm =
                                         NumberFormat.DecFormat(
                                             rComm[
                                                 string.Format("v{0}_comm_{1}", Constants.Sport.HorseRacing,
-                                                              (int) BettypeInfo.Bettype.SAToteWin)], 4);
+                                                              (int)BettypeInfo.Bettype.SAToteWin)], 4);
                                     break;
-                                case (int) BettypeInfo.Bettype.UKToteWin:
+
+                                case (int)BettypeInfo.Bettype.UKToteWin:
                                     memberRacingInfo.AllowViewTotes[i].Comm =
                                         NumberFormat.DecFormat(
                                             rComm[
                                                 string.Format("v{0}_comm_{1}", Constants.Sport.HorseRacing,
-                                                              (int) BettypeInfo.Bettype.UKToteWin)], 4);
+                                                              (int)BettypeInfo.Bettype.UKToteWin)], 4);
                                     break;
-                                case (int) BettypeInfo.Bettype.AUToteWin:
+
+                                case (int)BettypeInfo.Bettype.AUToteWin:
                                     memberRacingInfo.AllowViewTotes[i].Comm =
                                         NumberFormat.DecFormat(
                                             rComm[
                                                 string.Format("v{0}_comm_{1}", Constants.Sport.HorseRacing,
-                                                              (int) BettypeInfo.Bettype.AUToteWin)], 4);
+                                                              (int)BettypeInfo.Bettype.AUToteWin)], 4);
                                     break;
+
                                 default:
                                     break;
                             }
                         }
 
-                        #endregion
+                        #endregion Horse Racing
 
                         #region Greyhound
 
@@ -1079,26 +1101,28 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         {
                             switch (CastAide.AsInt32(memberGreyhoundInfo.AllowViewTotes[i].Id))
                             {
-                                case (int) BettypeInfo.Bettype.UKToteWin:
+                                case (int)BettypeInfo.Bettype.UKToteWin:
                                     memberGreyhoundInfo.AllowViewTotes[i].Comm =
                                         NumberFormat.DecFormat(
                                             rComm[
                                                 string.Format("v{0}_comm_{1}", Constants.Sport.Greyhound,
-                                                              (int) BettypeInfo.Bettype.UKToteWin)], 4);
+                                                              (int)BettypeInfo.Bettype.UKToteWin)], 4);
                                     break;
-                                case (int) BettypeInfo.Bettype.AUToteWin:
+
+                                case (int)BettypeInfo.Bettype.AUToteWin:
                                     memberGreyhoundInfo.AllowViewTotes[i].Comm =
                                         NumberFormat.DecFormat(
                                             rComm[
                                                 string.Format("v{0}_comm_{1}", Constants.Sport.Greyhound,
-                                                              (int) BettypeInfo.Bettype.AUToteWin)], 4);
+                                                              (int)BettypeInfo.Bettype.AUToteWin)], 4);
                                     break;
+
                                 default:
                                     break;
                             }
                         }
 
-                        #endregion
+                        #endregion Greyhound
 
                         #region Harness
 
@@ -1110,21 +1134,22 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         {
                             switch (CastAide.AsInt32(memberHarnessInfo.AllowViewTotes[i].Id))
                             {
-                                case (int) BettypeInfo.Bettype.AUToteWin:
+                                case (int)BettypeInfo.Bettype.AUToteWin:
                                     memberHarnessInfo.AllowViewTotes[i].Comm =
                                         NumberFormat.DecFormat(
                                             rComm[
                                                 string.Format("v{0}_comm_{1}", Constants.Sport.Harness,
-                                                              (int) BettypeInfo.Bettype.AUToteWin)], 4);
+                                                              (int)BettypeInfo.Bettype.AUToteWin)], 4);
                                     break;
+
                                 default:
                                     break;
                             }
                         }
 
-                        #endregion
+                        #endregion Harness
 
-                        #endregion
+                        #endregion assign new data
 
                         #region assign data to object
 
@@ -1208,21 +1233,21 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                             Name = gameComm.Name,
                                                             Comm = NumberFormat.DecFormat(rComm["v161_comm_81"], 4)
                                                         },
-                                                        LiveCasinoComm = new AllowViewSport()
-                                                                             {
-                                                                                 Status = liveCasino.Status,
-                                                                                 Name = liveCasino.Name,
-                                                                                 Comm = NumberFormat.DecFormat(rComm["v161_comm_81"], 4)
-                                                                             }
+                                                LiveCasinoComm = new AllowViewSport()
+                                                                     {
+                                                                         Status = liveCasino.Status,
+                                                                         Name = liveCasino.Name,
+                                                                         Comm = NumberFormat.DecFormat(rComm["v161_comm_81"], 4)
+                                                                     }
                                             };
                         result.Comm.Add(memberCom);
 
-                        #endregion
+                        #endregion assign data to object
                     }
 
-                    #endregion
+                    #endregion member
 
-                    #endregion
+                    #endregion assign Comm
                 }
                 else
                 {
@@ -1232,13 +1257,13 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
 
         #region private methods
+
         private void GetSportsOutOfList(ref SportDTO sports, string userName)
         {
             BettypeDTO bettype;
@@ -1262,7 +1287,8 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     }
                 }
             }
-            catch(Exception ex){
+            catch (Exception ex)
+            {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
 
@@ -1277,6 +1303,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 };
                 sports.SportsList.Add(sport);
             }
+
             #region Parlay Mix Sport
 
             var parlayMixsport = new Sport()
@@ -1287,14 +1314,15 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                          Bettype = new BettypeDTO()
                                      };
             sports.SportsList.Add(parlayMixsport);
-            #endregion
+
+            #endregion Parlay Mix Sport
 
             #region live casino
+
             ISettingManager liveCS = new SettingManager();
 
             if (WebSettings.EnableLiveCasino)
             {
-                
                 var sport = new Sport()
                 {
                     SportId = Constants.Sport.LiveCasino,
@@ -1303,8 +1331,11 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 };
                 sports.SportsList.Add(sport);
             }
-            #endregion
+
+            #endregion live casino
+
             #region All Sports
+
             var allSports = new Sport()
             {
                 SportId = 0,
@@ -1312,21 +1343,22 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 Bettype = GetPtBetType(0)
             };
             sports.SportsList.Add(allSports);
-            #endregion
+
+            #endregion All Sports
         }
 
         private static BettypeDTO GetListBingoGameKindGameType()
         {
-            var bettypes = new BettypeDTO {BettypeList = new List<Bettype>()};
+            var bettypes = new BettypeDTO { BettypeList = new List<Bettype>() };
 
             #region get game kind and game type from db
+
             var customerService = BingoContainer.Current.Resolve<ICustomerService>();
             IResult result = new Result();
             var tblGameKind = customerService.GetListGameKind(BingoSettings.BingoGame.CodeGameNo, ref  result);
 
             if (tblGameKind != null && tblGameKind.Count > 0)
             {
-                
                 //Load Game Type
                 foreach (GameKind dr in tblGameKind)
                 {
@@ -1351,7 +1383,8 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     }
                 }
             }
-            #endregion
+
+            #endregion get game kind and game type from db
 
             #region add All Game Kind and All Game Type
 
@@ -1368,7 +1401,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             };
             bettypes.BettypeList.Add(allGameType);
 
-            #endregion
+            #endregion add All Game Kind and All Game Type
 
             return bettypes;
         }
@@ -1379,6 +1412,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             bettypes.BettypeList = new List<Bettype>();
 
             #region get game kind and game type from db
+
             var bi = new BasicInfo();
             bi.SiteName = rngSiteName;
             var tblGameKind = bi.GetGameKind("01");
@@ -1409,7 +1443,8 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     }
                 }
             }
-            #endregion
+
+            #endregion get game kind and game type from db
 
             #region add All Game Kind and All Game Type
 
@@ -1426,7 +1461,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             };
             bettypes.BettypeList.Add(allGameType);
 
-            #endregion
+            #endregion add All Game Kind and All Game Type
 
             return bettypes;
         }
@@ -1441,25 +1476,29 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 result.IbcPtForRacebook = new List<IbcAutoPtForRacebook>();
 
                 #region pt info
+
                 var ibcPtOnRacebook = new IbcAutoPtForRacebook();
                 var ibcActualPtOnMember = new ActualIbcPtOnMember();
 
                 #region check valid currency
+
                 var ptInfo = data.ResultSet.Tables[0].Rows[0];
                 var currencyOfCustomer = ptInfo.Table.Columns.Contains(_currency) ? CastAide.AsInt32(ptInfo[_currency]) : 1;
                 var currencyAllowForTote = GetCurrencyAllowForEachTote(sportId, GetParentToteId(bettypeId));
                 var currencyAllowViewPt = Racing.RacingManager.CheckAllowCurrency(currencyOfCustomer, currencyAllowForTote, true);
-                
-                #endregion
+
+                #endregion check valid currency
 
                 switch (bettypeId)
                 {
                     #region for each bettype
+
                     #region SA tote
+
                     case (int)BettypeInfo.Bettype.SAToteWin:
                         //if (!currencyAllowViewPt)
                         //    break;
-                        ibcPtOnRacebook.IbcAutoPt = currencyAllowViewPt ?  NumberFormat.DecFormat(racebook.Rows[0][string.Format(_ibcAutoPt, sportId, (int)BettypeInfo.Bettype.SAToteWin)], 2) : "N/A";
+                        ibcPtOnRacebook.IbcAutoPt = currencyAllowViewPt ? NumberFormat.DecFormat(racebook.Rows[0][string.Format(_ibcAutoPt, sportId, (int)BettypeInfo.Bettype.SAToteWin)], 2) : "N/A";
                         ibcPtOnRacebook.ToteId = sportId;
                         ibcPtOnRacebook.ToteName = GetToteName((int)BettypeInfo.Bettype.SAToteWin);
                         if (roleId == (int)CustInfo.Roles.Member)
@@ -1469,10 +1508,11 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         }
                         result.IbcPtForRacebook.Add(ibcPtOnRacebook);
                         break;
+
                     case (int)BettypeInfo.Bettype.SATotePlace:
                         //if (!currencyAllowViewPt)
                         //    break;
-                        ibcPtOnRacebook.IbcAutoPt =currencyAllowViewPt ? NumberFormat.DecFormat(racebook.Rows[0][string.Format(_ibcAutoPt, sportId, (int)BettypeInfo.Bettype.SAToteWin)], 2) : "N/A";
+                        ibcPtOnRacebook.IbcAutoPt = currencyAllowViewPt ? NumberFormat.DecFormat(racebook.Rows[0][string.Format(_ibcAutoPt, sportId, (int)BettypeInfo.Bettype.SAToteWin)], 2) : "N/A";
                         ibcPtOnRacebook.ToteId = sportId;
                         ibcPtOnRacebook.ToteName = GetToteName((int)BettypeInfo.Bettype.SAToteWin);
                         if (roleId == (int)CustInfo.Roles.Member)
@@ -1482,21 +1522,25 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         }
                         result.IbcPtForRacebook.Add(ibcPtOnRacebook);
                         break;
-                    #endregion
+
+                    #endregion SA tote
+
                     #region UK tote
+
                     case (int)BettypeInfo.Bettype.UKToteWin:
                         //if (!currencyAllowViewPt)
                         //    break;
-                        ibcPtOnRacebook.IbcAutoPt =currencyAllowViewPt ?  NumberFormat.DecFormat(racebook.Rows[0][string.Format(_ibcAutoPt, sportId, (int)BettypeInfo.Bettype.UKToteWin)], 2) : "N/A";
+                        ibcPtOnRacebook.IbcAutoPt = currencyAllowViewPt ? NumberFormat.DecFormat(racebook.Rows[0][string.Format(_ibcAutoPt, sportId, (int)BettypeInfo.Bettype.UKToteWin)], 2) : "N/A";
                         ibcPtOnRacebook.ToteId = sportId;
                         ibcPtOnRacebook.ToteName = GetToteName((int)BettypeInfo.Bettype.UKToteWin);
                         if (roleId == (int)CustInfo.Roles.Member)
                         {
-                            ibcActualPtOnMember.Win =currencyAllowViewPt ? NumberFormat.DecFormat(ibcAutoPt.Rows[0][_ibcPt], 2) : "N/A";
+                            ibcActualPtOnMember.Win = currencyAllowViewPt ? NumberFormat.DecFormat(ibcAutoPt.Rows[0][_ibcPt], 2) : "N/A";
                             ibcPtOnRacebook.ActualIbcPtOnMember = ibcActualPtOnMember;
                         }
                         result.IbcPtForRacebook.Add(ibcPtOnRacebook);
                         break;
+
                     case (int)BettypeInfo.Bettype.UKTotePlace:
                         //if (!currencyAllowViewPt)
                         //    break;
@@ -1510,8 +1554,11 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         }
                         result.IbcPtForRacebook.Add(ibcPtOnRacebook);
                         break;
-                    #endregion
+
+                    #endregion UK tote
+
                     #region AU tote
+
                     case (int)BettypeInfo.Bettype.AUToteWin:
                         //if (!currencyAllowViewPt)
                         //    break;
@@ -1519,15 +1566,16 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         ibcPtOnRacebook.ToteName = GetToteName((int)BettypeInfo.Bettype.AUToteWin);
                         if (roleId == (int)CustInfo.Roles.Member)
                         {
-                            ibcActualPtOnMember.Win =currencyAllowViewPt ? NumberFormat.DecFormat(ibcAutoPt.Rows[0][_ibcPt], 2) : "N/A";
+                            ibcActualPtOnMember.Win = currencyAllowViewPt ? NumberFormat.DecFormat(ibcAutoPt.Rows[0][_ibcPt], 2) : "N/A";
                             ibcPtOnRacebook.ActualIbcPtOnMember = ibcActualPtOnMember;
                         }
                         result.IbcPtForRacebook.Add(ibcPtOnRacebook);
                         break;
+
                     case (int)BettypeInfo.Bettype.AUTotePlace:
                         //if (!currencyAllowViewPt)
                         //    break;
-                        ibcPtOnRacebook.IbcAutoPt =currencyAllowViewPt ?  NumberFormat.DecFormat(racebook.Rows[0][string.Format(_ibcAutoPt, sportId, (int)BettypeInfo.Bettype.AUToteWin)], 2) : "N/A";
+                        ibcPtOnRacebook.IbcAutoPt = currencyAllowViewPt ? NumberFormat.DecFormat(racebook.Rows[0][string.Format(_ibcAutoPt, sportId, (int)BettypeInfo.Bettype.AUToteWin)], 2) : "N/A";
                         ibcPtOnRacebook.ToteId = sportId;
                         ibcPtOnRacebook.ToteName = GetToteName((int)BettypeInfo.Bettype.AUToteWin);
                         if (roleId == (int)CustInfo.Roles.Member)
@@ -1537,9 +1585,13 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         }
                         result.IbcPtForRacebook.Add(ibcPtOnRacebook);
                         break;
-                    #endregion
-                    #endregion
+
+                    #endregion AU tote
+
+                    #endregion for each bettype
+
                     #region get all bettype
+
                     case 0:
                         foreach (DataRow row in ibcAutoPt.Rows)
                         {
@@ -1547,37 +1599,42 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             switch (CastAide.AsInt32(row["bettype"]))
                             {
                                 #region SA tote
+
                                 #region WIN
+
                                 case (int)BettypeInfo.Bettype.SAToteWin:
                                     enableTote = GetToteStatus(sportId, (int)BettypeInfo.Bettype.SAToteWin);
                                     currencyAllowForTote = GetCurrencyAllowForEachTote(sportId, (int)BettypeInfo.Bettype.SAToteWin);
                                     currencyAllowViewPt = Racing.RacingManager.CheckAllowCurrency(currencyOfCustomer, currencyAllowForTote, enableTote);
                                     //if (!currencyAllowViewPt)
-                                    //    break;                                    
+                                    //    break;
                                     if (enableTote)
                                     {
                                         var ibcPtSaWinCurrentValue = (from r in ibcAutoPt.AsEnumerable()
-                                                                        where
-                                                                            r.Field<int>("bettype") ==
-                                                                            (int)BettypeInfo.Bettype.SAToteWin
-                                                                        select r.Field<decimal>(_ibcPt)).First();
+                                                                      where
+                                                                          r.Field<int>("bettype") ==
+                                                                          (int)BettypeInfo.Bettype.SAToteWin
+                                                                      select r.Field<decimal>(_ibcPt)).First();
 
-                                        ibcPtOnRacebook.IbcAutoPt = currencyAllowViewPt ?  NumberFormat.DecFormat(racebook.Rows[0][string.Format(_ibcAutoPt, sportId, (int)BettypeInfo.Bettype.SAToteWin)], 2) : "N/A";
+                                        ibcPtOnRacebook.IbcAutoPt = currencyAllowViewPt ? NumberFormat.DecFormat(racebook.Rows[0][string.Format(_ibcAutoPt, sportId, (int)BettypeInfo.Bettype.SAToteWin)], 2) : "N/A";
                                         ibcPtOnRacebook.ToteId = sportId;
                                         ibcPtOnRacebook.ToteName = GetToteName((int)BettypeInfo.Bettype.SAToteWin);
                                         if (roleId == (int)CustInfo.Roles.Member)
                                         {
-                                            ibcActualPtOnMember.Win =currencyAllowViewPt ? NumberFormat.DecFormat(ibcPtSaWinCurrentValue, 2) : "N/A";
-                                            ibcActualPtOnMember.EWin =currencyAllowViewPt ?
+                                            ibcActualPtOnMember.Win = currencyAllowViewPt ? NumberFormat.DecFormat(ibcPtSaWinCurrentValue, 2) : "N/A";
+                                            ibcActualPtOnMember.EWin = currencyAllowViewPt ?
                                                 NumberFormat.DecFormat(
                                                     racebook.Rows[0][
                                                         string.Format(_ibcPtForToteOnMember, sportId,
-                                                        (int) BettypeInfo.Bettype.SAToteWin, 33)], 2) : "N/A";
+                                                        (int)BettypeInfo.Bettype.SAToteWin, 33)], 2) : "N/A";
                                         }
                                     }
                                     break;
-                                #endregion
+
+                                #endregion WIN
+
                                 #region PLACE
+
                                 case (int)BettypeInfo.Bettype.SATotePlace:
                                     //if (!currencyAllowViewPt)
                                     //    break;
@@ -1594,38 +1651,43 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                         {
                                             ibcActualPtOnMember.Place = currencyAllowViewPt ? NumberFormat.DecFormat(
                                                 ibcPtSaPlaceCurrentValue, 2) : "N/A";
-                                            ibcActualPtOnMember.EPlace =currencyAllowViewPt ?
+                                            ibcActualPtOnMember.EPlace = currencyAllowViewPt ?
                                                 NumberFormat.DecFormat(
                                                     racebook.Rows[0][
                                                         string.Format(_ibcPtForToteOnMember, sportId,
-                                                        (int) BettypeInfo.Bettype.SATotePlace, 33)], 2) : "N/A";
+                                                        (int)BettypeInfo.Bettype.SATotePlace, 33)], 2) : "N/A";
                                             ibcPtOnRacebook.ActualIbcPtOnMember = ibcActualPtOnMember;
                                         }
                                         result.IbcPtForRacebook.Add(ibcPtOnRacebook);
                                     }
                                     break;
-                                #endregion
-                                #endregion
+
+                                #endregion PLACE
+
+                                #endregion SA tote
+
                                 #region UK tote
+
                                 #region WIN
+
                                 case (int)BettypeInfo.Bettype.UKToteWin:
                                     enableTote = GetToteStatus(sportId, (int)BettypeInfo.Bettype.UKToteWin);
                                     currencyAllowForTote = GetCurrencyAllowForEachTote(sportId, (int)BettypeInfo.Bettype.UKToteWin);
                                     currencyAllowViewPt = Racing.RacingManager.CheckAllowCurrency(currencyOfCustomer, currencyAllowForTote, enableTote);
                                     //if (!currencyAllowViewPt)
-                                    //    break;                                    
+                                    //    break;
 
                                     if (enableTote)
                                     {
                                         ibcPtOnRacebook = new IbcAutoPtForRacebook();
                                         ibcActualPtOnMember = new ActualIbcPtOnMember();
                                         var ibcPtUkWinCurrentValue = (from r in ibcAutoPt.AsEnumerable()
-                                                                        where
-                                                                            r.Field<int>("bettype") ==
-                                                                            (int)BettypeInfo.Bettype.UKToteWin
-                                                                        select r.Field<decimal>(_ibcPt)).First();
+                                                                      where
+                                                                          r.Field<int>("bettype") ==
+                                                                          (int)BettypeInfo.Bettype.UKToteWin
+                                                                      select r.Field<decimal>(_ibcPt)).First();
 
-                                        ibcPtOnRacebook.IbcAutoPt = currencyAllowViewPt ?  NumberFormat.DecFormat(racebook.Rows[0][string.Format(_ibcAutoPt, sportId, (int)BettypeInfo.Bettype.UKToteWin)], 2) : "N/A";
+                                        ibcPtOnRacebook.IbcAutoPt = currencyAllowViewPt ? NumberFormat.DecFormat(racebook.Rows[0][string.Format(_ibcAutoPt, sportId, (int)BettypeInfo.Bettype.UKToteWin)], 2) : "N/A";
                                         ibcPtOnRacebook.ToteId = sportId;
                                         ibcPtOnRacebook.ToteName = GetToteName((int)BettypeInfo.Bettype.UKToteWin);
                                         if (roleId == (int)CustInfo.Roles.Member)
@@ -1635,12 +1697,15 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                 NumberFormat.DecFormat(
                                                     racebook.Rows[0][
                                                         string.Format(_ibcPtForToteOnMember, sportId,
-                                                        (int) BettypeInfo.Bettype.UKToteWin, 43)], 2) : "N/A";
+                                                        (int)BettypeInfo.Bettype.UKToteWin, 43)], 2) : "N/A";
                                         }
                                     }
                                     break;
-                                #endregion
+
+                                #endregion WIN
+
                                 #region PLACE
+
                                 case (int)BettypeInfo.Bettype.UKTotePlace:
                                     //if (!currencyAllowViewPt)
                                     //    break;
@@ -1656,55 +1721,62 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                         {
                                             ibcActualPtOnMember.Place = currencyAllowViewPt ? NumberFormat.DecFormat(
                                                 ibcPtUkPlaceCurrentValue, 2) : "N/A";
-                                            ibcActualPtOnMember.EPlace =currencyAllowViewPt ?
+                                            ibcActualPtOnMember.EPlace = currencyAllowViewPt ?
                                                 NumberFormat.DecFormat(
                                                     racebook.Rows[0][
                                                         string.Format(_ibcPtForToteOnMember, sportId,
-                                                        (int) BettypeInfo.Bettype.UKTotePlace, 43)], 2) : "N/A";
+                                                        (int)BettypeInfo.Bettype.UKTotePlace, 43)], 2) : "N/A";
 
                                             ibcPtOnRacebook.ActualIbcPtOnMember = ibcActualPtOnMember;
                                         }
                                         result.IbcPtForRacebook.Add(ibcPtOnRacebook);
                                     }
                                     break;
-                                #endregion
-                                #endregion
+
+                                #endregion PLACE
+
+                                #endregion UK tote
+
                                 #region AU tote
+
                                 #region WIN
+
                                 case (int)BettypeInfo.Bettype.AUToteWin:
                                     enableTote = GetToteStatus(sportId, (int)BettypeInfo.Bettype.AUToteWin);
                                     currencyAllowForTote = GetCurrencyAllowForEachTote(sportId, (int)BettypeInfo.Bettype.AUToteWin);
                                     currencyAllowViewPt = Racing.RacingManager.CheckAllowCurrency(currencyOfCustomer, currencyAllowForTote, enableTote);
                                     //if (!currencyAllowViewPt)
                                     //    break;
-                                    
+
                                     if (enableTote)
                                     {
                                         ibcPtOnRacebook = new IbcAutoPtForRacebook();
                                         ibcActualPtOnMember = new ActualIbcPtOnMember();
                                         var ibcPtAuWinCurrentValue = (from r in ibcAutoPt.AsEnumerable()
-                                                                        where
-                                                                            r.Field<int>("bettype") ==
-                                                                            (int)BettypeInfo.Bettype.AUToteWin
-                                                                        select r.Field<decimal>(_ibcPt)).First();
+                                                                      where
+                                                                          r.Field<int>("bettype") ==
+                                                                          (int)BettypeInfo.Bettype.AUToteWin
+                                                                      select r.Field<decimal>(_ibcPt)).First();
 
-                                        ibcPtOnRacebook.IbcAutoPt = currencyAllowViewPt ?  NumberFormat.DecFormat(racebook.Rows[0][string.Format(_ibcAutoPt, sportId, (int)BettypeInfo.Bettype.AUToteWin)], 2) : "N/A";
+                                        ibcPtOnRacebook.IbcAutoPt = currencyAllowViewPt ? NumberFormat.DecFormat(racebook.Rows[0][string.Format(_ibcAutoPt, sportId, (int)BettypeInfo.Bettype.AUToteWin)], 2) : "N/A";
                                         ibcPtOnRacebook.ToteId = sportId;
                                         ibcPtOnRacebook.ToteName = GetToteName((int)BettypeInfo.Bettype.AUToteWin);
                                         if (roleId == (int)CustInfo.Roles.Member)
                                         {
                                             ibcActualPtOnMember.Win = currencyAllowViewPt ? NumberFormat.DecFormat(ibcPtAuWinCurrentValue, 2) : "N/A";
-                                            ibcActualPtOnMember.EWin =currencyAllowViewPt ?
+                                            ibcActualPtOnMember.EWin = currencyAllowViewPt ?
                                                 NumberFormat.DecFormat(
                                                     racebook.Rows[0][
                                                         string.Format(_ibcPtForToteOnMember, sportId,
-                                                        (int) BettypeInfo.Bettype.AUToteWin, 53)], 2) : "N/A";
+                                                        (int)BettypeInfo.Bettype.AUToteWin, 53)], 2) : "N/A";
                                         }
-
                                     }
                                     break;
-                                #endregion
+
+                                #endregion WIN
+
                                 #region PLACE
+
                                 case (int)BettypeInfo.Bettype.AUTotePlace:
                                     //if (!currencyAllowViewPt)
                                     //    break;
@@ -1725,25 +1797,29 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                 NumberFormat.DecFormat(
                                                     racebook.Rows[0][
                                                         string.Format(_ibcPtForToteOnMember, sportId,
-                                                        (int) BettypeInfo.Bettype.AUTotePlace, 53)], 2) : "N/A";
+                                                        (int)BettypeInfo.Bettype.AUTotePlace, 53)], 2) : "N/A";
 
                                             ibcPtOnRacebook.ActualIbcPtOnMember = ibcActualPtOnMember;
                                         }
                                         result.IbcPtForRacebook.Add(ibcPtOnRacebook);
                                     }
                                     break;
-                                #endregion
-                                #endregion
+
+                                #endregion PLACE
+
+                                #endregion AU tote
                             }
                         }
 
                         break;
-                    #endregion
+
+                    #endregion get all bettype
+
                     default:
                         break;
                 }
-                
-                #endregion
+
+                #endregion pt info
             }
             return result;
         }
@@ -1756,7 +1832,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 var ptData = data.ResultSet.Tables[1];
                 var ptInfo = data.ResultSet.Tables[0].Rows[0];
                 var currencyOfCustomer = ptInfo.Table.Columns.Contains(_currency) ? CastAide.AsInt32(ptInfo[_currency]) : 1;
-                
+
                 foreach (DataRow dr in ptData.Rows)
                 {
                     var ptCurrent = new PositionTakingDTO();
@@ -1768,10 +1844,11 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
                     if (sportType == Constants.Sport.OtherSports && betType == Constants.BetType.MixParlay && sportId == Constants.Sport.OtherSports)
                         continue;
-                    if(sportId == Constants.Sport.NumberGame && !CheckBettypeSatusForNumberGame(betType, CastAide.AsBoolean(dr["islive"])))
+                    if (sportId == Constants.Sport.NumberGame && !CheckBettypeSatusForNumberGame(betType, CastAide.AsBoolean(dr["islive"])))
                         continue;
 
                     #region assign sport info
+
                     ptCurrent.LiveGame = (CastAide.AsBoolean(dr["islive"])) ? "LIVE" : string.Empty;
                     ptCurrent.SportName = ((sportType == Constants.Sport.OtherSports &&
                                             betType == Constants.BetType.MixParlay)
@@ -1786,19 +1863,21 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                          sportType == Constants.Sport.Greyhound
                          || sportType == Constants.Sport.Harness))
                     {
-                        
-                       allowViewCurrentTote = GetToteStatus(sportType, GetParentToteId(betType));
+                        allowViewCurrentTote = GetToteStatus(sportType, GetParentToteId(betType));
 
-                       #region check currency
-                       currencyAllowForTote = GetCurrencyAllowForEachTote(sportType, GetParentToteId(betType));
-                       currencyAllowViewPt = Racing.RacingManager.CheckAllowCurrency(currencyOfCustomer, currencyAllowForTote, allowViewCurrentTote);
-                       #endregion
+                        #region check currency
+
+                        currencyAllowForTote = GetCurrencyAllowForEachTote(sportType, GetParentToteId(betType));
+                        currencyAllowViewPt = Racing.RacingManager.CheckAllowCurrency(currencyOfCustomer, currencyAllowForTote, allowViewCurrentTote);
+
+                        #endregion check currency
 
                         #region check allow view current tote
-                        
+
                         if (!allowViewCurrentTote)
                             continue;
-                        #endregion
+
+                        #endregion check allow view current tote
 
                         if (betType == Constants.BetType.Win || betType == Constants.BetType.Place ||
                             betType == Constants.BetType.WinFOdds || betType == Constants.BetType.PlaceFOdds ||
@@ -1817,11 +1896,12 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     ptCurrent.EnableAutoMaster = !WebSettings.disableAutoM;
                     ptCurrent.DisableFlagCss = (!ptCurrent.PermistionEnableAutoMaster ? "disableFlag" : "OpenFlag");
                     ptCurrent.DisableAutoCss = (!ptCurrent.PermistionEnableAutoMaster ? "disColorMPT" : "");
-                    #endregion
 
-                    #region assign pt detail                    
+                    #endregion assign sport info
 
-                    if(sportId == Constants.Sport.HorseRacing || sportId == Constants.Sport.Greyhound || sportId == Constants.Sport.Harness)
+                    #region assign pt detail
+
+                    if (sportId == Constants.Sport.HorseRacing || sportId == Constants.Sport.Greyhound || sportId == Constants.Sport.Harness)
                     {
                         #region member
 
@@ -1833,7 +1913,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                 Master = currencyAllowViewPt ? NumberFormat.DecFormat(dr["m1"], 2) : "N/A",
                                 Agent = currencyAllowViewPt ? NumberFormat.DecFormat(dr["a1"], 2) : "N/A",
                                 SuperAuto = currencyAllowViewPt ? NumberFormat.DecFormat(dr["u1"], 2) : "N/A",
-                                SuperIsAuto = 
+                                SuperIsAuto =
                                     (CastAide.AsBoolean(dr["i1"], false))
                                         ? " checked='checked'"
                                         : string.Empty,
@@ -1846,7 +1926,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ptCurrent.Member = memberPt;
                         }
 
-                        #endregion
+                        #endregion member
 
                         #region agent
 
@@ -1872,7 +1952,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ptCurrent.Agent = agentPt;
                         }
 
-                        #endregion
+                        #endregion agent
 
                         #region master
 
@@ -1893,7 +1973,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ptCurrent.Master = masterPt;
                         }
 
-                        #endregion
+                        #endregion master
 
                         #region super
 
@@ -1910,7 +1990,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ptCurrent.Super = superPt;
                         }
 
-                        #endregion
+                        #endregion super
                     }
                     else
                     {
@@ -1937,7 +2017,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ptCurrent.Member = memberPt;
                         }
 
-                        #endregion
+                        #endregion member
 
                         #region agent
 
@@ -1963,7 +2043,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ptCurrent.Agent = agentPt;
                         }
 
-                        #endregion
+                        #endregion agent
 
                         #region master
 
@@ -1984,7 +2064,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ptCurrent.Master = masterPt;
                         }
 
-                        #endregion
+                        #endregion master
 
                         #region super
 
@@ -2001,12 +2081,10 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ptCurrent.Super = superPt;
                         }
 
-                        #endregion
+                        #endregion super
                     }
 
-                    
-
-                    #endregion
+                    #endregion assign pt detail
 
                     ptDetail.Add(ptCurrent);
                 }
@@ -2017,20 +2095,23 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
         private static string GetRacebookName(int sportId)
         {
             var sportName = string.Empty;
-            switch(sportId)
+            switch (sportId)
             {
                 case Constants.Sport.HorseRacing:
                     sportName = ResourceExtension.GetResourceValue(
                             ResourceExtension.Resources.Language, "HR");
                     break;
+
                 case Constants.Sport.Greyhound:
                     sportName = ResourceExtension.GetResourceValue(
                             ResourceExtension.Resources.Language, "Greyhound");
                     break;
+
                 case Constants.Sport.Harness:
                     sportName = ResourceExtension.GetResourceValue(
                             ResourceExtension.Resources.Language, "Harness");
                     break;
+
                 default:
                     break;
             }
@@ -2041,23 +2122,26 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
         private static string GetToteName(int bettype)
         {
             var toteName = string.Empty;
-            switch(bettype)
+            switch (bettype)
             {
                 case (int)BettypeInfo.Bettype.SAToteWin:
                 case (int)BettypeInfo.Bettype.SATotePlace:
                     toteName = ResourceExtension.GetResourceValue(
                             ResourceExtension.Resources.Language, "lblTote");
                     break;
+
                 case (int)BettypeInfo.Bettype.UKToteWin:
                 case (int)BettypeInfo.Bettype.UKTotePlace:
                     toteName = ResourceExtension.GetResourceValue(
                             ResourceExtension.Resources.Language, "lblOpenTote");
                     break;
+
                 case (int)BettypeInfo.Bettype.AUToteWin:
                 case (int)BettypeInfo.Bettype.AUTotePlace:
                     toteName = ResourceExtension.GetResourceValue(
                             ResourceExtension.Resources.Language, "lblAUTote");
                     break;
+
                 default:
                     break;
             }
@@ -2107,18 +2191,19 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 {
                     case Constants.Sport.Casino:
                         dtPt = bettypeId < 0
-                                   ? SelectCustomer.GetCSPT(userName, bettypeId*(-1), 0)
+                                   ? SelectCustomer.GetCSPT(userName, bettypeId * (-1), 0)
                                    : SelectCustomer.GetCSPT(userName, 0, bettypeId);
                         break;
+
                     case Constants.Sport.BingoGame:
                         var customerService = BingoContainer.Current.Resolve<ICustomerService>();
                         dtPt = bettypeId < 0
-                                   ? customerService.GetCustomerPt(userName, bettypeId*(-1), 0)
+                                   ? customerService.GetCustomerPt(userName, bettypeId * (-1), 0)
                                    : customerService.GetCustomerPt(userName, 0, bettypeId);
                         break;
                 }
 
-                #endregion
+                #endregion get data
 
                 #region assign data to ViewPtDTO
 
@@ -2127,61 +2212,61 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     result.IsCasino = true;
                     var drInfo = dtPt.Rows[dtPt.Rows.Count - 1];
                     var roleId = CastAide.AsInt32(drInfo["roleid"], 1);
-                    result.CustomerInfo = new CustomerRelation {Upline = new List<CustomerInfo>()};
+                    result.CustomerInfo = new CustomerRelation { Upline = new List<CustomerInfo>() };
                     result.PotionTakingDetail = new List<PositionTakingDTO>();
 
                     #region assign Customer Info
 
                     #region agent
 
-                    if (roleId < (int) CustInfo.Roles.Agent)
+                    if (roleId < (int)CustInfo.Roles.Agent)
                     {
                         var agentInfo = new CustomerInfo()
                                             {
                                                 CustId = CastAide.AsInt32(dtPt.Rows[2]["custid"].ToString()),
                                                 UserName = dtPt.Rows[2]["username"].ToString(),
-                                                RoleId = (int) CustInfo.Roles.Agent,
+                                                RoleId = (int)CustInfo.Roles.Agent,
                                                 RoleName = ResourceExtension.GetResourceValue(
                                                     ResourceExtension.Resources.Language, "Agent")
                                             };
                         result.CustomerInfo.Upline.Add(agentInfo);
                     }
 
-                    #endregion
+                    #endregion agent
 
                     #region master
 
-                    if (roleId < (int) CustInfo.Roles.Master)
+                    if (roleId < (int)CustInfo.Roles.Master)
                     {
                         var masterInfo = new CustomerInfo()
                                              {
                                                  CustId = CastAide.AsInt32(dtPt.Rows[1]["custid"].ToString()),
                                                  UserName = dtPt.Rows[1]["username"].ToString(),
-                                                 RoleId = (int) CustInfo.Roles.Master,
+                                                 RoleId = (int)CustInfo.Roles.Master,
                                                  RoleName = ResourceExtension.GetResourceValue(
                                                      ResourceExtension.Resources.Language, "Master")
                                              };
                         result.CustomerInfo.Upline.Add(masterInfo);
                     }
 
-                    #endregion
+                    #endregion master
 
                     #region super
 
-                    if (roleId < (int) CustInfo.Roles.Super)
+                    if (roleId < (int)CustInfo.Roles.Super)
                     {
                         var superInfo = new CustomerInfo()
                                             {
                                                 CustId = CastAide.AsInt32(dtPt.Rows[0]["custid"].ToString()),
                                                 UserName = dtPt.Rows[0]["username"].ToString(),
-                                                RoleId = (int) CustInfo.Roles.Super,
+                                                RoleId = (int)CustInfo.Roles.Super,
                                                 RoleName = ResourceExtension.GetResourceValue(
                                                     ResourceExtension.Resources.Language, "Super")
                                             };
                         result.CustomerInfo.Upline.Add(superInfo);
                     }
 
-                    #endregion
+                    #endregion super
 
                     #region current user level
 
@@ -2189,12 +2274,12 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                        {
                                                            CustId = CastAide.AsInt32(drInfo["custid"].ToString()),
                                                            UserName = drInfo["username"].ToString(),
-                                                           RoleId = (int) CustInfo.Roles.Member
+                                                           RoleId = (int)CustInfo.Roles.Member
                                                        };
 
-                    #endregion
+                    #endregion current user level
 
-                    #endregion
+                    #endregion assign Customer Info
 
                     #region assign PT
 
@@ -2205,7 +2290,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
                         #region super
 
-                        if (currentRoleId == (int) CustInfo.Roles.Super)
+                        if (currentRoleId == (int)CustInfo.Roles.Super)
                         {
                             ptCurrent.SportName = sportId == Constants.Sport.Casino ? "Casino" : "Bingo";
                             ptCurrent.SportType = dr["gamekind"].ToString();
@@ -2227,11 +2312,11 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ptCurrent.Super = superPt;
                         }
 
-                        #endregion
+                        #endregion super
 
                         #region master
 
-                        if (currentRoleId == (int) CustInfo.Roles.Master)
+                        if (currentRoleId == (int)CustInfo.Roles.Master)
                         {
                             var masterPt = new PositionTakingInfo()
                                                {
@@ -2249,11 +2334,11 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ptCurrent.Master = masterPt;
                         }
 
-                        #endregion
+                        #endregion master
 
                         #region Agent
 
-                        if (currentRoleId == (int) CustInfo.Roles.Agent)
+                        if (currentRoleId == (int)CustInfo.Roles.Agent)
                         {
                             var agentPt = new PositionTakingInfo()
                                               {
@@ -2271,11 +2356,11 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ptCurrent.Agent = agentPt;
                         }
 
-                        #endregion
+                        #endregion Agent
 
                         #region member
 
-                        if (currentRoleId == (int) CustInfo.Roles.Member)
+                        if (currentRoleId == (int)CustInfo.Roles.Member)
                         {
                             var memberPt = new PositionTakingInfo()
                                                {
@@ -2293,14 +2378,14 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ptCurrent.Member = memberPt;
                         }
 
-                        #endregion
+                        #endregion member
 
                         if (roleId != currentRoleId) continue;
                         result.PotionTakingDetail.Add(ptCurrent);
                         ptCurrent = new PositionTakingDTO();
                     }
 
-                    #endregion
+                    #endregion assign PT
                 }
                 else
                 {
@@ -2308,12 +2393,11 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                                              "thereisnodata");
                 }
 
-                #endregion
+                #endregion assign data to ViewPtDTO
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
@@ -2324,11 +2408,13 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             try
             {
                 #region get data
+
                 var dtPt = SelectCustomer.GetLiveCasinoPt(userName);
-                #endregion
+
+                #endregion get data
 
                 #region assign data to ViewPtDTO
-                
+
                 ISettingManager LiveCS = new SettingManager();
 
                 if (dtPt != null && dtPt.ResultSet.Tables.Count > 1)
@@ -2347,6 +2433,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     result.CustomerInfo = new CustomerRelation { Upline = new List<CustomerInfo>() };
                     result.PotionTakingDetail = new List<PositionTakingDTO>();
                     //var masterDisableAutoPt =
+
                     #region assign Customer Info
 
                     #region agent
@@ -2364,7 +2451,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         result.CustomerInfo.Upline.Add(agentInfo);
                     }
 
-                    #endregion
+                    #endregion agent
 
                     #region master
 
@@ -2381,7 +2468,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         result.CustomerInfo.Upline.Add(masterInfo);
                     }
 
-                    #endregion
+                    #endregion master
 
                     #region super
 
@@ -2398,7 +2485,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         result.CustomerInfo.Upline.Add(superInfo);
                     }
 
-                    #endregion
+                    #endregion super
 
                     #region current user level
 
@@ -2409,9 +2496,9 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         RoleId = (int)CustInfo.Roles.Member
                     };
 
-                    #endregion
+                    #endregion current user level
 
-                    #endregion
+                    #endregion assign Customer Info
 
                     #region assign PT
 
@@ -2444,7 +2531,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ptCurrent.Super = superPt;
                         }
 
-                        #endregion
+                        #endregion super
 
                         #region master
 
@@ -2465,7 +2552,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ptCurrent.Master = masterPt;
                         }
 
-                        #endregion
+                        #endregion master
 
                         #region Agent
 
@@ -2491,7 +2578,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ptCurrent.Agent = agentPt;
                         }
 
-                        #endregion
+                        #endregion Agent
 
                         #region member
 
@@ -2516,14 +2603,14 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             ptCurrent.Member = memberPt;
                         }
 
-                        #endregion
+                        #endregion member
 
                         if (roleId != currentRoleId) continue;
                         result.PotionTakingDetail.Add(ptCurrent);
                         ptCurrent = new PositionTakingDTO();
                     }
 
-                    #endregion
+                    #endregion assign PT
                 }
                 else
                 {
@@ -2531,7 +2618,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                                              "thereisnodata");
                 }
 
-                #endregion
+                #endregion assign data to ViewPtDTO
             }
             catch (Exception ex)
             {
@@ -2543,11 +2630,14 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
         private static CustomerRelation GetCustomerRelation(DbResult data)
         {
             var customerRelation = new CustomerRelation { Upline = new List<CustomerInfo>() };
+
             #region assign Customer Info
+
             var drCustInfo = data.ResultSet.Tables[0].Rows[0];
             var roleId = CastAide.AsInt32(drCustInfo["roleid"], 1);
 
             #region agent
+
             if (roleId < (int)CustInfo.Roles.Agent)
             {
                 var agentInfo = new CustomerInfo()
@@ -2559,10 +2649,12 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                      ResourceExtension.Resources.Language, "Agent")
                 };
                 customerRelation.Upline.Add(agentInfo);
-                
             }
-            #endregion
+
+            #endregion agent
+
             #region master
+
             if (roleId < (int)CustInfo.Roles.Master)
             {
                 var masterInfo = new CustomerInfo()
@@ -2575,8 +2667,11 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 };
                 customerRelation.Upline.Add(masterInfo);
             }
-            #endregion
+
+            #endregion master
+
             #region super
+
             if (roleId < (int)CustInfo.Roles.Super)
             {
                 var superInfo = new CustomerInfo()
@@ -2589,31 +2684,37 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 };
                 customerRelation.Upline.Add(superInfo);
             }
-            #endregion
+
+            #endregion super
+
             #region member
+
             customerRelation.Customer = new CustomerInfo()
             {
                 CustId = CastAide.AsInt32(drCustInfo["custid"].ToString()),
                 UserName = drCustInfo["username"].ToString(),
                 RoleId = (int)CustInfo.Roles.Member
             };
-            #endregion
-            #endregion
+
+            #endregion member
+
+            #endregion assign Customer Info
+
             return customerRelation;
         }
 
         private static bool GetRacbookStatus(int sportId)
         {
             var status = false;
-            
+
             var selectHorse =
                 (from currentHorse in
                      RacingSection.Instance.Racings.Cast<RacingElement>().Where(
                          currentTote => currentTote.Id == sportId.ToString())
                  select currentHorse);
-            if (selectHorse != null && selectHorse.Count() > 0)            
+            if (selectHorse != null && selectHorse.Count() > 0)
                 status = selectHorse.ToList()[0].Active;
-            
+
             return status;
         }
 
@@ -2628,16 +2729,16 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                          currentHorse => currentHorse.Id == sportId.ToString())
                  select currentHorse);
 
-            if (selectHorse== null || selectHorse.ToList()[0].Active == false)
+            if (selectHorse == null || selectHorse.ToList()[0].Active == false)
                 return false;
 
             var selectTote = (from currentTote in
-                                          selectHorse.ToList()[0].Totes.Cast<ToteElement>().Where(
-                                              currentTote => currentTote.Id == string.Format("{0}", toteId))
-                                      select currentTote);
-            if (selectTote != null && selectTote.Count() > 0)            
+                                  selectHorse.ToList()[0].Totes.Cast<ToteElement>().Where(
+                                      currentTote => currentTote.Id == string.Format("{0}", toteId))
+                              select currentTote);
+            if (selectTote != null && selectTote.Count() > 0)
                 status = selectTote.ToList()[0].Active;
-            
+
             return status;
         }
 
@@ -2659,13 +2760,12 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                           currentTote => currentTote.Id == string.Format("{0}", toteId))
                                   select currentTote);
 
-                if (selectTote.Count() > 0)                
+                if (selectTote.Count() > 0)
                     allowlist = selectTote.ToList()[0].Currency;
-                
             }
             return allowlist;
         }
-        
+
         private static int GetParentToteId(int toteId)
         {
             var parentId = 0;
@@ -2675,14 +2775,17 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 case (int)BettypeInfo.Bettype.SATotePlace:
                     parentId = (int)BettypeInfo.Bettype.SAToteWin;
                     break;
+
                 case (int)BettypeInfo.Bettype.UKToteWin:
                 case (int)BettypeInfo.Bettype.UKTotePlace:
                     parentId = (int)BettypeInfo.Bettype.UKToteWin;
                     break;
+
                 case (int)BettypeInfo.Bettype.AUToteWin:
                 case (int)BettypeInfo.Bettype.AUTotePlace:
                     parentId = (int)BettypeInfo.Bettype.AUToteWin;
                     break;
+
                 default:
                     break;
             }
@@ -2702,7 +2805,9 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             if (isEnableSport)
             {
                 result.AllowViewTotes = new List<AllowViewSport>();
+
                 #region get racebook info from config
+
                 var racingSetting = RacingSection.Instance;
                 var selectHorse =
                     (from currentHorse in
@@ -2710,7 +2815,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                              currentHorse => currentHorse.Id == sportId.ToString())
                      select currentHorse);
 
-                if(selectHorse != null && selectHorse.Count() > 0)
+                if (selectHorse != null && selectHorse.Count() > 0)
                 {
                     foreach (ToteElement toteElement in selectHorse.ToList()[0].Totes)
                     {
@@ -2722,12 +2827,14 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                               select currentTote);
                             if (selectTote != null && selectTote.Count() > 0)
                             {
-
                                 #region check currency
+
                                 var enableToteStatus = GetToteStatus(sportId, CastAide.AsInt32(toteElement.Id));
                                 var currencyAllowForTote = GetCurrencyAllowForEachTote(sportId, GetParentToteId(CastAide.AsInt32(toteElement.Id)));
-                                var currencyAllowViewPt = Racing.RacingManager.CheckAllowCurrency(currencyOfCustomer, currencyAllowForTote, enableToteStatus);                                
-                                #endregion
+                                var currencyAllowViewPt = Racing.RacingManager.CheckAllowCurrency(currencyOfCustomer, currencyAllowForTote, enableToteStatus);
+
+                                #endregion check currency
+
                                 if (enableToteStatus && currencyAllowViewPt)
                                 {
                                     var currentToteInfo = new AllowViewSport
@@ -2743,16 +2850,14 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                             }
                         }
                     }
-                    
                 }
-                
-                #endregion
-                
+
+                #endregion get racebook info from config
             }
             return result;
         }
 
-        private static bool CheckBettypeSatusForNumberGame(int bettype, bool isLive) 
+        private static bool CheckBettypeSatusForNumberGame(int bettype, bool isLive)
         {
             var status = false;
             var bettypes = NumberGameSection.Instance[NumberGameSection.NumberGameCollectionType.Bettype];
@@ -2775,20 +2880,21 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
 
         private static bool CheckNGBettypeStatusBySport(int bettype)
         {
-            
             var status = false;
             try
             {
                 #region private variables
+
                 var bettypes = NumberGameSection.Instance[NumberGameSection.NumberGameCollectionType.Bettype];
                 var deadball = bettypes[NumberGameSection.BallCollectionType.Deadball.ToString()];
                 var liveball = bettypes[NumberGameSection.BallCollectionType.Liveball.ToString()];
 
                 var deadQuery = (from q in deadball.Settings.Cast<NumberGameElement>().Where(q => q.Id == bettype && q.IsSetting) select q);
                 var liveQuery = (from q in liveball.Settings.Cast<NumberGameElement>().Where(q => q.Id == bettype && q.IsSetting) select q);
-                #endregion
 
-                if (deadQuery != null && liveQuery != null 
+                #endregion private variables
+
+                if (deadQuery != null && liveQuery != null
                     && deadQuery.Count<NumberGameElement>() > 0 && liveQuery.Count<NumberGameElement>() > 0)
                 {
                     if (deadQuery.First().Active || liveQuery.First().Active)
@@ -2796,7 +2902,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                 }
                 else
                 {
-                    if (deadQuery != null && deadQuery.Count<NumberGameElement>()> 0)
+                    if (deadQuery != null && deadQuery.Count<NumberGameElement>() > 0)
                         status = deadQuery.First().Active;
                     else if (liveQuery != null && liveQuery.Count<NumberGameElement>() > 0)
                         status = liveQuery.First().Active;
@@ -2805,6 +2911,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
             catch { }
             return status;
         }
-        #endregion
+
+        #endregion private methods
     }
 }

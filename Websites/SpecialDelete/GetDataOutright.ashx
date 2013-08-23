@@ -4,7 +4,6 @@ using System;
 using System.Web;
 using DNAide.Data;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using DNAide.Core;
 using System.Data;

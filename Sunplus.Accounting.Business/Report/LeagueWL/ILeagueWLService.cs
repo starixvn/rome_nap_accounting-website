@@ -5,6 +5,7 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
     public interface ILeagueWLService
     {
         LeagueWLBySportsDTO SelLeagueWLBySports(string winlostdate, bool isGetNew);
+
         LeagueWLBettypeDTO SelLeagueWLByBettypes(int sportId, int leagueId, string winlostDate);
 
         LeagueWLBettypeDetailBO SelLeagueWLDetailByBettypes(int sportId, int leagueId, int bettypeId, bool isLive,

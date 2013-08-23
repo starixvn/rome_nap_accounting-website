@@ -5,16 +5,14 @@ using Sunplus.Accounting.Entities.Report.Monitor;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.Report
 {
-    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]    
-    public class MonitorService:IMonitorService
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+    public class MonitorService : IMonitorService
     {
-
         public Filter LoadFilterReport()
         {
             var filter = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.Monitor.IMonitorService>();
-            return filter.LoadFilterReport(); 
+            return filter.LoadFilterReport();
         }
-
 
         public List<Items> GetBettypes(List<Items> option, int sporttype)
         {
@@ -22,13 +20,11 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
             return filter.GetBettypes(option, sporttype);
         }
 
-
-        public List<Items> GetLeague(List<Items> option, int sportId, string fromdate, string todate, int currency, int bettype,int live)
+        public List<Items> GetLeague(List<Items> option, int sportId, string fromdate, string todate, int currency, int bettype, int live)
         {
             var filter = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.Monitor.IMonitorService>();
             return filter.GetSelectLeagues(option, sportId, fromdate, todate, currency, bettype, live);
         }
-
 
         public MAMonitorDTO GetMAMonitorReport(Param param, bool fromcache)
         {
@@ -48,5 +44,4 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
             return export.CheckMAMonitorReportFromSession(param);
         }
     }
-
 }

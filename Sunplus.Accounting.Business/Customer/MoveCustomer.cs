@@ -2,33 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using IBCUtils;
-
-using Sunplus.Accounting.Entities;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.DataAccess;
-using Sunplus.Bingo.Core;
-using Sunplus.Bingo.Entities;
-using Sunplus.Bingo.Services;
-using Sunplus.Core.LoggingLib;
-using Result = Sunplus.Bingo.Entities.Result;
-using Sunplus.Accounting.Core.Extensions;
-using Microsoft.Practices.Unity;
-using Sunplus.Accounting.Core.Configurations;
 using Fanex.Tarus.LiveCasino.Business.MoveAccount;
 using Fanex.Tarus.LiveCasino.Entities.MoveAccount;
+using IBCUtils;
+using Microsoft.Practices.Unity;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.DataAccess;
+using Sunplus.Accounting.Entities;
+using Sunplus.Bingo.Core;
+using Sunplus.Bingo.Entities;
+using Result = Sunplus.Bingo.Entities.Result;
+
 namespace Sunplus.Accounting.Business.Customer
 {
     /// <summary>
     /// Summary description for MoveCustomer
     /// </summary>
-    public class MoveCustomer:BaseManager
+    public class MoveCustomer : BaseManager
     {
-
         private CustomerDetail _downlineDetail = new CustomerDetail();
         private CustomerDetail _uplineDetail = new CustomerDetail();
-        
+
         public enum MoveType
         {
             Master = 0, Agent = 1
@@ -47,7 +44,7 @@ namespace Sunplus.Accounting.Business.Customer
             }
         }
 
-        public enum  ErrorType
+        public enum ErrorType
         {
             Success = 0, InvalidParams = 1, InvalidDownline = 2, InvalidUpline = 3, ValidParam = 4
         }
@@ -73,7 +70,6 @@ namespace Sunplus.Accounting.Business.Customer
 
             if (WebSettings.IsApplySplitingDepositeCustomer)
             {
-
                 if (IsDeposit(uplineUser) || IsDeposit(downlineUser))
                 {
                     if (!IsDeposit(downlineUser))
@@ -110,17 +106,17 @@ namespace Sunplus.Accounting.Business.Customer
             {
                 return new IbcError((int)ErrorType.InvalidUpline, ResourceExtension.GetResourceValue(ResourceExtension.Resources.MoveCust, "ErrInvalidParent"));
             }
-            return new IbcError(0, ResourceExtension.GetResourceValue(ResourceExtension.Resources.MoveCust, "ValidParams") );
+            return new IbcError(0, ResourceExtension.GetResourceValue(ResourceExtension.Resources.MoveCust, "ValidParams"));
         }
 
         private static string MoveSuccessfully(string username)
         {
-            return StringUtils.ParseToJSMsg(string.Format(ResourceExtension.GetResourceValue(ResourceExtension.Resources.MoveCust, "MoveSuccessfully") , username));
+            return StringUtils.ParseToJSMsg(string.Format(ResourceExtension.GetResourceValue(ResourceExtension.Resources.MoveCust, "MoveSuccessfully"), username));
         }
 
         private static string NotSync(string username)
         {
-            return StringUtils.ParseToJSMsg(string.Format(ResourceExtension.GetResourceValue(ResourceExtension.Resources.MoveCust, "ErrCustomerNotSync") , username));
+            return StringUtils.ParseToJSMsg(string.Format(ResourceExtension.GetResourceValue(ResourceExtension.Resources.MoveCust, "ErrCustomerNotSync"), username));
         }
 
         private string MoveDepositCustomer(MoveType custType, string downlineUser, string uplineUser, int accId)
@@ -148,7 +144,7 @@ namespace Sunplus.Accounting.Business.Customer
                 /*if (WebSettings.IsAllowMoveToBingo)
                 {
                     bingoResult = CheckMoveBingoCustomer(downlineUser, uplineUser, isMoveAgent);
-                    
+
                     if (bingoResult.ErrorCode > 0)
                         return bingoResult.ErrorMessage;
                 }*/
@@ -182,7 +178,6 @@ namespace Sunplus.Accounting.Business.Customer
                             SignupIp = Utils.GetClientIP(),
                             UplineUsername = uplineUser,
                             UserId = accId,
-
                         };
                         var rs = moveLiveCS.Move(moveAccountInfo, isMoveAgent);
 
@@ -195,10 +190,12 @@ namespace Sunplus.Accounting.Business.Customer
                     }
                 }
 
-                #endregion 
-                
+                #endregion check for moving live casino
+
                 var customerRngSiteName = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(_downlineDetail.CustID);
+
                 #region Didn't Synchronize Casino
+
                 if (!_downlineDetail.IsCasinoSync)
                 {
                     error = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdMoveCustRpt(downlineUser, uplineUser,
@@ -248,7 +245,8 @@ namespace Sunplus.Accounting.Business.Customer
                     //Rollback minigame if error
                     return StringUtils.ParseToJSMsg(error.ErrorMsg);
                 }
-                #endregion
+
+                #endregion Didn't Synchronize Casino
 
                 if (!_uplineDetail.IsCasinoSync)
                 {
@@ -262,7 +260,7 @@ namespace Sunplus.Accounting.Business.Customer
                 {
                     if (errors.Count > 0)
                     {
-                        return errors.Aggregate(ResourceExtension.GetResourceValue(ResourceExtension.Resources.MoveCust, "lblErrorFromCasino") + "<br>", (current, errorDetail) => current + ("- " + errorDetail.ErrCode + ": " + errorDetail.ErrorMessage) + "<br>" );
+                        return errors.Aggregate(ResourceExtension.GetResourceValue(ResourceExtension.Resources.MoveCust, "lblErrorFromCasino") + "<br>", (current, errorDetail) => current + ("- " + errorDetail.ErrCode + ": " + errorDetail.ErrorMessage) + "<br>");
                     }
                 }
 
@@ -270,11 +268,11 @@ namespace Sunplus.Accounting.Business.Customer
                 error = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdMoveCustRpt(downlineUser, uplineUser,
                                                                                  accId.ToString(),
                                                                                  MoveTypeName(custType));
-                if(!error.IsSuccess())
+                if (!error.IsSuccess())
                 {
                     //Rollback data Casino when got problem with moving from IBC
                     bool rollBackResultCasino = RollbackCasino(custType, downlineUser, customerRngSiteName);
-                    string errMsg = ResourceExtension.GetResourceValue(ResourceExtension.Resources.MoveCust, "lblErrorFromIBC")  + error.ErrorMsg;
+                    string errMsg = ResourceExtension.GetResourceValue(ResourceExtension.Resources.MoveCust, "lblErrorFromIBC") + error.ErrorMsg;
                     string rollBackFunction = "";
 
                     switch (custType)
@@ -282,6 +280,7 @@ namespace Sunplus.Accounting.Business.Customer
                         case MoveType.Agent:
                             rollBackFunction = "RollbackAgent";
                             break;
+
                         case MoveType.Master:
                             rollBackFunction = "RollbackMaster";
                             break;
@@ -289,14 +288,12 @@ namespace Sunplus.Accounting.Business.Customer
 
                     if (!rollBackResultCasino)
                     {
-                        errMsg += "<br>" +ResourceExtension.GetResourceValue(ResourceExtension.Resources.MoveCust, "lblErrorFromCasino")   + rollBackFunction;
+                        errMsg += "<br>" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.MoveCust, "lblErrorFromCasino") + rollBackFunction;
                     }
-
 
                     return errMsg;
                 }
 
-             
                 //Complete moving customer
                 CompleteMoveCasino(custType, downlineUser, customerRngSiteName);
 
@@ -315,9 +312,7 @@ namespace Sunplus.Accounting.Business.Customer
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return StringUtils.ParseToJSMsg(ex.Message);
             }
-
         }
-
 
         #region Bingo
 
@@ -325,7 +320,7 @@ namespace Sunplus.Accounting.Business.Customer
         {
             var bingoService = BingoContainer.Current.Resolve<Sunplus.Bingo.Services.ICustomerService>();
             IResult bingoResult = new Result();
-            if(BingoSettings.BingoGame.Enabled)
+            if (BingoSettings.BingoGame.Enabled)
             {
                 bingoResult = bingoService.IsValidToMoveCustomer(downlineUser, uplineUser, isMoveAgent);
             }
@@ -335,7 +330,7 @@ namespace Sunplus.Accounting.Business.Customer
         private IResult MoveBingoCustomer(string downlineUser, string uplineUser, bool isMoveAgent)
         {
             var bingoService = BingoContainer.Current.Resolve<Sunplus.Bingo.Services.ICustomerService>();
-            
+
             IResult bingoResult = new Result();
             if (BingoSettings.BingoGame.Enabled)
             {
@@ -344,9 +339,11 @@ namespace Sunplus.Accounting.Business.Customer
             }
             return bingoResult;
         }
-        #endregion
+
+        #endregion Bingo
 
         #region Casino
+
         private static List<ErrorDetail> MoveCasino(MoveType custType, string downlineUser, string uplineUser, string siteName)
         {
             switch (custType)
@@ -379,13 +376,14 @@ namespace Sunplus.Accounting.Business.Customer
                 case MoveType.Agent:
                     IBCProvider.Casino.RollbackAgent(downlineUsername, false, siteName);
                     break;
-                    
+
                 default:
                     IBCProvider.Casino.RollbackMaster(downlineUsername, false, siteName);
                     break;
             }
         }
-        #endregion
+
+        #endregion Casino
 
         #region live casino
 
@@ -395,6 +393,6 @@ namespace Sunplus.Accounting.Business.Customer
             return result;
         }
 
-        #endregion
+        #endregion live casino
     }
 }

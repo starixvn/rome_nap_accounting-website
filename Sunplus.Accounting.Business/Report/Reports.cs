@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Data;
-using System.Web;
-using Sunplus.Accounting.Business.CacheManager;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Core.Web.Controls;
-using Sunplus.Accounting.DataAccess;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
-using IBCUtils;
-using System.Text;
 using System.Collections;
+using System.Data;
+using System.Text;
+using System.Web;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Web;
-
+using IBCUtils;
+using Sunplus.Accounting.Business.CacheManager;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Web.Controls;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using Sunplus.Accounting.DataAccess.Report;
 
 namespace Sunplus.Accounting.Business.Report
 {
@@ -26,8 +22,8 @@ namespace Sunplus.Accounting.Business.Report
     {
         public Reports()
         {
-
         }
+
         public static string Title
         {
             get { return "Accounting - Company Report"; }
@@ -44,6 +40,7 @@ namespace Sunplus.Accounting.Business.Report
         public const string Report2H_Other = "[Report2HO]-1";
 
         #region string colorvalue(object value)
+
         public static string colorvalue(object value)
         {
             string str = "";
@@ -54,6 +51,7 @@ namespace Sunplus.Accounting.Business.Report
             }
             return str;
         }
+
         public static string colorvalue(object value, string SpecialText)
         {
             string str = "";
@@ -64,16 +62,21 @@ namespace Sunplus.Accounting.Business.Report
             }
             return str;
         }
+
         #region colorvalueCreditTerm(double value)
+
         public static string colorvalueCreditTerm(double value)
         {
             if (value >= 0) return "<font color='blue'>" + FormatHandler.FormatNumber20(value) + "</font>";
             else return "<font color='red'>" + FormatHandler.FormatNumber20(value) + "</font>";
         }
-        #endregion
-        #endregion
+
+        #endregion colorvalueCreditTerm(double value)
+
+        #endregion string colorvalue(object value)
 
         #region void genrow(ref string totalRowSportType, string color, string BetType, double WinLost, double Position, double Comm, double Turnover)
+
         public static void genrow(ref string totalRowSportType, string color, string BetType, double WinLost, double Position, double Comm, double Turnover, bool IsBlankCell)
         {
             TemplateHandler.Assign(ref totalRowSportType, "{color}", color);
@@ -100,6 +103,7 @@ namespace Sunplus.Accounting.Business.Report
             if (BetType.Equals("8RM")) TemplateHandler.Assign(ref totalRowSportType, "{align}", "c");
             else TemplateHandler.Assign(ref totalRowSportType, "{align}", "l");
         }
+
         public static void genrow(ref string totalRowSportType, string color, string BetType, double WinLost, double Position, double Comm, double linetotal, double Turnover, bool IsBlankCell)
         {
             TemplateHandler.Assign(ref totalRowSportType, "{color}", color);
@@ -126,9 +130,11 @@ namespace Sunplus.Accounting.Business.Report
             if (BetType.Equals("8RM")) TemplateHandler.Assign(ref totalRowSportType, "{align}", "c");
             else TemplateHandler.Assign(ref totalRowSportType, "{align}", "l");
         }
-        #endregion
+
+        #endregion void genrow(ref string totalRowSportType, string color, string BetType, double WinLost, double Position, double Comm, double Turnover)
 
         #region public static void genrow(ref string totalRowSportType, string color, string BetType, double WinLost, double Position, double Comm, double Turnover)
+
         public static void genrow(ref string totalRowSportType, string color, string BetType, double WinLost, double Position, double Comm, double Turnover)
         {
             TemplateHandler.Assign(ref totalRowSportType, "{color}", color);
@@ -146,6 +152,7 @@ namespace Sunplus.Accounting.Business.Report
             if (BetType.Equals("8RM") || BetType.Equals("BARM")) TemplateHandler.Assign(ref totalRowSportType, "{align}", "c");
             else TemplateHandler.Assign(ref totalRowSportType, "{align}", "l");
         }
+
         public static void genrow2(ref string totalRowSportType, string color, string BetType, double WinLost, double Position, double Comm, double Turnover)
         {
             TemplateHandler.Assign(ref totalRowSportType, "{color}", color);
@@ -163,6 +170,7 @@ namespace Sunplus.Accounting.Business.Report
             if (BetType.Equals("8RM") || BetType.Equals("BARM")) TemplateHandler.Assign(ref totalRowSportType, "{align}", "c");
             else TemplateHandler.Assign(ref totalRowSportType, "{align}", "l");
         }
+
         public static void genrow2h(ref string totalRowSportType, string color, string BetType, double WinLost, double Position, double Comm, double LineTotal, double Turnover, bool Is8RM)
         {
             if (Is8RM)
@@ -193,9 +201,11 @@ namespace Sunplus.Accounting.Business.Report
                 TemplateHandler.Assign(ref totalRowSportType, "{align}", "l");
             }
         }
-        #endregion
+
+        #endregion public static void genrow(ref string totalRowSportType, string color, string BetType, double WinLost, double Position, double Comm, double Turnover)
 
         #region void genrow(ref string totalRowSportType, string color, string BetType, string WinLost, string Position, string Comm, string Turnover, string Line)
+
         public static void genrow(ref string totalRowSportType, string color, string BetType, string WinLost, string Position, string Comm, string Turnover, string Line)
         {
             TemplateHandler.Assign(ref totalRowSportType, "{color}", color);
@@ -206,11 +216,12 @@ namespace Sunplus.Accounting.Business.Report
             TemplateHandler.Assign(ref totalRowSportType, "{LineTotal}", (Line));
             TemplateHandler.Assign(ref totalRowSportType, "{Turnover}", (Turnover));
             TemplateHandler.Assign(ref totalRowSportType, "{Admin2}", (Turnover));
-
         }
-        #endregion
+
+        #endregion void genrow(ref string totalRowSportType, string color, string BetType, string WinLost, string Position, string Comm, string Turnover, string Line)
 
         #region void genrow(ref string totalRowSportType, string color, string BetType, string WinLost, string Position, string Comm, string Turnover, string Line)
+
         public static void genrow(ref string totalRowSportType, string color, string BetType, string WinLost, string Position, string Comm, string Turnover, string Line, string Margin)
         {
             TemplateHandler.Assign(ref totalRowSportType, "{color}", color);
@@ -222,11 +233,12 @@ namespace Sunplus.Accounting.Business.Report
             TemplateHandler.Assign(ref totalRowSportType, "{Turnover}", (Turnover));
             TemplateHandler.Assign(ref totalRowSportType, "{Margin}", (Margin));
             TemplateHandler.Assign(ref totalRowSportType, "{Admin2}", (Turnover));
-
         }
-        #endregion
+
+        #endregion void genrow(ref string totalRowSportType, string color, string BetType, string WinLost, string Position, string Comm, string Turnover, string Line)
 
         #region public static void genrow(ref string totalRowSportType, string color, string BetType, string WinLost, string Position, string Comm, string Turnover, string Line, bool IsBlankCell)
+
         public static void genrow(ref string totalRowSportType, string color, string BetType, string WinLost, string Position, string Comm, string Turnover, string Line, bool IsBlankCell)
         {
             TemplateHandler.Assign(ref totalRowSportType, "{color}", color);
@@ -247,11 +259,11 @@ namespace Sunplus.Accounting.Business.Report
                 TemplateHandler.Assign(ref totalRowSportType, "{blankcell}", "");
             }
         }
-        #endregion
 
-
+        #endregion public static void genrow(ref string totalRowSportType, string color, string BetType, string WinLost, string Position, string Comm, string Turnover, string Line, bool IsBlankCell)
 
         #region GetHeader
+
         public static string GetHeader(string strfdate, string strtdate, string path, bool IsGetData)
         {
             StringBuilder html = new StringBuilder();
@@ -290,16 +302,13 @@ namespace Sunplus.Accounting.Business.Report
                 }
 
                 html.Append(tpl);
-
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
                 return string.Empty;
-
             }
             return html.ToString();
         }
@@ -315,12 +324,13 @@ namespace Sunplus.Accounting.Business.Report
         public static string GetDateTimeSingle(string strFdate, string TextValue, string TitleReport)
         {
             string tpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Report/DateTimeSingle.html");
-            TemplateHandler.Assign(ref tpl, "{FromDateCal}", Calendar.GenCalendarControl("fdate", "../", "fdateTrigger", strFdate, false, false, 3, 0, ""));//Phuong.Nguyen@Updated: <2009-01-03>, show others day of next month        
+            TemplateHandler.Assign(ref tpl, "{FromDateCal}", Calendar.GenCalendarControl("fdate", "../", "fdateTrigger", strFdate, false, false, 3, 0, ""));//Phuong.Nguyen@Updated: <2009-01-03>, show others day of next month
             TemplateHandler.Assign(ref tpl, "{Text-value}", TextValue);
             TemplateHandler.Assign(ref tpl, "{Title-Report}", TitleReport);
 
             return tpl;
         }
+
         public static string GetDateTimeSingle(string strFdate, string TextValue, string TitleReport, int displaydays)
         {
             int displayMonths = 0;
@@ -331,7 +341,7 @@ namespace Sunplus.Accounting.Business.Report
                 ShowOtherDay = true;
             }
             string tpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Report/DateTimeSingle.html");
-            TemplateHandler.Assign(ref tpl, "{FromDateCal}", Calendar.GenCalendarControl("fdate", "../", "fdateTrigger", strFdate, false, false, displayMonths, displaydays, string.Empty));//Phuong.Nguyen@Updated: <2009-01-03>, show others day of next month        
+            TemplateHandler.Assign(ref tpl, "{FromDateCal}", Calendar.GenCalendarControl("fdate", "../", "fdateTrigger", strFdate, false, false, displayMonths, displaydays, string.Empty));//Phuong.Nguyen@Updated: <2009-01-03>, show others day of next month
             TemplateHandler.Assign(ref tpl, "{Text-value}", TextValue);
             TemplateHandler.Assign(ref tpl, "{Title-Report}", TitleReport);
 
@@ -371,7 +381,7 @@ namespace Sunplus.Accounting.Business.Report
             int displayMonths = 0;
 
             string tpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Report/DateTimeSinglePath.html");
-            TemplateHandler.Assign(ref tpl, "{FromDateCal}", "<input type=\"text\" id=\"fdate\" readonly=\"readonly\" class=\"txtdate\" style=\"width: 100px; background-color: white;\" />");//Phuong.Nguyen@Updated: <2009-01-03>, show others day of next month        
+            TemplateHandler.Assign(ref tpl, "{FromDateCal}", "<input type=\"text\" id=\"fdate\" readonly=\"readonly\" class=\"txtdate\" style=\"width: 100px; background-color: white;\" />");//Phuong.Nguyen@Updated: <2009-01-03>, show others day of next month
             TemplateHandler.Assign(ref tpl, "{Text-value}", TextValue);
             TemplateHandler.Assign(ref tpl, "{Title-Report}", TitleReport);
             TemplateHandler.Assign(ref tpl, "{path}", sitemap);
@@ -385,7 +395,7 @@ namespace Sunplus.Accounting.Business.Report
             int displayMonths = 0;
 
             string tpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Report/DateTimeSinglePath_2h.htm");
-            TemplateHandler.Assign(ref tpl, "{FromDateCal}", Calendar.GenCalendarControlMaxDays("fdate", path, "fdateTrigger", strFdate, false, false, displayMonths, displaydays, maxdays, eventfunction, "blue", ""));//Phuong.Nguyen@Updated: <2009-01-03>, show others day of next month        
+            TemplateHandler.Assign(ref tpl, "{FromDateCal}", Calendar.GenCalendarControlMaxDays("fdate", path, "fdateTrigger", strFdate, false, false, displayMonths, displaydays, maxdays, eventfunction, "blue", ""));//Phuong.Nguyen@Updated: <2009-01-03>, show others day of next month
             TemplateHandler.Assign(ref tpl, "{Text-value}", TextValue);
             TemplateHandler.Assign(ref tpl, "{Title-Report}", TitleReport);
             TemplateHandler.Assign(ref tpl, "{path}", sitemap);
@@ -399,7 +409,7 @@ namespace Sunplus.Accounting.Business.Report
             int displayMonths = 0;
 
             string tpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Report/DateTimeSinglePath.html");
-            TemplateHandler.Assign(ref tpl, "{FromDateCal}", Calendar.GenCalendarControl("fdate", path, "fdateTrigger", strFdate, false, false, displayMonths, displaydays, eventfunction, "blue"));//Phuong.Nguyen@Updated: <2009-01-03>, show others day of next month        
+            TemplateHandler.Assign(ref tpl, "{FromDateCal}", Calendar.GenCalendarControl("fdate", path, "fdateTrigger", strFdate, false, false, displayMonths, displaydays, eventfunction, "blue"));//Phuong.Nguyen@Updated: <2009-01-03>, show others day of next month
             TemplateHandler.Assign(ref tpl, "{Text-value}", TextValue);
             TemplateHandler.Assign(ref tpl, "{Title-Report}", TitleReport);
             TemplateHandler.Assign(ref tpl, "{path}", sitemap);
@@ -446,7 +456,6 @@ namespace Sunplus.Accounting.Business.Report
 
             html.Append("</select>");
 
-
             TemplateHandler.Assign(ref tpl, "{FromDateCal}", html.ToString());
             TemplateHandler.Assign(ref tpl, "{Text-value}", TextValue);
             TemplateHandler.Assign(ref tpl, "{Title-Report}", TitleReport);
@@ -478,11 +487,9 @@ namespace Sunplus.Accounting.Business.Report
                 TemplateHandler.Assign(ref tpl, "{path}", path);
 
                 html.Append(tpl);
-
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -490,6 +497,7 @@ namespace Sunplus.Accounting.Business.Report
             }
             return html.ToString();
         }
+
         public static string GetHeader1(string strfdate, string strtdate, string path, int displaydays, string eventfunction)
         {
             StringBuilder html = new StringBuilder();
@@ -518,11 +526,9 @@ namespace Sunplus.Accounting.Business.Report
                 TemplateHandler.Assign(ref tpl, "{path}", path);
 
                 html.Append(tpl);
-
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -530,9 +536,11 @@ namespace Sunplus.Accounting.Business.Report
             }
             return html.ToString();
         }
-        #endregion
+
+        #endregion GetHeader
 
         #region ShowFullPath
+
         public static string GetPath(string path)
         {
             string tpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Hidden.htm");
@@ -540,9 +548,11 @@ namespace Sunplus.Accounting.Business.Report
             TemplateHandler.Assign(ref tpl, "{strValue}", path);
             return tpl;
         }
-        #endregion
+
+        #endregion ShowFullPath
 
         #region public static string RemoveBlock(ref string tpl, string[] arrBlocks)
+
         public static string RemoveBlock(ref string tpl, string[] arrBlocks)
         {
             if (string.IsNullOrEmpty(tpl)) return string.Empty;
@@ -552,22 +562,25 @@ namespace Sunplus.Accounting.Business.Report
             }
             return tpl;
         }
-        #endregion
+
+        #endregion public static string RemoveBlock(ref string tpl, string[] arrBlocks)
 
         #region public static string RemoveTag(ref string tpl, string[] arrBlocks)
+
         public static string RemoveTag(ref string tpl, string[] arrTags)
         {
             if (string.IsNullOrEmpty(tpl)) return string.Empty;
             foreach (string tag in arrTags)
             {
                 TemplateHandler.Assign(ref tpl, tag, "");
-
             }
             return tpl;
         }
-        #endregion
+
+        #endregion public static string RemoveTag(ref string tpl, string[] arrBlocks)
 
         #region public static bool IsUserNameDeny(object CurrentUser)
+
         public static bool IsUserNameDeny(object CurrentUser)
         {
             string[] ArrUserDenies = { "SS33", "SSJOE", "SSMICHAEL", "BChai", "SSCK", "SSMK", "SSRAYMOND", "SSYEN", "SSFATTCHAI", "SSXING", "LAI" };
@@ -580,9 +593,11 @@ namespace Sunplus.Accounting.Business.Report
             }
             return IsDenyUser;
         }
-        #endregion
+
+        #endregion public static bool IsUserNameDeny(object CurrentUser)
 
         #region public static bool IsFileNameDeny(CurrentFile)
+
         public static bool IsFileNameDeny(string CurrentFile)
         {
             string[] ArrFiles = { "../Report/MatchWinLoss2.aspx", "../Report/MatchWinLoss2_14.aspx", "../Report/MatchWinLoss2V2.aspx", "../Report/MatchWinLoss2_14V2.aspx" };
@@ -594,16 +609,20 @@ namespace Sunplus.Accounting.Business.Report
             }
             return IsDeny;
         }
-        #endregion
+
+        #endregion public static bool IsFileNameDeny(CurrentFile)
 
         #region public static void RemoveCharacterNewLine(ref string str)
+
         public static void RemoveCharacterNewLine(ref string str)
         {
             str = str.Replace(Environment.NewLine, "");
         }
-        #endregion
+
+        #endregion public static void RemoveCharacterNewLine(ref string str)
 
         #region GetStatusDBType
+
         public static bool GetStatusDBType(ref string currdbtype)
         {
             bool IsMainDB = true;
@@ -622,13 +641,11 @@ namespace Sunplus.Accounting.Business.Report
             }
             return IsMainDB;
         }
-        #endregion
 
-
-
-
+        #endregion GetStatusDBType
 
         #region string datevalue(object value)
+
         public static string datevalue(object value)
         {
             DateTime date = Convert.ToDateTime(value);
@@ -638,9 +655,11 @@ namespace Sunplus.Accounting.Business.Report
             int mn = date.Minute;
             return mm.ToString() + "/" + dd.ToString() + " " + hh.ToString() + ":" + mn.ToString();
         }
-        #endregion
+
+        #endregion string datevalue(object value)
 
         #region GetCreditTerm()
+
         public static string GetCreditTerm_1()
         {
             StringBuilder html = new StringBuilder();
@@ -652,7 +671,6 @@ namespace Sunplus.Accounting.Business.Report
 
             try
             {
-
                 string tplHeader = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("CreditTeam/CreditTeamAllHeader.htm");
                 string tplHeaderParent = tplHeader.Clone().ToString();
                 TemplateHandler.Assign(ref tplHeaderParent, "{role}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Role"));
@@ -679,7 +697,6 @@ namespace Sunplus.Accounting.Business.Report
                 TemplateHandler.RemoveBlock(ref tplHeaderParent, "edit");
 
                 html.Append(tplHeaderParent);
-
 
                 Hashtable hash = new Hashtable();
                 hash.Add("groupid", 0);
@@ -750,7 +767,6 @@ namespace Sunplus.Accounting.Business.Report
 
                             if (groupid > 0)
                             {
-
                                 DataRow[] drChilds = dtDetail.Select("groupid=" + groupid);
                                 StringBuilder htmlChild = new StringBuilder();
 
@@ -816,11 +832,9 @@ namespace Sunplus.Accounting.Business.Report
                     html.Append(norow);
                     html.Append("</table>");
                 }
-
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -832,9 +846,11 @@ namespace Sunplus.Accounting.Business.Report
             html.Append("</table>");
             return html.ToString();
         }
-        #endregion
+
+        #endregion GetCreditTerm()
 
         #region IsContains
+
         public static bool IsContains(string strParent, string strChild)
         {
             bool Result = false;
@@ -849,9 +865,11 @@ namespace Sunplus.Accounting.Business.Report
             }
             return Result;
         }
-        #endregion
+
+        #endregion IsContains
 
         #region ExportToExcel
+
         public static void ExportToExcel(string strData, string fileName)
         {
             StringBuilder content = new StringBuilder();
@@ -861,7 +879,6 @@ namespace Sunplus.Accounting.Business.Report
             content.AppendLine("</head>");
             content.AppendLine(ReportHTML.CSSExcelReport());
             content.Append("</hmtl> ");
-
 
             HttpContext.Current.Response.Clear();
             HttpContext.Current.Response.AddHeader("content-disposition", "attachment;filename=" + fileName + ".xls");
@@ -875,16 +892,11 @@ namespace Sunplus.Accounting.Business.Report
 
             HttpContext.Current.Response.End();
         }
-        #endregion
+
+        #endregion ExportToExcel
 
         #region 2A Report
 
-
-
-
-
-        #endregion
+        #endregion 2A Report
     }
-
-
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace Sunplus.Accounting.Core.Configurations
 {
@@ -132,7 +128,6 @@ namespace Sunplus.Accounting.Core.Configurations
             return BaseIndexOf(settingElement);
         }
 
-
         protected override sealed ConfigurationElement CreateNewElement()
         {
             return new SettingElement();
@@ -146,7 +141,9 @@ namespace Sunplus.Accounting.Core.Configurations
 
     public class SettingElement : ConfigurationElement
     {
-        public SettingElement() { }
+        public SettingElement()
+        {
+        }
 
         [ConfigurationProperty("name", IsRequired = false)]
         public string Name

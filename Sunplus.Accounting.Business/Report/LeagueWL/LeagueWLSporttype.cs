@@ -11,11 +11,9 @@ using DNAide.Web;
 using Sunplus.Accounting.Business.Report;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
 
 /// <summary>
 /// Summary description for LeagueWLSporttype
@@ -52,7 +50,7 @@ namespace BLL.Report.LeagueWL
                 DateTime movebetsday = ReportUtils.BalanceUp.MoveBetsDay;
                 if (wldate <= movebetsday)
                     rs = SiteProvider.Report.LeagueWL().LeagueWL_Sporttype14(wldate);
-                    //rs = SiteProvider.Report.LeagueWL().LeagueWL_Sporttype(wldate); 
+                //rs = SiteProvider.Report.LeagueWL().LeagueWL_Sporttype(wldate);
                 else
                     rs = SiteProvider.Report.LeagueWL().LeagueWL_Sporttype(wldate);
 
@@ -60,7 +58,7 @@ namespace BLL.Report.LeagueWL
 
                 DataTable dtWL = rs.ResultSet.Tables[0];
 
-                dtWL.Columns.Add("LeagueName", typeof (string));
+                dtWL.Columns.Add("LeagueName", typeof(string));
                 DataRow[] dtRowsLeague = dtWL.Select();
                 foreach (DataRow dr in dtRowsLeague)
                 {
@@ -78,7 +76,6 @@ namespace BLL.Report.LeagueWL
                 var SportTotal = new LeagueWLRow();
                 var SportGrandTotal = new LeagueWLRow();
 
-
                 html.Append(tplHeader);
 
                 string strColspan = "<tr bgcolor='white'><td colspan='7'></td></tr>";
@@ -86,7 +83,7 @@ namespace BLL.Report.LeagueWL
                     "<tr class='limit'><td colspan='7' style='text-align:left;' class='rpt-header'><b>{sportname}</b></td></tr>";
                 string strRow = "", strHeader = "";
 
-                #endregion
+                #endregion Declare variable
 
                 #region foreach
 
@@ -109,7 +106,7 @@ namespace BLL.Report.LeagueWL
                         row.LineTotal == 0 & row.Turnover == 0)
                         continue;
 
-                    #endregion
+                    #endregion Mapping datarow into object LeagueWLRow
 
                     #region Calculate and add row total at each Sport
 
@@ -128,7 +125,6 @@ namespace BLL.Report.LeagueWL
                             html.Append(strRow);
                             html.Append(strColspan);
 
-
                             strRow = tplBody;
                         }
 
@@ -146,7 +142,7 @@ namespace BLL.Report.LeagueWL
                             SportGrandTotal.LineTotal += row.LineTotal;
                             SportGrandTotal.Turnover += row.Turnover;
 
-                            #endregion
+                            #endregion Calculate grand total
 
                             continue;
                         }
@@ -160,7 +156,7 @@ namespace BLL.Report.LeagueWL
                         SportTotal = new LeagueWLRow();
                     }
 
-                    #endregion
+                    #endregion Calculate and add row total at each Sport
 
                     #region Add row
 
@@ -175,7 +171,7 @@ namespace BLL.Report.LeagueWL
                         isNoInfo = false;
                     }
 
-                    #endregion
+                    #endregion Add row
 
                     #region Calculate total on each sport
 
@@ -185,7 +181,7 @@ namespace BLL.Report.LeagueWL
                     SportTotal.LineTotal += row.LineTotal;
                     SportTotal.Turnover += row.Turnover;
 
-                    #endregion
+                    #endregion Calculate total on each sport
 
                     #region Calculate grand total
 
@@ -195,10 +191,10 @@ namespace BLL.Report.LeagueWL
                     SportGrandTotal.LineTotal += row.LineTotal;
                     SportGrandTotal.Turnover += row.Turnover;
 
-                    #endregion
+                    #endregion Calculate grand total
                 }
 
-                #endregion
+                #endregion foreach
 
                 //if (isNoInfo)
                 //{
@@ -223,7 +219,7 @@ namespace BLL.Report.LeagueWL
                       SportTotal.LineTotal == 0 && SportTotal.Turnover == 0))
                     html.Append(strRow);
 
-                #endregion
+                #endregion Total of Sporttype
 
                 #region Grand Total of All Sporttypes
 
@@ -246,14 +242,13 @@ namespace BLL.Report.LeagueWL
                 TemplateHandler.Assign(ref strRow, "grandtotal", NumberFormat.DecFormat(SportGrandTotal.LineTotal, 2));
                 html.Append(strRow + "</table>");
 
-                #endregion
+                #endregion Grand Total of All Sporttypes
 
                 SetCacheReport(KeyCaching, html.ToString(), DateTime.Now.AddMinutes(30));
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 html = new StringBuilder();
                 html.Append(tplHeader);
                 html.Append("<tr><td bgcolor='white' class='rpt-red-color rpt-bold' colspan='7'>" + ex.Message +
@@ -263,7 +258,7 @@ namespace BLL.Report.LeagueWL
             return html.ToString();
         }
 
-        #endregion
+        #endregion RenderHTML
 
         #region AssignRow
 
@@ -280,7 +275,7 @@ namespace BLL.Report.LeagueWL
                 TemplateHandler.Assign(ref strRow, "League", CacheRef.GetLeagueName(row.leagueid));
                 TemplateHandler.Assign(ref strRow, "link", "rpt-link");
                 string evt = "onclick=\" GetLeagueWLBettype('{0}','{1}','{2}'); \"";
-                    // {0}: sporttype, {1}:leagueid, {2} sport and league name
+                // {0}: sporttype, {1}:leagueid, {2} sport and league name
 
                 string name = "";
                 name = (CacheRef.GetLeagueName(row.leagueid).Contains(CacheRef.GetSportName(row.sporttype)))
@@ -307,7 +302,7 @@ namespace BLL.Report.LeagueWL
             else TemplateHandler.Assign(ref strRow, "color-margin", "");
         }
 
-        #endregion
+        #endregion AssignRow
 
         #region Export2Excel
 
@@ -329,7 +324,7 @@ namespace BLL.Report.LeagueWL
             }
         }
 
-        #endregion
+        #endregion Export2Excel
 
         public LeagueWLSporttype()
         {

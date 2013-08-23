@@ -21,11 +21,11 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache
         public abstract object Get(string key);
 
         public abstract T Get<T>(string key);
+
         public bool InsertBatch<T>(string key, IEnumerable<T> data)
         {
             throw new NotImplementedException();
         }
-
 
         public abstract void FlushAll();
 

@@ -4,7 +4,7 @@ using Sunplus.Accounting.Entities.Report.DownLinceBalance;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.Report.DownLineBalance
 {
-    [ServiceContract]  
+    [ServiceContract]
     public interface IDownLineBalanceService
     {
         [OperationContract]

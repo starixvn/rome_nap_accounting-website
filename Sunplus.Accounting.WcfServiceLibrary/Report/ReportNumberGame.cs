@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.ServiceModel.Activation;
-using System.Text;
 using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business.Report;
 using Sunplus.Accounting.Entities.Report.NumberGame;
 using Sunplus.Accounting.Entities.ViewModel;
-using Sunplus.Accounting.Entities;
-using DNAide.Core;
-
 
 namespace Sunplus.Accounting.WcfServiceLibrary.Report
 {
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class ReportNumberGame : IReportNumberGame
     {
-
         public NumberGameTreeGridBO WinLoss_ByMatch_NumberGame(string date)
         {
             var winlossbymatch = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.INumberGameReport>();
@@ -74,13 +67,11 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
             return numberGameReport.GetCurrencyList();
         }
 
-
         public List<Entities.Report.Licensee.Item> GetBettypeList()
         {
             var numberGameReport = CommonBootStrapper.Locator.GetInstance<INumberGameReport>();
             return numberGameReport.GetBettypeList();
         }
-
 
         public NumberGameByDateTreeGridBO NumberGameWinLossByDate(string companies, string currencies, string bettypes, string fromdate, string todate)
         {
@@ -88,20 +79,17 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
             return numberGameReport.NumberGameWinLossByDate(companies, currencies, bettypes, fromdate, todate);
         }
 
-
         public BettypesWinLossDTO NumberGameWinLossByBettype(string companies, string currencies, string date)
         {
             var numberGameReport = CommonBootStrapper.Locator.GetInstance<INumberGameReport>();
             return numberGameReport.NumberGameWinLossByBettype(companies, currencies, date);
         }
 
-
         public BettypeWinLossDetail NumberGameWinLossDetailByBettype(string date, int isLive, int bettype, string companies, string currencies)
         {
             var numberGameReport = CommonBootStrapper.Locator.GetInstance<INumberGameReport>();
             return numberGameReport.NumberGameWinLossDetailByBettype(date, isLive, bettype, companies, currencies);
         }
-
 
         public BettypeWinLossDetailDTO NumberGameWinLossDetailByBettypeNew(string date, int isLive, int bettype, string companies, string currencies)
         {
@@ -115,13 +103,11 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
             return numberGameReport.NumberGameWinLossByMatch(date, companies, currencies, bettypes);
         }
 
-
         public NumberGameDataGridBO NumberGameWinLossByMatchDetail(string date, bool islive, int matchid, string companies, string currencies, int bettype)
         {
             var numberGameReport = CommonBootStrapper.Locator.GetInstance<INumberGameReport>();
             return numberGameReport.NumberGameWinLossByMatchDetails(date, islive, matchid, companies, currencies,
                                                                     bettype);
         }
-
     }
 }

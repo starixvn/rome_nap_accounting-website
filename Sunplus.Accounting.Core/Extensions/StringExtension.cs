@@ -133,7 +133,7 @@ namespace Sunplus.Accounting.Core.Extensions
             {
                 try
                 {
-                    convertedValue = (T) Enum.Parse(typeof (T), target.Trim(), true);
+                    convertedValue = (T)Enum.Parse(typeof(T), target.Trim(), true);
                 }
                 catch (ArgumentException)
                 {

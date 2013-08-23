@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Data;
 using DNAide.Data;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
-using Sunplus.Accounting.Entities;
-using System.Data;
-using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
+using Sunplus.Accounting.Entities;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet
 {
@@ -83,11 +79,11 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         public DataTable GetSites_Report_Licensee(Enumerations.AccountingSystem system)
         {
             DbResult ds = null;
-            var param = new Hashtable { 
-                { 
-                    "system", 
+            var param = new Hashtable {
+                {
+                    "system",
                     system.ToString().ToUpper()
-                } 
+                }
             };
 
             var spElement =

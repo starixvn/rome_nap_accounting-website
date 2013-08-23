@@ -60,7 +60,6 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-
         public static MailSection Instance
         {
             get
@@ -71,19 +70,17 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-
         public MailCollection this[Setting name]
         {
             get
             {
-
                 var spCollection = (MailCollection)this.GetType().GetProperty(name.ToString()).GetValue(this, System.Reflection.BindingFlags.GetField, null, null, null);
                 return spCollection;
             }
         }
 
-
         #region Old Version
+
         public static string MailServer
         {
             get { return ConfigurationManager.AppSettings["mailServer"]; }
@@ -354,13 +351,11 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return CastAide.AsString(ConfigurationManager.AppSettings["BCCMailRecoverBetCSD"]); }
         }
 
-        #endregion
+        #endregion Old Version
     }
-
 
     public class MailCollection : ConfigurationElementCollection
     {
-
         public MailCollection()
         {
             //var storeProcedure = (StoreProcedureElement) CreateNewElement();
@@ -406,7 +401,6 @@ namespace Sunplus.Accounting.Core.Configurations
             BaseClear();
         }
 
-
         public MailElement this[int index]
         {
             get
@@ -436,7 +430,6 @@ namespace Sunplus.Accounting.Core.Configurations
             return BaseIndexOf(mailElement);
         }
 
-
         protected override sealed ConfigurationElement CreateNewElement()
         {
             return new MailElement();
@@ -451,13 +444,9 @@ namespace Sunplus.Accounting.Core.Configurations
     public class MailElement : ConfigurationElement
     {
 
-
-
         public MailElement()
         {
-
         }
-
 
         [ConfigurationProperty("host", IsRequired = false)]
         //[RegexStringValidator(@"\w+:\/\/[\w.]+\S*")]
@@ -501,7 +490,6 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-
         [ConfigurationProperty("password", IsRequired = false)]
         //[RegexStringValidator(@"\w+:\/\/[\w.]+\S*")]
         public string Password
@@ -515,6 +503,7 @@ namespace Sunplus.Accounting.Core.Configurations
                 this["password"] = value;
             }
         }
+
         [ConfigurationProperty("auth", IsRequired = false, DefaultValue = true)]
         public bool Auth
         {
@@ -527,7 +516,6 @@ namespace Sunplus.Accounting.Core.Configurations
                 this["auth"] = value;
             }
         }
-
 
         [ConfigurationProperty("name", IsRequired = false)]
         //[RegexStringValidator(@"\w+:\/\/[\w.]+\S*")]

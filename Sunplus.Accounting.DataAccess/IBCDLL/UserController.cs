@@ -9,20 +9,20 @@ using IBCUtils;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
-using Sunplus.Core.LoggingLib;
 using Encryption = DNAide.Utils.Encryption;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL
 {
     using Fanex.Data;
 
-    public class UserController:DataAccess
+    public class UserController : DataAccess
     {
         public static StoreProcedureElement GetUserControlStoreProcedure(UserControlSession.StoreCollection storeCollection, string alias)
         {
             var sps = UserControlSession.Instance[storeCollection];
             return sps != null ? sps[alias] : null;
         }
+
         public static StoreProcedureElement GetCustomerStoreProcedure(string alias)
         {
             var sps = CustomerSession.Instance[CustomerSession.StoreCollection.CustomerControl];
@@ -222,7 +222,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
             {
                 error.ErrorCode = IbcError.INTERNAL_ERROR;
                 error.ErrorMsg = ex.Message;
-                
+
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return error;
@@ -235,7 +235,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
             system = "";
             var error = new IbcError(IbcError.SUCCESS, IbcError.SUCCESS_MSG);
             try
-            {                  
+            {
                 using (ObjectDb objDb = new ObjectDb("Acc_LoginAdmin"))
                 {
                     var param = new Hashtable();
@@ -272,13 +272,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
             {
                 error.ErrorCode = IbcError.INTERNAL_ERROR;
                 error.ErrorMsg = ex.Message;
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return error;
         }
 
-        
         /// <summary>
         /// Insert into on_user table for accountant log-in
         /// </summary>
@@ -306,8 +305,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return onUserId;
         }
@@ -330,8 +328,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
 
@@ -354,8 +351,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
 
@@ -396,12 +392,11 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
                     obj.AssignParamValues(param);
                     var ds = obj.ExecuteDataSet();
                     if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0) return ds.Tables[0].Rows;
-                    
                 }
             }
             catch (Exception ex)
             {
-                    Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return null;
         }

@@ -87,7 +87,6 @@ public class ServicePunterAnalysis : IServicePunterAnalysis
         return s;
     }
 
-
     public void SelTopPunterSummaryExportOnly(string username, string fromdate, string todate, string toprow,
                                               string orderby, string ordertype)
     {
@@ -112,7 +111,6 @@ public class ServicePunterAnalysis : IServicePunterAnalysis
                                           "SelTopPunterByCustId");
     }
 
-
     public string SelTopPunterBySporttype(string custid, string username, string sporttype, string fromdate,
                                           string todate, string orderby, string ordertype)
     {
@@ -127,7 +125,6 @@ public class ServicePunterAnalysis : IServicePunterAnalysis
         var punter = new PunterAnalysisManager();
         punter.Export2ExcelSelTopPunterBySport(custid, username, sporttype, fromdate, todate, orderby, ordertype);
     }
-
 
     public string SelTopPunterByBettype(string custid, string username, string sporttype, string bettype,
                                         string fromdate, string todate, string orderby, string ordertype)
@@ -221,5 +218,5 @@ public class ServicePunterAnalysis : IServicePunterAnalysis
                                           ordertype, "SelTopPunterByLeagueCustId");
     }
 
-    #endregion
+    #endregion IServicePunterAnalysis Members
 }

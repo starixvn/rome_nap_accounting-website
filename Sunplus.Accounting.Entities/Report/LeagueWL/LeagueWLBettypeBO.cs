@@ -4,7 +4,6 @@ using System.Runtime.Serialization;
 
 namespace Sunplus.Accounting.Entities.Report.LeagueWL
 {
-    
     [Serializable]
     [DataContract]
     public class LeagueWLBettypeRow
@@ -43,10 +42,13 @@ namespace Sunplus.Accounting.Entities.Report.LeagueWL
     {
         [DataMember]
         public bool IsLive { get; set; }
+
         [DataMember]
         public List<LeagueWLBettypeRow> Items { get; set; }
+
         [DataMember]
         public LeagueWLBettypeRow GrandTotal { get; set; }
+
         [DataMember]
         public string GrandTotal8RM { get; set; }
 
@@ -63,8 +65,10 @@ namespace Sunplus.Accounting.Entities.Report.LeagueWL
     {
         [DataMember]
         public string SportId { get; set; }
+
         [DataMember]
         public string LeagueId { get; set; }
+
         [DataMember]
         public List<LeagueWLBettypeBO> Items { get; set; }
     }

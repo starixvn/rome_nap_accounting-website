@@ -43,7 +43,10 @@
                                 type="button" class="btn_search" value="&nbsp;" title="Search" /><input id="btn_clear"
                                     type="button" class="btn_clear" value="&nbsp;" title="Clear search" />
                         </span>
-                    </div>
+						<div class="btngroup">
+                            <input type="button" title="Export to Excel" class="btnExcel" id="btnExport" name="btnExport" value="  " onclick="ExportToExcel();" />
+						</div>
+					</div>
                     <div id="group_header" class="header">
                         <div class="index">
                             #</div>
@@ -70,5 +73,17 @@
             </div>
         </div>
     </div>
+	<form id="form" method="post" action="CreditTermGroupView.aspx">
+        <input type="hidden" id="IsExport" name="IsExport" value="0" />
+		<input type="hidden" id="Query" name="Query" value="" />
+		<input type="hidden" id="SortOrder" name="SortOrder" value="" />
+		<input type="hidden" id="SortName" name="SortName" value="" />
+    </form>
+	<script type="text/javascript">
+		function ExportToExcel() {
+			$('#IsExport').val('1');
+			$('#form').submit();
+		}
+    </script>
 </body>
 </html>

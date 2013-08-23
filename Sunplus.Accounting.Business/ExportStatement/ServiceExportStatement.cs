@@ -22,9 +22,8 @@ namespace Sunplus.Accounting.Business.ExportStatement
             var s = new ExportStatementManager();
             return s.Export2Excel(userslistvalid, fdate, tdate);
         }
-        #endregion
 
-
+        #endregion IServiceExportStatement Members
 
         #region IServiceExportStatement Members
 
@@ -34,6 +33,6 @@ namespace Sunplus.Accounting.Business.ExportStatement
             return s.AllStatement_UsersList(userslistvalid, fdate, tdate);
         }
 
-        #endregion
+        #endregion IServiceExportStatement Members
     }
 }

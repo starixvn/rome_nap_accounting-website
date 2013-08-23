@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Runtime.Serialization;
-using Norm.Attributes;
-using DNAide.Utils;
 using DNAide.Core;
+using DNAide.Utils;
+using Norm.Attributes;
 
 namespace Sunplus.Data.DataAbstract.Entity
 {
@@ -36,7 +34,9 @@ namespace Sunplus.Data.DataAbstract.Entity
         }
 
         #region OddsM
+
         private string _oddsM;
+
         [MongoIgnore, DataMember]
         public string oddsM
         {
@@ -45,9 +45,9 @@ namespace Sunplus.Data.DataAbstract.Entity
                 return FormatHandler.FormatNumber4(CastAide.AsDecimal(_mbettran.Modds), "en-EN");
             }
             set { _oddsM = value; }
-
         }
-        #endregion
+
+        #endregion OddsM
 
         private SportEventDTO _sportEventDTO;
 
@@ -75,7 +75,6 @@ namespace Sunplus.Data.DataAbstract.Entity
             set { _msportEventDTO = value; }
         }
 
-
-        #endregion
+        #endregion Choice
     }
 }

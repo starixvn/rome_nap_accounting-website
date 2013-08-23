@@ -1,23 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
-using System.Text;
+using System.Web;
+using System.Web.UI.WebControls;
 using DNAide.Core;
-
+using ExcelUtil.Spreadsheet;
 using Sunplus.Accounting.Business.CacheManager;
 using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Accounting.DataAccess.ICreditTermDAO;
-using Sunplus.Accounting.Entities.CreditTerm;
-using Sunplus.Accounting.Entities.PositionTaking.Racing;
-using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.Entities;
+using Sunplus.Accounting.Entities.CreditTerm;
 
 namespace Sunplus.Accounting.Business.CreditTerm
 {
     public class CreditTermManager : ICreditTermManager
     {
+        private const string ALL_GROUPS_SESSION_KEY = "SelAllGroups";
+        private const string GROUPS_BY_ID_SESSION_KEY = "SelGroupsById";
+
         private ICreditTermGroupDAO _creditTermDAO = null;
+
         public CreditTermManager(ICreditTermGroupDAO creditTermDAO)
         {
             _creditTermDAO = creditTermDAO;
@@ -46,9 +52,12 @@ namespace Sunplus.Accounting.Business.CreditTerm
                                                    Checker = row["checkername"].ToString(),
                                                    ConsolidationReport = CastAide.AsBoolean(row["IsRptConsol"]),
                                                    Permisssion = false
-                                             });
+                                               });
 
                     listGroup = listGroup.OrderBy(m => m.Currency).ThenBy(m => m.HeadUsername).ToList();
+
+                    // add to Session
+                    SessionExtension.AddSession(HttpContext.Current.Session, ALL_GROUPS_SESSION_KEY, listGroup);
                 }
             }
             catch (Exception ex)
@@ -63,6 +72,369 @@ namespace Sunplus.Accounting.Business.CreditTerm
             var result = _creditTermDAO.UpdateConsolidationReportAllowStatus(custId, isViewReport, AppSession.AccId);
 
             return result;
+        }
+
+        public void ExportExcelAllGroup(string searchKey, string sortOrder, string sortName)
+        {
+            List<Group> listGroup = (List<Group>)SessionExtension.GetSession(HttpContext.Current.Session, ALL_GROUPS_SESSION_KEY);
+            if (listGroup == null)
+            {
+                listGroup = GetAllGroup();
+                if (listGroup == null)
+                {
+                    return;
+                }
+            }
+
+            // clone new list for seaching and sorting
+            List<Group> newListGroup = listGroup.GetRange(0, listGroup.Count);
+
+            // searching
+            if (!string.IsNullOrEmpty(searchKey))
+            {
+                newListGroup = newListGroup.Where(g => g.HeadUsername.IndexOf(searchKey, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+            }
+
+            // sorting ...
+            if (!string.IsNullOrEmpty(sortOrder) && !string.IsNullOrEmpty(sortName))
+            {
+                SortDirection sortDirection = string.Equals(sortOrder, "asc", StringComparison.OrdinalIgnoreCase)
+                    ? SortDirection.Ascending
+                    : SortDirection.Descending;
+                string propertyName = string.Equals(sortName, "group", StringComparison.OrdinalIgnoreCase)
+                    ? "GroupId"
+                    : "HeadUsername";
+
+                if (sortDirection == SortDirection.Ascending)
+                {
+                    newListGroup = newListGroup.OrderBy(g => g.GetType().GetProperty(propertyName).GetValue(g, null))
+                        .ToList();
+                }
+                else
+                {
+                    newListGroup = newListGroup.OrderByDescending(g => g.GetType().GetProperty(propertyName).GetValue(g, null))
+                        .ToList();
+                }
+            }
+
+            // Export excel here ...
+
+            #region ExcelTypes
+
+            ExcelFile excelFile = new ExcelFile();
+            ExcelWorksheetCollection worksheets = excelFile.Worksheets;
+            string sheetName = "Credit Term - View All Group";
+            ExcelWorksheet workSheet = worksheets.Add(sheetName);
+
+            int startRow = 0;
+            int startColumn = 0;
+            int currentRow = startRow;
+            int currentColumn = startColumn;
+
+            ExcelCell currentCell;
+            CellRange currentCellRange;
+
+            #endregion ExcelTypes
+
+            var excelUtils = new Core.Helper.ExcelGemboxUtils();
+            var headerTextStyle = excelUtils.GetStyleTitle(Color.FromArgb(181, 196, 208));
+
+            // event/odd style
+            var evenTextStyle = excelUtils.GetStyleText(223, 234, 255, HorizontalAlignmentStyle.Center);
+            var oddTextStyle = excelUtils.GetStyleText(255, 255, 255, HorizontalAlignmentStyle.Center);
+
+            #region Header
+
+            // set columns width
+            int fontWidth = 30;
+            int maxColumnIndex = 6;
+            workSheet.Columns[0].Width = 60 * fontWidth;
+            for (int i = 1; i < maxColumnIndex; i++)
+            {
+                workSheet.Columns[startColumn + i].Width = 120 * fontWidth;
+            }
+            workSheet.Columns[2].Width = 200 * fontWidth;
+            workSheet.Columns[6].Width = 200 * fontWidth;
+
+            // title
+            string title = sheetName;
+            currentColumn = startColumn;
+            currentCellRange = workSheet.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn + maxColumnIndex);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = title;
+            currentCellRange.Style = headerTextStyle;
+            currentCellRange.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+            currentRow++;
+
+            // empty row
+            currentColumn = startColumn;
+            currentCellRange = workSheet.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn + maxColumnIndex);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = string.Empty;
+            currentRow++;
+
+            // excel header
+            currentColumn = startColumn;
+            currentCell = workSheet.Cells[currentRow, currentColumn];
+            currentCell.Value = "#";
+            currentCell.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCell = workSheet.Cells[currentRow, currentColumn];
+            currentCell.Value = "GroupID";
+            currentCell.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCell = workSheet.Cells[currentRow, currentColumn];
+            currentCell.Value = "Username of Headline";
+            currentCell.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCell = workSheet.Cells[currentRow, currentColumn];
+            currentCell.Value = "Currency";
+            currentCell.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCell = workSheet.Cells[currentRow, currentColumn];
+            currentCell.Value = "Member(s)";
+            currentCell.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCell = workSheet.Cells[currentRow, currentColumn];
+            currentCell.Value = "Checker";
+            currentCell.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCell = workSheet.Cells[currentRow, currentColumn];
+            currentCell.Value = "Consolidated Group";
+            currentCell.Style = headerTextStyle;
+
+            #endregion Header
+
+            #region Body
+
+            Group group = null;
+            int reportLen = newListGroup.Count;
+            for (int i = 0; i < reportLen; i++)
+            {
+                currentRow++;
+                currentColumn = startColumn;
+
+                group = newListGroup[i];
+
+                // style
+                var textStyle = i % 2 == 0 ? evenTextStyle : oddTextStyle;
+
+                // #
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = i + 1;
+                currentCell.Style = textStyle;
+                currentColumn++;
+
+                // GroupId
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = group.GroupId;
+                currentCell.Style = textStyle;
+                currentColumn++;
+
+                // Username of Headline
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = group.HeadUsername;
+                currentCell.Style = textStyle;
+                currentColumn++;
+
+                // Currency
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = group.Currency;
+                currentCell.Style = textStyle;
+                currentColumn++;
+
+                // Member(s)
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = group.Members;
+                currentCell.Style = textStyle;
+                currentColumn++;
+
+                // Checker
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = group.Checker;
+                currentCell.Style = textStyle;
+                currentColumn++;
+
+                // Consolidated Group
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = group.RoleId != 1
+                    ? (group.ConsolidationReport ? "Allowed" : "Disallowed")
+                    : string.Empty;
+                currentCell.Style = textStyle;
+            }
+
+            #endregion Body
+
+            #region Response file
+
+            string reportName = sheetName;
+            var response = HttpContext.Current.Response;
+            response.Clear();
+            response.ContentType = "application/vnd.ms-excel";
+            response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName.Replace(" ", "")));
+
+            excelFile.SaveXls(response.OutputStream);
+
+            #endregion Response file
+        }
+
+        public List<GroupEditing> GetMemberByGroupId(int groupId)
+        {
+            List<GroupEditing> memberList = null;
+
+            var dbResult = AccountCredit.Acc_CreditTermSelByGroupID(groupId);
+            if (dbResult != null && dbResult.ResultSet != null && dbResult.ResultSet.Tables.Count > 0)
+            {
+                memberList = new List<GroupEditing>();
+
+                DataTable dt = dbResult.ResultSet.Tables[0];
+                foreach (DataRow drow in dt.Rows)
+                {
+                    memberList.Add(new GroupEditing
+                    {
+                        CustId = CastAide.AsInt32(drow["custid"]),
+                        Username = CastAide.AsString(drow["username"]),
+                        IsGroupHeadline = CastAide.AsBoolean(drow["isgroupheadline"])
+                    });
+                }
+
+                // add to Session
+                SessionExtension.AddSession(HttpContext.Current.Session, GROUPS_BY_ID_SESSION_KEY, memberList);
+            }
+
+            return memberList;
+        }
+
+        public void ExportExcelMemberByGroupId(int groupId)
+        {
+            List<GroupEditing> memberList = (List<GroupEditing>)SessionExtension.GetSession(HttpContext.Current.Session, GROUPS_BY_ID_SESSION_KEY);
+            if (memberList == null)
+            {
+                memberList = GetMemberByGroupId(groupId);
+                if (memberList == null)
+                {
+                    return;
+                }
+            }
+
+            // Export excel here ...
+
+            #region ExcelTypes
+
+            ExcelFile excelFile = new ExcelFile();
+            ExcelWorksheetCollection worksheets = excelFile.Worksheets;
+            string sheetName = "Credit Term - Group " + groupId;
+            ExcelWorksheet workSheet = worksheets.Add(sheetName);
+
+            int startRow = 0;
+            int startColumn = 0;
+            int currentRow = startRow;
+            int currentColumn = startColumn;
+
+            ExcelCell currentCell;
+            CellRange currentCellRange;
+
+            #endregion ExcelTypes
+
+            var excelUtils = new Core.Helper.ExcelGemboxUtils();
+            var headerTextStyle = excelUtils.GetStyleTitle(Color.FromArgb(181, 196, 208));
+
+            // event/odd style
+            var groupHeadlineTextStyle = excelUtils.GetStyleText(Color.FromArgb(162, 90, 16), 255, 255, 255, HorizontalAlignmentStyle.Center);
+            var evenTextStyle = excelUtils.GetStyleText(223, 234, 255, HorizontalAlignmentStyle.Center);
+            var oddTextStyle = excelUtils.GetStyleText(255, 255, 255, HorizontalAlignmentStyle.Center);
+
+            #region Header
+
+            // set columns width
+            int fontWidth = 30;
+            int maxColumnIndex = 1;
+            workSheet.Columns[0].Width = 60 * fontWidth;
+            workSheet.Columns[1].Width = 300 * fontWidth;
+
+            // title
+            string title = sheetName;
+            currentColumn = startColumn;
+            currentCellRange = workSheet.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn + maxColumnIndex);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = title;
+            currentCellRange.Style = headerTextStyle;
+            currentCellRange.Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+            currentRow++;
+
+            // empty row
+            currentColumn = startColumn;
+            currentCellRange = workSheet.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn + maxColumnIndex);
+            currentCellRange.Merged = true;
+            currentCellRange.Value = string.Empty;
+            currentRow++;
+
+            // excel header
+            currentColumn = startColumn;
+            currentCell = workSheet.Cells[currentRow, currentColumn];
+            currentCell.Value = "#";
+            currentCell.Style = headerTextStyle;
+            currentColumn++;
+
+            currentCell = workSheet.Cells[currentRow, currentColumn];
+            currentCell.Value = "Username";
+            currentCell.Style = headerTextStyle;
+
+            #endregion Header
+
+            #region Body
+
+            string username = null;
+            GroupEditing group = null;
+            int groupLen = memberList.Count;
+            for (int i = 0; i < groupLen; i++)
+            {
+                currentRow++;
+                currentColumn = startColumn;
+
+                group = memberList[i];
+                CellStyle textStyle; // style
+                if (group.IsGroupHeadline)
+                {
+                    textStyle = groupHeadlineTextStyle;
+                    username = group.Username + " (HEAD LINE)";
+                }
+                else
+                {
+                    textStyle = i % 2 == 0 ? oddTextStyle : evenTextStyle;
+                    username = group.Username;
+                }
+
+                // #
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = i + 1;
+                currentCell.Style = textStyle;
+                currentColumn++;
+
+                currentCell = workSheet.Cells[currentRow, currentColumn];
+                currentCell.Value = username;
+                currentCell.Style = textStyle;
+            }
+
+            #endregion Body
+
+            #region Response file
+
+            string reportName = sheetName;
+            var response = HttpContext.Current.Response;
+            response.Clear();
+            response.ContentType = "application/vnd.ms-excel";
+            response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName.Replace(" ", "")));
+
+            excelFile.SaveXls(response.OutputStream);
+
+            #endregion Response file
         }
     }
 }

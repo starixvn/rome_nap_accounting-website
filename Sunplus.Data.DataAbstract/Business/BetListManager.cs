@@ -26,7 +26,7 @@ namespace Sunplus.Data.DataAbstract.Business
 
         public List<BetListDetail> GetLatestBetList(int totalRow)
         {
-            var listBettran = _betListDao.GetLatestBetList(totalRow); 
+            var listBettran = _betListDao.GetLatestBetList(totalRow);
 
             var betList = listBettran.Select(bettran => new BetListDetail
             {
@@ -43,15 +43,13 @@ namespace Sunplus.Data.DataAbstract.Business
             var betList = new List<BetListDetail>();
             foreach (var bettran in listBettran)
             {
-                var betListDetail = new BetListDetail {Transid = bettran.Transid, BettranDetail = bettran};
-                
+                var betListDetail = new BetListDetail { Transid = bettran.Transid, BettranDetail = bettran };
+
                 betList.Add(betListDetail);
             }
-            
-            
+
             return betList;
         }
-
 
         public bool InsertBettran(Bettran bettran)
         {
@@ -144,7 +142,6 @@ namespace Sunplus.Data.DataAbstract.Business
                 Error.WriteLog(new Exception(Sunplus.Data.DataAbstract.Utils.JsonUtils.SerializeObject(match)));
 
                 return betlist;
-
             }
             catch (Exception exception)
             {
@@ -166,7 +163,5 @@ namespace Sunplus.Data.DataAbstract.Business
             }
             return null;
         }
-
-        
     }
 }

@@ -1,4 +1,4 @@
-﻿ /// <summary>
+﻿/// <summary>
 /// Summary description for ReportProvider
 /// </summary>
 
@@ -31,7 +31,6 @@ namespace Sunplus.Accounting.DataAccess.Provider.Report
             return LeagueWLProvider.Instance(client, source);
         }
 
-
         public MatchWLProvider MatchWL(DataAccess.DAOClient client, DataAccess.DataSource source)
         {
             return MatchWLProvider.Instance(client, source);
@@ -46,7 +45,6 @@ namespace Sunplus.Accounting.DataAccess.Provider.Report
         {
             return OpenToteSettlementProvider.Instance();
         }
-
 
         public HRGroupDailyProvider HRGroupDaily()
         {

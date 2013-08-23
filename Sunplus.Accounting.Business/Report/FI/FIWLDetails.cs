@@ -10,12 +10,11 @@ using DNAide.Web;
 
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
-//using Sunplus.Core.LoggingLib;
+
+
 
 /// <summary>
 /// Summary description for FIWLDetails
@@ -60,7 +59,7 @@ namespace BLL.Report.FI
 
                 #region Sort Data after got from DB
 
-                dtFI.Columns.Add("IndexName", typeof (string));
+                dtFI.Columns.Add("IndexName", typeof(string));
                 foreach (DataRow dr in dtFI.Rows)
                 {
                     dr["IndexName"] = CacheRef.GetFncIndexName(dr["homeid"]);
@@ -70,7 +69,7 @@ namespace BLL.Report.FI
                 dvFI.Sort = "IndexName asc, homeid asc";
                 DataTable dt = dvFI.ToTable();
 
-                #endregion
+                #endregion Sort Data after got from DB
 
                 #region Declare Variable
 
@@ -81,7 +80,7 @@ namespace BLL.Report.FI
                 string indexName_p = "", indexName = "", strIndexTotal = "";
                 ;
 
-                #endregion
+                #endregion Declare Variable
 
                 #region foreach (DataRow dr in dt.Rows)
 
@@ -116,7 +115,7 @@ namespace BLL.Report.FI
                             TemplateHandler.Assign(ref strIndexTotal, "Commission",
                                                    NumberFormat.DecFormat(
                                                        dt.Compute("sum(scomm)", "homeid ='" + index + "'"), 2));
-                                //"IndexName=" + index
+                            //"IndexName=" + index
                             TemplateHandler.Assign(ref strIndexTotal, "NetWinLoss",
                                                    NumberFormat.DecFormat(
                                                        dt.Compute("sum(NetWinLost)", "homeid ='" + index + "'"), 2));
@@ -148,7 +147,7 @@ namespace BLL.Report.FI
                     rows.Append(row);
                 }
 
-                #endregion
+                #endregion foreach (DataRow dr in dt.Rows)
 
                 #region Totla Index
 
@@ -173,7 +172,7 @@ namespace BLL.Report.FI
                 rows.Replace("{rowspan}", (countIndex + 1).ToString());
                 rows.Append(strIndexTotal);
 
-                #endregion
+                #endregion Totla Index
 
                 #region Grand Total
 
@@ -188,7 +187,7 @@ namespace BLL.Report.FI
                 TemplateHandler.Assign(ref tpl, "IBCWinLoss",
                                        NumberFormat.DecFormat(dt.Compute("sum(IBCWinLost)", ""), 2));
 
-                #endregion
+                #endregion Grand Total
 
                 TemplateHandler.Assign(ref tpl, "{bgcolor}", "report-footer");
                 TemplateHandler.ReplaceBlock(ref tpl, "content", rows.ToString());
@@ -205,11 +204,9 @@ namespace BLL.Report.FI
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 html.Append(ex.Message);
             }
-
 
             return html.ToString();
         }

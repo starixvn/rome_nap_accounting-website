@@ -1,4 +1,4 @@
-﻿ /// <summary>
+﻿/// <summary>
 /// Summary description for HRGroupDailyCommon
 /// </summary>
 
@@ -18,15 +18,19 @@ namespace BLL.Report.HR.GroupDaily
                 case 1:
                     partner = "PHU";
                     break;
+
                 case 2:
                     partner = "RUK";
                     break;
+
                 case 3:
                     partner = "ATR";
                     break;
+
                 case 4:
                     partner = "AUS";
                     break;
+
                 default:
                     partner = "Unknow";
                     break;
@@ -34,7 +38,7 @@ namespace BLL.Report.HR.GroupDaily
             return partner;
         }
 
-        #endregion
+        #endregion getHRType
 
         #region CalcAmountDueto3rd
 
@@ -47,6 +51,7 @@ namespace BLL.Report.HR.GroupDaily
                 case 1: //PHU
                     AmountDueto3rd = turnover3rd - DividendWon3rd - ExpComm3rd + Fees3rd;
                     break;
+
                 default:
                     AmountDueto3rd = turnover3rd - DividendWon3rd - ExpComm3rd - Fees3rd;
                     break;
@@ -54,7 +59,7 @@ namespace BLL.Report.HR.GroupDaily
             return AmountDueto3rd;
         }
 
-        #endregion
+        #endregion CalcAmountDueto3rd
 
         /// <summary>
         /// For PHUMELELA: Amount Due to = Turnover - Dividend Won - Comm Expense + Fees

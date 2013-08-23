@@ -1,36 +1,35 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
+using System.Web;
 using DNAide.Core;
 using DNAide.Utils;
 using Sunplus.Accounting.Business.CacheManager;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Entities.Report.Racebook;
-using System.Web;
 
 namespace Sunplus.Accounting.Business.Report.Racing
 {
     public partial class ReportRacing
     {
-        string ArrCurrencySubTotal_USD = "3,35,40,17,16";
+        private string ArrCurrencySubTotal_USD = "3,35,40,17,16";
         private int[] ArrUSD = { 3, 35, 40, 17, 16 };
 
-        string ArrCurrencySubTotal_THB = "4,43";
-        private int[] ArrTHB = {4, 43};
+        private string ArrCurrencySubTotal_THB = "4,43";
+        private int[] ArrTHB = { 4, 43 };
 
-        string ArrCurrencySubTotal_IN = "15,22,33,34,47";
-        private int[] ArrIN = {15, 22, 33, 34, 47};
+        private string ArrCurrencySubTotal_IN = "15,22,33,34,47";
+        private int[] ArrIN = { 15, 22, 33, 34, 47 };
 
-        string strArrCurrencyOrder = "[2],[13],[6],[5],[15], [22],[33],[34], [47],[1],[4],[43],[3],[35],[40],[17],[16]";
+        private string strArrCurrencyOrder = "[2],[13],[6],[5],[15], [22],[33],[34], [47],[1],[4],[43],[3],[35],[40],[17],[16]";
         private string _RacingDailyWinLossForToteSessionKey = "racingdailywinlossfortote";
+
         #region SelWinlostHR_Details
+
         public RacingDailyWinLossDTO SelWinlostHR_Details(string wldate)
         {
-
             RacingDailyWinLossDTO racing = new RacingDailyWinLossDTO();
             racing.Items = new List<RacingDailyWinLossByCurrency>();
             racing.Totals = new List<RacingDailyWinLossRow>();
@@ -38,9 +37,9 @@ namespace Sunplus.Accounting.Business.Report.Racing
             try
             {
                 DataTable dataTable = new DataTable();
-                DataTable  dtWL = _reportRacingDao.SelWinlostHR_Details(wldate);
+                DataTable dtWL = _reportRacingDao.SelWinlostHR_Details(wldate);
 
-                 dtWL.Columns.Add("Order", typeof (int));
+                dtWL.Columns.Add("Order", typeof(int));
                 int cid = 0, cid_p = 0;
                 foreach (DataRow dr in dtWL.Rows)
                 {
@@ -65,7 +64,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 RacingDailyWinLossByCurrency byAllCurrencyBase = new RacingDailyWinLossByCurrency();
                 byAllCurrencyBase.Items = new List<RacingDailyWinLossByMeetingCurrency>();
                 byAllCurrencyBase.Totals = new List<RacingDailyWinLossRow>();
-                
+
                 int CountUSD = 0;
                 int CountTHB = 0;
                 int CountIN = 0;
@@ -73,16 +72,15 @@ namespace Sunplus.Accounting.Business.Report.Racing
                 int TotalCurrTHB = 0;
                 int TotalCurrIN = 0;
 
-                
                 TotalCurrIN = Currencies.Intersect(ArrIN).ToList().Count;
                 TotalCurrTHB = Currencies.Intersect(ArrTHB).ToList().Count;
                 TotalCurrUSD = Currencies.Intersect(ArrUSD).ToList().Count;
-                
-                
+
                 foreach (int currency in Currencies)
                 {
                     #region Check Is need to calculate group total currency
-                    if(ArrCurrencySubTotal_USD.Split(',').Where(s=>s == currency.ToString()).Count()>0)
+
+                    if (ArrCurrencySubTotal_USD.Split(',').Where(s => s == currency.ToString()).Count() > 0)
                     {
                         CountUSD++;
                     }
@@ -94,7 +92,8 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     {
                         CountIN++;
                     }
-                    #endregion
+
+                    #endregion Check Is need to calculate group total currency
 
                     RacingDailyWinLossByCurrency byCurrencyOrigin = new RacingDailyWinLossByCurrency();
                     byCurrencyOrigin.Items = new List<RacingDailyWinLossByMeetingCurrency>();
@@ -124,6 +123,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         foreach (DataRow row in rows)
                         {
                             #region Origin
+
                             meetingCurrencyOrigin.Items.Add(new RacingDailyWinLossRow()
                             {
                                 Currency = CastAide.AsString(row["currencyName"]),
@@ -158,11 +158,12 @@ namespace Sunplus.Accounting.Business.Report.Racing
                                 PhuCommExpense = NumberFormat.DecFormat(row["commIncomeIBC_Origin"], 2),
                                 PhuAmountFee = NumberFormat.DecFormat(row["FeeDue2_Origin"], 2),
                                 PhuAmountDue = NumberFormat.DecFormat(row["AmountDue_Origin"], 2),
-                                
                             });
-                            #endregion
+
+                            #endregion Origin
 
                             #region Base
+
                             meetingCurrencyBase.Items.Add(new RacingDailyWinLossRow()
                             {
                                 Currency = CastAide.AsString(row["currencyName"]),
@@ -197,12 +198,13 @@ namespace Sunplus.Accounting.Business.Report.Racing
                                 PhuCommExpense = NumberFormat.DecFormat(row["commIncomeIBC"], 2),
                                 PhuAmountFee = NumberFormat.DecFormat(row["FeeDue2"], 2),
                                 PhuAmountDue = NumberFormat.DecFormat(row["AmountDue"], 2),
-
                             });
-                            #endregion
+
+                            #endregion Base
                         }
 
                         #region Total Origin
+
                         meetingCurrencyOrigin.Totals.Add(new RacingDailyWinLossRow()
                                 {
                                     Currency = CacheUtils.GetExchangeName(currency),
@@ -210,7 +212,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
                                     Meeting = CacheRef.GetLeagueName(meetingId),
                                     MeetingId = meetingId.ToString(),
 
-                                    AgWinTO = NumberFormat.DecFormat(meetingCurrencyOrigin.Items.Sum(s=> CastAide.AsDecimal( s.AgWinTO)), 2),
+                                    AgWinTO = NumberFormat.DecFormat(meetingCurrencyOrigin.Items.Sum(s => CastAide.AsDecimal(s.AgWinTO)), 2),
                                     AgPlaceTO = NumberFormat.DecFormat(meetingCurrencyOrigin.Items.Sum(s => CastAide.AsDecimal(s.AgPlaceTO)), 2),
                                     AgWPTO = NumberFormat.DecFormat(meetingCurrencyOrigin.Items.Sum(s => CastAide.AsDecimal(s.AgWPTO)), 2),
                                     AgTotal = NumberFormat.DecFormat(meetingCurrencyOrigin.Items.Sum(s => CastAide.AsDecimal(s.AgTotal)), 2),
@@ -236,7 +238,8 @@ namespace Sunplus.Accounting.Business.Report.Racing
                                     PhuAmountFee = NumberFormat.DecFormat(meetingCurrencyOrigin.Items.Sum(s => CastAide.AsDecimal(s.PhuAmountFee)), 2),
                                     PhuAmountDue = NumberFormat.DecFormat(meetingCurrencyOrigin.Items.Sum(s => CastAide.AsDecimal(s.PhuAmountDue)), 2),
                                 });
-                        #endregion
+
+                        #endregion Total Origin
 
                         byCurrencyOrigin.Items.Add(meetingCurrencyOrigin);
                         byCurrencyBase.Items.Add(meetingCurrencyBase);
@@ -244,13 +247,13 @@ namespace Sunplus.Accounting.Business.Report.Racing
                     }
 
                     #region Total Origin currency
+
                     byCurrencyOrigin.Totals.Add(new RacingDailyWinLossRow()
                         {
                             CurrencyId = currency.ToString(),
                             Currency = CacheUtils.GetExchangeName(currency),
-                           
 
-                            AgWinTO = NumberFormat.DecFormat( byCurrencyOrigin.Items.Sum(s=>s.Items.Sum(l=> CastAide.AsDecimal(l.AgWinTO)))  , 2),
+                            AgWinTO = NumberFormat.DecFormat(byCurrencyOrigin.Items.Sum(s => s.Items.Sum(l => CastAide.AsDecimal(l.AgWinTO))), 2),
                             AgPlaceTO = NumberFormat.DecFormat(byCurrencyOrigin.Items.Sum(s => s.Items.Sum(l => CastAide.AsDecimal(l.AgPlaceTO))), 2),
                             AgWPTO = NumberFormat.DecFormat(byCurrencyOrigin.Items.Sum(s => s.Items.Sum(l => CastAide.AsDecimal(l.AgWPTO))), 2),
                             AgTotal = NumberFormat.DecFormat(byCurrencyOrigin.Items.Sum(s => s.Items.Sum(l => CastAide.AsDecimal(l.AgTotal))), 2),
@@ -276,9 +279,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                             PhuAmountFee = NumberFormat.DecFormat(byCurrencyOrigin.Items.Sum(s => s.Items.Sum(l => CastAide.AsDecimal(l.PhuAmountFee))), 2),
                             PhuAmountDue = NumberFormat.DecFormat(byCurrencyOrigin.Items.Sum(s => s.Items.Sum(l => CastAide.AsDecimal(l.PhuAmountDue))), 2),
                         });
-                    #endregion
+
+                    #endregion Total Origin currency
 
                     #region Total Base currency
+
                     if (currency != 2)
                     {
                         byCurrencyOrigin.Totals.Add(new RacingDailyWinLossRow()
@@ -313,20 +318,23 @@ namespace Sunplus.Accounting.Business.Report.Racing
                             PhuAmountDue = NumberFormat.DecFormat(byCurrencyBase.Items.Sum(s => s.Items.Sum(l => CastAide.AsDecimal(l.PhuAmountDue))), 2),
                         });
                     }
-                    #endregion
+
+                    #endregion Total Base currency
 
                     #region Sub Total By Group Currency
 
                     string expression = "";
 
                     #region USD
-                    if (CountUSD == TotalCurrUSD && TotalCurrUSD>=2)
+
+                    if (CountUSD == TotalCurrUSD && TotalCurrUSD >= 2)
                     {
                         //reset counter
                         CountUSD = -100;
                         expression = "currency in (" + ArrCurrencySubTotal_USD + ")";
 
                         #region Origin
+
                         byCurrencyOrigin.GroupTotals.Add(new RacingDailyWinLossRow()
                         {
                             CurrencyId = currency.ToString(),
@@ -357,11 +365,12 @@ namespace Sunplus.Accounting.Business.Report.Racing
                             PhuCommExpense = NumberFormat.DecFormat(dataTable.Compute("sum(commIncomeIBC_Origin)", expression), 2),
                             PhuAmountFee = NumberFormat.DecFormat(dataTable.Compute("sum(FeeDue2_Origin)", expression), 2),
                             PhuAmountDue = NumberFormat.DecFormat(dataTable.Compute("sum(AmountDue_Origin)", expression), 2),
-
                         });
-                        #endregion
+
+                        #endregion Origin
 
                         #region Base RM
+
                         byCurrencyOrigin.GroupTotals.Add(new RacingDailyWinLossRow()
                         {
                             CurrencyId = "2",
@@ -392,13 +401,15 @@ namespace Sunplus.Accounting.Business.Report.Racing
                             PhuCommExpense = NumberFormat.DecFormat(dataTable.Compute("sum(commIncomeIBC)", expression), 2),
                             PhuAmountFee = NumberFormat.DecFormat(dataTable.Compute("sum(FeeDue2)", expression), 2),
                             PhuAmountDue = NumberFormat.DecFormat(dataTable.Compute("sum(AmountDue)", expression), 2),
-
                         });
-                        #endregion
+
+                        #endregion Base RM
                     }
-                    #endregion
+
+                    #endregion USD
 
                     #region THB
+
                     if (CountTHB == TotalCurrTHB && TotalCurrTHB >= 2)
                     {
                         //reset counter
@@ -406,6 +417,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         expression = "currency in (" + ArrCurrencySubTotal_THB + ")";
 
                         #region Origin
+
                         byCurrencyOrigin.GroupTotals.Add(new RacingDailyWinLossRow()
                         {
                             CurrencyId = currency.ToString(),
@@ -436,11 +448,12 @@ namespace Sunplus.Accounting.Business.Report.Racing
                             PhuCommExpense = NumberFormat.DecFormat(dataTable.Compute("sum(commIncomeIBC_Origin)", expression), 2),
                             PhuAmountFee = NumberFormat.DecFormat(dataTable.Compute("sum(FeeDue2_Origin)", expression), 2),
                             PhuAmountDue = NumberFormat.DecFormat(dataTable.Compute("sum(AmountDue_Origin)", expression), 2),
-
                         });
-                        #endregion
+
+                        #endregion Origin
 
                         #region Base RM
+
                         byCurrencyOrigin.GroupTotals.Add(new RacingDailyWinLossRow()
                         {
                             CurrencyId = "2",
@@ -471,20 +484,23 @@ namespace Sunplus.Accounting.Business.Report.Racing
                             PhuCommExpense = NumberFormat.DecFormat(dataTable.Compute("sum(commIncomeIBC)", expression), 2),
                             PhuAmountFee = NumberFormat.DecFormat(dataTable.Compute("sum(FeeDue2)", expression), 2),
                             PhuAmountDue = NumberFormat.DecFormat(dataTable.Compute("sum(AmountDue)", expression), 2),
-
                         });
-                        #endregion
+
+                        #endregion Base RM
                     }
-                    #endregion
+
+                    #endregion THB
 
                     #region IN
-                    if (CountIN == TotalCurrIN && TotalCurrIN>=2)
+
+                    if (CountIN == TotalCurrIN && TotalCurrIN >= 2)
                     {
                         //reset counter
                         CountIN = -100;
                         expression = "currency in (" + ArrCurrencySubTotal_IN + ")";
 
                         #region Origin
+
                         byCurrencyOrigin.GroupTotals.Add(new RacingDailyWinLossRow()
                         {
                             CurrencyId = currency.ToString(),
@@ -515,11 +531,12 @@ namespace Sunplus.Accounting.Business.Report.Racing
                             PhuCommExpense = NumberFormat.DecFormat(dataTable.Compute("sum(commIncomeIBC_Origin)", expression), 2),
                             PhuAmountFee = NumberFormat.DecFormat(dataTable.Compute("sum(FeeDue2_Origin)", expression), 2),
                             PhuAmountDue = NumberFormat.DecFormat(dataTable.Compute("sum(AmountDue_Origin)", expression), 2),
-
                         });
-                        #endregion
+
+                        #endregion Origin
 
                         #region Base RM
+
                         byCurrencyOrigin.GroupTotals.Add(new RacingDailyWinLossRow()
                         {
                             CurrencyId = "2",
@@ -550,18 +567,20 @@ namespace Sunplus.Accounting.Business.Report.Racing
                             PhuCommExpense = NumberFormat.DecFormat(dataTable.Compute("sum(commIncomeIBC)", expression), 2),
                             PhuAmountFee = NumberFormat.DecFormat(dataTable.Compute("sum(FeeDue2)", expression), 2),
                             PhuAmountDue = NumberFormat.DecFormat(dataTable.Compute("sum(AmountDue)", expression), 2),
-
                         });
-                        #endregion
-                    }
-                    #endregion
 
-                    #endregion
+                        #endregion Base RM
+                    }
+
+                    #endregion IN
+
+                    #endregion Sub Total By Group Currency
 
                     racing.Items.Add(byCurrencyOrigin);
                 }
 
                 #region Grand Total Base RM
+
                 racing.Totals.Add(new RacingDailyWinLossRow()
                     {
                         Currency = "Base (RM)",
@@ -592,7 +611,8 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         PhuAmountFee = NumberFormat.DecFormat(byAllCurrencyBase.Items.Sum(s => s.Items.Sum(l => CastAide.AsDecimal(l.PhuAmountFee))), 2),
                         PhuAmountDue = NumberFormat.DecFormat(byAllCurrencyBase.Items.Sum(s => s.Items.Sum(l => CastAide.AsDecimal(l.PhuAmountDue))), 2),
                     });
-                #endregion
+
+                #endregion Grand Total Base RM
 
                 SessionExtension.AddSession(HttpContext.Current.Session, _RacingDailyWinLossForToteSessionKey, racing);
             }
@@ -602,8 +622,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
             }
             return racing;
         }
-        #endregion
-    }
 
-   
+        #endregion SelWinlostHR_Details
+    }
 }

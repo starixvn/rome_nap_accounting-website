@@ -19,11 +19,11 @@ namespace Sunplus.Accounting.DataAccess.CustomerAdapter.ConsolidatedGroup
 
         public static Result UpdateGroup(string UserName, int GroupID, int isHeader,
             string Remark, int UserID, string IP)
-        {            
+        {
             using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdConsolidatedGroup", 600))
             {
                 var hsParam = new Hashtable();
-                hsParam.Add("username", UserName.Trim());                
+                hsParam.Add("username", UserName.Trim());
                 hsParam.Add("remark", Remark);
                 hsParam.Add("userid", UserID);
                 hsParam.Add("ip", IP);
@@ -53,7 +53,7 @@ namespace Sunplus.Accounting.DataAccess.CustomerAdapter.ConsolidatedGroup
         }
 
         public static Result AddUserToGroup(int GroupID, string UserName, string IP)
-        {            
+        {
             using (ObjectDb objDb = new ObjectDb("Acc_CustomerInsConsolidatedGroup_User", 600))
             {
                 var hsParam = new Hashtable();
@@ -74,7 +74,7 @@ namespace Sunplus.Accounting.DataAccess.CustomerAdapter.ConsolidatedGroup
         }
 
         public static Result RemoveUsers(int GroupID, string CustIDList, string IP)
-        {            
+        {
             using (ObjectDb objDb = new ObjectDb("Acc_CustomerDelConsolidatedGroup", 600))
             {
                 var hsParam = new Hashtable();

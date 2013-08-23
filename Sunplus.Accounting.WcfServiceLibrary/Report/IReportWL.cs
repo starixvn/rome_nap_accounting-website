@@ -30,7 +30,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         string LeagueWL(string date, int dbtype);
 
-
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         string Hello();

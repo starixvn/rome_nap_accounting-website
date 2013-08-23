@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ServiceModel.Activation;
 using Sunplus.Accounting.Business.BetAggregator;
 using Sunplus.Accounting.Business.BootStrappers;
@@ -8,7 +7,7 @@ using Sunplus.Accounting.Entities.BetAggregator;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.BetAggregator
 {
-     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class LicenseeConfigService : ILicenseeConfigService
     {
         public List<LicenseeConfig> SelAllLicensee()
@@ -19,66 +18,63 @@ namespace Sunplus.Accounting.WcfServiceLibrary.BetAggregator
             return listLicensees;
         }
 
-         public List<LicenseeConfig> SelBaLicenseeConfig()
-         {
-             var listBALicensee = new List<LicenseeConfig>();
-             var result = CommonBootStrapper.Locator.GetInstance<ILicenseeConfigManager>();
-             listBALicensee = result.SelBaLicenseeList();
-             return listBALicensee;
-         }
+        public List<LicenseeConfig> SelBaLicenseeConfig()
+        {
+            var listBALicensee = new List<LicenseeConfig>();
+            var result = CommonBootStrapper.Locator.GetInstance<ILicenseeConfigManager>();
+            listBALicensee = result.SelBaLicenseeList();
+            return listBALicensee;
+        }
 
-         public List<LicenseeLog> SelBaLicenseeLogList(int licenseeId)
-         {
-             List<LicenseeLog> listBALicenseelog;
-             var result = CommonBootStrapper.Locator.GetInstance<ILicenseeConfigManager>();
-             listBALicenseelog = result.SelBaLicenseeLogList(licenseeId);
+        public List<LicenseeLog> SelBaLicenseeLogList(int licenseeId)
+        {
+            List<LicenseeLog> listBALicenseelog;
+            var result = CommonBootStrapper.Locator.GetInstance<ILicenseeConfigManager>();
+            listBALicenseelog = result.SelBaLicenseeLogList(licenseeId);
 
-             return listBALicenseelog;
-         }
+            return listBALicenseelog;
+        }
 
-         public Result InsBALicenseeConfig(int licenseeId, double hdpComm, double oneXTwoComm, double otherComm, double gameComm, bool  enableBa)
-         {
-             var result = new Result();
-             var BALicensee = CommonBootStrapper.Locator.GetInstance<ILicenseeConfigManager>();
-             result = BALicensee.InsertConfig(licenseeId, hdpComm, oneXTwoComm, otherComm, gameComm, enableBa);
-             return result;
-         }
+        public Result InsBALicenseeConfig(int licenseeId, double hdpComm, double oneXTwoComm, double otherComm, double gameComm, bool enableBa)
+        {
+            var result = new Result();
+            var BALicensee = CommonBootStrapper.Locator.GetInstance<ILicenseeConfigManager>();
+            result = BALicensee.InsertConfig(licenseeId, hdpComm, oneXTwoComm, otherComm, gameComm, enableBa);
+            return result;
+        }
 
-         public Result UpdBALicenseeConfig(int licenseeId, double groupa, double groupb, double groupc, double groupd, double oneXTwoComm, double otherComm, bool enableBa)
-         {
-             var result = new Result();
-             var BALicensee = CommonBootStrapper.Locator.GetInstance<ILicenseeConfigManager>();
-             result = BALicensee.UpdateConfig(licenseeId, groupa, groupb, groupc, groupd, oneXTwoComm, otherComm, enableBa);
-             return result;
-         }
+        public Result UpdBALicenseeConfig(int licenseeId, double groupa, double groupb, double groupc, double groupd, double oneXTwoComm, double otherComm, bool enableBa)
+        {
+            var result = new Result();
+            var BALicensee = CommonBootStrapper.Locator.GetInstance<ILicenseeConfigManager>();
+            result = BALicensee.UpdateConfig(licenseeId, groupa, groupb, groupc, groupd, oneXTwoComm, otherComm, enableBa);
+            return result;
+        }
 
-         public Result DelBALicenseeConfig(int licenseeId)
-         {
-             var result = new Result();
-             var BALicensee = CommonBootStrapper.Locator.GetInstance<ILicenseeConfigManager>();
-             result = BALicensee.DeleteConfig(licenseeId);
+        public Result DelBALicenseeConfig(int licenseeId)
+        {
+            var result = new Result();
+            var BALicensee = CommonBootStrapper.Locator.GetInstance<ILicenseeConfigManager>();
+            result = BALicensee.DeleteConfig(licenseeId);
 
-             return result;
-         }
+            return result;
+        }
 
-        
-         public int CheckDownlineBA(int licenseeid)
-         {
-             return CommonBootStrapper.Locator.GetInstance<ILicenseeConfigManager>().CheckDownlineBA(licenseeid);
-         }
+        public int CheckDownlineBA(int licenseeid)
+        {
+            return CommonBootStrapper.Locator.GetInstance<ILicenseeConfigManager>().CheckDownlineBA(licenseeid);
+        }
 
+        public BACurrenyGroupDTO SelBACurrencyGroupBy(int licenseeId)
+        {
+            var licenseeList = CommonBootStrapper.Locator.GetInstance<ILicenseeConfigManager>();
+            return licenseeList.SelBACurrencyGroupBy(licenseeId);
+        }
 
-         public BACurrenyGroupDTO SelBACurrencyGroupBy(int licenseeId)
-         {
-             var licenseeList = CommonBootStrapper.Locator.GetInstance<ILicenseeConfigManager>();
-             return licenseeList.SelBACurrencyGroupBy(licenseeId);
-         }
-
-
-         public Result BAUpdateGroupSetting(int licenseeId, string setting)
-         {
-             var licenseeList = CommonBootStrapper.Locator.GetInstance<ILicenseeConfigManager>();
-             return licenseeList.BAUpdateGroupSetting(licenseeId, setting);
-         }
+        public Result BAUpdateGroupSetting(int licenseeId, string setting)
+        {
+            var licenseeList = CommonBootStrapper.Locator.GetInstance<ILicenseeConfigManager>();
+            return licenseeList.BAUpdateGroupSetting(licenseeId, setting);
+        }
     }
 }

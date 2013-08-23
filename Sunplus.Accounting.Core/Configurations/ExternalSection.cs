@@ -10,13 +10,13 @@ namespace Sunplus.Accounting.Core.Configurations
         }
 
         [ConfigurationProperty("Sorting", IsDefaultCollection = false)]
-        [ConfigurationCollection(typeof (ExternalCollection),
+        [ConfigurationCollection(typeof(ExternalCollection),
             AddItemName = "add",
             ClearItemsName = "clear",
             RemoveItemName = "remove")]
         public ExternalCollection Sorting
         {
-            get { return (ExternalCollection) base["Sorting"]; }
+            get { return (ExternalCollection)base["Sorting"]; }
         }
 
         public static ExternalSection Instance
@@ -115,7 +115,6 @@ namespace Sunplus.Accounting.Core.Configurations
             return BaseIndexOf(settingElement);
         }
 
-
         protected override sealed ConfigurationElement CreateNewElement()
         {
             return new ExternalElement();
@@ -129,7 +128,9 @@ namespace Sunplus.Accounting.Core.Configurations
 
     public class ExternalElement : ConfigurationElement
     {
-        public ExternalElement() { }
+        public ExternalElement()
+        {
+        }
 
         [ConfigurationProperty("name", IsRequired = true)]
         public string Name
@@ -170,5 +171,4 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
     }
-
 }

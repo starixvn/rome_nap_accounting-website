@@ -43,7 +43,7 @@ public class ServiceAgencyAnalysis : IServiceAgencyAnalysis
         agency.GenerateChartByCustId(custId, username, fMonth, fYear, tMonth, tYear);
     }
 
-    #endregion
+    #endregion IServiceAgencyAnalysis Members
 
     public string DirectCustomerReportExportOnly(string fMonth, string fYear, string tMonth, string tYear,
                                                  string statistic, string username)

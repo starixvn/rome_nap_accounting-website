@@ -3,7 +3,7 @@
 /// <summary>
 /// Summary description for SystemBO
 /// </summary>
-/// 
+///
 
 namespace Sunplus.Accounting.Entities.ViewModel
 {

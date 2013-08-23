@@ -13,7 +13,6 @@ using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Helper;
-using Sunplus.Core.LoggingLib;
 
 
 public class EditUsername : IHttpHandler,IRequiresSessionState {

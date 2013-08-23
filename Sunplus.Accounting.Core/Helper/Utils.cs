@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Web;
 using DNAide.Core;
-
-using Sunplus.Accounting.Entities.ViewModel;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
+using Sunplus.Accounting.Entities.ViewModel;
 
 namespace Sunplus.Accounting.Core.Helper
 {
@@ -77,7 +74,6 @@ namespace Sunplus.Accounting.Core.Helper
             }
         }
 
-
         public static void ParseError(ref int ErrorCode, ref string ErrorMsg, string ErrMsgContent, string ErrMsgOutPut)
         {
             try
@@ -129,14 +125,12 @@ namespace Sunplus.Accounting.Core.Helper
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
                 return string.Empty;
             }
         }
-
 
         public static bool IsBooleanType(object value)
         {
@@ -151,6 +145,7 @@ namespace Sunplus.Accounting.Core.Helper
                 return false;
             }
         }
+
         public static bool IsStringType(object value)
         {
             try
@@ -164,7 +159,6 @@ namespace Sunplus.Accounting.Core.Helper
                 return false;
             }
         }
-
 
         public static IEnumerable<SystemBO> GetSystemList()
         {
@@ -185,11 +179,10 @@ namespace Sunplus.Accounting.Core.Helper
                 return String.Format("{0:0,0}", CastAide.AsDouble(num));
             else
             {
-                if(CastAide.AsDouble(chars[0]) >= 1000)
-                   return String.Format("{0:0,0}", CastAide.AsDouble(chars[0])) + "." + chars[1].Substring(0, 2);
+                if (CastAide.AsDouble(chars[0]) >= 1000)
+                    return String.Format("{0:0,0}", CastAide.AsDouble(chars[0])) + "." + chars[1].Substring(0, 2);
                 else
                     return chars[0] + "." + chars[1].Substring(0, 2);
-               
             }
         }
     }

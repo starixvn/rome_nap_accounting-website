@@ -10,8 +10,8 @@ using DNAide.Web;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
-using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using Sunplus.Accounting.WcfServiceLibrary.CreditTerm;
 
 namespace Sunplus.Accounting.Presentation
 {
@@ -145,7 +145,9 @@ namespace Sunplus.Accounting.Presentation
                     Thread.Sleep(2000);
                 }
 
-                DataTable dt = AccountCredit.Acc_CreditTermSelByGroupID(groupid).ResultSet.Tables[0];
+                //DataTable dt = AccountCredit.Acc_CreditTermSelByGroupID(groupid).ResultSet.Tables[0];
+				var creditTermService = new CreditTermService();
+				var memberList = creditTermService.GetMemberByGroupId(groupid);
                 string headline = "";
                 var userrows = new StringBuilder();
                 string userrow = TemplateHandler.CopyBlock(from, "UserRow");
@@ -158,10 +160,10 @@ namespace Sunplus.Accounting.Presentation
                 string title = "";
                 TemplateHandler.RemoveBlock(ref from, "UserRow");
                 string roweven = "evenrow";
-                foreach (DataRow dr in dt.Rows)
+				foreach (var member in memberList)
                 {
                     _userrow = (string) userrow.Clone();
-                    if (Convert.ToBoolean(dr["isgroupheadline"]))
+					if (member.IsGroupHeadline)
                     {
                         jsheadline = "";
                         headline = "(HEAD LINE)";
@@ -176,15 +178,15 @@ namespace Sunplus.Accounting.Presentation
                         headlineclass = "../App_Themes/Images/headline.gif";
                         headlineclasstext = "";
                         headline = "";
-                        removeitem = "<input type='checkbox' value='" + dr["custid"] + "|" + dr["username"] +
+						removeitem = "<input type='checkbox' value='" + member.CustId + "|" + member.Username +
                                      "' name='chkuser' id='chkuser' />";
-                        jsheadline = "ExecuteCreditTerm('2','" + dr["custid"] + "');";
+                        jsheadline = "ExecuteCreditTerm('2','" + member.CustId + "');";
                     }
                     if (roweven == "") roweven = "evenrow";
                     else roweven = "";
                     TemplateHandler.Assign(ref _userrow, "{row-even}", roweven);
-                    TemplateHandler.Assign(ref _userrow, "{CustId}", dr["username"] + " " + headline);
-                    TemplateHandler.Assign(ref _userrow, "{UserName}", dr["username"] + " " + headline);
+                    TemplateHandler.Assign(ref _userrow, "{CustId}", member.Username + " " + headline);
+                    TemplateHandler.Assign(ref _userrow, "{UserName}", member.Username + " " + headline);
                     TemplateHandler.Assign(ref _userrow, "{headline}", headlineclass);
                     TemplateHandler.Assign(ref _userrow, "{headlineclasstext}", headlineclasstext);
                     TemplateHandler.Assign(ref _userrow, "{removeitem}", removeitem);

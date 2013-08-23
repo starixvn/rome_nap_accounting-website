@@ -50,17 +50,17 @@ namespace Sunplus.Accounting.Core.Common
                                        out T result)
         {
             string strTypeFixed = strType.Replace(' ', '_');
-            if (Enum.IsDefined(typeof (T), strTypeFixed))
+            if (Enum.IsDefined(typeof(T), strTypeFixed))
             {
-                result = (T) Enum.Parse(typeof (T), strTypeFixed, true);
+                result = (T)Enum.Parse(typeof(T), strTypeFixed, true);
                 return true;
             }
 
-            string[] names = Enum.GetNames(typeof (T));
+            string[] names = Enum.GetNames(typeof(T));
             foreach (
                 string value in names.Where(value => value.Equals(strTypeFixed, StringComparison.OrdinalIgnoreCase)))
             {
-                result = (T) Enum.Parse(typeof (T), value);
+                result = (T)Enum.Parse(typeof(T), value);
                 return true;
             }
 

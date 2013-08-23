@@ -47,6 +47,6 @@ namespace Sunplus.Accounting.Business.Settle
             return s;
         }
 
-        #endregion
+        #endregion Menu
     }
 }

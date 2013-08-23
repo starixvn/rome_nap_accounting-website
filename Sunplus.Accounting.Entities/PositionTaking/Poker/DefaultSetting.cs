@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
-using Sunplus.Accounting.Entities.Customer;
 
 namespace Sunplus.Accounting.Entities.PositionTaking.Poker
 {
@@ -15,7 +14,6 @@ namespace Sunplus.Accounting.Entities.PositionTaking.Poker
 
         [DataMember]
         public string errMessage { get; set; }
-       
     }
 
     public class DefaultSettingItem

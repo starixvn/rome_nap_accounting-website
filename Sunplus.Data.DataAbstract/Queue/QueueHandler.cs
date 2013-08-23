@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Sunplus.Data.DataAbstract.Queue
 {
     public delegate void ChangedEventHandler(object sender, EventArgs e);
+
     public class QueueHandler<T>
     {
         private readonly Queue<T> queue = new Queue<T>();
@@ -31,12 +31,12 @@ namespace Sunplus.Data.DataAbstract.Queue
         public virtual T Dequeue()
         {
             T item = queue.Dequeue();
-            return item;  
+            return item;
         }
 
         public virtual IList<T> ToList()
         {
-            if (queue.Count > 0) 
+            if (queue.Count > 0)
                 return queue.ToList<T>();
             return new List<T>();
         }

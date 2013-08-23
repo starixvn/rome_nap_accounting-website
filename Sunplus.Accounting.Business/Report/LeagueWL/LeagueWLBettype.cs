@@ -1,46 +1,40 @@
 ﻿using System;
-using System.Data;
 using System.Collections;
-using System.Collections.Generic;
+using System.Data;
 using System.Text;
-using DNAide.Web;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
-
-using BLL.Report.LeagueWL;
-using System.Linq;
+using DNAide.Web;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.Provider.Report;
 using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
-
 
 /// <summary>
 /// Summary description for LeagueWLBettype
 /// </summary>
 namespace BLL.Report.LeagueWL
 {
-    public class LeagueWLBettype: ReportBase
+    public class LeagueWLBettype : ReportBase
     {
         public LeagueWLBettype()
         {
             KeyCaching = "accreportleaguewinlostbettype." + AppSession.Username;
         }
 
-        string tplHeader= "", tplBody = "", tplFooter = "";
+        private string tplHeader = "", tplBody = "", tplFooter = "";
+
         #region RenderHTML
+
         public override string RenderHTML(Hashtable input)
         {
             StringBuilder html = new StringBuilder();
-          
 
             try
             {
-                
                 int sporttype = CastAide.AsInt32(input["sporttype"]);
                 int leagueid = CastAide.AsInt32(input["leagueid"]);
                 DateTime wldate = CastAide.AsDateTime(input["wldate"]);
@@ -55,7 +49,7 @@ namespace BLL.Report.LeagueWL
                 string evt = "", title = "";
 
                 title = "";
-                title = (CacheRef.GetLeagueName(leagueid).Contains(CacheRef.GetSportName(sporttype))) 
+                title = (CacheRef.GetLeagueName(leagueid).Contains(CacheRef.GetSportName(sporttype)))
                     ? CacheRef.GetLeagueName(leagueid)
                     : CacheRef.GetSportName(sporttype) + " - " + CacheRef.GetLeagueName(leagueid);
                 TemplateHandler.Assign(ref tplHeaderLive, "title", title + " - LIVE");
@@ -65,7 +59,7 @@ namespace BLL.Report.LeagueWL
                 DateTime movebetsday = ReportUtils.BalanceUp.MoveBetsDay;
                 if (wldate <= movebetsday)
                     rs = SiteProvider.Report.LeagueWL().LeagueWL_Bettype14(wldate, sporttype, leagueid);
-                    //rs = SiteProvider.Report.LeagueWL().LeagueWL_Bettype(wldate, sporttype, leagueid);
+                //rs = SiteProvider.Report.LeagueWL().LeagueWL_Bettype(wldate, sporttype, leagueid);
                 else
                     rs = SiteProvider.Report.LeagueWL().LeagueWL_Bettype(wldate, sporttype, leagueid);
 
@@ -83,13 +77,6 @@ namespace BLL.Report.LeagueWL
                     if (CastAide.AsInt32(dr["liveindicator"]) == 0)
                         WinLost_8RM_NoneLive = CastAide.AsDecimal(dr["winlost8rm"]);
                 }
-
-                
-                
-                
-                
-
-                
 
                 LeagueWLRow GrandTotal = new LeagueWLRow();
                 LeagueWLRow TotalLive = new LeagueWLRow();
@@ -111,6 +98,7 @@ namespace BLL.Report.LeagueWL
                     LeagueWLRow row = new LeagueWLRow();
 
                     #region map data from Datarow into object
+
                     row.liveindicator = CastAide.AsBoolean(dr["liveindicator"]);
                     row.Bettype = CastAide.AsInt32(dr["bettype"]);
                     row.isHedge = CastAide.AsString(dr["isHedge"]);
@@ -119,13 +107,14 @@ namespace BLL.Report.LeagueWL
                     row.Commission = CastAide.AsDecimal(dr["Commission"]);
                     row.LineTotal = CastAide.AsDecimal(dr["LineTotal"]);
                     row.Turnover = CastAide.AsDecimal(dr["Turnover"]);
-                    #endregion
+
+                    #endregion map data from Datarow into object
 
                     row.Header = CacheRef.GetBettype(row.Bettype);
                     row.Header += " " + row.isHedge;
 
                     //leagueid, sporttype, bettype, liveindicator, IsHedge, db, wldate
-                    evt = "onclick=\"GetLeagueWLDetails('" + leagueid + "','" + sporttype + "','" + row.Bettype + "','" + CastAide.AsInt32(row.liveindicator) + "','" + ((row.isHedge.Length > 0) ? 1 : 0) + "','" + db + "','" + wldate.ToShortDateString() +"');\"";
+                    evt = "onclick=\"GetLeagueWLDetails('" + leagueid + "','" + sporttype + "','" + row.Bettype + "','" + CastAide.AsInt32(row.liveindicator) + "','" + ((row.isHedge.Length > 0) ? 1 : 0) + "','" + db + "','" + wldate.ToShortDateString() + "');\"";
 
                     TemplateHandler.Assign(ref strRow, "bold", "");
                     TemplateHandler.Assign(ref strRow, "link", "rpt-link");
@@ -145,7 +134,6 @@ namespace BLL.Report.LeagueWL
                     }
                 }
 
-
                 if (IsLiveHasData)
                 {
                     strRow = tplFooter;
@@ -153,7 +141,7 @@ namespace BLL.Report.LeagueWL
                     GrandTotal = TotalLive;
                     TemplateHandler.Assign(ref strRow, "bold", "rpt-bold");
 
-                    if (WinLost_8RM_Live>0)
+                    if (WinLost_8RM_Live > 0)
                         TemplateHandler.Assign(ref strRow, "color-8rm", "rpt-red-color");
                     else
                         TemplateHandler.Assign(ref strRow, "color-8rm", "");
@@ -163,7 +151,7 @@ namespace BLL.Report.LeagueWL
                     else
                         TemplateHandler.Assign(ref strRow, "color-grand", "");
 
-                    TemplateHandler.Assign(ref strRow, "8rm", NumberFormat.DecFormat(WinLost_8RM_Live,2));
+                    TemplateHandler.Assign(ref strRow, "8rm", NumberFormat.DecFormat(WinLost_8RM_Live, 2));
                     TemplateHandler.Assign(ref strRow, "total", NumberFormat.DecFormat(TotalLive.LineTotal + WinLost_8RM_Live, 2));
                     AssignRow(ref strRow, TotalLive, ref GrandTotal);
                     htmlLive.Append(strRow);
@@ -188,7 +176,7 @@ namespace BLL.Report.LeagueWL
                         TemplateHandler.Assign(ref strRow, "color-grand", "");
 
                     TemplateHandler.Assign(ref strRow, "8rm", NumberFormat.DecFormat(WinLost_8RM_NoneLive, 2));
-                    TemplateHandler.Assign(ref strRow, "total", NumberFormat.DecFormat(TotalNoneLive.LineTotal  +  WinLost_8RM_NoneLive, 2));
+                    TemplateHandler.Assign(ref strRow, "total", NumberFormat.DecFormat(TotalNoneLive.LineTotal + WinLost_8RM_NoneLive, 2));
                     AssignRow(ref strRow, TotalNoneLive, ref GrandTotal);
                     htmlNoneLive.Append(strRow);
 
@@ -200,13 +188,10 @@ namespace BLL.Report.LeagueWL
                     html.Append(htmlLive.ToString());
                     html.Append("<tr><td bgcolor='white' colspan='7'>There is no information</td></tr>");
                 }
-                
-                
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 html = new StringBuilder();
                 html.Append(tplHeader);
                 html.Append("<tr><td bgcolor='white' class='rpt-red-color rpt-bold' colspan='7'>" + ex.Message + "</td></tr>");
@@ -217,10 +202,12 @@ namespace BLL.Report.LeagueWL
 
             return html.ToString();
         }
-        #endregion
+
+        #endregion RenderHTML
 
         #region AssignRow
-        void AssignRow(ref string strRow, LeagueWLRow row, ref LeagueWLRow Total)
+
+        private void AssignRow(ref string strRow, LeagueWLRow row, ref LeagueWLRow Total)
         {
             TemplateHandler.Assign(ref strRow, "Bettype", row.Header);
 
@@ -238,7 +225,7 @@ namespace BLL.Report.LeagueWL
             else TemplateHandler.Assign(ref strRow, "color-line", "");
 
             if (row.Margin > 0) TemplateHandler.Assign(ref strRow, "color-margin", "rpt-red-color");
-            else TemplateHandler.Assign(ref strRow, "color-margin", "");            
+            else TemplateHandler.Assign(ref strRow, "color-margin", "");
 
             Total.WinLost += row.WinLost;
             Total.Position += row.Position;
@@ -246,9 +233,11 @@ namespace BLL.Report.LeagueWL
             Total.LineTotal += row.LineTotal;
             Total.Turnover += row.Turnover;
         }
-        #endregion
+
+        #endregion AssignRow
 
         #region Export2Excel
+
         public override void Export2Excel(Hashtable input)
         {
             string wldate = CastAide.AsString(input["wldate"]);
@@ -258,17 +247,14 @@ namespace BLL.Report.LeagueWL
             {
                 ExcelContent = RenderHTML(input).Replace("{border}", "1");
                 base.Export2Excel(input);
-
             }
             else
             {
                 ExcelContent = GetCachedReport(KeyCaching).Replace("{border}", "1"); ;
                 base.Export2Excel(input);
             }
-
         }
-        #endregion
 
-        
+        #endregion Export2Excel
     }
 }

@@ -1,42 +1,29 @@
 using System;
-using System.Data;
-using System.Configuration;
 using System.Collections;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
+using System.Data;
 using System.Text;
+using System.Web;
+using System.Web.UI;
+using DNAide.Core;
+using DNAide.Data;
+using DNAide.Web;
+using IBCUtils;
 using Sunplus.Accounting.Business.Customer;
 using Sunplus.Accounting.Business.Report;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Business.Security;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
-using IBCUtils.Web;
-using IBCUtils.DAL;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using IBCUtils;
-using DNAide.Data;
-using DNAide.Core;
-using DNAide.Web;
 using Sunplus.Accounting.Business.Report.Common;
-
-
+using Sunplus.Accounting.Business.Security;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using Sunplus.Accounting.DataAccess.Report;
 
 public partial class DailyWL_OtherSport : PageBase
 {
-
     public string mode = "";
     public string today = string.Format("{0:MM/dd/yyyy}", DateTime.Today);
     public string yesterday = string.Format("{0:MM/dd/yyyy}", DateTime.Today.AddDays(-1));
-    RMReportUtils utilsBARM;
+    private RMReportUtils utilsBARM;
+
     protected void Page_Load(object sender, EventArgs e)
     {
-
         utilsBARM = new RMReportUtils(RMReportUtils.ReportName.Report2h, RMReportUtils.RMType.BARM);
 
         Title = Sunplus.Accounting.Business.Report.Reports.Title;
@@ -45,6 +32,7 @@ public partial class DailyWL_OtherSport : PageBase
         else
         {
             #region LoadData
+
             string str = "";
 
             string strfdate = Request["fdate"];
@@ -62,6 +50,7 @@ public partial class DailyWL_OtherSport : PageBase
             string FullPhath = "<b> <a href= 'DailyWL_Sporttype.aspx?fdate=" + strfdate + "&db=" + Request["db"] + "&mode=" + mode + "'> Main </a> > " + Request["path"] + "</b>";
 
             #region Header
+
             int displaydays = 0;
             TimeSpan sp = DateTime.Today - new DateTime(2011, 01, 01);
             displaydays = sp.Days;
@@ -89,7 +78,7 @@ public partial class DailyWL_OtherSport : PageBase
 
             headerDatetime.Text = strDateTimeSingle;
 
-            #endregion
+            #endregion Header
 
             //headerDatetime.Text = Reports.GetHeader(strfdate, strtdate, FullPhath, true);
             int count = 0;
@@ -109,15 +98,15 @@ public partial class DailyWL_OtherSport : PageBase
                 content.Text = "Invalid Date Format!!!";
             }
 
-
-            if (wldate>ReportUtils.BalanceUp.MoveBetsDay)
+            if (wldate > ReportUtils.BalanceUp.MoveBetsDay)
                 rs = MatchWinLostReport.Acc_Rpt_DailyWLDirect_OtherSport(wldate);
-            else if(wldate>=ReportUtils.BalanceUp.BalanceUpDay)
+            else if (wldate >= ReportUtils.BalanceUp.BalanceUpDay)
                 rs = MatchWinLostReport.Acc_Rpt_DailyWLDirect_OtherSport_14(wldate);
             else
                 rs = MatchWinLostReport.Acc_Rpt_DailyWLDirect_OtherSport_WH(wldate);
 
             #region separate data Live and None Line
+
             dtLive = rs.ResultSet.Tables[0].Clone();
             dtNoneLive = rs.ResultSet.Tables[0].Clone();
             dt8RM = rs.ResultSet.Tables[1];
@@ -152,8 +141,8 @@ public partial class DailyWL_OtherSport : PageBase
                     dtNoneLive.Rows.Add(drNewNoneLive);
                 }
             }
-            #endregion
 
+            #endregion separate data Live and None Line
 
             str += getcontent(wldate, 0, false, dtNoneLive, _8RM_NoneLive, _BARM_NoneLive);
             if (IsHasData) count++;
@@ -179,12 +168,13 @@ public partial class DailyWL_OtherSport : PageBase
                 ExportToExcel(FileName);
             }
 
-            #endregion
+            #endregion LoadData
         }
     }
 
     #region getcontent
-    string getcontent(DateTime wldate, int liveindicator, bool isFooter, DataTable dt, decimal total8rm, decimal totalBARM)
+
+    private string getcontent(DateTime wldate, int liveindicator, bool isFooter, DataTable dt, decimal total8rm, decimal totalBARM)
     {
         StringBuilder html = new StringBuilder();
         DateTime fdate = wldate, tdate = wldate;
@@ -201,9 +191,7 @@ public partial class DailyWL_OtherSport : PageBase
             if (liveindicator == 1) isLive = "LIVE";
             else isLive = "NON - LIVE";
 
-
             TemplateHandler.Assign(ref norow, "{bgcolor-nodata}", "bgcolor-nodata");
-          
 
             html.Append(Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("WinLost/WinLostSummaryAllHeader.htm", new string[] { "{msg}", "{col}", "{width}" }, new string[] { "OTHER SPORTS \"" + isLive + "\" PRODUCT WIN/LOSS REPORT", "7", "w100pc" }));
             string WLheader = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("WinLost/WinLostSummaryHeader.htm");
@@ -212,15 +200,18 @@ public partial class DailyWL_OtherSport : PageBase
             if (dt.Rows.Count == 0)
             {
                 #region no data
+
                 html.Append(WLheader);
                 TemplateHandler.Assign(ref norow, "{nodata}", (Resources.Language.thereisnodata));
                 TemplateHandler.Assign(ref norow, "{tdno}", "8");
                 html.Append(norow);
                 return html.ToString();
-                #endregion
+
+                #endregion no data
             }
 
             #region declare variable
+
             string sp = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("WinLost/WinLostSummarySportType.htm");
             string rows = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("WinLost/WinLostSummaryAllRow.htm");
             string colspans = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("WinLost/WinLostSummaryColspan.htm"), colspan = "";
@@ -240,7 +231,8 @@ public partial class DailyWL_OtherSport : PageBase
 
             double Win = 0, Pos = 0, Com = 0, TurnOver = 0;
             string totalRowSportType = "";
-            #endregion declare
+
+            #endregion declare variable
 
             html.Append(WLheader);
             if (dt.Rows.Count > 0)
@@ -278,7 +270,8 @@ public partial class DailyWL_OtherSport : PageBase
                     AllCom += Com; IBCCom += Com;
                     AllTurnOver += TurnOver; IBCTurnOver += TurnOver;
                 }
-                #endregion //end foreach
+
+                #endregion foreach
 
                 #region //total
 
@@ -304,14 +297,17 @@ public partial class DailyWL_OtherSport : PageBase
                     string str8rm = "<tr><td nowrap align='right'><b>IBC(8RM" + (utilsBARM.IsActive ? " + " + utilsBARM.DisplayName : string.Empty) + ") Total:</b></td><td align='right'><b>" + Sunplus.Accounting.Business.Report.Reports.colorvalue(total) + "</b></td><td colspan='5'></td></tr>";
                     html.Append(str8rm);
                 }
-                #endregion end total
+
+                #endregion //total
             }
             else
             {
                 #region no data
+
                 TemplateHandler.Assign(ref norow, "{nodata}", (Resources.Language.thereisnodata));
                 html.Append(norow);
-                #endregion
+
+                #endregion no data
             }
         }
         catch (Exception ex)
@@ -326,10 +322,12 @@ public partial class DailyWL_OtherSport : PageBase
         if (isFooter) Footer.Text = (GetFooter(fdate, tdate, title));
         return html.ToString();
     }
-    #endregion
+
+    #endregion getcontent
 
     #region footer
-    string GetFooter(DateTime fdate, DateTime tdate, string sportname)
+
+    private string GetFooter(DateTime fdate, DateTime tdate, string sportname)
     {
         StringBuilder html = new StringBuilder();
         string footer = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("WinLost/DailyWLFooter.htm");
@@ -347,10 +345,12 @@ public partial class DailyWL_OtherSport : PageBase
         html.Append(tplmainmenu);
         return html.ToString();
     }
-    #endregion end footer
+
+    #endregion footer
 
     #region AssignHidden
-    string AssignHidden()
+
+    private string AssignHidden()
     {
         string sporttype = Request["sporttype"];
         sporttype = (string.IsNullOrEmpty(sporttype)) ? "" : sporttype;
@@ -362,9 +362,11 @@ public partial class DailyWL_OtherSport : PageBase
         // hash.Add("type", type);
         return CustomerUtils.AssignMultipleHidden(hash);
     }
-    #endregion
+
+    #endregion AssignHidden
 
     #region ExportToExcel
+
     public void ExportToExcel(string FileName)
     {
         string strStyle = ReportHTML.CSSExcelReport();
@@ -384,5 +386,6 @@ public partial class DailyWL_OtherSport : PageBase
         Response.Write(stringWrite.ToString());
         Response.End();
     }
-    #endregion
+
+    #endregion ExportToExcel
 }

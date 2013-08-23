@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Web;
-using Sunplus.Accounting.Entities.Report.Deposit;
 using Sunplus.Accounting.Entities.Report.Monitor;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.Report
@@ -34,5 +32,4 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         bool CheckMAMonitorReportFromSession(Param param);
     }
-
 }

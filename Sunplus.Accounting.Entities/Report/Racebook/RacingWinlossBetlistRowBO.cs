@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Sunplus.Accounting.Entities.Report.Racebook
 {
@@ -11,7 +8,7 @@ namespace Sunplus.Accounting.Entities.Report.Racebook
     public class RacingWinlossBetlistRowBO
     {
         [DataMember]
-        public string No {get; set;}
+        public string No { get; set; }
 
         [DataMember]
         public string BettypeId { get; set; }
@@ -75,13 +72,11 @@ namespace Sunplus.Accounting.Entities.Report.Racebook
 
         [DataMember]
         public bool IsShowOtExRate { get; set; }
-        
+
         [DataMember]
         public string WinStatus { get; set; }
 
         [DataMember]
         public string PlaceStatus { get; set; }
-
-        
     }
 }

@@ -8,7 +8,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
     /// </summary>
     public class AccException : Exception
     {
-        public AccException(string message) : base(message)
+        public AccException(string message)
+            : base(message)
         {
         }
     }

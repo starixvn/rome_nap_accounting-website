@@ -11,15 +11,13 @@ namespace Sunplus.Accounting.WcfServiceLibrary.BetList
     public class BetListNumberGameManager : IBetListNumberGameManager
     {
         #region IBetListNumberGameManager Members
+
         public NumbergameResult GetBetListNumberGame(int matchId)
         {
             var betlistNumberGame = new Sunplus.Accounting.Business.BetList.BetListNumberGameManager();
             return betlistNumberGame.GetBetListNumberGame(matchId);
         }
 
-        #endregion
+        #endregion IBetListNumberGameManager Members
     }
 }
-
-
-

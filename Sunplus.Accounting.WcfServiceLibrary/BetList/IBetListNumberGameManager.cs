@@ -13,9 +13,3 @@ namespace Sunplus.Accounting.WcfServiceLibrary.BetList
         NumbergameResult GetBetListNumberGame(int matchId);
     }
 }
-
-
-
-
-
-

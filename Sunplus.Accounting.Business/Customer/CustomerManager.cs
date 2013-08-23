@@ -21,13 +21,12 @@ using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.Core.Web.Controls;
 using Sunplus.Accounting.DataAccess;
+using Sunplus.Accounting.DataAccess.AdoNet;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Accounting.Entities.Customer;
 using Sunplus.Bingo.Core;
 using Result = Sunplus.Accounting.Entities.Result;
-using System.Xml;
-using Sunplus.Accounting.DataAccess.AdoNet;
 
 /// <summary>
 /// Summary description for CustomerManager
@@ -38,11 +37,9 @@ namespace Sunplus.Accounting.Business.Customer
     {
         public ICustomerDAO _customerDAO;
 
-
         public CustomerManager()
             : this(null)
         {
-
         }
 
         public CustomerManager(ICustomerDAO customerDAO)
@@ -125,7 +122,6 @@ namespace Sunplus.Accounting.Business.Customer
 
         public string GenOnlineList(int custId)
         {
-
             string tplOnlineList = WebUtils.LoadTemplate("CustomerInfo/OnlineList.htm");
             string tplRowData = TemplateHandler.CopyBlock(tplOnlineList, "rowdata");
             string data = "";
@@ -148,8 +144,6 @@ namespace Sunplus.Accounting.Business.Customer
             }
             TemplateHandler.ReplaceBlock(ref tplOnlineList, "rowdata", data);
             return tplOnlineList;
-
-
         }
 
         public CustomerDetail GetCustomerDetail(string username)
@@ -160,7 +154,6 @@ namespace Sunplus.Accounting.Business.Customer
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
@@ -174,7 +167,6 @@ namespace Sunplus.Accounting.Business.Customer
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
@@ -190,7 +182,6 @@ namespace Sunplus.Accounting.Business.Customer
             }
             else
             {
-
                 var customerService = new CustomerService();
                 var ds = customerService.GetCustomerInfo(userName, AppSession.SYSTEM);
 
@@ -203,8 +194,8 @@ namespace Sunplus.Accounting.Business.Customer
                 {
                     //Add CustSearch
 
-
                     #region assign data
+
                     if (ds.ResultSet.Tables[0].Rows.Count == 0)
                     {
                         //return AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"), AlertMessage.MsgType.Error);
@@ -308,6 +299,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 yesterdayCash = Convert.IsDBNull(row3["Yesterday_Cash"]) ? 0 : Convert.ToDecimal(row3["Yesterday_Cash"]);
                                 downlinename = "";
                                 break;
+
                             case 2: // agent
                                 parentId = Convert.ToInt32(row2["masterid"]);
                                 accOutstanding = Convert.IsDBNull(row3["agentPositionTaking"]) ? 0 : Convert.ToDecimal(row3["agentPositionTaking"]);
@@ -319,6 +311,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 usedCredit = IBCUtils.FormatHandler.GetDecimal(row3["agentUsedCredit"]);
                                 downlinename = "Member";
                                 break;
+
                             case 3: // master
                                 parentId = Convert.ToInt32(row2["superId"]);
                                 accOutstanding = Convert.IsDBNull(row3["masterPositionTaking"]) ? 0 : Convert.ToDecimal(row3["masterPositionTaking"]);
@@ -332,6 +325,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 usedCredit = IBCUtils.FormatHandler.GetDecimal(row3["masterUsedCredit"]);
                                 downlinename = "Agent";
                                 break;
+
                             case 4: // super
                                 parentId = 0;
                                 accOutstanding = Convert.IsDBNull(row3["superPositionTaking"]) ? 0 : Convert.ToDecimal(row3["superPositionTaking"]);
@@ -347,17 +341,17 @@ namespace Sunplus.Accounting.Business.Customer
                                 usedCredit = IBCUtils.FormatHandler.GetDecimal(row3["superUsedCredit"]);
                                 downlinename = "Master";
                                 break;
+
                             default:
                                 break;
                         }
 
-                    #endregion
+                    #endregion assign data
 
                         if (parentId > 0)
                         {
                             _custparent = IBCProvider.IBCCustomer.GetCustomerStatus(parentId);
                         }
-
 
                         bool isAllowEditCS = true;
                         bool disabledCSParent = false;
@@ -461,7 +455,7 @@ namespace Sunplus.Accounting.Business.Customer
                             TemplateHandler.Assign(ref htmlcontent, "{AccId}", AppSession.AccId.ToString());
                             TemplateHandler.Assign(ref htmlcontent, "{InternalAgent}", WebSettings.InternalAgentUrl);
 
-                            //Render Enabled 
+                            //Render Enabled
                             if (isOpenStatus)
                             {
                                 TemplateHandler.Assign(ref htmlcontent, "{enabledbg}", string.Empty);
@@ -511,10 +505,12 @@ namespace Sunplus.Accounting.Business.Customer
                                 }
                             }
                             catch (Exception ex) { }
+
                             #region BalanceInfo
+
                             string balanceinfo = WebUtils.LoadTemplateBySystem("CustomerInfo/BalanceInfo.htm");
 
-                            bool isManageCustomerAccess = Permissions.GetHostPermission(Enumerations.Functions.Customer.OtherCust); // 4: id of [Customer] function               
+                            bool isManageCustomerAccess = Permissions.GetHostPermission(Enumerations.Functions.Customer.OtherCust); // 4: id of [Customer] function
                             bool hasTransferPermission = Permissions.GetHostPermission(Enumerations.Functions.Transfer.OtherTrans); // 2: Transfer
                             bool isManageVirtualRateAccess = Permissions.GetHostPermission(Enumerations.Functions.ExRates.VirtualRate); // [VirtualRate]
                             TemplateHandler.Assign(ref balanceinfo, "{colorTotalCash}", ((hasTransferPermission && Functions.Customer.IsApplyCssBalanceInfo) ? " canchange" : string.Empty) + ((cash >= 0) ? " b" : " hilight"));
@@ -559,10 +555,7 @@ namespace Sunplus.Accounting.Business.Customer
                             TemplateHandler.Assign(ref balanceinfo, "{GivenCreditCurrency}", currency + " ");
                             TemplateHandler.Assign(ref balanceinfo, "{GivenCredit}", string.Format("{0:n}", credit));
 
-
-
                             TemplateHandler.Assign(ref balanceinfo, "{VirtualRate}", vRate);
-
 
                             if (roleId > 1)
                             {
@@ -600,9 +593,13 @@ namespace Sunplus.Accounting.Business.Customer
                             }
 
                             TemplateHandler.Assign(ref htmlcontent, "{BalanceInfo}", balanceinfo);
-                            #endregion
-                            //Setting       
+
+                            #endregion BalanceInfo
+
+                            //Setting
+
                             #region Setting
+
                             var strCloseStatus = "";
                             if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL) && roleId == 4 && closed)
                             {
@@ -664,7 +661,6 @@ namespace Sunplus.Accounting.Business.Customer
                                     {
                                         TemplateHandler.Assign(ref strLimitPerIP, "{ishideapplydownline}", "style='display:none;'");
                                     }
-
                                 }
                                 else
                                 {
@@ -706,7 +702,6 @@ namespace Sunplus.Accounting.Business.Customer
                                     int danger2Level = Convert.IsDBNull(row1["danger2"]) ? 0 : Convert.ToInt32(row1["danger2"]);
                                     int danger3Level = Convert.IsDBNull(row1["danger3"]) ? 0 : Convert.ToInt32(row1["danger3"]);
 
-
                                     int[] currentlevels = new int[] { dangerLevel, danger2Level, danger3Level };
 
                                     TemplateHandler.Assign(ref htmlcontent, "{ThemePath}", WebSettings.ThemePath);
@@ -715,6 +710,7 @@ namespace Sunplus.Accounting.Business.Customer
                             }
 
                             #region Abnormal
+
                             if (WebSettings.EnableAbnormal)
                             {
                                 if (roleId > 2)
@@ -732,15 +728,20 @@ namespace Sunplus.Accounting.Business.Customer
                             {
                                 TemplateHandler.RemoveBlock(ref htmlcontent, "AbnormalSession");
                             }
-                            #endregion
+
+                            #endregion Abnormal
+
                             GenSettingControl(ref htmlcontent, row1, row3, roleId, parentId, _custparent,
                                               isManageCustomerAccess, suspend, autosuspend, UplineAutoSuspend, isAllowEditCS,
                                               disabledCSParent, isAllowEditBI, disabledBIParent, isAllowEditLCS,
                                               disabledLCSParent, disalbedVSParent);
 
-                            #endregion
+                            #endregion Setting
+
                             //Menu detail
+
                             #region MenuDetail
+
                             GenMenuMinMaxPT(ref htmlcontent, row2, custId, roleId, currency, userName, (isAllowEditBI && AppSession.IsSyncBingoCurrentCust), isDeposit);
 
                             string infoUrl = "";
@@ -755,6 +756,7 @@ namespace Sunplus.Accounting.Business.Customer
                             var liveCasinoSetting = "";
                             string RacingUpdateURL = "";
                             var VirtualSportsSetting = "";
+                            string bettingLimitURL = "";
                             switch (roleId)
                             {
                                 case 1: // member
@@ -788,6 +790,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.Assign(ref htmlcontent, "{type}", "Agent");
                                     if (!CustomerUtils.IsTransferDaily(Convert.ToString(_masterID))) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime");
                                     break;
+
                                 case 3: // master
                                     int _superID = CastAide.AsInt32(row2["superId"], -1);
                                     RacingUpdateURL = string.Format("EditMasterPTRacing/Index?custid={0}&uplineid={1}", custId, _superID);
@@ -803,7 +806,8 @@ namespace Sunplus.Accounting.Business.Customer
                                     VirtualSportsSetting = string.Format("VirtualSportMasterPT/EditMaster?custId={0}&uplineId={1}", custId, _superID);
                                     TemplateHandler.Assign(ref htmlcontent, "{type}", "Master");
                                     break;
-                                case 4: // super                                    
+
+                                case 4: // super
                                     parentId = 0;
                                     RacingUpdateURL = string.Format("EditSuperPTRacing/Index?custid={0}", custId);
                                     bingoLinkSetting = "Customer/PT/Bingo/SuperUpdate.aspx?custId=" + custId;
@@ -819,6 +823,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.Assign(ref htmlcontent, "{type}", "Super");
                                     if (custId < 100) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime"); // for dummy super
                                     break;
+
                                 default:
                                     break;
                             }
@@ -829,15 +834,18 @@ namespace Sunplus.Accounting.Business.Customer
                                     //run add new old and add new new
                                     addDownlineURL = addDownlineURL_New + addDownlineHtml + addDownlineURL;
                                     break;
+
                                 case 2:
                                     //run only add new new
                                     addDownlineURL = addDownlineURL_New;
                                     break;
+
                                 case 3:
                                     //run add new new and edit new:
                                     addDownlineURL = addDownlineURL_New;
                                     detailUrl = detailUrlNew;
                                     break;
+
                                 default:
                                     //run only add new old
                                     break;
@@ -862,6 +870,26 @@ namespace Sunplus.Accounting.Business.Customer
                             TemplateHandler.Assign(ref htmlcontent, "{pokerLinkSetting}", pokerLinkSetting + "&roleId=" + roleId.ToString());
                             TemplateHandler.Assign(ref htmlcontent, "{livecasinoLinkSetting}", liveCasinoSetting + "&roleId=" + roleId.ToString());
                             TemplateHandler.Assign(ref htmlcontent, "{virtualSportLinkSetting}", VirtualSportsSetting + "&roleId=" + roleId.ToString());
+
+                            string bettingSetting = WebSettings.ExternalBettingLimitConfig;
+                            //AppSession.GroupID
+                            if (!String.IsNullOrEmpty(bettingSetting) && bettingSetting.Contains("|"))
+                            {
+                                int groupId = CastAide.AsInt32(bettingSetting.Split(new char[] { '|' })[0], 0);
+                                if (groupId != AppSession.GroupID && roleId == 4)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-BetSetting");
+                                }
+                                else
+                                {
+                                    TemplateHandler.Assign(ref htmlcontent, "{bettingLimitLinkSetting}", string.Format("customersetting/betsetting/sportsbook/index/{0}/{1}/{2}/{3}", custId, custId, AppSession.AccId.ToString(), AppSession.SYSTEM));
+                                }
+                            }
+                            else
+                            {
+                                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-BetSetting");
+                            }
+
                             //---- for menu details -----------
                             AssignEditFinance(ref htmlcontent, roleId);
                             TemplateHandler.Assign(ref htmlcontent, "{ParentId}", parentId.ToString());
@@ -875,7 +903,6 @@ namespace Sunplus.Accounting.Business.Customer
                             TemplateHandler.Assign(ref htmlcontent, "{Username}", _username);
                             //Edit Casino
                             //Qui.Nguyen  -- Casino setting
-
 
                             if (!Permissions.IsAllowCasino())
                             {
@@ -904,7 +931,7 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualSport");
                             }
 
-                            #endregion
+                            #endregion MenuDetail
 
                             TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(jsparam));
 
@@ -943,7 +970,6 @@ namespace Sunplus.Accounting.Business.Customer
             return arrcontent;
         }
 
-
         private string GetSettingAbnormal(int roleId, bool isManageCustomerAccess, int currentLevel)
         {
             try
@@ -953,7 +979,6 @@ namespace Sunplus.Accounting.Business.Customer
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
@@ -962,6 +987,7 @@ namespace Sunplus.Accounting.Business.Customer
         #region private functions
 
         #region GetSettingControl
+
         private void GenSettingControl(ref string htmlcontent, DataRow row1, DataRow row3, int roleId, int parentID,
             CustomerDetail CustParent, bool isManageCustomerAccess, bool isSuspended, bool autosuspend, bool UplineAutoSuspend,
             bool isAllowEdit, bool disabledCSParent, bool isAllowEditBI, bool disabledBIParent, bool isAllowEditLCS,
@@ -976,28 +1002,35 @@ namespace Sunplus.Accounting.Business.Customer
             sg.Add(GetSettingControlSuspended(isManageCustomerAccess, "suspended", isSuspended, (roleId > 1), CustParent.IsSuspended));
 
             #region Selected Betting
+
             if (roleId > 1 && Functions.Settings.IsVisibleSelectedBetting)
             {
                 bool SelectedBetting = Convert.IsDBNull(row1["SelectedBetting"]) ? false : Convert.ToBoolean(row1["SelectedBetting"]);
                 //bool SelectedBettingDL = Convert.IsDBNull(row1["DownlinesSelectedBetting"]) ? false : Convert.ToBoolean(row1["DownlinesSelectedBetting"]);
                 sg.Add(GetSettingControlSelectedBetting(roleId, CustParent.SelectedBetting, isManageCustomerAccess, "SelectedBetting", SelectedBetting, (roleId > 1)));
             }
-            #endregion
+
+            #endregion Selected Betting
 
             #region Auto Suspend
+
             if (Functions.Settings.IsVisibleAutoSuspend)
                 sg.Add(GetSettingControlAutoSuspend(roleId, isManageCustomerAccess, "AutoSuspend", !autosuspend, (roleId > 1), UplineAutoSuspend, CastAide.AsBoolean(row1["Enabled"])));
-            #endregion
+
+            #endregion Auto Suspend
 
             #region is Internal user
+
             if (!WebSettings.DisableInternal && Functions.Settings.IsVisibleInternal)
             {
                 bool isInternalUser = Convert.IsDBNull(row1["IsInternal"]) ? false : Convert.ToBoolean(row1["IsInternal"]);
                 sg.Add(GetSettingControlInternalUser(roleId, CustParent.IsInternalUser, isManageCustomerAccess, "internalUser", isInternalUser, CastAide.AsBoolean(row1["Enabled"])));
             }
-            #endregion
+
+            #endregion is Internal user
 
             #region Auto Master
+
             if (roleId == 3)
             {
                 try
@@ -1007,18 +1040,21 @@ namespace Sunplus.Accounting.Business.Customer
                 }
                 catch (Exception ex)
                 {
-
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
             }
-            #endregion
+
+            #endregion Auto Master
 
             #region Outright
+
             bool disabledOutright = Convert.IsDBNull(row1["DisableOutright"]) ? false : Convert.ToBoolean(row1["DisableOutright"]);
             sg.Add(GetSettingControlOutright(roleId, CustParent.IsDisableOutright, isManageCustomerAccess, "disabledOutright", !disabledOutright, (roleId > 1), CastAide.AsBoolean(row1["Enabled"])));
-            #endregion
+
+            #endregion Outright
 
             #region HR
+
             ////////HR
             //if (Permissions.AllowSaTote(row1["currency"].ToString()))
             //{
@@ -1038,9 +1074,11 @@ namespace Sunplus.Accounting.Business.Customer
             //bool disabledHROpenToteDL = Convert.IsDBNull(row1["DisableDownlinesOpenTote"]) ? false : Convert.ToBoolean(row1["DisableDownlinesOpenTote"]);
             //sg.Add(GetSettingControlHROpenTote(roleId, CustParent.IsDisabledOpenTote, isManageCustomerAccess, "disabledHROpenTote", row1["currency"].ToString(), !disabledHROpenTote, (roleId > 1), !disabledHROpenToteDL, CastAide.AsBoolean(row1["Enabled"])));
             //TemplateHandler.Assign(ref htmlcontent, "{chkUKTote}", disabledHROpenTote ? 1 : 0);
-            #endregion
+
+            #endregion HR
 
             #region FI
+
             if (!AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL))
             {
                 bool disabledFinancial = Convert.IsDBNull(row1["DisableFinancial"]) ? false : Convert.ToBoolean(row1["DisableFinancial"]);
@@ -1048,17 +1086,21 @@ namespace Sunplus.Accounting.Business.Customer
                 sg.Add(GetSettingControlFI(roleId, CustParent.IsDisabledFI, isManageCustomerAccess, "disabledFinancial", !disabledFinancial, (roleId > 1), !disabledFIDL, CastAide.AsBoolean(row1["Enabled"])));
                 TemplateHandler.Assign(ref htmlcontent, "{chkFinance}", disabledFinancial ? 1 : 0);
             }
-            #endregion
+
+            #endregion FI
 
             #region Enable Casino
+
             bool disabledCasino = Convert.IsDBNull(row1["disablecasino"]) ? false : Convert.ToBoolean(row1["disablecasino"]);
             bool syncCasino = Convert.IsDBNull(row1["synccasino"]) ? false : Convert.ToBoolean(row1["synccasino"]);
             bool disabledCSDL = Convert.IsDBNull(row1["DisableDownlinesCS"]) ? false : Convert.ToBoolean(row1["DisableDownlinesCS"]);
             sg.Add(GetSettingControlCasino(roleId, parentID, isManageCustomerAccess, "disabledCS", !disabledCasino, (roleId > 1), syncCasino, isAllowEdit, CastAide.AsBoolean(row1["Enabled"].ToString()), disabledCSParent, !disabledCSDL));
             TemplateHandler.Assign(ref htmlcontent, "{chkCasino}", disabledCasino ? 1 : 0);
-            #endregion
+
+            #endregion Enable Casino
 
             #region Bingo Game
+
             bool disabledBingo = Convert.IsDBNull(row1["DisableBingo"]) ? false : Convert.ToBoolean(row1["DisableBingo"]);
             bool syncBingo = Convert.IsDBNull(row1["SyncBingo"]) ? false : Convert.ToBoolean(row1["SyncBingo"]);
             bool disabledBIDL = Convert.IsDBNull(row1["DisableDownlinesBI"]) ? false : Convert.ToBoolean(row1["DisableDownlinesBI"]);
@@ -1067,18 +1109,22 @@ namespace Sunplus.Accounting.Business.Customer
                                               CastAide.AsBoolean(row1["Enabled"].ToString()), disabledBIParent,
                                               !disabledBIDL));
             TemplateHandler.Assign(ref htmlcontent, "{chkBingo}", disabledBingo ? 1 : 0);
-            #endregion
+
+            #endregion Bingo Game
 
             #region Number Game
+
             bool disabledNumberGame = Convert.IsDBNull(row1["DisableNumber"]) ? false : Convert.ToBoolean(row1["DisableNumber"]);
             bool disabledNumberGameDL = Convert.IsDBNull(row1["DisableDownlinesNumber"]) ? false : Convert.ToBoolean(row1["DisableDownlinesNumber"]);
             sg.Add(GetSettingControlNumberGame(roleId, CustParent.IsDisabledNumberGame, isManageCustomerAccess,
                                                "disabledNumberGame", !disabledNumberGame, (roleId > 1),
                                                !disabledNumberGameDL, CastAide.AsBoolean(row1["Enabled"])));
             TemplateHandler.Assign(ref htmlcontent, "{chkNumberGame}", disabledNumberGame ? 1 : 0);
-            #endregion
+
+            #endregion Number Game
 
             #region live casino
+
             bool disabledLiveCasino = WebSettings.EnableLiveCasino ? Convert.IsDBNull(row1["disableLiveCasino"]) ? false : Convert.ToBoolean(row1["disableLiveCasino"]) : true;
             bool syncLiveCasino = WebSettings.EnableLiveCasino ? (Convert.IsDBNull(row1["synclivecasino"]) ? false : Convert.ToBoolean(row1["synclivecasino"])) : false;
             bool disabledLCSDL = WebSettings.EnableLiveCasino
@@ -1091,9 +1137,11 @@ namespace Sunplus.Accounting.Business.Customer
                                                CastAide.AsBoolean(row1["Enabled"].ToString()), disableLiveCasinoParent,
                                                !disabledLCSDL));
             TemplateHandler.Assign(ref htmlcontent, "{chkLiveCasino}", disabledLiveCasino ? 1 : 0);
-            #endregion
+
+            #endregion live casino
 
             #region Virtual Sports
+
             bool disabledVirtualSports = WebSettings.EnableVirtualSports ? Convert.IsDBNull(row1["disablevirtualsports"]) ? false : Convert.ToBoolean(row1["disablevirtualsports"]) : true;
             bool disabledVSDownline = WebSettings.EnableVirtualSports
                                      ? Convert.IsDBNull(row1["disabledownlinesvirtualsports"])
@@ -1110,15 +1158,18 @@ namespace Sunplus.Accounting.Business.Customer
                                                    !disabledVSDownline));
             }
             TemplateHandler.Assign(ref htmlcontent, "{chkVirtualSport}", disabledVirtualSports ? 1 : 0);
-            #endregion
+
+            #endregion Virtual Sports
 
             #region DoubleComm
+
             if (WebSettings.OfferDoubleComm)
             {
                 bool IsEnableDoubleCommLosing = Convert.IsDBNull(row1["DoubleCommLosing"]) ? false : Convert.ToBoolean(row1["DoubleCommLosing"]);
                 sg.Add(GetSettingControlDoubleComm(roleId, CustParent.IsEnableDoubleCommLosing, isManageCustomerAccess, "doubleCommLosing", IsEnableDoubleCommLosing, (roleId > 1), CastAide.AsBoolean(row1["Enabled"])));
             }
-            #endregion
+
+            #endregion DoubleComm
 
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }
@@ -1142,7 +1193,6 @@ namespace Sunplus.Accounting.Business.Customer
                     TemplateHandler.Assign(ref htmlcontent, "{lblMinMax}", isDeposit ? "" : "<li id=\"detail_tab_1\" onclick=\"detail_tabnew_Click(this)\"><a href=\"javascript:void(0);\"><span>Super PT</span></a></li>");
                     TemplateHandler.Assign(ref htmlcontent, "{lblMinMax1}", isDeposit ? "" : "<a href=\"javascript:void(0);\"><span>Master PT</span></a>");
 
-
                     minMaxPtUrl = "Customer/v2/EditSuperOnMember.aspx?custId=" + custId + "&agentId=" + row2["agentId"] + "&uname=" + userName;
                     masterPtUrl = "Customer/v2/EditMasterOnMember.aspx?custId=" + custId + "&agentId=" + row2["agentId"] + "&uname=" + userName;
                     if (WebSettings.IsShowCustomerSettingRenovation == 3)
@@ -1165,7 +1215,7 @@ namespace Sunplus.Accounting.Business.Customer
                         submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "customer/PT/Bingo/SuperOnMemberUpdate.aspx?custId=" + custId.ToString() + "&roleid=" + roleId.ToString() + "\");' target='centerFr'>Bingo</a>";
                     }
                     if (WebSettings.EnableLiveCasino)
-                    {                        
+                    {
                         if (AppSession.IsSyncLCSCurrentCust)
                         {
                             submenu1 += "<br><a class='button_left02' href='javascript:;' onclick='parent.gotoURL(\"centerFr\",\"" + "LiveCasino/PTSetting/SuperEditOnMember.aspx?custId=" + custId.ToString() + "&superId=" + superId + "\");' target='centerFr'>Live Casino</a>";
@@ -1211,8 +1261,8 @@ namespace Sunplus.Accounting.Business.Customer
                     TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", submenu1);
                     TemplateHandler.Assign(ref htmlcontent, "{contentminmax1}", submenu2);
 
-
                     break;
+
                 case 2: // agent
                     parentId = Convert.ToInt32(row2["masterid"]);
                     TemplateHandler.Assign(ref htmlcontent, "{isHiddenMember}", "none");
@@ -1231,6 +1281,7 @@ namespace Sunplus.Accounting.Business.Customer
                     }
                     TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", submenu3);
                     break;
+
                 case 3: // master
                     parentId = Convert.ToInt32(row2["superId"]);
                     TemplateHandler.Assign(ref htmlcontent, "{isHiddenMember}", "none");
@@ -1251,6 +1302,7 @@ namespace Sunplus.Accounting.Business.Customer
                     }
                     TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", submenu3);
                     break;
+
                 case 4: // super
                     parentId = 0;
                     TemplateHandler.Assign(ref htmlcontent, "{isHiddenMember}", "none");
@@ -1269,6 +1321,7 @@ namespace Sunplus.Accounting.Business.Customer
                     }
                     TemplateHandler.Assign(ref htmlcontent, "{contentminmax}", submenu3);
                     break;
+
                 default:
                     break;
             }
@@ -1299,17 +1352,15 @@ namespace Sunplus.Accounting.Business.Customer
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
         }
+
         private string GetClosedStatus(bool isManageCustomerAccess, string name, bool currStatus, bool hasDownLine, bool uplineclosed, bool hasClearCreditPermission)
         {
             try
             {
-
-
                 string s = WebUtils.LoadTemplate("SettingClosed.htm");
                 TemplateHandler.Assign(ref s, "{name}", name);
 
@@ -1333,7 +1384,6 @@ namespace Sunplus.Accounting.Business.Customer
                             TemplateHandler.Assign(ref s, "{UserName}", GetCustName(AppSession.CustRoleId));
                             TemplateHandler.Assign(ref s, "{isallowupdatecredit}", "1");
                         }
-
                     }
                     else
                     {
@@ -1354,7 +1404,6 @@ namespace Sunplus.Accounting.Business.Customer
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
@@ -1362,7 +1411,6 @@ namespace Sunplus.Accounting.Business.Customer
 
         private SettingControl GetSettingControlSelectedBetting(int roleID, bool parentstatus, bool isManageCustomerAccess, string statusName, bool currStatus, bool hasDownLine)
         {
-
             string classname = "";
             string jsonclick = "";
             string jsonmouseover = "";
@@ -1370,7 +1418,6 @@ namespace Sunplus.Accounting.Business.Customer
 
             if (isManageCustomerAccess)
             {
-
                 if (!parentstatus)
                 {
                     classname = "canchange";
@@ -1383,15 +1430,12 @@ namespace Sunplus.Accounting.Business.Customer
                     jsonmouseout = "UnTip()";
                     jsonmouseover = "Tip('" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblSelectedBettingUL") + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
                 }
-
             }
 
             return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblSelectedBetting"), currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleID, false, statusName);
-
         }
 
         //HuyNguyen
-
 
         private string GetSettingControlDangerous(int roleId, bool isManageCustomerAccess, string[] dangeroustype, int[] levels, bool isBA)
         {
@@ -1402,11 +1446,11 @@ namespace Sunplus.Accounting.Business.Customer
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
         }
+
         private SettingControl GetSettingControlSuspended(bool isManageCustomerAccess, string name, bool currStatus, bool hasDownLine, bool UpLineStatus)
         {
             string classname = "";
@@ -1420,7 +1464,6 @@ namespace Sunplus.Accounting.Business.Customer
                 {
                     classname = (currStatus) ? "chkchecked" : "chkuncheck";
                     jsonclick = "return changeStatus('" + name + "'," + ((hasDownLine) ? "true" : "false") + ");";
-
                 }
                 else
                 {
@@ -1596,12 +1639,10 @@ namespace Sunplus.Accounting.Business.Customer
 
                 return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEnabledFI"), currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleID, isdisabledFIDL, "FI");
             }
-
         }
 
         private SettingControl GetSettingControlAutoSuspend(int roleID, bool isManageCustomerAccess, string statusName, bool currStatus, bool hasDownLine, bool UplineAutoSuspend, bool isenabled)
         {
-
             string classname = "";
             string jsonclick = "";
             string jsonmouseover = "";
@@ -1636,7 +1677,6 @@ namespace Sunplus.Accounting.Business.Customer
 
         private SettingControl GetSettingControlCasino(int roleID, int parentID, bool isManageCustomerAccess, string statusName, bool currStatus, bool hasDownLine, bool syncCasino, bool isAllowEdit, bool isenabled, bool disabledCSParent, bool disableDownLine)
         {
-
             if (WebSettings.disableCS || !isAllowEdit || !syncCasino)
             {
                 return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEnabledCasino"), false, true, "", "", "", "", statusName, roleID, false, "CS");
@@ -1720,7 +1760,6 @@ namespace Sunplus.Accounting.Business.Customer
 
         private SettingControl GetSettingControlOutright(int roleID, bool parentstatus, bool isManageCustomerAccess, string statusName, bool currStatus, bool hasDownLine, bool isenalbed)
         {
-
             string classname = "";
             string jsonclick = "";
             string jsonmouseover = "";
@@ -1749,12 +1788,10 @@ namespace Sunplus.Accounting.Business.Customer
                 }
             }
             return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAllowOutright"), currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleID, false, "OR");
-
         }
 
         private SettingControl GetSettingControlDoubleComm(int roleID, bool parentstatus, bool isManageCustomerAccess, string statusName, bool currStatus, bool hasDownLine, bool isenalbed)
         {
-
             string classname = "";
             string jsonclick = "";
             string jsonmouseover = "";
@@ -1783,7 +1820,6 @@ namespace Sunplus.Accounting.Business.Customer
                 }
             }
             return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAllowDoubleComm"), currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleID, false, "DoubleComm");
-
         }
 
         private SettingControl GetSettingControlEnableAutoMaster(int roleID, bool isManageCustomerAccess, string statusName, bool currStatus, bool isenabled)
@@ -1794,7 +1830,6 @@ namespace Sunplus.Accounting.Business.Customer
             }
             else
             {
-
                 string classname = "";
                 string jsonclick = "";
                 string jsonmouseover = "";
@@ -1833,7 +1868,6 @@ namespace Sunplus.Accounting.Business.Customer
                 string jsonmouseout = "";
                 if (isManageCustomerAccess)
                 {
-
                     if (roleID == 1)
                     {
                         classname = "cannotchangeinternal";
@@ -1854,7 +1888,6 @@ namespace Sunplus.Accounting.Business.Customer
                             jsonmouseover = "Tip('" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblUplineIsInternalUser") + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
                         }
                     }
-
                 }
                 //string userType = isInternalUser ? Resources.Language.userInternal : Resources.Language.userBetting;
                 return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "userInternal"), isInternalUser, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleID, false, "INTERNALUSER");
@@ -1864,7 +1897,6 @@ namespace Sunplus.Accounting.Business.Customer
         private SettingControl GetSettingControlLiveCasino(int roleId, bool isManageCustomerAccess, string statusName, bool currStatus,
             bool hasDownLine, bool syncLiveCasino, bool isAllowEdit, bool isenabled, bool disabledUpline, bool disableDownLine)
         {
-
             if (!WebSettings.EnableLiveCasino || !isAllowEdit || !syncLiveCasino)
             {
                 return
@@ -1907,14 +1939,12 @@ namespace Sunplus.Accounting.Business.Customer
                         ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "enableLiveCasino"),
                         currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleId,
                         disableDownLine, "LCS");
-
             }
         }
 
         private SettingControl GetSettingControlVirtualSports(int roleId, bool isManageCustomerAccess, string statusName, bool currStatus,
             bool hasDownLine, bool hasDownline, bool isenabled, bool disabledUpline, bool disableDownLine)
         {
-
             if (!WebSettings.EnableVirtualSports)
             {
                 return
@@ -1957,10 +1987,10 @@ namespace Sunplus.Accounting.Business.Customer
                         ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "virtualsports"),
                         currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleId,
                         disableDownLine, "VS");
-
             }
         }
-        #endregion
+
+        #endregion GetSettingControl
 
         private void GenUplineBox(ref string htmlcontent, int roleId, DataRow row)
         {
@@ -2015,10 +2045,8 @@ namespace Sunplus.Accounting.Business.Customer
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
-
         }
 
         //Login Detail
@@ -2100,7 +2128,6 @@ namespace Sunplus.Accounting.Business.Customer
                     case Globals.AccountType.Super:
                         if (!isInternal)
                         {
-
                             if (WebSettings.OfferDoubleComm)
                             {
                                 downlineListURL = "CustomerList/MasterAgentList?superId=" + custId + "&doubleCommSuper=" + doubleComm.ToString().ToLower();
@@ -2117,10 +2144,10 @@ namespace Sunplus.Accounting.Business.Customer
                         lblDownlineList = "Master List";
                         TemplateHandler.Assign(ref tplTransLink, "{AgentShow}", "hidden");
                         break;
+
                     case Globals.AccountType.Master:
                         if (!isInternal)
                         {
-
                             if (WebSettings.OfferDoubleComm)
                             {
                                 downlineListURL = "CustomerList/AgentList?masterId=" + custId + "&doubleCommMaster=" + doubleComm.ToString().ToLower();
@@ -2137,6 +2164,7 @@ namespace Sunplus.Accounting.Business.Customer
                         lblDownlineList = "Agent List";
                         TemplateHandler.Assign(ref tplTransLink, "{AgentShow}", "hidden");
                         break;
+
                     case Globals.AccountType.Agent:
                         if (!isInternal)
                         {
@@ -2156,13 +2184,13 @@ namespace Sunplus.Accounting.Business.Customer
                         lblDownlineList = "Member List";
                         TemplateHandler.Assign(ref tplTransLink, "{AgentShow}", "");
                         break;
+
                     case Globals.AccountType.Member:
                         downlineListURL = "TarusBetList/BetListByCustInfo?CustID=" + custId;
                         lblDownlineList = "Bet List";
                         TemplateHandler.Assign(ref tplTransLink, "{AgentShow}", "hidden");
                         break;
                 }
-
 
                 TemplateHandler.Assign(ref tplTransLink, "{IsInternal}", isInternal.ToString().ToLower());
 
@@ -2182,12 +2210,9 @@ namespace Sunplus.Accounting.Business.Customer
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
-
-
 
         private void AssignEditFinance(ref string tpl, int roleId)
         {
@@ -2199,6 +2224,7 @@ namespace Sunplus.Accounting.Business.Customer
                         if (WebSettings.disabledFI)
                             TemplateHandler.RemoveBlock(ref tpl, "edit-finance");
                         break;
+
                     case 3:
                     case 2:
                     case 1:
@@ -2209,11 +2235,9 @@ namespace Sunplus.Accounting.Business.Customer
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
-
         }
 
         private string AssignJS(Hashtable param)
@@ -2244,20 +2268,17 @@ namespace Sunplus.Accounting.Business.Customer
                     return "";
             }
         }
-        #endregion
 
+        #endregion private functions
 
         public Result UpdateCustomerSite(int custId, string newSite)
         {
             Result result;
-            if (!Permissions.GetHostPermission(Enumerations.Functions.Customer.MoveSite))
-                return new Result { ErrorCode = 500, ErrorMessage = ResourceExtension.GetResourceValue(Sunplus.Accounting.Core.Extensions.ResourceExtension.Resources.ErrorMsg, "_500") };
             if (string.IsNullOrEmpty(newSite))
             {
                 result = new Result { ErrorCode = 1, ErrorMessage = "Site is empty" };
                 return result;
             }
-
 
             if (custId <= 0)
             {
@@ -2310,7 +2331,8 @@ namespace Sunplus.Accounting.Business.Customer
             TemplateHandler.Assign(ref balanceInfo, "{masterhidden}", roleId > 3 ? "" : "hidden");
             TemplateHandler.Assign(ref balanceInfo, "{agenthidden}", roleId > 2 ? "" : "hidden");
             TemplateHandler.Assign(ref balanceInfo, "{memberhidden}", roleId > 1 ? "" : "hidden");
-            #endregion
+
+            #endregion assign template
         }
 
         public Result UpdateDangerousCustomer(int custId, int updateDownline, int dangerType, int dangerLevel)
@@ -2327,13 +2349,10 @@ namespace Sunplus.Accounting.Business.Customer
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
             }
 
             return result;
-
         }
 
         public Sunplus.Accounting.Entities.Customer.CustomerExRate SelectCustomerExRate(string username)
@@ -2358,13 +2377,11 @@ namespace Sunplus.Accounting.Business.Customer
 
         #region Enable Number game for Downline
 
-
         public BetSettingNG CheckEnableNGDownline(string username)
         {
             var betsetting = new BetSettingNG();
             betsetting = _customerDAO.CheckEnableNGDownline(username);
             return betsetting;
-
         }
 
         public Result UpdateBetSettingNGDownline(string username, int isEnable, string minbet, string maxbet, string maxMatch, string MaxBall)
@@ -2374,8 +2391,7 @@ namespace Sunplus.Accounting.Business.Customer
             return result;
         }
 
-        #endregion
-
+        #endregion Enable Number game for Downline
 
         public Result AutoInsertThridPartyAccount(CSCustomerDetail custInfo, CustDetail uplineInfo, int userId, string userName, string ip)
         {
@@ -2415,7 +2431,6 @@ namespace Sunplus.Accounting.Business.Customer
             return result;
         }
 
-
         public string GetRNGSiteNameByCustId(int custId)
         {
             try
@@ -2429,5 +2444,4 @@ namespace Sunplus.Accounting.Business.Customer
             }
         }
     }
-
 }

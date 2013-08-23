@@ -3,12 +3,10 @@
 using System;
 using System.Web;
 using System.Web.SessionState;
-//using IBC.Core.LoggingLib;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Core.LoggingLib;
 using IBCUtils.DAL;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using IBCUtils;

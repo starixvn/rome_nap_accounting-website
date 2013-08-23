@@ -55,5 +55,5 @@ public class ServiceOpenToteSettlement : IServiceOpenToteSettlement
         return s.LoadComparision(winlostdate, ibcTO, ibcDividendWon);
     }
 
-    #endregion
+    #endregion IServiceOpenToteSettlement Members
 }

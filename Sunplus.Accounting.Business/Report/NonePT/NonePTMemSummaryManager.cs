@@ -13,7 +13,6 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web.Controls;
 using Sunplus.Accounting.DataAccess;
-using Sunplus.Core.LoggingLib;
 
 namespace BLL.Report.NonePT
 {
@@ -87,7 +86,7 @@ namespace BLL.Report.NonePT
                         #region content
 
                         DataRow[] Rows = dt.Select();
-                        int order = (CastAide.AsInt32(currpage) - 1)*1000 + 1;
+                        int order = (CastAide.AsInt32(currpage) - 1) * 1000 + 1;
                         foreach (DataRow dr in Rows)
                         {
                             string row = tplContent;
@@ -116,24 +115,22 @@ namespace BLL.Report.NonePT
                         TemplateHandler.ReplaceBlock(ref tpl, "footer", tplFooter);
                         TemplateHandler.ReplaceBlock(ref tpl, "paging", tplPaging);
 
-                        #endregion
+                        #endregion content
                     }
                 }
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 TemplateHandler.RemoveBlock(ref tpl, "footer");
                 TemplateHandler.RemoveBlock(ref tpl, "paging");
                 TemplateHandler.Assign(ref msg, "content", ex.Message);
                 TemplateHandler.ReplaceBlock(ref tpl, "content", "<tr><td colspan='9' class='c'>" + msg + "</td></tr>");
             }
 
-
             return tpl;
         }
 
-        #endregion
+        #endregion getNonePTMembers
     }
 }

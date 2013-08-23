@@ -1,25 +1,24 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
-using Sunplus.Accounting.Entities.SpecialDelete.Mixparlay;
-using System.Data;
+using System.Text.RegularExpressions;
 using DNAide.Core;
+using DNAide.Data;
 using DNAide.Utils;
+using DNAide.Web;
 using Sunplus.Accounting.Business.CacheManager;
 using Sunplus.Accounting.Core.Cache;
-using System.Text.RegularExpressions;
 using Sunplus.Accounting.Core.Common;
-using DNAide.Web;
-using DNAide.Data;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.DataAccess.SpecialDelete;
-using Sunplus.Accounting.Entities.SpecialDelete;
-using System.Collections;
 using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
+using Sunplus.Accounting.DataAccess.SpecialDelete;
+using Sunplus.Accounting.Entities.SpecialDelete;
+using Sunplus.Accounting.Entities.SpecialDelete.Mixparlay;
 
 namespace Sunplus.Accounting.Business.SpecialDelete
 {
@@ -31,6 +30,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
         {
             mpTplItem = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("SpecialDelete/Mixpalay/TplMixparlayEvent.htm");
         }
+
         public List<MixParlayDTO> FetchData(DataTable table, string type)
         {
             List<MixParlayDTO> rows = new List<MixParlayDTO>();
@@ -74,6 +74,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             }
             return rows;
         }
+
         /// <summary>
         /// GenMPRowClient - Web UI
         /// </summary>
@@ -109,7 +110,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         string tid = row2["transid"].ToString();
                         string mid = row2["matchid"].ToString();
                         string bid = row2["bettype"].ToString();
-                       
+
                         int statusId = CastAide.AsInt32(row2["statusid"]);
                         string borderTop = (ind > 1) ? " b-top" : "";
                         bool liveindicator = CastAide.AsBoolean(row2["liveindicator"], false);
@@ -153,50 +154,63 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             case 125:
                                 GenHdpEvent(ref mpItem, mpHome, mpAway, betteam, statusId, true);
                                 break;
+
                             case 2:
                             case 12:
                                 GenOEEvent(ref mpItem, mpHome, mpAway, statusId, true);
                                 break;
+
                             case 3:
                             case 8:
                                 GenOUEvent(ref mpItem, mpHome, mpAway, statusId, true);
                                 break;
+
                             case 4:
                             case 14:
                             case 30:
                                 GenCSEvent(ref mpItem, mpHome, mpAway, true);
                                 break;
+
                             case 5:
                             case 15:
                                 Gen1x2Event(ref mpItem, mpHome, mpAway, statusId, true);
                                 break;
+
                             case 6:
                             case 16:
                                 GenTGEvent(ref mpItem, mpHome, mpAway, statusId, true);
                                 break;
+
                             case 24:
                                 GenDoubleChanceEvent(ref mpItem, mpHome, mpAway, statusId, true);
                                 break;
+
                             case 25:
                                 GenDrawNoBetEvent(ref mpItem, mpHome, mpAway, statusId, true);
                                 break;
+
                             case 26:
                                 GenBothOneNeitherEvent(ref mpItem, mpHome, mpAway, statusId, true);
                                 break;
+
                             case 27:
                                 GenToWinToNilEvent(ref mpItem, mpHome, mpAway, statusId, true);
                                 break;
+
                             case 28:
                                 GenThreeWayHandicap(ref mpItem, mpHome, mpAway, statusId, true);
                                 break;
+
                             case 13:
                                 GenCleanSheetEvent(ref mpItem, mpHome, mpAway, statusId, true);
                                 break;
+
                             case 121:
                             case 122:
                             case 123:
                                 GenHomeAwayDrawNoBet(ref mpItem, mpHome, mpAway, statusId, betteam, true);
                                 break;
+
                             default:
                                 mpItem = string.Empty;
                                 break;
@@ -213,7 +227,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             return strData;
         }
 
-       
         /// <summary>
         /// GenMPRowItem
         /// </summary>
@@ -277,61 +290,75 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                     case 125:
                         GenHdpEvent(ref mpItem, mpHome, mpAway, betteam, true);
                         break;
+
                     case 2:
                     case 12:
                         GenOEEvent(ref mpItem, mpHome, mpAway, true);
                         break;
+
                     case 3:
                     case 8:
                         GenOUEvent(ref mpItem, mpHome, mpAway, true);
                         break;
+
                     case 4:
                     case 14:
                     case 30:
                         GenCSEvent(ref mpItem, mpHome, mpAway, true);
                         break;
+
                     case 5:
                     case 15:
                         Gen1x2Event(ref mpItem, mpHome, mpAway, true);
                         break;
+
                     case 6:
                     case 16:
                         GenTGEvent(ref mpItem, mpHome, mpAway, true);
                         break;
+
                     case 24:
                         GenDoubleChanceEvent(ref mpItem, mpHome, mpAway, true);
                         break;
+
                     case 25:
                         GenDrawNoBetEvent(ref mpItem, mpHome, mpAway, true);
                         break;
+
                     case 26:
                         GenBothOneNeitherEvent(ref mpItem, mpHome, mpAway, true);
                         break;
+
                     case 27:
                         GenToWinToNilEvent(ref mpItem, mpHome, mpAway, true);
                         break;
+
                     case 28:
                         GenThreeWayHandicap(ref mpItem, mpHome, mpAway, true);
                         break;
+
                     case 13:
                         GenCleanSheetEvent(ref mpItem, mpHome, mpAway, true);
                         break;
+
                     case 121:
                     case 122:
                     case 123:
                         GenHomeAwayDrawNoBet(ref mpItem, mpHome, mpAway, betteam, true);
                         break;
+
                     default:
                         mpItem = string.Empty;
                         break;
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
             return mpItem;
         }
+
         /// <summary>
         /// SendPrivateMsg
         /// </summary>
@@ -345,6 +372,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             try
             {
                 #region send private message to users
+
                 if (rs.ResultSet.Tables.Count > 0)
                 {
                     DataTable dtMsg = rs.ResultSet.Tables[2];
@@ -354,7 +382,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
                         for (int i = 0; i < dtMsg.Rows.Count; i++)
                         {
-
                             string[] ArrColumnsNameDownLineID = { "custid", "recommend", "mrecommend", "srecommend" };
                             string[] ArrColumnsNameDownLineUserName = { "CustUserName", "AgUserName", "MagUserName", "SagUserName" };
 
@@ -393,7 +420,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         {
                             int custid = CastAide.AsInt32(Key.Key.ToString().Split('^')[0]); // This is a CustID of ticket that is deleted [TargetID Field]
                             string uname = Key.Key.ToString().Split('^')[1];//This is a UserName of ticket that is deleted [TargetName Field]
-
                             DataRow dr = dtDeletedBet.NewRow();
                             dr["custid"] = custid;
                             dr["username"] = uname;
@@ -418,14 +444,13 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             strTransID_Current = CastAide.AsString(dtBets.Rows[0]["transids"]);
                         int CountBetsBelong1Member = CastAide.AsInt32(dtBets.Compute("count(transids)", "transids='" + strTransID_Current + "'"));
 
-                        // send private message to users for cancel their transactions                                                                                                                
+                        // send private message to users for cancel their transactions
                         int MessageId = 0;
                         foreach (DataRow dr in dtBets.Rows)
                         {
                             int[] custid = { CastAide.AsInt32(dr["custid"]) }; // This is a CustID of ticket that is deleted [TargetID Field]
                             string[] uname = { CastAide.AsString(dr["username"]) };//This is a UserName of ticket that is deleted [TargetName Field]
-
-                            if (CastAide.AsInt32(dr["custid"]) < 100) continue;//SRecommend < 100 and roleid=3 
+                            if (CastAide.AsInt32(dr["custid"]) < 100) continue;//SRecommend < 100 and roleid=3
                             string[] bettransid = { CastAide.AsString(dr["transids"]) };
 
                             if (MessageId == 0)
@@ -439,7 +464,8 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         }
                     }
                 }
-                #endregion
+
+                #endregion send private message to users
 
                 result = true;
             }
@@ -451,6 +477,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
             return result;
         }
+
         /// <summary>
         /// SendEmailToCSD
         /// </summary>
@@ -484,10 +511,10 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
                     string tplUser_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/DeleteBetReportSendMailAllRow_SpecialBet.htm");
 
-
                     if (dtMatch.Rows.Count > 0 && dtUsers.Rows.Count > 0)
                     {
                         #region send mail to CSD
+
                         string strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + (CastAide.AsBoolean(dtMatch.Rows[0]["isNeutral"]) ? "(N)" : string.Empty);
                         if (CastAide.AsInt32(dtUsers.Rows[0]["choice_bettype"]) == 10)
                         {
@@ -522,6 +549,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             if (collection.Alias.ToLower().Equals("deposit"))
                             {
                                 #region deposit
+
                                 ISpecialDeleteDAO _specialDAO = new SpecialDeleteDAO();
                                 DataTable dtMail = _specialDAO.SelMailingList();
 
@@ -551,13 +579,14 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
                                     mailing.Items = dtUser;
                                     maillings.Items.Add(mailing);
-
                                 }
-                                #endregion
+
+                                #endregion deposit
                             }
                             else
                             {
-                                #region others group                                
+                                #region others group
+
                                 foreach (SpecialDeleteElement store in collection.Stores)
                                 {
                                     SpecialDeleteDataforMailing mailing = new SpecialDeleteDataforMailing()
@@ -576,26 +605,28 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
                                     DataRow[] rows = dtUsers.Select(expression);
                                     foreach (DataRow row in rows)
-                                    {                                      
+                                    {
                                         dtUser.ImportRow(row);
                                     }
 
                                     mailing.Items = dtUser;
                                     maillings.Items.Add(mailing);
                                 }
-                                #endregion
+
+                                #endregion others group
                             }
                         }
-                        #endregion
+
+                        #endregion Create Dataset dsUser
 
                         foreach (SpecialDeleteDataforMailing dataforMailing in maillings.Items)
                         {
                             if (dataforMailing.Items.Rows.Count > 0)
                             {
                                 #region MatchInfo
+
                                 DataRow drMatch = dtMatch.Rows[0];
                                 string Subject = string.Empty;
-
 
                                 Subject = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "specialDelete_MPBet_Subject");
                                 Subject = string.Format(Subject, "{site}", "{site_name}", Convert.ToDateTime(drMatch["datetime"]));
@@ -615,9 +646,11 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                 TemplateHandler.Assign(ref tplMatch, "reason", reason);
 
                                 string site = string.Empty;
-                                #endregion
+
+                                #endregion MatchInfo
 
                                 #region AssignRow
+
                                 StringBuilder body_mix = new StringBuilder();
                                 foreach (DataRow drBet in dataforMailing.Items.Rows)
                                 {
@@ -648,12 +681,13 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                     TemplateHandler.Assign(ref rowMP, "choice", choice);
 
                                     body_mix.Append(rowMP);
-
                                 }
                                 TemplateHandler.Assign(ref tplMatch, "Rows_Mix", body_mix.ToString());
-                                #endregion
+
+                                #endregion AssignRow
 
                                 #region send mail
+
                                 string ToMailCSD = "";
                                 string CC = "", BCC = "";
 
@@ -667,7 +701,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                 Subject = Subject.Replace("{site}", site);
                                 Subject = Subject.Replace("{site_name}", dataforMailing.Name);
 
-                               
                                 // send mail via gmail system
                                 bool result = SendMailExtension.AccSendMail(MailSection.HostName.IBC, ToMailCSD, CC, BCC, Subject, Subject, tplMatch, null);
 
@@ -684,13 +717,13 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                                     msg = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "specialDelete_SendMail_Fail");
                                     ErrMsg += AlertMessage.GetMsg(string.Format(msg, site, ToMailCSD), AlertMessage.MsgType.Error);
                                 }
-                                #endregion
+
+                                #endregion send mail
                             }
                         }
-                        #endregion
-                    }
 
-                   
+                        #endregion send mail to CSD
+                    }
                 }
             }
             catch (Exception ex)
@@ -709,7 +742,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 ErrMsg = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "specialDelete_MPBet_Msg");
                 ErrMsg = AlertMessage.GetMsg(ErrMsg, AlertMessage.MsgType.Success);
 
-                if (rs!= null && rs.Tables.Count >= 2)
+                if (rs != null && rs.Tables.Count >= 2)
                 {
                     DataTable dtMatch = rs.Tables[0];
                     DataTable dtUsers = new DataTable();
@@ -718,7 +751,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
                     string expression = "";
 
-                    if(IsRealCurrency)
+                    if (IsRealCurrency)
                     {
                         expression = "currency  <> 20";
                     }
@@ -753,12 +786,12 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
                     string tplUser_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/DeleteBetReportSendMailAllRow_SpecialBet.htm");
 
-
                     if (dtMatch.Rows.Count > 0 && cnt > 0)
                     {
                         #region send mail to CSD
 
                         #region Template
+
                         string strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + (CastAide.AsBoolean(dtMatch.Rows[0]["isNeutral"]) ? "(N)" : string.Empty);
                         if (CastAide.AsInt32(dtUsers.Rows[0]["choice_bettype"]) == 10)
                         {
@@ -779,21 +812,18 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
                             strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + " - " + CacheRef.GetLeagueName(dtMatch.Rows[0]["leagueid"]);
                         }
-                        #endregion
 
-                       
+                        #endregion Template
 
-                        
-                      
                         #region MatchInfo
+
                         DataRow drMatch = dtMatch.Rows[0];
                         string Subject = string.Empty;
-
 
                         Subject = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "specialDelete_MPBet_Subject");
                         Subject = string.Format(Subject, "{site}", "{site_name}", Convert.ToDateTime(drMatch["datetime"]));
 
-                        if(IsRealCurrency)
+                        if (IsRealCurrency)
                         {
                             Subject = "Real Currency - " + Subject;
                         }
@@ -814,10 +844,10 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         TemplateHandler.Assign(ref tplMatch, "time", Convert.ToDateTime(drMatch["datetime"]));
                         TemplateHandler.Assign(ref tplMatch, "reason", reason);
 
-                                
-                        #endregion
+                        #endregion MatchInfo
 
                         #region AssignRow
+
                         StringBuilder body_mix = new StringBuilder();
                         foreach (DataRow drBet in rows)
                         {
@@ -847,12 +877,13 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             TemplateHandler.Assign(ref rowMP, "choice", choice);
 
                             body_mix.Append(rowMP);
-
                         }
                         TemplateHandler.Assign(ref tplMatch, "Rows_Mix", body_mix.ToString());
-                        #endregion
+
+                        #endregion AssignRow
 
                         #region send mail
+
                         string ToMailCSD = "";
                         string CC = "", BCC = "";
 
@@ -867,7 +898,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             mailling = SpecialDeleteSection.Instance.NotificationTestCurrency["EmailNotification"];
                         }
 
-
                         ToMailCSD = mailling.To;
                         CC = mailling.CC;
                         BCC = mailling.BCC;
@@ -876,7 +906,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
                         Subject = Subject.Replace("{site}", site);
 
-                       
                         // send mail via gmail system
                         bool result = SendMailExtension.AccSendMail(MailSection.HostName.IBC, ToMailCSD, CC, BCC, Subject, Subject, tplMatch, null);
 
@@ -893,12 +922,11 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             msg = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "specialDelete_SendMail_Fail");
                             ErrMsg += AlertMessage.GetMsg(string.Format(msg, site, ToMailCSD), AlertMessage.MsgType.Error);
                         }
-                        #endregion
-                       
-                        #endregion
-                    }
 
-                    
+                        #endregion send mail
+
+                        #endregion send mail to CSD
+                    }
                 }
             }
             catch (Exception ex)
@@ -908,8 +936,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             }
             return ErrMsg;
         }
-
-        
 
         /// <summary>
         /// GenMPMailRowsa
@@ -967,50 +993,62 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                     case 125:
                         GenHdpEvent(ref mpItem, mpHome, mpAway, betteam, true);
                         break;
+
                     case 121:
                     case 122:
                     case 123:
                         GenHomeAwayDrawNoBet(ref mpItem, mpHome, mpAway, betteam, true);
                         break;
+
                     case 2:
                     case 12:
                         GenOEEvent(ref mpItem, mpHome, mpAway, true);
                         break;
+
                     case 3:
                     case 8:
                         GenOUEvent(ref mpItem, mpHome, mpAway, true);
                         break;
+
                     case 4:
                     case 14:
                     case 30:
                         GenCSEvent(ref mpItem, mpHome, mpAway, true);
                         break;
+
                     case 5:
                     case 15:
                         Gen1x2Event(ref mpItem, mpHome, mpAway, true);
                         break;
+
                     case 6:
                     case 16:
                         GenTGEvent(ref mpItem, mpHome, mpAway, true);
                         break;
+
                     case 24:
                         GenDoubleChanceEvent(ref mpItem, mpHome, mpAway, true);
                         break;
+
                     case 25:
                         GenDrawNoBetEvent(ref mpItem, mpHome, mpAway, true);
                         break;
+
                     case 26:
                         GenBothOneNeitherEvent(ref mpItem, mpHome, mpAway, true);
                         break;
+
                     case 27:
                         GenToWinToNilEvent(ref mpItem, mpHome, mpAway, true);
                         break;
+
                     case 28:
                         GenThreeWayHandicap(ref mpItem, mpHome, mpAway, true);
                         break;
+
                     case 13:
                         GenCleanSheetEvent(ref mpItem, mpHome, mpAway, true);
-                        break;   
+                        break;
 
                     default:
                         mpItem = string.Empty;
@@ -1064,7 +1102,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                     away.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
 
             if (isMP) choice += oddMP();
-           
+
             TemplateHandler.Assign(ref eventItem, "{choice}", choice);
             TemplateHandler.Assign(ref eventItem, "{bettype}", bettypeName);
             TemplateHandler.Assign(ref eventItem, "{event}", home + " -VS- " + away);
@@ -1085,7 +1123,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 choice = string.Format("{0} <span style='color:#000;'>{1}</span>", away.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""), "NO");
 
             if (isMP) choice += oddMP();
-           
+
             TemplateHandler.Assign(ref eventItem, "{choice}", choice);
             TemplateHandler.Assign(ref eventItem, "{bettype}", bettypeName);
             TemplateHandler.Assign(ref eventItem, "{event}", home + " -VS- " + away);
@@ -1133,7 +1171,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
             if (isMP) { choice += oddMP(); }
 
-           
             TemplateHandler.Assign(ref eventItem, "{choice}", choice);
             TemplateHandler.Assign(ref eventItem, "{bettype}", bettypeName);
             TemplateHandler.Assign(ref eventItem, "{event}", home + " -VS- " + away);
@@ -1166,7 +1203,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             TemplateHandler.Assign(ref eventItem, "{leaguename}", leagueName);
         }
 
-
         protected void GenBothOneNeitherEvent(ref string eventItem, string home, string away, bool isMP)
         {
             var choice = string.Empty;
@@ -1178,7 +1214,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 choice = "No Goal";
 
             if (isMP) { choice += oddMP(); }
-            
+
             TemplateHandler.Assign(ref eventItem, "{choice}", choice);
             TemplateHandler.Assign(ref eventItem, "{bettype}", bettypeName);
             TemplateHandler.Assign(ref eventItem, "{event}", home + " -VS- " + away);
@@ -1213,7 +1249,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             TemplateHandler.Assign(ref eventItem, "{leaguename}", leagueName);
         }
 
-        protected void GenToWinToNilEvent(ref string eventItem, string home, string away,  bool isMP)
+        protected void GenToWinToNilEvent(ref string eventItem, string home, string away, bool isMP)
         {
             var choice = string.Empty;
             if (betteam.ToLower().Equals("h"))
@@ -1225,7 +1261,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 choice = string.Format("{0}", away.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
             }
             if (isMP) { choice += oddMP(); }
-            
+
             TemplateHandler.Assign(ref eventItem, "{choice}", choice);
             TemplateHandler.Assign(ref eventItem, "{bettype}", bettypeName);
             TemplateHandler.Assign(ref eventItem, "{event}", home + " -VS- " + away);
@@ -1233,8 +1269,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             TemplateHandler.Assign(ref eventItem, "{leaguename}", leagueName);
         }
 
-
-        protected void GenToWinToNilEvent(ref string eventItem, string home, string away, int statusId,  bool isMP)
+        protected void GenToWinToNilEvent(ref string eventItem, string home, string away, int statusId, bool isMP)
         {
             var choice = string.Empty;
             if (betteam.ToLower().Equals("h"))
@@ -1282,18 +1317,15 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             }
             else if (betteam.ToLower().Equals("x"))
             {
-                
                 choice = string.Format("Draw <span style='color:#000;'>(<span style='color:#ff0000;'>{0}</span> +{1})</span>", (hdp1 - hdp2 > 0 ? "A" : "H"), (int)(Math.Abs(hdp1 - hdp2)));
-
             }
             if (isMP) { choice += oddMP(); }
-           
+
             TemplateHandler.Assign(ref eventItem, "{choice}", choice);
             TemplateHandler.Assign(ref eventItem, "{bettype}", bettypeName);
             TemplateHandler.Assign(ref eventItem, "{event}", home + " -VS- " + away);
             TemplateHandler.Assign(ref eventItem, "{sporttype}", sportypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", leagueName);
-
         }
 
         protected void GenThreeWayHandicap(ref string eventItem, string home, string away, int statusId, bool isMP)
@@ -1315,13 +1347,12 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                     (hdpResult > 0 ? "+" : string.Empty), hdpResult);
             }
             else if (betteam.ToLower().Equals("x"))
-            { 
+            {
                 /*choice = string.Format("Draw <span style='color:#000;'>(<span style='color:#ff0000;'>{0}</span> +{1})</span>",
                     (hdp1 - hdp2 > 0 ? away.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), "") :
                     home.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), "")),
                     (int)(Math.Abs(hdp1 - hdp2)));*/
-                choice = string.Format("Draw <span style='color:#000;'>(<span style='color:#ff0000;'>{0}</span> +{1})</span>",(hdp1 - hdp2 > 0 ? "A" : "H"),(int)(Math.Abs(hdp1 - hdp2)));
-
+                choice = string.Format("Draw <span style='color:#000;'>(<span style='color:#ff0000;'>{0}</span> +{1})</span>", (hdp1 - hdp2 > 0 ? "A" : "H"), (int)(Math.Abs(hdp1 - hdp2)));
             }
             if (isMP) { choice += oddMP(); }
             string Event = home + " -VS- " + away;
@@ -1338,7 +1369,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             TemplateHandler.Assign(ref eventItem, "{event}", Event);
             TemplateHandler.Assign(ref eventItem, "{sporttype}", sportypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", leagueName);
-
         }
 
         public List<MixParlayDTO> FetchDataPager(List<DataRow> rows)
@@ -1382,8 +1412,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                     // format choice
                     mpItem.Choice = GenMPChoiceItem(mpTplItem, dataRow, "0");
                     listRow.Add(mpItem);
-                    
-                    
                 }
             }
             catch (Exception ex)

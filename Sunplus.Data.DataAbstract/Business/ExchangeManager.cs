@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using DNAide.Core;
 using Sunplus.Data.DataAbstract.Entity;
 using Sunplus.Data.DataAbstract.Storage.Cache.MemTable;
-using DNAide.Core;
 
 namespace Sunplus.Data.DataAbstract.Business
 {
     public class ExchangeManager
     {
-        public ExchangeManager() { }
+        public ExchangeManager()
+        {
+        }
 
         public Exchange GetExchangeDetail(string exchangeId)
         {

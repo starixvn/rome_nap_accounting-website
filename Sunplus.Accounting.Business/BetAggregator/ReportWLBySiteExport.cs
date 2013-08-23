@@ -9,16 +9,18 @@ using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.Report;
 using Sunplus.Accounting.Entities.BetAggregator;
 
-
 namespace Sunplus.Accounting.Business.BetAggregator
 {
     public partial class ReportWlbaBySiteService
     {
         #region Export 2 excel
+
         #region licensee report
-        public void Export2ExcelReportByLicensee(string reportTitle, int licenseeId, int currency, int BaseCurrency, string fromDate, string toDate, int showSb, int showRb,int showNg, int reportType, int drawFilter, int excludeTest, int pageIndex, int pageSize, int reportSelected, int custId)
+
+        public void Export2ExcelReportByLicensee(string reportTitle, int licenseeId, int currency, int BaseCurrency, string fromDate, string toDate, int showSb, int showRb, int showNg, int reportType, int drawFilter, int excludeTest, int pageIndex, int pageSize, int reportSelected, int custId)
         {
             #region excel format
+
             const int startCol = 0;
             const int startRow = 2;
             var nextRow = 0;
@@ -27,15 +29,18 @@ namespace Sunplus.Accounting.Business.BetAggregator
             var excelFile = new ExcelFile();
             var wsReport = excelFile.Worksheets.Add(string.Format("{0}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDepositReport")));
 
-            #endregion
+            #endregion excel format
 
             #region header
+
             wsReport.Cells[startRow - 2, startCol].Style.Font.Weight = ExcelFont.BoldWeight;
             wsReport.Cells[startRow - 2, startCol].Value = reportTitle;
             Export2ExcelReportByLicenseeAssignHeader(ref wsReport, startRow, startCol, reportType, reportSelected);
-            #endregion
+
+            #endregion header
 
             #region content
+
             var MoveBetsDay = ReportUtils.BalanceUp.MoveBetsDay.ToShortDateString();
             var getReportData = new Report_LicenseeWLBA_DTO();
             switch (reportSelected)
@@ -46,56 +51,59 @@ namespace Sunplus.Accounting.Business.BetAggregator
                     getReportData = getReportData ??
                                     SelReportByLicenseeFromDB(licenseeId, currency, BaseCurrency, fromDate, toDate, showSb, showRb, showNg,
                                                               reportType, MoveBetsDay,
-                                                              drawFilter,excludeTest,1, pageIndex,pageSize);
-
+                                                              drawFilter, excludeTest, 1, pageIndex, pageSize);
 
                     break;
+
                 case 1:
                     getReportData = (Report_LicenseeWLBA_DTO)AppSession.GetSession(System.Web.HttpContext.Current.Session,
                                                            _keySelReportByLicenseeDetail_Ag);
                     getReportData = getReportData ??
                                     SelReportByLicenseeDetail_AgFromDB(licenseeId, currency, BaseCurrency, fromDate, toDate, showSb,
-                                                                       showRb,showNg,
-                                                                       reportType, drawFilter, excludeTest,1, pageIndex,pageSize);
+                                                                       showRb, showNg,
+                                                                       reportType, drawFilter, excludeTest, 1, pageIndex, pageSize);
                     break;
+
                 case 2:
                     getReportData = (Report_LicenseeWLBA_DTO)AppSession.GetSession(System.Web.HttpContext.Current.Session,
                                                            _keySelReportByLicenseeDetail);
                     getReportData = getReportData ??
                                     SelReportByLicenseeDetailFromDB(licenseeId, currency, BaseCurrency, custId, fromDate, toDate,
                                                                     showSb, showRb, showNg,
-                                                                    reportType, MoveBetsDay, drawFilter, excludeTest,1, pageIndex,pageSize);
+                                                                    reportType, MoveBetsDay, drawFilter, excludeTest, 1, pageIndex, pageSize);
                     break;
+
                 default:
                     break;
             }
 
-
             if (getReportData != null && getReportData.Items != null)
             {
-                Export2ExcelReportByLicenseeAssignContent("",ref wsReport, startRow, startCol, ref nextRow, false, false,
+                Export2ExcelReportByLicenseeAssignContent("", ref wsReport, startRow, startCol, ref nextRow, false, false,
                                                           getReportData.Items, reportSelected, getReportData.DateGroup);
                 Export2ExcelReportByLicenseeAssignContent("Total ", ref wsReport, startRow, startCol, ref nextRow, true, false,
                                                           getReportData.Totals, reportSelected);
                 Export2ExcelReportByLicenseeAssignContent("Grand Total ", ref wsReport, startRow, startCol, ref nextRow, false, true,
                                                           getReportData.TotalsBaseCurrency, reportSelected);
-
             }
 
-            #endregion
+            #endregion content
 
             #region response file
+
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
             excelFile.SaveXls(response.OutputStream);
-            #endregion
+
+            #endregion response file
         }
 
         private static void Export2ExcelReportByLicenseeAssignHeader(ref ExcelWorksheet wsReport, int startRow, int startCol, int reportType, int selectedReport)
         {
             #region private variables
+
             var bgHeaderNormalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
             var nextCol = 0;
             var dateTitle = selectedReport == 0 ? (reportType != 3
@@ -106,19 +114,18 @@ namespace Sunplus.Accounting.Business.BetAggregator
             var currencyTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Currency");
             var turnoverTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "TurnOver");
             var totalTransTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblTotalTrans");
-           // var memberTilte = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Member");
-           // var agentTilte = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Agent");
+            // var memberTilte = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Member");
+            // var agentTilte = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Agent");
             //var companyTilte = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Company");
             //var winlossTilte = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "WinLost");
             //var commTilte = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblComm");
-           // var totalTilte = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Total");
+            // var totalTilte = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Total");
             var customerTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "CustomerWL");
             var licenseeCommTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "licenseeComm");
             var AmtDuetoBATitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "AmtDuetoBA");
 
-            #endregion
+            #endregion private variables
 
-            
             wsReport.Cells[startRow - 1, startCol].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow - 1, startCol].Value = dateTitle;
 
@@ -143,17 +150,19 @@ namespace Sunplus.Accounting.Business.BetAggregator
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = totalTransTitle;
 
-
             #region member
+
             nextCol++;
             //wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Merged = true;
             //wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Style = bgHeaderNormalFormat;
             //wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Value = customerTitle;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = customerTitle;
-            #endregion
+
+            #endregion member
 
             #region agent
+
             nextCol++;
             //wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Merged = true;
             //wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Style = bgHeaderNormalFormat;
@@ -161,7 +170,8 @@ namespace Sunplus.Accounting.Business.BetAggregator
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = licenseeCommTitle;
 
-            #endregion
+            #endregion agent
+
             nextCol++;
             //wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Merged = true;
             //wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Style = bgHeaderNormalFormat;
@@ -170,9 +180,8 @@ namespace Sunplus.Accounting.Business.BetAggregator
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = AmtDuetoBATitle;
         }
 
-        private static void Export2ExcelReportByLicenseeAssignContent(string preCurrency, ref ExcelWorksheet wsReport, int startRow, int startCol, ref int nextRow, bool isTotal, bool isTotalBaseCurr, List<Report_LicenseeWLBA_Row> licenseeRows, int reportSelected, List<int> dateGroup )
+        private static void Export2ExcelReportByLicenseeAssignContent(string preCurrency, ref ExcelWorksheet wsReport, int startRow, int startCol, ref int nextRow, bool isTotal, bool isTotalBaseCurr, List<Report_LicenseeWLBA_Row> licenseeRows, int reportSelected, List<int> dateGroup)
         {
-
             var bgColor = isTotal
                               ? Color.FromArgb(255, 238, 221)
                               : (isTotalBaseCurr ? Color.FromArgb(211, 225, 200) : Color.FromArgb(255, 255, 255));
@@ -204,8 +213,6 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                 wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + nextCol, startRow + nextRow + totalMergeRows - 1, startCol + nextCol).Merged = true;
                                 wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + nextCol, startRow + nextRow + totalMergeRows - 1, startCol + nextCol).Style = numberFormat;
                                 wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + nextCol, startRow + nextRow + totalMergeRows - 1, startCol + nextCol).Value = licenseeRow.ReportTypeId;
-
-
                             }
                             else
                             {
@@ -214,7 +221,6 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
                             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
                             wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = licenseeRow.CurrencyName;
-
                         }
                         else if (isTotalBaseCurr || isTotal)
                         {
@@ -230,15 +236,16 @@ namespace Sunplus.Accounting.Business.BetAggregator
                             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
                             wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = licenseeRow.CurrencyName;
                         }
-                        
-
 
                         #region Turnover
+
                         wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
                         wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Turnover);
-                        #endregion
+
+                        #endregion Turnover
 
                         #region betcount (total trans)
+
                         if (items == 0 && isTotalBaseCurr)
                         {
                             wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol += 1),
@@ -259,18 +266,22 @@ namespace Sunplus.Accounting.Business.BetAggregator
                             wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.BetCount);
                         }
 
-                        #endregion
+                        #endregion betcount (total trans)
 
                         #region member
+
                         wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
                         wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Winlost);
-                        #endregion
+
+                        #endregion member
 
                         #region agent
 
                         wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
                         wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.AComm);
-                        #endregion
+
+                        #endregion agent
+
                         wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
                         wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Company);
 
@@ -286,7 +297,9 @@ namespace Sunplus.Accounting.Business.BetAggregator
                 foreach (Report_LicenseeWLBA_Row licenseeRow in licenseeRows)
                 {
                     var nextCol = 0;
+
                     #region current row is total or not
+
                     if (isTotal || isTotalBaseCurr)
                     {
                         wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + (nextCol + 1)).
@@ -312,15 +325,17 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = licenseeRow.CurrencyName;
                     }
 
-
-                    #endregion
+                    #endregion current row is total or not
 
                     #region Turnover
+
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
                     wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Turnover);
-                    #endregion
+
+                    #endregion Turnover
 
                     #region betcount (total trans)
+
                     if (items == 0 && isTotalBaseCurr)
                     {
                         wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol += 1),
@@ -341,9 +356,10 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.BetCount);
                     }
 
-                    #endregion
+                    #endregion betcount (total trans)
 
                     #region member
+
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
                     wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Winlost);
 
@@ -352,9 +368,11 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
                     //wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
                     //wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Total);
-                    #endregion
+
+                    #endregion member
 
                     #region agent
+
                     //wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
                     //wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.AWinlost);
 
@@ -363,19 +381,19 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
                     //wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
                     //wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.ATotal);
-                    #endregion
+
+                    #endregion agent
+
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
                     wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Company);
                     nextRow++;
                     items++;
                 }
             }
-            
         }
 
         private static void Export2ExcelReportByLicenseeAssignContent(string preCurrency, ref ExcelWorksheet wsReport, int startRow, int startCol, ref int nextRow, bool isTotal, bool isTotalBaseCurr, List<Report_LicenseeWLBA_Row> licenseeRows, int reportSelected)
         {
-
             var bgColor = isTotal
                               ? Color.FromArgb(255, 238, 221)
                               : (isTotalBaseCurr ? Color.FromArgb(211, 225, 200) : Color.FromArgb(255, 255, 255));
@@ -388,121 +406,133 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                                                                         ? true
                                                                                         : false, false);
             var index = 0;
-            
-                var items = 0;
-                foreach (Report_LicenseeWLBA_Row licenseeRow in licenseeRows)
+
+            var items = 0;
+            foreach (Report_LicenseeWLBA_Row licenseeRow in licenseeRows)
+            {
+                var nextCol = 0;
+
+                #region current row is total or not
+
+                if (isTotal || isTotalBaseCurr)
                 {
-                    var nextCol = 0;
-                    #region current row is total or not
-                    if (isTotal || isTotalBaseCurr)
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + (nextCol + 1)).
+                        Merged = true;
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + (nextCol + 1)).
+                        Style = numberFormat;
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + (nextCol += 1)).
+                        Value = preCurrency + licenseeRow.CurrencyName;
+                }
+                else
+                {
+                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style = numberFormat;
+                    if (reportSelected == 0)
                     {
-                        wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + (nextCol + 1)).
-                            Merged = true;
-                        wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + (nextCol + 1)).
-                            Style = numberFormat;
-                        wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + (nextCol += 1)).
-                            Value = preCurrency + licenseeRow.CurrencyName;
+                        wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = licenseeRow.ReportTypeId;
                     }
                     else
                     {
-                        wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style = numberFormat;
-                        if (reportSelected == 0)
-                        {
-                            wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = licenseeRow.ReportTypeId;
-                        }
-                        else
-                        {
-                            wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = licenseeRow.Username;
-                        }
-
-                        wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
-                        wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = licenseeRow.CurrencyName;
+                        wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = licenseeRow.Username;
                     }
 
-
-                    #endregion
-
-                    #region Turnover
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Turnover);
-                    #endregion
-
-                    #region betcount (total trans)
-                    if (items == 0 && isTotalBaseCurr)
-                    {
-                        wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol += 1),
-                                                           startRow + nextRow + licenseeRows.Count - 1, startCol + nextCol).
-                            Merged = true;
-                        wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol),
-                                                           startRow + nextRow + licenseeRows.Count - 1, startCol + nextCol).
-                            Style = numberNormalFormat;
-                        wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol),
-                                                           startRow + nextRow + licenseeRows.Count - 1, startCol + nextCol).
-                            Value = CastAide.AsDouble(licenseeRow.BetCount);
-                    }
-                    else if (isTotalBaseCurr && items > 0)
-                        nextCol += 1;
-                    else if (!isTotalBaseCurr)
-                    {
-                        wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberNormalFormat;
-                        wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.BetCount);
-                    }
-
-                    #endregion
-
-                    #region member
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Winlost);
-
-                    //wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
-                    //wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Comm);
-
-                    //wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
-                    //wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Total);
-                    #endregion
-
-                    #region agent
-                    //wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
-                    //wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.AWinlost);
-
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.AComm);
-
-                    //wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
-                    //wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.ATotal);
-                    #endregion
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Company);
-                    nextRow++;
-                    items++;
+                    wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = licenseeRow.CurrencyName;
                 }
-            
 
+                #endregion current row is total or not
+
+                #region Turnover
+
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Turnover);
+
+                #endregion Turnover
+
+                #region betcount (total trans)
+
+                if (items == 0 && isTotalBaseCurr)
+                {
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol += 1),
+                                                       startRow + nextRow + licenseeRows.Count - 1, startCol + nextCol).
+                        Merged = true;
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol),
+                                                       startRow + nextRow + licenseeRows.Count - 1, startCol + nextCol).
+                        Style = numberNormalFormat;
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol),
+                                                       startRow + nextRow + licenseeRows.Count - 1, startCol + nextCol).
+                        Value = CastAide.AsDouble(licenseeRow.BetCount);
+                }
+                else if (isTotalBaseCurr && items > 0)
+                    nextCol += 1;
+                else if (!isTotalBaseCurr)
+                {
+                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberNormalFormat;
+                    wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.BetCount);
+                }
+
+                #endregion betcount (total trans)
+
+                #region member
+
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Winlost);
+
+                //wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                //wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Comm);
+
+                //wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                //wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Total);
+
+                #endregion member
+
+                #region agent
+
+                //wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                //wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.AWinlost);
+
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.AComm);
+
+                //wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                //wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.ATotal);
+
+                #endregion agent
+
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(licenseeRow.Company);
+                nextRow++;
+                items++;
+            }
         }
 
-        #endregion 
+        #endregion licensee report
 
         #region BA win loss by licensee
+
         public void ExportExcelBAWinLossReportByLicensee(int licenseeId, int currency, int baseCurrency, string fromDate, string toDate, int reportType, int drawfilter, int excludeTest, string title, int reportSelected)
         {
             #region excel format
+
             const int startCol = 0;
             const int startRow = 2;
             var nextRow = 0;
             var reportName = title.Replace(" ", "");
             var excelFile = new ExcelFile();
             var wsReport = excelFile.Worksheets.Add(string.Format("{0}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDepositReport")));
-            #endregion
-            
+
+            #endregion excel format
+
             #region header
-            wsReport.Cells.GetSubrangeAbsolute(startRow -2, startCol, startRow -2, startCol+ 7).Merged = true;
+
+            wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + 7).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + 7).Style.
                 HorizontalAlignment = HorizontalAlignmentStyle.Center;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + 7).Style.Font.Weight =
                 ExcelFont.BoldWeight;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + 7).Value = title;
             ExportExcelBAWinLossReportByLicenseeAssignHeader(ref wsReport, startRow, startCol, reportType, reportSelected);
-            #endregion
+
+            #endregion header
 
             #region content
 
@@ -516,8 +546,8 @@ namespace Sunplus.Accounting.Business.BetAggregator
                 ExportExcelBAWinLossReportByLicenseeAssignContent(ref wsReport, startRow, startCol, ref nextRow,
                                                                   getData.Items);
 
-
                 #region grand total
+
                 var numberBaseTotalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", Color.FromArgb(250, 191, 143), true, false);
 
                 var nextCol = 0;
@@ -553,7 +583,6 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol + 1), startRow + nextRow + 2, startCol + nextCol + 1).Value = CastAide.AsDouble(total.BetCount);
 
                         nextCol++;
-
                     }
                     else
                         nextCol++;
@@ -569,24 +598,27 @@ namespace Sunplus.Accounting.Business.BetAggregator
                     nextRow++;
                     nextCol = 0;
                 }
-                #endregion
 
+                #endregion grand total
             }
 
-            #endregion
+            #endregion content
 
             #region response file
+
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
             excelFile.SaveXls(response.OutputStream);
-            #endregion
+
+            #endregion response file
         }
-        
+
         private void ExportExcelBAWinLossReportByLicenseeAssignHeader(ref ExcelWorksheet wsReport, int startRow, int startCol, int reportType, int selectedReport)
         {
             #region private variables
+
             var bgHeaderNormalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
             var nextCol = 0;
             var dateTitle = selectedReport == 0
@@ -600,7 +632,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
             var licenseeCommTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "licenseeComm");
             var AmtDuetoBATitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "AmtDuetoBA");
 
-            #endregion
+            #endregion private variables
 
             wsReport.Cells[startRow - 1, startCol].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow - 1, startCol].Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblLicensee");
@@ -621,19 +653,22 @@ namespace Sunplus.Accounting.Business.BetAggregator
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = totalTransTitle;
 
-
             #region member
+
             nextCol++;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = customerTitle;
-            #endregion
+
+            #endregion member
 
             #region agent
+
             nextCol++;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = licenseeCommTitle;
 
-            #endregion
+            #endregion agent
+
             nextCol++;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Style = bgHeaderNormalFormat;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = AmtDuetoBATitle;
@@ -649,7 +684,7 @@ namespace Sunplus.Accounting.Business.BetAggregator
             {
                 var totalItems = licenseeWlba.Items.Count + licenseeWlba.Totals.Count + licenseeWlba.TotalsBaseCurrency.Count;
                 var nextCol = 0;
-                wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow + (totalItems-1),
+                wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow + (totalItems - 1),
                                                    startCol).Merged = true;
                 wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow + (totalItems - 1),
                                                    startCol).Style = numberFormat;
@@ -657,7 +692,9 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                                    startCol).Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
                 wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow + (totalItems - 1),
                                                    startCol).Value = licenseeWlba.Licensee;
-                #region items                
+
+                #region items
+
                 var index = 0;
                 for (int i = 0; i < licenseeWlba.DateGroup.Count; i++)
                 {
@@ -677,7 +714,6 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         }
                         else
                             nextCol += 1;
-                       
 
                         wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberFormat;
                         wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment =
@@ -700,7 +736,8 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         nextCol = 0;
                     }
                 }
-                #endregion
+
+                #endregion items
 
                 #region total
 
@@ -738,7 +775,8 @@ namespace Sunplus.Accounting.Business.BetAggregator
                     nextRow++;
                     nextCol = 0;
                 }
-                #endregion
+
+                #endregion total
 
                 #region base total
 
@@ -775,7 +813,6 @@ namespace Sunplus.Accounting.Business.BetAggregator
                         wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol + 1), startRow + nextRow + 2, startCol + nextCol + 1).Value = CastAide.AsDouble(total.BetCount);
 
                         nextCol++;
-
                     }
                     else
                         nextCol++;
@@ -786,21 +823,22 @@ namespace Sunplus.Accounting.Business.BetAggregator
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(total.AComm);
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = numberBaseTotalFormat;
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(total.Company);
-                    
+
                     baseIndex++;
                     nextRow++;
                     nextCol = 0;
                 }
-                #endregion
 
+                #endregion base total
             }
-
         }
-        #endregion
+
+        #endregion BA win loss by licensee
 
         public void ExportExcelBAWinLoss12BetDetail(int licenseeId, int currency, int baseCurrency, string fromDate, string toDate, int drawfilter, int excludeTest, string title, int reportSeleted)
         {
             #region excel format
+
             const int startCol = 0;
             const int startRow = 2;
             var nextRow = 0;
@@ -809,15 +847,18 @@ namespace Sunplus.Accounting.Business.BetAggregator
             var excelFile = new ExcelFile();
             var wsReport = excelFile.Worksheets.Add(string.Format("{0}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDepositReport")));
 
-            #endregion
+            #endregion excel format
 
             #region header
+
             wsReport.Cells[startRow - 2, startCol].Style.Font.Weight = ExcelFont.BoldWeight;
             wsReport.Cells[startRow - 2, startCol].Value = title;
             Export2ExcelReportByLicenseeAssignHeader(ref wsReport, startRow, startCol, 0, 1);
-            #endregion
+
+            #endregion header
 
             #region content
+
             var getReportData = new Report_LicenseeWLBA_DTO();
 
             getReportData = (Report_LicenseeWLBA_DTO)AppSession.GetSession(System.Web.HttpContext.Current.Session,
@@ -834,23 +875,25 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                                           getReportData.Totals, 1);
                 Export2ExcelReportByLicenseeAssignContent("Grand Total ", ref wsReport, startRow, startCol, ref nextRow, false, true,
                                                           getReportData.TotalsBaseCurrency, 1);
-
             }
 
-            #endregion
+            #endregion content
 
             #region response file
+
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
             excelFile.SaveXls(response.OutputStream);
-            #endregion
+
+            #endregion response file
         }
 
         public void ExportExcelBAWinLossDetail(int licenseeId, int currency, int baseCurrency, string fromDate, int custId, string toDate, int drawfilter, int excludeTest, string title, int reportSeleted, int reportType)
         {
             #region excel format
+
             const int startCol = 0;
             const int startRow = 2;
             var nextRow = 0;
@@ -859,15 +902,18 @@ namespace Sunplus.Accounting.Business.BetAggregator
             var excelFile = new ExcelFile();
             var wsReport = excelFile.Worksheets.Add(string.Format("{0}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDepositReport")));
 
-            #endregion
+            #endregion excel format
 
             #region header
+
             wsReport.Cells[startRow - 2, startCol].Style.Font.Weight = ExcelFont.BoldWeight;
             wsReport.Cells[startRow - 2, startCol].Value = title;
             Export2ExcelReportByLicenseeAssignHeader(ref wsReport, startRow, startCol, 0, 1);
-            #endregion
+
+            #endregion header
 
             #region content
+
             var getReportData = new Report_LicenseeWLBA_DTO();
 
             getReportData = (Report_LicenseeWLBA_DTO)AppSession.GetSession(System.Web.HttpContext.Current.Session,
@@ -884,22 +930,22 @@ namespace Sunplus.Accounting.Business.BetAggregator
                                                           getReportData.Totals, 1);
                 Export2ExcelReportByLicenseeAssignContent("Grand Total ", ref wsReport, startRow, startCol, ref nextRow, false, true,
                                                           getReportData.TotalsBaseCurrency, 1);
-
             }
 
-            #endregion
+            #endregion content
 
             #region response file
+
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
             excelFile.SaveXls(response.OutputStream);
-            #endregion
+
+            #endregion response file
         }
 
-        #endregion
-
+        #endregion Export 2 excel
 
         public void Export2ExcelReportByCommissionLevel(string reportTitle, int licenseeId, int currencyId, string fromDate, string toDate, int drawFilter, bool excludeTest)
         {
@@ -921,17 +967,18 @@ namespace Sunplus.Accounting.Business.BetAggregator
             getReportData = getReportData ?? LicenseeWinLossByCommLevel(licenseeId, currencyId, excludeTest, fromDate, toDate, drawFilter);
             if (getReportData != null && getReportData.Items.Count > 0)
             {
-                ExportToExcelContentCommissionLevel(ref wsReport, startRow, startCol,ref nextRow, getReportData);
+                ExportToExcelContentCommissionLevel(ref wsReport, startRow, startCol, ref nextRow, getReportData);
             }
+
             #region response file
+
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "Application/x-msexcel";
             response.AddHeader("Content-Disposition", "attachment; filename=WLByCommLevel-" + fromDate + "-" + toDate + ".xls");
             excelFile.SaveXls(response.OutputStream);
 
-            #endregion
-                                                                                       
+            #endregion response file
         }
 
         private static void ExportToExcelHeaderCommissionLevel(ref ExcelWorksheet wsReport, int startRow, int startCol)
@@ -970,7 +1017,6 @@ namespace Sunplus.Accounting.Business.BetAggregator
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Style = bgHeaderNormalFormat;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Value = betType;
 
-
             nextCol++;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Style = bgHeaderNormalFormat;
@@ -1000,7 +1046,6 @@ namespace Sunplus.Accounting.Business.BetAggregator
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Style = bgHeaderNormalFormat;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Value = customerWL;
 
-
             nextCol++;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Style = bgHeaderNormalFormat;
@@ -1010,23 +1055,21 @@ namespace Sunplus.Accounting.Business.BetAggregator
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Style = bgHeaderNormalFormat;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol), startRow, startCol + (nextCol)).Value = AmtDueto;
-           
-
         }
 
-        private static void ExportToExcelContentCommissionLevel(ref ExcelWorksheet wsReport, int startRow, int startCol, ref int nextRow, LicenseeWinLossCommDTO listCommLevel) 
+        private static void ExportToExcelContentCommissionLevel(ref ExcelWorksheet wsReport, int startRow, int startCol, ref int nextRow, LicenseeWinLossCommDTO listCommLevel)
         {
             var bgColorComm = new Core.Helper.ExcelGemboxUtils().GetStyleText(255, 255, 255);
             var bgColorTrans = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber("", Color.FromArgb(255, 255, 255), false, false);
             var bgColorNormal = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", Color.FromArgb(255, 255, 255), false, false);
             var bgColorSubTotal = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", Color.FromArgb(221, 246, 207), true, false);
             var bgColorTotal = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", Color.FromArgb(250, 191, 143),
-                                                                                    true, false); 
+                                                                                    true, false);
 
             foreach (LicenseeWinLossCommBO item in listCommLevel.Items)
             {
                 var nextCol = 0;
-                wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + nextCol , startRow + nextRow + item.TotalChilds - 1, startCol + nextCol).Merged = true;
+                wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + nextCol, startRow + nextRow + item.TotalChilds - 1, startCol + nextCol).Merged = true;
                 wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + nextCol, startRow + nextRow + item.TotalChilds - 1, startCol + nextCol).Style = bgColorNormal;
                 wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + nextCol, startRow + nextRow + item.TotalChilds - 1, startCol + nextCol).Value = item.ReportDate;
 
@@ -1034,42 +1077,39 @@ namespace Sunplus.Accounting.Business.BetAggregator
                 nextCol++;
                 foreach (LicenseeWinLossCurrency itemcurr in listItemCurr)
                 {
-                  
-                        wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + nextCol, startRow + nextRow + itemcurr.Items.Count - 1, startCol + nextCol).Merged = true;
-                        wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + nextCol, startRow + nextRow + itemcurr.Items.Count - 1, startCol + nextCol).Style = bgColorNormal;
-                        wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + nextCol, startRow + nextRow + itemcurr.Items.Count - 1, startCol + nextCol).Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
-                        wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + nextCol, startRow + nextRow + itemcurr.Items.Count - 1, startCol + nextCol).Value = itemcurr.Currency;
-                    
-                        var listitemComm = itemcurr.Items;
-                        foreach (LicenseeWinLossCommLevel itemComm in listitemComm)
-                        {
-                            wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgColorComm;
-                            wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value =  CastAide.AsDecimal(itemComm.Comm);
-                            wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgColorNormal;
-                            wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = itemComm.Bettype;
-                            wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgColorTrans;
-                            wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsDouble(itemComm.TotalTrans);
-                            wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgColorNormal;
-                            wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsDecimal(itemComm.BaseTurnover);
-                            wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgColorNormal;
-                            wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsDecimal(itemComm.BaseCustWinLoss);
-                            wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgColorNormal;
-                            wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsDecimal(itemComm.BaseLinceseeComm);
-                            wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgColorNormal;
-                            wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsDecimal(itemComm.BaseAmountDue);
-                            wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgColorNormal;
-                            wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsDecimal(itemComm.Turnover);
-                            wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgColorNormal;
-                            wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsDecimal(itemComm.CustWinLoss);
-                            wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgColorNormal;
-                            wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsDecimal(itemComm.LicenseeComm);
-                            wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgColorNormal;
-                            wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Value = CastAide.AsDecimal(itemComm.AmountDue);
-                            nextRow++;
-                            nextCol = 1;
-                        }
-                       
-                    
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + nextCol, startRow + nextRow + itemcurr.Items.Count - 1, startCol + nextCol).Merged = true;
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + nextCol, startRow + nextRow + itemcurr.Items.Count - 1, startCol + nextCol).Style = bgColorNormal;
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + nextCol, startRow + nextRow + itemcurr.Items.Count - 1, startCol + nextCol).Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+                    wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + nextCol, startRow + nextRow + itemcurr.Items.Count - 1, startCol + nextCol).Value = itemcurr.Currency;
+
+                    var listitemComm = itemcurr.Items;
+                    foreach (LicenseeWinLossCommLevel itemComm in listitemComm)
+                    {
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgColorComm;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsDecimal(itemComm.Comm);
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgColorNormal;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = itemComm.Bettype;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgColorTrans;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsDouble(itemComm.TotalTrans);
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgColorNormal;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsDecimal(itemComm.BaseTurnover);
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgColorNormal;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsDecimal(itemComm.BaseCustWinLoss);
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgColorNormal;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsDecimal(itemComm.BaseLinceseeComm);
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgColorNormal;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsDecimal(itemComm.BaseAmountDue);
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgColorNormal;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsDecimal(itemComm.Turnover);
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgColorNormal;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsDecimal(itemComm.CustWinLoss);
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgColorNormal;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Value = CastAide.AsDecimal(itemComm.LicenseeComm);
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Style = bgColorNormal;
+                        wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Value = CastAide.AsDecimal(itemComm.AmountDue);
+                        nextRow++;
+                        nextCol = 1;
+                    }
                 }
                 nextCol = 0;
                 //assign Sub total
@@ -1097,7 +1137,6 @@ namespace Sunplus.Accounting.Business.BetAggregator
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol + 1)].Value = CastAide.AsDecimal(item.SubTotal.BaseAmountDue);
 
                 nextRow++;
-
             }
             //Assign Total
             var nextColTotal = 0;
@@ -1122,9 +1161,6 @@ namespace Sunplus.Accounting.Business.BetAggregator
 
             wsReport.Cells[startRow + nextRow, startCol + (nextColTotal + 1)].Style = bgColorTotal;
             wsReport.Cells[startRow + nextRow, startCol + (nextColTotal + 1)].Value = CastAide.AsDecimal(listCommLevel.Total.BaseAmountDue);
-
         }
-   
     }
 }
-

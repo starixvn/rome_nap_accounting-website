@@ -1,20 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
-using System;
 using DNAide.Core;
 using DNAide.Data;
-
 using Sunplus.Accounting.Business.CacheManager;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web.TplCore.App_Templates.SpecialDelete.App_Templates.SpecialDelete;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.Entity.SqlServer.SpecialDelete;
-using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.Provider.SpecialDelete;
-using Sunplus.Core.LoggingLib;
 
 /// <summary>
 /// Summary description for SpecialDelete
@@ -24,6 +22,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
     public class SpecialDeleteOtherCondition : SpecialDeleteBase
     {
         #region GetSpecialDelete
+
         public string GetSpecialDelete(Hashtable param)
         {
             string matchHtml = string.Empty;
@@ -36,7 +35,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             SpecialDeleteBets_Bets_SpecialBets_ContentSpecialBets_Block specialBet = new SpecialDeleteBets_Bets_SpecialBets_ContentSpecialBets_Block();
             SpecialDeleteBets_Bets_SpecialBets_HeaderSpecialBets_Block headerBet = new SpecialDeleteBets_Bets_SpecialBets_HeaderSpecialBets_Block();
 
-            
             DbResult rs;
 
             rs = DbHelper.Execute("DBA_SelBet_BatchMsg", param, DBType.REPORT);
@@ -61,7 +59,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 IsHasData = false;
                 bets.Bets.NormalBets.HeaderNomalBets.DeleteOption.Clear();
                 normalBet.DeleteOption.Clear();
-
             }
             else if (cntNormalBet > 0 && cntDeposit == 0 && cntBetDaq == 0 && cnt12EU == 0 && cntMasterMHC == 0)
             {
@@ -99,7 +96,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             //bets.Bets.SpecialBets.HeaderSpecialBets.Append(headerBet);
                             bets.Bets.SpecialBets.Append(headerBet);
                         }
-                        
+
                         AssignDatarow(row, index, SpecialBettype.BetDeposit, ref specialBet);
                         bets.Bets.SpecialBets.Append(specialBet);
                     }
@@ -137,13 +134,12 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         }
 
                         AssignDatarow(row, index, SpecialBettype.BetMasterMHC, ref specialBet);
-                        bets.Bets.SpecialBets.Append(specialBet);                        
+                        bets.Bets.SpecialBets.Append(specialBet);
                     }
                 }
 
                 index = 0;
                 countTbl++;
-
             }
 
             bets.rowcount = cntNormalBet.ToString();
@@ -173,24 +169,26 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
             return bets.ToString();
         }
-        #endregion
+
+        #endregion GetSpecialDelete
 
         #region GetMatchInfoById
-        string GetMatchInfoById(int matchid, ref bool IsFail)
+
+        private string GetMatchInfoById(int matchid, ref bool IsFail)
         {
             IsFail = false;
             string tpl = "";
-            List<MatchInfoRow> lst = SpecialDeleteProvider.Instance( DataAccess.DataAccess.DAOClient.Entity ).MatchSeById(matchid);
+            List<MatchInfoRow> lst = SpecialDeleteProvider.Instance(DataAccess.DataAccess.DAOClient.Entity).MatchSeById(matchid);
             if (lst.Count == 0)
             {
                 IsFail = true;
-                tpl = AlertMessage.GetMsg("NO MATCH WITH SUCH MATCH ID", AlertMessage.MsgType.Error );
+                tpl = AlertMessage.GetMsg("NO MATCH WITH SUCH MATCH ID", AlertMessage.MsgType.Error);
             }
             else
             {
                 _MatchInfo info = new _MatchInfo();
 
-                foreach(MatchInfoRow row in lst)
+                foreach (MatchInfoRow row in lst)
                 {
                     info.MatchCode = row.matchcode;
                     info.Home = CacheRef.GetTeamName(row.homeid) + (row.IsNeutral ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral") : string.Empty);
@@ -199,13 +197,15 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 }
                 tpl = info.ToString();
             }
-            
-            return tpl  ;
+
+            return tpl;
         }
-        #endregion
+
+        #endregion GetMatchInfoById
 
         #region AssignDatarow
-        void AssignDatarow(SpecialDeleteRow row, int index, ref SpecialDeleteBets_Bets_NormalBets_ContentNomalBets_Block transrow_normal)
+
+        private void AssignDatarow(SpecialDeleteRow row, int index, ref SpecialDeleteBets_Bets_NormalBets_ContentNomalBets_Block transrow_normal)
         {
             transrow_normal.no = index.ToString();
             transrow_normal.Account = row.username;
@@ -225,6 +225,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 case 22:
                     transrow_normal.Hdp = IBCUtils.FormatHandler.FormatNumber2(row.hdp2 - row.hdp1);
                     break;
+
                 default:
                     transrow_normal.Hdp = "--";
                     break;
@@ -238,10 +239,12 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
             //return transrow_normal;
         }
-        #endregion
+
+        #endregion AssignDatarow
 
         #region AssignDatarow
-        void AssignDatarow(SpecialDeleteRow row, int index, SpecialBettype type, ref SpecialDeleteBets_Bets_SpecialBets_ContentSpecialBets_Block transRowTpl_SB)
+
+        private void AssignDatarow(SpecialDeleteRow row, int index, SpecialBettype type, ref SpecialDeleteBets_Bets_SpecialBets_ContentSpecialBets_Block transRowTpl_SB)
         {
             transRowTpl_SB.no = index.ToString();
             transRowTpl_SB.Account = row.username;
@@ -262,6 +265,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 case 22:
                     transRowTpl_SB.Hdp = IBCUtils.FormatHandler.FormatNumber2(row.hdp2 - row.hdp1);
                     break;
+
                 default:
                     transRowTpl_SB.Hdp = "--";
                     break;
@@ -278,12 +282,13 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             else if (row.status == "running")
                 IsDelete = "1";
             transRowTpl_SB.IsDelete = IsDelete;
-            
         }
-        #endregion
+
+        #endregion AssignDatarow
 
         #region Mapping
-        SpecialDeleteRow Mapping(DataRow dr)
+
+        private SpecialDeleteRow Mapping(DataRow dr)
         {
             SpecialDeleteRow row = new SpecialDeleteRow();
             row.username = CastAide.AsString(dr["username"]);
@@ -303,10 +308,12 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             row.status = CastAide.AsString(dr["status"]);
             return row;
         }
-        #endregion
+
+        #endregion Mapping
 
         #region BuildDeleteFormNew
-        string BuildDeleteFormNew(Hashtable param)
+
+        private string BuildDeleteFormNew(Hashtable param)
         {
             try
             {
@@ -338,22 +345,23 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
 
             return string.Empty;
- 
         }
-        #endregion
+
+        #endregion BuildDeleteFormNew
 
         #region GetHeaderSpecialBets
-        void GetHeaderSpecialBets(string name, string color, SpecialBettype type, ref SpecialDeleteBets_Bets_SpecialBets_HeaderSpecialBets_Block header)
+
+        private void GetHeaderSpecialBets(string name, string color, SpecialBettype type, ref SpecialDeleteBets_Bets_SpecialBets_HeaderSpecialBets_Block header)
         {
             header.SB_Name = name;
             header.SB_Color = color;
             header.SB = GetSpecialBettype(type);
         }
-        #endregion
+
+        #endregion GetHeaderSpecialBets
     }
 }

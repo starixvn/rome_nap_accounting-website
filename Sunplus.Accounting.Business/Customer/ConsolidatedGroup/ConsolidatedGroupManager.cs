@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Data;
+using System.Web;
+using DNAide.Core;
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.DataAccess.CustomerAdapter.ConsolidatedGroup;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Customer.ConsolidatedGroup;
-using Sunplus.Accounting.DataAccess.CustomerAdapter.ConsolidatedGroup;
-using System.Data;
-using DNAide.Core;
-using System.Web;
-using Sunplus.Data.DataAbstract.BootStrappers;
-using Sunplus.Accounting.DataAccess;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Cache;
 
 namespace Sunplus.Accounting.Business.Customer.ConsolidatedGroup
 {
@@ -69,9 +64,8 @@ namespace Sunplus.Accounting.Business.Customer.ConsolidatedGroup
             {
                 LogExtensions.ExceptionHandler(ex);
 
-                return  new Result();
+                return new Result();
             }
-            
         }
 
         private int GetCustID(string UserName)
@@ -115,13 +109,11 @@ namespace Sunplus.Accounting.Business.Customer.ConsolidatedGroup
             }
             catch (Exception ex)
             {
-                
                 LogExtensions.ExceptionHandler(ex);
                 return new List<ConsolidatedMemberTable>();
             }
-            
         }
- 
+
         public Sunplus.Accounting.Entities.Result AddUserToGroup(int GroupID, string UserName)
         {
             try
@@ -130,11 +122,9 @@ namespace Sunplus.Accounting.Business.Customer.ConsolidatedGroup
             }
             catch (Exception ex)
             {
-                
                 LogExtensions.ExceptionHandler(ex);
                 return new Result();
             }
-            
         }
 
         public Sunplus.Accounting.Entities.Result RemoveUsers(int GroupID, string CustIDList, string IP)
@@ -162,11 +152,9 @@ namespace Sunplus.Accounting.Business.Customer.ConsolidatedGroup
             }
             catch (Exception ex)
             {
-                
                 LogExtensions.ExceptionHandler(ex);
                 return new Result();
             }
-            
         }
 
         public Sunplus.Accounting.Entities.Result ChangeHeadline(int GroupID, int CustID, string CustName, string IP)
@@ -182,11 +170,9 @@ namespace Sunplus.Accounting.Business.Customer.ConsolidatedGroup
             }
             catch (Exception ex)
             {
-                
                 LogExtensions.ExceptionHandler(ex);
                 return new Result();
             }
-            
         }
     }
 }

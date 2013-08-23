@@ -12,10 +12,9 @@ namespace Sunplus.Accounting.DataAccess.Provider.Betlist
         //Define virtual or abstract function
         private static BetlistProvider _Instance;
 
-
         public static BetlistProvider Instance
         {
-            get { return (BetlistProvider) Activator.CreateInstance(Type.GetType(Globals.IBCSetting.Betlist.ProviderType)); }
+            get { return (BetlistProvider)Activator.CreateInstance(Type.GetType(Globals.IBCSetting.Betlist.ProviderType)); }
             set { _Instance = value; }
         }
     }

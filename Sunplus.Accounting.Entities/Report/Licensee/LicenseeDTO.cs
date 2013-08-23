@@ -20,7 +20,6 @@ namespace Sunplus.Accounting.Entities.Report.Licensee
 
         [DataMember]
         public List<LicenseeRow> TotalsBaseCurrency { get; set; }
-       
 
         [DataMember]
         public string fdate { get; set; }
@@ -30,8 +29,6 @@ namespace Sunplus.Accounting.Entities.Report.Licensee
 
         [DataMember]
         public int totalrow { get; set; }
-
-      
 
     }
 
@@ -59,7 +56,6 @@ namespace Sunplus.Accounting.Entities.Report.Licensee
 
         [DataMember]
         public int totalrow { get; set; }
-
     }
 
     [Serializable]

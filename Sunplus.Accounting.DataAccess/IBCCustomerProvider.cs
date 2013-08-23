@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Casino;
-using Sunplus.Accounting.Core.Common;
 
 /// <summary>
 /// Summary description for IBCCustomerProvider

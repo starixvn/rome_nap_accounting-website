@@ -7,7 +7,6 @@ using DNAide.Core;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Business.Security;
-using Sunplus.Core.LoggingLib;
 
 
 public class Function : IHttpHandler, IRequiresSessionState

@@ -7,7 +7,6 @@ using System.Web.UI.WebControls;
 
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Business.Security;
-using Sunplus.Core.LoggingLib;
 
 public partial class Others_NewsUpload : PageBase
 {

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Runtime.Serialization;
 
 namespace Sunplus.Accounting.Entities.PositionTaking.Racing
@@ -40,7 +38,7 @@ namespace Sunplus.Accounting.Entities.PositionTaking.Racing
 
     public class CustInfo
     {
-        public enum Roles 
+        public enum Roles
         {
             Super = 4,
             Master = 3,
@@ -52,14 +50,23 @@ namespace Sunplus.Accounting.Entities.PositionTaking.Racing
             MasterMinMax = -4,
             AgentMinMax = -5
         }
+
         public int CustId { get; set; }
-        public int CustLevel {get; set;}
-        public string UserName {get; set;}
-        public string FirstName {get; set;}
-        public string LastName {get; set;}
-        public string Phone {get; set;}
-        public string MobilePhone {get; set;}
+
+        public int CustLevel { get; set; }
+
+        public string UserName { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string Phone { get; set; }
+
+        public string MobilePhone { get; set; }
+
         public string Fax { get; set; }
+
         public int Currency { get; set; }
     }
 }

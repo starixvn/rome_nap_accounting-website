@@ -6,25 +6,19 @@
 
 namespace Sunplus.Accounting.DataAccess.Report.ResetWinning
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using DNAide.Data;
-    using Sunplus.Accounting.Core.Configurations;
-    using System.Collections;
     using System.Data;
     using DNAide.Core;
-    using Sunplus.Accounting.Entities.Report.ResetWinning;
-    using Fanex.Data;
     using DNAide.Utils;
+    using Fanex.Data;
+    using Sunplus.Accounting.Core.Configurations;
+    using Sunplus.Accounting.Entities.Report.ResetWinning;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class ResetWinningDAO:DataAccessReport, IResetWinningDAO
+    public class ResetWinningDAO : DataAccessReport, IResetWinningDAO
     {
-
         private StoreProcedureElement getSPMapping(string key)
         {
             return GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.ResetWinning, key);
@@ -51,14 +45,15 @@ namespace Sunplus.Accounting.DataAccess.Report.ResetWinning
                 list.Add(new ResetWinning()
                 {
                     Products = CastAide.AsString(row["product"]),
-                    Winloss = NumberFormat.DecFormat(CastAide.AsString(row["winlost"]),2),
-                    Reset = CastAide.AsDouble(row["reset"]) == 0 ? "-" : NumberFormat.DecFormat(CastAide.AsString(row["reset"]),2),
+                    Winloss = NumberFormat.DecFormat(CastAide.AsString(row["winlost"]), 2),
+                    Reset = CastAide.AsDouble(row["reset"]) == 0 ? "-" : NumberFormat.DecFormat(CastAide.AsString(row["reset"]), 2),
                     Variance = NumberFormat.DecFormat((CastAide.AsDouble(row["winlost"]) + CastAide.AsDouble(row["reset"])).ToString(), 2)
                 });
                 sumWinloss += CastAide.AsDouble(row["winlost"]);
                 sumVariance += CastAide.AsDouble(row["winlost"]) + CastAide.AsDouble(row["reset"]);
             }
-            list.Add(new ResetWinning() { 
+            list.Add(new ResetWinning()
+            {
                 Products = "OTHERS",
                 Winloss = NumberFormat.DecFormat((totalBalance - sumWinloss).ToString(), 2),
                 Reset = "N/A",
@@ -67,9 +62,6 @@ namespace Sunplus.Accounting.DataAccess.Report.ResetWinning
             result.Items = list;
             result.Total = NumberFormat.DecFormat(sumVariance, 0);
             return result;
-            
         }
-
-     
     }
 }

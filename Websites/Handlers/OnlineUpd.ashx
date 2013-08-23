@@ -7,7 +7,6 @@ using System.Web.SessionState;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.IBCDLL;
-using Sunplus.Core.LoggingLib;
 
 
 

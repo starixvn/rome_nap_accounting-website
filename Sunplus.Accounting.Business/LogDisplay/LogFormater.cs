@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Sunplus.Accounting.Entities.LogDisplay.SettingPT;
-using Sunplus.Accounting.Core.Configurations;
 using System.Xml.Linq;
 using DNAide.Core;
-using System.Configuration;
+using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Entities.LogDisplay.SettingPT;
 
 namespace Sunplus.Accounting.Business.LogDisplay
 {
@@ -23,13 +22,13 @@ namespace Sunplus.Accounting.Business.LogDisplay
             var elm = new TrackingElement();
             if (attr != null)
             {
-                var elmVal  = FormatValue(attr);
-                var param   = elmVal.P;
-                elm.P       = param;
-                elm.Val     = elmVal.Val;
+                var elmVal = FormatValue(attr);
+                var param = elmVal.P;
+                elm.P = param;
+                elm.Val = elmVal.Val;
                 if (action != null && !string.IsNullOrEmpty(action.Prefix))
                     param = MacthParam(param, action);
-                elm.N = GetResourceName(param);   
+                elm.N = GetResourceName(param);
             }
             return elm;
         }
@@ -59,9 +58,11 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 case 1:
                     strVal = FormatTransferOption(val);
                     break;
+
                 case 2:
                     strVal = ReplaceIP(val);
                     break;
+
                 default:
                     break;
             }

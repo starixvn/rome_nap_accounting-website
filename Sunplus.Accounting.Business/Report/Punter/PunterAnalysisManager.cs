@@ -3,21 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
-
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
 using DNAide.Web;
 using ExcelUtil.Spreadsheet;
-
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.Core.Extensions;
 
 namespace BLL.Report.Punter
 {
@@ -93,7 +90,7 @@ namespace BLL.Report.Punter
                 str = NumberFormat.DecFormat(n, 2) + spec;
             else
             {
-                n = n*(-1);
+                n = n * (-1);
                 str = "<span class='negnum'>(" + NumberFormat.DecFormat(n, 2) + spec + ")</span>";
             }
             return str;
@@ -107,7 +104,7 @@ namespace BLL.Report.Punter
                 str = NumberFormat.DecFormat(n, 2);
             else
             {
-                n = n*(-1);
+                n = n * (-1);
                 str = "<span class='negnum'>(" + NumberFormat.DecFormat(n, 2) + ")</span>";
             }
             return str;
@@ -139,7 +136,6 @@ namespace BLL.Report.Punter
             hash.Add("orderby", orderby);
             hash.Add("ordertype", CastAide.AsInt32(ordertype));
 
-
             try
             {
                 DbResult rs = IBCProvider.ReportProvider.PunterAnalysis().SelTopPunterSummary(hash);
@@ -149,8 +145,8 @@ namespace BLL.Report.Punter
             {
                 hashError = true;
                 TemplateHandler.Assign(ref msg, "content", ex.Message);
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
 
             return dt;
@@ -184,7 +180,7 @@ namespace BLL.Report.Punter
                 TemplateHandler.Assign(ref row, "todate", todate);
                 TemplateHandler.Assign(ref row, "WinlostIBC", negativenumber(dataRow["WinlostIbc"]));
                 TemplateHandler.Assign(ref row, "TurnOver", NumberFormat.DecFormat(dataRow["Turnover"], 2));
-                TemplateHandler.Assign(ref row, "Margin", negativenumber(CastAide.AsDecimal(dataRow["Margin"])*100, "%"));
+                TemplateHandler.Assign(ref row, "Margin", negativenumber(CastAide.AsDecimal(dataRow["Margin"]) * 100, "%"));
                 TemplateHandler.Assign(ref row, "BetCount", NumberFormat.DecFormat(dataRow["Betcount"], 0));
 
                 total.WinlostIBC += CastAide.AsDecimal(dataRow["WinlostIBC"]);
@@ -194,10 +190,9 @@ namespace BLL.Report.Punter
                 htmlContent.Append(row);
             }
 
-
             total.Margin =
                 CastAide.AsDecimal(
-                    NumberFormat.DecFormat((total.WinlostIBC/(total.TurnOver == 0 ? 1 : total.TurnOver))*100, 2));
+                    NumberFormat.DecFormat((total.WinlostIBC / (total.TurnOver == 0 ? 1 : total.TurnOver)) * 100, 2));
             string footer = TemplateHandler.CopyBlock(tpl, "Footer");
             TemplateHandler.Assign(ref footer, "WinlostIBC", negativenumber(total.WinlostIBC));
             TemplateHandler.Assign(ref footer, "TurnOver", NumberFormat.DecFormat(total.TurnOver, 2));
@@ -238,7 +233,7 @@ namespace BLL.Report.Punter
             return JsonUtil.ToJson(h);
         }
 
-        #endregion
+        #endregion SelTopPunterSummary
 
         #region SelTopPunterSummaryExportOnly
 
@@ -258,7 +253,7 @@ namespace BLL.Report.Punter
             hash.Add("toprow", toprow);
             hash.Add("orderby", orderby);
             hash.Add("ordertype", CastAide.AsInt32(ordertype));
-            DataRow[] rows = {};
+            DataRow[] rows = { };
 
             try
             {
@@ -270,8 +265,8 @@ namespace BLL.Report.Punter
             {
                 hashError = true;
                 TemplateHandler.Assign(ref msg, "content", ex.Message);
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             string fullpath = "";
             string title = "Punter Summary from " + fromdate + " to " + todate;
@@ -282,7 +277,7 @@ namespace BLL.Report.Punter
             return JsonUtil.ToJson(h);
         }
 
-        #endregion
+        #endregion SelTopPunterSummaryExportOnly
 
         #region SelTopPunterByCustId
 
@@ -297,7 +292,7 @@ namespace BLL.Report.Punter
             hash.Add("orderby", orderby);
             hash.Add("ordertype", CastAide.AsInt32(ordertype));
 
-            DataRow[] rows = {};
+            DataRow[] rows = { };
             DbResult rs = null;
             var dt = new DataTable();
             try
@@ -310,8 +305,8 @@ namespace BLL.Report.Punter
             {
                 hashError = true;
                 TemplateHandler.Assign(ref msg, "content", ex.Message);
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dt;
         }
@@ -349,7 +344,7 @@ namespace BLL.Report.Punter
                 row = content;
 
                 if (dataRow["sporttype"].ToString() == "100" || dataRow["sporttype"].ToString() == "251")
-                    //Mix parlay, CASINO
+                //Mix parlay, CASINO
                 {
                     string str = "<td class='l'>" + dataRow["sportname"] + "</td>";
                     TemplateHandler.ReplaceBlock(ref row, "Sport", str);
@@ -360,7 +355,7 @@ namespace BLL.Report.Punter
                 TemplateHandler.Assign(ref row, "Sporttype", dataRow["Sporttype"]);
                 TemplateHandler.Assign(ref row, "WinlostIBC", negativenumber(dataRow["WinlostIbc"], ""));
                 TemplateHandler.Assign(ref row, "TurnOver", NumberFormat.DecFormat(dataRow["Turnover"], 2));
-                TemplateHandler.Assign(ref row, "Margin", negativenumber(CastAide.AsDecimal(dataRow["Margin"])*100, "%"));
+                TemplateHandler.Assign(ref row, "Margin", negativenumber(CastAide.AsDecimal(dataRow["Margin"]) * 100, "%"));
 
                 total.WinlostIBC += CastAide.AsDecimal(dataRow["WinlostIbc"]);
                 total.TurnOver += CastAide.AsDecimal(dataRow["Turnover"]);
@@ -374,7 +369,7 @@ namespace BLL.Report.Punter
 
             total.Margin =
                 CastAide.AsDecimal(
-                    NumberFormat.DecFormat((total.WinlostIBC/(total.TurnOver == 0 ? 1 : total.TurnOver))*100, 2));
+                    NumberFormat.DecFormat((total.WinlostIBC / (total.TurnOver == 0 ? 1 : total.TurnOver)) * 100, 2));
             string footer = TemplateHandler.CopyBlock(tpl, "Footer");
             TemplateHandler.Assign(ref footer, "SportName", "Total");
             TemplateHandler.Assign(ref footer, "WinlostIBC", negativenumber(total.WinlostIBC, ""));
@@ -407,7 +402,6 @@ namespace BLL.Report.Punter
             CacheData(keySelTopPunterByCustId, hashCache, WebSettings.CacheExpire);
             //Export2ExcelSelTopPunterBy(rows, title, "PunterByUserName-" + username, "SelTopPunterByCustId", ref fullpath);
 
-
             var h = new Hashtable();
             h.Add("header", header);
             h.Add("data", tpl);
@@ -415,7 +409,7 @@ namespace BLL.Report.Punter
             return JsonUtil.ToJson(h);
         }
 
-        #endregion
+        #endregion SelTopPunterByCustId
 
         #region SelTopPunterBySporttype
 
@@ -431,7 +425,7 @@ namespace BLL.Report.Punter
             hash.Add("orderby", orderby);
             hash.Add("ordertype", CastAide.AsInt32(ordertype));
 
-            DataRow[] rows = {};
+            DataRow[] rows = { };
             var dt = new DataTable();
             try
             {
@@ -443,8 +437,8 @@ namespace BLL.Report.Punter
             {
                 hashError = true;
                 TemplateHandler.Assign(ref msg, "content", ex.Message);
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dt;
         }
@@ -452,10 +446,9 @@ namespace BLL.Report.Punter
         public string SelTopPunterBySporttype(string custId, string username, string sporttype, string fromdate,
                                               string todate, string orderby, string ordertype)
         {
-            DataRow[] rows = {};
+            DataRow[] rows = { };
             DataTable dt = GetSelTopPunterBySporttype(custId, username, sporttype, fromdate, todate, orderby, ordertype);
             rows = dt.Select();
-
 
             var total = new PunterAnalysisDetails();
             var lst = new List<PunterAnalysisDetails>();
@@ -506,7 +499,7 @@ namespace BLL.Report.Punter
                 TemplateHandler.Assign(ref row, "Bettype", dataRow["Bettype"]);
                 TemplateHandler.Assign(ref row, "WinlostIBC", negativenumber(dataRow["WinlostIbc"], ""));
                 TemplateHandler.Assign(ref row, "TurnOver", NumberFormat.DecFormat(dataRow["Turnover"], 2));
-                TemplateHandler.Assign(ref row, "Margin", negativenumber(CastAide.AsDecimal(dataRow["Margin"])*100, "%"));
+                TemplateHandler.Assign(ref row, "Margin", negativenumber(CastAide.AsDecimal(dataRow["Margin"]) * 100, "%"));
 
                 total.WinlostIBC += CastAide.AsDecimal(dataRow["WinlostIbc"]);
                 total.TurnOver += CastAide.AsDecimal(dataRow["Turnover"]);
@@ -520,7 +513,7 @@ namespace BLL.Report.Punter
 
             total.Margin =
                 CastAide.AsDecimal(
-                    NumberFormat.DecFormat((total.WinlostIBC/(total.TurnOver == 0 ? 1 : total.TurnOver))*100, 2));
+                    NumberFormat.DecFormat((total.WinlostIBC / (total.TurnOver == 0 ? 1 : total.TurnOver)) * 100, 2));
             string footer = TemplateHandler.CopyBlock(tpl, "Footer");
             TemplateHandler.Assign(ref footer, "BettypeName", "Total");
             TemplateHandler.Assign(ref footer, "WinlostIBC", negativenumber(total.WinlostIBC, ""));
@@ -553,7 +546,6 @@ namespace BLL.Report.Punter
             hashCache.Add("filename", "PunterBySportType-" + username);
             CacheData(keySelTopPunterBySporttype, hashCache, WebSettings.CacheExpire);
 
-
             var h = new Hashtable();
             h.Add("header", header);
             h.Add("data", tpl);
@@ -561,7 +553,7 @@ namespace BLL.Report.Punter
             return JsonUtil.ToJson(h);
         }
 
-        #endregion
+        #endregion SelTopPunterBySporttype
 
         #region SelTopPunterByBettype
 
@@ -578,7 +570,7 @@ namespace BLL.Report.Punter
             hash.Add("orderby", orderby);
             hash.Add("ordertype", CastAide.AsInt32(ordertype));
 
-            DataRow[] rows = {};
+            DataRow[] rows = { };
             var dt = new DataTable();
             try
             {
@@ -590,8 +582,8 @@ namespace BLL.Report.Punter
             {
                 hashError = true;
                 TemplateHandler.Assign(ref msg, "content", ex.Message);
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dt;
         }
@@ -625,7 +617,7 @@ namespace BLL.Report.Punter
                 TemplateHandler.Assign(ref row, "League", CacheRef.GetLeagueName(dataRow["leagueid"]));
                 TemplateHandler.Assign(ref row, "WinlostIBC", negativenumber(dataRow["WinlostIbc"], ""));
                 TemplateHandler.Assign(ref row, "TurnOver", NumberFormat.DecFormat(dataRow["Turnover"], 2));
-                TemplateHandler.Assign(ref row, "Margin", negativenumber(CastAide.AsDecimal(dataRow["Margin"])*100, "%"));
+                TemplateHandler.Assign(ref row, "Margin", negativenumber(CastAide.AsDecimal(dataRow["Margin"]) * 100, "%"));
 
                 total.WinlostIBC += CastAide.AsDecimal(dataRow["WinlostIbc"]);
                 total.TurnOver += CastAide.AsDecimal(dataRow["Turnover"]);
@@ -639,7 +631,7 @@ namespace BLL.Report.Punter
 
             total.Margin =
                 CastAide.AsDecimal(
-                    NumberFormat.DecFormat((total.WinlostIBC/(total.TurnOver == 0 ? 1 : total.TurnOver))*100, 2));
+                    NumberFormat.DecFormat((total.WinlostIBC / (total.TurnOver == 0 ? 1 : total.TurnOver)) * 100, 2));
             string footer = TemplateHandler.CopyBlock(tpl, "Footer");
             TemplateHandler.Assign(ref footer, "League", "Total");
             TemplateHandler.Assign(ref footer, "WinlostIBC", negativenumber(total.WinlostIBC, ""));
@@ -672,7 +664,6 @@ namespace BLL.Report.Punter
             hashCache.Add("filename", "PunterByBettype-" + username);
             CacheData(keySelTopPunterByBettype, hashCache, WebSettings.CacheExpire);
 
-
             var h = new Hashtable();
             h.Add("header", header);
             h.Add("data", tpl);
@@ -680,7 +671,7 @@ namespace BLL.Report.Punter
             return JsonUtil.ToJson(h);
         }
 
-        #endregion
+        #endregion SelTopPunterByBettype
 
         #region SelIpByCustomer
 
@@ -701,8 +692,8 @@ namespace BLL.Report.Punter
             {
                 hashError = true;
                 TemplateHandler.Assign(ref msg, "content", ex.Message);
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dt;
         }
@@ -733,7 +724,6 @@ namespace BLL.Report.Punter
                 Rows.Append(row);
             }
 
-
             if (dataRows.Length == 0)
                 TemplateHandler.ReplaceBlock(ref tpl, "Content",
                                              "<tr bgcolor='white'><td class='c' colspan='4'>" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata") +
@@ -754,7 +744,7 @@ namespace BLL.Report.Punter
             return tpl;
         }
 
-        #endregion
+        #endregion SelIpByCustomer
 
         #region SelBetCountByCustomer
 
@@ -769,7 +759,7 @@ namespace BLL.Report.Punter
             if (CastAide.AsInt32(leagueid) > 0)
                 hash.Add("leagueid", leagueid);
 
-            DataRow[] rows = {};
+            DataRow[] rows = { };
             var dt = new DataTable();
             try
             {
@@ -781,8 +771,8 @@ namespace BLL.Report.Punter
             {
                 hashError = true;
                 TemplateHandler.Assign(ref msg, "content", ex.Message);
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dt;
         }
@@ -790,7 +780,7 @@ namespace BLL.Report.Punter
         public string SelBetCountByCustomer(string custid, string username, string fromdate, string todate,
                                             ref string fullpath, string leagueid)
         {
-            DataRow[] rows = {};
+            DataRow[] rows = { };
             DataTable dt = GetSelBetCountByCustomer(custid, username, fromdate, todate, leagueid);
             rows = dt.Select();
 
@@ -825,7 +815,6 @@ namespace BLL.Report.Punter
                 htmlContent.Append(row);
             }
 
-
             string footer = TemplateHandler.CopyBlock(tpl, "Footer");
             TemplateHandler.Assign(ref footer, "BetCount", NumberFormat.DecFormat(total.BetCount, 0));
             TemplateHandler.Assign(ref footer, "WinCount", NumberFormat.DecFormat(total.Wincount, 0));
@@ -859,7 +848,7 @@ namespace BLL.Report.Punter
             return tpl;
         }
 
-        #endregion;
+        #endregion SelBetCountByCustomer
 
         #region SelSports
 
@@ -883,7 +872,7 @@ namespace BLL.Report.Punter
             return JsonUtil.ToJson(hashtable);
         }
 
-        #endregion
+        #endregion SelSports
 
         #region SelLeagues
 
@@ -911,7 +900,7 @@ namespace BLL.Report.Punter
             return html.ToString();
         }
 
-        #endregion
+        #endregion SelLeagues
 
         #region SelTopPunterSummaryByLeague
 
@@ -937,8 +926,8 @@ namespace BLL.Report.Punter
             {
                 hashError = true;
                 TemplateHandler.Assign(ref msg, "content", ex.Message);
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dt;
         }
@@ -946,7 +935,7 @@ namespace BLL.Report.Punter
         public string SelTopPunterSummaryByLeague(string leagueid, string leaguename, string fromdate, string todate,
                                                   string toprow, string orderby, string ordertype)
         {
-            DataRow[] rows = {};
+            DataRow[] rows = { };
             DataTable dt = GetSelTopPunterSummaryByLeague(leagueid, leaguename, fromdate, todate, toprow, orderby,
                                                           ordertype);
             rows = dt.Select();
@@ -973,7 +962,7 @@ namespace BLL.Report.Punter
                 TemplateHandler.Assign(ref row, "todate", todate);
                 TemplateHandler.Assign(ref row, "WinlostIBC", negativenumber(dataRow["WinlostIbc"]));
                 TemplateHandler.Assign(ref row, "TurnOver", NumberFormat.DecFormat(dataRow["Turnover"], 2));
-                TemplateHandler.Assign(ref row, "Margin", negativenumber(CastAide.AsDecimal(dataRow["Margin"])*100, "%"));
+                TemplateHandler.Assign(ref row, "Margin", negativenumber(CastAide.AsDecimal(dataRow["Margin"]) * 100, "%"));
                 TemplateHandler.Assign(ref row, "BetCount", NumberFormat.DecFormat(dataRow["Betcount"], 0));
 
                 total.WinlostIBC += CastAide.AsDecimal(dataRow["WinlostIBC"]);
@@ -983,10 +972,9 @@ namespace BLL.Report.Punter
                 htmlContent.Append(row);
             }
 
-
             total.Margin =
                 CastAide.AsDecimal(
-                    NumberFormat.DecFormat((total.WinlostIBC/(total.TurnOver == 0 ? 1 : total.TurnOver))*100, 2));
+                    NumberFormat.DecFormat((total.WinlostIBC / (total.TurnOver == 0 ? 1 : total.TurnOver)) * 100, 2));
             string footer = TemplateHandler.CopyBlock(tpl, "Footer");
             TemplateHandler.Assign(ref footer, "WinlostIBC", negativenumber(total.WinlostIBC));
             TemplateHandler.Assign(ref footer, "TurnOver", NumberFormat.DecFormat(total.TurnOver, 2));
@@ -1025,7 +1013,7 @@ namespace BLL.Report.Punter
             return JsonUtil.ToJson(h);
         }
 
-        #endregion
+        #endregion SelTopPunterSummaryByLeague
 
         #region SelTopPunterByLeagueCustId
 
@@ -1051,8 +1039,8 @@ namespace BLL.Report.Punter
             {
                 hashError = true;
                 TemplateHandler.Assign(ref msg, "content", ex.Message);
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dt;
         }
@@ -1060,7 +1048,7 @@ namespace BLL.Report.Punter
         public string SelTopPunterByLeagueCustId(string custId, string leagueid, string username, string sporttype,
                                                  string fromdate, string todate, string orderby, string ordertype)
         {
-            DataRow[] rows = {};
+            DataRow[] rows = { };
             DataTable dt = GetSelTopPunterByLeagueCustId(custId, leagueid, username, sporttype, fromdate, todate,
                                                          orderby, ordertype);
             rows = dt.Select();
@@ -1087,7 +1075,7 @@ namespace BLL.Report.Punter
                 TemplateHandler.Assign(ref row, "Bettype", CacheRef.GetBettype(dataRow["bettype"]));
                 TemplateHandler.Assign(ref row, "WinlostIBC", negativenumber(dataRow["WinlostIbc"], ""));
                 TemplateHandler.Assign(ref row, "TurnOver", NumberFormat.DecFormat(dataRow["Turnover"], 2));
-                TemplateHandler.Assign(ref row, "Margin", negativenumber(CastAide.AsDecimal(dataRow["Margin"])*100, "%"));
+                TemplateHandler.Assign(ref row, "Margin", negativenumber(CastAide.AsDecimal(dataRow["Margin"]) * 100, "%"));
 
                 total.WinlostIBC += CastAide.AsDecimal(dataRow["WinlostIbc"]);
                 total.TurnOver += CastAide.AsDecimal(dataRow["Turnover"]);
@@ -1101,7 +1089,7 @@ namespace BLL.Report.Punter
 
             total.Margin =
                 CastAide.AsDecimal(
-                    NumberFormat.DecFormat((total.WinlostIBC/(total.TurnOver == 0 ? 1 : total.TurnOver))*100, 2));
+                    NumberFormat.DecFormat((total.WinlostIBC / (total.TurnOver == 0 ? 1 : total.TurnOver)) * 100, 2));
             string footer = TemplateHandler.CopyBlock(tpl, "Footer");
             TemplateHandler.Assign(ref footer, "Bettype", "Total");
             TemplateHandler.Assign(ref footer, "WinlostIBC", negativenumber(total.WinlostIBC, ""));
@@ -1142,7 +1130,7 @@ namespace BLL.Report.Punter
             return JsonUtil.ToJson(h);
         }
 
-        #endregion
+        #endregion SelTopPunterByLeagueCustId
 
         #region Export2ExcelSelTopPunterSummary
 
@@ -1156,19 +1144,20 @@ namespace BLL.Report.Punter
                 case "SelTopPunterSummary":
                     key = keySelTopPunterSummary;
                     break;
+
                 case "SelTopPunterSummaryByLeagues":
                     key = keySelTopPunterSummaryByLeague;
                     break;
             }
 
-            var hashCach = (Hashtable) GetCachedObjData(key);
+            var hashCach = (Hashtable)GetCachedObjData(key);
             var dt = new DataTable();
-            DataRow[] Rows = {};
+            DataRow[] Rows = { };
             string title = "";
             if (hashCach != null)
             {
-                dt = (DataTable) hashCach["data"];
-                title = (string) hashCach["title"];
+                dt = (DataTable)hashCach["data"];
+                title = (string)hashCach["title"];
             }
             else
             {
@@ -1178,6 +1167,7 @@ namespace BLL.Report.Punter
                         dt = GetSelTopPunterSummary(username, fromdate, todate, toprow, orderby, ordertype);
                         title = "Punter Summary from " + fromdate + " to " + todate;
                         break;
+
                     case "SelTopPunterSummaryByLeagues":
                         dt = GetSelTopPunterSummaryByLeague(leagueid, leaguename, fromdate, todate, toprow, orderby,
                                                             ordertype);
@@ -1209,7 +1199,6 @@ namespace BLL.Report.Punter
             // CellStyle bgcolorText = new CellStyle();
             // CellStyle bgcolorNumber = new CellStyle();
 
-
             // CellStyle cellNumberNormalEven = new CellStyle();
             // cellNumberNormalEven.VerticalAlignment = VerticalAlignmentStyle.Center;
             // cellNumberNormalEven.Borders.SetBorders(MultipleBorders.Outside, Color.Gray, LineStyle.Thin);
@@ -1235,13 +1224,11 @@ namespace BLL.Report.Punter
             // cellNumberNormal.Borders.SetBorders(MultipleBorders.Outside, Color.Gray, LineStyle.Thin);
             // cellNumberNormal.NumberFormat = "#,##0.00_);(#,##0.00)";
 
-
             // CellStyle cellNumberNegNormal = new CellStyle();
             // cellNumberNegNormal.VerticalAlignment = VerticalAlignmentStyle.Center;
             // cellNumberNegNormal.Borders.SetBorders(MultipleBorders.Outside, Color.Gray, LineStyle.Thin);
             // cellNumberNegNormal.Font.Color = Color.Red;
             // cellNumberNegNormal.NumberFormat = "#,##0.00_);(#,##0.00)";
-
 
             // CellStyle cellNumberNormalPercent = new CellStyle();
             // cellNumberNormalPercent.VerticalAlignment = VerticalAlignmentStyle.Center;
@@ -1253,7 +1240,6 @@ namespace BLL.Report.Punter
             // cellNumberNegNormalPercent.Borders.SetBorders(MultipleBorders.Outside, Color.Gray, LineStyle.Thin);
             // cellNumberNegNormalPercent.Font.Color = Color.Red;
             // cellNumberNegNormalPercent.NumberFormat = "#,##0.00%_);(#,##0.00)%";
-
 
             // CellStyle cellTextNormal = new CellStyle();
             // cellTextNormal.VerticalAlignment = VerticalAlignmentStyle.Center;
@@ -1270,7 +1256,6 @@ namespace BLL.Report.Punter
             // cellNumberTotal.Font.Color = Color.Black;
             // cellNumberTotal.NumberFormat = "#,##0.00_);(#,##0.00)";
 
-
             // CellStyle cellNumberNegTotal = new CellStyle();
             // cellNumberNegTotal.VerticalAlignment = VerticalAlignmentStyle.Center;
             // cellNumberNegTotal.Borders.SetBorders(MultipleBorders.Outside, Color.Gray, LineStyle.Thin);
@@ -1279,7 +1264,6 @@ namespace BLL.Report.Punter
             // cellNumberNegTotal.Font.Weight = ExcelFont.BoldWeight;
             // cellNumberNegTotal.Font.Color = Color.Red;
             // cellNumberNegTotal.NumberFormat = "#,##0.00_);(#,##0.00)";
-
 
             // CellStyle cellNumberTotalPercent = new CellStyle();
             // cellNumberTotalPercent.VerticalAlignment = VerticalAlignmentStyle.Center;
@@ -1290,7 +1274,6 @@ namespace BLL.Report.Punter
             // cellNumberTotalPercent.Font.Color = Color.Black;
             // cellNumberTotalPercent.NumberFormat = "#,##0.00%_);(#,##0.00%)";
 
-
             // CellStyle cellNumberNegTotalPercent = new CellStyle();
             // cellNumberNegTotalPercent.VerticalAlignment = VerticalAlignmentStyle.Center;
             // cellNumberNegTotalPercent.Borders.SetBorders(MultipleBorders.Outside, Color.Gray, LineStyle.Thin);
@@ -1299,7 +1282,6 @@ namespace BLL.Report.Punter
             // cellNumberNegTotalPercent.Font.Weight = ExcelFont.BoldWeight;
             // cellNumberNegTotalPercent.Font.Color = Color.Red;
             // cellNumberNegTotalPercent.NumberFormat = "#,##0.00%_);(#,##0.00)%";
-
 
             // CellStyle cellTextTotal = new CellStyle();
             // cellTextTotal.VerticalAlignment = VerticalAlignmentStyle.Center;
@@ -1310,17 +1292,17 @@ namespace BLL.Report.Punter
             // cellTextTotal.Font.Color = Color.Black;
             // cellTextTotal.WrapText = true;
 
-            #endregion
+            #endregion declare format cell
 
             #region columnwidth
 
-            ws.Columns[0].Width = 20*256;
-            ws.Columns[1].Width = 15*256;
-            ws.Columns[2].Width = 15*256;
-            ws.Columns[3].Width = 15*256;
-            ws.Columns[4].Width = 15*256;
+            ws.Columns[0].Width = 20 * 256;
+            ws.Columns[1].Width = 15 * 256;
+            ws.Columns[2].Width = 15 * 256;
+            ws.Columns[3].Width = 15 * 256;
+            ws.Columns[4].Width = 15 * 256;
 
-            #endregion
+            #endregion columnwidth
 
             #region Header
 
@@ -1336,7 +1318,7 @@ namespace BLL.Report.Punter
 
             ws.Cells.GetSubrangeAbsolute(1, 0, 1, 4).Style = gem.GetStyleTitle();
 
-            #endregion
+            #endregion Header
 
             #region Content
 
@@ -1351,7 +1333,7 @@ namespace BLL.Report.Punter
             {
                 index++;
 
-                IsEven = index%2 == 0;
+                IsEven = index % 2 == 0;
 
                 winlost = CastAide.AsDecimal(dr["WinlostIbc"]);
                 turnover = CastAide.AsDecimal(dr["turnover"]);
@@ -1380,7 +1362,7 @@ namespace BLL.Report.Punter
                 i++;
             }
 
-            totalmargin = (totalwinlost/((totalturnover == 0) ? 1 : totalturnover));
+            totalmargin = (totalwinlost / ((totalturnover == 0) ? 1 : totalturnover));
             ws.Cells[i, 0].Value = "Total";
             ws.Cells[i, 0].Style = gem.GetStyleTextTotal();
 
@@ -1399,10 +1381,10 @@ namespace BLL.Report.Punter
             base.excelFile = excelFile;
             ExportExcelFile(type + "-" + DateTime.Today.ToShortDateString().Replace("/", "-"));
 
-            #endregion
+            #endregion Content
         }
 
-        #endregion
+        #endregion Export2ExcelSelTopPunterSummary
 
         #region Export2ExcelSelTopPunterBy
 
@@ -1416,7 +1398,7 @@ namespace BLL.Report.Punter
             string columnname = "Sporttype";
 
             var dt = new DataTable();
-            DataRow[] Rows = {};
+            DataRow[] Rows = { };
             string title = "", FileName = "";
 
             var hashCache = new Hashtable();
@@ -1425,12 +1407,12 @@ namespace BLL.Report.Punter
             {
                 case "SelTopPunterByCustId":
                     columnname = "Sporttype";
-                    hashCache = (Hashtable) GetCachedObjData(keySelTopPunterByCustId);
+                    hashCache = (Hashtable)GetCachedObjData(keySelTopPunterByCustId);
                     if (hashCache != null)
                     {
-                        dt = (DataTable) hashCache["data"];
-                        title = (string) hashCache["title"];
-                        FileName = (string) hashCache["filename"];
+                        dt = (DataTable)hashCache["data"];
+                        title = (string)hashCache["title"];
+                        FileName = (string)hashCache["filename"];
                     }
                     else
                     {
@@ -1440,13 +1422,14 @@ namespace BLL.Report.Punter
                         FileName = "PunterByUserName-" + username;
                     }
                     break;
+
                 case "SelTopPunterByLeagueCustId":
                     columnname = "Bettype";
-                    hashCache = (Hashtable) GetCachedObjData(keySelTopPunterByLeagueCustId);
+                    hashCache = (Hashtable)GetCachedObjData(keySelTopPunterByLeagueCustId);
                     if (hashCache != null)
                     {
-                        dt = (DataTable) hashCache["data"];
-                        title = (string) hashCache["title"];
+                        dt = (DataTable)hashCache["data"];
+                        title = (string)hashCache["title"];
                     }
                     else
                     {
@@ -1457,14 +1440,15 @@ namespace BLL.Report.Punter
                     }
                     FileName = "PunterByUserName-" + username;
                     break;
+
                 case "SelTopPunterByBettype":
                     columnname = "leagueid";
-                    hashCache = (Hashtable) GetCachedObjData(keySelTopPunterByBettype);
+                    hashCache = (Hashtable)GetCachedObjData(keySelTopPunterByBettype);
                     if (hashCache != null)
                     {
-                        dt = (DataTable) hashCache["data"];
-                        title = (string) hashCache["title"];
-                        FileName = (string) hashCache["filename"];
+                        dt = (DataTable)hashCache["data"];
+                        title = (string)hashCache["title"];
+                        FileName = (string)hashCache["filename"];
                     }
                     else
                     {
@@ -1485,12 +1469,12 @@ namespace BLL.Report.Punter
 
             #region columnwidth
 
-            ws.Columns[0].Width = 20*256;
-            ws.Columns[1].Width = 15*256;
-            ws.Columns[2].Width = 15*256;
-            ws.Columns[3].Width = 15*256;
+            ws.Columns[0].Width = 20 * 256;
+            ws.Columns[1].Width = 15 * 256;
+            ws.Columns[2].Width = 15 * 256;
+            ws.Columns[3].Width = 15 * 256;
 
-            #endregion
+            #endregion columnwidth
 
             #region Header
 
@@ -1508,7 +1492,7 @@ namespace BLL.Report.Punter
 
             ws.Cells.GetSubrangeAbsolute(1, 0, 1, 3).Style = gem.GetStyleTitle();
 
-            #endregion
+            #endregion Header
 
             #region Content
 
@@ -1524,7 +1508,7 @@ namespace BLL.Report.Punter
             {
                 index++;
 
-                IsEven = index%2 == 0;
+                IsEven = index % 2 == 0;
 
                 winlost = CastAide.AsDecimal(dr["WinlostIbc"]);
                 turnover = CastAide.AsDecimal(dr["turnover"]);
@@ -1543,10 +1527,12 @@ namespace BLL.Report.Punter
                         else
                             ws.Cells[i, 0].Value = CacheRef.GetSportName(CastAide.AsString(dr[columnname]));
                         break;
+
                     case "SelTopPunterBySporttype":
                     case "SelTopPunterByLeagueCustId":
                         ws.Cells[i, 0].Value = CacheRef.GetBettype(CastAide.AsString(dr[columnname]));
                         break;
+
                     case "SelTopPunterByBettype":
                         ws.Cells[i, 0].Value = CacheRef.GetLeagueName(CastAide.AsString(dr[columnname]));
                         break;
@@ -1555,7 +1541,6 @@ namespace BLL.Report.Punter
                 ws.Cells[i, 0].Style = gem.GetStyleText(IsEven);
                 ws.Cells[i, 1].Value = winlost;
                 ws.Cells[i, 1].Style = gem.GetStyleNumber(winlost, IsEven, "");
-
 
                 ws.Cells[i, 2].Value = turnover;
                 ws.Cells[i, 2].Style = gem.GetStyleNumber(turnover, IsEven, "");
@@ -1566,13 +1551,12 @@ namespace BLL.Report.Punter
                 i++;
             }
 
-            totalmargin = (totalwinlost/((totalturnover == 0) ? 1 : totalturnover));
+            totalmargin = (totalwinlost / ((totalturnover == 0) ? 1 : totalturnover));
             ws.Cells[i, 0].Value = "Total";
             ws.Cells[i, 0].Style = gem.GetStyleTextTotal();
 
             ws.Cells[i, 1].Value = totalwinlost;
             ws.Cells[i, 1].Style = gem.GetStyleNumberTotal(totalwinlost, "");
-
 
             ws.Cells[i, 2].Value = totalturnover;
             ws.Cells[i, 2].Style = gem.GetStyleNumberTotal(totalturnover, "");
@@ -1583,10 +1567,10 @@ namespace BLL.Report.Punter
             base.excelFile = excelFile;
             ExportExcelFile(FileName);
 
-            #endregion
+            #endregion Content
         }
 
-        #endregion
+        #endregion Export2ExcelSelTopPunterBy
 
         #region Export2ExcelSelIPByCustomer
 
@@ -1599,14 +1583,14 @@ namespace BLL.Report.Punter
             var gem = new ExcelGemboxUtils();
 
             var hashCache = new Hashtable();
-            hashCache = (Hashtable) GetCachedObjData(keySelIpByCustomer);
+            hashCache = (Hashtable)GetCachedObjData(keySelIpByCustomer);
             var dt = new DataTable();
             string title = "";
             if (hashCache != null)
             {
-                dt = (DataTable) hashCache["data"];
-                title = (string) hashCache["title"];
-                FileName = (string) hashCache["filename"];
+                dt = (DataTable)hashCache["data"];
+                title = (string)hashCache["title"];
+                FileName = (string)hashCache["filename"];
             }
             else
             {
@@ -1620,12 +1604,12 @@ namespace BLL.Report.Punter
 
             #region columnwidth
 
-            ws.Columns[0].Width = 20*256;
-            ws.Columns[1].Width = 15*256;
-            ws.Columns[2].Width = 15*256;
-            ws.Columns[3].Width = 15*256;
+            ws.Columns[0].Width = 20 * 256;
+            ws.Columns[1].Width = 15 * 256;
+            ws.Columns[2].Width = 15 * 256;
+            ws.Columns[3].Width = 15 * 256;
 
-            #endregion
+            #endregion columnwidth
 
             #region Header
 
@@ -1640,7 +1624,7 @@ namespace BLL.Report.Punter
 
             ws.Cells.GetSubrangeAbsolute(1, 0, 1, 3).Style = gem.GetStyleTitle();
 
-            #endregion
+            #endregion Header
 
             #region Content
 
@@ -1648,7 +1632,7 @@ namespace BLL.Report.Punter
             bool IsEven = false;
             foreach (DataRow dr in Rows)
             {
-                IsEven = i%2 == 0;
+                IsEven = i % 2 == 0;
                 ws.Cells[i, 0].Value = dr["rptmonth"];
                 ws.Cells[i, 0].Style = gem.GetStyleText(IsEven);
 
@@ -1661,17 +1645,16 @@ namespace BLL.Report.Punter
                 ws.Cells[i, 3].Value = dr["country"];
                 ws.Cells[i, 3].Style = gem.GetStyleText(IsEven);
 
-
                 i++;
             }
 
             base.excelFile = excelFile;
             ExportExcelFile(FileName);
 
-            #endregion
+            #endregion Content
         }
 
-        #endregion
+        #endregion Export2ExcelSelIPByCustomer
 
         #region Export2ExcelSelBetCountByCustomer
 
@@ -1682,14 +1665,14 @@ namespace BLL.Report.Punter
             var excelFile = new ExcelFile();
             ExcelWorksheetCollection worksheets = excelFile.Worksheets;
 
-            var hashCache = (Hashtable) GetCachedObjData(keySelBetCountByCustomer);
+            var hashCache = (Hashtable)GetCachedObjData(keySelBetCountByCustomer);
             var dt = new DataTable();
-            DataRow[] Rows = {};
+            DataRow[] Rows = { };
             string title = "";
             if (hashCache != null)
             {
-                dt = (DataTable) hashCache["data"];
-                title = (string) hashCache["title"];
+                dt = (DataTable)hashCache["data"];
+                title = (string)hashCache["title"];
             }
             else
             {
@@ -1704,13 +1687,13 @@ namespace BLL.Report.Punter
 
             #region columnwidth
 
-            ws.Columns[0].Width = 20*256;
-            ws.Columns[1].Width = 15*256;
-            ws.Columns[2].Width = 15*256;
-            ws.Columns[3].Width = 15*256;
-            ws.Columns[4].Width = 15*256;
+            ws.Columns[0].Width = 20 * 256;
+            ws.Columns[1].Width = 15 * 256;
+            ws.Columns[2].Width = 15 * 256;
+            ws.Columns[3].Width = 15 * 256;
+            ws.Columns[4].Width = 15 * 256;
 
-            #endregion
+            #endregion columnwidth
 
             #region Header
 
@@ -1726,7 +1709,7 @@ namespace BLL.Report.Punter
 
             ws.Cells.GetSubrangeAbsolute(1, 0, 1, 4).Style = gem.GetStyleTitle();
 
-            #endregion
+            #endregion Header
 
             #region Content
 
@@ -1739,7 +1722,7 @@ namespace BLL.Report.Punter
             foreach (DataRow dr in Rows)
             {
                 index++;
-                IsEven = index%2 == 0;
+                IsEven = index % 2 == 0;
 
                 winlost = CastAide.AsDecimal(dr["WinlostIbc"]);
                 wincount = CastAide.AsDecimal(dr["wincount"]);
@@ -1769,7 +1752,6 @@ namespace BLL.Report.Punter
                 i++;
             }
 
-
             ws.Cells[i, 0].Value = "Total";
             ws.Cells[i, 0].Style = gem.GetStyleTextTotal();
 
@@ -1788,10 +1770,10 @@ namespace BLL.Report.Punter
             base.excelFile = excelFile;
             ExportExcelFile(filename);
 
-            #endregion
+            #endregion Content
         }
 
-        #endregion
+        #endregion Export2ExcelSelBetCountByCustomer
 
         #region Export2ExcelSelTopPunterBySport
 
@@ -1799,14 +1781,14 @@ namespace BLL.Report.Punter
                                                     string todate, string orderby, string ordertype)
         {
             var dt = new DataTable();
-            DataRow[] Rows = {};
+            DataRow[] Rows = { };
             string title = "", FileName = "";
-            var hashCache = (Hashtable) GetCachedObjData(keySelTopPunterBySporttype);
+            var hashCache = (Hashtable)GetCachedObjData(keySelTopPunterBySporttype);
             if (hashCache != null)
             {
-                dt = (DataTable) hashCache["data"];
-                title = (string) hashCache["title"];
-                FileName = (string) hashCache["filename"];
+                dt = (DataTable)hashCache["data"];
+                title = (string)hashCache["title"];
+                FileName = (string)hashCache["filename"];
             }
             else
             {
@@ -1829,13 +1811,13 @@ namespace BLL.Report.Punter
 
             #region columnwidth
 
-            ws.Columns[0].Width = 15*256;
-            ws.Columns[1].Width = 20*256;
-            ws.Columns[2].Width = 15*256;
-            ws.Columns[3].Width = 15*256;
-            ws.Columns[4].Width = 15*256;
+            ws.Columns[0].Width = 15 * 256;
+            ws.Columns[1].Width = 20 * 256;
+            ws.Columns[2].Width = 15 * 256;
+            ws.Columns[3].Width = 15 * 256;
+            ws.Columns[4].Width = 15 * 256;
 
-            #endregion
+            #endregion columnwidth
 
             #region Header
 
@@ -1851,7 +1833,7 @@ namespace BLL.Report.Punter
 
             ws.Cells.GetSubrangeAbsolute(1, 0, 1, 4).Style = gem.GetStyleTitle();
 
-            #endregion
+            #endregion Header
 
             #region Content
 
@@ -1860,7 +1842,6 @@ namespace BLL.Report.Punter
             decimal winlost = 0, turnover = 0, margin = 0;
             decimal totalwinlost = 0, totalturnover = 0, totalmargin = 0;
 
-
             int sport_p = 0, sport = 0;
             bool IsEven = false;
             int index = 0;
@@ -1868,7 +1849,7 @@ namespace BLL.Report.Punter
             {
                 index++;
 
-                IsEven = index%2 == 0;
+                IsEven = index % 2 == 0;
 
                 winlost = CastAide.AsDecimal(dr["WinlostIbc"]);
                 turnover = CastAide.AsDecimal(dr["turnover"]);
@@ -1893,13 +1874,11 @@ namespace BLL.Report.Punter
                 totalwinlost += winlost;
                 totalturnover += turnover;
 
-
                 ws.Cells[i, 1].Value = CacheRef.GetBettype(dr["bettype"]);
                 ws.Cells[i, 1].Style = gem.GetStyleText(IsEven);
 
                 ws.Cells[i, 2].Value = winlost;
                 ws.Cells[i, 2].Style = gem.GetStyleNumber(winlost, IsEven, "");
-
 
                 ws.Cells[i, 3].Value = turnover;
                 ws.Cells[i, 3].Style = gem.GetStyleNumber(turnover, IsEven, "");
@@ -1910,7 +1889,7 @@ namespace BLL.Report.Punter
                 i++;
             }
 
-            totalmargin = (totalwinlost/((totalturnover == 0) ? 1 : totalturnover));
+            totalmargin = (totalwinlost / ((totalturnover == 0) ? 1 : totalturnover));
 
             ws.Cells.GetSubrangeAbsolute(i, 0, i, 1).Merged = true;
             ws.Cells[i, 0].Value = "Total";
@@ -1928,9 +1907,9 @@ namespace BLL.Report.Punter
             base.excelFile = excelFile;
             ExportExcelFile(FileName);
 
-            #endregion
+            #endregion Content
         }
 
-        #endregion
+        #endregion Export2ExcelSelTopPunterBySport
     }
 }

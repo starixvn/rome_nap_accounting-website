@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using DNAide.Web;
-using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.Entities;
 
 namespace Sunplus.Accounting.DataAccess
 {
@@ -12,10 +12,12 @@ namespace Sunplus.Accounting.DataAccess
     public class SettingGroup
     {
         private ArrayList settinggroup = new ArrayList();
+
         public void Add(SettingControl st)
         {
             settinggroup.Add(st);
         }
+
         public ArrayList ShowSettingControl()
         {
             ArrayList _st = new ArrayList();
@@ -26,6 +28,7 @@ namespace Sunplus.Accounting.DataAccess
             }
             return _st;
         }
+
         public bool IsDisplay()
         {
             bool check = false;
@@ -39,7 +42,6 @@ namespace Sunplus.Accounting.DataAccess
 
         public string GetHTMLSettingControl()
         {
-
             string strsetting = "";
             string htmctl = "";
             string _htlctl = "";
@@ -117,16 +119,11 @@ namespace Sunplus.Accounting.DataAccess
                     }
                 }
 
-
-
                 //TemplateHandler.Assign(ref _htlctl, "{statusDLL}", control.IsDisableDownlines ? "checked='true'" : "");
                 lblagenttype = Sunplus.Accounting.Core.Common.Constants.GetNameByRoleId(control.RoleID);
 
                 TemplateHandler.Assign(ref _htlctl, "{lblagenttypeL}", lblagenttype);
                 TemplateHandler.Assign(ref _htlctl, "{lblagenttypeDLL}", (control.Type == "CS" ? "Casino" : lblagenttype) + "'s downlines");
-
-
-
 
                 if (i + 1 < arr.Count)
                 {
@@ -151,7 +148,6 @@ namespace Sunplus.Accounting.DataAccess
                         TemplateHandler.Assign(ref _htlctl, "{R}", nextControl.Value.ToString());
                         TemplateHandler.Assign(ref _htlctl, "{classnameR}", nextControl.CSSClass);
                     }
-
 
                     TemplateHandler.Assign(ref _htlctl, "{jsonclickR}", nextControl.JSOnClick);
                     TemplateHandler.Assign(ref _htlctl, "{jsonmouseoverR}", nextControl.JSOnMouseOver);
@@ -182,7 +178,6 @@ namespace Sunplus.Accounting.DataAccess
                     }
                     else
                     {
-
                         if ((Utils.IsBooleanType(nextControl.Value) && !(bool)nextControl.Value) || !nextControl.IsDisableDownlines)
                         {
                             TemplateHandler.Assign(ref _htlctl, "{oldvalueDLR}", "0");
@@ -199,8 +194,6 @@ namespace Sunplus.Accounting.DataAccess
                             TemplateHandler.RemoveBlock(ref _htlctl, "chkdownlineR");
                         }
                     }
-
-
 
                 }
                 else
@@ -220,12 +213,10 @@ namespace Sunplus.Accounting.DataAccess
                     TemplateHandler.Assign(ref _htlctl, "{oldvalueDLR}", "");
                     TemplateHandler.Assign(ref _htlctl, "{statusDLR}", "");
                     TemplateHandler.RemoveBlock(ref _htlctl, "removeable");
-
                 }
                 strsetting += _htlctl;
             }
             return strsetting;
-
         }
 
         //string GetSelectBettingPopupHTML(SettingControl control)
@@ -248,7 +239,7 @@ namespace Sunplus.Accounting.DataAccess
         //        TemplateHandler.Assign(ref s, "{disabledDL}", "");
         //    }
         //    else
-        //    { 
+        //    {
         //        TemplateHandler.Assign(ref s, "{checked}", "checked='true'");
         //        TemplateHandler.Assign(ref s, "{disabledDL}", "disabled='disabled'");
 

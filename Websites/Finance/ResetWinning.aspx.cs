@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Text;
-using System.Collections.Generic;
-using DNAide.Web;
 using DNAide.Utils;
-//using Sunplus.Core.LoggingLib;
+using DNAide.Web;
 using Sunplus.Accounting.Business;
 using Sunplus.Accounting.Business.BootStrappers;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Entities;
-using Sunplus.Accounting.Entities.ViewModel;
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
-
 
 public partial class Finance_ResetWinning : PageBase
 {
@@ -34,7 +28,7 @@ public partial class Finance_ResetWinning : PageBase
             //Get Data here
             var list = userService.GetResetWinning();
             //List<ResetWinning> list = new List<ResetWinning>();
-            
+
             if (list.Count > 0)
             {
                 decimal dcBalance = 0;
@@ -43,14 +37,14 @@ public partial class Finance_ResetWinning : PageBase
                 int count = 0;
 
                 foreach (var r in list)
-                {   
+                {
                     string strTmp = strTpl;
                     if (count == 0)//First row
                     {
                         dcBalance = r.Amount;
                         TemplateHandler.Assign(ref strTmp, "date", r.Date.ToString("M/d/yyyy"));
                         TemplateHandler.RemoveBlock(ref strTmp, "reset");
-                        TemplateHandler.ReplaceBlock(ref strTmp, "viewtrans", "-");                        
+                        TemplateHandler.ReplaceBlock(ref strTmp, "viewtrans", "-");
                         TemplateHandler.ReplaceBlock(ref strTmp, "view", "-");
                         TemplateHandler.Assign(ref strTmp, "amount", "-");
                         TemplateHandler.Assign(ref strTmp, "balance", NumberFormat.DecFormat(dcBalance, 2));
@@ -62,10 +56,10 @@ public partial class Finance_ResetWinning : PageBase
 
                         TemplateHandler.Assign(ref strTmp, "date", r.Date.ToString("M/d/yyyy"));
                         TemplateHandler.Assign(ref strTmp, "disabled", r.IsReset ? "disabled" : string.Empty);
-                        if(r.IsReset && dcAmount != 0)
+                        if (r.IsReset && dcAmount != 0)
                         {
                             TemplateHandler.Assign(ref strTmp, "amtcss", "red");
-                            TemplateHandler.Assign(ref strTmp, "isreset",  "1");
+                            TemplateHandler.Assign(ref strTmp, "isreset", "1");
                         }
                         TemplateHandler.Assign(ref strTmp, "amtcss", string.Empty);
                         TemplateHandler.Assign(ref strTmp, "isreset", "0");
@@ -75,16 +69,16 @@ public partial class Finance_ResetWinning : PageBase
                         if (dcAmount <= dcRange && dcAmount >= (-dcRange))
                         {
                             TemplateHandler.RemoveBlock(ref strTmp, "reset");
-                            TemplateHandler.ReplaceBlock(ref strTmp, "viewtrans", "-"); 
+                            TemplateHandler.ReplaceBlock(ref strTmp, "viewtrans", "-");
                         }
                         else
-                            TemplateHandler.RemoveBlock(ref strTmp, "view");                            
-                        
+                            TemplateHandler.RemoveBlock(ref strTmp, "view");
+
                         TemplateHandler.Assign(ref strTmp, "transactions", r.Date.ToString("M/d/yyyy"));
                         TemplateHandler.Assign(ref strTmp, "action", r.Date.ToString("M/d/yyyy"));
                     }
                     count++;
-                    
+
                     strBuild.Append(strTmp);
                 }
             }
@@ -105,4 +99,3 @@ public partial class Finance_ResetWinning : PageBase
         return strBuild.ToString();
     }
 }
-

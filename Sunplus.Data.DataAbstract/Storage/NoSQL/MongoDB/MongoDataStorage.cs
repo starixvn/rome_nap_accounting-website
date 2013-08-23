@@ -8,7 +8,6 @@ namespace Sunplus.Data.DataAbstract.Storage.NoSQL.MongoDB
 {
     public class MongoDataStorage : DataAccess, INoSQL
     {
-        
         private readonly Mongo _server;
         private readonly MongoDatabase _database;
 
@@ -21,18 +20,17 @@ namespace Sunplus.Data.DataAbstract.Storage.NoSQL.MongoDB
                                     NoSqlElement.Option);
                 _database = _server.Database;
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 Error.WriteLog(exception);
-               
             }
         }
 
         public T Select<T>(object value)
         {
             try
-            {                
-                var queryCommand = new {_id = Q.Equals(value.ToString())};
+            {
+                var queryCommand = new { _id = Q.Equals(value.ToString()) };
                 var result = _database.GetCollection<T>().Find(queryCommand).FirstOrDefault();
                 _server.ConnectionProvider.Close(_database.CurrentConnection);
                 return result;
@@ -80,8 +78,7 @@ namespace Sunplus.Data.DataAbstract.Storage.NoSQL.MongoDB
             {
                 _database.GetCollection<T>().Save(data);
                 _server.ConnectionProvider.Close(_database.CurrentConnection);
-                 return true;
-               
+                return true;
             }
             catch (Exception exception)
             {
@@ -144,7 +141,7 @@ namespace Sunplus.Data.DataAbstract.Storage.NoSQL.MongoDB
         {
             try
             {
-                _database.GetCollection<T>().Delete(new {_id = Q.Equals(value)});
+                _database.GetCollection<T>().Delete(new { _id = Q.Equals(value) });
                 _server.ConnectionProvider.Close(_database.CurrentConnection);
                 return true;
             }

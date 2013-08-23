@@ -1,24 +1,24 @@
 ﻿using System;
+
+//using Fanex.Tarus.SpecialDelete.Entity;
+using System.Collections.Generic;
+
+//using Fanex.Tarus.SpecialDelete.Business;
+using System.Data;
 using System.Web;
 using DNAide.Core;
 using DNAide.Web;
-using IBCUtils;
-
-using Sunplus.Accounting.Business.SpecialDelete;
-using Sunplus.Accounting.Entities.SpecialDelete;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Core.LoggingLib;
-//using Fanex.Tarus.SpecialDelete.Business;
-using System.Data;
-//using Fanex.Tarus.SpecialDelete.Entity;
-using System.Collections.Generic;
 using Fanex.Tarus.SpecialDelete.SendEmail.Business;
 using Fanex.Tarus.SpecialDelete.SendEmail.Entity;
+using IBCUtils;
+using Sunplus.Accounting.Business.SpecialDelete;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using Sunplus.Accounting.Entities.SpecialDelete;
 
-//using Sunplus.Core.LoggingLib;
+
 
 /// <summary>
 /// Summary description for DeleteBet
@@ -90,11 +90,12 @@ namespace Sunplus.Accounting.Business.BetList
                     if (errcode == 0)
                     {
                         #region send private message to users
-                        // send private message to users for cancel their transactions                                               
+
+                        // send private message to users for cancel their transactions
 
                         Sunplus.Accounting.Entities.SpecialDelete.Message pmsg = new Sunplus.Accounting.Entities.SpecialDelete.Message();
                         int[] targetid = new int[1];//This is a CustID of ticket that is deleted [TargetID Field]
-                        string[] targetname = new string[1];//This is a UserName of ticket that is deleted [TargetName Field]                
+                        string[] targetname = new string[1];//This is a UserName of ticket that is deleted [TargetName Field]
                         string[] transid = { betId };
 
                         pmsg.Content_en = CastAide.AsString(HttpContext.Current.Request["men"]);
@@ -124,7 +125,7 @@ namespace Sunplus.Accounting.Business.BetList
                                     targetid[0] = ArrDownlineID[i];
                                     targetname[0] = ArrDownlineName[i];
 
-                                    if (targetid[0] < 100) continue;//SRecommend < 100 and roleid=3 
+                                    if (targetid[0] < 100) continue;//SRecommend < 100 and roleid=3
 
                                     if (MessageId == 0)
                                         MessageId = Messenger.SetMessage(pmsg, targetid, targetname, MatchId, transid);
@@ -141,7 +142,7 @@ namespace Sunplus.Accounting.Business.BetList
                                 targetid[0] = ArrDownlineID[i];
                                 targetname[0] = ArrDownlineName[i];
 
-                                if (targetid[0] < 100) continue; //SRecommend < 100 and roleid=3 
+                                if (targetid[0] < 100) continue; //SRecommend < 100 and roleid=3
 
                                 if (MessageId == 0)
                                     MessageId = Messenger.SetMessage(pmsg, targetid, targetname, MatchId, transid);
@@ -150,7 +151,7 @@ namespace Sunplus.Accounting.Business.BetList
                             }
                         }
 
-                        #endregion
+                        #endregion send private message to users
 
                         result = "Success|You have deleted successfully BetID : " + betId;
 
@@ -177,7 +178,7 @@ namespace Sunplus.Accounting.Business.BetList
                         }
                         else if (bettype >= 80 && bettype <= 120)
                         {
-                            ////4- Number Game                        
+                            ////4- Number Game
                             _emailService.SendEmailWhenDeleteBetToCSD(resultModel, dtMatch, dtUsers, dtChoice, true, false, reason);
                             _emailService.SendEmailWhenDeleteBetToInternalGroup(resultModel, dtMatch, dtUsers, dtChoice, true, false, false, reason);
                             _emailService.SendEmailWhenDeleteBetToInternalGroup(resultModel, dtMatch, dtUsers, dtChoice, true, false, true, reason);
@@ -207,8 +208,7 @@ namespace Sunplus.Accounting.Business.BetList
                             //7-Virtual Sport
                             _emailService.SendEmailWhenDeleteVirtualSportToCSD(errcode, errmsg, delResult.PrivateMessage);
                             _emailService.SendEmailWhenDeleteVirtualSportToInternalGroup(errcode, errmsg, delResult.PrivateMessage, true); // for real currency
-                            _emailService.SendEmailWhenDeleteVirtualSportToInternalGroup(errcode, errmsg, delResult.PrivateMessage, false); // for test currency                        
-
+                            _emailService.SendEmailWhenDeleteVirtualSportToInternalGroup(errcode, errmsg, delResult.PrivateMessage, false); // for test currency
                         }
                         else
                         {
@@ -224,7 +224,7 @@ namespace Sunplus.Accounting.Business.BetList
                         //_emailService.SendEmailWhenDeleteBetToInternalGroupEarlyKO(delResult.PrivateMessage, string.Empty, true, reason); // real currency
                         //_emailService.SendEmailWhenDeleteBetToInternalGroupEarlyKO(delResult.PrivateMessage, string.Empty, false, reason); // test currency
 
-                        #endregion
+                        #endregion Send CSD, Real Currency, Test Currency
 
                         #region analysis code temp
 
@@ -270,8 +270,7 @@ namespace Sunplus.Accounting.Business.BetList
                         //result.ErrorMessage += SendEmailWhenDeleteBetToInternalGroup(errcode, errmsg, dbResult, VirtualSportsName, true); // for real currency
                         //SendEmailWhenDeleteBetToInternalGroup(errcode, errmsg, dbResult, VirtualSportsName, false); // for test currency
 
-                        #endregion
-
+                        #endregion analysis code temp
                     }
                     else if (errcode == 103)
                     {
@@ -288,7 +287,6 @@ namespace Sunplus.Accounting.Business.BetList
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw;
-
             }
             return result;
         }

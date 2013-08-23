@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using DNAide.Data;
-using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.PositionTaking.Racing;
 using Sunplus.Accounting.Entities;
@@ -24,6 +23,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking.Racing
             }
             return null;
         }
+
         public System.Data.DataTable GetRacingSetting(int custId, int roleId)
         {
             DbResult dbResult = null;
@@ -46,21 +46,27 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking.Racing
                 case (int)CustInfo.Roles.Member:
                     spMaping = "GetMemberSetting";
                     break;
+
                 case (int)CustInfo.Roles.SuperOnMember: //*******Super on Member params*****
                     spMaping = "GetSuperOnMember";
                     break;
+
                 case (int)CustInfo.Roles.MasterOnMember: //*******Master on Member params*****
                     spMaping = "GetMasterOnMember";
                     break;
+
                 case (int)CustInfo.Roles.SuperMin: //*******Super Min params*****
                     spMaping = "GetSuperMin";
                     break;
+
                 case (int)CustInfo.Roles.MasterMinMax: //*******Master Min/Max params*****
                     spMaping = "GetMasterMinMax";
                     break;
+
                 case (int)CustInfo.Roles.AgentMinMax: //*******Agent Min/Max params*****
                     spMaping = "GetAgentMinMax";
                     break;
+
                 default:
                     break;
             }
@@ -73,7 +79,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking.Racing
                     return dbResult.ResultSet.Tables[0];
             }
             return null;
-
         }
 
         public Result UpdateRacingStatus(Hashtable settingParams)
@@ -92,7 +97,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking.Racing
 
         public Result UpdateRacingSetting(Hashtable settingParams, int roleId)
         {
-
             var result = new Result();
             string spMaping = null;
             switch (roleId)
@@ -112,12 +116,15 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking.Racing
                 case (int)CustInfo.Roles.Member:
                     spMaping = "UpdateMemberSetting";
                     break;
+
                 case (int)CustInfo.Roles.SuperOnMember: //*******Super on Member params*****
                     spMaping = "UpdateSuperOnMember";
                     break;
+
                 case (int)CustInfo.Roles.MasterOnMember: //*******Master on Member params*****
                     spMaping = "UpdateMasterOnMember";
                     break;
+
                 case (int)CustInfo.Roles.SuperMin: //*******Super Min params*****
                 case (int)CustInfo.Roles.MasterMinMax: //*******Master Min/Max params*****
                 case (int)CustInfo.Roles.AgentMinMax: //*******Agent Min/Max params*****

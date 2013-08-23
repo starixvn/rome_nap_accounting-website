@@ -1,20 +1,16 @@
 ﻿using System;
-using DNAide.Data;
-
-using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.Core.Common;
 using System.Collections;
+using DNAide.Data;
+using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 
 namespace Sunplus.Accounting.DataAccess.Report.MemberStatistics
 {
-    public class GamesActiveMembers :DataAccess, IGamesActiveMembers
+    public class GamesActiveMembers : DataAccess, IGamesActiveMembers
     {
         private static Core.Configurations.StoreProcedureElement GetReportStoreProcedure(ReportSession.StoreCollection storeCollection, string aliasName)
         {
             var sps = ReportSession.Instance[storeCollection];
             return sps != null ? sps[aliasName] : null;
-
         }
 
         public DbResult GetNumberOfActiveMembers(DateTime fromDate, DateTime toDate, DateTime balanceUpDay)
@@ -31,8 +27,7 @@ namespace Sunplus.Accounting.DataAccess.Report.MemberStatistics
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dbResult;
         }

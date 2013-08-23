@@ -1,44 +1,37 @@
 ﻿using System;
-using System.Data;
 using System.Collections;
+using System.Data;
+using System.Text;
 using System.Web;
 using System.Web.UI;
-using System.Text;
+using DNAide.Core;
+using DNAide.Data;
+using DNAide.Web;
 using IBCUtils;
 using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business.Customer;
 using Sunplus.Accounting.Business.Report;
-using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Business.Report.Common;
 using Sunplus.Accounting.Business.Security;
-using Sunplus.Accounting.Core.Web.Controls;
-using Sunplus.Accounting.DataAccess.IBCDLL.Report;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Accounting.DataAccess.IReportDAO;
 using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using DNAide.Core;
-using DNAide.Data;
-using DNAide.Web;
-
-
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Business.Report.Common;
 
 public partial class DailyWL_Bettype : PageBase
 {
-
-    bool IsBlankCell = false;
+    private bool IsBlankCell = false;
     public string mode = "";
     public string jsfunction = "";
     public string today = string.Format("{0:MM/dd/yyyy}", DateTime.Today);
     public string yesterday = string.Format("{0:MM/dd/yyyy}", DateTime.Today.AddDays(-1));
     private RMReportUtils utilsBARM = null;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         int count = 0;
         try
         {
-
             utilsBARM = new RMReportUtils(RMReportUtils.ReportName.Report2h, RMReportUtils.RMType.BARM);
 
             Title = Sunplus.Accounting.Business.Report.Reports.Title;
@@ -48,7 +41,7 @@ public partial class DailyWL_Bettype : PageBase
                 strfdate = today;
             else if (CastAide.AsInt16(dateReport) == 2)
                 strfdate = yesterday;
-            
+
             string str = "";
             string path = "";
             string header = "";
@@ -72,43 +65,48 @@ public partial class DailyWL_Bettype : PageBase
                     if (Permissions.IsDenyView2HSoccer)
                         Response.Redirect("~/AccessDenied.aspx");
                     break;
+
                 case "hr":
                     hash = (Hashtable)Session["sitemap_hr"];
                     header = "Horse Racing";
                     if (Permissions.IsDenyView2HOther)
                         Response.Redirect("~/AccessDenied.aspx");
                     break;
+
                 case "fi":
                     hash = (Hashtable)Session["sitemap_fi"];
                     header = "Finance";
                     if (Permissions.IsDenyView2HOther)
                         Response.Redirect("~/AccessDenied.aspx");
                     break;
+
                 case "casino":
                     hash = (Hashtable)Session["sitemap_casino"];
                     header = "Casino";
                     if (Permissions.IsDenyView2HOther)
                         Response.Redirect("~/AccessDenied.aspx");
                     break;
+
                 case "bingo":
                     hash = (Hashtable)Session["sitemap_bingo"];
                     header = "Bingo";
                     if (Permissions.IsDenyView2HOther)
                         Response.Redirect("~/AccessDenied.aspx");
                     break;
+
                 case "p2p":
                     hash = (Hashtable)Session["sitemap_p2p"];
                     header = "P2P";
                     if (Permissions.IsDenyView2HOther)
                         Response.Redirect("~/AccessDenied.aspx");
                     break;
+
                 default:
                     hash = (Hashtable)Session["sitemap_other"];
                     header = Request["path"].ToUpper();
                     if (Permissions.IsDenyView2HOther)
                         Response.Redirect("~/AccessDenied.aspx");
                     break;
-
             }
             string sitemap = "";
             string lnksporttype = hash["sporttype"].ToString();
@@ -126,16 +124,16 @@ public partial class DailyWL_Bettype : PageBase
                 path += "<b class='font-small'>" + Request["path"] + "</b>";
 
             bool hashData = true;
-            
 
             DateTime wldate;
 
             #region Header
+
             int displaydays = 0;
-            TimeSpan sp = DateTime.Today - new DateTime(2011,01,01);
+            TimeSpan sp = DateTime.Today - new DateTime(2011, 01, 01);
             displaydays = sp.Days;
             string evt = "SetEvtGetdate()";
-            
+
             string strDateTimeSingle = Sunplus.Accounting.Business.Report.Reports.GetDateTimeSingleMaxDays(strfdate, "Date", string.Empty, displaydays, 7, "../", string.Empty, evt);
 
             if (IsWL)
@@ -159,13 +157,12 @@ public partial class DailyWL_Bettype : PageBase
 
             headerDatetime.Text = strDateTimeSingle;
 
-            #endregion
+            #endregion Header
 
             //headerDatetime.Text = Reports.GetHeader(strfdate, strtdate, path, true);
             DbResult rs;
             DataTable dtLive = new DataTable(), dtNoneLive = new DataTable(), dt8RM = new DataTable(), dtBARM = new DataTable();
-            decimal _8RM_Live = 0, _8RM_NoneLive = 0, _BARM_Live = 0, _BARM_NoneLive=0;
-
+            decimal _8RM_Live = 0, _8RM_NoneLive = 0, _BARM_Live = 0, _BARM_NoneLive = 0;
 
             strfdate = (string.IsNullOrEmpty(strfdate)) ? DateTime.Today.ToShortDateString() : strfdate;
             if (!Validator.ValidDateMMDDYYYY(strfdate, out wldate).IsSuccess())
@@ -178,13 +175,15 @@ public partial class DailyWL_Bettype : PageBase
             {
                 case "soccer":
                     IsBlankCell = false;
-                    if (wldate>ReportUtils.BalanceUp.MoveBetsDay)
+                    if (wldate > ReportUtils.BalanceUp.MoveBetsDay)
                         rs = MatchWinLostReport.Acc_Rpt_DailyWLDirect_Soccer_Bettype(wldate);
-                    else if(wldate>=ReportUtils.BalanceUp.BalanceUpDay)
+                    else if (wldate >= ReportUtils.BalanceUp.BalanceUpDay)
                         rs = MatchWinLostReport.Acc_Rpt_DailyWLDirect_Soccer_Bettype_14(wldate);
                     else
                         rs = MatchWinLostReport.Acc_Rpt_DailyWLDirect_Soccer_Bettype_WH(wldate);
+
                     #region separate data Live and None Line
+
                     dtLive = rs.ResultSet.Tables[0].Clone();
                     dtNoneLive = rs.ResultSet.Tables[0].Clone();
                     dt8RM = rs.ResultSet.Tables[1];
@@ -220,7 +219,9 @@ public partial class DailyWL_Bettype : PageBase
                             dtNoneLive.Rows.Add(drNewNoneLive);
                         }
                     }
-                    #endregion
+
+                    #endregion separate data Live and None Line
+
                     break;
 
                 case "numbergame":
@@ -228,8 +229,9 @@ public partial class DailyWL_Bettype : PageBase
                     var dailyWL = CommonBootStrapper.Locator.GetInstance<IReportRacingDAO>();
 
                     rs = dailyWL.DailyWLDirect_NumberGame(wldate.ToShortDateString());
-                    
+
                     #region separate data Live and None Line
+
                     dtLive = rs.ResultSet.Tables[0].Clone();
                     dtNoneLive = rs.ResultSet.Tables[0].Clone();
                     foreach (DataRow dr in rs.ResultSet.Tables[0].Rows)
@@ -253,38 +255,44 @@ public partial class DailyWL_Bettype : PageBase
                             dtNoneLive.Rows.Add(drNewNoneLive);
                         }
                     }
-                    #endregion
+
+                    #endregion separate data Live and None Line
+
                     break;
+
                 case "hr":
                     IsBlankCell = false;
-                    if (wldate>ReportUtils.BalanceUp.MoveBetsDay)
+                    if (wldate > ReportUtils.BalanceUp.MoveBetsDay)
                         rs = MatchWinLostReport.Acc_Rpt_DailyWLDirect_HorseRacing(wldate);
-                    else if(wldate>=ReportUtils.BalanceUp.BalanceUpDay)
+                    else if (wldate >= ReportUtils.BalanceUp.BalanceUpDay)
                         rs = MatchWinLostReport.Acc_Rpt_DailyWLDirect_HorseRacing_14(wldate);
                     else
                         rs = MatchWinLostReport.Acc_Rpt_DailyWLDirect_HorseRacing_WH(wldate);
                     dtNoneLive = rs.ResultSet.Tables[0];
                     break;
+
                 case "fi":
                     IsBlankCell = false;
-                    if (wldate>ReportUtils.BalanceUp.MoveBetsDay)
+                    if (wldate > ReportUtils.BalanceUp.MoveBetsDay)
                         rs = MatchWinLostReport.Acc_Rpt_DailyWLDirect_Finance(wldate);
-                    else if(wldate>=ReportUtils.BalanceUp.BalanceUpDay)
+                    else if (wldate >= ReportUtils.BalanceUp.BalanceUpDay)
                         rs = MatchWinLostReport.Acc_Rpt_DailyWLDirect_Finance_14(wldate);
                     else
                         rs = MatchWinLostReport.Acc_Rpt_DailyWLDirect_Finance_WH(wldate);
                     dtNoneLive = rs.ResultSet.Tables[0];
                     break;
+
                 case "casino":
                     IsBlankCell = false;
-                    if (wldate>ReportUtils.BalanceUp.MoveBetsDay)
+                    if (wldate > ReportUtils.BalanceUp.MoveBetsDay)
                         rs = MatchWinLostReport.Acc_Rpt_DailyWLDirect_Casino(wldate);
-                    else if(wldate>=ReportUtils.BalanceUp.BalanceUpDay)
+                    else if (wldate >= ReportUtils.BalanceUp.BalanceUpDay)
                         rs = MatchWinLostReport.Acc_Rpt_DailyWLDirect_Casino14(wldate);
                     else
                         rs = MatchWinLostReport.Acc_Rpt_DailyWLDirect_Casino_WH(wldate);
                     dtNoneLive = rs.ResultSet.Tables[0];
                     break;
+
                 case "bingo":
                     IsBlankCell = false;
                     if (wldate > ReportUtils.BalanceUp.MoveBetsDay)
@@ -295,15 +303,18 @@ public partial class DailyWL_Bettype : PageBase
                         rs = MatchWinLostReport.Acc_Rpt_DailyWLDirect_Bingo_WH(wldate);
                     dtNoneLive = rs.ResultSet.Tables[0];
                     break;
+
                 case "otherbettype":
                     IsBlankCell = false;
-                    if (wldate>ReportUtils.BalanceUp.MoveBetsDay)
+                    if (wldate > ReportUtils.BalanceUp.MoveBetsDay)
                         rs = MatchWinLostReport.Acc_Rpt_DailyWLDirect_OtherSport_Bettype(wldate, sporttype);
-                    else if(wldate>=ReportUtils.BalanceUp.BalanceUpDay)
+                    else if (wldate >= ReportUtils.BalanceUp.BalanceUpDay)
                         rs = MatchWinLostReport.Acc_Rpt_DailyWLDirect_OtherSport_Bettype_14(wldate, sporttype);
                     else
                         rs = MatchWinLostReport.Acc_Rpt_DailyWLDirect_OtherSport_Bettype_WH(wldate, sporttype);
+
                     #region separate data Live and None Line
+
                     dtLive = rs.ResultSet.Tables[0].Clone();
                     dtNoneLive = rs.ResultSet.Tables[0].Clone();
                     dt8RM = rs.ResultSet.Tables[1];
@@ -339,10 +350,11 @@ public partial class DailyWL_Bettype : PageBase
                             dtNoneLive.Rows.Add(drNewNoneLive);
                         }
                     }
-                    #endregion
+
+                    #endregion separate data Live and None Line
+
                     break;
             }
-
 
             //str += "<table width='500px'><tr><td>";
             str += getcontent(wldate, 0, header, dtNoneLive, _8RM_NoneLive, _BARM_NoneLive);
@@ -359,23 +371,20 @@ public partial class DailyWL_Bettype : PageBase
                 case "casino":
                 case "bingo":
                     break;
+
                 default:
                     str += getcontent(wldate, 1, header, dtLive, _8RM_Live, _BARM_Live);
                     if (dtLive.Rows.Count > 0) count++;
                     break;
             }
 
-
             str += "</td></tr></table>";
-
-
 
             Footer.Text = GetFooter(strfdate, strfdate, sportname, sporttype, Request["path"]);
             Footer.Text += AssignHidden();
 
             content.Text = str;
 
-            
             //Export to Excel
             string btnExport = Request["IsExport"];
             if (btnExport == "1")
@@ -392,7 +401,7 @@ public partial class DailyWL_Bettype : PageBase
             //Response.Write(script);
             LogExtensions.ExceptionHandler(ex);
         }
-        finally 
+        finally
         {
             string script = "<script type ='text/javascript'>";
             script += "var count = " + count.ToString() + ";";
@@ -401,10 +410,12 @@ public partial class DailyWL_Bettype : PageBase
             jsfunction = script;
         }
     }
-    string type = "";
+
+    private string type = "";
 
     #region getcontent
-    string getcontent(DateTime wldate, int liveindicator, string header, DataTable dt, decimal total8rm, decimal totalBARM)
+
+    private string getcontent(DateTime wldate, int liveindicator, string header, DataTable dt, decimal total8rm, decimal totalBARM)
     {
         StringBuilder html = new StringBuilder();
 
@@ -423,7 +434,6 @@ public partial class DailyWL_Bettype : PageBase
             if (liveindicator == 1) isLive = "LIVE";
             else isLive = "NON - LIVE";
 
-
             TemplateHandler.Assign(ref norow, "{bgcolor-nodata}", "bgcolor-nodata");
             string strfdate;
             strfdate = Request["fdate"];
@@ -438,22 +448,24 @@ public partial class DailyWL_Bettype : PageBase
             html.Append(Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("WinLost/WinLostSummaryAllHeader.htm", new string[] { "{msg}", "{width}", "{col}", "{style}" }, new string[] { header + " \"" + isLive + "\" PRODUCT WIN/LOSS REPORT", "", "7", "width='500'" }));
             string WLheader = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("WinLost/WinLostSummaryHeader.htm");
 
-
             TemplateHandler.Assign(ref WLheader, "{TypeName}", "Bettype");
 
             if (dt.Rows.Count == 0)
             {
                 #region no data
+
                 TemplateHandler.RemoveBlock(ref WLheader, "no-link");
                 html.Append(WLheader);
                 TemplateHandler.Assign(ref norow, "{nodata}", (Resources.Language.thereisnodata));
                 TemplateHandler.Assign(ref norow, "{tdno}", "7");
                 html.Append(norow);
                 return html.ToString();
-                #endregion
+
+                #endregion no data
             }
 
             #region declare variable
+
             string sp = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("WinLost/WinLostSummarySportType.htm");
             string rows = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("WinLost/WinLostSummaryAllRow.htm");
             string colspans = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("WinLost/WinLostSummaryColspan.htm"), colspan = "";
@@ -480,7 +492,8 @@ public partial class DailyWL_Bettype : PageBase
             bool IsCalculatedTotalToteOdds = false, IsExistedTOdds = false, IsExistedFOdds = false;
             string condition = "", row = "";
             double l = 0;
-            #endregion declare
+
+            #endregion declare variable
 
             html.Append(WLheader);
             if (dt.Rows.Count > 0)
@@ -491,7 +504,7 @@ public partial class DailyWL_Bettype : PageBase
                 {
                     odd_even = (odd_even == "") ? "evenrow" : "";
                     row = rows.Clone().ToString();
-                    var bettypeId =CastAide.AsInt32(dr["bettype"]);
+                    var bettypeId = CastAide.AsInt32(dr["bettype"]);
                     Win = FormatHandler.GetDouble(dr["WinLost"]);
                     Pos = FormatHandler.GetDouble(dr["Position"]);
                     Com = FormatHandler.GetDouble(dr["Commission"]);
@@ -507,13 +520,16 @@ public partial class DailyWL_Bettype : PageBase
                             case 33:
                                 IsExistedTOdds = true;
                                 break;
+
                             case 41:
                             case 42:
                             case 43:
                                 IsExistedFOdds = true;
                                 break;
                         }
+
                         #region Subtotal Tote Odds HR
+
                         if (!IsCalculatedTotalToteOdds && IsExistedTOdds && bettypeId > 34)
                         {
                             row = rows.Clone().ToString();
@@ -541,13 +557,15 @@ public partial class DailyWL_Bettype : PageBase
 
                             IsCalculatedTotalToteOdds = true;
                         }
-                        #endregion
+
+                        #endregion Subtotal Tote Odds HR
                     }
 
                     BettypeName = RemotingRef.RefData.GetBetTypeName(bettypeId.ToString(), "E");  //CastAide.AsString(dr["bettypename"]);
                     Bettype = bettypeId.ToString();
 
                     #region Set Bettype Name
+
                     if (string.IsNullOrEmpty(BettypeName))
                     {
                         switch (Bettype)
@@ -559,8 +577,8 @@ public partial class DailyWL_Bettype : PageBase
                                 break;
                         }
                     }
-                    #endregion
 
+                    #endregion Set Bettype Name
 
                     string path = "Main>" + Request["path"] + ">" + BettypeName;
 
@@ -577,12 +595,15 @@ public partial class DailyWL_Bettype : PageBase
                             case 1:
                                 BettypeName = "<b>HDP (hedge)</b>";
                                 break;
+
                             case 3:
                                 BettypeName = "<b>OU (hedge)</b>";
                                 break;
+
                             case 7:
                                 BettypeName = "<b>1st HDP (hedge)</b>";
                                 break;
+
                             case 8:
                                 BettypeName = "<b>1st OU (hedge)</b>";
                                 break;
@@ -597,37 +618,46 @@ public partial class DailyWL_Bettype : PageBase
                             case 1:
                                 BettypeName = "<b>HDP</b>";
                                 break;
+
                             case 3:
                                 BettypeName = "<b>OU</b>";
                                 break;
+
                             case 4:
                                 BettypeName = "<b>CS</b>";
                                 break;
+
                             case 30:
                                 BettypeName = "<b>1st CS</b>";
                                 break;
+
                             case 6:
                                 BettypeName = "<b>TG</b>";
                                 break;
+
                             case 7:
                                 BettypeName = "<b>1st HDP</b>";
                                 break;
+
                             case 8:
                                 BettypeName = "<b>1st OU</b>";
                                 break;
+
                             case 14:
                                 BettypeName = "<b>FG/LG</b>";
                                 break;
+
                             case 1001:
                                 BettypeName = "<b>Kick Off</b>";
                                 break;
+
                             default:
                                 BettypeName = "<b>" + BettypeName + "</b>";
                                 break;
                         }
-
                     }
-                    #endregion
+
+                    #endregion all betype
 
                     string db = (ReportUtils.IsRepDB) ? "Rep" : "Main";
 
@@ -650,11 +680,13 @@ public partial class DailyWL_Bettype : PageBase
                     AllCom += Com; IBCCom += Com;
                     AllTurnOver += TurnOver; IBCTurnOver += TurnOver;
                 }
-                #endregion //end foreach
+
+                #endregion foreach
 
                 if (type == "hr")
                 {
                     #region Subtotal Totle & Fixed Odds HR
+
                     row = rows.Clone().ToString();
                     TemplateHandler.Assign(ref row, "style", "bgcolor='' style='font-weight:bold'");
                     if (!IsCalculatedTotalToteOdds && IsExistedTOdds)
@@ -675,7 +707,8 @@ public partial class DailyWL_Bettype : PageBase
                     Sunplus.Accounting.Business.Report.Reports.genrow(ref row, color, BettypeName, Win, Pos, Com, l, TurnOver, IsBlankCell);
                     html.Append(row);
                     row = rows.Clone().ToString();
-                    #endregion
+
+                    #endregion Subtotal Totle & Fixed Odds HR
                 }
 
                 #region //total
@@ -702,25 +735,28 @@ public partial class DailyWL_Bettype : PageBase
                 html.Append(totalRowSportType);
 
                 //Total IBC
-                if (total8rm != 0 || totalBARM !=0)
+                if (total8rm != 0 || totalBARM != 0)
                 {
                     decimal totalRM = total8rm + (utilsBARM.IsActive ? totalBARM : 0);
                     string str8rm = "<tr><td align='right' nowrap><b>IBC(8RM" + (utilsBARM.IsActive ? " + " + utilsBARM.DisplayName : string.Empty) + ") Total:</b></td><td nowrap align='right'><b>" + Sunplus.Accounting.Business.Report.Reports.colorvalue(totalRM) + "</b></td><td colspan='5'></td></tr>";
                     html.Append(str8rm);
                 }
-                #endregion end total
+
+                #endregion //total
             }
             else
             {
                 #region no data
+
                 TemplateHandler.Assign(ref norow, "{nodata}", (Resources.Language.thereisnodata));
                 html.Append(norow);
-                #endregion
+
+                #endregion no data
             }
         }
         catch (Exception ex)
         {
-           LogExtensions.ExceptionHandler(ex);
+            LogExtensions.ExceptionHandler(ex);
             TemplateHandler.Assign(ref norow, "{nodata}", (ex.Message));
             html.Append("</table>");
             throw;
@@ -729,10 +765,12 @@ public partial class DailyWL_Bettype : PageBase
 
         return html.ToString();
     }
-    #endregion
+
+    #endregion getcontent
 
     #region footer
-    string GetFooter(string fdate, string tdate, string sportname, string sporttype, string path)
+
+    private string GetFooter(string fdate, string tdate, string sportname, string sporttype, string path)
     {
         StringBuilder html = new StringBuilder();
 
@@ -753,10 +791,12 @@ public partial class DailyWL_Bettype : PageBase
 
         return html.ToString();
     }
-    #endregion end footer
+
+    #endregion footer
 
     #region AssignHidden
-    string AssignHidden()
+
+    private string AssignHidden()
     {
         Hashtable hash = new Hashtable();
 
@@ -773,9 +813,11 @@ public partial class DailyWL_Bettype : PageBase
 
         return CustomerUtils.AssignMultipleHidden(hash);
     }
-    #endregion
+
+    #endregion AssignHidden
 
     #region ExportToExcel
+
     public void ExportToExcel(string FileName)
     {
         string strStyle = "";
@@ -796,5 +838,6 @@ public partial class DailyWL_Bettype : PageBase
         Response.Write(stringWrite.ToString());
         Response.End();
     }
-    #endregion
+
+    #endregion ExportToExcel
 }

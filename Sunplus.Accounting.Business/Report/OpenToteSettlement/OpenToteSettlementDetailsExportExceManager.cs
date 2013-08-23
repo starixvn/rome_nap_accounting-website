@@ -12,8 +12,6 @@ using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.Core.Common;
 
 /// <summary>
 /// Summary description for OpenToteSettlementExportExceManager
@@ -113,7 +111,7 @@ namespace BLL.Report.OpenToteSettlement
                 ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow + rowspan, colspan).Merged = true;
 
                 ws.Cells.GetSubrangeAbsolute(indexRow, 26 - colspan, indexRow + rowspan, 26).Value = TitleRow;
-                    // +" Total";
+                // +" Total";
                 ws.Cells.GetSubrangeAbsolute(indexRow, 26 - colspan, indexRow + rowspan, 26).Style =
                     gembox.GetStyleTitle(red, green, blue);
                 ws.Cells.GetSubrangeAbsolute(indexRow, 26 - colspan, indexRow + rowspan, 26).Merged = true;
@@ -221,21 +219,17 @@ namespace BLL.Report.OpenToteSettlement
                 ws.Cells.GetSubrangeAbsolute(1, 0, 2, 0).Value = "Meeting-Currency";
                 ws.Cells.GetSubrangeAbsolute(1, 0, 2, 0).Merged = true;
 
-
                 ws.Cells.GetSubrangeAbsolute(1, 1, 2, 1).Style = gembox.GetStyleTitle(181, 196, 208);
                 ws.Cells.GetSubrangeAbsolute(1, 1, 2, 1).Value = "Race";
                 ws.Cells.GetSubrangeAbsolute(1, 1, 2, 1).Merged = true;
-
 
                 ws.Cells.GetSubrangeAbsolute(1, 2, 1, 7).Style = gembox.GetStyleTitle(208, 232, 251);
                 ws.Cells.GetSubrangeAbsolute(1, 2, 1, 7).Value = "Agency";
                 ws.Cells.GetSubrangeAbsolute(1, 2, 1, 7).Merged = true;
 
-
                 ws.Cells.GetSubrangeAbsolute(1, 8, 1, 16).Style = gembox.GetStyleTitle(181, 196, 208);
                 ws.Cells.GetSubrangeAbsolute(1, 8, 1, 16).Value = "IBC";
                 ws.Cells.GetSubrangeAbsolute(1, 8, 1, 16).Merged = true;
-
 
                 ws.Cells.GetSubrangeAbsolute(1, 17, 1, 24).Style = gembox.GetStyleTitle(208, 232, 251);
                 ws.Cells.GetSubrangeAbsolute(1, 17, 1, 24).Value = "Partner";
@@ -249,7 +243,7 @@ namespace BLL.Report.OpenToteSettlement
                 ws.Cells.GetSubrangeAbsolute(1, 26, 1, 26).Value = "Meeting-Currency";
                 ws.Cells.GetSubrangeAbsolute(1, 26, 2, 26).Merged = true;
 
-                string[] arrAgency = {"Win TO", "Place TO", "W/P TO", "Total TO", "Comm Income", "PT Win/Loss"};
+                string[] arrAgency = { "Win TO", "Place TO", "W/P TO", "Total TO", "Comm Income", "PT Win/Loss" };
                 for (int i = 0; i < arrAgency.Length; i++)
                 {
                     ws.Cells.GetSubrangeAbsolute(2, i + 2, 2, i + 2).Style = gembox.GetStyleTitle(208, 232, 251);
@@ -276,14 +270,14 @@ namespace BLL.Report.OpenToteSettlement
                     ws.Cells.GetSubrangeAbsolute(2, i + 17, 2, i + 17).Value = arrPartner[i];
                 }
 
-                #endregion
+                #endregion Header
 
                 #region Sort sub total by group currency
 
                 DataTable dtWL = rs.ResultSet.Tables[0];
                 int cid = 0, cid_p = 0, last_cid_usd = 101, last_cid_thb = 101, last_cid_in = 101;
 
-                #endregion
+                #endregion Sort sub total by group currency
 
                 DataView dv = dtWL.DefaultView;
                 dv.Sort = "currency asc, meetingid asc ";
@@ -304,7 +298,7 @@ namespace BLL.Report.OpenToteSettlement
                        bgcolorCurrency = "#d3e1c8",
                        bgcolorCurrency_sub = "#ffffc4";
                 string condition_Meeting = "", strTitleMeeting = "", strTotalMeeting = "", bgcolorMeeting = "#ffeedd";
-                    // #d0e3ca
+                // #d0e3ca
                 string meeting_currency = "",
                        strConditionSubTotalGroupCurrencyUSD = "",
                        strConditionSubTotalGroupCurrencyTHB = "",
@@ -317,7 +311,7 @@ namespace BLL.Report.OpenToteSettlement
                     cid_thb = 0,
                     cid_in = 0;
 
-                #endregion
+                #endregion Declare Variable
 
                 #region foreach
 
@@ -346,7 +340,7 @@ namespace BLL.Report.OpenToteSettlement
                                                                "_Origin", ref indexRow, true, m_index, gembox, IsEven,
                                                                false, 255, 238, 221);
 
-                            #endregion
+                            #endregion Total Meeting
 
                             #region Total Currency
 
@@ -366,7 +360,7 @@ namespace BLL.Report.OpenToteSettlement
                                                                    IsEven, true, 211, 225, 200);
                             }
 
-                            #endregion
+                            #endregion Total Currency
 
                             c_index = 0;
                             meetingid = 0;
@@ -377,7 +371,7 @@ namespace BLL.Report.OpenToteSettlement
                         m_index = 0;
                     }
 
-                    #endregion
+                    #endregion Each Currency
 
                     #region Each Meeting
 
@@ -400,12 +394,12 @@ namespace BLL.Report.OpenToteSettlement
                         meetingid = meetingid_p;
                         count_meeting++;
 
-                        IsEven = count_meeting%2 == 0;
+                        IsEven = count_meeting % 2 == 0;
                     }
 
                     m_index++;
 
-                    #endregion
+                    #endregion Each Meeting
 
                     #region Assign Each Row
 
@@ -415,10 +409,10 @@ namespace BLL.Report.OpenToteSettlement
 
                     ExcelAssignRow_OpenToteDetail(ref ws, dr, IsEven, "_Origin", ref indexRow, gembox);
 
-                    #endregion
+                    #endregion Assign Each Row
                 }
 
-                #endregion
+                #endregion foreach
 
                 #region Total
 
@@ -431,7 +425,7 @@ namespace BLL.Report.OpenToteSettlement
                 ExcelAssignRowTotal_OpenToteDetail(ref ws, dt, condition_Meeting, strTitleMeeting, cid, "_Origin",
                                                    ref indexRow, true, m_index, gembox, IsEven, false, 255, 238, 221);
 
-                #endregion
+                #endregion Total Meeting
 
                 #region Total Currency
 
@@ -440,7 +434,7 @@ namespace BLL.Report.OpenToteSettlement
                 ExcelAssignRowTotal_OpenToteDetail(ref ws, dt, strConditionCurrency, strTitleCurrency, cid, "_Origin",
                                                    ref indexRow, false, m_index, gembox, IsEven, true, 211, 225, 200);
 
-                #endregion
+                #endregion Total Currency
 
                 #region Grand Total
 
@@ -450,14 +444,13 @@ namespace BLL.Report.OpenToteSettlement
                                                    "_PoolCurr", ref indexRow, false, count_meeting, gembox, IsEven,
                                                    false, 146, 208, 80);
 
-                #endregion
+                #endregion Grand Total
 
-                #endregion
+                #endregion Total
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return excelFile;
         }

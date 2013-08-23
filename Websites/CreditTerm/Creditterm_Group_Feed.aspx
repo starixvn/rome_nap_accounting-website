@@ -18,7 +18,7 @@
 
 </head>
 <body>
-    <div class="main">
+    <div class="main" style="width: 608px">
         <div class="maincontent">
              <table border="0" cellpadding="0px" cellspacing="0px" class="maincontent_header">
                 <tr>
@@ -96,10 +96,20 @@
                         try{parent.jQuery.unblockUI();}catch(e){}
 
                     }
+
+                    function ExportToExcel(groupid) {
+                    	$('#IsExport').val('1');
+                    	$('#groupid').val(groupid);
+                    	$('#form').submit();
+                    }
                 </script>
 
             </div>
         </div>
     </div>
+	<form id="form" method="post" action="Creditterm_Group_Feed.aspx">
+        <input type="hidden" id="IsExport" name="IsExport" value="0" />
+		<input type="hidden" id="groupid" name="groupid" value="0" />
+    </form>
 </body>
 </html>

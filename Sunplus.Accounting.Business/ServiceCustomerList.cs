@@ -1,38 +1,32 @@
-﻿using System.Data;
-using System;
+﻿using System;
 using System.Collections;
+using System.Data;
 using System.ServiceModel.Activation;
 using System.Text;
-using DNAide.Web;
-
-using Sunplus.Accounting.Business.Customer;
-using Sunplus.Accounting.Core.Configurations;
-
-using Sunplus.Accounting.Core.Web;
+using DNAide.Core;
 using DNAide.Data;
+using DNAide.Web;
+using IBCUtils;
+using Sunplus.Accounting.Business.Customer;
+using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.Core.Web.Controls;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
-using DNAide.Core;
 using Sunplus.Bingo.Core;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Core.LoggingLib;
-using IBCUtils;
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.Business.Security;
-using Sunplus.Accounting.Business.Security;
-using System.Collections.Generic;
 
 namespace Sunplus.Accounting.Business
 {
     /// <summary>
     /// Summary description for ServiceCustomerList
     /// </summary>
-    /// 
+    ///
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class ServiceCustomerList : IServiceCustomerList
     {
-
         public ServiceCustomerList()
         {
             //
@@ -43,7 +37,8 @@ namespace Sunplus.Accounting.Business
         public string GenSuperListContent(string searchText, string selectAlpha, string selectCurreny, int type, string status, int PageIndex)
         {
             #region private varialbes
-            int TotalPages=0;
+
+            int TotalPages = 0;
             int tblWidth = 40 + 60 + 40 + 50 + 50 + 120 + 120 + 120 + 120 + 40 + 50 + 50 + 50 + 50 + 50 + 50 + 50 + 80;
             int divwidth = 0;
             int colNo = 18;
@@ -54,7 +49,9 @@ namespace Sunplus.Accounting.Business
             string contentTpl = "";
             var html = new StringBuilder();
             var html2 = new StringBuilder();
-            #endregion
+
+            #endregion private varialbes
+
             try
             {
                 var hash = new Hashtable();
@@ -79,7 +76,7 @@ namespace Sunplus.Accounting.Business
                     hash.Add("currency", selectCurreny);
                 if (!string.IsNullOrEmpty(status))
                     hash.Add("closed", DNAide.Core.CastAide.AsBoolean(DNAide.Core.CastAide.AsInt32(status)));
-            
+
                 hash.Add("isinternal", type);
 
                 string strCurrency = selectCurreny as string ?? string.Empty;
@@ -92,7 +89,7 @@ namespace Sunplus.Accounting.Business
                 }
 
                 contentTpl = WebUtils.LoadTemplateBySystem(tplURL, true);
-                
+
                 var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
                 bool visibleP2PSetting = CastAide.AsBoolean(p2pSetting.Value);
                 if (!visibleP2PSetting)
@@ -102,17 +99,15 @@ namespace Sunplus.Accounting.Business
                 TemplateHandler.Assign(ref contentTpl, "{roleid}", "4");
                 TemplateHandler.Assign(ref contentTpl, "{parentid}", "0");
                 //TemplateHandler.RemoveBlock(ref contentTpl, "nickname"); colNo--; colinfo--; tblWidth = tblWidth - 120;
-            
-          
+
                 //phuong.nguyen
                 //add edit field for Horseracing
-                #region start code               
 
+                #region start code
 
                 if (!Functions.Customer.IsVisibleMaxExposure) { TemplateHandler.RemoveBlock(ref contentTpl, "maxExposure"); colinfo--; colNo--; tblWidth = tblWidth - 50; }
                 if (!Functions.Customer.IsVisibleVirtualRate) { TemplateHandler.RemoveBlock(ref contentTpl, "virtualRate"); colinfo--; colNo--; tblWidth = tblWidth - 50; }
                 if (!BingoSettings.NumberGame.Enabled) { TemplateHandler.RemoveBlock(ref contentTpl, "numbergame"); colComm--; colNo--; tblWidth = tblWidth - 50; }
-            
 
                 if (!WebSettings.disabledHR)
                 {
@@ -126,7 +121,7 @@ namespace Sunplus.Accounting.Business
                 //casino
                 if (!WebSettings.disableCS)
                 {
-                    TemplateHandler.Assign(ref contentTpl, "{lblCSHeader}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblCSHeader") );
+                    TemplateHandler.Assign(ref contentTpl, "{lblCSHeader}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblCSHeader"));
                 }
                 else
                 {
@@ -149,7 +144,7 @@ namespace Sunplus.Accounting.Business
 
                 string row2 = TemplateHandler.CopyBlock(contentTpl, "row2");
                 TemplateHandler.RemoveBlock(ref contentTpl, "row2");
-            
+
                 TemplateHandler.Assign(ref contentTpl, "{Group}", "View");
                 TemplateHandler.Assign(ref contentTpl, "{groupa}", "Group A");
                 TemplateHandler.Assign(ref contentTpl, "{groupb}", "Group B");
@@ -160,7 +155,8 @@ namespace Sunplus.Accounting.Business
                 TemplateHandler.Assign(ref contentTpl, "{NG}", "Number Game");
                 TemplateHandler.Assign(ref contentTpl, "{minmaxPT}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMinPT"));
 
-                #endregion
+                #endregion start code
+
                 var ds = new DataSet();
                 var outputParams = new Hashtable();
 
@@ -177,7 +173,9 @@ namespace Sunplus.Accounting.Business
                         PageIndex = 1;
                     }
                     DataTable tbl = ds.Tables[0];
+
                     #region if (tbl.Rows.Count > 0)
+
                     if (tbl.Rows.Count > 0)
                     {
                         TemplateHandler.RemoveBlock(ref contentTpl, "noinfomation");
@@ -199,7 +197,7 @@ namespace Sunplus.Accounting.Business
                             {
                                 TemplateHandler.RemoveBlock(ref strRow, "statusEnabled");
                                 TemplateHandler.RemoveBlock(ref strRow2, "statusEnabled");
-                                strStatus = "Disabled";                           
+                                strStatus = "Disabled";
                             }
                             else
                             {
@@ -208,7 +206,6 @@ namespace Sunplus.Accounting.Business
                                 if (FormatHandler.GetBool(dr["closed"]))
                                 {
                                     strStatus = "Closed";
-                                
                                 }
                                 else if (CastAide.AsBoolean(dr["suspended"]))
                                 {
@@ -216,9 +213,7 @@ namespace Sunplus.Accounting.Business
                                 }
                                 else if (DataUtils.IsExistKey(dr, "isinternal") && CastAide.AsBoolean(dr["isinternal"]))
                                 {
-
                                     strStatus = "Open";
-                                   
                                 }
                                 else
                                 {
@@ -229,7 +224,9 @@ namespace Sunplus.Accounting.Business
                             TemplateHandler.Assign(ref strRow, "{status}", strStatus);
                             TemplateHandler.Assign(ref strRow2, "{status}", strStatus);
                             double maxEx = 0;
+
                             #region assign template
+
                             maxEx = FormatHandler.GetDouble(dr["matchlimit"]) * 100;
                             TemplateHandler.Assign(ref strRow, "{maxEx}", FormatHandler.FormatNumber2(maxEx));
                             TemplateHandler.Assign(ref strRow2, "{maxEx}", FormatHandler.FormatNumber2(maxEx));
@@ -238,7 +235,7 @@ namespace Sunplus.Accounting.Business
                             TemplateHandler.Assign(ref strRow, "{uplineid}", string.Empty);
                             TemplateHandler.Assign(ref strRow2, "{uplineid}", string.Empty);
                             TemplateHandler.Assign(ref strRow, "{GroupView}", "<span class='canchange'><a href='{link}' target='_self'>View</a></span>");
-                            TemplateHandler.Assign(ref strRow, "{link}", "MasterAgentList.aspx?superId=" + dr["custid"].ToString() + "&isSynccasino=" + 
+                            TemplateHandler.Assign(ref strRow, "{link}", "MasterAgentList.aspx?superId=" + dr["custid"].ToString() + "&isSynccasino=" +
                                 (dr.Table.Columns.Contains("synccasino") ? dr["synccasino"] : false));
                             TemplateHandler.Assign(ref strRow2, "{link}", "MasterAgentList.aspx?superId=" + dr["custid"].ToString() + "&isSynccasino=" +
                                 (dr.Table.Columns.Contains("synccasino") ? dr["synccasino"] : false));
@@ -253,7 +250,7 @@ namespace Sunplus.Accounting.Business
                             TemplateHandler.Assign(ref strRow2, "{username}", string.IsNullOrEmpty(_username) ? "&nbsp;" : _username);
                             TemplateHandler.Assign(ref strRow, "{nickname}", dr.IsNull("username2") ? "&nbsp;" : Convert.ToString(dr["username2"]));
                             TemplateHandler.Assign(ref strRow2, "{nickname}", dr.IsNull("username2") ? "&nbsp;" : Convert.ToString(dr["username2"]));
-                            TemplateHandler.Assign(ref strRow, "{firstname}", string.IsNullOrEmpty(dr["firstname"].ToString()) ? "&nbsp;": dr["firstname"].ToString());
+                            TemplateHandler.Assign(ref strRow, "{firstname}", string.IsNullOrEmpty(dr["firstname"].ToString()) ? "&nbsp;" : dr["firstname"].ToString());
                             TemplateHandler.Assign(ref strRow, "{lastname}", string.IsNullOrEmpty(dr["lastname"].ToString()) ? "&nbsp;" : dr["lastname"].ToString());
                             TemplateHandler.Assign(ref strRow, "{groupa}", FormatHandler.FormatNumber4(dr["groupa"]));
                             TemplateHandler.Assign(ref strRow, "{groupb}", FormatHandler.FormatNumber4(dr["groupb"]));
@@ -264,7 +261,8 @@ namespace Sunplus.Accounting.Business
                             TemplateHandler.Assign(ref strRow, "{ngcom}", FormatHandler.FormatNumber5(dr["discountNumber"]));
                             TemplateHandler.Assign(ref strRow, "{loginip}", string.IsNullOrEmpty(IpManagement.ReplaceVNIP(dr["lastloginip"].ToString())) ? "&nbsp;" : dr["lastloginip"].ToString());
                             TemplateHandler.Assign(ref strRow2, "{currency}", currency);
-                            #endregion
+
+                            #endregion assign template
 
                             if (WebSettings.disabledHR)
                             {
@@ -303,11 +301,11 @@ namespace Sunplus.Accounting.Business
                             {
                                 TemplateHandler.RemoveBlock(ref strRow, "edit-virtualSports");
                                 TemplateHandler.RemoveBlock(ref strRow2, "edit-virtualSports");
-                            }  
+                            }
                             html.Append(strRow);
                             html2.Append(strRow2);
                         }
-                        strpager=Pager.InitPager(TotalPages, PageIndex, "");
+                        strpager = Pager.InitPager(TotalPages, PageIndex, "");
                     }
                     else
                     {
@@ -318,14 +316,13 @@ namespace Sunplus.Accounting.Business
                         TemplateHandler.Assign(ref nohtml, "{nodata}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"));
                         html.Append(nohtml);
                         html2.Append(nohtml);
-                  
                     }
-                    #endregion
+
+                    #endregion if (tbl.Rows.Count > 0)
                 }
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -347,7 +344,7 @@ namespace Sunplus.Accounting.Business
             int divwidth = 0;
             int colNo = 18;
             int colinfo = 6;
-            int colComm = 7; 
+            int colComm = 7;
             string odd_even = "";
             string strpager = "";
             string contentTpl = "";
@@ -359,7 +356,7 @@ namespace Sunplus.Accounting.Business
             {
                 searchText = (!string.IsNullOrEmpty(searchText) && searchText.Equals("All")) ? "" : searchText;
                 selectAlpha = (!string.IsNullOrEmpty(selectAlpha) && selectAlpha.Equals("All")) ? "" : selectAlpha;
-            
+
                 var hash = new Hashtable();
 
                 if (!string.IsNullOrEmpty(searchText))
@@ -367,7 +364,7 @@ namespace Sunplus.Accounting.Business
                     string keyword = "%" + searchText.Replace("'", "") + "%";
                     hash.Add("keyword", keyword);
                 }
-            
+
                 if (!string.IsNullOrEmpty(selectAlpha))
                 {
                     string firstchar = selectAlpha;
@@ -382,7 +379,7 @@ namespace Sunplus.Accounting.Business
                     hash.Add("currency", selectCurreny);
                 if (!string.IsNullOrEmpty(status))
                     hash.Add("closed", DNAide.Core.CastAide.AsBoolean(DNAide.Core.CastAide.AsInt32(status)));
-            
+
                 hash.Add("isinternal", type);
 
                 contentTpl = WebUtils.LoadTemplateBySystem("Customer/AgentList.htm", true);
@@ -393,7 +390,7 @@ namespace Sunplus.Accounting.Business
                     TemplateHandler.RemoveBlock(ref contentTpl, "edit-p2p");
                 }
                 TemplateHandler.Assign(ref contentTpl, "{roleid}", "3");
-                //TemplateHandler.RemoveBlock(ref contentTpl, "nickname"); 
+                //TemplateHandler.RemoveBlock(ref contentTpl, "nickname");
                 colNo--; //colinfo--; //tblWidth = tblWidth - 120;
 
                 if (!Sunplus.Accounting.Core.Common.Functions.Customer.IsVisibleMaxExposure) { TemplateHandler.RemoveBlock(ref contentTpl, "maxExposure"); colinfo--; colNo--; tblWidth = tblWidth - 50; }
@@ -417,7 +414,6 @@ namespace Sunplus.Accounting.Business
                     allowCS = CastAide.AsInt32(superId) == 0 ? true : thirdPartyStatus.CasinoSync;
                     allowLiveCS = Security.Permissions.IsAllowEditLiveCasino(CastAide.AsInt32(superId, 0), thirdPartyStatus.LiveCasinoSync);
                 }
-                
 
                 TemplateHandler.Assign(ref contentTpl, "{isAgent}", "0");
                 string row = TemplateHandler.CopyBlock(contentTpl, "row");
@@ -425,8 +421,7 @@ namespace Sunplus.Accounting.Business
 
                 string row2 = TemplateHandler.CopyBlock(contentTpl, "row2");
                 TemplateHandler.RemoveBlock(ref contentTpl, "row2");
-           
-           
+
                 TemplateHandler.Assign(ref contentTpl, "{Group}", "View");
                 TemplateHandler.Assign(ref contentTpl, "{groupa}", "Group A");
                 TemplateHandler.Assign(ref contentTpl, "{groupb}", "Group B");
@@ -439,7 +434,6 @@ namespace Sunplus.Accounting.Business
 
                 #region start code
 
-         
                 if (!WebSettings.disabledHR)
                 {
                     TemplateHandler.Assign(ref contentTpl, "{HR}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblHRHeader"));
@@ -470,8 +464,9 @@ namespace Sunplus.Accounting.Business
 
                 TemplateHandler.Assign(ref contentTpl, "{colcom}", colComm.ToString());
                 TemplateHandler.Assign(ref contentTpl, "{colinfo}", colinfo.ToString());
-                #endregion
-            
+
+                #endregion start code
+
                 hash.Add("pageindex", PageIndex);
                 hash.Add("totalpages", TotalPages);
                 hash.Add("pagesize", AccCommon.pageSize);
@@ -484,14 +479,13 @@ namespace Sunplus.Accounting.Business
                     hash.Add("pagesize", AccCommon.pageSize);
                     hash.Add("srecommend", superId);
                     ds = SelectCustomer.GetMasterList(hash);
-                    
                 }
                 else
                 {
                     ds = SelectCustomer.GetMasterByComList_1(hash);
                     directMaster = true;
                 }
-            
+
                 if (ds != null)
                 {
                     TotalPages = CastAide.AsInt32(ds.Outputs["totalpages"]);
@@ -500,8 +494,9 @@ namespace Sunplus.Accounting.Business
 
                     DataTable tbl = ds.ResultSet.Tables[0];
                     int totalrow = tbl.Rows.Count;
-            
+
                     #region if (tbl.Rows.Count > 0)
+
                     if (totalrow > 0)
                     {
                         TemplateHandler.RemoveBlock(ref contentTpl, "noinfomation");
@@ -520,7 +515,9 @@ namespace Sunplus.Accounting.Business
                             string strRow2 = (string)row2.Clone();
                             TemplateHandler.Assign(ref strRow2, "{no}", rowNo.ToString());
                             string strStatus = "";
+
                             #region assign template
+
                             if (!FormatHandler.GetBool(dr["enabled"]))
                             {
                                 TemplateHandler.RemoveBlock(ref strRow2, "statusEnabled");
@@ -528,11 +525,10 @@ namespace Sunplus.Accounting.Business
                             }
                             else
                             {
-
                                 TemplateHandler.RemoveBlock(ref strRow2, "statusDisabled");
                                 if (FormatHandler.GetBool(dr["closed"]))
                                 {
-                                    strStatus = "Closed";                                  
+                                    strStatus = "Closed";
                                 }
                                 else if (CastAide.AsBoolean(dr["suspended"]))
                                 {
@@ -547,7 +543,6 @@ namespace Sunplus.Accounting.Business
                                     strStatus = "Open";
                                     if (odd_even == "") { odd_even = "evenrow"; } else { odd_even = ""; }
                                 }
-
                             }
                             TemplateHandler.Assign(ref strRow2, "{status}", strStatus);
                             TemplateHandler.Assign(ref strRow, "{status}", strStatus);
@@ -590,16 +585,18 @@ namespace Sunplus.Accounting.Business
                             TemplateHandler.Assign(ref strRow, "{othercom}", FormatHandler.FormatNumber5(dr["discountcs"]));
                             TemplateHandler.Assign(ref strRow, "{ngcom}", FormatHandler.FormatNumber5(dr["discountnumber"]));
                             TemplateHandler.Assign(ref strRow, "{loginip}", string.IsNullOrEmpty(IpManagement.ReplaceVNIP(dr["lastloginip"].ToString())) ? "&nbsp;" : dr["lastloginip"].ToString());
-                            #endregion
+
+                            #endregion assign template
+
                             if (WebSettings.disabledHR)
                             {
                                 TemplateHandler.RemoveBlock(ref strRow, "horseracing-edit");
                             }
                             //casino
                             var isSynCasinoUpline = !directMaster ? (!string.IsNullOrEmpty(synccasinoUpline) ?
-                                CastAide.AsBoolean(synccasinoUpline) : allowCS) : 
+                                CastAide.AsBoolean(synccasinoUpline) : allowCS) :
                                 CastAide.AsBoolean(dr.Table.Columns.Contains("SyncCasinoUpline") ? dr["SyncCasinoUpline"] : false);
-                            
+
                             if (isSynCasinoUpline)
                             {
                                 var htmlOpenCS = "onclick=\"OpenEditCS('" + dr["custid"] + "');\"";
@@ -628,13 +625,13 @@ namespace Sunplus.Accounting.Business
                             {
                                 TemplateHandler.RemoveBlock(ref strRow, "edit-virtualSports");
                                 TemplateHandler.RemoveBlock(ref strRow2, "edit-virtualSports");
-                            }  
+                            }
                             rowNo++;
                             html.Append(strRow);
                             html2.Append(strRow2);
                         }
                         //Assign pager
-                        strpager=Pager.InitPager(TotalPages, PageIndex, "");
+                        strpager = Pager.InitPager(TotalPages, PageIndex, "");
                     }
                     else
                     {
@@ -644,13 +641,12 @@ namespace Sunplus.Accounting.Business
                         html2.Append(WebUtils.LoadHtml("NoInformation.htm", new string[] { "{tdno}", "{nodata}", "{bgcolor-nodata}" },
                                                       new string[] { colNo.ToString(), ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"), "whitebg" }));
                     }
-                    #endregion
-              
+
+                    #endregion if (tbl.Rows.Count > 0)
                 }
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -689,8 +685,8 @@ namespace Sunplus.Accounting.Business
                     TemplateHandler.RemoveBlock(ref contentTpl, "edit-p2p");
                 }
                 TemplateHandler.Assign(ref contentTpl, "{roleid}", "2");
-                //TemplateHandler.RemoveBlock(ref contentTpl, "nickname"); 
-                //colNo--; 
+                //TemplateHandler.RemoveBlock(ref contentTpl, "nickname");
+                //colNo--;
                 //colinfo--; tblWidth = tblWidth - 120;
 
                 if (!Sunplus.Accounting.Core.Common.Functions.Customer.IsVisibleMaxExposure) { TemplateHandler.RemoveBlock(ref contentTpl, "maxExposure"); colinfo--; colNo--; tblWidth = tblWidth - 50; }
@@ -705,7 +701,7 @@ namespace Sunplus.Accounting.Business
                 TemplateHandler.RemoveBlock(ref contentTpl, "row2");
 
                 TemplateHandler.Assign(ref contentTpl, "{Group}", "View");
-            
+
                 TemplateHandler.Assign(ref contentTpl, "{colothersinfo}", "2");
                 TemplateHandler.Assign(ref contentTpl, "{groupa}", "Group A");
                 TemplateHandler.Assign(ref contentTpl, "{groupb}", "Group B");
@@ -722,13 +718,12 @@ namespace Sunplus.Accounting.Business
                 bool allowCS = CastAide.AsInt32(masterId) == 0 ? true : thirdPartyStatus.CasinoSync;
                 bool allowLiveCS = Security.Permissions.IsAllowEditLiveCasino(CastAide.AsInt32(masterId, 0), thirdPartyStatus.LiveCasinoSync);
                 bool allowFI = Permissions.IsAllowEditFI();
-          
+
                 #region start code
-   
-          
+
                 if (!WebSettings.disabledHR)
                 {
-                    TemplateHandler.Assign(ref contentTpl, "{HR}",ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblHRHeader") );
+                    TemplateHandler.Assign(ref contentTpl, "{HR}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblHRHeader"));
                 }
                 else
                 {
@@ -738,7 +733,7 @@ namespace Sunplus.Accounting.Business
                 //casino
                 if (allowCS)
                 {
-                    TemplateHandler.Assign(ref contentTpl, "{lblCSHeader}",ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblCSHeader") );
+                    TemplateHandler.Assign(ref contentTpl, "{lblCSHeader}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblCSHeader"));
                 }
                 else
                 {
@@ -747,7 +742,7 @@ namespace Sunplus.Accounting.Business
                 //finance
                 if (allowFI)
                 {
-                    TemplateHandler.Assign(ref contentTpl, "{lblFIHeader}",ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblHeaderFI"));
+                    TemplateHandler.Assign(ref contentTpl, "{lblFIHeader}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblHeaderFI"));
                 }
                 else
                 {
@@ -755,7 +750,8 @@ namespace Sunplus.Accounting.Business
                 }
                 TemplateHandler.Assign(ref contentTpl, "{colcom}", colComm.ToString());
                 TemplateHandler.Assign(ref contentTpl, "{colinfo}", colinfo.ToString());
-                #endregion
+
+                #endregion start code
 
                 bool isDirectMaster = CustomerUtils.IsTransferDaily(masterId);
                 if (!isDirectMaster)
@@ -770,7 +766,7 @@ namespace Sunplus.Accounting.Business
                 hash.Add("totalpages", TotalPages);
                 hash.Add("pagesize", AccCommon.pageSize);
                 ds = SelectCustomer.GetAgentList(hash);
-            
+
                 //display data of Agent List table
                 if (ds != null)
                 {
@@ -813,7 +809,6 @@ namespace Sunplus.Accounting.Business
                             }
                             else
                             {
-
                                 TemplateHandler.RemoveBlock(ref strRow, "statusDisabled");
                                 TemplateHandler.RemoveBlock(ref strRow2, "statusDisabled");
                                 if (FormatHandler.GetBool(dr["closed"]))
@@ -823,19 +818,16 @@ namespace Sunplus.Accounting.Business
                                 else if (CastAide.AsBoolean(dr["suspended"]))
                                 {
                                     strStatus = "Suspended";
-                              
                                 }
                                 else if (isInternal)
                                 {
                                     strStatus = "Open";
-                                 
                                 }
                                 else
                                 {
                                     strStatus = "Open";
                                     if (odd_even == "") { odd_even = "evenrow"; } else { odd_even = ""; }
                                 }
-
                             }
                             TemplateHandler.Assign(ref strRow, "{status}", strStatus);
                             TemplateHandler.Assign(ref strRow2, "{status}", strStatus);
@@ -915,17 +907,16 @@ namespace Sunplus.Accounting.Business
                             {
                                 TemplateHandler.RemoveBlock(ref strRow, "edit-virtualSports");
                                 TemplateHandler.RemoveBlock(ref strRow2, "edit-virtualSports");
-                            }  
+                            }
                             rowNo++;
                             html.Append(strRow);
                             html2.Append(strRow2);
                         }
-                   
+
                         if (TotalPages > 1)
                         {
                             strpager = Pager.InitPager(TotalPages, PageIndex, "");
                         }
-
                     }
                     else
                     {
@@ -939,7 +930,6 @@ namespace Sunplus.Accounting.Business
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -965,7 +955,7 @@ namespace Sunplus.Accounting.Business
             string odd_even = "";
             string strpager = "";
             string contentTpl = "";
-        
+
             StringBuilder html = new StringBuilder();
             StringBuilder html2 = new StringBuilder();
             try
@@ -986,7 +976,7 @@ namespace Sunplus.Accounting.Business
 
                 TemplateHandler.Assign(ref contentTpl, "{isAgent}", "0");
                 TemplateHandler.RemoveBlock(ref contentTpl, "minmaxPT");
-            
+
                 string row = TemplateHandler.CopyBlock(contentTpl, "row");
                 TemplateHandler.RemoveBlock(ref contentTpl, "row");
 
@@ -1008,13 +998,12 @@ namespace Sunplus.Accounting.Business
                 bool allowCS = CastAide.AsInt32(agentId) == 0 ? true : thirdPartyStatus.CasinoSync;
                 bool allowLiveCS = Security.Permissions.IsAllowEditLiveCasino(CastAide.AsInt32(agentId, 0), thirdPartyStatus.LiveCasinoSync);
                 bool allowFI = Permissions.IsAllowEditFI();
-          
+
                 #region start code
-         
-         
+
                 if (!WebSettings.disabledHR)
                 {
-                    TemplateHandler.Assign(ref contentTpl, "{HR}",ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblHRHeader"));
+                    TemplateHandler.Assign(ref contentTpl, "{HR}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblHRHeader"));
                 }
                 else
                 {
@@ -1034,7 +1023,6 @@ namespace Sunplus.Accounting.Business
                 //finance
                 if (allowFI)
                 {
-
                     TemplateHandler.Assign(ref contentTpl, "{lblFIHeader}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblHeaderFI"));
                 }
                 else
@@ -1044,8 +1032,8 @@ namespace Sunplus.Accounting.Business
 
                 TemplateHandler.Assign(ref contentTpl, "{colcom}", colComm.ToString());
                 TemplateHandler.Assign(ref contentTpl, "{colinfo}", colinfo.ToString());
-                #endregion
 
+                #endregion start code
 
                 DbResult ds = null;
                 Hashtable hash = new Hashtable();
@@ -1064,7 +1052,7 @@ namespace Sunplus.Accounting.Business
                     }
                     DataTable tbl = ds.ResultSet.Tables[0];
                     int totalrow = tbl.Rows.Count;
-   
+
                     if (totalrow > 0)
                     {
                         TemplateHandler.RemoveBlock(ref contentTpl, "noinfomation");
@@ -1088,30 +1076,25 @@ namespace Sunplus.Accounting.Business
                             }
                             else
                             {
-
                                 TemplateHandler.RemoveBlock(ref strRow, "statusDisabled");
                                 TemplateHandler.RemoveBlock(ref strRow2, "statusDisabled");
                                 if (FormatHandler.GetBool(dr["closed"]))
                                 {
                                     strStatus = "Closed";
-                               
                                 }
                                 else if (CastAide.AsBoolean(dr["suspended"]))
                                 {
                                     strStatus = "Suspended";
-                               
                                 }
                                 else if (CastAide.AsBoolean(isInternal))
                                 {
                                     strStatus = "Open";
-                                   
                                 }
                                 else
                                 {
                                     strStatus = "Open";
                                     if (odd_even == "") { odd_even = "evenrow"; } else { odd_even = ""; }
                                 }
-
                             }
                             TemplateHandler.Assign(ref strRow, "{status}", strStatus);
                             TemplateHandler.Assign(ref strRow, "{uplineid}", agentId);
@@ -1128,9 +1111,9 @@ namespace Sunplus.Accounting.Business
                             TemplateHandler.Assign(ref strRow, "{GroupView}", dr["ugroup"].ToString());
                             TemplateHandler.Assign(ref strRow, "{groupa}", FormatHandler.FormatNumber4(dr["discount"]));
                             TemplateHandler.Assign(ref strRow, "{groupb}", FormatHandler.FormatNumber5(dr["discountcs"]));
-                            TemplateHandler.Assign(ref strRow, "{groupc}",  FormatHandler.FormatNumber4(dr["playerdiscount"]));
-                            TemplateHandler.Assign(ref strRow, "{groupd}",FormatHandler.FormatNumber4(dr["playerdiscountcs"]));
-                            TemplateHandler.Assign(ref strRow, "{1X2}",FormatHandler.FormatNumber4(dr["discount1x2"]) );
+                            TemplateHandler.Assign(ref strRow, "{groupc}", FormatHandler.FormatNumber4(dr["playerdiscount"]));
+                            TemplateHandler.Assign(ref strRow, "{groupd}", FormatHandler.FormatNumber4(dr["playerdiscountcs"]));
+                            TemplateHandler.Assign(ref strRow, "{1X2}", FormatHandler.FormatNumber4(dr["discount1x2"]));
                             TemplateHandler.Assign(ref strRow, "{othercom}", FormatHandler.FormatNumber4(dr["playerdiscount1x2"]));
                             TemplateHandler.Assign(ref strRow, "{ngcom}", FormatHandler.FormatNumber4(dr["playerdiscountnumber"]));
 
@@ -1154,7 +1137,6 @@ namespace Sunplus.Accounting.Business
                             TemplateHandler.Assign(ref strRow2, "{1X2}", FormatHandler.FormatNumber4(dr["discount1x2"]));
                             TemplateHandler.Assign(ref strRow2, "{othercom}", FormatHandler.FormatNumber4(dr["playerdiscount1x2"]));
                             TemplateHandler.Assign(ref strRow2, "{ngcom}", FormatHandler.FormatNumber4(dr["playerdiscountnumber"]));
-                     
 
                             TemplateHandler.Assign(ref strRow, "{loginip}", string.IsNullOrEmpty(IpManagement.ReplaceVNIP(dr["lastloginip"].ToString())) ? "&nbsp;" : dr["lastloginip"].ToString());
                             TemplateHandler.Assign(ref strRow2, "{loginip}", string.IsNullOrEmpty(IpManagement.ReplaceVNIP(dr["lastloginip"].ToString())) ? "&nbsp;" : dr["lastloginip"].ToString());
@@ -1196,17 +1178,16 @@ namespace Sunplus.Accounting.Business
                             {
                                 TemplateHandler.RemoveBlock(ref strRow, "edit-virtualSports");
                                 TemplateHandler.RemoveBlock(ref strRow2, "edit-virtualSports");
-                            }  
+                            }
                             rowNo++;
                             html.Append(strRow);
-                            html2.Append(strRow2);     
-                        }
-                 
-                        if (TotalPages > 1)
-                        {
-                            strpager=Pager.InitPager(TotalPages, PageIndex, "");
+                            html2.Append(strRow2);
                         }
 
+                        if (TotalPages > 1)
+                        {
+                            strpager = Pager.InitPager(TotalPages, PageIndex, "");
+                        }
                     }
                     else
                     {
@@ -1220,7 +1201,6 @@ namespace Sunplus.Accounting.Business
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -1251,7 +1231,7 @@ namespace Sunplus.Accounting.Business
                     string keyword = "%" + searchText.Replace("'", "") + "%";
                     hash.Add("keyword", keyword);
                 }
-                if (!string.IsNullOrEmpty(selectAlpha))  
+                if (!string.IsNullOrEmpty(selectAlpha))
                 {
                     string firstchar = selectAlpha;
                     if (string.Compare(firstchar, "0-9", true) == 0)
@@ -1259,9 +1239,9 @@ namespace Sunplus.Accounting.Business
                         firstchar = "[" + firstchar + "]";
                     }
                     firstchar = firstchar + "%";
-                    hash.Add("firstchar", firstchar); 
+                    hash.Add("firstchar", firstchar);
                 }
-          
+
                 DbResult ds = null;
                 if (PageIndex < 1)
                 {
@@ -1282,6 +1262,7 @@ namespace Sunplus.Accounting.Business
                     html.Append(WebUtils.LoadHtml("Customer/OperatorListHeader.htm", null, null));
 
                     #region if (tbl.Rows.Count > 0)
+
                     if (tbl.Rows.Count > 0)
                     {
                         int rowNo = (PageIndex - 1) * AccCommon.pageSize + 1;
@@ -1310,7 +1291,6 @@ namespace Sunplus.Accounting.Business
                         }
                         html.Append("</table>");
                         html.Append(Pager.InitPager(TotalPages, PageIndex, ""));
-
                     }
                     else
                     {
@@ -1318,12 +1298,12 @@ namespace Sunplus.Accounting.Business
                                                       new string[] { "13", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata") }));
                         html.Append("</table>");
                     }
-                    #endregion
+
+                    #endregion if (tbl.Rows.Count > 0)
                 }
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }

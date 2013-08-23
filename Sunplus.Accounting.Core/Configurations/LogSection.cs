@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Configuration;
 using System.Linq;
-using System.Text;
-using System.Configuration;
 
 namespace Sunplus.Accounting.Core.Configurations
 {
@@ -12,15 +9,15 @@ namespace Sunplus.Accounting.Core.Configurations
         public LogTypeCollection LogType
         {
             get { return (LogTypeCollection)this["LogType"]; }
-        }        
+        }
 
         [ConfigurationProperty("TrackingTemplate", IsDefaultCollection = true)]
         public TrackingCollection Tracking
         {
             get { return (TrackingCollection)this["TrackingTemplate"]; }
-        }        
+        }
 
-        [ConfigurationProperty("Groups", IsDefaultCollection=true)]
+        [ConfigurationProperty("Groups", IsDefaultCollection = true)]
         public GroupCollection Groups
         {
             get { return (GroupCollection)this["Groups"]; }
@@ -34,19 +31,20 @@ namespace Sunplus.Accounting.Core.Configurations
 
         public TrackingTemplate DefaultTracking
         {
-            get { return (TrackingTemplate)this.Tracking.Cast<TrackingTemplate>().Where(tracking => tracking.IsDefault==true).SingleOrDefault<TrackingTemplate>(); }
+            get { return (TrackingTemplate)this.Tracking.Cast<TrackingTemplate>().Where(tracking => tracking.IsDefault == true).SingleOrDefault<TrackingTemplate>(); }
         }
 
         public static LogSection Instance
         {
             get
             {
-                 return ConfigurationManager.GetSection("LogSection") as LogSection;
+                return ConfigurationManager.GetSection("LogSection") as LogSection;
             }
         }
     }
 
     #region Tracking Configuration
+
     [ConfigurationCollection(typeof(LogTypeElement), AddItemName = "type")]
     public class LogTypeCollection : ConfigurationElementCollection
     {
@@ -85,6 +83,7 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return "type"; }
         }
     }
+
     public class LogTypeElement : ConfigurationElement
     {
         [ConfigurationProperty("id", IsRequired = true, IsKey = true)]
@@ -92,6 +91,7 @@ namespace Sunplus.Accounting.Core.Configurations
         {
             get { return (string)this["id"]; }
         }
+
         [ConfigurationProperty("name", DefaultValue = "")]
         public string Name
         {
@@ -102,8 +102,9 @@ namespace Sunplus.Accounting.Core.Configurations
         public bool IsTracking
         {
             get { return (bool)this["isTracking"]; }
-        }       
+        }
     }
+
     [ConfigurationCollection(typeof(TrackingTemplate), AddItemName = "tracking")]
     public class TrackingCollection : ConfigurationElementCollection
     {
@@ -142,6 +143,7 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return "tracking"; }
         }
     }
+
     public class TrackingTemplate : ConfigurationElement
     {
         [ConfigurationProperty("level", DefaultValue = "0", IsRequired = true, IsKey = true)]
@@ -149,7 +151,7 @@ namespace Sunplus.Accounting.Core.Configurations
         {
             get { return (int)this["level"]; }
         }
-        
+
         [ConfigurationProperty("action", DefaultValue = "*", IsRequired = true)]
         public string Action
         {
@@ -180,7 +182,6 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return (string)this["hiddenDefault"]; }
         }
 
-        
         [ConfigurationProperty("filters", IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(ActionCollection),
            AddItemName = "action",
@@ -221,6 +222,7 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return (InformationCollection)this["information"]; }
         }
     }
+
     [ConfigurationCollection(typeof(ActionElement), AddItemName = "action")]
     public class ActionCollection : ConfigurationElementCollection
     {
@@ -254,6 +256,7 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return "action"; }
         }
     }
+
     public class ActionElement : ConfigurationElement
     {
         [ConfigurationProperty("id", IsRequired = true, IsKey = true)]
@@ -268,7 +271,7 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return this["hidden"].ToString(); }
         }
 
-        [ConfigurationProperty("groupName", DefaultValue="", IsRequired=false)]
+        [ConfigurationProperty("groupName", DefaultValue = "", IsRequired = false)]
         public string GroupName
         {
             get { return this["groupName"].ToString(); }
@@ -320,6 +323,7 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return "param"; }
         }
     }
+
     public class ParamElement : ConfigurationElement
     {
         [ConfigurationProperty("name", IsRequired = true, IsKey = true)]
@@ -368,6 +372,7 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return "info"; }
         }
     }
+
     public class InfoElement : ConfigurationElement
     {
         [ConfigurationProperty("name", IsRequired = true, IsKey = true)]
@@ -430,6 +435,7 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return "sport"; }
         }
     }
+
     public class SportInfoElement : ConfigurationElement
     {
         [ConfigurationProperty("name", IsRequired = true, IsKey = true)]
@@ -448,9 +454,11 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return (ParamCollection)this["params"]; }
         }
     }
+
     #endregion Tracking Configuration
 
     #region Group Configuration
+
     [ConfigurationCollection(typeof(GroupElement), AddItemName = "group")]
     public class GroupCollection : ConfigurationElementCollection
     {
@@ -489,6 +497,7 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return "group"; }
         }
     }
+
     public class GroupElement : ConfigurationElement
     {
         [ConfigurationProperty("name", IsRequired = true, IsKey = true)]
@@ -507,6 +516,7 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return (SportCollection)this["sports"]; }
         }
     }
+
     [ConfigurationCollection(typeof(SportElement), AddItemName = "add")]
     public class SportCollection : ConfigurationElementCollection
     {
@@ -545,6 +555,7 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return "add"; }
         }
     }
+
     public class SportElement : ConfigurationElement
     {
         [ConfigurationProperty("id", IsRequired = true, IsKey = true)]
@@ -559,6 +570,6 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return this["label"].ToString(); }
         }
     }
+
     #endregion Group Configuration
-    
 }

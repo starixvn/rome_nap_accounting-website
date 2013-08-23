@@ -1,24 +1,23 @@
 ﻿using System.ServiceModel.Activation;
-using Sunplus.Accounting.Entities.Report.DownLinceBalance;
 using Sunplus.Accounting.Business.BootStrappers;
+using Sunplus.Accounting.Entities.Report.DownLinceBalance;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.Report.DownLineBalance
 {
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
-    public class DownLineBalanceService:IDownLineBalanceService
+    public class DownLineBalanceService : IDownLineBalanceService
     {
         public CurrencyDTO GetCurrenciesBySystem()
         {
             var result = CommonBootStrapper.Locator.GetInstance<IServiceDownLineBalance>();
             return result.GetCurrenciesBySystem();
         }
-        
+
         public DownLineBalanceDTO GetSuperBalance(string db, bool isYesterday, string usernameSearch, string firstletter, string currency, bool isViewTotalOnly)
         {
             var result = CommonBootStrapper.Locator.GetInstance<IServiceDownLineBalance>();
             return result.GetSuperBalance(db, isYesterday, usernameSearch, firstletter, currency, isViewTotalOnly);
         }
-
 
         public DownLineBalanceDTO GetMasterBalance(string db, int roleid, int custid, bool isYesterday, string usernameSearch, string firstletter, string currency)
         {
@@ -37,7 +36,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report.DownLineBalance
             var result = CommonBootStrapper.Locator.GetInstance<IServiceDownLineBalance>();
             return result.GetMemberBalance(db, roleid, custid, isYesterday, usernameSearch, firstletter, currency);
         }
-        
+
         public DifferenceBalanceInfo GetDifferenceBalance()
         {
             var result = CommonBootStrapper.Locator.GetInstance<IServiceDownLineBalance>();

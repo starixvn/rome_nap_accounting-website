@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Globalization;
+using DNAide.Core;
 using DNAide.Web;
 using IBCUtils;
 using Sunplus.Accounting.Core.Configurations;
-using DNAide.Core;
 
 namespace Sunplus.Accounting.Core.Web.Controls
 {
@@ -108,7 +108,6 @@ namespace Sunplus.Accounting.Core.Web.Controls
                 throw;
             }
         }
-
 
         /// <summary>
         /// Create date time selector
@@ -285,7 +284,5 @@ namespace Sunplus.Accounting.Core.Web.Controls
             }
         }
 
-
-       
     }
 }

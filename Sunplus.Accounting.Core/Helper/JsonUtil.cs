@@ -11,7 +11,6 @@ namespace Sunplus.Accounting.Core.Helper
     /// Summary description for JsonUlti
     /// </summary>
     public class JsonUtil
-
     {
         public static string ToJson(Hashtable data)
         {
@@ -42,7 +41,6 @@ namespace Sunplus.Accounting.Core.Helper
             return Serialize(dataTable);
         }
 
-
         private static string Serialize(object value)
         {
             Type type = value.GetType();
@@ -55,15 +53,15 @@ namespace Sunplus.Accounting.Core.Helper
                                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                            };
 
-            if (type == typeof (DataRow))
+            if (type == typeof(DataRow))
                 json.Converters.Add(new DataRowConverter());
-            else if (type == typeof (DataTable))
+            else if (type == typeof(DataTable))
                 json.Converters.Add(new DataTableConverter());
-            else if (type == typeof (DataSet))
+            else if (type == typeof(DataSet))
                 json.Converters.Add(new DataSetConverter());
 
             var sw = new StringWriter();
-            var writer = new JsonTextWriter(sw) {Formatting = Formatting.None, QuoteChar = '"'};
+            var writer = new JsonTextWriter(sw) { Formatting = Formatting.None, QuoteChar = '"' };
             //if (this.FormatJsonOutput)
             //    writer.Formatting = Formatting.Indented;
             //else
@@ -123,10 +121,9 @@ namespace Sunplus.Accounting.Core.Helper
 
         public override bool CanConvert(Type objectType)
         {
-            return typeof (DataRow).IsAssignableFrom(objectType);
+            return typeof(DataRow).IsAssignableFrom(objectType);
         }
     }
-
 
     /// <summary>
     /// Converts a DataTable to JSON. Note no support for deserialization
@@ -135,7 +132,7 @@ namespace Sunplus.Accounting.Core.Helper
     {
         public override bool CanConvert(Type valueType)
         {
-            return typeof (DataTable).IsAssignableFrom(valueType);
+            return typeof(DataTable).IsAssignableFrom(valueType);
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, JsonSerializer serializer)
@@ -177,9 +174,8 @@ namespace Sunplus.Accounting.Core.Helper
         /// </returns>
         public override bool CanConvert(Type valueType)
         {
-            return typeof (DataSet).IsAssignableFrom(valueType);
+            return typeof(DataSet).IsAssignableFrom(valueType);
         }
-
 
         public override object ReadJson(JsonReader reader, Type objectType, JsonSerializer serializer)
         {

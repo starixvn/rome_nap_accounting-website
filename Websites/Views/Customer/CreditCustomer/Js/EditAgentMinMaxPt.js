@@ -41,7 +41,7 @@ var edm = {
                 customer = JSON.parse(stringCustomer);
                 edm.initPtGrid();
                 edm.initForKnockout();
-                storeOldPTSetting = customer.ptSetting.clone();
+                storeOldPTSetting = Fanex.copy(customer.ptSetting);
             }
             , error: function (e) {
                 showAlertMessage("err", "Init Customer Error", 1);

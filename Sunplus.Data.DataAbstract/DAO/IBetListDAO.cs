@@ -10,6 +10,7 @@ namespace Sunplus.Data.DataAbstract.DAO
         List<Bettran> GetLatestBABetList(int totalRow);
 
         bool InsertBettran(Bettran bettran);
+
         bool UpdateBettran(Bettran bettran);
 
         bool DeleteBettran(string transId);

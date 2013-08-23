@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Runtime.Serialization;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Sunplus.Accounting.Entities.Report.Others
 {
@@ -10,6 +10,7 @@ namespace Sunplus.Accounting.Entities.Report.Others
     {
         [DataMember]
         public string Site { get; set; }
+
         [DataMember]
         public int BetCount { get; set; }
     }
@@ -20,6 +21,7 @@ namespace Sunplus.Accounting.Entities.Report.Others
     {
         [DataMember]
         public List<NumberOfBets> rows { get; set; }
+
         [DataMember]
         public NumberOfBets total { get; set; }
     }

@@ -1,29 +1,26 @@
 using System;
 using System.Data;
 using System.Text;
-using DNAide.Web;
-using Sunplus.Accounting.Core.Cache;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
-using IBCUtils;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using DNAide.Core;
-
+using DNAide.Web;
+using IBCUtils;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
 public partial class Report_WinlostMultipleBetOnlyDetail : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
         StringBuilder html = new StringBuilder();
-        html.Append(Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("WinLost/WinLostMultipleBetOnlyDetailAllHeader.htm", new string[] { "{refno}" }, new string[] { Resources.Language.RefNo + ": " + Request["refno"]}));
+        html.Append(Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("WinLost/WinLostMultipleBetOnlyDetailAllHeader.htm", new string[] { "{refno}" }, new string[] { Resources.Language.RefNo + ": " + Request["refno"] }));
         string norow = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("NoInformation.htm");
         TemplateHandler.Assign(ref norow, "{bgcolor-nodata}", "bgcolor-nodata");
         TemplateHandler.Assign(ref norow, "{tdno}", "1");
         TemplateHandler.Assign(ref norow, "{nodata}", Resources.Language.thereisnodata);
         long refno = 0;
         string lang = "E";
-        if(!string.IsNullOrEmpty(Request["refno"])) refno = Convert.ToInt64(Request["refno"]);
-        if(!string.IsNullOrEmpty(Request["lang"])) lang = Request["lang"];
+        if (!string.IsNullOrEmpty(Request["refno"])) refno = Convert.ToInt64(Request["refno"]);
+        if (!string.IsNullOrEmpty(Request["lang"])) lang = Request["lang"];
         DataTable dt = AccountReport.AccBetsSelBetCheckM(refno.ToString()).ResultSet.Tables[0];
         try
         {
@@ -33,7 +30,7 @@ public partial class Report_WinlostMultipleBetOnlyDetail : System.Web.UI.Page
                 string betteam = "";
                 int bettype = 0;
                 string rows = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("WinLost/WinLostMultipleBetOnlyDetailAllRow.htm");
-                string odd_even = "";                
+                string odd_even = "";
                 foreach (DataRow dr in dt.Rows)
                 {
                     StringBuilder str = new StringBuilder();
@@ -47,8 +44,9 @@ public partial class Report_WinlostMultipleBetOnlyDetail : System.Web.UI.Page
                     betteam = Convert.ToString(dr["betteam"]);
                     hdp1 = FormatHandler.GetDouble(dr["hdp1"]);
                     hdp2 = FormatHandler.GetDouble(dr["hdp2"]);
-                   
+
                     #region bettype
+
                     switch (bettype)
                     {
                         case 1:
@@ -66,6 +64,7 @@ public partial class Report_WinlostMultipleBetOnlyDetail : System.Web.UI.Page
                             }
                             str.Append("/" + FormatHandler.FormatNumber2(dr["odds"]) + "<br/>");
                             break;
+
                         case 2:
                             if (betteam == "h")
                             {
@@ -77,10 +76,11 @@ public partial class Report_WinlostMultipleBetOnlyDetail : System.Web.UI.Page
                             }
                             str.Append("/" + FormatHandler.FormatNumber2(dr["odds"]) + "<br/>");
                             break;
+
                         case 3:
                             if (betteam == "h")
                             {
-                                str.Append(Resources.Language.Over.ToUpper() + "@");  
+                                str.Append(Resources.Language.Over.ToUpper() + "@");
                             }
                             else if (betteam == "a")
                             {
@@ -89,15 +89,18 @@ public partial class Report_WinlostMultipleBetOnlyDetail : System.Web.UI.Page
                             str.Append(FormatHandler.FormatNumber2(hdp1));
                             str.Append("/" + FormatHandler.FormatNumber2(dr["odds"]) + "<br/>");
                             break;
+
                         case 4:
                             str.Append(dr["hdp1"] + ":" + dr["hdp2"] + "@");
                             str.Append(FormatHandler.FormatNumber2(dr["odds"]) + "<br/>");
                             break;
+
                         case 5:
                         case 6:
                             str.Append(dr["betteam"] + "@");
                             str.Append(FormatHandler.FormatNumber2(dr["odds"]) + "<br/>");
                             break;
+
                         case 7:
                             if (betteam == "h")
                             {
@@ -114,7 +117,8 @@ public partial class Report_WinlostMultipleBetOnlyDetail : System.Web.UI.Page
                             str.Append("/" + FormatHandler.FormatNumber2(dr["odds"]) + "<br/>");
                             break;
                     }
-                    #endregion
+
+                    #endregion bettype
 
                     TemplateHandler.Assign(ref row, "{odd_even}", odd_even);
                     TemplateHandler.Assign(ref row, "{refno}", str.ToString());
@@ -135,5 +139,4 @@ public partial class Report_WinlostMultipleBetOnlyDetail : System.Web.UI.Page
 
         content.Text = html.ToString();
     }
-
 }

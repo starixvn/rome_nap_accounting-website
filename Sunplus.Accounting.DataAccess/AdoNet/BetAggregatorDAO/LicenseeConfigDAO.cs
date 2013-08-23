@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Data;
 using System.Web;
 using DNAide.Core;
@@ -9,8 +8,6 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.DataAccess.IBetAggregatorDAO;
 using Sunplus.Accounting.Entities;
-
-using Sunplus.Core.LoggingLib;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.BetAggregatorDAO
 {
@@ -22,12 +19,11 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.BetAggregatorDAO
             return spElement;
         }
 
-
         public DataTable SelectAllLicensee()
         {
             DataTable dtResult = null;
             var spElement = GetBaStoreProcedure("SelAllLicensee");
-           
+
             var ds = DbHelper.Execute(spElement.Name, spElement.DbName);
             if (ds != null && ds.ResultSet != null && ds.ResultSet.Tables.Count > 0)
                 dtResult = ds.ResultSet.Tables[0];
@@ -55,19 +51,17 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.BetAggregatorDAO
             if (ds != null && ds.ResultSet != null && ds.ResultSet.Tables.Count > 0)
                 dtResult = ds.ResultSet.Tables[0];
             return dtResult;
-            
         }
-
 
         public Result InsertLicenseeConfig(int licenseeId, double hdpComm, double oneXTwoComm, double otherComm, double ngComm, bool enableBa)
         {
             var result = new Result();
             var param = new Hashtable();
-            param.Add("licenseeid",licenseeId);
-            param.Add("hdpcomm",hdpComm);
+            param.Add("licenseeid", licenseeId);
+            param.Add("hdpcomm", hdpComm);
             param.Add("1x2comm", oneXTwoComm);
-            param.Add("othercomm",otherComm);
-            param.Add("ngcomm",ngComm);
+            param.Add("othercomm", otherComm);
+            param.Add("ngcomm", ngComm);
             param.Add("enableba", enableBa);
             param.Add("userid", AppSession.AccId);
             param.Add("ip", HttpContext.Current.Request.UserHostAddress);
@@ -83,7 +77,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.BetAggregatorDAO
         {
             var result = new Result();
             var param = new Hashtable();
-            param.Add("licenseeid",licenseeId);
+            param.Add("licenseeid", licenseeId);
             param.Add("groupa", groupa);
             param.Add("groupb", groupb);
             param.Add("groupc", groupc);
@@ -116,7 +110,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.BetAggregatorDAO
             result.ErrorMessage = CastAide.AsString(rs.Outputs["errmsg"]);
 
             return result;
-            
         }
 
         public int CheckDownlineBA(int licenseeId)
@@ -193,8 +186,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.BetAggregatorDAO
 
         public DbResult BALimitWarning(int licenseeID, string licenseeName, double limitAmt)
         {
-            
-            
             var param = new Hashtable();
             param.Add("licenseeid", licenseeID);
             param.Add("licenseename", licenseeName);
@@ -204,7 +195,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.BetAggregatorDAO
 
             return rs;
         }
-
 
         public DataTable SelBAWinLossByCommLevel(int licenseeId, DateTime fromDate, DateTime toDate, int currencyId, int drawFilter, bool isExcludeTest)
         {
@@ -216,7 +206,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.BetAggregatorDAO
             param.Add("currency", currencyId);
             param.Add("drawfilter", drawFilter);
             param.Add("excludetest", isExcludeTest);
-            
+
             var rs = DbHelper.Execute(spElement.Name, param, spElement.DbName);
             if (rs != null || rs.ResultSet.Tables.Count > 0)
             {
@@ -224,7 +214,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.BetAggregatorDAO
             }
             return null;
         }
-
 
         public DbResult SelGroupCurrencyByLicensee(int licenseeId)
         {
@@ -235,7 +224,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.BetAggregatorDAO
             var rs = DbHelper.Execute(spElement.Name, param, spElement.DbName);
             return rs;
         }
-
 
         public Result UpdateGroupSettingByLicensee(int licenseeId, string setting)
         {

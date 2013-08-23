@@ -1,20 +1,17 @@
-﻿
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using DNAide.Core;
 using DNAide.Data;
-
+using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Cache.Extension;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Web.TplCore.App_Templates.Others.App_Templates.Others;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.Provider.Others;
 using Sunplus.Accounting.Entities.Others;
-using Sunplus.Core.LoggingLib;
 
 /// <summary>
 /// Summary description for News
@@ -24,6 +21,7 @@ namespace Sunplus.Accounting.Business.Others
     public class News : BaseManager
     {
         #region Const
+
         private const String VIEW_PERMISSION_DENY = "You do not have permission to view news.";
         private const String UPDATE_PERMISSION_DENY = "You do not have permission to view news.";
         private const String INSERT_PERMISSION_DENY = "You do not have permission to insert news.";
@@ -31,15 +29,16 @@ namespace Sunplus.Accounting.Business.Others
         private const String UPLOAD_PERMISSION_DENY = "You do not have permission to upload file on this page.";
         private const int PAGE_SIZE = 15;
         private const int LAST_NEWS_ROTATION_SIZE = 5;
-        private const String KEY_CACHE_FEATURE  = "news.a{0}.feature";
-        private const String KEY_CACHE_DETAIL   = "news.a{0}.i{1}.detail";
-        private const String KEY_CACHE_BYPAGE   = "news.a{0}.p{1}.list";
-        private const string KEY_CACHE_ALLPAGE  = "news.a{0}.p";
-        #endregion
+        private const String KEY_CACHE_FEATURE = "news.a{0}.feature";
+        private const String KEY_CACHE_DETAIL = "news.a{0}.i{1}.detail";
+        private const String KEY_CACHE_BYPAGE = "news.a{0}.p{1}.list";
+        private const string KEY_CACHE_ALLPAGE = "news.a{0}.p";
+
+        #endregion Const
 
         #region Constructor
 
-        #endregion
+        #endregion Constructor
 
         public NewsProvider NewsProvider
         {
@@ -48,18 +47,19 @@ namespace Sunplus.Accounting.Business.Others
         }
 
         #region InsertNews
-        /// <summary>        
+
+        /// <summary>
         /// Check host permission
         /// Insert news
         /// </summary>
         /// <param name="content"></param>
         /// <param name="date"></param>
         /// <returns></returns>
-        public String InsertNews(String title, String content, DateTime date, string func, int feature, string thumbnail, int appId, int ownerID,out int newsID)
+        public String InsertNews(String title, String content, DateTime date, string func, int feature, string thumbnail, int appId, int ownerID, out int newsID)
         {
             newsID = 0;
             String resultMessage = "";
-            // Check permission 
+            // Check permission
             bool hostPermission = false;
             try
             {
@@ -72,6 +72,7 @@ namespace Sunplus.Accounting.Business.Others
             if (hostPermission)
             {
                 #region Insert Data
+
                 try
                 {
                     var param = new Hashtable();
@@ -87,18 +88,17 @@ namespace Sunplus.Accounting.Business.Others
                     param.Add("errcode", 0);
                     param.Add("errmsg", "");
 
-
                     DbResult rs = OtherProvider.News.NewsIns(param);
                     resultMessage = CastAide.AsString(rs.Outputs["errmsg"]);
                     newsID = CastAide.AsInt32(rs.Outputs["newsid"]);
 
                     //delete cache news detail
                     CacheExtension.RegexDelete(string.Format(KEY_CACHE_ALLPAGE, appId));
-                    if (feature==1)
+                    if (feature == 1)
                     {
                         var newsFeature = CacheExtension.Get<NewsItem>(string.Format(KEY_CACHE_FEATURE, appId));
                         CacheExtension.Delete(string.Format(KEY_CACHE_FEATURE, appId));
-                        if (newsFeature!=null)
+                        if (newsFeature != null)
                         {
                             CacheExtension.Delete(string.Format(KEY_CACHE_DETAIL, appId, newsFeature.NewsID));
                         }
@@ -107,16 +107,17 @@ namespace Sunplus.Accounting.Business.Others
                 catch (SqlException exception)
                 {
                     resultMessage = exception.Message;
-                    
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                 }
                 catch (Exception exception)
                 {
                     resultMessage = exception.Message;
-                    
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                 }
-                #endregion
+
+                #endregion Insert Data
             }
             else
             {
@@ -124,9 +125,11 @@ namespace Sunplus.Accounting.Business.Others
             }
             return resultMessage;
         }
-        #endregion
+
+        #endregion InsertNews
 
         #region UpdateNews
+
         /// <summary>
         /// Check host permission
         /// Update news
@@ -138,7 +141,7 @@ namespace Sunplus.Accounting.Business.Others
         public String UpdateNews(int newsID, String title, String content, DateTime date, string func, int feature, string thumbnail, int appId, int ownerID)
         {
             String resultMessage = "";
-            // Check permission 
+            // Check permission
             bool hostPermission = false;
             try
             {
@@ -152,6 +155,7 @@ namespace Sunplus.Accounting.Business.Others
             if (hostPermission)
             {
                 #region Update data
+
                 try
                 {
                     var param = new Hashtable();
@@ -186,16 +190,16 @@ namespace Sunplus.Accounting.Business.Others
                 catch (SqlException exception)
                 {
                     resultMessage = exception.Message;
-                    
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                 }
                 catch (Exception exception)
                 {
-                    
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                     resultMessage = exception.Message;
                 }
-                #endregion
+
+                #endregion Update data
             }
             else
             {
@@ -203,14 +207,16 @@ namespace Sunplus.Accounting.Business.Others
             }
             return resultMessage;
         }
-        #endregion
+
+        #endregion UpdateNews
 
         #region DeleteNews
+
         public String DeleteNews(int newsID, int appId)
         {
             String resultMessage = "";
 
-            // Check permission 
+            // Check permission
             bool hostPermission = false;
             try
             {
@@ -224,6 +230,7 @@ namespace Sunplus.Accounting.Business.Others
             if (hostPermission)
             {
                 #region Delete Data
+
                 try
                 {
                     var hash = new Hashtable();
@@ -234,7 +241,7 @@ namespace Sunplus.Accounting.Business.Others
 
                     DbResult rsResult = OtherProvider.News.NewsDel(hash);
 
-                    // Check error message 
+                    // Check error message
                     resultMessage = rsResult.Outputs["errmsg"].ToString();
                     resultMessage = string.IsNullOrEmpty(resultMessage) ? "Success" : resultMessage;
 
@@ -245,17 +252,16 @@ namespace Sunplus.Accounting.Business.Others
                 }
                 catch (SqlException exception)
                 {
-                    
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                     resultMessage = exception.Message;
                 }
                 catch (Exception exception)
                 {
-                    
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                     resultMessage = exception.Message;
                 }
-                #endregion
+
+                #endregion Delete Data
             }
             else
             {
@@ -263,9 +269,11 @@ namespace Sunplus.Accounting.Business.Others
             }
             return resultMessage;
         }
-        #endregion
+
+        #endregion DeleteNews
 
         #region ShowAllNews
+
         /// <summary>
         /// Get all news and generate their content
         /// </summary>
@@ -275,7 +283,7 @@ namespace Sunplus.Accounting.Business.Others
         {
             String htmlData = "";
 
-            // Check permission 
+            // Check permission
             bool viewPermission = false, hostPermission = false;
             try
             {
@@ -289,7 +297,8 @@ namespace Sunplus.Accounting.Business.Others
 
             if (viewPermission)
             {
-                #region  Render the html
+                #region Render the html
+
                 try
                 {
                     // Generate new list
@@ -306,7 +315,7 @@ namespace Sunplus.Accounting.Business.Others
                     newsTemplate.Rows.Clear();
                     foreach (DataRow dr in Rows)
                     {
-                        DateTime archiveDate = Convert.IsDBNull(dr["Date"]) ? DateTime.Now : (DateTime) dr["Date"];
+                        DateTime archiveDate = Convert.IsDBNull(dr["Date"]) ? DateTime.Now : (DateTime)dr["Date"];
                         var block = new News_Rows_Block();
                         block.ArchiveDate = archiveDate.ToShortDateString();
                         block.NewsTitle = dr["Title"].ToString();
@@ -318,8 +327,8 @@ namespace Sunplus.Accounting.Business.Others
                     // Generate Pager Control
                     int totalRows = Convert.IsDBNull(rsNews.Outputs["totalrows"])
                                         ? 0
-                                        : (int) rsNews.Outputs["totalrows"];
-                    int totalPages = totalRows%PAGE_SIZE == 0 ? totalRows/PAGE_SIZE : totalRows/PAGE_SIZE + 1;
+                                        : (int)rsNews.Outputs["totalrows"];
+                    int totalPages = totalRows % PAGE_SIZE == 0 ? totalRows / PAGE_SIZE : totalRows / PAGE_SIZE + 1;
                     newsTemplate.PagerControl = AccCommon.Acc_GenPager(totalPages, pageIndex, "");
                     newsTemplate.AddNewsButton.Clear();
                     if (hostPermission)
@@ -335,16 +344,17 @@ namespace Sunplus.Accounting.Business.Others
                 catch (SqlException exception)
                 {
                     htmlData = exception.Message;
-                    
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                 }
                 catch (Exception exception)
                 {
                     htmlData = exception.Message;
-                    
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                 }
-                #endregion
+
+                #endregion Render the html
             }
             else
             {
@@ -352,9 +362,11 @@ namespace Sunplus.Accounting.Business.Others
             }
             return htmlData;
         }
-        #endregion
+
+        #endregion ShowAllNews
 
         #region ShowNewsDetail
+
         /// <summary>
         /// Generate html for news detail
         /// </summary>
@@ -364,7 +376,7 @@ namespace Sunplus.Accounting.Business.Others
         {
             String htmlData = "";
 
-            // Check permission 
+            // Check permission
             bool viewPermission = false, hostPermission = false;
             try
             {
@@ -378,7 +390,8 @@ namespace Sunplus.Accounting.Business.Others
 
             if (viewPermission)
             {
-                #region  Render the html
+                #region Render the html
+
                 try
                 {
                     var param = new Hashtable();
@@ -405,7 +418,7 @@ namespace Sunplus.Accounting.Business.Others
                                 detailTemplate.DeleteButton.Append(deleteBlock);
                                 detailTemplate.EditButton.Append(editBlock);
                             }
-                            
+
                             detailTemplate.NewsTitle = Convert.IsDBNull(firstRow["Title"]) ? "" : firstRow["Title"].ToString();
                             detailTemplate.NewsDate = Convert.IsDBNull(firstRow["Date"]) ? "" : ((DateTime)firstRow["Date"]).ToShortDateString();
                             detailTemplate.NewsContent = Convert.IsDBNull(firstRow["NewsContent"]) ? "" : firstRow["NewsContent"].ToString();
@@ -415,7 +428,7 @@ namespace Sunplus.Accounting.Business.Others
                                                            : firstRow["Title"].ToString();
                             detailTemplate.NewsDate = Convert.IsDBNull(firstRow["Date"])
                                                           ? ""
-                                                          : ((DateTime) firstRow["Date"]).ToShortDateString();
+                                                          : ((DateTime)firstRow["Date"]).ToShortDateString();
                             detailTemplate.NewsContent = Convert.IsDBNull(firstRow["NewsContent"])
                                                              ? ""
                                                              : firstRow["NewsContent"].ToString();
@@ -427,16 +440,17 @@ namespace Sunplus.Accounting.Business.Others
                 catch (SqlException exception)
                 {
                     htmlData = exception.Message;
-                    
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                 }
                 catch (Exception exception)
                 {
                     htmlData = exception.Message;
-                    
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                 }
-                #endregion
+
+                #endregion Render the html
             }
             else
             {
@@ -444,14 +458,16 @@ namespace Sunplus.Accounting.Business.Others
             }
             return htmlData;
         }
-        #endregion
+
+        #endregion ShowNewsDetail
 
         #region ShowNewsEditing
+
         public String ShowNewsEditing(int newsID)
         {
             String htmlData = "";
 
-            // Check permission 
+            // Check permission
             bool hostPermission = false;
             try
             {
@@ -464,7 +480,8 @@ namespace Sunplus.Accounting.Business.Others
 
             if (hostPermission)
             {
-                #region  Render the html
+                #region Render the html
+
                 try
                 {
                     String newsTitle = "", newsDate = DateTime.Now.ToShortDateString(), newsContent = "";
@@ -488,13 +505,14 @@ namespace Sunplus.Accounting.Business.Others
                                 newsTitle = Convert.IsDBNull(firstRow["Title"]) ? "" : firstRow["Title"].ToString();
                                 newsDate = Convert.IsDBNull(firstRow["Date"])
                                                ? ""
-                                               : ((DateTime) firstRow["Date"]).ToShortDateString();
+                                               : ((DateTime)firstRow["Date"]).ToShortDateString();
                                 newsContent = Convert.IsDBNull(firstRow["NewsContent"])
                                                   ? ""
                                                   : firstRow["NewsContent"].ToString();
                             }
                         }
-                        #endregion
+
+                        #endregion Get News Detail Data
                     }
 
                     // Render html
@@ -509,16 +527,17 @@ namespace Sunplus.Accounting.Business.Others
                 catch (SqlException exception)
                 {
                     htmlData = exception.Message;
-                    
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                 }
                 catch (Exception exception)
                 {
                     htmlData = exception.Message;
-                    
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                 }
-                #endregion
+
+                #endregion Render the html
             }
             else
             {
@@ -526,14 +545,16 @@ namespace Sunplus.Accounting.Business.Others
             }
             return htmlData;
         }
-        #endregion
+
+        #endregion ShowNewsEditing
 
         #region ShowLastNewsRotation
+
         public String ShowLastNewsRotaion()
         {
             String htmlData = "";
 
-            // Check permission 
+            // Check permission
             bool viewPermission = false;
             try
             {
@@ -546,10 +567,11 @@ namespace Sunplus.Accounting.Business.Others
 
             if (viewPermission)
             {
-                #region  Render the html
+                #region Render the html
+
                 try
                 {
-                    // Generate new list                    
+                    // Generate new list
                     var param = new Hashtable();
                     param.Add("pageindex", 1);
                     param.Add("pagesize", LAST_NEWS_ROTATION_SIZE);
@@ -562,7 +584,7 @@ namespace Sunplus.Accounting.Business.Others
                     newsTemplate.Rows.Clear();
                     foreach (DataRow dr in Rows)
                     {
-                        DateTime archiveDate = Convert.IsDBNull(dr["Date"]) ? DateTime.Now : (DateTime) dr["Date"];
+                        DateTime archiveDate = Convert.IsDBNull(dr["Date"]) ? DateTime.Now : (DateTime)dr["Date"];
                         var block = new LastNews_Rows_Block();
                         block.NewsID = Convert.IsDBNull(dr["NewsID"]) ? "0" : dr["NewsID"].ToString();
                         block.NewsTitle = Convert.IsDBNull(dr["Title"]) ? "" : dr["Title"].ToString();
@@ -575,16 +597,17 @@ namespace Sunplus.Accounting.Business.Others
                 catch (SqlException exception)
                 {
                     htmlData = exception.Message;
-                    
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                 }
                 catch (Exception exception)
                 {
                     htmlData = exception.Message;
-                    
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                 }
-                #endregion
+
+                #endregion Render the html
             }
             else
             {
@@ -592,7 +615,8 @@ namespace Sunplus.Accounting.Business.Others
             }
             return htmlData;
         }
-        #endregion
+
+        #endregion ShowLastNewsRotation
 
         #region GetNewsDetail
 
@@ -603,7 +627,7 @@ namespace Sunplus.Accounting.Business.Others
             newsContent = "";
             newsTitle = "";
 
-            // Check permission 
+            // Check permission
             bool viewPermission = false;
             try
             {
@@ -618,6 +642,7 @@ namespace Sunplus.Accounting.Business.Others
             if (viewPermission)
             {
                 #region Get Data
+
                 try
                 {
                     var param = new Hashtable();
@@ -634,7 +659,7 @@ namespace Sunplus.Accounting.Business.Others
                             newsTitle = Convert.IsDBNull(firstRow["Title"]) ? "" : firstRow["Title"].ToString();
                             newsDate = Convert.IsDBNull(firstRow["Date"])
                                            ? ""
-                                           : ((DateTime) firstRow["Date"]).ToShortDateString();
+                                           : ((DateTime)firstRow["Date"]).ToShortDateString();
                             newsContent = Convert.IsDBNull(firstRow["NewsContent"])
                                               ? ""
                                               : firstRow["NewsContent"].ToString();
@@ -644,16 +669,17 @@ namespace Sunplus.Accounting.Business.Others
                 catch (SqlException exception)
                 {
                     resultMessage = exception.Message;
-                    
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                 }
                 catch (Exception exception)
                 {
                     resultMessage = exception.Message;
-                    
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                 }
-                #endregion
+
+                #endregion Get Data
             }
             else
             {
@@ -662,9 +688,10 @@ namespace Sunplus.Accounting.Business.Others
             return resultMessage;
         }
 
-        #endregion
-    
+        #endregion GetNewsDetail
+
         #region GetNewsPage
+
         /// <summary>
         /// Get all news by page
         /// </summary>
@@ -674,7 +701,7 @@ namespace Sunplus.Accounting.Business.Others
         public NewsData GetNewsPage(int page, int appId)
         {
             NewsData listNews = null;
-            // Check permission 
+            // Check permission
             var viewPermission = false;
             var hostPermission = false;
             try
@@ -689,7 +716,6 @@ namespace Sunplus.Accounting.Business.Others
 
             if (viewPermission)
             {
-
                 try
                 {
                     var pageIndex = page <= 0 ? 1 : page;
@@ -698,7 +724,6 @@ namespace Sunplus.Accounting.Business.Others
                     listNews = CacheExtension.Get<NewsData>(keyList);
                     if (listNews == null)
                     {
-
                         // Generate new list
                         var param = new Hashtable();
                         param.Add("pageindex", pageIndex);
@@ -717,10 +742,10 @@ namespace Sunplus.Accounting.Business.Others
                             {
                                 DateTime archiveDate = Convert.IsDBNull(dr["Date"])
                                                            ? DateTime.Now
-                                                           : (DateTime) dr["Date"];
+                                                           : (DateTime)dr["Date"];
                                 var newsItem = new NewsItem
                                                    {
-                                                       NewsID = (int) dr["NewsID"],
+                                                       NewsID = (int)dr["NewsID"],
                                                        Date = archiveDate.ToShortDateString(),
                                                        Title = dr["Title"].ToString(),
                                                        AppID = appId,
@@ -731,7 +756,7 @@ namespace Sunplus.Accounting.Business.Others
                             }
                             int totalRows = Convert.IsDBNull(rsNews.Outputs["totalrows"])
                                                 ? 0
-                                                : (int) rsNews.Outputs["totalrows"];
+                                                : (int)rsNews.Outputs["totalrows"];
 
                             listNews.Total = totalRows;
                             listNews.PagerControl = "";
@@ -744,20 +769,20 @@ namespace Sunplus.Accounting.Business.Others
                 }
                 catch (SqlException exception)
                 {
-                    
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                 }
                 catch (Exception exception)
                 {
-                    
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                 }
             }
             return listNews;
         }
-        #endregion
+
+        #endregion GetNewsPage
 
         #region Get News Detail
+
         /// <summary>
         /// Get News Detail
         /// </summary>
@@ -767,7 +792,7 @@ namespace Sunplus.Accounting.Business.Others
         public NewsItem GetNewsDetail(int newsID, int appId)
         {
             NewsItem newsItem = null;
-            // Check permission 
+            // Check permission
             var viewPermission = false;
             var hostPermission = false;
             try
@@ -781,7 +806,6 @@ namespace Sunplus.Accounting.Business.Others
             }
             if (viewPermission)
             {
-
                 try
                 {
                     newsItem = CacheExtension.Get<NewsItem>(string.Format(KEY_CACHE_DETAIL, appId, newsID));
@@ -803,14 +827,14 @@ namespace Sunplus.Accounting.Business.Others
 
                                 newsItem.AppID = appId;
 
-                                newsItem.NewsID = (int) firstRow["NewsID"];
+                                newsItem.NewsID = (int)firstRow["NewsID"];
 
                                 newsItem.Title = Convert.IsDBNull(firstRow["Title"])
                                                      ? ""
                                                      : firstRow["Title"].ToString();
                                 newsItem.Date = Convert.IsDBNull(firstRow["Date"])
                                                     ? ""
-                                                    : ((DateTime) firstRow["Date"]).ToShortDateString();
+                                                    : ((DateTime)firstRow["Date"]).ToShortDateString();
                                 newsItem.NewsContent = Convert.IsDBNull(firstRow["NewsContent"])
                                                            ? ""
                                                            : firstRow["NewsContent"].ToString();
@@ -840,20 +864,20 @@ namespace Sunplus.Accounting.Business.Others
                 }
                 catch (SqlException exception)
                 {
-                    
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                 }
                 catch (Exception exception)
                 {
-                    
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                 }
             }
             return newsItem;
         }
-        #endregion
+
+        #endregion Get News Detail
 
         #region Get News Feature
+
         /// <summary>
         /// Get News Feature
         /// </summary>
@@ -887,14 +911,14 @@ namespace Sunplus.Accounting.Business.Others
 
                             DataRow firstRow = dtData.Rows[0];
 
-                            newsItem.NewsID = (int) firstRow["NewsID"];
+                            newsItem.NewsID = (int)firstRow["NewsID"];
 
                             newsItem.Title = Convert.IsDBNull(firstRow["Title"])
                                                  ? ""
                                                  : firstRow["Title"].ToString();
                             newsItem.Date = Convert.IsDBNull(firstRow["Date"])
                                                 ? ""
-                                                : ((DateTime) firstRow["Date"]).ToShortDateString();
+                                                : ((DateTime)firstRow["Date"]).ToShortDateString();
                             newsItem.NewsContent = Convert.IsDBNull(firstRow["NewsContent"])
                                                        ? ""
                                                        : firstRow["NewsContent"].ToString();
@@ -920,20 +944,20 @@ namespace Sunplus.Accounting.Business.Others
                 }
                 catch (SqlException exception)
                 {
-                    
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                 }
                 catch (Exception exception)
                 {
-                    
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                 }
             }
             return newsItem;
         }
-        #endregion
+
+        #endregion Get News Feature
 
         #region Hot Feature News
+
         /// <summary>
         /// Hot Feature News
         /// </summary>
@@ -944,7 +968,7 @@ namespace Sunplus.Accounting.Business.Others
         public string HotFeature(int appId, int newsId, int feature)
         {
             string resultMessage = "";
-            // Check permission 
+            // Check permission
             bool hostPermission = false;
             try
             {
@@ -956,6 +980,7 @@ namespace Sunplus.Accounting.Business.Others
             }
 
             #region Update data
+
             if (hostPermission)
             {
                 try
@@ -969,27 +994,25 @@ namespace Sunplus.Accounting.Business.Others
 
                     DbResult rs = OtherProvider.News.NewsUpdFeature(param);
                     resultMessage = CastAide.AsString(rs.Outputs["errmsg"]);
-                    
+
                     // delete cache news feature
                     var newsFeature = CacheExtension.Get<NewsItem>(string.Format(KEY_CACHE_FEATURE, appId));
                     CacheExtension.Delete(string.Format(KEY_CACHE_FEATURE, appId));
-                    CacheExtension.Delete(string.Format(KEY_CACHE_DETAIL, appId, newsId)); 
+                    CacheExtension.Delete(string.Format(KEY_CACHE_DETAIL, appId, newsId));
                     if (newsFeature != null)
                     {
-                        CacheExtension.Delete(string.Format(KEY_CACHE_DETAIL, appId, newsFeature.NewsID));    
+                        CacheExtension.Delete(string.Format(KEY_CACHE_DETAIL, appId, newsFeature.NewsID));
                     }
-                    
                 }
                 catch (SqlException exception)
                 {
                     resultMessage = exception.Message;
-                    
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                 }
                 catch (Exception exception)
                 {
-                    
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                     resultMessage = exception.Message;
                 }
             }
@@ -997,10 +1020,12 @@ namespace Sunplus.Accounting.Business.Others
             {
                 resultMessage = UPDATE_PERMISSION_DENY;
             }
-            #endregion
+
+            #endregion Update data
+
             return resultMessage;
         }
-        #endregion
-    }
 
+        #endregion Hot Feature News
+    }
 }

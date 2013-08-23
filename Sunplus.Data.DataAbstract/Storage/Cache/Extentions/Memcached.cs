@@ -20,7 +20,6 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.Extentions
             }
             catch (Exception ex)
             {
-
             }
         }
 
@@ -32,8 +31,6 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.Extentions
             }
         }
 
-        
-
         public bool Set(string key, object value)
         {
             try
@@ -43,7 +40,6 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.Extentions
             }
             catch (Exception ex)
             {
-
             }
             return false;
         }
@@ -57,10 +53,10 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.Extentions
             }
             catch (Exception ex)
             {
-
             }
             return false;
         }
+
         public object Get(string key)
         {
             try
@@ -69,7 +65,6 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.Extentions
             }
             catch (Exception ex)
             {
-
             }
             return null;
         }
@@ -113,7 +108,6 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.Extentions
             }
             catch (Exception ex)
             {
-
             }
             return false;
         }
@@ -154,7 +148,6 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.Extentions
             }
             catch (Exception ex)
             {
-
             }
             return default(T);
         }
@@ -167,7 +160,6 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.Extentions
             }
             catch (Exception ex)
             {
-
             }
         }
 
@@ -178,6 +170,5 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.Extentions
             //});
             return new List<T>();
         }
-
     }
 }

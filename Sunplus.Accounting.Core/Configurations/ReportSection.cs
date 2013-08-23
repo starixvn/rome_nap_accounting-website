@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace Sunplus.Accounting.Core.Configurations
 {
@@ -14,7 +8,6 @@ namespace Sunplus.Accounting.Core.Configurations
         {
             NumberGame
         }
-
 
         [ConfigurationProperty("NumberGame", IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(ReportCollection),
@@ -31,9 +24,6 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-
-      
-
         public static ReportSection Instance
         {
             get
@@ -44,23 +34,18 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-
         public ReportCollection this[ReportCollectionType name]
         {
             get
             {
-
                 var spCollection = (ReportCollection)this.GetType().GetProperty(name.ToString()).GetValue(this, System.Reflection.BindingFlags.GetField, null, null, null);
                 return spCollection;
             }
         }
-
-
     }
 
     public class ReportCollection : ConfigurationElementCollection
     {
-
         public ReportCollection()
         {
             //var storeProcedure = (ReportElement) CreateNewElement();
@@ -106,7 +91,6 @@ namespace Sunplus.Accounting.Core.Configurations
             BaseClear();
         }
 
-
         public ReportElement this[int index]
         {
             get
@@ -136,7 +120,6 @@ namespace Sunplus.Accounting.Core.Configurations
             return BaseIndexOf(ReportElement);
         }
 
-
         protected override sealed ConfigurationElement CreateNewElement()
         {
             return new ReportElement();
@@ -151,14 +134,9 @@ namespace Sunplus.Accounting.Core.Configurations
     public class ReportElement : ConfigurationElement
     {
 
-
-
         public ReportElement()
         {
-
         }
-
-       
 
         [ConfigurationProperty("name", IsRequired = true)]
         //[RegexStringValidator(@"\w+:\/\/[\w.]+\S*")]
@@ -202,6 +180,5 @@ namespace Sunplus.Accounting.Core.Configurations
                 return items;
             }
         }
-
     }
 }

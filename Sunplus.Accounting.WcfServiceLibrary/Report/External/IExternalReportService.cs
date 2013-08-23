@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
+﻿using System.ServiceModel;
 using System.ServiceModel.Web;
-using System.Text;
 using Sunplus.Accounting.Entities.Report.External;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.Report.External
 {
-    [ServiceContract]  
+    [ServiceContract]
     public interface IExternalReportService
     {
         [OperationContract]

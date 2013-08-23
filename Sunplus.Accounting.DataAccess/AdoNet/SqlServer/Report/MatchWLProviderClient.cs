@@ -3,9 +3,7 @@ using System.Collections;
 using DNAide.Data;
 using IBCUtils;
 
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess.Provider.Report;
-using Sunplus.Core.LoggingLib;
 
 /// <summary>
 /// Summary description for MatchWLProviderClient
@@ -63,7 +61,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Report
                 var p = new Hashtable();
                 p.Add("fromdate", FormatHandler.ResetStartDate(fromDate));
                 p.Add("todate", FormatHandler.ResetEndDate(toDate));
-                
+
                 using (ObjectDb obj = new ObjectDb("MatchWinLossSingleBet", 600))
                 {
                     obj.AssignParamValues(p);
@@ -89,14 +87,13 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Report
 
                 if (db.Equals("rep"))
                     result = DbHelper.Execute("Acc_Rpt_WinLossByBettype", p, DBType.REPORT, 600);
-                        //DatabaseType.ARCHIVE_1
+                //DatabaseType.ARCHIVE_1
                 else if (db.Equals("main"))
                     result = DbHelper.Execute("Acc_Rpt_WinLossByBettype", p, DBType.MAIN, 600); //DatabaseType.MAINs
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
@@ -110,12 +107,11 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Report
 
                 p.Add("winlostdate", wldate);
 
-                result = DbHelper.Execute("Acc_Rpt_WinLossByBettype14", p, DBType.REPORT, 600); 
+                result = DbHelper.Execute("Acc_Rpt_WinLossByBettype14", p, DBType.REPORT, 600);
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
@@ -130,12 +126,11 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Report
                 p.Add("fromdate", wldate);
                 p.Add("todate", wldate);
 
-                result = DbHelper.Execute("Acc_Rpt_WinlossByBettype_Old", p, DBType.PUNTER, 600); 
+                result = DbHelper.Execute("Acc_Rpt_WinlossByBettype_Old", p, DBType.PUNTER, 600);
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }

@@ -16,6 +16,5 @@ namespace Sunplus.Accounting.Entities.Report.Racebook
 
         [DataMember]
         public List<RacingWinlossRowBO> GrandTotals { get; set; }
-
     }
 }

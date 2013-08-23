@@ -4,15 +4,17 @@ using System.Text;
 using TplCore.Element;
 
 #pragma warning disable
+
 namespace Sunplus.Accounting.Core.Web.TplCore.App_Templates.SpecialDelete
 {
     namespace App_Templates.SpecialDelete
-	{
+    {
         public class OutrightList_Template : Template
         {
             public OutrightList_bets_Block bets = new OutrightList_bets_Block();
             protected static string s0 = "<br>";
             public OutrightList_delete_Block delete = new OutrightList_delete_Block();
+
             public override void ToString(ref StringBuilder bd)
             {
                 if (!Visible) return;
@@ -24,13 +26,13 @@ namespace Sunplus.Accounting.Core.Web.TplCore.App_Templates.SpecialDelete
                 }
                 if (IsAssigned) { bd.Append(Value); }
             }
+
             public string ToString()
             {
                 StringBuilder bd = new StringBuilder();
                 ToString(ref bd);
                 return bd.ToString();
             }
-
         }
 
         public class OutrightList_bets_Block : Block
@@ -42,6 +44,7 @@ namespace Sunplus.Accounting.Core.Web.TplCore.App_Templates.SpecialDelete
             public OutrightList_bets_SpecialContent_Block SpecialContent = new OutrightList_bets_SpecialContent_Block();
             public OutrightList_bets_Footer_Block Footer = new OutrightList_bets_Footer_Block();
             protected static string s2 = "</table>";
+
             public override void ToString(ref StringBuilder bd)
             {
                 if (!Visible) return;
@@ -64,6 +67,7 @@ namespace Sunplus.Accounting.Core.Web.TplCore.App_Templates.SpecialDelete
             protected static string s3 = "<tr class=\"title c\"><td width=\"20\">NO</td><td width=\"100\">ACCOUNT</td><td width=\"70\">REFNO</td><td width=\"50\">ODDS</td><td width=\"70\">AMOUNT</td><td width='70'>CURRENCY</td><td width=\"150\">TRANS.TIME</td><td width=\"70\">CREATOR</td><td width=\"70\">STATUS</td>";
             public OutrightList_bets_NormalHeader_DeleteOption_Block DeleteOption = new OutrightList_bets_NormalHeader_DeleteOption_Block();
             protected static string s4 = "</tr>";
+
             public override void ToString(ref StringBuilder bd)
             {
                 if (!Visible) return;
@@ -80,6 +84,7 @@ namespace Sunplus.Accounting.Core.Web.TplCore.App_Templates.SpecialDelete
         public class OutrightList_bets_NormalHeader_DeleteOption_Block : Block
         {
             protected static string s5 = "<td width=\"70\">OPTION</td>";
+
             public override void ToString(ref StringBuilder bd)
             {
                 if (!Visible) return;
@@ -114,6 +119,7 @@ namespace Sunplus.Accounting.Core.Web.TplCore.App_Templates.SpecialDelete
             protected static string s15 = "</td>";
             public OutrightList_bets_NormalContent_DeleteOption_Block DeleteOption = new OutrightList_bets_NormalContent_DeleteOption_Block();
             protected static string s16 = "</tr>";
+
             public override void ToString(ref StringBuilder bd)
             {
                 if (!Visible) return;
@@ -148,6 +154,7 @@ namespace Sunplus.Accounting.Core.Web.TplCore.App_Templates.SpecialDelete
         public class OutrightList_bets_NormalContent_DeleteOption_Block : Block
         {
             protected static string s17 = "<td></td>";
+
             public override void ToString(ref StringBuilder bd)
             {
                 if (!Visible) return;
@@ -162,6 +169,7 @@ namespace Sunplus.Accounting.Core.Web.TplCore.App_Templates.SpecialDelete
         public class OutrightList_bets_noinfo_Block : Block
         {
             protected static string s18 = "<tr bgcolor=\"white\"><td colspan='9' class='calign'>There is no information available</td></tr>";
+
             public override void ToString(ref StringBuilder bd)
             {
                 if (!Visible) return;
@@ -177,6 +185,7 @@ namespace Sunplus.Accounting.Core.Web.TplCore.App_Templates.SpecialDelete
         {
             public OutrightList_bets_SpecialContent_Header_Block Header = new OutrightList_bets_SpecialContent_Header_Block();
             public OutrightList_bets_SpecialContent_Content_Block Content = new OutrightList_bets_SpecialContent_Content_Block();
+
             public override void ToString(ref StringBuilder bd)
             {
                 if (!Visible) return;
@@ -204,6 +213,7 @@ namespace Sunplus.Accounting.Core.Web.TplCore.App_Templates.SpecialDelete
             protected static string s24 = "\" onchange=\"ddl_change('";
             protected string t2_SB;
             protected static string s25 = "');\"><option value=\"0\" selected=\"selected\">Not Delete</option><option value=\"1\"> Delete All</option><option value=\"2\"> Optional</option></select></td></tr>";
+
             public override void ToString(ref StringBuilder bd)
             {
                 if (!Visible) return;
@@ -256,6 +266,7 @@ namespace Sunplus.Accounting.Core.Web.TplCore.App_Templates.SpecialDelete
             protected static string s38 = "' name='chk";
             protected string t4_SB;
             protected static string s39 = "' disabled=''></input></td></tr>";
+
             public override void ToString(ref StringBuilder bd)
             {
                 if (!Visible) return;
@@ -296,6 +307,7 @@ namespace Sunplus.Accounting.Core.Web.TplCore.App_Templates.SpecialDelete
         public class OutrightList_bets_Footer_Block : Block
         {
             protected static string s40 = "<tr id='trFooter' style='display:none' name='trFooter'><td colspan='15' class='calign'></td></tr>";
+
             public override void ToString(ref StringBuilder bd)
             {
                 if (!Visible) return;
@@ -310,7 +322,7 @@ namespace Sunplus.Accounting.Core.Web.TplCore.App_Templates.SpecialDelete
         public class OutrightList_delete_Block : Block
         {
             public string Username;
-            protected static string s41 = "<span id='sDelete'><table class=\"table\"><tr><td>REASON:</td><td><input type=\"text\" id=\"reason\" name=\"reason\" onkeyup=\"countChar(this,150,'#charNum')\" />&nbsp;<span style=\"color:Red;\">(*)</span><i><label id=\"charNum\">Characters Left: 150</label></i></td></tr><tr><td>USERNAME:</td><td><input type=\"text\" id=\"username\" name=\"username\" disabled=\"disabled\" ></input></td></tr><tr><td>PASSWORD:</td><td><input type=\"password\" id=\"userpwd\" name=\"userpwd\" ></input></td></tr><tr><td colspan=\"2\"><span style=\"color:red; font-weight:bold;\" id=\"ErrorMessage\"></span></td></tr></table><table border=\"0px\" class=\"table\"><tr><th colspan=\"3\" bgcolor=\"#88aaff\">Please include \"@@\" in message content for replacing ticket numbers</th></tr><tr bgcolor=\"#ADADAD\" class=\"tableBw\"><th width=\"300\" align=\"center\"><span style=\"color:Red;\">*</span>Message En</th><th width=\"300\" align=\"center\"><span style=\"color:Red;\">*</span>Message Ch</th><th width=\"300\" align=\"center\">Message Cs</th></tr><tr><td><textarea rows=\"10\" id=\"men\" name=\"men\" cols=\"36\"></textarea></td><td><textarea rows=\"10\" id=\"mch\" name=\"mch\" cols=\"36\"></textarea></td><td><textarea rows=\"10\" id=\"mcs\" name=\"mcs\" cols=\"36\"></textarea></td></tr><tr><th colspan=\"3\" bgcolor=\"#88aaff\"><a id=\"other_display\" onclick=\"hideLanguage(this)\" href=\"#\"><span style=\"color: Black;\">Other Languages</span> [+]</a></th></tr><tr bgcolor=\"#ADADAD\" class=\"tableBw\" id=\"otherLanguage_title\" style=\"display:none;\"><th width=\"300\" align=\"center\">Message Th</th><th width=\"300\" align=\"center\">Message It</th><th width=\"300\" align=\"center\">Message Jp</th></tr><tr id=\"otherLanguage_content\" style=\"display:none;\"><td><textarea rows=\"10\" id=\"mth\" name=\"mth\" cols=\"36\"></textarea></td><td><textarea rows=\"10\" id=\"mit\" name=\"mit\" cols=\"36\"></textarea></td><td><textarea rows=\"10\" id=\"mjp\" name=\"mjp\" cols=\"36\"></textarea></td></tr><tr bgcolor=\"#ADADAD\" class=\"tableBw\" id=\"otherLanguage_title2\" style=\"display:none;\"><th width=\"300\" align=\"center\">Message Es</th><th width=\"300\" align=\"center\"></th><th width=\"300\" align=\"center\"></th></tr><tr id=\"otherLanguage_content2\" style=\"display:none;\"><td><textarea rows=\"10\" id=\"mes\" name=\"mes\" cols=\"36\"></textarea></td><td></td><td></td></tr></table><table border=\"0px\" class=\"table\"><tr><td colspan=\"2\" class='lalign'><input class=\"btn\" type='button' value=' Delete ' onclick='on_delete();' /></td></tr><tr id=\"trMsg2\" style=\"display:none;\"><td colspan=\"2\"><input type=\"hidden\" id=\"rowcount\" name=\"rowcount\" value=\"";            
+            protected static string s41 = "<span id='sDelete'><table class=\"table\"><tr><td>REASON:</td><td><input type=\"text\" id=\"reason\" name=\"reason\" onkeyup=\"countChar(this,150,'#charNum')\" />&nbsp;<span style=\"color:Red;\">(*)</span><i><label id=\"charNum\">Characters Left: 150</label></i></td></tr><tr><td>USERNAME:</td><td><input type=\"text\" id=\"username\" name=\"username\" disabled=\"disabled\" ></input></td></tr><tr><td>PASSWORD:</td><td><input type=\"password\" id=\"userpwd\" name=\"userpwd\" ></input></td></tr><tr><td colspan=\"2\"><span style=\"color:red; font-weight:bold;\" id=\"ErrorMessage\"></span></td></tr></table><table border=\"0px\" class=\"table\"><tr><th colspan=\"3\" bgcolor=\"#88aaff\">Please include \"@@\" in message content for replacing ticket numbers</th></tr><tr bgcolor=\"#ADADAD\" class=\"tableBw\"><th width=\"300\" align=\"center\"><span style=\"color:Red;\">*</span>Message En</th><th width=\"300\" align=\"center\"><span style=\"color:Red;\">*</span>Message Ch</th><th width=\"300\" align=\"center\">Message Cs</th></tr><tr><td><textarea rows=\"10\" id=\"men\" name=\"men\" cols=\"36\"></textarea></td><td><textarea rows=\"10\" id=\"mch\" name=\"mch\" cols=\"36\"></textarea></td><td><textarea rows=\"10\" id=\"mcs\" name=\"mcs\" cols=\"36\"></textarea></td></tr><tr><th colspan=\"3\" bgcolor=\"#88aaff\"><a id=\"other_display\" onclick=\"hideLanguage(this)\" href=\"#\"><span style=\"color: Black;\">Other Languages</span> [+]</a></th></tr><tr bgcolor=\"#ADADAD\" class=\"tableBw\" id=\"otherLanguage_title\" style=\"display:none;\"><th width=\"300\" align=\"center\">Message Th</th><th width=\"300\" align=\"center\">Message It</th><th width=\"300\" align=\"center\">Message Jp</th></tr><tr id=\"otherLanguage_content\" style=\"display:none;\"><td><textarea rows=\"10\" id=\"mth\" name=\"mth\" cols=\"36\"></textarea></td><td><textarea rows=\"10\" id=\"mit\" name=\"mit\" cols=\"36\"></textarea></td><td><textarea rows=\"10\" id=\"mjp\" name=\"mjp\" cols=\"36\"></textarea></td></tr><tr bgcolor=\"#ADADAD\" class=\"tableBw\" id=\"otherLanguage_title2\" style=\"display:none;\"><th width=\"300\" align=\"center\">Message Es</th><th width=\"300\" align=\"center\"></th><th width=\"300\" align=\"center\"></th></tr><tr id=\"otherLanguage_content2\" style=\"display:none;\"><td><textarea rows=\"10\" id=\"mes\" name=\"mes\" cols=\"36\"></textarea></td><td></td><td></td></tr></table><table border=\"0px\" class=\"table\"><tr><td colspan=\"2\" class='lalign'><input class=\"btn\" type='button' value=' Delete ' onclick='on_delete();' /></td></tr><tr id=\"trMsg2\" style=\"display:none;\"><td colspan=\"2\"><input type=\"hidden\" id=\"rowcount\" name=\"rowcount\" value=\"";
             public string rowcount = "{rowcount}";
             protected static string s42 = "\"></input><input type=\"hidden\" id=\"rowcountDeposit\" name=\"rowcountDeposit\" value=\"";
             public string rowcountDeposit = "{rowcountDeposit}";
@@ -321,6 +333,7 @@ namespace Sunplus.Accounting.Core.Web.TplCore.App_Templates.SpecialDelete
             protected static string s45 = "\"></input><input type=\"hidden\" id=\"rowcountMHC\" name=\"rowcountMHC\" value=\"";
             public string rowcountMHC = "{rowcountMHC}";
             protected static string s46 = "\"></input><input type='hidden' id='DelOption' name='DelOption'></input><input type='hidden' id='DelOption_BD' name='DelOption_BD'></input><input type='hidden' id='DelOption_12EU' name='DelOption_12EU'></input><input type='hidden' id='transids' name='transids'></input><input type='hidden' id='transids_BD' name='transids_BD'></input><input type='hidden' id='transids_12EU' name='transids_12EU'></input><input type='hidden' id='DelOption_MHC' name='DelOption_MHC'></input><input type='hidden' id='transids_MHC' name='transids_MHC'></input><input type='hidden' id='IsOutRight' name='IsOutRight' value='1'></input><input type='hidden' id='matchid' name='matchid' value='1'></input></td></tr></table></span>";
+
             public override void ToString(ref StringBuilder bd)
             {
                 if (!Visible) return;
@@ -341,8 +354,8 @@ namespace Sunplus.Accounting.Core.Web.TplCore.App_Templates.SpecialDelete
                 if (IsAssigned) { bd.Append(Value); }
             }
         }
-
-	}
+    }
 }
+
 #pragma warning enable
 #endregion

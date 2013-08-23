@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Web;
-using DNAide.Data;
-
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
-using Sunplus.Core.LoggingLib;
-using Fanex.Data;
-using Sunplus.Accounting.Entities;
 using DNAide.Core;
+using DNAide.Data;
+using Fanex.Data;
+using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
+using Sunplus.Accounting.Entities;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
@@ -18,7 +15,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
             var sps = CustomerSession.Instance[CustomerSession.StoreCollection.CustomerControl];
             return sps != null ? sps[aliasName] : null;
-
         }
 
         /// <summary>
@@ -64,8 +60,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
         }
@@ -87,8 +82,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
         }
@@ -127,8 +121,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
         }
@@ -145,7 +138,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         public static Result Acc_CreditTermUpdRemoveFromGroup(string CustIDList, int groupid, int userid)
         {
             try
-            {               
+            {
                 using (ObjectDb objdb = new ObjectDb("Acc_CreditTermUpdRemoveFromGroup"))
                 {
                     var hash = new Hashtable();
@@ -156,19 +149,20 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     hash.Add("errmsg", "");
                     hash.Add("language", "E");
                     hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
-                    
+
                     objdb.AssignParamValues(hash);
 
                     objdb.ExecuteNonQuery();
 
-                    return new Result() { 
+                    return new Result()
+                    {
                         ErrorCode = CastAide.AsInt32(objdb.GetParameterValue("errcode")),
                         ErrorMessage = string.Format("{0}", objdb.GetParameterValue("errmsg")),
-                    };                    
+                    };
                 }
             }
             catch (Exception ex)
-            {                
+            {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
@@ -186,7 +180,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         public static Result Acc_CreditTermUpdSetGroupHeadline(int custid, int groupid, int userid)
         {
             try
-            {                
+            {
                 using (ObjectDb objdb = new ObjectDb("Acc_CreditTermUpdSetGroupHeadline"))
                 {
                     var hash = new Hashtable();
@@ -210,7 +204,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 }
             }
             catch (Exception ex)
-            {                
+            {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
@@ -236,8 +230,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
         }
@@ -257,8 +250,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
         }
@@ -281,8 +273,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
         }
@@ -308,7 +299,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                                                          int UserID, int checkerid)
         {
             try
-            {               
+            {
                 using (ObjectDb objdb = new ObjectDb("Acc_CreditTermUpdCustomer"))
                 {
                     var hash = new Hashtable();
@@ -342,8 +333,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
         }

@@ -1,6 +1,4 @@
 ﻿using System;
-using DNAide.Data;
-using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.DataAccess.Report;
 
 /// <summary>
@@ -9,7 +7,7 @@ using Sunplus.Accounting.DataAccess.Report;
 
 namespace Sunplus.Accounting.DataAccess
 {
-    public class DataAccessReport:DataAccess
+    public class DataAccessReport : DataAccess
     {
         protected static string GetStoreMappingSubfix(DateTime wldate)
         {

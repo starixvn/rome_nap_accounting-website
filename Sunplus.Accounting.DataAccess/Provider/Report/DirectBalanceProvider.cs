@@ -15,7 +15,6 @@ namespace Sunplus.Accounting.DataAccess.Provider.Report
                                                GetDAOClient(DAOClient.AdoNet), GetDataSource(DataSource.SqlServer))));
         }
 
-
         public virtual DbResult Balance_Direct_Master(string db)
         {
             throw new NotImplementedException();

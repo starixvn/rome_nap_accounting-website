@@ -6,7 +6,6 @@ using System.Web.SessionState;
 using DNAide.Web;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
-using Sunplus.Core.LoggingLib;
 
 
 public class DelTrans : IHttpHandler,IRequiresSessionState {

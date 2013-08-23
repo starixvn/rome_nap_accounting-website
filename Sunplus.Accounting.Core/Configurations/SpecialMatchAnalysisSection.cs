@@ -1,5 +1,4 @@
-﻿
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace Sunplus.Accounting.Core.Configurations
 {
@@ -38,7 +37,6 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-
         public static SpecialMatchAnalysisSection Instance
         {
             get
@@ -53,17 +51,14 @@ namespace Sunplus.Accounting.Core.Configurations
         {
             get
             {
-
                 var spCollection = (SpecialMatchAnalysisCollection)this.GetType().GetProperty(name.ToString()).GetValue(this, System.Reflection.BindingFlags.GetField, null, null, null);
                 return spCollection;
             }
         }
-
     }
 
     public class SpecialMatchAnalysisCollection : ConfigurationElementCollection
     {
-
         public SpecialMatchAnalysisCollection()
         {
         }
@@ -107,7 +102,6 @@ namespace Sunplus.Accounting.Core.Configurations
             BaseClear();
         }
 
-
         public SpecialMatchAnalysisElement this[int index]
         {
             get
@@ -137,7 +131,6 @@ namespace Sunplus.Accounting.Core.Configurations
             return BaseIndexOf(specialMatchAnalysisElement);
         }
 
-
         protected override sealed ConfigurationElement CreateNewElement()
         {
             return new SpecialMatchAnalysisElement();
@@ -153,7 +146,6 @@ namespace Sunplus.Accounting.Core.Configurations
     {
         public SpecialMatchAnalysisElement()
         {
-
         }
 
         [ConfigurationProperty("name", IsRequired = true)]
@@ -182,7 +174,7 @@ namespace Sunplus.Accounting.Core.Configurations
             {
                 this["id"] = value;
             }
-        }     
+        }
 
         [ConfigurationProperty("value", IsRequired = false)]
         //[RegexStringValidator(@"\w+:\/\/[\w.]+\S*")]
@@ -196,7 +188,6 @@ namespace Sunplus.Accounting.Core.Configurations
             {
                 this["value"] = value;
             }
-        }       
-
+        }
     }
 }

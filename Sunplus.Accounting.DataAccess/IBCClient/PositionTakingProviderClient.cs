@@ -4,12 +4,10 @@ using System.Web;
 using DNAide.Core;
 using DNAide.Data;
 using IBCUtils;
-
-using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Helper;
-using Sunplus.Core.LoggingLib;
+using Sunplus.Accounting.Entities;
 
 /// <summary>
 /// Summary description for PositionTakingProviderClient
@@ -59,7 +57,6 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -83,7 +80,6 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -106,7 +102,6 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -133,12 +128,15 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
                     case Globals.AccountType.Super:
                         result = DbHelper.Execute("Acc_CustomerUpdSuperFI_All", param, DBType.MAIN);
                         break;
+
                     case Globals.AccountType.Master:
                         result = DbHelper.Execute("Acc_CustomerUpdMasterFI_All", param, DBType.MAIN);
                         break;
+
                     case Globals.AccountType.Agent:
                         result = DbHelper.Execute("Acc_CustomerUpdAgentFI_All", param, DBType.MAIN);
                         break;
+
                     case Globals.AccountType.Member:
                         result = DbHelper.Execute("Acc_CustomerUpdMemberFI_All", param, DBType.MAIN);
                         break;
@@ -155,7 +153,6 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -179,7 +176,6 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -203,7 +199,6 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -242,7 +237,6 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -262,12 +256,15 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
                     case Globals.AccountType.Super:
                         result = DbHelper.Execute("Acc_CustOverrideUpdFI", param, DBType.MAIN);
                         break;
+
                     case Globals.AccountType.Master:
                         result = DbHelper.Execute("Acc_CustOverrideUpdFI", param, DBType.MAIN);
                         break;
+
                     case Globals.AccountType.Agent:
                         result = DbHelper.Execute("Acc_CustOverrideUpdFI", param, DBType.MAIN);
                         break;
+
                     default:
                         result = DbHelper.Execute("Acc_CustOverrideUpdFI", param, DBType.MAIN);
                         break;
@@ -281,7 +278,6 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -291,7 +287,6 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
 
         private class SpConfig : DataAccess
         {
-
             public StoreProcedureElement GetCustomerStoreProcedure(Core.Configurations.StoreProcedureGroup.SportbookPtSession.StoreCollection storeCollection, string aliasName)
             {
                 return GetStoreProcedure(storeCollection, aliasName);

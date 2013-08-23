@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections;
+using DNAide.Core;
 using DNAide.Data;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 using Sunplus.Accounting.DataAccess.Report;
-using DNAide.Core;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 {
-    public class PokerReportDAO : DataAccessReport, IPokerReportDAO 
+    public class PokerReportDAO : DataAccessReport, IPokerReportDAO
     {
         public DbResult SelWinlostP2P(string FromDate, string ToDate)
         {
@@ -31,7 +27,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
             Hashtable hashtable = new Hashtable();
             hashtable.Add("currency", currency);
-            hashtable.Add("winlostdate", date);         
+            hashtable.Add("winlostdate", date);
             DbResult db = DbHelper.Execute(sp.Name, hashtable, sp.DbName, 200);
             return db;
         }

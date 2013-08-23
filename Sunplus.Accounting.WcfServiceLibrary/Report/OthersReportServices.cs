@@ -1,22 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System.ServiceModel.Activation;
 using DNAide.Core;
 using Sunplus.Accounting.Business.BootStrappers;
-using Sunplus.Accounting.Business.Report.Other;
-using System.ServiceModel.Activation;
 using Sunplus.Accounting.Business.Report.Other.DuplicateTickets;
 using Sunplus.Accounting.Entities.Report.Others;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.Report
 {
-    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]    
-    public class OthersReportServices:IOthersReportServices
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+    public class OthersReportServices : IOthersReportServices
     {
         public NumberOfBetsDTO SelectNumberOfBetsForCreditSites(string fromDate, string toDate)
         {
             var result = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.Other.INumberOfBetsManager>();
             return result.SelectNumberOfBetsForCreditSite(CastAide.AsDateTime(fromDate), CastAide.AsDateTime(toDate));
         }
-
 
         public DuplicateTicketsDTO SelDuplicateTickets(string wldate)
         {

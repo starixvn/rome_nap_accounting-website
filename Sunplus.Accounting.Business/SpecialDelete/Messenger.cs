@@ -2,11 +2,8 @@
 using System.Collections;
 using DNAide.Core;
 using DNAide.Data;
-
-using Sunplus.Accounting.Entities.SpecialDelete;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess;
-using Sunplus.Core.LoggingLib;
+using Sunplus.Accounting.Entities.SpecialDelete;
 
 /// <summary>
 /// Summary description for Messenger
@@ -43,7 +40,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 Msg.Content_ko = CorrectSpace(Msg.Content_ko);
                 Msg.Content_es = CorrectSpace(Msg.Content_es);
 
-
                 p.Add("ispublic", 0);
                 p.Add("msgtype", 1);
                 p.Add("issticky", 0);
@@ -62,7 +58,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 p.Add("content_ko", Msg.Content_ko);
                 p.Add("content_es", Msg.Content_es);
 
-
                 rs = DbHelper.Execute("Dot_Msg_SetMessage", p, DBType.MESSAGE, 120);
 
                 Msg.MessageId = CastAide.AsInt32(rs.ResultSet.Tables[0].Rows[0]["MessageId"]);
@@ -73,8 +68,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return Msg.MessageId;
         }
@@ -108,8 +102,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
 
@@ -128,10 +121,8 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             }
             else
             {
-               if (scontent.Substring(index - 1, 1).Trim().Length > 0)
-                    scontent = scontent.Replace("@@", " @@");    
-                
-                
+                if (scontent.Substring(index - 1, 1).Trim().Length > 0)
+                    scontent = scontent.Replace("@@", " @@");
             }
             return scontent;
         }

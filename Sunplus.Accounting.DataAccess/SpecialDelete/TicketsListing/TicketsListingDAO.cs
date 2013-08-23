@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections;
 using DNAide.Core;
 using DNAide.Data;
 using Sunplus.Accounting.Core.Configurations;
 
 namespace Sunplus.Accounting.DataAccess.SpecialDelete.TicketsListing
 {
-    public class TicketsListingDAO: DataAccessReport, ITicketsListingDAO
+    public class TicketsListingDAO : DataAccessReport, ITicketsListingDAO
     {
         private StoreProcedureElement getSPMapping(string key)
         {
@@ -21,7 +17,6 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete.TicketsListing
             var element = getSPMapping("SelAllLicensee");
             return DbHelper.Execute(element.Name, element.DbName);
         }
-
 
         public DbResult SelBettype()
         {
@@ -42,11 +37,10 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete.TicketsListing
             hashtable.Add("type", Type);
             hashtable.Add("safilter", SAFilter);
             hashtable.Add("errcode", 0);
-            hashtable.Add("errmsg","");
-            hashtable.Add("livetype", DNAide.Core.CastAide.AsString(LiveType,"0"));
+            hashtable.Add("errmsg", "");
+            hashtable.Add("livetype", DNAide.Core.CastAide.AsString(LiveType, "0"));
             if (Type == 0) //sport book
             {
-
                 if (HomeScore.Length > 0 && AwayScore.Length > 0)
                 {
                     hashtable.Add("livehomescore", HomeScore);
@@ -57,10 +51,9 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete.TicketsListing
                     hashtable.Add("fromtransdate", CastAide.AsDateTime(FromTransDate).AddHours(-12));
                     hashtable.Add("totransdate", CastAide.AsDateTime(ToTransDate).AddHours(-12));
                 }
-
             }
 
-            return DbHelper.Execute(element.Name, hashtable, element.DbName, 6000); 
+            return DbHelper.Execute(element.Name, hashtable, element.DbName, 6000);
         }
     }
 }

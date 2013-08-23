@@ -3,18 +3,13 @@ using System.Collections;
 using System.Data;
 using System.Text;
 using DNAide.Core;
-using DNAide.Data;
 using DNAide.Utils;
 using DNAide.Web;
-
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Accounting.Core.Web.Controls;
-using Sunplus.Accounting.DataAccess.IBCDLL.Report;
-using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Web;
+using Sunplus.Accounting.DataAccess.IBCDLL.Report;
 
 /// <summary>
 /// Summary description for MatchWinLostByBetType
@@ -42,7 +37,6 @@ namespace BLL.Report.MatchWL
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -55,7 +49,7 @@ namespace BLL.Report.MatchWL
             string tpl = WebUtils.LoadTemplate("Report/MatchWL/MatchWLByBettype/MatchWinLostByBetTypeAllRow.htm");
             try
             {
-                //Get data                       
+                //Get data
                 var rs = MatchWinLostByBetType.RptMatchWinLostByBettype(CastAide.AsDateTime(input["fdate"]),
                                                                              CastAide.AsDateTime(input["tdate"]));
 
@@ -111,7 +105,6 @@ namespace BLL.Report.MatchWL
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }

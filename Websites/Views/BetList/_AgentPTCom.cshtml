@@ -25,9 +25,10 @@
 else
 {
     <div class="@betlistHelper.IsNegative(PT)">
-        @if (betdetail.Ticket.BetTypeId == 71)
+        @*casino, bingo*@
+        @if (betdetail.Ticket.BetTypeId == 71 || betdetail.Ticket.BetTypeId == 73)
         {
-           
+
         }
         else
         {
@@ -42,7 +43,8 @@ else
     </div>
 }
 <div class="margin-top-5">
-    @if (betdetail.Ticket.BetTypeId == 71)
+    @*casino, bingo*@
+    @if (betdetail.Ticket.BetTypeId == 71 || betdetail.Ticket.BetTypeId == 73)
     {
        
     }

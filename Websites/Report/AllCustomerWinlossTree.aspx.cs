@@ -1,27 +1,23 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Text;
-using DNAide.Web;
-using Sunplus.Accounting.Business.CacheManager;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Core.LoggingLib;
-using IBCUtils;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using DNAide.Core;
 using DNAide.Data;
-using System.Collections.Generic;
+using DNAide.Web;
+using IBCUtils;
+using Sunplus.Accounting.Business.CacheManager;
 using Sunplus.Accounting.Business.Report.Common;
-
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
 /// <summary>
 /// CITS
 /// </summary>
 public partial class Report_AllCustomerWinlossTree : PageBase
 {
-
     private RMReportUtils utilsBARM = null;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         string path = "";
@@ -40,7 +36,6 @@ public partial class Report_AllCustomerWinlossTree : PageBase
 
             date = "5/23/2012";
 
-
             string username = Request["username"];
             string url = "";
             if (roleid == 4) header.Text = Title = "Super Win Loss";
@@ -48,11 +43,11 @@ public partial class Report_AllCustomerWinlossTree : PageBase
             {
                 Session["custMaster"] = custid + "|" + username;
 
-                url = "<a href=\"AllCustomerWinlossTree.aspx?custid=0" +  "&roleid=" + (roleid + 1) +
+                url = "<a href=\"AllCustomerWinlossTree.aspx?custid=0" + "&roleid=" + (roleid + 1) +
                        "&username=" + username +
                      "&fdate=" + date + "\" target=\"centerFr\">Super</a>";
                 Session["urlMaster"] = url;
-                header.Text = Title = url + ": " +  username + " > Master Win Loss";
+                header.Text = Title = url + ": " + username + " > Master Win Loss";
             }
             if (roleid == 2)
             {
@@ -82,7 +77,7 @@ public partial class Report_AllCustomerWinlossTree : PageBase
                 url = "<a href=\"AllCustomerWinlossTree.aspx?custid=" + Session["custAgent"].ToString().Split('|')[0] + "&roleid=" + (roleid + 1) +
                        "&username=" + Session["custAgent"].ToString().Split('|')[1] +
                      "&fdate=" + date + "\" target=\"centerFr\"> Agent</a>";
-                
+
                 header.Text = Title = path + " > " + url + ": " + username + " > Member Win Loss";
             }
             content.Text = gencontent(roleid, custid, date);
@@ -93,7 +88,8 @@ public partial class Report_AllCustomerWinlossTree : PageBase
             Response.Write(ex.Message);
         }
     }
-    string gencontent(int roleid, int custid, string date)
+
+    private string gencontent(int roleid, int custid, string date)
     {
         string tplTotal = "";
         DbResult rs = null;
@@ -133,29 +129,29 @@ public partial class Report_AllCustomerWinlossTree : PageBase
                     odd_even = (odd_even == "") ? "evenrow" : "";
                     string row = rows.Clone().ToString();
                     string url = "";
-                    TemplateHandler.Assign(ref row, "{odd_even}", odd_even);                    
-                    
+                    TemplateHandler.Assign(ref row, "{odd_even}", odd_even);
+
                     //TemplateHandler.Assign(ref row, "{toverpt}",  "<font color=#cdcdcd>" + Convert.ToString(dr["currency"] + "</font>" + FormatHandler.FormatNumber20(dr["PositionTurnOverRM"])));
                     TemplateHandler.Assign(ref row, "{toverpt}", "<font color=#cdcdcd>" + CacheUtils.GetExchangeName(exchange, CastAide.AsInt32(dr["currency"])) + "</font> " + FormatHandler.FormatNumber20(dr["PositionTurnOverRM"]));
-                  
+
                     double toverrm = FormatHandler.GetDouble(dr["TurnOverRM"]);
-                    TemplateHandler.Assign(ref row, "{toverrm}", "<b>" +  FormatHandler.FormatNumber20(toverrm) + "</b>");
-                    
+                    TemplateHandler.Assign(ref row, "{toverrm}", "<b>" + FormatHandler.FormatNumber20(toverrm) + "</b>");
+
                     if (roleid == 0) url = Convert.ToString(dr["username"]);
                     else url = "<a href=\"AllCustomerWinlossTree.aspx?custid=" + Convert.ToString(dr["custid"]) + "&roleid=" + roleid +
                         "&username=" + Convert.ToString(dr["username"]) +
                       "&fdate=" + fdate.ToShortDateString() + "\" target=\"centerFr\">" + Convert.ToString(dr["username"]) + "</a>";
                     TemplateHandler.Assign(ref row, "{username}", url);
-                    
+
                     double comm = FormatHandler.GetDouble(dr["commission"]);
                     TemplateHandler.Assign(ref row, "{comm}", colorvalue(comm));
-                    
+
                     double winlost = FormatHandler.GetDouble(dr["winloss"]);
                     TemplateHandler.Assign(ref row, "{winlost}", colorvalue(winlost));
 
                     double total = FormatHandler.GetDouble(dr["total"]);
                     TemplateHandler.Assign(ref row, "{total}", colorvalue(total));
-                  
+
                     double totalrm = CastAide.AsDouble(dr["totalrm"]);
                     TemplateHandler.Assign(ref row, "{totalrm}", colorvalue(totalrm));
 
@@ -179,29 +175,25 @@ public partial class Report_AllCustomerWinlossTree : PageBase
                 if (roleid == 3)
                 {
                     string tpl = tplTotal;
-                    decimal winlost_8rm = - CastAide.AsDecimal(rs.Outputs["winlost_8rm"]);
-                    decimal virtualwinlost_8rm = - CastAide.AsDecimal(rs.Outputs["virtualwinlost_8rm"]);
-                    decimal winlost_barm = - CastAide.AsDecimal(rs.Outputs["winlost_barm"]);
+                    decimal winlost_8rm = -CastAide.AsDecimal(rs.Outputs["winlost_8rm"]);
+                    decimal virtualwinlost_8rm = -CastAide.AsDecimal(rs.Outputs["virtualwinlost_8rm"]);
+                    decimal winlost_barm = -CastAide.AsDecimal(rs.Outputs["winlost_barm"]);
                     decimal virtualwinlost_barm = -CastAide.AsDecimal(rs.Outputs["virtualwinlost_barm"]);
 
                     //testing
-                   
 
                     grandTotalRM += winlost_8rm + (utilsBARM.IsActive ? winlost_barm : 0);
                     grandVirtualTotalRM += virtualwinlost_8rm + (utilsBARM.IsActive ? virtualwinlost_barm : 0);
 
-                    
-
                     decimal variance_8rm = winlost_8rm - virtualwinlost_8rm;
                     decimal variance_barm = winlost_barm - virtualwinlost_barm;
-                    
-                    decimal variance_total = grandTotalRM - grandVirtualTotalRM;
 
+                    decimal variance_total = grandTotalRM - grandVirtualTotalRM;
 
                     string tplRM = TemplateHandler.CopyBlock(tplTotal, "rm");
                     string tplGrandTotal = TemplateHandler.CopyBlock(tplTotal, "grandtotal");
 
-                    //8RM 
+                    //8RM
                     tpl = tplRM;
 
                     TemplateHandler.Assign(ref tpl, "{RM}", "8RM");
@@ -221,18 +213,14 @@ public partial class Report_AllCustomerWinlossTree : PageBase
                         html.Append(tpl);
                     }
 
-
                     tpl = tplGrandTotal;
                     TemplateHandler.Assign(ref tpl, "{total}", colorvalue(grandTotalRM));
                     TemplateHandler.Assign(ref tpl, "{virtualtotal}", colorvalue(grandVirtualTotalRM));
                     TemplateHandler.Assign(ref tpl, "{variance_total}", colorvalue(variance_total));
                     html.Append(tpl);
 
-                    //----------- 12bet--------- 
-                    
-                    
+                    //----------- 12bet---------
 
-                    
                 }
             }
             else
@@ -241,20 +229,19 @@ public partial class Report_AllCustomerWinlossTree : PageBase
                 html.Append(norow);
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Sunplus.Accounting.Business.Logs.Write(ex.Message);
             TemplateHandler.Assign(ref norow, "{nodata}", AlertMessage.GetMsg(ex.Message, AlertMessage.MsgType.Error));
             html.Append(norow);
-        }       
+        }
 
         html.Append("</table>");
 
-        
-
         return html.ToString();
     }
-    string colorvalue(object value)
+
+    private string colorvalue(object value)
     {
         string str = "";
         if (CastAide.AsDecimal(value) >= 0) str = "<b>" + FormatHandler.FormatNumber20(value) + "</b>";

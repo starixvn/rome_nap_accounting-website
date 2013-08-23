@@ -26,7 +26,7 @@ namespace Sunplus.Accounting.DataAccess.Entity
             where TO : class, new()
         {
             //ClearCachedMapperMethods();
-            //TODO: Insert method into your data access utility class                  
+            //TODO: Insert method into your data access utility class
             var dbConn = new SqlConnection(ConString(dbtype));
             //Open connection if it's closed
             if (dbConn.State == ConnectionState.Closed)
@@ -34,7 +34,7 @@ namespace Sunplus.Accounting.DataAccess.Entity
                 dbConn.Open();
             }
 
-            //TODO: Move constant declaration below directly into containing class          
+            //TODO: Move constant declaration below directly into containing class
 
             var cmd = new SqlCommand(spName, dbConn)
                           {
@@ -65,7 +65,7 @@ namespace Sunplus.Accounting.DataAccess.Entity
                             {
                                 //   result.Add(OjbectMapper
                                 //MapToEntities<LeagueSportWLDetails>(rdr);
-                                var entity = ObjectMapper.FillObject<TO>(typeof (TO), rdr);
+                                var entity = ObjectMapper.FillObject<TO>(typeof(TO), rdr);
                                 result.Add(entity);
                             }
                         }
@@ -104,7 +104,7 @@ namespace Sunplus.Accounting.DataAccess.Entity
             where TO : class, new()
         {
             //ClearCachedMapperMethods();
-            //TODO: Insert method into your data access utility class                  
+            //TODO: Insert method into your data access utility class
             var dbConn = new SqlConnection(ConString(dbtype));
             //Open connection if it's closed
             if (dbConn.State == ConnectionState.Closed)
@@ -112,7 +112,7 @@ namespace Sunplus.Accounting.DataAccess.Entity
                 dbConn.Open();
             }
 
-            //TODO: Move constant declaration below directly into containing class          
+            //TODO: Move constant declaration below directly into containing class
 
             var cmd = new SqlCommand(spName, dbConn)
                           {
@@ -135,7 +135,6 @@ namespace Sunplus.Accounting.DataAccess.Entity
             var resultIteam = new List<TO>();
             var results = new ArrayList();
 
-
             try
             {
                 //rdr = cmd.ExecuteReader();
@@ -151,7 +150,7 @@ namespace Sunplus.Accounting.DataAccess.Entity
                         {
                             //   result.Add(OjbectMapper
                             //MapToEntities<LeagueSportWLDetails>(rdr);
-                            var entity = ObjectMapper.FillObject<TO>(typeof (TO), dr);
+                            var entity = ObjectMapper.FillObject<TO>(typeof(TO), dr);
                             resultIteam.Add(entity);
                         }
                         results.Add(resultIteam);
@@ -182,7 +181,7 @@ namespace Sunplus.Accounting.DataAccess.Entity
         public static List<TO> ExecuteReader<TO>(string spName, Hashtable param, string dbtype) where TO : class, new()
         {
             //ClearCachedMapperMethods();
-            //TODO: Insert method into your data access utility class                  
+            //TODO: Insert method into your data access utility class
             var dbConn = new SqlConnection(ConString(dbtype));
             //Open connection if it's closed
             if (dbConn.State == ConnectionState.Closed)
@@ -190,9 +189,9 @@ namespace Sunplus.Accounting.DataAccess.Entity
                 dbConn.Open();
             }
 
-            //TODO: Move constant declaration below directly into containing class          
+            //TODO: Move constant declaration below directly into containing class
 
-            var cmd = new SqlCommand(spName, dbConn) {CommandType = CommandType.StoredProcedure};
+            var cmd = new SqlCommand(spName, dbConn) { CommandType = CommandType.StoredProcedure };
             foreach (string key in param.Keys)
             {
 #pragma warning disable 612,618
@@ -217,7 +216,7 @@ namespace Sunplus.Accounting.DataAccess.Entity
                             {
                                 //   result.Add(OjbectMapper
                                 //MapToEntities<LeagueSportWLDetails>(rdr);
-                                var entity = ObjectMapper.FillObject<TO>(typeof (TO), rdr);
+                                var entity = ObjectMapper.FillObject<TO>(typeof(TO), rdr);
                                 result.Add(entity);
                             }
                         }
@@ -257,7 +256,7 @@ namespace Sunplus.Accounting.DataAccess.Entity
                                                  ref Hashtable output) where TO : class, new()
         {
             //ClearCachedMapperMethods();
-            //TODO: Insert method into your data access utility class                  
+            //TODO: Insert method into your data access utility class
             var dbConn = new SqlConnection(ConString(dbtype));
             //Open connection if it's closed
             if (dbConn.State == ConnectionState.Closed)
@@ -265,7 +264,7 @@ namespace Sunplus.Accounting.DataAccess.Entity
                 dbConn.Open();
             }
 
-            //TODO: Move constant declaration below directly into containing class          
+            //TODO: Move constant declaration below directly into containing class
 
             var cmd = new SqlCommand(spName, dbConn)
                           {
@@ -296,7 +295,7 @@ namespace Sunplus.Accounting.DataAccess.Entity
                             {
                                 //   result.Add(OjbectMapper
                                 //MapToEntities<LeagueSportWLDetails>(rdr);
-                                var entity = ObjectMapper.FillObject<TO>(typeof (TO), rdr);
+                                var entity = ObjectMapper.FillObject<TO>(typeof(TO), rdr);
                                 result.Add(entity);
                             }
                         }
@@ -323,7 +322,7 @@ namespace Sunplus.Accounting.DataAccess.Entity
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <typeparam name="TO"></typeparam>
         /// <param name="spName"></param>
@@ -335,7 +334,7 @@ namespace Sunplus.Accounting.DataAccess.Entity
             where TO : class, new()
         {
             //ClearCachedMapperMethods();
-            //TODO: Insert method into your data access utility class                  
+            //TODO: Insert method into your data access utility class
             var dbConn = new SqlConnection(ConString(dbtype));
             //Open connection if it's closed
             if (dbConn.State == ConnectionState.Closed)
@@ -343,9 +342,9 @@ namespace Sunplus.Accounting.DataAccess.Entity
                 dbConn.Open();
             }
 
-            //TODO: Move constant declaration below directly into containing class          
+            //TODO: Move constant declaration below directly into containing class
 
-            var cmd = new SqlCommand(spName, dbConn) {CommandType = CommandType.StoredProcedure};
+            var cmd = new SqlCommand(spName, dbConn) { CommandType = CommandType.StoredProcedure };
             foreach (string key in param.Keys)
             {
 #pragma warning disable 612,618
@@ -356,10 +355,9 @@ namespace Sunplus.Accounting.DataAccess.Entity
 
             foreach (object keyOut in output.Keys)
             {
-                var outputParam = new SqlParameter("@" + keyOut, output[keyOut]) {Direction = ParameterDirection.Output};
+                var outputParam = new SqlParameter("@" + keyOut, output[keyOut]) { Direction = ParameterDirection.Output };
                 cmd.Parameters.Add(outputParam);
             }
-
 
             SqlDataReader rdr;
             var result = new List<TO>();
@@ -377,7 +375,7 @@ namespace Sunplus.Accounting.DataAccess.Entity
                             {
                                 //   result.Add(OjbectMapper
                                 //MapToEntities<LeagueSportWLDetails>(rdr);
-                                var entity = ObjectMapper.FillObject<TO>(typeof (TO), rdr);
+                                var entity = ObjectMapper.FillObject<TO>(typeof(TO), rdr);
                                 result.Add(entity);
                             }
                         }

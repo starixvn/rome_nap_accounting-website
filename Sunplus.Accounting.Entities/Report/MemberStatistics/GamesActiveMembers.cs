@@ -10,6 +10,7 @@ namespace Sunplus.Accounting.Entities.Report.MemberStatistics
     {
         [DataMember]
         public string GameName { get; set; }
+
         [DataMember]
         public int NoActives { get; set; }
     }

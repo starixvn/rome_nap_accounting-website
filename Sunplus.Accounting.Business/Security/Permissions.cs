@@ -2,8 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
 using DNAide.Core;
 using DNAide.Data;
 
@@ -17,7 +15,6 @@ using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Bingo.Core;
-using Sunplus.Core.LoggingLib;
 
 namespace Sunplus.Accounting.Business.Security
 {
@@ -92,12 +89,10 @@ namespace Sunplus.Accounting.Business.Security
                         }
                         //try
                         //{
-
                         //    pages.Add(strListFiles[i].Trim(), strFuncName.Trim() + "-1");
                         //}
                         //catch
                         //{
-
                         //}
                     }
                 }
@@ -136,7 +131,7 @@ namespace Sunplus.Accounting.Business.Security
         }
 
         /// <summary>
-        /// Finance Transfer: allow current login admin can transfer money from Finance account to Betting account or not 
+        /// Finance Transfer: allow current login admin can transfer money from Finance account to Betting account or not
         /// </summary>
         /// <param name="fromcustid"></param>
         /// <param name="touser"></param>
@@ -224,12 +219,9 @@ namespace Sunplus.Accounting.Business.Security
             {
                 LogExtensions.ExceptionHandler(ex);
                 errmsg = ex.Message;
-
             }
             return errcode;
         }
-
-
 
         public static bool IsDenyView2HSoccer
         {
@@ -291,8 +283,6 @@ namespace Sunplus.Accounting.Business.Security
             }
         }
 
-
-
         public static bool HasPermission<T>(T function)
         {
             if (AppSession.RoleAccess == null)
@@ -312,7 +302,7 @@ namespace Sunplus.Accounting.Business.Security
             {
                 return false;
             }
-            return AppSession.RoleAccess[functionName.ToLower()] == 3;           
+            return AppSession.RoleAccess[functionName.ToLower()] == 3;
         }
 
         public static bool HasPermission(string funcName)
@@ -333,8 +323,6 @@ namespace Sunplus.Accounting.Business.Security
             return true;
         }
 
-
-
         public static bool IsAllowEditCasino(int parentId, bool syncCasino)
         {
             if (parentId == 0)
@@ -352,7 +340,6 @@ namespace Sunplus.Accounting.Business.Security
                 return false;
             return true;
         }
-
 
         public static bool IsAllowEditFI()
         {
@@ -411,8 +398,9 @@ namespace Sunplus.Accounting.Business.Security
                 return false;
             return true;
         }
-        
+
         #region Settlement
+
         public static string CheckHostPermissionSettle(int custID)
         {
             string result = "";
@@ -426,8 +414,8 @@ namespace Sunplus.Accounting.Business.Security
                 result += "[D]"; //Host permission on Undecided Settle Match
             return result;
         }
-        #endregion
 
+        #endregion Settlement
 
         #region Nested type: FinancePermission
 
@@ -442,8 +430,8 @@ namespace Sunplus.Accounting.Business.Security
             }
 
             /// <summary>
-            /// Create Finance Super Account: 
-            /// - Only user admin that is granted hot permission on this function can create a new finance super account 
+            /// Create Finance Super Account:
+            /// - Only user admin that is granted hot permission on this function can create a new finance super account
             /// </summary>
             public static bool IsCreateFiAcc
             {
@@ -451,8 +439,8 @@ namespace Sunplus.Accounting.Business.Security
             }
 
             /// <summary>
-            /// Open/Close Finance Account: 
-            /// - Allow a certain admin can Close or Open back a Finance Account 
+            /// Open/Close Finance Account:
+            /// - Allow a certain admin can Close or Open back a Finance Account
             /// </summary>
             public static bool IsOpenCloseFiAcc
             {
@@ -461,7 +449,7 @@ namespace Sunplus.Accounting.Business.Security
 
             /// <summary>
             /// Verify Transaction
-            /// - Allow to Verify  transaction on Daily Transactions and Statement or not 
+            /// - Allow to Verify  transaction on Daily Transactions and Statement or not
             /// </summary>
             public static bool IsVerifyTrans
             {
@@ -477,12 +465,10 @@ namespace Sunplus.Accounting.Business.Security
                 get { return Permissions.HasPermission(Enumerations.Functions.FinancialManagement.ManageTransaction); }
             }
 
-
-
             /// <summary>
             /// View Finance Account:
             /// - Allow to search Finance account in the left panel
-            /// - Allow to view the List of Finance Account 
+            /// - Allow to view the List of Finance Account
             /// </summary>
             /// <param name="IsInternal"></param>
             /// <returns></returns>
@@ -495,7 +481,6 @@ namespace Sunplus.Accounting.Business.Security
             }
         }
 
-        #endregion
-
+        #endregion Nested type: FinancePermission
     }
 }

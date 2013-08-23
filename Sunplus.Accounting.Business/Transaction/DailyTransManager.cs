@@ -1,35 +1,31 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
 using System.Globalization;
+using System.Linq;
 using System.ServiceModel.Activation;
 using System.Text;
-using DNAide.Utils;
+using System.Web;
+using DNAide.Core;
+using DNAide.Data;
 using DNAide.Web;
-
+using ExcelUtil.Spreadsheet;
 using Sunplus.Accounting.Business.BootStrappers;
-using Sunplus.Accounting.Entities;
-using Sunplus.Accounting.Entities.ViewModel;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Business.Security;
+using Sunplus.Accounting.Core.Cache.Extension;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.Core.Web.Controls;
-using Sunplus.Core.LoggingLib;
-using FormatHandler = IBCUtils.FormatHandler;
-using DNAide.Data;
-using System.Data;
 using Sunplus.Accounting.DataAccess;
-using Sunplus.Accounting.Core.Extensions;
-using DNAide.Core;
-using ExcelUtil.Spreadsheet;
-using System.Linq;
-using System.Drawing;
-using System.Web;
-using Sunplus.Accounting.Core.Cache.Extension;
-using System.IO;
+using Sunplus.Accounting.Entities;
+using Sunplus.Accounting.Entities.ViewModel;
+using FormatHandler = IBCUtils.FormatHandler;
 
-//using Sunplus.Core.LoggingLib;
+
 
 namespace Sunplus.Accounting.Business.Transaction
 {
@@ -46,6 +42,7 @@ namespace Sunplus.Accounting.Business.Transaction
 
         private const string TEMPLATE_VERIFIED_BUTTON =
             "<input type=\"button\" class=\"verified\" value=\"Verify\" title=\"Verify\"  onclick=\"return VerifyTrans(this);\"  id=\"{0}\"/>";
+
         private string _keyDailyAllTxn = AppSession.Username + "_SelDailyAllTxn";
         private string _keyDailyFinanceTxn = AppSession.Username + "_SelDailyFinanceTxn";
 
@@ -59,11 +56,13 @@ namespace Sunplus.Accounting.Business.Transaction
         /// <param name="Type"></param>
         /// <param name="Creator"></param>
         /// <returns></returns>
+
         #region get daily finance transaction
-        
-        #endregion
+
+        #endregion get daily finance transaction
 
         #region get Daily All Transaction
+
         public string GetDailyAllTransaction(int pageIndex, string date, string type, string creator)
         {
             var tpl = string.Empty;
@@ -73,7 +72,7 @@ namespace Sunplus.Accounting.Business.Transaction
                 tpl = WebUtils.LoadTemplate("Transactions/DailyAllTransaction.htm");
                 DateTime transDate = DateTime.Parse(date, CultureInfo.CurrentCulture);
                 transDate = IBCUtils.FormatHandler.ResetStartDate(transDate);
-                GetDailyAllTransactionContent(transDate, ref tpl, type, creator, pageIndex, 100,  ref TotalPages);
+                GetDailyAllTransactionContent(transDate, ref tpl, type, creator, pageIndex, 100, ref TotalPages);
             }
             catch (DNAide.Utils.AccException ex)
             {
@@ -82,7 +81,6 @@ namespace Sunplus.Accounting.Business.Transaction
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -113,12 +111,10 @@ namespace Sunplus.Accounting.Business.Transaction
                 dailyAllTxnPaging = GetDailyAllTxnDTO(dtoCaching, pageIndex, pageSize, maxLenList, totalRow);
             }
             return dailyAllTxnPaging;
-
         }
 
         public DailyTransactionDTO GetDailyAllTxnDTO(DailyTransactionDTO data, int pageIndex, int pageSize, int maxLenList, int totalRowList)
         {
-       
             var indexList = pageIndex * pageSize / maxLenList;
             var counterList = data.items.Count;
             var offset = ((pageIndex - 1) * pageSize) - (indexList * maxLenList);
@@ -184,8 +180,9 @@ namespace Sunplus.Accounting.Business.Transaction
             }
             return cacheReturn;
         }
-        
-        #endregion
+
+        #endregion get Daily All Transaction
+
         /// <summary>
         /// verify multiple transaction
         /// </summary>
@@ -207,7 +204,7 @@ namespace Sunplus.Accounting.Business.Transaction
             if (hasUpdateTransPermission == false)
                 return false;
 
-            #endregion
+            #endregion check permision before update to DB
 
             var userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
             isSuccessfull = userService.VerfiyDailyTransactions(user, refNoList);
@@ -216,7 +213,7 @@ namespace Sunplus.Accounting.Business.Transaction
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="refNo"></param>
         /// <returns></returns>
@@ -236,18 +233,15 @@ namespace Sunplus.Accounting.Business.Transaction
             if (hasUpdateTransPermission == false)
                 return false;
 
-            #endregion
+            #endregion check permision before update to DB
 
             var userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
             isSuccessfull = userService.UnverifyTransaction(user, refNo);
 
-
             return isSuccessfull;
         }
 
-        #endregion
-
-
+        #endregion IServiceDailyTran Members
 
         /// <summary>
         /// Build string render from daily finance transaction data
@@ -260,7 +254,9 @@ namespace Sunplus.Accounting.Business.Transaction
         /// <param name="PageIndex"></param>
         /// <param name="TotalPages"></param>
         /// <param name="cult"></param>
+
         #region get finance transaction content
+
         private string GetFinanceTransactionContent(string transDate, int status
                                                     , string type, string creator, int PageIndex, int TotalPages,
                                                     string verifyBy, List<DailyTransaction> entityList)
@@ -282,7 +278,6 @@ namespace Sunplus.Accounting.Business.Transaction
 
             string[] arrDate = transDate.ToString().Split('/');
             string strDate = arrDate[0] + "/" + arrDate[1] + "/" + arrDate[2].Substring(0, 4);
-
 
             //load template by permission
             if (hasUpdateTransPermission)
@@ -308,12 +303,12 @@ namespace Sunplus.Accounting.Business.Transaction
 
                 //render row by row data
                 string prevRefNo = entityList[0].RefNo;
-                //get dictionary list, 
+                //get dictionary list,
                 Dictionary<string, int> list = userService.GetListTotalTransPerGroup(entityList);
 
                 string actionTemplate = string.Empty;
 
-                #endregion
+                #endregion Define params
 
                 int rowIndexOnCurrentPage = 0;
                 int totalVeirfyAllow = 0;
@@ -375,7 +370,6 @@ namespace Sunplus.Accounting.Business.Transaction
                                                 ? entity.CheckedTime
                                                 : string.Empty));
 
-
                     if (entity.CheckerId > 0)
                     {
                         /*
@@ -410,7 +404,7 @@ namespace Sunplus.Accounting.Business.Transaction
 
                     TemplateHandler.Assign(ref itemContent, "{action}", actionTemplate);
 
-                    #endregion
+                    #endregion Assign to template data
 
                     strBuilder.Append(itemContent);
                 }
@@ -419,7 +413,7 @@ namespace Sunplus.Accounting.Business.Transaction
                 TemplateHandler.Assign(ref content, "{totalpage}", TotalPages.ToString());
 
                 /*
-             *  Just show paging only if total page > 1             
+             *  Just show paging only if total page > 1
              */
 
                 TemplateHandler.Assign(ref content, "{footerpager}",
@@ -446,9 +440,11 @@ namespace Sunplus.Accounting.Business.Transaction
 
             return content;
         }
-        #endregion
+
+        #endregion get finance transaction content
 
         #region get daily all transaction
+
         private void GetDailyAllTransactionContent(DateTime transDate, ref string tplContent, string type, string creator, int pageIndex, int pageSize, ref int totalPages)
         {
             var cult = CultureInfo.CurrentCulture;
@@ -467,7 +463,7 @@ namespace Sunplus.Accounting.Business.Transaction
                 getDailyAllTxn = (List<DailyTransaction>)AppSession.GetSession(System.Web.HttpContext.Current.Session,
                                                            _keyDailyAllTxn);
                 if (entityList.Count > 0)
-                {                    
+                {
                     foreach (DailyTransaction entity in entityList)
                     {
                         newRow = sRow;
@@ -501,15 +497,13 @@ namespace Sunplus.Accounting.Business.Transaction
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
             }
         }
-        #endregion
 
-        
+        #endregion get daily all transaction
 
         #region IServiceDailyTran Members
 
@@ -518,14 +512,18 @@ namespace Sunplus.Accounting.Business.Transaction
             try
             {
                 #region excel format
+
                 const int startCol = 0;
                 const int startRow = 2;
                 var nextRow = 0;
                 var excelFile = new ExcelFile();
                 var maxRowsInSheet = 65000;
                 //var dailyAll = new DailyTransactionDTOList();
-                #endregion
+
+                #endregion excel format
+
                 #region add new sheet
+
                 var totalSheets = totalRows % maxRowsInSheet > 0 ? (totalRows / maxRowsInSheet) + 1 : (totalRows / maxRowsInSheet);
                 //var totalSheets = 5;
                 int index = 0;
@@ -575,7 +573,6 @@ namespace Sunplus.Accounting.Business.Transaction
                     //var totalRowinSheet = (totalSheets - 1 == i) ? totalRows - (maxRowsInSheet * i) : maxRowsInSheet;
                     for (int j = 0; j < dailyTxn.items.Count; j++)
                     {
-
                         if (j % 2 == 0)
                         {
                             r = 217;
@@ -608,7 +605,7 @@ namespace Sunplus.Accounting.Business.Transaction
                     }
                 }
 
-                #endregion
+                #endregion add new sheet
 
                 var response = HttpContext.Current.Response;
                 //response.Write("<script>alert('test');</script>");
@@ -621,8 +618,7 @@ namespace Sunplus.Accounting.Business.Transaction
             { }
         }
 
-        #endregion
-
+        #endregion IServiceDailyTran Members
 
         public DailyTransactionDTO GetDailyTransData(string date, string type, int status, string creator, string verifyBy, int pageIndex, int pageSize, int fromcache)
         {
@@ -630,7 +626,7 @@ namespace Sunplus.Accounting.Business.Transaction
             var dailyFinancePaging = new DailyTransactionDTO();
             try
             {
-               // var getdataSession = AppSession.GetSession(System.Web.HttpContext.Current.Session, _keyDailyFinanceTxn);
+                // var getdataSession = AppSession.GetSession(System.Web.HttpContext.Current.Session, _keyDailyFinanceTxn);
                 var getdataSession = CacheExtension.Get<DailyTransactionDTO>(_keyDailyFinanceTxn);
                 if (getdataSession == null || fromcache == 0)
                 {
@@ -682,13 +678,13 @@ namespace Sunplus.Accounting.Business.Transaction
 
                 //render row by row data
                 string prevRefNo = entityList[0].RefNo;
-                //get dictionary list, 
+                //get dictionary list,
                 var userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
                 Dictionary<string, int> list = userService.GetListTotalTransPerGroup(entityList);
 
                 string actionTemplate = string.Empty;
 
-                #endregion
+                #endregion Define params
 
                 int rowIndexOnCurrentPage = 0;
                 int totalVeirfyAllow = 0;
@@ -703,7 +699,7 @@ namespace Sunplus.Accounting.Business.Transaction
 
                     TemplateHandler.Assign(ref itemContent, "{date}",
                                            entity.transDate);
-                    
+
                     //change row style for transaction group
                     //use ref no to seperate row style
                     if (prevRefNo != entity.RefNo || rowIndexOnCurrentPage == 1)
@@ -750,7 +746,6 @@ namespace Sunplus.Accounting.Business.Transaction
                                                 ? entity.transDate
                                                 : string.Empty));
 
-
                     if (entity.CheckerId > 0)
                     {
                         /*
@@ -785,7 +780,7 @@ namespace Sunplus.Accounting.Business.Transaction
 
                     TemplateHandler.Assign(ref itemContent, "{action}", actionTemplate);
 
-                    #endregion
+                    #endregion Assign to template data
 
                     strBuilder.Append(itemContent);
                 }
@@ -794,7 +789,7 @@ namespace Sunplus.Accounting.Business.Transaction
                 TemplateHandler.Assign(ref content, "{totalpage}", TotalPages.ToString());
 
                 /*
-             *  Just show paging only if total page > 1             
+             *  Just show paging only if total page > 1
              */
 
                 TemplateHandler.Assign(ref content, "{footerpager}",
@@ -820,7 +815,6 @@ namespace Sunplus.Accounting.Business.Transaction
             TemplateHandler.ShrinkHtml(ref content);
 
             return content;
-            
         }
 
         public DailyTransactionDTO GetDailyTransDatafromDB(string date, string type, int status, string creator, string verifyBy)
@@ -833,9 +827,6 @@ namespace Sunplus.Accounting.Business.Transaction
             var dailyTransactionDTO = CacheExtension.Get<DailyTransactionDTO>(_keyDailyFinanceTxn);
             return dailyFinance;
         }
-
-
-      
 
         public string GetDailyTransData(string date, string type, int status, string creator, string verifyBy, int pageIndex, int fromcache)
         {
@@ -860,7 +851,7 @@ namespace Sunplus.Accounting.Business.Transaction
                 TotalPages = dailyFinance.totalRows / PAGE_SIZE;
                 if ((dailyFinance.totalRows % PAGE_SIZE) != 0)
                     TotalPages++;
-                uiContent = GetFinanceTransactionContent(date, status, type, creator, pageIndex, TotalPages, verifyBy, dailyFinancePaging.items);                                 
+                uiContent = GetFinanceTransactionContent(date, status, type, creator, pageIndex, TotalPages, verifyBy, dailyFinancePaging.items);
             }
             catch (Exception ex)
             {
@@ -870,7 +861,6 @@ namespace Sunplus.Accounting.Business.Transaction
             data.Add("Content", uiContent);
             data.Add("Totalpages", TotalPages);
             return JsonUtil.ToJson(data);
-         
         }
 
         public void ExportToExcelDailyFinance(string date, int status, string type, string creator, string verifyBy)
@@ -889,6 +879,7 @@ namespace Sunplus.Accounting.Business.Transaction
             for (int i = 0; i < totalSheets; i++)
             {
                 #region assign data
+
                 var ws = excelFile.Worksheets.Add("DailyFinanceTransacion" + (i + 1));
                 ws.Columns[0].Width = 5 * 256;
                 ws.Columns[1].Width = 20 * 256;
@@ -921,12 +912,12 @@ namespace Sunplus.Accounting.Business.Transaction
                 ws.Cells[1, 7].Value = "Verify by";
                 ws.Cells[1, 8].Style = bgHeaderNormalFormat;
                 ws.Cells[1, 8].Value = "Checked Time";
-              
+
                 //var objdailyAllTxn = (DailyTransactionDTO)AppSession.GetSession(System.Web.HttpContext.Current.Session, _keyDailyFinanceTxn);
 
                 //objdailyAllTxn = objdailyAllTxn ?? GetDailyTransDatafromDB(date, type, status, creator, verifyBy);
                 int r = 0, g = 0, b = 0;
-                
+
                 var userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
                 Dictionary<string, int> list = userService.GetListTotalTransPerGroup(objdailyAllTxn.items);
                 int rowIndexOnCurrentPage = 0;
@@ -935,7 +926,6 @@ namespace Sunplus.Accounting.Business.Transaction
                 var totalRowinSheet = (totalSheets - 1 == i) ? totalRows - (MaxRowInSheet * i) : MaxRowInSheet;
                 for (int j = 0; j < totalRowinSheet; j++)
                 {
-
                     rowIndexOnCurrentPage++;
                     if (rowIndexOnCurrentPage == 1)
                     {
@@ -961,7 +951,7 @@ namespace Sunplus.Accounting.Business.Transaction
                             }
                         }
                     }
-                   
+
                     ws.Cells[j + startRow, 0].Style = new Core.Helper.ExcelGemboxUtils().GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
                     ws.Cells[j + startRow, 0].Value = rowIndexOnCurrentPage;
                     ws.Cells[j + startRow, 1].Style = new Core.Helper.ExcelGemboxUtils().GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
@@ -989,12 +979,12 @@ namespace Sunplus.Accounting.Business.Transaction
                                                     : string.Empty;
                         ws.Cells.GetSubrangeAbsolute(j + startRow, 6, j + startRow + key - 1, 8).Style = new Core.Helper.ExcelGemboxUtils().GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
                     }
-                    
+
                     prevRefNo = objdailyAllTxn.items[index].RefNo;
                     index++;
                 }
-                #endregion
-                
+
+                #endregion assign data
             }
             var response = HttpContext.Current.Response;
             response.Clear();
@@ -1002,7 +992,5 @@ namespace Sunplus.Accounting.Business.Transaction
             response.AddHeader("Content-Disposition", "attachment; filename=DailyFinanceTransaction-" + date + ".xls");
             excelFile.SaveXls(response.OutputStream);
         }
-
-       
     }
 }

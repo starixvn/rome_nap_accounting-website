@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Sunplus.Accounting.Entities.BetAggregator
@@ -42,12 +41,10 @@ namespace Sunplus.Accounting.Entities.BetAggregator
 
         [DataMember]
         public bool EnableBa { get; set; }
-
-
     }
 
     [DataContract]
-    public  class CommType
+    public class CommType
     {
         [DataMember]
         public string CommName { get; set; }
@@ -106,7 +103,7 @@ namespace Sunplus.Accounting.Entities.BetAggregator
 
         [DataMember]
         public string Description { get; set; }
-       
+
         [DataMember]
         public string IP { get; set; }
     }
@@ -119,11 +116,8 @@ namespace Sunplus.Accounting.Entities.BetAggregator
 
         [DataMember]
         public string Name { get; set; }
-        
+
         [DataMember]
         public List<LicenseeConfigLog> Items { get; set; }
-       
     }
-
 }
-

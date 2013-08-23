@@ -28,5 +28,5 @@ public class ServiceNonePTMemSummary : IServiceNonePTMemSummary
         return s.ExportToExcel_NonePTMemSummary(username, currpage);
     }
 
-    #endregion
+    #endregion IServiceNonePTMemSummary Members
 }

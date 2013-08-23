@@ -12,22 +12,31 @@ namespace Sunplus.Accounting.Entities.Settle
     {
         [DataMember]
         public int No { get; set; }
+
         [DataMember]
         public string Date { get; set; }
+
         [DataMember]
         public string UserName { get; set; }
+
         [DataMember]
         public string Action { get; set; }
+
         [DataMember]
         public string HTScore { get; set; }
+
         [DataMember]
         public string FTScore { get; set; }
+
         [DataMember]
         public string GoalRecord { get; set; }
+
         [DataMember]
         public string ResultString { get; set; }
+
         [DataMember]
         public string Remark { get; set; }
+
         [DataMember]
         public string Ip { get; set; }
     }
@@ -37,12 +46,16 @@ namespace Sunplus.Accounting.Entities.Settle
     {
         [DataMember]
         public string LeagueName { get; set; }
+
         [DataMember]
         public string HomeName { get; set; }
+
         [DataMember]
         public string AwayName { get; set; }
+
         [DataMember]
         public string EventDate { get; set; }
+
         [DataMember]
         public string MatchId { get; set; }
 

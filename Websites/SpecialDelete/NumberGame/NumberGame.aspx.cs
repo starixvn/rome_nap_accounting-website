@@ -17,7 +17,6 @@ using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Accounting.Entities.SpecialDelete;
-using Sunplus.Core.LoggingLib;
 
 public partial class SpecialDelete_NumberGame : PageBase
 {

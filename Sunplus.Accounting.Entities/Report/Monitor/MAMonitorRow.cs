@@ -1,25 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Sunplus.Accounting.Entities.Report.Monitor
 {
-     [Serializable]
+    [Serializable]
     [DataContract]
     public class MAMonitorDTO
-     {
-         [DataMember]
-         public List<MAMonitorRow> Item { get; set; }
+    {
+        [DataMember]
+        public List<MAMonitorRow> Item { get; set; }
 
-         [DataMember]
-         public MAMonitorRow Total { get; set; }
+        [DataMember]
+        public MAMonitorRow Total { get; set; }
 
-         [DataMember]
-         public int TotalRows { get; set; }
-
-     }
+        [DataMember]
+        public int TotalRows { get; set; }
+    }
 
     [Serializable]
     [DataContract]
@@ -58,7 +55,7 @@ namespace Sunplus.Accounting.Entities.Report.Monitor
         [DataMember]
         public string SWinloss { get; set; }
 
-       [DataMember]
+        [DataMember]
         public string Home { get; set; }
 
         [DataMember]

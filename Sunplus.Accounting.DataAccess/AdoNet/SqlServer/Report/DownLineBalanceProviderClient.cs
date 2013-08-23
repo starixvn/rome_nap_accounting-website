@@ -2,9 +2,7 @@
 using System.Collections;
 using DNAide.Data;
 
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess.Provider.Report;
-using Sunplus.Core.LoggingLib;
 
 /// <summary>
 /// Summary description for PunterAnalysisProviderClient
@@ -18,6 +16,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Report
         {
             return GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.Balance, aliasName);
         }
+
         public override DbResult RptMABalance(string db, int roleid, int custid, bool isYesterday, string username,
                                               string firstletter, string currency)
         {
@@ -49,7 +48,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Report
                 {
                     p.Add("masterid", custid);
                     spElement = GetStoreProcedure(isYesterday ? "agentbalanceyesterday" : "agentbalance");
-                    
                 }
                 else if (roleid == 1) //member
                 {
@@ -62,7 +60,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Report
             catch (Exception ex)
             {
                 // error assigning the datareader value to a property
-                
+
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -77,7 +75,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Report
             try
             {
                 var spElement = GetStoreProcedure(isYesterday ? "superbalanceyesterday" : "superbalance");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 600);                
+                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 600);
             }
             catch (Exception ex)
             {

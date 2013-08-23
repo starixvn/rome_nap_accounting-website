@@ -5,8 +5,6 @@ namespace Sunplus.Data.DataAbstract.Entity
 {
     public class League
     {
-        
-
 
         [MongoIdentifier]
         public string Leagueid { get; set; }
@@ -31,8 +29,6 @@ namespace Sunplus.Data.DataAbstract.Entity
 
         public string ProgramId { get; set; }
 
-        
-
         public bool IsActive { get; set; }
 
         public string Leaguenameko { get; set; }
@@ -44,7 +40,5 @@ namespace Sunplus.Data.DataAbstract.Entity
         public string LeaguenameVn { get; set; }
 
         public string LeaguenameEl { get; set; }
-
-        
     }
 }

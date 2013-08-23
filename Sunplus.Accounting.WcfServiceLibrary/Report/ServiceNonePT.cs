@@ -1,6 +1,4 @@
-﻿using System;
-using System.ServiceModel.Activation;
-using BLL.Report.NonePT;
+﻿using System.ServiceModel.Activation;
 using ExcelUtil.Spreadsheet;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.Report
@@ -32,7 +30,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
         public string getNonePTLastestBet(string username, string currency, string bettype, string fromstake, string tostake, string pageindex, string pagesize)
         {
             var nonePtService = new Sunplus.Accounting.Business.Report.NonePT.ServiceNonePT();
-            return nonePtService.getNonePTLastestBet( username,  currency,  bettype,  fromstake,  tostake,  pageindex,  pagesize);
+            return nonePtService.getNonePTLastestBet(username, currency, bettype, fromstake, tostake, pageindex, pagesize);
         }
 
         public string getAllBettypes()

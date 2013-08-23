@@ -13,14 +13,14 @@ public partial class ReportHTML
 
     /// <summary>
     /// RM[2],RMB[13],Euro[6],HK$[5],IN[15], IND[22], IDD[33], IDR[34], DDD[47],SD$[1],TB[4],THB[43],US$[3], $US[35], IRR[40], NTD[17], Yen[16]
-    /// </summary>    
+    /// </summary>
     public static string strArrCurrencyOrder =
         "[2],[13],[6],[5],[15], [22],[33],[34], [47],[1],[4],[43],[3],[35],[40],[17],[16]";
 
-    /// <summary>    
+    /// <summary>
     /// US$[3], $US[35], IRR[40], NTD[17], Yen[16]
     /// </summary>
-    public static int[] ArrCurrencySubTotal_USD = {3, 35, 40, 17, 16};
+    public static int[] ArrCurrencySubTotal_USD = { 3, 35, 40, 17, 16 };
 
     public static string strCurrencySubTotal_USD = "[3],[35],[40],[17],[16]";
 
@@ -28,7 +28,7 @@ public partial class ReportHTML
     /// 4, 43
     /// TB[4], THB[43]
     /// </summary>
-    public static int[] ArrCurrencySubTotal_THB = {4, 43};
+    public static int[] ArrCurrencySubTotal_THB = { 4, 43 };
 
     public static string strCurrencySubTotal_THB = "[4], [43]";
 
@@ -36,11 +36,11 @@ public partial class ReportHTML
     /// 15, 22, 33, 34
     /// IN[15], IND[22], IDD[33], IDR[34], DDD[47]
     /// </summary>
-    public static int[] ArrCurrencySubTotal_IN = {15, 22, 33, 34, 47};
+    public static int[] ArrCurrencySubTotal_IN = { 15, 22, 33, 34, 47 };
 
     public static string strCurrencySubTotal_IN = "[15], [22], [33], [34], [47]";
 
-    #endregion
+    #endregion Order by Currency
 
     #region ValidDate
 
@@ -58,7 +58,7 @@ public partial class ReportHTML
         return date;
     }
 
-    #endregion
+    #endregion ValidDate
 
     public static string Report2A_Excel
     {

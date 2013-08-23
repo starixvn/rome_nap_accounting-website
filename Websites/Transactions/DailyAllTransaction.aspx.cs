@@ -1,24 +1,20 @@
 ﻿using System;
-
+using DNAide.Core;
 using Sunplus.Accounting.Business;
-using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Business.BootStrappers;
+using Sunplus.Accounting.Business.Transaction;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web.Controls;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.Business.BootStrappers;
-using Sunplus.Accounting.Business.Transaction;
-using DNAide.Core;
 
 public partial class DailyAllTransaction : PageBase
-{       
+{
     private System.Globalization.CultureInfo cult = System.Globalization.CultureInfo.CurrentCulture;
     public string sTitle = string.Empty;
     public string strCalendar = string.Empty;
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
         string _s = string.Empty;
         try
         {
@@ -43,7 +39,6 @@ public partial class DailyAllTransaction : PageBase
                 var DailyAllTxn = CommonBootStrapper.Locator.GetInstance<DailyTransManager>();
                 DailyAllTxn.ExportToExcelforDailyAllTxn(CastAide.AsString(Request["transDate"]), CastAide.AsString(Request["type"]), CastAide.AsString(Request["creator"]), CastAide.AsInt32(Request["totalRows"]));
             }
-
         }
         catch (AccException ex)
         {
@@ -55,5 +50,4 @@ public partial class DailyAllTransaction : PageBase
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
     }
-
 }

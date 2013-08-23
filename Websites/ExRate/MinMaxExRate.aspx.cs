@@ -1,19 +1,16 @@
 using System;
-using System.Data;
-using System.Web.UI.WebControls;
-using DNAide.Web;
-using DNAide.Core;
-using System.Text;
-using DNAide.Utils;
 using System.Collections.Generic;
-
+using System.Data;
+using System.Text;
+using System.Web.UI.WebControls;
+using DNAide.Core;
+using DNAide.Utils;
+using DNAide.Web;
 using Sunplus.Accounting.Business.CacheManager;
-using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess;
-using Sunplus.Core.LoggingLib;
 
 public partial class MinMaxExRate : PageBase
 {
@@ -24,7 +21,7 @@ public partial class MinMaxExRate : PageBase
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        bool isHis =string.IsNullOrEmpty(Request["ishis"]) ? false : CastAide.AsBoolean(Request["ishis"]);
+        bool isHis = string.IsNullOrEmpty(Request["ishis"]) ? false : CastAide.AsBoolean(Request["ishis"]);
         MinMaxExchangeRate.Text = Resources.Language.MinMaxExchangeRate + " History";
         if (isHis)
         {
@@ -34,16 +31,16 @@ public partial class MinMaxExRate : PageBase
         }
         else
         {
-            MinMaxExchangeRate.Text = Resources.Language.MinMaxExchangeRate ;
+            MinMaxExchangeRate.Text = Resources.Language.MinMaxExchangeRate;
             MinMaxExRateListContentHtml.Text = ListExRateMinMax();
-        }       
-
+        }
     }
+
     private string ListExRateMinMax()
     {
         string ListMain = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("ExRate/MinMaxExRate.html");
         string ListContent = TemplateHandler.CopyBlock(ListMain, "limit-content");
-        
+
         string CopyContent = "";
         string bgcolor_row = "";
         string themePath = WebSettings.ThemePath;
@@ -52,7 +49,7 @@ public partial class MinMaxExRate : PageBase
         Dictionary<int, string> exchange = IBCProvider.Utils.GetExchange();//AppCache.Exchange;
         try
         {
-            using (IDataReader dr =  Sunplus.Accounting.DataAccess.IBCDLL.Accounting.Balance.ExChangeRateSel())
+            using (IDataReader dr = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.Balance.ExChangeRateSel())
             {
                 while (dr.Read())
                 {
@@ -64,7 +61,7 @@ public partial class MinMaxExRate : PageBase
                     TemplateHandler.Assign(ref CopyContent, "No_Value", counter.ToString());
                     TemplateHandler.Assign(ref CopyContent, "FromCurrency_Value", CacheUtils.GetExchangeName(exchange, DNAide.Core.CastAide.AsInt32(dr["fromexchangeId"])));
                     TemplateHandler.Assign(ref CopyContent, "ToCurrency_Value", CacheUtils.GetExchangeName(exchange, CastAide.AsInt32(dr["toexchangeId"])));
-                    TemplateHandler.Assign(ref CopyContent, "Min_Value", NumberFormat.DecFormat(dr["minactualrate"],2));
+                    TemplateHandler.Assign(ref CopyContent, "Min_Value", NumberFormat.DecFormat(dr["minactualrate"], 2));
                     TemplateHandler.Assign(ref CopyContent, "Max_Value", NumberFormat.DecFormat(dr["maxactualrate"], 2));
                     TemplateHandler.Assign(ref CopyContent, "LastUpdate_Value", dr["lastupdate"]);
                     TemplateHandler.Assign(ref CopyContent, "Creator_Value", dr["creator"]);
@@ -86,9 +83,10 @@ public partial class MinMaxExRate : PageBase
         catch (Exception ex)
         {
             LogExtensions.ExceptionHandler(ex);
-        }      
+        }
         return ListMain;
     }
+
     private string ListExRateMinMaxHis(int fromid, int toid)
     {
         string ListMain = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("ExRate/MinMaxExRateHis.html");
@@ -117,7 +115,7 @@ public partial class MinMaxExRate : PageBase
                     TemplateHandler.Assign(ref CopyContent, "Min_Value", NumberFormat.DecFormat(dr["minactualrate"], 2));
                     TemplateHandler.Assign(ref CopyContent, "Max_Value", NumberFormat.DecFormat(dr["maxactualrate"], 2));
                     TemplateHandler.Assign(ref CopyContent, "LastUpdate_Value", dr["actiondate"]);
-                    TemplateHandler.Assign(ref CopyContent, "Creator_Value", dr["username"]);                                       
+                    TemplateHandler.Assign(ref CopyContent, "Creator_Value", dr["username"]);
                     Content.Append(CopyContent);
                 }
             }
@@ -133,8 +131,8 @@ public partial class MinMaxExRate : PageBase
         }
         catch (Exception ex)
         {
-            LogExtensions.ExceptionHandler(ex); 
-        }      
+            LogExtensions.ExceptionHandler(ex);
+        }
         return ListMain;
     }
 }

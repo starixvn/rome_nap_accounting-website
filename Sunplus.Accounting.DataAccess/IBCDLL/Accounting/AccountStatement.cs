@@ -5,8 +5,6 @@ using DNAide.Data;
 using Fanex.Data;
 using IBCUtils;
 
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
@@ -63,8 +61,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
@@ -92,8 +89,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
@@ -112,8 +108,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
@@ -130,8 +125,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
@@ -148,8 +142,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
@@ -173,8 +166,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
@@ -190,7 +182,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
             IbcError error = IbcError.SuccessResult;
             try
-            {                
+            {
                 using (ObjectDb db = new ObjectDb("Acc_BettransDelTransaction", 1200))
                 {
                     var p = new Hashtable();
@@ -204,7 +196,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     db.AssignParamValues(p);
                     db.ExecuteNonQuery();
 
-                    return new IbcError() {
+                    return new IbcError()
+                    {
                         ErrorCode = DNAide.Core.CastAide.AsInt32(db.GetParameterValue("errcode")),
                         ErrorMsg = string.Format("{0}", db.GetParameterValue("errmsg"))
                     };
@@ -223,7 +216,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 
         /// <summary>
         /// Nguyen Thi Minh Thu code 08/12/2006
-        /// call store procedure Rpt_AgentStatement 
+        /// call store procedure Rpt_AgentStatement
         /// this function support for AgentStatement.aspx
         /// </summary>
         /// Phuong.Nguyen updated
@@ -241,8 +234,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
@@ -272,18 +264,19 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
 
-        private class BetListStoreProcedure : DataAccess {
+        private class BetListStoreProcedure : DataAccess
+        {
             public Sunplus.Accounting.Core.Configurations.StoreProcedureElement GetBetListStoreProcedure(BetListSection.StoreCollection storeCollection, string aliasName)
             {
                 return GetStoreProcedure(storeCollection, aliasName);
             }
         }
+
         private class TransactionStoreProcedure : DataAccess
         {
             public Sunplus.Accounting.Core.Configurations.StoreProcedureElement GetTransactionStoreProcedure(TransactionGroupSection.StoreCollection storeCollection, string aliasName)

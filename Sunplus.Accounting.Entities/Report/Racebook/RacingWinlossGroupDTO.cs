@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Sunplus.Accounting.Entities.Report.Racebook
 {
@@ -27,6 +25,4 @@ namespace Sunplus.Accounting.Entities.Report.Racebook
         [DataMember]
         public RacingWinlossGroupRowBO Total { get; set; }
     }
-
-   
 }

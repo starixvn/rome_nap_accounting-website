@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.ServiceModel.Activation;
 using DNAide.Core;
-using DNAide.Data;
 using Sunplus.Accounting.Business.BootStrappers;
-using Sunplus.Accounting.Entities;
-using Sunplus.Accounting.Entities.Report.Licensee;
 using Sunplus.Accounting.Entities.Report.MatchWL;
 using Sunplus.Accounting.Entities.Report.MemberStatistics;
 using Sunplus.Accounting.Entities.Report.Mixparlay;
@@ -16,7 +13,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class ReportService : IReportService
     {
-
         public IEnumerable<Entities.Report.MenuReport> GetMenuList(string system)
         {
             var reportMenu = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.IReportService>();
@@ -44,7 +40,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
             return rs;
         }
 
-
         public void MixparlayWonExportToExcel(bool isSoccer, string date, int sortType)
         {
             var mixparlay = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Report.Mixparlay.IMixparlayWon>();
@@ -62,7 +57,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
             var report = CommonBootStrapper.Locator.GetInstance<Business.Report.IReportService>();
             return report.GetCheckBet(fromDate);
         }
-    
+
         public List<GamesActiveMembers> GetNumberOfActiveMembers(string fromDate, string toDate)
         {
             var gamesActiveMembers = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.MemberStatistics.IGamesActiveMembersManager>();
@@ -70,20 +65,17 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
             return result;
         }
 
-
         #region IReportService Members
-
 
         public WLbyBettypeDTO SelWLbyBettype(string wldate)
         {
             var report2a = CommonBootStrapper.Locator.GetInstance<Sunplus.Accounting.Business.Report.MatchWL.IMatchWL2aServiceNEW>();
-            return report2a.SelWLbyBettype( CastAide.AsDateTime(wldate) );
+            return report2a.SelWLbyBettype(CastAide.AsDateTime(wldate));
         }
 
-        #endregion
+        #endregion IReportService Members
 
         #region IReportService Members
-
 
         public MatchWLBySportDTO SelMatchWLBySport(string wldate, int currIndex, int currIndexBtype)
         {
@@ -91,10 +83,9 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
             return report2a.SelMatchWLBySport(CastAide.AsDateTime(wldate), currIndex, currIndexBtype);
         }
 
-        #endregion
+        #endregion IReportService Members
 
         #region IReportService Members
-
 
         public MatchWLFooterDTO SelMatchWl3RdFooter(string wldate)
         {
@@ -102,10 +93,9 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
             return report2a.SelMatchWl3RdFooter(CastAide.AsDateTime(wldate));
         }
 
-        #endregion
+        #endregion IReportService Members
 
         #region IReportService Members
-
 
         public MixParlayView GetMixParlayDetailDailyWl(string wldate, int bettype)
         {
@@ -114,6 +104,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
             return reportDailyWL.DailyWLDirect_MixParlayAdvance(wldate, bettype);
         }
 
-        #endregion
+        #endregion IReportService Members
     }
 }

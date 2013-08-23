@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 using DNAide.Core;
+using DNAide.Utils;
 using Norm.Attributes;
 using Sunplus.Data.DataAbstract.Utils;
-using DNAide.Utils;
 
 namespace Sunplus.Data.DataAbstract.Entity
 {
@@ -14,13 +11,13 @@ namespace Sunplus.Data.DataAbstract.Entity
     [DataContract]
     public class BetMonitor
     {
-
         [DataMember]
         public string Transid { get; set; }
 
         #region TransDate
 
         private string _code;
+
         [MongoIgnore, DataMember]
         public string Code
         {
@@ -36,6 +33,7 @@ namespace Sunplus.Data.DataAbstract.Entity
         }
 
         private string _transDate;
+
         [MongoIgnore, DataMember]
         public string TransDate
         {
@@ -44,15 +42,16 @@ namespace Sunplus.Data.DataAbstract.Entity
                 DateTime transDate = CastAide.AsDateTime(_bettran.Transdate);
                 return transDate.ToShortDateString() + "&nbsp;" +
                         transDate.ToShortTimeString();
-
             }
             set { _transDate = value; }
         }
-        #endregion
+
+        #endregion TransDate
 
         #region Choice
 
         private SportEventDTO _sportEventDTO;
+
         [DataMember]
         public SportEventDTO SportEvent
         {
@@ -64,11 +63,12 @@ namespace Sunplus.Data.DataAbstract.Entity
             set { _sportEventDTO = value; }
         }
 
-
-        #endregion
+        #endregion Choice
 
         #region Odds
+
         private string _odds;
+
         [MongoIgnore, DataMember]
         public string Odds
         {
@@ -78,7 +78,7 @@ namespace Sunplus.Data.DataAbstract.Entity
                 var result = string.Empty;
                 if (_bettran.Bettype == 9)
                 {
-                    result =  FormatHandler.FormatNumber4(CastAide.AsDecimal(_odds),"en-EN");
+                    result = FormatHandler.FormatNumber4(CastAide.AsDecimal(_odds), "en-EN");
                     return result;
                 }
                 if (_bettran.Bettype == 71 || _bettran.Bettype == 72 || _bettran.Bettype == 73 || _bettran.Bettype == 113 || _bettran.Bettype == 114 || _bettran.Bettype == 112)
@@ -97,6 +97,7 @@ namespace Sunplus.Data.DataAbstract.Entity
         public string OddType { get; set; }
 
         private string _oddName;
+
         [MongoIgnore, DataMember]
         public string OddName
         {
@@ -107,25 +108,28 @@ namespace Sunplus.Data.DataAbstract.Entity
             set { _oddName = value; }
         }
 
-        #endregion
+        #endregion Odds
 
         #region Stake
+
         private string _stake;
+
         [MongoIgnore, DataMember]
         public string Stake
         {
-            get { return FormatHandler.FormatNumber2(CastAide.AsDecimal(_bettran.Stake),"en-EN"); }
+            get { return FormatHandler.FormatNumber2(CastAide.AsDecimal(_bettran.Stake), "en-EN"); }
             set { _stake = value; }
         }
-        #endregion
+
+        #endregion Stake
 
         private Bettran _bettran;
+
         [MongoIgnore, DataMember]
         public Bettran BettranDetail
         {
             get { return _bettran; }
             set { _bettran = value; }
         }
-        
     }
 }

@@ -1,35 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel.Activation;
-using System.Text;
-using DNAide.Core;
-using Microsoft.Office.Interop.Excel;
-
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.DataAccess.IReportDAO;
-using Sunplus.Accounting.DataAccess.Report;
-using DNAide.Data;
-using Sunplus.Accounting.DataAccess.Report.MatchWL;
-using Sunplus.Accounting.Entities.Report;
 using System.Data;
+using System.ServiceModel.Activation;
+using DNAide.Core;
+using DNAide.Data;
+using Sunplus.Accounting.DataAccess.IReportDAO;
+using Sunplus.Accounting.Entities.Report;
 using Sunplus.Accounting.Entities.Report.CheckBet;
-using Sunplus.Core.LoggingLib;
 using DataTable = System.Data.DataTable;
 
 namespace Sunplus.Accounting.Business.Report
 {
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
-    public class ReportService:IReportService
+    public class ReportService : IReportService
     {
-        private readonly IOthersDAO _reportMenuDao ;
-        
+        private readonly IOthersDAO _reportMenuDao;
+
         public ReportService(IOthersDAO ireReportMenuDao)
         {
             _reportMenuDao = ireReportMenuDao;
         }
-        
+
         #region GetMenuList
+
         public IEnumerable<MenuReport> GetMenuList(string system)
         {
             DbResult dbResult = _reportMenuDao.GetMenuList(system);
@@ -39,10 +32,10 @@ namespace Sunplus.Accounting.Business.Report
             {
                 var menu = new MenuReport
                 {
-                    Id = CastAide.AsInt32(dataRow["MenuId"]) ,
+                    Id = CastAide.AsInt32(dataRow["MenuId"]),
                     Name = CastAide.AsString(dataRow["Menu"]),
                     Url = CastAide.AsString(dataRow["url"]),
-                    Order = CastAide.AsInt32(dataRow["Order"]) 
+                    Order = CastAide.AsInt32(dataRow["Order"])
                 };
 
                 var parentId = CastAide.AsInt32(dataRow["parentId"]);
@@ -55,9 +48,11 @@ namespace Sunplus.Accounting.Business.Report
             }
             return menus;
         }
-        #endregion
+
+        #endregion GetMenuList
 
         #region IReportService Members
+
         public CheckBet GetCheckBet(string fromDate)
         {
             var checkBetData = _reportMenuDao.GetCheckBet(CastAide.AsDateTime(fromDate));
@@ -77,7 +72,6 @@ namespace Sunplus.Accounting.Business.Report
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -85,6 +79,6 @@ namespace Sunplus.Accounting.Business.Report
             return new CheckBet();
         }
 
-        #endregion
+        #endregion IReportService Members
     }
 }
