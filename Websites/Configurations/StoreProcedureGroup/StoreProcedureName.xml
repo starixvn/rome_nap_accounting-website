@@ -418,7 +418,7 @@
 
 		<Setting Key="SelMatchInfo" SpName="Acc_MatchSelByID" DbName="db053" />
 		<Setting Key="BettransSelRecoverSpecialBets" SpName="Acc_BettransSelRecoverSpecialBets" DbName="DBAGE.BODB02" />
-		<Setting Key="Acc_BettransRecoverSpecialBets" SpName="Acc_BettransRecoverSpecialBets" DbName="DBTXN.BODB02" />
+		
 
 		<Setting Key="Acc_CustomerSelStatusVS" SpName="Acc_CustomerSelStatusVS" DbName="DBAGE.BODB02" Plain="0" />
 		

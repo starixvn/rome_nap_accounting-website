@@ -33,4 +33,13 @@
     <Setting Key="NewLicensee_AdNewMember_VirtualSports" SpName="Acc_Dep_CustomerInsMemberVirtualSports_Ag" DbName="DBTXN.BODB02" />
     <Setting Key="Licensee_UpdMember_VirtualSports" SpName="Acc_Dep_CustomerUpdMemberVirtualSports_Ag" DbName="DBTXN.BODB02" />
   </Function>
+
+  <Function Name="Special Delete">
+    <Setting Key="Acc_BettransRecoverSpecialBets" SpName="Acc_BettransRecoverSpecialBets" DbName="DBTXN.BODB02" />
+  </Function>
+
+  <Function Name="Special Delete">
+    <Setting Key="AutoDummyTransfer_Finance" SpName="Admin_3rdAutoSettlement_s201" DbName="DBTXN.BODB02" />    
+  </Function>
+
 </Functions>

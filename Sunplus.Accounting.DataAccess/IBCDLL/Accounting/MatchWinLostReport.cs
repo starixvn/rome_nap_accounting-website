@@ -10,6 +10,7 @@ using Sunplus.Accounting.DataAccess.Report;
 using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 using Sunplus.Accounting.Core.Extensions;
+using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
@@ -1517,6 +1518,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("errcode", 0);
                 p.Add("errmsg", string.Empty);
 
+                //using(ObjectDb)
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Others, "AutoDummyTransfer_Finance");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
