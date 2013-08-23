@@ -1,8 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
-  <Function Name="Report">
-    
+
+  <Function Name="Helper">
+    <Setting Key="InsertCountry" SpName="Acc_InsCountry" DbName="DBTXN.BODB02"/>
   </Function>
+  
+  <Function Name="Report">
+    <Setting Key="Delebet" SpName="Acc_Rpt_DeleteBet" DbName="DBTXN.BODB02"/>    
+  </Function> 
 
   <Function Name="UserControl">    
     <Setting Key="AdminSel" SpName="Acc_AccAdminSel" DbName="DBTXN.BODB02"/><!--not use-->
@@ -38,8 +43,19 @@
     <Setting Key="Acc_BettransRecoverSpecialBets" SpName="Acc_BettransRecoverSpecialBets" DbName="DBTXN.BODB02" />
   </Function>
 
-  <Function Name="Special Delete">
-    <Setting Key="AutoDummyTransfer_Finance" SpName="Admin_3rdAutoSettlement_s201" DbName="DBTXN.BODB02" />    
+  <Function Name="Others">
+    <Setting Key="AutoDummyTransfer_Finance" SpName="Admin_3rdAutoSettlement_s201" DbName="DBTXN.BODB02" />
+    <Setting Key="BetRatioByUser" SpName="Acc_Rpt_BetRatioByUser" DbName="DBTXN.BODB02" />
+    <Setting Key="BetRatioByUser_14" SpName="Acc_Rpt_BetRatioByUser14" DbName="DBTXN.BODB02" />
+    <Setting Key="HedgeRecord" SpName="Acc_Rpt_HedgeRecord" DbName="DBTXN.BODB02" />
+    <Setting Key="HedgeSel" SpName="Acc_HedgeSel" DbName="DBTXN.BODB02" />
+    <Setting Key="HedgeDel" SpName="Acc_HedgeDel" DbName="DBTXN.BODB02" />
+    <Setting Key="HedgeUpd" SpName="Acc_HedgeUpd" DbName="DBTXN.BODB02" />    
+    
+  </Function>
+
+  <Function Name="Customer">
+    
   </Function>
 
 </Functions>

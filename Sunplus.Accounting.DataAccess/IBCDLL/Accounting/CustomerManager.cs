@@ -529,9 +529,16 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             try
             {
                 var listForexAccount = new List<Sunplus.Accounting.Entities.Customer.ForexAccount>();
-                var sp = CustomerSession.Instance[CustomerSession.StoreCollection.CustomerControl]["Acc_CustomerSelForexAccount"];
-                var param = new Hashtable();
-                DbResult dbResult = DbHelper.Execute(sp.Name, param, sp.DbName);
+                DbResult dbResult = null;
+
+                using (ObjectDb db = new ObjectDb("Acc_CustomerSelForexAccount"))
+                {
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+                    dbResult = new DbResult(output, ds);
+                }
+
+
                 if (dbResult.ResultSet.Tables.Count > 0 && dbResult.ResultSet.Tables[0].Rows.Count > 0)
                 {
                     foreach (DataRow row in dbResult.ResultSet.Tables[0].Rows)

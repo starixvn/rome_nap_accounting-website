@@ -1518,15 +1518,16 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("errcode", 0);
                 p.Add("errmsg", string.Empty);
 
-                //using(ObjectDb)
-                var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Others, "AutoDummyTransfer_Finance");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
+                using (ObjectDb db = new ObjectDb("AutoDummyTransfer_Finance"))
+                {
+                    db.AssignParamValues(p);
+                    var ds =db.ExecuteDataSet();
+                    result = new DbResult(db.GetOuputParams(), ds);
+                }                
             }
             catch (Exception ex)
             {
-                
-                    LogExtensions.ExceptionHandler(ex);
-
+                LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
