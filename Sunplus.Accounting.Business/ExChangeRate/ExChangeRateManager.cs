@@ -22,7 +22,6 @@ using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.AdoNet;
 using Sunplus.Accounting.Entities;
-using Sunplus.Core.LoggingLib;
 
 /// <summary>
 /// Summary description for ExchangeRateManager
@@ -33,7 +32,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
     public class ExchangeRateManager : IExchangeRateService
     {
         private readonly Sunplus.Accounting.DataAccess.IExchangeRateDAO _exchangeRateDAO;
-        private ILogger _logger;
 
         public ExchangeRateManager()
         { }
@@ -213,7 +211,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             }
             catch (Exception ex)
             {
-                (new EntLibLogger()).Error(ex.Message + "bool IsValidExtension()", ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return f;
         }
