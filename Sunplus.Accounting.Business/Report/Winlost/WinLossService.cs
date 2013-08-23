@@ -14,7 +14,7 @@ using Sunplus.Core.CachingLib;
 namespace Sunplus.Accounting.Services.ReportServices
 {
     //using Sunplus.Core.CachingLib;
-    //using Sunplus.Core.LoggingLib;
+    
 
     /// <summary>
     /// Summary description for WinLossService

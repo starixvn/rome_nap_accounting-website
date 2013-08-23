@@ -5,7 +5,7 @@ using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business.Transaction;
 using Sunplus.Accounting.Entities.ViewModel;
 
-//using Sunplus.Core.LoggingLib;
+
 
 namespace Sunplus.Accounting.WcfServiceLibrary
 {

@@ -18,7 +18,7 @@ using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Accounting.Entities.SpecialDelete;
 
-//using Sunplus.Core.LoggingLib;
+
 
 /// <summary>
 /// Summary description for DeleteBet

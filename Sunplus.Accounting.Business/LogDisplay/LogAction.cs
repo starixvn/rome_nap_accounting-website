@@ -13,7 +13,7 @@ using Sunplus.Shared.ViewLogLib.ServiceLayger;
 //using IBC.Shared.ViewLogLib;
 //using IBC.Shared.ViewLogLib.ServiceLayger;
 //using IBC.Shared.ViewLogLib.Model;
-//using Sunplus.Core.LoggingLib;
+
 
 namespace Sunplus.Accounting.Business.LogDisplay
 {

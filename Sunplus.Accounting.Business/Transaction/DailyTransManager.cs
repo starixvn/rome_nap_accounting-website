@@ -25,7 +25,7 @@ using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.ViewModel;
 using FormatHandler = IBCUtils.FormatHandler;
 
-//using Sunplus.Core.LoggingLib;
+
 
 namespace Sunplus.Accounting.Business.Transaction
 {

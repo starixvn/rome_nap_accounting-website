@@ -11,7 +11,7 @@ using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
-//using Sunplus.Core.LoggingLib;
+
 
 /// <summary>
 /// Summary description for FIAutoDummyTranfer

@@ -18,9 +18,6 @@ using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.IBCDLL;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
-
-//using Sunplus.Core.LoggingLib;
 
 /// <summary>
 /// Summary description for ExportStatement
@@ -172,7 +169,8 @@ namespace Sunplus.Accounting.Business.ExportStatement
             }
             catch (Exception ex)
             {
-                (new EntLibLogger()).Error(ex.Message + "bool IsValidExtension()", ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
             }
             return f;
         }

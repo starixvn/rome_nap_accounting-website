@@ -14,7 +14,7 @@ using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
 
-//using Sunplus.Core.LoggingLib;
+
 
 namespace BLL.Report.DirectBalance
 {

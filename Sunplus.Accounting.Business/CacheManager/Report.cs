@@ -5,7 +5,7 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using SCCACHE = SharedCache.WinServiceCommon.Provider.Cache.IndexusDistributionCache;
 
-//using Sunplus.Core.LoggingLib;
+
 
 /// <summary>
 /// Summary description for Report

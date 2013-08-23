@@ -13,7 +13,7 @@ using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
 using Sunplus.Accounting.DataAccess.Report;
 
-//using Sunplus.Core.LoggingLib;
+
 
 /// <summary>
 /// Summary description for FOddsHR12BETWLDetails

@@ -10,7 +10,7 @@ using Sunplus.Accounting.Entities.SpecialDelete.Mixparlay;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.SpecialDelete
 {
-    //using Sunplus.Core.LoggingLib;
+    
 
     /// <summary>
     /// Summary description for MenuManager

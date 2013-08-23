@@ -4,7 +4,7 @@ using ExcelUtil.Spreadsheet;
 using Sunplus.Accounting.Business.ExChangeRate;
 using Sunplus.Accounting.Entities;
 
-//using Sunplus.Core.LoggingLib;
+
 
 namespace Sunplus.Accounting.WcfServiceLibrary.ExRate
 {

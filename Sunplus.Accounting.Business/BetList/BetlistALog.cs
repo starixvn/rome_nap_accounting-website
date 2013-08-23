@@ -14,8 +14,6 @@ using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Accounting.DataAccess.Report;
 using FormatHandler = IBCUtils.FormatHandler;
 
-//using Sunplus.Core.LoggingLib;
-
 /// <summary>
 /// Summary description for BetlistALog
 /// </summary>

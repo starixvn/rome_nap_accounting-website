@@ -11,8 +11,6 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.Report;
 
-//using Sunplus.Core.LoggingLib;
-
 /// <summary>
 /// Summary description for BetlistM88
 /// </summary>

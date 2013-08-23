@@ -6,7 +6,7 @@ using DNAide.Core;
 
 using Sunplus.Accounting.Core.Configurations;
 
-//using Sunplus.Core.LoggingLib;
+
 
 /// <summary>
 /// Summary description for FinanceManager

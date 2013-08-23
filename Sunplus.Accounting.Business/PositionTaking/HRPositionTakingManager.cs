@@ -16,7 +16,7 @@ using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.Entities;
 
-//using Sunplus.Core.LoggingLib;
+
 
 namespace Sunplus.Accounting.Business.PositionTaking
 {

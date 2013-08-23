@@ -15,7 +15,7 @@ using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.Report;
 
-//using Sunplus.Core.LoggingLib;
+
 
 namespace BLL.Report.DownLineBalance
 {
