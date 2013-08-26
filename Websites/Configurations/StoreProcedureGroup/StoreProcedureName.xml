@@ -216,7 +216,7 @@
     <Setting Key="GameStatistics_GameTypeSel" SpName="Acc_Rpt_LiveCasino_GameStatistics_GameTypeSel" DbName="warehouse"  />
     <Setting Key="GameStatistics_LicenseeSel" SpName="Acc_Rpt_LiveCasino_GameStatistics_LicenseeSel" DbName="archive"  />
     
-    <Setting Key="GameStatistics_DW" SpName="Acc_Rpt_LiveCasino_GameStatistics_DW" DbName="dw"  />
+    
 	<Setting Key="LiveCasinoWinLoss_DW" SpName="Acc_Rpt_LiveCasino_AgencyWinLoss" DbName="warehouse"  />
 
 	<Setting Key="Gaming_SelLiveCasinoGameTable" SpName="Acc_Rpt_LiveCasinoFinance_GameTable" DbName="punter"  />
@@ -381,7 +381,7 @@
 		<Setting Key="Acc_Rpt_NumberGameWinlossByCurrency_detail" SpName="Acc_Rpt_NumberGameWinlossByCurrency_detail" DbName="punter"  />
 		<Setting Key="Acc_Rpt_NumberGameWinlossByCurrency" SpName="Acc_Rpt_NumberGameWinlossByCurrency" DbName="punter"  />
 		<Setting Key="Acc_Rpt_NumberGameWinlossByDate" SpName="Acc_Rpt_NumberGameWinlossByDate" DbName="punter"  />
-		<Setting Key="Acc_Rpt_NumberGameWinlossByMonth" SpName="Acc_Rpt_NumberGameWinlossByMonth" DbName="dw"  />
+		
 
 		<Setting Key="Acc_Rpt_NumberGame" SpName="Acc_Rpt_NumberGame" DbName="WAREHOUSE"  />
 		<Setting Key="Acc_Rpt_NumberGame14" SpName="Acc_Rpt_NumberGame14" DbName="WAREHOUSE"  />

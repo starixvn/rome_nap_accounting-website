@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+
+  <Function Name="Report">
+    <Setting Key="Acc_Rpt_NumberGameWinlossByMonth" SpName="Acc_Rpt_NumberGameWinlossByMonth" DbName="DBDWH.BODB02"  />
+    <Setting Key="GameStatistics_DW" SpName="Acc_Rpt_LiveCasino_GameStatistics_DW" DbName="DBDWH.BODB02"  />
+  </Function>
+
+
+</Functions>
