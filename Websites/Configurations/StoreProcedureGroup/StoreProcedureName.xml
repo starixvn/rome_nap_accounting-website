@@ -149,7 +149,7 @@
 	</Function>
   <Function Name="Exchange Rate">
     <Setting Key="Acc_ExchangeCurrencySel" SpName="Acc_ExchangeCurrencySel" DbName="db053"  />
-    <Setting Key="OANDAExRateSel" SpName="Lrf_GET_ExchangeRateOANDA" DbName="licensee"  />
+    
   </Function>
 
   <Function Name="Live Casino - GET PT Setting">
@@ -472,7 +472,7 @@
 	
 	<Function Name="Report - Licensee">
 		<Setting Key="GetGameType" SpName="Acc_LiveCasinoGetGameType" DbName="archive"  />
-		<Setting Key="GetLicenseesByResellers" SpName="Acc_LicenseeByResellerSel" DbName="licensee"  />
+		
 		<Setting Key="GetLiveCasinoWLByLicensee" SpName="Acc_Rpt_LicLiveCasinoWinloss" DbName="archive"  />
 		<Setting Key="NumberGameWinlossByLicensee" SpName="Acc_Rpt_LicNumberGameWinloss" DbName="archive"  />
 		<Setting Key="GetSportTypeVirtualSport" SpName="Acc_SporttypeGetVirtualSport" DbName="archive"  />

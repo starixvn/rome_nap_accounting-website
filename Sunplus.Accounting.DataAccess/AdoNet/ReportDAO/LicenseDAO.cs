@@ -8,6 +8,7 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.DataAccess.IReportDAO;
 using Sunplus.Core.LoggingLib;
+using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 {
@@ -288,21 +289,17 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
         public DataTable SelLicenseeByReseller()
         {
-            DataTable dataTable = null;
+            DataTable dataTable = new DataTable();
             try
             {
-                Hashtable param = new Hashtable();
-                string sp = "", db = "";
-
-                var spElement = GetStoreProcedure("LicGetReseller");
-
-                db = spElement.DbName;
-                sp = spElement.Name;
-
-                DbResult dbResult = DbHelper.Execute(sp, db);
-                if (dbResult != null && dbResult.ResultSet.Tables.Count > 0)
-                    dataTable = dbResult.ResultSet.Tables[0];
-
+                using (ObjectDb db = new ObjectDb("LicGetReseller"))
+                {
+                    var ds = db.ExecuteDataSet();
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        dataTable = ds.Tables[0];
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -361,18 +358,20 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
         public DataTable GetRates(string date)
         {
-            DataTable dataTable = null;
+            DataTable dataTable = new DataTable();
             try
             {
+                using (ObjectDb db = new ObjectDb("LicGetResellerRates"))
+                {
+                    var param = new Hashtable { { "inputdate", date } };
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
 
-                var spElement = GetStoreProcedure("LicGetResellerRates");
-
-                var param = new Hashtable { { "inputdate", date } };
-
-                var dbResult = DbHelper.Execute(spElement.Name, param, spElement.DbName);
-
-                if (dbResult != null && dbResult.ResultSet.Tables.Count > 0) dataTable = dbResult.ResultSet.Tables[0];
-
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        dataTable = ds.Tables[0];
+                    }
+                }
             }
             catch (Exception ex)
             {

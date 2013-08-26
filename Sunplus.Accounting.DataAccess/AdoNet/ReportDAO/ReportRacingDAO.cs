@@ -8,6 +8,7 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess.IReportDAO;
 using Sunplus.Accounting.DataAccess.Report;
 using Fanex.Data;
+using Fanex.Tarus.Infrastructure.Extensions;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 {
@@ -320,20 +321,28 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
         #region WinlostRacingLicensee_SiteSel
         public DataTable WinlostRacingLicensee_SiteSel()
         {
-            DataTable dataTable = null;
-            string strMapping = SpAlias.WinlostRacingLicensee_SiteSel.ToString() ;
+            DataTable dataTable = new DataTable();
 
-            //var spElement = GetStoreProcedure(StoreProcedureSection.StoreCollection.Report, "Racing").Stores[strMapping];
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.Racing, strMapping);
+            try
+            {
+                Hashtable hashtable = new Hashtable();
+                hashtable.Add("productprefix", "RB");
+                using (ObjectDb db = new ObjectDb("WinlostRacingLicensee_SiteSel"))
+                {
+                    db.AssignParamValues(hashtable);
 
-            Hashtable hashtable = new Hashtable();
-            hashtable.Add("productprefix", "RB");
+                    var ds = db.ExecuteDataSet();
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        dataTable = ds.Tables[0];
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
 
-            DbResult dbResult = DbHelper.Execute(spElement.Name, hashtable, spElement.DbName);
-            if (dbResult != null && dbResult.ResultSet != null && dbResult.ResultSet.Tables.Count > 0)
-                return dbResult.ResultSet.Tables[0];
-            else
-                return null;
             return dataTable;
         }
         #endregion
