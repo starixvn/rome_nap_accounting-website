@@ -37,10 +37,22 @@
     <Setting Key="Licensee_UpdAgent_VirtualSports" SpName="Acc_Dep_CustomerUpdMemberVirtualSports_MAg" DbName="DBTXN.BODB02" />
     <Setting Key="NewLicensee_AdNewMember_VirtualSports" SpName="Acc_Dep_CustomerInsMemberVirtualSports_Ag" DbName="DBTXN.BODB02" />
     <Setting Key="Licensee_UpdMember_VirtualSports" SpName="Acc_Dep_CustomerUpdMemberVirtualSports_Ag" DbName="DBTXN.BODB02" />
+    <Setting Key="Acc_CustomerUpdSuperVS_MinMaxBet" SpName="Acc_CustomerUpdSuperVS_MinMaxBet" DbName="DBTXN.BODB02" Plain="0" />
   </Function>
 
   <Function Name="Special Delete">
     <Setting Key="Acc_BettransRecoverSpecialBets" SpName="Acc_BettransRecoverSpecialBets" DbName="DBTXN.BODB02" />
+    <Setting Key="Acc_BettransDelSpecial_LiveCS" SpName="Acc_BettransDelSpecial_LiveCS" DbName="DBTXN.BODB02" />
+    <Setting Key="Acc_Set_LiveCasino_RecoverBet" SpName="Acc_BettransRecoverBet_LiveCS" DbName="DBTXN.BODB02" />
+    <Setting Key="Acc_BettransDelSpecial" SpName="Acc_BettransDelSpecial" DbName="DBTXN.BODB02"  />
+    <Setting Key="Acc_BettransDelSpecialDel_MixParlay" SpName="Acc_BettransDelSpecialDel_MixParlay" DbName="DBTXN.BODB02"  />
+    <Setting Key="Acc_BettransDelBet" SpName="Acc_BettransDelBet" DbName="DBTXN.BODB02"  />
+    <Setting Key="Acc_BettransDelBet_Parlay" SpName="Acc_BettransDelBet_Parlay" DbName="DBTXN.BODB02"  />
+    <Setting Key="BettransDelSpecial_VirtualSports" SpName="Acc_BettransDelSpecial_VirtualSports" DbName="DBTXN.BODB02" />
+    <Setting Key="Acc_BettransDelSpecial_NumberGame" SpName="Acc_BettransDelSpecial_NumberGame" DbName="DBTXN.BODB02"  />
+    <Setting Key="Acc_BettransRecoverBet_NumberGame" SpName="Acc_BettransRecoverBet_NumberGame" DbName="DBTXN.BODB02"  />
+    <Setting Key="Acc_BettransDelSpecialDel_EarlyKO" SpName="Acc_BettransDelSpecialDel_EarlyKO" DbName="DBTXN.BODB02"  />
+    
   </Function>
 
   <Function Name="Others">
@@ -54,8 +66,29 @@
     
   </Function>
 
-  <Function Name="Customer">
-    
+  <Function Name="P2P">
+    <Setting Key="Acc_P2PUpdDefaultSetting" SpName="Acc_P2PUpdDefaultSetting" DbName="DBTXN.BODB02"  />
   </Function>
+
+  <Function Name="Transfer">
+    <Setting Key="Acc_FinanceCrossTransferMulUpd" SpName="Acc_FinanceCrossTransferMulUpd" DbName="DBTXN.BODB02"></Setting>
+    <Setting Key="Acc_FinanceTransferMulUpd" SpName="Acc_FinanceTransferMulUpd" DbName="DBTXN.BODB02"></Setting>
+    <Setting Key="Acc_BettransInsTransaction" SpName="Acc_BettransInsTransaction" DbName="DBTXN.BODB02"></Setting>
+    <Setting Key="Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance" DbName="DBTXN.BODB02"></Setting>
+    <Setting Key="Acc_BettransInsTransferAllMembers" SpName="Acc_BettransInsTransferAllMembers" DbName="DBTXN.BODB02"></Setting>
+    <Setting Key="Acc_ClearBalanceAllDownlines" SpName="Acc_ClearBalanceAllDownlines" DbName="DBTXN.BODB02"></Setting>
+    <Setting Key="Acc_DailyTxn_UpdChecker" SpName="Acc_DailyTxn_UpdChecker" DbName="DBTXN.BODB02"  />
+    <Setting Key="Acc_BettransDelTransaction" SpName="Acc_BettransDelTransaction" DbName="DBTXN.BODB02"  />
+    <Setting Key="Acc_BettransInsCrossTransfer" SpName="Acc_BettransInsCrossTransfer" DbName="DBTXN.BODB02"  />
+    <Setting Key="Acc_BettransInsTransfer" SpName="Acc_BettransInsTransfer" DbName="DBTXN.BODB02"  />
+  </Function>
+
+  <Function Name="Exchange Daily">
+    <Setting Key="Acc_ExchangeUpdateOpenToteRate" SpName="Acc_ExchangeUpdateOpenToteRate" DbName="DBTXN.BODB02"/>
+    <Setting Key="Acc_ExchangeIns" SpName="Acc_ExchangeIns" DbName="DBTXN.BODB02"/>
+    <Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel" DbName="DBTXN.BODB02" />
+    <Setting Key="EchangeUpd" SpName="Acc_ExchangeUpd" DbName="DBTXN.BODB02" />
+  </Function>
+
 
 </Functions>
