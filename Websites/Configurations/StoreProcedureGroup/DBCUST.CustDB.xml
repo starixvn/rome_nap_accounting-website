@@ -48,6 +48,7 @@
     <Setting Key="Acc_CustomerUpdP2PSuper_Commission" SpName="Acc_CustomerUpdP2PSuper_Commission" DbName="DBCUST.CustDB"/>
     <Setting Key="Acc_CustomerUpdP2PSuper_GameSetting" SpName="Acc_CustomerUpdP2PSuper_GameSetting" DbName="DBCUST.CustDB"/>
     <Setting Key="Acc_CustomerUpdP2PSuper_MaxTransfer" SpName="Acc_CustomerUpdP2PSuper_MaxTransfer" DbName="DBCUST.CustDB"  />
+    <Setting Key="Acc_P2PUpdDefaultSetting" SpName="Acc_P2PUpdDefaultSetting" DbName="DBCUST.CustDB"  />
   </Function>
 
   <Function Name="RNG Casino">
