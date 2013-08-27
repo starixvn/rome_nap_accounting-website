@@ -1,9 +1,10 @@
-
-// numeral.js
-// version : 1.3.1
-// author : Adam Draper
-// license : MIT
-// http://adamwdraper.github.com/Numeral-js/
+/*!
+ * numeral.js
+ * version : 1.4.9
+ * author : Adam Draper
+ * license : MIT
+ * http://adamwdraper.github.com/Numeral-js/
+ */
 
 (function () {
 
@@ -12,11 +13,11 @@
     ************************************/
 
     var numeral,
-        VERSION = '1.3.1',
-        round = Math.round, i,
+        VERSION = '1.4.9',
         // internal storage for language config files
         languages = {},
         currentLanguage = 'en',
+        zeroFormat = null,
         // check for nodeJS
         hasModule = (typeof module !== 'undefined' && module.exports);
 
@@ -27,7 +28,7 @@
 
 
     // Numeral prototype object
-    function Numeral(number) {
+    function Numeral (number) {
         this._n = number;
     }
 
@@ -80,32 +81,38 @@
         if (string.indexOf(':') > -1) {
             n._n = unformatTime(string);
         } else {
-            var stringOriginal = string;
-            if (languages[currentLanguage].delimiters.decimal !== '.') {
-                string = string.replace(/\./g,'').replace(languages[currentLanguage].delimiters.decimal, '.');
-            }
-
-            // see if abbreviations are there so that we can multiply to the correct number
-            var thousandRegExp = new RegExp(languages[currentLanguage].abbreviations.thousand + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$'),
-                millionRegExp = new RegExp(languages[currentLanguage].abbreviations.million + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
-
-            // see if bytes are there so that we can multiply to the correct number
-            var prefixes = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-                bytesMultiplier = false;
-
-            for (var power = 0; power <= prefixes.length; power++) {
-                bytesMultiplier = (string.indexOf(prefixes[power]) > -1) ? Math.pow(1024, power + 1) : false;
-
-                if (bytesMultiplier) {
-                    break;
+            if (string === zeroFormat) {
+                n._n = 0;
+            } else {
+                var stringOriginal = string;
+                if (languages[currentLanguage].delimiters.decimal !== '.') {
+                    string = string.replace(/\./g,'').replace(languages[currentLanguage].delimiters.decimal, '.');
                 }
+
+                // see if abbreviations are there so that we can multiply to the correct number
+                var thousandRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.thousand + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$'),
+                    millionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.million + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$'),
+                    billionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.billion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$'),
+                    trillionRegExp = new RegExp('[^a-zA-Z]' + languages[currentLanguage].abbreviations.trillion + '(?:\\)|(\\' + languages[currentLanguage].currency.symbol + ')?(?:\\))?)?$');
+
+                // see if bytes are there so that we can multiply to the correct number
+                var prefixes = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+                    bytesMultiplier = false;
+
+                for (var power = 0; power <= prefixes.length; power++) {
+                    bytesMultiplier = (string.indexOf(prefixes[power]) > -1) ? Math.pow(1024, power + 1) : false;
+
+                    if (bytesMultiplier) {
+                        break;
+                    }
+                }
+
+                // do some math to create our number
+                n._n = ((bytesMultiplier) ? bytesMultiplier : 1) * ((stringOriginal.match(thousandRegExp)) ? Math.pow(10, 3) : 1) * ((stringOriginal.match(millionRegExp)) ? Math.pow(10, 6) : 1) * ((stringOriginal.match(billionRegExp)) ? Math.pow(10, 9) : 1) * ((stringOriginal.match(trillionRegExp)) ? Math.pow(10, 12) : 1) * ((string.indexOf('%') > -1) ? 0.01 : 1) * (((string.split('-').length + Math.min(string.split('(').length-1, string.split(')').length-1)) % 2)? 1: -1) * Number(string.replace(/[^0-9\.]+/g, ''));
+
+                // round if we are talking about bytes
+                n._n = (bytesMultiplier) ? Math.ceil(n._n) : n._n;
             }
-
-            // do some math to create our number
-            n._n = ((bytesMultiplier) ? bytesMultiplier : 1) * ((stringOriginal.match(thousandRegExp)) ? 1000 : 1) * ((stringOriginal.match(millionRegExp)) ? 1000000 : 1) * ((string.indexOf('%') > -1) ? 0.01 : 1) * Number(((string.indexOf('(') > -1) ? '-' : '') + string.replace(/[^0-9\.'-]+/g, ''));
-
-            // round if we are talking about bytes
-            n._n = (bytesMultiplier) ? Math.ceil(n._n) : n._n;
         }
         return n._n;
     }
@@ -192,7 +199,7 @@
             seconds = seconds + (Number(timeArray[1]) * 60);
             // seconds
             seconds = seconds + Number(timeArray[2]);
-        } else if (timeArray.lenght === 2) {
+        } else if (timeArray.length === 2) {
             // minutes
             seconds = seconds + (Number(timeArray[0]) * 60);
             // seconds
@@ -203,115 +210,143 @@
 
     function formatNumber (n, format) {
         var negP = false,
+            optDec = false,
             abbr = '',
             bytes = '',
-            ord = '';
+            ord = '',
+            abs = Math.abs(n._n);
 
-        // see if we should use parentheses for negative number
-        if (format.indexOf('(') > -1) {
-            negP = true;
-            format = format.slice(1, -1);
-        }
-
-        // see if abbreviation is wanted
-        if (format.indexOf('a') > -1) {
-            // check for space before abbreviation
-            if (format.indexOf(' a') > -1) {
-                abbr = ' ';
-                format = format.replace(' a', '');
-            } else {
-                format = format.replace('a', '');
+        // check if number is zero and a custom zero format has been set
+        if (n._n === 0 && zeroFormat !== null) {
+            return zeroFormat;
+        } else {
+            // see if we should use parentheses for negative number
+            if (format.indexOf('(') > -1) {
+                negP = true;
+                format = format.slice(1, -1);
             }
 
-            if (n._n > 1000000) {
-                abbr = abbr + languages[currentLanguage].abbreviations.million;
-                n._n = n._n / 1000000;
-            } else {
-                abbr = abbr + languages[currentLanguage].abbreviations.thousand;
-                n._n = n._n / 1000;
-            }
-        }
+            // see if abbreviation is wanted
+            if (format.indexOf('a') > -1) {
+                // check for space before abbreviation
+                if (format.indexOf(' a') > -1) {
+                    abbr = ' ';
+                    format = format.replace(' a', '');
+                } else {
+                    format = format.replace('a', '');
+                }
 
-        // see if we are formatting bytes
-        if (format.indexOf('b') > -1) {
-            // check for space before
-            if (format.indexOf(' b') > -1) {
-                bytes = ' ';
-                format = format.replace(' b', '');
-            } else {
-                format = format.replace('b', '');
-            }
-
-            var prefixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-                min,
-                max;
-
-            for (var power = 0; power <= prefixes.length; power++) {
-                min = Math.pow(1024, power);
-                max = Math.pow(1024, power+1);
-
-                if (n._n > min && n._n < max) {
-                    bytes = bytes + prefixes[power];
-                    if (min > 0) {
-                        n._n = n._n / min;
-                    }
-                    break;
+                if (abs >= Math.pow(10, 12)) {
+                    // trillion
+                    abbr = abbr + languages[currentLanguage].abbreviations.trillion;
+                    n._n = n._n / Math.pow(10, 12);
+                } else if (abs < Math.pow(10, 12) && abs >= Math.pow(10, 9)) {
+                    // billion
+                    abbr = abbr + languages[currentLanguage].abbreviations.billion;
+                    n._n = n._n / Math.pow(10, 9);
+                } else if (abs < Math.pow(10, 9) && abs >= Math.pow(10, 6)) {
+                    // million
+                    abbr = abbr + languages[currentLanguage].abbreviations.million;
+                    n._n = n._n / Math.pow(10, 6);
+                } else if (abs < Math.pow(10, 6) && abs >= Math.pow(10, 3)) {
+                    // thousand
+                    abbr = abbr + languages[currentLanguage].abbreviations.thousand;
+                    n._n = n._n / Math.pow(10, 3);
                 }
             }
-        }
 
-        // see if ordinal is wanted
-        if (format.indexOf('o') > -1) {
-            // check for space before
-            if (format.indexOf(' o') > -1) {
-                ord = ' ';
-                format = format.replace(' o', '');
+            // see if we are formatting bytes
+            if (format.indexOf('b') > -1) {
+                // check for space before
+                if (format.indexOf(' b') > -1) {
+                    bytes = ' ';
+                    format = format.replace(' b', '');
+                } else {
+                    format = format.replace('b', '');
+                }
+
+                var prefixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+                    min,
+                    max;
+
+                for (var power = 0; power <= prefixes.length; power++) {
+                    min = Math.pow(1024, power);
+                    max = Math.pow(1024, power+1);
+
+                    if (n._n >= min && n._n < max) {
+                        bytes = bytes + prefixes[power];
+                        if (min > 0) {
+                            n._n = n._n / min;
+                        }
+                        break;
+                    }
+                }
+            }
+
+            // see if ordinal is wanted
+            if (format.indexOf('o') > -1) {
+                // check for space before
+                if (format.indexOf(' o') > -1) {
+                    ord = ' ';
+                    format = format.replace(' o', '');
+                } else {
+                    format = format.replace('o', '');
+                }
+
+                ord = ord + languages[currentLanguage].ordinal(n._n);
+            }
+
+            if (format.indexOf('[.]') > -1) {
+                optDec = true;
+                format = format.replace('[.]', '.');
+            }
+
+            var w = n._n.toString().split('.')[0],
+                precision = format.split('.')[1],
+                thousands = format.indexOf(','),
+                d = '',
+                neg = false;
+
+            if (precision) {
+                if (precision.indexOf('[') > -1) {
+                    precision = precision.replace(']', '');
+                    precision = precision.split('[');
+                    d = toFixed(n._n, (precision[0].length + precision[1].length), precision[1].length);
+                } else {
+                    d = toFixed(n._n, precision.length);
+                }
+
+                w = d.split('.')[0];
+
+                if (d.split('.')[1].length) {
+                    d = languages[currentLanguage].delimiters.decimal + d.split('.')[1];
+                } else {
+                    d = '';
+                }
+
+                if (optDec && Number(d.slice(1)) === 0) {
+                    d = '';
+                }
             } else {
-                format = format.replace('o', '');
+                w = toFixed(n._n, null);
             }
 
-            ord = ord + languages[currentLanguage].ordinal(n._n);
-        }
-
-        var w = n._n.toString().split('.')[0],
-            precision = format.split('.')[1],
-            thousands = format.indexOf(','),
-            d = '',
-            neg = false;
-
-        if (!precision) {
-            w = toFixed(n._n, null);
-        }
-
-        // format number
-        if (n._n < 0) {
-            w = w.slice(1);
-            neg = true;
-        }
-
-        if (thousands > -1) {
-            w = w.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + languages[currentLanguage].delimiters.thousands);
-        }
-
-        if (format.indexOf('.') === 0) {
-            w = '';
-        }
-
-        if (precision) {
-            if (precision.indexOf('[') > -1) {
-                precision = precision.replace(']', '');
-                precision = precision.split('[');
-                d = toFixed(n._n, (precision[0].length + precision[1].length), precision[1].length).split('.')[1];
-            } else {
-                d = toFixed(n._n, precision.length).split('.')[1];
+            // format number
+            if (w.indexOf('-') > -1) {
+                w = w.slice(1);
+                neg = true;
             }
 
-            if (d) {
-                d = languages[currentLanguage].delimiters.decimal + d;
+            if (thousands > -1) {
+                w = w.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + languages[currentLanguage].delimiters.thousands);
             }
-        }
 
-        return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + w + d + ((ord) ? ord : '') + ((abbr) ? abbr : '') + ((bytes) ? bytes : '') + ((negP && neg) ? ')' : '');
+            if (format.indexOf('.') === 0) {
+                w = '';
+            }
+
+            return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + w + d + ((ord) ? ord : '') + ((abbr) ? abbr : '') + ((bytes) ? bytes : '') + ((negP && neg) ? ')' : '');
+        }
     }
 
     /************************************
@@ -321,16 +356,13 @@
     numeral = function (input) {
         if (numeral.isNumeral(input)) {
             input = input.value();
-        } else if (!Number(input)) {
+        } else if (input == 0 || typeof input == "undefined") {
             input = 0;
+        } else if (!Number(input)) {
+            input = numeral.fn.unformat(input);
         }
 
         return new Numeral(Number(input));
-    };
-
-    // compare numeral object
-    numeral.isNumeral = function (obj) {
-        return obj instanceof Numeral;
     };
 
     // version number
@@ -350,6 +382,9 @@
         }
 
         if (key && !values) {
+            if(!languages[key]) {
+                throw new Error('Unknown language : ' + key);
+            }
             currentLanguage = key;
         }
 
@@ -357,7 +392,7 @@
             loadLanguage(key, values);
         }
 
-        return languages;
+        return numeral;
     };
 
     numeral.language('en', {
@@ -367,7 +402,9 @@
         },
         abbreviations: {
             thousand: 'k',
-            million: 'm'
+            million: 'm',
+            billion: 'b',
+            trillion: 't'
         },
         ordinal: function (number) {
             var b = number % 10;
@@ -380,6 +417,14 @@
             symbol: '$'
         }
     });
+
+    numeral.zeroFormat = function (format) {
+        if (typeof(format) === 'string') {
+            zeroFormat = format;
+        } else {
+            zeroFormat = null;
+        }
+    };
 
     /************************************
         Helpers
@@ -410,6 +455,10 @@
         },
 
         value : function () {
+            return this._n;
+        },
+
+        valueOf : function () {
             return this._n;
         },
 
@@ -454,11 +503,11 @@
         Exposing Numeral
     ************************************/
 
-    // Commenting out common js and global variable
-    // // CommonJS module is defined
+    // CommonJS module is defined
     if (hasModule) {
         module.exports = numeral;
     }
+
     /*global ender:false */
     if (typeof ender === 'undefined') {
         // here, `this` means `window` in the browser, or `global` on the server
