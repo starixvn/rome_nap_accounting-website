@@ -1074,8 +1074,7 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
 				wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = winlossValue > 0 ? cellSpecialNumberNormalFormat : cellNumberNormalFormat;
 				wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = winlossValue;
 
-				wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellSpecialNumberNormalFormat;
-				wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.Font.Color = Color.Red;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = winlossDetail.Comm != 0 ? cellSpecialNumberNormalFormat : cellNumberNormalFormat;
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = winlossDetail.Comm;
 
 				total =  winlossDetail.Total;

@@ -97,7 +97,7 @@
                             </td>
                             <td><div class="r" style="width: 120px; height: 17px">@NumberFormat.DoubleFormat(winlossDetail.Turnover, 2)</div></td>
                             <td><div class="r @numberColor(winlossDetail.WinLoss)" style="width: 120px; height: 17px">@NumberFormat.DoubleFormat(winlossDetail.WinLoss, 2)</div></td>
-                            <td><div class="r red" style="width: 80px; height: 17px">@NumberFormat.DoubleFormat(winlossDetail.Comm, 2)</div></td>
+                            <td><div class="r @(winlossDetail.Comm != 0 ? "red" : "")" style="width: 80px; height: 17px">@NumberFormat.DoubleFormat(winlossDetail.Comm, 2)</div></td>
                             <td><div class="r @numberColor(winlossDetail.Total)" style="width: 120px; height: 17px">@NumberFormat.DoubleFormat(winlossDetail.Total, 2)</div></td>
                         </tr>
                     }

@@ -443,7 +443,7 @@ var treeWinLossByCustomerLevel = {
                                     <div class="r ' + (treeWinLoss.numberColor(row.WinLoss)) + '" style="width: 120px; height: 17px">' + numeral(row.WinLoss).format('0,0.00') + '</div>\
                                 </td>\
                                 <td>\
-                                    <div class="r red" style="width: 80px; height: 17px">' + numeral(row.Comm).format('0,0.00') + '</div>\
+                                    <div class="r ' + (row.Comm != 0 ? 'red' : '') + '" style="width: 80px; height: 17px">' + numeral(row.Comm).format('0,0.00') + '</div>\
                                 </td>\
                                 <td>\
                                     <div class="r ' + (treeWinLoss.numberColor(row.Total)) + '" style="width: 120px; height: 17px">' + numeral(row.Total).format('0,0.00') + '</div>\
