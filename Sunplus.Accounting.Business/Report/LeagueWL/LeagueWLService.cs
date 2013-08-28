@@ -137,10 +137,10 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
 
                 #region grand total - margin
 
-                league.GrandTotal.Margin =
-                    NumberFormat.DecFormat(
-                        ((CastAide.AsDouble(league.GrandTotal.LineTotal) / CastAide.AsDouble(league.GrandTotal.Turnover)) *
-                        100), 2);
+                var margin = CastAide.AsDouble(league.GrandTotal.Turnover) != 0 ?
+                    CastAide.AsDouble(league.GrandTotal.LineTotal) / CastAide.AsDouble(league.GrandTotal.Turnover) :
+                    0;
+                league.GrandTotal.Margin = NumberFormat.DecFormat(margin * 100, 2);
 
                 #endregion grand total - margin
 

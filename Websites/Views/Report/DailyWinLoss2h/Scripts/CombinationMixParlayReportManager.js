@@ -40,6 +40,7 @@ var CombinationMixParlayReportManager = {
         CombinationMixParlayReportManager.me = $("#combinationMixParlayReport");
         CombinationMixParlayReportManager.tb = $("#tblContent_Cmpr");
 
+        $("#txtfromdate").datepicker("option", "minDate", balanceUpDay);
         $("#dailyWLReportDiv").removeClass("hidden");
         try { parent.jQuery.unblockUI(); } catch (e) { }
         CombinationMixParlayReportManager.viewReport(wldate);

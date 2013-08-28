@@ -57,7 +57,6 @@ using Sunplus.Accounting.DataAccess.SpecialDelete;
 using Sunplus.Accounting.DataAccess.SpecialDelete.TicketsListing;
 using Sunplus.Accounting.Report.CombinationMixparlay;
 using Sunplus.Accounting.Report.Mixparlay;
-using Sunplus.Core.LoggingLib;
 
 namespace Sunplus.Accounting.Business.BootStrappers
 {
@@ -83,7 +82,6 @@ namespace Sunplus.Accounting.Business.BootStrappers
                 .RegisterType<IUserDAO, UserDAO>()
                 .RegisterType<IUserService, UserService>()
                 .RegisterType<IMenuManager, MenuManager>()
-                .RegisterType<Sunplus.Core.LoggingLib.ILogger, EntLibLogger>(new ContainerControlledLifetimeManager())
                 .RegisterType<IExchangeRateDAO, ExchangeRateDAO>()
                 .RegisterType<IExchangeRateService, ExchangeRateManager>()
                 .RegisterType<ISpecialDeleteDAO, SpecialDeleteDAO>()

@@ -12,7 +12,6 @@ using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.ViewModel;
-using Sunplus.Core.LoggingLib;
 
 namespace Sunplus.Accounting.Business
 {
@@ -22,7 +21,6 @@ namespace Sunplus.Accounting.Business
     public class UserService : IUserService
     {
         private readonly IUserDAO _userDAO;
-        private ILogger _logger;
         private string _keyDailyAllTxn = AppSession.Username + ".SelDailyAllTxn";
         private string _keyDailyFinanceTxn = AppSession.Username + ".SelDailyFinanceTxn";
 
@@ -57,10 +55,7 @@ namespace Sunplus.Accounting.Business
             }
             catch (Exception ex)
             {
-                {
-                    _logger = CommonBootStrapper.Locator.GetInstance<Sunplus.Core.LoggingLib.ILogger>();
-                    _logger.Error(ex.Message, ex);
-                }
+                LogExtensions.ExceptionHandler(ex);
                 isResetSuccess = false;
             }
 
@@ -210,12 +205,7 @@ namespace Sunplus.Accounting.Business
             }
             catch (Exception ex)
             {
-                {
-                    //will refactor later
-                    // _logger = new EntLibLogger();
-                    _logger = CommonBootStrapper.Locator.GetInstance<Sunplus.Core.LoggingLib.ILogger>();
-                    _logger.Error(ex.Message, ex);
-                }
+                LogExtensions.ExceptionHandler(ex);
             }
 
             return entityList;
@@ -273,10 +263,7 @@ namespace Sunplus.Accounting.Business
             }
             catch (Exception ex)
             {
-                {
-                    _logger = CommonBootStrapper.Locator.GetInstance<Sunplus.Core.LoggingLib.ILogger>();
-                    _logger.Error(ex.Message, ex);
-                }
+                LogExtensions.ExceptionHandler(ex);
             }
 
             return isSuccessful;
@@ -300,10 +287,7 @@ namespace Sunplus.Accounting.Business
             }
             catch (Exception ex)
             {
-                {
-                    _logger = CommonBootStrapper.Locator.GetInstance<Sunplus.Core.LoggingLib.ILogger>();
-                    _logger.Error(ex.Message, ex);
-                }
+                LogExtensions.ExceptionHandler(ex);
             }
 
             return isSuccessful;
@@ -349,10 +333,7 @@ namespace Sunplus.Accounting.Business
             }
             catch (Exception ex)
             {
-                {
-                    _logger = CommonBootStrapper.Locator.GetInstance<Sunplus.Core.LoggingLib.ILogger>();
-                    _logger.Error(ex.Message, ex);
-                }
+                LogExtensions.ExceptionHandler(ex);
             }
 
             return entityList;
@@ -371,10 +352,7 @@ namespace Sunplus.Accounting.Business
             }
             catch (Exception ex)
             {
-                {
-                    _logger = CommonBootStrapper.Locator.GetInstance<Sunplus.Core.LoggingLib.ILogger>();
-                    _logger.Error(ex.Message, ex);
-                }
+                LogExtensions.ExceptionHandler(ex);
             }
 
             return custId;
@@ -389,10 +367,7 @@ namespace Sunplus.Accounting.Business
             }
             catch (Exception ex)
             {
-                {
-                    _logger = CommonBootStrapper.Locator.GetInstance<Sunplus.Core.LoggingLib.ILogger>();
-                    _logger.Error(ex.Message, ex);
-                }
+                LogExtensions.ExceptionHandler(ex);
             }
             return entityList;
         }
@@ -428,60 +403,12 @@ namespace Sunplus.Accounting.Business
             }
             catch (Exception ex)
             {
-                {
-                    _logger = CommonBootStrapper.Locator.GetInstance<Sunplus.Core.LoggingLib.ILogger>();
-                    _logger.Error(ex.Message, ex);
-                }
+                LogExtensions.ExceptionHandler(ex);
             }
 
             return entityList;
         }
-
-        /* public DailyTransactionDTO GetDailyAllTransaction(DateTime transDate, string type, string creator, int pageIndex, int pageSize, ref int totalPage)
-         {
-             Check.Argument.IsNotNegative(pageIndex, "pageIndex");
-             Check.Argument.IsNotNegative(pageSize, "pageSize");
-             Check.Argument.IsNotInvalidDate(transDate, "transDate");
-             //Check.Argument.IsNotInFuture(transDate, "transDate");
-
-             var entityList = new DailyTransactionDTO();
-
-             try
-             {
-                 //always get valid transactions
-                 if (transDate <= DateTime.Now)
-                 {
-                     DbResult dbResult = _userDAO.GetDailyAllTransaction(transDate, pageIndex, pageSize, type, creator, ref totalPage);
-                     if (dbResult != null && dbResult.ResultSet.Tables[0].Rows.Count > 0)
-                     {
-                         foreach (DataRow dr in dbResult.ResultSet.Tables[0].Rows)
-                         {
-                             var entity = new DailyTransaction();
-                             entity.Username = (string)dr["username"];
-                             entity.Date = (DateTime)dr["transdate"];
-                             entity.Amount = Convert.ToDouble(dr["amount"]);
-                             entity.Description = (string)dr["transdesc"];
-                             entity.Type = (string)dr["typenamee"];
-                             entity.Creator = (string)dr["creator"];
-                             entity.RowIndex = Convert.ToInt32(dr["rownumber"]);
-                             entityList.items.Add(entity);
-                         }
-
-                         //get total record
-                         entityList.totalRows = dbResult.ResultSet.Tables[0].Rows.Count;
-                     }
-                 }
-             }
-             catch (Exception ex)
-             {
-                 {
-                     _logger = CommonBootStrapper.Locator.GetInstance<Sunplus.Core.LoggingLib.ILogger>();
-                     _logger.Error(ex.Message, ex);
-                 }
-             }
-
-             return entityList;
-         }*/
+      
 
         #endregion IUserService Members
     }
