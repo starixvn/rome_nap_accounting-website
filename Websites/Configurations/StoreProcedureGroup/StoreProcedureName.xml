@@ -564,7 +564,7 @@
 	</Function>
 	
 	<Function Name="Virtual sports - Setting">
-		<Setting Key="Acc_CustomerUpdSuperVS_MinMaxBet" SpName="Acc_CustomerUpdSuperVS_MinMaxBet" DbName="DBTXN.BODB02" Plain="0" />
+		
 		
 		
 		
