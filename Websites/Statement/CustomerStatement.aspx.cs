@@ -1,32 +1,17 @@
 ﻿using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
 using System.Text;
-
+using System.Web;
+using DNAide.Core;
+using DNAide.Web;
+using IBCUtils;
 using Sunplus.Accounting.Business.Statement;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Web;
-using IBCUtils.DAL;
 using Sunplus.Accounting.Core.Web.Controls;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using IBCUtils.Web;
-using IBCUtils;
-using DNAide.Web;
-using DNAide.Core; 
-using DNAide.Data;
-using Sunplus.Core.CachingLib;
 
 public partial class Statement_CustomerStatement : PageBase
 {
-
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -52,7 +37,6 @@ public partial class Statement_CustomerStatement : PageBase
             if (!Validator.ValidDateMMDDYYYYNotNull(tdate, out tdt).IsSuccess())
                 tdt = DateTime.Now;
 
-
             //render banner search - filter
             reportHeader.Text = "Statement";
             RenderFilterBanner(reportNo, fdt, tdt);
@@ -64,12 +48,12 @@ public partial class Statement_CustomerStatement : PageBase
                 string filenameSuffix = "-" + CastAide.AsString(AppSession.CustUName, string.Empty)
                                         + "-" + fdt.ToString("yyyyMMdd") + "-" + tdt.ToString("yyyyMMdd");
 
-
                 switch (reportNo)
                 {
                     case 1:
                         GenerateStatementExcelContent(fdate, tdate, ref reportContent, ref filenameSuffix);
                         break;
+
                     case 3:
                         GenerateDetailExcelContent(fdate, tdate, ref reportContent, ref filenameSuffix);
                         break;
@@ -77,17 +61,15 @@ public partial class Statement_CustomerStatement : PageBase
                     case 4:
                         GenerateAuditExcelContent(ref reportContent, ref filenameSuffix);
                         break;
-
                 }
 
                 ExportToExcel(reportContent, filenameSuffix);
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex); 
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
-
     }
 
     private static void GenerateAuditExcelContent(ref string reportContent, ref string filenameSuffix)
@@ -126,11 +108,9 @@ public partial class Statement_CustomerStatement : PageBase
     {
         filenameSuffix = "Statement" + filenameSuffix;
 
-
         string key = "CustomerStatement" + AppSession.AccUserName;
 
         var report = AppSession.GetSession(HttpContext.Current.Session, key);
-
 
         if (report != null)
         {
@@ -176,7 +156,6 @@ public partial class Statement_CustomerStatement : PageBase
         if (fromdate > todate)
             fromdate = todate;
 
-
         string headerHtml = WebUtils.LoadTemplate("Statement/CustomerHeader.htm");
 
         TemplateHandler.Assign(ref headerHtml, "{reportNo}", reportTypeNo.ToString());
@@ -186,7 +165,6 @@ public partial class Statement_CustomerStatement : PageBase
         //remove Audit tab if current user is member
         if (Session["CustRoleId"] == null || (int)Session["CustRoleId"] < 2)
             TemplateHandler.RemoveBlock(ref headerHtml, "IsAgent");
-
 
         switch (reportTypeNo)
         {
@@ -201,12 +179,12 @@ public partial class Statement_CustomerStatement : PageBase
                 TemplateHandler.RemoveBlock(ref headerHtml, "DetailLink");
                 TemplateHandler.RemoveBlock(ref headerHtml, "Audit");
                 break;
+
             case 4://Audit
                 TemplateHandler.RemoveBlock(ref headerHtml, "Statement");
                 TemplateHandler.RemoveBlock(ref headerHtml, "Detail");
                 TemplateHandler.RemoveBlock(ref headerHtml, "AuditLink");
                 break;
-
         }
         //if (reportTypeNo == 1) //Statement 1&2
         //{
@@ -270,7 +248,8 @@ public partial class Statement_CustomerStatement : PageBase
                     string.Empty));
         }
 
-        #endregion
+        #endregion Render from and to date calendar
+
         //TemplateHandler.Assign(ref headerHtml, "{ToDateCal}",
         //    Calendar.GenCalendarControl("tdate", "../", "tdateTrigger",
         //    todate.ToShortDateString(), true, false, 0, 0, string.Empty));
@@ -279,18 +258,14 @@ public partial class Statement_CustomerStatement : PageBase
         //what happend if a dev move the definition of this function after it is called
         //tpl = tpl + "<script>GetDataReport();</script>";
 
-
-
         searchContent.Text = headerHtml;
     }
-
 
     private void ExportToExcel(string data, string filename)
     {
         if (!string.IsNullOrEmpty(filename)
             && !string.IsNullOrEmpty(data))
         {
-
             data = data.Replace("<br>", "");
 
             HttpContext.Current.Response.Clear();
