@@ -1,0 +1,113 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="ViewPTService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
+
+namespace Fanex.Tarus.Customer.Business.ViewPT
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using DNAide.Core;
+    using DNAide.Utils;
+    using Fanex.Tarus.Customer.Criteria.ViewPT;
+    using Fanex.Tarus.Customer.DataAccess.ViewPT;
+    using Fanex.Tarus.Customer.Entities;
+    using Fanex.Tarus.Customer.Entities.ViewPT;
+    using Fanex.Tarus.Customer.Resources;
+    using Fanex.Tarus.Infrastructure.Constants;
+    using Sunplus.Accounting.Core.Extensions;
+
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    public class ViewPTService : IViewPTService
+    {
+        private IViewPTRepository _repositoryManager;
+        public ViewPTService()
+            : this(null)
+        {
+        }
+
+        public ViewPTService(IViewPTRepository repositoryManager)
+        {
+            this._repositoryManager = repositoryManager ?? new ViewPTRepository();
+        }
+
+        public List<PostionTakingInfo> GetPTSetting(GetPTSettingCriteria criteria)
+        {
+            try
+            {
+                List<PostionTakingInfo> postionTakingInfoList = new List<PostionTakingInfo>();
+                switch (criteria.SportId)
+                {
+                    case Sports.BingoGame:
+                        postionTakingInfoList = this.GetPTSetting_Bingo(criteria);
+                        break;
+                }
+
+                return postionTakingInfoList;
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return null;
+        }
+
+        private List<PostionTakingInfo> GetPTSetting_Bingo(GetPTSettingCriteria criteria)
+        {
+            var rawData = this._repositoryManager.GetPTSetting_Bingo(criteria);
+            List<PostionTakingInfo> postionTakingInfoList = new List<PostionTakingInfo>();
+            PostionTakingInfo info;
+            foreach (var data in rawData)
+            {
+                info = new PostionTakingInfo
+                {
+                    CustomerInfo = new CustomerInfo
+                    {
+                        CustId = CastAide.AsInt32(data.custid),
+                        UserName = CastAide.AsString(data.username),
+                        RoleId = CastAide.AsInt32(data.roleid, 1)
+                    },
+
+                    SportType = CastAide.AsInt32(data.gamekindid),
+                    BetType = CastAide.AsInt32(data.gametypeid),
+                    SuperPT = NumberFormat.DecFormat(CastAide.AsDecimal(data.SPT), 2),
+                    MasterPT = NumberFormat.DecFormat(CastAide.AsDecimal(data.mPT), 2),
+                    AgentPT = NumberFormat.DecFormat(CastAide.AsDecimal(data.aPT), 2),
+
+                    MinPt = NumberFormat.DecFormat(CastAide.AsDecimal(data.MinPt), 2),
+                    IsAutoPT = CastAide.AsBoolean(data.IsAutoPT),
+                    AutoPT = NumberFormat.DecFormat(CastAide.AsDecimal(data.AutoPT), 2),
+                    Commission = IBCUtils.FormatHandler.FormatNumber4(CastAide.AsDecimal(data.RollingRate)),
+                    Incentive = NumberFormat.DecFormat(CastAide.AsDecimal(data.Incentive), 2)
+                };
+
+                info.CustomerInfo.RoleName = CustomerCoreService.GetRoleName(info.CustomerInfo.RoleId);
+                info.SportName = this.GetSportName(info.SportType);
+                postionTakingInfoList.Add(info);
+            }
+
+            // Sort: Super -> Master -> Agent -> Member
+            postionTakingInfoList.OrderByDescending(ptInfo => ptInfo.CustomerInfo.RoleId);
+            return postionTakingInfoList;
+        }
+
+        private string GetSportName(int sportId)
+        {
+            var sportName = string.Empty;
+            switch (sportId)
+            {
+                case Sports.BingoGame:
+                    return Customer_Labels.Bingo;
+            }
+
+            return sportName;
+        }
+    }
+}
