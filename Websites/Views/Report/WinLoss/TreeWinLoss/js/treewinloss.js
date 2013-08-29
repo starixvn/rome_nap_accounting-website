@@ -155,6 +155,8 @@ var treeWinLoss = {
             dataType: "html",
             success: function (evt) {
                 $('#mainreport').html(evt);
+				// highlight row when mouseover
+				treeWinLoss.registerGridMouseover();
             },
             error: function (req, status, error) {
                 treeWinLoss.showErrorMessage(error);
@@ -268,7 +270,7 @@ var treeWinLoss = {
 
         $("#frameExportExcel").attr("src", linkExportExcel + request);
     },
-    numberColor: function (number, isVarial, varianValue) {
+    /*numberColor: function (number, isVarial, varianValue) {
         var numberColor = "";
         if (parseFloat(number) > 0) {
             numberColor = 'red';
@@ -277,7 +279,28 @@ var treeWinLoss = {
             }
         }
         return numberColor;
-    }
+    },*/
+	numberColor: function (number) {
+        return number > 0 ? 'red' : '';
+    },
+	registerGridMouseover: function() {
+		// highlight row when mouseover
+		$('#tblContentHeader > tbody > tr').hover(function() {
+			var className = $(this).attr('class');
+			$('#tblContent > tbody > tr.' + className).addClass('highlight');
+		}, function() {
+			var className = $(this).attr('class');
+			$('#tblContent > tbody > tr.' + className).removeClass('highlight');
+		});
+
+		$('#tblContent > tbody > tr').hover(function() {
+			var className = $(this).attr('class');
+			$('#tblContentHeader > tbody > tr.' + className).addClass('highlight');
+		}, function() {
+			var className = $(this).attr('class');
+			$('#tblContentHeader > tbody > tr.' + className).removeClass('highlight');
+		});
+	}
 };
 
 var treeWinLossByProduct = {
@@ -364,7 +387,7 @@ var treeWinLossByCustomerLevel = {
         for (var i = startRow; i < endRow; i++) {
             var row = wlDetail[i];
             arrFrozen.push(treeWinLossByCustomerLevel.renderWlReportFrozenRow(row, i + 1));
-            arrScroll.push(treeWinLossByCustomerLevel.renderWlReportScrollRow(row));
+            arrScroll.push(treeWinLossByCustomerLevel.renderWlReportScrollRow(row, i + 1));
         }
 
         var htmlScrollContent = arrScroll.join('');
@@ -397,7 +420,10 @@ var treeWinLossByCustomerLevel = {
         if($.browser.mozilla && parseFloat($.browser.version) <= 7) {
             $('#mainreportgrid .x-scrollbar').prop("scrollLeft",preLeft);
             $('#mainreportgrid .container').prop("scrollLeft", preLeft);
-        }        
+        }
+
+		// highlight row when mouseover
+		treeWinLoss.registerGridMouseover();
     },
     renderWlReportFrozenRow: function (row, no) {
         var downlineLinke = '<div class="c" style="width: 100px; height: 17px"><a href="javascript:;" onclick="treeWinLoss.goToDownLine(' + row.Id + ',\'' + row.Title + '\');">' + row.Title + '</a></div>';
@@ -405,7 +431,7 @@ var treeWinLossByCustomerLevel = {
             downlineLinke = '<div class="c" style="width: 100px; height: 17px">' + row.Title + '</div>';
         }
 
-        var html = '<tr><td>\
+        var html = '<tr class="row' + no + '"><td>\
                                     <div class="c" style="width: 30px; height: 17px">'+ no +'</div>\
                                 </td>\
                                 <td>' + downlineLinke + '\
@@ -414,20 +440,20 @@ var treeWinLossByCustomerLevel = {
                                     <div class="r" style="width: 120px; height: 17px">' +  numeral(row.Turnover).format('0,0.00') + '</div>\
                                 </td>\
                                 <td>\
-                                    <div class="r ' + (treeWinLoss.numberColor(row.WinLoss, false, '')) + '" style="width: 120px; height: 17px">' + numeral(row.WinLoss).format('0,0.00') + '</div>\
+                                    <div class="r ' + (treeWinLoss.numberColor(row.WinLoss)) + '" style="width: 120px; height: 17px">' + numeral(row.WinLoss).format('0,0.00') + '</div>\
                                 </td>\
                                 <td>\
-                                    <div class="r" style="width: 80px; height: 17px">' + numeral(row.Comm).format('0,0.00') + '</div>\
+                                    <div class="r ' + (row.Comm != 0 ? 'red' : '') + '" style="width: 80px; height: 17px">' + numeral(row.Comm).format('0,0.00') + '</div>\
                                 </td>\
                                 <td>\
-                                    <div class="r ' + (treeWinLoss.numberColor(row.Total, false, '')) + '" style="width: 120px; height: 17px">' + numeral(row.Total).format('0,0.00') + '</div>\
+                                    <div class="r ' + (treeWinLoss.numberColor(row.Total)) + '" style="width: 120px; height: 17px">' + numeral(row.Total).format('0,0.00') + '</div>\
                                 </td>\
                             </tr>';
         return html;
     },
-    renderWlReportScrollRow: function (row) {
+    renderWlReportScrollRow: function (row, no) {
     var turnover = '', turnoverVirtual='';
-    var margin = '';
+    var margin = '', baseRMVarianceMargin = '';
     if( treeWinLoss.params.isShowSB == true ||
                         treeWinLoss.params.isShowNG  == true ||
                         treeWinLoss.params.isShowRB == true ||
@@ -441,7 +467,8 @@ var treeWinLossByCustomerLevel = {
                             turnover = 'N/A';
                             turnoverVirtual = 'N/A';
                        }
-
+	
+	baseRMVarianceMargin = row.BaseRMTOVarianceAbsoluteTotal != 0 ? numeral(row.BaseRMVarianceMargin).format('0,0.00') : 'N/A';
     if(turnoverVirtual == 'N/A' || turnoverVirtual == '0.00')
     {
         margin = 'N/A';
@@ -449,7 +476,7 @@ var treeWinLossByCustomerLevel = {
     else{ 
         margin =  numeral(row.Margin).format('0,0.00');
     }
-        var html = '<tr><td>\
+        var html = '<tr class="row' + no + '"><td>\
                                     <div class="c" style="width: 30px; height: 17px">&nbsp;</div>\
                                 </td>\
                                 <td>\
@@ -479,20 +506,29 @@ var treeWinLossByCustomerLevel = {
                                 <td>\
                                     <div class="r" style="width: 110px; height: 17px">' + numeral(row.BaseRMTOVarianceMinus).format('0,0.00') + '</div>\
                                 </td>\
+								<td>\
+                                    <div class="r" style="width: 115px; height: 17px">' + numeral(row.BaseRMTOVarianceAbsoluteTotal).format('0,0.00') + '</div>\
+                                </td>\
                                 <td>\
-                                    <div class="r ' + (treeWinLoss.numberColor(row.Total, true, numeral(row.BaseRMWLVariancePlus).format('0,0.00'))) + '" style="width: 110px; height: 17px">' + numeral(row.BaseRMWLVariancePlus.toFixed(2)).format('0,0.00') + '</div>\
+                                    <div class="r ' + (treeWinLoss.numberColor(row.BaseRMWLVariancePlus)) + '" style="width: 110px; height: 17px">' + numeral(row.BaseRMWLVariancePlus.toFixed(2)).format('0,0.00') + '</div>\
                                 </td>\
                                  <td>\
-                                    <div class="r ' + (treeWinLoss.numberColor(row.Total, true, numeral(row.BaseRMWLVarianceMinus).format('0,0.00'))) + '" style="width: 110px; height: 17px">' +  numeral(row.BaseRMWLVarianceMinus.toFixed(2)).format('0,0.00') + '</div>\
+                                    <div class="r ' + (treeWinLoss.numberColor(row.BaseRMWLVarianceMinus)) + '" style="width: 110px; height: 17px">' +  numeral(row.BaseRMWLVarianceMinus.toFixed(2)).format('0,0.00') + '</div>\
+                                </td>\
+								<td>\
+                                    <div class="r ' + (treeWinLoss.numberColor(row.BaseRMWLVarianceTotal)) + '" style="width: 110px; height: 17px">' +  numeral(row.BaseRMWLVarianceTotal.toFixed(2)).format('0,0.00') + '</div>\
+                                </td>\
+								<td>\
+                                    <div class="r ' + (treeWinLoss.numberColor(row.BaseRMVarianceMargin)) + '" style="width: 110px; height: 17px">' + baseRMVarianceMargin + '</div>\
                                 </td>\
                                 <td>\
-                                    <div class="r ' + (treeWinLoss.numberColor(row.BaseRMTotal, false, '')) + '" style="width: 110px; height: 17px">' + numeral(row.BaseRMTotal).format('0,0.00') + '</div>\
+                                    <div class="r ' + (treeWinLoss.numberColor(row.BaseRMTotal)) + '" style="width: 110px; height: 17px">' + numeral(row.BaseRMTotal).format('0,0.00') + '</div>\
                                 </td>\
                                 <td>\
-                                    <div class="r ' + (treeWinLoss.numberColor(row.BaseRMVirtualTotal, false)) + '" style="width: 110px; height: 17px">' + numeral(row.BaseRMVirtualTotal).format('0,0.00') + '</div>\
+                                    <div class="r ' + (treeWinLoss.numberColor(row.BaseRMVirtualTotal)) + '" style="width: 110px; height: 17px">' + numeral(row.BaseRMVirtualTotal).format('0,0.00') + '</div>\
                                 </td>\
                                 <td>\
-                                    <div class="r ' + (treeWinLoss.numberColor(row.Margin, false, '')) + '" style="width: 110px; height: 17px">' + margin + '</div>\
+                                    <div class="r ' + (treeWinLoss.numberColor(row.Margin)) + '" style="width: 110px; height: 17px">' + margin + '</div>\
                                 </td>\
                                 <td>\
                                     <div class="c" style="width: 80px; height: 17px"><a href="javascript:;" onclick="treeWinLossByCustomerLevel.getVirtualRateUpdateHistory(' + row.Id + ',\'' + row.Title + '\');">' + row.VirtualRate + '</a></div>\

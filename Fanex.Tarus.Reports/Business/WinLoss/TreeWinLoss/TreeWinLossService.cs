@@ -739,7 +739,7 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
 
         public void ExportTreeWinLossReportToExcelFile(string reportTitle,
                                             int reportType,
-                                             string fromDate,
+                                            string fromDate,
                                             string toDate,
                                             int uplineId,
                                             string uplineName,
@@ -802,28 +802,28 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                 #endregion
 
                 #region content
-                
-                if (getSession != null && getSession.WinLoss.Count > 0)
-                {
-                    var nextRow = 1;
-                    startRow = 3;
-                    ExportTreeWinLossReportToExcelFileAssignBody(startRow, startCol, ref nextRow, ref wsReport, getSession.WinLoss, reportType, isShowSB,
-                                             isShowNG,
-                                             isShowRB,
-                                             isShowLCS,
-                                             isShowCS,
-                                             isShowP2P,
-                                             isShowBI,
-                                             isShowVS);
-                    ExportTreeWinLossReportToExcelFileAssignFooter(startRow, startCol, ref nextRow, ref wsReport, getSession, reportType, isShowSB,
-                                             isShowNG,
-                                             isShowRB,
-                                             isShowLCS,
-                                             isShowCS,
-                                             isShowP2P,
-                                             isShowBI,
-                                             isShowVS);
-                }
+
+				if (getSession != null && getSession.WinLoss.Count > 0)
+				{
+					var nextRow = 1;
+					startRow = 3;
+					ExportTreeWinLossReportToExcelFileAssignBody(startRow, startCol, ref nextRow, ref wsReport, getSession.WinLoss, reportType, isShowSB,
+											 isShowNG,
+											 isShowRB,
+											 isShowLCS,
+											 isShowCS,
+											 isShowP2P,
+											 isShowBI,
+											 isShowVS);
+					ExportTreeWinLossReportToExcelFileAssignFooter(startRow, startCol, ref nextRow, ref wsReport, getSession, reportType, isShowSB,
+											 isShowNG,
+											 isShowRB,
+											 isShowLCS,
+											 isShowCS,
+											 isShowP2P,
+											 isShowBI,
+											 isShowVS);
+				}
                 #endregion
 
                 #region response file
@@ -846,124 +846,186 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
             var bgHeaderFormat = new ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
             var nextCol = 0;
 
+			int maxColumnIndex = reportType != 0 ? 18 : 16;
+
+			startRow--;
+			int currentRow = startRow;
+			int currentColumn = startCol;
+
+			CellRange currentCellRange;
+			ExcelCell currentCell;
+
+			// 1. first row
             if (reportType != 0)
             {
-                wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol, startRow + 1, startCol).Merged = true;
-                wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol, startRow + 1, startCol).Style = bgHeaderFormat;
-                wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol, startRow + 1, startCol).Value = "No";
-                wsReport.Columns[startCol].Width = 255 * 10;
+				// No.
+				currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 2, currentColumn);
+				currentCellRange.Merged = true;
+				currentCellRange.Style = bgHeaderFormat;
+				currentCellRange.Value = "No";
+				wsReport.Columns[currentColumn].Width = 255 * 10;
+				currentColumn++;
+			}
+			// Currency or Username
+			currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 2, currentColumn);
+			currentCellRange.Merged = true;
+			currentCellRange.Style = bgHeaderFormat;
+			currentCellRange.Value = reportType == 0 ? "Currency" : "Username";
+			wsReport.Columns[currentColumn].Width = 255 * 20;
+			currentColumn++;
+			// Turnover
+			currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 2, currentColumn);
+			currentCellRange.Merged = true;
+			currentCellRange.Style = bgHeaderFormat;
+			currentCellRange.Value = "Turnover";
+			wsReport.Columns[currentColumn].Width = 255 * 20;
+			currentColumn++;
+			// Win Loss
+			currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 2, currentColumn);
+			currentCellRange.Merged = true;
+			currentCellRange.Style = bgHeaderFormat;
+			currentCellRange.Value = "Win Loss";
+			wsReport.Columns[currentColumn].Width = 255 * 20;
+			currentColumn++;
+			// Comm
+			currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 2, currentColumn);
+			currentCellRange.Merged = true;
+			currentCellRange.Style = bgHeaderFormat;
+			currentCellRange.Value = "Comm";
+			wsReport.Columns[currentColumn].Width = 255 * 15;
+			currentColumn++;
+			// Total
+			currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 2, currentColumn);
+			currentCellRange.Merged = true;
+			currentCellRange.Style = bgHeaderFormat;
+			currentCellRange.Value = "Total";
+			wsReport.Columns[currentColumn].Width = 255 * 15;
+			currentColumn++;
+			// Base RM
+			currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn + 11);
+			currentCellRange.Merged = true;
+			currentCellRange.Style = bgHeaderFormat;
+			currentCellRange.Value = "Base RM";
 
-                wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol += 1), startRow + 1, startCol + nextCol).Merged = true;
-                wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + nextCol, startRow + 1, startCol + nextCol).Style = bgHeaderFormat;
-                wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + nextCol, startRow + 1, startCol + nextCol).Value = reportType == 0 ? "Currency" : "Username";
-                wsReport.Columns[startCol + (nextCol)].Width = 255 * 20;
-            }
-            else
-            {
-                wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol, startRow + 1, startCol).Merged = true;
-                wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol, startRow + 1, startCol).Style = bgHeaderFormat;
-                wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol, startRow + 1, startCol).Value = reportType == 0 ? "Currency" : "Username";
-                wsReport.Columns[startCol].Width = 255 * 20;
-            }
+			#region virtual rate
 
-            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol += 1), startRow + 1, startCol + nextCol).Merged = true;
-            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + nextCol, startRow + 1, startCol + nextCol).Style = bgHeaderFormat;
-            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + nextCol, startRow + 1, startCol + nextCol).Value = "Turnover";
-            wsReport.Columns[startCol + (nextCol)].Width = 255 * 20;
+			if (reportType > 0)
+			{
+				currentColumn += 12;
+				currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 2, currentColumn);
+				currentCellRange.Merged = true;
+				currentCellRange.Style = bgHeaderFormat;
+				currentCellRange.Value = "Virtual Rate (%)";
+				wsReport.Columns[currentColumn].Width = 255 * 10;
+			}
 
-            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol += 1), startRow + 1, startCol + nextCol).Merged = true;
-            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + nextCol, startRow + 1, startCol + nextCol).Style = bgHeaderFormat;
-            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + nextCol, startRow + 1, startCol + nextCol).Value = "Win Loss";
-            wsReport.Columns[startCol + (nextCol)].Width = 255 * 20;
+			#endregion
+			
+			// 2. second row: ignore 5 or 6 columns
+			currentRow++;
+			currentColumn = reportType != 0 ? startCol + 6 : startCol + 5;
+			// Turnover
+			currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 1, currentColumn);
+			currentCellRange.Merged = true;
+			currentCellRange.Style = bgHeaderFormat;
+			currentCellRange.Value = "Turnover";
+			wsReport.Columns[currentColumn].Width = 255 * 15;
+			currentColumn++;
+			// Virtual Turnover
+			currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 1, currentColumn);
+			currentCellRange.Merged = true;
+			currentCellRange.Style = bgHeaderFormat;
+			currentCellRange.Value = "Virtual Turnover";
+			wsReport.Columns[currentColumn].Width = 255 * 15;
+			currentColumn++;
+			// Turnover Variance
+			currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn + 2);
+			currentCellRange.Merged = true;
+			currentCellRange.Style = bgHeaderFormat;
+			currentCellRange.Value = "Turnover Variance";
+			currentColumn += 3;
+			// Winlost Variance
+			currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow, currentColumn + 2);
+			currentCellRange.Merged = true;
+			currentCellRange.Style = bgHeaderFormat;
+			currentCellRange.Value = "Winlost Variance";
+			currentColumn += 3;
+			// Variance Margin (%)
+			currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 1, currentColumn);
+			currentCellRange.Merged = true;
+			currentCellRange.Style = bgHeaderFormat;
+			currentCellRange.Value = "Variance Margin (%)";
+			wsReport.Columns[currentColumn].Width = 255 * 15;
+			currentColumn++;
+			// Total
+			currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 1, currentColumn);
+			currentCellRange.Merged = true;
+			currentCellRange.Style = bgHeaderFormat;
+			currentCellRange.Value = "Total";
+			wsReport.Columns[currentColumn].Width = 255 * 15;
+			currentColumn++;
+			// Virtual Total
+			currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 1, currentColumn);
+			currentCellRange.Merged = true;
+			currentCellRange.Style = bgHeaderFormat;
+			currentCellRange.Value = "Virtual Total";
+			wsReport.Columns[currentColumn].Width = 255 * 15;
+			currentColumn++;
+			// Margin (%)
+			currentCellRange = wsReport.Cells.GetSubrangeAbsolute(currentRow, currentColumn, currentRow + 1, currentColumn);
+			currentCellRange.Merged = true;
+			currentCellRange.Style = bgHeaderFormat;
+			currentCellRange.Value = "Margin (%)";
+			wsReport.Columns[currentColumn].Width = 255 * 15;
 
-            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol += 1), startRow + 1, startCol + nextCol).Merged = true;
-            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + nextCol, startRow + 1, startCol + nextCol).Style = bgHeaderFormat;
-            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + nextCol, startRow + 1, startCol + nextCol).Value = "Comm";
-            wsReport.Columns[startCol + (nextCol)].Width = 255 * 15;
+			// 3. third column: Ignore 7 or 8 columns
+			currentRow++;
+			currentColumn = reportType != 0 ? startCol + 8 : startCol + 7;
+			// +
+			currentCell = wsReport.Cells[currentRow, currentColumn];
+			currentCell.Style = bgHeaderFormat;
+			currentCell.Value = "+";
+			wsReport.Columns[currentColumn].Width = 255 * 15;
+			currentColumn++;
+			// -
+			currentCell = wsReport.Cells[currentRow, currentColumn];
+			currentCell.Style = bgHeaderFormat;
+			currentCell.Value = "-";
+			wsReport.Columns[currentColumn].Width = 255 * 15;
+			currentColumn++;
+			// Absolute Total
+			currentCell = wsReport.Cells[currentRow, currentColumn];
+			currentCell.Style = bgHeaderFormat;
+			currentCell.Value = "Absolute Total";
+			wsReport.Columns[currentColumn].Width = 255 * 15;
+			currentColumn++;
+			// +
+			currentCell = wsReport.Cells[currentRow, currentColumn];
+			currentCell.Style = bgHeaderFormat;
+			currentCell.Value = "+";
+			wsReport.Columns[currentColumn].Width = 255 * 15;
+			currentColumn++;
+			// -
+			currentCell = wsReport.Cells[currentRow, currentColumn];
+			currentCell.Style = bgHeaderFormat;
+			currentCell.Value = "-";
+			wsReport.Columns[currentColumn].Width = 255 * 15;
+			currentColumn++;
+			// Total
+			currentCell = wsReport.Cells[currentRow, currentColumn];
+			currentCell.Style = bgHeaderFormat;
+			currentCell.Value = "Total";
+			wsReport.Columns[currentColumn].Width = 255 * 15;
+			currentColumn++;
 
-            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol += 1), startRow + 1, startCol + nextCol).Merged = true;
-            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + nextCol, startRow + 1, startCol + nextCol).Style = bgHeaderFormat;
-            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + nextCol, startRow + 1, startCol + nextCol).Value = "Total";
-            wsReport.Columns[startCol + (nextCol)].Width = 255 * 20;
+			#region header title
 
-            wsReport.Columns[startCol + (nextCol)].Width = 255 * 20;
-            #region base RM group
-            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol + 1), startRow - 1, startCol + (nextCol + 1 + 8)).Merged = true;
-            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol + 1), startRow - 1, startCol + (nextCol + 1 + 8)).Style = bgHeaderFormat;
-            wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol + 1), startRow - 1, startCol + (nextCol + 1 + 8)).Value = "Base RM";
+			currentCellRange = wsReport.Cells.GetSubrangeAbsolute(startRow - startRow, startCol, startRow - startRow, maxColumnIndex);
+			currentCellRange.Merged = true;
+			currentCellRange.Style = bgHeaderFormat;
+			currentCellRange.Value = title;
 
-            wsReport.Cells.GetSubrangeAbsolute(startRow, startCol + (nextCol + 1), startRow + 1, startCol + (nextCol + 1)).Style = bgHeaderFormat; ;
-            wsReport.Cells.GetSubrangeAbsolute(startRow, startCol + (nextCol + 1), startRow + 1, startCol + (nextCol + 1)).Value = "Turnover";
-            wsReport.Cells.GetSubrangeAbsolute(startRow, startCol + (nextCol + 1), startRow + 1, startCol + (nextCol + 1)).Merged = true;
-            wsReport.Columns[5].Width = 255 * 15;
-
-            wsReport.Cells.GetSubrangeAbsolute(startRow, startCol + (nextCol += 1), startRow + 1, startCol + (nextCol + 1)).Style = bgHeaderFormat; ;
-            wsReport.Cells.GetSubrangeAbsolute(startRow, startCol + (nextCol + 1), startRow + 1, startCol + (nextCol + 1)).Value = "Virtual Turnover";
-            wsReport.Cells.GetSubrangeAbsolute(startRow, startCol + (nextCol + 1), startRow + 1, startCol + (nextCol + 1)).Merged = true;
-            wsReport.Columns[6].Width = 255 * 15;
-
-            wsReport.Cells.GetSubrangeAbsolute(startRow, startCol + (nextCol += 1), startRow, startCol + (nextCol + 2)).Style = bgHeaderFormat; ;
-            wsReport.Cells.GetSubrangeAbsolute(startRow, startCol + (nextCol + 1), startRow, startCol + (nextCol + 2)).Value = "Turnover Variance";
-            wsReport.Cells.GetSubrangeAbsolute(startRow, startCol + (nextCol + 1), startRow, startCol + (nextCol + 2)).Merged = true;
-            wsReport.Columns[7].Width = 255 * 15;
-
-            wsReport.Cells.GetSubrangeAbsolute(startRow + 1, startCol + (nextCol += 1), startRow + 1, startCol + (nextCol + 1)).Style = bgHeaderFormat; ;
-            wsReport.Cells.GetSubrangeAbsolute(startRow + 1, startCol + (nextCol), startRow + 1, startCol + (nextCol)).Value = "+";
-            wsReport.Cells.GetSubrangeAbsolute(startRow + 1, startCol + (nextCol), startRow + 1, startCol + (nextCol)).Merged = true;
-
-            wsReport.Cells.GetSubrangeAbsolute(startRow + 1, startCol + (nextCol += 1), startRow + 1, startCol + (nextCol)).Style = bgHeaderFormat; ;
-            wsReport.Cells.GetSubrangeAbsolute(startRow + 1, startCol + (nextCol), startRow + 1, startCol + (nextCol)).Value = "-";
-            wsReport.Cells.GetSubrangeAbsolute(startRow + 1, startCol + (nextCol), startRow + 1, startCol + (nextCol)).Merged = true;
-            wsReport.Columns[8].Width = 255 * 15;
-
-            wsReport.Cells.GetSubrangeAbsolute(startRow, startCol + (nextCol += 1), startRow, startCol + (nextCol + 1)).Style = bgHeaderFormat; ;
-            wsReport.Cells.GetSubrangeAbsolute(startRow, startCol + (nextCol), startRow, startCol + (nextCol + 1)).Value = "Winlost Variance";
-            wsReport.Cells.GetSubrangeAbsolute(startRow, startCol + (nextCol), startRow, startCol + (nextCol + 1)).Merged = true;
-            wsReport.Columns[9].Width = 255 * 15;
-
-            wsReport.Cells.GetSubrangeAbsolute(startRow + 1, startCol + (nextCol), startRow + 1, startCol + (nextCol)).Style = bgHeaderFormat; ;
-            wsReport.Cells.GetSubrangeAbsolute(startRow + 1, startCol + (nextCol), startRow + 1, startCol + (nextCol)).Value = "+";
-            wsReport.Cells.GetSubrangeAbsolute(startRow + 1, startCol + (nextCol), startRow + 1, startCol + (nextCol)).Merged = true;
-
-            wsReport.Cells.GetSubrangeAbsolute(startRow + 1, startCol + (nextCol + 1), startRow + 1, startCol + (nextCol + 1)).Style = bgHeaderFormat; ;
-            wsReport.Cells.GetSubrangeAbsolute(startRow + 1, startCol + (nextCol + 1), startRow + 1, startCol + (nextCol + 1)).Value = "-";
-            wsReport.Cells.GetSubrangeAbsolute(startRow + 1, startCol + (nextCol + 1), startRow + 1, startCol + (nextCol + 1)).Merged = true;
-            wsReport.Columns[10].Width = 255 * 15;
-
-            wsReport.Cells.GetSubrangeAbsolute(startRow, startCol + (nextCol += 1), startRow + 1, startCol + (nextCol + 1)).Style = bgHeaderFormat; ;
-            wsReport.Cells.GetSubrangeAbsolute(startRow, startCol + (nextCol + 1), startRow + 1, startCol + (nextCol + 1)).Value = "Total";
-            wsReport.Cells.GetSubrangeAbsolute(startRow, startCol + (nextCol + 1), startRow + 1, startCol + (nextCol + 1)).Merged = true;
-            wsReport.Columns[11].Width = 255 * 15;
-
-            wsReport.Cells.GetSubrangeAbsolute(startRow, startCol + (nextCol += 1), startRow + 1, startCol + (nextCol + 1)).Style = bgHeaderFormat; ;
-            wsReport.Cells.GetSubrangeAbsolute(startRow, startCol + (nextCol + 1), startRow + 1, startCol + (nextCol + 1)).Value = "Virtual Total";
-            wsReport.Cells.GetSubrangeAbsolute(startRow, startCol + (nextCol + 1), startRow + 1, startCol + (nextCol + 1)).Merged = true;
-            wsReport.Columns[12].Width = 255 * 15;
-
-            wsReport.Cells.GetSubrangeAbsolute(startRow, startCol + (nextCol += 1), startRow + 1, startCol + (nextCol + 1)).Style = bgHeaderFormat; ;
-            wsReport.Cells.GetSubrangeAbsolute(startRow, startCol + (nextCol + 1), startRow + 1, startCol + (nextCol + 1)).Value = "Margin (%)";
-            wsReport.Cells.GetSubrangeAbsolute(startRow, startCol + (nextCol + 1), startRow + 1, startCol + (nextCol + 1)).Merged = true;
-            wsReport.Columns[13].Width = 255 * 15;
-
-            #endregion
-
-            #region virtual rate
-            if (reportType > 0)
-            {
-                wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + (nextCol += 2 ), startRow + 1, startCol + nextCol).Merged = true;
-                wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + nextCol, startRow + 1, startCol + nextCol).Style = bgHeaderFormat;
-                wsReport.Cells.GetSubrangeAbsolute(startRow - 1, startCol + nextCol, startRow + 1, startCol + nextCol).Value = "Virtual Rate (%)";
-                wsReport.Columns[startCol + (nextCol)].Width = 255 * 10;
-
-                nextCol--;                
-            }
-            #endregion
-
-            #region header title
-            wsReport.Cells.GetSubrangeAbsolute(startRow - startRow, startCol, startRow - startRow, startCol + (nextCol +=1)).Merged = true;
-            wsReport.Cells.GetSubrangeAbsolute(startRow - startRow, startCol, startRow - startRow, startCol + nextCol).Style = bgHeaderFormat;
-            wsReport.Cells.GetSubrangeAbsolute(startRow - startRow, startCol, startRow - startRow, startCol + nextCol).Value = title;
-            #endregion
+			#endregion
         }
 
         private void ExportTreeWinLossReportToExcelFileAssignBody(int startRow, int startCol, ref int nextRow, ref ExcelWorksheet wsReport, List<TreeWinLossDetail> winloss, int reportType, 
@@ -981,13 +1043,16 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
             var cellTextFormat = new ExcelGemboxUtils().GetStyleText(255, 255, 255);
             cellTextFormat.HorizontalAlignment = HorizontalAlignmentStyle.Center;
 
+			double winlossValue, comm, total,
+				baseRMWLVariancePlus, baseRMWLVarianceMinus, baseRMWLVarianceTotal,
+				baseRMVarianceMargin,
+				baseRMTotal, baseRMVirtualTotal,
+				margin;
             foreach (TreeWinLossDetail winlossDetail in winloss)
             {
                 string turnover = string.Empty;
                 string turnoverVirtual = string.Empty;
 
-                var baseRMTotal = CastAide.AsDouble(winlossDetail.BaseRMTotal);
-                var baseRMVariance = CastAide.AsDouble(winlossDetail.BaseRMTOVariancePlus);
                 var nextCol = 0;
                 if (reportType != 0)
                 {
@@ -1003,13 +1068,18 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                 }
 
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winlossDetail.Turnover);
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellSpecialNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winlossDetail.WinLoss);
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winlossDetail.Comm);
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellSpecialNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winlossDetail.Total);
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = winlossDetail.Turnover;
+
+				winlossValue = winlossDetail.WinLoss;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = winlossValue > 0 ? cellSpecialNumberNormalFormat : cellNumberNormalFormat;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = winlossValue;
+
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = winlossDetail.Comm != 0 ? cellSpecialNumberNormalFormat : cellNumberNormalFormat;
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = winlossDetail.Comm;
+
+				total =  winlossDetail.Total;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = total > 0 ? cellSpecialNumberNormalFormat : cellNumberNormalFormat;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = total;
               
 
                 if (isShowSB == true ||
@@ -1020,11 +1090,11 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                 {
                     turnover = NumberFormat.DoubleFormat(winlossDetail.BaseRMTurnover, 2);
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winlossDetail.BaseRMTurnover);
+                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = winlossDetail.BaseRMTurnover;
 
                     turnoverVirtual = NumberFormat.DoubleFormat(winlossDetail.BaseRMVirtualTurnover, 2);
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winlossDetail.BaseRMVirtualTurnover);
+                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = winlossDetail.BaseRMVirtualTurnover;
                 }
                 else
                 {
@@ -1040,42 +1110,58 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                 }
 
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(NumberFormat.DoubleFormat(winlossDetail.BaseRMTOVariancePlus,2));
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = winlossDetail.BaseRMTOVariancePlus;
 
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(NumberFormat.DoubleFormat(winlossDetail.BaseRMTOVarianceMinus,2));
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = winlossDetail.BaseRMTOVarianceMinus;
 
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(NumberFormat.DoubleFormat(winlossDetail.BaseRMWLVariancePlus,2));
-                if (winlossDetail.Total > 0 && CastAide.AsDouble(NumberFormat.DoubleFormat(winlossDetail.BaseRMWLVariancePlus,2)) != 0)
-                {
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.Font.Color = Color.Red;
-                }
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = winlossDetail.BaseRMTOVarianceAbsoluteTotal;
 
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat; 
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(NumberFormat.DoubleFormat(winlossDetail.BaseRMWLVarianceMinus,2));
-                if (winlossDetail.Total > 0 && CastAide.AsDouble(NumberFormat.DoubleFormat(winlossDetail.BaseRMWLVarianceMinus, 2)) != 0) 
-                {
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.Font.Color = Color.Red;
-                }
-                
+				baseRMWLVariancePlus = winlossDetail.BaseRMWLVariancePlus;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = baseRMWLVariancePlus > 0 ? cellSpecialNumberNormalFormat : cellNumberNormalFormat;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = baseRMWLVariancePlus;
 
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellSpecialNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(NumberFormat.DoubleFormat(winlossDetail.BaseRMTotal, 2));
+				baseRMWLVarianceMinus = winlossDetail.BaseRMWLVarianceMinus;
+                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = baseRMWLVarianceMinus > 0 ? cellSpecialNumberNormalFormat : cellNumberNormalFormat;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = baseRMWLVarianceMinus;
 
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellSpecialNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(NumberFormat.DoubleFormat(winlossDetail.BaseRMVirtualTotal, 2));
+				baseRMWLVarianceTotal = winlossDetail.BaseRMWLVarianceTotal;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = baseRMWLVarianceTotal > 0 ? cellSpecialNumberNormalFormat : cellNumberNormalFormat;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = baseRMWLVarianceTotal;
+
+				if (winlossDetail.BaseRMTOVarianceAbsoluteTotal == 0)
+				{
+					wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
+					wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+					wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = "N/A";
+				}
+				else
+				{
+					baseRMVarianceMargin = winlossDetail.BaseRMVarianceMargin;
+					wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = baseRMVarianceMargin > 0 ? cellSpecialNumberNormalFormat : cellNumberNormalFormat;
+					wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = baseRMVarianceMargin;
+				}
+
+				baseRMTotal = winlossDetail.BaseRMTotal;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = baseRMTotal > 0 ? cellSpecialNumberNormalFormat : cellNumberNormalFormat;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = baseRMTotal;
+
+				baseRMVirtualTotal = winlossDetail.BaseRMVirtualTotal;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = baseRMVirtualTotal > 0 ?cellSpecialNumberNormalFormat : cellNumberNormalFormat;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = baseRMVirtualTotal;
 
                 if (turnoverVirtual == "N/A" || turnoverVirtual == "0.00") 
                 {
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellSpecialNumberNormalFormat;
+                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = "N/A";
                 }
                 else
                 {
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellSpecialNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value =  CastAide.AsDouble(NumberFormat.DoubleFormat(winlossDetail.Margin,2));
+					margin = winlossDetail.Margin;
+					wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = margin > 0 ? cellSpecialNumberNormalFormat : cellNumberNormalFormat;
+					wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = margin;
                 }
                
 
@@ -1100,6 +1186,8 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                                             bool isShowVS)
         {
             var cellNumberNormalFormat = GetStyleDecimalFormat(".00", Color.FromArgb(205, 222, 255), true, false);
+			var cellSpecialNumberNormalFormat = GetStyleDecimalFormat(".00", Color.FromArgb(205, 222, 255), true, true);
+
             int nextCol = 0;
             if (reportType == 0)
             {
@@ -1112,73 +1200,19 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
             #region view by member level
             if (reportType > 0)
             {
-                string turnover = string.Empty;
-
-                wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + nextCol).Merged = true;
-                wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + nextCol).Style = cellNumberNormalFormat;
-                wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + nextCol).Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + nextCol).Value = "Total";
-
-                if (isShowSB == true ||
-               isShowNG == true ||
-               isShowRB == true ||
-               isShowLCS == true ||
-               isShowVS == true)
-                {
-                    turnover = NumberFormat.DoubleFormat(winloss.Total.BaseRMVirtualTurnover, 2);
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total.BaseRMTurnover);
-
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total.BaseRMVirtualTurnover);
-                }
-                else
-                {
-                    turnover = "N/A";
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = "N/A";
-
-                    turnover = "N/A";
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = "N/A";
-                }
-               
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total.BaseRMTOVariancePlus);
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total.BaseRMTOVarianceMinus);
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total.BaseRMWLVariancePlus);
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total.BaseRMWLVarianceMinus);
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total.BaseRMTotal);
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total.BaseRMVirtualTotal);
-
-                if (turnover == "N/A" || turnover == "0.00")
-                {
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = "N/A";
-                }
-                else
-                {
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total.Margin);
-                }
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = string.Empty;
+				this.ExportTreeWinLossReportToExcelFileAssignTotal(startRow, startCol, ref nextRow, nextCol, ref wsReport, winloss.Total, reportType,
+					"Total", cellSpecialNumberNormalFormat, cellNumberNormalFormat,
+					isShowSB,
+					isShowNG,
+					isShowRB,
+					isShowLCS,
+					isShowCS,
+					isShowP2P,
+					isShowBI,
+					isShowVS);
             }
             #endregion
+
             #region view all currencies
             else
             {
@@ -1188,287 +1222,184 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
                 string turnoverBARM = string.Empty;
                 string turnoverGrandTotal = string.Empty;
 
-
                 #region total
-                wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + nextCol).Merged = true;
-                wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + nextCol).Style = cellNumberNormalFormat;
-                wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + nextCol).Value = string.Empty;
-
-                if (isShowSB == true ||
-                 isShowNG == true ||
-                 isShowRB == true ||
-                 isShowLCS == true ||
-                 isShowVS == true)
-                {
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total.BaseRMTurnover);
-                    turnoverTotal = NumberFormat.DoubleFormat(winloss.Total.BaseRMTurnover, 2);
-
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total.BaseRMVirtualTurnover); 
-                    turnoverVirtualTotal = NumberFormat.DoubleFormat(winloss.Total.BaseRMVirtualTurnover, 2);
-                }
-                else
-                {
-                    turnoverTotal = "N/A";
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = "N/A";
-
-                    turnoverVirtualTotal = "N/A";
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = "N/A";
-                }
-
+				this.ExportTreeWinLossReportToExcelFileAssignTotal(startRow, startCol, ref nextRow, nextCol, ref wsReport, winloss.Total, reportType,
+					"", cellSpecialNumberNormalFormat, cellNumberNormalFormat,
+					isShowSB,
+					isShowNG,
+					isShowRB,
+					isShowLCS,
+					isShowCS,
+					isShowP2P,
+					isShowBI,
+					isShowVS);
                
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total.BaseRMTOVariancePlus);
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total.BaseRMTOVarianceMinus);
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total.BaseRMWLVariancePlus);
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total.BaseRMWLVarianceMinus);
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total.BaseRMTotal);
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total.BaseRMVirtualTotal);
-
-                if (turnoverVirtualTotal == "N/A" || turnoverVirtualTotal == "0.00") 
-                {
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = "N/A";
-                }
-                else
-                {
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total.Margin);
-                }
-
-               
-                nextCol = 3;
+                nextCol = 4;
                 nextRow++;
                 #endregion
 
+				var cellSpecialNumberTotalFormat = GetStyleDecimalFormat(".00", Color.FromArgb(255, 255, 255), true, true);
                 cellNumberNormalFormat.FillPattern.SetSolid(Color.FromArgb(255, 255, 255));
+
                 #region 8rm
-                wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + nextCol).Merged = true;
-                wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + nextCol).Style = cellNumberNormalFormat;
-                wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + nextCol).Value = string.Empty;
+				this.ExportTreeWinLossReportToExcelFileAssignTotal(startRow, startCol, ref nextRow, nextCol, ref wsReport, winloss.Total8RM, reportType,
+					"8RM", cellSpecialNumberTotalFormat, cellNumberNormalFormat,
+					isShowSB,
+					isShowNG,
+					isShowRB,
+					isShowLCS,
+					isShowCS,
+					isShowP2P,
+					isShowBI,
+					isShowVS);
 
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = "8RM";
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-
-                if (isShowSB == true ||
-                isShowNG == true ||
-                isShowRB == true ||
-                isShowLCS == true ||
-                isShowVS == true)
-                {
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total8RM.BaseRMTurnover);
-                    turnover8RM = NumberFormat.DoubleFormat(winloss.Total8RM.BaseRMTurnover, 2);
-
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total8RM.BaseRMTurnover);
-                    turnover8RM = NumberFormat.DoubleFormat(winloss.Total8RM.BaseRMTurnover, 2);
-                }
-                else
-                {
-                    turnover8RM = "N/A";
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = "N/A";
-
-                    turnover8RM = "N/A";
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = "N/A";
-                }
-
-              
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total8RM.BaseRMTOVariancePlus);
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total8RM.BaseRMTOVarianceMinus);
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total8RM.BaseRMWLVariancePlus);
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total8RM.BaseRMWLVarianceMinus);
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total8RM.BaseRMTotal);
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total8RM.BaseRMVirtualTotal);
-
-                if (turnover8RM == "N/A" || turnover8RM == "0.00")
-                {
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = "N/A";
-                }
-                else
-                {
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.Total8RM.Margin);
-                }
-
-                nextCol = 3;
+                nextCol = 4;
                 nextRow++;
                 #endregion
 
                 #region barm
-                wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + nextCol).Merged = true;
-                wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + nextCol).Style = cellNumberNormalFormat;
-                wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + nextCol).Value = string.Empty;
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = "BARM";
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-
-                if (isShowSB == true ||
-               isShowNG == true ||
-               isShowRB == true ||
-               isShowLCS == true ||
-               isShowVS == true)
-                {
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.TotalBARM.BaseRMTurnover);
-                    turnoverBARM = NumberFormat.DoubleFormat(winloss.TotalBARM.BaseRMTurnover, 2);
-
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.TotalBARM.BaseRMVirtualTurnover);
-                    turnoverBARM = NumberFormat.DoubleFormat(winloss.TotalBARM.BaseRMVirtualTurnover, 2); 
-                }
-                else
-                {
-                    turnoverBARM = "N/A";
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = "N/A";
-
-                    turnoverBARM = "N/A";
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = "N/A";
-                }
-
-              
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.TotalBARM.BaseRMTOVariancePlus);
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.TotalBARM.BaseRMTOVarianceMinus);
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.TotalBARM.BaseRMWLVariancePlus);
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.TotalBARM.BaseRMWLVarianceMinus);
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.TotalBARM.BaseRMTotal);
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.TotalBARM.BaseRMVirtualTotal);
-
-                if (turnoverBARM == "N/A" || turnoverBARM == "0.00")
-                {
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = "N/A";
-                }
-                else
-                {
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.TotalBARM.Margin);
-                }
+				this.ExportTreeWinLossReportToExcelFileAssignTotal(startRow, startCol, ref nextRow, nextCol, ref wsReport, winloss.TotalBARM, reportType,
+					"BARM", cellSpecialNumberTotalFormat, cellNumberNormalFormat,
+					isShowSB,
+					isShowNG,
+					isShowRB,
+					isShowLCS,
+					isShowCS,
+					isShowP2P,
+					isShowBI,
+					isShowVS);
                
-                nextCol = 3;
+                nextCol = 4;
                 nextRow++;
                 #endregion
 
                 #region grand total
-                wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + nextCol).Merged = true;
-                wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + nextCol).Style = cellNumberNormalFormat;
-                wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + nextCol).Value = string.Empty;
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = "Total";
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                if (isShowSB == true ||
-                 isShowNG == true ||
-                 isShowRB == true ||
-                 isShowLCS == true ||
-                 isShowVS == true)
-                {
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.GrandTotal.BaseRMTurnover);
-
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.GrandTotal.BaseRMVirtualTurnover);
-                    turnoverGrandTotal = NumberFormat.DoubleFormat(winloss.GrandTotal.BaseRMVirtualTurnover, 2); 
-                }
-                else
-                {
-                    turnoverGrandTotal = "N/A";
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = "N/A";
-
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = "N/A";
-                }
+				this.ExportTreeWinLossReportToExcelFileAssignTotal(startRow, startCol, ref nextRow, nextCol, ref wsReport, winloss.GrandTotal, reportType,
+					"Total", cellSpecialNumberTotalFormat, cellNumberNormalFormat,
+					isShowSB,
+					isShowNG,
+					isShowRB,
+					isShowLCS,
+					isShowCS,
+					isShowP2P,
+					isShowBI,
+					isShowVS);
                 
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.GrandTotal.BaseRMTOVariancePlus);
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.GrandTotal.BaseRMTOVarianceMinus);
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.GrandTotal.BaseRMWLVariancePlus);
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.GrandTotal.BaseRMWLVarianceMinus);
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.GrandTotal.BaseRMTotal);
-
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.GrandTotal.BaseRMVirtualTotal);
-
-                if (turnoverGrandTotal == "N/A" || turnoverGrandTotal == "0.00")
-                {
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = "N/A";
-                }
-                else
-                {
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
-                    wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(winloss.GrandTotal.Margin);
-                }
-                
-                nextCol = 3;
+                nextCol = 4;
                 nextRow++;
                 #endregion
             }
             #endregion
         }
+
+		private void ExportTreeWinLossReportToExcelFileAssignTotal(int startRow, int startCol, ref int nextRow, int nextCol, ref ExcelWorksheet wsReport, TreeWinLossDetail total, int reportType,
+											string title, CellStyle cellSpecialNumberNormalFormat, CellStyle cellNumberNormalFormat,
+											bool isShowSB,
+											bool isShowNG,
+											bool isShowRB,
+											bool isShowLCS,
+											bool isShowCS,
+											bool isShowP2P,
+											bool isShowBI,
+											bool isShowVS)
+		{
+			double baseRMWLVariancePlus, baseRMWLVarianceMinus, baseRMWLVarianceTotal, baseRMVarianceMargin, baseRMTotal, baseRMVirtualTotal, margin;
+			string turnover = string.Empty;
+
+			wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + nextCol).Merged = true;
+			wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + nextCol).Style = cellNumberNormalFormat;
+			wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + nextCol).Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+			wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + nextCol).Value = title;
+
+			if (isShowSB == true ||
+			isShowNG == true ||
+			isShowRB == true ||
+			isShowLCS == true ||
+			isShowVS == true)
+			{
+				turnover = NumberFormat.DoubleFormat(total.BaseRMVirtualTurnover, 2);
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(total.BaseRMTurnover);
+
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(total.BaseRMVirtualTurnover);
+			}
+			else
+			{
+				turnover = "N/A";
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = "N/A";
+
+				turnover = "N/A";
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = "N/A";
+			}
+
+			wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
+			wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = total.BaseRMTOVariancePlus;
+
+			wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
+			wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = total.BaseRMTOVarianceMinus;
+
+			wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
+			wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = total.BaseRMTOVarianceAbsoluteTotal;
+
+			baseRMWLVariancePlus = total.BaseRMWLVariancePlus;
+			wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = baseRMWLVariancePlus > 0 ? cellSpecialNumberNormalFormat : cellNumberNormalFormat;
+			wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = baseRMWLVariancePlus;
+
+			baseRMWLVarianceMinus = total.BaseRMWLVarianceMinus;
+			wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = baseRMWLVarianceMinus > 0 ? cellSpecialNumberNormalFormat : cellNumberNormalFormat;
+			wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = baseRMWLVarianceMinus;
+
+			baseRMWLVarianceTotal = total.BaseRMWLVarianceTotal;
+			wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = baseRMWLVarianceTotal > 0 ? cellSpecialNumberNormalFormat : cellNumberNormalFormat;
+			wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = baseRMWLVarianceTotal;
+
+			baseRMVarianceMargin = total.BaseRMVarianceMargin;
+			if (total.BaseRMTOVarianceAbsoluteTotal == 0)
+			{
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = "N/A";
+			}
+			else
+			{
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = baseRMVarianceMargin > 0 ? cellSpecialNumberNormalFormat : cellNumberNormalFormat;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = baseRMVarianceMargin;
+			}
+
+			baseRMTotal = total.BaseRMTotal;
+			wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = baseRMTotal > 0 ? cellSpecialNumberNormalFormat : cellNumberNormalFormat;
+			wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = baseRMTotal;
+
+			baseRMVirtualTotal = total.BaseRMVirtualTotal;
+			wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = baseRMVirtualTotal > 0 ? cellSpecialNumberNormalFormat : cellNumberNormalFormat;
+			wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = baseRMVirtualTotal;
+
+			if (turnover == "N/A" || turnover == "0.00")
+			{
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = "N/A";
+			}
+			else
+			{
+				margin = total.Margin;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = margin > 0 ? cellSpecialNumberNormalFormat : cellNumberNormalFormat;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = margin;
+			}
+
+			// view by member level
+			if (reportType > 0)
+			{
+				// Virtual Rate (%)
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = cellNumberNormalFormat;
+				wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = string.Empty;
+			}
+		}
 
         void SortList<T>(List<T> dataSource, string sortingCol, string sortType)
         {
@@ -1512,8 +1443,8 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
 
             return style;
         }
-        #endregion
-
+        
+		#endregion
 
         public TreeWinLoss SortingTreeWinLossReport(string sortCol, string sortType)
         {

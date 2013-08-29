@@ -50,7 +50,35 @@ namespace Fanex.Tarus.Reports.Entities.WinLoss.TreeWinLoss
         public double VirtualRate { get; set; }
         public double Margin { get; set; }
 
-        
+        // add more columns (enhancement)
+		public double BaseRMTOVarianceAbsoluteTotal
+		{
+			get
+			{
+				return Math.Abs(this.BaseRMTOVariancePlus + this.BaseRMTOVarianceMinus);
+			}
+		}
+
+		public double BaseRMWLVarianceTotal
+		{
+			get
+			{
+				return this.BaseRMWLVariancePlus + this.BaseRMWLVarianceMinus;
+			}
+		}
+
+		public double BaseRMVarianceMargin
+		{
+			get
+			{
+				if (this.BaseRMTOVarianceAbsoluteTotal != 0)
+				{
+					return this.BaseRMWLVarianceTotal / this.BaseRMTOVarianceAbsoluteTotal;
+				}
+
+				return 0;
+			}
+		}
     }
         
     public class HistoryDetail
