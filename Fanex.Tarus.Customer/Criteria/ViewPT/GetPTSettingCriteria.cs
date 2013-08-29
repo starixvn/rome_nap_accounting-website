@@ -24,7 +24,7 @@ namespace Fanex.Tarus.Customer.Criteria.ViewPT
 
         public string GetSettingKey()
         {
-            return string.Empty;
+            return "Customer_ViewPTSel";
         }
 
         public bool IsValid()
