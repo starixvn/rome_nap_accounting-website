@@ -622,7 +622,7 @@ var ViewPT = {
         try { parent.BlockUI(); } catch (e) { }
 
         switch (sportId) {
-            case 252:
+            case 252://Bingo 
                 ViewPT.getPTSetting(userName,
                     sportId,
                     betTypeId,
