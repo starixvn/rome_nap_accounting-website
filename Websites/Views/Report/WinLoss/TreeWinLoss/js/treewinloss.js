@@ -281,7 +281,8 @@ var treeWinLoss = {
         return numberColor;
     },*/
 	numberColor: function (number) {
-        return number > 0 ? 'red' : '';
+		var tmpNumber = number.toFixed(2);
+        return tmpNumber > 0 ? 'red' : '';
     },
 	registerGridMouseover: function() {
 		// highlight row when mouseover

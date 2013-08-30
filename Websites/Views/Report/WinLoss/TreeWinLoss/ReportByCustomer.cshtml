@@ -5,7 +5,8 @@
 	@functions{
 		public string numberColor(double number)
 		{
-			return number > 0 ? "red" : string.Empty;
+			double tmpNumber = Math.Round(number, 2);
+			return tmpNumber > 0 ? "red" : string.Empty;
 		}
 	}
     <div id="mainreportgrid" class="freegrid">
