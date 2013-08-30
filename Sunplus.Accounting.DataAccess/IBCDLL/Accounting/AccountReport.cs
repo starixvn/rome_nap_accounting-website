@@ -428,11 +428,17 @@
             DbResult result = null;
             try
             {
-                var param = new Hashtable();
-                param.Add("date", date);
-                StoreProcedureElement spElement = GetReportStoreProcedure(
-                    ReportSession.StoreCollection.Gaming, "Acc_Rpt_NumberGameMemberWinlossByMatch");
-                result = DbHelper.Execute(spElement.Name, param, spElement.DbName, 600);
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameMemberWinlossByMatch"))
+                {
+                    var param = new Hashtable();
+                    param.Add("date", date);
+
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }                
             }
             catch (Exception ex)
             {
@@ -446,14 +452,19 @@
             DbResult result = null;
             try
             {
-                var param = new Hashtable();
-                param.Add("date", date);
-                param.Add("siteid", SiteID);
-                param.Add("currency", Currency);
-                StoreProcedureElement sp =
-                    ReportSession.Instance[ReportSession.StoreCollection.Gaming][
-                        "Acc_Rpt_NumberGameMemberWinlossByMatch"];
-                result = DbHelper.Execute(sp.Name, param, sp.DbName, 600);
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameMemberWinlossByMatch"))
+                {
+                    var param = new Hashtable();
+                    param.Add("date", date);
+                    param.Add("siteid", SiteID);
+                    param.Add("currency", Currency);
+
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -468,14 +479,20 @@
             DbResult result = null;
             try
             {
-                var param = new Hashtable();
-                param.Add("date", date);
-                param.Add("islive", islive);
-                param.Add("matchid", matchid);
-                param.Add("bettype", bettype);
-                StoreProcedureElement spElement = GetReportStoreProcedure(
-                    ReportSession.StoreCollection.Gaming, "Acc_Rpt_NumberGameMemberWinlossByMatch_details");
-                result = DbHelper.Execute(spElement.Name, param, spElement.DbName, 600);
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameMemberWinlossByMatch_details"))
+                {
+                    var param = new Hashtable();
+                    param.Add("date", date);
+                    param.Add("islive", islive);
+                    param.Add("matchid", matchid);
+                    param.Add("bettype", bettype);
+
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+                    result = new DbResult(output, ds);
+                }
+                
             }
             catch (Exception ex)
             {
@@ -490,18 +507,24 @@
             DbResult result = null;
             try
             {
-                var param = new Hashtable();
-                param.Add("date", date);
-                param.Add("islive", islive);
-                param.Add("matchid", matchid);
-                param.Add("bettype", bettype);
-                param.Add("siteid", SiteID);
-                param.Add("currency", Currency);
-                param.Add("balanceupday", ReportUtils.BalanceUp.BalanceUpDay);
-                StoreProcedureElement sp =
-                    ReportSession.Instance[ReportSession.StoreCollection.Gaming][
-                        "Acc_Rpt_NumberGameMemberWinlossByMatch_details"];
-                result = DbHelper.Execute(sp.Name, param, sp.DbName, 600);
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameMemberWinlossByMatch_details"))
+                {
+                    var param = new Hashtable();
+                    param.Add("date", date);
+                    param.Add("islive", islive);
+                    param.Add("matchid", matchid);
+                    param.Add("bettype", bettype);
+                    param.Add("siteid", SiteID);
+                    param.Add("currency", Currency);
+                    param.Add("balanceupday", ReportUtils.BalanceUp.BalanceUpDay);
+
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+                
             }
             catch (Exception ex)
             {
@@ -515,12 +538,18 @@
             DbResult result = null;
             try
             {
-                var param = new Hashtable();
-                param.Add("fromdate", fdate);
-                param.Add("todate", tdate);
-                StoreProcedureElement spElement = GetReportStoreProcedure(
-                    ReportSession.StoreCollection.Gaming, "Acc_Rpt_NumberGameWinlossByDate");
-                result = DbHelper.Execute(spElement.Name, param, spElement.DbName, 600);
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameWinlossByDate"))
+                {
+                    var param = new Hashtable();
+                    param.Add("fromdate", fdate);
+                    param.Add("todate", tdate);
+
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -534,14 +563,19 @@
             DbResult result = null;
             try
             {
-                var param = new Hashtable();
-                param.Add("fromdate", fdate);
-                param.Add("todate", tdate);
-                param.Add("siteid", SiteID);
-                param.Add("currency", Currency);
-                StoreProcedureElement sp =
-                    ReportSession.Instance[ReportSession.StoreCollection.Gaming]["Acc_Rpt_NumberGameWinlossByDate"];
-                result = DbHelper.Execute(sp.Name, param, sp.DbName, 600);
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameWinlossByDate"))
+                {
+                    var param = new Hashtable();
+                    param.Add("fromdate", fdate);
+                    param.Add("todate", tdate);
+                    param.Add("siteid", SiteID);
+                    param.Add("currency", Currency);
+
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+                    result = new DbResult(output, ds);
+                }                
             }
             catch (Exception ex)
             {
@@ -1708,15 +1742,21 @@
             DbResult result = null;
             try
             {
-                var param = new Hashtable();
-                param.Add("fromdate", fdate);
-                param.Add("todate", tdate);
-                param.Add("siteid", companies);
-                param.Add("currency", currencies);
-                param.Add("bettype", bettypess);
-                StoreProcedureElement sp =
-                    ReportSession.Instance[ReportSession.StoreCollection.Gaming]["Acc_Rpt_NumberGameWinlossByDate"];
-                result = DbHelper.Execute(sp.Name, param, sp.DbName, 600);
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameWinlossByDate"))
+                {
+                    var param = new Hashtable();
+                    param.Add("fromdate", fdate);
+                    param.Add("todate", tdate);
+                    param.Add("siteid", companies);
+                    param.Add("currency", currencies);
+                    param.Add("bettype", bettypess);
+
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }                
             }
             catch (Exception ex)
             {
@@ -1731,15 +1771,21 @@
             DbResult result = null;
             try
             {
-                var param = new Hashtable();
-                param.Add("date", date);
-                param.Add("siteid", companies);
-                param.Add("currency", currencies);
-                param.Add("bettype", bettypes);
-                StoreProcedureElement sp =
-                    ReportSession.Instance[ReportSession.StoreCollection.Gaming][
-                        "Acc_Rpt_NumberGameMemberWinlossByMatch"];
-                result = DbHelper.Execute(sp.Name, param, sp.DbName, 600);
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameMemberWinlossByMatch"))
+                {
+                    var param = new Hashtable();
+                    param.Add("date", date);
+                    param.Add("siteid", companies);
+                    param.Add("currency", currencies);
+                    param.Add("bettype", bettypes);
+
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+                
             }
             catch (Exception ex)
             {
@@ -1754,18 +1800,23 @@
             DbResult result = null;
             try
             {
-                var param = new Hashtable();
-                param.Add("date", date);
-                param.Add("islive", islive);
-                param.Add("matchid", matchid);
-                param.Add("bettype", bettype);
-                param.Add("siteid", companies);
-                param.Add("currency", currencies);
-                param.Add("balanceupday", ReportUtils.BalanceUp.BalanceUpDay);
-                StoreProcedureElement sp =
-                    ReportSession.Instance[ReportSession.StoreCollection.Gaming][
-                        "Acc_Rpt_NumberGameMemberWinlossByMatch_details"];
-                result = DbHelper.Execute(sp.Name, param, sp.DbName, 600);
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameMemberWinlossByMatch_details"))
+                {
+                    var param = new Hashtable();
+                    param.Add("date", date);
+                    param.Add("islive", islive);
+                    param.Add("matchid", matchid);
+                    param.Add("bettype", bettype);
+                    param.Add("siteid", companies);
+                    param.Add("currency", currencies);
+                    param.Add("balanceupday", ReportUtils.BalanceUp.BalanceUpDay);
+
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {

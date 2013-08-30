@@ -130,37 +130,38 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
         #region GetLeague
         public DataTable GetLeague(List<Items> option, int sportId, string fromdate, string todate, int currency, int bettype, int live)
         {
-            DataTable dataTable = null;
+            DataTable dataTable = new DataTable();
             try
             {
-                var spElement = getSPMapping(GetKeySpMapping.Monitor_LeagueSel);
-                var db = spElement.DbName;
-                var sp = spElement.Name;
-
-                Hashtable hashtable = new Hashtable();
-
-                foreach (Items items in option)
+                using (ObjectDb db = new ObjectDb("Monitor_LeagueSel"))
                 {
+                    Hashtable hashtable = new Hashtable();
 
-                    if (items.Key.Length > 0)
-                        hashtable.Add(items.Key,
-                                      CastAide.AsInt16(option[0].Value) == 1 ? 1 : CastAide.AsInt16(items.Value));
-                }
+                    foreach (Items items in option)
+                    {
 
-                hashtable.Add("sporttype", sportId);
-                hashtable.Add("fromdate", fromdate);
-                hashtable.Add("todate", todate);
-                hashtable.Add("currency", currency);
-                hashtable.Add("bettype", bettype);
-                if (live > -1)
-                {
-                    hashtable.Add("live", live);
+                        if (items.Key.Length > 0)
+                            hashtable.Add(items.Key,
+                                          CastAide.AsInt16(option[0].Value) == 1 ? 1 : CastAide.AsInt16(items.Value));
+                    }
+
+                    hashtable.Add("sporttype", sportId);
+                    hashtable.Add("fromdate", fromdate);
+                    hashtable.Add("todate", todate);
+                    hashtable.Add("currency", currency);
+                    hashtable.Add("bettype", bettype);
+                    if (live > -1)
+                    {
+                        hashtable.Add("live", live);
+                    }
+
+                    db.AssignParamValues(hashtable);
+                    var ds = db.ExecuteDataSet();
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        dataTable = ds.Tables[0];
+                    }
                 }
-                DbResult dbResult = DbHelper.Execute(sp,hashtable, db,1000);
-                if (dbResult != null && dbResult.ResultSet.Tables.Count > 0)
-                    dataTable = dbResult.ResultSet.Tables[0];
-                else
-                    return null;
             }
             catch (Exception ex)
             {
@@ -177,15 +178,12 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
         #region GetMAMonitorReport
         public DataTable GetMAMonitorReport(Param param)
         {
-            DataTable dataTable = null;
+            DataTable dataTable = new DataTable();
             try
             {
-                var spElement = getSPMapping(GetKeySpMapping.Monitor_ReportArchive);
-                var db = "";
-                var sp = "";
                 DataTable dtWH = null;
                 Hashtable hashtable = new Hashtable();
-
+                string key = "";
 
                 string fdate = param.fromdate;
                 string tdate = param.todate;
@@ -219,18 +217,22 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
                 if(CastAide.AsDateTime(param.fromdate) >= ReportUtils.BalanceUp.BalanceUpDay )//archive
                 {
-                    spElement = getSPMapping(GetKeySpMapping.Monitor_Report);
-                    db = spElement.DbName;
-                    sp = spElement.Name;
-                    dataTable = DbHelper.Execute(sp, hashtable, db, 1000).ResultSet.Tables[0];
+                    key = "Monitor_Report";                                    
                 }
                 else //wh
                 {
-                    spElement = getSPMapping(GetKeySpMapping.Monitor_ReportArchive);
-                    db = spElement.DbName;
-                    sp = spElement.Name;
-                    dataTable = DbHelper.Execute(sp, hashtable, db,1000).ResultSet.Tables[0]; 
+                    key = "Monitor_ReportArchive";                   
                 }
+
+                using (ObjectDb db = new ObjectDb(key, 600))
+                {
+                    db.AssignParamValues(hashtable);
+                    var ds = db.ExecuteDataSet();
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        dataTable = ds.Tables[0];
+                    }
+                }    
             }
             catch (Exception ex)
             {
