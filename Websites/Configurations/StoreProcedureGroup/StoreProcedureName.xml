@@ -206,7 +206,7 @@
     <Setting Key="GameStatistics" SpName="Acc_Rpt_LiveCasino_GameStatistics" DbName="db053"  />
     <Setting Key="GameStatistics_GameTableSel" SpName="Acc_Rpt_LiveCasino_GameStatistics_GameTableSel" DbName="warehouse"  />
     <Setting Key="GameStatistics_GameTypeSel" SpName="Acc_Rpt_LiveCasino_GameStatistics_GameTypeSel" DbName="warehouse"  />
-    <Setting Key="GameStatistics_LicenseeSel" SpName="Acc_Rpt_LiveCasino_GameStatistics_LicenseeSel" DbName="archive"  />
+    
     
     
 	<Setting Key="LiveCasinoWinLoss_DW" SpName="Acc_Rpt_LiveCasino_AgencyWinLoss" DbName="warehouse"  />
@@ -263,14 +263,7 @@
     <Setting Key="ExchangeCurrencySel" SpName="Acc_ExchangeCurrencySel" DbName="db053"  />
   </Function>
 
-  <Function Name="PT Setting">
-	  <Setting Key="Acc_CustomerSelComEditOverride_SAg" SpName="Acc_CustomerSelComEditOverride_SAg" DbName="archive" />
-	  <Setting Key="Acc_CustomerSelComEditOverride_MAg" SpName="Acc_CustomerSelComEditOverride_MAg" DbName="archive" />
-	  <Setting Key="Acc_CustomerSelComEditOverride_Ag" SpName="Acc_CustomerSelComEditOverride_Ag" DbName="archive" />
-	  <Setting Key="Acc_CustomerSelEditCustomer_SAg" SpName="Acc_CustomerSelEditCustomer_SAg" DbName="archive" />
-	  <Setting Key="Acc_CustomerSelEditCustomer_MAg" SpName="Acc_CustomerSelEditCustomer_MAg" DbName="archive" />
-	  
-  </Function>
+  
 
   <Function Name="Users">
     <Setting Key="CustomerSelOnline" SpName="Acc_CustomerSelOnline" DbName="ON_USER"  />
@@ -320,19 +313,8 @@
 		<Setting Key="ResetWinningRep" SpName="Acc_ResetWinning_SelByDate" DbName="db054"  />
 		<Setting Key="ResetWinningRep14" SpName="Acc_ResetWinning_SelByDate14" DbName="db054"  />
 	</Function>
-  <Function Name="Customer - New Licensee">
-	  <Setting Key="Dep_LicenseeSelAll" SpName="Acc_Dep_LicenseeSelAll" DbName="archive" /> 
-    <Setting Key="NewLicensee_GetSuperSetting" SpName="Acc_Dep_CustomerSelMember_Com" DbName="archive" />
-    <Setting Key="NewLicensee_GetMasterSetting" SpName="Acc_Dep_CustomerSelMember_SAg" DbName="archive" />
-    <Setting Key="NewLicensee_GetAgentSetting" SpName="Acc_Dep_CustomerSelMember_MAg" DbName="archive" />
-    <Setting Key="NewLicensee_GetMemberSetting" SpName="Acc_Dep_CustomerSelMember_Ag" DbName="archive" />
-	  <Setting Key="CustomerSelMember_MAgInfo" SpName="Acc_Dep_CustomerSelMember_MAgInfo" DbName="archive" />
-	  <Setting Key="CustomerSelMember_AgInfo" SpName="Acc_Dep_CustomerSelMember_AgInfo" DbName="archive" />
-  </Function>
-
-	<Function Name="Admin-BACustomer">
-		<Setting Key="LicenseeSelAll" SpName="Acc_LicenseeSelAll" DbName="archive"/>
-	</Function>
+  
+  
   
 	
 	<Function Name="User - Account Management">
@@ -354,7 +336,7 @@
 		<Setting Key="Acc_CustomerSelByAgFinance" SpName="Acc_CustomerSelFinance_Mem" DbName="db053"  />
 	</Function>
 	<Function Name="NumberGame">
-		<Setting Key="Acc_Rpt_NumberGame_LicenseesSel" SpName="Acc_Rpt_NumberGame_LicenseesSel" DbName="archive"  />
+		
 		<Setting Key="Acc_BetTypeSel_NumberGame" SpName="Acc_BetTypeSel_NumberGame" DbName="WAREHOUSE"  />
 		
 		
@@ -404,22 +386,11 @@
 		<Setting Key="Acc_CustomerSelSEditCustomerVS" SpName="Acc_CustomerSelSEditCustomerVS" DbName="DBAGE.BODB02" Plain="0" />
 
 		
-		<Setting Key="Licensee_SelSuper_VirtualSports" SpName="Acc_Dep_CustomerSelMemberVirtualSports_Com" DbName="archive" />
+		
 		
 
 		
-		<Setting Key="Licensee_SelMaster_VirtualSports" SpName="Acc_Dep_CustomerSelMemberVirtualSports_SAg" DbName="archive" />
-		<Setting Key="Licensee_SelMaster_VirtualSports_ForAddNew" SpName="Acc_Dep_CustomerSelMemberVirtualSports_SAgInfo" DbName="archive" />
 		
-
-		
-		<Setting Key="Licensee_SelAgent_VirtualSports" SpName="Acc_Dep_CustomerSelMemberVirtualSports_MAg" DbName="archive" />
-		<Setting Key="Licensee_SelAgent_VirtualSports_ForAddNew" SpName="Acc_Dep_CustomerSelMemberVirtualSports_MAgInfo" DbName="archive" />
-		
-
-		
-		<Setting Key="Licensee_SelMember_VirtualSports" SpName="Acc_Dep_CustomerSelMemberVirtualSports_Ag" DbName="archive" />
-		<Setting Key="Licensee_SelMember_VirtualSports_ForAddNew" SpName="Acc_Dep_CustomerSelMemberVirtualSports_AgInfo" DbName="archive" />
 		
 		<Setting Key="Dot_Msg_SetMessage" SpName="Dot_Msg_SetMessage" DbName="message" />
 		<Setting Key="Dot_Msg_SetUsrMessage" SpName="Dot_Msg_SetUsrMessage" DbName="message" />
@@ -442,16 +413,7 @@
 		<Setting Key="Acc_CustomerSelByAg" SpName="Acc_CustomerSelByAg" DbName="db053"  />
 	</Function>
 	
-	<Function Name="Report - Licensee">
-		<Setting Key="GetGameType" SpName="Acc_LiveCasinoGetGameType" DbName="archive"  />
-		
-		<Setting Key="GetLiveCasinoWLByLicensee" SpName="Acc_Rpt_LicLiveCasinoWinloss" DbName="archive"  />
-		<Setting Key="NumberGameWinlossByLicensee" SpName="Acc_Rpt_LicNumberGameWinloss" DbName="archive"  />
-		<Setting Key="GetSportTypeVirtualSport" SpName="Acc_SporttypeGetVirtualSport" DbName="archive"  />
-		<Setting Key="VirtualSportWinlossByLicensee" SpName="Acc_Rpt_LicVirtualSportWinloss" DbName="archive"  />
-		
-		<Setting Key="OA_Get_ResellerProductCharge" SpName="OA_Get_ResellerProductCharge" DbName="archive"  />
-	</Function>
+	
 	<Function Name="Admin-SMA Management">
 		<Setting Key="Acc_SiteSel_Credit" SpName="Acc_SiteSel_Credit" DbName="db053" />
 		<Setting Key="Acc_CustomerSelByGroupHeadline" SpName="Acc_CustomerSelByGroupHeadline" DbName="DBACC.BODB02" />

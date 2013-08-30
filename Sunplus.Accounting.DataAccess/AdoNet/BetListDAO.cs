@@ -15,6 +15,7 @@ using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Customer.PT.ViewPT;
 using Sunplus.Data.DataAbstract.Entity;
 using Sunplus.Data.DataAbstract.Utils;
+using Fanex.Tarus.Infrastructure.Extensions;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet
 {
@@ -390,15 +391,15 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         public BABetList GetBABetListByTransId(string refno, List<IPVNBean> IPVNList)
         {
             var betList = new List<BetListDetail>();
-            var spElement = GetBetListStoreProcedure("BABetlistByTransID");
-            var db = GetDatabase(spElement.DbName);
-
-
-            using (var dbCommand = db.GetStoredProcCommand(spElement.Name))
+            using (ObjectDb db = new ObjectDb("BABetlistByTransID"))
             {
-                db.AddInParameter(dbCommand, "TransID", DbType.String, refno);
-                dbCommand.CommandTimeout = 60;
-                var data = db.ExecuteReader(dbCommand);
+                Hashtable param = new Hashtable();
+                param.Add("transid", refno);
+
+                db.AssignParamValues(param);
+
+                var data = db.ExecuteReader();
+                
                 int resultCount = 0;
                 if (data != null)
                 {
@@ -536,13 +537,20 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         public DataTable GetCurrency()
         {
             var dataTable = new DataTable();
-            StoreProcedureElement procedureElement = GetBetListStoreProcedure("GetCurrency");
-            string spName = procedureElement.Name;
-            string db = procedureElement.DbName;
-            DbResult dbResult = DbHelper.Execute(spName, db);
-            if (dbResult != null && dbResult.ResultSet.Tables.Count > 0)
+            try
             {
-                dataTable = dbResult.ResultSet.Tables[0];
+                using (ObjectDb db = new ObjectDb("GetCurrency"))
+                {
+                    var ds = db.ExecuteDataSet();
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        dataTable = ds.Tables[0];
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
             }
             return dataTable;
         }

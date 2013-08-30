@@ -6,6 +6,8 @@ using System.Text;
 using DNAide.Core;
 using DNAide.Data;
 using Sunplus.Accounting.Core.Configurations;
+using Fanex.Tarus.Infrastructure.Extensions;
+using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.SpecialDelete.TicketsListing
 {
@@ -18,8 +20,22 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete.TicketsListing
 
         public DbResult SelAllLicensee()
         {
-            var element = getSPMapping("SelAllLicensee");
-            return DbHelper.Execute(element.Name, element.DbName);
+            DbResult result = null;
+            try
+            {
+                using (ObjectDb db = new ObjectDb("SelAllLicensee"))
+                {
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
 
