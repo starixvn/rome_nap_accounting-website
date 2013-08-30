@@ -333,6 +333,7 @@ var treeWinLossByProduct = {
             dataType: "html",
             success: function (evt) {
                 $('#mainreport').html(evt);
+				treeWinLoss.registerGridMouseover();
             },
             error: function (req, status, error) {
                 treeWinLoss.showErrorMessage(error);
