@@ -76,6 +76,7 @@ namespace Fanex.Tarus.BetList.Controller
         public ActionResult GetBetListByCustInfo_DateRange(int CustID, DateTime FromDate, DateTime ToDate, int Bettype, int PageSize, int PageIndex, bool IsCache)
         {
             int quantity = 0;
+            PageIndex= PageIndex < 0 ? 0 : PageIndex;
             var result = _betListService.GetBetListByCustInfo_DateRange(CustID, FromDate, ToDate, Bettype, PageSize, PageIndex, ref quantity, IsCache);
             ViewBag.Quantity = quantity;
             ViewBag.NumberBegining = (PageSize * (PageIndex - 1)) + 1;
