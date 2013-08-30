@@ -55,7 +55,7 @@ namespace Fanex.Tarus.Reports.Entities.WinLoss.TreeWinLoss
 		{
 			get
 			{
-				return Math.Abs(this.BaseRMTOVariancePlus + this.BaseRMTOVarianceMinus);
+				return Math.Abs(this.BaseRMTOVariancePlus) + Math.Abs(this.BaseRMTOVarianceMinus);
 			}
 		}
 
