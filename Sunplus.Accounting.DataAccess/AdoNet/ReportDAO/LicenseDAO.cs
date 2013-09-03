@@ -9,6 +9,7 @@ using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.DataAccess.IReportDAO;
 using Sunplus.Core.LoggingLib;
 using Fanex.Data;
+using Fanex.Tarus.Infrastructure.Extensions;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 {
@@ -144,15 +145,27 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
         public DataTable SelConcurrentUser(DateTime fromDate, DateTime toDate, string licenseSite)
         {
-            var param = new Hashtable();
-            param.Add("fromdate", fromDate);
-            param.Add("todate", toDate);
-            param.Add("licenseename", licenseSite);
-            DataTable dtResult = null;
-            var spElement = GetStoreProcedure("ConcurrentUserReport");
-            var ds = DbHelper.Execute(spElement.Name, param, spElement.DbName);
-            if (ds != null && ds.ResultSet != null && ds.ResultSet.Tables.Count > 0)
-                dtResult = ds.ResultSet.Tables[0];
+            DataTable dtResult = new DataTable();
+            try
+            {
+                using (ObjectDb db = new ObjectDb("ConcurrentUserReport"))
+                {
+                    var param = new Hashtable();
+                    param.Add("fromdate", fromDate);
+                    param.Add("todate", toDate);
+                    param.Add("licenseename", licenseSite);
+
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    if (ds != null && ds.Tables.Count > 0)
+                        dtResult = ds.Tables[0];
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
             return dtResult;
         }
 

@@ -265,9 +265,7 @@
 
   
 
-  <Function Name="Users">
-    <Setting Key="CustomerSelOnline" SpName="Acc_CustomerSelOnline" DbName="ON_USER"  />
-  </Function>
+  
 
   <Function Name="Special delete - Sportbook">
 	  <Setting Key="Acc_BettransSelBet_BatchMsg" SpName="Acc_BettransSelBet_BatchMsg" DbName="warehouse"  />
