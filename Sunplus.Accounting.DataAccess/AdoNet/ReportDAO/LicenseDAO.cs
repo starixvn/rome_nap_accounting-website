@@ -165,27 +165,30 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             try
             {
                 Hashtable param = new Hashtable();
-                string sp = "", db = "", alias = "";
+                
+                using (ObjectDb db = new ObjectDb("LicWinlossDetail_Ag"))
+                {
+                    param.Add("licenseeid", LicenseeID);
+                    param.Add("currency", Math.Abs(Currency));
+                    param.Add("fromdate", FromDate);
+                    param.Add("todate", ToDate);
+                    param.Add("showsb", showSB);
+                    param.Add("showrb", ShowRB);
+                    param.Add("showng", ShowNG);
+                    param.Add("reporttype", ReportType);
+                    param.Add("movebetsday", MoveBetsDay);
+                    param.Add("isold", IsOld);
+                    param.Add("drawfilter", drawfilter);
+                    param.Add("excludetest", excludeTest);
+                    param.Add("bafilter", BAFilter);
 
-                var spElement = GetStoreProcedure("LicWinlossDetail_Ag");
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
 
-                db = spElement.DbName;
-                sp = spElement.Name;
-
-                param.Add("licenseeid", LicenseeID);
-                param.Add("currency", Math.Abs(Currency));
-                param.Add("fromdate", FromDate);
-                param.Add("todate", ToDate);
-                param.Add("showsb", showSB);
-                param.Add("showrb", ShowRB);
-                param.Add("showng", ShowNG);
-                param.Add("reporttype", ReportType);
-                param.Add("movebetsday", MoveBetsDay);
-                param.Add("isold", IsOld);
-                param.Add("drawfilter", drawfilter);
-                param.Add("excludetest", excludeTest);
-                param.Add("bafilter", BAFilter);
-                dbResult = DbHelper.Execute(sp, param, db, 600);
+                    dbResult = new DbResult(output, ds);
+                }
+                
             }
             catch (Exception ex)
             {
@@ -317,37 +320,32 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
         public DataTable SelTotalTicket(int resellerid, int licenseeid, string date, string MoveBetsDay, string BalanceUpDay, bool showSB, bool showNG, bool showRB, bool showLC, bool showVS, bool showCS)
         {
-            DataTable dataTable = null;
+            DataTable dataTable = new DataTable();
             try
             {
-                Hashtable param = new Hashtable();
-                string sp = "", db = "";
+                using (ObjectDb db = new ObjectDb("LicGetTotalTicket"))
+                {
+                    Hashtable h = new Hashtable();
 
-                var spElement = GetStoreProcedure("LicGetTotalTicket");
+                    bool IsOld = CastAide.AsDateTime(date) < new DateTime(2009, 01, 01);
+                    h.Add("resellerid", resellerid);
+                    h.Add("licenseeid", licenseeid);
+                    h.Add("showsb", showSB);
+                    h.Add("showng", showNG);
+                    h.Add("inputdate", date);
+                    h.Add("movebetsday", MoveBetsDay);
+                    h.Add("balanceupday", BalanceUpDay);
+                    h.Add("showrb", showRB);
+                    h.Add("showlc", showLC);
+                    h.Add("showvs", showVS);
+                    h.Add("showcs", showCS);
+                    h.Add("isold", IsOld);
 
-                db = spElement.DbName;
-                sp = spElement.Name;
-
-                Hashtable h = new Hashtable();
-
-                bool IsOld = CastAide.AsDateTime(date) < new DateTime(2009, 01, 01);
-                h.Add("resellerid", resellerid);
-                h.Add("licenseeid", licenseeid);
-                h.Add("showsb", showSB);
-                h.Add("showng", showNG);
-                h.Add("inputdate", date);
-                h.Add("movebetsday", MoveBetsDay);
-                h.Add("balanceupday", BalanceUpDay);
-                h.Add("showrb", showRB);
-                h.Add("showlc", showLC);
-                h.Add("showvs", showVS);
-                h.Add("showcs", showCS);
-                h.Add("isold", IsOld);
-
-                DbResult dbResult = DbHelper.Execute(sp, h, db, 6000);
-                if (dbResult != null && dbResult.ResultSet.Tables.Count > 0)
-                    dataTable = dbResult.ResultSet.Tables[0];
-
+                    db.AssignParamValues(h);
+                    var ds = db.ExecuteDataSet();
+                    if (ds != null && ds.Tables.Count > 0)
+                        dataTable = ds.Tables[0];
+                }
             }
             catch (Exception ex)
             {
@@ -469,32 +467,34 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             try
             {
                 Hashtable param = new Hashtable();
-                string sp = "", db = "", alias = "";
+              
+                using (ObjectDb db = new ObjectDb("LicWinlossDetail_AgV2"))
+                {
+                    param.Add("licenseeid", LicenseeID);
+                    param.Add("currency", Math.Abs(Currency));
+                    param.Add("mrecommend", CustId);
+                    param.Add("fromdate", FromDate);
+                    param.Add("todate", ToDate);
+                    param.Add("showsb", showSB);
+                    param.Add("showrb", ShowRB);
+                    param.Add("showng", ShowNG);
+                    param.Add("showba", ShowBA);
+                    param.Add("showlc", ShowLC);
+                    param.Add("showvs", ShowVS);
+                    param.Add("showcs", ShowCS);
+                    param.Add("reporttype", ReportType);
+                    param.Add("movebetsday", MoveBetsDay);
+                    param.Add("isold", IsOld);
+                    param.Add("drawfilter", drawfilter);
+                    param.Add("excludetest", excludeTest);
 
-                var spElement = GetStoreProcedure("LicWinlossDetail_AgV2");
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
 
-                db = spElement.DbName;
-                sp = spElement.Name;
-
-                param.Add("licenseeid", LicenseeID);
-                param.Add("currency", Math.Abs(Currency));
-                param.Add("mrecommend", CustId);
-                param.Add("fromdate", FromDate);
-                param.Add("todate", ToDate);
-                param.Add("showsb", showSB);
-                param.Add("showrb", ShowRB);
-                param.Add("showng", ShowNG);
-                param.Add("showba", ShowBA);
-                param.Add("showlc", ShowLC);
-                param.Add("showvs", ShowVS);
-                param.Add("showcs", ShowCS);
-                param.Add("reporttype", ReportType);
-                param.Add("movebetsday", MoveBetsDay);
-                param.Add("isold", IsOld);
-                param.Add("drawfilter", drawfilter);
-                param.Add("excludetest", excludeTest);
-
-                dbResult = DbHelper.Execute(sp, param, db, 600);
+                    dbResult = new DbResult(output, ds);
+                }
+              
             }
             catch (Exception ex)
             {
@@ -512,32 +512,33 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             try
             {
                 Hashtable param = new Hashtable();
-                string sp = "", db = "", alias = "";
+                
+                using (ObjectDb db = new ObjectDb("LicWinlossDetailV2"))
+                {
+                    param.Add("licenseeid", LicenseeID);
+                    param.Add("currency", Math.Abs(Currency));
+                    param.Add("custid", CustId);
+                    param.Add("fromdate", FromDate);
+                    param.Add("todate", ToDate);
+                    param.Add("showsb", showSB);
+                    param.Add("showrb", ShowRB);
+                    param.Add("showng", ShowNG);
+                    param.Add("showba", ShowBA);
+                    param.Add("showlc", ShowLC);
+                    param.Add("showvs", ShowVS);
+                    param.Add("showcs", ShowCS);
+                    param.Add("reporttype", ReportType);
+                    param.Add("movebetsday", MoveBetsDay);
+                    param.Add("isold", IsOld);
+                    param.Add("drawfilter", drawfilter);
+                    param.Add("excludetest", excludeTest);
 
-                var spElement = GetStoreProcedure("LicWinlossDetailV2");
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
 
-                db = spElement.DbName;
-                sp = spElement.Name;
-
-                param.Add("licenseeid", LicenseeID);
-                param.Add("currency", Math.Abs(Currency));
-                param.Add("custid", CustId);
-                param.Add("fromdate", FromDate);
-                param.Add("todate", ToDate);
-                param.Add("showsb", showSB);
-                param.Add("showrb", ShowRB);
-                param.Add("showng", ShowNG);
-                param.Add("showba", ShowBA);
-                param.Add("showlc", ShowLC);
-                param.Add("showvs", ShowVS);
-                param.Add("showcs", ShowCS);
-                param.Add("reporttype", ReportType);
-                param.Add("movebetsday", MoveBetsDay);
-                param.Add("isold", IsOld);
-                param.Add("drawfilter", drawfilter);
-                param.Add("excludetest", excludeTest);
-
-                dbResult = DbHelper.Execute(sp, param, db, 600);
+                    dbResult = new DbResult(output, ds);
+                }                
             }
             catch (Exception ex)
             {
@@ -721,31 +722,32 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             try
             {
                 Hashtable param = new Hashtable();
-                string sp = "", db = "";
+                
+                using (ObjectDb db = new ObjectDb("LicWinlossDetail_SAgV2"))
+                {
+                    param.Add("licenseeid", LicenseeID);
+                    param.Add("currency", Math.Abs(Currency));
+                    param.Add("fromdate", FromDate);
+                    param.Add("todate", ToDate);
+                    param.Add("showsb", showSB);
+                    param.Add("showrb", ShowRB);
+                    param.Add("showng", ShowNG);
+                    param.Add("showba", ShowBA);
+                    param.Add("showlc", ShowLC);
+                    param.Add("showvs", ShowVS);
+                    param.Add("showcs", ShowCS);
+                    param.Add("reporttype", ReportType);
+                    param.Add("movebetsday", MoveBetsDay);
+                    param.Add("isold", IsOld);
+                    param.Add("drawfilter", drawfilter);
+                    param.Add("excludetest", excludeTest);
 
-                var spElement = GetStoreProcedure("LicWinlossDetail_SAgV2");
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
 
-                db = spElement.DbName;
-                sp = spElement.Name;
-
-                param.Add("licenseeid", LicenseeID);
-                param.Add("currency", Math.Abs(Currency));
-                param.Add("fromdate", FromDate);
-                param.Add("todate", ToDate);
-                param.Add("showsb", showSB);
-                param.Add("showrb", ShowRB);
-                param.Add("showng", ShowNG);
-                param.Add("showba", ShowBA);
-                param.Add("showlc", ShowLC);
-                param.Add("showvs", ShowVS);
-                param.Add("showcs", ShowCS);
-                param.Add("reporttype", ReportType);
-                param.Add("movebetsday", MoveBetsDay);
-                param.Add("isold", IsOld);
-                param.Add("drawfilter", drawfilter);
-                param.Add("excludetest", excludeTest);
-
-                dbResult = DbHelper.Execute(sp, param, db, 600);
+                    dbResult = new DbResult(output, ds);
+                }                
             }
             catch (Exception ex)
             {
@@ -763,32 +765,33 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             try
             {
                 Hashtable param = new Hashtable();
-                string sp = "", db = "";
+                
+                using (ObjectDb db = new ObjectDb("LicWinlossDetail_MAgV2"))
+                {
+                    param.Add("licenseeid", LicenseeID);
+                    param.Add("currency", Math.Abs(Currency));
+                    param.Add("srecommend", CustId);
+                    param.Add("fromdate", FromDate);
+                    param.Add("todate", ToDate);
+                    param.Add("showsb", showSB);
+                    param.Add("showrb", ShowRB);
+                    param.Add("showng", ShowNG);
+                    param.Add("showba", ShowBA);
+                    param.Add("showlc", ShowLC);
+                    param.Add("showvs", ShowVS);
+                    param.Add("showcs", ShowCS);
+                    param.Add("reporttype", ReportType);
+                    param.Add("movebetsday", MoveBetsDay);
+                    param.Add("isold", IsOld);
+                    param.Add("drawfilter", drawfilter);
+                    param.Add("excludetest", excludeTest);
 
-                var spElement = GetStoreProcedure("LicWinlossDetail_MAgV2");
-
-                db = spElement.DbName;
-                sp = spElement.Name;
-
-                param.Add("licenseeid", LicenseeID);
-                param.Add("currency", Math.Abs(Currency));
-                param.Add("srecommend", CustId);
-                param.Add("fromdate", FromDate);
-                param.Add("todate", ToDate);
-                param.Add("showsb", showSB);
-                param.Add("showrb", ShowRB);
-                param.Add("showng", ShowNG);
-                param.Add("showba", ShowBA);
-                param.Add("showlc", ShowLC);
-                param.Add("showvs", ShowVS);
-                param.Add("showcs", ShowCS);
-                param.Add("reporttype", ReportType);
-                param.Add("movebetsday", MoveBetsDay);
-                param.Add("isold", IsOld);
-                param.Add("drawfilter", drawfilter);
-                param.Add("excludetest", excludeTest);
-
-                dbResult = DbHelper.Execute(sp, param, db, 600);
+                    db.ExecuteDataSet();
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+                    dbResult = new DbResult(output, ds);
+                }
+                
             }
             catch (Exception ex)
             {
