@@ -1,5 +1,8 @@
 ﻿@model Fanex.Tarus.Reports.Entities.WinLoss.TreeWinLoss.TreeWinLoss
 @using DNAide.Utils
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
+
 @if (Model != null && Model.WinLoss != null && Model.WinLoss.Count > 0)
 {
 	@functions{
@@ -333,7 +336,13 @@
     </div>
     
     <script type="text/javascript">
-        var wl = '@Json.Encode(Model)';
+        @{
+        var wl = JsonConvert.SerializeObject(Model, Formatting.None, new JsonSerializerSettings
+        { 
+            ContractResolver = new CamelCasePropertyNamesContractResolver(),            
+            NullValueHandling = NullValueHandling.Ignore
+        });
+        }
         wl = wl.replace(/&quot;/g, '"');
         var wlJson = jQuery.parseJSON(wl);
         var wlDetail = wlJson.WinLoss;
