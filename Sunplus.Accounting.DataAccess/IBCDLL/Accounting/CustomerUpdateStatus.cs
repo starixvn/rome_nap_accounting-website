@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using DNAide.Core;
 using DNAide.Data;
 using Sunplus.Accounting.Core.Configurations;
@@ -9,6 +10,7 @@ using Sunplus.Accounting.Entities;
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
     using Fanex.Data;
+    using Sunplus.Accounting.Core.Common;
 
     public sealed class CustomerUpdateStatus : DataAccess
     {
@@ -26,10 +28,17 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <param name="custid"></param>
         /// <param name="isClosed"></param>
         ///  protected StoreProcedureElement GetStoreProcedure(string site)
-        public static void CustomerUpdateClosed(int accid, int custid, bool isClosed, string Ip)
+        public static void CustomerUpdateClosed(int accid, int custid, bool isClosed, string Ip, int roleId = 0)
         {
             try
             {
+                if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL)
+                    && roleId == 4 &&
+                    !WebSettings.ExternalAdminUsersEditSuperStatus.Contains(AppSession.AccId.ToString()))
+                {
+                    return;
+                }
+
                 using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdClosed", 600))
                 {
                     Hashtable param = new Hashtable();

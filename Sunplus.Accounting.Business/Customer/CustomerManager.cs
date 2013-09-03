@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Linq;
 using System.Web;
 using System.Web.Security;
 using DNAide.Core;
@@ -600,11 +601,16 @@ namespace Sunplus.Accounting.Business.Customer
 
                             #region Setting
 
-                            var strCloseStatus = "";
-                            if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL) && roleId == 4 && closed)
+                            var strCloseStatus = string.Empty;
+
+                            if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL) 
+                                && roleId == 4 && 
+                                !WebSettings.ExternalAdminUsersEditSuperStatus.Contains(AppSession.AccId.ToString())
+                                && closed)
                             {
-                                strCloseStatus = "<span class='chkchecked'></span>";
+                                strCloseStatus = "<span class='chkchecked'></span>";                              
                             }
+
                             TemplateHandler.Assign(ref htmlcontent, "{closedCustomer}", strCloseStatus != "" ? strCloseStatus : GetClosedStatus(isManageCustomerAccess, "closed", closed, (roleId > 1), _custparent.IsClosed, isallowupdategivencredit));
 
                             //Limit per IP
