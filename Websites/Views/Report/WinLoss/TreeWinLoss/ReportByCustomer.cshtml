@@ -1,7 +1,17 @@
 ﻿@model Fanex.Tarus.Reports.Entities.WinLoss.TreeWinLoss.TreeWinLoss
 @using DNAide.Utils
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
+
 @if (Model != null && Model.WinLoss != null && Model.WinLoss.Count > 0)
-{    
+{
+	@functions{
+		public string numberColor(double number)
+		{
+			double tmpNumber = Math.Round(number, 2);
+			return tmpNumber > 0 ? "red" : string.Empty;
+		}
+	}
     <div id="mainreportgrid" class="freegrid">
         <div class="grid-title">
             <div class="grid-title-lable" id="reporttile">
@@ -108,7 +118,7 @@
                                 <div class="table-cell" style="width: 120px; height: 61px">
                                     &nbsp;</div>
                             </th>
-                            <th colspan="9">
+                            <th colspan="12">
                                 <div style="height: 17px">
                                     Base RM</div>
                             </th>
@@ -124,12 +134,13 @@
                              <th rowspan="2">
                                 <div class="table-cell sorter" style="width: 110px; height: 39px" id="divBaseRMTotal" onclick="treeWinLossByCustomerLevel.sorting(this, 'BaseRMVirtualTurnover')">Virtual <br/> Turnover</div>
                             </th>
-                             <th colspan="2">
-                                <div class="table-cell" style="width: 220px; height: 17px">Turnover Variance</div>
+                             <th colspan="3">
+                                <div class="table-cell" style="width: 335px; height: 17px">Turnover Variance</div>
                             </th>
-                             <th colspan="2">
-                                <div class="table-cell" style="width: 220px; height: 17px" id="divBaseRMVariance">Winlost Variance</div>
+                             <th colspan="3">
+                                <div class="table-cell" style="width: 330px; height: 17px" id="divBaseRMVariance">Winlost Variance</div>
                             </th>
+							<th rowspan="2"><div class="table-cell sorter" style="width: 110px; height: 39px" id="dvBaseRMVarianceMargin" onclick="treeWinLossByCustomerLevel.sorting(this,'BaseRMVarianceMargin')">Variance<br/>Margin (%)</div></th>
                             <th rowspan="2"><div class="table-cell sorter" style="width: 110px; height: 39px" id="dvBaseRMTotal" onclick="treeWinLossByCustomerLevel.sorting(this,'BaseRMTotal')">Total</div></th>
                             <th rowspan="2"><div class="table-cell sorter" style="width: 110px; height: 39px" id="dvBaseRMVirtualTotal" onclick="treeWinLossByCustomerLevel.sorting(this,'BaseRMVirtualTotal')">Virtual Total</div></th>
                             <th rowspan="2"><div class="table-cell sorter" style="width: 110px; height: 39px" id="divMargin" onclick="treeWinLossByCustomerLevel.sorting(this,'Margin')">Margin (%)</div></th>
@@ -137,8 +148,10 @@
                         <tr>
                             <th> <div class="table-cell sorter" style="width: 110px; height: 17px" id="dvBaseRMTOVariancePlus" onclick="treeWinLossByCustomerLevel.sorting(this,'BaseRMTOVariancePlus')">+</div></th>
                             <th> <div class="table-cell sorter" style="width: 110px; height: 17px" id="dvBaseRMTOVarianceMinus" onclick="treeWinLossByCustomerLevel.sorting(this,'BaseRMTOVarianceMinus')">-</div></th>
+							<th> <div class="table-cell sorter" style="width: 115px; height: 17px" id="dvBaseRMTOVarianceAbsoluteTotal" onclick="treeWinLossByCustomerLevel.sorting(this,'BaseRMTOVarianceAbsoluteTotal')">Absolute Total</div></th>
                             <th> <div class="table-cell sorter" style="width: 110px; height: 17px" id="dvBaseRMWLVariancePlus" onclick="treeWinLossByCustomerLevel.sorting(this,'BaseRMWLVariancePlus')">+</div></th>
                             <th> <div class="table-cell sorter" style="width: 110px; height: 17px" id="dvBaseRMWLVarianceMinus" onclick="treeWinLossByCustomerLevel.sorting(this,'BaseRMWLVarianceMinus')">-</div></th>
+							<th> <div class="table-cell sorter" style="width: 110px; height: 17px" id="dvBaseRMWLVarianceTotal" onclick="treeWinLossByCustomerLevel.sorting(this,'BaseRMWLVarianceTotal')">Total</div></th>
                         </tr>
                     </thead>
                 </table>
@@ -173,7 +186,7 @@
                                 <div class="table-cell" style="width: 120px; height: 61px">
                                     &nbsp;</div>
                             </th>
-                            <th colspan="9">
+                            <th colspan="12">
                                 <div style="height: 17px">
                                     Base RM</div>
                             </th>
@@ -191,13 +204,16 @@
                                 <div class="table-cell sorter" style="width: 110px; height: 39px">
                                     Virtual Total</div>
                             </th>
-                            <th colspan="2">
-                                <div class="table-cell" style="width: 110px; height: 39px">
+                            <th colspan="3">
+                                <div class="table-cell" style="width: 335px; height: 39px">
                                     Turnover Variance</div>
                             </th>
-                            <th colspan="2">
-                                <div class="table-cell sorter" style="width: 110px; height: 39px">
+                            <th colspan="3">
+                                <div class="table-cell sorter" style="width: 330px; height: 39px">
                                     Winlost Variance</div>
+                            </th>
+							<th rowspan="2">
+                                <div class="table-cell sorter" style="width: 110px; height: 39px">Variance<br/>Margin (%)</div>
                             </th>
                             <th rowspan="2">
                                 <div class="table-cell sorter" style="width: 110px; height: 39px">Total</div>
@@ -237,6 +253,7 @@
                     string turnoverTotal = string.Empty;
                     string turnoverTotalVirtual = string.Empty;
                     string marginTotal = string.Empty;
+					string baseRMVarianceMargin = string.Empty;
 
                     if (ViewBag.isShowSB == true ||
                     ViewBag.isShowNG == true ||
@@ -252,6 +269,9 @@
                         turnoverTotal = "N/A";
                         turnoverTotalVirtual = "N/A";
                     }
+					
+					baseRMVarianceMargin = Model.Total.BaseRMTOVarianceAbsoluteTotal == 0
+						? "N/A" : NumberFormat.DoubleFormat(Model.Total.BaseRMVarianceMargin, 2);
 
                     if (turnoverTotalVirtual == "N/A" || turnoverTotalVirtual == "0.00")
                     {
@@ -292,11 +312,14 @@
                             <th><div class="r" style="width: 110px; height: 17px">@turnoverTotalVirtual</div></th>
                             <th><div class="r" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total.BaseRMTOVariancePlus, 2)</div></th>
                             <th><div class="r" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total.BaseRMTOVarianceMinus, 2)</div></th>
-                            <th><div class="r " style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total.BaseRMWLVariancePlus, 2)</div></th>
-                            <th><div class="r " style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total.BaseRMWLVarianceMinus, 2)</div></th>
-                            <th><div class="r " style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total.BaseRMTotal, 2)</div></th>
-                            <th><div class="r " style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total.BaseRMVirtualTotal, 2)</div></th>
-                            <th><div class="r " style="width: 110px; height: 17px">@marginTotal</div></th>
+							<th><div class="r" style="width: 115px; height: 17px">@NumberFormat.DoubleFormat(Model.Total.BaseRMTOVarianceAbsoluteTotal, 2)</div></th>
+                            <th><div class="r @numberColor(Model.Total.BaseRMWLVariancePlus)" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total.BaseRMWLVariancePlus, 2)</div></th>
+                            <th><div class="r @numberColor(Model.Total.BaseRMWLVarianceMinus)" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total.BaseRMWLVarianceMinus, 2)</div></th>
+							<th><div class="r @numberColor(Model.Total.BaseRMWLVarianceTotal)" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total.BaseRMWLVarianceTotal, 2)</div></th>
+							<th><div class="r @numberColor(Model.Total.BaseRMVarianceMargin)" style="width: 110px; height: 17px">@baseRMVarianceMargin</div></th>
+                            <th><div class="r @numberColor(Model.Total.BaseRMTotal)" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total.BaseRMTotal, 2)</div></th>
+                            <th><div class="r @numberColor(Model.Total.BaseRMVirtualTotal)" style="width: 110px; height: 17px">@NumberFormat.DoubleFormat(Model.Total.BaseRMVirtualTotal, 2)</div></th>
+                            <th><div class="r @numberColor(Model.Total.Margin)" style="width: 110px; height: 17px">@marginTotal</div></th>
 
                             <th>
                                 <div class="r" style="width: 80px; height: 17px">
@@ -313,7 +336,13 @@
     </div>
     
     <script type="text/javascript">
-        var wl = '@Json.Encode(Model)';
+        @{
+        var wl = JsonConvert.SerializeObject(Model, Formatting.None, new JsonSerializerSettings
+        { 
+            ContractResolver = new CamelCasePropertyNamesContractResolver(),            
+            NullValueHandling = NullValueHandling.Ignore
+        });
+        }
         wl = wl.replace(/&quot;/g, '"');
         var wlJson = jQuery.parseJSON(wl);
         var wlDetail = wlJson.WinLoss;
