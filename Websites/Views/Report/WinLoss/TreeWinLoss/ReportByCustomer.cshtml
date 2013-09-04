@@ -339,10 +339,11 @@
         @{
         var wl = JsonConvert.SerializeObject(Model, Formatting.None, new JsonSerializerSettings
         { 
-            ContractResolver = new CamelCasePropertyNamesContractResolver(),            
+            //ContractResolver = new CamelCasePropertyNamesContractResolver(),
             NullValueHandling = NullValueHandling.Ignore
         });
         }
+		var wl = '@wl';
         wl = wl.replace(/&quot;/g, '"');
         var wlJson = jQuery.parseJSON(wl);
         var wlDetail = wlJson.WinLoss;
