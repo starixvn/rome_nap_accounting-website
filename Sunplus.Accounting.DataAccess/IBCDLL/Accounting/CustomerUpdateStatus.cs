@@ -34,7 +34,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL)
                     && roleId == 4 &&
-                    !WebSettings.ExternalAdminUsersEditSuperStatus.Contains(AppSession.AccId.ToString()))
+                    !WebSettings.ExternalAdminUsersEditSuperStatus.Contains(AppSession.AccId.ToString())
+                    && !isClosed)
                 {
                     return;
                 }
