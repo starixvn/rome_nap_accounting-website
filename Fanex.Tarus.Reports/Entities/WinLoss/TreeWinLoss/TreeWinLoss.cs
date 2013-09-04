@@ -73,7 +73,7 @@ namespace Fanex.Tarus.Reports.Entities.WinLoss.TreeWinLoss
 			{
 				if (this.BaseRMTOVarianceAbsoluteTotal != 0)
 				{
-					return this.BaseRMWLVarianceTotal / this.BaseRMTOVarianceAbsoluteTotal;
+					return (this.BaseRMWLVarianceTotal / this.BaseRMTOVarianceAbsoluteTotal) * 100;
 				}
 
 				return 0;
