@@ -117,7 +117,7 @@ public class UpdateCustomerStatus : BaseHandler
                     {
                         Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     }
-                    Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateClosed(_accid, _custid, status, context.Request.UserHostAddress);
+                    Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateClosed(_accid, _custid, status, context.Request.UserHostAddress, custcs.RoleId);
                     if (context.Request["isClearCredit"] != null)
                     {
                         bool isClearCredit = bool.Parse(context.Request["isClearCredit"].ToString());
