@@ -190,6 +190,7 @@
     <Setting Key="CustomerUpdMoveDepositMaster" SpName="Acc_Dep_CustomerUpdMoveMaster" DbName="main"  />
     <Setting Key="CustomerUpdMoveDepositAgent" SpName="Acc_Dep_CustomerUpdMoveAgent" DbName="main"  />
 
+    <Setting Key="Customer_ViewPTSel" SpName="Acc_MT_GetBingoPT" DbName="CS_LBBackupDB" Plain="1" />
   </Function>
 
   <Function Name="Finance">
@@ -728,7 +729,7 @@
     <Setting Key="Acc_CustomerUpdP2PSuper_GameSetting" SpName="Acc_CustomerUpdP2PSuper_GameSetting" DbName="DBTXN.BODB02"  />
     <Setting Key="Acc_CustomerUpdP2PSuper_MaxTransfer" SpName="Acc_CustomerUpdP2PSuper_MaxTransfer" DbName="DBTXN.BODB02"  />
   </Function>
-  
+
 
   <Function Name="Credit term">
     <Setting Key="Acc_CreditTermUpdAddToGroup" SpName="Acc_CreditTermUpdAddToGroup" DbName="DBTXN.BODB02"  />
@@ -738,7 +739,7 @@
     <Setting Key="Acc_CreditTermUpdSetGroupHeadline" SpName="Acc_CreditTermUpdSetGroupHeadline" DbName="DBTXN.BODB02"  />
     <Setting Key="GetAllGroup" SpName="Acc_CreditTermSelGroupHeadline" DbName="DBAGE.BODB02"/>
     <Setting Key="Acc_CreditTermUpdIsViewReport" SpName="Acc_CreditTermUpdIsRptConsol" DbName="DBTXN.BODB02"/>
-    
+
   </Function>
 
   <Function Name="Accounting Transfer">
