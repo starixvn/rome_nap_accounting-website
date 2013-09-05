@@ -94,9 +94,9 @@
     </div>
     <iframe id="frm" width="0" height="0" frameborder="0" style="display: none"></iframe>
     <script type="text/javascript">
-        var matchId = '<%=matchId %>';
-        var bettype = '<%=bettype %>';
-        var league = '<%=league %>';
+//        var matchId = '<%=matchId %>';
+//        var bettype = '<%=bettype %>';
+//        var league = '<%=league %>';
     </script>
 </body>
 </html>
