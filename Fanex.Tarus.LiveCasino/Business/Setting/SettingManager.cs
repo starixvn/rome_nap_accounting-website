@@ -418,7 +418,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                             BettingLimit = bettingLimit,
                             IsUplineUnCheckAll = cntSelected == 0
                         });
-                        if (!isHasSetting)
+                        if (!isHasSetting && bettingLimit.Count > 0)
                             result.GameSetting[gameSettingIndex].BettingLimit[0].IsSelected = true;
                       
                         
