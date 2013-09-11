@@ -5,5 +5,5 @@
 
 function LoadRacing() {
     Fanex.CustomerSetting.Core.BlockUI();
-    document.location.href = toUrl('Racing/Index/' + custId + '/' + uplineId + '/' + userId + '/' + siteName);
+    document.location.href = toUrl('RacingBetting/Index/' + custId + '/' + uplineId + '/' + userId + '/' + siteName);
 };
