@@ -24,7 +24,7 @@
 
 $(document).ready(function () {
     $('#rdoPT').attr('checked', true);
-    $("#txtUsername").val($.URLDecode(gup("username")));    
+    $("#txtUsername").val($.URLDecode(gup("username")));
     Custom.init();
     ViewPT.getSporttype();
     $('#btnSubmit').attr('disabled', true);
@@ -620,34 +620,84 @@ var ViewPT = {
             return;
         }
         try { parent.BlockUI(); } catch (e) { }
-        //jQuery.blockUI();
-        var params = '{"userName":"' + userName + '","sportId":"' + sportId + '","bettypeId":"' + betTypeId + '", "isLive": "' + isLive + '"}';
+
+        switch (sportId) {
+            case 252://Bingo 
+                ViewPT.getPTSetting(userName,
+                    sportId,
+                    betTypeId,
+                    isLive);
+                break;
+            default:
+                //jQuery.blockUI(); 
+                var params = '{"userName":"' + userName + '","sportId":"' + sportId + '","bettypeId":"' + betTypeId + '", "isLive": "' + isLive + '"}';
+                $.ajax({
+                    type: "POST",
+                    url: "../../../Services/WCF/PT/ViewPT/ViewPTService.svc/ViewPositionTaking",
+                    data: params,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (resp) {
+                        if (resp != null) {
+                            if (resp.ErrorMessage != null && resp.ErrorMessage.length > 0) {
+                                showAlertMessage("err", resp.ErrorMessage, 1);
+                                try { parent.jQuery.unblockUI(); } catch (e) { }
+                                return;
+                            }
+                            $.tmpl(ViewPT.TplPt, resp).appendTo('#sContent');
+                            try { parent.jQuery.unblockUI(); } catch (e) { }
+                        }
+                        else {
+                            showAlertMessage("err", "There is no information available.", 1);
+                        }
+                        try { parent.jQuery.unblockUI(); } catch (e) { }
+                    },
+                    error: function () { try { parent.jQuery.unblockUI(); } catch (e) { } }
+                });
+        }
+    },
+    getPTSetting: function (userName,
+        sportId,
+        betTypeId,
+        isLive) {
+        var requestParams = {
+            UserName: userName,
+            SportId: sportId,
+            BetTypeId: betTypeId,
+            IsLive: isLive
+        };
+
         $.ajax({
             type: "POST",
-            url: "../../../Services/WCF/PT/ViewPT/ViewPTService.svc/ViewPositionTaking",
-            data: params,
+            url: "../../../ViewPT/GetPTSetting",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            success: function (resp) {
-                if (resp != null) {
-                    if (resp.ErrorMessage != null && resp.ErrorMessage.length > 0) {
-                        showAlertMessage("err", resp.ErrorMessage, 1);
-                        try { parent.jQuery.unblockUI(); } catch (e) { }
-                        return;
-                    }
-                    $.tmpl(ViewPT.TplPt, resp).appendTo('#sContent');
-                    try { parent.jQuery.unblockUI(); } catch (e) { }
-                }
-                else {
-
-                    showAlertMessage("err", "There is no information available.", 1);
-
-                }
-                try { parent.jQuery.unblockUI(); } catch (e) { }
+            data: JSON.stringify(requestParams),
+            success: function (result) {
+                ViewPT.renderPTSetting(requestParams, result);
             },
-            error: function () { try { parent.jQuery.unblockUI(); } catch (e) { } }
+            error: function (jqXHR, event, ajaxSettings) {
+                ViewPT.renderPTSetting(requestParams, null);
+            },
+            complete: function () {
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+            }
         });
     },
+    renderPTSetting: function (requestParams, result) {
+        if (result && result.length > 0) {
+            var ptHtmlResult = '';
+            switch (requestParams.SportId) {
+                case 252:
+                    ptHtmlResult = viewPT_Bingo.renderPTSetting(requestParams, result);
+                    break;
+            }
+
+            $('#sContent').append(ptHtmlResult);
+        } else {
+            showAlertMessage("err", "There is no information available.", 1);
+        }
+    },   
     getCurrentSportIndex: function (indexValue) {
         var indexArr = indexValue.split('_');
         var sport = null;

@@ -1,0 +1,43 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="ViewPTController.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
+
+namespace Fanex.Tarus.Customer.Controller
+{
+    using System.Diagnostics.CodeAnalysis;
+    using System.Web.Mvc;
+    using Fanex.Tarus.Customer.Business.ViewPT;
+    using Fanex.Tarus.Customer.Criteria.ViewPT;
+    using Fanex.Tarus.Web.Controllers;
+
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    public class ViewPTController : BaseController
+    {
+        private readonly IViewPTService _serviceManager;
+
+        public ViewPTController()
+            : this(null)
+        {
+        }
+
+        public ViewPTController(IViewPTService serviceManager)
+        {
+            this._serviceManager = serviceManager ?? new ViewPTService();
+        }
+
+        [HttpPost]
+        public JsonResult GetPTSetting(GetPTSettingCriteria criteria)
+        {
+            var result = this._serviceManager.GetPTSetting(criteria);
+
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
+    }
+}
