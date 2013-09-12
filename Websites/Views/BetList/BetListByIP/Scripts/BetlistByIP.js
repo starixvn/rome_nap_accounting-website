@@ -49,6 +49,7 @@
             success: function (result) {
                 $("#betListContent_Soccer").remove();
                 $("#betListContent").html(result);
+                BetListByIP.gridOpts_Username.isShowPager = _length == 0 ? false : true;
                 $("#BetlistByIP_Username").initGrid(BetListByIP.gridOpts_Username);
                 $('#BetlistByIP_Username').removeClass("display-none").gridScroller(BetListByIP.gridOpts_Username);
 
@@ -138,7 +139,7 @@ var BetListByIP_SportType = {
             success: function (result) {
                 $("#BetlistByIP_Username").remove();
                 $("#betListContent").html(result);
-
+                BetListByIP_SportType.gridOpts_Soccer.isShowPager = _lengthSprortype == 0 ? false : true;
                 $("#BetlistByIP_Soccer").initGrid(BetListByIP_SportType.gridOpts_Soccer);
                 $('#BetlistByIP_Soccer').removeClass("display-none").gridScroller(BetListByIP_SportType.gridOpts_Soccer);
                 BetListByIP_SportType.initPager(_lengthSprortype, BetListByIP_SportType.params_SportType.PageSize, BetListByIP_SportType.params_SportType.PageIndex - 1);
