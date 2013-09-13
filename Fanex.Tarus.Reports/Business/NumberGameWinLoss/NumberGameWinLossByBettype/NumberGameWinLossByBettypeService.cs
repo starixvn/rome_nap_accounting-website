@@ -43,6 +43,11 @@ namespace Fanex.Tarus.Reports.Business.NumberGameWinLoss.NumberGameWinLossByBett
             try
             {
                 AppSession.AddSession(HttpContext.Current.Session, _NumberGameWinLossByBettypeSessionKey, null);
+                if (string.IsNullOrEmpty(currencies) || string.IsNullOrEmpty(companies))
+                {
+                    return reseult;
+                }
+
                 var dsWinLoss = _numberGameAccess.SelNumberGameWinLossByBettype(CastAide.AsDateTime(wlDate), currencies, companies, liveStatus);
                 if (dsWinLoss != null && dsWinLoss.Tables.Count > 0 && dsWinLoss.Tables[0].Rows.Count > 0)
                 {
