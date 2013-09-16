@@ -89,8 +89,9 @@
             result.ErrorHandler = new System.Collections.Generic.Dictionary<int, string>();
             try
             {
-                using (ObjectDb objdb = new ObjectDb("Acc_CreditTermUpdRemark", 500))
+                using (ObjectDb objdb = new ObjectDb("Acc_CreditTermUpdRemark",  500))
                 {
+                    objdb.AssignParamValues(hash);
                     objdb.ExecuteNonQuery();
 
                     result.ErrorCode = CastAide.AsInt32(objdb.GetParameterValue("errcode"));

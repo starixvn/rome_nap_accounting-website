@@ -15,7 +15,9 @@ namespace Fanex.Tarus.Customer.Controller
     using Fanex.Tarus.Customer.Criteria.ViewPT;
     using Fanex.Tarus.Web.Controllers;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", 
+        "SA1600:ElementsMustBeDocumented", 
+        Justification = "Reviewed. Suppression is OK here.")]
     public class ViewPTController : BaseController
     {
         private readonly IViewPTService _serviceManager;

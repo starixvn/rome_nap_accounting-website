@@ -3810,7 +3810,6 @@ namespace Sunplus.Accounting.Business.Report.Other
             ref int colIndex, int startRow, int startCol, int isSoccer, int parentIndex)
         {
             var childIndex = 0;
-            var childrenIndex = 0;
             int maxTextLengthPerLine = 39;
             int currentTextLength = 0;
             int currentRowHeight = 0;

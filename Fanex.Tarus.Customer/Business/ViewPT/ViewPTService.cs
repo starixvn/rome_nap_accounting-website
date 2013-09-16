@@ -23,10 +23,10 @@ namespace Fanex.Tarus.Customer.Business.ViewPT
     using Fanex.Tarus.Infrastructure.Constants;
     using Sunplus.Accounting.Core.Extensions;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class ViewPTService : IViewPTService
     {
         private IViewPTRepository _repositoryManager;
+
         public ViewPTService()
             : this(null)
         {

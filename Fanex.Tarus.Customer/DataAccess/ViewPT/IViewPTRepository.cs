@@ -12,8 +12,7 @@ namespace Fanex.Tarus.Customer.DataAccess.ViewPT
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using Fanex.Tarus.Customer.Criteria.ViewPT;
-
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+   
     public interface IViewPTRepository
     {
         List<dynamic> GetPTSetting_Bingo(GetPTSettingCriteria criteria);

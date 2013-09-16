@@ -170,14 +170,6 @@
     <Compile Include="IReportDAO\IReportRacingDAO.cs" />
     <Compile Include="IReportWinLossDAO.cs" />
     <Compile Include="IUserDAO.cs" />
-    <Compile Include="Linq\SqlServer\Report\Acc_Rpt_DailyWLDirect_SporttypeResult.cs" />
-    <Compile Include="Linq\SqlServer\Report\Acc_Rpt_LeagueWL_DetailsResult.cs" />
-    <Compile Include="Linq\SqlServer\Report\Acc_Rpt_LeagueWL_SporttypeResult.cs" />
-    <Compile Include="Linq\SqlServer\Report\DailyWLSporttypeDataContext.cs" />
-    <Compile Include="Linq\SqlServer\Report\LeagueWLProviderClient.cs" />
-    <Compile Include="Linq\SqlServer\Report\LeagueWL_DetailsDataContext.cs" />
-    <Compile Include="Linq\SqlServer\Report\LeagueWL_SporttypeDataContext.cs" />
-    <Compile Include="Linq\SqlServer\Report\ReportActionDataContext.cs" />
     <Compile Include="NoSql\BetListDAO.cs" />
     <Compile Include="OtherProvider.cs" />
     <Compile Include="PositionTakingProvider.cs" />
@@ -235,39 +227,6 @@
     <Compile Include="SpecialDelete\TicketsListing\ITicketsListingDAO.cs" />
     <Compile Include="SpecialDelete\TicketsListing\TicketsListingDAO.cs" />
     <Compile Include="UtilsProvider.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Linq\SqlServer\Report\DailyWLSporttype.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>DailyWLSporttype1.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Linq\SqlServer\Report\LeagueWL_Details.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>LeagueWL_Details1.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Linq\SqlServer\Report\LeagueWL_Sporttype.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>LeagueWL_Sporttype1.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Linq\SqlServer\Report\ReportAction.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>ReportAction1.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Linq\SqlServer\Report\DailyWLSporttype.dbml.layout">
-      <DependentUpon>DailyWLSporttype.dbml</DependentUpon>
-    </None>
-    <None Include="Linq\SqlServer\Report\LeagueWL_Details.dbml.layout">
-      <DependentUpon>LeagueWL_Details.dbml</DependentUpon>
-    </None>
-    <None Include="Linq\SqlServer\Report\LeagueWL_Sporttype.dbml.layout">
-      <DependentUpon>LeagueWL_Sporttype.dbml</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
@@ -364,14 +323,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AdoNet\SqlServer\PositionTaking\" />
-    <Folder Include="Linq\SqlServer\Log\" />
     <Folder Include="Provider\PositionTaking\" />
     <Folder Include="Report\Poker\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UseGlobalSettings="True" BuildVersion_ReplaceNonNumerics="False" />
+      <UserProperties BuildVersion_ReplaceNonNumerics="False" BuildVersion_UseGlobalSettings="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -11,7 +11,6 @@ namespace Fanex.Tarus.Customer.Criteria.ViewPT
 {
     using System.Diagnostics.CodeAnalysis;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class GetPTSettingCriteria
     {
         public string UserName { get; set; }

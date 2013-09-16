@@ -13,7 +13,6 @@ namespace Fanex.Tarus.Customer.Entities.ViewPT
     using System.Diagnostics.CodeAnalysis;
 
     [Serializable]
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class PostionTakingInfo
     {
         public CustomerInfo CustomerInfo { get; set; }

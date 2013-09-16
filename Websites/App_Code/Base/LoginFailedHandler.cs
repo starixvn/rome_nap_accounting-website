@@ -1,22 +1,10 @@
 ﻿using System;
-using System.Data;
 using System.Configuration;
-using System.Linq;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-
 using System.Runtime.Serialization;
-
-using Fanex.Tarus.Business.Implement;
-
-using Sunplus.Data.DataAbstract.Storage.Cache;
+using System.Text.RegularExpressions;
 using DNAide.Core;
-
-
+using Fanex.Tarus.Business.Implement;
+using Sunplus.Data.DataAbstract.Storage.Cache;
 
 /// <summary>
 /// Summary description for LoginFailedHandler
@@ -25,7 +13,6 @@ public class LoginFailedHandler
 {
     private static ICache _cache;
 
-    
     /// <summary>
     /// Before pass info through into DB, we will invoke this function to check "Reach max times wrong password."
     /// Get info of this username from the caching server.
@@ -36,8 +23,9 @@ public class LoginFailedHandler
     /// }
     /// else
     /// {
-    ///     Normal process(pass info throug int DB)
+    ///     Normal process(pass info thought into DB)
     /// }
+
     /// </summary>
     /// <param name="username"></param>
     public static bool IsLocked(string username)
@@ -55,139 +43,22 @@ public class LoginFailedHandler
         RemoveLoginInformation(username);
     }
 
-    /// <summary>
-    /// User login failed.
-    /// If (username is existed in Database)
-    /// {
-    ///     If ("log failed info" of this user has existed on the caching server)
-    ///     {
-    ///         Increase counter, update logtime
-    ///     }
-    ///     Else
-    ///     {
-    ///         Add "log failed info" of this user into the caching server.
-    ///     }
-    ///  }
-    ///  Else//User is not exist in Database
-    ///  {
-    ///  }
-    /// </summary>
-    /// <param name="username"></param>
+   /// <summary>
+   /// 
+   /// </summary>
+   /// <param name="username"></param>
+   /// <param name="ErrorCode"></param>
     public static void LoginFailed(string username, int ErrorCode)
     {
-        if (ErrorCode == 103)//User is existed in database
+        switch (ErrorCode)
         {
-            IncreaseCount(username);
+            case 103: //User is existed in database
+                IncreaseCount(username);
+                break;
+
+            default:
+                break;
         }
-        else if (ErrorCode == 101) //User is not exist in database
-        {
-
-        }
-    }
-
-    private static LogFailedInformation GetInformation(string username)
-    {
-        return CacheService.Get<LogFailedInformation>(GetKey(username));
-    }
-
-
-    private static char[] ForbiddenChars()
-    {
-        var forbiddenChars = new char[]
-            {
-                '\u0000', '\u0001', '\u0002', '\u0003', '\u0004', '\u0005', '\u0006', '\u0007', '\u0008', '\u0009',
-                '\u000a', '\u000b', '\u000c', '\u000d', '\u000e', '\u000f', '\u0010', '\u0011', '\u0012', '\u0013',
-                '\u0014', '\u0015', '\u0016', '\u0017', '\u0018', '\u0019', '\u001a', '\u001b', '\u001c', '\u001d',
-                '\u001e', '\u001f', '\u0020'
-            };
-        return forbiddenChars;
-
-    }
-
-    private static string ReplaceForbiddenChars(string key)
-    {
-        try
-        {
-            if (string.IsNullOrEmpty(key)) return key;
-
-            var forbiddenChars = ForbiddenChars();
-
-            foreach (var forbiddenChar in forbiddenChars)
-            {
-                key = key.Replace(forbiddenChar, '/');
-            }
-
-        }
-        catch (Exception ex)
-        {
-            return key;
-        }
-
-        return key;
-
-    }
-
-    private static string GetKey(string username)
-    {
-        username = ReplaceForbiddenChars(username);
-        return "login_failed_" + username.ToLower();
-    }
-
-    private static void AddLoginInformation(string username)
-    {
-        CacheService.Set(
-            GetKey(username),
-            new LogFailedInformation() { UserName = username, Count = 1, LoginTime = DateTime.Now },
-            new TimeSpan(0, 100, 0));
-    }
-
-    private static void IncreaseCount(string username)
-    {
-        if (GetInformation(username) == null)
-        {
-            AddLoginInformation(username);
-        }
-        else
-        {
-            CacheService.Set(GetKey(username), new LogFailedInformation()
-            {
-                UserName = username
-                ,
-                Count = GetCount(username) + 1
-                ,
-                LoginTime = DateTime.Now
-                ,
-                UnLockTime = DateTime.Now.AddMinutes(CastAide.AsInt32(ConfigurationManager.AppSettings["loginfailed_countdown_minute"]))
-            });
-        }
-    }
-
-    private static bool CheckReachMaxLoginTimes(string username)
-    {
-        LogFailedInformation info = GetInformation(username);
-        if (info != null && info.Count == CastAide.AsInt32(ConfigurationManager.AppSettings["NumberWrongPassword"]))
-        {
-            if (info.UnLockTime < DateTime.Now)
-            {
-                RemoveLoginInformation(username);
-                return false;
-            }
-            return true;
-        }
-        return false;
-    }
-
-    private static bool RemoveLoginInformation(string username)
-    {
-        CacheService.Delete(GetKey(username));
-        return true;
-    }
-
-    private static int GetCount(string username)
-    {
-        LogFailedInformation info = GetInformation(username);
-        if (info == null) return 0;
-        return info.Count;
     }
 
     public static string GetRemainingTime(string username)
@@ -247,6 +118,104 @@ public class LoginFailedHandler
                         parent.document.getElementById('spanDownTime').innerHTML = minute + ' : ' + second;
                     }
                 }, 999);";
+    }
+    private static LogFailedInformation GetInformation(string username)
+    {
+        return CacheService.Get<LogFailedInformation>(GetKey(username));
+    }
+
+    private static char[] ForbiddenChars()
+    {
+        var forbiddenChars = new char[]
+            {
+                '\u0000', '\u0001', '\u0002', '\u0003', '\u0004', '\u0005', '\u0006', '\u0007', '\u0008', '\u0009',
+                '\u000a', '\u000b', '\u000c', '\u000d', '\u000e', '\u000f', '\u0010', '\u0011', '\u0012', '\u0013',
+                '\u0014', '\u0015', '\u0016', '\u0017', '\u0018', '\u0019', '\u001a', '\u001b', '\u001c', '\u001d',
+                '\u001e', '\u001f', '\u0020'
+            };
+        return forbiddenChars;
+    }
+
+    private static string ReplaceForbiddenChars(string key)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(key)) return key;
+
+            key = Regex.Replace(key, @"\s+", string.Empty);
+            var forbiddenChars = ForbiddenChars();
+
+            foreach (var forbiddenChar in forbiddenChars)
+            {
+                key = key.Replace(forbiddenChar, '/');
+            }
+        }
+        catch
+        {
+            return key;
+        }
+
+        return key;
+    }
+
+    private static string GetKey(string username)
+    {
+        username = ReplaceForbiddenChars(username);
+        return "login_failed_" + username.ToLower();
+    }
+
+    private static void AddLoginInformation(string username)
+    {
+        CacheService.Set(
+            GetKey(username),
+            new LogFailedInformation() { UserName = username, Count = 1, LoginTime = DateTime.Now },
+            new TimeSpan(0, 100, 0));
+    }
+
+    private static void IncreaseCount(string username)
+    {
+        if (GetInformation(username) == null)
+        {
+            AddLoginInformation(username);
+        }
+        else
+        {
+            CacheService.Set(GetKey(username), new LogFailedInformation()
+            {
+                UserName = username,
+                Count = GetCount(username) + 1,
+                LoginTime = DateTime.Now,
+                UnLockTime = DateTime.Now.AddMinutes(CastAide.AsInt32(ConfigurationManager.AppSettings["loginfailed_countdown_minute"]))
+            });
+        }
+    }
+
+    private static bool CheckReachMaxLoginTimes(string username)
+    {
+        LogFailedInformation info = GetInformation(username);
+        if (info != null && info.Count == CastAide.AsInt32(ConfigurationManager.AppSettings["NumberWrongPassword"]))
+        {
+            if (info.UnLockTime < DateTime.Now)
+            {
+                RemoveLoginInformation(username);
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private static bool RemoveLoginInformation(string username)
+    {
+        CacheService.Delete(GetKey(username));
+        return true;
+    }
+
+    private static int GetCount(string username)
+    {
+        LogFailedInformation info = GetInformation(username);
+        if (info == null) return 0;
+        return info.Count;
     }
 }
 
