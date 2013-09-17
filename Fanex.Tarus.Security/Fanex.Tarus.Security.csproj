@@ -45,7 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Authenticate\CustomerSetting.cs" />
+    <Compile Include="Authenticate\CustomerSettingAttribute.cs" />
     <Compile Include="Permission\IPermissionService.cs" />
     <Compile Include="Permission\PermissionService.cs" />
     <Compile Include="Web\AppSessions.cs" />

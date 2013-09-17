@@ -1,9 +1,14 @@
 ﻿var numberGameWLByBettype = {
+    currencyLoaded: false,
+    companyLoaded: false,
     currencies: '0',
     companies: '0',
     liveStatus: -1,
     fdate: '',
     title: '',
+    isFullLoad: function () {
+        return (numberGameWLByBettype.currencyLoaded && numberGameWLByBettype.companyLoaded) ? true : false;
+    },
     getCurrencies: function () {
         $.ajax({
             type: "POST",
@@ -12,6 +17,7 @@
             dataType: "json",
             data: null,
             success: function (rs) {
+                numberGameWLByBettype.currencyLoaded = true;
                 var tempData = [];
                 var id = "selectCurrency";
                 for (var i = 0; i < rs.length; i++) {
@@ -65,11 +71,15 @@
                     noItemText: 'No currency found.'
                 });
             },
-            complete: function () { }
+            complete: function () {
+                if (numberGameWLByBettype.isFullLoad()) {
+                    try { parent.jQuery.unblockUI() } catch (e) { };
+                }
+            }
         });
     },
     getCompanies: function () {
-        try { parent.BlockUI() } catch (e) { }
+
         $.ajax({
             type: "POST",
             url: window.rootUrl + "NumberGameWinLossByBettype/GetLicensees",
@@ -77,6 +87,7 @@
             dataType: "json",
             data: null,
             success: function (rs) {
+                numberGameWLByBettype.companyLoaded = true;
                 var companyGroup = [];
                 companyGroup.push({
                     Id: "0IBCGroup",
@@ -151,7 +162,11 @@
                     noItemText: 'No company found.'
                 });
             },
-            complete: function () { try { parent.jQuery.unblockUI() } catch (e) { }; }
+            complete: function () {
+                if (numberGameWLByBettype.isFullLoad()) {
+                    try { parent.jQuery.unblockUI() } catch (e) { };
+                } 
+            }
         });
     },
     getReport: function () {
@@ -250,7 +265,7 @@
             gridHeight: 140,
             freezeWidth: 415,
             numberFreezeCol: 4,
-            gridWidth:730
+            gridWidth: 730
         };
         $('#numbergamewinloss').removeClass("hidden").gridScroller(gridOpts);
     },
@@ -303,7 +318,7 @@
     exportExcel: function () {
         var url = window.rootUrl + 'NumberGameWinLossByBettype/Index?isexport=true&type=1&currencies=' +
             numberGameWLByBettype.currencies + '&companies=' + numberGameWLByBettype.companies +
-            '&date=' + numberGameWLByBettype.fdate + '&title=' + numberGameWLByBettype.title+
+            '&date=' + numberGameWLByBettype.fdate + '&title=' + numberGameWLByBettype.title +
             '&liveStatus=' + numberGameWLByBettype.liveStatus;
         $("#frm").attr('src', url);
     },
@@ -506,6 +521,7 @@ $(document).ready(function () {
     };
     calendarUtils.renderCalendar("#fdate", limitFromDate, "#fdate", "", fDay, options);
 
+    try { parent.BlockUI() } catch (e) { }
     numberGameWLByBettype.getCompanies();
     numberGameWLByBettype.getCurrencies();
 
