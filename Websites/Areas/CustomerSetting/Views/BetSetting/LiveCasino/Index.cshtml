@@ -21,7 +21,8 @@
     <link href="@Url.Content("~/Areas/CustomerSetting/Views/BetSetting/LiveCasino/Styles/LiveCasino.css")" rel="stylesheet" type="text/css" />
 }
 @section LiveCasino{
-    <div id="ng-app" ng-app="liveCasinoApp" ng-controller="Fanex.CustomerSetting.Betting.LiveCasino" ng-init="Init()" style="width: 815px">
+    <div id="ng-app" ng-app="liveCasinoApp" ng-controller="Fanex.CustomerSetting.Betting.LiveCasino" style="width: 815px">
+        <div id="warningMsg" style="display: none; color: Red" class="errMsg">Unchecking all stake levels will affect and apply to all downlines</div>
         <div id="errMsg" style="display: none" class="errMsg">
         </div>
         <div class="title C bold header">
@@ -57,7 +58,7 @@
                 <td class="R">{{gameType.name}}</td>
                 <td colspan="2">
                     <div class="floatLeft" ng-repeat="betting in gameType.bettingLimit">
-                        <input type="checkbox" ng-model="betting.isSelected" ng-init="changed = betting.isSelected" ng-click="betting.isDirty = changed != betting.isSelected" />
+                        <input type="checkbox" ng-model="betting.isSelected" ng-init="changed = betting.isSelected" ng-click="betting.isDirty = changed != betting.isSelected; ChangeLimit(this)" />
                         <span>{{betting.text}}</span>
                     </div>
                 </td>

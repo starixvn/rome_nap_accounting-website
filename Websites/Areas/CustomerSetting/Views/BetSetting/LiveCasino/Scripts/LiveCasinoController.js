@@ -9,6 +9,35 @@ Fanex.CustomerSetting.Betting = {};
 Fanex.CustomerSetting.Betting.LiveCasino = function ($scope, $http) {
     $scope.model = model;
     $scope.gameTypes = $scope.model.bettingLimits;
+
+    $scope.ChangeLimit = function (scope) {
+        var gameTypes = scope.gameTypes;
+        var allUnchecked = true;
+
+        for (var i = 0; i < gameTypes.length; i++) {
+            var bettings = gameTypes[i].bettingLimit;
+
+            if (scope.gameType.id == gameTypes[i].id) {
+                for (var j = 0; j < bettings.length; j++) {
+                    if (bettings[j].isSelected) {
+                        allUnchecked = false;
+                        break;
+                    }
+                }
+
+                if (!allUnchecked) {
+                    break;
+                }
+            }
+        }
+
+        if (allUnchecked) {
+            $('#warningMsg').show();
+        }
+        else {
+            $('#warningMsg').hide();
+        }
+    };
 };
 
 Fanex.CustomerSetting.Betting.LiveCasino.Update = function (ondone) {
