@@ -75,12 +75,27 @@
     var uplineId = parseInt('@uplineId');
     var userId = parseInt('@userId');
     var siteName = '@siteName';
+    var syncCasino = '@ViewBag.SyncCasino';
+    var syncBingo = '@ViewBag.SyncBingo';
+    var syncLiveCasino = '@ViewBag.SyncLiveCasino';
 
     function toUrl(relativeUrl) {
         return '@Url.Content("~/CustomerSetting/BetSetting/")' + relativeUrl;
     }
 
     $(document).ready(function () {
+        if (syncBingo == 'False') {
+            $('#tab6').remove();
+        }
+
+        if (syncCasino == 'False') {
+            $('#tab5').remove();
+        }
+
+        if (syncLiveCasino == 'False') {
+            $('#tab4').remove();
+        }
+
         $('#tab2').addClass('ui-tabs-active ui-state-active');
         $('#tab1').removeClass('ui-tabs-active ui-state-active');
         $('#tab3').removeClass('ui-tabs-active ui-state-active');

@@ -433,3 +433,7 @@ li
     border-left-radius: 3px;
     border-top-radius: 3px;
 }
+.floatLeft
+{
+    float: left;
+}

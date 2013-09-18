@@ -102,13 +102,28 @@
         var custId = parseInt('@id');
         var uplineId = parseInt('@uplineId');
         var userId = parseInt('@userId');
-        var siteName = '@siteName';      
+        var siteName = '@siteName';
+        var syncCasino = '@ViewBag.SyncCasino';
+        var syncBingo = '@ViewBag.SyncBingo';
+        var syncLiveCasino = '@ViewBag.SyncLiveCasino';
 
         function toUrl(relativeUrl) {
             return '@Url.Content("~/CustomerSetting/BetSetting/")' + relativeUrl;
         }
 
         $(document).ready(function () {
+            if (syncBingo == 'False') {
+                $('#tab6').remove();
+            }
+
+            if (syncCasino == 'False') {
+                $('#tab5').remove();
+            }
+
+            if (syncLiveCasino == 'False') {
+                $('#tab4').remove();
+            }
+
             $('.custBtn2').bind('click', function () {
                 Fanex.CustomerSetting.Betting.Sportsbook.Update(function (data) {
                     if(data.errorCode == "0"){

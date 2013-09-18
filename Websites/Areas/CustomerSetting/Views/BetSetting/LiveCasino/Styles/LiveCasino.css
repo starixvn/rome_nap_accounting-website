@@ -1,0 +1,84 @@
+﻿body, html {
+    font-family: Tahoma,Arial,helvetica,sans-serif;
+    font-size: 11px;
+    line-height: 18px;
+    padding: 0;
+    margin: 1px;    
+}
+td
+{
+    border-color:1px solid #7C98A4;
+    }
+input[type="text"], input[type="password"] {
+    border: 1px solid #818181;
+    text-align: right;
+    width: 110px;
+    padding: 1px;
+}
+.title
+{
+    background-color: #B5C4D0;
+}
+.bold
+{
+    font-weight: bold;
+}
+.inactive 
+{
+    background-color: #DDDDDD !important;
+    cursor: default;
+}
+.BettingLimitTextBox9 
+{
+    width: 90px !important;
+}
+.titleWidth
+{
+    width: 120px;
+}
+.betWidth
+{
+    width: 230px;
+}
+.numberGameWidth
+{
+    width: 172px;
+}
+.copyActive
+{
+    background-color: #FFFFDD;
+}
+.ui-tabs .ui-tabs-panel {
+    border: none;
+    max-height: 1024px;
+    padding: 2px;
+}
+.ui-widget 
+{
+    font-size: 11px !important;
+}
+.ui-widget-content 
+{
+    border: none 0px;
+	
+}
+.header
+{
+     height: 25px; 
+     border: 1px solid #7C98A4; 
+     border-bottom: none;
+}
+
+
+.normal
+{
+    font-weight: normal;
+}
+.memberWinLimitWidth
+{
+    width: 120px;
+}
+.bettingLimitWidth
+{
+    width: 200px;
+}

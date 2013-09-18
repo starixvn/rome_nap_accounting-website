@@ -17,8 +17,8 @@
             <li id="tab1" onclick="LoadSB()"><a href="#tabs-1">Sportsbook</a></li>
             <li id="tab2" onclick="LoadRacing()"><a href="#tabs-2">Racing</a></li>
             <li id="tab3" onclick="LoadVirtualSports()"><a href="#tabs-3">Virtual Sports</a></li>
-            <!--<li id="tab4"><a href="#tabs-4" class="hidden">RNG Casino</a></li>
-            <li id="tab5"><a href="#tabs-5" class="hidden">Live Casino</a></li>
+            <li id="tab4" onclick="LoadLiveCasino()"><a href="#tabs-4">Live Casino</a></li>
+            <!--<li id="tab5"><a href="#tabs-5" class="hidden">Casino</a></li>
             <li id="tab6"><a href="#tabs-6" class="hidden">Bingo</a></li>-->
         </ul>
         <div id="tabs-1">
@@ -30,11 +30,14 @@
         <div id="tabs-3">
             @RenderSection("VirtualSports", false)
         </div>
-        <!--<div id="tabs-4" class="hidden">          
+        <div id="tabs-4" class="hidden">          
+            @RenderSection("LiveCasino", false)
         </div>                
-        <div id="tabs-5" class="hidden">          
+        <!--<div id="tabs-5" class="hidden">   
+            @RenderSection("Casino", false)       
         </div>                
         <div id="tabs-6" class="hidden">          
+            @RenderSection("Bingo", false)
         </div>-->
     </div>                    
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")" type="text/javascript"></script>

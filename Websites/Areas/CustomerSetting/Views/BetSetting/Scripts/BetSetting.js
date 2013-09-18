@@ -12,3 +12,8 @@ function LoadVirtualSports() {
     Fanex.CustomerSetting.Core.BlockUI();
     document.location.href = toUrl('VirtualSportsBetting/Index/' + custId + '/' + uplineId + '/' + userId + '/' + siteName);
 };
+
+function LoadLiveCasino() {
+    Fanex.CustomerSetting.Core.BlockUI();
+    document.location.href = toUrl('LiveCasinoBetting/Index/' + custId + '/' + uplineId + '/' + userId + '/' + siteName);
+};
