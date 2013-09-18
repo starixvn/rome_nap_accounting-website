@@ -91,9 +91,9 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
             bool hasInactive = false;
             double _activeSum = 0.0, _inactiveSum = 0.0;
             string odd_even = "";
-            using (IDataReader dr = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.SelectAgentCredit(_custid))
+            using (DataTable dt = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.SelectAgentCredit(_custid))
             {
-                while (dr.Read())
+                foreach(DataRow dr in dt.Rows)
                 {
                     string _s = _sRow;
                     _hasClosed = Convert.ToBoolean(dr["closed"]);
@@ -164,9 +164,9 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
             string _sRow = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("UserCredit/MasterRow.htm");
             double _SumGiven = 0.0, _SumUsed = 0.0;
             string odd_even = "";
-            using (IDataReader dr = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.SelectMasterCredit(_custid))
+            using (DataTable dt = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.SelectMasterCredit(_custid))
             {
-                while (dr.Read())
+                foreach(DataRow dr in dt.Rows)
                 {
                     hasData = true;
                     string _s = _sRow;
@@ -211,24 +211,24 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
             string _sRow = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("UserCredit/SuperRow.htm");
             double _SumGiven = 0.0, _SumUsed = 0.0;
             string odd_even = "";
-            using (IDataReader dr = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.SelectSuperCredit(_custid))
+            DataTable dt = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.SelectSuperCredit(_custid);
+            
+            foreach(DataRow dr in dt.Rows)
             {
-                while (dr.Read())
-                {
-                    hasData = true;
-                    string _s = _sRow;
-                    double _givenCredit = Convert.IsDBNull(dr["givencredit"]) ? 0.00 : Convert.ToDouble(dr["givencredit"]);
-                    double _usedCredit = Convert.IsDBNull(dr["usedcredit"]) ? 0.00 : Convert.ToDouble(dr["usedcredit"]);
-                    odd_even = (odd_even == "") ? "evenrow" : "";
-                    TemplateHandler.Assign(ref _s, "{odd_even}", odd_even);
-                    TemplateHandler.Assign(ref _s, "{username}", dr["mastername"].ToString());
-                    TemplateHandler.Assign(ref _s, "{givencredit}", string.Format(cult, "{0:#,##0.00}", _givenCredit));
-                    TemplateHandler.Assign(ref _s, "{usedcredit}", string.Format(cult, "{0:#,##0.00}", _usedCredit));
-                    sbrRows.Append(_s);
-                    _SumGiven += _givenCredit;
-                    _SumUsed += _usedCredit;
-                }
+                hasData = true;
+                string _s = _sRow;
+                double _givenCredit = Convert.IsDBNull(dr["givencredit"]) ? 0.00 : Convert.ToDouble(dr["givencredit"]);
+                double _usedCredit = Convert.IsDBNull(dr["usedcredit"]) ?0.00 : Convert.ToDouble(dr["usedcredit"]);
+                odd_even = (odd_even == "") ? "evenrow" : "";
+                TemplateHandler.Assign(ref _s, "{odd_even}", odd_even);
+                TemplateHandler.Assign(ref _s, "{username}", dr["mastername"].ToString());
+                TemplateHandler.Assign(ref _s, "{givencredit}", string.Format(cult, "{0:#,##0.00}", _givenCredit));
+                TemplateHandler.Assign(ref _s, "{usedcredit}", string.Format(cult, "{0:#,##0.00}", _usedCredit));
+                sbrRows.Append(_s);
+                _SumGiven += _givenCredit;
+                _SumUsed += _usedCredit;
             }
+           
             if (hasData)
             {
                 TemplateHandler.Assign(ref sSuper, "{content}", sbrRows.ToString());

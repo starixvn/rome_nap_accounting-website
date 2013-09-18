@@ -488,19 +488,27 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
             try
             {
-                Hashtable param = new Hashtable();
-                param.Add("userid", accid);
-                param.Add("custid", custid);
-                param.Add("disablefinancial", disabledFinancial);
-                param.Add("language", "E");
-                param.Add("errcode", 0);
-                param.Add("errmsg", string.Empty);
-                param.Add("ip", Ip);
-                param.Add("disabledownlinefi", isUpdDownline);
+                Hashtable output = new Hashtable();
+                using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableFI"))
+                {
+                    Hashtable param = new Hashtable();
+                    param.Add("userid", accid);
+                    param.Add("custid", custid);
+                    param.Add("disablefinancial", disabledFinancial);
+                    param.Add("language", "E");
+                    param.Add("errcode", 0);
+                    param.Add("errmsg", string.Empty);
+                    param.Add("ip", Ip);
+                    param.Add("disabledownlinefi", isUpdDownline);
 
-                DbResult dr = DbHelper.ExecuteCmd("Acc_CustomerUpdDisableFI", param, DBType.MAIN);
-                if ((int)dr.Outputs["errcode"] > 0)
-                    throw new AccException(dr.Outputs["errmsg"].ToString());
+                    db.AssignParamValues(param);
+                    db.ExecuteNonQuery();
+
+                    output = db.GetOuputParams();
+                }
+
+                if ((int)output["errcode"] > 0)
+                    throw new AccException(output["errmsg"].ToString());
             }
             catch (AccException accException)
             {

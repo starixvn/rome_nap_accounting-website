@@ -30,7 +30,7 @@
 
         public DataSet GetExChangeBySystem(string system)
         {
-            using (ObjectDb objDB = new ObjectDb("CustomerSetting_ExchangeSel"))
+            using (ObjectDb objDB = new ObjectDb("Acc_ExchangeSel"))
             {
                 var ressult = objDB.ExecuteDataSet();
                 return ressult;

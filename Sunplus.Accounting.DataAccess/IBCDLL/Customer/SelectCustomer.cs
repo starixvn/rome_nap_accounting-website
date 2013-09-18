@@ -82,20 +82,24 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         /// <returns>DataResult</returns>
         public static DbResult ExchangeSelRpt(string accountingSystem)
         {
-            DbResult rs = null;
+            DbResult dbResult = null;
             try
             {
-                var param = new Hashtable { { "system", accountingSystem.ToString().ToUpper() } };
+                using (ObjectDb objDB = new ObjectDb("Acc_ExchangeSel", 600))
+                {
+                    var param = new Hashtable { { "system", accountingSystem.ToString().ToUpper() } };
 
-                var spElement = GetExchangeStoreProcedure("ExchangeSel");
+                    objDB.AssignParamValues(param);
 
-                rs = DbHelper.Execute(spElement.Name, param, spElement.DbName);
+                    var dataset = objDB.ExecuteDataSet();
+                    dbResult = new DbResult(objDB.GetOuputParams(), dataset);
+                }   
             }
             catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
-            return rs;
+            return dbResult;
         }
 
         /// <summary>

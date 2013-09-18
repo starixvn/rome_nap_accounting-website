@@ -34,7 +34,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.DataAccess
             var currencies = new List<Currency>();
             try
             {
-                using (ObjectDb objDB = new ObjectDb("CustomerSetting_ExchangeSel"))
+                using (ObjectDb objDB = new ObjectDb("Acc_ExchangeSel"))
                 {
                     objDB.AddInParameter("system", DbType.String, system.ToUpper());
                     using (var reader = objDB.ExecuteReader())
