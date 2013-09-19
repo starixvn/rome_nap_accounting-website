@@ -368,7 +368,7 @@ namespace Sunplus.Accounting.Core.Web
                                  string.Format(Globals.BTN_CHANGEPT_CLICK, "this", Globals.CONST_CHANGEPT_10));
                 return btn;
             }
-            catch (Exception ex)
+            catch
             {
                 return string.Empty;
             }

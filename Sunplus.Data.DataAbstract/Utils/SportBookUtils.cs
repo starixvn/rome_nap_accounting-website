@@ -7,9 +7,7 @@ namespace Sunplus.Data.DataAbstract.Utils
 {
     public static class SportBookUtils
     {
-        private static IDataStorage DataStorage = null;
-        private static NoSQLElement NoSqlElement = null;
-
+       
         public static string GetOddName(string oddType)
         {
             try
