@@ -105,7 +105,7 @@
 
         $('.custBtn2').bind('click', function () {
             Fanex.CustomerSetting.Betting.Racing.Update(function (data) {
-                if (data.errorCode == "0") {
+                if (data.errorCode == "0" || data.errorCode == "") {
                     var timeout = setTimeout(function () {
                         clearTimeout(timeout);
 

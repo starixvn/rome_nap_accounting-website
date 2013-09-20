@@ -99,7 +99,8 @@ Fanex.CustomerSetting.Betting.VirtualSports.Update = function (ondone) {
             id: custId,
             uplineId: uplineId,
             userId: userId,
-            txtCustomerObject: JSON.stringify(model)
+            txtCustomerObject: JSON.stringify(model),
+            siteName: siteName
         }
     })
     .success(function (data) {
