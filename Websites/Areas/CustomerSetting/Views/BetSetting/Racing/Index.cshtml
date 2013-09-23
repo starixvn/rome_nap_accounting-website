@@ -76,7 +76,7 @@
     var userId = parseInt('@userId');
     var siteName = '@siteName';
     var syncCasino = '@ViewBag.SyncCasino';
-    var syncLiveBingo = '@ViewBag.SyncLiveBingo';
+    var syncLiveCasino = '@ViewBag.SyncLiveCasino';
     var syncBingo = '@ViewBag.SyncBingo';
 
     function toUrl(relativeUrl) {
@@ -92,7 +92,7 @@
             $('#tab5').remove();
         }
 
-        if (syncLiveBingo == 'False') {
+        if (syncLiveCasino == 'False') {
             $('#tab4').remove();
         }
 
