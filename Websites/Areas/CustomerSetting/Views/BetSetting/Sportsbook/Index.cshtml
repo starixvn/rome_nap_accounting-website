@@ -104,23 +104,23 @@
         var userId = parseInt('@userId');
         var siteName = '@siteName';
         var syncCasino = '@ViewBag.SyncCasino';
+        var syncLiveBingo = '@ViewBag.SyncLiveBingo';
         var syncBingo = '@ViewBag.SyncBingo';
-        var syncLiveCasino = '@ViewBag.SyncLiveCasino';
 
         function toUrl(relativeUrl) {
             return '@Url.Content("~/CustomerSetting/BetSetting/")' + relativeUrl;
         }
 
         $(document).ready(function () {
-            if (syncBingo == 'False') {
+            if (syncCasino == 'False') {
                 $('#tab6').remove();
             }
 
-            if (syncCasino == 'False') {
+            if (syncBingo == 'False') {
                 $('#tab5').remove();
             }
 
-            if (syncLiveCasino == 'False') {
+            if (syncLiveBingo == 'False') {
                 $('#tab4').remove();
             }
 
