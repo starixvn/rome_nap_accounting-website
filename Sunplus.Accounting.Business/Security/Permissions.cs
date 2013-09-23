@@ -124,7 +124,7 @@ namespace Sunplus.Accounting.Business.Security
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
             }
             return pages;

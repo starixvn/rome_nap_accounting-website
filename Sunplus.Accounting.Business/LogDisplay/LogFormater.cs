@@ -104,7 +104,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             {
                 return ResourceExtension.GetResourceValue(ResourceExtension.Resources.Viewlog, key).ToString();
             }
-            catch (Exception ex)
+            catch
             {
                 // missing resource
                 str = key;

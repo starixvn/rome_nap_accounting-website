@@ -96,7 +96,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             string tplContent = TemplateHandler.CopyBlock(tpl, "Content");
 
             string odd_even = "";
-            var i = 1;
             foreach (DataRow dr in Rows)
             {
                 int exid = CastAide.AsInt32(dr["exchangeid"]);

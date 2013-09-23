@@ -171,7 +171,7 @@ namespace BLL.Report.HR.GroupDaily
                 string hrTypeName = "", date_p = "", date_c = "";
                 string condition = "", style = "";
                 int countdate = 0;
-                int countFixed = 0, hrType = 0;
+                int countFixed = 0;
 
                 foreach (DataRow dr in dtGroup.Rows)
                 {

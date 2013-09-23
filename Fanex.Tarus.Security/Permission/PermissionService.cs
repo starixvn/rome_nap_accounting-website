@@ -1,16 +1,12 @@
-﻿// ***********************************************************************
-// Assembly         : Fanex.Tarus.Security
-// Author           : ethan.nguyen
-// Created          : 08-16-2013
-//
-// Last Modified By : ethan.nguyen
-// Last Modified On : 09-17-2013
-// ***********************************************************************
-// <copyright file="PermissionService.cs" company="Nexcel">
-//     Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+﻿// --------------------------------------------------------------------------
+// <copyright file="PermissionService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
-// <summary></summary>
-// ***********************************************************************
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="ethan.nguyen" date="2013.8.16">Created</change>
+// </history>
+
 
 /// <summary>
 /// The Permission namespace.

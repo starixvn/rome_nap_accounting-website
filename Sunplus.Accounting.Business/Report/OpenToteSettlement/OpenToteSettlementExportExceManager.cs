@@ -127,8 +127,7 @@ namespace BLL.Report.OpenToteSettlement
                                "winTOPartner", "placeTOPartner", "winplaceTOPartner", "totalTOPartner", "dividendWon",
                                "commIncomeIBC", "FeeDue2", "AmountDue"
                            };
-
-            int rowspan = 0;
+           
             int colspan = 0;
 
             ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow + 1, 0).Value = TitleRow;
