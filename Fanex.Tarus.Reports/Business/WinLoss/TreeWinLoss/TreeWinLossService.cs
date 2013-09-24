@@ -844,8 +844,7 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
         private void ExportTreeWinLossReportToExcelFileAssignHeader(int startRow, int startCol, ref ExcelWorksheet wsReport, string title, int reportType)
         {
             var bgHeaderFormat = new ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
-            var nextCol = 0;
-
+          
 			int maxColumnIndex = reportType != 0 ? 18 : 16;
 
 			startRow--;
@@ -1043,7 +1042,7 @@ namespace Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss
             var cellTextFormat = new ExcelGemboxUtils().GetStyleText(255, 255, 255);
             cellTextFormat.HorizontalAlignment = HorizontalAlignmentStyle.Center;
 
-			double winlossValue, comm, total,
+			double winlossValue, total,
 				baseRMWLVariancePlus, baseRMWLVarianceMinus, baseRMWLVarianceTotal,
 				baseRMVarianceMargin,
 				baseRMTotal, baseRMVirtualTotal,

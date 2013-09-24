@@ -18,7 +18,7 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.Extentions
                     Cache = new MemcachedClient("memcached");
                 }
             }
-            catch (Exception ex)
+            catch
             {
             }
         }
@@ -38,7 +38,7 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.Extentions
                 Cache.Store(StoreMode.Set, key, value);
                 return true;
             }
-            catch (Exception ex)
+            catch 
             {
             }
             return false;
@@ -51,7 +51,7 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.Extentions
                 Cache.Store(StoreMode.Set, key, value, expire);
                 return true;
             }
-            catch (Exception ex)
+            catch 
             {
             }
             return false;
@@ -63,7 +63,7 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.Extentions
             {
                 return Cache.Get(key);
             }
-            catch (Exception ex)
+            catch
             {
             }
             return null;

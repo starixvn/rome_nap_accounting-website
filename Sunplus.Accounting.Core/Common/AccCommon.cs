@@ -346,13 +346,8 @@ namespace Sunplus.Accounting.Core.Common
                     HttpContext.Current.Response.Redirect(
                         HttpContext.Current.Request.Url.AbsoluteUri.Replace("https", "http"));
             }
-            catch (Exception ex)
+            catch
             {
-                //
-                //{
-                //    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                //}
-                //throw ex;
             }
         }
 

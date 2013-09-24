@@ -583,7 +583,7 @@ namespace Fanex.Tarus.Reports.Business.MixParlay
 
                 #region Content
                 int index = 3;
-                decimal linetotal = 0, turnover = 0, margin = 0;
+               
                 int r = 255, g = 255, b = 255;
                 foreach (DailyParlayWinLoss combination in parlay.Rows)
                 {
@@ -754,7 +754,7 @@ namespace Fanex.Tarus.Reports.Business.MixParlay
 
                 #region Content
                 int index = 2;
-                decimal linetotal = 0, turnover = 0, margin = 0;
+                decimal  margin = 0;
                 int r = 255, g = 255, b = 255;
                 foreach (DailyParlayWinLoss livetype in parlay.Rows)
                 {
