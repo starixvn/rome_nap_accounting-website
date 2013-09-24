@@ -48,11 +48,6 @@ input[type="text"], input[type="password"] {
 {
     background-color: #FFFFDD;
 }
-.ui-tabs .ui-tabs-panel {
-    border: none;
-    max-height: 1024px;
-    padding: 2px;
-}
 .ui-widget 
 {
     font-size: 11px !important;
@@ -68,8 +63,6 @@ input[type="text"], input[type="password"] {
      border: 1px solid #7C98A4; 
      border-bottom: none;
 }
-
-
 .normal
 {
     font-weight: normal;

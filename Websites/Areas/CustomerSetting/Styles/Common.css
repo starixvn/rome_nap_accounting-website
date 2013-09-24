@@ -355,7 +355,6 @@ select,.select
 .ui-tabs .ui-tabs-panel
 {
     padding: 2px;
-    max-height: 300px;
     border: 1px solid #7C98A4 !important;
 }
 .ui-tabs-anchor
