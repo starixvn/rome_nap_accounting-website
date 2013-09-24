@@ -1,32 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
-  <Function Name="Special Report">
-    <Setting Key="Acc_Rpt_MatchAnalysisByCurrency" SpName="Acc_Rpt_MatchAnalysisByCurrency" DbName="DBACC.bodb02.bodbAdminNet"/>
-    <Setting Key="Acc_Rpt_MatchAnalysisByBettype" SpName="Acc_Rpt_MatchAnalysisByBettype" DbName="DBACC.bodb02.bodbAdminNet"/>
-    <Setting Key="Acc_Rpt_MatchAnalysisBySuper" SpName="Acc_Rpt_MatchAnalysisBySuper" DbName="DBACC.bodb02.bodbAdminNet"/>
-    <Setting Key="Acc_Rpt_MatchAnalysisByMember" SpName="Acc_Rpt_MatchAnalysisByMember" DbName="DBACC.bodb02.bodbAdminNet"/>
-    <Setting Key="Acc_Rpt_MatchAnalysisByCountry" SpName="Acc_Rpt_MatchAnalysisByCountry" DbName="DBACC.bodb02.bodbAdminNet"/>
-    <Setting Key="Acc_LeagueSel" SpName="Acc_LeagueSel" DbName="DBACC.bodb02.bodbAdminNet"/>
-    <Setting Key="Acc_MatchSel" SpName="Acc_MatchSel" DbName="DBACC.bodb02.bodbAdminNet"/>
-    <Setting Key="Acc_BettypeSelFromMatch" SpName="Acc_BettypeSelFromMatch" DbName="DBACC.bodb02.bodbAdminNet"/>
-    <Setting Key="Acc_Rpt_MatchAnalysisBySuper_SAg" SpName="Acc_Rpt_MatchAnalysisBySuper_SAg" DbName="DBACC.bodb02.bodbAdminNet"/>
-    <Setting Key="Acc_Rpt_MatchAnalysisBySuper_MAg" SpName="Acc_Rpt_MatchAnalysisBySuper_MAg" DbName="DBACC.bodb02.bodbAdminNet"/>
-    <Setting Key="Acc_Rpt_MatchAnalysisBySuper_Ag" SpName="Acc_Rpt_MatchAnalysisBySuper_Ag" DbName="DBACC.bodb02.bodbAdminNet"/>
-  </Function>
-
-  <Function Name="MatchWinLoss2aReport">
-    <Setting Key="WLSummaryReportByBettype" SpName="Acc_Rpt_WinlossByBettype" DbName="DBACC.bodb02.bodbAdminNet"  />
-    <Setting Key="WLSummaryReportByBettype_14" SpName="Acc_Rpt_WinlossByBettype14" DbName="DBACC.bodb02.bodbAdminNet"  />
-    <Setting Key="MatchWinLoss2a" SpName="Acc_Rpt_MatchWinLoss2_New" DbName="DBACC.bodb02.bodbAdminNet"  />
-    <Setting Key="MatchWinLoss2a_14" SpName="Acc_Rpt_MatchWinLoss2_New14" DbName="DBACC.bodb02.bodbAdminNet"  />
-    <Setting Key="SelWLBySportTypeDetail" SpName="Acc_Rpt_MatchWinLoss2_Sporttype" DbName="DBACC.bodb02.bodbAdminNet"  />
-    <Setting Key="SelWLBySportTypeDetail_14" SpName="Acc_Rpt_MatchWinLoss2_Sporttype14" DbName="DBACC.bodb02.bodbAdminNet"  />
-    <Setting Key="MatchWinLoss2a_Old" SpName="Acc_Rpt_MatchWinLoss2" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="MatchWinLoss2a_Old_14" SpName="Acc_Rpt_MatchWinLoss214" DbName="DBACC.bodb02.bodbAdminNet"  />
-    <Setting Key="ThirdPartyCasinoReport" SpName="Acc_Rpt_WinlostCA_Details" DbName="DBACC.bodb02.bodbAdminNet"  />
-    <Setting Key="ThirdPartyCasinoReport_14" SpName="Acc_Rpt_WinlostCA_Details14" DbName="DBACC.bodb02.bodbAdminNet"  />
+  <Function Name="Main Report - Match Win Loss (2a)">
     <Setting Key="MatchWinLoss2aV3_SelMainReport" SpName="Acc_Rpt_MatchWinLoss2_New" DbName="DBACC.bodb02.bodbAdminNet"  />
     <Setting Key="MatchWinLoss2aV3_SelMainReport_14" SpName="Acc_Rpt_MatchWinLoss2_New14" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="ThirdPartyCasinoReport" SpName="Acc_Rpt_WinlostCA_Details" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="ThirdPartyCasinoReport_14" SpName="Acc_Rpt_WinlostCA_Details14" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="WLSummaryReportByBettype" SpName="Acc_Rpt_WinlossByBettype" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="WLSummaryReportByBettype_14" SpName="Acc_Rpt_WinlossByBettype14" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="SelWLBySportTypeDetail" SpName="Acc_Rpt_MatchWinLoss2_Sporttype" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="SelWLBySportTypeDetail_14" SpName="Acc_Rpt_MatchWinLoss2_Sporttype14" DbName="DBACC.bodb02.bodbAdminNet"  />    
   </Function>
 
   <Function Name="Daily WinLoss2h Report New">
@@ -55,9 +37,7 @@
     <Setting Key="DailyWLDirect_Bingo" SpName="Acc_Rpt_DailyWLDirect_Bingo" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="DailyWLDirect_Bingo_14" SpName="Acc_Rpt_DailyWLDirect_Bingo14" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="DailyWLDirect_Finance_Detail" SpName="Acc_Rpt_DailyWLDirect_Finance_Details" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="DailyWLDirect_Finance_Detail_14" SpName="Acc_Rpt_DailyWLDirect_Finance_Details14" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="DailyWLDirect_Bingo" SpName="Acc_Rpt_DailyWLDirect_Finance_Details" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="DailyWLDirect_Finance_Detail_14" SpName="Acc_Rpt_DailyWLDirect_Finance_Details14" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="DailyWLDirect_Finance_Detail_14" SpName="Acc_Rpt_DailyWLDirect_Finance_Details14" DbName="DBACC.bodb02.bodbAdminNet" />    
     <Setting Key="DailyWLDirect_LiveCasino" SpName="Acc_Rpt_DailyWLDirect_LiveCasino" DbName="DBACC.bodb02.bodbAdminNet"  />
     <Setting Key="DailyWLDirect_LiveCasino_14" SpName="Acc_Rpt_DailyWLDirect_LiveCasino14" DbName="DBACC.bodb02.bodbAdminNet"  />
     <Setting Key="DailyWLDirect_MixParlayAdvance" SpName="Acc_Rpt_MixParlay_Advance" DbName="DBACC.bodb02.bodbAdminNet"  />
@@ -70,15 +50,35 @@
     <Setting Key="DailyWLDirect_VirtualSports_14" SpName="Acc_Rpt_DailyWLDirect_VirtualSports14" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="DailyWLDirect_VirtualSports_Bettype" SpName="Acc_Rpt_DailyWLDirect_VirtualSports_Bettype" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="DailyWLDirect_VirtualSports_Bettype_14" SpName="Acc_Rpt_DailyWLDirect_VirtualSports_Bettype14" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_Rpt_DailyParlayWinloss" SpName="Acc_Rpt_DailyParlayWinloss" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_Rpt_DailyParlayWinloss_14" SpName="Acc_Rpt_DailyParlayWinloss14" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="DailyWLDirect_VirtualHorseRacing_Detail" SpName="Acc_Rpt_DailyWLDirect_VirtualHR_Details" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="DailyWLDirect_VirtualHorseRacing_Detail_14" SpName="Acc_Rpt_DailyWLDirect_VirtualHR_Details14" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
+  
+  <Function Name="Special Report">
+    <Setting Key="Acc_Rpt_MatchAnalysisByCurrency" SpName="Acc_Rpt_MatchAnalysisByCurrency" DbName="DBACC.bodb02.bodbAdminNet"/>
+    <Setting Key="Acc_Rpt_MatchAnalysisByBettype" SpName="Acc_Rpt_MatchAnalysisByBettype" DbName="DBACC.bodb02.bodbAdminNet"/>
+    <Setting Key="Acc_Rpt_MatchAnalysisBySuper" SpName="Acc_Rpt_MatchAnalysisBySuper" DbName="DBACC.bodb02.bodbAdminNet"/>
+    <Setting Key="Acc_Rpt_MatchAnalysisByMember" SpName="Acc_Rpt_MatchAnalysisByMember" DbName="DBACC.bodb02.bodbAdminNet"/>
+    <Setting Key="Acc_Rpt_MatchAnalysisByCountry" SpName="Acc_Rpt_MatchAnalysisByCountry" DbName="DBACC.bodb02.bodbAdminNet"/>
+    <Setting Key="Acc_LeagueSel" SpName="Acc_LeagueSel" DbName="DBACC.bodb02.bodbAdminNet"/>
+    <Setting Key="Acc_MatchSel" SpName="Acc_MatchSel" DbName="DBACC.bodb02.bodbAdminNet"/>
+    <Setting Key="Acc_BettypeSelFromMatch" SpName="Acc_BettypeSelFromMatch" DbName="DBACC.bodb02.bodbAdminNet"/>
+    <Setting Key="Acc_Rpt_MatchAnalysisBySuper_SAg" SpName="Acc_Rpt_MatchAnalysisBySuper_SAg" DbName="DBACC.bodb02.bodbAdminNet"/>
+    <Setting Key="Acc_Rpt_MatchAnalysisBySuper_MAg" SpName="Acc_Rpt_MatchAnalysisBySuper_MAg" DbName="DBACC.bodb02.bodbAdminNet"/>
+    <Setting Key="Acc_Rpt_MatchAnalysisBySuper_Ag" SpName="Acc_Rpt_MatchAnalysisBySuper_Ag" DbName="DBACC.bodb02.bodbAdminNet"/>
+  </Function>
+
+  
+
+  <Function Name="Daily WinLoss2h Report New">
+    
+    <Setting Key="Acc_Rpt_DailyParlayWinloss" SpName="Acc_Rpt_DailyParlayWinloss" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_Rpt_DailyParlayWinloss_14" SpName="Acc_Rpt_DailyParlayWinloss14" DbName="DBACC.bodb02.bodbAdminNet" />
+    
+  </Function>
 
   <Function Name="Live Casino - Report">
-    <Setting Key="DailyWLDirect_LiveCasino" SpName="Acc_Rpt_DailyWLDirect_LiveCasino" DbName="DBACC.bodb02.bodbAdminNet"  />
-    <Setting Key="DailyWLDirect_LiveCasino_14" SpName="Acc_Rpt_DailyWLDirect_LiveCasino14" DbName="DBACC.bodb02.bodbAdminNet"  />
+    
     <Setting Key="GameStatistics_GameTableSel" SpName="Acc_Rpt_LiveCasino_GameStatistics_GameTableSel" DbName="DBACC.bodb02.bodbAdminNet"  />
     <Setting Key="GameStatistics_GameTypeSel" SpName="Acc_Rpt_LiveCasino_GameStatistics_GameTypeSel" DbName="DBACC.bodb02.bodbAdminNet"  />
     <Setting Key="LiveCasinoWinLoss_DW" SpName="Acc_Rpt_LiveCasino_AgencyWinLoss" DbName="DBACC.bodb02.bodbAdminNet"  />
@@ -150,11 +150,7 @@
 
     
     
-    <add alias="DailyWLDirectRacing_14" name="Acc_Rpt_DailyWLDirect_Racing14" db="DBACC.bodb02.bodbAdminNet"></add>
-    <add alias="DailyWLDirectRacingBySport" name="Acc_Rpt_DailyWLDirect_RacingBySport" db="DBACC.bodb02.bodbAdminNet"></add>
-    <add alias="DailyWLDirectRacingBySport_14" name="Acc_Rpt_DailyWLDirect_RacingBySport14" db="DBACC.bodb02.bodbAdminNet"></add>
-    <add alias="DailyWLDirectRacingBySportDetails" name="Acc_Rpt_DailyWLDirect_RacingBySport_Details" db="DBACC.bodb02.bodbAdminNet"></add>
-    <add alias="DailyWLDirectRacingBySportDetails_14" name="Acc_Rpt_DailyWLDirect_RacingBySport_Details14" db="DBACC.bodb02.bodbAdminNet"></add>
+    
     <add alias="WinlostRacingLicensee_Details" name="Acc_Rpt_WinlostRacingLicensee_Details" db="DBACC.bodb02.bodbAdminNet"></add>
     <add alias="WinlostRacingLicensee_Details_14" name="Acc_Rpt_WinlostRacingLicensee_Details14" db="DBACC.bodb02.bodbAdminNet"></add>
     <add alias="WinlostRacingLicensee_Details_WH" name="Acc_Rpt_WinlostRacingLicensee_Details14" db="DBACC.bodb02.bodbAdminNet"></add>

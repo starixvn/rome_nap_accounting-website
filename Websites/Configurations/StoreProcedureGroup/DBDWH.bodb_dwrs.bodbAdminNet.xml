@@ -1,19 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
 
-  <Function Name="Report">    
+  <Function Name="Main Report - Match Win Loss (2a)">
+    <Setting Key="MatchWinLoss2aV3_SelMainReport_WH" SpName="Acc_Rpt_MatchWinLoss2_New_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
     <Setting Key="WLSummaryReportByBettype_WH" SpName="Acc_Rpt_WinlossByBettype_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
-    <Setting Key="MatchWinLoss2a_WH" SpName="Acc_Rpt_MatchWinLoss2_New_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
     <Setting Key="SelWLBySportTypeDetail_WH" SpName="Acc_Rpt_MatchWinLoss2_Sporttype_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
     <Setting Key="MatchWinLoss2a_Old_WH" SpName="Acc_Rpt_MatchWinLoss2_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
     <Setting Key="ThirdPartyCasinoReport_WH" SpName="Acc_Rpt_WinlostCA_Details_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
-    <Setting Key="MatchWinLoss2aV3_SelMainReport_WH" SpName="Acc_Rpt_MatchWinLoss2_New_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
-    <Setting Key="GetSportType" SpName="Acc_SelVirtualSport" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
-    <Setting Key="DailyWinlossVirtualSport" SpName="Acc_Rpt_VirtualsportWinloss" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
-    <Setting Key="WinlossVirtualSportByCurrency" SpName="Acc_Rpt_VirtualsportWinloss_detail" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
-    <Setting Key="BingoWinlossByMonth" SpName="Acc_Rpt_BingoWinlossByMonth" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
-    <Setting Key="Acc_Rpt_NumberGameMonthlyWinloss" SpName="Acc_Rpt_NumberGameMonthlyWinloss" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
-    <Setting Key="Gaming_SelNumberGameMonthlyWinLossReport" SpName="Acc_Rpt_NumberGameWinlossByMonth" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
+  </Function>
+
+  <Function Name="Daily WinLoss2h Report New">
     <Setting Key="DailyWLDirect_Sporttype_Soccer_WH" SpName="Acc_Rpt_DailyWLDirect_Sporttype_Soccer_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
     <Setting Key="DailyWLDirect_Sporttype_WH" SpName="Acc_Rpt_DailyWLDirect_Sporttype_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
     <Setting Key="DailyWLDirect_Sporttype_OtherSports_WH" SpName="Acc_Rpt_DailyWLDirect_Sporttype_OtherSports_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
@@ -33,12 +29,26 @@
     <Setting Key="DailyWLDirect_othersport_bettype_WH" SpName="Acc_Rpt_DailyWLDirect_OtherSport_Bettype" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
     <Setting Key="DailyWLDirect_VirtualSports_WH" SpName="Acc_Rpt_DailyWLDirect_VirtualSports_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
     <Setting Key="DailyWLDirect_VirtualSports_Bettype_WH" SpName="Acc_Rpt_DailyWLDirect_VirtualSports_Bettype_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
+    <Setting Key="DailyWLDirect_VirtualHorseRacing_Detail_WH" SpName="Acc_Rpt_DailyWLDirect_VirtualHR_Details" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />    
+    <Setting Key="BetList_ScoreInformation_SelScoreInformation_WH" SpName="Acc_Rpt_DailyWLDirect_Result_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
+    <Setting Key="DailyWLDirect_HorseRacing_WH" SpName="Acc_Rpt_DailyWLDirect_HorseRacing" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
+    <Setting Key="DailyWLDirect_HorseRacing_Detail_WH" SpName="Acc_Rpt_DailyWLDirect_HorseRacing_Details" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
+    <Setting Key="DailyWLDirect_Finance_WH" SpName="Acc_Rpt_DailyWLDirect_Finance" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
+  </Function>
+  
+  <Function Name="Report">       
+    <Setting Key="GetSportType" SpName="Acc_SelVirtualSport" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
+    <Setting Key="DailyWinlossVirtualSport" SpName="Acc_Rpt_VirtualsportWinloss" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
+    <Setting Key="WinlossVirtualSportByCurrency" SpName="Acc_Rpt_VirtualsportWinloss_detail" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
+    <Setting Key="BingoWinlossByMonth" SpName="Acc_Rpt_BingoWinlossByMonth" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
+    <Setting Key="Acc_Rpt_NumberGameMonthlyWinloss" SpName="Acc_Rpt_NumberGameMonthlyWinloss" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
+    <Setting Key="Gaming_SelNumberGameMonthlyWinLossReport" SpName="Acc_Rpt_NumberGameWinlossByMonth" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
+    
     <Setting Key="Acc_Rpt_DailyParlayWinloss_WH" SpName="Acc_Rpt_DailyParlayWinloss_DW" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
-    <Setting Key="DailyWLDirect_VirtualHorseRacing_Detail_WH" SpName="Acc_Rpt_DailyWLDirect_VirtualHR_Details" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
-    <Setting Key="DailyWLDirect_LiveCasino_WH" SpName="Acc_Rpt_DailyWLDirect_LiveCasino" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
+    
     <Setting Key="Gaming_SelLiveCasinoGameTable" SpName="Acc_Rpt_LiveCasinoFinance_GameTable" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
     <Setting Key="Gaming_SelFinancialReport" SpName="Acc_Rpt_LiveCasinoFinance" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
-    <Setting Key="BetList_ScoreInformation_SelScoreInformation_WH" SpName="Acc_Rpt_DailyWLDirect_Result_Old_xtest" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
+    
     <Setting Key="Acc_Rpt_NumberGameWinlossByCurrency_detail" SpName="Acc_Rpt_NumberGameWinlossByCurrency_detail" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
     <Setting Key="Acc_Rpt_NumberGameWinlossByCurrency" SpName="Acc_Rpt_NumberGameWinlossByCurrency" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
     <Setting Key="Acc_Rpt_NumberGameWinlossByDate" SpName="Acc_Rpt_NumberGameWinlossByDate" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
@@ -52,9 +62,7 @@
     <Setting Key="Acc_Rpt_TreeWinlostBySAg_Old" SpName="Acc_Rpt_TreeWinlostBySAg_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
     <Setting Key="Acc_Rpt_TreeWinlostByMAg_Old" SpName="Acc_Rpt_TreeWinlostByMAg_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
     <Setting Key="Acc_Rpt_TreeWinlostByAg_Old" SpName="Acc_Rpt_TreeWinlostByAg_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
-    <Setting Key="DailyWLDirect_HorseRacing_WH" SpName="Acc_Rpt_DailyWLDirect_HorseRacing" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
-    <Setting Key="DailyWLDirect_HorseRacing_Detail_WH" SpName="Acc_Rpt_DailyWLDirect_HorseRacing_Details" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
-    <Setting Key="DailyWLDirect_Finance_WH" SpName="Acc_Rpt_DailyWLDirect_Finance" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
+    
     <Setting Key="WinLoss_HorseRacing_Detail_WH" SpName="Acc_Rpt_WinlostHR_Details_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
     <Setting Key="Acc_Rpt_NumberGameMemberWinlossByMatch_details" SpName="Acc_Rpt_NumberGameMemberWinlossByMatch_details" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
     <Setting Key="Acc_Rpt_NumberGameMemberWinlossByMatch" SpName="Acc_Rpt_NumberGameMemberWinlossByMatch" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />

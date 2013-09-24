@@ -463,10 +463,19 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         {
             var listMenu = new List<MenuBO>();
             var parms = new Hashtable();
-            parms.Add("custid", custId);
-            //parms.Add("system", AppSession.SYSTEM.ToString().ToUpper());
+            parms.Add("custid", custId);            
             parms.Add("system", AppSession.CurrentSystemNAME.ToString());
-            DbResult result = DbHelper.Execute("Acc_MenuSelByCustID", parms, DBType.DB03, 120);
+
+            DbResult result = null;
+
+            using (ObjectDb db = new ObjectDb("Acc_MenuSelByCustID"))
+            {
+                db.AssignParamValues(parms);
+                var ds = db.ExecuteDataSet();
+                var output = db.GetOuputParams();
+
+                result = new DbResult(output, ds);
+            }
 
             if (result.ResultSet != null && result.ResultSet.Tables.Count > 0)
             {
@@ -677,7 +686,17 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             var parms = new Hashtable();
             parms.Add("custid", custId);
             parms.Add("system", system);
-            DbResult result = DbHelper.Execute("Acc_MenuSelByCustID", parms, DBType.DB03, 120);
+            
+            DbResult result = null;
+
+            using (ObjectDb db = new ObjectDb("Acc_MenuSelByCustID"))
+            {
+                db.AssignParamValues(parms);
+                var ds = db.ExecuteDataSet();
+                var output = db.GetOuputParams();
+
+                result = new DbResult(output, ds);
+            }
 
             if (result.ResultSet != null && result.ResultSet.Tables.Count > 0)
             {
