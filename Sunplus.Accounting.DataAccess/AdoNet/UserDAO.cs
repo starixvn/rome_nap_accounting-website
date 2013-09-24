@@ -252,8 +252,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                                                           int status, string type, string creator, ref int totalPages,
                                                           string verifyBy)
         {
-            var entityList = new List<DailyTransaction>();
-            var spElement = GetTransactionStoreProcedure("SelDailyFinanceTxn");
+            var entityList = new List<DailyTransaction>();            
             var paramList = new Hashtable();
             paramList.Add("fromdate", transDate);
             paramList.Add("pageindex", pageIndex);
@@ -263,9 +262,11 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             paramList.Add("checkerid", status);
             paramList.Add("checkername", verifyBy);
 
-            using (IDataReader reader = DbHelper.ExecuteReader(spElement.Name,
-                                                               paramList, spElement.DbName, 120))
+            
+            using (ObjectDb db = new ObjectDb("SelDailyFinanceTxn"))
             {
+                db.AssignParamValues(paramList);
+                var reader = db.ExecuteReader();
                 if (reader != null)
                 {
                     while (reader.Read())
@@ -305,8 +306,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
         public List<DailyTransaction> GetDailyAllTransaction(DateTime transDate, int pageIndex, int pageSize, string type, string creator, ref int totalPages)
         {
-            var entityList = new List<DailyTransaction>();
-            var spElement = GetTransactionStoreProcedure("SelDailyAllTxn");
+            var entityList = new List<DailyTransaction>();            
             var paramList = new Hashtable();
             paramList.Add("fromdate", transDate);
             paramList.Add("pageindex", pageIndex);
@@ -315,9 +315,15 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             paramList.Add("type", type);
             paramList.Add("creator", creator);
 
-            DbResult dbResult = DbHelper.Execute(spElement.Name,
-                                                               paramList, spElement.DbName, 6000);
-            
+            DbResult dbResult = null;
+            using (ObjectDb db = new ObjectDb("SelDailyAllTxn", 6000))
+            {
+                db.AssignParamValues(paramList);
+                var ds = db.ExecuteDataSet();
+                var output = db.GetOuputParams();
+
+                dbResult = new DbResult(output, ds);
+            }
 
             if (dbResult != null && dbResult.ResultSet.Tables[0].Rows.Count > 0)
             {

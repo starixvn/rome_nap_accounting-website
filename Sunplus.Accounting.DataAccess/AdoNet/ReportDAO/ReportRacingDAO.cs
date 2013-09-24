@@ -50,10 +50,17 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             param.Add("winlostdate", CastAide.AsDateTime(winlossDate));
             param.Add("reporttype", ((int)reportType));
             string strMapping = SpAlias.WinlostRacingTote.ToString() + GetStoreMappingSubfix(CastAide.AsDateTime(winlossDate));
-          
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.Racing, strMapping);
+                      
+            using (ObjectDb db = new ObjectDb(strMapping))
+            {
+                db.AssignParamValues(param);
+                var ds = db.ExecuteDataSet();
+                var output = db.GetOuputParams();
+
+                dbResult = new DbResult(output, ds);
+            }
             
-            dbResult = DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
+            
             if (dbResult != null && dbResult.ResultSet != null && dbResult.ResultSet.Tables.Count > 0)
                 return dbResult.ResultSet.Tables[0];
             else
@@ -67,11 +74,17 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             Hashtable param = new Hashtable();
             param.Add("winlostdate", CastAide.AsDateTime(winlossDate));
             param.Add("reporttype", ((int)reportType));
-            string strMapping = SpAlias.WinlostRacingTote_New.ToString() + GetStoreMappingSubfix(CastAide.AsDateTime(winlossDate));
+            string strMapping = "WinlostRacingTote" + GetStoreMappingSubfix(CastAide.AsDateTime(winlossDate));
 
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.Racing, strMapping);
+            using (ObjectDb db = new ObjectDb(strMapping))
+            {
+                db.AssignParamValues(param);
+                var ds = db.ExecuteDataSet();
+                var output = db.GetOuputParams();
 
-            dbResult = DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
+                dbResult = new DbResult(output, ds);
+            }
+            
             if (dbResult != null && dbResult.ResultSet != null && dbResult.ResultSet.Tables.Count > 0)
                 return dbResult.ResultSet.Tables[0];
             else
@@ -88,11 +101,16 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             param.Add("poolcurrency", poolCurrency);
             param.Add("partnerid", partnerId);
 
-            string strMapping = SpAlias.WinlostRacingToteDetail.ToString() + GetStoreMappingSubfix(CastAide.AsDateTime(winlossDate));
+            string strMapping = "WinlostRacingToteDetail" + GetStoreMappingSubfix(CastAide.AsDateTime(winlossDate));
 
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.Racing, strMapping);
-
-            dbResult = DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
+            using (ObjectDb db = new ObjectDb("WinlostRacingToteDetail"))
+            {
+                db.AssignParamValues(param);
+                var ds = db.ExecuteDataSet();
+                var output = db.GetOuputParams();
+                dbResult = new DbResult(output, ds);
+            }
+            
             if (dbResult != null && dbResult.ResultSet != null && dbResult.ResultSet.Tables.Count > 0)
                 return dbResult.ResultSet.Tables[0];
             else
@@ -108,11 +126,16 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             param.Add("poolcurrency", poolCurrency);
             param.Add("partnerid", partnerId);
 
-            string strMapping = SpAlias.WinlostRacingToteDetail_New.ToString() + GetStoreMappingSubfix(CastAide.AsDateTime(winlossDate));
+            string strMapping = "WinlostRacingToteDetail" + GetStoreMappingSubfix(CastAide.AsDateTime(winlossDate));
+            using (ObjectDb db = new ObjectDb(strMapping))
+            {
+                db.AssignParamValues(param);
+                var ds = db.ExecuteDataSet();
+                var output = db.GetOuputParams();
 
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.Racing, strMapping);
+                dbResult = new DbResult(output, ds);
+            }
 
-            dbResult = DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
             if (dbResult != null && dbResult.ResultSet != null && dbResult.ResultSet.Tables.Count > 0)
                 return dbResult.ResultSet.Tables[0];
             else
@@ -139,16 +162,23 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
         {
             DbResult dbResult = null;
 
-            string strMapping = SpAlias.WinlostRacingBetlist.ToString() + GetStoreMappingSubfix(CastAide.AsDateTime(winlossdate)); 
-
-            //var spElement = GetStoreProcedure(StoreProcedureSection.StoreCollection.Report, "Racing").Stores[strMapping];
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.Racing, strMapping);
+            string strMapping = "WinlostRacingBetlist" + GetStoreMappingSubfix(CastAide.AsDateTime(winlossdate)); 
+            
             Hashtable param = new Hashtable();
             param.Add("winlostdate", winlossdate);
             param.Add("leagueid", leagueid);
             param.Add("raceno", raceNo);
             param.Add("currency", currency); 
-            dbResult = DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
+
+            using (ObjectDb db = new ObjectDb(strMapping))
+            {
+                db.AssignParamValues(param);
+                var ds = db.ExecuteDataSet();
+                var output = db.GetOuputParams();
+
+                dbResult = new DbResult(output, ds);
+            }
+
             if (dbResult != null && dbResult.ResultSet != null && dbResult.ResultSet.Tables.Count > 0)
                 return dbResult.ResultSet.Tables[0];
             else
@@ -160,16 +190,21 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
         {
             DbResult dbResult = null;
 
-            string strMapping = SpAlias.WinlostRacingBetlist_New.ToString() + GetStoreMappingSubfix(CastAide.AsDateTime(winlossdate));
+            string strMapping = "WinlostRacingBetlist" + GetStoreMappingSubfix(CastAide.AsDateTime(winlossdate));
 
-            //var spElement = GetStoreProcedure(StoreProcedureSection.StoreCollection.Report, "Racing").Stores[strMapping];
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.Racing, strMapping);
             Hashtable param = new Hashtable();
             param.Add("winlostdate", winlossdate);
             param.Add("leagueid", leagueid);
             param.Add("raceno", raceNo);
             param.Add("currency", currency);
-            dbResult = DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
+                        
+            using (ObjectDb db = new ObjectDb(strMapping))
+            {
+                db.AssignParamValues(param);
+                var ds = db.ExecuteDataSet();
+                var output = db.GetOuputParams();
+            }
+            
             if (dbResult != null && dbResult.ResultSet != null && dbResult.ResultSet.Tables.Count > 0)
                 return dbResult.ResultSet.Tables[0];
             else

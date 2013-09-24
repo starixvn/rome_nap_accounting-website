@@ -1016,23 +1016,21 @@
             DbResult result = null;
             try
             {
-                string dbtype = "";
-
-                if (db.Equals("rep"))
-                {
-                    dbtype = DBType.WAREHOUSE;
-                }
-                else if (db.Equals("main"))
-                {
-                    dbtype = DBType.MAIN;
-                }
+              
                 var param = new Hashtable();
                 param.Add("fromdate", FormatHandler.ResetStartDate(fdate));
                 param.Add("todate", FormatHandler.ResetEndDate(tdate));
                 param.Add("winlost_8rm", 0);
-                StoreProcedureElement spElement = GetReportStoreProcedure(
-                    ReportSession.StoreCollection.WinLoss, "WinLoss_Sporttype");
-                result = DbHelper.Execute(spElement.Name, param, spElement.DbName, 120);
+
+
+                using (ObjectDb objectDb = new ObjectDb("WinLoss_Sporttype"))
+                {
+                    objectDb.AssignParamValues(param);
+                    var ds = objectDb.ExecuteDataSet();
+                    var output = objectDb.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {

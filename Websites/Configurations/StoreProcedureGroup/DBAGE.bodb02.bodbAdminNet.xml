@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+
+  <Function Name="BetList">
+    <Setting Key="BetListByDayAll" SpName="Acc_BetListByDayAll" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="ByTransID" SpName="Acc_BetsSelBetList_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    
+  </Function>
+
+
+</Functions>

@@ -2,44 +2,8 @@
 
 <Functions>
 
-  <Function Name="Special Report">
-	  <Setting Key="Acc_Rpt_MatchAnalysisByCurrency" SpName="Acc_Rpt_MatchAnalysisByCurrency" DbName="warehouse"/>
-	  <Setting Key="Acc_Rpt_MatchAnalysisByBettype" SpName="Acc_Rpt_MatchAnalysisByBettype" DbName="warehouse"/>
-	  <Setting Key="Acc_Rpt_MatchAnalysisBySuper" SpName="Acc_Rpt_MatchAnalysisBySuper" DbName="warehouse"/>
-	  <Setting Key="Acc_Rpt_MatchAnalysisByMember" SpName="Acc_Rpt_MatchAnalysisByMember" DbName="warehouse"/>
-	  <Setting Key="Acc_Rpt_MatchAnalysisByCountry" SpName="Acc_Rpt_MatchAnalysisByCountry" DbName="warehouse"/>
-	  <Setting Key="Acc_LeagueSel" SpName="Acc_LeagueSel" DbName="warehouse"/>
-	  <Setting Key="Acc_MatchSel" SpName="Acc_MatchSel" DbName="warehouse"/>
-	  <Setting Key="Acc_BettypeSelFromMatch" SpName="Acc_BettypeSelFromMatch" DbName="warehouse"/>
-
-	  <Setting Key="Acc_Rpt_MatchAnalysisBySuper_SAg" SpName="Acc_Rpt_MatchAnalysisBySuper_SAg" DbName="warehouse"/>
-	  <Setting Key="Acc_Rpt_MatchAnalysisBySuper_MAg" SpName="Acc_Rpt_MatchAnalysisBySuper_MAg" DbName="warehouse"/>
-	  <Setting Key="Acc_Rpt_MatchAnalysisBySuper_Ag" SpName="Acc_Rpt_MatchAnalysisBySuper_Ag" DbName="warehouse"/>
-  </Function>
-	<Function Name="MatchWinLoss2aReport">
-		<Setting Key="WLSummaryReportByBettype" SpName="Acc_Rpt_WinlossByBettype" DbName="warehouse"  />
-		<Setting Key="WLSummaryReportByBettype_14" SpName="Acc_Rpt_WinlossByBettype14" DbName="warehouse"  />
-		
-
-		<Setting Key="MatchWinLoss2a" SpName="Acc_Rpt_MatchWinLoss2_New" DbName="warehouse"  />
-		<Setting Key="MatchWinLoss2a_14" SpName="Acc_Rpt_MatchWinLoss2_New14" DbName="warehouse"  />
-		
-
-		<Setting Key="SelWLBySportTypeDetail" SpName="Acc_Rpt_MatchWinLoss2_Sporttype" DbName="warehouse"  />
-		<Setting Key="SelWLBySportTypeDetail_14" SpName="Acc_Rpt_MatchWinLoss2_Sporttype14" DbName="warehouse"  />
-		
-
-		<Setting Key="MatchWinLoss2a_Old" SpName="Acc_Rpt_MatchWinLoss2" DbName="warehouse" />
-		<Setting Key="MatchWinLoss2a_Old_14" SpName="Acc_Rpt_MatchWinLoss214" DbName="warehouse"  />
-		
-
-		<Setting Key="ThirdPartyCasinoReport" SpName="Acc_Rpt_WinlostCA_Details" DbName="report"  />
-		<Setting Key="ThirdPartyCasinoReport_14" SpName="Acc_Rpt_WinlostCA_Details14" DbName="report"  />
-		
-		<Setting Key="MatchWinLoss2aV3_SelMainReport" SpName="Acc_Rpt_MatchWinLoss2_New" DbName="warehouse"  />
-		<Setting Key="MatchWinLoss2aV3_SelMainReport_14" SpName="Acc_Rpt_MatchWinLoss2_New14" DbName="warehouse"  />
-		
-	</Function>
+  
+	
 	
 	
 	<Function Name="Report - CheckBet">
@@ -48,93 +12,7 @@
 		<Setting Key="CheckBetNormal" SpName="Acc_Rpt_CheckBet_Normal" DbName="DBBET.BK"  />
 		<Setting Key="CheckBetReject" SpName="Acc_Rpt_CheckBet_Reject" DbName="DBBET.BK"  />
 	</Function>
-	<Function Name="Daily WinLoss2h Report New">
-
-		<Setting Key="DailyWLDirect_Sporttype" SpName="Acc_Rpt_DailyWLDirect_Sporttype" DbName="warehouse" />
-		<Setting Key="DailyWLDirect_Sporttype_14" SpName="Acc_Rpt_DailyWLDirect_Sporttype14" DbName="warehouse" />
-		
-
-		<Setting Key="DailyWLDirect_Sporttype_Soccer" SpName="Acc_Rpt_DailyWLDirect_Sporttype_Soccer" DbName="warehouse" />
-		<Setting Key="DailyWLDirect_Sporttype_Soccer_14" SpName="Acc_Rpt_DailyWLDirect_Sporttype_Soccer14" DbName="warehouse" />
-		
-
-		<Setting Key="DailyWLDirect_Sporttype_OtherSports" SpName="Acc_Rpt_DailyWLDirect_Sporttype_OtherSports" DbName="warehouse" />
-		<Setting Key="DailyWLDirect_Sporttype_OtherSports_14" SpName="Acc_Rpt_DailyWLDirect_Sporttype_OtherSports14" DbName="warehouse" />
-		
-		
-		<Setting Key="DailyWLDirect_MixParlay" SpName="Acc_Rpt_DailyWLDirect_MixParlay" DbName="warehouse" />
-		<Setting Key="DailyWLDirect_MixParlay_14" SpName="Acc_Rpt_DailyWLDirect_MixParlay14" DbName="warehouse" />
-		
-
-		<Setting Key="DailyWLDirectRacing" SpName="Acc_Rpt_DailyWLDirect_Racing" DbName="warehouse" />
-		<Setting Key="DailyWLDirectRacing_14" SpName="Acc_Rpt_DailyWLDirect_Racing14" DbName="warehouse" />
-		
-		<Setting Key="DailyWLDirectRacingBySport" SpName="Acc_Rpt_DailyWLDirect_RacingBySport" DbName="warehouse" />
-		<Setting Key="DailyWLDirectRacingBySport_14" SpName="Acc_Rpt_DailyWLDirect_RacingBySport14" DbName="warehouse" />
-		
-		<Setting Key="DailyWLDirectRacingBySportDetails" SpName="Acc_Rpt_DailyWLDirect_RacingBySport_Details" DbName="warehouse" />
-		<Setting Key="DailyWLDirectRacingBySportDetails_14" SpName="Acc_Rpt_DailyWLDirect_RacingBySport_Details14" DbName="warehouse" />
-		
-
-		<Setting Key="DailyWLDirect_soccer_bettype" SpName="Acc_Rpt_DailyWLDirect_Soccer_Bettype" DbName="report" />
-		<Setting Key="DailyWLDirect_soccer_bettype_14" SpName="Acc_Rpt_DailyWLDirect_Soccer_Bettype14" DbName="report" />
-		
-
-		<Setting Key="DailyWLDirect_Detail" SpName="Acc_Rpt_DailyWLDirect_Details" DbName="report" />
-		<Setting Key="DailyWLDirect_Detail_14" SpName="Acc_Rpt_DailyWLDirect_Details14" DbName="report" />
-		
-
-		<Setting Key="DailyWLDirect_NumberGame" SpName="Acc_Rpt_DailyWLDirect_NumberGame" DbName="warehouse" />
-		<Setting Key="DailyWLDirect_NumberGame_14" SpName="Acc_Rpt_DailyWLDirect_NumberGame14" DbName="warehouse" />
-		
-
-		<Setting Key="DailyWLDirect_Casino_Detail" SpName="Acc_Rpt_DailyWLDirect_Casino" DbName="report" />
-		<Setting Key="DailyWLDirect_Casino_Detail_14" SpName="Acc_Rpt_DailyWLDirect_Casino14" DbName="report" />
-		
-
-		<Setting Key="DailyWLDirect_Bingo" SpName="Acc_Rpt_DailyWLDirect_Bingo" DbName="report" />
-		<Setting Key="DailyWLDirect_Bingo_14" SpName="Acc_Rpt_DailyWLDirect_Bingo14" DbName="report" />
-		
-
-		<Setting Key="DailyWLDirect_Finance_Detail" SpName="Acc_Rpt_DailyWLDirect_Finance_Details" DbName="report" />
-		<Setting Key="DailyWLDirect_Finance_Detail_14" SpName="Acc_Rpt_DailyWLDirect_Finance_Details14" DbName="report" />
-		
-
-		<Setting Key="DailyWLDirect_Bingo" SpName="Acc_Rpt_DailyWLDirect_Finance_Details" DbName="report" />
-		<Setting Key="DailyWLDirect_Finance_Detail_14" SpName="Acc_Rpt_DailyWLDirect_Finance_Details14" DbName="report" />
-		
-
-		<Setting Key="DailyWLDirect_LiveCasino" SpName="Acc_Rpt_DailyWLDirect_LiveCasino" DbName="warehouse"  />
-		<Setting Key="DailyWLDirect_LiveCasino_14" SpName="Acc_Rpt_DailyWLDirect_LiveCasino14" DbName="warehouse"  />
-		
-
-		<Setting Key="DailyWLDirect_MixParlayAdvance" SpName="Acc_Rpt_MixParlay_Advance" DbName="warehouse"  />
-		<Setting Key="DailyWLDirect_MixParlayAdvance_14" SpName="Acc_Rpt_MixParlay_Advance14" DbName="warehouse"  />
-		
-
-		<Setting Key="DailyWLDirect_othersport" SpName="Acc_Rpt_DailyWLDirect_OtherSport" DbName="report"  />
-		<Setting Key="DailyWLDirect_othersport_14" SpName="Acc_Rpt_DailyWLDirect_OtherSport14" DbName="report"  />
-		
-
-		<Setting Key="DailyWLDirect_othersport_bettype" SpName="Acc_Rpt_DailyWLDirect_OtherSport_Bettype" DbName="report"  />
-		<Setting Key="DailyWLDirect_othersport_bettype_14" SpName="Acc_Rpt_DailyWLDirect_OtherSport_Bettype14" DbName="report"  />
-		
-
-		<Setting Key="DailyWLDirect_VirtualSports" SpName="Acc_Rpt_DailyWLDirect_VirtualSports" DbName="warehouse" />
-		<Setting Key="DailyWLDirect_VirtualSports_14" SpName="Acc_Rpt_DailyWLDirect_VirtualSports14" DbName="warehouse" />
-		
-		<Setting Key="DailyWLDirect_VirtualSports_Bettype" SpName="Acc_Rpt_DailyWLDirect_VirtualSports_Bettype" DbName="warehouse" />
-		<Setting Key="DailyWLDirect_VirtualSports_Bettype_14" SpName="Acc_Rpt_DailyWLDirect_VirtualSports_Bettype14" DbName="warehouse" />
-		
-
-		<Setting Key="Acc_Rpt_DailyParlayWinloss" SpName="Acc_Rpt_DailyParlayWinloss" DbName="warehouse" />
-		<Setting Key="Acc_Rpt_DailyParlayWinloss_14" SpName="Acc_Rpt_DailyParlayWinloss14" DbName="warehouse" />
-		
-
-		<Setting Key="DailyWLDirect_VirtualHorseRacing_Detail" SpName="Acc_Rpt_DailyWLDirect_VirtualHR_Details" DbName="report" />
-		<Setting Key="DailyWLDirect_VirtualHorseRacing_Detail_14" SpName="Acc_Rpt_DailyWLDirect_VirtualHR_Details14" DbName="report" />
-		
-	</Function>
+	
 	<Function Name="Direct Balance Report">
 		<Setting Key="superbalance" SpName="Acc_Rpt_Balance_Super" DbName="DBACC.BODB02"  />
 		<Setting Key="superbalanceyesterday" SpName="Acc_Rpt_Balance_Super_Yesterday" DbName="DBACC.BODB02"  />
@@ -194,25 +72,12 @@
 	  <Setting Key="Acc_Get_LiveCasinoGameByID" SpName="Acc_LiveCS_SelGameByID" DbName="db053" />
 	  
 	  <Setting Key="TP_Controller_MiniBac_RecoverBet" SpName="TP_Game_MiniBac_RecoverBet" DbName="LV_MainDB" Plain="1"/>
-	  <Setting Key="Acc_Msg_Remove" SpName="Acc_Msg_Remove" DbName="message" />
+	  
   </Function>
 
   <Function Name="Live Casino - Report">
-    <Setting Key="LiveCasinoDailyWinloss" SpName="Acc_CustomerSelSEditCustomerLiveCS" DbName="db053"  />
-    <Setting Key="DailyWLDirect_LiveCasino" SpName="Acc_Rpt_DailyWLDirect_LiveCasino" DbName="warehouse"  />
-	
-    
-	<Setting Key="DailyWLDirect_LiveCasino_14" SpName="Acc_Rpt_DailyWLDirect_LiveCasino14" DbName="warehouse"  />
-    <Setting Key="GameStatistics" SpName="Acc_Rpt_LiveCasino_GameStatistics" DbName="db053"  />
-    <Setting Key="GameStatistics_GameTableSel" SpName="Acc_Rpt_LiveCasino_GameStatistics_GameTableSel" DbName="warehouse"  />
-    <Setting Key="GameStatistics_GameTypeSel" SpName="Acc_Rpt_LiveCasino_GameStatistics_GameTypeSel" DbName="warehouse"  />
-    
-    
-    
-	<Setting Key="LiveCasinoWinLoss_DW" SpName="Acc_Rpt_LiveCasino_AgencyWinLoss" DbName="warehouse"  />
-
-	
-	
+    <Setting Key="LiveCasinoDailyWinloss" SpName="Acc_CustomerSelSEditCustomerLiveCS" DbName="db053"  />    
+    <Setting Key="GameStatistics" SpName="Acc_Rpt_LiveCasino_GameStatistics" DbName="db053"  />  	
   </Function>
 
   <Function Name="Live Casino - Betlist">
@@ -221,8 +86,6 @@
 
   <Function Name="Customer">
     <Setting Key="Acc_CustomerSelStatus" SpName="Acc_CustomerSelStatus" DbName="db053"  />
-	  
-	  
   </Function>
 
 	<Function Name="New Customer Setting">
@@ -254,26 +117,15 @@
   </Function>
 
   <Function Name="Report">
-    <Setting Key="SelBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="db053"  />
-    <Setting Key="MatchWinLossByBetType" SpName="Acc_Rpt_MatchWinLossByBetType" DbName="warehouse"  />
-    <Setting Key="MatchWinLossSingleBet" SpName="Acc_Rpt_MatchWinLossSingleBet" DbName="warehouse"  />
+    <Setting Key="SelBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="db053"  />    
   </Function>
 
   <Function Name="Exchange Rate">
     <Setting Key="ExchangeCurrencySel" SpName="Acc_ExchangeCurrencySel" DbName="db053"  />
   </Function>
-
   
 
-  
 
-  <Function Name="Special delete - Sportbook">
-	  <Setting Key="Acc_BettransSelBet_BatchMsg" SpName="Acc_BettransSelBet_BatchMsg" DbName="warehouse"  />
-	  
-	  
-	  
-	  
-  </Function>
   
   <Function Name="BetList">
     
@@ -330,31 +182,14 @@
 		<Setting Key="Acc_CustomerSelByMFinance" SpName="Acc_CustomerSelFinance_Ag" DbName="db053"  />
 		<Setting Key="Acc_CustomerSelByAgFinance" SpName="Acc_CustomerSelFinance_Mem" DbName="db053"  />
 	</Function>
-	<Function Name="NumberGame">
-		
-		<Setting Key="Acc_BetTypeSel_NumberGame" SpName="Acc_BetTypeSel_NumberGame" DbName="WAREHOUSE"  />
-		
-		
-
-		<Setting Key="Acc_Rpt_NumberGame" SpName="Acc_Rpt_NumberGame" DbName="WAREHOUSE"  />
-		<Setting Key="Acc_Rpt_NumberGame14" SpName="Acc_Rpt_NumberGame14" DbName="WAREHOUSE"  />
-		
-
-		<Setting Key="Acc_Rpt_NumberGame_Details" SpName="Acc_Rpt_NumberGame_Details" DbName="WAREHOUSE"  />
-		<Setting Key="Acc_Rpt_NumberGame_Details14" SpName="Acc_Rpt_NumberGame_Details14" DbName="WAREHOUSE"  />
-		
-		
-	</Function>
+	
 	
 	<Function Name="Report - ParlayWon">
 		<Setting Key="Acc_Rpt_ParlayWon" SpName="Acc_Rpt_ParlayWon" DbName="db053"  />
 	</Function>
-	<Function Name="Finance Module">
-		<Setting Key="Acc_StatementFinance" SpName="Acc_StatementFinance" DbName="warehouse"  />
-		<Setting Key="Acc_StatementFinanceByRefno" SpName="Acc_StatementFinanceByRefno" DbName="warehouse"  />
-		<Setting Key="Acc_FinanceAccountByCustId" SpName="Acc_FinanceAccountByCustId" DbName="warehouse"  />
-		
-	</Function>
+	
+  
+  
 	<Function Name="PTVirtualSports - Setting">
 		<Setting Key="Acc_CustomerSelEditSuperVS" SpName="Acc_CustomerSelEditSuperVS" DbName="DBAGE.BODB02" Plain="0" />
 		<Setting Key="Acc_CustomerSelEditMasterVS" SpName="Acc_CustomerSelEditMasterVS" DbName="DBAGE.BODB02" Plain="0" />
@@ -387,15 +222,10 @@
 		
 		
 		
-		<Setting Key="Dot_Msg_SetMessage" SpName="Dot_Msg_SetMessage" DbName="message" />
-		<Setting Key="Dot_Msg_SetUsrMessage" SpName="Dot_Msg_SetUsrMessage" DbName="message" />
-	</Function>
-	<Function Name="Gaming Report - Poker Winloss">
-		<Setting Key="PokerWinloss" SpName="Acc_Rpt_WinlostP2P" DbName="warehouse"  />
-		<Setting Key="PokerWinlossDetail" SpName="Acc_Rpt_WinlostP2P_Details" DbName="warehouse"  />
-		<Setting Key="PokerWinlossDetail_14" SpName="Acc_Rpt_WinlostP2P_Details14" DbName="warehouse"  />
 		
 	</Function>
+	
+  
 	
 	<Function Name="Report - Racing">
 		<Setting Key="Acc_Rpt_RacingActiveMember" SpName="Acc_Rpt_RacingActiveMember" DbName="db053"  />
@@ -414,20 +244,12 @@
 		<Setting Key="Acc_CustomerSelByGroupHeadline" SpName="Acc_CustomerSelByGroupHeadline" DbName="DBACC.BODB02" />
 	</Function>
 	<Function Name="Report - WinLoss">
-		<Setting Key="Acc_Rpt_TreeWinlostByProduct" SpName="Acc_Rpt_TreeWinlostByProduct" DbName="warehouse" />
-		<Setting Key="Acc_Rpt_TreeWinlostByCom" SpName="Acc_Rpt_TreeWinlostByCom" DbName="warehouse" />
-		<Setting Key="Acc_Rpt_TreeWinlostBySAg" SpName="Acc_Rpt_TreeWinlostBySAg" DbName="warehouse" />
-		<Setting Key="Acc_Rpt_TreeWinlostByMAg" SpName="Acc_Rpt_TreeWinlostByMAg" DbName="warehouse" />
-		<Setting Key="Acc_Rpt_TreeWinlostByAg" SpName="Acc_Rpt_TreeWinlostByAg" DbName="warehouse" />
 		<Setting Key="Acc_CustomerSelVirtualRateHistory" SpName="Acc_CustomerSelVirtualRateHistory" DbName="log" />
-
-		
 	</Function>
+  
 	<Function Name="Special Delete - NumberGame">
 		<Setting Key="SelSpecialDel_NumberGame" SpName="Acc_BettransSelSpecialDel_NumberGame" DbName="db053"  />
-		
 		<Setting Key="Acc_BettransSelRecoverBet_NumberGame" SpName="Acc_BettransSelRecoverBet_NumberGame" DbName="db053"  />
-		
 	</Function>
 	
 	<Function Name="Special delete - Ticket Listing">
@@ -497,47 +319,16 @@
   </Function>
 	<Function Name="Accounting Transfer">
 		<Setting Key="Acc_FinanceCrossTransferMulInsTmpExcel" SpName="Acc_FinanceCrossTransferMulInsTmpExcel" DbName="DBACC.BODB02"></Setting>
-		
 		<Setting Key="Acc_FinanceTransferMulDelTmpExcel" SpName="Acc_FinanceTransferMulDelTmpExcel" DbName="DBACC.BODB02"></Setting>
 		<Setting Key="Acc_FinanceTransferMulInsTmpExcel" SpName="Acc_FinanceTransferMulInsTmpExcel" DbName="DBACC.BODB02"></Setting>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	</Function>
-	<Function Name="Special Status - Function">
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	</Function>
-	
-
+  
   <Function Name="Admin-SecurityCode">
     <Setting Key="Admin_SecurityCode_GetUserList" SpName="ACC_CustomerValidation" DbName="DBACC.BODB02" />
 	</Function>
 	<Function Name="Racing-Report">
 		<Setting Key="Acc_Rpt_Racing_ComparisionTO3rd" SpName="Acc_Rpt_Racing_ComparisionTO3rd" DbName="DBACC.BODB_ACC" />
-		<Setting Key="Acc_Rpt_WinlostRacing_Group" SpName="Acc_Rpt_WinlostRacing_Group" DbName="DBACC.bodb_report" />
-		<Setting Key="Acc_Rpt_WinlostRacing_Group_Daily" SpName="Acc_Rpt_WinlostRacing_Group_Daily" DbName="warehouse" />
+		<Setting Key="Acc_Rpt_WinlostRacing_Group" SpName="Acc_Rpt_WinlostRacing_Group" DbName="DBACC.bodb_report" />		
 	</Function>
 	<Function Name="Racing - PT Setting">
 		<Setting Key="Acc_CustomerSelHRSuper_All" SpName="Acc_CustomerSelHRSuper_All" DbName="db053"  />

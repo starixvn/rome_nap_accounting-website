@@ -1018,8 +1018,14 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 Hashtable p = new Hashtable();
                 p.Add("winlostdate", (date));
-                var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "TaskWinLossUpdateTable");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);//DatabaseType.REPORT
+                
+                using (ObjectDb db = new ObjectDb("TaskWinLossUpdateTable"))
+                {
+                    db.AssignParamValues(p);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {

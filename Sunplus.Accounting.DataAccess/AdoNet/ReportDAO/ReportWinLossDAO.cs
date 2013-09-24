@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using DNAide.Data;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
+using Fanex.Data;
+using System;
+using Fanex.Tarus.Infrastructure.Extensions;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 {
@@ -8,15 +11,31 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
     {
         public DbResult SelLeagueWLbySports(string winlostdate)
         {
-            string subfix = GetStoreMappingSubfix(DNAide.Core.CastAide.AsDateTime(winlostdate));
-            var rs = ReportSession.Instance[ReportSession.StoreCollection.WinLoss]["LeagueWL_Sporttype" + subfix];
-            Hashtable hashtable = new Hashtable();
-            hashtable.Add("winlostdate", winlostdate);
-            hashtable.Add("winlost_8rm",0);
-            hashtable.Add("winlost_barm", 0);
+            DbResult dbresult = null;
+            try
+            {
+                string subfix = GetStoreMappingSubfix(DNAide.Core.CastAide.AsDateTime(winlostdate));
+                string spName = "LeagueWL_Sporttype" + subfix;
+                
+                using (ObjectDb db = new ObjectDb(spName))
+                {
+                    Hashtable hashtable = new Hashtable();
+                    hashtable.Add("winlostdate", winlostdate);
+                    hashtable.Add("winlost_8rm", 0);
+                    hashtable.Add("winlost_barm", 0);
 
+                    db.AssignParamValues(hashtable);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
 
-            return DbHelper.Execute(rs.Name, hashtable, rs.DbName, 600);
+                    dbresult = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return dbresult;
         }
 
 
