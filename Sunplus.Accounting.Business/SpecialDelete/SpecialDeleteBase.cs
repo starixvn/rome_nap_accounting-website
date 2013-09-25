@@ -2507,7 +2507,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             string ErrMsg = "";
             try
             {
-                if (rs.Tables.Count >= 3)
+                if (rs.Tables.Count >= 4)
                 {
                     DataTable dtMatch = rs.Tables[0];
                     DataTable dtUsers = rs.Tables[3];
@@ -2533,12 +2533,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         string tplUser = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow.htm");
                         string tplUserMP = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRowMP.htm");
 
-                        ////For special bets - 12EU
-                        //string tplMatchAll_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMail_SpecialBet.htm");
-                        //TemplateHandler.Assign(ref tplMatchAll_SpecialBet, "ActionType", "Deleted");
-
-                        //string tplUser_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "DeleteBetReportSendMailAllRow_SpecialBet.htm");
-
                         #region send mail to CSD
 
                         string strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + (CastAide.AsBoolean(dtMatch.Rows[0]["isNeutral"]) ? "(N)" : string.Empty);
@@ -2552,16 +2546,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                             TemplateHandler.RemoveBlock(ref tplUser, "betype-choice");
                             TemplateHandler.RemoveBlock(ref tplUser, "score");
                             TemplateHandler.RemoveBlock(ref tplUser, "hdp");
-
-                            ////For 12EU
-                            //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "betype-choice");
-                            //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "score");
-                            //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "hdp");
-                            //TemplateHandler.RemoveBlock(ref tplMatchAll_SpecialBet, "vs");
-
-                            //TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "betype-choice");
-                            //TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "score");
-                            //TemplateHandler.RemoveBlock(ref tplUser_SpecialBet, "hdp");
 
                             strHome = CacheRef.GetTeamName(dtMatch.Rows[0]["homeid"]) + " - " + CacheRef.GetLeagueName(dtMatch.Rows[0]["leagueid"]);
                         }

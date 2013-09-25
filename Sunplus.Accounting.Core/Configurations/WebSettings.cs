@@ -472,5 +472,13 @@ namespace Sunplus.Accounting.Core.Configurations
                 return (ConfigurationManager.AppSettings["ExternalBettingLimitConfig"].ToString());
             }
         }
+
+        public static string[] ExternalAdminUsersEditSuperStatus
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["AdminUsersEditSuperStatus"].Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+            }
+        }
     }
 }

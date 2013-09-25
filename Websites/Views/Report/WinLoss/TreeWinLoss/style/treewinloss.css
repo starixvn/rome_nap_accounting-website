@@ -7,7 +7,6 @@
 {
     color: Red;
 }
-
 div.sorter
 {
     background-image: url(../../../../../App_Themes/images/sorting_bg.gif);
@@ -15,7 +14,6 @@ div.sorter
     background-position: center right !important;
     cursor: pointer;
 }
-
 div.sorter.asc
 {
     background-image: url(../../../../../App_Themes/images/sorting_asc.gif) !important;
@@ -24,3 +22,8 @@ div.sorter.desc
 {
     background-image: url(../../../../../App_Themes/images/sorting_desc.gif) !important;
 }
+#tblContentHeader tr:hover td, #tblContent tr:hover td
+{
+	background-color: #FFF3C8;
+}
+.freegrid .highlight td, .grid-fixed-table .highlight td { background-color: #FFF3C8; }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Linq;
 using System.Web;
 using System.Web.Security;
 using DNAide.Core;
@@ -600,11 +601,16 @@ namespace Sunplus.Accounting.Business.Customer
 
                             #region Setting
 
-                            var strCloseStatus = "";
-                            if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL) && roleId == 4 && closed)
+                            var strCloseStatus = string.Empty;
+
+                            if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL)
+                                && roleId == 4 &&
+                                !WebSettings.ExternalAdminUsersEditSuperStatus.Contains(AppSession.AccId.ToString())
+                                && closed)
                             {
                                 strCloseStatus = "<span class='chkchecked'></span>";
                             }
+
                             TemplateHandler.Assign(ref htmlcontent, "{closedCustomer}", strCloseStatus != "" ? strCloseStatus : GetClosedStatus(isManageCustomerAccess, "closed", closed, (roleId > 1), _custparent.IsClosed, isallowupdategivencredit));
 
                             //Limit per IP
@@ -756,7 +762,6 @@ namespace Sunplus.Accounting.Business.Customer
                             var liveCasinoSetting = "";
                             string RacingUpdateURL = "";
                             var VirtualSportsSetting = "";
-                            string bettingLimitURL = "";
                             switch (roleId)
                             {
                                 case 1: // member
@@ -873,22 +878,29 @@ namespace Sunplus.Accounting.Business.Customer
 
                             string bettingSetting = WebSettings.ExternalBettingLimitConfig;
                             //AppSession.GroupID
-                            if (!String.IsNullOrEmpty(bettingSetting) && bettingSetting.Contains("|"))
-                            {
-                                int groupId = CastAide.AsInt32(bettingSetting.Split(new char[] { '|' })[0], 0);
-                                if (groupId != AppSession.GroupID && roleId == 4)
+                            try {
+                                if (!String.IsNullOrEmpty(bettingSetting) && bettingSetting.Contains("|"))
                                 {
-                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-BetSetting");
+                                    var groupId = bettingSetting.Split(new char[] { '|' })[0].Split(new char[] { ',' });
+                                    if (!groupId.Contains(AppSession.GroupID.ToString()) && roleId == 4)
+                                    {
+                                        TemplateHandler.RemoveBlock(ref htmlcontent, "edit-BetSetting");
+                                    }
+                                    else
+                                    {
+                                        TemplateHandler.Assign(ref htmlcontent, "{bettingLimitLinkSetting}", string.Format("customersetting/betsetting/sportsbook/index/{0}/{1}/{2}/{3}", custId, custId, AppSession.AccId.ToString(), AppSession.SYSTEM));
+                                    }
                                 }
                                 else
                                 {
-                                    TemplateHandler.Assign(ref htmlcontent, "{bettingLimitLinkSetting}", string.Format("customersetting/betsetting/sportsbook/index/{0}/{1}/{2}/{3}", custId, custId, AppSession.AccId.ToString(), AppSession.SYSTEM));
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-BetSetting");
                                 }
                             }
-                            else
-                            {
+                            catch {
                                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-BetSetting");
                             }
+
+                           
 
                             //---- for menu details -----------
                             AssignEditFinance(ref htmlcontent, roleId);

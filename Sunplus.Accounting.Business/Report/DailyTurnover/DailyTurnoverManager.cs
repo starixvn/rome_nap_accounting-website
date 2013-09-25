@@ -496,6 +496,10 @@ namespace Sunplus.Accounting.Business.Report.DailyTurnover
             try
             {
                 var dbresult = _dailyTurnoverDAO.SelDailyChangeDetial(date);
+                if (dbresult.ResultSet.Tables==null || dbresult.ResultSet.Tables[0].Rows.Count == 0)
+                {
+                    return listDetail;
+                }
                 var dtb = dbresult.ResultSet.Tables[0];
                 string action = "";
                 string detail = "";

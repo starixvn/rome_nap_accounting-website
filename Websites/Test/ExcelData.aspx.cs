@@ -17,11 +17,11 @@ public partial class ExcelData : System.Web.UI.Page
         }
         catch (Exception ex)
         {
-            var helper = new Fanex.Tarus.Finance.Helper();
-            LogExtensions.ExceptionHandler(new Exception(helper.BalanceUpDate.ToShortDateString()));
+            //var helper = new Fanex.Tarus.Finance.Helper();
+            LogExtensions.ExceptionHandler(ex);
         }
 
-
+        
     }
 
 

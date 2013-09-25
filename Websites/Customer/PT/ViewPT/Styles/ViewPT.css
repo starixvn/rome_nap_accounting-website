@@ -1,0 +1,24 @@
+﻿.padding-20
+{
+    padding-left: 20px;
+}
+
+.col70
+{
+    width: 70px;
+}
+
+.col40
+{
+    width: 40px;
+}
+
+.col60
+{
+    width: 60px;
+}
+
+.customerInfoTable td.colRoleName
+{
+    text-transform: uppercase;
+}

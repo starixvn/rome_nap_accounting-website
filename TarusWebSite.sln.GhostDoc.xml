@@ -9,7 +9,11 @@
   </SpellChecker>
 <HelpConfigurations selected="HelpFile">
   <HelpConfiguration name="HelpFile">
+<<<<<<< HEAD
     <OutputPath>D:\3.Working\11.GIT\MAIN\accountingsite\Help</OutputPath>
+=======
+    <OutputPath>D:\GitSources\Accounting\accountingsite\Help</OutputPath>
+>>>>>>> 4eee2ba0fc19d75747e3a80d1265177abcb697bb
     <ImageFolderPath />
     <HtmlFormats>
       <HtmlHelp>true</HtmlHelp>

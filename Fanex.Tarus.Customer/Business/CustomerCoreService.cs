@@ -1,0 +1,41 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="CustomerCoreService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
+
+namespace Fanex.Tarus.Customer.Business
+{
+    using System.Diagnostics.CodeAnalysis;
+    using Fanex.Tarus.Customer.Constants;
+    using Fanex.Tarus.Customer.Resources;
+
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    public class CustomerCoreService
+    {
+        public static string GetRoleName(int roleId)
+        {
+            var roleName = string.Empty;
+            switch (roleId)
+            {
+                case RoleIdConstants.SUPER:
+                    roleName = Customer_Labels.Super;
+                    break;
+                case RoleIdConstants.MASTER:
+                    roleName = Customer_Labels.Master;
+                    break;
+                case RoleIdConstants.AGENT:
+                    roleName = Customer_Labels.Agent;
+                    break;
+                case RoleIdConstants.MEMBER:
+                    roleName = Customer_Labels.Member;
+                    break;
+            }
+
+            return roleName;
+        }
+    }
+}

@@ -418,7 +418,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                             BettingLimit = bettingLimit,
                             IsUplineUnCheckAll = cntSelected == 0
                         });
-                        if (!isHasSetting)
+                        if (!isHasSetting && bettingLimit.Count > 0)
                             result.GameSetting[gameSettingIndex].BettingLimit[0].IsSelected = true;
                       
                         
@@ -718,9 +718,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             return resultDto;
         }
-
-      
-
+        
         public ResultDTO UpdateSuperPTSetting(LiveCasinoSettingDTO setting)
         {
             ResultDTO resultDto = new ResultDTO();
@@ -728,7 +726,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
-                if (!GetHostPermission("Customer", AppSession.PageAccess))
+                if (!GetHostPermission("Customer", AppSession.RoleAccess))
                 {
                     resultDto.IsSuccess = false;
                     resultDto.ErrorHandler.Add(new Result()
@@ -792,7 +790,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
-                if (!GetHostPermission("Customer", AppSession.PageAccess))
+                if (!GetHostPermission("Customer", AppSession.RoleAccess))
                 {
                     result.IsSuccess = false;
                     result.ErrorHandler.Add(new Result()
@@ -832,7 +830,6 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                     }
 
                     oldValues.Add(_gameType);
-
                 }
                 #endregion
 
@@ -852,9 +849,16 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                     {
                         foreach (var stakeLavel in gameType.BettingLimit)
                         {
-                            stakeLavel.IsSelected = setting.GameSetting.Where(s => s.Id == gameType.Id).Select(
-                                f => f.BettingLimit.Where(r => r.Id == stakeLavel.Id).Select(k => k.IsSelected)).ToList().
-                                FirstOrDefault().FirstOrDefault();
+                            var gameSetting = setting.GameSetting.Where(s => s.Id == gameType.Id).Select(
+                                f => f.BettingLimit.Where(r => r.Id == stakeLavel.Id).Select(k => k.IsSelected));
+                            if (gameSetting != null && gameSetting.Count() > 0)
+                            {
+                                var stakeSetting = gameSetting.ToList().FirstOrDefault();
+                                if (stakeSetting != null && stakeSetting.Count() > 0)
+                                {
+                                    stakeLavel.IsSelected = stakeSetting.FirstOrDefault();
+                                }                                
+                            }
                         }
                     }
                 }
@@ -865,9 +869,16 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
                         var bettingLimit = new List<LiveCasinoSetting.Model.StakeLevel>();
                         foreach (var stakeLavel in gameType.BettingLimit)
                         {
-                            stakeLavel.IsSelected = setting.GameSetting.Where(s => s.Id == gameType.Id).Select(
-                                f => f.BettingLimit.Where(r => r.Id == stakeLavel.Id).Select(k => k.IsSelected)).ToList().
-                                FirstOrDefault().FirstOrDefault();
+                            var gameSetting = setting.GameSetting.Where(s => s.Id == gameType.Id).Select(
+                                f => f.BettingLimit.Where(r => r.Id == stakeLavel.Id).Select(k => k.IsSelected));
+                            if (gameSetting != null && gameSetting.Count() > 0)
+                            {
+                                var stakeSetting = gameSetting.ToList().FirstOrDefault();
+                                if (stakeSetting != null && stakeSetting.Count() > 0)
+                                {
+                                    stakeLavel.IsSelected = stakeSetting.FirstOrDefault();
+                                }
+                            }
 
                             bettingLimit.Add(new LiveCasinoSetting.Model.StakeLevel()
                             {
@@ -971,7 +982,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
-                if (!GetHostPermission("Customer", AppSession.PageAccess))
+                if (!GetHostPermission("Customer", AppSession.RoleAccess))
                 {
                     resultDto.IsSuccess = false;
                     resultDto.ErrorHandler.Add(new Result()
@@ -1059,7 +1070,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
-                if (!GetHostPermission("Customer", AppSession.PageAccess))
+                if (!GetHostPermission("Customer", AppSession.RoleAccess))
                 {
                     resultDto.IsSuccess = false;
                     resultDto.ErrorHandler.Add(new Result()
@@ -1149,7 +1160,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
-                if (!GetHostPermission("Customer", AppSession.PageAccess))
+                if (!GetHostPermission("Customer", AppSession.RoleAccess))
                 {
                     resultDto.IsSuccess = false;
                     resultDto.ErrorHandler.Add(new Result()
@@ -1239,7 +1250,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
-                if (!GetHostPermission("Customer", AppSession.PageAccess))
+                if (!GetHostPermission("Customer", AppSession.RoleAccess))
                 {
                     resultDto.IsSuccess = false;
                     resultDto.ErrorHandler.Add(new Result()
@@ -1320,7 +1331,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
-                if (!GetHostPermission("Customer", AppSession.PageAccess))
+                if (!GetHostPermission("Customer", AppSession.RoleAccess))
                 {
                     resultDto.IsSuccess = false;
                     resultDto.ErrorHandler.Add(new Result()
@@ -1693,7 +1704,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
             ResultDTO resultDto = new ResultDTO();
             try
             {
-                if (!GetHostPermission("Customer", AppSession.PageAccess))
+                if (!GetHostPermission("Customer", AppSession.RoleAccess))
                 {
                     resultDto.IsSuccess = false;
                     resultDto.ErrorHandler.Add(new Result()
@@ -1757,7 +1768,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
-                if (!GetHostPermission("Customer", AppSession.PageAccess))
+                if (!GetHostPermission("customer", AppSession.RoleAccess))
                 {
                     result.IsSuccess = false;
                     result.ErrorHandler.Add(new Result()
@@ -1797,7 +1808,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
             resultDto.ErrorHandler = new List<Result>();
             try
             {
-                if (!GetHostPermission("Customer", AppSession.PageAccess))
+                if (!GetHostPermission("Customer", AppSession.RoleAccess))
                 {
                     resultDto.IsSuccess = false;
                     resultDto.ErrorHandler.Add(new Result()
@@ -1835,7 +1846,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
-                if (!GetHostPermission("Customer", AppSession.PageAccess))
+                if (!GetHostPermission("Customer", AppSession.RoleAccess))
                 {
                     result.IsSuccess = false;
                     result.ErrorHandler.Add(new Result()
@@ -1898,7 +1909,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
-                if (!GetHostPermission("Customer", AppSession.PageAccess))
+                if (!GetHostPermission("Customer", AppSession.RoleAccess))
                 {
                     result.IsSuccess = false;
                     result.ErrorHandler.Add(new Result()
@@ -1961,7 +1972,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
-                if (!GetHostPermission("Customer", AppSession.PageAccess))
+                if (!GetHostPermission("Customer", AppSession.RoleAccess))
                 {
                     result.IsSuccess = false;
                     result.ErrorHandler.Add(new Result()
@@ -2039,7 +2050,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
-                if (!GetHostPermission("Customer", AppSession.PageAccess))
+                if (!GetHostPermission("Customer", AppSession.RoleAccess))
                 {
                     result.IsSuccess = false;
                     result.ErrorHandler.Add(new Result()
@@ -2081,7 +2092,7 @@ namespace Fanex.Tarus.LiveCasino.Business.Setting
 
             try
             {
-                if (!GetHostPermission("Customer", AppSession.PageAccess))
+                if (!GetHostPermission("Customer", AppSession.RoleAccess))
                 {
                     result.IsSuccess = false;
                     result.ErrorHandler.Add(new Result()

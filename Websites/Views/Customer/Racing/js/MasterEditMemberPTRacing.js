@@ -40,8 +40,14 @@
             data: '{"requestContext":' + JSON.stringify(customerPTRacingSetting.context) + '}',
             success: function (stringCustomer) {
                 customerPTRacingSetting.currentSetting = JSON.parse(stringCustomer);
-                customerPTRacingSetting.oldSetting = JSON.parse(stringCustomer);
-                customerPTRacingSetting.initHtml();
+                if (customerPTRacingSetting.currentSetting == null || customerPTRacingSetting.currentSetting.custId == 0) {
+                    $('.bg_table').addClass('hidden');
+                    showAlertMessage("err", 'There is no information available.', 1);
+                }
+                else {
+                    customerPTRacingSetting.oldSetting = JSON.parse(stringCustomer);
+                    customerPTRacingSetting.initHtml();
+                }
             }
             , error: function (e) {
                 showAlertMessage("err", "Init Customer Error", 1);

@@ -37,19 +37,19 @@ namespace Fanex.Tarus.LiveCasino.Business
             return false;
         }
 
-        public bool GetHostPermission(string actionPath, Dictionary<string, int> pageAccess)
-        {
-            if (pageAccess == null)
-                return false;
-            if (string.IsNullOrEmpty(actionPath))
-                return false;
+        //public bool GetHostPermission(string actionPath, Dictionary<string, int> pageAccess)
+        //{
+        //    if (pageAccess == null)
+        //        return false;
+        //    if (string.IsNullOrEmpty(actionPath))
+        //        return false;
 
-            if (pageAccess.ContainsKey(actionPath.ToLower()))
-            {
-                return pageAccess[actionPath.ToLower()] == 3;
-            }
-            return false;
-        }
+        //    if (pageAccess.ContainsKey(actionPath.ToLower()))
+        //    {
+        //        return pageAccess[actionPath.ToLower()] == 3;
+        //    }
+        //    return false;
+        //}
 
     }
 }

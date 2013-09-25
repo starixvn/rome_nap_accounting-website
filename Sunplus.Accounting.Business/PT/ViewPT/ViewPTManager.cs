@@ -1994,21 +1994,25 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                     }
                     else
                     {
+                        var numberOfDecimalDigits = (byte)(sportId == Constants.Sport.NumberGame ?
+                            3 :
+                            2);
+
                         #region member
 
                         if (roleId < (int)CustInfo.Roles.Agent)
                         {
                             var memberPt = new PositionTakingInfo()
                             {
-                                Super = NumberFormat.DecFormat(dr["s1"], 2),
-                                Master = NumberFormat.DecFormat(dr["m1"], 2),
-                                Agent = NumberFormat.DecFormat(dr["a1"], 2),
-                                SuperAuto = NumberFormat.DecFormat(dr["u1"], 2),
+                                Super = NumberFormat.DecFormat(dr["s1"], numberOfDecimalDigits),
+                                Master = NumberFormat.DecFormat(dr["m1"], numberOfDecimalDigits),
+                                Agent = NumberFormat.DecFormat(dr["a1"], numberOfDecimalDigits),
+                                SuperAuto = NumberFormat.DecFormat(dr["u1"], numberOfDecimalDigits),
                                 SuperIsAuto =
                                     (CastAide.AsBoolean(dr["i1"], false))
                                         ? " checked='checked'"
                                         : string.Empty,
-                                MasterAuto = NumberFormat.DecFormat(dr["um1"], 2),
+                                MasterAuto = NumberFormat.DecFormat(dr["um1"], numberOfDecimalDigits),
                                 MasterIsAuto =
                                     (CastAide.AsBoolean(dr["im1"], false))
                                         ? " checked='checked'"
@@ -2025,20 +2029,20 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         {
                             var agentPt = new PositionTakingInfo()
                             {
-                                Master = NumberFormat.DecFormat(dr["m2"], 2),
-                                Agent = NumberFormat.DecFormat(dr["a2"], 2),
-                                SuperAuto = NumberFormat.DecFormat(dr["um2"], 2),
+                                Master = NumberFormat.DecFormat(dr["m2"], numberOfDecimalDigits),
+                                Agent = NumberFormat.DecFormat(dr["a2"], numberOfDecimalDigits),
+                                SuperAuto = NumberFormat.DecFormat(dr["um2"], numberOfDecimalDigits),
                                 SuperIsAuto =
                                     (CastAide.AsBoolean(dr["im2"], false))
                                         ? " checked='checked'"
                                         : string.Empty,
-                                MasterAuto = NumberFormat.DecFormat(dr["um2"], 2),
+                                MasterAuto = NumberFormat.DecFormat(dr["um2"], numberOfDecimalDigits),
                                 MasterIsAuto =
                                     (CastAide.AsBoolean(dr["im2"], false))
                                         ? " checked='checked'"
                                         : string.Empty,
-                                MinPt = NumberFormat.DecFormat(dr["n2"], 2),
-                                MaxPt = NumberFormat.DecFormat(dr["l2"], 2)
+                                MinPt = NumberFormat.DecFormat(dr["n2"], numberOfDecimalDigits),
+                                MaxPt = NumberFormat.DecFormat(dr["l2"], numberOfDecimalDigits)
                             };
                             ptCurrent.Agent = agentPt;
                         }
@@ -2051,15 +2055,15 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         {
                             var masterPt = new PositionTakingInfo()
                             {
-                                Super = NumberFormat.DecFormat(dr["s3"], 2),
-                                Master = NumberFormat.DecFormat(dr["m3"], 2),
-                                SuperAuto = NumberFormat.DecFormat(dr["u3"], 2),
+                                Super = NumberFormat.DecFormat(dr["s3"], numberOfDecimalDigits),
+                                Master = NumberFormat.DecFormat(dr["m3"], numberOfDecimalDigits),
+                                SuperAuto = NumberFormat.DecFormat(dr["u3"], numberOfDecimalDigits),
                                 SuperIsAuto =
                                     (CastAide.AsBoolean(dr["i3"], false))
                                         ? " checked='checked'"
                                         : string.Empty,
-                                MinPt = NumberFormat.DecFormat(dr["n3"], 2),
-                                MaxPt = NumberFormat.DecFormat(dr["l3"], 2)
+                                MinPt = NumberFormat.DecFormat(dr["n3"], numberOfDecimalDigits),
+                                MaxPt = NumberFormat.DecFormat(dr["l3"], numberOfDecimalDigits)
                             };
                             ptCurrent.Master = masterPt;
                         }
@@ -2072,11 +2076,11 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                         {
                             var superPt = new PositionTakingInfo()
                             {
-                                Super = NumberFormat.DecFormat(dr["s4"], 2),
-                                Master = NumberFormat.DecFormat(dr["m4"], 2),
-                                Agent = NumberFormat.DecFormat(dr["a4"], 2),
-                                MinPt = NumberFormat.DecFormat(dr["n4"], 2),
-                                MaxPt = NumberFormat.DecFormat(dr["l4"], 2)
+                                Super = NumberFormat.DecFormat(dr["s4"], numberOfDecimalDigits),
+                                Master = NumberFormat.DecFormat(dr["m4"], numberOfDecimalDigits),
+                                Agent = NumberFormat.DecFormat(dr["a4"], numberOfDecimalDigits),
+                                MinPt = NumberFormat.DecFormat(dr["n4"], numberOfDecimalDigits),
+                                MaxPt = NumberFormat.DecFormat(dr["l4"], numberOfDecimalDigits)
                             };
                             ptCurrent.Super = superPt;
                         }

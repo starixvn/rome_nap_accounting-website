@@ -81,7 +81,7 @@
             </div>
             <div class="bg_table">
                 <iframe name="InsertData" id="InsertData" style="display: none;" onload="PTUnBlockUI();"></iframe>
-                <form id="frmUpdatePT" action="../Handlers/SynCasino.ashx?insert=<%= Request["insert"] %>"
+                <form id="frmUpdatePT" action="../Handlers/SynCasino.ashx?insert=<%= Request["insert"] %>&custId=<%=Request["custId"] %>"
                 method="post" target="InsertData">
                 <asp:Literal ID="ctrHTML" EnableViewState="false" runat="server"></asp:Literal>
                 </form>

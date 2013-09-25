@@ -419,7 +419,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                         foreach (DictionaryEntry Key in list)
                         {
                             int custid = CastAide.AsInt32(Key.Key.ToString().Split('^')[0]); // This is a CustID of ticket that is deleted [TargetID Field]
-                            string uname = Key.Key.ToString().Split('^')[1];//This is a UserName of ticket that is deleted [TargetName Field]
+                            string uname = Key.Key.ToString().Split('^')[1]; //This is a UserName of ticket that is deleted [TargetName Field]
                             DataRow dr = dtDeletedBet.NewRow();
                             dr["custid"] = custid;
                             dr["username"] = uname;
@@ -505,7 +505,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                     TemplateHandler.Assign(ref tplMatchAll, "ActionType", "Deleted");
                     string tplUserMP = WebUtils.LoadTemplate("SpecialDelete/" + tplpath + "TplMPSendMailRow.htm");
 
-                    //For special bets - 12EU
+                    ////For special bets - 12EU
                     string tplMatchAll_SpecialBet = WebUtils.LoadTemplate("SpecialDelete/DeleteBetReportSendMail_SpecialBet.htm");
                     TemplateHandler.Assign(ref tplMatchAll_SpecialBet, "ActionType", "Deleted");
 
@@ -742,12 +742,10 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 ErrMsg = ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "specialDelete_MPBet_Msg");
                 ErrMsg = AlertMessage.GetMsg(ErrMsg, AlertMessage.MsgType.Success);
 
-                if (rs != null && rs.Tables.Count >= 2)
+                if (rs != null && rs.Tables.Count > 2)
                 {
                     DataTable dtMatch = rs.Tables[0];
-                    DataTable dtUsers = new DataTable();
-
-                    dtUsers = rs.Tables[3];
+                    DataTable dtUsers = rs.Tables[3];
 
                     string expression = "";
 

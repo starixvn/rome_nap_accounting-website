@@ -10,6 +10,8 @@ namespace Fanex.Tarus.Reports.Controllers.WinLoss
     using Fanex.Tarus.Reports.Business.WinLoss.TreeWinLoss;
     using Fanex.Tarus.Reports.Entities.WinLoss.TreeWinLoss;
     using Fanex.Tarus.Web.Controllers.Filters;
+    using System.Web.Script.Serialization;
+    using System;
 
     /// <summary>
     /// TODO: Update summary.
@@ -55,6 +57,8 @@ namespace Fanex.Tarus.Reports.Controllers.WinLoss
             ViewBag.isShowBI = isShowBI;
             ViewBag.isShowVS = isShowVS;
 
+
+
             if (reportType == 0)
             {
                 var winLoss = _treeWinLossService.GetTreeWinLossReportByProduct(fromDate,
@@ -67,13 +71,23 @@ namespace Fanex.Tarus.Reports.Controllers.WinLoss
                                             isShowP2P,
                                             isShowBI,
                                             isShowVS);
-               
+                //var serializer = new JavaScriptSerializer();
+                //serializer.MaxJsonLength = Int32.MaxValue;
+
+                //var result = new ContentResult
+                //{
+                //    Content = serializer.Serialize(winLoss),
+                //    ContentType = "application/json"
+                //};
+
                 return PartialView("~/Views/Report/WinLoss/TreeWinLoss/ReportByProduct.cshtml", winLoss);
             }
             else
             {
                 var winloss = new TreeWinLoss();
                 var title = string.Empty;
+
+              
 
                 winloss = _treeWinLossService.GetTreeWinLossReport(fromDate,
                                            toDate,

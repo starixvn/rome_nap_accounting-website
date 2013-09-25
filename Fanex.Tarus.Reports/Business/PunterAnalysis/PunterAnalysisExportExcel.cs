@@ -1,17 +1,14 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Web;
 using DNAide.Core;
 using ExcelUtil.Spreadsheet;
+using Fanex.Tarus.Infrastructure.Caching;
 using Fanex.Tarus.Reports.Entities.PunterAnalysis;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
-using Fanex.Tarus.Infrastructure.Caching;
-using System.Data;
-using System.Linq;
 
 namespace Fanex.Tarus.Reports.Business.PunterAnalysis
 {
@@ -36,21 +33,21 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
 
             var excelGemboxUtils = new ExcelGemboxUtils();
 
-            var endCol = startCol;
-            var currentCol = startCol;
-
             #endregion ExcelFormat
+
             #region Header
 
             ExportHeader_TopPunterSummary(ref wsReport, startCol, ref currentRow, param);
 
             #endregion Header
+
             #region Body
 
             ExportBody_TopPunterSummary(ref wsReport, startCol, ref currentRow, topPunterSummaryReport, param);
             //ExportExcelCustomerIP_TopPunterSummary(ref excelFile, startCol, topPunterSummaryReport, param);
 
             #endregion Body
+
             #region ResponseFile
 
             var response = HttpContext.Current.Response;
@@ -60,7 +57,6 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             excelFile.SaveXls(response.OutputStream);
 
             #endregion ResponseFile
-
         }
 
         public void ExportExcelTopPunterSummaryByLeague(PunterAnalysisParam param)
@@ -80,21 +76,22 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             }
 
             var excelGemboxUtils = new ExcelGemboxUtils();
-
-            var endCol = startCol;
-            var currentCol = startCol;
+           
 
             #endregion ExcelFormat
+
             #region Header
 
             ExportHeader_TopPunterSummaryByLeague(ref wsReport, startCol, ref currentRow, param);
 
             #endregion Header
+
             #region Body
 
             ExportBody_TopPunterSummaryByLeague(ref wsReport, startCol, ref currentRow, topPunterSummaryByLeagueReport, param);
 
             #endregion Body
+
             #region ResponseFile
 
             var response = HttpContext.Current.Response;
@@ -128,16 +125,19 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             var currentCol = startCol;
 
             #endregion ExcelFormat
+
             #region Header
 
             ExportHeader_TopPunterByCustID(ref wsReport, startCol, ref currentRow, param);
 
             #endregion Header
+
             #region Body
 
             ExportBody_TopPunterByCustID(ref wsReport, startCol, ref currentRow, topPunterByCustIdReport, param);
 
             #endregion Body
+
             #region ResponseFile
 
             var response = HttpContext.Current.Response;
@@ -171,16 +171,19 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             var currentCol = startCol;
 
             #endregion ExcelFormat
+
             #region Header
 
             ExportHeader_TopPunterByLeagueCustID(ref wsReport, startCol, ref currentRow, param);
 
             #endregion Header
+
             #region Body
 
             ExportBody_TopPunterByCustID(ref wsReport, startCol, ref currentRow, topPunterByLeagueCustIdReport, param);
 
             #endregion Body
+
             #region ResponseFile
 
             var response = HttpContext.Current.Response;
@@ -214,16 +217,19 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             var currentCol = startCol;
 
             #endregion ExcelFormat
+
             #region Header
 
             ExportHeader_TopPunterBySporttype(ref wsReport, startCol, ref currentRow, param);
 
             #endregion Header
+
             #region Body
 
             ExportBody_TopPunterBySporttype(ref wsReport, startCol, ref currentRow, topPunterBySporttypeReport, param);
 
             #endregion Body
+
             #region ResponseFile
 
             var response = HttpContext.Current.Response;
@@ -257,16 +263,19 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             var currentCol = startCol;
 
             #endregion ExcelFormat
+
             #region Header
 
             ExportHeader_TopPunterByBettype(ref wsReport, startCol, ref currentRow, topPunterByBettypeReport, param);
 
             #endregion Header
+
             #region Body
 
             ExportBody_TopPunterByBettype(ref wsReport, startCol, ref currentRow, topPunterByBettypeReport, param);
 
             #endregion Body
+
             #region ResponseFile
 
             var response = HttpContext.Current.Response;
@@ -521,7 +530,6 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
 
                 #endregion EmptyReport
             }
-
         }
 
         private void ExportHeader_TopPunterSummaryByLeague(ref ExcelWorksheet wsReport, int startCol, ref int currentRow,
@@ -740,7 +748,6 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
 
                 #endregion EmptyReport
             }
-
         }
 
         private void ExportHeader_TopPunterByCustID(ref ExcelWorksheet wsReport, int startCol, ref int currentRow,
@@ -799,9 +806,11 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             {
                 case "0":
                     break;
+
                 case "1":
                     reportSummaryHeader += " - League: " + (string.IsNullOrEmpty(param.LeagueId) ? "" : LeagueName(param.LeagueId));
                     break;
+
                 default:
                     break;
             }
@@ -812,6 +821,7 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             currentRow += 3;
 
             #endregion Title
+
             #region EmptyRow
 
             endCol = startCol + colSpan;
@@ -820,6 +830,7 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             currentRow++;
 
             #endregion EmptyRow
+
             #region Header
 
             currentCol = startCol;
@@ -981,7 +992,6 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
 
                 #endregion EmptyReport
             }
-
         }
 
         private void ExportHeader_TopPunterByLeagueCustID(ref ExcelWorksheet wsReport, int startCol, ref int currentRow,
@@ -1028,6 +1038,7 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             currentRow += 3;
 
             #endregion Title
+
             #region EmptyRow
 
             endCol = startCol + colSpan;
@@ -1036,6 +1047,7 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             currentRow++;
 
             #endregion EmptyRow
+
             #region Header
 
             currentCol = startCol;
@@ -1114,9 +1126,11 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             {
                 case "0":
                     break;
+
                 case "1":
                     reportSummaryHeader += " - League: " + (string.IsNullOrEmpty(param.LeagueId) ? "" : LeagueName(param.LeagueId));
                     break;
+
                 default:
                     break;
             }
@@ -1134,6 +1148,7 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             currentRow += 3;
 
             #endregion Title
+
             #region EmptyRow
 
             endCol = startCol + colSpan;
@@ -1142,6 +1157,7 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             currentRow++;
 
             #endregion EmptyRow
+
             #region Header
 
             endRow = currentRow + 1;
@@ -1172,6 +1188,7 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             currentRow++;
 
             currentCol = startCol + 1;
+
             #region NoneLiveHeader
 
             wsReport.Cells[currentRow, currentCol].Style = bgHeader;
@@ -1195,6 +1212,7 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             currentCol++;
 
             #endregion NoneLiveHeader
+
             #region LiveHeader
 
             wsReport.Cells[currentRow, currentCol].Style = bgHeader;
@@ -1218,6 +1236,7 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             currentCol++;
 
             #endregion LiveHeader
+
             #region LiveAndNoneLiveHeader
 
             wsReport.Cells[currentRow, currentCol].Style = bgHeader;
@@ -1413,7 +1432,6 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
 
                 #endregion EmptyReport
             }
-
         }
 
         private void ExportHeader_TopPunterByBettype(ref ExcelWorksheet wsReport, int startCol, ref int currentRow,
@@ -1456,9 +1474,11 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             {
                 case "0":
                     break;
+
                 case "1":
                     reportSummaryHeader += " - League: " + (string.IsNullOrEmpty(param.LeagueId) ? "" : LeagueName(param.LeagueId));
                     break;
+
                 default:
                     break;
             }
@@ -1478,6 +1498,7 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             currentRow += 3;
 
             #endregion Title
+
             #region LiveTypeTable
 
             switch (param.PeriodType)
@@ -1485,12 +1506,13 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
                 case PeriodTypeReportConstants.LongRange:
                     ExportLongRangeSummary_TopPunterByBettype(ref wsReport, startCol, ref currentRow, report, param);
                     break;
+
                 default:
                     break;
             }
 
-
             #endregion LiveTypeTable
+
             #region EmptyRow
 
             colSpan = (report.Punters.Count == 0) ? 4 : report.Punters[0].Columns.Count * 4;
@@ -1500,6 +1522,7 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             currentRow++;
 
             #endregion EmptyRow
+
             #region Header
 
             endRow = currentRow + 1;
@@ -1568,9 +1591,9 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
                                 {
                                     headerTitle = _arrMonths[month - 1];
                                 }
-
                             }
                             break;
+
                         case PeriodTypeReportConstants.Weekly:
                             if (i == lastIndex)
                             {
@@ -1583,9 +1606,11 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
                                 headerTitle = "Week " + week + " (" + date + ")";
                             }
                             break;
+
                         case PeriodTypeReportConstants.Monthly:
                             headerTitle = _arrMonths[month - 1] + " - " + year;
                             break;
+
                         case PeriodTypeReportConstants.Annually:
                             if (i == 0)
                             {
@@ -1596,6 +1621,7 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
                                 headerTitle = _arrMonths[month - 1];
                             }
                             break;
+
                         case PeriodTypeReportConstants.LongRange:
                             if (i == lastIndex)
                             {
@@ -1606,7 +1632,6 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
                                 headerTitle = "Year " + year;
                             }
                             break;
-
                     }
 
                     endCol = currentCol + 3;
@@ -1682,6 +1707,7 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             currentRow++;
 
             #endregion EmptyRow
+
             #region BettypeHeader
 
             endCol = startCol + colSpan;
@@ -1722,6 +1748,7 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
                 for (var i = 0; i < report.GrandTotal.Count; i++)
                 {
                     var detail = report.GrandTotal[i];
+
                     #region PunterRow
 
                     currentCol = startCol;
@@ -1953,7 +1980,6 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
 
                 #endregion EmptyReport
             }
-
         }
 
         public void ExportExcelTopPunterBySporttypeSum(PunterAnalysisParam param)
@@ -1978,16 +2004,19 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             var currentCol = startCol;
 
             #endregion ExcelFormat
+
             #region Header
 
             ExportHeader_TopPunterByCustID(ref wsReport, startCol, ref currentRow, param);
 
             #endregion Header
+
             #region Body
 
             ExportBody_TopPunterByCustID(ref wsReport, startCol, ref currentRow, topPunterBySporttypeSumReport, param);
 
             #endregion Body
+
             #region ResponseFile
 
             var response = HttpContext.Current.Response;
@@ -2086,6 +2115,7 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
                 currentRow++;
 
                 #endregion Header
+
                 #region Body
 
                 foreach (var ipInfo in ipList)
@@ -2122,7 +2152,6 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
 
         public void ExportExcelIPByCustId_TopPunterSummary(PunterAnalysisParam param)
         {
-
             #region ExcelFormat
 
             const int startCol = 0;
@@ -2143,16 +2172,19 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             var currentCol = startCol;
 
             #endregion ExcelFormat
+
             #region Header
 
             ExportExcelHeader_IPByCustId_TopPunterSummary(ref wsReport, startCol, ref currentRow, param);
 
             #endregion Header
+
             #region Body
 
             ExportBody_IPByCustId_TopPunterSummary(ref wsReport, startCol, ref currentRow, ipByCustIdReport, param);
 
             #endregion Body
+
             #region ResponseFile
 
             var response = HttpContext.Current.Response;
@@ -2162,7 +2194,6 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             excelFile.SaveXls(response.OutputStream);
 
             #endregion ResponseFile
-
         }
 
         private void ExportExcelHeader_IPByCustId_TopPunterSummary(ref ExcelWorksheet wsReport, int startCol, ref int currentRow,
@@ -2196,6 +2227,7 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             currentRow += 2;
 
             #endregion Title
+
             #region EmptyRow
 
             endCol = startCol + 3;
@@ -2204,6 +2236,7 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             currentRow++;
 
             #endregion EmptyRow
+
             #region Header
 
             wsReport.Cells[currentRow, currentCol].Style = bgHeader;
@@ -2309,16 +2342,19 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             var currentCol = startCol;
 
             #endregion ExcelFormat
+
             #region Header
 
             ExportExcelHeader_BetCountByCustId_TopPunterSummary(ref wsReport, startCol, ref currentRow, param);
 
             #endregion Header
+
             #region Body
 
             ExportBody_BetCountByCustId_TopPunterSummary(ref wsReport, startCol, ref currentRow, betCountByCustIdReport, param);
 
             #endregion Body
+
             #region ResponseFile
 
             var response = HttpContext.Current.Response;
@@ -2328,7 +2364,6 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             excelFile.SaveXls(response.OutputStream);
 
             #endregion ResponseFile
-
         }
 
         private void ExportExcelHeader_BetCountByCustId_TopPunterSummary(ref ExcelWorksheet wsReport, int startCol, ref int currentRow,
@@ -2392,9 +2427,11 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
                 {
                     case "0":
                         break;
+
                     case "1":
                         extraDetail += "League: " + (string.IsNullOrEmpty(param.LeagueId) ? "" : LeagueName(param.LeagueId)) + " - ";
                         break;
+
                     default:
                         break;
                 }
@@ -2419,6 +2456,7 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
                 {
                     case "0":
                         break;
+
                     case "1":
                         endRow = currentRow;
                         endCol = startCol + 4;
@@ -2431,13 +2469,14 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
                         wsReport.Cells.GetSubrangeAbsolute(currentRow, startCol, endRow, endCol).Value = extraDetail;
                         currentRow++;
                         break;
+
                     default:
                         break;
                 }
-
             }
 
             #endregion Title
+
             #region EmptyRow
 
             endCol = startCol + 4;
@@ -2446,6 +2485,7 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
             currentRow++;
 
             #endregion EmptyRow
+
             #region Header
 
             wsReport.Cells[currentRow, currentCol].Style = bgHeader;
@@ -2501,7 +2541,6 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
 
             if (report.Punters.Count > 0)
             {
-
                 foreach (var betCountInfo in report.Punters)
                 {
                     currentCol = startCol;
@@ -2580,7 +2619,6 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
 
                 #endregion EmptyReport
             }
-
         }
 
         private string GetSelectedSportsName(string sportIds)
@@ -2602,12 +2640,15 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
                 case "0":
                     result = "None Live";
                     break;
+
                 case "1":
                     result = "Live";
                     break;
+
                 case "2":
                     result = "None Live & Live";
                     break;
+
                 default:
                     break;
             }
@@ -2622,15 +2663,19 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
                 case PeriodTypeReportConstants.Daily:
                     result = "Daily";
                     break;
+
                 case PeriodTypeReportConstants.Weekly:
                     result = "Weekly";
                     break;
+
                 case PeriodTypeReportConstants.Monthly:
                     result += "Monthly";
                     break;
+
                 case PeriodTypeReportConstants.Annually:
                     result += "Annually";
                     break;
+
                 case PeriodTypeReportConstants.LongRange:
                     result += "Month Range";
                     break;
