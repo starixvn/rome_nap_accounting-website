@@ -22,43 +22,44 @@ namespace Fanex.Tarus.Customer.DataAccess.ViewPT
         public List<dynamic> GetPTSetting_Bingo(GetPTSettingCriteria criteria)
         {
             DataTable dataTable = null;
+            List<dynamic> rawData = new List<dynamic>();
+
             using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 objDb.AddInParameter("username", DbType.String, criteria.UserName);
                 objDb.AddInParameter("GameKind", DbType.Int32, Math.Abs(criteria.BetTypeId));
                 objDb.AddInParameter("GameType", DbType.Int32, 0);
                 DataSet ds = objDb.ExecuteDataSet();
-                if (ds != null)
+                if (ds == null || ds.Tables.Count==0)
                 {
-                    dataTable = ds.Tables[0];
+                    return rawData;
                 }
+
+                dataTable = ds.Tables[0];
             }
 
-            List<dynamic> rawData = new List<dynamic>();
-            if (dataTable != null && dataTable.Rows.Count > 0)
+            foreach (DataRow row in dataTable.Rows)
             {
-                foreach (DataRow row in dataTable.Rows)
+                rawData.Add(new
                 {
-                    rawData.Add(new
-                    {
-                        roleid = row["roleid"],
-                        rolename = row["rolename"],
-                        gamekindid = row["gamekindid"],
-                        gametypeid = row["gametypeid"],
-                        gametype = row["gametype"],
-                        custid = row["custid"],
-                        username = row["username"],
-                        SPT = row["SPT"],
-                        mPT = row["mPT"],
-                        aPT = row["aPT"],
-                        MinPt = row["MinPt"],
-                        IsAutoPT = row["IsAutoPT"],
-                        AutoPT = row["AutoPT"],
-                        RollingRate = row["RollingRate"],
-                        Incentive = row["IncentiveRate"]
-                    });
-                }
+                    roleid = row["roleid"],
+                    rolename = row["rolename"],
+                    gamekindid = row["gamekindid"],
+                    gametypeid = row["gametypeid"],
+                    gametype = row["gametype"],
+                    custid = row["custid"],
+                    username = row["username"],
+                    SPT = row["SPT"],
+                    mPT = row["mPT"],
+                    aPT = row["aPT"],
+                    MinPt = row["MinPt"],
+                    IsAutoPT = row["IsAutoPT"],
+                    AutoPT = row["AutoPT"],
+                    RollingRate = row["RollingRate"],
+                    Incentive = row["IncentiveRate"]
+                });
             }
+           
 
             return rawData;
         }

@@ -32,7 +32,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
         private static readonly CultureInfo cult = CultureInfo.CurrentCulture;
 
         /// <summary>
-        /// Execure SP On_UserUpd
+        /// Execute SP On_UserUpd.
         /// @PhuongDN
         /// </summary>
         /// <param name="onlineUserId"></param>
@@ -361,7 +361,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
             param.Add("inputuser", id);
             var spElement = GetCustomerStoreProcedure("DBA_GetAgent");
             DbResult ds = DbHelper.Execute(spElement.Name, param, spElement.DbName);
-            if (ds.ResultSet.Tables[0].Rows.Count > 0)
+            if (ds != null && ds.ResultSet.Tables.Count > 0 && ds.ResultSet.Tables[0].Rows.Count > 0)
             {
                 if (!Convert.IsDBNull(ds.ResultSet.Tables[0].Rows[0]["membername"]))
                     return ds.ResultSet.Tables[0].Rows[0]["membername"].ToString();
@@ -372,7 +372,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
                 if (!Convert.IsDBNull(ds.ResultSet.Tables[0].Rows[0]["superName"]))
                     return ds.ResultSet.Tables[0].Rows[0]["superName"].ToString();
             }
-            return "";
+            return string.Empty;
         }
 
         /// <summary>
