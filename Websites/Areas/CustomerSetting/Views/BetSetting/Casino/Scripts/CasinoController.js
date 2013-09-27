@@ -8,11 +8,12 @@ Fanex.CustomerSetting.Betting = {};
 
 Fanex.CustomerSetting.Betting.Casino = function ($scope, $http) {
     $scope.model = model;
-    $scope.customerModel = model.customerModel;
-    $scope.gameKinds = $scope.model.settingModel.gameGroups;
+    $scope.customerModel = model != null ? model.customerModel : null;
+    $scope.gameKinds = model != null ? $scope.model.settingModel.gameGroups : null;
 
     $scope.Init = function () {
-        $scope.customerModel.maxTransferCredit = $scope.customerModel.maxTransferCredit.formatNumber();
+        if ($scope.customerModel)
+            $scope.customerModel.maxTransferCredit = $scope.customerModel.maxTransferCredit.formatNumber();
     };
 };
 
