@@ -840,4 +840,9 @@
     <Setting Key="Customer_SMATurnover_CheckSMAList" SpName="Acc_SMATurnoverCheckList" DbName="DBAGE.BODB02" />
     <Setting Key="Customer_SMATurnover_AddSMAList" SpName="Acc_SMATurnoverIns" DbName="DBAGE.BODB02" />
   </Function>
+
+  <Function Name="Progressive Bonus">
+	  <Setting Key="CustomerSelCasinoBonusStatus" SpName="Acc_CustomerSelCasinoBonusStatus" DbName="DBAGE.BODB02" />
+	  <Setting Key="CustomerUpdDisableCasinoBonus" SpName="Acc_CustomerUpdDisableCasinoBonus" DbName="DBTXN.BODB02" />
+  </Function>
 </Functions>

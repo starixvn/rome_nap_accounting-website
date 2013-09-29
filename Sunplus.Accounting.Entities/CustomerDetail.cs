@@ -601,9 +601,8 @@ namespace Sunplus.Accounting.Entities
         public int MasterId { get; set; }
 
         public bool IsDisableVirtualSports { get; set; }
-
         public bool IsHideVirtualSports { get; set; }
-
+            		
         #endregion Properties
     }
 }
