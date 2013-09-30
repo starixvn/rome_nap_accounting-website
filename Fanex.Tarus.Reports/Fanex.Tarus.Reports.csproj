@@ -211,7 +211,6 @@
     <Compile Include="Controllers\Others\BetCountController.cs" />
     <Compile Include="Controllers\Others\CheckBetController.cs" />
     <Compile Include="Controllers\PunterAnalysisController.cs" />
-    <Compile Include="Controllers\DailyWinLoss2hController.cs" />
     <Compile Include="Controllers\WinLoss\TreeWinLossController.cs" />
     <Compile Include="Core\Configurations\MappingReportUrlSection.cs" />
     <Compile Include="Core\Configurations\LicenseeReportSection.cs" />
