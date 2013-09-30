@@ -8,49 +8,48 @@
 <script src="~/js/json2.js" type="text/javascript"></script>
 <script src="~/js/jQuery/Number/jquery.formattyping.js" type="text/javascript"></script>
 <script src="~/js/jQuery/Number/jquery.setcaretposition.js" type="text/javascript"></script>
+<script src="~/Views/Customer/DepositCustomer/Js/PTRenderManager.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
 <script src="~/Views/Customer/DepositCustomer/Js/Common.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
 <script src="~/Views/Customer/DepositCustomer/Js/NewLicensee.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
-
 @helper GetSites()
-{
+    {
     var depositCustomerService = new Fanex.Tarus.Business.Implement.Customer.DepositCustomerService();
     var listLicensee = depositCustomerService.SelAllLicensee();
-    
+
     var isFirst = true;
     foreach (var licensee in listLicensee)
     {
         if (isFirst)
         {
-            @:<option selected="selected" value="@licensee.Id">@licensee.Name</option>";
+    @:<option selected="selected" value="@licensee.Id">@licensee.Name</option>";
             isFirst = false;
         }
         else
         {
-            @:<option value="@licensee.Id">@licensee.Name</option>";
+    @:<option value="@licensee.Id">@licensee.Name</option>";
         }
     }
 }
 @helper GetCurrency()
     {
-    var result = CommonBootStrapper.Locator.GetInstance<IServiceDownLineBalance>();
-    var listEntity = result.GetCurrenciesBySystem();
-    var isFirst = true;
-    foreach (var currency in listEntity.Currencies)
-    {
-        if (isFirst)
+        var result = CommonBootStrapper.Locator.GetInstance<IServiceDownLineBalance>();
+        var listEntity = result.GetCurrenciesBySystem();
+        var isFirst = true;
+        foreach (var currency in listEntity.Currencies)
         {
-                @:<option selected="selected" value="@currency.Id">@currency.Value</option>";
+            if (isFirst)
+            {
+    @:<option selected="selected" value="@currency.Id">@currency.Value</option>";
                 isFirst = false;
+            }
+            else
+            {
+    @:<option value="@currency.Id">@currency.Value</option>";
         }
-        else
-        {
-                @:<option value="@currency.Id">@currency.Value</option>";
         }
-    }
 }
-
 @helper GenerateBetSettingSportsbook()
-{
+    {
     var sports = Sunplus.Accounting.Core.Configurations.SportsSection.Instance.Sports;
     foreach (Sunplus.Accounting.Core.Configurations.SportsElement sport in sports)
     {
@@ -58,7 +57,7 @@
         {
             continue;
         }
-        
+
         var flat = "";
         flat = sport.Id == "1" ? "soccer='true'" : "remainsport='true'";
 
@@ -67,24 +66,24 @@
         var maxPerMatchv = "maxpermatchv" + @sport.Id.ToLower();
         
         
-        <tr>
-            <td align="left" style="padding-left: 4px">
-                <span>@sport.Name</span>
-            </td>
-            <td>
-                <input id="@minBetv" minbet="true" type="text" @flat style="width: 128px; text-align: right" value="@sport.Minbet" />
-            </td>
-            <td>
-                <input id="@maxBetv" maxbet="true" type="text" @flat style="width: 128px; text-align: right" value="@sport.Maxbet" />
-            </td>
-            <td>
-                <input id="@maxPerMatchv" maxpermatch="true" type="text" @flat style="width: 128px; text-align: right" value="@sport.Maxpermatch" />
-            </td>
-        </tr>
+    <tr>
+        <td align="left" style="padding-left: 4px">
+            <span>@sport.Name</span>
+        </td>
+        <td>
+            <input id="@minBetv" minbet="true" type="text" @flat style="width: 128px; text-align: right" value="@sport.Minbet" />
+        </td>
+        <td>
+            <input id="@maxBetv" maxbet="true" type="text" @flat style="width: 128px; text-align: right" value="@sport.Maxbet" />
+        </td>
+        <td>
+            <input id="@maxPerMatchv" maxpermatch="true" type="text" @flat style="width: 128px; text-align: right" value="@sport.Maxpermatch" />
+        </td>
+    </tr>
     }
 }
 @helper GenerateBetSettingComPtRacing()
-{
+    {
     var racings = Sunplus.Accounting.Core.Configurations.RacingSection.Instance.Racings;
     foreach (Sunplus.Accounting.Core.Configurations.RacingElement racing in racings)
     {
@@ -120,54 +119,52 @@
             var winplaceId = "v" + racing.Id.ToLower() + "spositiontaking_" + tote.Id;
             var horseAutoId = "v" + racing.Id.ToLower() + "ibcpositiontaking_" + tote.Id;
             var disableId = "disable" + racing.Id.ToLower() + "_" + tote.Id;
-            <tr>
-                @if (isFirst && activeCounter != 0)
-                {
-                    isFirst = false;
-                    <td rowspan="@activeCounter" align="left" style="padding-left: 4px">
-                        <span>@racing.Name</span>
-                    </td>
-                }
-                @if (!tote.Active)
-                {
-                    continue;
-                }
-                <td align="left" style="padding-left: 4px">
-                    <span>@tote.Name</span>
-                </td>
-                <td style="padding-right: 4px">
-                    <input id="@minBetId" @flat type="text" minbet="true" style="width: 100%; text-align: right" value="@tote.Minbet" />
-                </td>
-                <td style="padding-right: 4px">
-                    <input id="@maxBetId" @flat type="text" maxbet="true" style="width: 100%; text-align: right" value="@tote.Maxbet" />
-                </td>
-                <td style="padding-right: 4px">
-                    <input id="@maxpermatchId" @flat type="text" maxpermatch="true" style="width: 100%; text-align: right" value="@tote.Maxpermatch" />
-                </td>
-                <td align="center">
-                    <select id="@commId" @flat comm="true" style="width: 60px; text-align:left">
-                    </select>
-                </td>
-                <td align="center">
-                    <select id="@winplaceId" @flat winplacept="true" style="width: 60px; text-align:left">
-                    </select>
-                </td>
-                <td align="center">
-                    <select id="@horseAutoId" @flat houseautopt="true" style="width: 60px; text-align:left">
-                    </select>
-                </td>
-                <td align="center">
-                    <input id="@disableId" @flat type="checkbox" /><span>Enable</span>
-                </td>
-            </tr>
+    <tr>
+        @if (isFirst && activeCounter != 0)
+        {
+            isFirst = false;
+            <td rowspan="@activeCounter" align="left" style="padding-left: 4px">
+                <span>@racing.Name</span>
+            </td>
+        }
+        @if (!tote.Active)
+        {
+            continue;
+        }
+        <td align="left" style="padding-left: 4px">
+            <span>@tote.Name</span>
+        </td>
+        <td style="padding-right: 4px">
+            <input id="@minBetId" @flat type="text" minbet="true" style="width: 100%; text-align: right" value="@tote.Minbet" />
+        </td>
+        <td style="padding-right: 4px">
+            <input id="@maxBetId" @flat type="text" maxbet="true" style="width: 100%; text-align: right" value="@tote.Maxbet" />
+        </td>
+        <td style="padding-right: 4px">
+            <input id="@maxpermatchId" @flat type="text" maxpermatch="true" style="width: 100%; text-align: right" value="@tote.Maxpermatch" />
+        </td>
+        <td align="center">
+            <select id="@commId" @flat comm="true" style="width: 60px; text-align:left">
+            </select>
+        </td>
+        <td align="center">
+            <select id="@winplaceId" @flat winplacept="true" style="width: 60px; text-align:left">
+            </select>
+        </td>
+        <td align="center">
+            <select id="@horseAutoId" @flat houseautopt="true" style="width: 60px; text-align:left">
+            </select>
+        </td>
+        <td align="center">
+            <input id="@disableId" @flat type="checkbox" /><span>Enable</span>
+        </td>
+    </tr>
         }
     }
 }
-
 @{
     var sports = Sunplus.Accounting.Core.Configurations.SportsSection.Instance.Sports;
 }
-
 <script type="text/javascript">
     var arrNumberGameBettypes = [];
     @{
@@ -191,7 +188,6 @@
         }
     }
 </script>
-
 <script type="text/javascript">
     var sports = [];
     (function () {
@@ -220,7 +216,6 @@
     }
     })();
 </script>
-
 <script type="text/javascript">
 var arrRacing = [];
 (function () {
@@ -264,7 +259,6 @@ var arrRacing = [];
 })();
 
 </script>
-
 <input id="hiddenAccID" type="hidden" value="@Sunplus.Accounting.Core.Common.AppSession.AccId"/>
 <div class="main">
     <div class="maincontent">
@@ -375,8 +369,7 @@ var arrRacing = [];
                     </tr>
                 </tbody>
             </table>
-            <table cellspacing="0" cellpadding="0" border="0" class="tblPTheader"
-                style="margin-top: 15px">
+            <table cellspacing="0" cellpadding="0" border="0" class="tblPTheader" style="margin-top: 15px">
                 <tbody id="tblTabSBNG">
                     <tr id="btntop" style="cursor: pointer;">
                         <td class="btnleft">
@@ -399,8 +392,7 @@ var arrRacing = [];
                                 <input id="cbxCopyAllSportsBook" type="checkbox" />
                             </td>
                             <td>
-                                <span style="font-weight: bold">Copy all Bet Setting from Soccer (Excluding
-                                    Number Game)</span>
+                                <span style="font-weight: bold">Copy all Bet Setting from Soccer (Excluding Number Game)</span>
                             </td>
                         </tr>
                     </tbody>
@@ -449,16 +441,20 @@ var arrRacing = [];
                                         </tr>
                                         <tr>
                                             <td>
-                                                <input id="minbetv161" numbergame="true" minbet="true" type="text" style="width: 96px; text-align: right" value="0" />
+                                                <input id="minbetv161" numbergame="true" minbet="true" type="text" style="width: 96px;
+                                                    text-align: right" value="0" />
                                             </td>
                                             <td>
-                                                <input id="maxbetv161" numbergame="true" maxbet="true" type="text" style="width: 96px; text-align: right" value="0" />
+                                                <input id="maxbetv161" numbergame="true" maxbet="true" type="text" style="width: 96px;
+                                                    text-align: right" value="0" />
                                             </td>
                                             <td>
-                                                <input id="maxpermatchv161" numbergame="true" maxpermatch="true" type="text" style="width: 96px; text-align: right" value="0" />
+                                                <input id="maxpermatchv161" numbergame="true" maxpermatch="true" type="text" style="width: 96px;
+                                                    text-align: right" value="0" />
                                             </td>
                                             <td>
-                                                <input id="maxperballv161" numbergame="true" maxperball="true" type="text" style="width: 96px; text-align: right" value="0" />
+                                                <input id="maxperballv161" numbergame="true" maxperball="true" type="text" style="width: 96px;
+                                                    text-align: right" value="0" />
                                             </td>
                                         </tr>
                                     </tbody>
@@ -479,14 +475,14 @@ var arrRacing = [];
                                 <span>Sportsbook</span>
                             </td>
                             <td style="width: 100px" align="left">
-                                <select id="selSBPT" style="width: 60px; text-align:left">
+                                <select id="selSBPT" style="width: 60px; text-align: left">
                                 </select>
                             </td>
                             <td style="padding-left: 4px" align="right">
                                 <span>Number Game</span>
                             </td>
                             <td style="width: 100px" align="left">
-                                <select id="selNGPT" style="width: 60px; text-align:left">
+                                <select id="selNGPT" style="width: 60px; text-align: left">
                                 </select>
                             </td>
                         </tr>
@@ -564,14 +560,12 @@ var arrRacing = [];
                     </tbody>
                 </table>
             </div>
-
             <!--Virtual Sports-->
             @if (Sunplus.Accounting.Core.Configurations.WebSettings.EnableVirtualSports)
             {
                 @Html.Partial("~/Views/VirtualSport/Customer/DepositCustomer/AddNewSuper.cshtml")
             }
             <!--/Virtual Sports-->
-
             <table id="tblAdd" cellspacing="0" cellpadding="0" border="0" style="margin-top: 15px">
                 <tbody>
                     <tr>
