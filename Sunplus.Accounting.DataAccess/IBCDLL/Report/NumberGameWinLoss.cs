@@ -9,6 +9,7 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess.Report;
 using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
+using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
 {
@@ -460,8 +461,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
             DbResult result = null;
             try
             {
-                var sp = ReportSession.Instance[ReportSession.StoreCollection.Gaming]["SelAllNumberGameBettypes"];
-                result = DbHelper.Execute(sp.Name, sp.DbName);
+                using (ObjectDb db = new ObjectDb("SelAllNumberGameBettypes"))
+                {
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {

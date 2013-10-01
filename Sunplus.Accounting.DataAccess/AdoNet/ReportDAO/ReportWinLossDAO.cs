@@ -41,34 +41,68 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
         public DbResult SelLeagueWLByBettype(int sportId, int leagueId, string winlostDate)
         {
-            var subfix = GetStoreMappingSubfix(DNAide.Core.CastAide.AsDateTime(winlostDate));
-            var rs = ReportSession.Instance[ReportSession.StoreCollection.WinLoss]["LeagueWL_Bettype" + subfix];
-            var hashtable = new Hashtable();
-            hashtable.Add("winlostdate", winlostDate);
-            hashtable.Add("sporttype", sportId);
-            hashtable.Add("leagueid", leagueId);
-            hashtable.Add("winlost_8rm", 0);
-            hashtable.Add("winlost_barm", 0);
+            DbResult result = null;
+            try
+            {
+                var subfix = GetStoreMappingSubfix(DNAide.Core.CastAide.AsDateTime(winlostDate));
+                string spName = "LeagueWL_Bettype" + subfix;                
 
-            return DbHelper.Execute(rs.Name, hashtable, rs.DbName, 600);
+                using (ObjectDb db = new ObjectDb(spName))
+                {
+                    var hashtable = new Hashtable();
+                    hashtable.Add("winlostdate", winlostDate);
+                    hashtable.Add("sporttype", sportId);
+                    hashtable.Add("leagueid", leagueId);
+                    hashtable.Add("winlost_8rm", 0);
+                    hashtable.Add("winlost_barm", 0);
+
+                    db.AssignParamValues(hashtable);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }                
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
 
         public DbResult SeleLeagueWLDetailByBettype(string winlostDate, int sportId, int leagueId, int bettypeId, bool isLive, bool isHedge)
         {
-            var subfix = GetStoreMappingSubfix(DNAide.Core.CastAide.AsDateTime(winlostDate));
-            var rs = ReportSession.Instance[ReportSession.StoreCollection.WinLoss]["LeagueWL_BettypeDetail" + subfix];
-            var hashtable = new Hashtable();
-            hashtable.Add("winlostdate", winlostDate);
-            hashtable.Add("leagueid", leagueId);
-            hashtable.Add("sporttype", sportId);
-            hashtable.Add("bettype", bettypeId);
-            hashtable.Add("liveindicator", isLive);
-            hashtable.Add("ishedge", isHedge);
-            hashtable.Add("winlost_8rm", 0);
-            hashtable.Add("winlost_barm", 0);
+            DbResult result = null;
+            try
+            {
+                var subfix = GetStoreMappingSubfix(DNAide.Core.CastAide.AsDateTime(winlostDate));
+                string spName = "LeagueWL_BettypeDetail" + subfix;
 
-            return DbHelper.Execute(rs.Name, hashtable, rs.DbName, 600);
+                using (ObjectDb db = new ObjectDb(spName))
+                {
+                    var hashtable = new Hashtable();
+                    hashtable.Add("winlostdate", winlostDate);
+                    hashtable.Add("leagueid", leagueId);
+                    hashtable.Add("sporttype", sportId);
+                    hashtable.Add("bettype", bettypeId);
+                    hashtable.Add("liveindicator", isLive);
+                    hashtable.Add("ishedge", isHedge);
+                    hashtable.Add("winlost_8rm", 0);
+                    hashtable.Add("winlost_barm", 0);
+
+                    db.AssignParamValues(hashtable);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }                
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
        

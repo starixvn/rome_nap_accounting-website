@@ -13,10 +13,7 @@
 		<Setting Key="CheckBetReject" SpName="Acc_Rpt_CheckBet_Reject" DbName="DBBET.BK"  />
 	</Function>
 	
-	<Function Name="Direct Balance Report">
-		<Setting Key="superbalance" SpName="Acc_Rpt_Balance_Super" DbName="DBACC.BODB02"  />
-		<Setting Key="superbalanceyesterday" SpName="Acc_Rpt_Balance_Super_Yesterday" DbName="DBACC.BODB02"  />
-	</Function>
+	
   <Function Name="Exchange Rate">
     <Setting Key="Acc_ExchangeCurrencySel" SpName="Acc_ExchangeCurrencySel" DbName="db053"  />
     
@@ -116,9 +113,7 @@
     <Setting Key="Acc_ExchangeSelCodeforCrossTransfer" SpName="Acc_ExchangeSelCodeforCrossTransfer" DbName="db053"  />
   </Function>
 
-  <Function Name="Report">
-    <Setting Key="SelBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="db053"  />    
-  </Function>
+  
 
   <Function Name="Exchange Rate">
     <Setting Key="ExchangeCurrencySel" SpName="Acc_ExchangeCurrencySel" DbName="db053"  />

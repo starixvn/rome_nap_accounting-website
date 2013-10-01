@@ -329,9 +329,15 @@
                 p.Add("todate", FormatHandler.ResetEndDate(tdate));
                 p.Add("site", sitefilter);
                 p.Add("from", fromfilter);
-                StoreProcedureElement spElement = GetReportStoreProcedure(
-                    ReportSession.StoreCollection.Others, "CustomerTurnoverBySite");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 600);
+
+                using (ObjectDb db = new ObjectDb("CustomerTurnoverBySite"))
+                {
+                    db.AssignParamValues(p);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -1246,9 +1252,14 @@
 
             try
             {
-                StoreProcedureElement spElement =
-                    ReportSession.Instance[ReportSession.StoreCollection.Trader]["Acc_Rpt_TraderPerformanceDetail"];
-                result = DbHelper.Execute(spElement.Name, param, spElement.DbName, 600);
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_TraderPerformanceDetail"))
+                {
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -1270,6 +1281,15 @@
                 StoreProcedureElement spElement =
                     ReportSession.Instance[ReportSession.StoreCollection.Trader]["Acc_Rpt_TraderPerformanceDetail_14"];
                 result = DbHelper.Execute(spElement.Name, param, spElement.DbName, 600);
+
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_TraderPerformanceDetail_14", 600))
+                {
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -1283,9 +1303,15 @@
             DbResult result = null;
             try
             {
-                StoreProcedureElement spElement =
-                    ReportSession.Instance[ReportSession.StoreCollection.Trader]["Acc_Rpt_TraderPerformanceSum"];
-                result = DbHelper.Execute(spElement.Name, hash, spElement.DbName, 600);
+
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_TraderPerformanceSum", 600))
+                {
+                    db.AssignParamValues(hash);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -1299,9 +1325,14 @@
             DbResult result = null;
             try
             {
-                StoreProcedureElement spElement =
-                    ReportSession.Instance[ReportSession.StoreCollection.Trader]["Acc_Rpt_TraderPerformanceSum_14"];
-                result = DbHelper.Execute(spElement.Name, hash, spElement.DbName, 600);
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_TraderPerformanceSum_14", 600))
+                {
+                    db.AssignParamValues(hash);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
 
-  <Function Name="Report">
+  <Function Name="Report - Gaming">
     <Setting Key="GameStatistics_LicenseeSel" SpName="Acc_Rpt_LiveCasino_GameStatistics_LicenseeSel" DbName="DBEXT.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_Rpt_NumberGame_LicenseesSel" SpName="Acc_Rpt_NumberGame_LicenseesSel" DbName="DBEXT.bodb02.bodbAdminNet"  />    
   </Function>

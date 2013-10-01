@@ -12,6 +12,8 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
+using Fanex.Tarus.Infrastructure.Extensions;
+using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.Report
 {
@@ -109,8 +111,22 @@ namespace Sunplus.Accounting.DataAccess.Report
 
             private static DbResult Age_BalDaySel()
             {
-                var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Others, "SelBalanceUpDay");
-                return DbHelper.Execute(spElement.Name, spElement.DbName);
+                DbResult result = null;
+                try
+                {
+                    using (ObjectDb db = new ObjectDb("SelBalanceUpDay"))
+                    {
+                        var ds = db.ExecuteDataSet();
+                        var output = db.GetOuputParams();
+
+                        result = new DbResult(output, ds);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogExtensions.ExceptionHandler(ex);
+                }
+                return result;                
             }
         }
     }
