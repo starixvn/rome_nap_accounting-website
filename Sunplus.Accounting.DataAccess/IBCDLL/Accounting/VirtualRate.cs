@@ -7,6 +7,8 @@ using DNAide.Data;
 
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
+using Fanex.Data;
+using Sunplus.Accounting.Entities;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
@@ -100,24 +102,31 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             return rs;
         }
 
-        public static DbResult UpdateVirtualRateIntoCustinfo(string filename, int filesize, int index)
+        public static void UpdateVirtualRateIntoCustinfo(string filename, int filesize, int index, ref int errcode, ref string errmsg)
         {
-            DbResult rs = null;
             try
             {
-                var hash = new Hashtable();
-                hash.Add("userid", AppSession.AccId);
-                hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
-                hash.Add("filename", filename);
-                hash.Add("filesize", filesize);
-                hash.Add("index", index);
-                rs = DbHelper.Execute("Acc_VirtualRateMulUpd", hash, DBType.MAIN);
+                using (ObjectDb objDB = new ObjectDb("Acc_VirtualRateMulUpd", 600))
+                {
+                    var hash = new Hashtable();
+                    hash.Add("userid", AppSession.AccId);
+                    hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
+                    hash.Add("filename", filename);
+                    hash.Add("filesize", filesize);
+                    hash.Add("index", index);
+
+                    objDB.AssignParamValues(hash);
+
+                    objDB.ExecuteNonQuery();
+
+                    errcode = Convert.ToInt32(objDB.GetParameterValue("errcode"));
+                    errmsg = Convert.ToString(objDB.GetParameterValue("errmsg"));
+                }
             }
             catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
-            return rs;
         }
 
         public static DbResult ViewVRHistory(Hashtable hash)

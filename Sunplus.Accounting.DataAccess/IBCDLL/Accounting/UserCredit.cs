@@ -85,20 +85,32 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// </summary>
         /// <param name="_agentId"></param>
         /// <returns></returns>
-        public static IDataReader SelectAgentCredit(int _agentId)
+        public static DataTable SelectAgentCredit(int _agentId)
         {
+            DataTable dt = new DataTable();
             try
             {
-                var param = new Hashtable();
-                param.Add("agentid", _agentId);
+                using (ObjectDb objDB = new ObjectDb("Acc_CustomerSelUsedCredit_Ag", 600))
+                {
+                    var param = new Hashtable();
+                    param.Add("agentid", _agentId);
 
-                return DbHelper.ExecuteReader("Acc_CustomerSelUsedCredit_Ag", param, DBType.MAIN, 120);
+                    objDB.AssignParamValues(param);
+
+                    var ds = objDB.ExecuteDataSet();
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        dt = ds.Tables[0];
+                    }
+
+                }
             }
             catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
+            return dt;
         }
 
         /// <summary>
@@ -108,20 +120,32 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// </summary>
         /// <param name="_masterId"></param>
         /// <returns></returns>
-        public static IDataReader SelectMasterCredit(int _masterId)
+        public static DataTable SelectMasterCredit(int _masterId)
         {
+            DataTable dt = new DataTable();
             try
             {
-                var param = new Hashtable();
-                param.Add("masterid", _masterId);
+               
+                using (ObjectDb objDB = new ObjectDb("Acc_CustomerSelUsedCredit_MAg", 600))
+                {
+                    var param = new Hashtable();
+                    param.Add("masterid", _masterId);
 
-                return DbHelper.ExecuteReader("Acc_CustomerSelUsedCredit_MAg", param, DBType.MAIN, 120);
+                    objDB.AssignParamValues(param);
+
+                    var ds = objDB.ExecuteDataSet();
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        dt = ds.Tables[0];
+                    }
+                }
             }
             catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
+            return dt;
         }
 
         /// <summary>
@@ -131,20 +155,30 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// </summary>
         /// <param name="_superId"></param>
         /// <returns></returns>
-        public static IDataReader SelectSuperCredit(int _superId)
+        public static DataTable SelectSuperCredit(int _superId)
         {
+            DataTable dt = new DataTable();
             try
             {
-                var param = new Hashtable();
-                param.Add("superid", _superId);
+                using (ObjectDb objDB = new ObjectDb("Acc_CustomerSelUsedCredit_SAg", 600))
+                {
+                    var param = new Hashtable();
+                    param.Add("superid", _superId);
 
-                return DbHelper.ExecuteReader("Acc_CustomerSelUsedCredit_SAg", param, DBType.MAIN, 120);
+                    objDB.AssignParamValues(param);
+                    var ds = objDB.ExecuteDataSet();
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        dt = ds.Tables[0];
+                    }
+                }
             }
             catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
+            return dt;
         }
 
         /// <summary>

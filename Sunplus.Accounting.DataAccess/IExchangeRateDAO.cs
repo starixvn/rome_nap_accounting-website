@@ -8,7 +8,8 @@
     public interface IExchangeRateDAO
     {
         DbResult ExChangeRateUpdateBaseRate(string currency, string baserate, string minbet, string minbetlive);
+        void ExChangeRateUpdateOpenTote(string currency, string GBPRate, string AUDRate, string ZARRate, string EURORate, string USDRate, ref int errcode, ref string errmsg);
 
-        DbResult ExChangeRateUpdateOpenTote(string currency, string GBPRate, string AUDRate, string ZARRate, string EURORate, string USDRate);
+        //DbResult ExChangeRateUpdateOpenTote(string currency, string GBPRate, string AUDRate, string ZARRate, string EURORate, string USDRate);
     }
 }

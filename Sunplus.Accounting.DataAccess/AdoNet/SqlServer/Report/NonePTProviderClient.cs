@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using DNAide.Data;
 using Sunplus.Accounting.DataAccess.Provider.Report;
+using Fanex.Data;
 
 /// <summary>
 /// Summary description for PunterAnalysisProviderClient
@@ -28,8 +29,12 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Report
 
         public override DbResult GetCurrencyList()
         {
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ExchangeRateSession.StoreCollection.ExchangeRateControl, "ExchangeSel");
-            return DbHelper.Execute(spElement.Name, spElement.DbName);
+            using (ObjectDb objDB = new ObjectDb("Acc_ExchangeSel", 600))
+            {
+                var dataset = objDB.ExecuteDataSet();
+                DbResult dbResult = new DbResult(objDB.GetOuputParams(), dataset);
+                return dbResult;
+            }            
         }
     }
 }

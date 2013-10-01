@@ -23,7 +23,7 @@ namespace Fanex.Tarus.Reports.DataAccess.Gaming.LiveCasinoGameFinancialReport
         public List<dynamic> GetCurrencies()
         {
             var dataTable = new DataTable();
-            using (ObjectDb objDb = new ObjectDb("GameStatistics_SelCurrency"))
+            using (ObjectDb objDb = new ObjectDb("Acc_ExchangeSel"))
             {
                 var ds = objDb.ExecuteDataSet();
                 if (ds != null && ds.Tables.Count > 0)

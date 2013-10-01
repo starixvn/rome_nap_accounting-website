@@ -31,7 +31,7 @@ namespace Fanex.Tarus.Admin.DataAccess.SMAManagement
         public DataTable SelAllCurrencies()
         {
             DataTable datatable = null;
-            using (var dbContext = new ObjectDb("CustomerSetting_ExchangeSel"))
+            using (var dbContext = new ObjectDb("Acc_ExchangeSel"))
             {
                 var ds = dbContext.ExecuteDataSet();
                 if (ds != null && ds.Tables.Count > 0)

@@ -2,12 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using DNAide.Core;
 using DNAide.Data;
+
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.DataAccess.IReportDAO;
 using Sunplus.Accounting.DataAccess.Report;
 using Sunplus.Accounting.Entities.Report.Monitor;
+using Sunplus.Core.LoggingLib;
+using DNAide.Core;
+using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 {
@@ -24,48 +28,40 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
         }
 
         #region getSPMapping
-
         private StoreProcedureElement getSPMapping(GetKeySpMapping mapping)
         {
             return GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.Others, mapping.ToString());
         }
 
-        #endregion getSPMapping
+        
+        #endregion
 
         #region GetCurrency
-
         public DataTable GetCurrency()
         {
-            StoreProcedureElement spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.HelperSession.StoreCollection.HelperControl, GetKeySpMapping.GetCurrenies.ToString());
-
-            //var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.HelperSession.StoreCollection.HelperControl, "GetCurrenies");
 
             DataTable dataTable = new DataTable();
             try
             {
-                string db = spElement.DbName;
-                string sp = spElement.Name;
-
-                DbResult dbResult = DbHelper.Execute(sp, db);
-                if (dbResult != null && dbResult.ResultSet.Tables.Count > 0)
-                    dataTable = dbResult.ResultSet.Tables[0];
-                else
-                    return null;
+                using (ObjectDb objDB = new ObjectDb("Acc_ExchangeSel", 600))
+                {
+                    var dataset = objDB.ExecuteDataSet();
+                    if (dataset != null && dataset.Tables.Count > 0)
+                    {
+                        dataTable = dataset.Tables[0];
+                    }
+                }   
             }
             catch (Exception ex)
             {
-                {
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                }
-                return null;
+                
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dataTable;
         }
-
-        #endregion GetCurrency
+        #endregion
 
         #region GetSports
-
         public DataTable GetSports()
         {
             DataTable dataTable = null;
@@ -83,6 +79,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             }
             catch (Exception ex)
             {
+                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -90,11 +87,9 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             }
             return dataTable;
         }
-
-        #endregion GetSports
+        #endregion
 
         #region GetBettypes
-
         public DataTable GetBettypes(List<Items> option, int sporttype)
         {
             DataTable dataTable = null;
@@ -108,12 +103,13 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
                 foreach (Items items in option)
                 {
-                    if (items.Key.Length > 0)
-                        hashtable.Add(items.Key, CastAide.AsInt16(items.Value));
+                    if(items.Key.Length>0)
+                        hashtable.Add(items.Key,CastAide.AsInt16(items.Value) );
                 }
                 hashtable.Add("sporttype", sporttype);
+                
 
-                DbResult dbResult = DbHelper.Execute(sp, hashtable, db);
+                DbResult dbResult = DbHelper.Execute(sp,hashtable, db);
                 if (dbResult != null && dbResult.ResultSet.Tables.Count > 0)
                     dataTable = dbResult.ResultSet.Tables[0];
                 else
@@ -121,6 +117,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             }
             catch (Exception ex)
             {
+                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -128,11 +125,9 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             }
             return dataTable;
         }
-
-        #endregion GetBettypes
+        #endregion
 
         #region GetLeague
-
         public DataTable GetLeague(List<Items> option, int sportId, string fromdate, string todate, int currency, int bettype, int live)
         {
             DataTable dataTable = null;
@@ -146,6 +141,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
                 foreach (Items items in option)
                 {
+
                     if (items.Key.Length > 0)
                         hashtable.Add(items.Key,
                                       CastAide.AsInt16(option[0].Value) == 1 ? 1 : CastAide.AsInt16(items.Value));
@@ -160,7 +156,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                 {
                     hashtable.Add("live", live);
                 }
-                DbResult dbResult = DbHelper.Execute(sp, hashtable, db, 1000);
+                DbResult dbResult = DbHelper.Execute(sp,hashtable, db,1000);
                 if (dbResult != null && dbResult.ResultSet.Tables.Count > 0)
                     dataTable = dbResult.ResultSet.Tables[0];
                 else
@@ -168,6 +164,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             }
             catch (Exception ex)
             {
+                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -175,11 +172,9 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             }
             return dataTable;
         }
-
-        #endregion GetLeague
+        #endregion
 
         #region GetMAMonitorReport
-
         public DataTable GetMAMonitorReport(Param param)
         {
             DataTable dataTable = null;
@@ -191,6 +186,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                 DataTable dtWH = null;
                 Hashtable hashtable = new Hashtable();
 
+
                 string fdate = param.fromdate;
                 string tdate = param.todate;
 
@@ -200,16 +196,16 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
                 foreach (Items items in param.product)
                 {
-                    if (items.Key.Length > 0)
+                    if(items.Key.Length>0)
                         hashtable.Add(items.Key, items.Value);
                 }
 
                 bool showsb = CastAide.AsBoolean(hashtable["showsb"]);
-                if (showsb)
+                if(showsb)
                     hashtable.Add("sporttype", param.sporttype);
 
                 hashtable.Add("bettype", param.bettype);
-                if (param.live < 2 && param.live > -1)
+                if(param.live<2 && param.live>-1)
                     hashtable.Add("live", param.live);
                 if (param.usernames != "")
                 {
@@ -221,7 +217,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                 }
                 hashtable.Add("reportby", param.reportby);
 
-                if (CastAide.AsDateTime(param.fromdate) >= ReportUtils.BalanceUp.BalanceUpDay)//archive
+                if(CastAide.AsDateTime(param.fromdate) >= ReportUtils.BalanceUp.BalanceUpDay )//archive
                 {
                     spElement = getSPMapping(GetKeySpMapping.Monitor_Report);
                     db = spElement.DbName;
@@ -233,11 +229,12 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                     spElement = getSPMapping(GetKeySpMapping.Monitor_ReportArchive);
                     db = spElement.DbName;
                     sp = spElement.Name;
-                    dataTable = DbHelper.Execute(sp, hashtable, db, 1000).ResultSet.Tables[0];
+                    dataTable = DbHelper.Execute(sp, hashtable, db,1000).ResultSet.Tables[0]; 
                 }
             }
             catch (Exception ex)
             {
+                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -245,8 +242,9 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             }
             return dataTable;
         }
+        #endregion
 
-        #endregion GetMAMonitorReport
 
+       
     }
 }

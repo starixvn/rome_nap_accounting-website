@@ -40,7 +40,7 @@ namespace Fanex.Tarus.Customer.Criteria.CustomerLogin
 
         public string GetSettingKey()
         {
-            return "CustomerUpdSecurityCode";
+            return "DBA_ResetSecurityCode_Agent";
         }
 
         public bool IsValid()

@@ -21,14 +21,14 @@ public class CheckUserName : IHttpHandler, IRequiresSessionState
         try
         {
             string strType = context.Request["listType"] as string ?? string.Empty;
-            System.Data.DataSet ds = SelectCustomer.CustSelByUsername(username, AppSession.SYSTEM);
+            var ds = SelectCustomer.CustSelByUsername(username, AppSession.SYSTEM);
             if (ds != null)
             {
                 if (ds.Tables.Count> 0 && ds.Tables[0].Rows.Count > 0)
                 {
                     var row = ds.Tables[0].Rows[0];
                     int roleId = 0;
-                    int.TryParse(row["roleid"].ToString(), out roleId);
+                    int.TryParse(ds.Tables[0].Rows[0]["roleid"].ToString(), out roleId);
                     
                     bool isDeposit = Sunplus.Accounting.Core.Configurations.WebSettings.IsApplySplitingDepositeCustomer ?  IsDeposit(username) : false;
                     //bool isDeposit = IsDeposit(username);
@@ -42,7 +42,7 @@ public class CheckUserName : IHttpHandler, IRequiresSessionState
                     }
                     else
                     {
-                        context.Response.Write("parent.OpenFormAdd(" + row["custid"] + "," + row["roleid"] + ");");
+                        context.Response.Write("parent.OpenFormAdd(" + ds.Tables[0].Rows[0]["custid"] + "," + ds.Tables[0].Rows[0]["roleid"] + ");");
                     }
                 }
                 else

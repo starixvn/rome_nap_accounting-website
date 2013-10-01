@@ -74,5 +74,50 @@ namespace Sunplus.Accounting.Entities
                 result.ErrorHandler = new Dictionary<int, string> { { 100, ex.Message } };
             }
         }
+
+        public void HandleError(ref Result result, string errcode, string errmsg, string fileResource)
+        {
+            try
+            {
+                result.ErrorHandler = new Dictionary<int, string>();
+                if (CastAide.AsString(errcode).Length > 0)
+                {
+                    var listErrorCode = errcode.ToString().Split('');
+                    var listErrorMsg = errmsg.ToString().Split('');
+                    var len = listErrorMsg.Length;
+                    result.ErrorCode = 100;
+                    result.ErrorMessage = string.Empty;
+                    for (int ind = 0; ind < len; ind++)
+                    {
+                        var eCode = CastAide.AsInt32(listErrorCode[ind]);
+                        if (eCode == 0) { continue; }
+                        var eMsg = eCode > 0
+                                        ? listErrorMsg[ind]
+                                        : HttpContext.GetGlobalResourceObject(fileResource, eCode.ToString()).ToString();
+                        result.ErrorHandler.Add(eCode, eMsg);
+                    }
+                    if (result.ErrorHandler.Count == 0)
+                    {
+                        var msgSuccess = HttpContext.GetGlobalResourceObject(fileResource, "0").ToString();
+                        result.ErrorCode = 0;
+                        result.ErrorMessage = msgSuccess;
+                        result.ErrorHandler.Add(0, msgSuccess);
+                    }
+                }
+                else
+                {
+                    var msgSuccess = HttpContext.GetGlobalResourceObject(fileResource, "0").ToString();
+                    result.ErrorCode = 0;
+                    result.ErrorMessage = msgSuccess;
+                    result.ErrorHandler.Add(0, msgSuccess);
+                }
+            }
+            catch (NullReferenceException ex)
+            {
+                result.ErrorCode = 100;
+                result.ErrorMessage = ex.Message;
+                result.ErrorHandler = new Dictionary<int, string> { { 100, ex.Message } };
+            }
+        }
     }
 }

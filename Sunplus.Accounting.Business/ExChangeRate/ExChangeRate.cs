@@ -182,9 +182,14 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 hash.Add("description", Description);
                 hash.Add("multipliedby", Convert.ToInt32(MultipliedBy.Trim()));
 
-                DbResult rs = IBCProvider.ExChangeRate.ExchangeIns(hash);
-                msg = CastAide.AsString(rs.Outputs["errmsg"]);
-                int exid = CastAide.AsInt32(rs.Outputs["exchangeid"]);
+                int errcode = 0;
+                string errmsg = "";
+                int exchangeid = 0;
+
+                IBCProvider.ExChangeRate.ExchangeIns(hash, ref errcode, ref errmsg, ref exchangeid);
+
+                msg = errmsg;
+                int exid = exchangeid;
                 if (msg.Length == 0)
                 {
                     CasinoLibrary.SBAgent.BasicInfo info = new CasinoLibrary.SBAgent.BasicInfo();
@@ -414,8 +419,11 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 rs = IBCProvider.ExChangeRate.ExchangeSelByID(exid);// get info to send email
                 DataRow[] Rows = rs.ResultSet.Tables[0].Select();
 
-                rs = IBCProvider.ExChangeRate.ExchangeUpd(hash);
-                msg = CastAide.AsString(rs.Outputs["errmsg"]);
+                int errcode = 0;
+                string errmsg = "";
+
+                IBCProvider.ExChangeRate.ExchangeUpd(hash, ref errcode, ref errmsg);
+                msg = errmsg;
 
                 if (msg.Length == 0)
                 {
