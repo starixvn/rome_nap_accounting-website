@@ -60,7 +60,7 @@ ProgressiveBonus.controller(
             var custId = $('#txtCustId').val();
             $.ajax({
                 type: "POST",
-                url: rootUrl + "Casino/GetProducts?CustId=" + custId,
+                url: rootUrl + "CasinoBonus/GetProducts?CustId=" + custId,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 beforeSend: function () {
@@ -133,7 +133,7 @@ ProgressiveBonus.controller(
 
             $.ajax({
                 type: "POST",
-                url: rootUrl + "Casino/UpdateProgressive",
+                url: rootUrl + "CasinoBonus/UpdateProgressive",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 data: JSON.stringify($scope.module),
