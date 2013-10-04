@@ -20,21 +20,21 @@
 @section Styles{
     <link href="@Url.Content("~/Areas/CustomerSetting/Views/BetSetting/Casino/Styles/Casino.css")" rel="stylesheet" type="text/css" />
 }
-@section Casino{
-    <table cellspacing="0" cellpadding="0" border="0" style="margin: 6px 0;" ng-hide="model == null">
-        <tbody>
-            <tr>
-                <td class="custBtn1">
-                </td>
-                <td class="custBtn2 hand">
-                    Update
-                </td>
-            </tr>
-        </tbody>
-    </table>
+@section Casino{    
     <div id="ng-app" ng-app="casinoApp" ng-controller="Fanex.CustomerSetting.Betting.Casino" ng-init="Init()" style="width: 815px">
         <div id="errMsg" style="display: none" class="errMsg">
         </div>
+        <table cellspacing="0" cellpadding="0" border="0" style="margin: 6px 0;" ng-hide="model == null">
+            <tbody>
+                <tr>
+                    <td class="custBtn1">
+                    </td>
+                    <td class="custBtn2 hand">
+                        Update
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         <div class="title C bold header">
             Update Bet Setting: @ViewBag.Username
         </div>
