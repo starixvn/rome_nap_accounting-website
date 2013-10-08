@@ -60,6 +60,7 @@
     <Compile Include="AdminAccess.cs" />
     <Compile Include="BaseAccess.cs" />
     <Compile Include="Constants\DbTypeSize.cs" />
+    <Compile Include="Constants\RoleConstants.cs" />
     <Compile Include="Customer\DepositCustomerAccess.cs" />
     <Compile Include="HelperAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

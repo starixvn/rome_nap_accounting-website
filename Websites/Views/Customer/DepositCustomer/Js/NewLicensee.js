@@ -57,7 +57,7 @@ newLic.verifyData = function () {
         common.showErr("Dummy Agent's Username is invalid!");
         return false;
     }
-    
+
     var dummyMemberName = $("#tbxDummyMemberName").val();
     if (common.isEmpty(dummyMemberName)) {
         common.showErr("Please input Dummy Member's Username!");
@@ -271,10 +271,13 @@ newLic.getPostParam = function () {
     }
     return {
         postParam: {
-            SuperName: $("#tbxSuperName").val()
-            , MasterName: $("#tbxMasterName").val()
-            , AgentName: $("#tbxAgentName").val()
-            , PostParams: params
+            SuperName: $("#tbxSuperName").val(),
+            MasterName: $("#tbxMasterName").val(),
+            AgentName: $("#tbxAgentName").val(),
+            DummyMasterName: $("#tbxDummyMasterName").val(),
+            DummyAgentName: $("#tbxDummyAgentName").val(),
+            DummyMemberName: $("#tbxDummyMemberName").val(),
+            PostParams: params
         }
     };
 };
@@ -305,17 +308,42 @@ newLic.submit = function () {
                 common.showErr(data.ErrorMessage);
             }
             else {
-                var msg = "Add new super: " + $("#tbxSuperName").val();
-                if ($("#tbxMasterName").val() != "") {
-                    msg += ", master: " + $("#tbxMasterName").val();
+                var infoList = [];
+                var infoPrefix = "";
+                for (var i = 0; i < 17; i++) {
+                    infoPrefix += "&nbsp;";
                 }
 
-                if ($("#tbxAgentName").val() != "") {
-                    msg += ", agent: " + $("#tbxAgentName").val();
+                infoList.push(infoPrefix + "super: " + $("#tbxSuperName").val());
+                var masterName = $("#tbxMasterName").val();
+                if (masterName != "") {
+                    infoList.push(infoPrefix + "master: " + masterName);
                 }
 
-                msg += " successfully!";
+                var agentName = $("#tbxAgentName").val();
+                if (agentName != "") {
+                    infoList.push(infoPrefix + "agent: " + agentName);
+                }
 
+                var dummyInfoList = [];
+                var dummyMasterName = $("#tbxDummyMasterName").val();
+                if (dummyMasterName != "") {
+                    infoList.push(infoPrefix + "dummy master: " + dummyMasterName);
+                }
+
+                var dummyAgentName = $("#tbxDummyAgentName").val();
+                if (dummyAgentName != "") {
+                    infoList.push(infoPrefix + "dummy agent: " + dummyAgentName);
+                }
+
+                var dummyMemberName = $("#tbxDummyMemberName").val();
+                if (dummyMemberName != "") {
+                    infoList.push(infoPrefix + "dummy member: " + dummyMemberName);
+                }
+
+                var msg = "Add new: " + "<br />" +
+                          infoList.join("<br />") +
+                          "<br />" + "successfully!";
                 common.showSuccess(msg);
                 common.resetValues();
             }
