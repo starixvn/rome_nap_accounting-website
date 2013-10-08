@@ -80,12 +80,24 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
             }
 
             succeededIdList.Add(newLicenseePostParam.AgentId);
+            if (string.IsNullOrWhiteSpace(newLicenseePostParam.DummyMasterName))
+            {
+                result.ErrorMessage = string.Join(",", succeededIdList);
+                return result;
+            }
+
             result = NewLicenseeAddNewDummyUser(ref newLicenseePostParam,
                 RoleConstants.Master,
                 ref result,
                 ref succeededIdList);
             if (result.ErrorCode != 0)
             {
+                return result;
+            }
+
+            if (string.IsNullOrWhiteSpace(newLicenseePostParam.DummyAgentName))
+            {
+                result.ErrorMessage = string.Join(",", succeededIdList);
                 return result;
             }
 
@@ -98,13 +110,24 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 return result;
             }
 
-            result = NewLicenseeAddNewDummyUser(ref newLicenseePostParam,
-                RoleConstants.Member,
-                ref result,
-                ref succeededIdList);
-            if (result.ErrorCode != 0)
+            if (string.IsNullOrWhiteSpace(newLicenseePostParam.DummyMemberName))
             {
+                result.ErrorMessage = string.Join(",", succeededIdList);
                 return result;
+            }
+
+            var dummyMemberNameList = newLicenseePostParam.DummyMemberName.Split(new char[] { ',' });
+            foreach (var dummyMemberName in dummyMemberNameList)
+            {
+                newLicenseePostParam.DummyMemberName = dummyMemberName;
+                result = NewLicenseeAddNewDummyUser(ref newLicenseePostParam,
+                    RoleConstants.Member,
+                    ref result,
+                    ref succeededIdList);
+                if (result.ErrorCode != 0)
+                {
+                    return result;
+                }
             }
 
             result.ErrorMessage = string.Join(",", succeededIdList);
