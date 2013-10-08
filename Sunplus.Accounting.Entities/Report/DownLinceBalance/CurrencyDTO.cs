@@ -21,5 +21,8 @@ namespace Sunplus.Accounting.Entities.Report.DownLinceBalance
 
         [DataMember]
         public string Value { get; set; }
+
+        [DataMember]
+        public string Code { get; set; }
     }
 }

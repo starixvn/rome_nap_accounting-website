@@ -36,6 +36,41 @@ newLic.verifyData = function () {
         }
     }
 
+    var dummyMasterName = $("#tbxDummyMasterName").val();
+    if (common.isEmpty(dummyMasterName)) {
+        common.showErr("Please input Dummy Master's Username!");
+        return false;
+    }
+
+    if (!common.validateUserName(dummyMasterName)) {
+        common.showErr("Dummy Master's Username is invalid!");
+        return false;
+    }
+
+    var dummyAgentName = $("#tbxDummyAgentName").val();
+    if (common.isEmpty(dummyAgentName)) {
+        common.showErr("Please input Dummy Agent's Username!");
+        return false;
+    }
+
+    if (!common.validateUserName(dummyAgentName)) {
+        common.showErr("Dummy Agent's Username is invalid!");
+        return false;
+    }
+    
+    var dummyMemberName = $("#tbxDummyMemberName").val();
+    if (common.isEmpty(dummyMemberName)) {
+        common.showErr("Please input Dummy Member's Username!");
+        return false;
+    }
+
+    var dummyMemberNameList = dummyMemberName.split(',');
+    if (!common.validateUserName(dummyMemberName) ||
+         $.inArray("", dummyMemberNameList) != -1) {
+        common.showErr("Dummy Member's Usernames is invalid!");
+        return false;
+    }
+
     return true;
 };
 
@@ -121,7 +156,7 @@ newLic.assignNumberGamePT = function (params) {
         var type = arr[i];
 
         var bettypes = window.arrNumberGameBettypes;
-        
+
         for (var j = 0; j < bettypes.length; j++) {
             params.push({
                 Name: "v" + id + type + "positiontaking_" + bettypes[j]
@@ -133,7 +168,7 @@ newLic.assignNumberGamePT = function (params) {
             params.push({
                 Name: "v" + id + type + "livepositiontaking_" + bettypes[k]
                 , Value: $("#selNGPT").val()
-            }); 
+            });
         }
     }
 };
@@ -157,14 +192,14 @@ newLic.assignRacingBetSettingComPT = function (params) {
                 Name: "v" + racing.Id + "maxpermatch_" + tote.Id
                 , Value: $("#v" + racing.Id + "maxpermatch_" + tote.Id).getNumberValue()
             });
-            
+
             for (var i = 0; i < tote.Bettype.length; i++) {
                 //commision
                 params.push({
                     Name: "v" + racing.Id + "discount_" + tote.Bettype[i]
                     , Value: $("#v" + racing.Id + "discount_" + tote.Id).val()
                 });
-                
+
                 //win place pt
                 params.push({
                     Name: "v" + racing.Id + "spositiontaking_" + tote.Bettype[i]

@@ -75,7 +75,8 @@ public class ServiceDownLineBalance : IServiceDownLineBalance
                 var currency = new Currency()
                 {
                     Id = CastAide.AsString(dr["exchangeid"]),
-                    Value = CastAide.AsString(dr["currency"])
+                    Value = CastAide.AsString(dr["currency"]),
+                    Code = CastAide.AsString(dr["exchangeid"])
                 };
                 currencies.Currencies.Add(currency);
             }

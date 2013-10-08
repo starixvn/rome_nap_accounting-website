@@ -16,6 +16,15 @@ namespace Fanex.Tarus.Entities.Customer.DepositCustomer
         public int MemberId { get; set; }
         public string MemberName { get; set; }
 
+        public int DummyMasterId { get; set; }
+        public string DummyMasterName { get; set; }
+
+        public int DummyAgentId { get; set; }
+        public string DummyAgentName { get; set; }
+
+        public int DummyMemberId { get; set; }
+        public string DummyMemberName { get; set; }
+
         public List<PostParam> PostParams { get; set; }
     }
 }
