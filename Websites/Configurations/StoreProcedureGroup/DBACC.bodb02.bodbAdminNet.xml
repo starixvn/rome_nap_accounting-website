@@ -254,6 +254,9 @@
     <add alias="BetsSelBetList_Old" name="Acc_BetsSelBetList_Old" db="DBACC.bodb02.bodbAdminNet"></add>
     <add alias="BetListByIP_Soccer" name="Acc_BetListByIP_Soccer" db="DBACC.bodb02.bodbAdminNet"></add>
     <add alias="BetlistByIp_Username" name="Acc_BetListbyIP_Username" db="DBACC.bodb02.bodbAdminNet" function=""></add>
+  </Function>
+
+  <Function Name="Bet List - ScoreInformation">
     <Setting Key="BetList_ScoreInformation_SelScoreInformation" SpName="Acc_Rpt_DailyWLDirect_Result_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
 
