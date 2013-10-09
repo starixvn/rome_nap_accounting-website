@@ -132,5 +132,13 @@
     <Setting Key="Acc_customerSelExRate" SpName="Acc_customerSelExRate" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_ExchangeSelCodeforCrossTransfer" SpName="Acc_ExchangeSelCodeforCrossTransfer" DbName="DBAGE.bodb02.bodbAdminNet"  />
   </Function>
+
+  <Function Name="External">
+    <Setting Key="WinLossDetail_ComEx" SpName="Acc_Rpt_WinLossDetail_ComEx" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="WinLossDetail_SAg" SpName="Age_Rpt_WinLossDetail_SAg" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="WinLossDetail_MAg_New" SpName="Age_Rpt_WinLossDetail_MAg_New" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="WinLossDetail_Ag" SpName="Age_Rpt_WinLossDetail_Ag" DbName="DBAGE.bodb02.bodbAdminNet"  />    
+  </Function>
+
 </Functions>
 

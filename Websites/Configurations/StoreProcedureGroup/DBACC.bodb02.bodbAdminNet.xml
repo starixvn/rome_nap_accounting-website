@@ -232,17 +232,17 @@
     <Setting Key="WinLossDaily_ComEx_14" SpName="Acc_Rpt_WinLossDaily_ComEx14" DbName="DBACC.bodb02.bodbAdminNet"  />
     <Setting Key="WinLossDaily_ComEx_WH" SpName="Acc_Rpt_WinLossDaily_ComEx14" DbName="DBACC.bodb02.bodbAdminNet"  />
 
-    <add alias="WinLossDaily_SAgEx" name="Acc_Rpt_WinLossDaily_SAgEx" db="DBACC.bodb02.bodbAdminNet"></add>
-    <add alias="WinLossDaily_SAgEx_14" name="Acc_Rpt_WinLossDaily_SAgEx14" db="DBACC.bodb02.bodbAdminNet"></add>
-    <add alias="WinLossDaily_SAgEx_WH" name="Acc_Rpt_WinLossDaily_SAgEx14" db="DBACC.bodb02.bodbAdminNet"></add>
+    <Setting Key="WinLossDaily_SAgEx" SpName="Acc_Rpt_WinLossDaily_SAgEx" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="WinLossDaily_SAgEx_14" SpName="Acc_Rpt_WinLossDaily_SAgEx14" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="WinLossDaily_SAgEx_WH" SpName="Acc_Rpt_WinLossDaily_SAgEx14" DbName="DBACC.bodb02.bodbAdminNet"  />
 
-    <add alias="WinLossDaily_MAgEx" name="Acc_Rpt_WinLossDaily_MAgEx" db="DBACC.bodb02.bodbAdminNet"></add>
-    <add alias="WinLossDaily_MAgEx_14" name="Acc_Rpt_WinLossDaily_MAgEx14" db="DBACC.bodb02.bodbAdminNet"></add>
-    <add alias="WinLossDaily_MAgEx_WH" name="Acc_Rpt_WinLossDaily_MAgEx14" db="DBACC.bodb02.bodbAdminNet"></add>
+    <Setting Key="WinLossDaily_MAgEx" SpName="Acc_Rpt_WinLossDaily_MAgEx" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="WinLossDaily_MAgEx_14" SpName="Acc_Rpt_WinLossDaily_MAgEx14" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="WinLossDaily_MAgEx_WH" SpName="Acc_Rpt_WinLossDaily_MAgEx14" DbName="DBACC.bodb02.bodbAdminNet"  />
 
-    <add alias="WinLossDaily_AgEx" name="Acc_Rpt_WinLossDaily_AgEx" db="DBACC.bodb02.bodbAdminNet"></add>
-    <add alias="WinLossDaily_AgEx_14" name="Acc_Rpt_WinLossDaily_AgEx14" db="DBACC.bodb02.bodbAdminNet"></add>
-    <add alias="WinLossDaily_AgEx_WH" name="Acc_Rpt_WinLossDaily_AgEx14" db="DBACC.bodb02.bodbAdminNet"></add>
+    <Setting Key="WinLossDaily_AgEx" SpName="Acc_Rpt_WinLossDaily_AgEx" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="WinLossDaily_AgEx_14" SpName="Acc_Rpt_WinLossDaily_AgEx14" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="WinLossDaily_AgEx_WH" SpName="Acc_Rpt_WinLossDaily_AgEx14" DbName="DBACC.bodb02.bodbAdminNet"  />
   </Function>
 
   <Function Name="Daily Turnover">
