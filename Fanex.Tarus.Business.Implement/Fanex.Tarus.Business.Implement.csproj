@@ -56,7 +56,7 @@
       <HintPath>..\Dependency\UM\IBCFile.dll</HintPath>
     </Reference>
     <Reference Include="IBCUtils">
-      <HintPath>..\..\..\..\Dependency\IBCUtils.dll</HintPath>
+      <HintPath>..\Dependency\IBCUtils.dll</HintPath>
     </Reference>
     <Reference Include="SPSRemoting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
