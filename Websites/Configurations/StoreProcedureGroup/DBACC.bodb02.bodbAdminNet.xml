@@ -8,7 +8,7 @@
     <Setting Key="WLSummaryReportByBettype" SpName="Acc_Rpt_WinlossByBettype" DbName="DBACC.bodb02.bodbAdminNet"  />
     <Setting Key="WLSummaryReportByBettype_14" SpName="Acc_Rpt_WinlossByBettype14" DbName="DBACC.bodb02.bodbAdminNet"  />
     <Setting Key="SelWLBySportTypeDetail" SpName="Acc_Rpt_MatchWinLoss2_Sporttype" DbName="DBACC.bodb02.bodbAdminNet"  />
-    <Setting Key="SelWLBySportTypeDetail_14" SpName="Acc_Rpt_MatchWinLoss2_Sporttype14" DbName="DBACC.bodb02.bodbAdminNet"  />    
+    <Setting Key="SelWLBySportTypeDetail_14" SpName="Acc_Rpt_MatchWinLoss2_Sporttype14" DbName="DBACC.bodb02.bodbAdminNet"  />
   </Function>
 
   <Function Name="Daily WinLoss2h Report New">
@@ -37,7 +37,7 @@
     <Setting Key="DailyWLDirect_Bingo" SpName="Acc_Rpt_DailyWLDirect_Bingo" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="DailyWLDirect_Bingo_14" SpName="Acc_Rpt_DailyWLDirect_Bingo14" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="DailyWLDirect_Finance_Detail" SpName="Acc_Rpt_DailyWLDirect_Finance_Details" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="DailyWLDirect_Finance_Detail_14" SpName="Acc_Rpt_DailyWLDirect_Finance_Details14" DbName="DBACC.bodb02.bodbAdminNet" />    
+    <Setting Key="DailyWLDirect_Finance_Detail_14" SpName="Acc_Rpt_DailyWLDirect_Finance_Details14" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="DailyWLDirect_LiveCasino" SpName="Acc_Rpt_DailyWLDirect_LiveCasino" DbName="DBACC.bodb02.bodbAdminNet"  />
     <Setting Key="DailyWLDirect_LiveCasino_14" SpName="Acc_Rpt_DailyWLDirect_LiveCasino14" DbName="DBACC.bodb02.bodbAdminNet"  />
     <Setting Key="DailyWLDirect_MixParlayAdvance" SpName="Acc_Rpt_MixParlay_Advance" DbName="DBACC.bodb02.bodbAdminNet"  />
@@ -72,12 +72,12 @@
     <Setting Key="superbalanceyesterday" SpName="Acc_Rpt_Balance_Super_Yesterday" DbName="DBACC.bodb02.bodbAdminNet"  />
   </Function>
 
-  <Function Name="Credit Term">    
+  <Function Name="Credit Term">
     <Setting Key="CreditTerm" SpName="Acc_Rpt_CreditTerm" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="InstallAmount" SpName="Acc_Rpt_InstallAmount" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
-  
-  
+
+
   <Function Name="WinLoss Report">
     <Setting Key="Acc_Rpt_TreeWinlostByProduct" SpName="Acc_Rpt_TreeWinlostByProduct" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_Rpt_TreeWinlostByCom" SpName="Acc_Rpt_TreeWinlostByCom" DbName="DBACC.bodb02.bodbAdminNet" />
@@ -101,7 +101,7 @@
     <Setting Key="LeagueWL_BettypeDetail_14" SpName="Acc_Rpt_LeagueWL_Details14" DbName="DBACC.bodb02.bodbAdminNet"  />
     <Setting Key="LeagueWL_BettypeDetail_WH" SpName="Acc_Rpt_LeagueWL_Details14" DbName="DBACC.bodb02.bodbAdminNet"  />
 
-    <Setting Key="CustomerTurnoverBySite" SpName="Acc_Rpt_CustomerTurnoverBySite" DbName="DBACC.bodb02.bodbAdminNet"  />    
+    <Setting Key="CustomerTurnoverBySite" SpName="Acc_Rpt_CustomerTurnoverBySite" DbName="DBACC.bodb02.bodbAdminNet"  />
   </Function>
 
   <Function Name="Gaming">
@@ -120,7 +120,7 @@
     <Setting Key="SelAllNumberGameBettypes" SpName="Acc_BetTypeSel_NumberGame" DbName="DBACC.bodb02.bodbAdminNet"  />
 
     <Setting Key="WinLoss_Bingo_Detail" SpName="Acc_Rpt_WinlostBI_Details" DbName="DBACC.bodb02.bodbAdminNet"  />
-    <Setting Key="WinLoss_Bingo_Detail_14" SpName="Acc_Rpt_WinlostBI_Details14" DbName="DBACC.bodb02.bodbAdminNet"  />    
+    <Setting Key="WinLoss_Bingo_Detail_14" SpName="Acc_Rpt_WinlostBI_Details14" DbName="DBACC.bodb02.bodbAdminNet"  />
   </Function>
 
   <Function Name="Racing">
@@ -182,10 +182,10 @@
     <Setting Key="PokerWinlossDetail_14" SpName="Acc_Rpt_WinlostP2P_Details14" DbName="DBACC.bodb02.bodbAdminNet"  />
   </Function>
 
-  
+
 
   <Function Name="NumberGame">
-    <Setting Key="Acc_BetTypeSel_NumberGame" SpName="Acc_BetTypeSel_NumberGame" DbName="DBACC.bodb02.bodbAdminNet"  />    
+    <Setting Key="Acc_BetTypeSel_NumberGame" SpName="Acc_BetTypeSel_NumberGame" DbName="DBACC.bodb02.bodbAdminNet"  />
   </Function>
 
   <Function Name="Finance Module">
@@ -196,29 +196,29 @@
 
   <Function Name="Daily Transaction">
     <Setting Key="SelDailyFinanceTxn" SpName="Acc_DailyTxn_Sel" DbName="DBACC.bodb02.bodbAdminNet"  />
-    <Setting Key="SelDailyAllTxn" SpName="Acc_RptStatementDaily" DbName="DBACC.bodb02.bodbAdminNet"  />    
+    <Setting Key="SelDailyAllTxn" SpName="Acc_RptStatementDaily" DbName="DBACC.bodb02.bodbAdminNet"  />
   </Function>
 
-  <Function Name="Main">    
+  <Function Name="Main">
     <Setting Key="TaskWinLossUpdateTable" SpName="Task_rptWinLost_UpdateTable" DbName="DBACC.bodb02.bodbAdminNet"  />
     <Setting Key="WinLoss_Sporttype" SpName="Acc_Rpt_WinLoss_Sporttype" DbName="DBACC.bodb02.bodbAdminNet"  />
   </Function>
 
-  
 
-  
+
+
 
   <Function Name="Licensee">
     <add alias="LicWinlossDetailBetlist" name="Acc_BetList_SelWinloss_Mem" db="DBACC.bodb02.bodbAdminNet" function=""></add>
     <add alias="LicWinlossDetailBetlist2" name="Acc_BetList_SelWinloss_Mem2" db="DBACC.bodb02.bodbAdminNet" function=""></add>
-    <add alias="LicNegativeBalanceMember" name="Acc_Rpt_NegativeBalanceMember_Dep" db="DBACC.bodb02.bodbAdminNet" function=""></add>  
+    <add alias="LicNegativeBalanceMember" name="Acc_Rpt_NegativeBalanceMember_Dep" db="DBACC.bodb02.bodbAdminNet" function=""></add>
   </Function>
 
   <Function Name="Others">
-    
-    
+
+
     <add alias="TreeWinLoss" name="Acc_Rpt_TreeWinlost" db="DBACC.bodb02.bodbAdminNet"></add>
-    
+
 
     <Setting Key="Acc_DailyCreatedCustomer" SpName="Acc_DailyCreatedCustomer" DbName="DBACC.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_DailyCreatedCustomer_Details" SpName="Acc_DailyCreatedCustomer_Details" DbName="DBACC.bodb02.bodbAdminNet"  />
@@ -231,7 +231,7 @@
     <Setting Key="WinLossDaily_ComEx" SpName="Acc_Rpt_WinLossDaily_ComEx" DbName="DBACC.bodb02.bodbAdminNet"  />
     <Setting Key="WinLossDaily_ComEx_14" SpName="Acc_Rpt_WinLossDaily_ComEx14" DbName="DBACC.bodb02.bodbAdminNet"  />
     <Setting Key="WinLossDaily_ComEx_WH" SpName="Acc_Rpt_WinLossDaily_ComEx14" DbName="DBACC.bodb02.bodbAdminNet"  />
-    
+
     <add alias="WinLossDaily_SAgEx" name="Acc_Rpt_WinLossDaily_SAgEx" db="DBACC.bodb02.bodbAdminNet"></add>
     <add alias="WinLossDaily_SAgEx_14" name="Acc_Rpt_WinLossDaily_SAgEx14" db="DBACC.bodb02.bodbAdminNet"></add>
     <add alias="WinLossDaily_SAgEx_WH" name="Acc_Rpt_WinLossDaily_SAgEx14" db="DBACC.bodb02.bodbAdminNet"></add>
@@ -245,19 +245,30 @@
     <add alias="WinLossDaily_AgEx_WH" name="Acc_Rpt_WinLossDaily_AgEx14" db="DBACC.bodb02.bodbAdminNet"></add>
   </Function>
 
-  
-
   <Function Name="Daily Turnover">
-    
-    
   </Function>
-  
+
   <Function Name="Betlist">
     <add alias="BABetlist" name="Acc_BA_BetList" db="DBACC.bodb02.bodbAdminNet"></add>
     <add alias="ByIPOtherSports" name="Acc_BetListByIP_OtherSports" db="DBACC.bodb02.bodbAdminNet"></add>
     <add alias="BetsSelBetList_Old" name="Acc_BetsSelBetList_Old" db="DBACC.bodb02.bodbAdminNet"></add>
     <add alias="BetListByIP_Soccer" name="Acc_BetListByIP_Soccer" db="DBACC.bodb02.bodbAdminNet"></add>
     <add alias="BetlistByIp_Username" name="Acc_BetListbyIP_Username" db="DBACC.bodb02.bodbAdminNet" function=""></add>
+    <Setting Key="BetList_ScoreInformation_SelScoreInformation" SpName="Acc_Rpt_DailyWLDirect_Result_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
-  
+
+  <Function Name="Admin - Security Code">
+    <Setting Key="Admin_SecurityCode_GetUserList" SpName="ACC_CustomerValidation" DbName="DBACC.bodb02.bodbAdminNet" />
+  </Function>
+  <Function Name="Transaction - Automate Finance Transfer">
+    <Setting Key="Acc_FinanceCrossTransferMulInsTmpExcel" SpName="Acc_FinanceCrossTransferMulInsTmpExcel" DbName="DBACC.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="Acc_FinanceTransferMulDelTmpExcel" SpName="Acc_FinanceTransferMulDelTmpExcel" DbName="DBACC.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="Acc_FinanceTransferMulInsTmpExcel" SpName="Acc_FinanceTransferMulInsTmpExcel" DbName="DBACC.bodb02.bodbAdminNet"></Setting>
+  </Function>
+  <Function Name="Special delete - Ticket Listing">
+    <Setting Key="Acc_Rpt_TicketsListingDetail" SpName="Acc_Rpt_TicketsListingDetail" DbName="DBACC.bodb02.bodbAdminNet"  />
+  </Function>
+  <Function Name="Admin - SMA Management">
+    <Setting Key="Acc_CustomerSelByGroupHeadline" SpName="Acc_CustomerSelByGroupHeadline" DbName="DBACC.bodb02.bodbAdminNet" />
+  </Function>
 </Functions>

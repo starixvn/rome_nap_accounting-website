@@ -5,7 +5,10 @@
     <Setting Key="Acc_VirtualRateMulInsTmpExcel" SpName="Acc_VirtualRateMulInsTmpExcel" DbName="DBACC.bodb_ACC.bodbAdminNet"  />
     <Setting Key="Acc_VirtualRateMulSelCheck" SpName="Acc_VirtualRateMulSelCheck" DbName="DBACC.bodb_ACC.bodbAdminNet"  />
   </Function>
-
-  
+  <Function Name="Admin - Mailing List">
+    <Setting Key="Acc_MailingListIns" SpName="Acc_MailingListIns" DbName="DBACC.bodb_ACC.bodbAdminNet" />
+    <Setting Key="Acc_MailingListSel" SpName="Acc_MailingListSel" DbName="DBACC.bodb_ACC.bodbAdminNet" />
+    <Setting Key="Acc_MailingListUpd" SpName="Acc_MailingListUp" DbName="DBACC.bodb_ACC.bodbAdminNet" />
+  </Function>
 
 </Functions>

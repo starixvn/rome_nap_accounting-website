@@ -1,20 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <Functions>
+  <Function Name="Report - CheckBet">
+    <Setting Key="Acc_checkhack2" SpName="Acc_checkhack2" DbName="DBBET.BK"  />
+    <Setting Key="CheckBet" SpName="Acc_Rpt_CheckBet" DbName="DBBET.BK"  />
+    <Setting Key="CheckBetNormal" SpName="Acc_Rpt_CheckBet_Normal" DbName="DBBET.BK"  />
+    <Setting Key="CheckBetReject" SpName="Acc_Rpt_CheckBet_Reject" DbName="DBBET.BK"  />
+  </Function>
+  <Function Name="Report - WinLoss">
+    <Setting Key="Acc_CustomerSelVirtualRateHistory" SpName="Acc_CustomerSelVirtualRateHistory" DbName="log" />
+  </Function>
+  <Function Name="Report - ParlayWon">
+    <Setting Key="Acc_Rpt_ParlayWon" SpName="Acc_Rpt_ParlayWon" DbName="db053"  />
+  </Function>
 
-  
-	
-	
-	
-	<Function Name="Report - CheckBet">
-		<Setting Key="Acc_checkhack2" SpName="Acc_checkhack2" DbName="DBBET.BK"  />
-		<Setting Key="CheckBet" SpName="Acc_Rpt_CheckBet" DbName="DBBET.BK"  />
-		<Setting Key="CheckBetNormal" SpName="Acc_Rpt_CheckBet_Normal" DbName="DBBET.BK"  />
-		<Setting Key="CheckBetReject" SpName="Acc_Rpt_CheckBet_Reject" DbName="DBBET.BK"  />
-	</Function>
-	
-	
-  
+  <Function Name="ResetWinning">
+    <Setting Key="ResetWinningMain" SpName="Acc_ResetWinning_SelByDate" DbName="db054"  />
+    <Setting Key="ResetWinningMain14" SpName="Acc_ResetWinning_SelByDate14" DbName="db054"  />
+    <Setting Key="ResetWinningRep" SpName="Acc_ResetWinning_SelByDate" DbName="db054"  />
+    <Setting Key="ResetWinningRep14" SpName="Acc_ResetWinning_SelByDate14" DbName="db054"  />
+  </Function>
+
 
   <Function Name="Live Casino - GET PT Setting">
     <Setting Key="Acc_CustomerSelInfoLiveCS" SpName="Acc_CustomerSelInfoLiveCS" DbName="db053"/>
@@ -24,23 +29,18 @@
     <Setting Key="Acc_CustomerSelEditMemberLiveCS" SpName="Acc_CustomerSelEditMemberLiveCS" DbName="db053"  />
     <Setting Key="Acc_CustomerSelSEditCustomerLiveCS" SpName="Acc_CustomerSelSEditCustomerLiveCS" DbName="db053"  />
     <Setting Key="Acc_CustomerSelMEditCustomerLiveCS" SpName="Acc_CustomerSelMEditCustomerLiveCS" DbName="db053"  />
-	<Setting Key="CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="db053"  />
-	  
+    <Setting Key="CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="db053"  />
   </Function>
-	<Function Name="Live Casino - Win Limit Setting">
-		<Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="db053"  />
-		
-		
-	</Function>
-	<Function Name="Live Casino - Move Account">
-		<Setting Key="TP_User_Customer_MoveMaster_Update" SpName="TP_User_Customer_MoveMaster_Update" DbName="LV_BackupDB" Plain="1" />
-		<Setting Key="TP_User_Customer_MoveAgent_Update" SpName="TP_User_Customer_MoveAgent_Update" DbName="LV_BackupDB" Plain="1" />
-		<Setting Key="TP_User_Customer_MoveMaster_Rollback" SpName="TP_User_Customer_MoveMaster_Rollback" DbName="LV_BackupDB" Plain="1" />
-		<Setting Key="TP_User_Customer_MoveAgent_Rollback" SpName="TP_User_Customer_MoveAgent_Rollback" DbName="LV_BackupDB" Plain="1" />
-		<Setting Key="Acc_CustomerCheckMoveMaster" SpName="Acc_CustomerCheckMoveMaster" DbName="db053" />
-	</Function>
-  
-
+  <Function Name="Live Casino - Win Limit Setting">
+    <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="db053"  />
+  </Function>
+  <Function Name="Live Casino - Move Account">
+    <Setting Key="TP_User_Customer_MoveMaster_Update" SpName="TP_User_Customer_MoveMaster_Update" DbName="LV_BackupDB" Plain="1" />
+    <Setting Key="TP_User_Customer_MoveAgent_Update" SpName="TP_User_Customer_MoveAgent_Update" DbName="LV_BackupDB" Plain="1" />
+    <Setting Key="TP_User_Customer_MoveMaster_Rollback" SpName="TP_User_Customer_MoveMaster_Rollback" DbName="LV_BackupDB" Plain="1" />
+    <Setting Key="TP_User_Customer_MoveAgent_Rollback" SpName="TP_User_Customer_MoveAgent_Rollback" DbName="LV_BackupDB" Plain="1" />
+    <Setting Key="Acc_CustomerCheckMoveMaster" SpName="Acc_CustomerCheckMoveMaster" DbName="db053" />
+  </Function>
   <Function Name="Live Casino - Stake Level Settingc">
     <Setting Key="TP_Admin_StakeLevel_GetGameTypeStakeLevel" SpName="TP_Admin_StakeLevel_GetGameTypeStakeLevel" DbName="LV_BackupDB" Plain="1" />
     <Setting Key="TP_Admin_StakeLevel_GetCustStakeLevelMulti" SpName="TP_Admin_StakeLevel_GetCustStakeLevelMulti" DbName="LV_BackupDB" Plain="1" />
@@ -50,294 +50,32 @@
     <Setting Key="TP_User_Customer_ManualInsertAccount" SpName="TP_User_Customer_ManualInsertAccount" DbName="LV_BackupDB" Plain="1" />
     <Setting Key="WriteLog_UserLog_RunSP" SpName="WriteLog_UserLog_RunSP" DbName="log"  />
   </Function>
-
   <Function Name="Live Casino - Update Ex.Rate">
     <Setting Key="TP_Admin_Exchange_UpdateExchange" SpName="TP_Admin_Exchange_UpdateExchange" DbName="LV_BackupDB" Plain="1" />
   </Function>
-
   <Function Name="Live Casino - Special Delete - Recover Bet">
-	  <Setting Key="Acc_BettransSelSpecialDel_LiveCS" SpName="Acc_BettransSelSpecialDel_LiveCS" DbName="db053" />
-	  
-	  
-	  <Setting Key="TP_Controller_MiniBac_SpecialDelete" SpName="TP_Game_MiniBac_SpecialDelete" DbName="LV_MainDB" Plain="1"/>
-	  <Setting Key="Acc_SpecialDel_CheckMatchIDwithRefno" SpName="Acc_SpecialDel_CheckMatchIDwithRefno" DbName="db053" />
-
-	  <Setting Key="Acc_Get_LiveCasino_RecoverBet" SpName="Acc_BettransSelRecoverBet_LiveCS" DbName="db053" />
-	  <Setting Key="Acc_Get_LiveCasinoGameByID" SpName="Acc_LiveCS_SelGameByID" DbName="db053" />
-	  
-	  <Setting Key="TP_Controller_MiniBac_RecoverBet" SpName="TP_Game_MiniBac_RecoverBet" DbName="LV_MainDB" Plain="1"/>
-	  
+    <Setting Key="Acc_BettransSelSpecialDel_LiveCS" SpName="Acc_BettransSelSpecialDel_LiveCS" DbName="db053" />
+    <Setting Key="TP_Controller_MiniBac_SpecialDelete" SpName="TP_Game_MiniBac_SpecialDelete" DbName="LV_MainDB" Plain="1"/>
+    <Setting Key="Acc_Get_LiveCasino_RecoverBet" SpName="Acc_BettransSelRecoverBet_LiveCS" DbName="db053" />
+    <Setting Key="Acc_Get_LiveCasinoGameByID" SpName="Acc_LiveCS_SelGameByID" DbName="db053" />
+    <Setting Key="TP_Controller_MiniBac_RecoverBet" SpName="TP_Game_MiniBac_RecoverBet" DbName="LV_MainDB" Plain="1"/>
   </Function>
-
   <Function Name="Live Casino - Report">
-    <Setting Key="LiveCasinoDailyWinloss" SpName="Acc_CustomerSelSEditCustomerLiveCS" DbName="db053"  />    
-    <Setting Key="GameStatistics" SpName="Acc_Rpt_LiveCasino_GameStatistics" DbName="db053"  />  	
+    <Setting Key="LiveCasinoDailyWinloss" SpName="Acc_CustomerSelSEditCustomerLiveCS" DbName="db053"  />
+    <Setting Key="GameStatistics" SpName="Acc_Rpt_LiveCasino_GameStatistics" DbName="db053"  />
   </Function>
-
-  <Function Name="Live Casino - Betlist">
-    <Setting Key="SelBetlistResultLC" SpName="Acc_BetList_SelMatchResult" DbName="db053"  />
-  </Function>
-
   <Function Name="Customer">
     <Setting Key="Acc_CustomerSelStatus" SpName="Acc_CustomerSelStatus" DbName="db053"  />
   </Function>
-
-	<Function Name="New Customer Setting">
-		
-		<Setting Key="CustomerSetting_SiteSel" SpName="Acc_SiteSel" DbName="db053" />
-		<Setting Key="CustomerSetting_CustomerSelCustomerInfo" SpName="Acc_CustomerSelCustomerInfo" DbName="db053" />
-
-		<Setting Key="Acc_CustomerSelMEditCustomer" SpName="Acc_CustomerSelMEditCustomer" DbName="db053" />
-		<Setting Key="Acc_CustomerSelSEditCustomer" SpName="Acc_CustomerSelSEditCustomer" DbName="db053"/>
-		<Setting Key="Acc_CustomerSelCEditCustomer" SpName="Acc_CustomerSelCEditCustomer" DbName="db053"/>
-		<Setting Key="Acc_CustomerSelEditCustomer" SpName="Acc_CustomerSelEditCustomer" DbName="db053"/>
-		
-		<Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="db053"/>
-		
-		
-		
-		
-		<Setting Key="GetCustIdByUsername" SpName="Acc_GetCustIdByUsername" DbName="DBACC.BODB02"/>
-		
-		<Setting Key="GetCommSuper" SpName="Acc_CustomerSelSuperLiveCS_Commission" DbName="db053"/>
-	</Function>
-	
-	<Function Name="Finance">
-   
- 
-    <Setting Key="Acc_customerSelExRate" SpName="Acc_customerSelExRate" DbName="db053"  />
-    
-    <Setting Key="Acc_ExchangeSelCodeforCrossTransfer" SpName="Acc_ExchangeSelCodeforCrossTransfer" DbName="db053"  />
+  <Function Name="New Customer Setting">
+    <Setting Key="CustomerSetting_SiteSel" SpName="Acc_SiteSel" DbName="db053" />
+    <Setting Key="CustomerSetting_CustomerSelCustomerInfo" SpName="Acc_CustomerSelCustomerInfo" DbName="db053" />
+    <Setting Key="Acc_CustomerSelMEditCustomer" SpName="Acc_CustomerSelMEditCustomer" DbName="db053" />
+    <Setting Key="Acc_CustomerSelSEditCustomer" SpName="Acc_CustomerSelSEditCustomer" DbName="db053"/>
+    <Setting Key="Acc_CustomerSelCEditCustomer" SpName="Acc_CustomerSelCEditCustomer" DbName="db053"/>
+    <Setting Key="Acc_CustomerSelEditCustomer" SpName="Acc_CustomerSelEditCustomer" DbName="db053"/>
+    <Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="db053"/>
+    <Setting Key="GetCustIdByUsername" SpName="Acc_GetCustIdByUsername" DbName="DBACC.BODB02"/>
+    <Setting Key="GetCommSuper" SpName="Acc_CustomerSelSuperLiveCS_Commission" DbName="db053"/>
   </Function>
-
-  
-
-  
-  
-
-
-  
-  <Function Name="BetList">
-    
-	  <Setting Key="ByIPOtherSports" SpName="Acc_BetListByIP_OtherSports" DbName="DBACC.BODB02"  />
-	
-    <Setting Key="BetListByIP_Soccer" SpName="Acc_BetListByIP_Soccer" DbName="DBACC.BODB02"  />
-    
-    <Setting Key="BetsSelBetList_Old" SpName="Acc_BetsSelBetList_Old" DbName="DBACC.BODB_ARCHIVE"  />
-    <Setting Key="BetsSelBetList" SpName="Acc_BetsSelBetList" DbName="DBAGE.BODB02"  />
-    <Setting Key="GetCombinationMixparlay" SpName="Acc_BetlistCombinationParlay_Details" DbName="db053"  />
-    <Setting Key="BetlistSystemParlayDetailByTransid" SpName="Acc_BetlistCombinationParlay_ByTransID" DbName="db053"  />
-	<Setting Key="SoprtingSolutionBetlistResult" SpName="Acc_BetList_SelMatchResultSS" DbName="db053"  />
-
-	  <Setting Key="BetList_RefNoSel" SpName="Acc_BetsSelBetList_ByTransID_Advance" DbName="DBAGE.BODB02"  />
-	  <Setting Key="BetList_MixParlayBetsSel" SpName="Acc_BetsSelBetCheckM_All" DbName="db053"  />
-
-	  <Setting Key="BetList_CustInfo_Old" SpName="Acc_BetsSelBetList_Old" DbName="DBACC.BODB_ARCHIVE"  />
-	  <Setting Key="BetList_CustInfo" SpName="Acc_BetsSelBetList" DbName="DBAGE.BODB02"  />
-	  <Setting Key="BetList_CustInfo_SystemParlay" SpName="Acc_BetlistCombinationParlay_ByTransID" DbName="db053"  />
-	  <Setting Key="BetList_SelBetTypeByDate" SpName="Acc_BetList_SelBettype" DbName="db053"  />
-
-	  <Setting Key="BetList_IP_Username" SpName="Acc_BetListbyIP_Username" DbName="DBACC.BODB02"  />
-	  <Setting Key="BetList_IP_Soccer" SpName="Acc_BetListByIP_Soccer" DbName="DBACC.BODB02"  />
-	  <Setting Key="BetList_IP_OtherSports" SpName="Acc_BetListByIP_OtherSports" DbName="DBACC.BODB02"  />
-
-	  <Setting Key="BetList_VirtualHR_Popup" SpName="Acc_BetList_SelMatchResult" DbName="db053"  />
-
-	  <Setting Key="BetList_ScoreInformation_SelScoreInformation" SpName="Acc_Rpt_DailyWLDirect_Result_xtest" DbName="DBACC.BODB02" />
-	  
-	  
-  </Function>
-	<Function Name="ResetWinning">
-		<Setting Key="ResetWinningMain" SpName="Acc_ResetWinning_SelByDate" DbName="db054"  />
-		<Setting Key="ResetWinningMain14" SpName="Acc_ResetWinning_SelByDate14" DbName="db054"  />
-		<Setting Key="ResetWinningRep" SpName="Acc_ResetWinning_SelByDate" DbName="db054"  />
-		<Setting Key="ResetWinningRep14" SpName="Acc_ResetWinning_SelByDate14" DbName="db054"  />
-	</Function>
-  
-  
-  
-	
-	<Function Name="User - Account Management">
-		
-		
-		
-		<Setting Key="UserLog_UserControlSel" SpName="Acc_UserLog_UserControlSel" DbName="log"/>
-		
-		<Setting Key="UserLog_UserControlSelTotalRecords" SpName="Acc_UserLog_UserControlSelTotalRecords" DbName="log"/>
-		
-	</Function>
-	<Function Name="Customer Finance List">
-		<Setting Key="Acc_CustomerSelSFinance" SpName="Acc_CustomerSelFinance_SAg" DbName="db053"  />
-		<Setting Key="Acc_CustomerSelBySFinance" SpName="Acc_CustomerSelFinance_MAg" DbName="db053"  />
-		<Setting Key="Acc_CustomerSelByMFinance" SpName="Acc_CustomerSelFinance_Ag" DbName="db053"  />
-		<Setting Key="Acc_CustomerSelByAgFinance" SpName="Acc_CustomerSelFinance_Mem" DbName="db053"  />
-	</Function>
-	
-	
-	<Function Name="Report - ParlayWon">
-		<Setting Key="Acc_Rpt_ParlayWon" SpName="Acc_Rpt_ParlayWon" DbName="db053"  />
-	</Function>
-	
-  
-  
-	<Function Name="PTVirtualSports - Setting">
-		<Setting Key="Acc_CustomerSelEditSuperVS" SpName="Acc_CustomerSelEditSuperVS" DbName="DBAGE.BODB02" Plain="0" />
-		<Setting Key="Acc_CustomerSelEditMasterVS" SpName="Acc_CustomerSelEditMasterVS" DbName="DBAGE.BODB02" Plain="0" />
-		<Setting Key="Acc_CustomerSelEditAgentVS" SpName="Acc_CustomerSelEditAgentVS" DbName="DBAGE.BODB02" Plain="0" />
-		<Setting Key="Acc_CustomerSelEditMemberVS" SpName="Acc_CustomerSelEditMemberVS" DbName="DBAGE.BODB02" Plain="0" />
-		<Setting Key="Acc_CustomerSelMEditCustomerVS" SpName="Acc_CustomerSelMEditCustomerVS" DbName="DBAGE.BODB02" Plain="0" />
-		<Setting Key="BetTypeSel_VirtualSports" SpName="Acc_BetTypeSel" DbName="db053" />
-		<Setting Key="CheckRefno" SpName="Acc_SpecialDel_CheckMatchIDwithRefno" DbName="db053" />
-		<Setting Key="BettransSelSpecialDel_VirtualSports" SpName="Acc_BettransSelSpecialDel_VirtualSports" DbName="DBAGE.BODB02" />
-		
-
-		<Setting Key="SelMatchInfo" SpName="Acc_MatchSelByID" DbName="db053" />
-		<Setting Key="BettransSelRecoverSpecialBets" SpName="Acc_BettransSelRecoverSpecialBets" DbName="DBAGE.BODB02" />
-		
-
-		<Setting Key="Acc_CustomerSelStatusVS" SpName="Acc_CustomerSelStatusVS" DbName="DBAGE.BODB02" Plain="0" />
-		
-		
-		
-
-		
-		
-		
-		<Setting Key="Acc_CustomerSelSEditCustomerVS" SpName="Acc_CustomerSelSEditCustomerVS" DbName="DBAGE.BODB02" Plain="0" />
-
-		
-		
-		
-
-		
-		
-		
-		
-	</Function>
-	
-  
-	
-	
-	
-	<Function Name="Customer List">
-		<Setting Key="Acc_CustomerSelBySAg" SpName="Acc_CustomerSelBySAg" DbName="db053"  />
-		<Setting Key="Acc_CustomerSelMAgByCom" SpName="Acc_CustomerSelMAgByCom" DbName="db053"  />
-		<Setting Key="Acc_CustomerSelByMAg" SpName="Acc_CustomerSelByMAg" DbName="db053"  />
-		<Setting Key="Acc_CustomerSelByAg" SpName="Acc_CustomerSelByAg" DbName="db053"  />
-	</Function>
-	
-	
-	<Function Name="Admin-SMA Management">
-		<Setting Key="Acc_SiteSel_Credit" SpName="Acc_SiteSel_Credit" DbName="db053" />
-		<Setting Key="Acc_CustomerSelByGroupHeadline" SpName="Acc_CustomerSelByGroupHeadline" DbName="DBACC.BODB02" />
-	</Function>
-	<Function Name="Report - WinLoss">
-		<Setting Key="Acc_CustomerSelVirtualRateHistory" SpName="Acc_CustomerSelVirtualRateHistory" DbName="log" />
-	</Function>
-  
-	<Function Name="Special Delete - NumberGame">
-		<Setting Key="SelSpecialDel_NumberGame" SpName="Acc_BettransSelSpecialDel_NumberGame" DbName="db053"  />
-		<Setting Key="Acc_BettransSelRecoverBet_NumberGame" SpName="Acc_BettransSelRecoverBet_NumberGame" DbName="db053"  />
-	</Function>
-	
-	<Function Name="Special delete - Ticket Listing">
-		<Setting Key="Acc_Rpt_TicketsListingDetail" SpName="Acc_Rpt_TicketsListingDetail" DbName="DBACC.BODB02"  />
-	</Function>
-	<Function Name="RNG Casino - Customer">
-		<Setting Key="Acc_SiteSel_RNGCS" SpName="Acc_SiteSel_RNGCS" DbName="DBAGE.BODB02"  />
-	</Function>
-	
-	<Function Name="Admin-Mailing">
-		<Setting Key="Acc_MailingListIns" SpName="Acc_MailingListIns" DbName="DBACC.BODB_ACC" />
-		<Setting Key="Acc_MailingListSel" SpName="Acc_MailingListSel" DbName="DBACC.BODB_ACC" />
-		<Setting Key="Acc_MailingListUpd" SpName="Acc_MailingListUp" DbName="DBACC.BODB_ACC" />
-	</Function>
-	<Function Name="Consolidated Group">
-		<Setting Key="Acc_CustomerDelConsolidatedGroup" SpName="Acc_CustomerDelConsolidatedGroup" DbName="DBAGE.bodb_AGE" />
-		<Setting Key="Acc_CustomerInsConsolidatedGroup_User" SpName="Acc_CustomerInsConsolidatedGroup_User" DbName="DBAGE.bodb_AGE" />
-		<Setting Key="Acc_CustomerSelByConsolidatedGroupID" SpName="Acc_CustomerSelByConsolidatedGroupID" DbName="DBAGE.bodb_AGE" />
-		<Setting Key="Acc_CustomerSelConsolidatedGroup" SpName="Acc_CustomerSelConsolidatedGroup" DbName="DBAGE.bodb_AGE" />
-		<Setting Key="Acc_CustomerUpdConsolidatedGroup" SpName="Acc_CustomerUpdConsolidatedGroup" DbName="DBAGE.bodb_AGE" />
-		<Setting Key="Acc_CustomerUpdConsolidatedGroupHeader" SpName="Acc_CustomerUpdConsolidatedGroupHeader" DbName="DBAGE.bodb_AGE" />
-	</Function>
-	<Function Name="Customer - Sportsbook-NG-Bingo Settings">
-		<Setting Key="Acc_CustomerSelAgentInfo" SpName="Acc_CustomerSelAgentInfo" DbName="DBAGE.BODB02"/>
-		<Setting Key="Acc_CustomerSelMAgentInfo" SpName="Acc_CustomerSelMAgentInfo" DbName="DBAGE.BODB02"/>
-		<Setting Key="Acc_CustomerSelSAgentInfo" SpName="Acc_CustomerSelSAgentInfo" DbName="DBAGE.BODB02"/>
-		<Setting Key="Acc_CustomerSelSAg" SpName="Acc_CustomerSelSAg" DbName="DBAGE.BODB02"  />
-		<Setting Key="Acc_CustomerSelSAgList" SpName="Acc_CustomerSelSAgList" DbName="DBAGE.BODB02"  />
-		<Setting Key="Acc_CustomerSelNGUpline" SpName="Acc_CustomerSelNGUpline" DbName="DBAGE.BODB02"  />
-		<Setting Key="Acc_CustomerSelByUserName" SpName="Acc_CustomerSelByUserName" DbName="DBAGE.BODB02"  />
-		
-		
-	</Function>
-	
-	<Function Name="Bet List - Result">
-		<Setting Key="Acc_BetlistCombinationParlay_Details" SpName="Acc_BetlistCombinationParlay_Details" DbName="DBAGE.BODB02"  />
-		<Setting Key="Acc_BetList_HRResults" SpName="Acc_BetList_HRResults" DbName="DBAGE.BODB02"  />
-		<Setting Key="Acc_BetList_SelBettype" SpName="Acc_BetList_SelBettype" DbName="DBAGE.BODB02"  />
-		<Setting Key="Acc_BetList_SelMatchResult" SpName="Acc_BetList_SelMatchResult" DbName="DBAGE.BODB02"  />
-		<Setting Key="Acc_BetlistCombinationParlay_ByTransID" SpName="Acc_BetlistCombinationParlay_ByTransID" DbName="DBAGE.BODB02"  />
-		<Setting Key="Acc_BetsSelBetCheckM_All" SpName="Acc_BetsSelBetCheckM_All" DbName="DBAGE.BODB02"  />
-		<Setting Key="Acc_BetsSelBetList_ByTransID" SpName="Acc_BetsSelBetList_ByTransID" DbName="DBAGE.BODB02"  />
-		<Setting Key="BetList_RefNoSel" SpName="Acc_BetsSelBetList_ByTransID_Advance" DbName="DBAGE.BODB02"  />
-		<Setting Key="Acc_BetsSelBetList_Old" SpName="Acc_BetsSelBetList_Old" DbName="DBACC.BODB_ARCHIVE"  />
-	</Function>
-	
-	
-	<Function Name="Move Customer">
-		<Setting Key="Acc_CustomerCheckMoveAgent" SpName="Acc_CustomerCheckMoveAgent" DbName="DBAGE.BODB02"/>
-		
-		
-	</Function>
-
-	<Function Name="Move Site">
-		<Setting Key="Acc_CustomerSelCheckMoveSite" SpName="Acc_CustomerSelCheckMoveSite" DbName="DBAGE.BODB02"  />
-		
-	</Function>
-	
-<Function Name="Credit term">
-    
-    
-    
-    
-    
-	<Setting Key="GetAllGroup" SpName="Acc_CreditTermSelGroupHeadline" DbName="DBAGE.BODB02"/>
-	
-  </Function>
-	<Function Name="Accounting Transfer">
-		<Setting Key="Acc_FinanceCrossTransferMulInsTmpExcel" SpName="Acc_FinanceCrossTransferMulInsTmpExcel" DbName="DBACC.BODB02"></Setting>
-		<Setting Key="Acc_FinanceTransferMulDelTmpExcel" SpName="Acc_FinanceTransferMulDelTmpExcel" DbName="DBACC.BODB02"></Setting>
-		<Setting Key="Acc_FinanceTransferMulInsTmpExcel" SpName="Acc_FinanceTransferMulInsTmpExcel" DbName="DBACC.BODB02"></Setting>
-	</Function>
-  
-  <Function Name="Admin-SecurityCode">
-    <Setting Key="Admin_SecurityCode_GetUserList" SpName="ACC_CustomerValidation" DbName="DBACC.BODB02" />
-	</Function>
-	
-	<Function Name="Racing - PT Setting">
-		<Setting Key="Acc_CustomerSelHRSuper_All" SpName="Acc_CustomerSelHRSuper_All" DbName="db053"  />
-		<Setting Key="Acc_CustomerSelHRMaster_All" SpName="Acc_CustomerSelHRMaster_All" DbName="db053"  />
-		<Setting Key="Acc_CustomerSelHRAgent_All" SpName="Acc_CustomerSelHRAgent_All" DbName="db053"  />
-		<Setting Key="Acc_CustomerSelHRMember_All" SpName="Acc_CustomerSelHRMember_All" DbName="db053"  />
-		<Setting Key="Acc_CustomerSelHREditMember_SAg" SpName="Acc_CustomerSelHREditMember_SAg" DbName="db053"  />
-		<Setting Key="Acc_CustomerSelHREditMember_MAg" SpName="Acc_CustomerSelHREditMember_MAg" DbName="db053"  />
-
-    <Setting Key="Acc_RacingBetSettingSel" SpName="Acc_RacingBetSettingSel" DbName="db053"  />
-		
-	</Function>
-	<Function Name="Customer - SMATurnover">
-		<Setting Key="SMASportType" SpName="Acc_SportTypeSel" DbName="DBAGE.BODB02" />
-		<Setting Key="GetLeague" SpName="Acc_SMATurnoverLeagueSel" DbName="DBAGE.BODB02" />
-		<Setting Key="GetInfoByMatch" SpName="Acc_SMATurnoverMatchSel" DbName="DBAGE.BODB02" />
-		<Setting Key="GetSMATurnoverList" SpName="Acc_SMATurnoverListSel" DbName="DBAGE.BODB02" />
-		<Setting Key="AddSMATurnover" SpName="Acc_SMATurnoverIns" DbName="DBAGE.BODB02" />
-		<Setting Key="UpdateSMATurnover" SpName="Acc_SMATurnoverUpd" DbName="DBAGE.BODB02" />
-		<Setting Key="CheckMaxTurnover" SpName="Acc_SMATurnoverCheckTotalTurnover" DbName="DBAGE.BODB02" />
-
-		<Setting Key="Customer_SMATurnover_CheckSMAList" SpName="Acc_SMATurnoverCheckList" DbName="DBAGE.BODB02" />
-		<Setting Key="Customer_SMATurnover_AddSMAList" SpName="Acc_SMATurnoverIns" DbName="DBAGE.BODB02" />
-	</Function>
-
-  
 </Functions>

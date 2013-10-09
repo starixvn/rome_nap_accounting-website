@@ -8,6 +8,7 @@ using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
+using Fanex.Data;
 
 /// <summary>
 /// Summary description for PositionTakingProviderClient
@@ -64,6 +65,7 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
                 var param = new Hashtable();
                 param.Add("custid", custId);
                 param.Add("agentid", uplineId);
+
                 var spElement =
                             new HRSpConfig().GetHRStoreProcedure(
                                 Core.Configurations.StoreProcedureGroup.RacingSession.StoreCollection.RacingControl, "GetMasterOnMember");
@@ -163,7 +165,7 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
                     Core.Configurations.StoreProcedureGroup.RacingSession.StoreCollection.RacingControl,
                     "UpdateMasterOnMember");
                 result = DbHelper.Execute(spElement.Name, param, spElement.DbName);
-                
+
                 IbcError error = IbcError.SuccessResult;
                 AlertMessage.ParseError(ref error.ErrorCode, ref error.ErrorMsg, result.Outputs["errcode"].ToString(),
                                         result.Outputs["errmsg"].ToString());
@@ -288,9 +290,9 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
             }
         }
 
-        private class HRSpConfig: DataAccess
+        private class HRSpConfig : DataAccess
         {
-            
+
             public StoreProcedureElement GetHRStoreProcedure(Core.Configurations.StoreProcedureGroup.RacingSession.StoreCollection storeCollection, string aliasName)
             {
                 return GetStoreProcedure(storeCollection, aliasName);

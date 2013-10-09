@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+  <Function Name="Customer - Consolidated Group">
+    <Setting Key="Acc_CustomerDelConsolidatedGroup" SpName="Acc_CustomerDelConsolidatedGroup" DbName="DBAGE.bodb_AGE.bodbAdminNet" />
+    <Setting Key="Acc_CustomerInsConsolidatedGroup_User" SpName="Acc_CustomerInsConsolidatedGroup_User" DbName="DBAGE.bodb_AGE.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelByConsolidatedGroupID" SpName="Acc_CustomerSelByConsolidatedGroupID" DbName="DBAGE.bodb_AGE.bodbAdminNet" />
+    
+    <Setting Key="Acc_CustomerSelConsolidatedGroup" SpName="Acc_CustomerSelConsolidatedGroup" DbName="DBAGE.bodb_AGE.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdConsolidatedGroup" SpName="Acc_CustomerUpdConsolidatedGroup" DbName="DBAGE.bodb_AGE.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdConsolidatedGroupHeader" SpName="Acc_CustomerUpdConsolidatedGroupHeader" DbName="DBAGE.bodb_AGE.bodbAdminNet" />
+  </Function>
+</Functions>

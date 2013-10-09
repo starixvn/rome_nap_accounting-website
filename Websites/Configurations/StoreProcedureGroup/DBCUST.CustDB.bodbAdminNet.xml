@@ -130,7 +130,7 @@
     <Setting Key="CustomerUpdMoveDepositMaster" SpName="Acc_Dep_CustomerUpdMoveMaster" DbName="DBCUST.CustDB.bodbAdminNet"  />
   </Function>
 
-  <Function Name="Move Site">
+  <Function Name="Customer - Move Site">
     <Setting Key="Acc_CustomerUpdMoveSite" SpName="Acc_CustomerUpdMoveSite" DbName="DBCUST.CustDB.bodbAdminNet"  />
   </Function>
 

@@ -3,7 +3,7 @@
 
   <Function Name="BetList">
     <Setting Key="BetListByDayAll" SpName="Acc_BetListByDayAll" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="ByTransID" SpName="Acc_BetsSelBetList_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet"  />    
+    <Setting Key="ByTransID" SpName="Acc_BetsSelBetList_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet"  />
   </Function>
 
   <Function Name="Balance Up Day">
@@ -25,6 +25,112 @@
   <Function Name="Others">
     <Setting Key="Monitor_BettypeSel" SpName="Acc_Rpt_MAMonitor_BettypeSel" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="Monitor_SportSel" SpName="Acc_Rpt_MAMonitor_SportSel" DbName="DBAGE.bodb02.bodbAdminNet"  />
+  </Function>
+
+
+  <Function Name="Racing - PT Setting">
+    <Setting Key="Acc_CustomerSelHRSuper_All" SpName="Acc_CustomerSelHRSuper_All" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_CustomerSelHRMaster_All" SpName="Acc_CustomerSelHRMaster_All" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_CustomerSelHRAgent_All" SpName="Acc_CustomerSelHRAgent_All" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_CustomerSelHRMember_All" SpName="Acc_CustomerSelHRMember_All" DbName="DBAGE.bodb02.bodbAdminNet"  />
+
+    <Setting Key="Acc_CustomerSelHREditMember_SAg" SpName="Acc_CustomerSelHREditMember_SAg" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_CustomerSelHREditMember_MAg" SpName="Acc_CustomerSelHREditMember_MAg" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_RacingBetSettingSel" SpName="Acc_RacingBetSettingSel" DbName="DBAGE.bodb02.bodbAdminNet"  />
+  </Function>
+  <Function Name="Customer - SMA Turnover Management">
+    <Setting Key="SMASportType" SpName="Acc_SportTypeSel" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="GetLeague" SpName="Acc_SMATurnoverLeagueSel" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="GetInfoByMatch" SpName="Acc_SMATurnoverMatchSel" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="GetSMATurnoverList" SpName="Acc_SMATurnoverListSel" DbName="DBAGE.bodb02.bodbAdminNet" />
+
+    <Setting Key="UpdateSMATurnover" SpName="Acc_SMATurnoverUpd" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="CheckMaxTurnover" SpName="Acc_SMATurnoverCheckTotalTurnover" DbName="DBAGE.bodb02.bodbAdminNet" />
+
+    <Setting Key="Customer_SMATurnover_CheckSMAList" SpName="Acc_SMATurnoverCheckList" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Customer_SMATurnover_AddSMAList" SpName="Acc_SMATurnoverIns" DbName="DBAGE.bodb02.bodbAdminNet" />
+  </Function>
+  <Function Name="Left Panel - Credit term">
+    <Setting Key="GetAllGroup" SpName="Acc_CreditTermSelGroupHeadline" DbName="DBAGE.bodb02.bodbAdminNet"/>
+  </Function>
+  <Function Name="Customer - Move Customer - Move Agent">
+    <Setting Key="Acc_CustomerCheckMoveAgent" SpName="Acc_CustomerCheckMoveAgent" DbName="DBAGE.bodb02.bodbAdminNet"/>
+  </Function>
+  <Function Name="Bet List - Result">
+    <Setting Key="Acc_BetlistCombinationParlay_Details" SpName="Acc_BetlistCombinationParlay_Details" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_BetList_HRResults" SpName="Acc_BetList_HRResults" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_BetList_SelBettype" SpName="Acc_BetList_SelBettype" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_BetList_SelMatchResult" SpName="Acc_BetList_SelMatchResult" DbName="DBAGE.bodb02.bodbAdminNet"  />
+   
+    <Setting Key="Acc_BetlistCombinationParlay_ByTransID" SpName="Acc_BetlistCombinationParlay_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_BetsSelBetCheckM_All" SpName="Acc_BetsSelBetCheckM_All" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_BetsSelBetList_ByTransID" SpName="Acc_BetsSelBetList_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="BetList_RefNoSel" SpName="Acc_BetsSelBetList_ByTransID_Advance" DbName="DBAGE.bodb02.bodbAdminNet"  />
+
+    <Setting Key="BetsSelBetList" SpName="Acc_BetsSelBetList" DbName="DBAGE.bodb02.bodbAdminNet"  />
+  </Function>
+  <Function Name="Customer - New Customer (NEW)">
+    <Setting Key="Acc_CustomerSelAgentInfo" SpName="Acc_CustomerSelAgentInfo" DbName="DBAGE.bodb02.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerSelMAgentInfo" SpName="Acc_CustomerSelMAgentInfo" DbName="DBAGE.bodb02.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerSelSAgentInfo" SpName="Acc_CustomerSelSAgentInfo" DbName="DBAGE.bodb02.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerSelSAg" SpName="Acc_CustomerSelSAg" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_CustomerSelSAgList" SpName="Acc_CustomerSelSAgList" DbName="DBAGE.bodb02.bodbAdminNet"  />
+  </Function>
+  <Function Name="Customer - Enable Number Game">
+    <Setting Key="Acc_CustomerSelNGUpline" SpName="Acc_CustomerSelNGUpline" DbName="DBAGE.bodb02.bodbAdminNet"  />
+  </Function>
+  <Function Name="Core - Customer Info">
+    <Setting Key="Acc_CustomerSelByUserName" SpName="Acc_CustomerSelByUserName" DbName="DBAGE.bodb02.bodbAdminNet"  />
+  </Function>
+  <Function Name="Special Delete - Number Game">
+    <Setting Key="SelSpecialDel_NumberGame" SpName="Acc_BettransSelSpecialDel_NumberGame" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_BettransSelRecoverBet_NumberGame" SpName="Acc_BettransSelRecoverBet_NumberGame" DbName="DBAGE.bodb02.bodbAdminNet" />
+  </Function>
+  <Function Name="RNG Casino - Customer">
+    <Setting Key="Acc_SiteSel_RNGCS" SpName="Acc_SiteSel_RNGCS" DbName="DBAGE.bodb02.bodbAdminNet"  />
+  </Function>
+  <Function Name="Admin - SMA Management">
+    <Setting Key="Acc_SiteSel_Credit" SpName="Acc_SiteSel_Credit" DbName="DBAGE.bodb02.bodbAdminNet" />
+  </Function>
+  <Function Name="Customer - Customer List">
+    <Setting Key="Acc_CustomerSelBySAg" SpName="Acc_CustomerSelBySAg" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_CustomerSelMAgByCom" SpName="Acc_CustomerSelMAgByCom" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_CustomerSelByMAg" SpName="Acc_CustomerSelByMAg" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_CustomerSelByAg" SpName="Acc_CustomerSelByAg" DbName="DBAGE.bodb02.bodbAdminNet"  />
+  </Function>
+  <Function Name="PTVirtualSports - Setting">
+    <Setting Key="Acc_CustomerSelEditSuperVS" SpName="Acc_CustomerSelEditSuperVS" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_CustomerSelEditMasterVS" SpName="Acc_CustomerSelEditMasterVS" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_CustomerSelEditAgentVS" SpName="Acc_CustomerSelEditAgentVS" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_CustomerSelEditMemberVS" SpName="Acc_CustomerSelEditMemberVS" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_CustomerSelMEditCustomerVS" SpName="Acc_CustomerSelMEditCustomerVS" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
+  </Function>
+  <Function Name="Sepcial Delete - Virtual Sports - Delete Bets">
+    <Setting Key="BetTypeSel_VirtualSports" SpName="Acc_BetTypeSel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="BettransSelSpecialDel_VirtualSports" SpName="Acc_BettransSelSpecialDel_VirtualSports" DbName="DBACC.bodb02.bodbAdminNet" />
+  </Function>
+  <Function Name="Sepcial Delete - Core">
+    <Setting Key="Acc_SpecialDel_CheckMatchIDwithRefno" SpName="Acc_SpecialDel_CheckMatchIDwithRefno" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="SelMatchInfo" SpName="Acc_MatchSelByID" DbName="DBACC.bodb02.bodbAdminNet" />
+  </Function>
+  <Function Name="Sepcial Delete - Recover Bet">
+    <Setting Key="BettransSelRecoverSpecialBets" SpName="Acc_BettransSelRecoverSpecialBets" DbName="DBACC.bodb02.bodbAdminNet" />
+  </Function>
+  <Function Name="Customer - Enable Virtual Sports">
+    <Setting Key="Acc_CustomerSelStatusVS" SpName="Acc_CustomerSelStatusVS" DbName="DBACC.bodb02.bodbAdminNet" Plain="0" />
+  </Function>
+  <Function Name="Customer - Finance Super List">
+    <Setting Key="Acc_CustomerSelSFinance" SpName="Acc_CustomerSelFinance_SAg" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_CustomerSelBySFinance" SpName="Acc_CustomerSelFinance_MAg" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_CustomerSelByMFinance" SpName="Acc_CustomerSelFinance_Ag" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_CustomerSelByAgFinance" SpName="Acc_CustomerSelFinance_Mem" DbName="DBAGE.bodb02.bodbAdminNet"  />
+  </Function>
+  <Function Name="Bet List - Score Information">
+    <Setting Key="SportingSolutionBetlistResult" SpName="Acc_BetList_SelMatchResultSS" DbName="DBAGE.bodb02.bodbAdminNet"  />
+  </Function>
+  <Function Name="Finance">
+    <Setting Key="Acc_customerSelExRate" SpName="Acc_customerSelExRate" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_ExchangeSelCodeforCrossTransfer" SpName="Acc_ExchangeSelCodeforCrossTransfer" DbName="DBAGE.bodb02.bodbAdminNet"  />
   </Function>
 </Functions>
 
