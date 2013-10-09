@@ -68,10 +68,16 @@
     <Setting Key="agentbalanceyesterday" SpName="Acc_Rpt_Balance_Agent_Yesterday" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="memberbalance" SpName="Acc_Rpt_Balance_Member" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="memberbalanceyesterday" SpName="Acc_Rpt_Balance_Member_Yesterday" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="superbalance" SpName="Acc_Rpt_Balance_Super" DbName="DBACC.BODB02"  />
-    <Setting Key="superbalanceyesterday" SpName="Acc_Rpt_Balance_Super_Yesterday" DbName="DBACC.BODB02"  />
+    <Setting Key="superbalance" SpName="Acc_Rpt_Balance_Super" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="superbalanceyesterday" SpName="Acc_Rpt_Balance_Super_Yesterday" DbName="DBACC.bodb02.bodbAdminNet"  />
   </Function>
 
+  <Function Name="Credit Term">    
+    <Setting Key="CreditTerm" SpName="Acc_Rpt_CreditTerm" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="InstallAmount" SpName="Acc_Rpt_InstallAmount" DbName="DBACC.bodb02.bodbAdminNet" />
+  </Function>
+  
+  
   <Function Name="WinLoss Report">
     <Setting Key="Acc_Rpt_TreeWinlostByProduct" SpName="Acc_Rpt_TreeWinlostByProduct" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_Rpt_TreeWinlostByCom" SpName="Acc_Rpt_TreeWinlostByCom" DbName="DBACC.bodb02.bodbAdminNet" />
@@ -117,6 +123,40 @@
     <Setting Key="WinLoss_Bingo_Detail_14" SpName="Acc_Rpt_WinlostBI_Details14" DbName="DBACC.bodb02.bodbAdminNet"  />    
   </Function>
 
+  <Function Name="Racing">
+    <Setting Key="WinlostHR_Details" SpName="Acc_Rpt_WinlostHR_Details" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="WinlostHR_Details_14" SpName="Acc_Rpt_WinlostHR_Details14" DbName="DBACC.bodb02.bodbAdminNet"  />
+
+    <Setting Key="WinlostRacingTote" SpName="Acc_Rpt_WinlostRacing_Tote" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="WinlostRacingTote_14" SpName="Acc_Rpt_WinlostRacing_Tote14" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="WinlostRacingTote_WH" SpName="Acc_Rpt_WinlostRacing_Tote14" DbName="DBACC.bodb02.bodbAdminNet"  />
+
+    <Setting Key="WinlostRacingToteDetail" SpName="Acc_Rpt_WinlostRacing_Tote_Details" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="WinlostRacingToteDetail_14" SpName="Acc_Rpt_WinlostRacing_Tote_Details14" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="WinlostRacingToteDetail_WH" SpName="Acc_Rpt_WinlostRacing_Tote_Details14" DbName="DBACC.bodb02.bodbAdminNet"  />
+
+    <Setting Key="WinlostRacingBetlist" SpName="Acc_Rpt_WinlostRacing_Tote_BetList" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="WinlostRacingBetlist_14" SpName="Acc_Rpt_WinlostRacing_Tote_BetList14" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="WinlostRacingBetlist_WH" SpName="Acc_Rpt_WinlostRacing_Tote_BetList14" DbName="DBACC.bodb02.bodbAdminNet"  />
+
+    <Setting Key="Acc_Rpt_Racing_ComparisionTO3rd" SpName="Acc_Rpt_Racing_ComparisionTO3rd" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_Rpt_WinlostHR_OpenTote" SpName="Acc_Rpt_WinlostHR_OpenTote" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_Rpt_WinlostHR_OpenTote14" SpName="Acc_Rpt_WinlostHR_OpenTote14" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_Rpt_WinlostHR_OpenTote_Details" SpName="Acc_Rpt_WinlostHR_OpenTote_Details" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_Rpt_WinlostHR_OpenTote_Details14" SpName="Acc_Rpt_WinlostHR_OpenTote_Details14" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_Rpt_WinlostHR_OpenTote_BetList" SpName="Acc_Rpt_WinlostHR_OpenTote_BetList" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_Rpt_WinlostHR_OpenTote_BetList14" SpName="Acc_Rpt_WinlostHR_OpenTote_BetList14" DbName="DBACC.bodb02.bodbAdminNet" />
+
+    <Setting Key="WinlostRacingLicensee_Details" SpName="Acc_Rpt_WinlostRacingLicensee_Details" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="WinlostRacingLicensee_Details_14" SpName="Acc_Rpt_WinlostRacingLicensee_Details14" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="WinlostRacingLicensee_Details_WH" SpName="Acc_Rpt_WinlostRacingLicensee_Details14" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="WinlostRacingLicensee_BetList_Details" SpName="Acc_Rpt_WinlostRacingLicensee_BetList_Details" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="WinlostRacingLicensee_BetList_Details_14" SpName="Acc_Rpt_WinlostRacingLicensee_BetList_Details14" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="WinlostRacingLicensee_BetList_Details_WH" SpName="Acc_Rpt_WinlostRacingLicensee_BetList_Details14" DbName="DBACC.bodb02.bodbAdminNet" />
+
+    <Setting Key="Acc_Rpt_WinlostRacing_Group_Daily" SpName="Acc_Rpt_WinlostRacing_Group_Daily" DbName="DBACC.bodb02.bodbAdminNet" />
+
+  </Function>
 
   <Function Name="Special Report">
     <Setting Key="Acc_Rpt_MatchAnalysisByCurrency" SpName="Acc_Rpt_MatchAnalysisByCurrency" DbName="DBACC.bodb02.bodbAdminNet"/>
@@ -142,9 +182,7 @@
     <Setting Key="PokerWinlossDetail_14" SpName="Acc_Rpt_WinlostP2P_Details14" DbName="DBACC.bodb02.bodbAdminNet"  />
   </Function>
 
-  <Function Name="Racing-Report">
-    <Setting Key="Acc_Rpt_WinlostRacing_Group_Daily" SpName="Acc_Rpt_WinlostRacing_Group_Daily" DbName="DBACC.bodb02.bodbAdminNet" />
-  </Function>
+  
 
   <Function Name="NumberGame">
     <Setting Key="Acc_BetTypeSel_NumberGame" SpName="Acc_BetTypeSel_NumberGame" DbName="DBACC.bodb02.bodbAdminNet"  />    
@@ -166,31 +204,7 @@
     <Setting Key="WinLoss_Sporttype" SpName="Acc_Rpt_WinLoss_Sporttype" DbName="DBACC.bodb02.bodbAdminNet"  />
   </Function>
 
-  <Function Name="Racing">
-    <Setting Key="WinlostRacingTote" SpName="Acc_Rpt_WinlostRacing_Tote" DbName="DBACC.bodb02.bodbAdminNet"  />
-    <Setting Key="WinlostRacingTote_14" SpName="Acc_Rpt_WinlostRacing_Tote14" DbName="DBACC.bodb02.bodbAdminNet"  />
-    <Setting Key="WinlostRacingTote_WH" SpName="Acc_Rpt_WinlostRacing_Tote14" DbName="DBACC.bodb02.bodbAdminNet"  />
-
-    <Setting Key="WinlostRacingToteDetail" SpName="Acc_Rpt_WinlostRacing_Tote_Details" DbName="DBACC.bodb02.bodbAdminNet"  />
-    <Setting Key="WinlostRacingToteDetail_14" SpName="Acc_Rpt_WinlostRacing_Tote_Details14" DbName="DBACC.bodb02.bodbAdminNet"  />
-    <Setting Key="WinlostRacingToteDetail_WH" SpName="Acc_Rpt_WinlostRacing_Tote_Details14" DbName="DBACC.bodb02.bodbAdminNet"  />
-
-    <Setting Key="WinlostRacingBetlist" SpName="Acc_Rpt_WinlostRacing_Tote_BetList" DbName="DBACC.bodb02.bodbAdminNet"  />
-    <Setting Key="WinlostRacingBetlist_14" SpName="Acc_Rpt_WinlostRacing_Tote_BetList14" DbName="DBACC.bodb02.bodbAdminNet"  />
-    <Setting Key="WinlostRacingBetlist_WH" SpName="Acc_Rpt_WinlostRacing_Tote_BetList14" DbName="DBACC.bodb02.bodbAdminNet"  />
-
-    
-    
-    
-    <add alias="WinlostRacingLicensee_Details" name="Acc_Rpt_WinlostRacingLicensee_Details" db="DBACC.bodb02.bodbAdminNet"></add>
-    <add alias="WinlostRacingLicensee_Details_14" name="Acc_Rpt_WinlostRacingLicensee_Details14" db="DBACC.bodb02.bodbAdminNet"></add>
-    <add alias="WinlostRacingLicensee_Details_WH" name="Acc_Rpt_WinlostRacingLicensee_Details14" db="DBACC.bodb02.bodbAdminNet"></add>
-    <add alias="WinlostRacingLicensee_BetList_Details" name="Acc_Rpt_WinlostRacingLicensee_BetList_Details" db="DBACC.bodb02.bodbAdminNet"></add>
-    <add alias="WinlostRacingLicensee_BetList_Details_14" name="Acc_Rpt_WinlostRacingLicensee_BetList_Details14" db="DBACC.bodb02.bodbAdminNet"></add>
-    <add alias="WinlostRacingLicensee_BetList_Details_WH" name="Acc_Rpt_WinlostRacingLicensee_BetList_Details14" db="DBACC.bodb02.bodbAdminNet"></add>
-    <add alias="WinlostHR_Details" name="Acc_Rpt_WinlostHR_Details" db="DBACC.bodb02.bodbAdminNet"></add>
-    <add alias="WinlostHR_Details_14" name="Acc_Rpt_WinlostHR_Details14" db="DBACC.bodb02.bodbAdminNet"></add>
-  </Function>
+  
 
   
 
@@ -201,12 +215,23 @@
   </Function>
 
   <Function Name="Others">
-    <add alias="SelDuplicateTickets" name="Acc_CheckDuplicateTickets" db="DBACC.bodb02.bodbAdminNet"></add>    
+    
+    
     <add alias="TreeWinLoss" name="Acc_Rpt_TreeWinlost" db="DBACC.bodb02.bodbAdminNet"></add>
-    <add alias="InstallAmount" name="Acc_Rpt_InstallAmount" db="DBACC.bodb02.bodbAdminNet"></add>
+    
+
+    <Setting Key="Acc_DailyCreatedCustomer" SpName="Acc_DailyCreatedCustomer" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_DailyCreatedCustomer_Details" SpName="Acc_DailyCreatedCustomer_Details" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="SelDuplicateTickets" SpName="Acc_CheckDuplicateTickets" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="HistoryDailyTurnover" SpName="Acc_Rpt_DailyTurnover" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="DailyTurnoverChangeDetail" SpName="Acc_Rpt_DailyTurnover_ChangedDetail" DbName="DBACC.bodb02.bodbAdminNet"  />
   </Function>
 
   <Function Name="External">
+    <Setting Key="WinLossDaily_ComEx" SpName="Acc_Rpt_WinLossDaily_ComEx" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="WinLossDaily_ComEx_14" SpName="Acc_Rpt_WinLossDaily_ComEx14" DbName="DBACC.bodb02.bodbAdminNet"  />
+    <Setting Key="WinLossDaily_ComEx_WH" SpName="Acc_Rpt_WinLossDaily_ComEx14" DbName="DBACC.bodb02.bodbAdminNet"  />
+    
     <add alias="WinLossDaily_SAgEx" name="Acc_Rpt_WinLossDaily_SAgEx" db="DBACC.bodb02.bodbAdminNet"></add>
     <add alias="WinLossDaily_SAgEx_14" name="Acc_Rpt_WinLossDaily_SAgEx14" db="DBACC.bodb02.bodbAdminNet"></add>
     <add alias="WinLossDaily_SAgEx_WH" name="Acc_Rpt_WinLossDaily_SAgEx14" db="DBACC.bodb02.bodbAdminNet"></add>
@@ -223,17 +248,10 @@
   
 
   <Function Name="Daily Turnover">
-    <add alias="HistoryDailyTurnover" name="Acc_Rpt_DailyTurnover" db="DBACC.bodb02.bodbAdminNet"></add>
-    <add alias="DailyTurnoverChangeDetail" name="Acc_Rpt_DailyTurnover_ChangedDetail" db="DBACC.bodb02.bodbAdminNet"></add>
+    
+    
   </Function>
-
-  <Function Name="P2P">
-    <add alias="WinlostP2P" name="Acc_Rpt_WinlostP2P" db="DBACC.bodb02.bodbAdminNet"/>
-    <add alias="WinlostP2P_Detail" name="Acc_Rpt_WinlostP2P_Details" db="DBACC.bodb02.bodbAdminNet"/>
-    <add alias="WinlostP2P_Details_14" name="Acc_Rpt_WinlostP2P_Details14" db="DBACC.bodb02.bodbAdminNet"/>
-    <add alias="WinlostP2P_Details_WH" name="Acc_Rpt_WinlostP2P_Details14" db="DBACC.bodb02.bodbAdminNet"/>
-  </Function>
-
+  
   <Function Name="Betlist">
     <add alias="BABetlist" name="Acc_BA_BetList" db="DBACC.bodb02.bodbAdminNet"></add>
     <add alias="ByIPOtherSports" name="Acc_BetListByIP_OtherSports" db="DBACC.bodb02.bodbAdminNet"></add>

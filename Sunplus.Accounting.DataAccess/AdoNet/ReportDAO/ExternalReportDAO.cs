@@ -10,6 +10,8 @@ using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.DataAccess.IReportDAO;
 using Sunplus.Accounting.DataAccess.Report;
 using Sunplus.Accounting.Entities.Report.External;
+using Fanex.Tarus.Infrastructure.Extensions;
+using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 {
@@ -22,13 +24,29 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
         public DbResult SelWinLossDailyByCom(string winlostdate)
         {
-            Hashtable hashtable = new Hashtable();
-            hashtable.Add("winlostdate", winlostdate);
-            hashtable.Add("system", AppSession.SYSTEM.ToString());
+            DbResult result = null;
+            try
+            {
+                Hashtable hashtable = new Hashtable();
+                hashtable.Add("winlostdate", winlostdate);
+                hashtable.Add("system", AppSession.SYSTEM.ToString());
 
-            var element = getSPMapping("WinLossDaily_ComEx" + GetStoreMappingSubfix(CastAide.AsDateTime(winlostdate)));
+                string spName = "WinLossDaily_ComEx" + GetStoreMappingSubfix(CastAide.AsDateTime(winlostdate));
 
-            return DbHelper.Execute(element.Name, hashtable, element.DbName, 600);
+                using(ObjectDb db = new ObjectDb(spName, 600))
+                {
+                    db.AssignParamValues(hashtable);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
 

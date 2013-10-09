@@ -43,7 +43,7 @@ namespace Fanex.Tarus.SpecialDelete.SendEmail.DataAccess
 
         public DataSet SelExchangeCurrency()
         {
-            using (ObjectDb objDB = new ObjectDb("ExchangeCurrencySel"))
+            using (ObjectDb objDB = new ObjectDb("Acc_ExchangeCurrencySel"))
             {
                 var rs = objDB.ExecuteDataSet();
                 return rs;

@@ -302,9 +302,15 @@
             DbResult result = null;
             try
             {
-                StoreProcedureElement spElement = GetReportStoreProcedure(
-                    ReportSession.StoreCollection.Others, "CreditTerm");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 500);
+                using (ObjectDb db = new ObjectDb("CreditTerm"))
+                {
+                    db.AssignParamValues(p);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -418,9 +424,16 @@
             {
                 var p = new Hashtable();
                 p.Add("roleid", roleid);
-                StoreProcedureElement spElement = GetReportStoreProcedure(
-                    ReportSession.StoreCollection.Others, "InstallAmount");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
+
+                using(ObjectDb db = new ObjectDb("InstallAmount", 300))
+                {
+                    db.AssignParamValues(p);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {

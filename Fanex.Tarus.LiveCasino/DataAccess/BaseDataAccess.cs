@@ -66,7 +66,7 @@ namespace Fanex.Tarus.LiveCasino.DataAccess
             var exchange = new Dictionary<int, string>();
             
             //get data from database
-            using (ObjectDb objDB = new ObjectDb("ExchangeCurrencySel"))
+            using (ObjectDb objDB = new ObjectDb("Acc_ExchangeCurrencySel"))
             {
                 DataSet ds = objDB.ExecuteDataSet();
                 if (ds != null && ds.Tables[0].Rows.Count > 0)

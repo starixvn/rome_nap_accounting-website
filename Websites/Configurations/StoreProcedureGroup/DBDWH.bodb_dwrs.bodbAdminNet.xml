@@ -53,31 +53,43 @@
     <Setting Key="Acc_Rpt_NumberGame_Details_Old" SpName="Acc_Rpt_NumberGame_Details_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
     <Setting Key="Acc_Rpt_NumberGameWinlossByDate" SpName="Acc_Rpt_NumberGameWinlossByDate" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
     <Setting Key="Acc_Rpt_NumberGameFinanceWinlossByMonth" SpName="Acc_Rpt_NumberGameFinanceWinlossByMonth" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
-  </Function>
-  
-  <Function Name="Report">       
+    <Setting Key="Acc_Rpt_NumberGameWinlossByCurrency_detail" SpName="Acc_Rpt_NumberGameWinlossByCurrency_detail" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
+    <Setting Key="Acc_Rpt_NumberGameWinlossByCurrency" SpName="Acc_Rpt_NumberGameWinlossByCurrency" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
+    <Setting Key="BingoWinlossByMonth" SpName="Acc_Rpt_BingoWinlossByMonth" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
     <Setting Key="GetSportType" SpName="Acc_SelVirtualSport" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
     <Setting Key="DailyWinlossVirtualSport" SpName="Acc_Rpt_VirtualsportWinloss" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
     <Setting Key="WinlossVirtualSportByCurrency" SpName="Acc_Rpt_VirtualsportWinloss_detail" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
-    <Setting Key="BingoWinlossByMonth" SpName="Acc_Rpt_BingoWinlossByMonth" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
+  </Function>
+
+  <Function Name="Racing">
+    <Setting Key="WinlostHR_Details_WH" SpName="Acc_Rpt_WinlostHR_Details_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
+  </Function>
+  
+  <Function Name="Report">       
     <Setting Key="Acc_Rpt_NumberGameMonthlyWinloss" SpName="Acc_Rpt_NumberGameMonthlyWinloss" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
     <Setting Key="Gaming_SelNumberGameMonthlyWinLossReport" SpName="Acc_Rpt_NumberGameWinlossByMonth" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />    
     <Setting Key="Gaming_SelLiveCasinoGameTable" SpName="Acc_Rpt_LiveCasinoFinance_GameTable" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
     <Setting Key="Gaming_SelFinancialReport" SpName="Acc_Rpt_LiveCasinoFinance" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
-    <Setting Key="Acc_Rpt_NumberGameWinlossByCurrency_detail" SpName="Acc_Rpt_NumberGameWinlossByCurrency_detail" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
-    <Setting Key="Acc_Rpt_NumberGameWinlossByCurrency" SpName="Acc_Rpt_NumberGameWinlossByCurrency" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />    
+    
     
     <Setting Key="PokerWinloss_WH" SpName="Acc_Rpt_WinlostP2P_DW" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
-    <Setting Key="PokerWinlossDetail_WH" SpName="Acc_Rpt_WinlostP2P_DW_Detail" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
-    <Setting Key="WinLoss_HorseRacing_Detail_WH" SpName="Acc_Rpt_WinlostHR_Details_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
+    <Setting Key="PokerWinlossDetail_WH" SpName="Acc_Rpt_WinlostP2P_DW_Detail" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />    
     <Setting Key="Acc_Rpt_NumberGameMemberWinlossByMatch_details" SpName="Acc_Rpt_NumberGameMemberWinlossByMatch_details" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
-    <Setting Key="Acc_Rpt_NumberGameMemberWinlossByMatch" SpName="Acc_Rpt_NumberGameMemberWinlossByMatch" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
+    <Setting Key="Acc_Rpt_NumberGameMemberWinlossByMatch" SpName="Acc_Rpt_NumberGameMemberWinlossByMatch" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />    
+  </Function>
+
+  <Function Name="Others">
     <Setting Key="Monitor_LeagueSel" SpName="Acc_Rpt_MAMonitor_LeagueSel" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
     <Setting Key="Monitor_Report" SpName="Acc_Rpt_MAMonitor" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
     <Setting Key="Monitor_ReportArchive" SpName="Acc_Rpt_MAMonitor_Archive" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
+    <Setting Key="BetCountReport" SpName="Acc_Rpt_BetCount" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
+    <Setting Key="Acc_BetCountSelSports" SpName="Acc_Rpt_BetCount_SelSports" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
+
+    <Setting Key="Acc_DirectCustomerReport" SpName="Acc_DirectCustomerReport" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />    
+    
   </Function>
 
-  <Function Name="Punter Analysis Report">
+    <Function Name="Punter Analysis Report">
     <Setting Key="Punter_TopPunterSelLeagues" SpName="Acc_TopPunterSelLeagues" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
     <Setting Key="Punter_SelTopPunterSummary" SpName="Acc_SelTopPunterSummary" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
     <Setting Key="Punter_SelTopPunterSummaryByLeague" SpName="Acc_SelTopPunterSummaryByLeague" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
@@ -93,8 +105,8 @@
   </Function>
 
   <Function Name="OtherReport">
-    <Setting Key="BetCountReport" SpName="Acc_Rpt_BetCount" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
-    <Setting Key="Acc_BetCountSelSports" SpName="Acc_Rpt_BetCount_SelSports" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
+    
+    
     <Setting Key="CreditSiteBetCount" SpName="GET_Acc_CreditSite_BetCount" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
   </Function>
 

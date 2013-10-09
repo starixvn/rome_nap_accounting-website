@@ -4,6 +4,7 @@ using DNAide.Data;
 
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Core.LoggingLib;
+using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
 {
@@ -18,7 +19,14 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
             DbResult rs = null;
             try
             {
-                rs = DbHelper.Execute("Acc_DailyCreatedCustomer", hash, DBType.REPORT);
+                using (ObjectDb db = new ObjectDb("Acc_DailyCreatedCustomer", 600))
+                {
+                    db.AssignParamValues(hash);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -37,7 +45,14 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
             DbResult rs = null;
             try
             {
-                rs = DbHelper.Execute("Acc_DailyCreatedCustomer_Details", hash, DBType.REPORT);
+                using (ObjectDb db = new ObjectDb("Acc_DailyCreatedCustomer_Details",600))
+                {
+                    db.AssignParamValues(hash);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {

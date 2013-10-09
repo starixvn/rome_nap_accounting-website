@@ -14,10 +14,7 @@
 	</Function>
 	
 	
-  <Function Name="Exchange Rate">
-    <Setting Key="Acc_ExchangeCurrencySel" SpName="Acc_ExchangeCurrencySel" DbName="db053"  />
-    
-  </Function>
+  
 
   <Function Name="Live Casino - GET PT Setting">
     <Setting Key="Acc_CustomerSelInfoLiveCS" SpName="Acc_CustomerSelInfoLiveCS" DbName="db053"/>
@@ -115,9 +112,7 @@
 
   
 
-  <Function Name="Exchange Rate">
-    <Setting Key="ExchangeCurrencySel" SpName="Acc_ExchangeCurrencySel" DbName="db053"  />
-  </Function>
+  
   
 
 
@@ -222,9 +217,7 @@
 	
   
 	
-	<Function Name="Report - Racing">
-		<Setting Key="Acc_Rpt_RacingActiveMember" SpName="Acc_Rpt_RacingActiveMember" DbName="db053"  />
-	</Function>
+	
 	
 	<Function Name="Customer List">
 		<Setting Key="Acc_CustomerSelBySAg" SpName="Acc_CustomerSelBySAg" DbName="db053"  />
@@ -321,10 +314,7 @@
   <Function Name="Admin-SecurityCode">
     <Setting Key="Admin_SecurityCode_GetUserList" SpName="ACC_CustomerValidation" DbName="DBACC.BODB02" />
 	</Function>
-	<Function Name="Racing-Report">
-		<Setting Key="Acc_Rpt_Racing_ComparisionTO3rd" SpName="Acc_Rpt_Racing_ComparisionTO3rd" DbName="DBACC.BODB_ACC" />
-		<Setting Key="Acc_Rpt_WinlostRacing_Group" SpName="Acc_Rpt_WinlostRacing_Group" DbName="DBACC.bodb_report" />		
-	</Function>
+	
 	<Function Name="Racing - PT Setting">
 		<Setting Key="Acc_CustomerSelHRSuper_All" SpName="Acc_CustomerSelHRSuper_All" DbName="db053"  />
 		<Setting Key="Acc_CustomerSelHRMaster_All" SpName="Acc_CustomerSelHRMaster_All" DbName="db053"  />

@@ -7,8 +7,7 @@
 
   <Function Name="Report">
     <Setting Key="GetLicenseesByResellers" SpName="Acc_LicenseeByResellerSel" DbName="DBLIC.bodb_Licensee.bodbAdminNet"  />
-    <Setting Key="WinlostRacingLicensee_SiteSel" SpName="Acc_LicenseeProduct3rdSel" DbName="DBLIC.bodb_Licensee.bodbAdminNet"  />
-    <Setting Key="LicGetReseller" SpName="Acc_LicenseeByResellerSel" DbName="DBLIC.bodb_Licensee.bodbAdminNet"  />
+    <Setting Key="WinlostRacingLicensee_SiteSel" SpName="Acc_LicenseeProduct3rdSel" DbName="DBLIC.bodb_Licensee.bodbAdminNet"  />    
     <Setting Key="LicGetResellerRates" SpName="OA_ResellerTransactionSel" DbName="DBLIC.bodb_Licensee.bodbAdminNet"  />
     
   </Function>

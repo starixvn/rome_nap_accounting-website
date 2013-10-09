@@ -5,6 +5,7 @@ using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.Core.Common;
 using System.Collections;
+using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.Report.MemberStatistics
 {
@@ -26,8 +27,16 @@ namespace Sunplus.Accounting.DataAccess.Report.MemberStatistics
                 param.Add("fromdate", fromDate);
                 param.Add("todate", toDate);
                 param.Add("balanceupday", balanceUpDay);
-                var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Gaming, "GamesActiveMember");
-                dbResult = DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
+
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_GamesActiveMember", 1000))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    dbResult = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {

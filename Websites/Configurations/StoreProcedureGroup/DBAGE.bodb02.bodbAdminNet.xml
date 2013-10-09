@@ -10,5 +10,21 @@
     <Setting Key="SelBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="DBAGE.bodb02.bodbAdminNet"  />
   </Function>
 
+  <Function Name="Exchange Rate">
+    <Setting Key="Acc_ExchangeCurrencySel" SpName="Acc_ExchangeCurrencySel" DbName="DBAGE.bodb02.bodbAdminNet"  />
+  </Function>
 
+  <Function Name="Gaming">
+    <Setting Key="Acc_Rpt_GamesActiveMember" SpName="Acc_Rpt_GamesActiveMember" DbName="DBAGE.bodb02.bodbAdminNet"  />
+  </Function>
+
+  <Function Name="Racing">
+    <Setting Key="Acc_Rpt_RacingActiveMember" SpName="Acc_Rpt_RacingActiveMember" DbName="DBAGE.bodb02.bodbAdminNet"  />
+  </Function>
+
+  <Function Name="Others">
+    <Setting Key="Monitor_BettypeSel" SpName="Acc_Rpt_MAMonitor_BettypeSel" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="Monitor_SportSel" SpName="Acc_Rpt_MAMonitor_SportSel" DbName="DBAGE.bodb02.bodbAdminNet"  />
+  </Function>
 </Functions>
+

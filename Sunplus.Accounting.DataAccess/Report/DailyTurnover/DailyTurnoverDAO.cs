@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using DNAide.Data;
 using Sunplus.Accounting.Core.Configurations;
+using System;
+using Fanex.Tarus.Infrastructure.Extensions;
+using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.Report.DailyTurnoverDAO
 {
@@ -14,23 +17,54 @@ namespace Sunplus.Accounting.DataAccess.Report.DailyTurnoverDAO
 
         public DbResult SelDailyTurnover(string date, bool isActual, string key)
         {
-            var element = getSPMapping(key);
-            Hashtable hashtable = new Hashtable();
-            hashtable.Add("fromdate", date);
-            hashtable.Add("isactual", isActual);
+            DbResult result = null;
+            try
+            {
+                Hashtable hashtable = new Hashtable();
+                hashtable.Add("fromdate", date);
+                hashtable.Add("isactual", isActual);
 
-            return DbHelper.Execute(element.Name, hashtable, element.DbName,1800);
+                using (ObjectDb db = new ObjectDb(key, 1800))
+                {
+                    db.AssignParamValues(hashtable);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return result;
         }
 
 
         public DbResult SelDailyChangeDetial(string date)
         {
-            var element = getSPMapping("DailyTurnoverChangeDetail");
-            Hashtable hashtable = new Hashtable();
-            hashtable.Add("fromdate", date);
+            DbResult result = null;
+            try
+            {
+                Hashtable hashtable = new Hashtable();
+                hashtable.Add("fromdate", date);
 
-            return DbHelper.Execute(element.Name, hashtable, element.DbName, 1800);
-            
+                using (ObjectDb db = new ObjectDb("DailyTurnoverChangeDetail", 1800))
+                {
+                    db.AssignParamValues(hashtable);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
     }
 }

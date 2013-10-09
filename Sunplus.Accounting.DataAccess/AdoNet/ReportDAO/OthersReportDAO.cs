@@ -45,12 +45,27 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
         public DbResult SelDuplicateTickets(string wldate)
         {
-            Hashtable hashtable = new Hashtable();
-            hashtable.Add("date", wldate);
+            DbResult result = null;
+            try
+            {
+                Hashtable hashtable = new Hashtable();
+                hashtable.Add("date", wldate);
+                using (ObjectDb db = new ObjectDb("SelDuplicateTickets"))
+                {
+                    db.AssignParamValues(hashtable);
 
-            var spElement = GetStoreProcedure("SelDuplicateTickets");
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
 
-            return DbHelper.Execute(spElement.Name, hashtable, spElement.DbName, 600);
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return result;
         }
     }
 }

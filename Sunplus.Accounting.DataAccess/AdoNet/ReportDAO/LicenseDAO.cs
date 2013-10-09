@@ -312,7 +312,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             DataTable dataTable = new DataTable();
             try
             {
-                using (ObjectDb db = new ObjectDb("LicGetReseller"))
+                using (ObjectDb db = new ObjectDb("GetLicenseesByResellers"))
                 {
                     var ds = db.ExecuteDataSet();
                     if (ds != null && ds.Tables.Count > 0)

@@ -8,6 +8,7 @@ using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Core.LoggingLib;
+using Fanex.Data;
 
 /// <summary>
 /// Summary description for UtilsProviderClient
@@ -49,13 +50,13 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
             var exchange = new Dictionary<int, string>();
             try
             {
-                //get data from database
-                DataSet ds;
-                var spElement =
-                    new SpConfig().GetExchangeStoreProcedure(
-                        Core.Configurations.StoreProcedureGroup.ExchangeRateSession.StoreCollection.ExchangeRateControl,
-                        "ExchangeCurrencySel");
-                ds = DbHelper.Execute(spElement.Name, spElement.DbName).ResultSet;
+                //get data from database       
+                DataSet ds = new DataSet();
+                using (ObjectDb db = new ObjectDb("Acc_ExchangeCurrencySel"))
+                {
+                    ds = db.ExecuteDataSet();
+                }
+
                 if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
                     DataRow[] dr = ds.Tables[0].Select();

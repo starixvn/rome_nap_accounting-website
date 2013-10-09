@@ -5,6 +5,8 @@ using DNAide.Data;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess.Provider.Report;
 using Sunplus.Core.LoggingLib;
+using Fanex.Tarus.Infrastructure.Extensions;
+using Fanex.Data;
 
 /// <summary>
 /// Summary description for PunterAnalysisProviderClient
@@ -59,7 +61,23 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Report
 
         public override DbResult DirectCustomerReport(Hashtable param)
         {
-            return DbHelper.Execute("Acc_DirectCustomerReport", param, DBType.PUNTER, 3600);
+            DbResult result = null;
+            try
+            {
+                using (ObjectDb db = new ObjectDb("Acc_DirectCustomerReport", 3600))
+                {
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         public override DbResult SelSports()

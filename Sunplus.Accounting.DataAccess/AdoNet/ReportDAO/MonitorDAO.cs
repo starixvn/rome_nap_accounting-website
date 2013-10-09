@@ -67,15 +67,14 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             DataTable dataTable = null;
             try
             {
-                var spElement = getSPMapping(GetKeySpMapping.Monitor_SportSel);
-                var db = spElement.DbName;
-                var sp = spElement.Name;
-
-                DbResult dbResult = DbHelper.Execute(sp, db);
-                if (dbResult != null && dbResult.ResultSet.Tables.Count > 0)
-                    dataTable = dbResult.ResultSet.Tables[0];
-                else
-                    return null;
+                using (ObjectDb db = new ObjectDb("Monitor_SportSel", 1000))
+                {
+                    var ds = db.ExecuteDataSet();
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        dataTable = ds.Tables[0];
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -95,10 +94,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             DataTable dataTable = null;
             try
             {
-                var spElement = getSPMapping(GetKeySpMapping.Monitor_BettypeSel);
-                var db = spElement.DbName;
-                var sp = spElement.Name;
-
                 Hashtable hashtable = new Hashtable();
 
                 foreach (Items items in option)
@@ -107,13 +102,16 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                         hashtable.Add(items.Key,CastAide.AsInt16(items.Value) );
                 }
                 hashtable.Add("sporttype", sporttype);
-                
 
-                DbResult dbResult = DbHelper.Execute(sp,hashtable, db);
-                if (dbResult != null && dbResult.ResultSet.Tables.Count > 0)
-                    dataTable = dbResult.ResultSet.Tables[0];
-                else
-                    return null;
+                using (ObjectDb db = new ObjectDb("Monitor_BettypeSel", 1000))
+                {
+                    db.AssignParamValues(hashtable);
+                    var ds = db.ExecuteDataSet();
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        dataTable = ds.Tables[0];
+                    }
+                }
             }
             catch (Exception ex)
             {
