@@ -21,7 +21,7 @@
     <link href="@Url.Content("~/Areas/CustomerSetting/Views/BetSetting/Casino/Styles/Casino.css")" rel="stylesheet" type="text/css" />
 }
 @section Casino{    
-    <div id="ng-app" ng-app="casinoApp" ng-controller="Fanex.CustomerSetting.Betting.Casino" ng-init="Init()" style="width: 815px">
+    <div ng-controller="Fanex.CustomerSetting.Betting.Casino" ng-init="Init()" style="width: 815px">
         <div id="errMsg" style="display: none" class="errMsg">
         </div>
         <table cellspacing="0" cellpadding="0" border="0" style="margin: 6px 0;" ng-hide="model == null">
