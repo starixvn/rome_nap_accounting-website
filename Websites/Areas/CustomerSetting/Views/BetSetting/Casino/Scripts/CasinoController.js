@@ -1,12 +1,10 @@
-﻿var module = angular.module("casinoApp", []);
-
-if (typeof Fanex == 'undefined' || typeof Fanex.CustomerSetting == 'undefined' || typeof Fanex.CustomerSetting.Core == 'undefined') {
+﻿if (typeof Fanex == 'undefined' || typeof Fanex.CustomerSetting == 'undefined' || typeof Fanex.CustomerSetting.Core == 'undefined') {
     alert('Require Fanex.CustomerSetting.Core.js');
 };
 
 Fanex.CustomerSetting.Betting = {};
 
-Fanex.CustomerSetting.Betting.Casino = function ($scope, $http) {
+Fanex.CustomerSetting.Betting.Casino = function ($scope, $element) {
     $scope.model = model;
     $scope.customerModel = model != null ? model.customerModel : null;
     $scope.gameKinds = model != null ? $scope.model.settingModel.gameGroups : null;

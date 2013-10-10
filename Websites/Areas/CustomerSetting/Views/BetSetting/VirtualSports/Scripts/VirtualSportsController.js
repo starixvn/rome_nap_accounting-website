@@ -1,12 +1,10 @@
-﻿angular.module('virtualSportsApp', []);
-
-if (typeof Fanex == 'undefined' || typeof Fanex.CustomerSetting == 'undefined' || typeof Fanex.CustomerSetting.Core == 'undefined') {
+﻿if (typeof Fanex == 'undefined' || typeof Fanex.CustomerSetting == 'undefined' || typeof Fanex.CustomerSetting.Core == 'undefined') {
     alert('Require Fanex.CustomerSetting.Core.js');
 };
 
 Fanex.CustomerSetting.Betting = {};
 
-Fanex.CustomerSetting.Betting.VirtualSports = function ($scope, $http) {
+Fanex.CustomerSetting.Betting.VirtualSports = function ($scope, $element) {
     $scope.model = model;
 
     $scope.bettingLimits = $scope.model.bettingLimit.bettingLimitItems;

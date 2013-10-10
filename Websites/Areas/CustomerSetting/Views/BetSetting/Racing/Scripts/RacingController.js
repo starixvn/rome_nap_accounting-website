@@ -1,12 +1,10 @@
-﻿angular.module('racingApp', []);
-
-if (typeof Fanex == 'undefined' || typeof Fanex.CustomerSetting == 'undefined' || typeof Fanex.CustomerSetting.Core == 'undefined') {
+﻿if (typeof Fanex == 'undefined' || typeof Fanex.CustomerSetting == 'undefined' || typeof Fanex.CustomerSetting.Core == 'undefined') {
     alert('Require Fanex.CustomerSetting.Core.js');
 };
 
 Fanex.CustomerSetting.Betting = {};
 
-Fanex.CustomerSetting.Betting.Racing = function ($scope, $http) {
+Fanex.CustomerSetting.Betting.Racing = function ($scope, $element) {
     $scope.model = model;
 
     $scope.bettingLimits = $scope.model.settings.sportTypes;
@@ -264,7 +262,10 @@ Fanex.CustomerSetting.Betting.Racing.Update = function (ondone) {
         Fanex.CustomerSetting.Core.UnBlockUI();
 
         if (typeof ondone == 'function') {
-            ondone(data);
+            ondone({
+                errorCode: data.errorCode == "0" || data.errorCode == "" || success ? "0" : "1",
+                errorMessage: data.errorMessage
+            });
         }
     })
     .error(function (data) {
