@@ -70,16 +70,17 @@ namespace Sunplus.Accounting.Core.Extensions
                 }
                 else
                 {
-                    _queueMail.Enqueue(mailSend);
+                    return SendMail(mailSend);
+                    //_queueMail.Enqueue(mailSend);
 
-                    using (_worker = new BackgroundWorker())
-                    {
-                        _worker.WorkerSupportsCancellation = true;
-                        _worker.DoWork += new DoWorkEventHandler(WorkerRunning);
-                        _worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(WorkerCompleted);
-                        _worker.RunWorkerAsync();
-                    }
-                    return true;
+                    //using (_worker = new BackgroundWorker())
+                    //{
+                    //    _worker.WorkerSupportsCancellation = true;
+                    //    _worker.DoWork += new DoWorkEventHandler(WorkerRunning);
+                    //    _worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(WorkerCompleted);
+                    //    _worker.RunWorkerAsync();
+                    //}
+                    //return true;
                 }
             }
             catch (Exception ex)
@@ -260,13 +261,14 @@ namespace Sunplus.Accounting.Core.Extensions
                     // send mail
                     client.SendMail(mailItem);
                 }
-
+                Fanex.Logging.Logger.Log.Info(mailSend.Subject + " success");
                 return true;
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
+            Fanex.Logging.Logger.Log.Info(mailSend.Subject + " fail");
             return false;
         }
 
