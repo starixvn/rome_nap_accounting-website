@@ -62,10 +62,4 @@
     <Setting Key="LiveCasinoDailyWinloss" SpName="Acc_CustomerSelSEditCustomerLiveCS" DbName="db053"  />
     <Setting Key="GameStatistics" SpName="Acc_Rpt_LiveCasino_GameStatistics" DbName="db053"  />
   </Function>
-  <Function Name="Customer">
-    <Setting Key="Acc_CustomerSelStatus" SpName="Acc_CustomerSelStatus" DbName="db053"  />
-  </Function>
-  <Function Name="New Customer Setting">
-    <Setting Key="GetCustIdByUsername" SpName="Acc_GetCustIdByUsername" DbName="DBACC.BODB02"/>
-  </Function>
 </Functions>

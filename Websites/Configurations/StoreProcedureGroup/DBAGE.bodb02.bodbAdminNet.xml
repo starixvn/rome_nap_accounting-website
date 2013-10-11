@@ -3,8 +3,7 @@
 
   <Function Name="BetList">
     <Setting Key="BetListByDayAll" SpName="Acc_BetListByDayAll" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="ByTransID" SpName="Acc_BetsSelBetList_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet"  />
-  </Function>
+   </Function>
 
   <Function Name="Balance Up Day">
     <Setting Key="SelBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="DBAGE.bodb02.bodbAdminNet"  />
@@ -152,6 +151,9 @@
   </Function>
   <Function Name="Left Panel - Customer Info">
     <Setting Key="GetCommSuper" SpName="Acc_CustomerSelSuperLiveCS_Commission" DbName="DBAGE.bodb02.bodbAdminNet"/>
+  </Function>
+  <Function Name="Customer">
+    <Setting Key="CustomerSelStatus" SpName="Acc_CustomerSelStatus" DbName="DBAGE.bodb02.bodbAdminNet"  />
   </Function>
 </Functions>
 
