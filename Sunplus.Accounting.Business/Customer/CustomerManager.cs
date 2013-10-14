@@ -1185,7 +1185,7 @@ namespace Sunplus.Accounting.Business.Customer
 
             #endregion DoubleComm
 
-            #region DoubleComm
+            #region HRFixedOdds
 
             if (WebSettings.OfferHorseRacingFixedOdds)
             {
@@ -1201,9 +1201,10 @@ namespace Sunplus.Accounting.Business.Customer
                     isEnableHorseRacingFixedOdds,
                     (roleId > 1),
                     CastAide.AsBoolean(row1["Enabled"])));
+                TemplateHandler.Assign(ref htmlcontent, "{chkEnableHorseRacingFixedOdds}", isEnableHorseRacingFixedOdds ? 1 : 0);
             }
 
-            #endregion DoubleComm
+            #endregion HRFixedOdds
 
             TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
         }
