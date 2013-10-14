@@ -2419,4 +2419,10 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="Unchanged" xml:space="preserve">
     <value>There is no change to update.</value>
   </data>
+  <data name="lblDisabledHorseRacingFixedOddsUpline" xml:space="preserve">
+    <value>Horse Racing Fixed Odds has been disallowed at upline</value>
+  </data>
+  <data name="lblEnableHorseRacingFixedOdds" xml:space="preserve">
+    <value>HR Fixed Odds</value>
+  </data>
 </root>

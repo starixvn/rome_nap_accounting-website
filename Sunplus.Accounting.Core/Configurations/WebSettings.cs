@@ -480,5 +480,13 @@ namespace Sunplus.Accounting.Core.Configurations
                 return ConfigurationManager.AppSettings["AdminUsersEditSuperStatus"].Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
             }
         }
+
+        public static bool OfferHorseRacingFixedOdds
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["OfferHorseRacingFixedOdds"] == "1");
+            }
+        }
     }
 }

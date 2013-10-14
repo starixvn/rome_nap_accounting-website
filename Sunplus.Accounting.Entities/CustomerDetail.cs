@@ -38,6 +38,8 @@ namespace Sunplus.Accounting.Entities
         private bool _IsAllowMasterAutoPT = false;
         private bool _IsDisableOutright = false;
         private bool _IsEnableDoubleCommLosing = false;
+
+        private bool _isEnableHorseRacingFixedOdds = false;
         private bool _SelectedBetting;
         //end
 
@@ -589,6 +591,20 @@ namespace Sunplus.Accounting.Entities
             set
             {
                 _LimitPerIP = value;
+            }
+        }
+
+
+        public bool IsEnableHorseRacingFixedOdds
+        {
+            get
+            {
+                return _isEnableHorseRacingFixedOdds;
+            }
+
+            set
+            {
+                _isEnableHorseRacingFixedOdds = value;
             }
         }
 
