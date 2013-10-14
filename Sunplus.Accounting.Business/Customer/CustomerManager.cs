@@ -1189,9 +1189,9 @@ namespace Sunplus.Accounting.Business.Customer
 
             if (WebSettings.OfferHorseRacingFixedOdds)
             {
-                bool isEnableHorseRacingFixedOdds = Convert.IsDBNull(row1["DoubleCommLosing"]) ?
+                bool isEnableHorseRacingFixedOdds = Convert.IsDBNull(row1["DisableDownlinesHRFixedOdds"]) ?
                     false :
-                    Convert.ToBoolean(row1["DoubleCommLosing"]);
+                    !Convert.ToBoolean(row1["DisableDownlinesHRFixedOdds"]);
 
                 sg.Add(GetSettingControlEnableHorseRacingFixedOdds(
                     roleId,

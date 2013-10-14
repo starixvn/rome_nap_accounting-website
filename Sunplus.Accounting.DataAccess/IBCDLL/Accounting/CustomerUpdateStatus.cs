@@ -713,7 +713,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 Hashtable param = new Hashtable();
                 param.Add("userid", userId);
                 param.Add("custid", custId);
-                param.Add("disable", isDisable);
+                param.Add("disablehrfixedodds", isDisable);
+                param.Add("enabledownlineshrfixedodds", !isDisable);
                 param.Add("language", "E");
                 param.Add("ip", ip);
                 param.Add("disabledownlines", isDisableDownlines);
