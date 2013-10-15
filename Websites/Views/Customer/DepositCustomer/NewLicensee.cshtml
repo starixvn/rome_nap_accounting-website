@@ -1,5 +1,6 @@
 ﻿@using Sunplus.Accounting.Business.BetAggregator
 @using Sunplus.Accounting.Business.BootStrappers
+@using Fanex.Tarus.Customer.Controller.NewLicensee;
 <link href="~/App_Themes/Public/table.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="~/Views/Customer/DepositCustomer/Styles/NewLicensee.css" />
 <script src="~/js/common.js" type="text/javascript"></script>
@@ -33,10 +34,11 @@
 }
 @helper GetCurrency()
     {
-        var result = CommonBootStrapper.Locator.GetInstance<IServiceDownLineBalance>();
-        var listEntity = result.GetCurrenciesBySystem();
+        //var result = CommonBootStrapper.Locator.GetInstance<IServiceDownLineBalance>();
+        var newLicenseeController = new NewLicenseeController();
+        var currencyList = newLicenseeController.GetCurrenciesBySystem();
         var isFirst = true;
-        foreach (var currency in listEntity.Currencies)
+        foreach (var currency in currencyList)
         {
             var currencyOptionText = currency.Code;
             if (!string.IsNullOrEmpty(currency.Value))

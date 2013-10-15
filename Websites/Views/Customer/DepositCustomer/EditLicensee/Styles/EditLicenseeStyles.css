@@ -1,0 +1,207 @@
+﻿.display-none
+{
+    display: none;
+}
+
+.table-username
+{
+    margin-left: 10px;
+}
+
+.textbox-username
+{
+    font-family: Tahoma,Arial,helvetica,sans-serif;
+    font-size: 12px;
+    height: 20px;
+    width: 280px;
+}
+
+.table-site-info .info-padding
+{
+    padding-left: 20px;
+}
+
+.bold
+{
+    font-weight: bold;
+}
+
+.div-licensee-info
+{
+    margin-left: 10px;
+}
+
+.label-for-checkbox
+{
+    cursor: pointer;
+}
+
+.table-positiontaking-header
+{
+    margin-top: 15px;
+}
+
+#tabheader-sportsbook-numbergame .btnmiddle
+{
+    width: 170px;
+    text-align: left;
+}
+
+#tabheader-sportsbook-numbergame .btnright, #table-racing-settings .btnright, #tab-virtualsports-settings .btnright
+{
+    width: 20px;
+}
+
+.align-center
+{
+    text-align: center;
+}
+
+.align-right
+{
+    text-align: right;
+}
+
+.align-left
+{
+    text-align: left;
+}
+
+#div-sportsbook-numbergame-container .table-betsettings
+{
+    width: 520px !important;
+    margin-left: 7px;
+}
+
+#div-sportsbook-numbergame-container .table-betsettings .header-title
+{
+    width: 130px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#div-sportsbook-numbergame-container .table-betsettings .setting-input, #div-virtualsports-container .table-betsettings .setting-input
+{
+    width: 128px;
+    text-align: right;
+}
+
+#div-sportsbook-numbergame-container .table-betsettings .column-sportname
+{
+    text-align: left;
+    padding-left: 4px;
+}
+
+#div-sportsbook-numbergame-container .table-betsettings .table-numbergame-settings
+{
+    width: 400px;
+}
+
+#div-sportsbook-numbergame-container .table-betsettings .table-numbergame-settings .header-title
+{
+    width: 97px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#div-sportsbook-numbergame-container .table-betsettings .table-numbergame-settings .numbergame-setting-input
+{
+    width: 96px;
+    text-align: right;
+}
+
+#div-sportsbook-numbergame-container .table-positiontaking
+{
+    width: 520px !important;
+    margin-left: 7px;
+    margin-top: 15px;
+}
+
+#div-sportsbook-numbergame-container #dropdown-sportsbook-positiontaking
+{
+    width: 60px;
+    text-align: left;
+}
+
+#div-sportsbook-numbergame-container #dropdown-numbergame-positiontaking
+{
+    width: 60px;
+    text-align: left;
+}
+
+#tabheader-sportsbook-numbergame #btntop
+{
+    cursor: pointer;
+}
+
+#div-racing-container .table-settings
+{
+    width: 880px !important;
+    margin-left: 7px;
+}
+
+#div-racing-container .table-settings .header-title
+{
+    font-weight: bold;
+    text-align: center;
+}
+
+#div-racing-container .table-settings .bettypename
+{
+    padding-left: 4px;
+    text-align: left;
+}
+
+#div-racing-container .table-settings .totename
+{
+    padding-left: 4px;
+    text-align: left;
+}
+
+#div-racing-container .table-settings .dropdown-commission, #div-racing-container .table-settings .dropdown-position
+{
+    width: 60px;
+    text-align: left;
+}
+
+#div-racing-container .table-settings .betsetting
+{
+    width: 100%;
+    text-align: right;
+}
+
+#div-virtualsports-container .table-betsettings
+{
+    width: 520px !important;
+    margin-left: 7px;
+}
+
+#div-virtualsports-container .table-betsettings .header-title
+{
+    width: 130px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#div-virtualsports-container .table-positiontaking
+{
+    width: 520px !important;
+    margin-left: 7px;
+    margin-top: 15px;
+}
+
+#div-virtualsports-container #dropwdown-virtualsports-positiontaking
+{
+    width: 60px;
+    text-align: left;
+}
+
+#div-sportsbook-numbergame-container .table-positiontaking .column-sportgroup, #div-virtualsports-container .table-positiontaking .column-sportgroup
+{
+    padding-left: 4px;
+}
+
+.table-buttongroup
+{
+    padding: 15px 0 15px 7px;
+}

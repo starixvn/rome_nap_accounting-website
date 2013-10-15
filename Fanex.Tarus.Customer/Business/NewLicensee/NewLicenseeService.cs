@@ -1,0 +1,51 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="NewLicenseeService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Bao" date="2012.11.26">Created</change>
+// </history>
+
+namespace Fanex.Tarus.Customer.Business.NewLicensee
+{
+    using System;
+    using System.Collections.Generic;
+    using Fanex.Tarus.Customer.Criteria.NewLicensee;
+    using Fanex.Tarus.Customer.DataAccess.NewLicensee;
+    using Fanex.Tarus.Customer.Entities.NewLicensee;
+    using Fanex.Tarus.Infrastructure.Extensions;
+
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class NewLicenseeService : INewLicenseeService
+    {
+        private readonly INewLicenseeRepository _newLicenseeRepository;
+
+        public NewLicenseeService()
+            : this(null)
+        {
+        }
+
+        public NewLicenseeService(INewLicenseeRepository newLicenseeRepository)
+        {
+            _newLicenseeRepository = newLicenseeRepository ?? new NewLicenseeRepository();
+        }
+
+        public List<Currency> GetCurrenciesBySystem(GetCurrenciesBySystemCriteria criteria)
+        {
+            try
+            {
+                var rawData = _newLicenseeRepository.GetCurrenciesBySystem(criteria);
+                return rawData;
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return null;
+        }
+    }
+}
