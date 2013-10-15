@@ -272,6 +272,12 @@ function ShowDisablePop(obj) {
 
     curleft = 73;
     curtop = curtop + _obj.offsetHeight + 6; // - top.leftPanel.document.documentElement.scrollTop;
+
+    var popupElement = $("#" + _obj.id + 'Pop');
+    if (curtop + popupElement.height() >= $(window).height()) {
+        curtop -= popupElement.height();
+    }
+
     $("#" + _obj.id + 'Pop').css("top", curtop + "px");
     $("#" + _obj.id + 'Pop').css("left", curleft + "px");
     $("#" + _obj.id + 'Pop').css("display", ($("#" + _obj.id + 'Pop').css("display") == 'inline') ? 'none' : 'inline');
