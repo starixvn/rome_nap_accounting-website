@@ -246,7 +246,6 @@
   <Function Name="Betlist">
     <add alias="BABetlist" name="Acc_BA_BetList" db="DBACC.bodb02.bodbAdminNet"></add>
     <add alias="ByIPOtherSports" name="Acc_BetListByIP_OtherSports" db="DBACC.bodb02.bodbAdminNet"></add>
-    <add alias="BetsSelBetList_Old" name="Acc_BetsSelBetList_Old" db="DBACC.bodb02.bodbAdminNet"></add>
     <add alias="BetListByIP_Soccer" name="Acc_BetListByIP_Soccer" db="DBACC.bodb02.bodbAdminNet"></add>
     <add alias="BetlistByIp_Username" name="Acc_BetListbyIP_Username" db="DBACC.bodb02.bodbAdminNet" function=""></add>
   </Function>
@@ -268,5 +267,8 @@
   </Function>
   <Function Name="Admin - SMA Management">
     <Setting Key="Acc_CustomerSelByGroupHeadline" SpName="Acc_CustomerSelByGroupHeadline" DbName="DBACC.bodb02.bodbAdminNet" />
+  </Function>
+  <Function Name="Customer - Update Live Casino Comm">
+    <Setting Key="GetCustIdByUsername" SpName="Acc_GetCustIdByUsername" DbName="DBACC.bodb02.bodbAdminNet"/>
   </Function>
 </Functions>

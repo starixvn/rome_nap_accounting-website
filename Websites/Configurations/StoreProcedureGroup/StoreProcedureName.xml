@@ -12,15 +12,13 @@
   <Function Name="Report - ParlayWon">
     <Setting Key="Acc_Rpt_ParlayWon" SpName="Acc_Rpt_ParlayWon" DbName="db053"  />
   </Function>
-
   <Function Name="ResetWinning">
     <Setting Key="ResetWinningMain" SpName="Acc_ResetWinning_SelByDate" DbName="db054"  />
     <Setting Key="ResetWinningMain14" SpName="Acc_ResetWinning_SelByDate14" DbName="db054"  />
     <Setting Key="ResetWinningRep" SpName="Acc_ResetWinning_SelByDate" DbName="db054"  />
     <Setting Key="ResetWinningRep14" SpName="Acc_ResetWinning_SelByDate14" DbName="db054"  />
   </Function>
-
-
+  
   <Function Name="Live Casino - GET PT Setting">
     <Setting Key="Acc_CustomerSelInfoLiveCS" SpName="Acc_CustomerSelInfoLiveCS" DbName="db053"/>
     <Setting Key="Acc_CustomerSelEditSuperLiveCS" SpName="Acc_CustomerSelEditSuperLiveCS" DbName="db053"  />
@@ -63,19 +61,5 @@
   <Function Name="Live Casino - Report">
     <Setting Key="LiveCasinoDailyWinloss" SpName="Acc_CustomerSelSEditCustomerLiveCS" DbName="db053"  />
     <Setting Key="GameStatistics" SpName="Acc_Rpt_LiveCasino_GameStatistics" DbName="db053"  />
-  </Function>
-  <Function Name="Customer">
-    <Setting Key="Acc_CustomerSelStatus" SpName="Acc_CustomerSelStatus" DbName="db053"  />
-  </Function>
-  <Function Name="New Customer Setting">
-    <Setting Key="CustomerSetting_SiteSel" SpName="Acc_SiteSel" DbName="db053" />
-    <Setting Key="CustomerSetting_CustomerSelCustomerInfo" SpName="Acc_CustomerSelCustomerInfo" DbName="db053" />
-    <Setting Key="Acc_CustomerSelMEditCustomer" SpName="Acc_CustomerSelMEditCustomer" DbName="db053" />
-    <Setting Key="Acc_CustomerSelSEditCustomer" SpName="Acc_CustomerSelSEditCustomer" DbName="db053"/>
-    <Setting Key="Acc_CustomerSelCEditCustomer" SpName="Acc_CustomerSelCEditCustomer" DbName="db053"/>
-    <Setting Key="Acc_CustomerSelEditCustomer" SpName="Acc_CustomerSelEditCustomer" DbName="db053"/>
-    <Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="db053"/>
-    <Setting Key="GetCustIdByUsername" SpName="Acc_GetCustIdByUsername" DbName="DBACC.BODB02"/>
-    <Setting Key="GetCommSuper" SpName="Acc_CustomerSelSuperLiveCS_Commission" DbName="db053"/>
   </Function>
 </Functions>
