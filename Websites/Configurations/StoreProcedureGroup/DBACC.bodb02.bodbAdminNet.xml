@@ -215,11 +215,6 @@
   </Function>
 
   <Function Name="Others">
-
-
-    <add alias="TreeWinLoss" name="Acc_Rpt_TreeWinlost" db="DBACC.bodb02.bodbAdminNet"></add>
-
-
     <Setting Key="Acc_DailyCreatedCustomer" SpName="Acc_DailyCreatedCustomer" DbName="DBACC.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_DailyCreatedCustomer_Details" SpName="Acc_DailyCreatedCustomer_Details" DbName="DBACC.bodb02.bodbAdminNet"  />
     <Setting Key="SelDuplicateTickets" SpName="Acc_CheckDuplicateTickets" DbName="DBACC.bodb02.bodbAdminNet"  />

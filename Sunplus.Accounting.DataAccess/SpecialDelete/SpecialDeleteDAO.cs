@@ -334,14 +334,29 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
         /// <returns></returns>
         public DbResult SelectEarlyKOMixparlay_Notuse(string refno, string transid, int curency)
         {
-            Hashtable param = new Hashtable();
-            param.Add("refno", refno);
-            param.Add("transid", transid);
-            param.Add("currencyid", curency);
+            DbResult result = null;
+            try
+            {
+                Hashtable param = new Hashtable();
+                param.Add("refno", refno);
+                param.Add("transid", transid);
+                param.Add("currencyid", curency);
 
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SpecialDeleteGroupSection.StoreCollection.EarlyKO, "GetEarlyKOBet_MixParlay");
+                using (ObjectDb db = new ObjectDb("Acc_BettransSelSpecialDel_MixParlay", 600))
+                {
+                    db.AssignParamValues(param);
 
-            return DbHelper.Execute(spElement.Name, param, spElement.DbName, 600);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
         public DeleteResult DeleteSpecialEarlyKO(string matchId, string bettype,
                                                        string betteam1378, string betteam515, string hdp, string uname,
@@ -411,50 +426,84 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
         /// <returns></returns>
         public DbResult GetMPList(SpecialDeleteParam deleteParam)
         {
-            Hashtable param = new Hashtable();
-            param.Add("matchid", deleteParam.MatchId);
-            param.Add("hdp", deleteParam.Hdp);
-            param.Add("bettypes", deleteParam.Bettypes);
-            param.Add("betteam1378", deleteParam.Betteam1378);
-            param.Add("betteam515", deleteParam.Betteam515);
-            param.Add("betteam430", deleteParam.Betteam430);
-            param.Add("betteam6", deleteParam.Betteam6);
-            param.Add("betteam14", deleteParam.Betteam14);
-            param.Add("betteam16", deleteParam.Betteam16);
-            param.Add("type", deleteParam.Type);
-            param.Add("bettype", deleteParam.SelectBettype);
+            DbResult result = null;
+            try
+            {
+                Hashtable param = new Hashtable();
+                param.Add("matchid", deleteParam.MatchId);
+                param.Add("hdp", deleteParam.Hdp);
+                param.Add("bettypes", deleteParam.Bettypes);
+                param.Add("betteam1378", deleteParam.Betteam1378);
+                param.Add("betteam515", deleteParam.Betteam515);
+                param.Add("betteam430", deleteParam.Betteam430);
+                param.Add("betteam6", deleteParam.Betteam6);
+                param.Add("betteam14", deleteParam.Betteam14);
+                param.Add("betteam16", deleteParam.Betteam16);
+                param.Add("type", deleteParam.Type);
+                param.Add("bettype", deleteParam.SelectBettype);
 
-            if (deleteParam.HomeScore.Length > 0 && deleteParam.AwayScore.Length > 0 && deleteParam.FromTransdate.Length == 0 && deleteParam.ToTransdate.Length == 0)
-            {
-                param.Add("livehomescore", deleteParam.HomeScore);
-                param.Add("liveawayscore", deleteParam.AwayScore);
+                if (deleteParam.HomeScore.Length > 0 && deleteParam.AwayScore.Length > 0 && deleteParam.FromTransdate.Length == 0 && deleteParam.ToTransdate.Length == 0)
+                {
+                    param.Add("livehomescore", deleteParam.HomeScore);
+                    param.Add("liveawayscore", deleteParam.AwayScore);
+                }
+                else if (deleteParam.FromTransdate.Length > 0 && deleteParam.ToTransdate.Length > 0 && deleteParam.HomeScore.Length == 0 && deleteParam.AwayScore.Length == 0)
+                {
+                    param.Add("fromtransdate", CastAide.AsDateTime(deleteParam.FromTransdate).AddHours(-12));
+                    param.Add("totransdate", CastAide.AsDateTime(deleteParam.ToTransdate).AddHours(-12));
+                }
+                else if (deleteParam.HomeScore.Length > 0 && deleteParam.AwayScore.Length > 0 && deleteParam.FromTransdate.Length > 0 && deleteParam.ToTransdate.Length > 0)
+                {
+                    param.Add("livehomescore", deleteParam.HomeScore);
+                    param.Add("liveawayscore", deleteParam.AwayScore);
+                    param.Add("fromtransdate", CastAide.AsDateTime(deleteParam.FromTransdate).AddHours(-12));
+                    param.Add("totransdate", CastAide.AsDateTime(deleteParam.ToTransdate).AddHours(-12));
+                }
+
+                using (ObjectDb db = new ObjectDb("Acc_BettransSelDelSpecial_MixParlay", 600))
+                {
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
-            else if (deleteParam.FromTransdate.Length > 0 && deleteParam.ToTransdate.Length > 0 && deleteParam.HomeScore.Length == 0 && deleteParam.AwayScore.Length == 0)
+            catch (Exception ex)
             {
-                param.Add("fromtransdate", CastAide.AsDateTime(deleteParam.FromTransdate).AddHours(-12));
-                param.Add("totransdate", CastAide.AsDateTime(deleteParam.ToTransdate).AddHours(-12));
-            }
-            else if (deleteParam.HomeScore.Length > 0 && deleteParam.AwayScore.Length > 0 && deleteParam.FromTransdate.Length > 0 && deleteParam.ToTransdate.Length > 0)
-            {
-                param.Add("livehomescore", deleteParam.HomeScore);
-                param.Add("liveawayscore", deleteParam.AwayScore);
-                param.Add("fromtransdate", CastAide.AsDateTime(deleteParam.FromTransdate).AddHours(-12));
-                param.Add("totransdate", CastAide.AsDateTime(deleteParam.ToTransdate).AddHours(-12));
+                LogExtensions.ExceptionHandler(ex);
             }
 
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SpecialDeleteGroupSection.StoreCollection.Mixparlay, "GetMPList");
-            return DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
+            return result;
         }
         public DbResult GetMPTicket(string refno)
         {
-            Hashtable param = new Hashtable();
-            param.Add("refno", refno);
-            param.Add("transid", 0);
-            param.Add("currencyid", 0);
-            param.Add("language", "E");
+            DbResult result = null;
+            try
+            {
+                Hashtable param = new Hashtable();
+                param.Add("refno", refno);
+                param.Add("transid", 0);
+                param.Add("currencyid", 0);
+                param.Add("language", "E");
+                
+                using (ObjectDb db = new ObjectDb("Acc_BettransSelSpecialDel_MixParlay", 1000))
+                {
+                    db.AssignParamValues(param);
 
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SpecialDeleteGroupSection.StoreCollection.Mixparlay, "GetMPTicket");
-            return DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return result;
         }
 
         public DbResult CheckRefno(string matchid, string fromRefno, string toRefno, string type)

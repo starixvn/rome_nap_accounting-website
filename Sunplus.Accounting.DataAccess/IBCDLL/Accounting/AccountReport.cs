@@ -44,10 +44,14 @@
                 var p = new Hashtable();
                 p.Add("refno", refno);
 
+                using (ObjectDb db = new ObjectDb("Acc_BetsSelBetCheckM", 180))
+                {
+                    db.AssignParamValues(p);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
 
-                StoreProcedureElement spElement = GetReportStoreProcedure(
-                    ReportSession.StoreCollection.Main, "BetsSelBetCheckM");
-                rs = DbHelper.Execute(spElement.Name, p, spElement.DbName, 180);
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -69,9 +73,15 @@
             DbResult rs = null;
             try
             {
-                StoreProcedureElement spElement = GetReportStoreProcedure(
-                    ReportSession.StoreCollection.Main, "BettransSelDelSpecial_MixParlay");
-                rs = DbHelper.Execute(spElement.Name, param, spElement.DbName, 300);
+                using (ObjectDb db = new ObjectDb("Acc_BettransSelDelSpecial_MixParlay"))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
