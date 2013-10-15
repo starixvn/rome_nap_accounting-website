@@ -714,10 +714,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 param.Add("userid", userId);
                 param.Add("custid", custId);
                 param.Add("disablehrfixedodds", isDisable);
-                param.Add("enabledownlineshrfixedodds", !isDisable);
+                param.Add("enabledownlineshrfixedodds", isDisableDownlines);
                 param.Add("language", "E");
                 param.Add("ip", ip);
-                param.Add("disabledownlines", isDisableDownlines);
                 param.Add("errcode", 0);
                 param.Add("errmsg", string.Empty);
 
