@@ -30,10 +30,10 @@ namespace Fanex.Tarus.Customer.DataAccess.NewLicensee
             using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 objDb.AssignParamValues(param);
-                var ds = objDb.ExecuteDataSet();
-                if (ds != null && ds.Tables.Count > 0)
+                var dataset = objDb.ExecuteDataSet();
+                if (dataset != null && dataset.Tables.Count > 0)
                 {
-                    dataTable = ds.Tables[0];
+                    dataTable = dataset.Tables[0];
                 }
             }
 

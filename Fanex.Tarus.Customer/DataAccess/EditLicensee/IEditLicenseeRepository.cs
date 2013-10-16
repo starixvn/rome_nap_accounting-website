@@ -9,7 +9,11 @@
 
 namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
 {
+    using Fanex.Tarus.Customer.Criteria.EditLicensee;
+    using Fanex.Tarus.Customer.Entities.EditLicensee;
+
     public interface IEditLicenseeRepository
     {
+        LicenseeInfo GetLicenseeInfo(GetLicenseeInfoCriteria criteria);
     }
 }

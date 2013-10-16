@@ -160,6 +160,7 @@
     <Compile Include="Controller\EditLicensee\EditLicenseeController.cs" />
     <Compile Include="Controller\NewLicensee\NewLicenseeController.cs" />
     <Compile Include="Controller\ViewPTController.cs" />
+    <Compile Include="Criteria\EditLicensee\GetLicenseeInfoCriteria.cs" />
     <Compile Include="Criteria\NewLicensee\GetCurrenciesBySystemCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\AddSMAListCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\UploadSMAListCriteria.cs" />
@@ -219,6 +220,7 @@
     <Compile Include="Entities\CreditCustomer\MemberGroup.cs" />
     <Compile Include="Entities\CreditCustomer\Site.cs" />
     <Compile Include="Entities\CreditCustomer\Sites.cs" />
+    <Compile Include="Entities\EditLicensee\LicenseeInfo.cs" />
     <Compile Include="Entities\NewLicensee\Currency.cs" />
     <Compile Include="Entities\CustomerInfo.cs" />
     <Compile Include="Entities\CustomerList\CustomerList.cs" />

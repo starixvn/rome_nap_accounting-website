@@ -129,7 +129,9 @@
     text-align: left;
 }
 
-#tabheader-sportsbook-numbergame #btntop
+#tabheader-sportsbook-numbergame #btntop,
+#table-racing-settings #btntop,
+#tab-virtualsports-settings #btntop
 {
     cursor: pointer;
 }
@@ -201,7 +203,8 @@
     padding-left: 4px;
 }
 
-.table-buttongroup
+#button-update
 {
     padding: 15px 0 15px 7px;
 }
+

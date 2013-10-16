@@ -37,8 +37,7 @@ common.init = function () {
     this.arrSelectCopyToWinplacept_Racing = $("#divRacingContainer").find("select[copyto][winplacept]");
     this.arrSelectCopyToHouseautopt_Racing = $("#divRacingContainer").find("select[copyto][houseautopt]");
     this.arrCheckBoxEnable_Racing = $("#divRacingContainer").find("input[type='checkbox'][copyto]");
-
-
+    
     $("#divSBNGContainer").find("input[type='text']").ForceDecimalOnly().ForceCurrencyOnly();
     $("#divSBNGContainer").find("input[type='text'][soccer][minbet]").keyup(function () {
         if ($("#cbxCopyAllSportsBook").is(":checked")) {

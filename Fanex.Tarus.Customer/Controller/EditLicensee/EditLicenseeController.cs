@@ -13,6 +13,7 @@ namespace Fanex.Tarus.Customer.Controller.EditLicensee
     using Fanex.Tarus.Customer.Business.EditLicensee;
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
+    using Fanex.Tarus.Customer.Criteria.EditLicensee;
 
     /// <summary>
     /// TODO: Update summary.
@@ -36,6 +37,15 @@ namespace Fanex.Tarus.Customer.Controller.EditLicensee
         public ActionResult Index()
         {
             return View("~/Views/Customer/DepositCustomer/EditLicensee/Index.cshtml");
+        }
+
+        [HttpPost]
+        public JsonResult GetLicenseeInfo(GetLicenseeInfoCriteria criteria)
+        {
+            var result = _editLicenseeService.GetLicenseeInfo(criteria);
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
         }
     }
 }

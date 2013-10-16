@@ -37,6 +37,11 @@
         //var result = CommonBootStrapper.Locator.GetInstance<IServiceDownLineBalance>();
         var newLicenseeController = new NewLicenseeController();
         var currencyList = newLicenseeController.GetCurrenciesBySystem();
+        if (currencyList == null)
+        {
+            return;
+        }
+
         var isFirst = true;
         foreach (var currency in currencyList)
         {

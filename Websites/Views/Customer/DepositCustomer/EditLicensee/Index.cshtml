@@ -9,7 +9,8 @@
 <script type="text/javascript" src="~/js/json2.js"></script>
 <script type="text/javascript" src="~/js/jQuery/Number/jquery.formattyping.js"></script>
 <script type="text/javascript" src="~/js/jQuery/Number/jquery.setcaretposition.js"></script>
-<script type="text/javascript" src="~/Views/Customer/DepositCustomer/EditLicensee/Scripts/EditLicenseeManager.js?version=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+<script type="text/javascript" src="~/Views/Customer/DepositCustomer/EditLicensee/Scripts/PositionTakingRenderManager.js?version=@WebSettings.Version"></script>
+<script type="text/javascript" src="~/Views/Customer/DepositCustomer/EditLicensee/Scripts/EditLicenseeManager.js"></script>
 <script type="text/javascript">
 </script>
 @helper GenerateSportsbook_NumberGameSettings()
@@ -25,8 +26,8 @@
 
             var attributeIsSoccer = "";
             attributeIsSoccer = string.Equals(sport.Id, Sports.Soccer.ToString()) ?
-                "data-soccer=\"true\"" :
-                "data-remainsport=\"true\"";
+                "soccer='true'" :
+                "remainsport='true'";
 
             var minBetv = "minbetv" + @sport.Id.ToLower();
             var maxBetv = "maxbetv" + @sport.Id.ToLower();
@@ -37,13 +38,13 @@
             <span>@sport.Name</span>
         </td>
         <td>
-            <input id="@minBetv" type="text" @attributeIsSoccer class="setting-input" value="@sport.Minbet" />
+            <input id="@minBetv" minbet="true" type="text" @attributeIsSoccer class="setting-input" value="@sport.Minbet" />
         </td>
         <td>
-            <input id="@maxBetv" type="text" @attributeIsSoccer class="setting-input" value="@sport.Maxbet" />
+            <input id="@maxBetv" maxbet="true" type="text" @attributeIsSoccer class="setting-input" value="@sport.Maxbet" />
         </td>
         <td>
-            <input id="@maxPerMatchv" type="text" @attributeIsSoccer class="setting-input" value="@sport.Maxpermatch" />
+            <input id="@maxPerMatchv" maxpermatch="true" type="text" @attributeIsSoccer class="setting-input" value="@sport.Maxpermatch" />
         </td>
     </tr>
         }
@@ -72,7 +73,7 @@
             {
                 var flat = "";
                 if (string.Equals(racing.Id, Sports.HorseRacing.ToString()) &&
-                    string.Equals(tote.Id, BetType.WinUKTote))
+                    string.Equals(tote.Id, BetType.WinUKTote.ToString()))
                 {
                     flat = "copyfrom";
                 }
@@ -112,19 +113,19 @@
         <td>
             <input id="@maxpermatchId" @flat type="text" maxpermatch="true" class="betsetting" value="@tote.Maxpermatch" />
         </td>
-        <td align="center">
+        <td class="align-center">
             <select id="@commId" @flat comm="true"  class="dropdown-commission">
             </select>
         </td>
-        <td align="center">
+        <td class="align-center">
             <select id="@winplaceId" @flat winplacept="true" class="dropdown-position">
             </select>
         </td>
-        <td align="center">
+        <td class="align-center">
             <select id="@horseAutoId" @flat houseautopt="true" class="dropdown-position">
             </select>
         </td>
-        <td align="center">
+        <td class="align-center">
             <input id="@disableId" @flat type="checkbox" />
             <label class="label-for-checkbox" for="@disableId">
                 Enable</label>
@@ -148,9 +149,9 @@
                 </tr>
             </tbody>
         </table>
-        <div id="errorMessage" class="display-none">
-        </div>
         <div class="bg_table">
+            <div id="result-message" class="display-none">
+            </div>
             <table border="0" class="table-username">
                 <tbody>
                     <tr>
@@ -158,16 +159,16 @@
                             <span class="bold">Username</span>
                         </td>
                         <td class="column-textbox-username">
-                            <input id="tbxUserName" type="text" class="textbox-username" maxlength="30" />
+                            <input id="textbox-username" type="text" class="textbox-username" maxlength="30" />
                         </td>
                         <td>
-                            <input id="btnSearch" class="btn" type="button" value="Search">
+                            <input id="button-search" class="btn" type="button" value="Search">
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div class="div-licensee-info">
+        <div class="div-licensee-info display-none">
             <table border="0" class="table-site-info">
                 <tbody>
                     <tr>
@@ -175,13 +176,13 @@
                             <span class="bold">Site:</span>
                         </td>
                         <td>
-                            <span class="label-licensee-site">12bet</span>
+                            <span class="label-licensee-site"></span>
                         </td>
                         <td>
                             <span class="bold info-padding">Currency:</span>
                         </td>
                         <td>
-                            <span>UUS</span>
+                            <span class="label-licensee-currency"></span>
                         </td>
                         <td class="info-padding">
                             <input id="checkbox-enable-numbergame" type="checkbox" />
@@ -386,7 +387,7 @@
                 @Html.Partial("~/Views/Customer/DepositCustomer/EditLicensee/VirtualSportsSettings.cshtml")
             }
             <!--/Virtual Sports-->
-            <table cellspacing="0" cellpadding="0" border="0" class="table-buttongroup">
+            <table cellspacing="0" cellpadding="0" border="0" id="button-update">
                 <tbody>
                     <tr>
                         <td class="custBtn1">

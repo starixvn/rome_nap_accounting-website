@@ -15,7 +15,7 @@ namespace Fanex.Tarus.Customer.Criteria.NewLicensee
 
         public string GetSettingKey()
         {
-            return "ExchangeSel";
+            return "Customer_NewLicensee_GetCurrencies";
         }
 
         public bool IsValid()
