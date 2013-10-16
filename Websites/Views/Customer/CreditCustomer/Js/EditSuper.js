@@ -114,7 +114,7 @@ eds.checkValidInput = function () {
     commissionSetting.discount1x2 = $('#listGroup1x2').val();
     commissionSetting.discountCS = $('#listOther').val();
     commissionSetting.discountNumber = $('#listGameComm').val();
-    commissionSetting.discountNumber = $('#listHRFixOddsComm').val();
+    commissionSetting.discountHRFixedOdds = $('#listHRFixOddsComm').val();
     //get pt setting
     customer.ptSetting = ptGrid.Save();
 

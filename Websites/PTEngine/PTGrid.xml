@@ -231,7 +231,7 @@
         </BetTypeGroupSet>
       </BetTypeGroupSets>
     </SportType>
-    
+
     <SportType id="161" name="Number Game">
       <BetTypeGroupSets>
         <BetTypeGroupSet isLive="false" showGroupSetLabel="true">
