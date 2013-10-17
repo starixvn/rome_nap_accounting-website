@@ -159,8 +159,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
             {
                 var param = new Hashtable();
                 param.Add("custid", custId);
-                var spElement = GetCustomerStoreProcedure("CustomerSelDownLineList");
-                rs = DbHelper.Execute(spElement.Name, param, spElement.DbName);
+                
+                using (ObjectDb db = new ObjectDb("CustomerSelDownLineList", 180))
+                {
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -372,8 +379,17 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
         {
             var param = new Hashtable();
             param.Add("inputuser", id);
-            var spElement = GetCustomerStoreProcedure("DBA_GetAgent");
-            DbResult ds = DbHelper.Execute(spElement.Name, param, spElement.DbName);
+            
+            DbResult ds = null;
+            using (ObjectDb db = new ObjectDb("DBA_GetAgent"))
+            {
+                db.AssignParamValues(param);
+                var dataset = db.ExecuteDataSet();
+                var output = db.GetOuputParams();
+
+                ds = new DbResult(output, dataset);
+            }
+
             if (ds.ResultSet.Tables[0].Rows.Count > 0)
             {
                 if (!Convert.IsDBNull(ds.ResultSet.Tables[0].Rows[0]["membername"]))

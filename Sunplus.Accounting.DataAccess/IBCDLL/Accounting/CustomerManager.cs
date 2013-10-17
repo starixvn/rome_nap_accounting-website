@@ -46,11 +46,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 var param = new Hashtable();
                 param.Add("custid", custId);
 
-                var sps = HelperSession.Instance[Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.HelperSession.StoreCollection.HelperControl];
-                var spElement = sps != null ? sps["CheckAllowedShow"] : null;
-                
+                using (ObjectDb db = new ObjectDb("CheckAllowedShow"))
+                {
+                    db.AssignParamValues(param);
 
-                dbCheckCurrency = DbHelper.Execute(spElement.Name, param, spElement.DbName);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    dbCheckCurrency = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -72,9 +76,17 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var param = new Hashtable();
                 param.Add("custid", custId);
-                var spElement = GetCustomerStoreProcedure("CustomerSelDisableHR");
-                DbResult ds = DbHelper.Execute(spElement.Name, param, spElement.DbName);
-                DataRow row1 = ds.ResultSet.Tables[0].Rows[0];
+                
+                DbResult result = null;
+                using (ObjectDb db = new ObjectDb("CustomerSelDisableHR"))
+                {
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+                DataRow row1 = result.ResultSet.Tables[0].Rows[0];
                 bool parentDisabledHR = Convert.IsDBNull(row1["DisableHorseracing"])
                                             ? false
                                             : Convert.ToBoolean(row1["DisableHorseracing"]);
@@ -94,9 +106,18 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var param = new Hashtable();
                 param.Add("custid", custId);
-                var spElement = GetCustomerStoreProcedure("CustomerSelDisableFI");
-                DbResult ds = DbHelper.Execute(spElement.Name, param, spElement.DbName);
-                DataRow row1 = ds.ResultSet.Tables[0].Rows[0];
+
+                DbResult result = null;
+                using (ObjectDb db = new ObjectDb("CustomerSelDisableFI"))
+                {
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+
+                DataRow row1 = result.ResultSet.Tables[0].Rows[0];
                 bool parentDisabledHR = Convert.IsDBNull(row1["DisableFinancial"])
                                             ? false
                                             : Convert.ToBoolean(row1["DisableFinancial"]);
@@ -121,9 +142,18 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var param = new Hashtable();
                 param.Add("custid", custId);
-                var spElement = GetCustomerStoreProcedure("CustomerSelDisableOutright");
-                DbResult ds = DbHelper.Execute(spElement.Name, param, spElement.DbName);
-                DataRow row1 = ds.ResultSet.Tables[0].Rows[0];
+
+                DbResult result = null;
+                using (ObjectDb db = new ObjectDb("CustomerSelDisableOutright"))
+                {
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+
+                DataRow row1 = result.ResultSet.Tables[0].Rows[0];
                 bool parentDisabledOutright = Convert.IsDBNull(row1["DisableOutright"])
                                                   ? false
                                                   : Convert.ToBoolean(row1["DisableOutright"]);
@@ -145,11 +175,19 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 var param = new Hashtable();
                 param.Add("custid", custId);
 
-                var spElement = GetCustomerStoreProcedure("CustomerSelSuspended");
-                DbResult ds = DbHelper.Execute(spElement.Name, param, spElement.DbName);
-                if (ds.ResultSet.Tables[0].Rows.Count > 0)
+                DbResult result = null;
+                using (ObjectDb db = new ObjectDb("CustomerSelSuspended"))
                 {
-                    DataRow row1 = ds.ResultSet.Tables[0].Rows[0];
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+
+                if (result.ResultSet.Tables[0].Rows.Count > 0)
+                {
+                    DataRow row1 = result.ResultSet.Tables[0].Rows[0];
                     suspended = Convert.IsDBNull(row1["Suspended"])
                                     ? false
                                     : Convert.ToBoolean(row1["Suspended"]);

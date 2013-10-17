@@ -65,8 +65,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var param = new Hashtable();
                 param.Add("custid", custid);
-                var spElement = GetUserStoreProcedure(UserControlSession.StoreCollection.AccountInfo, "CustomerSelUserInfo");
-                return DbHelper.ExecuteReader(spElement.Name, param, spElement.DbName);
+                
+                using (ObjectDb db = new ObjectDb("CustomerSelUserInfo", 600))
+                {
+                    db.AssignParamValues(param);
+                    return db.ExecuteReader();
+                }
             }
             catch (Exception ex)
             {

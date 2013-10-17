@@ -5,6 +5,7 @@ using Sunplus.Accounting.DataAccess.Provider.ExchangeRate;
 using System;
 using Fanex.Data;
 using System.Data;
+using Fanex.Tarus.Infrastructure.Extensions;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.ExchangeRate
 {
@@ -12,8 +13,22 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.ExchangeRate
     {
         public override DbResult ExchangeSelAccount()
         {
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ExchangeRateSession.StoreCollection.ExchangeRateControl, "EchangeSelAcc");
-            return DbHelper.Execute(spElement.Name, spElement.DbName);
+            DbResult result = null;
+            try
+            {
+                using (ObjectDb db = new ObjectDb("EchangeSelAcc"))
+                {
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         public override void ExchangeIns(Hashtable param, ref int errcode, ref string errmsg, ref int exchangeid)
@@ -43,9 +58,26 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.ExchangeRate
 
         public override DbResult ExchangeSelByID(int exid)
         {
+            DbResult result = null;
             var hash = new Hashtable {{"exchangeid", exid}};
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ExchangeRateSession.StoreCollection.ExchangeRateControl, "EchangeSelById");
-            return DbHelper.Execute(spElement.Name, hash, spElement.DbName, 300);
+
+            try
+            {
+                using (ObjectDb db = new ObjectDb("EchangeSelById"))
+                {
+                    db.AssignParamValues(hash);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return result;
         }
 
         public override void ExchangeUpd(Hashtable param, ref int errcode, ref string errmsg)

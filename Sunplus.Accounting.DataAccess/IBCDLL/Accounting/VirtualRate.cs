@@ -163,9 +163,14 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             DbResult rs = null;
             try
             {
-                var spElement = GetStoreProcedure("CustomerSelVirtualRateHistory");
-                return DbHelper.Execute(spElement.Name, hash, spElement.DbName);
-                
+                using (ObjectDb db = new ObjectDb("CustomerSelVirtualRateHistory"))
+                {
+                    db.AssignParamValues(hash);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {

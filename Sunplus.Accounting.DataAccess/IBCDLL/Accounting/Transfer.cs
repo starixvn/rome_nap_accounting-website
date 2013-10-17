@@ -87,8 +87,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 var hash = new Hashtable();
                 hash.Add("custid", custId);
                 hash.Add("closed", closed);
-                var spElement = GetCustomerStoreProcedure("CustomerSelMultipleTransfer");
-                rs = DbHelper.Execute(spElement.Name, hash, spElement.DbName, 300);
+                
+                using (ObjectDb db = new ObjectDb("CustomerSelMultipleTransfer"))
+                {
+                    db.AssignParamValues(hash);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {

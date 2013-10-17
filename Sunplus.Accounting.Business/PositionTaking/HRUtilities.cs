@@ -16,6 +16,7 @@ using Sunplus.Core.LoggingLib;
 using SCCACHE = SharedCache.WinServiceCommon.Provider.Cache.IndexusDistributionCache;
 using Sunplus.Accounting.Core.Web;
 using IBCUtils;
+using Fanex.Data;
 /// <summary>
 /// Summary description for FinanceManager
 /// </summary>
@@ -831,11 +832,15 @@ namespace Sunplus.Accounting.Business.PositionTaking
 
         private static Hashtable GetSaToteCurrencies()
         {
+            DbResult ds = null;
+            using (ObjectDb db = new ObjectDb("SelHRAllowedCurrency"))
+            {
+                var dataset = db.ExecuteDataSet();
+                var output = db.GetOuputParams();
 
-            var sps = HelperSession.Instance[Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.HelperSession.StoreCollection.HelperControl];
-            var spElement = sps != null ? sps["SelHRAllowedCurrency"] : null;
+                ds = new DbResult(output, dataset);
+            }
 
-            DbResult ds = DbHelper.Execute(spElement.Name, spElement.DbName);
             var currencies = new Hashtable();
             if (ds.ResultSet.Tables.Count > 0)
             {

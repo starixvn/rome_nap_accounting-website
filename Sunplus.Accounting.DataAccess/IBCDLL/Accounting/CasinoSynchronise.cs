@@ -13,6 +13,7 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 using Sunplus.Core.LoggingLib;
+using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
@@ -34,8 +35,16 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 var p = new Hashtable();
                 p.Add("searchby", searchby);
                 p.Add("keyword", username);
-                var spElement = SpConfig.GetCasinoStoreProcedure("CasinoSynchronise");
-                rs = DbHelper.Execute(spElement.Name, p, spElement.DbName, 180);
+
+                using(ObjectDb db = new ObjectDb("CasinoSynchronise", 180))
+                {
+                    db.AssignParamValues(p);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {

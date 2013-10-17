@@ -354,8 +354,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             DbResult rs = null;
             try
             {
-                var spElement = GetStoreProcedure("OperatorSel");
-                rs = DbHelper.Execute(spElement.Name, hash, spElement.DbName);
+                using (ObjectDb db = new ObjectDb("OperatorSel"))
+                {
+                    db.AssignParamValues(hash);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -377,8 +384,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             DbResult rs = null;
             try
             {
-                var spElement = GetStoreProcedure("OperatorSel");
-                rs = DbHelper.Execute(spElement.Name, hash, spElement.DbName);
+                using (ObjectDb db = new ObjectDb("OperatorSel"))
+                {
+                    db.AssignParamValues(hash);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -402,8 +416,16 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             {
                 var hash = new Hashtable();
                 hash.Add("custid", custId);
-                var spElement = GetStoreProcedure("OperatorSelByID");
-                rs = DbHelper.Execute(spElement.Name, hash, spElement.DbName);
+
+                using (ObjectDb db = new ObjectDb("OperatorSelByID"))
+                {
+                    db.AssignParamValues(hash);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -544,8 +566,16 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             hash.Add("custid", custid);
             try
             {
-                var spElement = GetUserControlStoreProcedure("CustomerSelUserInfo");
-                ds = DbHelper.Execute(spElement.Name, hash, spElement.DbName);
+                using (ObjectDb db = new ObjectDb("CustomerSelUserInfo", 120))
+                {
+                    db.AssignParamValues(hash);
+
+                    var dataset = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    ds = new DbResult(output, dataset);
+                }
+
             }
             catch (Exception ex)
             {
@@ -659,9 +689,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             var p = new Hashtable();
             p.Add("custid", custID);
             p.Add("isdirect", false);
-            var spElement = GetStoreProcedure("CustomerSelIsDirectMaster");
-            DbResult dr = DbHelper.Execute(spElement.Name, p, spElement.DbName);
-            return CastAide.AsBoolean(dr.Outputs["isdirect"], false);
+            
+            using (ObjectDb db = new ObjectDb("CustomerSelIsDirectMaster"))
+            {
+                db.AssignParamValues(p);
+                var ds = db.ExecuteDataSet();
+                var output = db.GetOuputParams();
+
+                return CastAide.AsBoolean(output["isdirect"], false);
+            }
         }
 
         /// <summary>
@@ -677,9 +713,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 var p = new Hashtable();
                 p.Add("custid", custID);
                 p.Add("matchlimit", 0);
-                var spElement = GetStoreProcedure("CustomerSelMatchLimit");
-                DbResult dr = DbHelper.Execute(spElement.Name, p, spElement.DbName);
-                return CastAide.AsDecimal(dr.Outputs["matchlimit"], 0);
+                
+                using (ObjectDb db = new ObjectDb("CustomerSelMatchLimit"))
+                {
+                    db.AssignParamValues(p);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+                    return CastAide.AsDecimal(output["matchlimit"], 0);
+                }
+                
             }
             catch (InvalidOperationException invalidOperation)
             {
@@ -826,23 +868,42 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         {
             var param = new Hashtable();
             param.Add("custid", custid);
-            var spElement = GetStoreProcedure("SelCustomerGivenCredit");
-            DbResult dr = DbHelper.Execute(spElement.Name, param, spElement.DbName);
-            //roleid = dr.ResultSet.Tables[0].Rows[0]["roleid"].ToString();
-            return Math.Round(decimal.Parse(dr.ResultSet.Tables[0].Rows[0]["givencredit"].ToString()));
+            
+            using (ObjectDb db = new ObjectDb("SelCustomerGivenCredit"))
+            {
+                db.AssignParamValues(param);
+
+                var ds = db.ExecuteDataSet();
+                return Math.Round(decimal.Parse(ds.Tables[0].Rows[0]["givencredit"].ToString()));
+            }
         }
 
         public static DbResult QueryUserName(int userid, string query, string accountingSystem, bool hasViewFinanceAccount)
         {
-            
+            DbResult result = null;
 
-            var param = new Hashtable();
-            param.Add("custid", userid);
-            param.Add("username", query);
-            param.Add("system", accountingSystem.ToString());
-            param.Add("isallowfisearch", hasViewFinanceAccount);
-            var spElement = GetStoreProcedure("CustomerSelUserSearch");
-            return DbHelper.Execute(spElement.Name, param, spElement.DbName);
+            try
+            {
+                var param = new Hashtable();
+                param.Add("custid", userid);
+                param.Add("username", query);
+                param.Add("system", accountingSystem.ToString());
+                param.Add("isallowfisearch", hasViewFinanceAccount);
+                
+                using (ObjectDb db = new ObjectDb("CustomerSelUserSearch"))
+                {
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         public static DbResult GetLiveCasinoPt(string username)

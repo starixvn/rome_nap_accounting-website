@@ -35,8 +35,16 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var hash = new Hashtable();
                 hash.Add("custid", custid);
-                var spElement = GetStoreProcedure("CustomerSelCredit");
-                rs = DbHelper.Execute(spElement.Name, hash, spElement.DbName, 300);
+                
+                using (ObjectDb db = new ObjectDb("CustomerSelCredit"))
+                {
+                    db.AssignParamValues(hash);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch
             {
@@ -78,12 +86,21 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <returns></returns>
         public static DbResult Acc_CreditTermSelByGroupID(int groupid)
         {
+            DbResult result = null;
             try
             {
                 var hash = new Hashtable();
                 hash.Add("groupid", groupid);
-                var spElement = GetStoreProcedure("CreditTermSelByGroupID");
-                return DbHelper.Execute(spElement.Name, hash, spElement.DbName);
+                
+                using (ObjectDb db = new ObjectDb("CreditTermSelByGroupID"))
+                {
+                    db.AssignParamValues(hash);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -91,6 +108,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
+            return result;
         }
 
         /// <summary>
@@ -227,12 +245,21 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <returns></returns>
         public static DbResult Acc_CreditTermSelByCustID(int custid)
         {
+            DbResult result = null;
             try
             {
                 var hash = new Hashtable();
                 hash.Add("custid", custid);
-                var spElement = GetStoreProcedure("CreditTermSelByCustID");
-                return DbHelper.Execute(spElement.Name, hash, spElement.DbName);
+                
+                using (ObjectDb db = new ObjectDb("CreditTermSelByCustID"))
+                {
+                    db.AssignParamValues(hash);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -240,6 +267,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
+            return result;
         }
 
         /// <summary>
@@ -272,12 +300,20 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <returns></returns>
         public static DbResult Acc_CreditTermSelGroupHeadlineByGroupID(int groupid)
         {
+            DbResult result = null;
             try
             {
                 var hash = new Hashtable();
                 hash.Add("groupid", groupid);
-                var spElement = GetStoreProcedure("CreditTermSelGroupHeadlineByGroupID");
-                return DbHelper.Execute(spElement.Name, hash, spElement.DbName);
+
+                using (ObjectDb db = new ObjectDb("CreditTermSelGroupHeadlineByGroupID"))
+                {
+                    db.AssignParamValues(hash);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -285,6 +321,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
+            return result;
         }
 
         /// <summary>

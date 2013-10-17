@@ -11,6 +11,8 @@
 
   <Function Name="Exchange Rate">
     <Setting Key="Acc_ExchangeCurrencySel" SpName="Acc_ExchangeCurrencySel" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="EchangeSelAcc" SpName="Acc_ExchangeSelAccount" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="EchangeSelById" SpName="Acc_ExchangeSelByID" DbName="DBAGE.bodb02.bodbAdminNet"  />
   </Function>
 
   <Function Name="Gaming">
@@ -161,6 +163,48 @@
   </Function>
   <Function Name="Customer">
     <Setting Key="CustomerSelStatus" SpName="Acc_CustomerSelStatus" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="CustomerSelDownLineList" SpName="Acc_CustomerSelList" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="CustomerSelUserInfo" SpName="Acc_CustomerSelUserInfo" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="CustomerSelCredit" SpName="CustomerSelCredit" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="CustomerSelClearBalance" SpName="Acc_CustomerSelClearBalance" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="CustomerSelDisableHR" SpName="Acc_CustomerSelDisableHR" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="CustomerSelDisableFI" SpName="Acc_CustomerSelDisableFI" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="CustomerSelDisableOutright" SpName="Acc_CustomerSelDisableOutright" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="CustomerSelSuspended" SpName="Acc_CustomerSelSuspended" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="CustomerSelMultipleTransfer" SpName="CustomerSelMultipleTransfer" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="CustomerSelMemberSearch_AutoSuspend" SpName="Acc_CustomerSelMemberSearch_AutoSuspend" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="CustomerSelVirtualMultiplier" SpName="Acc_CustomerSelVirtualMultiplier" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="CustomerSelIsDirectMaster" SpName="Acc_CustomerSelIsDirectMaster" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="CustomerSelMatchLimit" SpName="Acc_CustomerSelMatchLimit" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="SelCustomerGivenCredit" SpName="Acc_SelCustomerGivenCredit" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="CustomerSelUserSearch" SpName="Acc_CustomerSelUserSearch" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="DBA_GetAgent" SpName="DBA_GetAgent" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    
+    
   </Function>
+
+  <Function Name="User Control">
+    <Setting Key="OperatorSel" SpName="Acc_OperatorSel" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="OperatorSelByID" SpName="Acc_OperatorSelByID" DbName="DBAGE.bodb02.bodbAdminNet"  />
+  </Function>
+
+  <Function Name="Credit Term">
+    <Setting Key="CreditTermSelByGroupID" SpName="Acc_CreditTermSelByGroupID" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="CreditTermSelByCustID" SpName="Acc_CreditTermSelByCustID" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="CreditTermSelGroupHeadlineByGroupID" SpName="Acc_CreditTermSelGroupHeadlineByGroupID" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    
+  </Function>
+  
+  <Function Name="Betlist Casino">
+    <Setting Key="CasinoSynchronise" SpName="Acc_Rpt_CasinoSynchronise" DbName="DBAGE.bodb02.bodbAdminNet"  />
+  </Function>
+
+  <Function Name="Helper">
+    <Setting Key="SelHRAllowedCurrency" SpName="Acc_SelHRAllowedCurrency" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow" DbName="DBAGE.bodb02.bodbAdminNet"  />
+  </Function>
+  
 </Functions>
 

@@ -24,14 +24,28 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         
         public DataTable GetCustomerInfo(string username)
         {
-            var param = new System.Collections.Hashtable();
-            param.Add("username", username);
-            DataTable dtResult = null;
-            var spElement = GetStoreProcedure("CustomerSelSiteByUserName");
-            DbResult ds = DbHelper.Execute(spElement.Name, param, spElement.DbName);
-            if (ds != null && ds.ResultSet != null && ds.ResultSet.Tables.Count > 0)
-                dtResult = ds.ResultSet.Tables[0];
-            return dtResult;
+            DataTable dt = new DataTable();
+            try
+            {
+                var param = new System.Collections.Hashtable();
+                param.Add("username", username);
+
+                using (ObjectDb db = new ObjectDb("Acc_CustomerSelSiteByUserName"))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        dt = ds.Tables[0];
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return dt;
         }
 
         public Result UpdateCustomerSite(int custId, string newSite, int userId, string ip)
@@ -84,7 +98,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
         public DbResult GetAllCustInfo(string username)
         {
-            DbResult ds = null;
+            DbResult result = null;
             var dtResult = new DataTable();
             try
             {
@@ -92,15 +106,24 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                                 {
                                     {"username", username}
                                 };
-                var spElement = GetStoreProcedure("SelAllInfo");
-                return DbHelper.Execute(spElement.Name, param, spElement.DbName);
+
+                using (ObjectDb db = new ObjectDb("SelAllInfo", 600))
+                {
+                    db.AssignParamValues(param);
+                    
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+
               
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
-            return ds;
+            return result;
         }
 
         #region Enable Number Game for downlines

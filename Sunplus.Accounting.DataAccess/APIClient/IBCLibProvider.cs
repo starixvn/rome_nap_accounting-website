@@ -27,10 +27,18 @@ namespace Sunplus.Accounting.DataAccess.APIClient
             {
                 var param = new Hashtable();
                 param.Add("custid", _IBCCustId);
-                var spElement =
-                    new StoreCustomerProcedureConfiguration().GetStoreProcedureInfo(
-                        Core.Configurations.StoreProcedureGroup.CustomerSession.StoreCollection.CustomerControl, "CustomerSelUserInfo");
-                DbResult drCustomer = DbHelper.Execute(spElement.Name, param, spElement.DbName, 300);
+
+                DbResult drCustomer = null;
+                using (ObjectDb db = new ObjectDb("CustomerSelUserInfo", 600))
+                {
+                    db.AssignParamValues(param);
+                    
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    drCustomer = new DbResult(output, ds);
+                }
+
                 DataRow row = null;
 
                 if (drCustomer.ResultSet.Tables[0].Rows.Count > 0)
@@ -92,11 +100,19 @@ namespace Sunplus.Accounting.DataAccess.APIClient
             {
                 var param = new Hashtable();
                 param.Add("custid", _IBCCustId);
+                
+                DbResult drCustomer = null;
 
-                var spElement =
-                    new StoreCustomerProcedureConfiguration().GetStoreProcedureInfo(
-                        Core.Configurations.StoreProcedureGroup.CustomerSession.StoreCollection.CustomerControl, "CustomerSelUserInfo");
-                DbResult drCustomer = DbHelper.Execute(spElement.Name, param, spElement.DbName, 300);
+                using (ObjectDb db = new ObjectDb("CustomerSelUserInfo", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    drCustomer = new DbResult(output, ds);
+                }
+
                 DataRow row = null;
 
                 if (drCustomer.ResultSet.Tables[0].Rows.Count > 0)

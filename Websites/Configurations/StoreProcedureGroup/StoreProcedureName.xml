@@ -27,10 +27,10 @@
     <Setting Key="Acc_CustomerSelEditMemberLiveCS" SpName="Acc_CustomerSelEditMemberLiveCS" DbName="db053"  />
     <Setting Key="Acc_CustomerSelSEditCustomerLiveCS" SpName="Acc_CustomerSelSEditCustomerLiveCS" DbName="db053"  />
     <Setting Key="Acc_CustomerSelMEditCustomerLiveCS" SpName="Acc_CustomerSelMEditCustomerLiveCS" DbName="db053"  />
-    <Setting Key="CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="db053"  />
+    
   </Function>
   <Function Name="Live Casino - Win Limit Setting">
-    <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="db053"  />
+    
   </Function>
   <Function Name="Live Casino - Move Account">
     <Setting Key="TP_User_Customer_MoveMaster_Update" SpName="TP_User_Customer_MoveMaster_Update" DbName="LV_BackupDB" Plain="1" />
