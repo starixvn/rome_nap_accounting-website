@@ -86,7 +86,7 @@ ans.initCommission = function () {
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listOther'), 0, commissionSetting.discountCS, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discountCS);
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listGroup1x2'), 0, commissionSetting.discount1x2, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discount1x2);
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listGameComm'), 0, commissionSetting.discountNumber, Fanex.PTEngine.COMMISSION_STEP, 0);
-    Fanex.PTEngine.PT_SetSelect(document.getElementById('listHRFixOddsComm'), 0, Math.max(commissionSetting.discountHRFixedOddsMax, commissionSetting.discountHRFixedOdds), Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discountHRFixedOdds);
+    Fanex.PTEngine.PT_SetSelect(document.getElementById('listHRFixOddsComm'), 0, Math.max(commissionSetting.discountHRFixedOddsMax, commissionSetting.discountHRFixedOdds), Fanex.PTEngine.COMMISSION_STEP, 0);
 };
 // check valid user input
 ans.checkValidInput = function () {
