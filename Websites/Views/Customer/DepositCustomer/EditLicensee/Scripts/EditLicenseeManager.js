@@ -43,23 +43,29 @@ var EditLicenseeManager = function () {
         tableSiteInfo: null,
         labelLicenseeSite: null,
         labelLicenseeCurrency: null,
-        checkboxEnableNumbergame: null
+        checkboxEnableNumbergame: null,
+        checkboxEnableVirtualSports: null
     };
 
     self.Constants = {
         MaxMonerValue: 912337203685477.5807,
 
         Sports: {
-            NumberGame: 161
+            NumberGame: 161,
+            Soccer: 1
         }
     };
 
     self.CacheData = {
-
+        licenseeInfo: null
     };
 
     self.Params = {
         getLicenseeInfoParams: {
+            LicenseeName: ''
+        },
+
+        updateLicenseeInfoParams: {
             LicenseeName: ''
         }
     };
@@ -167,7 +173,7 @@ var EditLicenseeManager = function () {
         self.Tables.labelLicenseeSite = self.Tables.tableSiteInfo.find(".label-licensee-site");
         self.Tables.labelLicenseeCurrency = self.Tables.tableSiteInfo.find(".label-licensee-currency");
         self.Tables.checkboxEnableNumbergame = self.Tables.tableSiteInfo.find("#checkbox-enable-numbergame");
-
+        self.Tables.checkboxEnableVirtualSports = self.Tables.DivVirtualSportsContainer.find("#checkbox-enable-virtualsports");
     };
 
     self.bindingEvent = function () {
@@ -431,10 +437,129 @@ var EditLicenseeManager = function () {
     };
 
     self.UpdateLicenseeInfo = function () {
+        self.blockUI();
+        self.GetUpdateParams();
+        if (!self.ValidateUpdateParams()) {
+            self.unblockUI();
+            return;
+        }
 
+        self.CallAjax(self,
+            "UpdateLicenseeInfo",
+            self.Params.updateLicenseeInfoParams,
+            self.RenderUpdateLicenseeInfoResult,
+            self.RenderUpdateLicenseeInfoResult,
+            self.unblockUI);
+    };
+
+    self.GetUpdateParams = function () {
+        self.Params.updateLicenseeInfoParams.LicenseeName = self.Params.getLicenseeInfoParams.LicenseeName;
+        self.Params.updateLicenseeInfoParams.Site = self.CacheData.licenseeInfo.Site;
+        self.Params.updateLicenseeInfoParams.Currency = self.CacheData.licenseeInfo.Currency;
+        self.Params.updateLicenseeInfoParams.EnableNumberGame = self.Tables.checkboxEnableNumbergame.prop("checked");
+
+        self.Params.updateLicenseeInfoParams.SettingInfo = [];
+        self.Params.updateLicenseeInfoParams.VirtualSportsSettingInfo = [];
+
+        var sportsbookSettings = self.GetUpdateParams_Sportsbook();
+        self.Params.updateLicenseeInfoParams.SettingInfo = sportsbookSettings;
+    };
+
+    self.GetUpdateParams_Sportsbook = function () {
+        var settingInfoList = [];
+        var sportId;
+        var settingName;
+        var sportLength = sportsbookSports.length;
+        for (var i = 0; i < sportLength; i++) {
+            var sport = sportsbookSports[i];
+            sportId = sport.Id.toLowerCase();
+
+            if (sportId == self.Constants.Sports.NumberGame.toString()) {
+                continue;
+            }
+
+            settingName = "minbetv" + sportId;
+            settingInfoList.push({
+                Name: settingName,
+                Value: $("#" + settingName).getNumberValue()
+            });
+
+            settingName = "maxbetv" + sportId;
+            settingInfoList.push({
+                Name: settingName,
+                Value: $("#" + settingName).getNumberValue()
+            });
+
+            settingName = "maxpermatchv" + sportId;
+            settingInfoList.push({
+                Name: settingName,
+                Value: $("#" + settingName).getNumberValue()
+            });
+
+            if (sportId.toString().toLowerCase() == "99mp") {
+                continue;
+            }
+
+            var betTypesLength = sport.BetTypes.length;
+            for (var j = 0; j < betTypesLength; j++) {
+                var betType = sport.BetTypes[j];
+                var positionTakingValue = self.Tables.DropdownSportsbookPositionTaking_SbNG.val();
+                settingName = "v" + sportId + "spositiontaking_" + betType;
+                settingInfoList.push({
+                    Name: settingName,
+                    Value: positionTakingValue
+                });
+
+                settingName = "v" + sportId + "mpositiontaking_" + betType;
+                settingInfoList.push({
+                    Name: settingName,
+                    Value: positionTakingValue
+                });
+
+                settingName = "v" + sportId + "apositiontaking_" + betType;
+                settingInfoList.push({
+                    Name: settingName,
+                    Value: positionTakingValue
+                });
+
+                if (sportId == self.Constants.Sports.Soccer) {
+                    settingName = "v" + sportId + "slivepositiontaking_" + betType;
+                    settingInfoList.push({
+                        Name: settingName,
+                        Value: positionTakingValue
+                    });
+
+                    settingName = "v" + sportId + "mlivepositiontaking_" + betType;
+                    settingInfoList.push({
+                        Name: settingName,
+                        Value: positionTakingValue
+                    });
+
+                    settingName = "v" + sportId + "alivepositiontaking_" + betType;
+                    settingInfoList.push({
+                        Name: settingName,
+                        Value: positionTakingValue
+                    });
+                }
+            }
+        }
+
+        return settingInfoList;
+    };
+
+    self.ValidateUpdateParams = function () {
+        if (self.Params.updateLicenseeInfoParams.LicenseeName == '') {
+            showAlertMessage("result-message", "Please input licensee name!", 1);
+            self.Tables.resultMessage.removeClass("display-none");
+            return false;
+        }
+
+        self.Tables.resultMessage.empty().addClass("display-none");
+        return true;
     };
 
     self.RenderLicenseeInfo = function (licenseeInfo) {
+        self.CacheData.licenseeInfo = licenseeInfo;
         if (licenseeInfo == null) {
             self.Tables.divLicenseeInfo.addClass("display-none");
             showAlertMessage("result-message", viewResources.ThereIsNoData, 1);
@@ -461,6 +586,7 @@ var EditLicenseeManager = function () {
         self.RenderLicenseeInfo_Sportsbook(licenseeInfo, settingInfoDictionary);
         self.RenderLicenseeInfo_NumberGame(licenseeInfo, settingInfoDictionary);
         self.RenderLicenseeInfo_Racing(licenseeInfo, settingInfoDictionary);
+        self.RenderLicenseeInfo_VirtualSport(licenseeInfo, settingInfoDictionary);
         self.Tables.divLicenseeInfo.removeClass("display-none");
     };
 
@@ -471,6 +597,16 @@ var EditLicenseeManager = function () {
         for (var i = 0; i < settingLength; i++) {
             var settingInfo = licenseeInfo.SettingInfo[i];
             settingInfoDictionary[settingInfo.Name] = settingInfo.Value;
+        }
+
+        var virtualSportsLength = licenseeInfo.VirtualSportsSettingInfo.length;
+        for (var i = 0; i < virtualSportsLength; i++) {
+            var sport = licenseeInfo.VirtualSportsSettingInfo[i];
+            var settingLength = sport.SettingInfo.length;
+            for (var j = 0; j < settingLength; j++) {
+                var settingInfo = sport.SettingInfo[j];
+                settingInfoDictionary[settingInfo.Name] = settingInfo.Value;
+            }
         }
 
         return settingInfoDictionary;
@@ -527,9 +663,33 @@ var EditLicenseeManager = function () {
                     "checked" :
                     null);
 
-                $("#v151discount_41").val("0.032");
             }
         }
+    };
+    self.RenderLicenseeInfo_VirtualSport = function (licenseeInfo, settingInfoDictionary) {
+        var sportId;
+        var settingName;
+        settingName = "disablevirtualsports";
+        self.Tables.checkboxEnableVirtualSports.attr("checked", licenseeInfo.EnableNumberGame ?
+            "checked" :
+            null);
+        var sportId;
+        var settingName;
+        var virtualSportsLength = virtualSports.length;
+        for (var i = 0; i < virtualSportsLength; i++) {
+            var sport = virtualSports[i];
+            sportId = sport.Id;
+
+            settingName = "maxbetv" + sportId;
+            $("#" + settingName).val(settingInfoDictionary[settingName]);
+            settingName = "minbetv" + sportId;
+            $("#" + settingName).val(settingInfoDictionary[settingName]);
+            settingName = "maxpermatchv" + sportId;
+            $("#" + settingName).val(settingInfoDictionary[settingName]);
+        }
+    };
+    self.RenderUpdateLicenseeInfoResult = function (updateLicenseeInfoResult) {
+        alert("abc");
     };
 };
 

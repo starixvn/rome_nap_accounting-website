@@ -303,6 +303,7 @@
   </Function>
   <Function Name="Customer - Edit Licensee">
     <Setting Key="Customer_EditLicensee_GetLicenseeInfo" SpName="Acc_ExchangeSel" DbName="main"  />
+    <Setting Key="Customer_EditLicensee_UpdateLicenseeInfo" SpName="Acc_ExchangeSel" DbName="main"  />
   </Function>
   <Function Name="BetList">
     <Setting Key="BetListByDayAll" SpName="Acc_BetListByDayAll" DbName="db053"  />

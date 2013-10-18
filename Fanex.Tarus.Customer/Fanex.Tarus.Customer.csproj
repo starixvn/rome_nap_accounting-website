@@ -161,6 +161,7 @@
     <Compile Include="Controller\NewLicensee\NewLicenseeController.cs" />
     <Compile Include="Controller\ViewPTController.cs" />
     <Compile Include="Criteria\EditLicensee\GetLicenseeInfoCriteria.cs" />
+    <Compile Include="Criteria\EditLicensee\UpdateLicenseeInfoCriteria.cs" />
     <Compile Include="Criteria\NewLicensee\GetCurrenciesBySystemCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\AddSMAListCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\UploadSMAListCriteria.cs" />

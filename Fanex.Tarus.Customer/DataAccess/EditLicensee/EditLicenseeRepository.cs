@@ -365,19 +365,19 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
 
                 virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
                 {
-                    Name = "v" + sportId + "maxbet",
+                    Name = "maxbetv" + sportId,
                     Value = childrenNode.Attributes["MaxBet"].Value
                 });
 
                 virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
                 {
-                    Name = "v" + sportId + "minbet",
+                    Name = "minbetv" + sportId,
                     Value = childrenNode.Attributes["MinBet"].Value
                 });
 
                 virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
                 {
-                    Name = "v" + sportId + "maxpermatch",
+                    Name = "maxpermatchv" + sportId,
                     Value = childrenNode.Attributes["MaxPerMatch"].Value
                 });
 

@@ -47,5 +47,14 @@ namespace Fanex.Tarus.Customer.Controller.EditLicensee
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;
         }
+
+        [HttpPost]
+        public JsonResult UpdateLicenseeInfo(UpdateLicenseeInfoCriteria criteria)
+        {
+            //var result = _editLicenseeService.GetLicenseeInfo(criteria);
+            var jsonResult = Json(null);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
     }
 }

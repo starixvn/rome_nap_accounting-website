@@ -1,4 +1,35 @@
 ﻿@using Fanex.Tarus.Infrastructure.Configurations;
+<script type="text/javascript">
+    var virtualSports = [];
+  (function () {
+    @{
+        @:var sport;
+            var sports = VirtualSportsSection.Instance.Sports;
+            foreach (VirtualSportsElement virtualSportsElement in sports)
+            {
+                if (!virtualSportsElement.Active)
+                {
+                    continue;
+                }
+
+            @:sport = {Id: '@virtualSportsElement.Id.ToLower()', BetType: [], Name: '@virtualSportsElement.Name'};
+            if (virtualSportsElement.Bettype != null &&
+                virtualSportsElement.Bettype != "NA" &&
+                virtualSportsElement.Bettype != string.Empty &&
+                !string.IsNullOrWhiteSpace(virtualSportsElement.Bettype.Trim()))
+            {
+                var betTypes = virtualSportsElement.Bettype.Split(new char[] { ',' });
+                foreach (var betType in betTypes)
+                {
+                    @:sport.BetType.push(@betType);
+                }
+            }
+            
+            @:window.virtualSports.push(sport);
+        }
+    }
+    })();
+</script>
 @helper GenerateBetSettingVirtualSports()
     {
         var virtualSports = VirtualSportsSection.Instance.Sports;
