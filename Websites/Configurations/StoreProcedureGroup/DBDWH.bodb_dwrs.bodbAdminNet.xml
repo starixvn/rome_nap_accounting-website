@@ -3,6 +3,7 @@
 
   <Function Name="Main Report - Match Win Loss (2a)">
     <Setting Key="MatchWinLoss2aV3_SelMainReport_WH" SpName="Acc_Rpt_MatchWinLoss2_New_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
+    <Setting Key="MatchWinLoss2a_WH" SpName="Acc_Rpt_MatchWinLoss2_New_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
     <Setting Key="WLSummaryReportByBettype_WH" SpName="Acc_Rpt_WinlossByBettype_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
     <Setting Key="SelWLBySportTypeDetail_WH" SpName="Acc_Rpt_MatchWinLoss2_Sporttype_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
     <Setting Key="MatchWinLoss2a_Old_WH" SpName="Acc_Rpt_MatchWinLoss2_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />

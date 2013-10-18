@@ -76,7 +76,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             param.Add("reporttype", ((int)reportType));
             string strMapping = "WinlostRacingTote" + GetStoreMappingSubfix(CastAide.AsDateTime(winlossDate));
 
-            using (ObjectDb db = new ObjectDb(strMapping))
+            using (ObjectDb db = new ObjectDb(strMapping, 600))
             {
                 db.AssignParamValues(param);
                 var ds = db.ExecuteDataSet();
@@ -103,7 +103,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
             string strMapping = "WinlostRacingToteDetail" + GetStoreMappingSubfix(CastAide.AsDateTime(winlossDate));
 
-            using (ObjectDb db = new ObjectDb("WinlostRacingToteDetail"))
+            using (ObjectDb db = new ObjectDb("WinlostRacingToteDetail", 600))
             {
                 db.AssignParamValues(param);
                 var ds = db.ExecuteDataSet();
@@ -127,7 +127,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             param.Add("partnerid", partnerId);
 
             string strMapping = "WinlostRacingToteDetail" + GetStoreMappingSubfix(CastAide.AsDateTime(winlossDate));
-            using (ObjectDb db = new ObjectDb(strMapping))
+            using (ObjectDb db = new ObjectDb(strMapping, 600))
             {
                 db.AssignParamValues(param);
                 var ds = db.ExecuteDataSet();
@@ -145,7 +145,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
         public DataTable WinlostRacingToteDumpFiles(string winlossdate, int reportType)
         {
-            using (ObjectDb objDB = new ObjectDb("Acc_Rpt_Racing_ComparisionTO3rd"))
+            using (ObjectDb objDB = new ObjectDb("Acc_Rpt_Racing_ComparisionTO3rd", 600))
             {
                 var param = new Hashtable { { "winlostdate", winlossdate }, { "reporttype", reportType } };
 
@@ -170,7 +170,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             param.Add("raceno", raceNo);
             param.Add("currency", currency); 
 
-            using (ObjectDb db = new ObjectDb(strMapping))
+            using (ObjectDb db = new ObjectDb(strMapping, 600))
             {
                 db.AssignParamValues(param);
                 var ds = db.ExecuteDataSet();
@@ -198,7 +198,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             param.Add("raceno", raceNo);
             param.Add("currency", currency);
                         
-            using (ObjectDb db = new ObjectDb(strMapping))
+            using (ObjectDb db = new ObjectDb(strMapping, 600))
             {
                 db.AssignParamValues(param);
                 ds = db.ExecuteDataSet();
