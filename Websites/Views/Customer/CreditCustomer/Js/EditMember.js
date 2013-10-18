@@ -90,6 +90,7 @@ edm.initCommission = function () {
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listOtherBettypes'), 0, commissionSetting.discountCS, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.playerDiscountCs);
     Fanex.PTEngine.PT_SetSelect(document.getElementById('list1X2'), 0, commissionSetting.discount1x2, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.playerDiscount1x2);
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listGameComm'), 0, commissionSetting.discountNumber, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.playerDiscountNumber);
+    Fanex.PTEngine.PT_SetSelect(document.getElementById('listHRFixOddsComm'), 0, Math.max(commissionSetting.discountHRFixedOddsMax, commissionSetting.discountHRFixedOdds), Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discountHRFixedOdds);
 };
 //render Transfer Option
 // check valid user input
@@ -110,6 +111,7 @@ edm.checkValidInput = function () {
     commissionSetting.playerDiscount1x2 = $('#list1X2').val();
     commissionSetting.playerDiscountCs = $('#listOtherBettypes').val();
     commissionSetting.playerDiscountNumber = $('#listGameComm').val();
+    commissionSetting.playerDiscountHRFixedOdds = $('#listHRFixOddsComm').val();
     // get user group
     //customer.group = $('#ddlUGruop').val();
     //get pt setting
