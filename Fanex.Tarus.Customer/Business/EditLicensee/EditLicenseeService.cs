@@ -10,6 +10,7 @@
 namespace Fanex.Tarus.Customer.Business.EditLicensee
 {
     using System;
+    using System.Collections;
     using Fanex.Tarus.Customer.Criteria.EditLicensee;
     using Fanex.Tarus.Customer.DataAccess.EditLicensee;
     using Fanex.Tarus.Customer.Entities.EditLicensee;
@@ -36,13 +37,10 @@ namespace Fanex.Tarus.Customer.Business.EditLicensee
         {
             try
             {
-                var rawData = _editLicenseeRepository.GetLicenseeInfo(criteria);
+                Hashtable outputParams = new Hashtable();
+                var rawData = _editLicenseeRepository.GetLicenseeInfo(criteria, ref outputParams);
                 LicenseeInfo licenseeInfo = new LicenseeInfo();
-
-                licenseeInfo.Site = "12bet";
-                licenseeInfo.Currency = "UUS";
-                licenseeInfo.EnableNumberGame = true;
-
+                licenseeInfo = rawData;
                 return licenseeInfo;
             }
             catch (Exception ex)

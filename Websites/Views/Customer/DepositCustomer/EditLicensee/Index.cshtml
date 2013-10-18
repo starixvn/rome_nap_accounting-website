@@ -9,10 +9,87 @@
 <script type="text/javascript" src="~/js/json2.js"></script>
 <script type="text/javascript" src="~/js/jQuery/Number/jquery.formattyping.js"></script>
 <script type="text/javascript" src="~/js/jQuery/Number/jquery.setcaretposition.js"></script>
+<script type="text/javascript">
+    var viewResources = {
+        ThereIsNoData: "There is no data!"
+    };
+
+    var sportsbookSports = [];
+   (function () { 
+       @{
+            @:var sport;
+            var sports = SportsSection.Instance.Sports;
+            foreach (SportsElement sportElement in sports)
+            {
+                if (!sportElement.Active ||
+                    string.Equals(sportElement.Id, Sports.NumberGame.ToString()))
+                {
+                    continue;
+                }
+
+                @:sport = { Id: '@sportElement.Id.ToLower()', BetTypes: []};
+                if (sportElement.Bettype != null &&
+                    sportElement.Bettype != "NA" &&
+                    sportElement.Bettype != string.Empty &&
+                    !string.IsNullOrWhiteSpace(sportElement.Bettype.Trim()))
+                {
+                    var betTypes = sportElement.Bettype.Split(new char[] { ',' });
+                    foreach (var betType in betTypes)
+                    {
+                        @:sport.BetTypes.push(@betType);
+                    }
+                }
+                
+                @:window.sportsbookSports.push(sport);
+            }
+        }
+   })();
+   
+    var racingToteTypes = [];
+   (function () { 
+        var racing;
+        var tote;
+        @{
+            var racings = RacingSection.Instance.Racings;
+            foreach (RacingElement racingElement in racings)
+            {
+                if (!racingElement.Active)
+                {
+                    continue;
+                }
+
+                @:racing = { Id: "@racingElement.Id" , Totes: [] };
+                foreach (ToteElement tote in racingElement.Totes)
+                {
+                    if (!tote.Active)
+                    {
+                        continue;
+                    }
+
+                    @:tote = {Id: @tote.Id, BetType: []};   
+                     if (tote.BetType != null ||
+                         tote.BetType != "NA" ||
+                         tote.BetType != string.Empty ||
+                         !string.IsNullOrWhiteSpace(tote.BetType.Trim()))
+                     {
+                         var betTypes = tote.BetType.Split(new char[] { ',' });
+                         foreach (var betType in betTypes)
+                         {
+                             @:tote.BetType.push(@betType);
+                         }
+                     }
+                                          
+                    @:racing.Totes.push(tote);
+                }
+
+        @:window.racingToteTypes.push(racing);
+            }
+       }
+   })();
+
+</script>
 <script type="text/javascript" src="~/Views/Customer/DepositCustomer/EditLicensee/Scripts/PositionTakingRenderManager.js?version=@WebSettings.Version"></script>
 <script type="text/javascript" src="~/Views/Customer/DepositCustomer/EditLicensee/Scripts/EditLicenseeManager.js"></script>
-<script type="text/javascript">
-</script>
 @helper GenerateSportsbook_NumberGameSettings()
     {
         var sports = SportsSection.Instance.Sports;

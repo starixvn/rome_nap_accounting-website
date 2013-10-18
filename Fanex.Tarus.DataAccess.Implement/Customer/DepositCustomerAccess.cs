@@ -1,6 +1,7 @@
 ﻿
 namespace Fanex.Tarus.DataAccess.Implement.Customer
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
@@ -10,19 +11,431 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
     using Fanex.Tarus.DataAccess.Implement.Constants;
     using Fanex.Tarus.DataAccess.Interface.Customer;
     using Fanex.Tarus.Entities.Customer.DepositCustomer;
+    using Fanex.Tarus.Infrastructure.Configurations;
+    using Sunplus.Accounting.Core.Configurations;
     using Sunplus.Accounting.Core.Helper;
     using Sunplus.Accounting.Entities;
 
     public class DepositCustomerAccess : BaseAccess, IDepositCustomerAccess
     {
-        public Result NewLicenseeAddNewSuper(NewLicenseePostParam newLicenseePostParam)
+        private Hashtable GetAddNewHashTableParams(NewLicenseePostParam newLicenseePostParam)
         {
-            var hashParam = new Hashtable();
+            string paramName;
+            string sportId;
+            Dictionary<string, object> dictionaryParam = new Dictionary<string, object>();
             foreach (var param in newLicenseePostParam.PostParams)
             {
-                hashParam.Add(param.Name.ToLower(), param.Value);
+                paramName = param.Name.ToLower();
+                if (dictionaryParam.ContainsKey(paramName))
+                {
+                    continue;
+                }
+
+                dictionaryParam.Add(paramName, param.Value);
             }
 
+            var hashParam = new Hashtable();
+            hashParam.Add("creator", dictionaryParam["creator"]);
+            hashParam.Add("site", dictionaryParam["site"]);
+            hashParam.Add("currency", dictionaryParam["currency"]);
+            hashParam.Add("disablenumber", dictionaryParam["disablenumber"]);
+
+            #region Sportsbook
+
+            var sports = SportsSection.Instance.Sports;
+            foreach (SportsElement sport in SportsSection.Instance.Sports)
+            {
+                sportId = sport.Id.ToLower();
+                if (string.Equals(sportId, "161", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                paramName = "minbetv" + sportId;
+                hashParam.Add(paramName, dictionaryParam[paramName]);
+
+                paramName = "maxbetv" + sportId;
+                hashParam.Add(paramName, dictionaryParam[paramName]);
+
+                paramName = "maxpermatchv" + sportId;
+                hashParam.Add(paramName, dictionaryParam[paramName]);
+
+                if (string.Equals(sportId, "99mp", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                var betTypes = sport.Bettype.Split(new char[] { ',' });
+                var betTypesLength = betTypes.Length;
+                for (var l = 0; l < betTypesLength; l++)
+                {
+                    paramName = "v" + sportId + "spositiontaking_" + betTypes[l];
+                    hashParam.Add(paramName, dictionaryParam[paramName]);
+
+                    paramName = "v" + sportId + "mpositiontaking_" + betTypes[l];
+                    hashParam.Add(paramName, dictionaryParam[paramName]);
+
+                    paramName = "v" + sportId + "apositiontaking_" + betTypes[l];
+                    hashParam.Add(paramName, dictionaryParam[paramName]);
+
+                    if (sportId == "1")
+                    {
+                        paramName = "v" + sportId + "slivepositiontaking_" + betTypes[l];
+                        hashParam.Add(paramName, dictionaryParam[paramName]);
+
+                        paramName = "v" + sportId + "mlivepositiontaking_" + betTypes[l];
+                        hashParam.Add(paramName, dictionaryParam[paramName]);
+
+                        paramName = "v" + sportId + "alivepositiontaking_" + betTypes[l];
+                        hashParam.Add(paramName, dictionaryParam[paramName]);
+                    }
+                }
+            }
+
+            #endregion Sportsbook
+            #region NumberGame
+
+            sportId = "161";
+            paramName = "minbetv" + sportId;
+            hashParam.Add(paramName, dictionaryParam[paramName]);
+            paramName = "maxbetv" + sportId;
+            hashParam.Add(paramName, dictionaryParam[paramName]);
+            paramName = "maxpermatchv" + sportId;
+            hashParam.Add(paramName, dictionaryParam[paramName]);
+            paramName = "maxperballv" + sportId;
+            hashParam.Add(paramName, dictionaryParam[paramName]);
+
+            var levelType = new string[] { "s", "m", "a" };
+            var levelTypeLength = levelType.Length;
+            for (var i = 0; i < levelTypeLength; i++)
+            {
+                var type = levelType[i];
+                foreach (SportsElement sport in sports)
+                {
+                    if (!string.Equals(sport.Id.Trim(), sportId) ||
+                        sport.Bettype == null ||
+                        sport.Bettype == "NA" ||
+                        sport.Bettype == string.Empty ||
+                        string.IsNullOrWhiteSpace(sport.Bettype.Trim()))
+                    {
+                        continue;
+                    }
+
+                    var betTypes = sport.Bettype.Split(new char[] { ',' });
+                    foreach (var betType in betTypes)
+                    {
+                        var betTypeAfterTrim = betType.Trim();
+                        paramName = "v" + sportId + type + "positiontaking_" + betTypeAfterTrim;
+                        hashParam.Add(paramName, dictionaryParam[paramName]);
+                        paramName = "v" + sportId + type + "livepositiontaking_" + betTypeAfterTrim;
+                        hashParam.Add(paramName, dictionaryParam[paramName]);
+                    }
+                }
+            }
+
+            #endregion NumberGame
+            #region Racing
+
+            var racings = RacingSection.Instance.Racings;
+            foreach (RacingElement racing in racings)
+            {
+                if (!racing.Active)
+                {
+                    continue;
+                }
+
+                foreach (ToteElement tote in racing.Totes)
+                {
+                    if (!tote.Active)
+                    {
+                        continue;
+                    }
+
+                    paramName = "v" + racing.Id + "minbet_" + tote.Id;
+                    hashParam.Add(paramName, dictionaryParam[paramName]);
+                    paramName = "v" + racing.Id + "maxbet_" + tote.Id;
+                    hashParam.Add(paramName, dictionaryParam[paramName]);
+                    paramName = "v" + racing.Id + "maxpermatch_" + tote.Id;
+                    hashParam.Add(paramName, dictionaryParam[paramName]);
+                    if (tote.BetType == null ||
+                        tote.BetType == "NA" ||
+                        tote.BetType == string.Empty ||
+                        string.IsNullOrWhiteSpace(tote.BetType.Trim()))
+                    {
+                        continue;
+                    }
+
+                    var betTypes = tote.BetType.Split(new char[] { ',' });
+                    foreach (var betType in betTypes)
+                    {
+                        paramName = "v" + racing.Id + "discount_" + betType;
+                        hashParam.Add(paramName, dictionaryParam[paramName]);
+                        paramName = "v" + racing.Id + "spositiontaking_" + betType;
+                        hashParam.Add(paramName, dictionaryParam[paramName]);
+                        paramName = "v" + racing.Id + "mpositiontaking_" + betType;
+                        hashParam.Add(paramName, dictionaryParam[paramName]);
+                        paramName = "v" + racing.Id + "apositiontaking_" + betType;
+                        hashParam.Add(paramName, dictionaryParam[paramName]);
+                        paramName = "v" + racing.Id + "ibcpositiontaking_" + betType;
+                        hashParam.Add(paramName, dictionaryParam[paramName]);
+                    }
+
+                    paramName = "disable" + racing.Id + "_" + tote.Id;
+                    hashParam.Add(paramName, dictionaryParam[paramName]);
+                }
+            }
+
+
+            #endregion Racing
+            #region VirtualSports
+
+            var virtualSports = VirtualSportsSection.Instance.Sports;
+
+            paramName = "disablevirtualsports";
+            hashParam.Add(paramName, dictionaryParam[paramName]);
+            var virtualSportsParams = "<products>";
+            foreach (VirtualSportsElement sport in virtualSports)
+            {
+                if (!sport.Active)
+                {
+                    continue;
+                }
+
+                var betTypes = sport.Bettype;
+                sportId = sport.Id;
+
+                virtualSportsParams += string.Format("<product SportType=\"{0}\"" +
+                    " MaxBet=\"{1}\"" +
+                    " MinBet=\"{2}\"" +
+                    " MaxPerMatch=\"{3}\"" +
+                    " sPositionTaking=\"{4}\"" +
+                    " mPositionTaking=\"{5}\"" +
+                    " aPositionTaking=\"{6}\"></product>",
+                    sportId,
+                    dictionaryParam["v" + sportId + "maxbet"],
+                    dictionaryParam["v" + sportId + "minbet"],
+                    dictionaryParam["v" + sportId + "maxpermatch"],
+                    dictionaryParam["v" + sportId + "spositiontaking"],
+                    dictionaryParam["v" + sportId + "mpositiontaking"],
+                    dictionaryParam["v" + sportId + "apositiontaking"]);
+            }
+
+            virtualSportsParams += "</products>";
+            hashParam.Add("virtualsportlist", virtualSportsParams);
+
+            #endregion VirtualSports
+
+            return hashParam;
+        }
+
+        private Hashtable GetAddNewHashTableParams_DummyUser(NewLicenseePostParam newLicenseePostParam)
+        {
+            string paramName;
+            string sportId;
+            Dictionary<string, object> dictionaryParam = new Dictionary<string, object>();
+            foreach (var param in newLicenseePostParam.PostParams)
+            {
+                paramName = param.Name.ToLower();
+                if (dictionaryParam.ContainsKey(paramName))
+                {
+                    continue;
+                }
+
+                dictionaryParam.Add(paramName, param.Value);
+            }
+
+            var hashParam = new Hashtable();
+            hashParam.Add("creator", dictionaryParam["creator"]);
+            hashParam.Add("site", dictionaryParam["site"]);
+            hashParam.Add("currency", dictionaryParam["currency"]);
+            hashParam.Add("disablenumber", dictionaryParam["disablenumber"]);
+
+            #region Sportsbook
+
+            var sports = SportsSection.Instance.Sports;
+            foreach (SportsElement sport in SportsSection.Instance.Sports)
+            {
+                sportId = sport.Id;
+                if (string.Equals(sportId, "99mp", StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(sportId, "161", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                paramName = "minbetv" + sportId;
+                hashParam.Add(paramName, 0);
+
+                paramName = "maxbetv" + sportId;
+                hashParam.Add(paramName, 0);
+
+                paramName = "maxpermatchv" + sportId;
+                hashParam.Add(paramName, 0);
+
+                var betTypes = sport.Bettype.Split(new char[] { ',' });
+                var betTypesLength = betTypes.Length;
+                for (var l = 0; l < betTypesLength; l++)
+                {
+                    paramName = "v" + sportId + "spositiontaking_" + betTypes[l];
+                    hashParam.Add(paramName, 0);
+
+                    paramName = "v" + sportId + "mpositiontaking_" + betTypes[l];
+                    hashParam.Add(paramName, 0);
+
+                    paramName = "v" + sportId + "apositiontaking_" + betTypes[l];
+                    hashParam.Add(paramName, 0);
+
+                    if (sportId == "1")
+                    {
+                        paramName = "v" + sportId + "slivepositiontaking_" + betTypes[l];
+                        hashParam.Add(paramName, 0);
+
+                        paramName = "v" + sportId + "mlivepositiontaking_" + betTypes[l];
+                        hashParam.Add(paramName, 0);
+
+                        paramName = "v" + sportId + "alivepositiontaking_" + betTypes[l];
+                        hashParam.Add(paramName, 0);
+                    }
+                }
+            }
+
+            #endregion Sportsbook
+            #region NumberGame
+
+            sportId = "161";
+            paramName = "minbetv" + sportId;
+            hashParam.Add(paramName, 0);
+            paramName = "maxbetv" + sportId;
+            hashParam.Add(paramName, 0);
+            paramName = "maxpermatchv" + sportId;
+            hashParam.Add(paramName, 0);
+            paramName = "maxperballv" + sportId;
+            hashParam.Add(paramName, 0);
+
+            var levelType = new string[] { "s", "m", "a" };
+            var levelTypeLength = levelType.Length;
+            for (var i = 0; i < levelTypeLength; i++)
+            {
+                var type = levelType[i];
+                foreach (SportsElement sport in sports)
+                {
+                    if (!string.Equals(sport.Id.Trim(), sportId) ||
+                        sport.Bettype == null ||
+                        sport.Bettype == "NA" ||
+                        sport.Bettype == string.Empty ||
+                        string.IsNullOrWhiteSpace(sport.Bettype.Trim()))
+                    {
+                        continue;
+                    }
+
+                    var betTypes = sport.Bettype.Split(new char[] { ',' });
+                    foreach (var betType in betTypes)
+                    {
+                        paramName = "v" + sportId + type + "positiontaking_" + betType;
+                        hashParam.Add(paramName, 0);
+                        paramName = "v" + sportId + type + "livepositiontaking_" + betType;
+                        hashParam.Add(paramName, 0);
+                    }
+                }
+            }
+
+            #endregion NumberGame
+            #region Racing
+
+            var racings = RacingSection.Instance.Racings;
+            foreach (RacingElement racing in racings)
+            {
+                if (!racing.Active)
+                {
+                    continue;
+                }
+
+                foreach (ToteElement tote in racing.Totes)
+                {
+                    if (!tote.Active)
+                    {
+                        continue;
+                    }
+
+                    paramName = "v" + racing.Id + "minbet_" + tote.Id;
+                    hashParam.Add(paramName, 0);
+                    paramName = "v" + racing.Id + "maxbet_" + tote.Id;
+                    hashParam.Add(paramName, 0);
+                    paramName = "v" + racing.Id + "maxpermatch_" + tote.Id;
+                    hashParam.Add(paramName, 0);
+                    if (tote.BetType == null ||
+                        tote.BetType == "NA" ||
+                        tote.BetType == string.Empty ||
+                        string.IsNullOrWhiteSpace(tote.BetType.Trim()))
+                    {
+                        continue;
+                    }
+
+                    var betTypes = tote.BetType.Split(new char[] { ',' });
+                    foreach (var betType in betTypes)
+                    {
+                        paramName = "v" + racing.Id + "discount_" + betType;
+                        hashParam.Add(paramName, 0);
+                        paramName = "v" + racing.Id + "spositiontaking_" + betType;
+                        hashParam.Add(paramName, 0);
+                        paramName = "v" + racing.Id + "mpositiontaking_" + betType;
+                        hashParam.Add(paramName, 0);
+                        paramName = "v" + racing.Id + "apositiontaking_" + betType;
+                        hashParam.Add(paramName, 0);
+                        paramName = "v" + racing.Id + "ibcpositiontaking_" + betType;
+                        hashParam.Add(paramName, 0);
+                    }
+
+                    paramName = "disable" + racing.Id + "_" + tote.Id;
+                    hashParam.Add(paramName, dictionaryParam[paramName]);
+                }
+            }
+
+
+            #endregion Racing
+            #region VirtualSports
+
+            var virtualSports = VirtualSportsSection.Instance.Sports;
+
+            paramName = "disablevirtualsports";
+            hashParam.Add(paramName, dictionaryParam[paramName]);
+            var virtualSportsParams = "<VTSports>";
+            foreach (VirtualSportsElement sport in virtualSports)
+            {
+                if (!sport.Active)
+                {
+                    continue;
+                }
+
+                var betTypes = sport.Bettype;
+                sportId = sport.Id;
+
+                virtualSportsParams += string.Format("<VTSport SportType = \"{0}\"" +
+                    " MaxBet=\"{1}\"" +
+                    " MinBet=\"{2}\"" +
+                    " MaxPerMatch=\"{3}\"" +
+                    " sPositionTaking=\"{4}\"" +
+                    " mPositionTaking=\"{5}\"" +
+                    " aPositionTaking=\"{6}\"></VTSport>",
+                    sportId,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0);
+            }
+
+            virtualSportsParams += "/<VTSports>";
+            hashParam.Add("virtualsportsPparams", virtualSportsParams);
+
+            #endregion VirtualSports
+
+            return hashParam;
+        }
+
+        public Result NewLicenseeAddNewSuper(NewLicenseePostParam newLicenseePostParam)
+        {
+            var hashParam = GetAddNewHashTableParams(newLicenseePostParam);
             hashParam.Add("username", newLicenseePostParam.SuperName);
             hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
             hashParam.Add("custid", 0);
@@ -136,27 +549,22 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
 
         public Result NewLicenseeAddNewMaster(NewLicenseePostParam newLicenseePostParam)
         {
+            var hashParam = GetAddNewHashTableParams(newLicenseePostParam);
+            hashParam.Add("srecommend", newLicenseePostParam.SuperId);
+            hashParam.Add("username", newLicenseePostParam.MasterName);
+            hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+
+            hashParam.Add("custid", 0);
+            hashParam.Add("errcode", 0);
+            hashParam.Add("errmsg", string.Empty);
+
+            if (!hashParam.ContainsKey("userpwd"))
+            {
+                hashParam.Add("userpwd", Encryption.CfsEnCode("123qwe"));
+            }
+
             using (var objDb = new ObjectDb("NewLicensee_AdNewMaster"))
             {
-                var hashParam = new Hashtable();
-                foreach (var param in newLicenseePostParam.PostParams)
-                {
-                    hashParam.Add(param.Name.ToLower(), param.Value);
-                }
-
-                hashParam.Add("srecommend", newLicenseePostParam.SuperId);
-                hashParam.Add("username", newLicenseePostParam.MasterName);
-                hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
-
-                hashParam.Add("custid", 0);
-                hashParam.Add("errcode", 0);
-                hashParam.Add("errmsg", string.Empty);
-
-                if (!hashParam.ContainsKey("userpwd"))
-                {
-                    hashParam.Add("userpwd", Encryption.CfsEnCode("123qwe"));
-                }
-
                 objDb.AssignParamValues(hashParam);
 
                 objDb.ExecuteNonQuery();
@@ -243,12 +651,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 return new Result(1, "Wrong role ID level!");
             }
 
-            var hashParam = new Hashtable();
-            foreach (var param in newLicenseePostParam.PostParams)
-            {
-                hashParam.Add(param.Name.ToLower(), 0);
-            }
-
+            var hashParam = GetAddNewHashTableParams_DummyUser(newLicenseePostParam);
             hashParam.Add("ip", Utils.GetClientIP());
             hashParam.Add("custid", 0);
             hashParam.Add("errcode", 0);
@@ -319,27 +722,22 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
 
         public Result NewLicenseeAddNewAgent(NewLicenseePostParam newLicenseePostParam)
         {
+            var hashParam = GetAddNewHashTableParams(newLicenseePostParam);
+            hashParam.Add("mrecommend", newLicenseePostParam.MasterId);
+            hashParam.Add("username", newLicenseePostParam.AgentName);
+            hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+
+            hashParam.Add("custid", 0);
+            hashParam.Add("errcode", 0);
+            hashParam.Add("errmsg", string.Empty);
+
+            if (!hashParam.ContainsKey("userpwd"))
+            {
+                hashParam.Add("userpwd", Encryption.CfsEnCode("123qwe"));
+            }
+
             using (var objDb = new ObjectDb("NewLicensee_AdNewAgent"))
             {
-                var hashParam = new Hashtable();
-                foreach (var param in newLicenseePostParam.PostParams)
-                {
-                    hashParam.Add(param.Name.ToLower(), param.Value);
-                }
-
-                hashParam.Add("mrecommend", newLicenseePostParam.MasterId);
-                hashParam.Add("username", newLicenseePostParam.AgentName);
-                hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
-
-                hashParam.Add("custid", 0);
-                hashParam.Add("errcode", 0);
-                hashParam.Add("errmsg", string.Empty);
-
-                if (!hashParam.ContainsKey("userpwd"))
-                {
-                    hashParam.Add("userpwd", Encryption.CfsEnCode("123qwe"));
-                }
-
                 objDb.AssignParamValues(hashParam);
 
                 objDb.ExecuteNonQuery();
@@ -358,27 +756,22 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
 
         public Result NewLicenseeAddNewMember(NewLicenseePostParam newLicenseePostParam)
         {
+            var hashParam = GetAddNewHashTableParams(newLicenseePostParam);
+            hashParam.Add("recommend", newLicenseePostParam.AgentId);
+            hashParam.Add("username", newLicenseePostParam.MemberName);
+            hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+
+            hashParam.Add("custid", 0);
+            hashParam.Add("errcode", 0);
+            hashParam.Add("errmsg", string.Empty);
+
+            if (!hashParam.ContainsKey("userpwd"))
+            {
+                hashParam.Add("userpwd", Encryption.CfsEnCode("123qwe"));
+            }
+
             using (var objDb = new ObjectDb("NewLicensee_AdNewMember"))
             {
-                var hashParam = new Hashtable();
-                foreach (var param in newLicenseePostParam.PostParams)
-                {
-                    hashParam.Add(param.Name.ToLower(), param.Value);
-                }
-
-                hashParam.Add("recommend", newLicenseePostParam.AgentId);
-                hashParam.Add("username", newLicenseePostParam.MemberName);
-                hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
-
-                hashParam.Add("custid", 0);
-                hashParam.Add("errcode", 0);
-                hashParam.Add("errmsg", string.Empty);
-
-                if (!hashParam.ContainsKey("userpwd"))
-                {
-                    hashParam.Add("userpwd", Encryption.CfsEnCode("123qwe"));
-                }
-
                 objDb.AssignParamValues(hashParam);
 
                 objDb.ExecuteNonQuery();
@@ -535,7 +928,6 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
             }
         }
 
-
         public DataTable SelAllLicensee()
         {
             using (var objDb = new ObjectDb("Dep_LicenseeSelAll"))
@@ -545,7 +937,6 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 return dataSet.Tables[0];
             }
         }
-
 
         public DataSet GetMasterSettingForAddNew(int custId)
         {

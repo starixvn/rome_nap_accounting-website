@@ -2,12 +2,12 @@
     isUpdateCompleted: false,
     assignVirtualSportsSettings: function (params) {
         var totalSports = window.virtualSports.length;
-        if (totalSports > 0) {
-            params.push({
-                Name: "disablevirtualsports",
-                Value: !$("#cbxEnableVirtualSports").is(":checked")
-            });
+        params.push({
+            Name: "disablevirtualsports",
+            Value: !$("#cbxEnableVirtualSports").is(":checked")
+        });
 
+        if (totalSports > 0) {
             for (var i = 0; i < totalSports; ++i) {
                 var sport = window.virtualSports[i];
                 var bettypes = sport.Bettype;

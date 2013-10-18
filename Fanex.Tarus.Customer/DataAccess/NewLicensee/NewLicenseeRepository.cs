@@ -26,7 +26,6 @@ namespace Fanex.Tarus.Customer.DataAccess.NewLicensee
         {
             var dataTable = new DataTable();
             Hashtable param = new Hashtable();
-            param.Add("system", criteria.SystemName.ToUpper());
             using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 objDb.AssignParamValues(param);
@@ -46,7 +45,7 @@ namespace Fanex.Tarus.Customer.DataAccess.NewLicensee
                     {
                         Id = CastAide.AsString(row["exchangeid"]),
                         Value = CastAide.AsString(row["currency"]),
-                        Code = CastAide.AsString(row["exchangeid"])
+                        Code = CastAide.AsString(row["code"])
                     });
                 }
             }

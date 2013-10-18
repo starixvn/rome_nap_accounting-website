@@ -35,11 +35,7 @@ namespace Fanex.Tarus.Customer.Controller.NewLicensee
 
         public List<Currency> GetCurrenciesBySystem()
         {
-            var currencies = _newLicenseeService.GetCurrenciesBySystem(new GetCurrenciesBySystemCriteria
-            {
-                SystemName = AppSession.SYSTEM
-            });
-
+            var currencies = _newLicenseeService.GetCurrenciesBySystem(new GetCurrenciesBySystemCriteria());
             return currencies;
         }
     }

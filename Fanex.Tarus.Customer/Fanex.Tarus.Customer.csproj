@@ -221,6 +221,8 @@
     <Compile Include="Entities\CreditCustomer\Site.cs" />
     <Compile Include="Entities\CreditCustomer\Sites.cs" />
     <Compile Include="Entities\EditLicensee\LicenseeInfo.cs" />
+    <Compile Include="Entities\EditLicensee\SettingInfo.cs" />
+    <Compile Include="Entities\EditLicensee\VirtualSportsSettingInfo.cs" />
     <Compile Include="Entities\NewLicensee\Currency.cs" />
     <Compile Include="Entities\CustomerInfo.cs" />
     <Compile Include="Entities\CustomerList\CustomerList.cs" />

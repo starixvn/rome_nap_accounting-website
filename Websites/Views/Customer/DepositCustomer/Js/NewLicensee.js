@@ -265,7 +265,7 @@ newLic.getPostParam = function () {
         , Value: !$("#cbxEnableNumberGame").is(":checked")
     });
 
-    //virutal sports
+    //virtual sports
     if (typeof vsSuperSetting != 'undefined') {
         vsSuperSetting.assignVirtualSportsSettings(params);
     }

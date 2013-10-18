@@ -47,7 +47,11 @@ var EditLicenseeManager = function () {
     };
 
     self.Constants = {
-        MaxMonerValue: 912337203685477.5807
+        MaxMonerValue: 912337203685477.5807,
+
+        Sports: {
+            NumberGame: 161
+        }
     };
 
     self.CacheData = {
@@ -431,7 +435,14 @@ var EditLicenseeManager = function () {
     };
 
     self.RenderLicenseeInfo = function (licenseeInfo) {
-        if (licenseeInfo == null || licenseeInfo.ErrorCode > 0) {
+        if (licenseeInfo == null) {
+            self.Tables.divLicenseeInfo.addClass("display-none");
+            showAlertMessage("result-message", viewResources.ThereIsNoData, 1);
+            self.Tables.resultMessage.removeClass("display-none");
+            return;
+        }
+
+        if (licenseeInfo != null && licenseeInfo.ErrorCode > 0) {
             self.Tables.divLicenseeInfo.addClass("display-none");
             showAlertMessage("result-message", licenseeInfo.ErrorMessage, 1);
             self.Tables.resultMessage.removeClass("display-none");
@@ -442,11 +453,83 @@ var EditLicenseeManager = function () {
 
         self.Tables.labelLicenseeSite.html(licenseeInfo.Site);
         self.Tables.labelLicenseeCurrency.html(licenseeInfo.Currency);
-        if (licenseeInfo.EnableNumberGame) {
-            self.Tables.checkboxEnableNumbergame.attr("checked", "checked");
+        self.Tables.checkboxEnableNumbergame.attr("checked", licenseeInfo.EnableNumberGame ?
+            "checked" :
+            null);
+
+        var settingInfoDictionary = self.GetSettingInfoDictionary(licenseeInfo);
+        self.RenderLicenseeInfo_Sportsbook(licenseeInfo, settingInfoDictionary);
+        self.RenderLicenseeInfo_NumberGame(licenseeInfo, settingInfoDictionary);
+        self.RenderLicenseeInfo_Racing(licenseeInfo, settingInfoDictionary);
+        self.Tables.divLicenseeInfo.removeClass("display-none");
+    };
+
+    self.GetSettingInfoDictionary = function (licenseeInfo) {
+        var settingInfoDictionary = {};
+
+        var settingLength = licenseeInfo.SettingInfo.length;
+        for (var i = 0; i < settingLength; i++) {
+            var settingInfo = licenseeInfo.SettingInfo[i];
+            settingInfoDictionary[settingInfo.Name] = settingInfo.Value;
         }
 
-        self.Tables.divLicenseeInfo.removeClass("display-none");
+        return settingInfoDictionary;
+    };
+
+    self.RenderLicenseeInfo_Sportsbook = function (licenseeInfo, settingInfoDictionary) {
+        var sportId;
+        var settingName;
+        var sportLength = sportsbookSports.length;
+        for (var i = 0; i < sportLength; i++) {
+            var sport = sportsbookSports[i];
+            sportId = sport.Id.toLowerCase();
+            if (sportId == self.Constants.Sports.NumberGame.toString()) {
+                continue;
+            }
+
+            settingName = "minbetv" + sportId;
+            $("#" + settingName).val(settingInfoDictionary[settingName]);
+            settingName = "maxbetv" + sportId;
+            $("#" + settingName).val(settingInfoDictionary[settingName]);
+            settingName = "maxpermatchv" + sportId;
+            $("#" + settingName).val(settingInfoDictionary[settingName]);
+        }
+    };
+    self.RenderLicenseeInfo_NumberGame = function (licenseeInfo, settingInfoDictionary) {
+        var sportId = self.Constants.Sports.NumberGame.toString();
+        var settingName = "minbetv" + sportId;
+        $("#" + settingName).val(settingInfoDictionary[settingName]);
+        var settingName = "maxbetv" + sportId;
+        $("#" + settingName).val(settingInfoDictionary[settingName]);
+        var settingName = "maxpermatchv" + sportId;
+        $("#" + settingName).val(settingInfoDictionary[settingName]);
+        var settingName = "maxperballv" + sportId;
+        $("#" + settingName).val(settingInfoDictionary[settingName]);
+    };
+    self.RenderLicenseeInfo_Racing = function (licenseeInfo, settingInfoDictionary) {
+        var sportId;
+        var settingName;
+        var racingToteTypesLength = racingToteTypes.length;
+        for (var i = 0; i < racingToteTypesLength; i++) {
+            var racing = racingToteTypes[i];
+            var racingLength = racing.Totes.length;
+            for (var j = 0; j < racingLength; j++) {
+                var racingToteType = racing.Totes[j];
+                settingName = "v" + racing.Id + "minbet_" + racingToteType.Id;
+                $("#" + settingName).val(settingInfoDictionary[settingName]);
+                settingName = "v" + racing.Id + "maxbet_" + racingToteType.Id;
+                $("#" + settingName).val(settingInfoDictionary[settingName]);
+                settingName = "v" + racing.Id + "maxpermatch_" + racingToteType.Id;
+                $("#" + settingName).val(settingInfoDictionary[settingName]);
+
+                settingName = "disable" + racing.Id + "_" + racingToteType.Id;
+                $("#" + settingName).attr("checked", settingInfoDictionary[settingName] ?
+                    "checked" :
+                    null);
+
+                $("#v151discount_41").val("0.032");
+            }
+        }
     };
 };
 

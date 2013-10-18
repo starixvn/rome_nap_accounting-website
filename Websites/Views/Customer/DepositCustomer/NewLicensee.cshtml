@@ -45,10 +45,14 @@
         var isFirst = true;
         foreach (var currency in currencyList)
         {
-            var currencyOptionText = currency.Code;
-            if (!string.IsNullOrEmpty(currency.Value))
+            var currencyOptionText = string.Empty;
+            if (!string.IsNullOrEmpty(currency.Code))
             {
-                currencyOptionText += " (" + currency.Value + ")";
+                currencyOptionText += currency.Code + " (" + currency.Value + ")";
+            }
+            else
+            {
+                currencyOptionText = currency.Value;
             }
 
             if (isFirst)

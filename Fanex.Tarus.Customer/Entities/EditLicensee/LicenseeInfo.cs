@@ -10,7 +10,11 @@
 namespace Fanex.Tarus.Customer.Entities.EditLicensee
 {
     using System;
+    using System.Collections.Generic;
 
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
     [Serializable]
     public class LicenseeInfo
     {
@@ -23,5 +27,9 @@ namespace Fanex.Tarus.Customer.Entities.EditLicensee
         public int ErrorCode { get; set; }
 
         public string ErrorMessage { get; set; }
+
+        public List<SettingInfo> SettingInfo { get; set; }
+
+        public List<VirtualSportsSettingInfo> VirtualSportsSettingInfo { get; set; }
     }
 }

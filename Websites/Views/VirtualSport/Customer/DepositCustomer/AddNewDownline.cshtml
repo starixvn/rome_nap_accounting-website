@@ -1,4 +1,5 @@
-﻿<table id="tblTabVirtualSports" cellspacing="0" cellpadding="0" border="0" class="tblPTheader"
+﻿@using Fanex.Tarus.Infrastructure.Configurations;
+<table id="tblTabVirtualSports" cellspacing="0" cellpadding="0" border="0" class="tblPTheader"
     style="margin-top: 15px">
     <tbody>
         <tr id="btntop" style="cursor: pointer;">
@@ -40,14 +41,14 @@
 </div>
 
 @{
-    var virtualSports = Fanex.Tarus.VirtualSport.Core.Configurations.VirtualSportsSection.Instance.Sports;
+    var virtualSports = VirtualSportsSection.Instance.Sports;
 }
 <script type="text/javascript">
     var virtualSports = [];
     (function () {
     @{
         @:var sport;
-        foreach (Fanex.Tarus.VirtualSport.Core.Configurations.VirtualSportsElement sport in virtualSports)
+        foreach (VirtualSportsElement sport in virtualSports)
         {
             if (!sport.Active)
             {

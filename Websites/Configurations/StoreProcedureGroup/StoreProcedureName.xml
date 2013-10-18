@@ -281,10 +281,10 @@
   <Function Name="Customer - New Licensee">
     <Setting Key="Dep_LicenseeSelAll" SpName="Acc_Dep_LicenseeSelAll" DbName="archive" />
 
-    <Setting Key="NewLicensee_AdNewSuper" SpName="Acc_Dep_CustomerInsMember_Com" DbName="main" />
-    <Setting Key="NewLicensee_AdNewMaster" SpName="Acc_Dep_CustomerInsMember_SAg" DbName="main" />
-    <Setting Key="NewLicensee_AdNewAgent" SpName="Acc_Dep_CustomerInsMember_MAg" DbName="main" />
-    <Setting Key="NewLicensee_AdNewMember" SpName="Acc_Dep_CustomerInsMember_Ag" DbName="main" />
+    <Setting Key="NewLicensee_AdNewSuper" SpName="Acc_Dep_CustomerInsMember_Com_Copy" DbName="main" />
+    <Setting Key="NewLicensee_AdNewMaster" SpName="Acc_Dep_CustomerInsMember_SAg_Copy" DbName="main" />
+    <Setting Key="NewLicensee_AdNewAgent" SpName="Acc_Dep_CustomerInsMember_MAg_Copy" DbName="main" />
+    <Setting Key="NewLicensee_AdNewMember" SpName="Acc_Dep_CustomerInsMember_Ag_Copy" DbName="main" />
 
     <Setting Key="NewLicensee_GetSuperSetting" SpName="Acc_Dep_CustomerSelMember_Com" DbName="archive" />
     <Setting Key="NewLicensee_GetMasterSetting" SpName="Acc_Dep_CustomerSelMember_SAg" DbName="archive" />
@@ -299,7 +299,7 @@
     <Setting Key="DepositCust_UpdateAgentSetting" SpName="Acc_Dep_CustomerUpdMember_MAg" DbName="main" />
     <Setting Key="DepositCust_UpdateMemberSetting" SpName="Acc_Dep_CustomerUpdMember_Ag" DbName="main" />
     
-    <Setting Key="Customer_NewLicensee_GetCurrencies" SpName="Acc_ExchangeSel" DbName="main"  />
+    <Setting Key="Customer_NewLicensee_GetCurrencies" SpName="Acc_CurrencySel" DbName="main"  />
   </Function>
   <Function Name="Customer - Edit Licensee">
     <Setting Key="Customer_EditLicensee_GetLicenseeInfo" SpName="Acc_ExchangeSel" DbName="main"  />
