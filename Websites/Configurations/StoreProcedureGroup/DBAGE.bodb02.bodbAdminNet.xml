@@ -106,11 +106,15 @@
     <Setting Key="Acc_CustomerSelEditMemberVS" SpName="Acc_CustomerSelEditMemberVS" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
     <Setting Key="Acc_CustomerSelMEditCustomerVS" SpName="Acc_CustomerSelMEditCustomerVS" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
   </Function>
-  <Function Name="Sepcial Delete - Virtual Sports - Delete Bets">
-    <Setting Key="BetTypeSel_VirtualSports" SpName="Acc_BetTypeSel" DbName="DBAGE.bodb02.bodbAdminNet" />
+
+  <Function Name="Sepcial Delete - Sportbook">    
+    <Setting Key="BettransSelSpecialDel" SpName="Acc_BettransSelSpecialDel" DbName="DBAGE.bodb02.bodbAdminNet" />    
+  </Function>
+  <Function Name="Sepcial Delete - Virtual Sports - Delete Bets">    
     <Setting Key="BettransSelSpecialDel_VirtualSports" SpName="Acc_BettransSelSpecialDel_VirtualSports" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Sepcial Delete - Core">
+    <Setting Key="Acc_BetTypeSel" SpName="Acc_BetTypeSel" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Acc_SpecialDel_CheckMatchIDwithRefno" SpName="Acc_SpecialDel_CheckMatchIDwithRefno" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="SelMatchInfo" SpName="Acc_MatchSelByID" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>

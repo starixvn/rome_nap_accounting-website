@@ -97,10 +97,16 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 hash.Add("hdp", hdp);
                 hash.Add("liveindicator", liveindicator);
                 hash.Add("username", username);
-                var spElement =
-                    new SpecialDeleteStoreProcedure().GetSpecialDeleteStoreProcedure(
-                        SpecialDeleteGroupSection.StoreCollection.Sportbook, "BettransSelSpecialDel");
-                rs = DbHelper.Execute(spElement.Name, hash, spElement.DbName, 300);
+
+                using (ObjectDb db = new ObjectDb("BettransSelSpecialDel"))
+                {
+                    db.AssignParamValues(hash);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -138,15 +144,19 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var hash = new Hashtable();
                 hash.Add("matchid", matchId);
-                var spElement =
-                    new SpecialDeleteStoreProcedure().GetSpecialDeleteStoreProcedure(
-                        SpecialDeleteGroupSection.StoreCollection.Sportbook, "SelMatchInfo");
-                rs = DbHelper.Execute(spElement.Name, hash, spElement.DbName, 300);
+
+                using (ObjectDb db = new ObjectDb("SelMatchInfo"))
+                {
+                    db.AssignParamValues(hash);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }

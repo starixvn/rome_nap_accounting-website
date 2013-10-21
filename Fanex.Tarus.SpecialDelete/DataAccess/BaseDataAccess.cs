@@ -52,7 +52,7 @@ namespace Fanex.Tarus.SpecialDelete.DataAccess
 
         public DataSet SelBettype(Product.ProductType productType)
         {
-            using (ObjectDb objDB = new ObjectDb("BetTypeSel_VirtualSports"))
+            using (ObjectDb objDB = new ObjectDb("Acc_BetTypeSel"))
             {
                 Hashtable h = new Hashtable();
                 h.Add("mode", productType);
