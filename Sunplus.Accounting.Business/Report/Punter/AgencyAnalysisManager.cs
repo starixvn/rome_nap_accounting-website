@@ -250,6 +250,7 @@ namespace BLL.Report.Punter
             try
             {
                 rs = IBCProvider.ReportProvider.PunterAnalysis().DirectCustomerReport(hash);
+              
             }
             catch (Exception ex)
             {
@@ -272,12 +273,12 @@ namespace BLL.Report.Punter
             int rowspan = 0;
             string title = "";
             DbResult rs = GetDirectCustomerReport(fMonth, fYear, tMonth, tYear, statistic, username);
-
-            dataTable = rs.ResultSet.Tables[0];
-            if (username.Length == 0)
-                dtTotal = rs.ResultSet.Tables[1];
-
-            DataRow[] dataRows = dataTable.Select();
+          
+            if (rs.ResultSet.Tables.Count>0)
+                dataTable = rs.ResultSet.Tables[0];
+         
+            if (username.Length == 0 && rs.ResultSet.Tables.Count>1)
+                dtTotal = rs.ResultSet.Tables[1];           
 
             string fromdate = fMonth + "/01/" + fYear;
             string todate = tMonth + "/" + GetMaxDayByMonth(tMonth) + "/" + tYear;
@@ -501,8 +502,7 @@ namespace BLL.Report.Punter
             return JsonUtil.ToJson(h);
 
             #endregion generate data
-
-            return tpl;
+           
         }
 
         #endregion DirectCustomerReport
@@ -516,7 +516,7 @@ namespace BLL.Report.Punter
             var gem = new ExcelGemboxUtils();
 
             DataTable dataTable = new DataTable(), dtTotal = new DataTable();
-            DataRow[] dataRows = { };
+          
             string title = "";
             int rowspan = 0;
 
@@ -532,8 +532,9 @@ namespace BLL.Report.Punter
             else
             {
                 DbResult rs = GetDirectCustomerReport(fMonth, fYear, tMonth, tYear, statistic, username);
-                dataTable = rs.ResultSet.Tables[0];
-                if (username.Length == 0)
+                if (rs.ResultSet.Tables.Count>0)
+                    dataTable = rs.ResultSet.Tables[0];
+                if (username.Length == 0 && rs.ResultSet.Tables.Count>1)
                     dtTotal = rs.ResultSet.Tables[1];
 
                 string fromdate = fMonth + "/01/" + fYear;
@@ -541,8 +542,6 @@ namespace BLL.Report.Punter
 
                 title = " Analysis from " + fromdate + " to " + todate;
             }
-
-            dataRows = dataTable.Select();
 
             switch (statistic)
             {

@@ -134,7 +134,6 @@ namespace BLL.Report.HR.GroupDaily
 
                 ExcelWorksheetCollection worksheets = excelFile.Worksheets;
                 string filename = "WinlostHR_OpenTote-" + DateTime.Today.ToShortDateString().Replace("/", "-");
-                string strTitle = "";
                 ExcelWorksheet ws = null;
                 string tag = "Horse Racing Group Daily";
                 ws = worksheets.Add(tag);

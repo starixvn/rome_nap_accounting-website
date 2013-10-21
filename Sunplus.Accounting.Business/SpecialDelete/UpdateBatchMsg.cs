@@ -120,7 +120,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                     batches.Add(batch);
                 }
             }
-            catch (Exception ex)
+            catch
             {
             }
 
