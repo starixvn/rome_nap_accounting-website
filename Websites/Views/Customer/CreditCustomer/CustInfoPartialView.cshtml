@@ -110,6 +110,16 @@ else if ((Model.IsSuperSetting && Model.IsMemberSetting) || (Model.IsMasterSetti
                             <td><span data-bind="text: customer.commissionSetting.playerDiscountNumber"></span></td>
                         </tr>
                         <!--/game-comm-->
+                         <!--hr-fixed-odds-->
+                        <tr>
+                            <td class="r" style="width: 25%;">
+                                 HR Fixed Odds
+                            </td>
+                            <td><span data-bind="text: customer.commissionSetting2.playerDiscountNumber"></span></td>
+                            <td><span data-bind="text: customer.commissionSetting.discountNumber"></span></td>
+                            <td><span data-bind="text: customer.commissionSetting.playerDiscountNumber"></span></td>
+                        </tr>
+                        <!--/hr-fixed-odds-->
                     </table>
                 }
                 else
@@ -152,6 +162,15 @@ else if ((Model.IsSuperSetting && Model.IsMemberSetting) || (Model.IsMasterSetti
                             <td><span data-bind="text: customer.commissionSetting.playerDiscountNumber"></span></td>
                         </tr>
                         <!--/game-comm-->
+                        <!--hr-fixed-odds-->
+                        <tr>
+                            <td class="r" style="width: 25%;">
+                                HR Fixed Odds
+                            </td>
+                            <td><span data-bind="text: customer.commissionSetting.discountNumber"></span></td>
+                            <td><span data-bind="text: customer.commissionSetting.playerDiscountNumber"></span></td>
+                        </tr>
+                        <!--/hr-fixed-odds-->
                     </table>
                 }
                 
@@ -568,9 +587,16 @@ else
                             <select class="selectcomm" name="listGameComm" id="listGameComm">
                             </select>
                         </td>
-                        <td colspan="2">
-                        </td>
                         <!--/game-comm-->
+                         <!--hr-fixed-odds-->
+                        <td class="r">
+                           HR Fixed Odds
+                        </td>
+                        <td class="l">
+                            <select class="selectcomm" name="listHRFixOddsComm" id="listHRFixOddsComm">
+                            </select>
+                        </td>
+                        <!--/hr-fixed-odds-->
                     </tr>
                 </table>
             }
@@ -650,6 +676,21 @@ else
                         </td>
                     </tr>
                     <!--/game-comm-->
+                    <!--hr-fixed-odds-->
+                    <tr>
+                        <td class="r" style="width: 25%;">
+                           HR Fixed Odds
+                        </td>
+                        <td>
+                            <input class="selectcomm" type="text" id="txtDiscountHRFixOdds" name="txtDiscountHRFixOdds" disabled="disabled"
+                                data-bind="value: customer.commissionSetting.discountHRFixedOdds" style="text-align: right;" />
+                        </td>
+                        <td>
+                            <select class="selectcomm" name="listHRFixOdds" id="listHRFixOddsComm">
+                            </select>
+                        </td>
+                    </tr>
+                    <!--/hr-fixed-odds-->
                 </table>
             }
         </td>
