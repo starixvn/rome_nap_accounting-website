@@ -158,7 +158,7 @@ namespace Sunplus.Accounting.Business.Statement
                 decimal sumAmount = 0;
                 int index = 0;
                 ds = AccountStatement.Acc_CompanyStatement(fdt, tdt);
-                if (ds.ResultSet.Tables.Count>0 && ds.ResultSet.Tables[0].Rows.Count > 0)
+                if (ds.ResultSet.Tables.Count > 0 && ds.ResultSet.Tables[0].Rows.Count > 0)
                 {
                     foreach (DataRow row in ds.ResultSet.Tables[0].Rows)
                     {
@@ -255,7 +255,7 @@ namespace Sunplus.Accounting.Business.Statement
                 }
                 if (!Validator.ValidDateMMDDYYYYNotNull(tdate, out tdt).IsSuccess())
                 {
-                   tdt = DateTime.Now;
+                    tdt = DateTime.Now;
                 }
 
                 string rowTpl = TemplateHandler.CopyBlock(tpl, "ReportContent");
@@ -266,9 +266,9 @@ namespace Sunplus.Accounting.Business.Statement
                 var userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
                 int custId = userService.GetCustomerIdByUsername(WebUtils.GetQueryStringValue("custname", string.Empty));
 
-                if (custId > 0 && ds.ResultSet.Tables.Count>0 && ds.ResultSet.Tables[0].Rows.Count > 0)
+                if (custId > 0 && ds.ResultSet.Tables.Count > 0 && ds.ResultSet.Tables[0].Rows.Count > 0)
                 {
-                        ds = AccountStatement.Acc_DetailStatement(fdt, tdt, custId);
+                    ds = AccountStatement.Acc_DetailStatement(fdt, tdt, custId);
                     candelete = Permissions.GetHostPermission(Enumerations.Functions.Transfer.DeleteTrans);
                     foreach (DataRow row in ds.ResultSet.Tables[0].Rows)
                     {

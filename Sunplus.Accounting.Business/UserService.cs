@@ -5,7 +5,6 @@ using System.Data;
 using System.Linq;
 using DNAide.Core;
 using DNAide.Data;
-using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
@@ -305,7 +304,7 @@ namespace Sunplus.Accounting.Business
         public List<Entities.Statement> GetCustomerStatement(User customer, DateTime fromDate, DateTime toDate,
                                                     DateTime balanceUpDay, bool isInlucdeAccBal)
         {
-            Check.Argument.IsNotNull(customer, "customer");       
+            Check.Argument.IsNotNull(customer, "customer");
             Check.Argument.IsNotInFuture(balanceUpDay, "balanceUpDay");
 
             var entityList = new List<Entities.Statement>();
@@ -405,7 +404,6 @@ namespace Sunplus.Accounting.Business
 
             return entityList;
         }
-      
 
         #endregion IUserService Members
     }
