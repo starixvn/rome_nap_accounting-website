@@ -305,10 +305,7 @@ namespace Sunplus.Accounting.Business
         public List<Entities.Statement> GetCustomerStatement(User customer, DateTime fromDate, DateTime toDate,
                                                     DateTime balanceUpDay, bool isInlucdeAccBal)
         {
-            Check.Argument.IsNotNull(customer, "customer");
-            //Check.Argument.IsNotInFuture(fromDate, "fromDate");
-            //Check.Argument.IsNotInFuture(toDate, "toDate");
-
+            Check.Argument.IsNotNull(customer, "customer");       
             Check.Argument.IsNotInFuture(balanceUpDay, "balanceUpDay");
 
             var entityList = new List<Entities.Statement>();

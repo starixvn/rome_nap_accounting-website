@@ -49,6 +49,7 @@ public partial class ExcelData1234 : System.Web.UI.Page
 
     }
 
+
     protected void Export2ExcelDailyWLDirectRacing(string winlossDate)
     {
         new Sunplus.Accounting.WcfServiceLibrary.Report.DailyWL.ReportDailyWL().Export2ExcelDailyWLDirectRacing(winlossDate);

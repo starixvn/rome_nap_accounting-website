@@ -1,9 +1,11 @@
-﻿// ***********************************************************************
+﻿// --------------------------------------------------------------------------
 // <copyright file="CustomerSettingAttribute.cs" company="Nexcel Solutions Vietnam">
-//     Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
-// <summary></summary>
-// ***********************************************************************
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="ethan.nguyen" date="2013.8.16">Created</change>
+// </history>
 
 /// <summary>
 /// The Authenticate namespace.
