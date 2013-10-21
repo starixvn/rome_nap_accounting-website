@@ -892,7 +892,8 @@ namespace Sunplus.Accounting.Business.Customer
 
                             string bettingSetting = WebSettings.ExternalBettingLimitConfig;
                             //AppSession.GroupID
-                            try {
+                            try
+                            {
                                 if (!String.IsNullOrEmpty(bettingSetting) && bettingSetting.Contains("|"))
                                 {
                                     var groupId = bettingSetting.Split(new char[] { '|' })[0].Split(new char[] { ',' });
@@ -910,11 +911,12 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-BetSetting");
                                 }
                             }
-                            catch {
+                            catch
+                            {
                                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-BetSetting");
                             }
 
-                           
+
 
 							//---- for menu details -----------
 							AssignEditFinance(ref htmlcontent, roleId);
@@ -1201,6 +1203,27 @@ namespace Sunplus.Accounting.Business.Customer
 			}
 
             #endregion DoubleComm
+
+            #region HRFixedOdds
+
+            if (WebSettings.OfferHorseRacingFixedOdds)
+            {
+                bool isEnableHorseRacingFixedOdds = Convert.IsDBNull(row1["DisableDownlinesHRFixedOdds"]) ?
+                    false :
+                    !Convert.ToBoolean(row1["DisableDownlinesHRFixedOdds"]);
+
+                sg.Add(GetSettingControlEnableHorseRacingFixedOdds(
+                    roleId,
+                    CustParent.IsEnableHorseRacingFixedOdds,
+                    isManageCustomerAccess,
+                    "enableHorseRacingFixedOdds",
+                    isEnableHorseRacingFixedOdds,
+                    (roleId > 1),
+                    CastAide.AsBoolean(row1["Enabled"])));
+                TemplateHandler.Assign(ref htmlcontent, "{chkEnableHorseRacingFixedOdds}", isEnableHorseRacingFixedOdds ? 1 : 0);
+            }
+
+            #endregion HRFixedOdds
 
 			TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
 		}
@@ -1851,6 +1874,61 @@ namespace Sunplus.Accounting.Business.Customer
 				}
 			}
 			return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAllowDoubleComm"), currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleID, false, "DoubleComm");
+        }
+
+        private SettingControl GetSettingControlEnableHorseRacingFixedOdds(
+            int roleId,
+            bool parentStatus,
+            bool isManageCustomerAccess,
+            string statusName,
+            bool currentStatus,
+            bool hasDownline,
+            bool isEnabled)
+        {
+            string classname = "";
+            string jsonclick = "";
+            string jsonmouseover = "";
+            string jsonmouseout = "";
+            if (isManageCustomerAccess)
+            {
+                if (isEnabled)
+                {
+                    if (4 == roleId || parentStatus)
+                    {
+                        classname = "canchange";
+                        jsonclick = "return ShowDisablePop(this);";
+                    }
+                    else
+                    {
+                        classname = "cannotchange";
+                        jsonmouseout = "UnTip()";
+                        jsonmouseover = "Tip('" +
+                            ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledHorseRacingFixedOddsUpline") +
+                            "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
+                    }
+                }
+                else
+                {
+                    classname = "cannotchange";
+                    jsonmouseout = "UnTip()";
+                    jsonmouseover = "Tip('" +
+                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledAccount") +
+                        "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
+                }
+            }
+
+            return new SettingControl(
+                ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEnableHorseRacingFixedOdds"),
+                currentStatus,
+                false,
+                jsonclick,
+                jsonmouseout,
+                jsonmouseover,
+                classname,
+                statusName,
+                roleId,
+                false,
+                "EnableHorseRacingFixedOdds");
 		}
 
 		private SettingControl GetSettingControlEnableAutoMaster(int roleID, bool isManageCustomerAccess, string statusName, bool currStatus, bool isenabled)

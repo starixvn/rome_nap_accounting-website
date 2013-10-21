@@ -149,7 +149,7 @@
   <add key="IsApplySplitingDepositeCustomer" value="1"/>
   <add key="Fanex.Tarus.ExchangeRate.BaseCurrency" value ="EUR,USD" />
   <add key="Fanex.Tarus.Finance.CrossBaseCurrency" value ="AUD, CHF, CNY, EUR, GBP, HKD, MYR, PHP, SGD, USD, INH" />
-  <add key="ListIgnoreMenu" value="New Customer(NEW);Credit Term;"/>
+  <add key="ListIgnoreMenu" value="New Customer(NEW);"/>
   <add key="IsShowCustomerSettingRenovation" value="3"/>
   <add key="EnableVirtualSports" value="1"/>
   <add key="OfferDoubleCommission" value="1"/>
@@ -165,12 +165,15 @@
   <add key="IMSLoginUrl" value="http://10.18.200.202:8001/Ares/ims/SSO/AccountingLogin"/>
   <add key="NapReportLoginUrl" value="http://localhost:63738/SSO/AccountingLogin"/>
   <add key="NapSpecialDeleteLoginUrl" value="http://10.18.200.202:8001/Nap-SpecialDelete/SSO/AccountingLogin"/>
-<<<<<<< HEAD
-
   <add key="Admin_SMATurnover_FunctionId" value="328"/>
   <add key="aspnet:MaxJsonDeserializerMembers" value="50000000" />
+  <add key ="ExternalBettingLimitConfig" value="222|ViewInfo"/>
+  <add key="AdminUsersEditSuperStatus" value="4578191|"/>
+<<<<<<< HEAD
+</appSettings>
 =======
-  <add key="EnableProgressiveBonus" value="1"/>
->>>>>>> 336cb84df7cc5276ac4bb8e695d4a7e3658b1bf2
+
+  <add key="OfferHorseRacingFixedOdds" value="1"/>
 </appSettings>
 
+>>>>>>> c9561674316de1cb6c5af2bd60f843e783d4bda2

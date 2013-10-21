@@ -19,24 +19,25 @@ using System.Text;
 
 public class UpdateCustomerStatus : BaseHandler
 {
-    
-    public override void ProcessRequest (HttpContext context) {
+
+    public override void ProcessRequest(HttpContext context)
+    {
         context.Response.ContentType = "text/html";
         base.ProcessRequest(context);
         try
-        { 
+        {
             int _accid = Convert.ToInt32(context.Session["AccId"] as object ?? -1);
             if (_accid == -1) throw new AccException(IbcError.ACCESS_DENIED_MSG);
             int _custid = Convert.ToInt32(context.Request.QueryString["custid"]);
             if (_custid == -1) throw new AccException(IbcError.USERNAME_UNAVAILABLE_MSG);
-            
+
             bool status = false;
             bool isUpdDownline = false;
-            if (!Boolean.TryParse(context.Request["status"] as string ?? string.Empty, out status)) 
+            if (!Boolean.TryParse(context.Request["status"] as string ?? string.Empty, out status))
                 throw new AccException("Invalid Session");
             string s = string.Empty;
-            string type = context.Request["type"] as string ?? string.Empty;  
-            string errmsg="";
+            string type = context.Request["type"] as string ?? string.Empty;
+            string errmsg = "";
             if (Permissions.CheckPermission(_accid, Enumerations.Functions.Customer.OtherCust, ref errmsg) != 0)
             {
 
@@ -53,7 +54,7 @@ public class UpdateCustomerStatus : BaseHandler
                     CSCustomerDetail custcs = Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider.Instance.GetBasicCustInfoIBC(_custid);
                     try
                     {
-                        
+
                         if (WebSettings.disableCS && custcs.CasinoSync)
                         {
                             context.Response.Write("<script type='text/javascript'>" +
@@ -70,8 +71,8 @@ public class UpdateCustomerStatus : BaseHandler
                     s = "parent.changeDisplayStatus('suspended','" + status + "');";
                     s += "var chksuspended = parent.parent.frames['centerFr'].document.getElementById('chkSuspended');";
                     s += "if (chksuspended!=null) chksuspended.checked=" + ((status) ? "true;" : "false;");
-                  
-                   
+
+
                     // Notes: please put this into a transaction with updating of IBC
                     try // Casino cheat
                     {
@@ -84,12 +85,12 @@ public class UpdateCustomerStatus : BaseHandler
                     catch (Exception ex)
                     {
                         Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                    }                    
+                    }
                     break;
                 case "Outright":
                     Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateDisableOutright(_accid, _custid, status, context.Request.UserHostAddress);
                     s = "parent.changeDisplayStatus();";
-                    break;    
+                    break;
                 case "special":
                     Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateSpecial(_accid, _custid, status);
                     s = "parent.changeDisplayStatus('special','" + status + "');";
@@ -104,7 +105,7 @@ public class UpdateCustomerStatus : BaseHandler
                     custcs = Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider.Instance.GetBasicCustInfoIBC(_custid);
                     try
                     {
-                        
+
                         if (WebSettings.disableCS && custcs.CasinoSync)
                         {
                             context.Response.Write("<script type='text/javascript'>" +
@@ -132,13 +133,13 @@ public class UpdateCustomerStatus : BaseHandler
                                 context.Response.Write("<script type='text/javascript'>" +
                                                        StringUtils.JS_Alert(StringUtils.ParseToJSMsg(error.ErrorMsg)) + "</script>");
                             }
-                            
+
                         }
                         s += "parent.HideClosedPop('ClosedStatusPop');";
 
                     }
                     s += "parent.changeDisplayStatus();";
-                    
+
                     try // Casino cheat
                     {
                         if (custcs.CasinoSync)
@@ -160,14 +161,14 @@ public class UpdateCustomerStatus : BaseHandler
                         throw new AccException("Invalid Session");
                     int dangertype;
                     if (name == "Original")
-                    { dangertype =1; }
+                    { dangertype = 1; }
                     else if (name == "ABT")
                     { dangertype = 2; }
                     else
                     { dangertype = 3; }
                     StringBuilder result = new StringBuilder();
                     DangerousSetting danger = new DangerousSetting();
-                    DangerousDetail dangerDetail = danger.CustomerUpdateDangerous(_accid, _custid, level, dangertype); 
+                    DangerousDetail dangerDetail = danger.CustomerUpdateDangerous(_accid, _custid, level, dangertype);
                     result.Append("parent.document.getElementById('spanDangerous" + name + "').innerHTML ='" + dangerDetail.name + "';");
                     result.Append("parent.document.getElementById('tdvalue" + name + "').style.backgroundColor ='" + dangerDetail.color + "';");
                     result.Append("parent.document.getElementById('currentLevel" + name + "').value ='" + level + "';");
@@ -177,7 +178,7 @@ public class UpdateCustomerStatus : BaseHandler
                     break;
                 /*Phuong.Nguyen
                  *Add new case for HR request changing status
-                 */ 
+                 */
                 //Start
                 case "disabledHR":
                     isUpdDownline = false;
@@ -206,12 +207,12 @@ public class UpdateCustomerStatus : BaseHandler
                         throw new AccException("Invalid isupddonwline parameters");
                     CasinoManager.UpdateCSStatus(_custid, true, status, !isUpdDownline, customerRngSite);
                     s = "parent.changeDisplayStatus();";
-                    break;  
+                    break;
                 case "AutoSuspend":
                     int isSuspend = (status) ? 1 : 0;
                     IBCUtils.IbcError err = Sunplus.Accounting.DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdAutoSuspendRpt(_custid, isSuspend, _accid);
                     if (err.ErrorCode > 0)
-                        throw new AccException(err.ErrorMsg);                    
+                        throw new AccException(err.ErrorMsg);
                     s = "parent.changeDisplayStatus();";
                     break;
                 case "Internal":
@@ -251,7 +252,7 @@ public class UpdateCustomerStatus : BaseHandler
                 case "limitperip":
                     isUpdDownline = false;
                     int limitperid = 0;
-                    
+
                     if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
                         throw new AccException("Invalid isupddownline parameters");
 
@@ -274,7 +275,24 @@ public class UpdateCustomerStatus : BaseHandler
                         throw new AccException("Invalid isupddonwline parameters");
                     new CustomerUpdateStatus().CustomerUpdateDisabledVirtualSports(_accid, _custid, status, context.Request.UserHostAddress, isUpdDownline);
                     s = "parent.changeDisplayStatus();";
-                    break;  
+                    break;
+
+                case "enableHorseRacingFixedOdds":
+                    // Louis.Nguyen: Enable Horse Racing Fixed Odds
+                    isUpdDownline = false;
+                    if (!Boolean.TryParse(context.Request["isupddownline"] as string ?? string.Empty, out isUpdDownline))
+                    {
+                        throw new AccException("Invalid isupddonwline parameters");
+                    }
+
+                    new CustomerUpdateStatus().CustomerUpdateDisableHorseRacingFixedOdds(
+                        _accid,
+                        _custid,
+                        status,
+                        context.Request.UserHostAddress,
+                        isUpdDownline);
+                    s = "parent.changeDisplayStatus();";
+                    break;
                 //End
                 default: throw new AccException("Invalid Session!");
             }
@@ -300,9 +318,11 @@ public class UpdateCustomerStatus : BaseHandler
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
     }
- 
-    public bool IsReusable {
-        get {
+
+    public bool IsReusable
+    {
+        get
+        {
             return false;
         }
     }
