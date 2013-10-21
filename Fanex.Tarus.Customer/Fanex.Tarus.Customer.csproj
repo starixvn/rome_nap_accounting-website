@@ -55,6 +55,10 @@
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.PTEngine, Version=1.0.5039.30868, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Fanex\Fanex.PTEngine.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.PTRacing">
       <HintPath>..\Dependency\Fanex\Fanex.PTRacing.dll</HintPath>
     </Reference>
@@ -224,10 +228,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\sportsbook-engine-hrfixedodds\Fanex.PTEngine\Fanex.PTEngine.csproj">
-      <Project>{B16E08F3-B4F3-4878-A9B4-DBD098222B11}</Project>
-      <Name>Fanex.PTEngine</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Infrastructure\Fanex.Tarus.Infrastructure.csproj">
       <Project>{CCC0446A-42E7-4850-B09C-4DAC278F23B3}</Project>
       <Name>Fanex.Tarus.Infrastructure</Name>
