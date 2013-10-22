@@ -4,6 +4,8 @@ using System.Data;
 using DNAide.Data;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.DataAccess.IReportDAO;
+using Fanex.Tarus.Infrastructure.Extensions;
+using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 {
@@ -11,15 +13,28 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
     {
         public DataTable SelectNumberOfBetsForCreditSites(DateTime fromDate, DateTime toDate)
         {
-            var result = new DataTable();
-            var param = new Hashtable();
-            param.Add("datestart", fromDate);
-            param.Add("dateend", toDate);
-            var spElement = GetStoreProcedure("CreditSiteBetCount");
-            var ds = DbHelper.Execute(spElement.Name, param, spElement.DbName, 600);
-            if (ds != null && ds.ResultSet != null && ds.ResultSet.Tables.Count > 0)
-                result = ds.ResultSet.Tables[0];
-            return result;
+            DataTable dt = new DataTable();
+            try
+            {
+                using (ObjectDb db = new ObjectDb("CreditSiteBetCount"))
+                {
+                    var param = new Hashtable();
+                    param.Add("datestart", fromDate);
+                    param.Add("dateend", toDate);
+
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        dt = ds.Tables[0];
+                    }                    
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return dt;
         }
 
         protected StoreProcedureElement GetStoreProcedure(string site)
@@ -30,12 +45,27 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
         public DbResult SelDuplicateTickets(string wldate)
         {
-            Hashtable hashtable = new Hashtable();
-            hashtable.Add("date", wldate);
+            DbResult result = null;
+            try
+            {
+                Hashtable hashtable = new Hashtable();
+                hashtable.Add("date", wldate);
+                using (ObjectDb db = new ObjectDb("SelDuplicateTickets"))
+                {
+                    db.AssignParamValues(hashtable);
 
-            var spElement = GetStoreProcedure("SelDuplicateTickets");
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
 
-            return DbHelper.Execute(spElement.Name, hashtable, spElement.DbName, 600);
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return result;
         }
     }
 }

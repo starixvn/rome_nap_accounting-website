@@ -2,6 +2,9 @@
 using System.Data;
 using DNAide.Data;
 using Sunplus.Accounting.DataAccess.Provider.Customer;
+using System;
+using Fanex.Tarus.Infrastructure.Extensions;
+using Fanex.Data;
 
 /// <summary>
 /// Summary description for CustomerClient
@@ -14,13 +17,31 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Customer
         public override DbResult GetDownLineList(int custid, int pageSize, int pageIndex)
         {
             DbResult rs = null;
-            var param = new Hashtable();
-            param.Add("custid", custid);
-            param.Add("pagesize", pageSize);
-            param.Add("pageindex", pageIndex);
-            param.Add("totalpages", 0); // 0: Paging
-            var spElement = new SpConfig().GetStoreProcedure("CustomerSelDownLineList");
-            rs = DbHelper.Execute(spElement.Name, param, spElement.DbName);
+            try
+            {
+                var param = new Hashtable();
+                param.Add("custid", custid);
+                param.Add("pagesize", pageSize);
+                param.Add("pageindex", pageIndex);
+                param.Add("totalpages", 0); // 0: Paging
+                //var spElement = new SpConfig().GetStoreProcedure("CustomerSelDownLineList");
+                //rs = DbHelper.Execute(spElement.Name, param, spElement.DbName);
+
+                using (ObjectDb db = new ObjectDb("CustomerSelDownLineList", 180))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
             return rs;
         }
 

@@ -10,6 +10,7 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.DataAccess.AdoNet.ReportDAO;
 using Sunplus.Core.LoggingLib;
+using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.Report.MatchWL
 {
@@ -70,12 +71,14 @@ namespace Sunplus.Accounting.DataAccess.Report.MatchWL
                 var param = new Hashtable();
                 param.Add("winlostdate", wldate);
                 param.Add("winlost_8rm", 0);
-
-                string strMapping = "MatchWinLoss2_14";
-
-                //var spElement = GetStoreProcedure(StoreProcedureSection.StoreCollection.Report, "Main").Stores[strMapping];
-                var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.Main, strMapping);
-                dbResult = DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
+                
+                using (ObjectDb db = new ObjectDb("MatchWinLoss2_14",1000))
+                {
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+                    dbResult = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {

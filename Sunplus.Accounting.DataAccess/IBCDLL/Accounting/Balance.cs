@@ -69,9 +69,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             DbResult rs = null;
             try
             {
-                var hash = new Hashtable();
-                var spElement = GetExchangeStoreProcedure("EchangeSelAcc");
-                rs = DbHelper.Execute(spElement.Name, hash, spElement.DbName, 300);
+                using (ObjectDb db = new ObjectDb("EchangeSelAcc"))
+                {
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -175,14 +179,23 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <returns></returns>
         public static string[] ExchangeSelByID(int exid)
         {
-            DbResult rs = null;
+            DbResult rs = null;            
             string[] res = {"", "", ""};
             try
             {
                 var hash = new Hashtable();
                 hash.Add("exchangeid", exid);
-                var spElement = GetExchangeStoreProcedure("EchangeSelById");
-                rs = DbHelper.Execute(spElement.Name, hash, spElement.DbName, 300);
+
+                using (ObjectDb db = new ObjectDb("EchangeSelById"))
+                {
+                    db.AssignParamValues(hash);
+
+                    var ds = db.ExecuteDataSet();
+                    var outout = db.GetOuputParams();
+
+                    rs = new DbResult(outout, ds);
+                }
+
                 if (rs != null)
                 {
                     if (rs.ResultSet.Tables[0].Rows.Count > 0)
@@ -449,17 +462,27 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <returns></returns>
         public static DbResult CustomerSelectClearBalance(int _custid)
         {
+            DbResult result = null;
             try
             {
                 var param = new Hashtable();
                 param.Add("custid", _custid);
-                var spElement = GetCustomerStoreProcedure("CustomerSelClearBalance");
-                return DbHelper.Execute(spElement.Name, param, spElement.DbName);
+                
+                using (ObjectDb db = new ObjectDb("CustomerSelClearBalance"))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch
             {
                 throw;
             }
+            return result;
         }
 
 

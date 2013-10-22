@@ -43,7 +43,7 @@ namespace Fanex.Tarus.SpecialDelete.SendEmail.DataAccess
 
         public DataSet SelExchangeCurrency()
         {
-            using (ObjectDb objDB = new ObjectDb("ExchangeCurrencySel"))
+            using (ObjectDb objDB = new ObjectDb("Acc_ExchangeCurrencySel"))
             {
                 var rs = objDB.ExecuteDataSet();
                 return rs;
@@ -52,7 +52,7 @@ namespace Fanex.Tarus.SpecialDelete.SendEmail.DataAccess
 
         public DataSet SelBettype(Product.ProductType productType)
         {
-            using (ObjectDb objDB = new ObjectDb("BetTypeSel_VirtualSports"))
+            using (ObjectDb objDB = new ObjectDb("Acc_BetTypeSel"))
             {
                 Hashtable h = new Hashtable();
                 h.Add("mode", productType);

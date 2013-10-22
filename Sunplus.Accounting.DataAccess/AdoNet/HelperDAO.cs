@@ -10,6 +10,8 @@ using Sunplus.Accounting.Entities;
 using System.Data;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
+using Fanex.Data;
+using DNAide.Core;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet
 {
@@ -47,20 +49,19 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         {
             var result = new Result();
 
-            var spElement =
-                GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.HelperSession.StoreCollection.HelperControl,
-                                  "InsertCountry");
-            var db = GetDatabase(spElement.DbName);
-            using (var dbCommand = db.GetStoredProcCommand(spElement.Name))
+            using (ObjectDb db = new ObjectDb("InsertCountry"))
             {
-                db.AddInParameter(dbCommand, "name", DbType.String, countryName);
-                db.AddOutParameter(dbCommand, "ErrCode", DbType.Int32, 4);
-                db.AddOutParameter(dbCommand, "ErrMsg", DbType.String, 4000);
+                Hashtable p = new Hashtable();
+                p.Add("name", countryName);
+                db.AssignParamValues(p);
 
-                int numberOfRecordsAffected = db.ExecuteNonQuery(dbCommand);
+                db.ExecuteNonQuery();
 
-                result.ErrorCode = Convert.ToInt32(db.GetParameterValue(dbCommand, "ErrCode"));
-                result.ErrorMessage = Convert.ToString(db.GetParameterValue(dbCommand, "ErrMsg"));
+                var errcode = CastAide.AsInt32(db.GetParameterValue("errcode"));
+                var errmsg = CastAide.AsString(db.GetParameterValue("errmsg"));
+
+                result.ErrorCode = errcode;
+                result.ErrorMessage = errmsg;
             }
 
             return result;

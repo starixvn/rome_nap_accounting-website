@@ -7,6 +7,7 @@ using Sunplus.Accounting.Entities.SpecialDelete;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Core.LoggingLib;
+using Fanex.Data;
 
 /// <summary>
 /// Summary description for Messenger
@@ -62,8 +63,14 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 p.Add("content_ko", Msg.Content_ko);
                 p.Add("content_es", Msg.Content_es);
 
+                using (ObjectDb db = new ObjectDb("Dot_Msg_SetMessage"))
+                {
+                    db.AssignParamValues(p);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
 
-                rs = DbHelper.Execute("Dot_Msg_SetMessage", p, DBType.MESSAGE, 120);
+                    rs = new DbResult(output, ds);
+                }
 
                 Msg.MessageId = CastAide.AsInt32(rs.ResultSet.Tables[0].Rows[0]["MessageId"]);
                 if (Msg.MessageId > 0)
@@ -102,7 +109,11 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                     // set user or role via SP
                     if (TargetId[i] != 0)
                     {
-                        DbHelper.Execute("Dot_Msg_SetUsrMessage", p, DBType.MESSAGE, 120);
+                        using (ObjectDb db = new ObjectDb("Dot_Msg_SetUsrMessage"))
+                        {
+                            db.AssignParamValues(p);
+                            db.ExecuteNonQuery();
+                        }
                     }
                 }
             }

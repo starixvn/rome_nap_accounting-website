@@ -60,8 +60,17 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 var hash = new Hashtable();
                 hash.Add("userid", AppSession.AccId);
                 hash.Add("arrusernames", arrUsernames);
-                hash.Add("arrvirtualrates", arrVirtualRates);
-                rs = DbHelper.Execute("Acc_VirtualRateMulInsTmpExcel", hash, DBType.WAREHOUSE);
+                hash.Add("arrvirtualrates", arrVirtualRates);                
+
+                using (ObjectDb db = new ObjectDb("Acc_VirtualRateMulInsTmpExcel"))
+                {
+                    db.AssignParamValues(hash);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -78,7 +87,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var hash = new Hashtable();
                 hash.Add("userid", AppSession.AccId);
-                rs = DbHelper.Execute("Acc_VirtualRateMulSelCheck", hash, DBType.WAREHOUSE);
+                using (ObjectDb db = new ObjectDb("Acc_VirtualRateMulSelCheck"))
+                {
+                    db.AssignParamValues(hash);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -96,7 +113,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var hash = new Hashtable();
                 hash.Add("userid", AppSession.AccId);
-                rs = DbHelper.Execute("Acc_VirtualRateMulDelTmpExcel", hash, DBType.WAREHOUSE);
+                
+                using (ObjectDb db = new ObjectDb("Acc_VirtualRateMulDelTmpExcel"))
+                {
+                    db.AssignParamValues(hash);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -138,9 +163,14 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             DbResult rs = null;
             try
             {
-                var spElement = GetStoreProcedure("CustomerSelVirtualRateHistory");
-                return DbHelper.Execute(spElement.Name, hash, spElement.DbName);
-                
+                using (ObjectDb db = new ObjectDb("CustomerSelVirtualRateHistory"))
+                {
+                    db.AssignParamValues(hash);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
