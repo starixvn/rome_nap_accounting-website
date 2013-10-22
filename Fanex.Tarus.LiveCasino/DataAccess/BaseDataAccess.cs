@@ -19,7 +19,7 @@ namespace Fanex.Tarus.LiveCasino.DataAccess
         public bool GetSyncLiveCasinoStatus(int custId, string userName, int userId)
         {
 
-            using (ObjectDb objDB = new ObjectDb("Acc_CustomerSelStatus"))
+            using (ObjectDb objDB = new ObjectDb("CustomerSelStatus"))
                 {
                     objDB.AddInParameter("CustID", DbType.Int32, custId);
                     objDB.AddInParameter("AdminID", DbType.Int32, userId);
@@ -39,7 +39,7 @@ namespace Fanex.Tarus.LiveCasino.DataAccess
         public CustomerStatusInfo SelCustStatusInfo(int custId, string userName, int userId)
         {
             CustomerStatusInfo customer = new CustomerStatusInfo();
-            using (ObjectDb objDB = new ObjectDb("Acc_CustomerSelStatus"))
+            using (ObjectDb objDB = new ObjectDb("CustomerSelStatus"))
             {
                 objDB.AddInParameter("CustID", DbType.Int32, custId);
                 objDB.AddInParameter("AdminID", DbType.Int32, userId);
@@ -66,7 +66,7 @@ namespace Fanex.Tarus.LiveCasino.DataAccess
             var exchange = new Dictionary<int, string>();
             
             //get data from database
-            using (ObjectDb objDB = new ObjectDb("ExchangeCurrencySel"))
+            using (ObjectDb objDB = new ObjectDb("Acc_ExchangeCurrencySel"))
             {
                 DataSet ds = objDB.ExecuteDataSet();
                 if (ds != null && ds.Tables[0].Rows.Count > 0)

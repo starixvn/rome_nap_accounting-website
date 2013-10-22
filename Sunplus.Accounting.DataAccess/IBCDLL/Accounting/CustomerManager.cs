@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Data;
 using DNAide.Data;
-using Fanex.Data;
+
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
+using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.Entities;
+using System.Collections.Generic;
+using Fanex.Data;
 using DNAide.Core;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
@@ -14,14 +17,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
     /// <summary>
     /// @Author: Phuong.Nguyen
     /// </summary>
-    public sealed class CustomerManager : DataAccess
+    public sealed class CustomerManager:DataAccess
     {
         public static StoreProcedureElement GetCustomerStoreProcedure(string alias)
         {
             var sps = CustomerSession.Instance[CustomerSession.StoreCollection.CustomerControl];
             return sps != null ? sps[alias] : null;
         }
-
         public static StoreProcedureElement GetHRStoreProcedure(RacingSession.StoreCollection storeCollection, string alias)
         {
             var sps = RacingSession.Instance[storeCollection];
@@ -44,14 +46,20 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 var param = new Hashtable();
                 param.Add("custid", custId);
 
-                var sps = HelperSession.Instance[Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.HelperSession.StoreCollection.HelperControl];
-                var spElement = sps != null ? sps["CheckAllowedShow"] : null;
+                using (ObjectDb db = new ObjectDb("CheckAllowedShow"))
+                {
+                    db.AssignParamValues(param);
 
-                dbCheckCurrency = DbHelper.Execute(spElement.Name, param, spElement.DbName);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    dbCheckCurrency = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
             return dbCheckCurrency;
@@ -68,9 +76,17 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var param = new Hashtable();
                 param.Add("custid", custId);
-                var spElement = GetCustomerStoreProcedure("CustomerSelDisableHR");
-                DbResult ds = DbHelper.Execute(spElement.Name, param, spElement.DbName);
-                DataRow row1 = ds.ResultSet.Tables[0].Rows[0];
+                
+                DbResult result = null;
+                using (ObjectDb db = new ObjectDb("CustomerSelDisableHR"))
+                {
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+                DataRow row1 = result.ResultSet.Tables[0].Rows[0];
                 bool parentDisabledHR = Convert.IsDBNull(row1["DisableHorseracing"])
                                             ? false
                                             : Convert.ToBoolean(row1["DisableHorseracing"]);
@@ -78,7 +94,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
         }
@@ -89,9 +106,18 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var param = new Hashtable();
                 param.Add("custid", custId);
-                var spElement = GetCustomerStoreProcedure("CustomerSelDisableFI");
-                DbResult ds = DbHelper.Execute(spElement.Name, param, spElement.DbName);
-                DataRow row1 = ds.ResultSet.Tables[0].Rows[0];
+
+                DbResult result = null;
+                using (ObjectDb db = new ObjectDb("CustomerSelDisableFI"))
+                {
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+
+                DataRow row1 = result.ResultSet.Tables[0].Rows[0];
                 bool parentDisabledHR = Convert.IsDBNull(row1["DisableFinancial"])
                                             ? false
                                             : Convert.ToBoolean(row1["DisableFinancial"]);
@@ -99,7 +125,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
         }
@@ -115,9 +142,18 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var param = new Hashtable();
                 param.Add("custid", custId);
-                var spElement = GetCustomerStoreProcedure("CustomerSelDisableOutright");
-                DbResult ds = DbHelper.Execute(spElement.Name, param, spElement.DbName);
-                DataRow row1 = ds.ResultSet.Tables[0].Rows[0];
+
+                DbResult result = null;
+                using (ObjectDb db = new ObjectDb("CustomerSelDisableOutright"))
+                {
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+
+                DataRow row1 = result.ResultSet.Tables[0].Rows[0];
                 bool parentDisabledOutright = Convert.IsDBNull(row1["DisableOutright"])
                                                   ? false
                                                   : Convert.ToBoolean(row1["DisableOutright"]);
@@ -125,7 +161,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
         }
@@ -138,11 +175,19 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 var param = new Hashtable();
                 param.Add("custid", custId);
 
-                var spElement = GetCustomerStoreProcedure("CustomerSelSuspended");
-                DbResult ds = DbHelper.Execute(spElement.Name, param, spElement.DbName);
-                if (ds.ResultSet.Tables[0].Rows.Count > 0)
+                DbResult result = null;
+                using (ObjectDb db = new ObjectDb("CustomerSelSuspended"))
                 {
-                    DataRow row1 = ds.ResultSet.Tables[0].Rows[0];
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+
+                if (result.ResultSet.Tables[0].Rows.Count > 0)
+                {
+                    DataRow row1 = result.ResultSet.Tables[0].Rows[0];
                     suspended = Convert.IsDBNull(row1["Suspended"])
                                     ? false
                                     : Convert.ToBoolean(row1["Suspended"]);
@@ -151,10 +196,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
         }
+
 
         public static DbResult GetAllHRSetting(int custid, int roleid)
         {
@@ -172,19 +219,16 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                         dsHRBetSetting = DbHelper.Execute(spElementMe.Name, param, spElementMe.DbName);
 
                         break;
-
                     case 2:
                         var spElementA = GetHRStoreProcedure(RacingSession.StoreCollection.RacingControl, "GetAgentSetting");
                         dsHRBetSetting = DbHelper.Execute(spElementA.DbName, param, spElementA.DbName);
 
                         break;
-
                     case 3:
                         var spElementM = GetHRStoreProcedure(RacingSession.StoreCollection.RacingControl, "GetMasterSetting");
                         dsHRBetSetting = DbHelper.Execute(spElementM.Name, param, spElementM.DbName);
 
                         break;
-
                     case 4:
                         var spElementS = GetHRStoreProcedure(RacingSession.StoreCollection.RacingControl, "GetSuperSetting");
                         dsHRBetSetting = DbHelper.Execute(spElementS.DbName, param, spElementS.DbName);
@@ -197,7 +241,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 throw ex;
             }
 
-            #endregion Using DNAide Db
+            #endregion
 
             return dsHRBetSetting;
         }
@@ -221,7 +265,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 #endif
             }
 
-            #endregion DNAide Db
+            #endregion
 
             return dsHRBetSetting;
         }
@@ -240,10 +284,11 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
 
-            #endregion DNAide lib
+            #endregion
 
             return dsHRBetSetting;
         }
@@ -277,15 +322,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     case 1:
                         spName = "Acc_CustomerUpdMember_CommissionHR";
                         break;
-
                     case 2:
                         spName = "Acc_CustomerUpdAgent_CommissionHR";
                         break;
-
                     case 3:
                         spName = "Acc_CustomerUpdMaster_CommissionHR";
                         break;
-
                     case 4:
                         spName = "Acc_CustomerUpdSuper_CommissionHR";
                         break;
@@ -306,11 +348,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                    
                 }
 
-                #endregion DNAide lib
+                #endregion
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return hResult;
         }
@@ -338,15 +381,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     case 1:
                         ds = DbHelper.ExecuteCmd("Acc_CustomerUpdMember_MinMaxBetHR", hParams, DBType.MAIN, 600);
                         break;
-
                     case 2:
                         ds = DbHelper.ExecuteCmd("Acc_CustomerUpdAgent_MinMaxBetHR", hParams, DBType.MAIN, 600);
                         break;
-
                     case 3:
                         ds = DbHelper.ExecuteCmd("Acc_CustomerUpdMaster_MinMaxBetHR", hParams, DBType.MAIN, 600);
                         break;
-
                     case 4:
                         ds = DbHelper.ExecuteCmd("Acc_CustomerUpdSuper_MinMaxBetHR", hParams, DBType.MAIN, 600);
                         break;
@@ -358,14 +398,16 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     hResult.Add("errMsg", ds.Outputs["errmsg"]);
                 }
 
-                #endregion DNAide lib
+                #endregion
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return hResult;
         }
+
 
         public static Hashtable UpdateCustomerHRSetting(int custId, int userId, bool DisableHorseracing, string language,
                                                         string ip, double minbet, double maxbet, double maxpermatch,
@@ -402,11 +444,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     hResult.Add("errMsg", ds.Outputs["errmsg"]);
                 }
 
-                #endregion DNAide lib
+                #endregion
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return hResult;
         }
@@ -427,18 +470,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                             case 1: // member
                                 parentId = Convert.ToInt32(drAccExt["agentId"]);
                                 break;
-
                             case 2: // agent
 
                                 parentId = Convert.ToInt32(drAccExt["masterid"]);
                                 break;
-
                             case 3: // master
 
                                 //phuong.nguyen, set parentId = superid
                                 parentId = Convert.ToInt32(drAccExt["superId"]);
                                 break;
-
                             case 4: // super
                                 parentId = 0;
                                 break;
@@ -448,7 +488,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return parentId;
         }
@@ -491,7 +532,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             double toExRate, string forexUsername, string remark, int custid)
         {
             try
-            {
+            {                
                 using (ObjectDb objDb = new ObjectDb("Acc_BettransInsCrossTransfer"))
                 {
                     var param = new Hashtable();
@@ -515,7 +556,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     return new Result { ErrorCode = errCode, ErrorMessage = errMsg };
                 }
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 return new Result { ErrorCode = 1, ErrorMessage = e.Message };
             }
@@ -526,15 +567,21 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             try
             {
                 var listForexAccount = new List<Sunplus.Accounting.Entities.Customer.ForexAccount>();
-                var sp = CustomerSession.Instance[CustomerSession.StoreCollection.CustomerControl]["Acc_CustomerSelForexAccount"];
-                var param = new Hashtable();
-                DbResult dbResult = DbHelper.Execute(sp.Name, param, sp.DbName);
+                DbResult dbResult = null;
+
+                using (ObjectDb db = new ObjectDb("Acc_CustomerSelForexAccount"))
+                {
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+                    dbResult = new DbResult(output, ds);
+                }
+
+
                 if (dbResult.ResultSet.Tables.Count > 0 && dbResult.ResultSet.Tables[0].Rows.Count > 0)
                 {
                     foreach (DataRow row in dbResult.ResultSet.Tables[0].Rows)
                     {
-                        listForexAccount.Add(new Sunplus.Accounting.Entities.Customer.ForexAccount
-                        {
+                        listForexAccount.Add(new Sunplus.Accounting.Entities.Customer.ForexAccount { 
                             username = DNAide.Core.CastAide.AsString(row["vvalue"]),
                         });
                     }

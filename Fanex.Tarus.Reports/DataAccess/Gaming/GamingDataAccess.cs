@@ -23,10 +23,10 @@ namespace Fanex.Tarus.Reports.DataAccess.Gaming
         public DataTable SelNumberGameWinlossByDate(string fromdate, string todate)
         {
             DataTable dtb = new DataTable();
-            using (ObjectDb objDB = new ObjectDb("Acc_Rpt_NumberGameFinanceWinlossByMonth"))
+            using (ObjectDb objDB = new ObjectDb("Acc_Rpt_NumberGameFinanceWinlossByMonth", 1000))
             {
-                objDB.AddInParameter("@fromdate", DbType.DateTime, CastAide.AsDateTime(fromdate));
-                objDB.AddInParameter("@todate", DbType.DateTime,  CastAide.AsDateTime(todate));
+                objDB.AddInParameter("@datestart", DbType.DateTime, CastAide.AsDateTime(fromdate));
+                objDB.AddInParameter("@dateend", DbType.DateTime, CastAide.AsDateTime(todate));
                 
                 var ds = objDB.ExecuteDataSet();
                 if(ds != null && ds.Tables.Count>0)

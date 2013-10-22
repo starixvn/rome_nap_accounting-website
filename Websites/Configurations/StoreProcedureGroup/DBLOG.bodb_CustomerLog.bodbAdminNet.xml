@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+  <Function Name="Report for balance difference">
+    <Setting Key="Acc_Rpt_Balance_Company_History" SpName="Acc_Rpt_Balance_Company_History" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />    
+  </Function>
+  <Function Name="User - Account Management">
+    <Setting Key="UserLog_UserControlSel" SpName="Acc_UserLog_UserControlSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>
+    <Setting Key="UserLog_UserControlSelTotalRecords" SpName="Acc_UserLog_UserControlSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>
+  </Function>
+
+  <Function Name="Customer">
+    <Setting Key="CustomerSelVirtualRateHistory" SpName="Acc_CustomerSelVirtualRateHistory" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>
+    
+  </Function>
+</Functions>

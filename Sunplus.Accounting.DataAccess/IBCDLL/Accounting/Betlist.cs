@@ -663,7 +663,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             var result = new DataTable();
             try
             {
-                using (ObjectDb objDB = new ObjectDb("SoprtingSolutionBetlistResult"))
+                using (ObjectDb objDB = new ObjectDb("SportingSolutionBetlistResult"))
                 {
                     objDB.AddInParameter("matchid", DbType.Int32, matchID);
                     objDB.AddInParameter("resourceid", DbType.String, resourceId);

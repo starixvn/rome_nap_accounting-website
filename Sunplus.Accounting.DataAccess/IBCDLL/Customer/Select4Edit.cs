@@ -160,17 +160,23 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         /// <returns></returns>
         public static DbResult GetSuspendCustomerList(Hashtable hash)
         {
-            DbResult ds = null;
+            DbResult result = null;
             try
             {
-                var spElement = new Select4Edit().GetStoreProcedure(CustomerSession.StoreCollection.CustomerControl, "CustomerSelMemberSearch_AutoSuspend");
-                ds = DbHelper.Execute(spElement.Name, hash, spElement.DbName);
+                using (ObjectDb db = new ObjectDb("CustomerSelMemberSearch_AutoSuspend"))
+                {
+                    db.AssignParamValues(hash);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
-            return ds;
+            return result;
         }
 
         /// <summary>
@@ -182,17 +188,24 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         /// <returns></returns>
         public static DbResult GetSuspendCustomerList_1(Hashtable hash)
         {
-            DbResult ds = null;
+            DbResult result = null;
             try
             {
-                var spElement = new Select4Edit().GetStoreProcedure(CustomerSession.StoreCollection.CustomerControl, "CustomerSelMemberSearch_AutoSuspend");
-                ds = DbHelper.Execute(spElement.Name, hash, spElement.DbName);
+                using (ObjectDb db = new ObjectDb("CustomerSelMemberSearch_AutoSuspend"))
+                {
+                    db.AssignParamValues(hash);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
-            return ds;
+            return result;
         }
 
         /// <summary>
@@ -268,19 +281,27 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
 
         public static DbResult VirtualRateSel(object custId)
         {
-            DbResult ds = null;
+            DbResult result = null;
             var param = new Hashtable();
             try
             {
                 param.Add("custid", custId);
-                var spElement = new Select4Edit().GetStoreProcedure(CustomerSession.StoreCollection.CustomerControl, "CustomerSelVirtualMultiplier");
-                ds = DbHelper.Execute(spElement.Name, param, spElement.DbName);
+                
+                using (ObjectDb db = new ObjectDb("CustomerSelVirtualMultiplier"))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
-            return ds;
+            return result;
         }
 
         public static DbResult EditSuperOnMemberSel(object custId, object agentId)

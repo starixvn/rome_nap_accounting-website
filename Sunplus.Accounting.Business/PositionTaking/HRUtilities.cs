@@ -1,4 +1,4 @@
-﻿
+﻿//using Sunplus.Core.LoggingLib;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,14 +6,17 @@ using System.Data;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Web;
-using IBCUtils;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Accounting.Entities;
-using SCCACHE = SharedCache.WinServiceCommon.Provider.Cache.IndexusDistributionCache;
 
+using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
+using Sunplus.Accounting.Entities;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.DataAccess;
+using Sunplus.Core.LoggingLib;
+using SCCACHE = SharedCache.WinServiceCommon.Provider.Cache.IndexusDistributionCache;
+using Sunplus.Accounting.Core.Web;
+using IBCUtils;
+using Fanex.Data;
 /// <summary>
 /// Summary description for FinanceManager
 /// </summary>
@@ -54,7 +57,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
 
         //Tag name on template
         public static readonly string TAG_maxpt = "maxpt";
-
         public static readonly string TAG_minpt = "minpt";
         public static readonly string TAG_maxpt_value = "maxpt_value";
         public static readonly string TAG_minpt_value = "minpt_value";
@@ -102,7 +104,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
         public static readonly string TAG_CHK_CopyPreset = "chkCopyPreset";
         public static readonly string TAG_LBL_CopyPreset = "lblCopyPreset";
         public static string DISCOUNT = "discount";
-
         //Style
         public static string CLASS_Select_PT = "pt";
 
@@ -125,10 +126,10 @@ namespace Sunplus.Accounting.Business.PositionTaking
         private static string JS_Var_disableMinPTHR = "disableMinPTHR";
         private static string JS_Var_bettypeMemberPTMax = "bettypeMemberPTMax";
 
-        //END
-        //javascript function
-        public static readonly string FUNC_OnChangePT = "OnChangePT({0})";
 
+        //END
+        //javascript function 
+        public static readonly string FUNC_OnChangePT = "OnChangePT({0})";
         public static readonly string PARAMS_OnChangePT = "this";
 
         public static readonly string FUNC_ChkCopyFrom = "ChkCopyFrom({0})";
@@ -186,7 +187,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
 
         //Commission
         private static double COMM_HR_MAX = 0.01;
-
         private static int COMM_HR_INTERVAL = 5;
 
         public static readonly string Delimiter = "_";
@@ -237,7 +237,7 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
         }
 
-        #endregion CONST variables
+        #endregion
 
         private static Hashtable SaToteCurrencies
         {
@@ -254,6 +254,7 @@ namespace Sunplus.Accounting.Business.PositionTaking
                     listHrCurrency = GetSaToteCurrencies();
                     SaToteCurrencies = listHrCurrency;
                 }
+
 
                 return listHrCurrency;
             }
@@ -278,6 +279,7 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
+
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return string.Empty;
             }
@@ -302,6 +304,7 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
+
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return string.Empty;
             }
@@ -326,10 +329,12 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
             catch (Exception ex)
             {
+
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return string.Empty;
             }
         }
+
 
         private static void AssignJavaScript(ref string tplPT, List<string> lsData)
         {
@@ -560,6 +565,7 @@ namespace Sunplus.Accounting.Business.PositionTaking
                 }
             }
 
+
             //Assign Cust Detail
             custDetail.UserName = dt.Rows[0]["username"].ToString();
             custDetail.Currency = int.Parse(dt.Rows[0]["currency"].ToString());
@@ -577,6 +583,7 @@ namespace Sunplus.Accounting.Business.PositionTaking
             catch
             {
             }
+
 
             try
             {
@@ -653,6 +660,7 @@ namespace Sunplus.Accounting.Business.PositionTaking
             catch (Exception ex)
             {
             }
+
 
             //Assign Cust Comm
         }
@@ -824,10 +832,15 @@ namespace Sunplus.Accounting.Business.PositionTaking
 
         private static Hashtable GetSaToteCurrencies()
         {
-            var sps = HelperSession.Instance[Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.HelperSession.StoreCollection.HelperControl];
-            var spElement = sps != null ? sps["SelHRAllowedCurrency"] : null;
+            DbResult ds = null;
+            using (ObjectDb db = new ObjectDb("SelHRAllowedCurrency"))
+            {
+                var dataset = db.ExecuteDataSet();
+                var output = db.GetOuputParams();
 
-            DbResult ds = DbHelper.Execute(spElement.Name, spElement.DbName);
+                ds = new DbResult(output, dataset);
+            }
+
             var currencies = new Hashtable();
             if (ds.ResultSet.Tables.Count > 0)
             {

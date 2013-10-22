@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BetList>
+  <BetListStores>
+    <add alias="GetBettype" name="Acc_BA_BettypeSel" db="archive"></add>
+    <add alias="BetListByDayAll" name="Acc_BetListByDayAll" db="db053"></add>
+<<<<<<< HEAD
+    
+    <add alias="ByTransID" name="Acc_BetsSelBetList_ByTransID" db="db053"></add>
+=======
+    <add alias="Acc_BetsSelBetCheckM" name="Acc_BetsSelBetCheckM" db="db053"></add>
+>>>>>>> b314c264e6f7f60e9af40f5a661765b1752f783b
+    <add alias="AllStatement_Full" name="Acc_AllStatement_Full" db="db054"></add>
+    <add alias="BetListHRResults" name="Acc_BetList_HRResults" db="db053"></add>
+    <add alias="AllStatement" name="Acc_AllStatement" db="db053"></add>
+    <add alias="AgentStatement" name="Rpt_AgentStatement" db="db053"></add>
+
+    <add alias="M88_BetList" name="Acc_Rpt_Winloss_M88_BetList" db="db053"></add>
+    <add alias="Winloss_M88_BetList" name="Acc_Rpt_Winloss_M88_BetList" db="db053" function=""></add>
+    <add alias="Winloss_12Bet_BetList" name="Acc_Rpt_Winloss_12Bet_BetList" db="db053" function=""></add>
+    <add alias="Winloss_ALog_BetList" name="Acc_Rpt_Winloss_ALog_BetList" db="db053" function=""></add>
+    <add alias="Winloss_M88_BetList_History" name="Acc_Rpt_Winloss_M88_BetList_History" db="db053" function=""></add>
+    <add alias="Winloss_AB88_BetList_History" name="Acc_Rpt_Winloss_AB88_BetList_History" db="db053" function=""></add>
+    <add alias="Winloss_12Bet_BetList_History" name="Acc_Rpt_Winloss_12Bet_BetList_History" db="db053" function=""></add>
+    <add alias="Winloss_ALog_BetList_History" name="Acc_Rpt_Winloss_ALog_BetList_History" db="db053" function=""></add>
+    <add alias="Age_BetList_SelMatchResultParlay" name="Age_BetList_SelMatchResultParlay" db="db053" function=""></add>
+    
+    <add alias="Age_BetList_SelMatchResultFinance" name="Age_BetList_SelMatchResultFinance" db="db053" function=""></add>
+    <add alias="Winloss_Spondemo_BetList" name="Acc_Rpt_Winloss_Spondemo_BetList" db="db053" function=""></add>
+    <add alias="Winloss_Spondemo_BetList_History" name="Acc_Rpt_Winloss_Spondemo_BetList_History" db="db053" function=""></add>
+    <add alias="Winloss_Dela_BetList" name="Acc_Rpt_Winloss_Dela_BetList" db="db053" function=""></add>
+    <add alias="Winloss_Dela_BetList_History" name="Acc_Rpt_Winloss_Dela_BetList_History" db="db053" function=""></add>
+    <add alias="Winloss_TLC_BetList" name="Acc_Rpt_Winloss_TLC_BetList" db="db053" function=""></add>
+    <add alias="Winloss_TLC_BetList_History" name="Acc_Rpt_Winloss_TLC_BetList_History" db="db053" function=""></add>
+    <add alias="Winloss_AB88_BetList" name="Acc_Rpt_Winloss_AB88_BetList" db="db053" function=""></add>
+    <add alias="SelMatchResultNumberGame" name="Age_BetList_SelMatchResultNumberGame" db="db053" function=""></add>
+  </BetListStores>
+</BetList>

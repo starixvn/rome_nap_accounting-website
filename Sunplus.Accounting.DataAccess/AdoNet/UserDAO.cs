@@ -4,18 +4,21 @@ using System.Collections.Generic;
 using System.Data;
 using DNAide.Core;
 using DNAide.Data;
-using Fanex.Data;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Configurations;
+
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.ViewModel;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Core.LoggingLib;
+using Sunplus.Accounting.Core.Configurations;
+using Fanex.Data;
+using Fanex.Tarus.Infrastructure.Extensions;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet
 {
     /// <summary>
     /// Summary description for UserDAO
     /// </summary>
-    public class UserDAO : DataAccess, IUserDAO
+    public class UserDAO :DataAccess, IUserDAO
     {
         #region IUserDAO Members
 
@@ -50,6 +53,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             var hsParam = new Hashtable();
             hsParam.Add("movebetdate", dtmMoveBetDate);
             hsParam.Add("todate", dtmTodate);
+
 
             using (IDataReader reader = DbHelper.ExecuteReader("Acc_ResetWinning_Sel",
                                                                hsParam, DBType.WAREHOUSE, 120))
@@ -100,15 +104,29 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             return entityList;
         }
 
+
+
         public DateTime MoveBetDateSel()
         {
-            DbResult rs = DbHelper.Execute("Age_SelBalanceUpDay", DBType.WAREHOUSE);
-            return CastAide.AsDateTime(rs.ResultSet.Tables[0].Rows[0]["MoveBetsDay"], DateTime.Now);
+            DateTime datetime = DateTime.Today;
+            using (ObjectDb db = new ObjectDb("SelBalanceUpDay"))
+            {
+                var ds = db.ExecuteDataSet();
+                if (ds != null && ds.Tables.Count > 0)
+                {
+                    var dt = ds.Tables[0];
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        datetime = CastAide.AsDateTime(dt.Rows[0]["MoveBetsDay"], DateTime.Now);
+                    }                    
+                }
+            }
+            return datetime;
         }
 
         public DataSet InsDataTmpExcel(int userId, string arrFromCust, string arrToCust, string arrAmount,
                                         string arrExRate, string arrDescription, ref Hashtable error)
-        {
+        {           
             using (ObjectDb objDb = new ObjectDb("Acc_FinanceTransferMulInsTmpExcel", 6000))
             {
                 var hsParam = new Hashtable();
@@ -126,11 +144,12 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
                 error = objDb.GetOuputParams();
                 return result;
+
             }
         }
 
         public DataSet InsDataTmpExcel(int userId, string xml, ref Hashtable error)
-        {
+        {            
             using (ObjectDb objDb = new ObjectDb("Acc_FinanceTransferMulInsTmpExcel", 6000))
             {
                 var hsParam = new Hashtable();
@@ -144,6 +163,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
                 error = objDb.GetOuputParams();
                 return result;
+
             }
         }
 
@@ -172,7 +192,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         }
 
         public bool DelDataTmpExcel(int userId)
-        {
+        {            
             using (ObjectDb objDb = new ObjectDb("Acc_FinanceTransferMulDelTmpExcel"))
             {
                 var hsParam = new Hashtable();
@@ -188,7 +208,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         }
 
         public DataSet UpdFinanceTransferMul(int userId, string fileName, int fileSize, string IP, ref Hashtable error)
-        {
+        {            
             using (ObjectDb objDb = new ObjectDb("Acc_FinanceTransferMulUpd"))
             {
                 var hsParam = new Hashtable();
@@ -209,6 +229,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
         public DataSet UpdFinanceCrossTransferMul(int userId, string fileName, int fileSize, string IP, string forexName, ref Hashtable error)
         {
+            
             using (ObjectDb objDb = new ObjectDb("Acc_FinanceCrossTransferMulUpd"))
             {
                 var hsParam = new Hashtable();
@@ -228,6 +249,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             }
         }
 
+
         /// <summary>
         /// Get daily finance transaction IRP 444.4
         /// </summary>
@@ -243,8 +265,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                                                           int status, string type, string creator, ref int totalPages,
                                                           string verifyBy)
         {
-            var entityList = new List<DailyTransaction>();
-            var spElement = GetTransactionStoreProcedure("SelDailyFinanceTxn");
+            var entityList = new List<DailyTransaction>();            
             var paramList = new Hashtable();
             paramList.Add("fromdate", transDate);
             paramList.Add("pageindex", pageIndex);
@@ -254,22 +275,24 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             paramList.Add("checkerid", status);
             paramList.Add("checkername", verifyBy);
 
-            using (IDataReader reader = DbHelper.ExecuteReader(spElement.Name,
-                                                               paramList, spElement.DbName, 120))
+            
+            using (ObjectDb db = new ObjectDb("SelDailyFinanceTxn"))
             {
+                db.AssignParamValues(paramList);
+                var reader = db.ExecuteReader();
                 if (reader != null)
                 {
                     while (reader.Read())
                     {
                         var entity = new DailyTransaction();
                         //entity.TransId = (long)(reader["transid"]);
-                        entity.RefNo = CastAide.AsString(reader["refno"]);
-                        entity.Username = (string)reader["username"];
-                        entity.transDate = (string)reader["transdate"];
+                        entity.RefNo =  CastAide.AsString(reader["refno"]);
+                        entity.Username = (string) reader["username"];
+                        entity.transDate = (string) reader["transdate"];
                         entity.Amount = Convert.ToDouble(reader["amount"]);
-                        entity.Description = (string)reader["transdesc"];
-                        entity.Type = (string)reader["typenamee"];
-                        entity.Creator = (string)reader["creator"];
+                        entity.Description = (string) reader["transdesc"];
+                        entity.Type = (string) reader["typenamee"];
+                        entity.Creator = (string) reader["creator"];
                         entity.CheckerName = reader.IsDBNull(reader.GetOrdinal("checkerName"))
                                                  ? string.Empty
                                                  : reader["checkerName"].ToString();
@@ -290,23 +313,30 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 }
             }
 
+
             return entityList;
         }
 
         public List<DailyTransaction> GetDailyAllTransaction(DateTime transDate, int pageIndex, int pageSize, string type, string creator, ref int totalPages)
         {
-            var entityList = new List<DailyTransaction>();
-            var spElement = GetTransactionStoreProcedure("SelDailyAllTxn");
+            var entityList = new List<DailyTransaction>();            
             var paramList = new Hashtable();
             paramList.Add("fromdate", transDate);
             paramList.Add("pageindex", pageIndex);
             paramList.Add("totalpages", totalPages);
-            paramList.Add("pagesize", pageSize);
+            paramList.Add("pagesize", pageSize);            
             paramList.Add("type", type);
             paramList.Add("creator", creator);
 
-            DbResult dbResult = DbHelper.Execute(spElement.Name,
-                                                               paramList, spElement.DbName, 6000);
+            DbResult dbResult = null;
+            using (ObjectDb db = new ObjectDb("SelDailyAllTxn", 6000))
+            {
+                db.AssignParamValues(paramList);
+                var ds = db.ExecuteDataSet();
+                var output = db.GetOuputParams();
+
+                dbResult = new DbResult(output, ds);
+            }
 
             if (dbResult != null && dbResult.ResultSet.Tables[0].Rows.Count > 0)
             {
@@ -320,18 +350,18 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                     entity.Type = (string)dr["typenamee"];
                     entity.Creator = (string)dr["creator"];
                     entity.RowIndex = Convert.ToInt32(dr["rownumber"]);
-                    entityList.Add(entity);
-                }
-
-                //get total record
+                    entityList.Add(entity);    
+                }              
+                    
+                //get total record                
                 totalPages = (int)dbResult.Outputs["totalpages"];
-            }
+            }           
 
             return entityList;
         }
 
         public bool UpdateVerifyStatus(User user, string refNoList, bool isVerified)
-        {
+        {            
             using (ObjectDb db = new ObjectDb("Acc_DailyTxn_UpdChecker", 1200))
             {
                 var parms = new Hashtable();
@@ -340,15 +370,16 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 parms.Add("refnos", refNoList);
                 parms.Add("ip", user.LastLoginIP);
                 parms.Add("isverified", isVerified);
-
+                
                 db.AssignParamValues(parms);
                 db.ExecuteNonQuery();
                 return (CastAide.AsInt32(db.GetParameterValue("errcode")) != 0 ? false : true);
             }
         }
 
+
         /// <summary>
-        ///
+        /// 
         /// </summary>
         /// <param name="customer"></param>
         /// <param name="fromDate"></param>
@@ -366,8 +397,9 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             p.Add("fromdate", fromDate);
             p.Add("todate", toDate);
             p.Add("balanceupday", balanceUpDay);
-            p.Add("movebetday", Sunplus.Accounting.DataAccess.Report.ReportUtils.BalanceUp.MoveBetsDay);
+            p.Add("movebetday", Sunplus.Accounting.DataAccess.Report.ReportUtils.BalanceUp.MoveBetsDay);            
             p.Add("includeaccbal", isInlucdeAccBal);
+
 
             var spElement = GetStoreProcedure(Core.Configurations.StoreProcedureGroup.BetListSection.StoreCollection.BetListStores, "AllStatement_Full");
             using (IDataReader reader = DbHelper.ExecuteReader(spElement.Name, p, spElement.DbName, 600))
@@ -377,7 +409,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                     while (reader.Read())
                     {
                         var entity = new Statement();
-                        entity.RefNo = (long)(reader["refno"]);
+                        entity.RefNo = (long) (reader["refno"]);
                         entity.CreatedDate = Convert.ToDateTime(reader["accdate"]);
                         entity.TotalAmount = Convert.ToDouble(reader["totalamt"]);
                         entity.TransType = reader.IsDBNull(reader.GetOrdinal("transtype"))
@@ -392,6 +424,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                                                ? string.Empty
                                                : reader["creator"].ToString();
                         entity.Creator = creator;
+
 
                         if (!reader.IsDBNull(reader.GetOrdinal("checkerID")))
                         {
@@ -410,7 +443,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                             entity.CheckedTime = Convert.ToDateTime(reader["checkTime"]);
                         }
 
-                        if (!reader.IsDBNull(reader.GetOrdinal("transtypeid")))
+                        if (!reader.IsDBNull(reader.GetOrdinal("transtypeid")))                        
                             entity.TransTypeId = CastAide.AsInt32(reader["transtypeid"]);
                         else
                             entity.TransTypeId = 0;
@@ -421,6 +454,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                     }
                 }
             }
+
 
             return entityList;
         }
@@ -437,14 +471,24 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             return custId;
         }
 
+
         public List<MenuBO> GetUserMenu(int custId)
         {
             var listMenu = new List<MenuBO>();
             var parms = new Hashtable();
-            parms.Add("custid", custId);
-            //parms.Add("system", AppSession.SYSTEM.ToString().ToUpper());
+            parms.Add("custid", custId);            
             parms.Add("system", AppSession.CurrentSystemNAME.ToString());
-            DbResult result = DbHelper.Execute("Acc_MenuSelByCustID", parms, DBType.DB03, 120);
+
+            DbResult result = null;
+
+            using (ObjectDb db = new ObjectDb("Acc_MenuSelByCustID"))
+            {
+                db.AssignParamValues(parms);
+                var ds = db.ExecuteDataSet();
+                var output = db.GetOuputParams();
+
+                result = new DbResult(output, ds);
+            }
 
             if (result.ResultSet != null && result.ResultSet.Tables.Count > 0)
             {
@@ -457,13 +501,33 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         public List<MenuBO> ManageMenuGetMenuList(string system)
         {
             var listMenu = new List<MenuBO>();
-            var hash = new Hashtable();
-            hash.Add("system", system);
-            DbResult rs = DbHelper.Execute("Acc_MenuSelList", hash, DBType.DB03);
-            DataTable dt = rs.ResultSet.Tables[0];
-            RecursionMenu(dt, ref listMenu, 0);
+
+            try
+            {
+                var hash = new Hashtable();
+                hash.Add("system", system);
+
+                using (ObjectDb db = new ObjectDb("Acc_MenuSelList"))
+                {
+                    db.AssignParamValues(hash);
+                    var ds = db.ExecuteDataSet();
+
+                    DataTable dt = null;
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        dt = ds.Tables[0];
+                        RecursionMenu(dt, ref listMenu, 0);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
             return listMenu;
         }
+
 
         public Result InsMenuItem(MenuBO menu)
         {
@@ -489,6 +553,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             }
             catch (Exception ex)
             {
+                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     rs.ErrorCode = 100;
@@ -506,7 +571,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 var hash = new Hashtable();
                 hash.Add("menuid", menu.Id);
                 hash.Add("menu", menu.Name);
-                hash.Add("funcname", menu.FunctionName);
+                hash.Add("funcname", CastAide.AsString(menu.FunctionName));
                 hash.Add("url", menu.Url);
                 hash.Add("target", menu.Target);
                 hash.Add("ishide", menu.IsHide);
@@ -514,13 +579,21 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 hash.Add("system", menu.System);
                 hash.Add("errcode", 0);
                 hash.Add("errmsg", "");
-                DbResult dbrs = DbHelper.Execute("Acc_MenuUpd", hash, DBType.DB03);
 
-                rs.ErrorCode = CastAide.AsInt32(dbrs.Outputs["errcode"]);
-                rs.ErrorMessage = CastAide.AsString(dbrs.Outputs["errmsg"]);
+                using (ObjectDb db = new ObjectDb("Acc_MenuUpd"))
+                {
+                    db.AssignParamValues(hash);
+
+                    db.ExecuteNonQuery();
+                    var output = db.GetOuputParams();
+
+                    rs.ErrorCode = CastAide.AsInt32(output["errcode"]);
+                    rs.ErrorMessage = CastAide.AsString(output["errmsg"]);
+                }                
             }
             catch (Exception ex)
             {
+                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     rs.ErrorCode = 100;
@@ -546,6 +619,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             }
             catch (Exception ex)
             {
+                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     rs.ErrorCode = 100;
@@ -564,11 +638,20 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 hash.Add("errcode", 0);
                 hash.Add("errmsg", "");
 
-                DbResult rs = DbHelper.Execute("Acc_MenuSelGroupFunc", hash, DBType.DB03);
-                var dt = new DataTable();
-                if (rs.ResultSet.Tables.Count > 0)
+                DbResult result = null;
+                using (ObjectDb db = new ObjectDb("Acc_MenuSelGroupFunc"))
                 {
-                    dt = rs.ResultSet.Tables[0];
+                    db.AssignParamValues(hash);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+                
+                var dt = new DataTable();
+                if (result.ResultSet.Tables.Count > 0) 
+                {
+                    dt = result.ResultSet.Tables[0];
                     foreach (DataRow dr in dt.Select())
                     {
                         var m = new MenuBO();
@@ -579,6 +662,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             }
             catch (Exception ex)
             {
+                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -608,6 +692,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             }
             catch (Exception ex)
             {
+                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -616,7 +701,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         }
 
         /// <summary>
-        /// Insert customer to Site Group
+        /// Insert customer to Site Group 
         /// </summary>
         /// <param name="custId"></param>
         /// <param name="roleId"></param>
@@ -624,9 +709,9 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         /// <returns></returns>
         public Result InsertCustomerToGroup(int custId, int roleId, string system)
         {
-            var result = new Result { ErrorCode = 0, ErrorMessage = string.Empty };
+            var result = new Result {ErrorCode = 0, ErrorMessage = string.Empty};
             DbResult ds = null;
-            var param = new Hashtable { { "custid", custId } };
+            var param = new Hashtable {{"custid", custId}};
             param.Add("roleid", roleId);
             param.Add("system", system.ToString().ToUpper());
             var spElement =
@@ -638,6 +723,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             {
                 result.ErrorCode = CastAide.AsInt32(ds.Outputs["errcode"]);
                 result.ErrorMessage = CastAide.AsString(ds.Outputs["errmsg"]);
+               
             }
             return result;
         }
@@ -648,7 +734,17 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             var parms = new Hashtable();
             parms.Add("custid", custId);
             parms.Add("system", system);
-            DbResult result = DbHelper.Execute("Acc_MenuSelByCustID", parms, DBType.DB03, 120);
+            
+            DbResult result = null;
+
+            using (ObjectDb db = new ObjectDb("Acc_MenuSelByCustID"))
+            {
+                db.AssignParamValues(parms);
+                var ds = db.ExecuteDataSet();
+                var output = db.GetOuputParams();
+
+                result = new DbResult(output, ds);
+            }
 
             if (result.ResultSet != null && result.ResultSet.Tables.Count > 0)
             {
@@ -657,8 +753,8 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             }
             return listMenu;
         }
+        #endregion
 
-        #endregion IUserDAO Members
 
         private void RecursionMenu(DataTable dt, ref List<MenuBO> listMenu, int parentId)
         {
@@ -682,12 +778,14 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 var listSubMenu = new List<MenuBO>();
                 RecursionMenu(dt, ref listSubMenu, menuItem.Id);
                 menuItem.SubMenu = listSubMenu;
+                               
 
                 listMenu.Add(menuItem);
             }
         }
 
         #region IUserDAO Members
+
 
         public DbResult GetDailyAllTransaction(DateTime transDate, string type, string creator)
         {
@@ -705,7 +803,11 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             return dbResult;
         }
 
-        #endregion IUserDAO Members
+        #endregion
+
+
+
+       
 
         public DailyTransactionDTO GetDailyTransaction(DateTime transDate, int status, string type, string creator, string verifyBy)
         {
@@ -729,7 +831,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 {
                     while (reader.Read())
                     {
-                        count++;
+                        count ++;
                         var entity = new DailyTransaction();
                         //entity.TransId = (long)(reader["transid"]);
                         entity.RefNo = CastAide.AsString(reader["refno"]);
@@ -755,7 +857,10 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 }
             }
 
+
             return dailyFinance;
         }
+
+   
     }
 }

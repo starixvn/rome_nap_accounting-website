@@ -136,7 +136,7 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
             var result = new Result();
             try
             {
-                using (ObjectDb objDB = new ObjectDb("AddSMATurnover"))
+                using (ObjectDb objDB = new ObjectDb("Customer_SMATurnover_AddSMAList"))
                 {
                     objDB.AddInParameter("matchid", DbType.Int32, matchId);
                     objDB.AddInParameter("username", DbType.String, custName);

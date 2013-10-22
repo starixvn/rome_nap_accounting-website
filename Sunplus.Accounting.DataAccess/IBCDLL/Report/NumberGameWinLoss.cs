@@ -1,8 +1,15 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using DNAide.Data;
-using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
+
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess.Report;
+using Sunplus.Core.LoggingLib;
+using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
+using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
 {
@@ -21,7 +28,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -54,11 +63,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
-
         public static DbResult WinlossByBetTypeDetail(DateTime wldate, int liveindicator, int bettype, string companies, string currencies)
         {
             DbResult result = null;
@@ -76,7 +86,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -95,7 +107,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -128,11 +142,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
-
         public static DbResult WinlossByBetTypeDetail14(DateTime wldate, int liveindicator, int bettype, string companies, string currencies)
         {
             DbResult result = null;
@@ -150,7 +165,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -183,11 +200,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
-
         public static DbResult WinlossByBetTypeDetail_Old(DateTime wldate, int liveindicator, int bettype, string companies, string currencies)
         {
             DbResult result = null;
@@ -202,10 +220,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
 
                 var sp = ReportSession.Instance[ReportSession.StoreCollection.Gaming]["Acc_Rpt_NumberGame_Detail_Old"];
                 result = DbHelper.Execute(sp.Name, p, sp.DbName, 300);
+
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -223,7 +244,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -245,16 +268,20 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
                 {
                     var sp = ReportSession.Instance[ReportSession.StoreCollection.Gaming]["Acc_Rpt_NumberGame_Old"];
                     result = DbHelper.Execute(sp.Name, p, sp.DbName, 300);
+                    
                 }
                 else
                 {
                     var sp = ReportSession.Instance[ReportSession.StoreCollection.Gaming]["Acc_Rpt_NumberGame"];
                     result = DbHelper.Execute(sp.Name, p, sp.DbName, 300);
                 }*/
+                
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -274,11 +301,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
-
         public static DbResult WinlossByBetType14(DateTime wldate)
         {
             DbResult result = null;
@@ -292,7 +320,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -324,11 +354,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
-
         public static DbResult WinlossByBetType14(DateTime wldate, string companies, string currencies)
         {
             DbResult result = null;
@@ -345,7 +376,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -377,11 +410,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
-
         public static DbResult WinlossByBetType_Old(DateTime wldate, string companies, string currencies)
         {
             DbResult result = null;
@@ -398,7 +432,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -413,7 +449,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -423,12 +461,19 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Report
             DbResult result = null;
             try
             {
-                var sp = ReportSession.Instance[ReportSession.StoreCollection.Gaming]["SelAllNumberGameBettypes"];
-                result = DbHelper.Execute(sp.Name, sp.DbName);
+                using (ObjectDb db = new ObjectDb("SelAllNumberGameBettypes"))
+                {
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
