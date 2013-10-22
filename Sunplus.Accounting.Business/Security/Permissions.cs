@@ -4,14 +4,12 @@ using System.Collections.Generic;
 using System.Data;
 using DNAide.Core;
 using DNAide.Data;
-
 using Sunplus.Accounting.Business.PositionTaking;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
-
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Bingo.Core;
@@ -124,7 +122,7 @@ namespace Sunplus.Accounting.Business.Security
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
             }
             return pages;

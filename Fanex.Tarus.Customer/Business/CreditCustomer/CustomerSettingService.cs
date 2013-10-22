@@ -221,6 +221,7 @@ namespace Fanex.Tarus.Customer.CreditCustomer.Business
             customer.IsUplineDisableLiveCasino = uplineDetail.LiveCasinoDisabled;
             customer.CurrencyId = uplineDetail.Currency;
             customer.CurrencyName = uplineDetail.CurrencyName;
+            
 
             return customer;
         }

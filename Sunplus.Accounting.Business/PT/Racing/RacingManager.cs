@@ -814,6 +814,7 @@ namespace Sunplus.Accounting.Business.PT.Racing
             {
                 result.ErrorCode = 100;
                 result.ErrorMessage = ex.Message;
+                LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
