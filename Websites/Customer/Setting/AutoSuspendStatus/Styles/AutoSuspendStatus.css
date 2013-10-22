@@ -1,0 +1,30 @@
+﻿
+.width260
+{
+    width: 260px;
+}
+
+.table-settings
+{
+    margin-bottom: 15px;
+}
+
+.label-for-checkbox
+{
+    cursor: pointer;
+}
+
+.display-none
+{
+    display: none;
+}
+
+.align-left
+{
+    text-align: left;
+}
+
+#result-message
+{
+    width: 260px;
+}
