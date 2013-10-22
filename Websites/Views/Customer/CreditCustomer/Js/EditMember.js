@@ -38,7 +38,7 @@ edm.initContext = function () {
         url: "GetContextObject",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        data: '{"agentId":' + JSON.stringify(agentId) + ',"memberId":' +  JSON.stringify(memberId) + '}',
+        data: '{"agentId":' + JSON.stringify(agentId) + ',"memberId":' + JSON.stringify(memberId) + '}',
         success: function (stringContext) {
             context = JSON.parse(stringContext);
             edm.initCustomer();
@@ -90,7 +90,7 @@ edm.initCommission = function () {
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listOtherBettypes'), 0, commissionSetting.discountCS, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.playerDiscountCs);
     Fanex.PTEngine.PT_SetSelect(document.getElementById('list1X2'), 0, commissionSetting.discount1x2, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.playerDiscount1x2);
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listGameComm'), 0, commissionSetting.discountNumber, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.playerDiscountNumber);
-    Fanex.PTEngine.PT_SetSelect(document.getElementById('listHRFixOddsComm'), 0, Math.max(commissionSetting.discountHRFixedOddsMax, commissionSetting.discountHRFixedOdds), Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discountHRFixedOdds);
+    Fanex.PTEngine.PT_SetSelect(document.getElementById('listHRFixOddsComm'), 0, Math.max(commissionSetting.discountHRFixedOddsMax, commissionSetting.discountHRFixedOdds), Fanex.PTEngine.COMMISSION_STEP, commissionSetting.playerDiscountHRFixedOdds);
 };
 //render Transfer Option
 // check valid user input
@@ -128,7 +128,7 @@ edm.editMember = function () {
         else {
             return;
         }
-        try { parent.parent.BlockUI(); } catch (e) {  }
+        try { parent.parent.BlockUI(); } catch (e) { }
         try { parent.BlockUI(); } catch (e) { }
         $.ajax({
             type: "POST",
