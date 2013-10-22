@@ -50,8 +50,10 @@ namespace Fanex.Tarus.Customer.DataAccess.AutoSuspend
             {
                 Username = CastAide.AsString(rawCustomerInfo["username"]),
                 RoleId = CastAide.AsInt32(rawCustomerInfo["roleid"]),
-                UplineAutoSuspendSoccer = false && CastAide.AsBoolean(rawCustomerInfo["DisableDownlines151_31"]),
-                UplineAutoSuspendOtherSports = CastAide.AsBoolean(rawCustomerInfo["DisableDownlines151_31"])
+                UplineAutoSuspendSoccer = true && CastAide.AsBoolean(rawCustomerInfo["DisableDownlines151_31"]),
+                UplineAutoSuspendOtherSports = true && CastAide.AsBoolean(rawCustomerInfo["DisableDownlines151_31"]),
+                AutoSuspendSoccer = true,
+                AutoSuspendOtherSports = true
             };
 
             return result;
