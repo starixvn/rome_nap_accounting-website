@@ -180,12 +180,25 @@ var AutoSuspendStatus = function () {
         }
 
         self.GetUpdateParams();
-
+        self.CallAjax(self,
+            "../../../AutoSuspend/UpdateCustomerStatus",
+            self.Params.updateCustomerInfo,
+            self.RenderCustomerInfo,
+            self.RenderCustomerInfo,
+            self.unblockUI);
     };
 
     self.GetUpdateParams = function () {
         self.Params.updateCustomerInfo.CustomerId = self.CacheData.customerInfo.CustomerId;
         self.Params.updateCustomerInfo.Role = self.CacheData.customerInfo.Role;
+
+        self.Params.updateCustomerInfo.AutoSuspendSoccer = self.CacheData.customerInfo.UplineAutoSuspendSoccer ?
+            self.CacheData.customerInfo.AutoSuspendSoccer :
+            self.Tables.checkboxEnableAutosuspendSoccer.prop("checked");
+
+        self.Params.updateCustomerInfo.AutoSuspendOtherSports = self.CacheData.customerInfo.UplineAutoSuspendOtherSports ?
+            self.CacheData.customerInfo.AutoSuspendOtherSports :
+            self.Tables.checkboxEnableAutosuspendOthersports.prop("checked");
     };
 
     self.GetCustomerInfo = function () {
