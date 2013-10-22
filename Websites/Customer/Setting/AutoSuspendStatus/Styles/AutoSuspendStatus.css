@@ -12,6 +12,12 @@
 .label-for-checkbox
 {
     cursor: pointer;
+    display: inline-block;
+}
+
+.label-for-checkbox.disabled
+{
+    cursor: default;
 }
 
 .display-none
@@ -27,4 +33,33 @@
 #result-message
 {
     width: 260px;
+}
+
+.tipsy
+{
+    font-size: 12px;
+}
+
+.checkbox-checked
+{
+    background: url("Images/check.jpg") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: inline-block;
+    height: 13px;
+    width: 13px;
+    margin: -2px 4px;
+}
+
+.checkbox-unchecked
+{
+    background: url("Images/uncheck.jpg") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: inline-block;
+    height: 13px;
+    width: 13px;
+    margin: -2px 4px;
+}
+
+.checkbox-checked.display-none,
+.checkbox-unchecked.display-none 
+{
+    display: none;
 }

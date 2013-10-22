@@ -26,16 +26,29 @@ var AutoSuspendStatus = function () {
         customerInfoTitle: null,
 
         checkboxEnableAutosuspendSoccer: null,
-        checkboxEnableAutosuspendOthersports: null
+        labelEnableAutosuspendSoccer: null,
+        checkboxEnableAutosuspendSoccerDisable: null,
+
+        checkboxEnableAutosuspendOthersports: null,
+        labelEnableAutosuspendOthersports: null,
+        checkboxEnableAutosuspendOthersportsDisable: null
     };
 
     self.Params = {
         getCustomerInfo: {
             CustomerId: 0
+        },
+
+        updateCustomerInfo: {
+            CustomerId: 0,
+            Role: null,
+            AutoSuspendSoccer: null,
+            AutoSuspendOtherSports: null
         }
     };
 
     self.CacheData = {
+        customerInfo: null
     };
 
     self.blockUI = function () {
@@ -131,17 +144,48 @@ var AutoSuspendStatus = function () {
         self.Tables.customerInfoTitle = $("#customer-info-title");
 
         self.Tables.checkboxEnableAutosuspendSoccer = $("#checkbox-enable-autosuspend-soccer");
+        self.Tables.labelEnableAutosuspendSoccer = $("#label-enable-autosuspend-soccer");
+        self.Tables.checkboxEnableAutosuspendSoccerDisable = $("#checkbox-enable-autosuspend-soccer-disable");
+
         self.Tables.checkboxEnableAutosuspendOthersports = $("#checkbox-enable-autosuspend-othersports");
+        self.Tables.labelEnableAutosuspendOthersports = $("#label-enable-autosuspend-othersports");
+        self.Tables.checkboxEnableAutosuspendOthersportsDisable = $("#checkbox-enable-autosuspend-othersports-disable");
     };
     self.bindingEvent = function () {
         self.Tables.buttonUpdate.unbind("click");
         self.Tables.buttonUpdate.click(function () {
             self.buttonUpdateClick();
         });
+
+        self.Tables.checkboxEnableAutosuspendSoccerDisable.tipsy({
+            html: true,
+            opacity: 0.9,
+            gravity: 'nw'
+        });
+
+        self.Tables.checkboxEnableAutosuspendOthersportsDisable.tipsy({
+            html: true,
+            opacity: 0.9,
+            gravity: 'nw'
+        });
     };
 
     self.buttonUpdateClick = function () {
+        self.blockUI();
+        if (self.CacheData.customerInfo.UplineAutoSuspendSoccer &&
+            self.CacheData.customerInfo.UplineAutoSuspendOtherSports) {
+            showAlertMessage("result-message", "Upline has been auto suspended", 1);
+            self.Tables.resultMessage.removeClass("display-none");
+            return;
+        }
 
+        self.GetUpdateParams();
+
+    };
+
+    self.GetUpdateParams = function () {
+        self.Params.updateCustomerInfo.CustomerId = self.CacheData.customerInfo.CustomerId;
+        self.Params.updateCustomerInfo.Role = self.CacheData.customerInfo.Role;
     };
 
     self.GetCustomerInfo = function () {
@@ -158,6 +202,7 @@ var AutoSuspendStatus = function () {
     };
 
     self.RenderCustomerInfo = function (customerInfo) {
+        self.CacheData.customerInfo = customerInfo;
         if (customerInfo == null) {
             self.Tables.settingContent.addClass("display-none");
             showAlertMessage("result-message", "There is no customer info.", 1);
@@ -170,11 +215,45 @@ var AutoSuspendStatus = function () {
         var customerInfoTitle = self.getRoleName(customerInfo.RoleId) + ": " + customerInfo.Username;
         self.Tables.customerInfoTitle.html(customerInfoTitle);
 
-        self.Tables.checkboxEnableAutosuspendSoccer.attr("disabled",
-            customerInfo.UplineAutoSuspendSoccer ? "" : "disabled");
-        self.Tables.checkboxEnableAutosuspendOthersports.attr("disabled",
-            customerInfo.UplineAutoSuspendOtherSports ? "" : "disabled");
+        if (customerInfo.AutoSuspendSoccer) {
+            self.Tables.checkboxEnableAutosuspendSoccerDisable.removeClass("checkbox-unchecked")
+                                                              .addClass("checkbox-checked");
+        } else {
+            self.Tables.checkboxEnableAutosuspendSoccerDisable.removeClass("checkbox-checked")
+                                                              .addClass("checkbox-unchecked");
+        }
 
+        if (customerInfo.AutoSuspendOtherSports) {
+            self.Tables.checkboxEnableAutosuspendOthersportsDisable.removeClass("checkbox-unchecked")
+                                                                   .addClass("checkbox-checked");
+        } else {
+            self.Tables.checkboxEnableAutosuspendOthersportsDisable.removeClass("checkbox-checked")
+                                                                   .addClass("checkbox-unchecked");
+        }
+
+        if (customerInfo.UplineAutoSuspendSoccer) {
+            self.Tables.checkboxEnableAutosuspendSoccer.attr("disabled", "disabled");
+            self.Tables.checkboxEnableAutosuspendSoccer.addClass("display-none");
+            self.Tables.labelEnableAutosuspendSoccer.addClass("disabled ");
+            self.Tables.checkboxEnableAutosuspendSoccerDisable.removeClass("display-none");
+        } else {
+            self.Tables.checkboxEnableAutosuspendSoccerDisable.addClass("display-none");
+            self.Tables.labelEnableAutosuspendSoccer.removeClass("disabled");
+            self.Tables.checkboxEnableAutosuspendSoccer.removeClass("display-none");
+            self.Tables.checkboxEnableAutosuspendSoccer.attr("disabled", null);
+        }
+
+        if (customerInfo.UplineAutoSuspendOtherSports) {
+            self.Tables.checkboxEnableAutosuspendOthersports.attr("disabled", "disabled");
+            self.Tables.checkboxEnableAutosuspendOthersports.addClass("display-none");
+            self.Tables.labelEnableAutosuspendOthersports.addClass("disabled ");
+            self.Tables.checkboxEnableAutosuspendOthersportsDisable.removeClass("display-none");
+        } else {
+            self.Tables.checkboxEnableAutosuspendOthersportsDisable.addClass("display-none");
+            self.Tables.labelEnableAutosuspendOthersports.removeClass("disabled");
+            self.Tables.checkboxEnableAutosuspendOthersports.removeClass("display-none");
+            self.Tables.checkboxEnableAutosuspendOthersports.attr("disabled", null);
+        }
 
         self.Tables.settingContent.removeClass("display-none");
     };

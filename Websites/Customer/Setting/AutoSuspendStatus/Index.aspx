@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="../../../App_Themes/Public/table.css" />
     <link rel="stylesheet" type="text/css" href="../../../App_Themes/Public/input.css" />
     <link rel="stylesheet" type="text/css" href="../../../App_Themes/Public/Message.css" />
+    <link rel="stylesheet" type="text/css" href="../../../js/ToolTip/Tipsy-Tooltip/tipsy.css" />
     <link rel="stylesheet" type="text/css" href="Styles/AutoSuspendStatus.css" />
 </head>
 <body>
@@ -27,15 +28,19 @@
                         <tr>
                             <td class="align-left">
                                 <input id="checkbox-enable-autosuspend-soccer" type="checkbox" />
-                                <label class="label-for-checkbox" for="checkbox-enable-autosuspend-soccer">
+                                <span id="checkbox-enable-autosuspend-soccer-disable" class="checkbox-checked display-none"
+                                    title="Upline has been auto suspended"></span>
+                                <label id="label-enable-autosuspend-soccer" class="label-for-checkbox" for="checkbox-enable-autosuspend-soccer">
                                     Auto Suspend Soccer
                                 </label>
                             </td>
                         </tr>
                         <tr>
-                            <td class="align-left ">
+                            <td class="align-left">
                                 <input id="checkbox-enable-autosuspend-othersports" type="checkbox" />
-                                <label class="label-for-checkbox" for="checkbox-enable-autosuspend-othersports">
+                                <span id="checkbox-enable-autosuspend-othersports-disable" class="checkbox-unchecked display-none"
+                                    title="Upline has been auto suspended"></span>
+                                <label id="label-enable-autosuspend-othersports" class="label-for-checkbox" for="checkbox-enable-autosuspend-othersports">
                                     Auto Suspend Other Sports
                                 </label>
                             </td>
@@ -63,6 +68,7 @@
     <script type="text/javascript" src="../../../js/jQuery/jquery.blockUI.1.33.js"></script>
     <script type="text/javascript" src="../../../js/BlockUI.js"></script>
     <script type="text/javascript" src="../../../js/Common/Functions.js"></script>
+    <script type="text/javascript" src="../../../js/ToolTip/Tipsy-Tooltip/jquery.tipsy.js"></script>
     <script type="text/javascript" src="Scripts/AutoSuspendStatus.js?v=<%=Sunplus.Accounting.Core.Configurations.WebSettings.Version%>"></script>
     <script type="text/javascript">
         var viewResourses=<%=ViewResourses%>;
