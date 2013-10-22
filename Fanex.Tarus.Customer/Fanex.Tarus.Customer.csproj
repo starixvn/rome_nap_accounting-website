@@ -158,6 +158,7 @@
     <Compile Include="Controller\AutoSuspendController.cs" />
     <Compile Include="Controller\ViewPTController.cs" />
     <Compile Include="Criteria\AutoSuspend\GetCustomerStatusCriteria.cs" />
+    <Compile Include="Criteria\AutoSuspend\UpdateCustomerStatusCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\AddSMAListCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\UploadSMAListCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\CheckSMAListCriteria.cs" />

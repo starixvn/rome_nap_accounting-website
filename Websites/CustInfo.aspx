@@ -264,7 +264,7 @@
          function updateAutoSuspendStatus(id, roleIds) {
             var title = 'Update Auto Suspend Status';
             var url = 'Customer/Setting/AutoSuspendStatus/Index.aspx?custId=' + id;
-            var width = 290;
+            var width = 305;
             var height = 260;
             parent.OpenPopup(url, title, width, height, true, true, window, 2000, null, null);
         }       

@@ -42,6 +42,10 @@ var AutoSuspendStatus = function () {
         updateCustomerInfo: {
             CustomerId: 0,
             Role: null,
+
+            UplineAutoSuspendSoccer: null,
+            UplineAutoSuspendOtherSports: null,
+
             AutoSuspendSoccer: null,
             AutoSuspendOtherSports: null
         }
@@ -171,6 +175,16 @@ var AutoSuspendStatus = function () {
     };
 
     self.buttonUpdateClick = function () {
+        var confirmMessage = (self.CacheData.customerInfo.RoleId == self.Constants.RoleId.MEMBER ||
+            self.CacheData.customerInfo.RoleId == self.Constants.RoleId.SuperOnMember ||
+            self.CacheData.customerInfo.RoleId == self.Constants.RoleId.MasterOnMember) ?
+            "Are you sure you want to update auto suspend on this customer?" :
+            "Are you sure you want to update auto suspend on this customer and all downline?";
+
+        if (!confirm(confirmMessage)) {
+            return;
+        }
+
         self.blockUI();
         if (self.CacheData.customerInfo.UplineAutoSuspendSoccer &&
             self.CacheData.customerInfo.UplineAutoSuspendOtherSports) {
@@ -183,22 +197,40 @@ var AutoSuspendStatus = function () {
         self.CallAjax(self,
             "../../../AutoSuspend/UpdateCustomerStatus",
             self.Params.updateCustomerInfo,
-            self.RenderCustomerInfo,
-            self.RenderCustomerInfo,
+            self.RenderUpdateResult,
+            self.RenderUpdateResult,
             self.unblockUI);
     };
 
+    self.RenderUpdateResult = function (updateResult) {
+        if (updateResult == null) {
+            showAlertMessage("result-message", "There is a problem! Please try again!", 1);
+            self.Tables.resultMessage.removeClass("display-none");
+            return;
+        }
+
+        if (updateResult.ErrorCode > 0) {
+            showAlertMessage("result-message", updateResult.ErrorMessage, 1);
+            self.Tables.resultMessage.removeClass("display-none");
+            return;
+        }
+
+        showAlertMessage("result-message", updateResult.ErrorMessage, 0);
+        self.Tables.resultMessage.removeClass("display-none");
+        setTimeout(function () {
+            self.Tables.resultMessage.empty().addClass("display-none");
+        }, 5000);
+    };
+
     self.GetUpdateParams = function () {
-        self.Params.updateCustomerInfo.CustomerId = self.CacheData.customerInfo.CustomerId;
-        self.Params.updateCustomerInfo.Role = self.CacheData.customerInfo.Role;
+        self.Params.updateCustomerInfo.CustomerId = self.Params.getCustomerInfo.CustomerId;
+        self.Params.updateCustomerInfo.Role = self.CacheData.customerInfo.RoleId;
 
-        self.Params.updateCustomerInfo.AutoSuspendSoccer = self.CacheData.customerInfo.UplineAutoSuspendSoccer ?
-            self.CacheData.customerInfo.AutoSuspendSoccer :
-            self.Tables.checkboxEnableAutosuspendSoccer.prop("checked");
+        self.Params.updateCustomerInfo.UplineAutoSuspendSoccer = self.CacheData.customerInfo.UplineAutoSuspendSoccer;
+        self.Params.updateCustomerInfo.UplineAutoSuspendOtherSports = self.CacheData.customerInfo.UplineAutoSuspendOtherSports;
 
-        self.Params.updateCustomerInfo.AutoSuspendOtherSports = self.CacheData.customerInfo.UplineAutoSuspendOtherSports ?
-            self.CacheData.customerInfo.AutoSuspendOtherSports :
-            self.Tables.checkboxEnableAutosuspendOthersports.prop("checked");
+        self.Params.updateCustomerInfo.AutoSuspendSoccer = self.Tables.checkboxEnableAutosuspendSoccer.attr("checked");
+        self.Params.updateCustomerInfo.AutoSuspendOtherSports = self.Tables.checkboxEnableAutosuspendOthersports.attr("checked");
     };
 
     self.GetCustomerInfo = function () {

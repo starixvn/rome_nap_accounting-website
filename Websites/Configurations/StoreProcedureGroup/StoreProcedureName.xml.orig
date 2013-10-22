@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Functions>
+  <Function Name="Customer - Auto Suspend">
+    <Setting Key="Customer_AutoSuspend_GetCustomerStatus" SpName="Acc_CustomerSelRBStatus" DbName="db053"/>
+  </Function>
+</Functions>
+
+  
+</Functions>

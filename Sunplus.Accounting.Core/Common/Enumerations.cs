@@ -146,7 +146,8 @@ namespace Sunplus.Accounting.Core.Common
                 SuspendCustList,
                 DailyTransaction,
                 ClearCredit,
-                ResetMaxTransfer
+                ResetMaxTransfer,
+                AutoSuspend
             }
 
             public enum Transfer

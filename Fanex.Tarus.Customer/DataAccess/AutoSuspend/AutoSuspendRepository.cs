@@ -11,10 +11,11 @@ namespace Fanex.Tarus.Customer.DataAccess.AutoSuspend
 {
     using System.Collections;
     using System.Data;
+    using DNAide.Core;
     using Fanex.Data;
     using Fanex.Tarus.Customer.Criteria.AutoSuspend;
     using Fanex.Tarus.Customer.Entities.AutoSuspend;
-    using DNAide.Core;
+    using Sunplus.Accounting.Entities;
 
     /// <summary>
     /// TODO: Update summary.
@@ -50,13 +51,44 @@ namespace Fanex.Tarus.Customer.DataAccess.AutoSuspend
             {
                 Username = CastAide.AsString(rawCustomerInfo["username"]),
                 RoleId = CastAide.AsInt32(rawCustomerInfo["roleid"]),
-                UplineAutoSuspendSoccer = false && CastAide.AsBoolean(rawCustomerInfo["DisableDownlines151_31"]),
-                UplineAutoSuspendOtherSports = true && CastAide.AsBoolean(rawCustomerInfo["DisableDownlines151_31"]),
+                UplineAutoSuspendSoccer = false || CastAide.AsBoolean(rawCustomerInfo["DisableDownlines151_31"]),
+                UplineAutoSuspendOtherSports = false || CastAide.AsBoolean(rawCustomerInfo["DisableDownlines151_31"]),
                 AutoSuspendSoccer = true,
                 AutoSuspendOtherSports = true
             };
 
             return result;
+        }
+
+        public Result UpdateCustomerStatus(UpdateCustomerStatusCriteria criteria)
+        {
+            Hashtable hashtableParams = new Hashtable();
+            hashtableParams.Add("custid", criteria.CustomerId);
+            Hashtable outputParams = new Hashtable();
+            //hashtableParams.Add("roleid", criteria.RoleId);
+            //hashtableParams.Add("autosuspendsoccer", criteria.AutoSuspendSoccer);
+            //hashtableParams.Add("autosuspendothersports", criteria.AutoSuspendOtherSports);
+            DataTable dataTable = null;
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AssignParamValues(hashtableParams);
+                var dataset = objDb.ExecuteDataSet();
+                outputParams = objDb.GetOuputParams();
+                if (dataset != null &&
+                    dataset.Tables != null &&
+                    dataset.Tables.Count > 0)
+                {
+                    dataTable = dataset.Tables[0];
+                }
+            }
+
+            Result updateResult = new Result
+            {
+                ErrorCode = 0,
+                ErrorMessage = "Something wrong!"
+            };
+
+            return updateResult;
         }
     }
 }
