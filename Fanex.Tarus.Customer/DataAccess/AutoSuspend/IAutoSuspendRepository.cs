@@ -11,9 +11,12 @@ namespace Fanex.Tarus.Customer.DataAccess.AutoSuspend
 {
     using Fanex.Tarus.Customer.Criteria.AutoSuspend;
     using Fanex.Tarus.Customer.Entities.AutoSuspend;
+    using Sunplus.Accounting.Entities;
 
     public interface IAutoSuspendRepository
     {
         CustomerInfo GetCustomerStatus(GetCustomerStatusCriteria criteria);
+
+        Result UpdateCustomerStatus(UpdateCustomerStatusCriteria criteria);
     }
 }

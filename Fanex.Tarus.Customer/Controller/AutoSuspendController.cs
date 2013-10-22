@@ -13,6 +13,7 @@ namespace Fanex.Tarus.Customer.Controller
     using Fanex.Tarus.Customer.Business.AutoSuspend;
     using Fanex.Tarus.Customer.Criteria.AutoSuspend;
     using Fanex.Tarus.Web.Controllers;
+    using Fanex.Tarus.Web.Controllers.Filters;
 
     /// <summary>
     /// TODO: Update summary.
@@ -32,6 +33,7 @@ namespace Fanex.Tarus.Customer.Controller
         }
 
         [HttpPost]
+        [AuthenticateRead]
         public JsonResult GetCustomerStatus(GetCustomerStatusCriteria criteria)
         {
             var result = _autoSuspendService.GetCustomerStatus(criteria);
@@ -40,5 +42,14 @@ namespace Fanex.Tarus.Customer.Controller
             return jsonResult;
         }
 
+        [HttpPost]
+        [AuthenticateHost]
+        public JsonResult UpdateCustomerStatus(UpdateCustomerStatusCriteria criteria)
+        {
+            var result = _autoSuspendService.UpdateCustomerStatus(criteria);
+            var jsonResult = Json(result);
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
     }
 }

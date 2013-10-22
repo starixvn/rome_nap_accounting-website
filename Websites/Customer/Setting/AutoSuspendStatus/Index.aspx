@@ -19,7 +19,7 @@
                 Loading...
             </div>
             <div id="setting-content" class="display-none">
-                <table class="tblcollapse width260 table-settings">
+                <table class="tblcollapse content-width table-settings">
                     <tbody>
                         <tr class="title1">
                             <td id="customer-info-title">

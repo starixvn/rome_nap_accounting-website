@@ -1,7 +1,7 @@
 ﻿
-.width260
+.content-width
 {
-    width: 260px;
+    width: 275px;
 }
 
 .table-settings
@@ -32,7 +32,7 @@
 
 #result-message
 {
-    width: 260px;
+    width: 275px;
 }
 
 .tipsy

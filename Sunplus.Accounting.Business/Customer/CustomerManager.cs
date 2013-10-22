@@ -687,6 +687,22 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.RemoveBlock(ref htmlcontent, "p2pstatus");
                             }
 
+                            // Louis: Auto suspend status
+                            var hasReadPermission_AutoSuspend = Permissions.HasPermission(Enumerations.Functions.Customer.AutoSuspend);
+                            var hasHostPermission_AutoSuspend = Permissions.HasHostPermission(Enumerations.Functions.Customer.AutoSuspend);
+                            if (!hasReadPermission_AutoSuspend)
+                            {
+                                TemplateHandler.RemoveBlock(ref htmlcontent, "autosuspendstatus");
+                            }
+                            else if (!hasHostPermission_AutoSuspend)
+                            {
+                                TemplateHandler.RemoveBlock(ref htmlcontent, "autosuspendstatusenable");
+                            }
+                            else
+                            {
+                                TemplateHandler.RemoveBlock(ref htmlcontent, "autosuspendstatusdisable");
+                            }
+
                             if (Functions.Settings.IsVisibleSpecial)
                             {
                                 TemplateHandler.Assign(ref htmlcontent, "{specialCustomer}", StatusSpan(isManageCustomerAccess, "special", important, (roleId > 1)));
@@ -878,7 +894,8 @@ namespace Sunplus.Accounting.Business.Customer
 
                             string bettingSetting = WebSettings.ExternalBettingLimitConfig;
                             //AppSession.GroupID
-                            try {
+                            try
+                            {
                                 if (!String.IsNullOrEmpty(bettingSetting) && bettingSetting.Contains("|"))
                                 {
                                     var groupId = bettingSetting.Split(new char[] { '|' })[0].Split(new char[] { ',' });
@@ -896,11 +913,12 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-BetSetting");
                                 }
                             }
-                            catch {
+                            catch
+                            {
                                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-BetSetting");
                             }
 
-                           
+
 
                             //---- for menu details -----------
                             AssignEditFinance(ref htmlcontent, roleId);

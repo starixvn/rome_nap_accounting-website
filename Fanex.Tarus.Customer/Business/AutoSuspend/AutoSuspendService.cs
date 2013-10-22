@@ -14,6 +14,7 @@ namespace Fanex.Tarus.Customer.Business.AutoSuspend
     using Fanex.Tarus.Customer.DataAccess.AutoSuspend;
     using Fanex.Tarus.Customer.Entities.AutoSuspend;
     using Fanex.Tarus.Infrastructure.Extensions;
+    using Sunplus.Accounting.Entities;
 
     /// <summary>
     /// TODO: Update summary.
@@ -38,6 +39,35 @@ namespace Fanex.Tarus.Customer.Business.AutoSuspend
             {
                 var rawData = _autoSuspendRepository.GetCustomerStatus(criteria);
                 return rawData;
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return null;
+        }
+
+        public Result UpdateCustomerStatus(UpdateCustomerStatusCriteria criteria)
+        {
+            try
+            {
+                Result updateResult = new Result();
+                if (criteria.UplineAutoSuspendSoccer &&
+                    criteria.UplineAutoSuspendOtherSports)
+                {
+                    updateResult.ErrorCode = 1;
+                    updateResult.ErrorMessage = "Upline has been auto suspended";
+                    return updateResult;
+                }
+
+                updateResult = _autoSuspendRepository.UpdateCustomerStatus(criteria);
+                if (updateResult.ErrorCode == 0)
+                {
+                    updateResult.ErrorMessage = "Auto suspend status updated successfully";
+                }
+
+                return updateResult;
             }
             catch (Exception ex)
             {
