@@ -40,6 +40,7 @@ namespace Fanex.Tarus.Customer.Controller.EditLicensee
         }
 
         [HttpPost]
+        [AuthenticateRead]
         public JsonResult GetLicenseeInfo(GetLicenseeInfoCriteria criteria)
         {
             var result = _editLicenseeService.GetLicenseeInfo(criteria);
@@ -49,10 +50,11 @@ namespace Fanex.Tarus.Customer.Controller.EditLicensee
         }
 
         [HttpPost]
+        [AuthenticateHost]
         public JsonResult UpdateLicenseeInfo(UpdateLicenseeInfoCriteria criteria)
         {
             var result = _editLicenseeService.UpdateLicenseeInfo(criteria);
-            var jsonResult = Json(null);
+            var jsonResult = Json(result);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;
         }

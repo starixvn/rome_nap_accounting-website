@@ -65,8 +65,8 @@
                     }
 
                     @:tote = {Id: @tote.Id, BetTypes: []};   
-                     if (string.IsNullOrWhiteSpace(tote.BetType) &&
-                         tote.BetType == "NA")
+                     if (!string.IsNullOrWhiteSpace(tote.BetType) &&
+                         tote.BetType != "NA")
                      {
                          var betTypes = tote.BetType.Split(new char[] { ',' });
                          foreach (var betType in betTypes)

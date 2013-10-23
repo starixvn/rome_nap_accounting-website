@@ -147,6 +147,8 @@
     <Compile Include="Business\NewLicensee\NewLicenseeService.cs" />
     <Compile Include="Business\Racing\IRacingSettingService.cs" />
     <Compile Include="Business\Racing\RacingSettingService.cs" />
+    <Compile Include="Business\ReplicateLicenseeSettings\IReplicateLicenseeSettingsService.cs" />
+    <Compile Include="Business\ReplicateLicenseeSettings\ReplicateLicenseeSettingsService.cs" />
     <Compile Include="Business\ReportService.cs" />
     <Compile Include="Business\SettingCustomer\AbnormalBetService.cs" />
     <Compile Include="Business\SettingCustomer\CasinoComm\CasinoCommissionService.cs" />
@@ -159,10 +161,12 @@
     <Compile Include="Constants\RoleIdConstants.cs" />
     <Compile Include="Controller\EditLicensee\EditLicenseeController.cs" />
     <Compile Include="Controller\NewLicensee\NewLicenseeController.cs" />
+    <Compile Include="Controller\ReplicateLicenseeSettingsController.cs" />
     <Compile Include="Controller\ViewPTController.cs" />
     <Compile Include="Criteria\EditLicensee\GetLicenseeInfoCriteria.cs" />
     <Compile Include="Criteria\EditLicensee\UpdateLicenseeInfoCriteria.cs" />
     <Compile Include="Criteria\NewLicensee\GetCurrenciesBySystemCriteria.cs" />
+    <Compile Include="Criteria\ReplicateLicenseeSettings\DoReplicateLicenseeSettingsCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\AddSMAListCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\UploadSMAListCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\CheckSMAListCriteria.cs" />
@@ -172,6 +176,8 @@
     <Compile Include="DataAccess\EditLicensee\IEditLicenseeRepository.cs" />
     <Compile Include="DataAccess\NewLicensee\INewLicenseeRepository.cs" />
     <Compile Include="DataAccess\NewLicensee\NewLicenseeRepository.cs" />
+    <Compile Include="DataAccess\ReplicateLicenseeSettings\IReplicateLicenseeSettingsRepository.cs" />
+    <Compile Include="DataAccess\ReplicateLicenseeSettings\ReplicateLicenseeSettingsRepository.cs" />
     <Compile Include="DataAccess\SettingCustomer\SMATurnover\ISMATurnoverAccess.cs" />
     <Compile Include="DataAccess\SettingCustomer\SMATurnover\SMATurnoverAccess.cs" />
     <Compile Include="Controller\Credit\AddNewAgentController.cs" />

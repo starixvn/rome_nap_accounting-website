@@ -315,7 +315,6 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
                 }
             }
 
-
             #endregion Racing
             #region VirtualSports
 
@@ -421,7 +420,7 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
 
             result = new Result
             {
-                ErrorCode = 1,
+                ErrorCode = 0,
                 ErrorMessage = "Something is wrong!"
             };
 
@@ -441,6 +440,20 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
                 }
 
                 dictionaryParams.Add(paramName, param.Value);
+            }
+
+            foreach (var sportsSettingInfo in criteria.VirtualSportsSettingInfo)
+            {
+                foreach (var param in sportsSettingInfo.SettingInfo)
+                {
+                    paramName = param.Name.ToLower();
+                    if (dictionaryParams.ContainsKey(paramName))
+                    {
+                        continue;
+                    }
+
+                    dictionaryParams.Add(paramName, param.Value);
+                }
             }
 
             return dictionaryParams;
@@ -512,8 +525,6 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
             hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
             settingName = "maxbetv" + sportId;
             hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
-            settingName = "maxpermatchv" + sportId;
-            hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
             settingName = "maxperballv" + sportId;
             hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
 
@@ -547,6 +558,8 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
                     }
                 }
             }
+
+            hashtableParams.Add("disablenumber", criteria.EnableNumberGame);
         }
 
         private void GetUpdateSettingsHashTableParams_Racing(
@@ -555,7 +568,6 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
             ref Hashtable hashtableParams)
         {
             string settingName;
-            string sportId;
             var racings = RacingSection.Instance.Racings;
             foreach (RacingElement racing in racings)
             {
@@ -583,9 +595,56 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
                         continue;
                     }
 
+                    settingName = "v" + racing.Id + "discount_" + tote.Id;
+                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                    settingName = "v" + racing.Id + "spositiontaking_" + tote.Id;
+                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                    settingName = "v" + racing.Id + "mpositiontaking_" + tote.Id;
+                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                    settingName = "v" + racing.Id + "apositiontaking_" + tote.Id;
+                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                    settingName = "v" + racing.Id + "ibcpositiontaking_" + tote.Id;
+                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
 
+                    settingName = "disable" + racing.Id + "_" + tote.Id;
+                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
                 }
             }
+        }
+
+        private void GetUpdateSettingsHashTableParams_VirtualSports(
+            UpdateLicenseeInfoCriteria criteria,
+            Dictionary<string, object> updateSettingsDictionary,
+            ref Hashtable hashtableParams)
+        {
+            string settingName;
+            string sportId;
+            var virtualSports = criteria.VirtualSportsSettingInfo;
+
+            settingName = "disablevirtualsports";
+            hashtableParams.Add(settingName, criteria.EnableVirtualSports);
+            var virtualSportsParams = "<products>";
+            foreach (VirtualSportsSettingInfo sport in virtualSports)
+            {
+                sportId = sport.Id;
+                virtualSportsParams += string.Format("<product SportType=\"{0}\"" +
+                    " MaxBet=\"{1}\"" +
+                    " MinBet=\"{2}\"" +
+                    " MaxPerMatch=\"{3}\"" +
+                    " sPositionTaking=\"{4}\"" +
+                    " mPositionTaking=\"{5}\"" +
+                    " aPositionTaking=\"{6}\"></product>",
+                    sportId,
+                    updateSettingsDictionary["minbetv" + sportId],
+                    updateSettingsDictionary["maxbetv" + sportId],
+                    updateSettingsDictionary["maxpermatchv" + sportId],
+                    updateSettingsDictionary["v" + sportId + "spositiontaking"],
+                    updateSettingsDictionary["v" + sportId + "mpositiontaking"],
+                    updateSettingsDictionary["v" + sportId + "apositiontaking"]);
+            }
+
+            virtualSportsParams += "</products>";
+            hashtableParams.Add("virtualsportlist", virtualSportsParams);
         }
 
         private Hashtable GetUpdateSettingsHashTableParams(UpdateLicenseeInfoCriteria criteria)
@@ -612,7 +671,10 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
                 updateSettingsDictionary,
                 ref hashtableParams);
 
-            hashtableParams.Add("disablenumber", criteria.EnableNumberGame);
+            GetUpdateSettingsHashTableParams_VirtualSports(
+                criteria,
+                updateSettingsDictionary,
+                ref hashtableParams);
 
             return hashtableParams;
         }

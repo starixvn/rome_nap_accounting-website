@@ -197,7 +197,6 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                     continue;
                 }
 
-                var betTypes = sport.Bettype;
                 sportId = sport.Id;
 
                 virtualSportsParams += string.Format("<product SportType=\"{0}\"" +

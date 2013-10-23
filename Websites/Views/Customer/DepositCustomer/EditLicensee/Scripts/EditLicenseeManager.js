@@ -633,41 +633,37 @@ var EditLicenseeManager = function () {
                     Value: $("#" + settingName).getNumberValue()
                 });
 
-                var betTypesLength = tote.BetTypes.length;
-                for (var k = 0; k < betTypesLength; k++) {
-                    var betType = tote.BetTypes[k];
-                    settingName = "v" + racing.Id + "discount_" + betType;
-                    settingInfoList.push({
-                        Name: settingName,
-                        Value: $("#" + settingName).getNumberValue()
-                    });
+                settingName = "v" + racing.Id + "discount_" + tote.Id;
+                settingInfoList.push({
+                    Name: settingName,
+                    Value: $("#" + settingName).getNumberValue()
+                });
 
-                    var winPlacePositionTaking = $("#v" + racing.Id + "spositiontaking_" + tote.Id).val();
-                    settingName = "v" + racing.Id + "spositiontaking_" + betType;
-                    settingInfoList.push({
-                        Name: settingName,
-                        Value: winPlacePositionTaking
-                    });
+                var winPlacePositionTaking = $("#v" + racing.Id + "spositiontaking_" + tote.Id).val();
+                settingName = "v" + racing.Id + "spositiontaking_" + tote.Id;
+                settingInfoList.push({
+                    Name: settingName,
+                    Value: winPlacePositionTaking
+                });
 
-                    settingName = "v" + racing.Id + "mpositiontaking_" + betType;
-                    settingInfoList.push({
-                        Name: settingName,
-                        Value: winPlacePositionTaking
-                    });
+                settingName = "v" + racing.Id + "mpositiontaking_" + tote.Id;
+                settingInfoList.push({
+                    Name: settingName,
+                    Value: winPlacePositionTaking
+                });
 
-                    settingName = "v" + racing.Id + "apositiontaking_" + betType;
-                    settingInfoList.push({
-                        Name: settingName,
-                        Value: winPlacePositionTaking
-                    });
+                settingName = "v" + racing.Id + "apositiontaking_" + tote.Id;
+                settingInfoList.push({
+                    Name: settingName,
+                    Value: winPlacePositionTaking
+                });
 
-                    var houseAutoPositionTaking = $("#v" + racing.Id + "ibcpositiontaking_" + tote.Id).val();
-                    settingName = "v" + racing.Id + "ibcpositiontaking_" + betType;
-                    settingInfoList.push({
-                        Name: settingName,
-                        Value: houseAutoPositionTaking
-                    });
-                }
+                var houseAutoPositionTaking = $("#v" + racing.Id + "ibcpositiontaking_" + tote.Id).val();
+                settingName = "v" + racing.Id + "ibcpositiontaking_" + tote.Id;
+                settingInfoList.push({
+                    Name: settingName,
+                    Value: houseAutoPositionTaking
+                });
 
                 settingName = "disable" + racing.Id + "_" + tote.Id;
                 settingInfoList.push({
@@ -883,6 +879,23 @@ var EditLicenseeManager = function () {
         }
     };
     self.RenderUpdateLicenseeInfoResult = function (updateLicenseeInfoResult) {
+        if (updateLicenseeInfoResult == null) {
+            showAlertMessage("result-message", "Something is wrong!", 1);
+            self.Tables.resultMessage.removeClass("display-none");
+            return;
+        }
+
+        if (updateLicenseeInfoResult.ErrorCode > 0) {
+            showAlertMessage("result-message", updateLicenseeInfoResult.ErrorMessage, 1);
+            self.Tables.resultMessage.removeClass("display-none");
+            return;
+        }
+
+        showAlertMessage("result-message", updateLicenseeInfoResult.ErrorMessage, 0);
+        self.Tables.resultMessage.removeClass("display-none");
+        setTimeout(function () {
+            self.Tables.resultMessage.addClass("display-none");
+        }, 5000);
     };
 };
 
