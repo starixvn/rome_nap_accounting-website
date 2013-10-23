@@ -13,6 +13,7 @@ namespace Fanex.Tarus.Customer.Business.EditLicensee
     using System.Collections;
     using Fanex.Tarus.Customer.Criteria.EditLicensee;
     using Fanex.Tarus.Customer.DataAccess.EditLicensee;
+    using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.EditLicensee;
     using Fanex.Tarus.Infrastructure.Extensions;
 
@@ -42,6 +43,34 @@ namespace Fanex.Tarus.Customer.Business.EditLicensee
                 LicenseeInfo licenseeInfo = new LicenseeInfo();
                 licenseeInfo = rawData;
                 return licenseeInfo;
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return null;
+        }
+
+        public Result UpdateLicenseeInfo(UpdateLicenseeInfoCriteria criteria)
+        {
+            try
+            {
+                var updateResult = new Result();
+                if (string.IsNullOrWhiteSpace(criteria.LicenseeName))
+                {
+                    updateResult.ErrorCode = 1;
+                    updateResult.ErrorMessage = "Please input licensee name!";
+                    return updateResult;
+                }
+
+                updateResult = _editLicenseeRepository.UpdateLicenseeInfo(criteria);
+                if (updateResult.ErrorCode == 0)
+                {
+                    updateResult.ErrorMessage = "Update licensee settings successfully!";
+                }
+
+                return updateResult;
             }
             catch (Exception ex)
             {

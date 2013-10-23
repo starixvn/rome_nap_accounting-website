@@ -53,6 +53,12 @@ var EditLicenseeManager = function () {
         Sports: {
             NumberGame: 161,
             Soccer: 1
+        },
+
+        SMALevelNameConstants: {
+            Super: 's',
+            Master: 'm',
+            Agent: 'a'
         }
     };
 
@@ -435,7 +441,6 @@ var EditLicenseeManager = function () {
             self.RenderLicenseeInfo,
             self.unblockUI);
     };
-
     self.UpdateLicenseeInfo = function () {
         self.blockUI();
         self.GetUpdateParams();
@@ -459,12 +464,16 @@ var EditLicenseeManager = function () {
         self.Params.updateLicenseeInfoParams.EnableNumberGame = self.Tables.checkboxEnableNumbergame.prop("checked");
 
         self.Params.updateLicenseeInfoParams.SettingInfo = [];
-        self.Params.updateLicenseeInfoParams.VirtualSportsSettingInfo = [];
-
         var sportsbookSettings = self.GetUpdateParams_Sportsbook();
-        self.Params.updateLicenseeInfoParams.SettingInfo = sportsbookSettings;
-    };
+        $.merge(self.Params.updateLicenseeInfoParams.SettingInfo, sportsbookSettings);
+        var numberGameSettings = self.GetUpdateParams_NumberGame();
+        $.merge(self.Params.updateLicenseeInfoParams.SettingInfo, numberGameSettings);
+        var racingSettings = self.GetUpdateParams_Racing();
+        $.merge(self.Params.updateLicenseeInfoParams.SettingInfo, racingSettings);
 
+        self.Params.updateLicenseeInfoParams.EnableVirtualSports = self.Tables.checkboxEnableVirtualSports.prop("checked");
+        self.Params.updateLicenseeInfoParams.VirtualSportsSettingInfo = self.GetUpdateParams_VirtualSports();
+    };
     self.GetUpdateParams_Sportsbook = function () {
         var settingInfoList = [];
         var sportId;
@@ -546,6 +555,188 @@ var EditLicenseeManager = function () {
 
         return settingInfoList;
     };
+    self.GetUpdateParams_NumberGame = function () {
+        var settingInfoList = [];
+        var sportId = self.Constants.Sports.NumberGame;
+        var settingName;
+        settingName = "minbetv" + sportId;
+        settingInfoList.push({
+            Name: settingName,
+            Value: $("#" + settingName).getNumberValue()
+        });
+
+        settingName = "maxbetv" + sportId;
+        settingInfoList.push({
+            Name: settingName,
+            Value: $("#" + settingName).getNumberValue()
+        });
+
+        settingName = "maxperballv" + sportId;
+        settingInfoList.push({
+            Name: settingName,
+            Value: $("#" + settingName).getNumberValue()
+        });
+
+        var levelType = [
+            self.Constants.SMALevelNameConstants.Super,
+            self.Constants.SMALevelNameConstants.Master,
+            self.Constants.SMALevelNameConstants.Agent];
+
+        var levelTypeLength = levelType.length;
+        for (var i = 0; i < levelTypeLength; i++) {
+            var type = levelType[i];
+            var betTypes = numberGameBetTypes;
+            var betTypesLength = betTypes.length;
+            for (var j = 0; j < betTypesLength; j++) {
+                var betType = numberGameBetTypes[j];
+                var positionTakingValue = self.Tables.DropdownNumbergamePositiontaking_SbNG.val();
+                settingName = "v" + sportId + type + "positiontaking_" + betType;
+                settingInfoList.push({
+                    Name: settingName,
+                    Value: positionTakingValue
+                });
+
+                settingName = "v" + sportId + type + "livepositiontaking_" + betType;
+                settingInfoList.push({
+                    Name: settingName,
+                    Value: positionTakingValue
+                });
+            }
+        }
+
+        return settingInfoList;
+    };
+    self.GetUpdateParams_Racing = function () {
+        var settingInfoList = [];
+        var settingName;
+        var racingToteTypesLength = racingToteTypes.length;
+        for (var i = 0; i < racingToteTypesLength; i++) {
+            var racing = racingToteTypes[i];
+            var totesLength = racing.Totes.length;
+            for (var j = 0; j < totesLength; j++) {
+                var tote = racing.Totes[j];
+                settingName = "v" + racing.Id + "minbet_" + tote.Id;
+                settingInfoList.push({
+                    Name: settingName,
+                    Value: $("#" + settingName).getNumberValue()
+                });
+
+                settingName = "v" + racing.Id + "maxbet_" + tote.Id;
+                settingInfoList.push({
+                    Name: settingName,
+                    Value: $("#" + settingName).getNumberValue()
+                });
+
+                settingName = "v" + racing.Id + "maxpermatch_" + tote.Id;
+                settingInfoList.push({
+                    Name: settingName,
+                    Value: $("#" + settingName).getNumberValue()
+                });
+
+                var betTypesLength = tote.BetTypes.length;
+                for (var k = 0; k < betTypesLength; k++) {
+                    var betType = tote.BetTypes[k];
+                    settingName = "v" + racing.Id + "discount_" + betType;
+                    settingInfoList.push({
+                        Name: settingName,
+                        Value: $("#" + settingName).getNumberValue()
+                    });
+
+                    var winPlacePositionTaking = $("#v" + racing.Id + "spositiontaking_" + tote.Id).val();
+                    settingName = "v" + racing.Id + "spositiontaking_" + betType;
+                    settingInfoList.push({
+                        Name: settingName,
+                        Value: winPlacePositionTaking
+                    });
+
+                    settingName = "v" + racing.Id + "mpositiontaking_" + betType;
+                    settingInfoList.push({
+                        Name: settingName,
+                        Value: winPlacePositionTaking
+                    });
+
+                    settingName = "v" + racing.Id + "apositiontaking_" + betType;
+                    settingInfoList.push({
+                        Name: settingName,
+                        Value: winPlacePositionTaking
+                    });
+
+                    var houseAutoPositionTaking = $("#v" + racing.Id + "ibcpositiontaking_" + tote.Id).val();
+                    settingName = "v" + racing.Id + "ibcpositiontaking_" + betType;
+                    settingInfoList.push({
+                        Name: settingName,
+                        Value: houseAutoPositionTaking
+                    });
+                }
+
+                settingName = "disable" + racing.Id + "_" + tote.Id;
+                settingInfoList.push({
+                    Name: settingName,
+                    Value: !($("#" + settingName).is(":checked"))
+                });
+            }
+        }
+
+        return settingInfoList;
+    };
+    self.GetUpdateParams_VirtualSports = function () {
+        var settingInfoList = [];
+        var sportId;
+        var settingName;
+        var virtualSportsLength = virtualSports.length;
+        for (var i = 0; i < virtualSportsLength; i++) {
+            var sport = virtualSports[i];
+            sportId = sport.Id;
+            if (self.Tables.DivVirtualSportsContainer.find(".virtualsports_sport" + sportId).hasClass("display-none")) {
+                continue;
+            }
+
+            var sportSettings = [];
+            settingName = "minbetv" + sportId;
+            sportSettings.push({
+                Name: settingName,
+                Value: $("#" + settingName).getNumberValue()
+            });
+
+            settingName = "maxbetv" + sportId;
+            sportSettings.push({
+                Name: settingName,
+                Value: $("#" + settingName).getNumberValue()
+            });
+
+            settingName = "maxpermatchv" + sportId;
+            sportSettings.push({
+                Name: settingName,
+                Value: $("#" + settingName).getNumberValue()
+            });
+
+            var positionTakingValue = self.Tables.DropdownSportsbookPositionTaking_VS.val();
+            settingName = "v" + sportId + "spositiontaking";
+            sportSettings.push({
+                Name: settingName,
+                Value: positionTakingValue
+            });
+
+            settingName = "v" + sportId + "mpositiontaking";
+            sportSettings.push({
+                Name: settingName,
+                Value: positionTakingValue
+            });
+
+            settingName = "v" + sportId + "apositiontaking";
+            sportSettings.push({
+                Name: settingName,
+                Value: positionTakingValue
+            });
+
+            settingInfoList.push({
+                Id: sportId,
+                SettingInfo: sportSettings
+            });
+        }
+
+        return settingInfoList;
+    };
 
     self.ValidateUpdateParams = function () {
         if (self.Params.updateLicenseeInfoParams.LicenseeName == '') {
@@ -557,7 +748,6 @@ var EditLicenseeManager = function () {
         self.Tables.resultMessage.empty().addClass("display-none");
         return true;
     };
-
     self.RenderLicenseeInfo = function (licenseeInfo) {
         self.CacheData.licenseeInfo = licenseeInfo;
         if (licenseeInfo == null) {
@@ -589,7 +779,6 @@ var EditLicenseeManager = function () {
         self.RenderLicenseeInfo_VirtualSport(licenseeInfo, settingInfoDictionary);
         self.Tables.divLicenseeInfo.removeClass("display-none");
     };
-
     self.GetSettingInfoDictionary = function (licenseeInfo) {
         var settingInfoDictionary = {};
 
@@ -676,20 +865,24 @@ var EditLicenseeManager = function () {
         var sportId;
         var settingName;
         var virtualSportsLength = virtualSports.length;
+        self.Tables.DivVirtualSportsContainer.find(".virtualsports_sportrow").addClass("display-none");
         for (var i = 0; i < virtualSportsLength; i++) {
             var sport = virtualSports[i];
             sportId = sport.Id;
-
             settingName = "maxbetv" + sportId;
+            if (settingInfoDictionary[settingName] == undefined) {
+                continue;
+            }
+
             $("#" + settingName).val(settingInfoDictionary[settingName]);
             settingName = "minbetv" + sportId;
             $("#" + settingName).val(settingInfoDictionary[settingName]);
             settingName = "maxpermatchv" + sportId;
             $("#" + settingName).val(settingInfoDictionary[settingName]);
+            self.Tables.DivVirtualSportsContainer.find(".virtualsports_sport" + sportId).removeClass("display-none");
         }
     };
     self.RenderUpdateLicenseeInfoResult = function (updateLicenseeInfoResult) {
-        alert("abc");
     };
 };
 

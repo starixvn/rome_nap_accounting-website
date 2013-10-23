@@ -11,14 +11,19 @@ namespace Fanex.Tarus.Customer.Criteria.EditLicensee
 {
     using System.Collections.Generic;
     using Fanex.Tarus.Customer.Entities.EditLicensee;
+    using Fanex.Tarus.Infrastructure.Common;
 
     public class UpdateLicenseeInfoCriteria
     {
+        public string LicenseeName { get; set; }
+
         public string Site { get; set; }
 
         public string Currency { get; set; }
 
         public bool EnableNumberGame { get; set; }
+
+        public bool EnableVirtualSports { get; set; }
 
         public int ErrorCode { get; set; }
 
@@ -28,7 +33,13 @@ namespace Fanex.Tarus.Customer.Criteria.EditLicensee
 
         public List<VirtualSportsSettingInfo> VirtualSportsSettingInfo { get; set; }
 
-        public string Editor { get; set; }
+        public int Editor
+        {
+            get
+            {
+                return AppSession.AccId;
+            }
+        }
 
         public string GetSettingKey()
         {

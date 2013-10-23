@@ -40,11 +40,13 @@
                 continue;
             }
 
-            var minBetv = "minbetv" + @sport.Id.ToLower();
-            var maxBetv = "maxbetv" + @sport.Id.ToLower();
-            var maxPerMatchv = "maxpermatchv" + @sport.Id.ToLower();        
+            var sportId = @sport.Id.ToLower();
+            var minBetv = "minbetv" + sportId;
+            var maxBetv = "maxbetv" + sportId;
+            var maxPerMatchv = "maxpermatchv" + sportId;
+            var virtualSports_SportRowId = "virtualsports_sport" + sportId;
         
-    <tr>
+    <tr class="display-none virtualsports_sportrow @virtualSports_SportRowId">
         <td align="left" style="padding-left: 4px">
             <span>@sport.Name</span>
         </td>

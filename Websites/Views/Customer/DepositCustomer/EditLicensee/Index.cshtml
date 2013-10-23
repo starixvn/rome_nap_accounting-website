@@ -28,10 +28,8 @@
                 }
 
                 @:sport = { Id: '@sportElement.Id.ToLower()', BetTypes: []};
-                if (sportElement.Bettype != null &&
-                    sportElement.Bettype != "NA" &&
-                    sportElement.Bettype != string.Empty &&
-                    !string.IsNullOrWhiteSpace(sportElement.Bettype.Trim()))
+                if (!string.IsNullOrWhiteSpace(sportElement.Bettype.Trim()) &&
+                    sportElement.Bettype != "NA")
                 {
                     var betTypes = sportElement.Bettype.Split(new char[] { ',' });
                     foreach (var betType in betTypes)
@@ -66,16 +64,14 @@
                         continue;
                     }
 
-                    @:tote = {Id: @tote.Id, BetType: []};   
-                     if (tote.BetType != null ||
-                         tote.BetType != "NA" ||
-                         tote.BetType != string.Empty ||
-                         !string.IsNullOrWhiteSpace(tote.BetType.Trim()))
+                    @:tote = {Id: @tote.Id, BetTypes: []};   
+                     if (string.IsNullOrWhiteSpace(tote.BetType) &&
+                         tote.BetType == "NA")
                      {
                          var betTypes = tote.BetType.Split(new char[] { ',' });
                          foreach (var betType in betTypes)
                          {
-                             @:tote.BetType.push(@betType);
+                             @:tote.BetTypes.push(@betType);
                          }
                      }
                                           
@@ -87,6 +83,28 @@
        }
    })();
 
+   var numberGameBetTypes = [];
+   (function () { 
+    @{
+        sports = SportsSection.Instance.Sports;
+        foreach (SportsElement sportsElement in sports)
+        {
+            if (!string.Equals(sportsElement.Id.Trim(), Sports.NumberGame.ToString()) ||
+                string.IsNullOrWhiteSpace(sportsElement.Bettype) ||
+                sportsElement.Bettype == "NA")
+            {
+                continue;
+            }
+
+            var betTypes = sportsElement.Bettype.Split(new char[] { ',' });
+            foreach (var betType in betTypes)
+            {
+                @:window.numberGameBetTypes.push(@betType);
+            }
+        }
+    }
+
+   })();
 </script>
 <script type="text/javascript" src="~/Views/Customer/DepositCustomer/EditLicensee/Scripts/PositionTakingRenderManager.js?version=@WebSettings.Version"></script>
 <script type="text/javascript" src="~/Views/Customer/DepositCustomer/EditLicensee/Scripts/EditLicenseeManager.js"></script>

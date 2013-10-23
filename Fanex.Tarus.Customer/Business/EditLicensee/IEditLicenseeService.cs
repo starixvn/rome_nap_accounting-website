@@ -10,10 +10,13 @@
 namespace Fanex.Tarus.Customer.Business.EditLicensee
 {
     using Fanex.Tarus.Customer.Criteria.EditLicensee;
+    using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.EditLicensee;
 
     public interface IEditLicenseeService
     {
         LicenseeInfo GetLicenseeInfo(GetLicenseeInfoCriteria criteria);
+
+        Result UpdateLicenseeInfo(UpdateLicenseeInfoCriteria criteria);
     }
 }

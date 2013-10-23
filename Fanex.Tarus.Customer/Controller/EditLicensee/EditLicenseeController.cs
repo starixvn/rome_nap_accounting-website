@@ -11,9 +11,9 @@ namespace Fanex.Tarus.Customer.Controller.EditLicensee
 {
     using System.Web.Mvc;
     using Fanex.Tarus.Customer.Business.EditLicensee;
+    using Fanex.Tarus.Customer.Criteria.EditLicensee;
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
-    using Fanex.Tarus.Customer.Criteria.EditLicensee;
 
     /// <summary>
     /// TODO: Update summary.
@@ -51,7 +51,7 @@ namespace Fanex.Tarus.Customer.Controller.EditLicensee
         [HttpPost]
         public JsonResult UpdateLicenseeInfo(UpdateLicenseeInfoCriteria criteria)
         {
-            //var result = _editLicenseeService.GetLicenseeInfo(criteria);
+            var result = _editLicenseeService.UpdateLicenseeInfo(criteria);
             var jsonResult = Json(null);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;

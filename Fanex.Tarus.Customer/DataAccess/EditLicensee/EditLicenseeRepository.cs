@@ -16,10 +16,12 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
     using System.Xml;
     using Fanex.Data;
     using Fanex.Tarus.Customer.Criteria.EditLicensee;
+    using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Customer.Entities.EditLicensee;
     using Fanex.Tarus.Infrastructure.Caching;
     using Fanex.Tarus.Infrastructure.Configurations;
     using Fanex.Tarus.Infrastructure.Constants;
+    using Fanex.Tarus.Infrastructure.Helper;
     using Sunplus.Accounting.Core.Configurations;
 
     /// <summary>
@@ -27,7 +29,7 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
     /// </summary>
     public class EditLicenseeRepository : IEditLicenseeRepository
     {
-        private const string EmptyBetType = "NA";
+        private const string NotApplyBetType = "NA";
         public LicenseeInfo GetLicenseeInfo(GetLicenseeInfoCriteria criteria, ref Hashtable outputParams)
         {
             DataSet dataset;
@@ -193,10 +195,8 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
                 foreach (SportsElement sport in sports)
                 {
                     if (!string.Equals(sport.Id.Trim(), sportId) ||
-                        sport.Bettype == null ||
-                        sport.Bettype == EmptyBetType ||
-                        sport.Bettype == string.Empty ||
-                        string.IsNullOrWhiteSpace(sport.Bettype.Trim()))
+                        string.IsNullOrWhiteSpace(sport.Bettype) ||
+                        sport.Bettype == NotApplyBetType)
                     {
                         continue;
                     }
@@ -261,10 +261,8 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
                         Value = fakeSettingValue
                     });
 
-                    if (tote.BetType == null ||
-                        tote.BetType == EmptyBetType ||
-                        tote.BetType == string.Empty ||
-                        string.IsNullOrWhiteSpace(tote.BetType.Trim()))
+                    if (string.IsNullOrWhiteSpace(tote.BetType) ||
+                        tote.BetType == NotApplyBetType)
                     {
                         continue;
                     }
@@ -342,7 +340,7 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
                 activeVirtualSportsInfo.Add(sportId, sport.Active);
             }
 
-            var virtualSportsParams = "<products><product SportType=\"180\" MaxBet=\"0.3\" MinBet=\"0.3\" MaxPerMatch=\"0.3\" sPositionTaking=\"0.3\" mPositionTaking=\"0.3\" aPositionTaking=\"0.3\"></product><product SportType=\"181\" MaxBet=\"0.3\" MinBet=\"0.3\" MaxPerMatch=\"0.3\" sPositionTaking=\"0.3\" mPositionTaking=\"0.3\" aPositionTaking=\"0.3\"></product><product SportType=\"186\" MaxBet=\"0.3\" MinBet=\"0.3\" MaxPerMatch=\"0.3\" sPositionTaking=\"0.3\" mPositionTaking=\"0.3\" aPositionTaking=\"0.3\"></product><product SportType=\"182\" MaxBet=\"0.3\" MinBet=\"0.3\" MaxPerMatch=\"0.3\" sPositionTaking=\"0.3\" mPositionTaking=\"0.3\" aPositionTaking=\"0.3\"></product><product SportType=\"183\" MaxBet=\"0.3\" MinBet=\"0.3\" MaxPerMatch=\"0.3\" sPositionTaking=\"0.3\" mPositionTaking=\"0.3\" aPositionTaking=\"0.3\"></product><product SportType=\"184\" MaxBet=\"0.3\" MinBet=\"0.3\" MaxPerMatch=\"0.3\" sPositionTaking=\"0.3\" mPositionTaking=\"0.3\" aPositionTaking=\"0.3\"></product><product SportType=\"185\" MaxBet=\"0.3\" MinBet=\"0.3\" MaxPerMatch=\"0.3\" sPositionTaking=\"0.3\" mPositionTaking=\"0.3\" aPositionTaking=\"0.3\"></product></products>";
+            var virtualSportsParams = "<products><product SportType=\"180\" MaxBet=\"0.3\" MinBet=\"0.3\" MaxPerMatch=\"0.3\" sPositionTaking=\"0.3\" mPositionTaking=\"0.3\" aPositionTaking=\"0.3\"></product><product SportType=\"181\" MaxBet=\"0.3\" MinBet=\"0.3\" MaxPerMatch=\"0.3\" sPositionTaking=\"0.3\" mPositionTaking=\"0.3\" aPositionTaking=\"0.3\"></product><product SportType=\"186\" MaxBet=\"0.3\" MinBet=\"0.3\" MaxPerMatch=\"0.3\" sPositionTaking=\"0.3\" mPositionTaking=\"0.3\" aPositionTaking=\"0.3\"></product><product SportType=\"182\" MaxBet=\"0.3\" MinBet=\"0.3\" MaxPerMatch=\"0.3\" sPositionTaking=\"0.3\" mPositionTaking=\"0.3\" aPositionTaking=\"0.3\"></product><product SportType=\"183\" MaxBet=\"0.3\" MinBet=\"0.3\" MaxPerMatch=\"0.3\" sPositionTaking=\"0.3\" mPositionTaking=\"0.3\" aPositionTaking=\"0.3\"></product><product SportType=\"184\" MaxBet=\"0.3\" MinBet=\"0.3\" MaxPerMatch=\"0.3\" sPositionTaking=\"0.3\" mPositionTaking=\"0.3\" aPositionTaking=\"0.3\"></product></products>";
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(virtualSportsParams);
             string xpath = "/products/product";
@@ -407,6 +405,216 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
             licenseeInfo.SettingInfo = settingInfo;
             licenseeInfo.VirtualSportsSettingInfo = virtualSportsSettingInfoList;
             return licenseeInfo;
+        }
+
+        public Result UpdateLicenseeInfo(UpdateLicenseeInfoCriteria criteria)
+        {
+            var hashtableParams = GetUpdateSettingsHashTableParams(criteria);
+            Result result;
+            Hashtable outputParams;
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AssignParamValues(hashtableParams);
+                objDb.ExecuteNonQuery();
+                outputParams = objDb.GetOuputParams();
+            }
+
+            result = new Result
+            {
+                ErrorCode = 1,
+                ErrorMessage = "Something is wrong!"
+            };
+
+            return result;
+        }
+
+        private Dictionary<string, object> GetUpdateSettingsDictionary(UpdateLicenseeInfoCriteria criteria)
+        {
+            Dictionary<string, object> dictionaryParams = new Dictionary<string, object>();
+            string paramName;
+            foreach (var param in criteria.SettingInfo)
+            {
+                paramName = param.Name.ToLower();
+                if (dictionaryParams.ContainsKey(paramName))
+                {
+                    continue;
+                }
+
+                dictionaryParams.Add(paramName, param.Value);
+            }
+
+            return dictionaryParams;
+        }
+
+        private void GetUpdateSettingsHashTableParams_Sportsbook(
+            UpdateLicenseeInfoCriteria criteria,
+            Dictionary<string, object> updateSettingsDictionary,
+            ref Hashtable hashtableParams)
+        {
+            string settingName;
+            string sportId;
+            var sports = SportsSection.Instance.Sports;
+            foreach (SportsElement sport in SportsSection.Instance.Sports)
+            {
+                sportId = sport.Id.ToLower();
+                if (string.Equals(sportId, Sports.NumberGame.ToString(), StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                settingName = "minbetv" + sportId;
+                hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                settingName = "maxbetv" + sportId;
+                hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                settingName = "maxpermatchv" + sportId;
+                hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+
+                if (string.Equals(sportId, "99mp", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                var betTypes = sport.Bettype.Split(new char[] { ',' });
+                var betTypesLength = betTypes.Length;
+                for (var l = 0; l < betTypesLength; l++)
+                {
+                    settingName = "v" + sportId + "spositiontaking_" + betTypes[l];
+                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                    settingName = "v" + sportId + "mpositiontaking_" + betTypes[l];
+                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                    settingName = "v" + sportId + "apositiontaking_" + betTypes[l];
+                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+
+                    if (string.Equals(sportId, Sports.Soccer.ToString(), StringComparison.OrdinalIgnoreCase))
+                    {
+                        settingName = "v" + sportId + "slivepositiontaking_" + betTypes[l];
+                        hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+
+                        settingName = "v" + sportId + "mlivepositiontaking_" + betTypes[l];
+                        hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+
+                        settingName = "v" + sportId + "alivepositiontaking_" + betTypes[l];
+                        hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                    }
+                }
+            }
+        }
+
+        private void GetUpdateSettingsHashTableParams_NumberGame(
+            UpdateLicenseeInfoCriteria criteria,
+            Dictionary<string, object> updateSettingsDictionary,
+            ref Hashtable hashtableParams)
+        {
+            string settingName;
+            string sportId = Sports.NumberGame.ToString();
+            var sports = SportsSection.Instance.Sports;
+            settingName = "minbetv" + sportId;
+            hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+            settingName = "maxbetv" + sportId;
+            hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+            settingName = "maxpermatchv" + sportId;
+            hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+            settingName = "maxperballv" + sportId;
+            hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+
+            var levelType = new string[] { 
+                SMALevelNameConstants.Super,
+                SMALevelNameConstants.Master,
+                SMALevelNameConstants.Agent
+            };
+
+            var levelTypeLength = levelType.Length;
+            for (var i = 0; i < levelTypeLength; i++)
+            {
+                var type = levelType[i];
+                foreach (SportsElement sport in sports)
+                {
+                    if (!string.Equals(sport.Id.Trim(), sportId) ||
+                        string.IsNullOrWhiteSpace(sport.Bettype) ||
+                        sport.Bettype == NotApplyBetType)
+                    {
+                        continue;
+                    }
+
+                    var betTypes = sport.Bettype.Split(new char[] { ',' });
+                    foreach (var betType in betTypes)
+                    {
+                        var betTypeAfterTrim = betType.Trim();
+                        settingName = "v" + sportId + type + "positiontaking_" + betTypeAfterTrim;
+                        hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                        settingName = "v" + sportId + type + "livepositiontaking_" + betTypeAfterTrim;
+                        hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                    }
+                }
+            }
+        }
+
+        private void GetUpdateSettingsHashTableParams_Racing(
+            UpdateLicenseeInfoCriteria criteria,
+            Dictionary<string, object> updateSettingsDictionary,
+            ref Hashtable hashtableParams)
+        {
+            string settingName;
+            string sportId;
+            var racings = RacingSection.Instance.Racings;
+            foreach (RacingElement racing in racings)
+            {
+                if (!racing.Active)
+                {
+                    continue;
+                }
+
+                foreach (ToteElement tote in racing.Totes)
+                {
+                    if (!tote.Active)
+                    {
+                        continue;
+                    }
+
+                    settingName = "v" + racing.Id + "minbet_" + tote.Id;
+                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                    settingName = "v" + racing.Id + "maxbet_" + tote.Id;
+                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                    settingName = "v" + racing.Id + "maxpermatch_" + tote.Id;
+                    hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
+                    if (string.IsNullOrWhiteSpace(tote.BetType) ||
+                        tote.BetType == NotApplyBetType)
+                    {
+                        continue;
+                    }
+
+
+                }
+            }
+        }
+
+        private Hashtable GetUpdateSettingsHashTableParams(UpdateLicenseeInfoCriteria criteria)
+        {
+            Hashtable hashtableParams = new Hashtable();
+            Dictionary<string, object> updateSettingsDictionary = GetUpdateSettingsDictionary(criteria);
+            hashtableParams.Add("creator", criteria.Editor);
+            hashtableParams.Add("ip", Utils.GetClientIP());
+            hashtableParams.Add("errcode", 0);
+            hashtableParams.Add("errmsg", string.Empty);
+
+            GetUpdateSettingsHashTableParams_Sportsbook(
+                criteria,
+                updateSettingsDictionary,
+                ref hashtableParams);
+
+            GetUpdateSettingsHashTableParams_NumberGame(
+                criteria,
+                updateSettingsDictionary,
+                ref hashtableParams);
+
+            GetUpdateSettingsHashTableParams_Racing(
+                criteria,
+                updateSettingsDictionary,
+                ref hashtableParams);
+
+            hashtableParams.Add("disablenumber", criteria.EnableNumberGame);
+
+            return hashtableParams;
         }
     }
 }
