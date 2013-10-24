@@ -63,7 +63,7 @@
                 Discount1x2 = (decimal)0.0025,
                 DiscountCS = (decimal)0.01,
                 DiscountNumber = (decimal)0.0025,
-                DiscountHRFixedOdds = (decimal)0.0025
+                DiscountHRFixedOdds = (decimal)0.01
             };
             return customerObject;
         }

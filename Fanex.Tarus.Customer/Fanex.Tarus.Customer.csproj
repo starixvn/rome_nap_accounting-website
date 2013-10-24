@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -55,9 +55,9 @@
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.PTEngine, Version=1.0.5039.30868, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Fanex.PTEngine, Version=1.0.5044.25751, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependency\Fanex\Fanex.PTEngine.dll</HintPath>
+      <HintPath>..\..\sportsbook-engine-hrfixedodds\Fanex.PTEngine\bin\Fanex.PTEngine.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTRacing">
       <HintPath>..\Dependency\Fanex\Fanex.PTRacing.dll</HintPath>
