@@ -43,4 +43,7 @@
     <Setting Key="GroupPolicy" SpName="Acc_Con_GroupPolicyUpd" DbName="DBPOLICY.bodb02.bodbAdminNet"/>
   </Function>
 
+  <Function Name="Left Menu - Credit term">
+    <Setting Key="Acc_CreditTermSelCheckerList" SpName="Acc_CreditTermSelCheckerList" DbName="DBPOLICY.bodb02.bodbAdminNet"/>
+  </Function>
 </Functions>

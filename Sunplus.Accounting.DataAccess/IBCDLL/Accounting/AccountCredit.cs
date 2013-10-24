@@ -282,15 +282,23 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <returns></returns>
         public static DbResult Acc_CreditTermSelCheckerList()
         {
+            DbResult result = null;
             try
             {
-                return DbHelper.Execute("Acc_CreditTermSelCheckerList", DBType.DB03);
+                using (ObjectDb db = new ObjectDb("Acc_CreditTermSelCheckerList", 600))
+                {
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
+            return result;
         }
 
         /// <summary>
