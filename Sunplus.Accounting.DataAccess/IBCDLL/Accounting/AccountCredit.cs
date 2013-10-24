@@ -67,7 +67,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 //var spElement = GetStoreProcedure("CreditTermSelGroupHeadline");
                 //return DbHelper.Execute(spElement.Name, hash, spElement.DbName);
 
-                using(ObjectDb db = new ObjectDb(""))
+                using (ObjectDb db = new ObjectDb("GetAllGroup", 600))
+                {
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
