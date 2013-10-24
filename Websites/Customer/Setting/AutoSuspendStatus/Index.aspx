@@ -71,6 +71,6 @@
     <script type="text/javascript" src="../../../js/ToolTip/Tipsy-Tooltip/jquery.tipsy.js"></script>
     <script type="text/javascript" src="Scripts/AutoSuspendStatus.js?v=<%=Sunplus.Accounting.Core.Configurations.WebSettings.Version%>"></script>
     <script type="text/javascript">
-        var viewResourses=<%=ViewResourses%>;
+        var viewResources =<%=ViewResources%>;
     </script>
 </body>

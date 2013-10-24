@@ -235,7 +235,7 @@ var AutoSuspendStatus = function () {
 
     self.GetCustomerInfo = function () {
         self.Params.getCustomerInfo = {
-            CustomerId: viewResourses.CustomerId
+            CustomerId: viewResources.CustomerId
         };
 
         self.CallAjax(self,

@@ -210,7 +210,7 @@
     <Compile Include="DataAccess\ViewPT\IViewPTRepository.cs" />
     <Compile Include="DataAccess\ViewPT\ViewPTRepository.cs" />
     <Compile Include="Entities\AutoSuspend\CustomerInfo.cs" />
-    <Compile Include="Entities\AutoSuspend\ViewResourses.cs" />
+    <Compile Include="Entities\AutoSuspend\ViewResources.cs" />
     <Compile Include="Entities\BaseModel.cs" />
     <Compile Include="Entities\CreditCustomer\Currency.cs" />
     <Compile Include="Entities\CreditCustomer\CustomerSettingView.cs" />

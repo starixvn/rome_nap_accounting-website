@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="ViewResourses.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="ViewResources.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -11,7 +11,10 @@ namespace Fanex.Tarus.Customer.Entities.AutoSuspend
 {
     using System.Collections.Generic;
 
-    public class ViewResourses
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
+    public class ViewResources
     {
         public string CustomerId { get; set; }
 

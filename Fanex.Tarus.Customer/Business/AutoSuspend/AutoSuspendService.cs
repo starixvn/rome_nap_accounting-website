@@ -33,6 +33,11 @@ namespace Fanex.Tarus.Customer.Business.AutoSuspend
             _autoSuspendRepository = autoSuspendRepository ?? new AutoSuspendRepository();
         }
 
+        /// <summary>
+        /// Gets the customer status.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Customer Info.</returns>
         public CustomerInfo GetCustomerStatus(GetCustomerStatusCriteria criteria)
         {
             try
@@ -48,6 +53,11 @@ namespace Fanex.Tarus.Customer.Business.AutoSuspend
             return null;
         }
 
+        /// <summary>
+        /// Updates the customer status.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Update Result.</returns>
         public Result UpdateCustomerStatus(UpdateCustomerStatusCriteria criteria)
         {
             try
