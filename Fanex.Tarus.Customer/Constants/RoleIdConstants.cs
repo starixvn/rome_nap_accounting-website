@@ -11,7 +11,9 @@ namespace Fanex.Tarus.Customer.Constants
 {
     using System.Diagnostics.CodeAnalysis;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
     public class RoleIdConstants
     {
         public const int SUPER = 4;

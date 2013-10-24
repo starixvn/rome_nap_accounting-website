@@ -22,6 +22,11 @@ namespace Fanex.Tarus.Customer.DataAccess.AutoSuspend
     /// </summary>
     public class AutoSuspendRepository : IAutoSuspendRepository
     {
+        /// <summary>
+        /// Gets the customer status.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Customer Info.</returns>
         public CustomerInfo GetCustomerStatus(GetCustomerStatusCriteria criteria)
         {
             Hashtable hashtableParams = new Hashtable();
@@ -60,6 +65,11 @@ namespace Fanex.Tarus.Customer.DataAccess.AutoSuspend
             return result;
         }
 
+        /// <summary>
+        /// Updates the customer status.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Update Result.</returns>
         public Result UpdateCustomerStatus(UpdateCustomerStatusCriteria criteria)
         {
             Hashtable hashtableParams = new Hashtable();
