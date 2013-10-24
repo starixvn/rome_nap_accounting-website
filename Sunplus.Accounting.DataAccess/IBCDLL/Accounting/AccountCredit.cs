@@ -60,17 +60,21 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <returns></returns>
         public static DbResult Acc_CreditTermSelGroupHeadline()
         {
+            DbResult result = null;
             try
             {
                 var hash = new Hashtable();
-                var spElement = GetStoreProcedure("CreditTermSelGroupHeadline");
-                return DbHelper.Execute(spElement.Name, hash, spElement.DbName);
+                //var spElement = GetStoreProcedure("CreditTermSelGroupHeadline");
+                //return DbHelper.Execute(spElement.Name, hash, spElement.DbName);
+
+                using(ObjectDb db = new ObjectDb(""))
             }
             catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
+            return result;
         }
 
         /// <summary>

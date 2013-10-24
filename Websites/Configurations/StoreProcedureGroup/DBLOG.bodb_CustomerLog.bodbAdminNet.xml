@@ -9,7 +9,17 @@
   </Function>
 
   <Function Name="Customer">
-    <Setting Key="CustomerSelVirtualRateHistory" SpName="Acc_CustomerSelVirtualRateHistory" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>
-    
+    <Setting Key="CustomerSelVirtualRateHistory" SpName="Acc_CustomerSelVirtualRateHistory" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>    
   </Function>
+
+  <Function Name="Customer - Log">
+    <Setting Key="GetLogSetting" SpName="Acc_UserLog_RunSPSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>
+    <Setting Key="GetLogSettingTotal" SpName="Acc_UserLog_RunSPSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>
+    <Setting Key="GetLogLogin" SpName="Acc_UserLog_LoginSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>
+    <Setting Key="GetLogLoginTotal" SpName="Acc_UserLog_LoginSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>
+    <Setting Key="GetLogCredit" SpName="Acc_UserLog_CreditSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>
+    <Setting Key="GetLogCreditTotal" SpName="Acc_UserLog_CreditSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>
+  </Function>
+  
+  
 </Functions>
