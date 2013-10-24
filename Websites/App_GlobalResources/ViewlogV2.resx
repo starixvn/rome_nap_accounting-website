@@ -784,13 +784,13 @@
     <value>Max Bet</value>
   </data>
   <data name="maxv154pt_20" xml:space="preserve">
-    <value>maxv154pt_20</value>
+    <value>Max Money Line</value>
   </data>
   <data name="minbv154" xml:space="preserve">
     <value>Min Bet</value>
   </data>
   <data name="minv154pt_20" xml:space="preserve">
-    <value>Money Line</value>
+    <value>Min Money Line</value>
   </data>
   <data name="mpmv154" xml:space="preserve">
     <value>Max Per Match</value>
