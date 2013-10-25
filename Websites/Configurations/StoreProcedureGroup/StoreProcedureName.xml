@@ -704,7 +704,7 @@
     <Setting Key="EchangeUpd" SpName="Acc_ExchangeUpd" DbName="DBTXN.BODB02" />
   </Function>
   <Function Name="Customer - Auto Suspend">
-    <Setting Key="Customer_AutoSuspend_GetCustomerStatus" SpName="Acc_CustomerSelRBStatus" DbName="db053"/>
-    <Setting Key="Customer_AutoSuspend_UpdateCustomerStatus" SpName="Acc_CustomerSelRBStatus" DbName="db053"/>
+    <Setting Key="Customer_AutoSuspend_GetCustomerStatus" SpName="Acc_CustomerSelAutoSuspendStatus" DbName="db053"/>
+    <Setting Key="Customer_AutoSuspend_UpdateCustomerStatus" SpName="Acc_CustomerUpdAutoSuspend" DbName="DBTXN.BODB02"/>
   </Function>
 </Functions>

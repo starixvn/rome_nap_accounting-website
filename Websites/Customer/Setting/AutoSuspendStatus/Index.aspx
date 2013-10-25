@@ -20,11 +20,13 @@
             </div>
             <div id="setting-content" class="display-none">
                 <table class="tblcollapse content-width table-settings">
-                    <tbody>
+                    <thead>
                         <tr class="title1">
                             <td id="customer-info-title">
                             </td>
                         </tr>
+                    </thead>
+                    <tbody>
                         <tr>
                             <td class="align-left">
                                 <input id="checkbox-enable-autosuspend-soccer" type="checkbox" />

@@ -24,6 +24,7 @@ var AutoSuspendStatus = function () {
         buttonUpdate: null,
         resultMessage: null,
         customerInfoTitle: null,
+        tableSettings: null,
 
         checkboxEnableAutosuspendSoccer: null,
         labelEnableAutosuspendSoccer: null,
@@ -147,13 +148,15 @@ var AutoSuspendStatus = function () {
         self.Tables.resultMessage = $("#result-message");
         self.Tables.customerInfoTitle = $("#customer-info-title");
 
-        self.Tables.checkboxEnableAutosuspendSoccer = $("#checkbox-enable-autosuspend-soccer");
-        self.Tables.labelEnableAutosuspendSoccer = $("#label-enable-autosuspend-soccer");
-        self.Tables.checkboxEnableAutosuspendSoccerDisable = $("#checkbox-enable-autosuspend-soccer-disable");
+        self.Tables.tableSettings = $("#setting-content .table-settings");
+        self.Tables.checkboxEnableAutosuspendSoccer = self.Tables.tableSettings.find("#checkbox-enable-autosuspend-soccer");
+        self.Tables.labelEnableAutosuspendSoccer = self.Tables.tableSettings.find("#label-enable-autosuspend-soccer");
+        self.Tables.checkboxEnableAutosuspendSoccerDisable = self.Tables.tableSettings.find("#checkbox-enable-autosuspend-soccer-disable");
 
-        self.Tables.checkboxEnableAutosuspendOthersports = $("#checkbox-enable-autosuspend-othersports");
-        self.Tables.labelEnableAutosuspendOthersports = $("#label-enable-autosuspend-othersports");
-        self.Tables.checkboxEnableAutosuspendOthersportsDisable = $("#checkbox-enable-autosuspend-othersports-disable");
+        self.Tables.checkboxEnableAutosuspendOthersports = self.Tables.tableSettings.find("#checkbox-enable-autosuspend-othersports");
+        self.Tables.labelEnableAutosuspendOthersports = self.Tables.tableSettings.find("#label-enable-autosuspend-othersports");
+        self.Tables.checkboxEnableAutosuspendOthersportsDisable = self.Tables.tableSettings.find("#checkbox-enable-autosuspend-othersports-disable");
+
     };
     self.bindingEvent = function () {
         self.Tables.buttonUpdate.unbind("click");
@@ -175,11 +178,12 @@ var AutoSuspendStatus = function () {
     };
 
     self.buttonUpdateClick = function () {
+        self.GetUpdateParams();
         var confirmMessage = (self.CacheData.customerInfo.RoleId == self.Constants.RoleId.MEMBER ||
             self.CacheData.customerInfo.RoleId == self.Constants.RoleId.SuperOnMember ||
             self.CacheData.customerInfo.RoleId == self.Constants.RoleId.MasterOnMember) ?
             "Are you sure you want to update auto suspend on this customer?" :
-            "Are you sure you want to update auto suspend on this customer and all downline?";
+            "Are you sure you want to update auto suspend on this customer and all downlines?";
 
         if (!confirm(confirmMessage)) {
             return;
@@ -193,7 +197,6 @@ var AutoSuspendStatus = function () {
             return;
         }
 
-        self.GetUpdateParams();
         self.CallAjax(self,
             "../../../AutoSuspend/UpdateCustomerStatus",
             self.Params.updateCustomerInfo,
@@ -229,8 +232,12 @@ var AutoSuspendStatus = function () {
         self.Params.updateCustomerInfo.UplineAutoSuspendSoccer = self.CacheData.customerInfo.UplineAutoSuspendSoccer;
         self.Params.updateCustomerInfo.UplineAutoSuspendOtherSports = self.CacheData.customerInfo.UplineAutoSuspendOtherSports;
 
-        self.Params.updateCustomerInfo.AutoSuspendSoccer = self.Tables.checkboxEnableAutosuspendSoccer.attr("checked");
-        self.Params.updateCustomerInfo.AutoSuspendOtherSports = self.Tables.checkboxEnableAutosuspendOthersports.attr("checked");
+        self.Params.updateCustomerInfo.AutoSuspendSoccer = !self.Params.updateCustomerInfo.UplineAutoSuspendSoccer ?
+            self.Tables.checkboxEnableAutosuspendSoccer.attr("checked") :
+            self.CacheData.customerInfo.AutoSuspendSoccer;
+        self.Params.updateCustomerInfo.AutoSuspendOtherSports = !self.Params.updateCustomerInfo.UplineAutoSuspendOtherSports ?
+            self.Tables.checkboxEnableAutosuspendOthersports.attr("checked") :
+            self.CacheData.customerInfo.AutoSuspendOtherSports;
     };
 
     self.GetCustomerInfo = function () {
@@ -263,17 +270,21 @@ var AutoSuspendStatus = function () {
         if (customerInfo.AutoSuspendSoccer) {
             self.Tables.checkboxEnableAutosuspendSoccerDisable.removeClass("checkbox-unchecked")
                                                               .addClass("checkbox-checked");
+            self.Tables.checkboxEnableAutosuspendSoccer.attr("checked", "checked");
         } else {
             self.Tables.checkboxEnableAutosuspendSoccerDisable.removeClass("checkbox-checked")
                                                               .addClass("checkbox-unchecked");
+            self.Tables.checkboxEnableAutosuspendSoccer.attr("checked", null);
         }
 
         if (customerInfo.AutoSuspendOtherSports) {
             self.Tables.checkboxEnableAutosuspendOthersportsDisable.removeClass("checkbox-unchecked")
                                                                    .addClass("checkbox-checked");
+            self.Tables.checkboxEnableAutosuspendOthersports.attr("checked", "checked");
         } else {
             self.Tables.checkboxEnableAutosuspendOthersportsDisable.removeClass("checkbox-checked")
                                                                    .addClass("checkbox-unchecked");
+            self.Tables.checkboxEnableAutosuspendOthersports.attr("checked", null);
         }
 
         if (customerInfo.UplineAutoSuspendSoccer) {
