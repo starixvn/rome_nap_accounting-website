@@ -9,12 +9,31 @@
 
 namespace Fanex.Tarus.Customer.Criteria.AutoSuspend
 {
+    using Fanex.Tarus.Infrastructure.Common;
+    using Fanex.Tarus.Infrastructure.Helper;
+
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public class UpdateCustomerStatusCriteria
     {
         public string CustomerId { get; set; }
+
+        public int UserId
+        {
+            get
+            {
+                return AppSession.AccId;
+            }
+        }
+
+        public string IP
+        {
+            get
+            {
+                return Utils.GetClientIP();
+            }
+        }
 
         public int RoleId { get; set; }
 
@@ -25,6 +44,10 @@ namespace Fanex.Tarus.Customer.Criteria.AutoSuspend
         public bool AutoSuspendSoccer { get; set; }
 
         public bool AutoSuspendOtherSports { get; set; }
+
+        public bool AutoSuspendSoccerDownlines { get; set; }
+
+        public bool AutoSuspendOtherSportsDownlines { get; set; }
 
         public string GetSettingKey()
         {

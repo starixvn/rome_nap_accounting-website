@@ -25,5 +25,9 @@ namespace Fanex.Tarus.Customer.Entities.AutoSuspend
         public bool AutoSuspendSoccer { get; set; }
 
         public bool AutoSuspendOtherSports { get; set; }
+
+        public bool AutoSuspendSoccerDownlines { get; set; }
+
+        public bool AutoSuspendOtherSportsDownlines { get; set; }
     }
 }

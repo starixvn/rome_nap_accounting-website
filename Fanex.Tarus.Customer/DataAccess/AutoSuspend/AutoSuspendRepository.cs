@@ -54,12 +54,14 @@ namespace Fanex.Tarus.Customer.DataAccess.AutoSuspend
             var rawCustomerInfo = dataTable.Rows[0];
             result = new CustomerInfo
             {
-                Username = CastAide.AsString(rawCustomerInfo["username"]),
-                RoleId = CastAide.AsInt32(rawCustomerInfo["roleid"]),
-                UplineAutoSuspendSoccer = false || CastAide.AsBoolean(rawCustomerInfo["DisableDownlines151_31"]),
-                UplineAutoSuspendOtherSports = false || CastAide.AsBoolean(rawCustomerInfo["DisableDownlines151_31"]),
-                AutoSuspendSoccer = true,
-                AutoSuspendOtherSports = true
+                Username = CastAide.AsString(rawCustomerInfo["Username"]),
+                RoleId = CastAide.AsInt32(rawCustomerInfo["RoleId"]),
+                UplineAutoSuspendSoccer = CastAide.AsBoolean(rawCustomerInfo["AutoSuspendUplineSoccer"]),
+                UplineAutoSuspendOtherSports = CastAide.AsBoolean(rawCustomerInfo["AutoSuspendUplineOtherSports"]),
+                AutoSuspendSoccer = CastAide.AsBoolean(rawCustomerInfo["AutoSuspendSoccer"]),
+                AutoSuspendOtherSports = CastAide.AsBoolean(rawCustomerInfo["AutoSuspendOtherSports"]),
+                AutoSuspendSoccerDownlines = CastAide.AsBoolean(rawCustomerInfo["AutoSuspendDownlinesSoccer"]),
+                AutoSuspendOtherSportsDownlines = CastAide.AsBoolean(rawCustomerInfo["AutoSuspendDownlinesOtherSports"])
             };
 
             return result;
@@ -74,28 +76,25 @@ namespace Fanex.Tarus.Customer.DataAccess.AutoSuspend
         {
             Hashtable hashtableParams = new Hashtable();
             hashtableParams.Add("custid", criteria.CustomerId);
+            hashtableParams.Add("userid", criteria.UserId);
+            hashtableParams.Add("ip", criteria.IP);
             Hashtable outputParams = new Hashtable();
-            //hashtableParams.Add("roleid", criteria.RoleId);
-            //hashtableParams.Add("autosuspendsoccer", criteria.AutoSuspendSoccer);
-            //hashtableParams.Add("autosuspendothersports", criteria.AutoSuspendOtherSports);
-            DataTable dataTable = null;
+            hashtableParams.Add("roleid", criteria.RoleId);
+            hashtableParams.Add("autosuspend", criteria.AutoSuspendSoccer);
+            hashtableParams.Add("autosuspendother", criteria.AutoSuspendOtherSports);
+            hashtableParams.Add("errcode", 0);
+            hashtableParams.Add("errmsg", string.Empty);
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 objDb.AssignParamValues(hashtableParams);
-                var dataset = objDb.ExecuteDataSet();
+                objDb.ExecuteNonQuery();
                 outputParams = objDb.GetOuputParams();
-                if (dataset != null &&
-                    dataset.Tables != null &&
-                    dataset.Tables.Count > 0)
-                {
-                    dataTable = dataset.Tables[0];
-                }
             }
 
             Result updateResult = new Result
             {
-                ErrorCode = 0,
-                ErrorMessage = "Something wrong!"
+                ErrorCode = CastAide.AsInt32(outputParams["errcode"]),
+                ErrorMessage = CastAide.AsString(outputParams["errmsg"])
             };
 
             return updateResult;
