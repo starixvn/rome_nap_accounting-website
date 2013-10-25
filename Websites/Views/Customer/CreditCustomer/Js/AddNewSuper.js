@@ -86,7 +86,10 @@ ans.initCommission = function () {
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listOther'), 0, commissionSetting.discountCS, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discountCS);
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listGroup1x2'), 0, commissionSetting.discount1x2, Fanex.PTEngine.COMMISSION_STEP, commissionSetting.discount1x2);
     Fanex.PTEngine.PT_SetSelect(document.getElementById('listGameComm'), 0, commissionSetting.discountNumber, Fanex.PTEngine.COMMISSION_STEP, 0);
-    Fanex.PTEngine.PT_SetSelect(document.getElementById('listHRFixOddsComm'), 0, Math.max(commissionSetting.discountHRFixedOddsMax, commissionSetting.discountHRFixedOdds), Fanex.PTEngine.COMMISSION_STEP, 0);
+    if(parseBool2(_isOfferHRFixedOdds))
+    {
+        Fanex.PTEngine.PT_SetSelect(document.getElementById('listHRFixOddsComm'), 0, Math.max(commissionSetting.discountHRFixedOddsMax, commissionSetting.discountHRFixedOdds), Fanex.PTEngine.COMMISSION_STEP, 0);
+    }
 };
 // check valid user input
 ans.checkValidInput = function () {
@@ -133,7 +136,10 @@ ans.checkValidInput = function () {
     commissionSetting.discount1x2 = $('#listGroup1x2').val();
     commissionSetting.discountCS = $('#listOther').val();
     commissionSetting.discountNumber = $('#listGameComm').val();
-    commissionSetting.discountHRFixedOdds = $('#listHRFixOddsComm').val();
+    if(parseBool2(_isOfferHRFixedOdds))
+    {
+        commissionSetting.discountHRFixedOdds = $('#listHRFixOddsComm').val();
+    }
     //get pt setting
     customer.ptSetting = ptGrid.Save();
 

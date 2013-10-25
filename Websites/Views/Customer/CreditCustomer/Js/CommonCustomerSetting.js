@@ -222,3 +222,20 @@ function show(elementInput, message, xPos, pointerXPos, yPos, pointerYPos, heigh
     };
     hint.style.display = 'block';
 }
+
+function parseBool2(str) {
+    var boolmap = {
+        'no': false,
+        'NO': false,
+        'FALSE': false,
+        'False': false,
+        'false': false,
+        'yes': true,
+        'YES': true,
+        'TRUE': true,
+        'true': true
+    };
+
+    return (str in boolmap && boolmap.hasOwnProperty(str)) ?
+      boolmap[str] : !!str;
+};

@@ -1,5 +1,9 @@
 ﻿@using Fanex.Tarus.Customer.CreditCustomer.Entities;
+@using Sunplus.Accounting.Core.Configurations;
 @model Fanex.Tarus.Customer.CreditCustomer.Entities.CustomerSettingView
+@{
+    bool isOfferHRFixedOdds = WebSettings.OfferHorseRacingFixedOdds;
+}
 @if (Model.IsUpdateMinMaxPt)
 {
     <table class="tblcollapse" style="width:750px; margin-bottom: 10px;">
@@ -110,6 +114,8 @@ else if ((Model.IsSuperSetting && Model.IsMemberSetting) || (Model.IsMasterSetti
                             <td><span data-bind="text: customer.commissionSetting.playerDiscountNumber"></span></td>
                         </tr>
                         <!--/game-comm-->
+                        @if (isOfferHRFixedOdds)
+                        {
                          <!--hr-fixed-odds-->
                         <tr>
                             <td class="r" style="width: 25%;">
@@ -120,6 +126,7 @@ else if ((Model.IsSuperSetting && Model.IsMemberSetting) || (Model.IsMasterSetti
                             <td><span data-bind="text: customer.commissionSetting.playerDiscountHRFixedOdds"></span></td>
                         </tr>
                         <!--/hr-fixed-odds-->
+                        }
                     </table>
                 }
                 else
@@ -162,6 +169,8 @@ else if ((Model.IsSuperSetting && Model.IsMemberSetting) || (Model.IsMasterSetti
                             <td><span data-bind="text: customer.commissionSetting.playerDiscountNumber"></span></td>
                         </tr>
                         <!--/game-comm-->
+                         @if (isOfferHRFixedOdds)
+                         {
                         <!--hr-fixed-odds-->
                         <tr>
                             <td class="r" style="width: 25%;">
@@ -171,6 +180,7 @@ else if ((Model.IsSuperSetting && Model.IsMemberSetting) || (Model.IsMasterSetti
                             <td><span data-bind="text: customer.commissionSetting.playerDiscountHRFixedOdds"></span></td>
                         </tr>
                         <!--/hr-fixed-odds-->
+                         }
                     </table>
                 }
                 
@@ -588,6 +598,8 @@ else
                             </select>
                         </td>
                         <!--/game-comm-->
+                         @if (isOfferHRFixedOdds)
+                         {
                          <!--hr-fixed-odds-->
                         <td class="r">
                            HR Fixed Odds
@@ -597,6 +609,7 @@ else
                             </select>
                         </td>
                         <!--/hr-fixed-odds-->
+                         }
                     </tr>
                 </table>
             }
@@ -676,6 +689,8 @@ else
                         </td>
                     </tr>
                     <!--/game-comm-->
+                     @if (isOfferHRFixedOdds)
+                     {
                     <!--hr-fixed-odds-->
                     <tr>
                         <td class="r" style="width: 25%;">
@@ -691,6 +706,7 @@ else
                         </td>
                     </tr>
                     <!--/hr-fixed-odds-->
+                     }
                 </table>
             }
         </td>
@@ -698,3 +714,7 @@ else
     <!--/MinMaxPT-->
 </table>
 }
+
+<script language="javascript" type="text/javascript">
+    var  _isOfferHRFixedOdds = "@isOfferHRFixedOdds";
+</script>
