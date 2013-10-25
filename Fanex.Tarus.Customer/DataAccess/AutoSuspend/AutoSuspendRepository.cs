@@ -80,8 +80,16 @@ namespace Fanex.Tarus.Customer.DataAccess.AutoSuspend
             hashtableParams.Add("ip", criteria.IP);
             Hashtable outputParams = new Hashtable();
             hashtableParams.Add("roleid", criteria.RoleId);
-            hashtableParams.Add("autosuspend", criteria.AutoSuspendSoccer);
-            hashtableParams.Add("autosuspendother", criteria.AutoSuspendOtherSports);
+            if (!criteria.UplineAutoSuspendSoccer)
+            {
+                hashtableParams.Add("autosuspend", criteria.AutoSuspendSoccer);
+            }
+
+            if (!criteria.UplineAutoSuspendOtherSports)
+            {
+                hashtableParams.Add("autosuspendother", criteria.AutoSuspendOtherSports);
+            }
+
             hashtableParams.Add("errcode", 0);
             hashtableParams.Add("errmsg", string.Empty);
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))

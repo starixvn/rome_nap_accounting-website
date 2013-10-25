@@ -194,6 +194,7 @@ var AutoSuspendStatus = function () {
             self.CacheData.customerInfo.UplineAutoSuspendOtherSports) {
             showAlertMessage("result-message", "Upline has been auto suspended", 1);
             self.Tables.resultMessage.removeClass("display-none");
+            self.unblockUI();
             return;
         }
 
