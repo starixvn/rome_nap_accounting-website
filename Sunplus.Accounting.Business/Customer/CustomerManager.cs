@@ -1211,6 +1211,9 @@ namespace Sunplus.Accounting.Business.Customer
                 bool isEnableHorseRacingFixedOdds = Convert.IsDBNull(row1["DisableHRFixedOdds"]) ?
                     false :
                     !Convert.ToBoolean(row1["DisableHRFixedOdds"]);
+                bool disableDownlinesHorseRacingFixedOdds = !Convert.IsDBNull(row1["DisableDownlinesHRFixedOdds"]) ?
+                    Convert.ToBoolean(row1["DisableDownlinesHRFixedOdds"]) :
+                    false;
 
                 sg.Add(GetSettingControlEnableHorseRacingFixedOdds(
                     roleId,
@@ -1219,6 +1222,7 @@ namespace Sunplus.Accounting.Business.Customer
                     "enableHorseRacingFixedOdds",
                     isEnableHorseRacingFixedOdds,
                     (roleId > 1),
+                    !disableDownlinesHorseRacingFixedOdds,
                     CastAide.AsBoolean(row1["Enabled"])));
                 TemplateHandler.Assign(ref htmlcontent, "{chkEnableHorseRacingFixedOdds}", isEnableHorseRacingFixedOdds ? 1 : 0);
             }
@@ -1883,6 +1887,7 @@ namespace Sunplus.Accounting.Business.Customer
             string statusName,
             bool currentStatus,
             bool hasDownline,
+            bool disableDownLine,
             bool isEnabled)
         {
             string classname = "";
@@ -1927,7 +1932,7 @@ namespace Sunplus.Accounting.Business.Customer
                 classname,
                 statusName,
                 roleId,
-                false,
+                disableDownLine,
                 "EnableHorseRacingFixedOdds");
         }
 
@@ -2003,8 +2008,16 @@ namespace Sunplus.Accounting.Business.Customer
             }
         }
 
-        private SettingControl GetSettingControlLiveCasino(int roleId, bool isManageCustomerAccess, string statusName, bool currStatus,
-            bool hasDownLine, bool syncLiveCasino, bool isAllowEdit, bool isenabled, bool disabledUpline, bool disableDownLine)
+        private SettingControl GetSettingControlLiveCasino(int roleId,
+            bool isManageCustomerAccess,
+            string statusName,
+            bool currStatus,
+            bool hasDownLine,
+            bool syncLiveCasino,
+            bool isAllowEdit,
+            bool isenabled,
+            bool disabledUpline,
+            bool disableDownLine)
         {
             if (!WebSettings.EnableLiveCasino || !isAllowEdit || !syncLiveCasino)
             {
