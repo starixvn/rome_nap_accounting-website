@@ -33,6 +33,11 @@ namespace Fanex.Tarus.Customer.Business.NewLicensee
             _newLicenseeRepository = newLicenseeRepository ?? new NewLicenseeRepository();
         }
 
+        /// <summary>
+        /// Gets the currencies by system.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Currency List.</returns>
         public List<Currency> GetCurrenciesBySystem(GetCurrenciesBySystemCriteria criteria)
         {
             try

@@ -11,6 +11,9 @@ namespace Fanex.Tarus.Customer.Entities.EditLicensee
 {
     using System;
 
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
     [Serializable]
     public class SettingInfo
     {

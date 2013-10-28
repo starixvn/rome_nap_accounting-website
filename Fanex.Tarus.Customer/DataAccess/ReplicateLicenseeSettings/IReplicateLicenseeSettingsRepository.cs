@@ -11,9 +11,10 @@ namespace Fanex.Tarus.Customer.DataAccess.ReplicateLicenseeSettings
 {
     using System.Collections;
     using Fanex.Tarus.Customer.Criteria.ReplicateLicenseeSettings;
+    using Fanex.Tarus.Customer.Entities;
 
     public interface IReplicateLicenseeSettingsRepository
     {
-        void DoReplicateLicenseeSettings(DoReplicateLicenseeSettingsCriteria criteria, ref Hashtable outputParams);
+        Result DoReplicateLicenseeSettings(DoReplicateLicenseeSettingsCriteria criteria, ref Hashtable outputParams);
     }
 }

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="GetFinancialReportCriteria.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="GetCurrenciesBySystemCriteria.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -9,6 +9,9 @@
 
 namespace Fanex.Tarus.Customer.Criteria.NewLicensee
 {
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
     public class GetCurrenciesBySystemCriteria
     {
         public string GetSettingKey()

@@ -26,5 +26,6 @@ namespace Fanex.Tarus.Entities.Customer.DepositCustomer
         public string DummyMemberName { get; set; }
 
         public List<PostParam> PostParams { get; set; }
+        public List<VirtualSportsSettingInfo> VirtualSportsSettingInfo { get; set; }
     }
 }

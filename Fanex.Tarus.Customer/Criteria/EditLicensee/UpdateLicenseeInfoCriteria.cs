@@ -13,6 +13,9 @@ namespace Fanex.Tarus.Customer.Criteria.EditLicensee
     using Fanex.Tarus.Customer.Entities.EditLicensee;
     using Fanex.Tarus.Infrastructure.Common;
 
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
     public class UpdateLicenseeInfoCriteria
     {
         public string LicenseeName { get; set; }

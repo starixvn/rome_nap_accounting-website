@@ -22,6 +22,11 @@ namespace Fanex.Tarus.Customer.DataAccess.NewLicensee
     /// </summary>
     public class NewLicenseeRepository : INewLicenseeRepository
     {
+        /// <summary>
+        /// Gets the currencies by system.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Currency List.</returns>
         public List<Currency> GetCurrenciesBySystem(GetCurrenciesBySystemCriteria criteria)
         {
             var dataTable = new DataTable();

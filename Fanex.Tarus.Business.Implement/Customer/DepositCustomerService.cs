@@ -7,14 +7,19 @@ using Sunplus.Accounting.Entities;
 
 namespace Fanex.Tarus.Business.Implement.Customer
 {
-    using Interface.Customer;
+    using System.Xml;
     using DataAccess.Implement.Customer;
     using DataAccess.Interface.Customer;
+    using DNAide.Core;
+    using Fanex.Tarus.Infrastructure.Caching;
+    using Fanex.Tarus.Infrastructure.Configurations;
+    using Fanex.Tarus.Infrastructure.Constants;
+    using Interface.Customer;
+    using Newtonsoft.Json;
     using Sunplus.Accounting.Core.Extensions;
     using Sunplus.Accounting.Entities.BetAggregator;
-    using DNAide.Core;
-   
-    public class DepositCustomerService: BaseService, IDepositCustomerService
+
+    public class DepositCustomerService : BaseService, IDepositCustomerService
     {
 
         private static IDepositCustomerAccess _depositCustomerAccess;
@@ -24,8 +29,9 @@ namespace Fanex.Tarus.Business.Implement.Customer
             _depositCustomerAccess = depositCustomerAccess ?? new DepositCustomerAccess();
         }
 
-        public DepositCustomerService():this(null)
-        {}
+        public DepositCustomerService()
+            : this(null)
+        { }
 
         public Result NewLicenseeAddNewSuper(NewLicenseePostParam newLicenseePostParam)
         {
@@ -87,7 +93,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
                 if (ds.Tables.Count == 0 || ds.Tables[0].Rows.Count == 0) return string.Empty;
                 var tbl = ds.Tables[0];
                 var row = ds.Tables[0].Rows[0];
-                return BuildSettingJsonDataString(row, tbl);
+                return BuildSettingJsonDataString(row, tbl, RoleIdConstants.Super);
             }
             catch (Exception ex)
             {
@@ -104,7 +110,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
                 if (ds.Tables.Count == 0 || ds.Tables[0].Rows.Count == 0) return string.Empty;
                 var tbl = ds.Tables[0];
                 var row = ds.Tables[0].Rows[0];
-                return BuildSettingJsonDataString(row, tbl);
+                return BuildSettingJsonDataString(row, tbl, RoleIdConstants.Master);
             }
             catch (Exception ex)
             {
@@ -121,7 +127,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
                 if (ds.Tables.Count == 0 || ds.Tables[0].Rows.Count == 0) return string.Empty;
                 var tbl = ds.Tables[0];
                 var row = ds.Tables[0].Rows[0];
-                return BuildSettingJsonDataString(row, tbl);
+                return BuildSettingJsonDataString(row, tbl, RoleIdConstants.Agent);
             }
             catch (Exception ex)
             {
@@ -138,7 +144,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
                 if (ds.Tables.Count == 0 || ds.Tables[0].Rows.Count == 0) return string.Empty;
                 var tbl = ds.Tables[0];
                 var row = ds.Tables[0].Rows[0];
-                return BuildSettingJsonDataString(row, tbl);
+                return BuildSettingJsonDataString(row, tbl, RoleIdConstants.Member);
             }
             catch (Exception ex)
             {
@@ -147,14 +153,163 @@ namespace Fanex.Tarus.Business.Implement.Customer
             }
         }
 
-        private string BuildSettingJsonDataString(DataRow row, DataTable tbl)
+        private List<VirtualSportsSettingInfo> GetVirtualSportsSettingInfoList(string virtualSportsParams, int roleId)
+        {
+            var virtualSports = VirtualSportsSection.Instance.Sports;
+            Dictionary<string, bool> activeVirtualSportsInfo = new Dictionary<string, bool>();
+            string sportId;
+            foreach (VirtualSportsElement sport in virtualSports)
+            {
+                sportId = sport.Id;
+                if (activeVirtualSportsInfo.ContainsKey(sportId))
+                {
+                    continue;
+                }
+
+                activeVirtualSportsInfo.Add(sportId, sport.Active);
+            }
+
+            string roleName = string.Empty;
+            switch (roleId)
+            {
+                case RoleIdConstants.Super:
+                    roleName = SMALevelNameConstants.Super;
+                    break;
+                case RoleIdConstants.Master:
+                    roleName = SMALevelNameConstants.Master;
+                    break;
+                case RoleIdConstants.Agent:
+                case RoleIdConstants.Member:
+                    roleName = SMALevelNameConstants.Agent;
+                    break;
+                default:
+                    roleName = string.Empty;
+                    break;
+            }
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(virtualSportsParams);
+            string xpath = "/products/product";
+            var virtualSportsNodes = xmlDoc.SelectNodes(xpath);
+            List<VirtualSportsSettingInfo> virtualSportsSettingInfoList = new List<VirtualSportsSettingInfo>();
+            double positionTakingValue = 0;
+            double positionTakingValue_Min = 0;
+            double positionTakingValue_Max = 0;
+            foreach (XmlNode childrenNode in virtualSportsNodes)
+            {
+                sportId = childrenNode.Attributes["SportType"].Value;
+                if (!activeVirtualSportsInfo.ContainsKey(sportId) ||
+                    !activeVirtualSportsInfo[sportId])
+                {
+                    continue;
+                }
+
+                VirtualSportsSettingInfo virtualSportsSettingInfo = new VirtualSportsSettingInfo
+                {
+                    Id = sportId,
+                    Name = CacheRef.GetSportName(sportId),
+                    SettingInfo = new List<SettingInfo>()
+                };
+
+                virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+                {
+                    Name = "maxbetv" + sportId,
+                    Value = childrenNode.Attributes["MaxBet"].Value
+                });
+
+                virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+                {
+                    Name = "minbetv" + sportId,
+                    Value = childrenNode.Attributes["MinBet"].Value
+                });
+
+                virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+                {
+                    Name = "maxpermatchv" + sportId,
+                    Value = childrenNode.Attributes["MaxPerMatch"].Value
+                });
+
+                if (string.Equals(sportId, Sports.VirtualSoccer.ToString()))
+                {
+                    positionTakingValue = CastAide.AsDouble(childrenNode.Attributes[roleName + "PositionTaking"].Value);
+                    switch (roleId)
+                    {
+                        case RoleIdConstants.Master:
+                            positionTakingValue_Min = CastAide.AsDouble(childrenNode.Attributes[roleName + "PositionTaking_Min"].Value);
+                            positionTakingValue_Max = CastAide.AsDouble(childrenNode.Attributes[roleName + "PositionTaking_Max"].Value);
+                            break;
+                        case RoleIdConstants.Agent:
+                        case RoleIdConstants.Member:
+                            positionTakingValue_Max = CastAide.AsDouble(childrenNode.Attributes[roleName + "PositionTaking_Max"].Value);
+                            break;
+                        default:
+                            break;
+                    }
+
+                    sportId = virtualSportsSettingInfo.Id;
+                    virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+                    {
+                        Name = "v" + sportId + roleName + "positiontaking",
+                        Value = positionTakingValue
+                    });
+
+                    virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+                    {
+                        Name = "v" + sportId + roleName + "positiontaking_min",
+                        Value = positionTakingValue_Min
+                    });
+
+                    virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+                    {
+                        Name = "v" + sportId + roleName + "positiontaking_max",
+                        Value = positionTakingValue_Max
+                    });
+
+                    if (roleId != RoleIdConstants.Super)
+                    {
+                        virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+                        {
+                            Name = "minbetv" + sportId + "_max",
+                            Value = childrenNode.Attributes["MinBet_Max"].Value
+                        });
+
+                        virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+                        {
+                            Name = "maxbetv" + sportId + "_min",
+                            Value = childrenNode.Attributes["MaxBet_Min"].Value
+                        });
+
+                        virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+                        {
+                            Name = "maxpermatchv" + sportId + "_max",
+                            Value = childrenNode.Attributes["MaxPerMatch_Max"].Value
+                        });
+                    }
+                }
+
+                virtualSportsSettingInfoList.Add(virtualSportsSettingInfo);
+            }
+
+            return virtualSportsSettingInfoList;
+        }
+
+        private string BuildSettingJsonDataString(DataRow row, DataTable tbl, int roleId)
         {
             var listProp = new List<string>();
             for (var i = 0; i < tbl.Columns.Count; i++)
             {
                 var columName = tbl.Columns[i].ColumnName;
-                listProp.Add("\"" + columName.ToLower() + "\":\"" + DNAide.Core.CastAide.AsString(row[columName]) + "\"");
+                if (columName == "VirtualSportList")
+                {
+                    continue;
+                }
+
+                listProp.Add("\"\"" + columName.ToLower() + "\"\":\"\"" + CastAide.AsString(row[columName]) + "\"\"");
             }
+
+            var virtualSportsParams = CastAide.AsString(row["VirtualSportList"]);
+            var virtualSportsSettingInfoList = GetVirtualSportsSettingInfoList(virtualSportsParams, roleId);
+            listProp.Add("\"\"VirtualSportsSettingInfo\"\":\"\"" + JsonConvert.SerializeObject(virtualSportsSettingInfoList) + "\"\"");
             return "{" + string.Join(",", listProp.ToArray()) + "}";
         }
 
@@ -210,7 +365,6 @@ namespace Fanex.Tarus.Business.Implement.Customer
             }
         }
 
-
         public List<LicenseeConfig> SelAllLicensee()
         {
             try
@@ -220,7 +374,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
                 var listEntity = new List<LicenseeConfig>();
                 foreach (DataRow row in table.Rows)
                 {
-                    listEntity.Add(new LicenseeConfig 
+                    listEntity.Add(new LicenseeConfig
                     {
                         Id = CastAide.AsInt32(row["licenseeid"]),
                         Name = CastAide.AsString(row["licenseename"])
@@ -235,6 +389,16 @@ namespace Fanex.Tarus.Business.Implement.Customer
             }
         }
 
+        private string BuildSettingJsonDataStringForAddNew(DataRow row, DataTable tbl)
+        {
+            var listProp = new List<string>();
+            for (var i = 0; i < tbl.Columns.Count; i++)
+            {
+                var columName = tbl.Columns[i].ColumnName;
+                listProp.Add("\"" + columName.ToLower() + "\":\"" + DNAide.Core.CastAide.AsString(row[columName]) + "\"");
+            }
+            return "{" + string.Join(",", listProp.ToArray()) + "}";
+        }
 
         public string GetMasterSettingForAddNew(int custId)
         {
@@ -244,7 +408,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
                 if (ds.Tables.Count == 0 || ds.Tables[0].Rows.Count == 0) return string.Empty;
                 var tbl = ds.Tables[0];
                 var row = ds.Tables[0].Rows[0];
-                return BuildSettingJsonDataString(row, tbl);
+                return BuildSettingJsonDataStringForAddNew(row, tbl);
             }
             catch (Exception ex)
             {
@@ -261,7 +425,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
                 if (ds.Tables.Count == 0 || ds.Tables[0].Rows.Count == 0) return string.Empty;
                 var tbl = ds.Tables[0];
                 var row = ds.Tables[0].Rows[0];
-                return BuildSettingJsonDataString(row, tbl);
+                return BuildSettingJsonDataStringForAddNew(row, tbl);
             }
             catch (Exception ex)
             {

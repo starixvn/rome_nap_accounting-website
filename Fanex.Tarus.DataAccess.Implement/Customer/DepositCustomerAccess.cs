@@ -250,9 +250,8 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
             var sports = SportsSection.Instance.Sports;
             foreach (SportsElement sport in SportsSection.Instance.Sports)
             {
-                sportId = sport.Id;
-                if (string.Equals(sportId, "99mp", StringComparison.OrdinalIgnoreCase) ||
-                    string.Equals(sportId, "161", StringComparison.OrdinalIgnoreCase))
+                sportId = sport.Id.ToLower();
+                if (string.Equals(sportId, "161", StringComparison.OrdinalIgnoreCase))
                 {
                     continue;
                 }
@@ -265,6 +264,11 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
 
                 paramName = "maxpermatchv" + sportId;
                 hashParam.Add(paramName, 0);
+
+                if (string.Equals(sportId, "99mp", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
 
                 var betTypes = sport.Bettype.Split(new char[] { ',' });
                 var betTypesLength = betTypes.Length;
@@ -314,10 +318,8 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 foreach (SportsElement sport in sports)
                 {
                     if (!string.Equals(sport.Id.Trim(), sportId) ||
-                        sport.Bettype == null ||
-                        sport.Bettype == "NA" ||
-                        sport.Bettype == string.Empty ||
-                        string.IsNullOrWhiteSpace(sport.Bettype.Trim()))
+                        string.IsNullOrWhiteSpace(sport.Bettype) ||
+                        sport.Bettype == "NA")
                     {
                         continue;
                     }
@@ -325,9 +327,10 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                     var betTypes = sport.Bettype.Split(new char[] { ',' });
                     foreach (var betType in betTypes)
                     {
-                        paramName = "v" + sportId + type + "positiontaking_" + betType;
+                        var betTypeAfterTrim = betType.Trim();
+                        paramName = "v" + sportId + type + "positiontaking_" + betTypeAfterTrim;
                         hashParam.Add(paramName, 0);
-                        paramName = "v" + sportId + type + "livepositiontaking_" + betType;
+                        paramName = "v" + sportId + type + "livepositiontaking_" + betTypeAfterTrim;
                         hashParam.Add(paramName, 0);
                     }
                 }
@@ -357,10 +360,8 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                     hashParam.Add(paramName, 0);
                     paramName = "v" + racing.Id + "maxpermatch_" + tote.Id;
                     hashParam.Add(paramName, 0);
-                    if (tote.BetType == null ||
-                        tote.BetType == "NA" ||
-                        tote.BetType == string.Empty ||
-                        string.IsNullOrWhiteSpace(tote.BetType.Trim()))
+                    if (string.IsNullOrWhiteSpace(tote.BetType) ||
+                        tote.BetType == "NA")
                     {
                         continue;
                     }
@@ -393,7 +394,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
 
             paramName = "disablevirtualsports";
             hashParam.Add(paramName, dictionaryParam[paramName]);
-            var virtualSportsParams = "<VTSports>";
+            var virtualSportsParams = "<products>";
             foreach (VirtualSportsElement sport in virtualSports)
             {
                 if (!sport.Active)
@@ -404,13 +405,13 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 var betTypes = sport.Bettype;
                 sportId = sport.Id;
 
-                virtualSportsParams += string.Format("<VTSport SportType = \"{0}\"" +
+                virtualSportsParams += string.Format("<product SportType = \"{0}\"" +
                     " MaxBet=\"{1}\"" +
                     " MinBet=\"{2}\"" +
                     " MaxPerMatch=\"{3}\"" +
                     " sPositionTaking=\"{4}\"" +
                     " mPositionTaking=\"{5}\"" +
-                    " aPositionTaking=\"{6}\"></VTSport>",
+                    " aPositionTaking=\"{6}\"></product>",
                     sportId,
                     0,
                     0,
@@ -420,8 +421,8 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                     0);
             }
 
-            virtualSportsParams += "/<VTSports>";
-            hashParam.Add("virtualsportsPparams", virtualSportsParams);
+            virtualSportsParams += "</products>";
+            hashParam.Add("virtualsportlist", virtualSportsParams);
 
             #endregion VirtualSports
 
@@ -823,48 +824,99 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
             }
         }
 
+        private Dictionary<string, object> GetUpdateSettingsDictionary(NewLicenseePostParam criteria)
+        {
+            Dictionary<string, object> dictionaryParams = new Dictionary<string, object>();
+            string paramName;
+            foreach (var sportsSettingInfo in criteria.VirtualSportsSettingInfo)
+            {
+                foreach (var param in sportsSettingInfo.SettingInfo)
+                {
+                    paramName = param.Name.ToLower();
+                    if (dictionaryParams.ContainsKey(paramName))
+                    {
+                        continue;
+                    }
+
+                    dictionaryParams.Add(paramName, param.Value);
+                }
+            }
+
+            return dictionaryParams;
+        }
+
+        private void GetUpdateSettingsHashTableParams_VirtualSports(
+            NewLicenseePostParam criteria,
+            Dictionary<string, object> updateSettingsDictionary,
+            ref Hashtable hashtableParams)
+        {
+            string sportId;
+            var virtualSports = criteria.VirtualSportsSettingInfo;
+
+            var virtualSportsParams = "<products>";
+            foreach (VirtualSportsSettingInfo sport in virtualSports)
+            {
+                sportId = sport.Id;
+                virtualSportsParams += string.Format("<product SportType=\"{0}\"" +
+                    " MinBet=\"{1}\"" +
+                    " MaxBet=\"{2}\"" +
+                    " MaxPerMatch=\"{3}\"" +
+                    " sPositionTaking=\"{4}\"" +
+                    " mPositionTaking=\"{5}\"" +
+                    " aPositionTaking=\"{6}\"></product>",
+                    sportId,
+                    updateSettingsDictionary["v" + sportId + "minbet"],
+                    updateSettingsDictionary["v" + sportId + "maxbet"],
+                    updateSettingsDictionary["v" + sportId + "maxpermatch"],
+                    updateSettingsDictionary["v" + sportId + "spositiontaking"],
+                    updateSettingsDictionary["v" + sportId + "mpositiontaking"],
+                    updateSettingsDictionary["v" + sportId + "apositiontaking"]);
+            }
+
+            virtualSportsParams += "</products>";
+            hashtableParams.Add("virtualsportlist", virtualSportsParams);
+        }
+
+        private Hashtable GetUpdateSettingsHashTableParams(NewLicenseePostParam criteria)
+        {
+            var updateSettingsDictionary = GetUpdateSettingsDictionary(criteria);
+            var hashtableParams = new Hashtable();
+            foreach (var param in criteria.PostParams)
+            {
+                hashtableParams.Add(param.Name.ToLower(), param.Value);
+            }
+
+            GetUpdateSettingsHashTableParams_VirtualSports(criteria, updateSettingsDictionary, ref hashtableParams);
+            return hashtableParams;
+        }
+
         public Result UpdateSuperSetting(NewLicenseePostParam newLicenseePostParam)
         {
+            var hashtableParams = GetUpdateSettingsHashTableParams(newLicenseePostParam);
+            hashtableParams.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+            hashtableParams.Add("errcode", 0);
+            hashtableParams.Add("errmsg", string.Empty);
+
             using (var objDb = new ObjectDb("DepositCust_UpdateSuperSetting"))
             {
-                var hashParam = new Hashtable();
-                foreach (var param in newLicenseePostParam.PostParams)
-                {
-                    hashParam.Add(param.Name.ToLower(), param.Value);
-                }
-
-                hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
-
-                hashParam.Add("errcode", 0);
-                hashParam.Add("errmsg", string.Empty);
-
-                objDb.AssignParamValues(hashParam);
-
+                objDb.AssignParamValues(hashtableParams);
                 objDb.ExecuteNonQuery();
                 var errCode = CastAide.AsInt32(objDb.GetParameterValue("ErrCode"));
                 var errMsg = CastAide.AsString(objDb.GetParameterValue("ErrMsg"));
-
                 return new Result(errCode, errMsg);
             }
         }
 
         public Result UpdateMasterSetting(NewLicenseePostParam newLicenseePostParam)
         {
+            var hashtableParams = GetUpdateSettingsHashTableParams(newLicenseePostParam);
+            hashtableParams.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+            hashtableParams.Add("errcode", 0);
+            hashtableParams.Add("errmsg", string.Empty);
+
             using (var objDb = new ObjectDb("DepositCust_UpdateMasterSetting"))
             {
-                var hashParam = new Hashtable();
-                foreach (var param in newLicenseePostParam.PostParams)
-                {
-                    hashParam.Add(param.Name.ToLower(), param.Value);
-                }
-
-                hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
-
-                hashParam.Add("errcode", 0);
-                hashParam.Add("errmsg", string.Empty);
-
-                objDb.AssignParamValues(hashParam);
-
+                objDb.AssignParamValues(hashtableParams);
                 objDb.ExecuteNonQuery();
                 var errCode = CastAide.AsInt32(objDb.GetParameterValue("ErrCode"));
                 var errMsg = CastAide.AsString(objDb.GetParameterValue("ErrMsg"));
@@ -875,20 +927,14 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
 
         public Result UpdateAgentSetting(NewLicenseePostParam newLicenseePostParam)
         {
+            var hashtableParams = GetUpdateSettingsHashTableParams(newLicenseePostParam);
+            hashtableParams.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+            hashtableParams.Add("errcode", 0);
+            hashtableParams.Add("errmsg", string.Empty);
+
             using (var objDb = new ObjectDb("DepositCust_UpdateAgentSetting"))
             {
-                var hashParam = new Hashtable();
-                foreach (var param in newLicenseePostParam.PostParams)
-                {
-                    hashParam.Add(param.Name.ToLower(), param.Value);
-                }
-
-                hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
-
-                hashParam.Add("errcode", 0);
-                hashParam.Add("errmsg", string.Empty);
-
-                objDb.AssignParamValues(hashParam);
+                objDb.AssignParamValues(hashtableParams);
 
                 objDb.ExecuteNonQuery();
                 var errCode = CastAide.AsInt32(objDb.GetParameterValue("ErrCode"));
@@ -900,21 +946,14 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
 
         public Result UpdateMemberSetting(NewLicenseePostParam newLicenseePostParam)
         {
+            var hashtableParams = GetUpdateSettingsHashTableParams(newLicenseePostParam);
+            hashtableParams.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+            hashtableParams.Add("errcode", 0);
+            hashtableParams.Add("errmsg", string.Empty);
+
             using (var objDb = new ObjectDb("DepositCust_UpdateMemberSetting"))
             {
-                var hashParam = new Hashtable();
-                foreach (var param in newLicenseePostParam.PostParams)
-                {
-                    hashParam.Add(param.Name.ToLower(), param.Value);
-                }
-
-                hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
-
-                hashParam.Add("errcode", 0);
-                hashParam.Add("errmsg", string.Empty);
-
-                objDb.AssignParamValues(hashParam);
-
+                objDb.AssignParamValues(hashtableParams);
                 objDb.ExecuteNonQuery();
                 var errCode = CastAide.AsInt32(objDb.GetParameterValue("ErrCode"));
                 var errMsg = CastAide.AsString(objDb.GetParameterValue("ErrMsg"));

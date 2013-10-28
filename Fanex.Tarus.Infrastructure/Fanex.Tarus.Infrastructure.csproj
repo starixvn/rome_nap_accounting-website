@@ -102,6 +102,7 @@
     <Compile Include="Configurations\VirtualSportsSection.cs" />
     <Compile Include="Configurations\WebSettings.cs" />
     <Compile Include="Constants\BetType.cs" />
+    <Compile Include="Constants\RoleIdConstants.cs" />
     <Compile Include="Constants\SMALevelNameConstants.cs" />
     <Compile Include="Constants\Sports.cs" />
     <Compile Include="Extensions\LogExtensions.cs" />

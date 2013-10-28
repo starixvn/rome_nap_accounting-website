@@ -10,11 +10,11 @@
 namespace Fanex.Tarus.Customer.Business.ReplicateLicenseeSettings
 {
     using System;
+    using System.Collections;
     using Fanex.Tarus.Customer.Criteria.ReplicateLicenseeSettings;
     using Fanex.Tarus.Customer.DataAccess.ReplicateLicenseeSettings;
     using Fanex.Tarus.Customer.Entities;
     using Fanex.Tarus.Infrastructure.Extensions;
-    using System.Collections;
 
     /// <summary>
     /// TODO: Update summary.
@@ -33,6 +33,11 @@ namespace Fanex.Tarus.Customer.Business.ReplicateLicenseeSettings
             _replicateLicenseeSettingsRepository = replicateLicenseeSettingsRepository ?? new ReplicateLicenseeSettingsRepository();
         }
 
+        /// <summary>
+        /// Does the replicate licensee settings.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Replicate Result.</returns>
         public Result DoReplicateLicenseeSettings(DoReplicateLicenseeSettingsCriteria criteria)
         {
             try
@@ -46,13 +51,7 @@ namespace Fanex.Tarus.Customer.Business.ReplicateLicenseeSettings
                 }
 
                 Hashtable outputParams = new Hashtable();
-                _replicateLicenseeSettingsRepository.DoReplicateLicenseeSettings(criteria, ref outputParams);
-                replicateResult = new Result
-                {
-                    ErrorCode = 1,
-                    ErrorMessage = "Something is wrong!"
-                };
-
+                replicateResult = _replicateLicenseeSettingsRepository.DoReplicateLicenseeSettings(criteria, ref outputParams);
                 if (replicateResult.ErrorCode == 0)
                 {
                     replicateResult.ErrorMessage = "Replicate licensee settings successfully!";

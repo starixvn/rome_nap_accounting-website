@@ -9,6 +9,9 @@
 
 namespace Fanex.Tarus.Customer.Criteria.EditLicensee
 {
+    /// <summary>
+    /// TODO: Update summary.
+    /// </summary>
     public class GetLicenseeInfoCriteria
     {
         public string LicenseeName { get; set; }

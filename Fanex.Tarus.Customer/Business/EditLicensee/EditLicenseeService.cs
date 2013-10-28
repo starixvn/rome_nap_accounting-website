@@ -34,6 +34,11 @@ namespace Fanex.Tarus.Customer.Business.EditLicensee
             _editLicenseeRepository = editLicenseeRepository ?? new EditLicenseeRepository();
         }
 
+        /// <summary>
+        /// Gets the licensee information.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Licensee Info.</returns>
         public LicenseeInfo GetLicenseeInfo(GetLicenseeInfoCriteria criteria)
         {
             try
@@ -52,6 +57,11 @@ namespace Fanex.Tarus.Customer.Business.EditLicensee
             return null;
         }
 
+        /// <summary>
+        /// Updates the licensee information.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Update Result.</returns>
         public Result UpdateLicenseeInfo(UpdateLicenseeInfoCriteria criteria)
         {
             try

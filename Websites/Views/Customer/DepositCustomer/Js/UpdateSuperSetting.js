@@ -64,7 +64,7 @@ updSuperSetting.fillNumberGameSettingAndPT = function (dataJson) {
     $("#maxbetv161").val(parseFloat(dataJson["maxbetv161"]).formatMoneyFromVal());
     $("#maxpermatchv161").val(parseFloat(dataJson["maxpermatchv161"]).formatMoneyFromVal());
     $("#maxperballv161").val(parseFloat(dataJson["maxperballv161"]).formatMoneyFromVal());
-    
+
     if (this.roleId == 3 || this.roleId == 2 || this.roleId == 1) {
         if (this.roleId == 3) {
             $("#minbetv161").get(0).uplineVal = parseFloat(dataJson["minbetv161_min"]);
@@ -144,7 +144,7 @@ updSuperSetting.fillRacingSettingAndPT = function (dataJson) {
                 $("#v" + racing.Id + "discount_" + tote.Id).find("option").each(function () {
                     if (parseFloat($(this).val()) > uplineValMax) $(this).remove();
                     if (parseFloat($(this).val()) < uplineValMin) $(this).remove();
-                });    
+                });
             }
 
             $("#v" + racing.Id + "discount_" + tote.Id).removeAttr("selected").find("option[value='" + parseFloat(dataJson["v" + racing.Id + "discount_" + tote.Id]).formatMoneyFromVal() + "']").attr("selected", "selected");
@@ -269,7 +269,7 @@ updSuperSetting.assignNumberGamePT = function (params) {
         var type = arr[i];
 
         var bettypes = window.arrNumberGameBettypes;
-        
+
         for (var j = 0; j < bettypes.length; j++) {
             params.push({
                 Name: "v" + id + type + "positiontaking_" + bettypes[j]
@@ -305,7 +305,7 @@ updSuperSetting.assignRacingBetSettingComPT = function (params) {
                 Name: "v" + racing.Id + "maxpermatch_" + tote.Id
                     , Value: $("#v" + racing.Id + "maxpermatch_" + tote.Id).getNumberValue()
             });
-            
+
             for (var i = 0; i < tote.Bettype.length; i++) {
                 //commision
                 params.push({
@@ -377,20 +377,22 @@ updSuperSetting.getPostParam = function () {
     this.assignRacingBetSettingComPT(params);
 
     //virtual sports
+    var virtualSportsSettingInfo = [];
     if (this.roleId == 4) {
         if (typeof vsSuperSetting != 'undefined') {
-            vsSuperSetting.assignVirtualSportsSettings(params);
+            virtualSportsSettingInfo = vsSuperSetting.getUpdateVirtualSportsSettings();
         }
     }
     else {
         if (typeof vsDownlineSettings != 'undefined') {
-            vsDownlineSettings.assignVirtualSportsSettings(params);
+            virtualSportsSettingInfo = vsDownlineSettings.getUpdateVirtualSportsSettings();
         }
     }
 
     return {
         postParam: {
-            PostParams: params
+            PostParams: params,
+            VirtualSportsSettingInfo: virtualSportsSettingInfo
         }
     };
 };
@@ -416,7 +418,7 @@ updSuperSetting.submit = function () {
                     contentType: 'application/json; charset=utf-8',
                     success: function (data) {
                         if (parseInt(data.ErrorCode) != 0) {
-                            common.showErr(data.ErrorMessage);                            
+                            common.showErr(data.ErrorMessage);
                         }
                         else {
                             common.showSuccess("Update successfully!");
@@ -448,8 +450,8 @@ updSuperSetting.submit = function () {
                             common.showErr(data.ErrorMessage);
                         }
                         else {
-                            common.showSuccess("Update successfully!"); 
-                            common.reloadPage("DepositCustomer/EditSettingAgent");                            
+                            common.showSuccess("Update successfully!");
+                            common.reloadPage("DepositCustomer/EditSettingAgent");
                         }
                         common.unBlock();
                     }
@@ -507,7 +509,7 @@ updSuperSetting.submit = function () {
                         }
                         else {
                             common.showSuccess("Update successfully!");
-                            common.reloadPage("DepositCustomer/EditSettingAgent");                            
+                            common.reloadPage("DepositCustomer/EditSettingAgent");
                         }
                         common.unBlock();
                     }

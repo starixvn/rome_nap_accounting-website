@@ -9,17 +9,23 @@
 
 namespace Fanex.Tarus.Customer.DataAccess.ReplicateLicenseeSettings
 {
-    using Fanex.Tarus.Customer.Criteria.ReplicateLicenseeSettings;
-    using Fanex.Tarus.Customer.Entities;
     using System.Collections;
     using Fanex.Data;
+    using Fanex.Tarus.Customer.Criteria.ReplicateLicenseeSettings;
+    using Fanex.Tarus.Customer.Entities;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public class ReplicateLicenseeSettingsRepository : IReplicateLicenseeSettingsRepository
     {
-        public void DoReplicateLicenseeSettings(DoReplicateLicenseeSettingsCriteria criteria, ref Hashtable outputParams)
+        /// <summary>
+        /// Does the replicate licensee settings.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <param name="outputParams">The output parameters.</param>
+        /// <returns>Replicate Result.</returns>
+        public Result DoReplicateLicenseeSettings(DoReplicateLicenseeSettingsCriteria criteria, ref Hashtable outputParams)
         {
             Hashtable param = new Hashtable();
             param.Add("licenseename", criteria.LicenseeName);
@@ -29,6 +35,12 @@ namespace Fanex.Tarus.Customer.DataAccess.ReplicateLicenseeSettings
                 objDb.ExecuteNonQuery();
                 outputParams = objDb.GetOuputParams();
             }
+
+            return new Result
+            {
+                ErrorCode = 0,
+                ErrorMessage = "Something is wrong!"
+            };
         }
     }
 }

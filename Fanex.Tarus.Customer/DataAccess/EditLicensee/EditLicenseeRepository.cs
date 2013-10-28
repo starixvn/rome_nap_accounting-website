@@ -13,6 +13,7 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
+    using System.Diagnostics.CodeAnalysis;
     using System.Xml;
     using Fanex.Data;
     using Fanex.Tarus.Customer.Criteria.EditLicensee;
@@ -30,6 +31,13 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
     public class EditLicenseeRepository : IEditLicenseeRepository
     {
         private const string NotApplyBetType = "NA";
+
+        /// <summary>
+        /// Gets the licensee information.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <param name="outputParams">The output parameters.</param>
+        /// <returns>Licensee Info.</returns>
         public LicenseeInfo GetLicenseeInfo(GetLicenseeInfoCriteria criteria, ref Hashtable outputParams)
         {
             DataSet dataset;
@@ -50,7 +58,6 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
             }
 
             dataTable = dataset.Tables[0];
-            var fakeSettingValue = 0.3;
             licenseeInfo = new LicenseeInfo
             {
                 Site = "12bet1",
@@ -59,9 +66,44 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
             };
 
             var settingInfo = new List<SettingInfo>();
+            GetLicenseeInfo_Sportsbook(
+                criteria,
+                outputParams,
+                ref settingInfo);
 
-            #region Sportsbook
+            GetLicenseeInfo_NumberGame(
+                criteria,
+                outputParams,
+                ref settingInfo);
 
+            GetLicenseeInfo_Racing(
+                criteria,
+                outputParams,
+                ref settingInfo);
+
+            licenseeInfo.SettingInfo = settingInfo;
+            licenseeInfo.VirtualSportsSettingInfo = GetLicenseeInfo_VirtualSports(
+                criteria,
+                outputParams,
+                ref settingInfo);
+            return licenseeInfo;
+        }
+
+        /// <summary>
+        /// Gets the licensee info sports book.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <param name="outputParams">The output parameters.</param>
+        /// <param name="settingInfo">The setting information.</param>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+            "SP2101:MethodMustNotContainMoreLinesThan",
+            Justification = "Reviewed. Suppression is OK here.")]
+        public void GetLicenseeInfo_Sportsbook(
+            GetLicenseeInfoCriteria criteria,
+            Hashtable outputParams,
+            ref List<SettingInfo> settingInfo)
+        {
+            var fakeSettingValue = 0.3;
             string paramName;
             string sportId;
             var sports = SportsSection.Instance.Sports;
@@ -149,12 +191,26 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
                     }
                 }
             }
+        }
 
-            #endregion Sportsbook
-            #region NumberGame
-
-            sportId = Sports.NumberGame.ToString();
-            paramName = "minbetv" + sportId;
+        /// <summary>
+        /// Gets the licensee info number game.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <param name="outputParams">The output parameters.</param>
+        /// <param name="settingInfo">The setting information.</param>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+            "SP2101:MethodMustNotContainMoreLinesThan",
+            Justification = "Reviewed. Suppression is OK here.")]
+        public void GetLicenseeInfo_NumberGame(
+            GetLicenseeInfoCriteria criteria,
+            Hashtable outputParams,
+            ref List<SettingInfo> settingInfo)
+        {
+            var fakeSettingValue = 0.3;
+            var sports = SportsSection.Instance.Sports;
+            var sportId = Sports.NumberGame.ToString();
+            var paramName = "minbetv" + sportId;
             settingInfo.Add(new SettingInfo
             {
                 Name = paramName,
@@ -182,7 +238,8 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
                 Value = fakeSettingValue
             });
 
-            var levelType = new string[] { 
+            var levelType = new string[] 
+            { 
                 SMALevelNameConstants.Super,
                 SMALevelNameConstants.Master,
                 SMALevelNameConstants.Agent
@@ -221,10 +278,24 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
                     }
                 }
             }
+        }
 
-            #endregion NumberGame
-            #region Racing
-
+        /// <summary>
+        /// Gets the licensee info racing.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <param name="outputParams">The output parameters.</param>
+        /// <param name="settingInfo">The setting information.</param>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+            "SP2101:MethodMustNotContainMoreLinesThan",
+            Justification = "Reviewed. Suppression is OK here.")]
+        public void GetLicenseeInfo_Racing(
+            GetLicenseeInfoCriteria criteria,
+            Hashtable outputParams,
+            ref List<SettingInfo> settingInfo)
+        {
+            var fakeSettingValue = 0.3;
+            string paramName;
             var racings = RacingSection.Instance.Racings;
             foreach (RacingElement racing in racings)
             {
@@ -314,13 +385,27 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
                     });
                 }
             }
+        }
 
-            #endregion Racing
-            #region VirtualSports
-
+        /// <summary>
+        /// Gets the licensee info virtual sports.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <param name="outputParams">The output parameters.</param>
+        /// <param name="settingInfo">The setting information.</param>
+        /// <returns> List VirtualSportsSettingInfo.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+            "SP2101:MethodMustNotContainMoreLinesThan",
+            Justification = "Reviewed. Suppression is OK here.")]
+        public List<VirtualSportsSettingInfo> GetLicenseeInfo_VirtualSports(
+            GetLicenseeInfoCriteria criteria,
+            Hashtable outputParams,
+            ref List<SettingInfo> settingInfo)
+        {
             var virtualSports = VirtualSportsSection.Instance.Sports;
+            string sportId;
 
-            paramName = "disablevirtualsports";
+            var paramName = "disablevirtualsports";
             settingInfo.Add(new SettingInfo
             {
                 Name = paramName,
@@ -339,7 +424,7 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
                 activeVirtualSportsInfo.Add(sportId, sport.Active);
             }
 
-            var virtualSportsParams = "<products><product SportType=\"180\" MaxBet=\"0.3\" MinBet=\"0.3\" MaxPerMatch=\"0.3\" sPositionTaking=\"0.3\" mPositionTaking=\"0.3\" aPositionTaking=\"0.3\"></product><product SportType=\"181\" MaxBet=\"0.3\" MinBet=\"0.3\" MaxPerMatch=\"0.3\" sPositionTaking=\"0.3\" mPositionTaking=\"0.3\" aPositionTaking=\"0.3\"></product><product SportType=\"186\" MaxBet=\"0.3\" MinBet=\"0.3\" MaxPerMatch=\"0.3\" sPositionTaking=\"0.3\" mPositionTaking=\"0.3\" aPositionTaking=\"0.3\"></product><product SportType=\"182\" MaxBet=\"0.3\" MinBet=\"0.3\" MaxPerMatch=\"0.3\" sPositionTaking=\"0.3\" mPositionTaking=\"0.3\" aPositionTaking=\"0.3\"></product><product SportType=\"183\" MaxBet=\"0.3\" MinBet=\"0.3\" MaxPerMatch=\"0.3\" sPositionTaking=\"0.3\" mPositionTaking=\"0.3\" aPositionTaking=\"0.3\"></product><product SportType=\"184\" MaxBet=\"0.3\" MinBet=\"0.3\" MaxPerMatch=\"0.3\" sPositionTaking=\"0.3\" mPositionTaking=\"0.3\" aPositionTaking=\"0.3\"></product></products>";
+            var virtualSportsParams = string.Empty;
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(virtualSportsParams);
             string xpath = "/products/product";
@@ -348,7 +433,8 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
             foreach (XmlNode childrenNode in virtualSportsNodes)
             {
                 sportId = childrenNode.Attributes["SportType"].Value;
-                if (!activeVirtualSportsInfo[sportId])
+                if (!activeVirtualSportsInfo.ContainsKey(sportId) ||
+                    !activeVirtualSportsInfo[sportId])
                 {
                     continue;
                 }
@@ -399,16 +485,17 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
                 virtualSportsSettingInfoList.Add(virtualSportsSettingInfo);
             }
 
-            #endregion VirtualSports
-
-            licenseeInfo.SettingInfo = settingInfo;
-            licenseeInfo.VirtualSportsSettingInfo = virtualSportsSettingInfoList;
-            return licenseeInfo;
+            return virtualSportsSettingInfoList;
         }
 
+        /// <summary>
+        /// Updates the licensee information.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Update Result.</returns>
         public Result UpdateLicenseeInfo(UpdateLicenseeInfoCriteria criteria)
         {
-            var hashtableParams = GetUpdateSettingsHashTableParams(criteria);
+            var hashtableParams = GetUpdateSettingsHashtableParams(criteria);
             Result result;
             Hashtable outputParams;
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
@@ -427,6 +514,11 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
             return result;
         }
 
+        /// <summary>
+        /// Gets the update settings dictionary.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Update Settings Dictionary.</returns>
         private Dictionary<string, object> GetUpdateSettingsDictionary(UpdateLicenseeInfoCriteria criteria)
         {
             Dictionary<string, object> dictionaryParams = new Dictionary<string, object>();
@@ -459,6 +551,12 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
             return dictionaryParams;
         }
 
+        /// <summary>
+        /// Gets the update settings hash table parameters sports book.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <param name="updateSettingsDictionary">The update settings dictionary.</param>
+        /// <param name="hashtableParams">The hash table parameters.</param>
         private void GetUpdateSettingsHashTableParams_Sportsbook(
             UpdateLicenseeInfoCriteria criteria,
             Dictionary<string, object> updateSettingsDictionary,
@@ -513,6 +611,12 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
             }
         }
 
+        /// <summary>
+        /// Gets the update settings hash table parameters number game.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <param name="updateSettingsDictionary">The update settings dictionary.</param>
+        /// <param name="hashtableParams">The hash table parameters.</param>
         private void GetUpdateSettingsHashTableParams_NumberGame(
             UpdateLicenseeInfoCriteria criteria,
             Dictionary<string, object> updateSettingsDictionary,
@@ -528,7 +632,8 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
             settingName = "maxperballv" + sportId;
             hashtableParams.Add(settingName, updateSettingsDictionary[settingName]);
 
-            var levelType = new string[] { 
+            var levelType = new string[] 
+            { 
                 SMALevelNameConstants.Super,
                 SMALevelNameConstants.Master,
                 SMALevelNameConstants.Agent
@@ -562,6 +667,12 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
             hashtableParams.Add("disablenumber", criteria.EnableNumberGame);
         }
 
+        /// <summary>
+        /// Gets the update settings hash table parameters racing.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <param name="updateSettingsDictionary">The update settings dictionary.</param>
+        /// <param name="hashtableParams">The hash table parameters.</param>
         private void GetUpdateSettingsHashTableParams_Racing(
             UpdateLicenseeInfoCriteria criteria,
             Dictionary<string, object> updateSettingsDictionary,
@@ -612,6 +723,12 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
             }
         }
 
+        /// <summary>
+        /// Gets the update settings hash table parameters virtual sports.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <param name="updateSettingsDictionary">The update settings dictionary.</param>
+        /// <param name="hashtableParams">The hash table parameters.</param>
         private void GetUpdateSettingsHashTableParams_VirtualSports(
             UpdateLicenseeInfoCriteria criteria,
             Dictionary<string, object> updateSettingsDictionary,
@@ -627,9 +744,10 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
             foreach (VirtualSportsSettingInfo sport in virtualSports)
             {
                 sportId = sport.Id;
-                virtualSportsParams += string.Format("<product SportType=\"{0}\"" +
-                    " MaxBet=\"{1}\"" +
-                    " MinBet=\"{2}\"" +
+                virtualSportsParams += string.Format(
+                    "<product SportType=\"{0}\"" +
+                    " MinBet=\"{1}\"" +
+                    " MaxBet=\"{2}\"" +
                     " MaxPerMatch=\"{3}\"" +
                     " sPositionTaking=\"{4}\"" +
                     " mPositionTaking=\"{5}\"" +
@@ -647,7 +765,12 @@ namespace Fanex.Tarus.Customer.DataAccess.EditLicensee
             hashtableParams.Add("virtualsportlist", virtualSportsParams);
         }
 
-        private Hashtable GetUpdateSettingsHashTableParams(UpdateLicenseeInfoCriteria criteria)
+        /// <summary>
+        /// Gets the update settings hash table parameters.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>Update Settings Hash Table Parameters.</returns>
+        private Hashtable GetUpdateSettingsHashtableParams(UpdateLicenseeInfoCriteria criteria)
         {
             Hashtable hashtableParams = new Hashtable();
             Dictionary<string, object> updateSettingsDictionary = GetUpdateSettingsDictionary(criteria);
