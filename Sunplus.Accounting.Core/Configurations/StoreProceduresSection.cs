@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-
-using System.Configuration;
+﻿using System.Configuration;
 using Sunplus.Accounting.Core.Common;
 
 namespace Sunplus.Accounting.Core.Configurations
@@ -13,10 +7,7 @@ namespace Sunplus.Accounting.Core.Configurations
     {
         public enum StoreCollection
         {
-            
         }
-
-        
 
         // SP config for LogDisplay
         [ConfigurationProperty("LogDisplay", IsDefaultCollection = false)]
@@ -44,23 +35,18 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-
         public StoreProcedureCollection this[StoreCollection name]
         {
             get
             {
-
                 var spCollection = (StoreProcedureCollection)this.GetType().GetProperty(name.ToString()).GetValue(this, System.Reflection.BindingFlags.GetField, null, null, null);
                 return spCollection;
             }
         }
-
-
     }
 
     public class StoreProcedureCollection : ConfigurationElementCollection
     {
-
         public StoreProcedureCollection()
         {
             //var storeProcedure = (StoreProcedureElement) CreateNewElement();
@@ -106,7 +92,6 @@ namespace Sunplus.Accounting.Core.Configurations
             BaseClear();
         }
 
-
         public StoreProcedureElement this[int index]
         {
             get
@@ -136,7 +121,6 @@ namespace Sunplus.Accounting.Core.Configurations
             return BaseIndexOf(storeProcedureElement);
         }
 
-
         protected override sealed ConfigurationElement CreateNewElement()
         {
             return new StoreProcedureElement();
@@ -153,6 +137,7 @@ namespace Sunplus.Accounting.Core.Configurations
         public StoreProcedureElement()
         {
         }
+
         [ConfigurationProperty("alias", IsRequired = true, IsKey = true)]
         public string Alias
         {
@@ -186,7 +171,7 @@ namespace Sunplus.Accounting.Core.Configurations
         {
             get
             {
-                var dbName = (string) this["db"];
+                var dbName = (string)this["db"];
                 var db = AppSession.SYSTEM.ToLower() == Enumerations.AccountingSystem.Accounting.ToString().ToLower()
                            ? dbName
                            : dbName + "_" + "ex";

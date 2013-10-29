@@ -1,18 +1,13 @@
 using System;
 using System.Data;
 using System.Text;
-using DNAide.Web;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 using DNAide.Data;
-
+using DNAide.Web;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 
 public partial class NewCustomer_EditOperator : PageBase
 {
-
     protected void Page_Load(object sender, EventArgs e)
     {
         Literal1.Text = "Edit Operator";
@@ -21,6 +16,7 @@ public partial class NewCustomer_EditOperator : PageBase
             EditOperatorContentHtml.Text = GenEditInfo();
         }
     }
+
     private string GenEditInfo()
     {
         StringBuilder html = new StringBuilder();
@@ -29,7 +25,7 @@ public partial class NewCustomer_EditOperator : PageBase
             if (Request["custId"] == null) return "";
             string contentTpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Customer/AddOperator.htm");
             DbResult ds = SelectCustomer.CustomerSelEditOperatorRpt(Convert.ToInt32(Request["custId"]));
-            html.Append(Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("Hidden.htm", new string[] { "{name}", "{strValue}" }, new string[] { "operatorId", Request["custId"] }));            
+            html.Append(Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("Hidden.htm", new string[] { "{name}", "{strValue}" }, new string[] { "operatorId", Request["custId"] }));
             if (ds != null)
             {
                 DataTable tbl = ds.ResultSet.Tables[0];
@@ -51,10 +47,9 @@ public partial class NewCustomer_EditOperator : PageBase
                 TemplateHandler.Assign(ref contentTpl, "{pwd-none}", "none");
                 TemplateHandler.Assign(ref contentTpl, "{checkinput}", "");
                 html.Append(contentTpl);
-                
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             LogExtensions.ExceptionHandler(ex);
         }

@@ -48,5 +48,5 @@ public class ServiceHRGroupDaily : IServiceHRGroupDaily
         return s.ExportExcelHRGroupDaily_ToteOnly(fromdate, todate);
     }
 
-    #endregion
+    #endregion IServiceHRGroupDaily Members
 }

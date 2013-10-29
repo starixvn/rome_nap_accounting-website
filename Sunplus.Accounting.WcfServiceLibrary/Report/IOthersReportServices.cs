@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ServiceModel;
+﻿using System.ServiceModel;
 using System.ServiceModel.Web;
 using Sunplus.Accounting.Entities.Report.Others;
 
@@ -11,7 +10,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         NumberOfBetsDTO SelectNumberOfBetsForCreditSites(string fromDate, string toDate);
-
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]

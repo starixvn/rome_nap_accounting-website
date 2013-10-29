@@ -1,20 +1,11 @@
 ﻿using System;
-using System.Data;
-using System.Web;
-using System.Text;
 using System.Collections;
-using Sunplus.Accounting.Core.Common;
+using System.Data;
+using DNAide.Core;
+using DNAide.Data;
+using ExcelUtil.Spreadsheet;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using DNAide.Data;
-using DNAide.Core;
-using DNAide.Web;
-using DNAide.Utils;
-
-using ExcelUtil.Spreadsheet;
-
 
 /// <summary>
 /// Summary description for HRGroupDailyReport
@@ -23,9 +14,9 @@ namespace BLL.Report.HR.GroupDaily
 {
     public class HRGroupDailyToteOnlyExcelManager : ReportBase
     {
-
         #region ExcelAssignTotal_HRGroupDaily_ToteOnly
-        void ExcelAssignTotal_HRGroupDaily_ToteOnly(ref ExcelWorksheet ws, DataTable dtGroup, string condition, string title, int red, int green, int blue, ref int indexRow, ExcelGemboxUtils gembox)
+
+        private void ExcelAssignTotal_HRGroupDaily_ToteOnly(ref ExcelWorksheet ws, DataTable dtGroup, string condition, string title, int red, int green, int blue, ref int indexRow, ExcelGemboxUtils gembox)
         {
             string[] arr = {"turnoverAgents", "turnoverIBC", "turnover3rd", "totalTurnover",
                             "incomeIBCPT", "incomeIBCNetComm", "totalIBCIncome",
@@ -45,10 +36,12 @@ namespace BLL.Report.HR.GroupDaily
 
             indexRow++;
         }
-        #endregion
+
+        #endregion ExcelAssignTotal_HRGroupDaily_ToteOnly
 
         #region ExcelAssignRow_HRGroupDaily_ToteOnly
-        void ExcelAssignRow_HRGroupDaily_ToteOnly(ref ExcelWorksheet ws, DataRow dr, int red, int green, int blue, ref int indexRow, ExcelGemboxUtils gembox)
+
+        private void ExcelAssignRow_HRGroupDaily_ToteOnly(ref ExcelWorksheet ws, DataRow dr, int red, int green, int blue, ref int indexRow, ExcelGemboxUtils gembox)
         {
             string[] arr = { "HRType",
                             "turnoverAgents", "turnoverIBC", "turnover3rd", "totalTurnover",
@@ -71,9 +64,11 @@ namespace BLL.Report.HR.GroupDaily
             }
             indexRow++;
         }
-        #endregion
+
+        #endregion ExcelAssignRow_HRGroupDaily_ToteOnly
 
         #region ExportExcelHRGroupDaily_ToteOnly
+
         public ExcelFile ExportExcelHRGroupDaily_ToteOnly(string fromdate, string todate)
         {
             ExcelFile excelFile = new ExcelFile();
@@ -84,6 +79,7 @@ namespace BLL.Report.HR.GroupDaily
                 if (dtGroup == null)
                 {
                     #region getdate
+
                     DateTime fdate = CastAide.AsDateTime(fromdate);
                     DateTime tdate = CastAide.AsDateTime(todate);
 
@@ -110,6 +106,7 @@ namespace BLL.Report.HR.GroupDaily
                         }
 
                         #region Combine group daily into group
+
                         dtGroup = rsGroup.ResultSet.Tables[0];
                         if (rsGroupDaily != null)
                         {
@@ -124,23 +121,27 @@ namespace BLL.Report.HR.GroupDaily
                                 dtGroup.Rows.Add(drGroup);
                             }
                         }
-                        #endregion
+
+                        #endregion Combine group daily into group
                     }
-                    #endregion
+
+                    #endregion getdate
                 }
 
                 #region init excel
+
                 ExcelGemboxUtils gembox = new ExcelGemboxUtils();
 
                 ExcelWorksheetCollection worksheets = excelFile.Worksheets;
                 string filename = "WinlostHR_OpenTote-" + DateTime.Today.ToShortDateString().Replace("/", "-");
-                string strTitle = "";
                 ExcelWorksheet ws = null;
                 string tag = "Horse Racing Group Daily";
                 ws = worksheets.Add(tag);
-                #endregion
+
+                #endregion init excel
 
                 #region Header
+
                 ws.Cells.GetSubrangeAbsolute(0, 0, 0, 12).Style = gembox.GetStyleTitle(255, 171, 171);
                 ws.Cells.GetSubrangeAbsolute(0, 0, 0, 12).Value = "Horse Racing Group Daily from " + fromdate + " to " + todate;
                 ws.Cells.GetSubrangeAbsolute(0, 0, 0, 12).Merged = true;
@@ -198,9 +199,11 @@ namespace BLL.Report.HR.GroupDaily
                 ws.Cells.GetSubrangeAbsolute(1, 12, 2, 12).Style = gembox.GetStyleTitle(216, 221, 226);
                 ws.Cells.GetSubrangeAbsolute(1, 12, 2, 12).Value = "Group Total Income";
                 ws.Cells.GetSubrangeAbsolute(1, 12, 2, 12).Merged = true;
-                #endregion
+
+                #endregion Header
 
                 #region Content
+
                 string bettype = "", date_p = "", date_c = "";
                 string condition = "", style = "";
                 int countdate = 0;
@@ -246,9 +249,11 @@ namespace BLL.Report.HR.GroupDaily
 
                     ExcelAssignRow_HRGroupDaily_ToteOnly(ref ws, dr, red, green, blue, ref indexrow, gembox);
                 }
-                #endregion
+
+                #endregion Content
 
                 #region lastest total by date
+
                 condition = "winlostdate='" + date_p + "' and HRType=1";
                 countdate = CastAide.AsInt32(dtGroup.Compute("count(winlostdate)", condition));
 
@@ -256,31 +261,33 @@ namespace BLL.Report.HR.GroupDaily
                 ws.Cells.GetSubrangeAbsolute(indexrow - countdate, 0, indexrow - 1, 0).Value = date_p;
                 ws.Cells.GetSubrangeAbsolute(indexrow - countdate, 0, indexrow - 1, 0).Style = gembox.GetStyleTextCenter(red, green, blue);
 
-                #endregion
+                #endregion lastest total by date
 
                 #region colspan before cal grand total
+
                 ws.Cells.GetSubrangeAbsolute(indexrow, 0, indexrow, 12).Merged = true;
                 ws.Cells.GetSubrangeAbsolute(indexrow, 0, indexrow, 12).Style = gembox.GetStyleText(true);
                 indexrow++;
-                #endregion
+
+                #endregion colspan before cal grand total
 
                 #region grand total
 
                 //grand total
                 condition = "HRType=1";
                 ExcelAssignTotal_HRGroupDaily_ToteOnly(ref ws, dtGroup, condition, "Grand", 196, 208, 215, ref indexrow, gembox);
-                #endregion
+
+                #endregion grand total
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
 
             return excelFile;
         }
-        #endregion
 
+        #endregion ExportExcelHRGroupDaily_ToteOnly
 
         public override string RenderHTML(Hashtable input)
         {

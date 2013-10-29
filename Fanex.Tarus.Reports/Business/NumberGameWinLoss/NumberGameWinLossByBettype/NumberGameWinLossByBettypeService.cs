@@ -43,6 +43,11 @@ namespace Fanex.Tarus.Reports.Business.NumberGameWinLoss.NumberGameWinLossByBett
             try
             {
                 AppSession.AddSession(HttpContext.Current.Session, _NumberGameWinLossByBettypeSessionKey, null);
+                if (string.IsNullOrEmpty(currencies) || string.IsNullOrEmpty(companies))
+                {
+                    return reseult;
+                }
+
                 var dsWinLoss = _numberGameAccess.SelNumberGameWinLossByBettype(CastAide.AsDateTime(wlDate), currencies, companies, liveStatus);
                 if (dsWinLoss != null && dsWinLoss.Tables.Count > 0 && dsWinLoss.Tables[0].Rows.Count > 0)
                 {
@@ -179,7 +184,7 @@ namespace Fanex.Tarus.Reports.Business.NumberGameWinLoss.NumberGameWinLossByBett
         private void ExportToExcelNumberGameWinLossByBettypeAssignHeader(ref ExcelWorksheet wsReport, int startCol, int startRow, ref int nextRow, string title)
         {
             var headerFormart = new ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
-            var nextCol = 0;
+           
 
             wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 6).
                 Merged = true;

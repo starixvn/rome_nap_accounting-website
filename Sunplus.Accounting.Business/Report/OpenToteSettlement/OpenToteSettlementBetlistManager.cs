@@ -10,11 +10,9 @@ using DNAide.Web;
 
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
 
 namespace BLL.Report.OpenToteSettlement
 {
@@ -57,7 +55,6 @@ namespace BLL.Report.OpenToteSettlement
                     else
                         ds = IBCProvider.ReportProvider.OpenToteSettlement().WinlostHR_OpenTote_BetList(hashtable);
                 }
-
 
                 tpl = WebUtils.LoadTemplate("Report/OpenToteSettlement/OpenToteSettlementBetList.htm");
                 string tplContent = TemplateHandler.CopyBlock(tpl, "content");
@@ -170,8 +167,7 @@ namespace BLL.Report.OpenToteSettlement
             }
             catch (Exception exception)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                 TemplateHandler.ReplaceBlock(ref tpl, "content", exception.Message);
                 TemplateHandler.RemoveBlock(ref tpl, "total");
             }
@@ -179,7 +175,7 @@ namespace BLL.Report.OpenToteSettlement
             return html.ToString();
         }
 
-        #endregion
+        #endregion ViewBetList
 
         public override string RenderHTML(Hashtable input)
         {

@@ -6,32 +6,31 @@ using System.Text;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Web;
-
+using IBCUtils;
 using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.Core.Web.Controls;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
-using IBCUtils;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Core.LoggingLib;
 
 namespace Sunplus.Accounting.Business
 {
     /// <summary>
     /// Summary description for ServiceCustomerList
     /// </summary>
-    /// 
+    ///
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class ServiceSuspend : IServiceSuspend
     {
-
         public ServiceSuspend()
         {
             //
             // TODO: Add constructor logic here
             //
         }
+
         #region IServiceSuspend Members
+
         public string GenSuspendListContent(string searchText, string selectAlpha, int PageIndex)
         {
             int TotalPages = 0;
@@ -67,9 +66,6 @@ namespace Sunplus.Accounting.Business
                 }
 
                 DbResult ds = null;
-          
-            
-
 
                 hash.Add("pageindex", PageIndex);
                 hash.Add("totalpages", TotalPages);
@@ -89,7 +85,7 @@ namespace Sunplus.Accounting.Business
                         DataRowCollection rows = ds.ResultSet.Tables[0].Rows;
 
                         string odd_even = "";
-                        int rowCnt = (PageIndex - 1)*AccCommon.pageSize + 1;
+                        int rowCnt = (PageIndex - 1) * AccCommon.pageSize + 1;
                         if (PageIndex == 1) rowCnt = 1;
 
                         foreach (DataRow row in rows)
@@ -119,21 +115,21 @@ namespace Sunplus.Accounting.Business
                     }
                     else
                     {
-                        html.Append(WebUtils.LoadHtml("NoInformation.htm", new[] {"{tdno}", "{nodata}"},
-                                                      new[] {"3", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata")}));
+                        html.Append(WebUtils.LoadHtml("NoInformation.htm", new[] { "{tdno}", "{nodata}" },
+                                                      new[] { "3", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata") }));
                         html.Append("</table>");
                     }
                 }
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
             }
             return html.ToString();
         }
-        #endregion
+
+        #endregion IServiceSuspend Members
     }
 }

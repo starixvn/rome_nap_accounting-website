@@ -4,29 +4,31 @@ using System.Text;
 using TplCore.Element;
 
 #pragma warning disable
+
 namespace Sunplus.Accounting.Core.Web.TplCore.App_Templates.CreditTeam
 {
     namespace App_Templates.CreditTeam
-	{
-		public class _CreditTeamInstallAmountAllHeader : Template
-		{
-			protected static string s0 = "<table class=\"tbllayout\" cellspacing=\"1\"><tr class=\"title\"><td width =\"100\">Member</td><td width =\"50\">CURR</td><td width =\"120\">Balance</td><td width =\"120\">Base(RM)</td><td width =\"150\">Installment Amount</td><td width =\"150\">Day of Installment</td></tr>";
-			public override void ToString(ref StringBuilder bd)
-			{
-				bd.Append(s0);
-				bd.Append(Value);
-			}
-			public string ToString()
-			{
-				StringBuilder bd = new StringBuilder(500);
-				ToString(ref bd);
-				bd.Append(Value);
-				return bd.ToString();
-			}
+    {
+        public class _CreditTeamInstallAmountAllHeader : Template
+        {
+            protected static string s0 = "<table class=\"tbllayout\" cellspacing=\"1\"><tr class=\"title\"><td width =\"100\">Member</td><td width =\"50\">CURR</td><td width =\"120\">Balance</td><td width =\"120\">Base(RM)</td><td width =\"150\">Installment Amount</td><td width =\"150\">Day of Installment</td></tr>";
 
-		}
+            public override void ToString(ref StringBuilder bd)
+            {
+                bd.Append(s0);
+                bd.Append(Value);
+            }
 
-	}
+            public string ToString()
+            {
+                StringBuilder bd = new StringBuilder(500);
+                ToString(ref bd);
+                bd.Append(Value);
+                return bd.ToString();
+            }
+        }
+    }
 }
+
 #pragma warning enable
 #endregion

@@ -301,9 +301,9 @@ namespace Fanex.Tarus.SpecialDelete.Business
                                     string ToMailCSD = "";
                                     string CC = "", BCC = "";
 
-                                    string _ToMailCSD = "";
+                                 
 
-                                    bool isSendBoth = false;
+                                 
 
                                     ToMailCSD = dataforMailing.To;
                                     CC = dataforMailing.Cc;
@@ -1179,7 +1179,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
 
         public void SendEmailWhenRecoverBetToInternalGroup(ResultModel result, DbResult rs, bool IsNumberGame, bool IsLiveCasino, bool IsRealCurrency, string transid, bool IsNegativeBalance)
         {
-            string ErrMsg = "";
+          
             try
             {
                 if (rs.ResultSet.Tables.Count >= 2)
@@ -1485,7 +1485,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
 
         public void SendEmailWhenRecoverBetToCSD(ResultModel result, DbResult rs, bool IsNumberGame, bool IsLiveCasino, string transid, bool IsNegativeBalance)
         {
-            string ErrMsg = "";
+            
             try
             {
                 if (rs.ResultSet.Tables.Count >= 2)
@@ -2317,7 +2317,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
 
         protected void GenHomeAwayDrawNoBet(ref string eventItem, string home, string away, string betteam, bool isMP)
         {
-            string liveScore = "";
+          
             string choice = "";
             if (bettype == 121)
             {
@@ -2345,7 +2345,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
         }
         protected void GenHomeAwayDrawNoBet(ref string eventItem, string home, string away, int statusId, string betteam, bool isMP)
         {
-            string liveScore = "";
+           
             string choice = "";
             if (bettype == 121)
             {
@@ -3874,8 +3874,6 @@ namespace Fanex.Tarus.SpecialDelete.Business
 
                                     string ToMailCSD = "";
                                     string CC = "", BCC = "";
-
-                                    string _ToMailCSD = "";
 
                                     bool isSendBoth = false;
 

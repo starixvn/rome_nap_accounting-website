@@ -10,9 +10,6 @@ using DNAide.Core;
 using System.Threading;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Core.LoggingLib;
-
-using Microsoft.Practices.EnterpriseLibrary.Logging;
 
 public class ResetMaxTransfer : BaseHandler
 {

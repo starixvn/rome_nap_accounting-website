@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 using DNAide.Core;
 using DNAide.Utils;
 using Norm.Attributes;
@@ -34,6 +32,7 @@ namespace Sunplus.Data.DataAbstract.Entity
         #region TransDate
 
         private string _code;
+
         [MongoIgnore, DataMember]
         public string Code
         {
@@ -49,6 +48,7 @@ namespace Sunplus.Data.DataAbstract.Entity
         }
 
         private string _username;
+
         [MongoIgnore, DataMember]
         public string Username
         {
@@ -58,7 +58,9 @@ namespace Sunplus.Data.DataAbstract.Entity
             }
             set { _username = value; }
         }
+
         private string _transDate;
+
         [MongoIgnore, DataMember]
         public string TransDate
         {
@@ -67,12 +69,12 @@ namespace Sunplus.Data.DataAbstract.Entity
                 DateTime transDate = CastAide.AsDateTime(_bettran.Transdate);
                 return transDate.ToShortDateString() + "&nbsp;" +
                         transDate.ToShortTimeString();
-
             }
             set { _transDate = value; }
         }
 
         private string _transShortDate;
+
         [MongoIgnore, DataMember]
         public string TransShortDate
         {
@@ -84,9 +86,7 @@ namespace Sunplus.Data.DataAbstract.Entity
             set { _transShortDate = value; }
         }
 
-        #endregion
-
-
+        #endregion TransDate
 
         #region Choice
 
@@ -103,18 +103,19 @@ namespace Sunplus.Data.DataAbstract.Entity
             set { _sportEventDTO = value; }
         }
 
-
-        #endregion
+        #endregion Choice
 
         #region Combination Detail
 
         [DataMember]
         public List<CombinationDetalBaseDTO> CombinationDetails { get; set; }
 
-        #endregion
+        #endregion Combination Detail
 
         #region Odds
+
         private string _odds;
+
         [MongoIgnore, DataMember]
         public string Odds
         {
@@ -139,11 +140,11 @@ namespace Sunplus.Data.DataAbstract.Entity
             set { _odds = value; }
         }
 
-
         [MongoIgnore]
         public string OddType { get; set; }
 
         private string _oddName;
+
         [MongoIgnore, DataMember]
         public string OddName
         {
@@ -154,10 +155,12 @@ namespace Sunplus.Data.DataAbstract.Entity
             set { _oddName = value; }
         }
 
-        #endregion
+        #endregion Odds
 
         #region mOdds
+
         private string _modds;
+
         [MongoIgnore, DataMember]
         public string Modds
         {
@@ -166,58 +169,63 @@ namespace Sunplus.Data.DataAbstract.Entity
                 return FormatHandler.FormatNumber4(CastAide.AsDecimal(_bettran.Modds), "en-EN");
             }
             set { _modds = value; }
-
         }
-        #endregion
+
+        #endregion mOdds
 
         #region Stake
+
         private string _stake;
+
         [MongoIgnore, DataMember]
         public string Stake
         {
             get { return FormatHandler.FormatNumber2(CastAide.AsDecimal(_bettran.Stake), "en-EN"); }
             set { _stake = value; }
         }
-        #endregion
+
+        #endregion Stake
 
         #region Actual Stake
+
         private string _actualStake;
+
         [MongoIgnore, DataMember]
         public string actualStake
         {
             get { return FormatHandler.FormatNumber2(CastAide.AsDecimal(_bettran.actualStake), "en-EN"); }
             set { _actualStake = value; }
         }
-        #endregion
+
+        #endregion Actual Stake
 
         #region Status
+
         //Status get from BettranDetail
         private string _ip;
+
         [MongoIgnore, DataMember]
         public string Ip
         {
             get { return _bettran.Ip; } //View IPVN
             set { _ip = value; }
         }
-        #endregion
+
+        #endregion Status
 
         #region Comm Winloss
 
-
-
         private string _playerwinlost;
+
         [MongoIgnore, DataMember]
         public string PlayerWinloss
         {
-
             get { return FormatHandler.FormatNumber2(CastAide.AsDecimal(_bettran.PlayerWinloss), "en-EN"); }
             set { _playerwinlost = value; }
         }
 
-
-
-
         private string _agentDiscount;
+
         [MongoIgnore, DataMember]
         public string AgentDiscount
         {
@@ -226,10 +234,10 @@ namespace Sunplus.Data.DataAbstract.Entity
         }
 
         private string _awinlost;
+
         [MongoIgnore, DataMember]
         public string AgentWinloss
         {
-
             get
             {
                 var winloss = "";
@@ -243,6 +251,7 @@ namespace Sunplus.Data.DataAbstract.Entity
         }
 
         private string _agentComm;
+
         [MongoIgnore, DataMember]
         public string AgentComm
         {
@@ -251,6 +260,7 @@ namespace Sunplus.Data.DataAbstract.Entity
         }
 
         private string _companywinlost;
+
         [MongoIgnore, DataMember]
         public string CompanyWinloss
         {
@@ -258,9 +268,10 @@ namespace Sunplus.Data.DataAbstract.Entity
             set { _companywinlost = value; }
         }
 
-        #endregion
+        #endregion Comm Winloss
 
         private Bettran _bettran;
+
         [MongoIgnore, DataMember]
         public Bettran BettranDetail
         {

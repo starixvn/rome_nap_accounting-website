@@ -12,8 +12,6 @@ namespace Sunplus.Accounting.Business.CacheManager
     /// </summary>
     public class CacheUtils
     {
-    
-       
         public static Dictionary<int, string> Exchange
         {
             get
@@ -30,12 +28,10 @@ namespace Sunplus.Accounting.Business.CacheManager
                     Exchange = exchange;
                 }
 
-
                 return exchange;
             }
             set { IndexusDistributionCache.SharedCache.Add("exchange", value, DateTime.Now.AddHours(5)); }
         }
-
 
         public static string GetAllSiteNames
         {
@@ -61,6 +57,7 @@ namespace Sunplus.Accounting.Business.CacheManager
                             select k.Value).FirstOrDefault();
             return CastAide.AsString(value);
         }
+
         public static string GetExchangeName(Dictionary<int, string> exchange, int id)
         {
             string value = (from k in exchange

@@ -15,7 +15,7 @@
 
         /// <summary>
         /// Message ID
-        /// </summary>        
+        /// </summary>
         public int MessageId { get; set; }
 
         /// <summary>
@@ -30,7 +30,7 @@
         /// <summary>
         /// Tridional Chinese Message Content
         /// </summary>
-        /// 
+        ///
         public string Content_ch
         {
             get { return _Content_ch; }
@@ -138,6 +138,6 @@
 
     public class MessageMP : Message
     {
-        public int IsSend { get; set; }        
+        public int IsSend { get; set; }
     }
 }

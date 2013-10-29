@@ -33,12 +33,10 @@ namespace Sunplus.Accounting.Core.Configurations.StoreProcedureGroup
             }
         }
 
-
         public StoreProcedureCollection this[StoreCollection name]
         {
             get
             {
-
                 var spCollection = (StoreProcedureCollection)this.GetType().GetProperty(name.ToString()).GetValue(this, System.Reflection.BindingFlags.GetField, null, null, null);
                 return spCollection;
             }

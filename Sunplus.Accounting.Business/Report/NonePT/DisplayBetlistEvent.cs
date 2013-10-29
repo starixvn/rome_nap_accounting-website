@@ -4,9 +4,8 @@ using System.Data;
 using DNAide.Core;
 using Sunplus.Accounting.Business.BetList;
 using Sunplus.Accounting.Core.Cache;
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Web;
 
 /// <summary>
 /// Summary description for DisplayBetlistEvent
@@ -50,7 +49,6 @@ namespace BLL.Report.NonePT
             _finalAwayScore = row["finalawayscore"] + "";
             _liveHomeScore = row["livehomescore"] + "";
             _liveAwayScore = row["liveawayscore"] + "";
-
 
             GenEvent(ref rowHtml, row, eventTpl, 1);
         }

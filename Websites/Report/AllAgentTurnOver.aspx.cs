@@ -3,7 +3,6 @@ using System.Data;
 using System.Text;
 using DNAide.Web;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using IBCUtils;
 using DNAide.Data;

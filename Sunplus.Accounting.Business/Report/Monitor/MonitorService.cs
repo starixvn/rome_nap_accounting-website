@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Web;
 using DNAide.Core;
 using DNAide.Utils;
-
+using ExcelUtil.Spreadsheet;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
@@ -16,9 +14,6 @@ using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.IReportDAO;
 using Sunplus.Accounting.DataAccess.Report;
 using Sunplus.Accounting.Entities.Report.Monitor;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.Core.Cache;
-using ExcelUtil.Spreadsheet;
 
 namespace Sunplus.Accounting.Business.Report.Monitor
 {
@@ -32,10 +27,9 @@ namespace Sunplus.Accounting.Business.Report.Monitor
             _IMonitorDAO = monitorDao;
         }
 
-
-
         #region getCurrencies
-        List<Items> getCurrencies()
+
+        private List<Items> getCurrencies()
         {
             List<Items> itemses = new List<Items>();
             DataTable dataTable = _IMonitorDAO.GetCurrency();
@@ -59,10 +53,12 @@ namespace Sunplus.Accounting.Business.Report.Monitor
 
             return itemses;
         }
-        #endregion
+
+        #endregion getCurrencies
 
         #region getProduct
-        List<Items> getProduct()
+
+        private List<Items> getProduct()
         {
             List<Items> product = new List<Items>();
             MonitorCollection collection = MonitorSection.Instance.Product;
@@ -77,14 +73,15 @@ namespace Sunplus.Accounting.Business.Report.Monitor
                         Key = element.Key
                     });
                 }
-
             }
             return product;
         }
-        #endregion
+
+        #endregion getProduct
 
         #region getSport
-        List<Items> getSport()
+
+        private List<Items> getSport()
         {
             List<Items> product = new List<Items>();
             DataTable dataTable = _IMonitorDAO.GetSports();
@@ -104,9 +101,11 @@ namespace Sunplus.Accounting.Business.Report.Monitor
             }
             return product;
         }
-        #endregion
+
+        #endregion getSport
 
         #region GetBettypes
+
         public List<Items> GetBettypes(List<Items> option, int sporttype)
         {
             List<Items> bettype = new List<Items>();
@@ -130,15 +129,17 @@ namespace Sunplus.Accounting.Business.Report.Monitor
             }
             catch (Exception ex)
             {
-               LogExtensions.ExceptionHandler(ex);
+                LogExtensions.ExceptionHandler(ex);
             }
 
             return bettype;
         }
-        #endregion
+
+        #endregion GetBettypes
 
         #region getLeague
-        List<Items> getLeague()
+
+        private List<Items> getLeague()
         {
             List<Items> list = new List<Items>();
             try
@@ -160,10 +161,12 @@ namespace Sunplus.Accounting.Business.Report.Monitor
             }
             return list;
         }
-        #endregion
+
+        #endregion getLeague
 
         #region getReportBy
-        List<Items> getReportBy()
+
+        private List<Items> getReportBy()
         {
             List<Items> itemses = new List<Items>();
             try
@@ -186,10 +189,11 @@ namespace Sunplus.Accounting.Business.Report.Monitor
             }
             return itemses;
         }
-        #endregion
 
+        #endregion getReportBy
 
         #region LoadFilterReport
+
         public Filter LoadFilterReport()
         {
             Filter filter = new Filter();
@@ -210,7 +214,6 @@ namespace Sunplus.Accounting.Business.Report.Monitor
                     filter.InYears.Add(i.ToString());
                 }
 
-
                 filter.Currency = new List<Items>();
                 filter.Currency = getCurrencies();
 
@@ -222,8 +225,6 @@ namespace Sunplus.Accounting.Business.Report.Monitor
 
                 filter.BetType = new List<Items>();
                 MonitorCollection collection = MonitorSection.Instance.Product;
-
-
 
                 List<Items> itemses = new List<Items>();
 
@@ -251,9 +252,11 @@ namespace Sunplus.Accounting.Business.Report.Monitor
 
             return filter;
         }
-        #endregion
+
+        #endregion LoadFilterReport
 
         #region Get Select Leagues
+
         public List<Items> GetSelectLeagues(List<Items> option, int sportId, string fromdate, string todate, int currency, int bettype, int live)
         {
             List<Items> list = new List<Items>();
@@ -270,11 +273,9 @@ namespace Sunplus.Accounting.Business.Report.Monitor
                         {
                             Id = CastAide.AsInt32(row["leagueid"]),
                             Name = CacheRef.GetLeagueName(row["leagueid"])
-
                         });
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -282,12 +283,13 @@ namespace Sunplus.Accounting.Business.Report.Monitor
             }
             return list;
         }
-        #endregion
+
+        #endregion Get Select Leagues
 
         #region GetMAMonitorReport
+
         public MAMonitorDTO GetMAMonitorReport(Param param, bool fromcache)
         {
-
             MAMonitorDTO monitorPaging = new MAMonitorDTO();
             MAMonitorDTO monitorDto = GetObjectData(param, fromcache);
 
@@ -298,7 +300,7 @@ namespace Sunplus.Accounting.Business.Report.Monitor
             return monitorPaging;
         }
 
-        MAMonitorDTO GetObjectData(Param param, bool fromcache)
+        private MAMonitorDTO GetObjectData(Param param, bool fromcache)
         {
             MAMonitorDTO monitorDto = new MAMonitorDTO();
             monitorDto.Item = new List<MAMonitorRow>();
@@ -316,14 +318,11 @@ namespace Sunplus.Accounting.Business.Report.Monitor
 
                     if (param.Turnover1.Length > 0 && param.Turnover2.Length > 0)
                     {
-
-
                         list = dataTable.AsEnumerable().Where(
                             s =>
                             CastAide.AsDecimal(NumberFormat.DecFormat(s["Mem_Turnover"], 2)) >= CastAide.AsDecimal(param.Turnover1) &&
                             CastAide.AsDecimal(NumberFormat.DecFormat(s["Mem_Turnover"], 2)) <= CastAide.AsDecimal(param.Turnover2)).Select(
                                 s => s).ToList();
-
                     }
 
                     if (param.Winloss1.Length > 0 && param.Winloss2.Length > 0)
@@ -333,7 +332,6 @@ namespace Sunplus.Accounting.Business.Report.Monitor
                             CastAide.AsDecimal(NumberFormat.DecFormat(s["Mem_Winloss"], 2)) >= CastAide.AsDecimal(param.Winloss1) &&
                             CastAide.AsDecimal(NumberFormat.DecFormat(s["Mem_Winloss"], 2)) <= CastAide.AsDecimal(param.Winloss2)).Select(
                                               s => s).ToList();
-
                     }
 
                     int total = list.Count;
@@ -352,13 +350,16 @@ namespace Sunplus.Accounting.Business.Report.Monitor
                             case 0:
                                 r.Name = CastAide.AsDateTime(row["rptdate"]).ToShortDateString();
                                 break;
+
                             case 1:
                                 string month = "0" + CastAide.AsString(row["month"]);
                                 r.Name = month.Substring(month.Length - 2, 2) + "/" + CastAide.AsString(row["year"]);
                                 break;
+
                             case 2:
                                 r.Name = CastAide.AsString(row["username"]);
                                 break;
+
                             case 3:
                                 if (CastAide.AsInt32(row["bettype"]) == 18999)
                                     r.Name = "Kick-Off";
@@ -367,9 +368,11 @@ namespace Sunplus.Accounting.Business.Report.Monitor
                                 else
                                     r.Name = CacheRef.GetBettype(row["bettype"]);
                                 break;
+
                             case 4:
                                 r.Name = CacheRef.GetLeagueName(row["leagueid"]);
                                 break;
+
                             case 5:
                                 r.index = CastAide.AsString(row["matchid"]);
                                 switch (CastAide.AsString(row["matchid"]))
@@ -379,36 +382,43 @@ namespace Sunplus.Accounting.Business.Report.Monitor
                                         r.Home = CacheRef.GetLeagueName(row["homeid"]);
                                         r.Away = CastAide.AsString(row["awayid"]);
                                         break;
+
                                     case "161"://Number Game
                                         r.Name = "Number Game";
                                         r.Home = string.Empty;
                                         r.Away = CastAide.AsString(row["awayid"]);
                                         break;
+
                                     case "162"://Live Casino
                                         r.Name = CastAide.AsString(row["matchcode"]);
                                         r.Home = string.Empty;
                                         r.Away = CacheRef.GetLeagueName(row["homeid"]);
                                         break;
+
                                     case "1000"://P2P
                                         r.Name = CastAide.AsString(row["matchcode"]);
                                         r.Home = string.Empty;
                                         r.Away = string.Empty;
                                         break;
+
                                     case "10"://Outright
                                         r.Name = "Outright";
                                         r.Home = string.Empty;
                                         r.Away = string.Empty;
                                         break;
+
                                     case "9"://Mixparlay
                                         r.Name = "Mix Parlay";
                                         r.Home = string.Empty;
                                         r.Away = string.Empty;
                                         break;
+
                                     case "29"://System parlay
                                         r.Name = "System parlay";
                                         r.Home = string.Empty;
                                         r.Away = string.Empty;
                                         break;
+
                                     default:
                                         r.Name = CastAide.AsString(row["matchcode"]);
                                         r.Home = CacheRef.GetTeamName(row["homeid"]);
@@ -416,11 +426,13 @@ namespace Sunplus.Accounting.Business.Report.Monitor
                                         break;
                                 }
                                 break;
+
                             case 6:
                                 r.Name = CastAide.AsString(row["currencyname"]);
                                 r.Home = string.Empty;
                                 r.Away = string.Empty;
                                 break;
+
                             case 7:
                                 r.Name = CastAide.AsString(row["sport"]);
                                 r.Home = string.Empty;
@@ -443,10 +455,12 @@ namespace Sunplus.Accounting.Business.Report.Monitor
                         r.SWinloss = NumberFormat.DecFormat(row["SAg_Winloss"], 2);
 
                         monitorDto.Item.Add(r);
-                        #endregion
+
+                        #endregion AssignRow
                     }
 
                     #region Total
+
                     monitorDto.Total = new MAMonitorRow()
                     {
                         Name = "Total",
@@ -465,7 +479,9 @@ namespace Sunplus.Accounting.Business.Report.Monitor
                         STurnover = NumberFormat.DecFormat(list.Sum(s => CastAide.AsDecimal(s["SAg_Turnover"])), 2),
                         SWinloss = NumberFormat.DecFormat(list.Sum(s => CastAide.AsDecimal(s["SAg_Winloss"])), 2),
                     };
-                    #endregion
+
+                    #endregion Total
+
                     SessionExtension.AddSession(HttpContext.Current.Session, Monitor_SessionKey, monitorDto);
                 }
                 else
@@ -480,9 +496,11 @@ namespace Sunplus.Accounting.Business.Report.Monitor
 
             return monitorDto;
         }
-        #endregion
+
+        #endregion GetMAMonitorReport
 
         #region export 2 excel
+
         public bool CheckMAMonitorReportFromSession(Param param)
         {
             try
@@ -508,8 +526,8 @@ namespace Sunplus.Accounting.Business.Report.Monitor
             var excelFile = new ExcelFile();
 
             var limitMaxRows = 65000;
-            #endregion
 
+            #endregion excel format
 
             var getReportData = GetObjectData(new Param(), true);
 
@@ -544,18 +562,21 @@ namespace Sunplus.Accounting.Business.Report.Monitor
                 Export2ExcelMaMonitorReportHeader(ref wsReport, startCol, startRow, reportTitle, reportBy);
             }
 
-            #region  reponse file
+            #region reponse file
+
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
             excelFile.SaveXls(response.OutputStream);
-            #endregion
+
+            #endregion reponse file
         }
 
         private static void Export2ExcelMaMonitorReportHeader(ref ExcelWorksheet wsReport, int startCol, int startRow, string reportTitle, int reportBy)
         {
             #region local variables
+
             var reportByTitle = GetReportTypeName(reportBy);
             var turnOverTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "TurnOver");
             var winlossTitle = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "WinLost");
@@ -568,7 +589,8 @@ namespace Sunplus.Accounting.Business.Report.Monitor
             var bgHeader = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
             var nextCol = 1;
             var totalGroupCols = 2;
-            #endregion
+
+            #endregion local variables
 
             wsReport.Cells.GetSubrangeAbsolute(startRow - 3, startCol, startRow - 3, startCol + 9).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 3, startCol, startRow - 3, startCol + 9).Value = reportTitle;
@@ -608,9 +630,11 @@ namespace Sunplus.Accounting.Business.Report.Monitor
                 Style = bgHeader;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol + 1, startRow - 2,
                                                startCol + (nextCol + totalGroupCols)).Value = superTitle;
-            #endregion
+
+            #endregion first row
 
             #region second row
+
             nextCol = 1;
             //Member
             wsReport.Cells[startRow - 1, startCol + nextCol].Style = bgHeader;
@@ -635,7 +659,8 @@ namespace Sunplus.Accounting.Business.Report.Monitor
             wsReport.Cells[startRow - 1, startCol + nextCol++].Style = bgHeader;
             wsReport.Cells[startRow - 1, startCol + nextCol].Value = winlossTitle;
             wsReport.Cells[startRow - 1, startCol + nextCol].Style = bgHeader;
-            #endregion
+
+            #endregion second row
         }
 
         private static void Export2ExcelMaMonitorReportContent(ref ExcelWorksheet wsReport, int startCol, int startRow, int nextRow, bool isFooter, MAMonitorRow maMonitorRow, int reportBy)
@@ -649,7 +674,7 @@ namespace Sunplus.Accounting.Business.Report.Monitor
                                                                                 false, true);
             var nextCol = 0;
 
-            #endregion
+            #endregion local variables
 
             if (maMonitorRow != null)
             {
@@ -691,21 +716,27 @@ namespace Sunplus.Accounting.Business.Report.Monitor
                 case 0:
                     reportType = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Date");
                     break;
+
                 case 1:
                     reportType = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMonth");
                     break;
+
                 case 2:
                     reportType = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblUsername");
                     break;
+
                 case 3:
                     reportType = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Bettype");
                     break;
+
                 case 4:
                     reportType = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "league");
                     break;
+
                 case 5:
                     reportType = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblGame");
                     break;
+
                 default:
                     break;
             }
@@ -721,31 +752,36 @@ namespace Sunplus.Accounting.Business.Report.Monitor
                 case Constants.Sport.HorseRacing:
                     gameInfo = string.Format("{0} - {1} - {2} {3}", matchId, homeName, ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Race"), awayName);
                     break;
+
                 case Constants.Sport.NumberGame:
                     gameInfo = string.Format("{0} - Game No {1}", matchId, awayName);
                     break;
+
                 case Constants.Sport.Badminton:
                 case Constants.Sport.Golf:
                     gameInfo = string.Format("{0}", matchId);
                     break;
+
                 case Constants.Sport.LiveCasino:
                     gameInfo = string.Format("{0} - Game Table - {1}", matchId, awayName);
                     break;
+
                 case 1000://p2p
                     gameInfo = string.Format("{0}", matchId);
                     break;
+
                 case 29://system parlay
                     gameInfo = matchId;
                     break;
+
                 default:
                     gameInfo = string.Format("{0}        {1} -vs- {2}", matchId, homeName, awayName);
                     break;
-
             }
 
             return gameInfo;
         }
 
-        #endregion
-    } 
+        #endregion export 2 excel
+    }
 }

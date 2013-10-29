@@ -1,5 +1,4 @@
-﻿
-using Sunplus.Accounting.Entities.Casino;
+﻿using Sunplus.Accounting.Entities.Casino;
 
 namespace Sunplus.Accounting.Business.PT.Casino
 {

@@ -10,6 +10,7 @@ using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Core.LoggingLib;
+using Fanex.Data;
 
 /// <summary>
 /// Summary description for PositionTakingProviderClient
@@ -123,33 +124,38 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
         /// <returns></returns>
         public override IbcError UpdatePT(Globals.AccountType accountType, Hashtable param)
         {
-            //return base.GetPT(custId);
             try
             {
                 DbResult result = null;
                 param.Add("ip", HttpContext.Current.Request.UserHostAddress);
+                var key = "";
                 switch (accountType)
                 {
                     case Globals.AccountType.Super:
-                        result = DbHelper.Execute("Acc_CustomerUpdSuperFI_All", param, DBType.MAIN);
+                        key = "Acc_CustomerUpdSuperFI_All";
                         break;
                     case Globals.AccountType.Master:
-                        result = DbHelper.Execute("Acc_CustomerUpdMasterFI_All", param, DBType.MAIN);
+                        key = "Acc_CustomerUpdMasterFI_All";
                         break;
                     case Globals.AccountType.Agent:
-                        result = DbHelper.Execute("Acc_CustomerUpdAgentFI_All", param, DBType.MAIN);
+                        key = "Acc_CustomerUpdAgentFI_All";
                         break;
                     case Globals.AccountType.Member:
-                        result = DbHelper.Execute("Acc_CustomerUpdMemberFI_All", param, DBType.MAIN);
+                        key = "Acc_CustomerUpdMemberFI_All";
                         break;
                 }
 
-                //ErrorDetail error = new ErrorDetail();
+                Hashtable output = new Hashtable();
+                using (ObjectDb db = new ObjectDb(key))
+                {
+                    db.AssignParamValues(param);
+                    db.ExecuteNonQuery();
+
+                    output = db.GetOuputParams();
+                }
+
                 IbcError error = IbcError.SuccessResult;
-                AlertMessage.ParseError(ref error.ErrorCode, ref error.ErrorMsg, result.Outputs["errcode"].ToString(),
-                                        result.Outputs["errmsg"].ToString());
-                //error.ErrorCode = CastAide.AsInt32(result.Outputs["errcode"]);
-                //error.ErrorMessage = CastAide.AsString(result.Outputs["errmsg"]);
+                AlertMessage.ParseError(ref error.ErrorCode, ref error.ErrorMsg, output["errcode"].ToString(), output["errmsg"].ToString());
 
                 return error;
             }
@@ -167,13 +173,19 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
         {
             try
             {
-                DbResult result = null;
-                param.Add("ip", HttpContext.Current.Request.UserHostAddress);
-                result = DbHelper.Execute("Acc_CustomerUpdMemberFI_MAg", param, DBType.MAIN);
+                Hashtable output = new Hashtable();
+                using (ObjectDb db = new ObjectDb("Acc_CustomerUpdMemberFI_MAg"))
+                {
+                    param.Add("ip", HttpContext.Current.Request.UserHostAddress);
+
+                    db.AssignParamValues(param);
+                    db.ExecuteNonQuery();
+
+                    output = db.GetOuputParams();
+                }
 
                 IbcError error = IbcError.SuccessResult;
-                AlertMessage.ParseError(ref error.ErrorCode, ref error.ErrorMsg, result.Outputs["errcode"].ToString(),
-                                        result.Outputs["errmsg"].ToString());
+                AlertMessage.ParseError(ref error.ErrorCode, ref error.ErrorMsg, output["errcode"].ToString(), output["errmsg"].ToString());
 
                 return error;
             }
@@ -191,13 +203,19 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
         {
             try
             {
-                DbResult result = null;
-                param.Add("ip", HttpContext.Current.Request.UserHostAddress);
+                Hashtable output = new Hashtable();
 
-                result = DbHelper.Execute("Acc_CustomerUpdMemberFI_SAg", param, DBType.MAIN);
+                using (ObjectDb db = new ObjectDb("Acc_CustomerUpdMemberFI_SAg"))
+                {
+                    param.Add("ip", HttpContext.Current.Request.UserHostAddress);
+                    db.AssignParamValues(param);
+
+                    db.ExecuteNonQuery();
+                    output = db.GetOuputParams();
+                }
+                
                 IbcError error = IbcError.SuccessResult;
-                AlertMessage.ParseError(ref error.ErrorCode, ref error.ErrorMsg, result.Outputs["errcode"].ToString(),
-                                        result.Outputs["errmsg"].ToString());
+                AlertMessage.ParseError(ref error.ErrorCode, ref error.ErrorMsg, output["errcode"].ToString(), output["errmsg"].ToString());
 
                 return error;
             }
@@ -255,27 +273,20 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
             //return base.GetPT(custId);
             try
             {
-                DbResult result = null;
+                Hashtable output = new Hashtable();
                 param.Add("ip", HttpContext.Current.Request.UserHostAddress);
-                switch (accountType)
+
+                using (ObjectDb db = new ObjectDb("Acc_CustOverrideUpdFI"))
                 {
-                    case Globals.AccountType.Super:
-                        result = DbHelper.Execute("Acc_CustOverrideUpdFI", param, DBType.MAIN);
-                        break;
-                    case Globals.AccountType.Master:
-                        result = DbHelper.Execute("Acc_CustOverrideUpdFI", param, DBType.MAIN);
-                        break;
-                    case Globals.AccountType.Agent:
-                        result = DbHelper.Execute("Acc_CustOverrideUpdFI", param, DBType.MAIN);
-                        break;
-                    default:
-                        result = DbHelper.Execute("Acc_CustOverrideUpdFI", param, DBType.MAIN);
-                        break;
+                    db.AssignParamValues(param);
+                    db.ExecuteNonQuery();
+
+                    output = db.GetOuputParams();
                 }
 
                 var error = new ErrorDetail();
-                error.ErrorCode = CastAide.AsInt32(result.Outputs["errcode"]);
-                error.ErrorMessage = CastAide.AsString(result.Outputs["errmsg"]);
+                error.ErrorCode = CastAide.AsInt32(output["errcode"]);
+                error.ErrorMessage = CastAide.AsString(output["errmsg"]);
 
                 return error;
             }

@@ -9,6 +9,7 @@ namespace Sunplus.Accounting.Entities.Report
     public class TurnoverPositionTakingWinlossMargin
     {
         public float _positionTaking;
+
         public double Turnover { get; set; }
 
         public double Winloss { get; set; }
@@ -24,7 +25,7 @@ namespace Sunplus.Accounting.Entities.Report
             {
                 if (Turnover == 0)
                     return 0;
-                return (float) (Winloss/Turnover)*100;
+                return (float)(Winloss / Turnover) * 100;
             }
         }
 
@@ -32,7 +33,7 @@ namespace Sunplus.Accounting.Entities.Report
         {
             if (totalTurnover == 0)
                 return 0;
-            _positionTaking = (float) (Turnover/totalTurnover)*100;
+            _positionTaking = (float)(Turnover / totalTurnover) * 100;
             return _positionTaking;
         }
     }

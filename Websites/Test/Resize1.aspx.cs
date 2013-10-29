@@ -7,7 +7,6 @@ using System.Web.UI.WebControls;
 using BLL.Report;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Web;
-using Sunplus.Core.LoggingLib;
 
 using System.Text.RegularExpressions;
 using Fanex.Tarus.Infrastructure.Extensions;

@@ -12,7 +12,6 @@ using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Services;
-using Sunplus.Core.LoggingLib;
 using IBCUtils;
 using System.Data;
 
@@ -113,6 +112,10 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
                 {
                     LogUserInfo(context, username);
                 }
+				
+				// Progressive Bonus
+				Fanex.CustomerSetting.Module.Core.Web.AppSession.AdminId = custId;
+				Fanex.CustomerSetting.Module.Core.Web.AppSession.AdminUsername = username;
             }
             else
             {

@@ -1,15 +1,11 @@
 using System;
 using System.Data;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.Core.Web.Controls;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using System.Text;
-using IBCUtils;
-using DNAide.Web;
 using DNAide.Core;
-
+using DNAide.Web;
+using IBCUtils;
+using Sunplus.Accounting.Core.Helper;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
 /// <summary>
 /// CITS
@@ -20,6 +16,7 @@ public partial class Report_AllCustomerTurnOverBySite : System.Web.UI.Page
     protected string MinDay = "";
     protected string FDay = "";
     protected string TDay = "";
+
     protected void Page_Load(object sender, EventArgs e)
     {
         Title = Resources.Language.AllCustomerTurnOver;
@@ -59,7 +56,8 @@ public partial class Report_AllCustomerTurnOverBySite : System.Web.UI.Page
             content.Text = gencontent();
         }
     }
-    string gencontent()
+
+    private string gencontent()
     {
         StringBuilder html = new StringBuilder();
         string norow = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("NoInformation.htm");
@@ -89,7 +87,6 @@ public partial class Report_AllCustomerTurnOverBySite : System.Web.UI.Page
             SearchStandard.Text = filterContent.ToString();
             if (string.IsNullOrEmpty(Request["reload"]))
             {
-
                 return string.Empty;
             }
             html = new StringBuilder();
@@ -109,7 +106,6 @@ public partial class Report_AllCustomerTurnOverBySite : System.Web.UI.Page
             DataTable dt = AccountReport.Acc_Rpt_CustomerTurnoverBySite(fdate, tdate, sitefilter, fromfilter).ResultSet.Tables[0];
             if (dt.Rows.Count > 0)
             {
-
                 string odd_even = "";
                 string site = "", sitetotalrow = "";
                 string rowites = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("CompBalance/Customer/AllCustomerTurnOverBySiteColspan.htm");
@@ -136,7 +132,6 @@ public partial class Report_AllCustomerTurnOverBySite : System.Web.UI.Page
                         site = Convert.ToString(dr["site"]);
                         TemplateHandler.Assign(ref rowsite, "{user}", "<b>" + Convert.ToString(dr["site"]) + "</b>");
                         html.Append(rowsite);
-
                     }
                     total += FormatHandler.GetDouble(dr["turnover"]);
                     totalover += FormatHandler.GetDouble(dr["turnover"]);

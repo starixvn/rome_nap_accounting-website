@@ -5,14 +5,13 @@ using System.Drawing;
 using System.Linq;
 using System.Web;
 using DNAide.Core;
-using DNAide.Data;
 using DNAide.Utils;
 using ExcelUtil.Spreadsheet;
+using Sunplus.Accounting.Business.Report.Common;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.Entities.Report.LeagueWL;
-using Sunplus.Accounting.Business.Report.Common;
 
 namespace Sunplus.Accounting.Business.Report.LeagueWL
 {
@@ -22,7 +21,8 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
         private static string _SelLeagueWLBySport = "selleaguewlbysportnew";
         private static string _SelLeagueWLByBettype = "selleaguewlbybettypenew";
         private static string _SelLeagueWLByBettypeDetail = "selleaguewlbybettypedetailnew";
-        private RMReportUtils utilsBARM =   new RMReportUtils(RMReportUtils.ReportName.ReportLeagueWL, RMReportUtils.RMType.BARM);
+        private RMReportUtils utilsBARM = new RMReportUtils(RMReportUtils.ReportName.ReportLeagueWL, RMReportUtils.RMType.BARM);
+
         public LeagueWLService()
         {
         }
@@ -30,20 +30,18 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
         public LeagueWLService(IReportWinLossDAO ireportWinLossDAO)
         {
             _ireportWinLossDAO = ireportWinLossDAO;
-          
         }
 
         public LeagueWLBySportsDTO SelLeagueWLBySports(string winlostdate, bool isGetNew)
         {
-            if(!isGetNew)
+            if (!isGetNew)
             {
                 var leagueWLSession = SessionExtension.GetSession(HttpContext.Current.Session, _SelLeagueWLBySport);
                 if (leagueWLSession != null)
                     return (LeagueWLBySportsDTO)leagueWLSession;
             }
 
-            var league = new LeagueWLBySportsDTO
-                { Items = new List<LeagueWLBySportsBO>(), GrandTotal = new LeagueWLRow() };
+            var league = new LeagueWLBySportsDTO { Items = new List<LeagueWLBySportsBO>(), GrandTotal = new LeagueWLRow() };
             try
             {
                 var rs = _ireportWinLossDAO.SelLeagueWLbySports(winlostdate);
@@ -51,9 +49,11 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
                     return league;
 
                 var dataTable = rs.ResultSet.Tables[0];
-                
+
                 List<int> sports = dataTable.AsEnumerable().Select(s => CastAide.AsInt32(s["sporttype"])).Distinct().ToList();
+
                 #region assing items
+
                 foreach (int sport in sports)
                 {
                     var rows = dataTable.AsEnumerable().Where(s => CastAide.AsInt32(s["sporttype"]) == sport).Select(s => s);
@@ -66,7 +66,7 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
                             SportName = sport == 100 ? "Mix Parlay" : CacheRef.GetSportName(sport)
                         };
 
-                    leagueWlBySports.Total.LeagueName = string.Format("{0} Total", sport==100 ? "Mix Parlay" : CacheRef.GetSportName(sport));
+                    leagueWlBySports.Total.LeagueName = string.Format("{0} Total", sport == 100 ? "Mix Parlay" : CacheRef.GetSportName(sport));
                     double winlossTotal = 0, positionTotal = 0, commTotal = 0, lineTotal = 0, turnoverTotal = 0, marginTotal = 0;
                     foreach (DataRow row in rows)
                     {
@@ -81,8 +81,9 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
                                                            Turnover = NumberFormat.DecFormat(CastAide.AsDouble(row["Turnover"]), 2),
                                                            Margin = CastAide.AsDouble(row["Turnover"]) == 0 ? "N/A" : NumberFormat.DecFormat(CastAide.AsDouble(((CastAide.AsDouble(row["LineTotal"]) / CastAide.AsDouble(row["Turnover"])) * 100)), 2)
                                                        });
+
                         #region total for each sport
-                        
+
                         winlossTotal += CastAide.AsDouble(row["WinLost"]);
                         positionTotal += CastAide.AsDouble(row["Position"]);
                         commTotal += CastAide.AsDouble(row["Commission"]);
@@ -90,25 +91,28 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
                         turnoverTotal += CastAide.AsDouble(row["Turnover"]);
                         marginTotal += (CastAide.AsDouble(row["Turnover"]) == 0
                                             ? 0
-                                            : (((CastAide.AsDouble(row["LineTotal"])/CastAide.AsDouble(row["Turnover"]))*
+                                            : (((CastAide.AsDouble(row["LineTotal"]) / CastAide.AsDouble(row["Turnover"])) *
                                                 100)));
 
-                        #endregion
+                        #endregion total for each sport
                     }
                     leagueWlBySports.Items = leagueWlBySports.Items.OrderBy(e => e.LeagueName).ToList();
 
                     #region format for total row
+
                     leagueWlBySports.Total.WinLoss = NumberFormat.DecFormat(winlossTotal, 2);
                     leagueWlBySports.Total.Position = NumberFormat.DecFormat(positionTotal, 2);
                     leagueWlBySports.Total.Comm = NumberFormat.DecFormat(commTotal, 2);
                     leagueWlBySports.Total.LineTotal = NumberFormat.DecFormat(lineTotal, 2);
                     leagueWlBySports.Total.Turnover = NumberFormat.DecFormat(turnoverTotal, 2);
                     leagueWlBySports.Total.Margin = NumberFormat.DecFormat(marginTotal, 2);
-                    #endregion
+
+                    #endregion format for total row
 
                     league.Items.Add(leagueWlBySports);
 
                     #region grand total
+
                     league.GrandTotal.LeagueName = "Grand Total";
                     league.GrandTotal.WinLoss =
                         NumberFormat.DecFormat((CastAide.AsDouble(league.GrandTotal.WinLoss) +
@@ -125,22 +129,27 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
                     league.GrandTotal.Turnover =
                         NumberFormat.DecFormat((CastAide.AsDouble(league.GrandTotal.Turnover) +
                                                 CastAide.AsDouble(leagueWlBySports.Total.Turnover)), 2);
-                    #endregion
 
+                    #endregion grand total
                 }
-                #endregion
+
+                #endregion assing items
 
                 #region grand total - margin
-                league.GrandTotal.Margin =
-                    NumberFormat.DecFormat(
-                        ((CastAide.AsDouble(league.GrandTotal.LineTotal)/CastAide.AsDouble(league.GrandTotal.Turnover))*
-                        100), 2);
-                #endregion
+
+                var margin = CastAide.AsDouble(league.GrandTotal.Turnover) != 0 ?
+                    CastAide.AsDouble(league.GrandTotal.LineTotal) / CastAide.AsDouble(league.GrandTotal.Turnover) :
+                    0;
+                league.GrandTotal.Margin = NumberFormat.DecFormat(margin * 100, 2);
+
+                #endregion grand total - margin
+
                 #region 8RM
+
                 league.GrandTotal8RM = NumberFormat.DecFormat(CastAide.AsDouble(rs.Outputs["winlost_8rm"]), 2);
                 league.GrandTotalBARM = NumberFormat.DecFormat(CastAide.AsDouble(rs.Outputs["winlost_barm"]), 2);
 
-                #endregion
+                #endregion 8RM
 
                 #region Line Grand Total
 
@@ -149,8 +158,7 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
                         CastAide.AsDouble(league.GrandTotal.LineTotal) +
                         (CastAide.AsDouble(league.GrandTotal8RM) + (utilsBARM.IsActive ? CastAide.AsDouble(league.GrandTotalBARM) : 0)), 2);
 
-                #endregion
-
+                #endregion Line Grand Total
             }
             catch (Exception ex)
             {
@@ -160,7 +168,7 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
             SessionExtension.AddSession(HttpContext.Current.Session, _SelLeagueWLBySport, league);
             return league;
         }
-        
+
         public LeagueWLBettypeDTO SelLeagueWLByBettypes(int sportId, int leagueId, string winlostDate)
         {
             var result = new LeagueWLBettypeDTO();
@@ -175,7 +183,7 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
                 var dt8RM = rs.ResultSet.Tables[1];
                 var dtBARM = rs.ResultSet.Tables.Count == 3 ? rs.ResultSet.Tables[2] : new DataTable();
 
-                var liveRows = dtDetail.AsEnumerable().Where(s=> CastAide.AsBoolean(s["liveindicator"])).Select(s => s);
+                var liveRows = dtDetail.AsEnumerable().Where(s => CastAide.AsBoolean(s["liveindicator"])).Select(s => s);
                 var deadRows = dtDetail.AsEnumerable().Where(s => !CastAide.AsBoolean(s["liveindicator"])).Select(s => s);
 
                 result.SportId = sportId.ToString();
@@ -207,7 +215,7 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
                     }
                 }
 
-                if(liveRows!= null && liveRows.ToList().Count > 0)
+                if (liveRows != null && liveRows.ToList().Count > 0)
                 {
                     var liveData = AssignBettypeData(liveRows.ToList(), true);
 
@@ -215,7 +223,6 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
                     liveData.GrandTotalBARM = NumberFormat.DecFormat(utilsBARM.IsActive ? liveBARM : 0, 2);
                     liveData.LineTotal = NumberFormat.DecFormat(CastAide.AsDouble(liveData.GrandTotal.LineTotal) + live8RM + (utilsBARM.IsActive ? liveBARM : 0), 2);
                     result.Items.Add(liveData);
-                    
                 }
 
                 if (deadRows != null && deadRows.ToList().Count > 0)
@@ -263,7 +270,7 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
                 turnoverTotal += CastAide.AsDouble(liveRow["Turnover"]);
             }
 
-            marginTotal = CastAide.AsDouble(lineTotal/turnoverTotal)*100;
+            marginTotal = CastAide.AsDouble(lineTotal / turnoverTotal) * 100;
             result.GrandTotal = new LeagueWLBettypeRow()
                                     {
                                         BettypeName = "Total",
@@ -277,7 +284,7 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
 
             return result;
         }
-        
+
         public LeagueWLBettypeDetailBO SelLeagueWLDetailByBettypes(int sportId, int leagueId, int bettypeId, bool isLive, bool isHedge, string winlostDate)
         {
             var result = new LeagueWLBettypeDetailBO();
@@ -312,8 +319,8 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
                                                  CastAide.AsDouble(dr["Turnover"]) == 0
                                                      ? "N/A"
                                                      : NumberFormat.DecFormat(
-                                                         (CastAide.AsDouble(dr["LineTotal"])/
-                                                          CastAide.AsDouble(dr["Turnover"]))*100, 2)
+                                                         (CastAide.AsDouble(dr["LineTotal"]) /
+                                                          CastAide.AsDouble(dr["Turnover"])) * 100, 2)
                                          });
 
                     winlossTotal += CastAide.AsDouble(dr["Winlost"]);
@@ -333,10 +340,9 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
                                             Turnover = NumberFormat.DecFormat(turnoverTotal, 2),
                                             WinLoss = NumberFormat.DecFormat(winlossTotal, 2)
                                         };
-                result.GrandTotal8RM = NumberFormat.DecFormat(grandTotal8RM , 2);
+                result.GrandTotal8RM = NumberFormat.DecFormat(grandTotal8RM, 2);
                 result.GrandTotalBARM = NumberFormat.DecFormat(utilsBARM.IsActive ? grandTotalBARM : 0, 2);
                 result.LineTotal = NumberFormat.DecFormat((lineTotal + grandTotal8RM + (utilsBARM.IsActive ? grandTotalBARM : 0)), 2);
-                
             }
             catch (Exception ex)
             {
@@ -347,6 +353,7 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
         }
 
         #region Export 2 excel - by sport
+
         public void ExportExcelLeagueWLBySports(string winlostDate, string reportTitle)
         {
             const int startCol = 0;
@@ -355,7 +362,7 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
             var reportName = string.Format("{0}-{1}", reportTitle, winlostDate);
             var excelFile = new ExcelFile();
             var wsReport = excelFile.Worksheets.Add(reportTitle);
-            
+
             #region header
 
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + 6).Merged = true;
@@ -365,13 +372,15 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + 6).Value =
                 string.Format("{0}", reportTitle);
             ExportExcelLeagueWLBySportsAssignHeader(ref wsReport, startRow, startCol);
-            #endregion
+
+            #endregion header
 
             #region content
+
             try
             {
                 var getData =
-                    (LeagueWLBySportsDTO) SessionExtension.GetSession(HttpContext.Current.Session, _SelLeagueWLBySport);
+                    (LeagueWLBySportsDTO)SessionExtension.GetSession(HttpContext.Current.Session, _SelLeagueWLBySport);
                 if (getData != null)
                 {
                     var bgTotalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber("", Color.FromArgb(250, 229, 208), true, false);
@@ -459,28 +468,31 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
             {
             }
 
-            #endregion
+            #endregion content
 
             #region response file
+
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName.Replace(" ", "")));
 
             excelFile.SaveXls(response.OutputStream);
-            #endregion
+
+            #endregion response file
         }
+
         private void ExportExcelLeagueWLBySportsAssignHeader(ref ExcelWorksheet wsReport, int startRow, int startCol)
         {
             var bgHeaderFormat = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
             var nextCol = 0;
-            
+
             wsReport.Cells[startRow - 1, startCol].Style = bgHeaderFormat;
             wsReport.Cells[startRow - 1, startCol].Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "league");
             wsReport.Columns[startCol].Width = 255 * 45;
 
-            wsReport.Cells[startRow - 1, startCol+ (nextCol+=1)].Style = bgHeaderFormat;
-            wsReport.Cells[startRow - 1, startCol+ nextCol].Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Winlost");
+            wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeaderFormat;
+            wsReport.Cells[startRow - 1, startCol + nextCol].Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Winlost");
             wsReport.Columns[startCol + nextCol].Width = 255 * 15;
 
             wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = bgHeaderFormat;
@@ -503,6 +515,7 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
             wsReport.Cells[startRow - 1, startCol + nextCol].Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMargin");
             wsReport.Columns[startCol + nextCol].Width = 255 * 15;
         }
+
         private void ExportExcelLeagueWLBySportsAssignContent(ref ExcelWorksheet wsReport, int startCol, int startRow, ref int nextRow, LeagueWLRow row, bool isTotal, bool isFooter)
         {
             var color = isFooter ? Color.FromArgb(211, 225, 200) : (isTotal ? Color.FromArgb(250, 229, 208) : Color.FromArgb(255, 255, 255));
@@ -531,14 +544,15 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
             wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.Turnover);
 
             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormatPercent;
-            wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.Margin)/100;
+            wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.Margin) / 100;
 
             nextRow++;
         }
 
-        #endregion
+        #endregion Export 2 excel - by sport
 
         #region Export 2 excel - by bettype
+
         public void ExportExcelLeagueWLByBettypes(string winlostDate, int sportId, int leagueId, string reportTitle)
         {
             const int startCol = 0;
@@ -547,27 +561,29 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
             var reportName = string.Format("{0}-{1}", reportTitle, winlostDate);
             var excelFile = new ExcelFile();
             var wsReport = excelFile.Worksheets.Add(reportTitle);
+
             #region content
 
             var getDate =
-                (LeagueWLBettypeDTO) SessionExtension.GetSession(HttpContext.Current.Session, _SelLeagueWLByBettype);
-            if(getDate!= null)
+                (LeagueWLBettypeDTO)SessionExtension.GetSession(HttpContext.Current.Session, _SelLeagueWLByBettype);
+            if (getDate != null)
             {
-
                 foreach (LeagueWLBettypeBO leagueWL in getDate.Items)
                 {
                     #region header
+
                     wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 6).Merged = true;
                     wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 6).Style.Font.Weight =
                         ExcelFont.BoldWeight;
                     wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 6).Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
                     wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 6).Value =
-                        string.Format("{0} - {1}", reportTitle, (leagueWL.IsLive ? "LIVE" : "NONE LIVE") );
+                        string.Format("{0} - {1}", reportTitle, (leagueWL.IsLive ? "LIVE" : "NONE LIVE"));
                     nextRow++;
                     ExportExcelLeagueWLByBettypesAssignHeader(ref wsReport, startRow, startCol, ref nextRow);
                     nextRow++;
-                    #endregion
-                    
+
+                    #endregion header
+
                     #region detail
 
                     foreach (LeagueWLBettypeRow row in leagueWL.Items)
@@ -575,8 +591,9 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
                         ExportExcelLeagueWLByBettypesAssignContent(ref wsReport, startCol, startRow, ref nextRow, row,
                                                                    false, false);
                     }
-                    
-                    #endregion
+
+                    #endregion detail
+
                     ExportExcelLeagueWLByBettypesAssignContent(ref wsReport, startCol, startRow, ref nextRow, leagueWL.GrandTotal,
                                                                    false, true);
 
@@ -642,20 +659,20 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
                                                        startCol + 6).Value = string.Empty;
                     nextRow++;
                 }
-
-                
             }
 
-            #endregion
+            #endregion content
 
             #region response file
+
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName.Replace(" ", "")));
 
             excelFile.SaveXls(response.OutputStream);
-            #endregion
+
+            #endregion response file
         }
 
         private void ExportExcelLeagueWLByBettypesAssignHeader(ref ExcelWorksheet wsReport, int startRow, int startCol, ref int nextRow)
@@ -663,7 +680,7 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
             var bgHeaderFormat = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
             var nextCol = 0;
 
-            wsReport.Cells[startRow +nextRow, startCol].Style = bgHeaderFormat;
+            wsReport.Cells[startRow + nextRow, startCol].Style = bgHeaderFormat;
             wsReport.Cells[startRow + nextRow, startCol].Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Bettype");
             wsReport.Columns[startCol].Width = 255 * 25;
 
@@ -725,9 +742,11 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
 
             nextRow++;
         }
-        #endregion
+
+        #endregion Export 2 excel - by bettype
 
         #region Export 2 excel - by bettype detail
+
         public void ExportExcelLeagueWLDetailByBettype(int sportId, int leagueId, int bettypeId, bool isLive, bool isHedge, string winlostDate, string reportTitle)
         {
             const int startCol = 0;
@@ -738,6 +757,7 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
             var wsReport = excelFile.Worksheets.Add(reportTitle);
 
             #region header
+
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + 7).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + 7).Style.Font.Weight =
                 ExcelFont.BoldWeight;
@@ -745,14 +765,15 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + 7).Value =
                 string.Format("{0}", reportTitle);
             ExportExcelLeagueWLByDetailBettypeAssignHeader(ref wsReport, startRow, startCol);
-            #endregion
+
+            #endregion header
 
             #region content
 
             var getData =
                 (LeagueWLBettypeDetailBO)
                 SessionExtension.GetSession(HttpContext.Current.Session, _SelLeagueWLByBettypeDetail);
-            if(getData!= null)
+            if (getData != null)
             {
                 foreach (LeagueWLBettypeDetailRow row in getData.Items)
                 {
@@ -824,16 +845,18 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
                                                    startCol + 7).Value = string.Empty;
             }
 
-            #endregion
+            #endregion content
 
             #region response file
+
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName.Replace(" ", "")));
 
             excelFile.SaveXls(response.OutputStream);
-            #endregion
+
+            #endregion response file
         }
 
         private void ExportExcelLeagueWLByDetailBettypeAssignHeader(ref ExcelWorksheet wsReport, int startRow, int startCol)
@@ -841,7 +864,7 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
             var bgHeaderFormat = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
             var nextCol = 0;
 
-            wsReport.Cells[startRow -1, startCol].Style = bgHeaderFormat;
+            wsReport.Cells[startRow - 1, startCol].Style = bgHeaderFormat;
             wsReport.Cells[startRow - 1, startCol].Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblCode");
             wsReport.Columns[startCol].Width = 255 * 15;
 
@@ -883,7 +906,7 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
             var bgFormatPercent = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00%", color, isBold, true);
 
             var nextCol = 0;
-            if(isFooter)
+            if (isFooter)
             {
                 wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 1).
                     Merged = true;
@@ -901,9 +924,8 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
                 wsReport.Cells[startRow + nextRow, startCol].Value = row.Code;
 
                 wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormatOther;
-                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = row.Event;    
+                wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = row.Event;
             }
-            
 
             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormatOther;
             wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.WinLoss);
@@ -925,6 +947,7 @@ namespace Sunplus.Accounting.Business.Report.LeagueWL
 
             nextRow++;
         }
-        #endregion
+
+        #endregion Export 2 excel - by bettype detail
     }
 }

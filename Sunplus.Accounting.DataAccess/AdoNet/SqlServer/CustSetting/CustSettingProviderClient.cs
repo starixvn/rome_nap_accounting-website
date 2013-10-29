@@ -2,9 +2,9 @@
 using System.Web;
 using DNAide.Core;
 using DNAide.Data;
+using Fanex.Data;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess.Provider.CustSetting;
-using Fanex.Data;
 using Sunplus.Accounting.Entities;
 
 /// <summary>
@@ -29,7 +29,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.CustSetting
 
                 RoleId = CastAide.AsInt32(objDb.GetParameterValue("roleid"));
                 return CastAide.AsBoolean(objDb.GetParameterValue("isallow"));
-            }            
+            }
         }
 
         public override Result CustomerUdpMoveSite(int UserId, int CustId, string NewSite)
@@ -52,7 +52,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.CustSetting
                 result.ErrorMessage = CastAide.AsString(objDb.GetParameterValue("errmsg"));
 
                 return result;
-            }    
+            }
         }
 
         public override DbResult GetAllSiteNames()
@@ -61,7 +61,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.CustSetting
             return DbHelper.Execute(spElement.Name, spElement.DbName);
         }
 
-        private class SpConfig:DataAccess
+        private class SpConfig : DataAccess
         {
             public Core.Configurations.StoreProcedureElement GetStoreProcedure(string aliasName)
             {

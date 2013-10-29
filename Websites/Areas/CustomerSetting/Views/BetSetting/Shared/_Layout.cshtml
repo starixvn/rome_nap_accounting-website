@@ -14,9 +14,9 @@
     <body>
     <div id="tabs" style="float: left; width: auto">
         <ul class="tabs">
-            <li id="tab1"><a href="#tabs-1">Sportsbook</a></li>
-            <!--<li id="tab2"><a href="#tabs-2" class="hidden">Racing</a></li>
-            <li id="tab3"><a href="#tabs-3" class="hidden">Virtual Sports</a></li>
+            <li id="tab1" onclick="LoadSB()"><a href="#tabs-1">Sportsbook</a></li>
+            <li id="tab2" onclick="LoadRacing()"><a href="#tabs-2">Racing</a></li>
+            <!--<li id="tab3"><a href="#tabs-3" class="hidden">Virtual Sports</a></li>
             <li id="tab4"><a href="#tabs-4" class="hidden">RNG Casino</a></li>
             <li id="tab5"><a href="#tabs-5" class="hidden">Live Casino</a></li>
             <li id="tab6"><a href="#tabs-6" class="hidden">Bingo</a></li>-->
@@ -24,9 +24,10 @@
         <div id="tabs-1">     
             @RenderSection("Sportsbook", false)             
         </div>                
-        <!--<div id="tabs-2" class="hidden">          
+        <div id="tabs-2" class="hidden">          
+            @RenderSection("Racing", false)             
         </div>                
-        <div id="tabs-3" class="hidden">          
+        <!--<div id="tabs-3" class="hidden">          
         </div>                
         <div id="tabs-4" class="hidden">          
         </div>                
@@ -41,6 +42,7 @@
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Validators.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Views/BetSetting/Scripts/BetSetting.js")" type="text/javascript"></script>
     @RenderSection("Scripts", false)
     <script type="text/javascript">
         $(document).ready(function () {

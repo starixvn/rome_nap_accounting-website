@@ -1,41 +1,26 @@
 ﻿using System;
-using System.Data;
-using System.Configuration;
 using System.Collections;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
+using System.Data;
 using System.Text;
-using Sunplus.Accounting.Business.Customer;
-using Sunplus.Accounting.Business.Report;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Business.Security;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Accounting.DataAccess.IBCDLL.Report;
-using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
-using IBCUtils.Web;
-using IBCUtils.DAL;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using IBCUtils;
+using System.Web;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Web;
-
-
-using Sunplus.Accounting.Business.BootStrappers;
+using IBCUtils;
+using Sunplus.Accounting.Business.Customer;
+using Sunplus.Accounting.Business.Report;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.DataAccess.IBCDLL.Report;
+using Sunplus.Accounting.DataAccess.Report;
 
 public partial class NumberGameWLDetail : PageBase
 {
-
-    bool IsBlankCell = false;
+    private bool IsBlankCell = false;
     public string mode = "";
     public string jsfunction = "";
     private string keyReport = "NumberGameDailyWL";
-    string type = "";
+    private string type = "";
+
     protected void Page_Load(object sender, EventArgs e)
     {
         Title = Sunplus.Accounting.Business.Report.Reports.Title;
@@ -44,7 +29,7 @@ public partial class NumberGameWLDetail : PageBase
         keyReport += AppSession.AccUserName + strfdate;
 
         mode = Request["mode"];
-        
+
         //Export to Excel
         string btnExport = Request["IsExport"];
         if (btnExport == "1")
@@ -80,15 +65,13 @@ public partial class NumberGameWLDetail : PageBase
             const string sportname = "numbergame";
             const int sporttype = 161;
 
-
             Hashtable hash = null;
             string type = (string.IsNullOrEmpty(Request["type"])) ? string.Empty : Request["type"];
-
-
 
             DateTime wldate;
 
             #region Header
+
             int displaydays = 0;
             TimeSpan sp = DateTime.Today - ReportUtils.BalanceUp.BalanceUpDay;
             displaydays = sp.Days;
@@ -117,21 +100,17 @@ public partial class NumberGameWLDetail : PageBase
 
             headerDatetime.Text = strDateTimeSingle;
 
-            #endregion
+            #endregion Header
 
             //headerDatetime.Text = Reports.GetHeader(strfdate, strtdate, path, true);
             DbResult rs;
             DataTable dtLive = new DataTable(), dtNoneLive = new DataTable();
 
-
-
             fDate = (string.IsNullOrEmpty(fDate)) ? DateTime.Today.ToShortDateString() : fDate;
             if (!Validator.ValidDateMMDDYYYY(fDate, out wldate).IsSuccess())
             {
-
                 return "Invalid Date Format!!!";
             }
-
 
             IsBlankCell = false;
             int SiteID = string.IsNullOrEmpty(Request.Form["hiddenCompnayFilter"]) ? 0
@@ -152,6 +131,7 @@ public partial class NumberGameWLDetail : PageBase
                 rs = NumberGameWinLoss.WinlossByBetType_Old(wldate, SiteID, Currency);
 
             #region separate data Live and None Line
+
             dtLive = rs.ResultSet.Tables[0].Clone();
             dtNoneLive = rs.ResultSet.Tables[0].Clone();
             foreach (DataRow dr in rs.ResultSet.Tables[0].Rows)
@@ -175,7 +155,8 @@ public partial class NumberGameWLDetail : PageBase
                     dtNoneLive.Rows.Add(drNewNoneLive);
                 }
             }
-            #endregion
+
+            #endregion separate data Live and None Line
 
             string strTemp = string.Empty;
             strTemp = getcontent(0, header, dtNoneLive, 0);
@@ -199,7 +180,6 @@ public partial class NumberGameWLDetail : PageBase
             }
             if (dtLive.Rows.Count > 0) count++;
 
-
             //result += "</td></tr></table>";
 
             Footer.Text = GetFooter(fDate, fDate, sportname, sporttype.ToString(), Request["path"]);
@@ -210,8 +190,6 @@ public partial class NumberGameWLDetail : PageBase
 
             return result;
 
-
-            
         }
         catch (Exception ex)
         {
@@ -232,9 +210,8 @@ public partial class NumberGameWLDetail : PageBase
         }
     }
 
-
-
     #region getcontent
+
     private string getcontent(int liveindicator, string header, DataTable dt, decimal total8rm)
     {
         StringBuilder html = new StringBuilder();
@@ -254,7 +231,6 @@ public partial class NumberGameWLDetail : PageBase
             if (liveindicator == 1) isLive = "LIVE";
             else isLive = "NON - LIVE";
 
-
             TemplateHandler.Assign(ref norow, "{bgcolor-nodata}", "bgcolor-nodata");
             string strfdate;
             strfdate = Request["fdate"];
@@ -269,22 +245,24 @@ public partial class NumberGameWLDetail : PageBase
             html.Append(Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("Report/NumberGame/WinLostSummaryAllHeader.htm", new string[] { "{msg}", "{width}", "{col}", "{style}" }, new string[] { header + " \"" + isLive + "\" PRODUCT WIN/LOSS REPORT", "", "9", "width='500'" }));
             string WLheader = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Report/NumberGame/WinLostSummaryHeader.htm");
 
-
             TemplateHandler.Assign(ref WLheader, "{TypeName}", "Bettype");
 
             if (dt.Rows.Count == 0)
             {
                 #region no data
+
                 TemplateHandler.RemoveBlock(ref WLheader, "no-link");
                 html.Append(WLheader);
                 TemplateHandler.Assign(ref norow, "{nodata}", (Resources.Language.thereisnodata));
                 TemplateHandler.Assign(ref norow, "{tdno}", "9");
                 html.Append(norow);
                 return html.ToString();
-                #endregion
+
+                #endregion no data
             }
 
             #region declare variable
+
             string sp = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Report/NumberGame/WinLostSummarySportType.htm");
             string rows = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Report/NumberGame/WinLostSummaryAllRow.htm");
             string colspans = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Report/NumberGame/WinLostSummaryColspan.htm"), colspan = "";
@@ -311,7 +289,8 @@ public partial class NumberGameWLDetail : PageBase
             bool IsCalculatedTotalToteOdds = false, IsExistedTOdds = false, IsExistedFOdds = false;
             string condition = "", row = "";
             double l = 0;
-            #endregion declare
+
+            #endregion declare variable
 
             html.Append(WLheader);
             if (dt.Rows.Count > 0)
@@ -322,20 +301,16 @@ public partial class NumberGameWLDetail : PageBase
                 {
                     odd_even = (odd_even == "") ? "evenrow" : "";
                     row = rows.Clone().ToString();
-                    var bettypeId =CastAide.AsInt32(dr["bettype"]);
+                    var bettypeId = CastAide.AsInt32(dr["bettype"]);
                     Win = FormatHandler.GetDouble(dr["WinLost"]);
                     Pos = FormatHandler.GetDouble(dr["Position"]);
                     Com = FormatHandler.GetDouble(dr["Commission"]);
                     TurnOver = FormatHandler.GetDouble(dr["TurnOver"]);
                     virtualLt = FormatHandler.GetDouble(dr["VirtualLineTotal"]);
                     l = Win + Pos + Com;
-                    
 
                     BettypeName = RemotingRef.RefData.GetBetTypeName(bettypeId.ToString(), "E");  //CastAide.AsString(dr["bettypename"]);
                     Bettype = bettypeId.ToString();
-
-                   
-
 
                     //string path = "Main>" + Request["path"] + ">" + BettypeName;
                     string path = BettypeName;
@@ -343,14 +318,12 @@ public partial class NumberGameWLDetail : PageBase
                     TemplateHandler.Assign(ref row, "{style}", "");
                     TemplateHandler.Assign(ref row, "{odd_even}", odd_even);
 
-
                     string db = (ReportUtils.IsRepDB) ? "Rep" : "Main";
 
                     path = path.Replace(">", "-");
 
                     string evt = "OpenDetails('" + Bettype + "','" + liveindicator + "','" + type + "','" + fdate.ToShortDateString() + "','" + tdate.ToShortDateString() + "','" + sporttype + "','" + sportname + "','" + path + "','" + db + "','" + IsHedge + "','" + Request["mode"] + "');";
                     BettypeName = "<span id='spTypeName' onclick=\"" + evt + "\"><b><a href='#'>" + BettypeName + "</a></span></b>";
-
 
                     GenRow(ref row, color, BettypeName, Win, Pos, Com, l, TurnOver, IsBlankCell, virtualLt);
                     html.Append(row);
@@ -364,9 +337,9 @@ public partial class NumberGameWLDetail : PageBase
                     allVirtualLt += virtualLt;
                     ibcVirtualLt += virtualLt;
                 }
-                #endregion //end foreach
 
-                
+                #endregion foreach
+
                 #region //total
 
                 colspan = colspans.Clone().ToString();
@@ -381,8 +354,6 @@ public partial class NumberGameWLDetail : PageBase
 
                 double line = AllWin + AllPos + AllCom;
 
-               
-
                 double Margin = (AllTurnOver == 0) ? 0 : ((line / AllTurnOver) * 100);
                 GenRow(ref totalRowSportType, "", "<b>All Total:</b>", Reports.colorvalue(AllWin),
                        FormatHandler.FormatNumber20(AllPos), FormatHandler.FormatNumber20(AllCom),
@@ -393,14 +364,16 @@ public partial class NumberGameWLDetail : PageBase
                                           "<b>" + Sunplus.Accounting.Business.Report.Reports.colorvalue(line - allVirtualLt) + "</b>");
                 html.Append(totalRowSportType);
 
-                #endregion end total
+                #endregion //total
             }
             else
             {
                 #region no data
+
                 TemplateHandler.Assign(ref norow, "{nodata}", (Resources.Language.thereisnodata));
                 html.Append(norow);
-                #endregion
+
+                #endregion no data
             }
         }
         catch (Exception ex)
@@ -414,8 +387,8 @@ public partial class NumberGameWLDetail : PageBase
 
         return html.ToString();
     }
-    #endregion
 
+    #endregion getcontent
 
     private static void GenRow(ref string totalRowSportType, string color, string BetType, double WinLost, double Position, double Comm, double linetotal, double Turnover, bool IsBlankCell, double virtualLt)
     {
@@ -459,11 +432,11 @@ public partial class NumberGameWLDetail : PageBase
         TemplateHandler.Assign(ref totalRowSportType, "{Turnover}", (Turnover));
         TemplateHandler.Assign(ref totalRowSportType, "{Margin}", (Margin));
         TemplateHandler.Assign(ref totalRowSportType, "{Admin2}", (Turnover));
-
     }
 
     #region footer
-    string GetFooter(string fdate, string tdate, string sportname, string sporttype, string path)
+
+    private string GetFooter(string fdate, string tdate, string sportname, string sporttype, string path)
     {
         StringBuilder html = new StringBuilder();
 
@@ -475,13 +448,14 @@ public partial class NumberGameWLDetail : PageBase
 
         TemplateHandler.RemoveBlock(ref footer, "main");
 
-
         return html.ToString();
     }
-    #endregion end footer
+
+    #endregion footer
 
     #region AssignHidden
-    string AssignHidden()
+
+    private string AssignHidden()
     {
         Hashtable hash = new Hashtable();
 
@@ -498,9 +472,11 @@ public partial class NumberGameWLDetail : PageBase
 
         return CustomerUtils.AssignMultipleHidden(hash);
     }
-    #endregion
+
+    #endregion AssignHidden
 
     #region ExportToExcel
+
     public void ExportToExcel(string FileName, string data)
     {
         string strStyle = "";
@@ -521,5 +497,6 @@ public partial class NumberGameWLDetail : PageBase
         Response.Write(data);
         Response.End();
     }
-    #endregion
+
+    #endregion ExportToExcel
 }

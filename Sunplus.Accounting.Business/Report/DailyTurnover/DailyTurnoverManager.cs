@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using Sunplus.Accounting.Entities.Report.DailyTurnover;
-using Sunplus.Accounting.DataAccess.Report.DailyTurnoverDAO;
-using Sunplus.Accounting.Core.Extensions;
-using DNAide.Utils;
-using System.Web;
-using ExcelUtil.Spreadsheet;
-using System.Drawing;
 using System.Data;
-using System.Linq;
+using System.Drawing;
+using System.Web;
 using DNAide.Core;
+using DNAide.Utils;
+using ExcelUtil.Spreadsheet;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.DataAccess.Report.DailyTurnoverDAO;
+using Sunplus.Accounting.Entities.Report.DailyTurnover;
 
 namespace Sunplus.Accounting.Business.Report.DailyTurnover
 {
-    public class DailyTurnoverManager: IDailyTurnoverManager
+    public class DailyTurnoverManager : IDailyTurnoverManager
     {
         private static IDailyTurnoverDAO _dailyTurnoverDAO;
         private const string DailyTurnover_SessionKey = "DailyTurnover";
@@ -25,16 +24,17 @@ namespace Sunplus.Accounting.Business.Report.DailyTurnover
         {
             _dailyTurnoverDAO = dailyTurnoverDAO;
         }
-        public List<DailyTurnoverDTO> SelDailyTurnover(string date) {
+
+        public List<DailyTurnoverDTO> SelDailyTurnover(string date)
+        {
             var list = new List<DailyTurnoverDTO>();
             try
             {
                 var currHour = DateTime.Now.Hour;
                 bool isHistory = !(currHour >= 0 && currHour <= 8);
                 string key = isHistory ? "HistoryDailyTurnover" : "DailyTurnover";
-                list.Add(getDailyTurnover(date,false,key));
+                list.Add(getDailyTurnover(date, false, key));
                 list.Add(getDailyTurnover(date, true, key));
-                
             }
             catch (Exception ex)
             {
@@ -43,8 +43,8 @@ namespace Sunplus.Accounting.Business.Report.DailyTurnover
             SessionExtension.AddSession(HttpContext.Current.Session, DailyTurnover_SessionKey, list);
             return list;
         }
-        
-        private DailyTurnoverDTO getDailyTurnover(string date, bool isActual,string key)
+
+        private DailyTurnoverDTO getDailyTurnover(string date, bool isActual, string key)
         {
             var dailyTurnover = new DailyTurnoverDTO();
             var dbresult = _dailyTurnoverDAO.SelDailyTurnover(date, isActual, key);
@@ -55,11 +55,11 @@ namespace Sunplus.Accounting.Business.Report.DailyTurnover
                 {
                     var row = tb.Rows[0];
                     dailyTurnover.StrDate = date;
-                    dailyTurnover.Turnover= NumberFormat.DecFormat(row["total"],0);
-                    dailyTurnover.STurnover = NumberFormat.DecFormat(row["super"],0);
-                    dailyTurnover.MTurnover = NumberFormat.DecFormat(row["master"],0);
-                    dailyTurnover.ATurnover = NumberFormat.DecFormat(row["agent"],0);
-                    dailyTurnover.IBCTurnover = NumberFormat.DecFormat(row["after"],0);
+                    dailyTurnover.Turnover = NumberFormat.DecFormat(row["total"], 0);
+                    dailyTurnover.STurnover = NumberFormat.DecFormat(row["super"], 0);
+                    dailyTurnover.MTurnover = NumberFormat.DecFormat(row["master"], 0);
+                    dailyTurnover.ATurnover = NumberFormat.DecFormat(row["agent"], 0);
+                    dailyTurnover.IBCTurnover = NumberFormat.DecFormat(row["after"], 0);
                     dailyTurnover.CNT = row["TicketCNT"] + "/" + row["NormalCNT"] + "/" + row["RejectCNT"];
                     dailyTurnover.TypeName = isActual ? "Actual Currency" : "Virtual Currency";
                 }
@@ -71,149 +71,159 @@ namespace Sunplus.Accounting.Business.Report.DailyTurnover
         {
             var dailyTurnoverSession = SessionExtension.GetSession(HttpContext.Current.Session, DailyTurnover_SessionKey);
             var list = new List<DailyTurnoverDTO>();
+
             #region get data
+
             if (dailyTurnoverSession != null)
             {
                 list = (List<DailyTurnoverDTO>)dailyTurnoverSession;
             }
             else
             {
-                   try
-                    {
-                        var currHour = DateTime.Now.Hour;
-                        bool isHistory = !(currHour >= 0 && currHour <= 8);
-                        string key = isHistory ? "HistoryDailyTurnover" : "DailyTurnover";
-                        list.Add(getDailyTurnover(date,false,key));
-                        list.Add(getDailyTurnover(date, true, key));
-                        SessionExtension.AddSession(HttpContext.Current.Session, DailyTurnover_SessionKey, list);
-                    }
-                    catch (Exception ex)
-                    {
-                        LogExtensions.ExceptionHandler(ex);
-                    }
+                try
+                {
+                    var currHour = DateTime.Now.Hour;
+                    bool isHistory = !(currHour >= 0 && currHour <= 8);
+                    string key = isHistory ? "HistoryDailyTurnover" : "DailyTurnover";
+                    list.Add(getDailyTurnover(date, false, key));
+                    list.Add(getDailyTurnover(date, true, key));
+                    SessionExtension.AddSession(HttpContext.Current.Session, DailyTurnover_SessionKey, list);
+                }
+                catch (Exception ex)
+                {
+                    LogExtensions.ExceptionHandler(ex);
+                }
             }
-            #endregion
+
+            #endregion get data
 
             #region export
-                var reportName = string.Format("DailyTurnover_{0}", date.Replace("/","_"));
-                var excelFile = new ExcelFile();
-                int startRowIndex = 0;
-                int startColumnIndex = 0;
-                var wsDailyTurnover = excelFile.Worksheets.Add(reportName);
-                #region header
-                var bgFormat = ExcelFormat(Color.FromArgb(159, 183, 213), HorizontalAlignmentStyle.Center,
-                                       ExcelFont.BoldWeight, false);
-                var titleCell = wsDailyTurnover.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex, startRowIndex,
-                                                     startColumnIndex + 6);
-                titleCell.Merged = true;
-                titleCell.Style = bgFormat;
-                titleCell.Value=string.Format("Daily Turnover - Date: {0}", date);
-                startRowIndex +=1;
-                wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = "Date";
-                wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = bgFormat;
-                startColumnIndex += 1;
-                wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = "Total Turnover";
-                wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = bgFormat;
-                startColumnIndex += 1;
-                wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = "Super Turnover";
-                wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = bgFormat;
-                startColumnIndex += 1;
-                wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = "Master Turnover";
-                wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = bgFormat;
-                startColumnIndex += 1;
-                wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = "Agent Turnover";
-                wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = bgFormat;
-                startColumnIndex += 1;
-                wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = "IBC Turnover";
-                wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = bgFormat;
-                startColumnIndex += 1;
-                wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = "CNT";
-                wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = bgFormat;
-                
-                #endregion
+
+            var reportName = string.Format("DailyTurnover_{0}", date.Replace("/", "_"));
+            var excelFile = new ExcelFile();
+            int startRowIndex = 0;
+            int startColumnIndex = 0;
+            var wsDailyTurnover = excelFile.Worksheets.Add(reportName);
+
+            #region header
+
+            var bgFormat = ExcelFormat(Color.FromArgb(159, 183, 213), HorizontalAlignmentStyle.Center,
+                                   ExcelFont.BoldWeight, false);
+            var titleCell = wsDailyTurnover.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex, startRowIndex,
+                                                 startColumnIndex + 6);
+            titleCell.Merged = true;
+            titleCell.Style = bgFormat;
+            titleCell.Value = string.Format("Daily Turnover - Date: {0}", date);
+            startRowIndex += 1;
+            wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = "Date";
+            wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = bgFormat;
+            startColumnIndex += 1;
+            wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = "Total Turnover";
+            wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = bgFormat;
+            startColumnIndex += 1;
+            wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = "Super Turnover";
+            wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = bgFormat;
+            startColumnIndex += 1;
+            wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = "Master Turnover";
+            wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = bgFormat;
+            startColumnIndex += 1;
+            wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = "Agent Turnover";
+            wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = bgFormat;
+            startColumnIndex += 1;
+            wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = "IBC Turnover";
+            wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = bgFormat;
+            startColumnIndex += 1;
+            wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = "CNT";
+            wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = bgFormat;
+
+            #endregion header
+
             #region body
-                var rowColor = Color.FromArgb(248, 248, 248);
-                var numberFormat = ExcelFormat(rowColor, HorizontalAlignmentStyle.Right,
-                                                     ExcelFont.NormalWeight, true);
-                var normalFormat = ExcelFormat(rowColor, HorizontalAlignmentStyle.Center,
-                                                     ExcelFont.NormalWeight, false);
 
-                wsDailyTurnover.Columns[0].Width = 255 * 20;
-                wsDailyTurnover.Columns[1].Width = 255 * 20;
-                wsDailyTurnover.Columns[2].Width = 255 * 20;
-                wsDailyTurnover.Columns[3].Width = 255 * 20;
-                wsDailyTurnover.Columns[4].Width = 255 * 20;
-                wsDailyTurnover.Columns[5].Width = 255 * 20;
-                wsDailyTurnover.Columns[6].Width = 255 * 30;
-                int len = list.Count;
-                if (len > 0)
-                {
-                    foreach (DailyTurnoverDTO row in list)
-                    {
-                        startRowIndex += 1;
-                        startColumnIndex = 0;
-                        var groupCell = wsDailyTurnover.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex, startRowIndex,
-                                                        startColumnIndex + 6);
-                        bgFormat = ExcelFormat(Color.FromArgb(159, 183, 213), HorizontalAlignmentStyle.Left,
-                                           ExcelFont.BoldWeight, false);
-                        groupCell.Style = bgFormat;
-                        groupCell.Merged = true;
-                        groupCell.Value = row.TypeName;
+            var rowColor = Color.FromArgb(248, 248, 248);
+            var numberFormat = ExcelFormat(rowColor, HorizontalAlignmentStyle.Right,
+                                                 ExcelFont.NormalWeight, true);
+            var normalFormat = ExcelFormat(rowColor, HorizontalAlignmentStyle.Center,
+                                                 ExcelFont.NormalWeight, false);
 
-                        startRowIndex += 1;
-                        startColumnIndex = 0;
-                        wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = row.StrDate;
-                        wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = normalFormat;
-                       
-
-                        startColumnIndex += 1;
-                        wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = row.Turnover;
-                        wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = numberFormat;
-
-                        startColumnIndex += 1;
-                        wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = row.STurnover;
-                        wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = numberFormat;
-
-                        startColumnIndex += 1;
-                        wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = row.MTurnover;
-                        wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = numberFormat;
-
-                        startColumnIndex += 1;
-                        wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = row.ATurnover;
-                        wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = numberFormat;
-
-                        startColumnIndex += 1;
-                        wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = row.IBCTurnover;
-                        wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = numberFormat;
-
-                        startColumnIndex += 1;
-                        wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = row.CNT;
-                        wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = numberFormat;
-                    }
-                }
-                else
+            wsDailyTurnover.Columns[0].Width = 255 * 20;
+            wsDailyTurnover.Columns[1].Width = 255 * 20;
+            wsDailyTurnover.Columns[2].Width = 255 * 20;
+            wsDailyTurnover.Columns[3].Width = 255 * 20;
+            wsDailyTurnover.Columns[4].Width = 255 * 20;
+            wsDailyTurnover.Columns[5].Width = 255 * 20;
+            wsDailyTurnover.Columns[6].Width = 255 * 30;
+            int len = list.Count;
+            if (len > 0)
+            {
+                foreach (DailyTurnoverDTO row in list)
                 {
                     startRowIndex += 1;
                     startColumnIndex = 0;
                     var groupCell = wsDailyTurnover.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex, startRowIndex,
                                                     startColumnIndex + 6);
-                    bgFormat = ExcelFormat(Color.FromArgb(159, 183, 213), HorizontalAlignmentStyle.Center,
+                    bgFormat = ExcelFormat(Color.FromArgb(159, 183, 213), HorizontalAlignmentStyle.Left,
                                        ExcelFont.BoldWeight, false);
                     groupCell.Style = bgFormat;
                     groupCell.Merged = true;
-                    groupCell.Value ="There is no data.";
-                }
-            #endregion 
+                    groupCell.Value = row.TypeName;
 
-            #endregion
+                    startRowIndex += 1;
+                    startColumnIndex = 0;
+                    wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = row.StrDate;
+                    wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = normalFormat;
+
+                    startColumnIndex += 1;
+                    wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = row.Turnover;
+                    wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = numberFormat;
+
+                    startColumnIndex += 1;
+                    wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = row.STurnover;
+                    wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = numberFormat;
+
+                    startColumnIndex += 1;
+                    wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = row.MTurnover;
+                    wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = numberFormat;
+
+                    startColumnIndex += 1;
+                    wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = row.ATurnover;
+                    wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = numberFormat;
+
+                    startColumnIndex += 1;
+                    wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = row.IBCTurnover;
+                    wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = numberFormat;
+
+                    startColumnIndex += 1;
+                    wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Value = row.CNT;
+                    wsDailyTurnover.Cells[startRowIndex, startColumnIndex].Style = numberFormat;
+                }
+            }
+            else
+            {
+                startRowIndex += 1;
+                startColumnIndex = 0;
+                var groupCell = wsDailyTurnover.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex, startRowIndex,
+                                                startColumnIndex + 6);
+                bgFormat = ExcelFormat(Color.FromArgb(159, 183, 213), HorizontalAlignmentStyle.Center,
+                                   ExcelFont.BoldWeight, false);
+                groupCell.Style = bgFormat;
+                groupCell.Merged = true;
+                groupCell.Value = "There is no data.";
+            }
+
+            #endregion body
+
+            #endregion export
 
             #region response
-                var response = HttpContext.Current.Response;
-                response.Clear();
-                response.ContentType = "application/vnd.ms-excel";
-                response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
-                excelFile.SaveXls(response.OutputStream);
-            #endregion
+
+            var response = HttpContext.Current.Response;
+            response.Clear();
+            response.ContentType = "application/vnd.ms-excel";
+            response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
+            excelFile.SaveXls(response.OutputStream);
+
+            #endregion response
         }
 
         private static CellStyle ExcelFormat(Color backgroundColor, HorizontalAlignmentStyle alignmentStyle, int font, bool isDecFormat)
@@ -227,17 +237,14 @@ namespace Sunplus.Accounting.Business.Report.DailyTurnover
             excelFormat.WrapText = true;
             excelFormat.Font.Name = "Tahoma";
             excelFormat.Font.Size = 160;
-            
 
             if (isDecFormat)
                 excelFormat.NumberFormat = "#,##0.00_);[RED](-#,##0.00);";
             return excelFormat;
         }
 
-
         public List<ActionDetail> SelDetailActionTurnover(string date, string action, string username)
         {
-            
             var list = new List<ActionDetail>();
             try
             {
@@ -251,39 +258,34 @@ namespace Sunplus.Accounting.Business.Report.DailyTurnover
                             where CastAide.AsDateTime(d.Field<string>("DateTime")) == CastAide.AsDateTime(date)
                             && d.Field<string>("Action") == action && d.Field<string>("Username") == username
                             select d;
-                
+
                 foreach (DataRow row in query)
                 {
-                   
-                        var actionDetail = new ActionDetail();
-                        actionDetail.Detail = row["Detail"].ToString();
-                        actionDetail.TurnoverActual = NumberFormat.DecFormat(row["Total_Actual"].ToString(), 0);
-                        actionDetail.TurnoverVirtual = NumberFormat.DecFormat(row["Total_Virtual"].ToString(), 0);
-                        actionDetail.STurnoverActual = NumberFormat.DecFormat(row["Super_Actual"].ToString(), 0);
-                        actionDetail.STurnoverVirtual = NumberFormat.DecFormat(row["Super_Virtual"].ToString(), 0);
-                        actionDetail.MTurnoverActual = NumberFormat.DecFormat(row["Master_Actual"].ToString(), 0);
-                        actionDetail.MTurnoverVirtual = NumberFormat.DecFormat(row["Master_Virtual"].ToString(), 0);
-                        actionDetail.ATurnoverActual = NumberFormat.DecFormat(row["Agent_Actual"].ToString(), 0);
-                        actionDetail.ATurnoverVirtual = NumberFormat.DecFormat(row["Agent_Virtual"].ToString(), 0);
-                        actionDetail.IBCTurnoverActual = NumberFormat.DecFormat(row["IBC_Actual"].ToString(), 0);
-                        actionDetail.IBCTurnoverVirtual = NumberFormat.DecFormat(row["IBC_Virtual"].ToString(), 0);
+                    var actionDetail = new ActionDetail();
+                    actionDetail.Detail = row["Detail"].ToString();
+                    actionDetail.TurnoverActual = NumberFormat.DecFormat(row["Total_Actual"].ToString(), 0);
+                    actionDetail.TurnoverVirtual = NumberFormat.DecFormat(row["Total_Virtual"].ToString(), 0);
+                    actionDetail.STurnoverActual = NumberFormat.DecFormat(row["Super_Actual"].ToString(), 0);
+                    actionDetail.STurnoverVirtual = NumberFormat.DecFormat(row["Super_Virtual"].ToString(), 0);
+                    actionDetail.MTurnoverActual = NumberFormat.DecFormat(row["Master_Actual"].ToString(), 0);
+                    actionDetail.MTurnoverVirtual = NumberFormat.DecFormat(row["Master_Virtual"].ToString(), 0);
+                    actionDetail.ATurnoverActual = NumberFormat.DecFormat(row["Agent_Actual"].ToString(), 0);
+                    actionDetail.ATurnoverVirtual = NumberFormat.DecFormat(row["Agent_Virtual"].ToString(), 0);
+                    actionDetail.IBCTurnoverActual = NumberFormat.DecFormat(row["IBC_Actual"].ToString(), 0);
+                    actionDetail.IBCTurnoverVirtual = NumberFormat.DecFormat(row["IBC_Virtual"].ToString(), 0);
 
-                        list.Add(actionDetail);
-                   
+                    list.Add(actionDetail);
                 }
             }
-           
+
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
-            
-            
+
             SessionExtension.AddSession(HttpContext.Current.Session, ActionDetailTurnover_SessionKey, list);
             return list;
         }
-           
-        
 
         public void DetailTurnoverExportExcel(string date)
         {
@@ -300,12 +302,15 @@ namespace Sunplus.Accounting.Business.Report.DailyTurnover
             }
 
             #region export
+
             var reportName = string.Format("DetailTurnover_{0}", date.Replace("/", "_"));
             var excelFile = new ExcelFile();
             int startRowIndex = 0;
             int startColumnIndex = 0;
             var wsDetailTurnover = excelFile.Worksheets.Add(reportName);
+
             #region header
+
             var bgFormat = ExcelFormat(Color.FromArgb(159, 183, 213), HorizontalAlignmentStyle.Center,
                                    ExcelFont.BoldWeight, false);
             var titleCell = wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex, startRowIndex,
@@ -337,15 +342,17 @@ namespace Sunplus.Accounting.Business.Report.DailyTurnover
             startColumnIndex += 1;
             wsDetailTurnover.Cells[startRowIndex, startColumnIndex].Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IBCTurnover");
             wsDetailTurnover.Cells[startRowIndex, startColumnIndex].Style = bgFormat;
-            
-            #endregion
-            #endregion
+
+            #endregion header
+
+            #endregion export
 
             #region body
+
             var rowColor = Color.FromArgb(248, 248, 248);
             var numberOddFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", Color.FromArgb(255, 255, 255), false, true);
             var numberEvenFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", Color.FromArgb(235, 241, 222), false, true);
-            
+
             wsDetailTurnover.Columns[0].Width = 255 * 20;
             wsDetailTurnover.Columns[1].Width = 255 * 20;
             wsDetailTurnover.Columns[2].Width = 255 * 20;
@@ -375,14 +382,14 @@ namespace Sunplus.Accounting.Business.Report.DailyTurnover
                     startColumnIndex++;
                     wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex, startRowIndex + nextRow + 3, startColumnIndex).Merged = true;
                     wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex, startRowIndex + nextRow + 3, startColumnIndex).Style = normalFormat;
-                     wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex, startRowIndex + nextRow + 3, startColumnIndex).Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+                    wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex, startRowIndex + nextRow + 3, startColumnIndex).Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
                     wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex, startRowIndex + nextRow + 3, startColumnIndex).Value = row.ActionName;
 
                     startColumnIndex++;
                     wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex, startRowIndex + nextRow + 3, startColumnIndex).Merged = true;
                     wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex, startRowIndex + nextRow + 3, startColumnIndex).Style = normalFormat;
-                     wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex, startRowIndex + nextRow + 3, startColumnIndex).Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
-                    wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex, startRowIndex + nextRow + 3, startColumnIndex).Value = row.Username; 
+                    wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex, startRowIndex + nextRow + 3, startColumnIndex).Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
+                    wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex, startRowIndex + nextRow + 3, startColumnIndex).Value = row.Username;
 
                     startColumnIndex++;
                     wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex, startRowIndex + nextRow, startColumnIndex + 4).Merged = true;
@@ -391,53 +398,50 @@ namespace Sunplus.Accounting.Business.Report.DailyTurnover
                     wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex, startRowIndex + nextRow, startColumnIndex + 4).Value = "Virtual";
 
                     startRowIndex++;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Style = normalFormat;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Value = row.ActionDetail.TurnoverVirtual;
- 
-                    startColumnIndex ++;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Style = normalFormat;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Value = row.ActionDetail.STurnoverVirtual;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Style = normalFormat;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Value = row.ActionDetail.TurnoverVirtual;
 
                     startColumnIndex++;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Style = normalFormat;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Value = row.ActionDetail.MTurnoverVirtual;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Style = normalFormat;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Value = row.ActionDetail.STurnoverVirtual;
 
                     startColumnIndex++;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Style = normalFormat;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Value = row.ActionDetail.ATurnoverVirtual;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Style = normalFormat;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Value = row.ActionDetail.MTurnoverVirtual;
 
                     startColumnIndex++;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Style = normalFormat;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Value = row.ActionDetail.IBCTurnoverVirtual;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Style = normalFormat;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Value = row.ActionDetail.ATurnoverVirtual;
 
+                    startColumnIndex++;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Style = normalFormat;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Value = row.ActionDetail.IBCTurnoverVirtual;
 
                     startRowIndex++;
                     wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex - 4, startRowIndex + nextRow, startColumnIndex).Merged = true;
                     wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex - 4, startRowIndex + nextRow, startColumnIndex).Style = normalFormat;
-                    wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex - 4, startRowIndex + nextRow, startColumnIndex).Style.Font.Weight = ExcelFont.BoldWeight ;
-                    wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex - 4, startRowIndex + nextRow, startColumnIndex).Value = "Actual"; 
+                    wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex - 4, startRowIndex + nextRow, startColumnIndex).Style.Font.Weight = ExcelFont.BoldWeight;
+                    wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex - 4, startRowIndex + nextRow, startColumnIndex).Value = "Actual";
 
                     startRowIndex++;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Style = normalFormat;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Value = row.ActionDetail.IBCTurnoverActual;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Style = normalFormat;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Value = row.ActionDetail.IBCTurnoverActual;
 
                     startColumnIndex--;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Style = normalFormat;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Value = row.ActionDetail.ATurnoverActual;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Style = normalFormat;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Value = row.ActionDetail.ATurnoverActual;
 
                     startColumnIndex--;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Style = normalFormat;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Value = row.ActionDetail.MTurnoverActual;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Style = normalFormat;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Value = row.ActionDetail.MTurnoverActual;
 
                     startColumnIndex--;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Style = normalFormat;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Value = row.ActionDetail.STurnoverActual;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Style = normalFormat;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Value = row.ActionDetail.STurnoverActual;
 
                     startColumnIndex--;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Style = normalFormat;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Value = row.ActionDetail.TurnoverActual;
-
-                  
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Style = normalFormat;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Value = row.ActionDetail.TurnoverActual;
                 }
             }
             else
@@ -453,42 +457,49 @@ namespace Sunplus.Accounting.Business.Report.DailyTurnover
                 groupCell.Value = "There is no data.";
             }
 
-            #endregion
+            #endregion body
+
             #region response
+
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
             excelFile.SaveXls(response.OutputStream);
-            #endregion
+
+            #endregion response
         }
 
         public List<ActionTurnover> SelDetailTurnover(string date)
         {
             var dailyTurnover = SessionExtension.GetSession(HttpContext.Current.Session, DailyTurnover_SessionKey);
             var listDailyTurnover = new List<DailyTurnoverDTO>();
-            if(dailyTurnover != null)
-                 listDailyTurnover = (List<DailyTurnoverDTO>)dailyTurnover;
+            if (dailyTurnover != null)
+                listDailyTurnover = (List<DailyTurnoverDTO>)dailyTurnover;
             else
             {
-                 try
-                    {
-                        var currHour = DateTime.Now.Hour;
-                        bool isHistory = !(currHour >= 0 && currHour <= 8);
-                        string key = isHistory ? "HistoryDailyTurnover" : "DailyTurnover";
-                        listDailyTurnover.Add(getDailyTurnover(date, false, key));
-                        listDailyTurnover.Add(getDailyTurnover(date, true, key));
-                        SessionExtension.AddSession(HttpContext.Current.Session, DailyTurnover_SessionKey, listDailyTurnover);
-                    }
-                    catch (Exception ex)
-                    {
-                        LogExtensions.ExceptionHandler(ex);
-                    }
+                try
+                {
+                    var currHour = DateTime.Now.Hour;
+                    bool isHistory = !(currHour >= 0 && currHour <= 8);
+                    string key = isHistory ? "HistoryDailyTurnover" : "DailyTurnover";
+                    listDailyTurnover.Add(getDailyTurnover(date, false, key));
+                    listDailyTurnover.Add(getDailyTurnover(date, true, key));
+                    SessionExtension.AddSession(HttpContext.Current.Session, DailyTurnover_SessionKey, listDailyTurnover);
+                }
+                catch (Exception ex)
+                {
+                    LogExtensions.ExceptionHandler(ex);
+                }
             }
             var listDetail = new List<ActionTurnover>();
             try
             {
                 var dbresult = _dailyTurnoverDAO.SelDailyChangeDetial(date);
+                if (dbresult.ResultSet.Tables==null || dbresult.ResultSet.Tables[0].Rows.Count == 0)
+                {
+                    return listDetail;
+                }
                 var dtb = dbresult.ResultSet.Tables[0];
                 string action = "";
                 string detail = "";
@@ -502,7 +513,6 @@ namespace Sunplus.Accounting.Business.Report.DailyTurnover
                         DataRow row1 = dtb.Rows[j];
                         if (action.Equals(row1["Action"].ToString()) && detail.Equals(row1["Detail"].ToString()))
                         {
-
                             dtb.Rows[i].Delete();
                         }
                         else
@@ -511,7 +521,6 @@ namespace Sunplus.Accounting.Business.Report.DailyTurnover
                                 break;
                         }
                     }
-
                 }
                 dtb = dtb.GetChanges(DataRowState.Unchanged);
                 var Act = new ActionDetail();
@@ -520,8 +529,8 @@ namespace Sunplus.Accounting.Business.Report.DailyTurnover
                 {
                     DataRow actionRows = dtb.Rows[i];
                     var ActionDetailTmp = new ActionDetail();
-                    if (i == 0) {
-                       
+                    if (i == 0)
+                    {
                         ActionDetailTmp.TurnoverActual = listDailyTurnover[1].Turnover;
                         ActionDetailTmp.STurnoverActual = listDailyTurnover[1].STurnover;
                         ActionDetailTmp.MTurnoverActual = listDailyTurnover[1].MTurnover;
@@ -533,8 +542,6 @@ namespace Sunplus.Accounting.Business.Report.DailyTurnover
                         ActionDetailTmp.MTurnoverVirtual = listDailyTurnover[0].MTurnover;
                         ActionDetailTmp.ATurnoverVirtual = listDailyTurnover[0].ATurnover;
                         ActionDetailTmp.IBCTurnoverVirtual = listDailyTurnover[0].IBCTurnover;
-
-                      
                     }
                     else if (i == 1)
                     {
@@ -550,7 +557,6 @@ namespace Sunplus.Accounting.Business.Report.DailyTurnover
                         ActionDetailTmp.MTurnoverVirtual = NumberFormat.DecFormat((CastAide.AsDouble(listDailyTurnover[0].MTurnover) - CastAide.AsDouble(row["Master_Virtual"])), 0);
                         ActionDetailTmp.ATurnoverVirtual = NumberFormat.DecFormat((CastAide.AsDouble(listDailyTurnover[0].ATurnover) - CastAide.AsDouble(row["Agent_Virtual"])), 0);
                         ActionDetailTmp.IBCTurnoverVirtual = NumberFormat.DecFormat((CastAide.AsDouble(listDailyTurnover[0].IBCTurnover) - CastAide.AsDouble(row["IBC_Virtual"])), 0);
-
 
                         Act = ActionDetailTmp;
                     }
@@ -568,7 +574,7 @@ namespace Sunplus.Accounting.Business.Report.DailyTurnover
                         ActionDetailTmp.MTurnoverVirtual = NumberFormat.DecFormat((CastAide.AsDouble(Act.MTurnoverVirtual) - CastAide.AsDouble(row["Master_Virtual"])), 0);
                         ActionDetailTmp.ATurnoverVirtual = NumberFormat.DecFormat((CastAide.AsDouble(Act.ATurnoverVirtual) - CastAide.AsDouble(row["Agent_Virtual"])), 0);
                         ActionDetailTmp.IBCTurnoverVirtual = NumberFormat.DecFormat((CastAide.AsDouble(Act.IBCTurnoverVirtual) - CastAide.AsDouble(row["IBC_Virtual"])), 0);
-                        
+
                         Act = ActionDetailTmp;
                     }
                     listDetail.Add(new ActionTurnover()
@@ -604,25 +610,27 @@ namespace Sunplus.Accounting.Business.Report.DailyTurnover
                 temp = SelDetailActionTurnover(Datetime, Action, username);
             }
 
-          
             string[] arr = temp[0].Detail.ToString().Split(new Char[] { '$' });
-            var DetailNameHeader = (arr.Length == 1)?  "TransID" : "Match";
+            var DetailNameHeader = (arr.Length == 1) ? "TransID" : "Match";
             var DetailName = (arr.Length == 1) ? arr[0] : arr[0] + " - " + arr[1];
-            
+
             #region export
-            var reportName = string.Format("{0}_{1}",Action.Replace(" ",""), CastAide.AsDateTime(Datetime).ToShortDateString().ToString().Replace("/", "_"));
+
+            var reportName = string.Format("{0}_{1}", Action.Replace(" ", ""), CastAide.AsDateTime(Datetime).ToShortDateString().ToString().Replace("/", "_"));
             var excelFile = new ExcelFile();
             int startRowIndex = 0;
             int startColumnIndex = 0;
             var wsDetailTurnover = excelFile.Worksheets.Add(reportName);
+
             #region header
+
             var bgFormat = ExcelFormat(Color.FromArgb(159, 183, 213), HorizontalAlignmentStyle.Center,
                                    ExcelFont.BoldWeight, false);
             var titleCell = wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex, startRowIndex,
                                                  startColumnIndex + 5);
             titleCell.Merged = true;
             titleCell.Style = bgFormat;
-            titleCell.Value = string.Format("{0} - Date: {1}",Action, Datetime);
+            titleCell.Value = string.Format("{0} - Date: {1}", Action, Datetime);
             startRowIndex += 1;
             wsDetailTurnover.Cells[startRowIndex, startColumnIndex].Value = DetailNameHeader;
             wsDetailTurnover.Cells[startRowIndex, startColumnIndex].Style = bgFormat;
@@ -641,16 +649,16 @@ namespace Sunplus.Accounting.Business.Report.DailyTurnover
             startColumnIndex += 1;
             wsDetailTurnover.Cells[startRowIndex, startColumnIndex].Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IBCTurnover");
             wsDetailTurnover.Cells[startRowIndex, startColumnIndex].Style = bgFormat;
-           
 
-            #endregion
-            #endregion
+            #endregion header
+
+            #endregion export
 
             #region body
-           
+
             var numberOddFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", Color.FromArgb(255, 255, 255), false, true);
             var numberEvenFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", Color.FromArgb(235, 241, 222), false, true);
-            
+
             wsDetailTurnover.Columns[0].Width = 255 * 30;
             wsDetailTurnover.Columns[1].Width = 255 * 20;
             wsDetailTurnover.Columns[2].Width = 255 * 20;
@@ -659,7 +667,7 @@ namespace Sunplus.Accounting.Business.Report.DailyTurnover
             wsDetailTurnover.Columns[5].Width = 255 * 20;
 
             int len = temp.Count;
-            
+
             var nextRow = 0;
             int index = 0;
             if (len > 0)
@@ -683,51 +691,50 @@ namespace Sunplus.Accounting.Business.Report.DailyTurnover
                     wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex, startRowIndex + nextRow, startColumnIndex + 4).Value = "Virtual";
 
                     startRowIndex++;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Style = normalFormat;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Value = row.TurnoverVirtual;
- 
-                    startColumnIndex ++;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Style = normalFormat;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Value = row.STurnoverVirtual;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Style = normalFormat;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Value = row.TurnoverVirtual;
 
                     startColumnIndex++;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Style = normalFormat;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Value = row.MTurnoverVirtual;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Style = normalFormat;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Value = row.STurnoverVirtual;
 
                     startColumnIndex++;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Style = normalFormat;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Value = row.ATurnoverVirtual;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Style = normalFormat;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Value = row.MTurnoverVirtual;
 
                     startColumnIndex++;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Style = normalFormat;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Value = row.IBCTurnoverVirtual;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Style = normalFormat;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Value = row.ATurnoverVirtual;
+
+                    startColumnIndex++;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Style = normalFormat;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Value = row.IBCTurnoverVirtual;
 
                     startRowIndex++;
                     wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex - 4, startRowIndex + nextRow, startColumnIndex).Merged = true;
                     wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex - 4, startRowIndex + nextRow, startColumnIndex).Style = normalFormat;
-                    wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex - 4, startRowIndex + nextRow, startColumnIndex).Style.Font.Weight = ExcelFont.BoldWeight ;
-                    wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex - 4, startRowIndex + nextRow, startColumnIndex).Value = "Actual"; 
+                    wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex - 4, startRowIndex + nextRow, startColumnIndex).Style.Font.Weight = ExcelFont.BoldWeight;
+                    wsDetailTurnover.Cells.GetSubrangeAbsolute(startRowIndex + nextRow, startColumnIndex - 4, startRowIndex + nextRow, startColumnIndex).Value = "Actual";
 
                     startRowIndex++;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Style = normalFormat;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Value = row.IBCTurnoverActual;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Style = normalFormat;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Value = row.IBCTurnoverActual;
 
                     startColumnIndex--;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Style = normalFormat;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Value = row.ATurnoverActual;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Style = normalFormat;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Value = row.ATurnoverActual;
 
                     startColumnIndex--;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Style = normalFormat;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Value = row.MTurnoverActual;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Style = normalFormat;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Value = row.MTurnoverActual;
 
                     startColumnIndex--;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Style = normalFormat;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Value = row.STurnoverActual;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Style = normalFormat;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Value = row.STurnoverActual;
 
                     startColumnIndex--;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Style = normalFormat;
-                    wsDetailTurnover.Cells[startRowIndex + nextRow , startColumnIndex].Value = row.TurnoverActual;
-                  
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Style = normalFormat;
+                    wsDetailTurnover.Cells[startRowIndex + nextRow, startColumnIndex].Value = row.TurnoverActual;
                 }
             }
             else
@@ -743,17 +750,17 @@ namespace Sunplus.Accounting.Business.Report.DailyTurnover
                 groupCell.Value = "There is no data.";
             }
 
-            #endregion
+            #endregion body
 
             #region response
+
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
             excelFile.SaveXls(response.OutputStream);
-            #endregion
-        }
 
-      
+            #endregion response
+        }
     }
 }

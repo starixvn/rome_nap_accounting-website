@@ -11,12 +11,8 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
-using Sunplus.Accounting.Core.Web.Controls;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
-
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Core.LoggingLib;
 using FormatHandler = IBCUtils.FormatHandler;
 
 /// <summary>
@@ -39,7 +35,6 @@ namespace BLL.Report
             }
             catch (Exception ex)
             {
-
                 LogExtensions.ExceptionHandler(ex);
             }
             return tpl;
@@ -106,6 +101,7 @@ namespace BLL.Report
                             if (string.Compare(dr["betteam"].ToString(), "a", true) == 0)
                                 strChoice = CacheRef.GetTeamName(dr["AwayId"]);
                             break;
+
                         case 3:
                         case 8:
                             if (string.Compare(dr["betteam"].ToString(), "a", true) == 0)
@@ -138,7 +134,6 @@ namespace BLL.Report
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw;
             }

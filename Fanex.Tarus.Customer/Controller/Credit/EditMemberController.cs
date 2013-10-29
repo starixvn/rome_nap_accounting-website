@@ -96,7 +96,6 @@
                 ICustomer customer = GetCustomerFromDeserializeJsonString(stringcustomer);
 
                 //do insert new agent
-                int memberId = 0;
                 currentContext.CustId = AppSession.AccId;
                 currentContext.AdminId = AppSession.AccId;
                 customer.Language = "E";

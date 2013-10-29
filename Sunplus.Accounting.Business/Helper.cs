@@ -1,25 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
+using Sunplus.Accounting.Business.BootStrappers;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.Entities;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Business.BootStrappers;
-using Sunplus.Accounting.Core.Configurations;
 
 namespace Sunplus.Accounting.Business
 {
     public class Helper : IHelper
     {
         private IHelperDAO _helperDao;
+
         public Helper()
         {
             _helperDao = CommonBootStrapper.Locator.GetInstance<IHelperDAO>();
         }
-
-
 
         public Helper(IHelperDAO helperDao)
         {
@@ -39,10 +36,8 @@ namespace Sunplus.Accounting.Business
             var listCredit = new List<Site>();
             foreach (DataRow row in result.Rows)
             {
-
                 if (row["islicensee"].ToString() == "True")
                 {
-
                     var license = new Site();
                     license.Id = int.Parse(row[0].ToString());
                     license.Name = row[1].ToString();

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Web;
 using DNAide.Core;
 using DNAide.Utils;
@@ -16,16 +15,18 @@ using Sunplus.Accounting.Entities.Report.MatchAnalysis;
 
 namespace Sunplus.Accounting.Business.Report.MatchAnalysis
 {
-    public class MatchAnalysisService:IMatchAnalysisService
+    public class MatchAnalysisService : IMatchAnalysisService
     {
         private IMatchAnalysisDAO _analysisDao;
+
         public MatchAnalysisService(IMatchAnalysisDAO iAnalysisDao)
         {
             _analysisDao = iAnalysisDao;
         }
 
         #region GetKeyForSession
-        string GetKeyForSession(ReportType reportType)
+
+        private string GetKeyForSession(ReportType reportType)
         {
             string key = "";
             switch (reportType)
@@ -33,25 +34,31 @@ namespace Sunplus.Accounting.Business.Report.MatchAnalysis
                 case ReportType.Currency:
                     key = "MatchAnalysisByCurrency";
                     break;
+
                 case ReportType.Bettype:
                     key = "MatchAnalysisByBettype";
                     break;
+
                 case ReportType.Super:
                     key = "MatchAnalysisBySuper";
                     break;
+
                 case ReportType.Member:
                     key = "MatchAnalysisByMember";
                     break;
+
                 case ReportType.Country:
                     key = "MatchAnalysisByCountry";
                     break;
             }
             return key;
         }
-        #endregion
+
+        #endregion GetKeyForSession
 
         #region GetNameSheet
-        string GetNameSheet(ReportType reportType)
+
+        private string GetNameSheet(ReportType reportType)
         {
             string key = "";
             switch (reportType)
@@ -59,25 +66,31 @@ namespace Sunplus.Accounting.Business.Report.MatchAnalysis
                 case ReportType.Currency:
                     key = "MatchAnalysisByCurrency";
                     break;
+
                 case ReportType.Bettype:
                     key = "MatchAnalysisByBettype";
                     break;
+
                 case ReportType.Super:
                     key = "MatchAnalysisBySuper";
                     break;
+
                 case ReportType.Member:
                     key = "MatchAnalysisByMember";
                     break;
+
                 case ReportType.Country:
                     key = "MatchAnalysisByCountry";
                     break;
             }
             return key;
         }
-        #endregion 
+
+        #endregion GetNameSheet
 
         #region GetColumnNameForExcel
-        string GetColumnNameForExcel(ReportType reportType, int statusId)
+
+        private string GetColumnNameForExcel(ReportType reportType, int statusId)
         {
             string name = "";
             switch (reportType)
@@ -85,33 +98,40 @@ namespace Sunplus.Accounting.Business.Report.MatchAnalysis
                 case ReportType.Currency:
                     name = "Currency";
                     break;
+
                 case ReportType.Bettype:
                     name = "Bet type";
                     break;
+
                 case ReportType.Super:
                     name = "Super";
                     break;
+
                 case ReportType.Member:
                     switch (statusId)
                     {
                         case 112:
                             name = "Top 100 (WON) Member";
                             break;
+
                         case 113:
                             name = "Top 100 (LOSE) Member";
                             break;
                     }
-                    
+
                     break;
+
                 case ReportType.Country:
                     name = "MatchAnalysisByCountry";
                     break;
             }
             return name;
         }
-        #endregion
+
+        #endregion GetColumnNameForExcel
 
         #region SelMatchAnalysisByType
+
         public MatchAnalysisBO SelMatchAnalysisByType(int matchId, int statusId, Entities.Report.MatchAnalysis.ReportType reportType)
         {
             MatchAnalysisBO match = new MatchAnalysisBO();
@@ -121,12 +141,13 @@ namespace Sunplus.Accounting.Business.Report.MatchAnalysis
             try
             {
                 DataTable dataTable = _analysisDao.SelMatchAnalysisByType(matchId, statusId, reportType);
-                if(dataTable != null)
+                if (dataTable != null)
                 {
                     DataRow[] rows = dataTable.Select();
                     string itemName = "", currency = "";
 
                     #region Assign Data
+
                     foreach (DataRow row in rows)
                     {
                         switch (reportType)
@@ -134,12 +155,15 @@ namespace Sunplus.Accounting.Business.Report.MatchAnalysis
                             case ReportType.Currency:
                                 itemName = CastAide.AsString(row["currencyname"]);
                                 break;
+
                             case ReportType.Bettype:
                                 itemName = CacheRef.GetBettype(row["bettype"]);
                                 break;
+
                             case ReportType.Super:
                                 itemName = CastAide.AsString(row["username"]);
                                 break;
+
                             case ReportType.Member:
                                 itemName = CastAide.AsString(row["username"]);
                                 currency = CastAide.AsString(row["currencyname"]);
@@ -150,7 +174,7 @@ namespace Sunplus.Accounting.Business.Report.MatchAnalysis
                                             {
                                                 ItemName = itemName,
                                                 Currency = currency,
-                                                BetCount = NumberFormat.DecFormat( (row["betcount"]),0),
+                                                BetCount = NumberFormat.DecFormat((row["betcount"]), 0),
                                                 MemberTO = NumberFormat.DecFormat((row["MemberTurnover"]), 2),
                                                 MemberWL = NumberFormat.DecFormat((row["MemberWinLost"]), 2),
                                                 HouseTO = NumberFormat.DecFormat((row["HouseTurnover"]), 2),
@@ -158,13 +182,12 @@ namespace Sunplus.Accounting.Business.Report.MatchAnalysis
                                                 SMATO = NumberFormat.DecFormat((row["SMATurnover"]), 2),
                                                 SMAWL = NumberFormat.DecFormat((row["SMAWinLost"]), 2),
                                             });
-                      
                     }
 
                     match.Total = new MatchAnalysisDTO()
                                       {
                                           ItemName = "TOTAL",
-                                          BetCount = NumberFormat.DecFormat( match.Items.Sum(s=>CastAide.AsDecimal(s.BetCount)),0),
+                                          BetCount = NumberFormat.DecFormat(match.Items.Sum(s => CastAide.AsDecimal(s.BetCount)), 0),
                                           MemberTO = NumberFormat.DecFormat(match.Items.Sum(s => CastAide.AsDecimal(s.MemberTO)), 2),
                                           MemberWL = NumberFormat.DecFormat(match.Items.Sum(s => CastAide.AsDecimal(s.MemberWL)), 2),
                                           HouseTO = NumberFormat.DecFormat(match.Items.Sum(s => CastAide.AsDecimal(s.HouseTO)), 2),
@@ -174,11 +197,12 @@ namespace Sunplus.Accounting.Business.Report.MatchAnalysis
                                           Currency = string.Empty,
                                       };
                 }
-                #endregion
+
+                    #endregion Assign Data
             }
             catch (Exception ex)
             {
-                LogExtensions .ExceptionHandler(ex);
+                LogExtensions.ExceptionHandler(ex);
             }
 
             string key = GetKeyForSession(reportType);
@@ -186,10 +210,12 @@ namespace Sunplus.Accounting.Business.Report.MatchAnalysis
 
             return match;
         }
-        #endregion
+
+        #endregion SelMatchAnalysisByType
 
         #region GetStatusById
-        string GetStatusById(int statusId)
+
+        private string GetStatusById(int statusId)
         {
             string status = string.Empty;
             switch (statusId)
@@ -197,26 +223,31 @@ namespace Sunplus.Accounting.Business.Report.MatchAnalysis
                 case 0:
                     status = "All";
                     break;
+
                 case 112:
                     status = "Won";
                     break;
+
                 case 113:
                     status = "Lose";
                     break;
+
                 case 111:
                     status = "Draw";
                     break;
             }
             return status;
         }
-        #endregion
+
+        #endregion GetStatusById
 
         #region ExportMatchAnalysis
+
         public ExcelFile ExportMatchAnalysis(int matchId, int statusId, ReportType reportType)
         {
             ExcelFile excelFile = new ExcelFile();
             var exlStyle = new ExcelGemboxUtils();
-            
+
             ExcelWorksheetCollection worksheets = excelFile.Worksheets;
             ExcelWorksheet ws = null;
             string tag = GetNameSheet(reportType);
@@ -234,6 +265,7 @@ namespace Sunplus.Accounting.Business.Report.MatchAnalysis
                 int r = 142, g = 179, b = 231;
 
                 #region Title
+
                 ws.Cells.GetSubrangeAbsolute(0, 0, 1, colspan).Value = "Special Match Analysis (Base on RM) ";
                 ws.Cells.GetSubrangeAbsolute(0, 0, 1, colspan).Style = exlStyle.GetStyleTitle(252, 213, 180);
                 ws.Cells.GetSubrangeAbsolute(0, 0, 1, colspan).Merged = true;
@@ -241,7 +273,8 @@ namespace Sunplus.Accounting.Business.Report.MatchAnalysis
                 ws.Cells.GetSubrangeAbsolute(2, 0, 2, colspan).Value = "Report Type: " + reportType.ToString() + " - Match ID: " + matchId + " - Status: " + GetStatusById(statusId);
                 ws.Cells.GetSubrangeAbsolute(2, 0, 2, colspan).Style = exlStyle.GetStyleText(217, 217, 217, HorizontalAlignmentStyle.Left, true);
                 ws.Cells.GetSubrangeAbsolute(2, 0, 2, colspan).Merged = true;
-                #endregion
+
+                #endregion Title
 
                 #region Header
 
@@ -284,9 +317,10 @@ namespace Sunplus.Accounting.Business.Report.MatchAnalysis
                     ws.Cells.GetSubrangeAbsolute(indexRow, 8, indexRow + 1, 8).Merged = true;
                 }
 
-                #endregion
+                #endregion Header
 
                 indexRow++;
+
                 #region Content
 
                 r = g = b = 255;
@@ -297,7 +331,7 @@ namespace Sunplus.Accounting.Business.Report.MatchAnalysis
                     ws.Cells[indexRow, 0].Value = item.ItemName;
                     ws.Cells[indexRow, 0].Style = exlStyle.GetStyleText(r, g, b);
 
-                    ws.Cells[indexRow, 1].Value = CastAide.AsDecimal( item.MemberTO);
+                    ws.Cells[indexRow, 1].Value = CastAide.AsDecimal(item.MemberTO);
                     ws.Cells[indexRow, 1].Style = exlStyle.GetStyleNumber(true, 0, "", r, g, b);
 
                     ws.Cells[indexRow, 2].Value = CastAide.AsDecimal(item.MemberWL);
@@ -318,14 +352,14 @@ namespace Sunplus.Accounting.Business.Report.MatchAnalysis
                     ws.Cells[indexRow, 7].Value = CastAide.AsDecimal(item.SMAWL);
                     ws.Cells[indexRow, 7].Style = exlStyle.GetStyleNumber(true, 0, "", r, g, b);
 
-
                     if (reportType == ReportType.Member)
                     {
                         ws.Cells[indexRow, 8].Value = item.Currency;
                         ws.Cells[indexRow, 8].Style = exlStyle.GetStyleText(r, g, b);
                     }
                 }
-                #endregion
+
+                #endregion Content
 
                 #region Total
 
@@ -358,13 +392,13 @@ namespace Sunplus.Accounting.Business.Report.MatchAnalysis
                 ws.Cells[indexRow, 7].Value = CastAide.AsDecimal(match.Total.SMAWL);
                 ws.Cells[indexRow, 7].Style = exlStyle.GetStyleNumberTotal(true, 0, "", r, g, b);
 
-
                 if (reportType == ReportType.Member)
                 {
                     ws.Cells[indexRow, 8].Value = "";
                     ws.Cells[indexRow, 8].Style = exlStyle.GetStyleTextTotal(r, g, b);
                 }
-                #endregion
+
+                #endregion Total
 
                 for (int i = 0; i <= colspan; i++)
                 {
@@ -377,6 +411,7 @@ namespace Sunplus.Accounting.Business.Report.MatchAnalysis
             }
             return excelFile;
         }
-        #endregion
+
+        #endregion ExportMatchAnalysis
     }
 }

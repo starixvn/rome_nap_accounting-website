@@ -1,6 +1,4 @@
 ﻿using System;
-using Sunplus.Data.DataAbstract.Entity;
-using Sunplus.Data.DataAbstract.DAO;
 
 namespace Sunplus.Data.DataAbstract.Log
 {

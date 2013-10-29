@@ -7,32 +7,26 @@ using CasinoLibrary.Model.BaseBO;
 using CasinoLibrary.Model.Common;
 using DNAide.Core;
 using DNAide.Data;
+using Fanex.Data;
 using JSoft.Utility;
-
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
-using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.Core.Extensions;
-using Fanex.Data;
-
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
 {
-    public class SelectCustomer: DataAccess
+    public class SelectCustomer : DataAccess
     {
         private static Core.Configurations.StoreProcedureElement GetStoreProcedure(string aliasName)
         {
             var sps = CustomerSession.Instance[CustomerSession.StoreCollection.CustomerControl];
             return sps != null ? sps[aliasName] : null;
-            
         }
 
         private static Core.Configurations.StoreProcedureElement GetHelperStoreProcedure(string aliasName)
         {
             var sps = HelperSession.Instance[HelperSession.StoreCollection.HelperControl];
             return sps != null ? sps[aliasName] : null;
-
         }
 
         private static Core.Configurations.StoreProcedureElement GetExchangeStoreProcedure(string aliasName)
@@ -40,7 +34,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             var sps = ExchangeRateSession.Instance[ExchangeRateSession.StoreCollection.ExchangeRateControl];
 
             return sps != null ? sps[aliasName] : null;
-
         }
 
         private static StoreProcedureElement GetUserControlStoreProcedure(string aliasName)
@@ -48,7 +41,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             var sps = UserControlSession.Instance[UserControlSession.StoreCollection.AccountInfo];
 
             return sps != null ? sps[aliasName] : null;
-
         }
 
         private static StoreProcedureElement GetSportBookStoreProcedure(string aliasName)
@@ -56,10 +48,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             var sps = SportbookPtSession.Instance[SportbookPtSession.StoreCollection.SportBooksPtControl];
 
             return sps != null ? sps[aliasName] : null;
-
         }
-
-        
 
         /// <summary>
         /// call Store SiteSel to get all SiteName
@@ -73,14 +62,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             DbResult rs = null;
             try
             {
-                var param = new Hashtable {{"system", system.ToString().ToUpper()}};
+                var param = new Hashtable { { "system", system.ToString().ToUpper() } };
                 var spElement = GetStoreProcedure("SiteSel");
                 rs = DbHelper.Execute(spElement.Name, param, spElement.DbName);
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
@@ -94,26 +82,29 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         /// <returns>DataResult</returns>
         public static DbResult ExchangeSelRpt(string accountingSystem)
         {
-            DbResult rs = null;
+            DbResult dbResult = null;
             try
             {
-                var param = new Hashtable {{"system",accountingSystem.ToString().ToUpper()}};
+                using (ObjectDb objDB = new ObjectDb("Acc_ExchangeSel", 600))
+                {
+                    var param = new Hashtable { { "system", accountingSystem.ToString().ToUpper() } };
 
-                var spElement = GetExchangeStoreProcedure("ExchangeSel");
+                    objDB.AssignParamValues(param);
 
-                rs = DbHelper.Execute(spElement.Name, param, spElement.DbName);
+                    var dataset = objDB.ExecuteDataSet();
+                    dbResult = new DbResult(objDB.GetOuputParams(), dataset);
+                }   
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
-            return rs;
+            return dbResult;
         }
 
         /// <summary>
         /// Nguyen Thi Minh Thu code
-        /// Vu Thi Hong Hanh review 
+        /// Vu Thi Hong Hanh review
         /// 09/11/2006
         /// call store procedure CustomerSelSAgList
         /// Using DNAide's Library
@@ -124,7 +115,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         {
             try
             {
-                var param = new Hashtable {{"system", accountingSystem.ToString().ToUpper()}};
+                var param = new Hashtable { { "system", accountingSystem.ToString().ToUpper() } };
 
                 using (ObjectDb objDb = new ObjectDb("Acc_CustomerSelSAgList", 600))
                 {
@@ -135,7 +126,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             catch (Exception ex)
             {
-                
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return null;
             }
@@ -153,7 +143,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         public static DataSet CustSelByUsername(string userName, string accountingSystem)
         {
             try
-            {              
+            {
                 using (ObjectDb objDb = new ObjectDb("Acc_CustomerSelByUserName", 600))
                 {
                     var p = new Hashtable
@@ -168,7 +158,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             catch (Exception ex)
             {
-                
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return null;
             }
@@ -177,7 +166,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         public static DataSet CustSelById(int custId, string accountingSystem)
         {
             try
-            {              
+            {
                 using (ObjectDb objDb = new ObjectDb("Acc_CustomerSelByUserName", 600))
                 {
                     var p = new Hashtable
@@ -192,7 +181,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             catch (Exception ex)
             {
-                
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return null;
             }
@@ -219,24 +207,23 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         //    }
         //    catch (Exception ex)
         //    {
-        //        
+        //
         //            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         //    }
         //    return ds;
         //}
 
-
         /// <summary>
-        /// Nguyen Thi Minh Thu 
+        /// Nguyen Thi Minh Thu
         /// 29/11/2006
-        /// Execute SP CustomerSelAgentInfo to get agent information 
+        /// Execute SP CustomerSelAgentInfo to get agent information
         /// Using DNAide's Library
         /// Tho.Nguyen updated: 12/3/2008
         /// </summary>
         /// <param name="custid">agentId</param>
         /// <returns></returns>
         public static DataSet CustomerSelAgentInfoRpt(object custid)
-        {         
+        {
             try
             {
                 var param = new Hashtable();
@@ -249,7 +236,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 }
             }
             catch (Exception ex)
-            {   
+            {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return null;
             }
@@ -275,7 +262,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 }
             }
             catch (Exception ex)
-            {                
+            {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return null;
             }
@@ -292,7 +279,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         public static DataSet CustomerSelSAgentInfoRpt(string custId)
         {
             try
-            {                
+            {
                 using (ObjectDb objDb = new ObjectDb("Acc_CustomerSelSAgentInfo", 600))
                 {
                     var hash = new Hashtable();
@@ -304,14 +291,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             catch (Exception ex)
             {
-                
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return null;
             }
         }
 
         /// <summary>
-        /// Nguyen Thi Minh Thu 
+        /// Nguyen Thi Minh Thu
         /// 29/11/2006
         /// Execute SP CustomerSelCustomerInfo to get group for add new member
         /// Using DNAide's Library
@@ -332,8 +318,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return ds;
         }
@@ -355,8 +340,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
@@ -378,8 +362,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
@@ -403,14 +386,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
 
         /// <summary>
-        /// @Khoa.Tran 
+        /// @Khoa.Tran
         /// exec sp Acc_CustomerSelSAg_1
         /// Using DNAide's library
         /// Tho Nguyen updated: 12/1/2008
@@ -432,7 +414,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             catch (Exception ex)
             {
-                
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return null;
             }
@@ -455,8 +436,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
@@ -478,8 +458,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
@@ -496,14 +475,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             DbResult rs = null;
             try
             {
-                
                 var spElement = GetStoreProcedure("MemberList");
                 rs = DbHelper.Execute(spElement.Name, hash, spElement.DbName, 600);
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
@@ -518,8 +495,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
@@ -545,8 +521,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return ds;
         }
@@ -575,22 +550,24 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                         var spElementS = GetSportBookStoreProcedure("CustomerSelComEditOverride_SAg");
                         ds = DbHelper.Execute(spElementS.Name, p, spElementS.DbName);
                         break;
+
                     case "master":
                         var spElementM = GetSportBookStoreProcedure("CustomerSelComEditOverride_MAg");
                         ds = DbHelper.Execute(spElementM.Name, p, spElementM.DbName);
                         break;
+
                     case "agent":
                         var spElementA = GetSportBookStoreProcedure("CustomerSelComEditOverride_Ag");
                         ds = DbHelper.Execute(spElementA.Name, p, spElementA.DbName);
                         break;
+
                     default:
                         break;
                 }
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return ds;
         }
@@ -623,23 +600,25 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                         spElement = new SelectCustomer().GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SportbookPtSession.StoreCollection.SportBooksPtControl, "CustomerSelComEditOverride_SAg");
                         ds = DbHelper.Execute(spElement.Name, p, spElement.DbName);
                         break;
+
                     case "master":
 
                         spElement = new SelectCustomer().GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SportbookPtSession.StoreCollection.SportBooksPtControl, "CustomerSelComEditOverride_MAg");
                         ds = DbHelper.Execute(spElement.Name, p, spElement.DbName);
                         break;
+
                     case "agent":
                         spElement = new SelectCustomer().GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SportbookPtSession.StoreCollection.SportBooksPtControl, "CustomerSelComEditOverride_Ag");
                         ds = DbHelper.Execute(spElement.Name, p, spElement.DbName);
                         break;
+
                     default:
                         break;
                 }
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return ds;
         }
@@ -679,8 +658,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             catch (InvalidOperationException invalidOperation)
             {
-                
-                    LogExtensions.ExceptionHandler(invalidOperation);
+                LogExtensions.ExceptionHandler(invalidOperation);
                 throw;
             }
             catch (Exception exception)
@@ -774,12 +752,10 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dtb;
         }
-
 
         /// <summary>
         /// Using CasinoLibrary's Library
@@ -792,7 +768,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             try
             {
                 Dictionary<string, string> objPara = null;
-                objPara = new Dictionary<string, string> {{"username", username}};
+                objPara = new Dictionary<string, string> { { "username", username } };
 
                 var nInParameters = new SqlParameter[1];
                 nInParameters[0] = objPara.ContainsKey("username")
@@ -807,8 +783,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dtb;
         }
@@ -830,8 +805,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
 
         public static DbResult QueryUserName(int userid, string query, string accountingSystem, bool hasViewFinanceAccount)
         {
-            
-
             var param = new Hashtable();
             param.Add("custid", userid);
             param.Add("username", query);
@@ -851,7 +824,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
 
                 var spElement = new SelectCustomerAdapter().GetStoreProcedureInfo(ViewPtSession.StoreCollection.ViewPtControl, "GetLiveCSPT");
                 dr = DbHelper.Execute(spElement.Name, p, spElement.DbName);
-                
             }
             catch (Exception ex)
             {
@@ -859,7 +831,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             }
             return dr;
         }
-       
     }
 
     public class SelectCustomerAdapter : DataAccess

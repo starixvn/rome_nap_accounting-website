@@ -2,12 +2,9 @@ using System;
 using System.Collections;
 using System.Data;
 using System.Web;
-using DNAide.Data;
-
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
-using Fanex.Data;
 using DNAide.Core;
+using DNAide.Data;
+using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
@@ -31,8 +28,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
         }
@@ -49,7 +45,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         public static void CustomerUpdateCredit(int _accId, int _custId, decimal _newCredit)
         {
             try
-            {                
+            {
                 using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdCredit", 600))
                 {
                     var param = new Hashtable();
@@ -86,24 +82,35 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// Select Agent Credit --
         /// store procedure: Acc_CustomerSelUsedCredit_Ag --
         /// @viet hoang
-        /// </summary>        
+        /// </summary>
         /// <param name="_agentId"></param>
         /// <returns></returns>
-        public static IDataReader SelectAgentCredit(int _agentId)
+        public static DataTable SelectAgentCredit(int _agentId)
         {
+            DataTable dt = new DataTable();
             try
             {
-                var param = new Hashtable();
-                param.Add("agentid", _agentId);
+                using (ObjectDb objDB = new ObjectDb("Acc_CustomerSelUsedCredit_Ag", 600))
+                {
+                    var param = new Hashtable();
+                    param.Add("agentid", _agentId);
 
-                return DbHelper.ExecuteReader("Acc_CustomerSelUsedCredit_Ag", param, DBType.MAIN, 120);
+                    objDB.AssignParamValues(param);
+
+                    var ds = objDB.ExecuteDataSet();
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        dt = ds.Tables[0];
+                    }
+
+                }
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
+            return dt;
         }
 
         /// <summary>
@@ -113,21 +120,32 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// </summary>
         /// <param name="_masterId"></param>
         /// <returns></returns>
-        public static IDataReader SelectMasterCredit(int _masterId)
+        public static DataTable SelectMasterCredit(int _masterId)
         {
+            DataTable dt = new DataTable();
             try
             {
-                var param = new Hashtable();
-                param.Add("masterid", _masterId);
+               
+                using (ObjectDb objDB = new ObjectDb("Acc_CustomerSelUsedCredit_MAg", 600))
+                {
+                    var param = new Hashtable();
+                    param.Add("masterid", _masterId);
 
-                return DbHelper.ExecuteReader("Acc_CustomerSelUsedCredit_MAg", param, DBType.MAIN, 120);
+                    objDB.AssignParamValues(param);
+
+                    var ds = objDB.ExecuteDataSet();
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        dt = ds.Tables[0];
+                    }
+                }
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
+            return dt;
         }
 
         /// <summary>
@@ -137,21 +155,30 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// </summary>
         /// <param name="_superId"></param>
         /// <returns></returns>
-        public static IDataReader SelectSuperCredit(int _superId)
+        public static DataTable SelectSuperCredit(int _superId)
         {
+            DataTable dt = new DataTable();
             try
             {
-                var param = new Hashtable();
-                param.Add("superid", _superId);
+                using (ObjectDb objDB = new ObjectDb("Acc_CustomerSelUsedCredit_SAg", 600))
+                {
+                    var param = new Hashtable();
+                    param.Add("superid", _superId);
 
-                return DbHelper.ExecuteReader("Acc_CustomerSelUsedCredit_SAg", param, DBType.MAIN, 120);
+                    objDB.AssignParamValues(param);
+                    var ds = objDB.ExecuteDataSet();
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        dt = ds.Tables[0];
+                    }
+                }
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
+            return dt;
         }
 
         /// <summary>
@@ -180,7 +207,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     objDb.AssignParamValues(param);
 
                     objDb.ExecuteNonQuery();
-                    if(CastAide.AsInt32(objDb.GetParameterValue("errcode")) > 0)
+                    if (CastAide.AsInt32(objDb.GetParameterValue("errcode")) > 0)
                         throw new AccException(string.Format("{0}", objDb.GetParameterValue("errmsg")));
                 }
             }

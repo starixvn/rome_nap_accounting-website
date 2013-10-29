@@ -1,58 +1,106 @@
-﻿using System.Collections.Generic;
-using System.Web;
-using Fanex.Tarus.Security.Web;
+﻿// --------------------------------------------------------------------------
+// <copyright file="PermissionService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="ethan.nguyen" date="2013.8.16">Created</change>
+// </history>
 
+
+/// <summary>
+/// The Permission namespace.
+/// </summary>
 namespace Fanex.Tarus.Security.Permission
 {
-    internal class PermissionService : Security.Permission.IPermissionService 
+    using System.Collections.Generic;
+    using Fanex.Tarus.Security.Web;
+
+    /// <summary>
+    /// Class PermissionService.
+    /// </summary>
+    internal class PermissionService : Security.Permission.IPermissionService
     {
-
-       public bool HasPermission(string actionPath, Dictionary<string, int> pageAccess)
-        {
-           if (pageAccess == null)
-           {
-               return false;
-           }
-
-           return !string.IsNullOrEmpty(actionPath) && pageAccess.ContainsKey(actionPath.ToLower());
-        }
-
+        /// <summary>
+        /// Determines whether the specified function name has permission.
+        /// </summary>
+        /// <param name="functionName">Name of the function.</param>
+        /// <returns><c>true</c> if the specified function name has permission; otherwise, <c>false</c>.</returns>
         public static bool HasPermission(string functionName)
         {
             var roleAccessSession = AppSessions.RoleAccess;
             if (null == roleAccessSession)
+            {
                 return false;
-            var roleAccess = (Dictionary<string,int>)roleAccessSession;
+            }
+
+            var roleAccess = (Dictionary<string, int>)roleAccessSession;
             return roleAccess.ContainsKey("[" + functionName.Trim().ToLower() + "]");
         }
 
+        /// <summary>
+        /// Determines whether the specified action path has permission.
+        /// </summary>
+        /// <param name="actionPath">The action path.</param>
+        /// <param name="pageAccess">The page access.</param>
+        /// <returns><c>true</c> if the specified action path has permission; otherwise, <c>false</c>.</returns>
+        public bool HasPermission(string actionPath, Dictionary<string, int> pageAccess)
+        {
+            if (pageAccess == null)
+            {
+                return false;
+            }
+
+            return !string.IsNullOrEmpty(actionPath) && pageAccess.ContainsKey(actionPath.ToLower());
+        }
+
+        /// <summary>
+        /// Gets the host permission.
+        /// </summary>
+        /// <typeparam name="T">The function type.</typeparam>
+        /// <param name="function">The function.</param>
+        /// <param name="roleAccess">The role access.</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public bool GetHostPermission<T>(T function, Dictionary<string, int> roleAccess)
         {
             if (roleAccess == null)
+            {
                 return false;
+            }
 
             string functionName = "[" + function.ToString() + "]";
-            if(roleAccess.ContainsKey(functionName.ToLower()))
+            if (roleAccess.ContainsKey(functionName.ToLower()))
             {
                 return roleAccess[functionName.ToLower()] == 3;
             }
+
             return false;
         }
 
+        /// <summary>
+        /// Gets the host permission.
+        /// </summary>
+        /// <param name="actionPath">The action path.</param>
+        /// <param name="pageAccess">The page access.</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public bool GetHostPermission(string actionPath, Dictionary<string, int> pageAccess)
         {
             if (pageAccess == null)
+            {
                 return false;
+            }
+
             if (string.IsNullOrEmpty(actionPath))
+            {
                 return false;
+            }
 
             if (pageAccess.ContainsKey(actionPath.ToLower()))
             {
                 return pageAccess[actionPath.ToLower()] == 3;
             }
+
             return false;
         }
-
-        
     }
 }

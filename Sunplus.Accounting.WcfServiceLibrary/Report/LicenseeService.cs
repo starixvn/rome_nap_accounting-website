@@ -6,16 +6,13 @@ using Sunplus.Accounting.Entities.Report.Deposit;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.Report
 {
-    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]    
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class LicenseeService : ILicenseeService
     {
         public ConcurrentUserDTO GetConcurrentUserList(string siteName, string fromDate, string toDate)
         {
-           
             var result = CommonBootStrapper.Locator.GetInstance<IReportWLBySiteService>();
-           return result.GetConcurrentUser(CastAide.AsDateTime(fromDate), CastAide.AsDateTime(toDate), siteName);
-            
-
+            return result.GetConcurrentUser(CastAide.AsDateTime(fromDate), CastAide.AsDateTime(toDate), siteName);
         }
 
         public void PeakExport2Excel(string siteName, string fromDate, string toDate)

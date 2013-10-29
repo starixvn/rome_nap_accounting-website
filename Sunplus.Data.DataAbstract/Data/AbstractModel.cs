@@ -13,7 +13,7 @@ namespace Sunplus.Data.DataAbstract.Data
         public AbstractModel(string modelName)
         {
             Caching = new Storage.Cache.Manager();
-            /*switch(modelName) 
+            /*switch(modelName)
             {
                 case "message":
                     storage = Storage.NoSQL.Abstract.Message();
@@ -22,12 +22,10 @@ namespace Sunplus.Data.DataAbstract.Data
                 case "bettran":
                     storage = Storage.NoSQL.Abstract.Bettrans();
                     break;
-                 
 
                 default:
                     break;
             }*/
-            
         }
     }
 }

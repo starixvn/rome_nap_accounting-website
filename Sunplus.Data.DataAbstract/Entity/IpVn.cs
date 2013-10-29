@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Norm;
+﻿using Norm;
 
 namespace Sunplus.Data.DataAbstract.Entity
 {
@@ -17,7 +13,9 @@ namespace Sunplus.Data.DataAbstract.Entity
         public string Id { get; set; }
 
         public string IpFrom { get; set; }
+
         public string IpTo { get; set; }
+
         public bool IsManual { get; set; }
     }
 }

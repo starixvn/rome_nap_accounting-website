@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace Sunplus.Data.DataAbstract.Storage.Cache
 {
     public class Manager : Abstract
@@ -23,8 +24,6 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache
             return Caching.Insert(key, value);
         }
 
-        
-
         public override bool Delete<T>(string key, object data)
         {
             return Caching.Delete<T>(key, data);
@@ -40,6 +39,8 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache
             return Caching.Insert(key, value, expire);
         }
 
-        ~Manager() { }
+        ~Manager()
+        {
+        }
     }
 }

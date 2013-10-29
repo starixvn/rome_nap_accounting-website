@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Data;
-using System.Text;   
+using System.Text;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
@@ -11,12 +11,9 @@ using Sunplus.Accounting.Business.CacheManager;
 using Sunplus.Accounting.Business.Report;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
-using System.Collections.Generic;
 
 namespace BLL.Report.OpenToteSettlement
 {
@@ -36,8 +33,8 @@ namespace BLL.Report.OpenToteSettlement
             TimeSpan sp = DateTime.Today - ReportUtils.BalanceUp.BalanceUpDay;
             displaydays = sp.Days;
             string evt = "SetEvtGetdate()";
-           // string strDateTimeSingle = Reports.GetDateTimeSingle(fdate, "Date", string.Empty, displaydays, "../../",
-                                                                 //string.Empty, evt);
+            // string strDateTimeSingle = Reports.GetDateTimeSingle(fdate, "Date", string.Empty, displaydays, "../../",
+            //string.Empty, evt);
             string strDateTimeSingle = Reports.GetDateTimeSingleMaxDays(fdate, "Date", string.Empty, displaydays, 7, "../../",
                                                                  string.Empty, evt);
 
@@ -59,7 +56,7 @@ namespace BLL.Report.OpenToteSettlement
             return strDateTimeSingle;
         }
 
-        #endregion
+        #endregion LoadHeader
 
         #region WinlostHR_OpenTote
 
@@ -68,6 +65,7 @@ namespace BLL.Report.OpenToteSettlement
         public string WinlostHR_OpenTote(string winlostdate, string db, bool IsTest)
         {
             #region local variables
+
             var tpl = WebUtils.LoadTemplate("Report/OpenToteSettlement/OpenToteSettlementReport.htm");
             TemplateHandler.Assign(ref tpl, "bettype", "Horse Racing Open Tote Daily Report");
             //28 columns
@@ -76,13 +74,15 @@ namespace BLL.Report.OpenToteSettlement
             var tplComparision = TemplateHandler.CopyBlock(tpl, "Comparision");
             string strColspan = "<tr bgcolor='white'><td colspan='30' class='c b'>{msg}</td></tr>", str = "";
             var rows = new StringBuilder();
-            DataRow[] dataRows = {};
+            DataRow[] dataRows = { };
             var dataTable = new DataTable();
-            #endregion
+
+            #endregion local variables
 
             try
             {
                 #region get data
+
                 var hashtable = new Hashtable();
                 hashtable.Add("winlostdate", winlostdate);
                 hashtable.Add("db", db);
@@ -109,21 +109,24 @@ namespace BLL.Report.OpenToteSettlement
                 //--------------------------------------
                 //dataTable.DefaultView.Sort = dataTable.Columns["PoolCurrency"] + " asc";
                 dataRows = dataTable.Select("");
-                #endregion
 
-                #region cache   
+                #endregion get data
+
+                #region cache
+
                 CacheData(OpenToteSettlementCommon.cachekeyreport, dataTable, DateTime.Now.AddHours(1));
-                #endregion
+
+                #endregion cache
             }
             catch (Exception exception)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
                 hasError = true;
                 TemplateHandler.Assign(ref msg, "content", exception.Message);
             }
 
-            #region nodata or error   
+            #region nodata or error
+
             if (hasError || dataRows.Length == 0)
             {
                 str = "";
@@ -136,15 +139,17 @@ namespace BLL.Report.OpenToteSettlement
                 TemplateHandler.RemoveBlock(ref tpl, "footer");
                 TemplateHandler.RemoveBlock(ref tpl, "Comparision");
             }
-            #endregion                
 
-            #region generate data              
+            #endregion nodata or error
+
+            #region generate data
+
             else
             {
                 string partnertype_p = "", partnertype = "", report_row = "bgodd", strPoolBase = "";
                 int poolcurrency = 0, poolcurrency_p = 0;
                 string poolCurrencyArr = string.Empty;
-                
+
                 foreach (DataRow dataRow in dataRows)
                 {
                     string row = tplContent;
@@ -198,10 +203,12 @@ namespace BLL.Report.OpenToteSettlement
                         }
 
                         #region assign data
+
                         report_row = (report_row == "bgodd") ? "bgeven" : "bgodd";
                         partnertype = partnertype_p;
                         poolcurrency = poolcurrency_p;
-                        #endregion
+
+                        #endregion assign data
                     }
                     else
                     {
@@ -213,13 +220,12 @@ namespace BLL.Report.OpenToteSettlement
                     rows.Append(row);
                 }
 
-                #region Lastest 
+                #region Lastest
 
                 //PoolCurr
                 strPoolBase = tplContent;
                 TotalPoolOrBaseCurrency_OpenTote(ref strPoolBase, "total2", dataTable, "_PoolCurr", winlostdate,
                                                  poolcurrency, partnertype, db);
-
 
                 if (poolcurrency == 2) //If currency is RM then no need to show the row Base (RM)
                 {
@@ -241,46 +247,52 @@ namespace BLL.Report.OpenToteSettlement
                     rows.Append(strPoolBase);
                 }
 
-                #endregion
+                #endregion Lastest
 
                 #region Grand Total
+
                 //List<IBCOpenTote> ibcOpenTote = new List<IBCOpenTote>();
+
                 #region add columns
-                DataColumn dcCurrency = new DataColumn("currencyName");                                
-                DataColumn dcIbcTO = new DataColumn("IBCTO");                
-                DataColumn dcIBCDividend = new DataColumn("IBCDividen");                    
+
+                DataColumn dcCurrency = new DataColumn("currencyName");
+                DataColumn dcIbcTO = new DataColumn("IBCTO");
+                DataColumn dcIBCDividend = new DataColumn("IBCDividen");
                 DataTable dtIBCOpenTote = new DataTable();
                 dcIbcTO.DataType = System.Type.GetType("System.Decimal");
                 dcIBCDividend.DataType = System.Type.GetType("System.Decimal");
                 dtIBCOpenTote.Columns.Add(dcCurrency);
                 dtIBCOpenTote.Columns.Add(dcIbcTO);
                 dtIBCOpenTote.Columns.Add(dcIBCDividend);
-                #endregion
+
+                #endregion add columns
+
                 str = strColspan;
                 TemplateHandler.Assign(ref str, "msg", "");
-                rows.Append(str);  
+                rows.Append(str);
                 //TotalPoolOrBaseCurrency_OpenTote(ref tplFooter, "total2", dataTable, "", "", 0, "", "");
                 GrandTotalPoolOrBaseCurrency_OpenToteNew(ref tplFooter, dataTable, poolCurrencyArr, ref dtIBCOpenTote);
                 TemplateHandler.ReplaceBlock(ref tpl, "footer", tplFooter);
 
-                #endregion
+                #endregion Grand Total
 
-                #region Comparision                                                               
+                #region Comparision
+
                 CacheData(OpenToteSettlementCommon.cachekeyibcopentotecompare, dtIBCOpenTote, DateTime.Now.AddHours(1));
                 ComparisionNew(winlostdate, ref tplComparision, dtIBCOpenTote);
                 TemplateHandler.ReplaceBlock(ref tpl, "Comparision", tplComparision);
 
-                #endregion
+                #endregion Comparision
 
                 TemplateHandler.ReplaceBlock(ref tpl, "content", rows.ToString());
             }
 
-            #endregion
+            #endregion generate data
 
             return tpl;
         }
 
-        #endregion
+        #endregion WinlostHR_OpenTote
 
         #region AssignDataForRow_OpenTote
 
@@ -322,7 +334,7 @@ namespace BLL.Report.OpenToteSettlement
             TemplateHandler.Assign(ref row, "PartnerAmountDue", NumberFormat.DecFormat(dataRow["AmountDue" + suffix], 2));
         }
 
-        #endregion
+        #endregion AssignDataForRow_OpenTote
 
         #region TotalPoolOrBaseCurrency_OpenTote
 
@@ -398,13 +410,13 @@ namespace BLL.Report.OpenToteSettlement
                                    NumberFormat.DecFormat(dataTable.Compute("sum(AmountDue" + suffix + ")", exp), 2));
         }
 
-        #endregion
+        #endregion TotalPoolOrBaseCurrency_OpenTote
 
         #region GrandTotalPoolOrBaseCurrency_OpenTote
 
         private void GrandTotalPoolOrBaseCurrency_OpenTote(ref string tplFooter, DataTable dataTable, int pool_curr)
         {
-            string[] suffixes = {"_PoolCurr", ""};
+            string[] suffixes = { "_PoolCurr", "" };
             string tplSubFooter = TemplateHandler.CopyBlock(tplFooter, "sub-footer");
             string[] arrTemlateColumns = {
                                              "Currency",
@@ -424,8 +436,7 @@ namespace BLL.Report.OpenToteSettlement
                                       "winTOPartner", "placeTOPartner", "winplaceTOPartner", "totalTOPartner",
                                       "totalTOPartner", "dividendWon", "commIncomeIBC", "AmountDue"
                                   };
-            string[] arrCurrs = {CacheUtils.GetExchangeName(pool_curr), "Base (RM)"};
-
+            string[] arrCurrs = { CacheUtils.GetExchangeName(pool_curr), "Base (RM)" };
 
             var rows = new StringBuilder();
             string exp = "";
@@ -515,6 +526,7 @@ namespace BLL.Report.OpenToteSettlement
             try
             {
                 #region local variables
+
                 var mainFooter = TemplateHandler.CopyBlock(tplFooter, "copy-footer");
                 string tplSubFooter = TemplateHandler.CopyBlock(tplFooter, "sub-footer");
 
@@ -545,13 +557,13 @@ namespace BLL.Report.OpenToteSettlement
                 }
                 arrCurrs[poolArr.Length - 1] = "Base (RM)";
 
-
                 //var rows = new StringBuilder();
                 string exp = "";
                 int index = 0;
                 var suffix = "_PoolCurr";
                 StringBuilder mainFooterDetail = new StringBuilder();
-                #endregion
+
+                #endregion local variables
 
                 foreach (string poolCurrencyType in arrCurrs)
                 {
@@ -624,11 +636,12 @@ namespace BLL.Report.OpenToteSettlement
                                                dataTable.Compute("sum(commIncomeIBC" + suffix + ")", exp), 2));
                     TemplateHandler.Assign(ref row, "PartnerAmountDue",
                                            NumberFormat.DecFormat(dataTable.Compute("sum(AmountDue" + suffix + ")", exp), 2));
+
                     #region assign template
+
                     if (index == 0)
                     {
                         TemplateHandler.ReplaceBlock(ref tplFooter, "sub-footer", row);
-
                     }
                     else
                     {
@@ -641,37 +654,42 @@ namespace BLL.Report.OpenToteSettlement
                             TemplateHandler.RemoveBlock(ref tplFooter, "copy-footer");
                         }
                     }
-                    #endregion
+
+                    #endregion assign template
 
                     #region assign data for ibc
 
                     if (index < arrCurrs.Length - 1)
                     {
-
                         DataRow drOpenToteCurrent = ibcOpenTote.NewRow();
                         drOpenToteCurrent["currencyName"] = arrCurrs[index];
                         drOpenToteCurrent["IBCTO"] = dataTable.Compute("sum(totalTOPartner" + suffix + ")", exp);
                         drOpenToteCurrent["IBCDividen"] = dataTable.Compute("sum(dividendWon" + suffix + ")", exp);
                         ibcOpenTote.Rows.Add(drOpenToteCurrent);
                     }
-                    #endregion
+
+                    #endregion assign data for ibc
 
                     index++;
                 }
                 TemplateHandler.Assign(ref tplFooter, "rowspan", index);
             }
-            catch {
+            catch
+            {
                 TemplateHandler.RemoveBlock(ref tplFooter, "copy-footer");
             }
         }
-        #endregion
+
+        #endregion GrandTotalPoolOrBaseCurrency_OpenTote
 
         #region Comparision
+
         private void ComparisionNew(string winlostdate, ref string tplComparision, DataTable ibcOpenTote)
         {
             try
             {
                 #region local variables
+
                 var hash = new Hashtable();
                 hash.Add("winlostdate", winlostdate);
                 DataTable dt = IBCProvider.ReportProvider.OpenToteSettlement().Horse_OpenToteTO3rd(hash).ResultSet.Tables[0];
@@ -683,7 +701,8 @@ namespace BLL.Report.OpenToteSettlement
                 bool compareTO = true;
                 bool compareDividen = true;
                 var indexCompare = 0;
-                #endregion
+
+                #endregion local variables
 
                 if (dt.Rows.Count == 0)
                 {
@@ -692,9 +711,12 @@ namespace BLL.Report.OpenToteSettlement
                 }
 
                 #region assign data when 3rd opentote data does not null
+
                 #region cache
+
                 CacheData(OpenToteSettlementCommon.cachekeycompare, dt, DateTime.Now.AddHours(1));
-                #endregion
+
+                #endregion cache
 
                 //foreach (DataRow dr in Rows)
                 //{
@@ -737,22 +759,24 @@ namespace BLL.Report.OpenToteSettlement
                     TemplateHandler.Assign(ref tplComparision, "clssDividendWonMatched", "");
                     TemplateHandler.Assign(ref tplComparision, "valueDividendWonMatched", span);
                 }
-                #endregion
+
+                #endregion assign data when 3rd opentote data does not null
             }
             catch
             {
-                tplComparision = string.Empty;                
+                tplComparision = string.Empty;
             }
-            
         }
-        #endregion
+
+        #endregion Comparision
 
         #region LoadComparision
 
         public string LoadComparision(string winlostdate, string ibcTO, string ibcDividendWon)
         {
             #region local vairables
-            var dt = (DataTable) GetCachedObjData(OpenToteSettlementCommon.cachekeycompare);
+
+            var dt = (DataTable)GetCachedObjData(OpenToteSettlementCommon.cachekeycompare);
             var dtIbc = (DataTable)GetCachedObjData(OpenToteSettlementCommon.cachekeyibcopentotecompare);
 
             if (dt == null)
@@ -765,15 +789,17 @@ namespace BLL.Report.OpenToteSettlement
             string tpl = WebUtils.LoadTemplate("Report/OpenToteSettlement/OpenToteSettlementComparision.htm");
             string tplContent = TemplateHandler.CopyBlock(tpl, "content");
             var rows = new StringBuilder();
-            #endregion
+
+            #endregion local vairables
+
             #region if open tote is lost data
-            
+
             bool isLostCurrency = false;
             foreach (DataRow drLostCurrency in dtIbc.Rows)
             {
                 var lostCurrencyName = drLostCurrency["currencyName"].ToString();
                 lostCurrencyName = lostCurrencyName.Equals("EURO") ? "EUR" : lostCurrencyName;
-                string row = tplContent;     
+                string row = tplContent;
 
                 if (dt.Rows.Count < dtIbc.Rows.Count)
                 {
@@ -791,7 +817,6 @@ namespace BLL.Report.OpenToteSettlement
 
                 if (isLostCurrency)
                 {
-
                     TemplateHandler.Assign(ref row, "Currency", lostCurrencyName);
                     TemplateHandler.Assign(ref row, "3rdTO", "N/A");
                     TemplateHandler.Assign(ref row, "3rdDividendWon", "N/A");
@@ -806,10 +831,10 @@ namespace BLL.Report.OpenToteSettlement
                     decimal ibcTOCurrent = CastAide.AsDecimal(drLostCurrency["IBCTO"]);
                     decimal ibcDividendCurrent = CastAide.AsDecimal(drLostCurrency["IBCDividen"]);
                     DataRow[] current3rd = dt.Select("currencyName = '" + lostCurrencyName + "'");
-                    decimal _3rdTO = (current3rd != null && current3rd.Length > 0) ?  CastAide.AsDecimal(current3rd[0]["TO3rd"]) : 0;
-                    decimal _3rdDividend = (current3rd != null && current3rd.Length > 0) ?  CastAide.AsDecimal(current3rd[0]["DividendWon3rd"]) : 0;
+                    decimal _3rdTO = (current3rd != null && current3rd.Length > 0) ? CastAide.AsDecimal(current3rd[0]["TO3rd"]) : 0;
+                    decimal _3rdDividend = (current3rd != null && current3rd.Length > 0) ? CastAide.AsDecimal(current3rd[0]["DividendWon3rd"]) : 0;
 
-                    TemplateHandler.Assign(ref row, "Currency", lostCurrencyName);                            
+                    TemplateHandler.Assign(ref row, "Currency", lostCurrencyName);
                     TemplateHandler.Assign(ref row, "3rdTO", NumberFormat.DecFormat(_3rdTO, 2));
                     TemplateHandler.Assign(ref row, "3rdDividendWon", NumberFormat.DecFormat(_3rdDividend, 2));
                     TemplateHandler.Assign(ref row, "ibcTO", NumberFormat.DecFormat(ibcTOCurrent, 2));
@@ -828,8 +853,8 @@ namespace BLL.Report.OpenToteSettlement
                     rows.Append(row);
                 }
             }
-            
-            #endregion
+
+            #endregion if open tote is lost data
 
             TemplateHandler.ReplaceBlock(ref tpl, "content", rows.ToString());
 
@@ -839,9 +864,9 @@ namespace BLL.Report.OpenToteSettlement
             return tpl;
         }
 
-        #endregion
+        #endregion LoadComparision
 
-        #endregion
+        #endregion WinlostHR_OpenTote
 
         public override string RenderHTML(Hashtable input)
         {

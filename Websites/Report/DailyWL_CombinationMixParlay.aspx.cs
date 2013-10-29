@@ -1,44 +1,30 @@
 using System;
-using System.Data;
-using System.Configuration;
 using System.Collections;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
+using System.Data;
 using System.Text;
+using System.Web;
+using System.Web.UI;
+using DNAide.Core;
+using DNAide.Data;
+using DNAide.Web;
+using ExcelUtil.Spreadsheet;
+using IBCUtils;
 using Sunplus.Accounting.Business.Customer;
 using Sunplus.Accounting.Business.Report;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Business.Security;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
-using IBCUtils.Web;
-using IBCUtils.DAL;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using IBCUtils;
-using DNAide.Data;
-using DNAide.Core;
-using DNAide.Web;
-
-
-using ExcelUtil.Spreadsheet;
-using Sunplus.Data.DataAbstract.BootStrappers;
-using Sunplus.Accounting.DataAccess.IReportDAO;
 using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using Sunplus.Accounting.DataAccess.Report;
 
 public partial class DailyWL_CombinationMixParlay : PageBase
 {
-
     public string mode = "";
     public string title = "";
     private DataTable dataTable = null;
     public string today = string.Format("{0:MM/dd/yyyy}", DateTime.Today);
     public string yesterday = string.Format("{0:MM/dd/yyyy}", DateTime.Today.AddDays(-1));
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.QueryString["bettype"] != null)
@@ -67,7 +53,9 @@ public partial class DailyWL_CombinationMixParlay : PageBase
 
             //content.Text += "Main>" + path;
             string fullpath = "<b> <a href= 'DailyWL_Sporttype.aspx?fdate=" + fdate + "&db=" + Request["db"] + "&mode=" + mode + "'> Main </a> > " + path + "</b>";
+
             #region Header
+
             int displaydays = 0;
             TimeSpan sp = DateTime.Today - new DateTime(2011, 01, 01);
             displaydays = sp.Days;
@@ -95,12 +83,13 @@ public partial class DailyWL_CombinationMixParlay : PageBase
 
             headerDatetime.Text = strDateTimeSingle;
 
-            #endregion
+            #endregion Header
+
             //headerDatetime.Text = Reports.GetHeader(fdate, tdate, fullpath, true);
             string btnExport = Request["IsExport"];
             if (btnExport != "1")
             {
-                this.GetDataTable(IsWL,fdate);
+                this.GetDataTable(IsWL, fdate);
                 Session["dataTable_SystemParlay2h_Report"] = this.dataTable;
 
                 content.Text += getcontent(IsWL);
@@ -170,7 +159,7 @@ public partial class DailyWL_CombinationMixParlay : PageBase
         return null;
     }
 
-    string getcontent(bool IsWL)
+    private string getcontent(bool IsWL)
     {
         StringBuilder html = new StringBuilder();
         DateTime wldate = DateTime.Today;
@@ -193,11 +182,10 @@ public partial class DailyWL_CombinationMixParlay : PageBase
 
             string WLheader = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("WinLost/WinLostSummaryHeader.htm");
             TemplateHandler.RemoveBlock(ref WLheader, "no-link");
-           // DbResult rs = null;
+            // DbResult rs = null;
             int bettype = CastAide.AsInt32(Request["bettype"], 0);
             //var dailyWL = CommonBootStrapper.Locator.GetInstance<IReportRacingDAO>();
             //rs = dailyWL.DailyWLDirect_MixParlay(wldate.ToShortDateString(), bettype);
-
 
             TemplateHandler.Assign(ref WLheader, "{TypeName}", "Bettype");
 
@@ -208,6 +196,7 @@ public partial class DailyWL_CombinationMixParlay : PageBase
             DataTable dt = dvMP.ToTable();
 
             #region declare variable
+
             string sp = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("WinLost/WinLostSummarySportType.htm");
             string rows = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("WinLost/WinLostSummaryAllRow.htm");
             TemplateHandler.RemoveBlock(ref rows, "no-link");
@@ -227,7 +216,7 @@ public partial class DailyWL_CombinationMixParlay : PageBase
             string totalRowSportType = "";
             int sporttype_p = 0, sporttype_c = 0, index = 0;
 
-            #endregion declare
+            #endregion declare variable
 
             html.Append(WLheader);
 
@@ -238,11 +227,11 @@ public partial class DailyWL_CombinationMixParlay : PageBase
                 string condition = "";
                 string row = "";
                 odd_even = "odd";
+
                 #region foreach
 
                 foreach (DataRow dr in dt.Rows)
                 {
-
                     sporttype_c = CastAide.AsInt32(dr["sporttype"]);
                     if (sporttype_p != sporttype_c)
                     {
@@ -251,6 +240,7 @@ public partial class DailyWL_CombinationMixParlay : PageBase
                         if (index > 0)
                         {
                             #region Sub total on each sport type
+
                             condition = "sporttype='" + sporttype_p + "'";
                             Win = CastAide.AsDouble(dt.Compute("sum(Winlost)", condition));
                             Pos = CastAide.AsDouble(dt.Compute("sum(Position)", condition));
@@ -270,11 +260,11 @@ public partial class DailyWL_CombinationMixParlay : PageBase
                             colspan = colspans.Clone().ToString();
                             TemplateHandler.Assign(ref colspan, "{msg}", "");
                             html.Append(colspan);
-                            #endregion
+
+                            #endregion Sub total on each sport type
                         }
                         sporttype_p = sporttype_c;
                     }
-
 
                     row = rows.Clone().ToString();
 
@@ -297,9 +287,11 @@ public partial class DailyWL_CombinationMixParlay : PageBase
                     AllTurnOver += TurnOver;
                     index++;
                 }
-                #endregion //end foreach
+
+                #endregion foreach
 
                 #region Sub total on each sport type
+
                 condition = "sporttype='" + sporttype_p + "'";
                 Win = CastAide.AsDouble(dt.Compute("sum(Winlost)", condition));
                 Pos = CastAide.AsDouble(dt.Compute("sum(Position)", condition));
@@ -318,7 +310,8 @@ public partial class DailyWL_CombinationMixParlay : PageBase
                 html.Append(row);
                 colspan = colspans.Clone().ToString();
                 TemplateHandler.Assign(ref colspan, "{msg}", "");
-                #endregion
+
+                #endregion Sub total on each sport type
 
                 #region //grand total
 
@@ -336,14 +329,17 @@ public partial class DailyWL_CombinationMixParlay : PageBase
                 double Margin = (AllTurnOver == 0) ? 0 : ((line / AllTurnOver) * 100);
                 Sunplus.Accounting.Business.Report.Reports.genrow(ref totalRowSportType, "", "<b>All Total:</b>", Reports.colorvalue(AllWin), FormatHandler.FormatNumber20(AllPos), FormatHandler.FormatNumber20(AllCom), "<b>" + FormatHandler.FormatNumber20(AllTurnOver) + "</b>", "<b>" + Sunplus.Accounting.Business.Report.Reports.colorvalue(line) + "</b>", Reports.colorvalue(Margin, "%"));
                 html.Append(totalRowSportType);
-                #endregion end total
+
+                #endregion //grand total
             }
             else
             {
                 #region no data
+
                 TemplateHandler.Assign(ref norow, "{nodata}", (Resources.Language.thereisnodata));
                 html.Append(norow);
-                #endregion
+
+                #endregion no data
             }
         }
         catch (Exception ex)
@@ -351,31 +347,33 @@ public partial class DailyWL_CombinationMixParlay : PageBase
             LogExtensions.ExceptionHandler(ex);
             TemplateHandler.Assign(ref norow, "{nodata}", (ex.Message));
             html.Append("</table>");
-
         }
         html.Append("</table>");
 
         return html.ToString();
     }
-    #endregion
+
+    #endregion getcontent
 
     #region AssignHidden
-    string AssignHidden()
+
+    private string AssignHidden()
     {
         Hashtable hash = new Hashtable();
         hash.Add("path", Request["path"]);
         return CustomerUtils.AssignMultipleHidden(hash);
     }
-    #endregion
+
+    #endregion AssignHidden
 
     #region GetFooter
-    string GetFooter(string fdate, string tdate)
+
+    private string GetFooter(string fdate, string tdate)
     {
         StringBuilder html = new StringBuilder();
         string footer = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("WinLost/DailyWLFooter.htm");
         string url_today = "DailyWL_CombinationMixParlay.aspx?F=RECAL&fdate=" + fdate + "&tdate=" + tdate + "&Date=" + DateTime.Today.ToShortDateString() + "&path=" + Request["path"] + "&mode=" + Request["mode"]; // - today
         string url_yesterday = "DailyWL_CombinationMixParlay.aspx?F=RECAL&fdate=" + fdate + "&tdate=" + tdate + "&Date=" + DateTime.Today.AddDays(-1).ToShortDateString() + "&path=" + Request["path"] + "&mode=" + Request["mode"];//- yesterday
-
 
         TemplateHandler.Assign(ref footer, "{fdate}", fdate);
         TemplateHandler.Assign(ref footer, "{tdate}", tdate);
@@ -388,14 +386,15 @@ public partial class DailyWL_CombinationMixParlay : PageBase
             tplmainmenu = tplmainmenu.Replace("DailyWL_Sporttype.aspx?", "DailyWL_Sporttype.aspx?mode=" + Request["mode"] + "&");
         }
 
-
         html.Append(tplmainmenu);
 
         return html.ToString();
     }
-    #endregion
+
+    #endregion GetFooter
 
     #region ExportToExcel
+
     public void ExportToExcel(string FileName)
     {
         string strStyle = ReportHTML.CSSExcelReport();
@@ -917,5 +916,6 @@ public partial class DailyWL_CombinationMixParlay : PageBase
         wsReport.Cells[currencRow, 6].Style.Font.Size = 200;
         wsReport.Columns[6].Width = 4000;
     }
-    #endregion
+
+    #endregion ExportToExcel
 }

@@ -1,4 +1,4 @@
-<%@ Page Language="C#" %>
+﻿<%@ Page Language="C#" %>
 <%@ Import Namespace="Sunplus.Accounting.Core.Common" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" Theme="">
 <html xmlns="http://www.w3.org/1999/xhtml"><head id="Head1" runat="server">
@@ -7,7 +7,7 @@
     <script type="text/javascript" src="../PT/Racing/JS/CommonPT.js"></script>   
     <script language="javascript" type="text/javascript">
         function openPage(url) {
-            $('#fContent').attr({ src: url });            
+            $('#fContent').attr({ src: url });
         }
         </script>
 </head>

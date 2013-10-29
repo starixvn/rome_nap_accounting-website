@@ -1,34 +1,24 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Web.SessionState;
+using System.Web;
 using DNAide.Core;
 using DNAide.Utils;
 using Sunplus.Accounting.Business.CacheManager;
-using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Cache;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Entities.Report.Racebook;
-using ExcelUtil.Spreadsheet;
-using System.Web;
 
 namespace Sunplus.Accounting.Business.Report.Racing
 {
-    public partial class ReportRacing 
+    public partial class ReportRacing
     {
         #region Licensee having Pt
 
-
         public RacingDailyBySiteBO RacingWinLossByLicenseeHavingPt(string winlossdate, string site)
         {
-            var wl = new RacingDailyBySiteBO
-                         {Items = new List<RacingDailyBySiteCurrency>(), Total = new RacingDailyBySiteRow()};
+            var wl = new RacingDailyBySiteBO { Items = new List<RacingDailyBySiteCurrency>(), Total = new RacingDailyBySiteRow() };
 
             var sites = WinlostRacingLicensee_SiteSel();
             int count = sites.SiteItems.Where(s => s.Name == site).Count();
@@ -50,11 +40,9 @@ namespace Sunplus.Accounting.Business.Report.Racing
 
                 foreach (int c in currencies)
                 {
-
                     RacingDailyBySiteCurrency Currency = new RacingDailyBySiteCurrency();
                     Currency.Items = new List<RacingDailyBySiteMeeting>();
                     Currency.Totals = new List<RacingDailyBySiteRow>();
-
 
                     List<int> MeetingIds =
                         dataTable.AsEnumerable().Where(s => CastAide.AsInt32(s["currency"]) == c).Select(
@@ -71,6 +59,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         foreach (DataRow row in rows)
                         {
                             #region AssignRow
+
                             meeting.Items.Add(new RacingDailyBySiteRow()
                             {
                                 CurrencyName = CastAide.AsString(row["currencyName"]),
@@ -99,9 +88,10 @@ namespace Sunplus.Accounting.Business.Report.Racing
                                 IBCCommIncomm = NumberFormat.DecFormat(row["CommIncomeIBC_Origin"], 2),
                             });
 
-                            #endregion
+                            #endregion AssignRow
 
                             #region Get All Rows by Base Currency
+
                             allRowsByBaseCurr.Add(new RacingDailyBySiteRow()
                             {
                                 CurrencyName = CastAide.AsString(row["currencyName"]),
@@ -127,10 +117,12 @@ namespace Sunplus.Accounting.Business.Report.Racing
                                 IBCPTWL = NumberFormat.DecFormat(row["PTWLIBC"], 2),
                                 IBCCommIncomm = NumberFormat.DecFormat(row["CommIncomeIBC"], 2)
                             });
-                            #endregion
+
+                            #endregion Get All Rows by Base Currency
                         }
 
                         #region Total Meeting
+
                         meeting.Total = new RacingDailyBySiteRow()
                         {
                             Name = CacheRef.GetLeagueName(MeetingId) + " - " + CacheUtils.GetExchangeName(c),
@@ -152,13 +144,14 @@ namespace Sunplus.Accounting.Business.Report.Racing
                             IBCPTWL = NumberFormat.DecFormat(meeting.Items.Sum(s => CastAide.AsDecimal(s.IBCPTWL)), 2),
                             IBCCommIncomm = NumberFormat.DecFormat(meeting.Items.Sum(s => CastAide.AsDecimal(s.IBCCommIncomm)), 2),
                         };
-                        #endregion
+
+                        #endregion Total Meeting
 
                         Currency.Items.Add(meeting);
                     }
 
-
                     #region Total Currency
+
                     #region//Origin
                     Currency.Totals.Add(new RacingDailyBySiteRow()
                     {
@@ -183,7 +176,8 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         IBCPTWL = NumberFormat.DecFormat(Currency.Items.Sum(s => CastAide.AsDecimal(s.Items.Sum(t => CastAide.AsDecimal(t.IBCPTWL)))), 2),
                         IBCCommIncomm = NumberFormat.DecFormat(Currency.Items.Sum(s => CastAide.AsDecimal(s.Items.Sum(t => CastAide.AsDecimal(t.IBCCommIncomm)))), 2),
                     });
-                    #endregion
+
+                    #endregion Total Currency
 
                     #region// Rows by Base Currency
                     if (c != 2)
@@ -213,12 +207,11 @@ namespace Sunplus.Accounting.Business.Report.Racing
                         });
                     }
 
-                    #endregion
+                    #endregion Licensee having Pt
 
                     #endregion
 
                     wl.Items.Add(Currency);
-
                 }
 
                 #region Grand Total by Base currency
@@ -248,7 +241,6 @@ namespace Sunplus.Accounting.Business.Report.Racing
 
                 SessionExtension.AddSession(HttpContext.Current.Session,
                                             string.Format(_winLossRacingReportLicensseSessionKey, site), wl);
-
             }
             catch (Exception ex)
             {
@@ -256,6 +248,7 @@ namespace Sunplus.Accounting.Business.Report.Racing
             }
             return wl;
         }
+
         #endregion
     }
 }

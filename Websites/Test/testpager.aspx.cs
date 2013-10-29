@@ -22,7 +22,7 @@ public partial class Test_testpager : System.Web.UI.Page
         }
         catch (Exception ex)
         {
-            LogExtensions.ExceptionHandler(ex, name, id);
+            LogExtensions.ExceptionHandler(ex);
         }
 
     }

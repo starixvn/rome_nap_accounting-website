@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Sunplus.Accounting.Entities.SpecialDelete.TicketsListing
 {
@@ -20,8 +18,10 @@ namespace Sunplus.Accounting.Entities.SpecialDelete.TicketsListing
     {
         [DataMember]
         public List<Bettype> ItemsSB { get; set; }
+
         [DataMember]
         public List<Bettype> ItemsNGLive { get; set; }
+
         [DataMember]
         public List<Bettype> ItemsNGNoneLive { get; set; }
 
@@ -54,7 +54,7 @@ namespace Sunplus.Accounting.Entities.SpecialDelete.TicketsListing
         public int Id { get; set; }
 
         [DataMember]
-        public string Name{ get; set; }
+        public string Name { get; set; }
     }
 
     [Serializable]
@@ -76,15 +76,17 @@ namespace Sunplus.Accounting.Entities.SpecialDelete.TicketsListing
 
     [Serializable]
     [DataContract]
-    public class  ProductListingDTO
+    public class ProductListingDTO
     {
         [DataMember]
         public List<ProductListing> Items { get; set; }
-        
+
         [DataMember]
         public MatchInfo MatchInfo { get; set; }
+
         [DataMember]
-        public int ErrCode{get;set;}
+        public int ErrCode { get; set; }
+
         [DataMember]
         public string ErrMsg { get; set; }
     }
@@ -106,7 +108,6 @@ namespace Sunplus.Accounting.Entities.SpecialDelete.TicketsListing
         public int TotalTrans { get; set; }
 
         [DataMember]
-        public List<ProductListing> Items { get; set; } 
-
+        public List<ProductListing> Items { get; set; }
     }
 }

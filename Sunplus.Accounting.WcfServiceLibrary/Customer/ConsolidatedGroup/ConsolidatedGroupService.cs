@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.ServiceModel.Activation;
+using System.Web;
 using Sunplus.Accounting.Business.Customer.ConsolidatedGroup;
 using Sunplus.Accounting.Entities.Customer.ConsolidatedGroup;
-using System.ServiceModel.Activation;
-using Sunplus.Data.DataAbstract.BootStrappers;
-using System.Web;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.Customer.ConsolidatedGroup
 {
@@ -46,7 +42,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Customer.ConsolidatedGroup
         public Sunplus.Accounting.Entities.Result ChangeHeadline(int GroupID, int CustID, string CustName)
         {
             var consolidatedGroupManager = new ConsolidatedGroupManager();
-            return consolidatedGroupManager.ChangeHeadline(GroupID, CustID, CustName,HttpContext.Current.Request.UserHostAddress);
+            return consolidatedGroupManager.ChangeHeadline(GroupID, CustID, CustName, HttpContext.Current.Request.UserHostAddress);
         }
     }
 }

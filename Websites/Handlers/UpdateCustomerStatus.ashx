@@ -11,7 +11,6 @@ using Sunplus.Accounting.Entities.Casino;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Helper;
-using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using IBCUtils;
 using IBCUtils.Web;
@@ -118,7 +117,7 @@ public class UpdateCustomerStatus : BaseHandler
                     {
                         Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     }
-                    Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateClosed(_accid, _custid, status, context.Request.UserHostAddress);
+                    Sunplus.Accounting.DataAccess.IBCDLL.Accounting.CustomerUpdateStatus.CustomerUpdateClosed(_accid, _custid, status, context.Request.UserHostAddress, custcs.RoleId);
                     if (context.Request["isClearCredit"] != null)
                     {
                         bool isClearCredit = bool.Parse(context.Request["isClearCredit"].ToString());

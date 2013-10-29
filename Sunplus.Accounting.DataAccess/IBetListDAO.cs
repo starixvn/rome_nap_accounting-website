@@ -1,12 +1,8 @@
-using System.Collections.Generic;
-using Sunplus.Data.DataAbstract.Entity;
 using System;
-using Sunplus.Accounting.Entities;
-using Sunplus.Accounting.Entities.Customer.PT.ViewPT;
-using Sunplus.Accounting.Entities.Customer;
+using System.Collections.Generic;
 using System.Data;
-using DNAide.Data;
-
+using Sunplus.Accounting.Entities;
+using Sunplus.Data.DataAbstract.Entity;
 
 namespace Sunplus.Accounting.DataAccess
 {
@@ -34,6 +30,7 @@ namespace Sunplus.Accounting.DataAccess
                                                           string AwayScore, string FromTransDate, string ToTransDate, int SAFilter);
 
         DataSet GetBetListSystemParlayByTransId(string transId, int custId, DateTime moveBetDay, DateTime balanceUpDay);
+
         //SystemParlayDetail GetBetListSystemParlayByTransId(string transId, int custId);
     }
 }

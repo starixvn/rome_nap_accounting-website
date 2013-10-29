@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using Sunplus.Accounting.Core.Configurations;
 
@@ -31,11 +30,13 @@ namespace Sunplus.Accounting.Core.Common
             public const string CurrencyId = "Currency";
             public const string ListCurrency = "listCurrency";
         }
+
         public static int MaxLimitPerIP = 10;
 
         public static readonly string ATTR_DISABLED = "disabled";
 
-#region Global  Resource
+        #region Global  Resource
+
         public static class Resources
         {
             public const string LanguageResources = "Language";
@@ -46,7 +47,8 @@ namespace Sunplus.Accounting.Core.Common
                 public const string UserBetting = "userBetting";
             }
         }
-#endregion
+
+        #endregion Global  Resource
 
         public static class SessionKey
         {
@@ -59,17 +61,21 @@ namespace Sunplus.Accounting.Core.Common
             /// ~/PageNotFound.aspx
             /// </summary>
             public const string NotFound = "~/PageNotFound.aspx";
+
             public const string SignIn = "~/Signin.aspx";
+
             /// <summary>
             /// ~/ErrorPage.aspx
             /// </summary>
             public const string Error = "~/ErrorPage.aspx";
+
             public const string ErrorPage = "/ErrorPage.aspx";
 
             /// <summary>
             /// "~/AccessDenied.aspx"
             /// </summary>
             public const string AccessDenied = "~/AccessDenied.aspx";
+
             public const string LogOut = "~/LogOut.aspx";
 
             public const string UMPage = "~/UnderMaintenance.aspx";
@@ -77,10 +83,7 @@ namespace Sunplus.Accounting.Core.Common
 
         public static class System
         {
-           
             public const string Accounting = "ACCOUNTING";
-            
-          
         }
 
         public static class SystemCurrency
@@ -94,9 +97,9 @@ namespace Sunplus.Accounting.Core.Common
         }
 
         #region Sport Constance
+
         public static class Sport
         {
-            
             public const int Soccer = 1;
             public const int Basketball = 2;
             public const int Football = 3;
@@ -137,6 +140,7 @@ namespace Sunplus.Accounting.Core.Common
             public const int NumberGame = 161;
             public const int LiveCasino = 162;
             public static readonly IEnumerable<int> Sports = new int[] { Soccer, Basketball, Football, Tennis, Baseball, Golf, Motorsports, OtherSports };
+
             public static string GetSportName(int sportId)
             {
                 switch (sportId)
@@ -198,7 +202,8 @@ namespace Sunplus.Accounting.Core.Common
                 }
             }
         }
-        #endregion
+
+        #endregion Sport Constance
 
         public class BetType
         {
@@ -206,7 +211,6 @@ namespace Sunplus.Accounting.Core.Common
             /// Plus 1000 to convert Bet
             /// </summary>
             public static int ToLiveBettype = 1000;
-
 
             public static readonly int Handicap = 1;
             public static readonly int OddEven = 2;
@@ -253,7 +257,7 @@ namespace Sunplus.Accounting.Core.Common
             public static readonly int CasinoMiniGame = 73;
             public static readonly int FirstLastOU = 81;
             public static readonly int NextOU = 85;
-            public static readonly int Warrior = 88; 
+            public static readonly int Warrior = 88;
             public static readonly int NextCombo = 89;
             public static readonly int NumberGroup = 90;
             //Live Bettype
@@ -262,7 +266,6 @@ namespace Sunplus.Accounting.Core.Common
             public static readonly int OverUnderLive = 3 + ToLiveBettype;
             public static readonly int FirstHandicapLive = 7 + ToLiveBettype;
             public static readonly int FirstOverUnderLive = 8 + ToLiveBettype;
-
 
             public static IEnumerable<int> SoccerBettypes = new int[] { Handicap, OverUnder, FirstHandicap, FirstOverUnder, OddEven, FT1X2, CorrectScore, TotalGoal, MixParlay, Outright, HandicapLive, OverUnderLive, FirstHandicapLive, FirstOverUnderLive };
 
@@ -274,61 +277,73 @@ namespace Sunplus.Accounting.Core.Common
                     case 1:
                         typename = "Handicap";
                         break;
+
                     case 2:
                         typename = "OddEven";
                         break;
+
                     case 12:
                         typename = "FirstOddEven";
                         break;
+
                     case 3:
                         typename = "OverUnder";
                         break;
+
                     case 4:
                         typename = "CorrectScore";
                         break;
+
                     case 5:
                         typename = "FT1X2";
                         break;
+
                     case 6:
                         typename = "TotalGoal";
                         break;
+
                     case 7:
                         typename = "FirstHandicap";
                         break;
+
                     case 8:
                         typename = "FirstOverUnder";
                         break;
+
                     case 14:
                         typename = "FirstGoalLastGoal";
                         break;
+
                     case 15:
                         typename = "First1X2";
                         break;
+
                     case 16:
                         typename = "HTFT";
                         break;
+
                     case 20:
                         typename = "MoneyLine";
                         break;
+
                     default:
                         typename = "NA";
                         break;
                 }
                 return typename;
             }
-
-
         }
 
         public class Error
         {
             public static int NotAutherized = 500;
         }
+
         public static string GetNameByRoleId(int roleId)
         {
             if (roleId == 4)
             {
-                return "Super";;
+                return "Super"; ;
             }
             else if (roleId == 3)
             {
@@ -340,15 +355,13 @@ namespace Sunplus.Accounting.Core.Common
             }
             else
             {
-                return"Member";
+                return "Member";
             }
         }
-
 
         public static class Config
         {
             public static readonly string ConfigFolder = "Configurations";
         }
-        
     }
 }

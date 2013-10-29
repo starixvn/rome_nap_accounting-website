@@ -1,5 +1,4 @@
-﻿
-using Microsoft.Practices.ServiceLocation;
+﻿using Microsoft.Practices.ServiceLocation;
 
 namespace Sunplus.Data.DataAbstract.BootStrappers
 {

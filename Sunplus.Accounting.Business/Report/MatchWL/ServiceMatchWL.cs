@@ -35,7 +35,6 @@ public class ServiceMatchWL : IServiceMatchWL
         throw new NotImplementedException();
     }
 
-
     public string MatchWL2a(string db, string type, string fdate)
     {
         var s = new MatchWLManager();
@@ -48,5 +47,5 @@ public class ServiceMatchWL : IServiceMatchWL
         return s.WLByBettype(db, fdate);
     }
 
-    #endregion
+    #endregion IServiceMatchWL Members
 }

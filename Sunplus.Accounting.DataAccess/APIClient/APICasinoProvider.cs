@@ -5,13 +5,12 @@ using System.Data;
 using System.Web;
 using CasinoLibrary.SBAgent;
 using DNAide.Core;
-using DNAide.Data;
+using Fanex.Data;
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Casino;
-using Sunplus.Accounting.Core.Common;
-using Fanex.Data;
-using Sunplus.Accounting.Core.Extensions;
 
 /// <summary>
 /// Summary description for APICasinoProvider
@@ -29,7 +28,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
             {
                 var _csBasicInfo = new BasicInfo();
                 _csBasicInfo.SiteName = siteName;
-                DataTable dtGameKind = _csBasicInfo.GetGameKind(null);                
+                DataTable dtGameKind = _csBasicInfo.GetGameKind(null);
                 foreach (DataRow row in dtGameKind.Rows)
                 {
                     var gameKind = new GameKindDetail(CastAide.AsInt32(row["CodeID"]), CastAide.AsString(row["CodeNo"]),
@@ -55,7 +54,6 @@ namespace Sunplus.Accounting.DataAccess.APIClient
         {
             var _custSetting = new CSCustomerDetail();
 
-
             _custSetting.UserName = CastAide.AsString(r["username"]);
             _custSetting.UserPwd = CastAide.AsString(r["userpwd"]);
             _custSetting.FirstName = CastAide.AsString(r["firstname"]);
@@ -69,7 +67,6 @@ namespace Sunplus.Accounting.DataAccess.APIClient
             _custSetting.Closed = CastAide.AsBoolean(r["closed"]);
             _custSetting.Suspend = CastAide.AsBoolean(r["suspend"] == null ? r["suspended"] : r["suspend"]);
 
-
             _custSetting.SIBCCustID = AppSession.RoleID == 4 ? AppSession.CustID : 0;
             _custSetting.MIBCCustID = AppSession.RoleID == 3 ? AppSession.CustID : 0;
             _custSetting.AIBCCustID = AppSession.RoleID == 2 ? AppSession.CustID : 0;
@@ -79,15 +76,18 @@ namespace Sunplus.Accounting.DataAccess.APIClient
             _custSetting.IBCCustID = CastAide.AsInt32(custid);
 
             #region rng site name
-            _custSetting.SiteName = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(_custSetting.IBCCustID);            
-            #endregion
+
+            _custSetting.SiteName = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(_custSetting.IBCCustID);
+
+            #endregion rng site name
+
             return _custSetting;
         }
 
         public override bool UpdateCSStatus(int custid, bool bSyncCS, bool bDisabledCS, string siteName)
         {
             try
-            {                
+            {
                 using (ObjectDb db = new ObjectDb("Acc_UpdCSStatus", 300))
                 {
                     var param = new Hashtable();
@@ -124,7 +124,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
         public override bool UpdateCSStatus(int custid, bool bSyncCS, bool bDisabledCS, bool isUpdDownline, string siteName)
         {
             try
-            {               
+            {
                 using (ObjectDb db = new ObjectDb("Acc_UpdCSStatus", 300))
                 {
                     var param = new Hashtable();
@@ -141,7 +141,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                     db.ExecuteNonQuery();
 
                     bool status = CastAide.AsBoolean(db.GetParameterValue("status"));
-                    if (!status) throw new Exception(db.GetParameterValue("errmsg").ToString());                    
+                    if (!status) throw new Exception(db.GetParameterValue("errmsg").ToString());
                 }
             }
             catch (Exception ex)
@@ -160,10 +160,9 @@ namespace Sunplus.Accounting.DataAccess.APIClient
 
         public override bool UpdateCSStatusAfterSync(int custid, bool bSyncCS, bool bDisabledCS, int userId, string ip)
         {
-            
             var status = false;
             try
-            {                
+            {
                 using (ObjectDb db = new ObjectDb("Acc_UpdCSStatus", 300))
                 {
                     var param = new Hashtable();
@@ -179,7 +178,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                     db.AssignParamValues(param);
                     db.ExecuteNonQuery();
 
-                    status = CastAide.AsBoolean(db.GetParameterValue("status"));                    
+                    status = CastAide.AsBoolean(db.GetParameterValue("status"));
                 }
             }
             catch (Exception ex)
@@ -222,7 +221,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
         {
             var lsGameKind = new List<GameKindDetail>();
             try
-            {   
+            {
                 var _cust = new Customer();
                 _cust.SiteName = siteName;
                 DataTable dtGameKind = _cust.GetCustGameKind(custId);
@@ -301,7 +300,6 @@ namespace Sunplus.Accounting.DataAccess.APIClient
 
             return lsGameKind;
         }
-
 
         //Get customer PT by game type when super edit member
         public override List<GameTypeDetail> GetGameTypes_EditMember(int memberId, int gameKindID, string siteName)
@@ -387,7 +385,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                     gameType.MPositionTaking = CastAide.AsDouble(row["MPositionTaking"]);
                     gameType.MasterMaxPositionTaking = CastAide.AsDouble(row["MasterMaxPositionTalking"]);
                     gameType.MasterMinPositionTaking = CastAide.AsDouble(row["MasterMinPositionTaking"]);
-                    gameType.SPositionTaking = CastAide.AsDouble(row["SPositionTaking"]);   
+                    gameType.SPositionTaking = CastAide.AsDouble(row["SPositionTaking"]);
                     lsGameType.Add(gameType);
                 }
                 return lsGameType;
@@ -617,7 +615,6 @@ namespace Sunplus.Accounting.DataAccess.APIClient
             }
         }
 
-
         public override CSCustomerDetail GetCustInfoIBC(int _IBCCustId)
         {
             throw new NotImplementedException();
@@ -817,10 +814,10 @@ namespace Sunplus.Accounting.DataAccess.APIClient
         }
 
         public override bool UpdateCSStatusWithoutSync(int custid, bool bSyncCS, bool bDisabledCS, bool isUpdDownline)
-        { 
+        {
             bool status = false;
             try
-            {                
+            {
                 using (ObjectDb db = new ObjectDb("Acc_UpdCSStatus", 300))
                 {
                     var param = new Hashtable();
@@ -849,8 +846,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
             return status;
         }
 
-
-        private class StoreProcedureConfiguration:DataAccess
+        private class StoreProcedureConfiguration : DataAccess
         {
             public StoreProcedureElement GetStoreProcedureInfo(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.CasinoSession.StoreCollection storeCollection, string aliasName)
             {

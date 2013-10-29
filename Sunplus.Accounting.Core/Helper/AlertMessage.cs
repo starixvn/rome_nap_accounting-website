@@ -3,8 +3,6 @@ using System.Web;
 using DNAide.Core;
 
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Constant;
-using Sunplus.Core.LoggingLib;
 
 namespace Sunplus.Accounting.Core.Helper
 {
@@ -22,7 +20,7 @@ namespace Sunplus.Accounting.Core.Helper
             Warning = 2
         }
 
-        #endregion
+        #endregion MsgType enum
 
         /// <summary>
         /// Return list formated error messages and error code from output message and code
@@ -72,7 +70,6 @@ namespace Sunplus.Accounting.Core.Helper
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -89,13 +86,16 @@ namespace Sunplus.Accounting.Core.Helper
                 case MsgType.Error:
                     result = "<div class=\"alertboxerr\"><div>" + content + "</div></div>";
                     break;
+
                 case MsgType.Success:
                     result = "<div class=\"alertboxscc\"><div>" + content + "</div></div>";
                     break;
+
                 case MsgType.Warning:
                     result = "<div class=\"alertboxwrn\"><div>" + content + "</div></div>";
                     ;
                     break;
+
                 default:
                     result = "";
                     break;
@@ -120,12 +120,15 @@ namespace Sunplus.Accounting.Core.Helper
                 case MsgType.Error:
                     result = "<div class=\"msgerror\">" + content + "</div>";
                     break;
+
                 case MsgType.Success:
                     result = "<div class=\"msgcorrect\">" + content + "</div>";
                     break;
+
                 case MsgType.Warning:
                     result = "<div class=\"msgwarning\">" + content + "</div>";
                     break;
+
                 default:
                     result = "";
                     break;
@@ -141,7 +144,6 @@ namespace Sunplus.Accounting.Core.Helper
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }

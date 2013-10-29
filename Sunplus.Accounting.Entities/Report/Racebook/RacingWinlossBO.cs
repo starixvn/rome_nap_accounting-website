@@ -19,11 +19,11 @@ namespace Sunplus.Accounting.Entities.Report.Racebook
 
         [DataMember]
         public bool IsTotalTOMatch { get; set; }
+
         [DataMember]
         public bool IsDividendMatch { get; set; }
 
         [DataMember]
         public List<RacingWinlossDumpFileBO> Comparision { get; set; }
-
     }
 }

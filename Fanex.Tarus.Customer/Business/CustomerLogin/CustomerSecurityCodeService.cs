@@ -58,8 +58,8 @@ namespace Fanex.Tarus.Customer.Business.CustomerLogin
                 this._reportRepository.ResetSecurityCode(criteria, ref outputParams);
                 return new Result
                 {
-                    ErrorCode = CastAide.AsInt32(outputParams["ErrCode"]),
-                    ErrorMessage = CastAide.AsString(outputParams["ErrMsg"])
+                    ErrorCode = CastAide.AsInt32(outputParams["errcode"]),
+                    ErrorMessage = CastAide.AsString(outputParams["errmsg"])
                 };
             }
             catch (Exception ex)

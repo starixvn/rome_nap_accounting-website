@@ -8,33 +8,33 @@ namespace Fanex.Tarus.SpecialDelete.Business.NumberGame
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using Fanex.Tarus.SpecialDelete.Entity.NumberGame;
-    using Fanex.Tarus.SpecialDelete.Core;
-using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
-    using Sunplus.Accounting.Core.Configurations;
     using System.Data;
-    using DNAide.Utils;
-    using DNAide.Core;
     using System.Linq;
-    using Fanex.Tarus.Infrastructure.Caching;
-    using Fanex.Tarus.SpecialDelete.Entity;
-    using Fanex.Tarus.Infrastructure.Extensions;
-    using Fanex.Tarus.Infrastructure.Common;
+    using DNAide.Core;
+    using DNAide.Utils;
     using Fanex.Data.DNAide;
+    using Fanex.Tarus.Infrastructure.Caching;
+    using Fanex.Tarus.Infrastructure.Common;
+    using Fanex.Tarus.Infrastructure.Extensions;
+    using Fanex.Tarus.SpecialDelete.Core;
+    using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
+    using Fanex.Tarus.SpecialDelete.Entity;
+    using Fanex.Tarus.SpecialDelete.Entity.NumberGame;
+    using Sunplus.Accounting.Core.Configurations;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class NumberGameService : BaseService, INumberGameService 
+    public class NumberGameService : BaseService, INumberGameService
     {
-        INumberGameDataAccess _numberGameDataAccess;
-        INumberWheelService _numberWheelService;
-        IEmailService _emailService;
-        
+        private INumberGameDataAccess _numberGameDataAccess;
+        private INumberWheelService _numberWheelService;
+        private IEmailService _emailService;
 
-        public NumberGameService(): this(null, null, null){}
+        public NumberGameService()
+            : this(null, null, null)
+        {
+        }
 
         public NumberGameService(INumberGameDataAccess numberGameDataAccess, IEmailService emailService, INumberWheelService numberWheelService)
         {
@@ -47,7 +47,6 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
         {
             return base.SelBettype(productType);
         }
-
 
         public Tickets GetTickets(string MatchID, string FromRefNo, string ToRefNo, string live, string dead)
         {
@@ -71,7 +70,6 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
 
             tickets.Licensees = AssignDataforLicensee(ds);
 
-            int index = 0;
 
             return tickets;
         }
@@ -80,7 +78,7 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
         {
             List<LicenseeTickets> licensees = new List<LicenseeTickets>();
             var collection = SpecialDeleteSection.Instance.DeleteBet;
-                        
+
             int index = 0;
             foreach (SpecialDeleteElement element in collection)
             {
@@ -111,7 +109,7 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
             int index = 0;
 
             foreach (DataRow row0 in table0.Rows)
-            {                
+            {
                 var username = CastAide.AsString(row0["username"]);
                 var transTime = CastAide.AsDateTime(row0["transdate"]).ToString("MM/dd/yyyy hh:mm:ss tt");
                 var betID = CastAide.AsString(row0["transid"]);
@@ -126,16 +124,15 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
                 var oddstype = CastAide.AsInt32(row0["oddstype"]);
                 var hdp1 = CastAide.AsInt32(row0["hdp1"]);
 
-
-                if(bettype == 90)
+                if (bettype == 90)
                 {
                     betTypeName += liveindicator ? " (Live Game)" : " (Pre Game)";
-                    betteam = _numberWheelService.GetChoiceName(hdp1, CastAide.AsInt32(betteam)).Replace(",",", ");
+                    betteam = _numberWheelService.GetChoiceName(hdp1, CastAide.AsInt32(betteam)).Replace(",", ", ");
                 }
 
                 tickets.Add(new TicketDetail
                 {
-                    Index = ++index,                    
+                    Index = ++index,
                     UserName = username,
                     TransTime = transTime,
                     BetID = betID,
@@ -143,16 +140,15 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
                     BetTypeName = betTypeName,
                     Stake = stake,
                     CurrencyName = currencyName,
-                    Status = status,                    
+                    Status = status,
                     WinLoss = status.ToLower() == "running" ? "-" : NumberFormat.DecFormat(row0["Winlost"], 2),
                     Comm = isRecoverBet ? string.Empty : (status.ToLower() == "running" ? "-" : NumberFormat.DecFormat(row0["Comm"], 2)),
                     Betteam = betteam,
                     Site = CastAide.AsString(row0["site"]),
-                    Odds = NumberFormat.DecFormat(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOdds(odds, bettype,oddstype), 3),
+                    Odds = NumberFormat.DecFormat(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOdds(odds, bettype, oddstype), 3),
                     OddsType = CacheRef.GetOddsTypeName(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOddsType(bettype, oddstype)),
                     Hdp = "",
                     Creator = CastAide.AsString(row0["Creator"])
-
                 });
             }
             return tickets;
@@ -164,17 +160,15 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
 
             if (ds.Tables.Count == 0 || ds.Tables[0].Rows.Count == 0)
                 return null;
-            DataRow row = ds.Tables[0].Rows[0];            
-            var eventDate = CastAide.AsDateTime(row["eventdate"]);            
+            DataRow row = ds.Tables[0].Rows[0];
+            var eventDate = CastAide.AsDateTime(row["eventdate"]);
             return new Match
             {
                 MatchID = CastAide.AsInt32(MatchId),
                 MatchCode = CastAide.AsString(row["matchcode"]),
-                EventDate = eventDate.ToShortDateString(),                
+                EventDate = eventDate.ToShortDateString(),
             };
         }
-
-
 
         public string CheckMatchIDwithRefno(string MatchID, string FromRefNo, string ToRefNo, Sport.SportType sportType)
         {
@@ -183,26 +177,24 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
             {
                 rs = base.CheckMatchIDwithRefno(MatchID, FromRefNo, ToRefNo, sportType);
             }
-            catch (Exception ex)
+            catch
             {
                 ///LogExtensions.ExceptionHandler(ex);
                 rs = "You have entered an invalid matchId or refno.";
             }
-            return rs;   
+            return rs;
         }
-
 
         public List<NegativeBalance> SelNegativeBalanceCustomer(string transid, Function.ActionType actionType)
         {
             return base.SelNegativeBalanceCustomer(transid, actionType, false);
         }
 
-        bool CheckPassword(string username, string password)
+        private bool CheckPassword(string username, string password)
         {
             bool rs = Encryption.CfsEnCode(password).Equals(AppSession.AccPwd);
             return rs;
         }
-
 
         private void ProcessDelBets(ResultModel result, string matchid, string f_transid, string t_transid, string dead, string live, string IP,
            string transids_n, string transids_d, string transids_bd, string transids_12eu, string transids_mhc,
@@ -210,9 +202,8 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
         {
             try
             {
-
                 //check max length
-                if(!CheckMaxLengthTransId(result, transids_n, transids_d, transids_bd,  transids_12eu, transids_mhc ))
+                if (!CheckMaxLengthTransId(result, transids_n, transids_d, transids_bd, transids_12eu, transids_mhc))
                 {
                     IsSuccess = false;
                     return;
@@ -232,7 +223,7 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
                 }
 
                 string ErrMsg = string.Empty;
-                string ErrCode = "";
+              
                 int ErrCode2 = 0;
 
                 //check tickets belong to match
@@ -257,7 +248,7 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
                    transids_bd,
                    transids_12eu,
                    transids_mhc,
-                   message.UserName, message.userPwd, message.UserId.ToString(), IP,  message.Reason, out errcode, out errmsg
+                   message.UserName, message.userPwd, message.UserId.ToString(), IP, message.Reason, out errcode, out errmsg
                     );
 
                 if (errcode == "0")
@@ -309,7 +300,6 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
                 dtUsers = dbResult.ResultSet.Tables[3];
                 _emailService.SendEmailWhenDeleteBetToInternalGroup(result, dtMatch, dtUsers, dtChoice, true, false, true, message.Reason);
                 _emailService.SendEmailWhenDeleteBetToInternalGroup(result, dtMatch, dtUsers, dtChoice, true, false, false, message.Reason);
-
             }
             catch (System.Exception ex)
             {
@@ -337,7 +327,7 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
             {
                 bool IsSucess = true;
 
-                string num_notAllowNullOrEmpty = matchid + "," + f_transid + "," + t_transid;// +",";// +dead + "," + live; 
+                string num_notAllowNullOrEmpty = matchid + "," + f_transid + "," + t_transid;// +",";// +dead + "," + live;
                 if (!string.IsNullOrEmpty(dead))
                 {
                     num_notAllowNullOrEmpty += "," + dead;
@@ -352,7 +342,8 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
                 string invalid_number = "";
                 if (!base.isValidInt64(num_notAllowNullOrEmpty, false, ",", ref invalid_number))
                 {
-                    result.ErrorHandler.Add(new Result() { 
+                    result.ErrorHandler.Add(new Result()
+                    {
                         Key = "100",
                         Value = "\"" + invalid_number + "\": Invalid number."
                     });
@@ -361,16 +352,16 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
                 }
 
                 string num_AllowNullOrEmpty = transids_n + "," + transids_d + "," + transids_bd + "," + transids_12eu + "," + transids_mhc;
-                if (!base.isValidInt64(num_AllowNullOrEmpty, true, ",", ref invalid_number))  
+                if (!base.isValidInt64(num_AllowNullOrEmpty, true, ",", ref invalid_number))
                 {
-                    result.ErrorHandler.Add(new Result() { 
+                    result.ErrorHandler.Add(new Result()
+                    {
                         Key = "100",
                         Value = "\"" + invalid_number + "\": Invalid number."
                     });
                     result.IsSuccess = false;
                     return result;
                 }
-
 
                 int _MaxTransIdPerBatch = int.MaxValue;
 
@@ -382,7 +373,6 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
 
                 int pageIndex = 0;
                 int Pagesize = _MaxTransIdPerBatch;
-
 
                 List<string[]> arr_transids = new List<string[]>();
                 arr_transids.Add(arr_transids_n);
@@ -411,7 +401,6 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
                         break;
                     }
                 }
-
             }
             catch (System.Exception ex)
             {
@@ -449,16 +438,15 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
             model.IsSuccess = true;
             try
             {
-
                 if (!base.isValidInt64(transid, false))
                 {
-                    model.ErrorHandler.Add(new Result() 
+                    model.ErrorHandler.Add(new Result()
                     {
                         Key = "100",
-                        Value = "\"" + transid + "\": Invalid number." 
+                        Value = "\"" + transid + "\": Invalid number."
                     });
-                    model.IsSuccess = false; 
-                    return model; 
+                    model.IsSuccess = false;
+                    return model;
                 }
 
                 //update bet tickets in IBC DB
@@ -473,7 +461,7 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
                 ht.Add("ErrCode", ErrCode);
                 DbResult dbResult = new DbResult(ht, dataSet);
                 if (ErrCode > 0)
-                {                    
+                {
                     //show error msg
                     model.ErrorHandler.Add(new Result()
                     {
@@ -514,7 +502,7 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
                                 _emailService.SendEmailWhenRecoverBetToInternalGroup(model, dbResult, true, false, false, transid.ToString(), IsNegativebalance);//test currency
                             }
                         }
-                    }                   
+                    }
 
                     _numberGameDataAccess.RemoveMsgInBoDBMessage(transid.ToString(), userid);
                 }
@@ -554,7 +542,7 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
                 });
             }
 
-            return _model;            
+            return _model;
         }
 
         public Tickets GetTicketsForRecoverBet(string transid, ResultModel result)
@@ -568,16 +556,18 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
                 string errmsg = "";
 
                 var ds = _numberGameDataAccess.GetTicketsForRecoverBet(transid, out errmsg, out errcode);
-                if(errcode>0)
+                if (errcode > 0)
                 {
-                     result.ErrorHandler.Add(new Result(){
+                    result.ErrorHandler.Add(new Result()
+                    {
                         Key = "100",
                         Value = errmsg
                     });
-                     return tickets;
+                    return tickets;
                 }
 
-                if (ds.Tables.Count == 0) {
+                if (ds.Tables.Count == 0)
+                {
                     result.ErrorHandler.Add(new Result()
                     {
                         Key = "100",
@@ -615,7 +605,8 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
-                result.ErrorHandler.Add(new Result(){
+                result.ErrorHandler.Add(new Result()
+                {
                     Key = "100",
                     Value = ex.Message
                 });
@@ -627,15 +618,14 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
         {
             var tickets = new Tickets();
             tickets.MatchId = match.MatchID;
-            tickets.MatchCode = match.MatchCode;            
+            tickets.MatchCode = match.MatchCode;
             tickets.EventDate = match.EventDate;
 
             if (ds == null) return tickets;
 
             tickets.Licensees = AssignDataforLicensee_RecoverBet(ds);
 
-            int index = 0;
-
+        
             return tickets;
         }
 
@@ -660,7 +650,6 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
             return licensees;
         }
 
-
         public ResultModel CheckParamInput(string param, bool IsAllowNullOrEmpty)
         {
             ResultModel model = new ResultModel();
@@ -672,7 +661,7 @@ using Fanex.Tarus.SpecialDelete.DataAccess.NumberGame;
                 model.ErrorHandler.Add(new Result()
                 {
                     Key = "100",
-                    Value = "\"" + numInvalid + "\": Invalid number." 
+                    Value = "\"" + numInvalid + "\": Invalid number."
                 });
                 model.IsSuccess = false;
                 return model;

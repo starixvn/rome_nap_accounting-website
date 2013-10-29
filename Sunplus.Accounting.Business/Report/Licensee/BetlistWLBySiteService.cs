@@ -1,31 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.ServiceModel.Activation;
 using System.Text;
 using System.Web;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
 using DNAide.Web;
-
+using Fanex.Tarus.LiveCasino.Entities.Betlist;
 using Sunplus.Accounting.Business.BetList;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IReportDAO;
-using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
-using Fanex.Tarus.LiveCasino.Entities.Betlist;
-
 
 namespace Sunplus.Accounting.Business.Report.Deposit
 {
-
     public class BetlistWLBySiteService : IBetlistWLBySiteService
     {
         private readonly ILicenseDAO _licenseReportDAO;
+
         public BetlistWLBySiteService(ILicenseDAO licenseReportDAO)
         {
             _licenseReportDAO = licenseReportDAO;
@@ -90,8 +84,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 TemplateHandler.Assign(ref tplHeader, "cellspacing", cellspacing);
                 TemplateHandler.Assign(ref tplHeader, "class", cssClass);
                 html.Append(tplHeader);
-
-
 
                 int drawFilter = CastAide.AsInt32(input["drawFilter"]);
                 DbResult dbResult = _licenseReportDAO.SelBetlistByLicensee(custid, fdate, tdate, MoveBetsDay, BalanceUpDay,
@@ -189,7 +181,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                         totalWL += CastAide.AsDecimal(winlost, 2);
                         totalComm += CastAide.AsDecimal(comm, 2);
 
-
                         matchid = CastAide.AsInt32(dr["matchid"], 0);
                         leagueid = CastAide.AsInt32(dr["leagueid"], 0);
 
@@ -201,18 +192,14 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                         TemplateHandler.Assign(ref strRow, "No", index.ToString());
                         TemplateHandler.Assign(ref strRow, "TransTime", DateFormat.FullDateFormat(dr["transdate"]));
 
-                     
-
                         //generate event
                         BetlistRow blRow = InputBetlistRow(dr);
                         strEvent = blEvent.GenerateEvent(strEvent, blRow);
                         TemplateHandler.Assign(ref strRow, "event", strEvent);
 
-
                         //Stake
-                        if(betType==29)
+                        if (betType == 29)
                         {
-                            
                             var stakeFormat = string.Format(
                                 "{0}{1}",
                                 IBCUtils.FormatHandler.FormatNumber20(actual_stake),
@@ -223,7 +210,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                             TemplateHandler.Assign(ref strRow, "Stake", stakeFormat);
                         }
-                        
+
                         else
                             TemplateHandler.Assign(ref strRow, "Stake", NumberFormat.DecFormat(stake, 2));
 
@@ -234,8 +221,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                         TemplateHandler.Assign(ref strRow, "PlayerComm", NumberFormat.DecFormat(comm, 2));
 
                         //assign odds
-                        #region assign Odds
 
+                        #region assign Odds
 
                         string oddsTypeName = "";
                         switch (betType)
@@ -251,10 +238,11 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                                     TemplateHandler.Assign(ref strRow, "Odds", "-");
                                 }
                                 break;
+
                             case 33:
                                 string Odds_33_win = "<span class='blue' style='font-weight:normal;'>{1}</span>";
                                 string Odds_33_place = "<span class='' style='font-weight:normal;'>{2}</span>";
-                                //get data of bettransm for bet type 33,43       
+                                //get data of bettransm for bet type 33,43
 
                                 if (dataTable2 != null && dataTable2.Rows.Count > 0)
                                 {
@@ -263,8 +251,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                                 if (foundRows != null && foundRows.Length > 1)
                                 {
-
-
                                     for (int i = 0; i < 2; i++)
                                     {
                                         string hrStatus = CastAide.AsString(foundRows[i]["status"]);
@@ -294,8 +280,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                                             }
                                             apos_Place = CastAide.AsDecimal(foundRows[i]["apositiontaking"]) * 100;
                                         }
-
-
                                     }
 
                                     if (status.ToLower() == "won" || status.ToLower() == "lose")
@@ -310,10 +294,10 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                                 break;
 
-
                             case 9: //mix parlay
                                 TemplateHandler.Assign(ref strRow, "Odds", NumberFormat.DecFormat(CastAide.AsDecimal(dr["odds"]), 4));
                                 break;
+
                             case 29:
                                 TemplateHandler.Assign(
                                     ref strRow,
@@ -322,6 +306,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                                          ? "-"
                                          : NumberFormat.DecFormat(CastAide.AsDecimal(dr["modds"]), 3)));
                                 break;
+
                             default:
                                 var _OddsTypeName = CacheRef.GetOddsTypeName(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOddsType(betType, CastAide.AsInt32(dr["oddstype"])));
                                 TemplateHandler.Assign(ref strRow, "Odds", IBCUtils.FormatHandler.FormatNumber3(CastAide.AsDecimal(dr["odds"])));
@@ -335,7 +320,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                                 break;
                         }
                         TemplateHandler.Assign(ref strRow, "OddsStype", oddsTypeName);
-                        #endregion
+
+                        #endregion assign Odds
 
                         //assign odd-even row
                         if (string.IsNullOrEmpty(liveStyle))
@@ -351,7 +337,9 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                         }
 
                         //assign status
+
                         #region assign betlist status
+
                         string betListStatus = status.ToLower();
                         if (betType == 33 || betType == 43) //win/place || fixodds win/place
                         {
@@ -361,15 +349,18 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                                     betListStatus = "Running";
                                     TemplateHandler.Assign(ref strRow, "PlayerComm", "");
                                     break;
+
                                 case "waiting":
                                     betListStatus = "Waiting";
                                     TemplateHandler.Assign(ref strRow, "PlayerComm", "");
                                     break;
+
                                 case "void":
                                 case "reject":
                                 case "refund":
                                     TemplateHandler.Assign(ref strRow, "PlayerComm", "");
                                     break;
+
                                 default:
                                     string Status_win = "<span class='blue' style='font-weight:normal;'>{1}</span>";
                                     string Status_place = "<span class='' style='font-weight:normal;'>{2}</span>";
@@ -394,7 +385,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                                                     TemplateHandler.Assign(ref Status_place, "2", "Place: " + "<b>Refund</b>");
                                                 else if (hrStatus.ToLower() == "lose")
                                                     TemplateHandler.Assign(ref Status_place, "2", "Place: " + "<b>Lose</b>");
-
                                             }
                                         }
                                         status = Status_win + "<br>" + Status_place;
@@ -410,16 +400,19 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                                     TemplateHandler.Assign(ref strRow, "PlayerComm", "");
                                     betListStatus = status;
                                     break;
+
                                 case "waiting":
                                     TemplateHandler.Assign(ref strRow, "PlayerComm", "");
                                     betListStatus = status;
                                     break;
+
                                 case "void":
                                 case "reject":
                                 case "refund":
                                 case "draw":
                                     betListStatus = status;
                                     break;
+
                                 case "lose":
                                 case "won":
                                     betListStatus = status;
@@ -428,7 +421,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                         }
                         TemplateHandler.Assign(ref strRow, "Status", betListStatus.ToUpper());
                         TemplateHandler.Assign(ref strRow, "IP", IpManagement.ReplaceVNIP(CastAide.AsString(dr["ip"])));
-                        #endregion
+
+                        #endregion assign betlist status
 
                         //PT - Comm
                         TemplateHandler.Assign(ref strRow, "PTValue", "<font class='bl_underdog'>" + NumberFormat.DecFormat(awinlost, 2) + "</font><br />");
@@ -443,16 +437,14 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                             case 43:
                                 TemplateHandler.Assign(ref strRow, "PT", "<span class='blue' style='font-weight:normal;'>Win: " + "<b>" + NumberFormat.DecFormat(apos_Win, 0) + "%</b>" + "</span><br>" + "<span class='' style='font-weight:normal;'>Place: " + "<b>" + NumberFormat.DecFormat(apos_Place, 0) + "%</b>" + "</span>" + "<br />");
                                 break;
+
                             default:
                                 TemplateHandler.Assign(ref strRow, "PT", "<font class='bl_underdog'>" + NumberFormat.DecFormat(apos, 0) + "%</font>" + "<br />");
                                 break;
                         }
 
-
                         //append row
                         html.Append(strRow);
-
-
 
                     }
                     //footer row
@@ -469,16 +461,15 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             catch (Exception ex)
             {
                 html.Append(ex.Message);
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
-
-
 
             return html.ToString();
         }
 
         #region InputBetlistRow
+
         private BetlistRow InputBetlistRow(DataRow dr)
         {
             var row = new BetlistRow();
@@ -534,7 +525,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             row.AcommEUR = CastAide.AsDecimal(dr["AcommEUR"]);
             return row;
         }
-        #endregion
+
+        #endregion InputBetlistRow
 
         #region InputBetlistRowV2
 
@@ -595,49 +587,58 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             return row;
         }
 
-        #endregion
+        #endregion InputBetlistRowV2
 
         #region IsBetLoseVoidReject
+
         private bool IsBetLoseVoidReject(string betStatus)
         {
             return (String.Compare(betStatus, "lose", true) == 0
                 || String.Compare(betStatus, "void", true) == 0
                 || String.Compare(betStatus, "reject", true) == 0);
         }
-        #endregion
+
+        #endregion IsBetLoseVoidReject
 
         #region IsBetSettled
+
         private bool IsBetSettled(string betStatus)
         {
             return (String.Compare(betStatus, "running", true) != 0
                 && String.Compare(betStatus, "waiting", true) != 0
                 && String.Compare(betStatus, "reject", true) != 0);
         }
-        #endregion
+
+        #endregion IsBetSettled
 
         #region IsBetRejectVoid
+
         private bool IsBetRejectVoid(string betStatus)
         {
             return (String.Compare(betStatus, "reject", true) == 0
                 || String.Compare(betStatus, "void", true) == 0);
         }
-        #endregion
+
+        #endregion IsBetRejectVoid
 
         #region IsBetLoseRefund
+
         private bool IsBetLoseRefund(string betStatus)
         {
             return (String.Compare(betStatus, "lose", true) == 0
                 || String.Compare(betStatus, "refund", true) == 0);
         }
-        #endregion
+
+        #endregion IsBetLoseRefund
 
         #region IsSportBook
+
         private bool IsSportBook(int bettype)
         {
             return (bettype == 1 || bettype == 2 || bettype == 3 || bettype == 7 || bettype == 8 || bettype == 12 || bettype == 20);
         }
-        #endregion
 
+        #endregion IsSportBook
 
         #region RenderHTMLV2
 
@@ -706,8 +707,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                 TemplateHandler.Assign(ref tplHeader, "class", cssClass);
                 html.Append(tplHeader);
 
-
-
                 int drawFilter = CastAide.AsInt32(input["drawFilter"]);
                 DbResult dbResult = _licenseReportDAO.SelBetlistByLicenseeV2(custid, fdate, tdate, MoveBetsDay, BalanceUpDay,
                                                                            showsb, showrb, showng, showba, showlc, showvs, showcs, drawfilter);
@@ -721,7 +720,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                     if (showrb || showlc)
                         dataTable2 = dbResult.ResultSet.Tables[1];
                 }
-               
+
                 DataRow[] rows = dataTable.Select();
                 if (rows.Length > 0)
                 {
@@ -744,7 +743,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                         winlost_col = "winlostusd";
                         licenseewl_col = "licenseewlusd";
                         stake_col = "stakeusd";
-                         comm_col = "playercommusd";
+                        comm_col = "playercommusd";
                         acomm_col = "commusd";
                     }
                     else if (baseCurrency == "myr")
@@ -785,7 +784,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                         winlost = CastAide.AsDecimal(dr[winlost_col]);
                         licenseewl = CastAide.AsDecimal(dr[licenseewl_col]);
                         stake = CastAide.AsDecimal(dr[stake_col]);
-                        
+
                         //comm
                         comm = CastAide.AsDecimal(dr[comm_col]);
                         //comm = CastAide.AsDecimal(0);
@@ -796,13 +795,11 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                         totalWL += CastAide.AsDecimal(winlost, 2);
                         totalComm += CastAide.AsDecimal(comm, 2);
 
-
                         matchid = CastAide.AsInt32(dr["matchid"], 0);
                         leagueid = CastAide.AsInt32(dr["leagueid"], 0);
 
                         //apos = Convert.ToDecimal(dr["apositiontaking"]) * 100;
                         //adiscount = Convert.ToDecimal(dr["adiscount"]) * 100;
-
 
                         status = CastAide.AsString(dr["status"]);
 
@@ -817,7 +814,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                         {
                             TemplateHandler.Assign(ref strRow, "TransID", CastAide.AsString(dr["transid"]));
                         }
-                        
 
                         //generate event
                         BetlistRow blRow = InputBetlistRowV2(dr);
@@ -826,11 +822,9 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                         {
                             if (dataTable2 != null && dataTable2.Rows.Count > 0)
                             {
-
                                 var query = from rowEvt in dataTable2.AsEnumerable()
                                             where rowEvt.Field<Int64>("refno") == blRow.RefNO
                                             select rowEvt;
-                            
 
                                 DataTable dtb3 = query.CopyToDataTable();
 
@@ -840,7 +834,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                                     {
                                         _listBetlistEvt.Add(new BetlistEvent()
                                         {
-
                                             GameType = CacheRef.GetLiveCasinoResult(CastAide.AsInt32(Fanex.Tarus.Infrastructure.Helper.SportHelper.BetTeam.GetBetTeam(rowEvt["betteam"].ToString(), blRow.Bettype, "e"))),
                                             Stake = NumberFormat.DecFormat(CastAide.AsDouble(rowEvt["stake" + baseCurrency]), 2),
                                             Odds = NumberFormat.DecFormat(CastAide.AsDouble(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOdds(CastAide.AsDecimal(rowEvt["odds"]), blRow.Bettype, CastAide.AsInt32(blRow.OddsType))), 2)
@@ -850,23 +843,19 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                                     {
                                         _listBetlistEvt.Add(new BetlistEvent()
                                         {
-
                                             GameType = CacheRef.GetRouletteBetItem(CastAide.AsInt32(Fanex.Tarus.Infrastructure.Helper.SportHelper.BetTeam.GetBetTeam(rowEvt["betteam"].ToString(), blRow.Bettype, "e"))),
                                             Stake = NumberFormat.DecFormat(CastAide.AsDouble(rowEvt["stake" + baseCurrency]), 2),
                                             Odds = NumberFormat.DecFormat(CastAide.AsDouble(Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOdds(CastAide.AsDecimal(rowEvt["odds"]), blRow.Bettype, CastAide.AsInt32(blRow.OddsType))), 2)
                                         });
                                     }
-
                                 }
 
                                 strEvent = blEvent.GenerateEventLiveCasino(eventTplLC, blRow, _listBetlistEvt);
-                                
                             }
                         }
-                        else 
+                        else
                             strEvent = blEvent.GenerateEvent(strEvent, blRow);
                         TemplateHandler.Assign(ref strRow, "event", strEvent);
-
 
                         //Stake
                         TemplateHandler.Assign(ref strRow, "Stake", NumberFormat.DecFormat(stake, 2));
@@ -878,6 +867,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                         //TemplateHandler.Assign(ref strRow, "PlayerComm", NumberFormat.DecFormat(comm, 2));
 
                         //assign odds
+
                         #region assign Odds
 
                         var _odds = Fanex.Tarus.Infrastructure.Helper.SportHelper.CalcOdds.GetOdds(CastAide.AsDecimal(dr["odds"]), betType, CastAide.AsInt32(dr["oddsType"]));
@@ -895,10 +885,11 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                                     TemplateHandler.Assign(ref strRow, "Odds", "-");
                                 }
                                 break;
+
                             case 33:
                                 string Odds_33_win = "<span class='blue' style='font-weight:normal;'>{1}</span>";
                                 string Odds_33_place = "<span class='' style='font-weight:normal;'>{2}</span>";
-                                //get data of bettransm for bet type 33,43       
+                                //get data of bettransm for bet type 33,43
 
                                 if (dataTable2 != null && dataTable2.Rows.Count > 0)
                                 {
@@ -907,8 +898,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
                                 if (foundRows != null && foundRows.Length > 1)
                                 {
-
-
                                     for (int i = 0; i < 2; i++)
                                     {
                                         string hrStatus = CastAide.AsString(foundRows[i]["status"]);
@@ -938,8 +927,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                                             }
                                             //apos_Place = CastAide.AsDecimal(foundRows[i]["apositiontaking"]) * 100;
                                         }
-
-
                                     }
 
                                     if (status.ToLower() == "won" || status.ToLower() == "lose")
@@ -957,6 +944,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                             case 9: //mix parlay
                                 TemplateHandler.Assign(ref strRow, "Odds", NumberFormat.DecFormat(_odds, 4));
                                 break;
+
                             case 29:
                                 {
                                     if (status.ToLower().Contains("running"))
@@ -969,13 +957,15 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                                     }
                                 }
                                 break;
+
                             case 1000:
                             case 1101:
                             case 1102:
                             case 1103:
                                 TemplateHandler.Assign(ref strRow, "{Odds}", "-");
-                                                   
+
                                 break;
+
                             default:
                                 TemplateHandler.Assign(ref strRow, "Odds", IBCUtils.FormatHandler.FormatNumber3(_odds));
                                 //if (betType > 80 && betType < 90)
@@ -989,7 +979,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                                 break;
                         }
                         TemplateHandler.Assign(ref strRow, "OddsStype", oddsTypeName);
-                        #endregion
+
+                        #endregion assign Odds
 
                         //assign odd-even row
                         if (string.IsNullOrEmpty(liveStyle))
@@ -1005,7 +996,9 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                         }
 
                         //assign status
+
                         #region assign betlist status
+
                         string betListStatus = status.ToLower();
                         if (betType == 33 || betType == 43) //win/place || fixodds win/place
                         {
@@ -1015,15 +1008,18 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                                     betListStatus = "Running";
                                     TemplateHandler.Assign(ref strRow, "PlayerComm", "");
                                     break;
+
                                 case "waiting":
                                     betListStatus = "Waiting";
                                     TemplateHandler.Assign(ref strRow, "PlayerComm", "");
                                     break;
+
                                 case "void":
                                 case "reject":
                                 case "refund":
                                     TemplateHandler.Assign(ref strRow, "PlayerComm", "");
                                     break;
+
                                 default:
                                     string Status_win = "<span class='blue' style='font-weight:normal;'>{1}</span>";
                                     string Status_place = "<span class='' style='font-weight:normal;'>{2}</span>";
@@ -1048,7 +1044,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                                                     TemplateHandler.Assign(ref Status_place, "2", "Place: " + "<b>Refund</b>");
                                                 else if (hrStatus.ToLower() == "lose")
                                                     TemplateHandler.Assign(ref Status_place, "2", "Place: " + "<b>Lose</b>");
-
                                             }
                                         }
                                         status = Status_win + "<br>" + Status_place;
@@ -1064,16 +1059,19 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                                     TemplateHandler.Assign(ref strRow, "PlayerComm", "");
                                     betListStatus = status;
                                     break;
+
                                 case "waiting":
                                     TemplateHandler.Assign(ref strRow, "PlayerComm", "");
                                     betListStatus = status;
                                     break;
+
                                 case "void":
                                 case "reject":
                                 case "refund":
                                 case "draw":
                                     betListStatus = status;
                                     break;
+
                                 case "lose":
                                 case "won":
                                     betListStatus = status;
@@ -1082,7 +1080,8 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                         }
                         TemplateHandler.Assign(ref strRow, "Status", betListStatus.ToUpper());
                         TemplateHandler.Assign(ref strRow, "IP", IpManagement.ReplaceVNIP(CastAide.AsString(dr["ip"])));
-                        #endregion
+
+                        #endregion assign betlist status
 
                         //PT - Comm
                         double convertLicenseeWL = CastAide.AsDouble(licenseewl);
@@ -1110,16 +1109,14 @@ namespace Sunplus.Accounting.Business.Report.Deposit
                             case 43:
                                 TemplateHandler.Assign(ref strRow, "PT", "<span class='blue' style='font-weight:normal;'>Win: " + "<b>" + NumberFormat.DecFormat(apos_Win, 0) + "%</b>" + "</span><br>" + "<span class='' style='font-weight:normal;'>Place: " + "<b>" + NumberFormat.DecFormat(apos_Place, 0) + "%</b>" + "</span>" + "<br />");
                                 break;
+
                             default:
                                 TemplateHandler.Assign(ref strRow, "PT", "<font class='bl_underdog'>" + NumberFormat.DecFormat(apos, 0) + "%</font>" + "<br />");
                                 break;
                         }
 
-
                         //append row
                         html.Append(strRow);
-
-
 
                     }
                     //footer row
@@ -1137,16 +1134,13 @@ namespace Sunplus.Accounting.Business.Report.Deposit
             catch (Exception ex)
             {
                 html.Append(ex.Message);
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
-
-
 
             return html.ToString();
         }
 
-        #endregion
-
+        #endregion RenderHTMLV2
     }
 }

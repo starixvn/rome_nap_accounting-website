@@ -10,7 +10,6 @@
 <%@ Import Namespace="System.Security.Principal"%>
 
 <%@ Import Namespace="Sunplus.Accounting.Core.Common" %>
-<%@ Import Namespace="Sunplus.Core.LoggingLib" %>
 <%@ Import Namespace="System.Linq" %>
 <%@ Import Namespace="Microsoft.Practices.Unity" %>
 <%@ Import Namespace="Microsoft.Practices.Unity.Configuration" %>
@@ -25,6 +24,8 @@
 
     void Application_Start(object sender, EventArgs e) 
     {
+        
+        
         // Code that runs on application startup    
         BootStrapperManager.Initialize(new UnityBootStrapper());
         //For Data Replication System
@@ -37,9 +38,6 @@
         //manager.Register(typeof(CasinoLibrary.SBAgent.BasicInfo), pattern);
 
         Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
-
-
-       
         RegisterGlobalFilters(GlobalFilters.Filters);
         
         RegisterRoutes(RouteTable.Routes);
@@ -95,8 +93,6 @@
         //Phuong.Nguyen, handler system error
         // Code that runs when an unhandled error occurs
         Exception ex = Server.GetLastError().GetBaseException();
-        //Lewin
-        //(new Sunplus.Core.LoggingLib.EntLibLogger()).Error(ex.Message, ex);
 
         if (ex.GetType() != typeof(HttpException))
         {
@@ -116,16 +112,7 @@
         
 
         #region MyRegion
-        //string message = ex.Message +
-        //                "\n SOURCE: " + ex.Source +
-        //                "\n FORM: " + Request.Form.ToString() +
-        //                "\n QUERYSTRING: " + Request.QueryString.ToString() +
-        //                "\n TARGETSITE: " + ex.TargetSite +
-        //                "\n STACKTRACE: " + ex.StackTrace;
-
-        //SendMailBugSystem.NotificationBugSystem(message);
-        //Logger.Write(message);
-        //END 
+       
         #endregion
        
     }   

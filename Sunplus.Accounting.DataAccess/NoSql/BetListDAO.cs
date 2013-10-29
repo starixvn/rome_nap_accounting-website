@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using Sunplus.Data.DataAbstract.Entity;
 using Sunplus.Accounting.Entities;
-
+using Sunplus.Data.DataAbstract.Entity;
 
 namespace Sunplus.Accounting.DataAccess.NoSql
 {
     public class BetListDAO : IBetListDAO
     {
-
         #region IBetListDAO Members
 
         public List<BetListDetail> GetLatestBetList(int totalRow)
@@ -57,16 +55,15 @@ namespace Sunplus.Accounting.DataAccess.NoSql
             throw new NotImplementedException();
         }
 
-        #endregion
+        #endregion IBetListDAO Members
 
         #region IBetListDAO Members
-
 
         public DataSet GetBetListSystemParlayByTransId(string transId, int custId, DateTime movebetday, DateTime balanceUpDay)
         {
             throw new NotImplementedException();
         }
 
-        #endregion
+        #endregion IBetListDAO Members
     }
 }

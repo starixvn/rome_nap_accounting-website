@@ -14,14 +14,13 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report.DailyTurnover
             return dailyTurnover.SelDailyTurnover(date);
         }
 
-        public void DailyTurnoverExportExcel(string date) {
+        public void DailyTurnoverExportExcel(string date)
+        {
             var dailyTurnover = CommonBootStrapper.Locator.GetInstance<Business.Report.DailyTurnover.DailyTurnoverManager>();
             dailyTurnover.DailyTurnoverExportExcel(date);
         }
 
-
         #region IDailyTurnover Members
-
 
         public List<ActionTurnover> SelDetailTurnover(string date)
         {
@@ -41,12 +40,12 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report.DailyTurnover
             dailyTurnover.DetailTurnoverExportExcel(date);
         }
 
-
         public void DetailActionTurnoverExportExcel(string datetime, string action, string username)
         {
             var dailyTurnover = CommonBootStrapper.Locator.GetInstance<Business.Report.DailyTurnover.DailyTurnoverManager>();
             dailyTurnover.DetailActionTurnoverExportExcel(datetime, action, username);
         }
-        #endregion
+
+        #endregion IDailyTurnover Members
     }
 }

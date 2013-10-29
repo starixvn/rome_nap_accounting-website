@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace Sunplus.Accounting.Core.Configurations
 {
-    public class RMSection:ConfigurationSection
+    public class RMSection : ConfigurationSection
     {
-        
         public static RMSection Instance
         {
             get
@@ -17,7 +12,6 @@ namespace Sunplus.Accounting.Core.Configurations
                 return RM;
             }
         }
-
 
         [ConfigurationProperty("Report", IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(RMCollection),
@@ -33,12 +27,10 @@ namespace Sunplus.Accounting.Core.Configurations
                 return spCollection;
             }
         }
-      
     }
 
     public class RMCollection : ConfigurationElementCollection
     {
-
         public RMCollection()
         {
         }
@@ -80,7 +72,6 @@ namespace Sunplus.Accounting.Core.Configurations
             return BaseIndexOf(RMElement);
         }
 
-
         protected override sealed ConfigurationElement CreateNewElement()
         {
             return new RMElement();
@@ -94,10 +85,8 @@ namespace Sunplus.Accounting.Core.Configurations
 
     public class RMElement : ConfigurationElement
     {
-
         public RMElement()
         {
-
         }
 
         [ConfigurationProperty("id", IsRequired = true, IsKey = true)]
@@ -126,8 +115,6 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-
-
         [ConfigurationProperty("isActive", IsRequired = false)]
         public bool IsActive
         {
@@ -153,7 +140,6 @@ namespace Sunplus.Accounting.Core.Configurations
                 this["displayName"] = value;
             }
         }
-        
 
         [ConfigurationProperty("stores", IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(RMCollection),

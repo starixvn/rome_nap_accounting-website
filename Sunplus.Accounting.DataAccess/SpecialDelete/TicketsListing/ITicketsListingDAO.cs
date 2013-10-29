@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DNAide.Data;
+﻿using DNAide.Data;
 
 namespace Sunplus.Accounting.DataAccess.SpecialDelete.TicketsListing
 {
@@ -13,6 +9,5 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete.TicketsListing
         DbResult SelBettype();
 
         DbResult SelTicketsListing(int matchID, int licenseeID, string betTypes, string betTypesLive, int Type, string LiveType, string HomeScore, string AwayScore, string FromTransDate, string ToTransDate, int SAFilter);
-
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 
-
 namespace Sunplus.Accounting.Entities
 {
     public class Menu
@@ -22,6 +21,7 @@ namespace Sunplus.Accounting.Entities
                     return "none";
             }
         }
+
         private readonly ArrayList _listsubmenu = new ArrayList();
         private string _classname = "";
         private string _floatstyle = "none";
@@ -136,7 +136,5 @@ namespace Sunplus.Accounting.Entities
             }
         }
 
-
-        
     }
 }

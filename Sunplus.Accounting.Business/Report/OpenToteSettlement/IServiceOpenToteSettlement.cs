@@ -32,7 +32,6 @@ public interface IServiceOpenToteSettlement
     ExcelFile ExportToExcel_OpenToteDetail(string winlostdate, string PartnerType, string PoolCurrency, string db,
                                            bool IsTest);
 
-
     [OperationContract]
     [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
     string LoadComparision(string winlostdate, string ibcTO, string ibcDividendWon);

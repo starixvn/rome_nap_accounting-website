@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Web;
-using Sunplus.Data.DataAbstract.Entity;
-using Sunplus.Accounting.Entities.Report.Licensee;
-using Sunplus.Accounting.Entities.Customer.PT.ViewPT;
 using Sunplus.Accounting.Entities.Customer;
-
+using Sunplus.Accounting.Entities.Customer.PT.ViewPT;
+using Sunplus.Accounting.Entities.Report.Licensee;
+using Sunplus.Data.DataAbstract.Entity;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.BetList
 {
@@ -18,7 +17,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.BetList
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        List<BetMonitor> GetLatestBABetList(int totalRow,int amount, System.Int64 lastTransId);
+        List<BetMonitor> GetLatestBABetList(int totalRow, int amount, System.Int64 lastTransId);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
@@ -27,7 +26,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.BetList
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         List<BetListDetail> GetMixParlayTickets(string refNo);
-
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
@@ -44,8 +42,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.BetList
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         SystemParlayDetail GetBetListSystemParlayDetailByTransId(string transId, int custId);
-
-
 
     }
 }

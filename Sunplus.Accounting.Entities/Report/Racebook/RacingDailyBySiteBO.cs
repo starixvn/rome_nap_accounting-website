@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Sunplus.Accounting.Entities.Report.Racebook
 {
     #region WinlostRacingLicensee_Details
+
     #region RacingDailyBySiteItem
+
     [Serializable]
     [DataContract]
     public class RacingDailyBySiteItem
@@ -21,9 +21,11 @@ namespace Sunplus.Accounting.Entities.Report.Racebook
         [DataMember]
         public bool HasPt { get; set; }
     }
-    #endregion
+
+    #endregion RacingDailyBySiteItem
 
     #region RacingDailyBySiteRow
+
     [Serializable]
     [DataContract]
     public class RacingDailyBySiteRow
@@ -55,8 +57,8 @@ namespace Sunplus.Accounting.Entities.Report.Racebook
         [DataMember]
         public string TotalTO { get; set; }
 
-
         #region Agent WL
+
         [DataMember]
         public string AgentWinTO { get; set; }
 
@@ -70,8 +72,9 @@ namespace Sunplus.Accounting.Entities.Report.Racebook
         public string AgentTotalTO { get; set; }
 
         [DataMember]
-        public string AgentPtWinLoss{ get; set; }
-        #endregion
+        public string AgentPtWinLoss { get; set; }
+
+        #endregion Agent WL
 
         [DataMember]
         public string IBCPTWL { get; set; }
@@ -86,11 +89,13 @@ namespace Sunplus.Accounting.Entities.Report.Racebook
         public string CommIncome { get; set; }
 
         [DataMember]
-        public string Amountdueto  { get; set; }
+        public string Amountdueto { get; set; }
     }
-    #endregion
+
+    #endregion RacingDailyBySiteRow
 
     #region RacingDailyBySiteMeeting
+
     [Serializable]
     [DataContract]
     public class RacingDailyBySiteMeeting
@@ -101,9 +106,11 @@ namespace Sunplus.Accounting.Entities.Report.Racebook
         [DataMember]
         public RacingDailyBySiteRow Total { get; set; }
     }
-    #endregion
+
+    #endregion RacingDailyBySiteMeeting
 
     #region RacingDailyBySiteCurrency
+
     [Serializable]
     [DataContract]
     public class RacingDailyBySiteCurrency
@@ -114,9 +121,11 @@ namespace Sunplus.Accounting.Entities.Report.Racebook
         [DataMember]
         public List<RacingDailyBySiteRow> Totals { get; set; }
     }
-    #endregion
+
+    #endregion RacingDailyBySiteCurrency
 
     #region RacingDailyBySiteBO
+
     [Serializable]
     [DataContract]
     public class RacingDailyBySiteBO
@@ -129,14 +138,16 @@ namespace Sunplus.Accounting.Entities.Report.Racebook
 
         [DataMember]
         public RacingDailyBySiteRow Total { get; set; }
-        
     }
-    #endregion
-    #endregion
+
+    #endregion RacingDailyBySiteBO
+
+    #endregion WinlostRacingLicensee_Details
 
     #region WinlostRacingLicensee_BetList_Details
 
     #region RacingDailyBySiteBetlistRow
+
     [Serializable]
     [DataContract]
     public class RacingDailyBySiteBetlistRow
@@ -219,9 +230,11 @@ namespace Sunplus.Accounting.Entities.Report.Racebook
         [DataMember]
         public string IBCCommIncomm { get; set; }
     }
-    #endregion
+
+    #endregion RacingDailyBySiteBetlistRow
 
     #region RacingDailyBySiteBetlistBO
+
     [Serializable]
     [DataContract]
     public class RacingDailyBySiteBetlistBO
@@ -232,6 +245,8 @@ namespace Sunplus.Accounting.Entities.Report.Racebook
         [DataMember]
         public RacingDailyBySiteBetlistRow Total { get; set; }
     }
-    #endregion
-    #endregion
+
+    #endregion RacingDailyBySiteBetlistBO
+
+    #endregion WinlostRacingLicensee_BetList_Details
 }

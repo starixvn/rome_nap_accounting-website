@@ -31,7 +31,7 @@ namespace Sunplus.Accounting.DataAccess.Provider.Customer
         /// <returns></returns>
         public static CustomerProvider Instance(DAOClient client, DataSource source)
         {
-            return (CustomerProvider) CreateInstance(Globals.IBCSetting.Customer.ProviderType, client, source);
+            return (CustomerProvider)CreateInstance(Globals.IBCSetting.Customer.ProviderType, client, source);
         }
 
         public virtual DbResult GetDownLineList(int custid, int pageSize, int pageIndex)

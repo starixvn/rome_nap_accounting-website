@@ -1,20 +1,14 @@
 ﻿using System;
 using DNAide.Core;
 using Sunplus.Accounting.Business.BetList;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Core.LoggingLib;
-
 
 public partial class BetListByIP : PageBase
 {
-   
     protected void Page_Load(object sender, EventArgs e)
     {
         try
         {
-
             int listType = 1; // 1:default (Link from BetList);  ||  2:by day (Link from Statement);  ||  3:by IP (Link from By IP)
             listType = CastAide.AsInt16(Request["bltype"], 1);
             if (listType < 1 || listType > 3) listType = 1; // Max = 3
@@ -33,7 +27,6 @@ public partial class BetListByIP : PageBase
                 BetlistByIP betlist = new BetlistByIP();
                 reportHeader.Text = betlist.CreateHeader(null);
             }
-
         }
         catch (Exception ex)
         {

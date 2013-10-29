@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using Sunplus.Accounting.Entities;
@@ -12,7 +11,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.SpecialDelete
     /// <summary>
     /// Summary description for IMenuManager
     /// </summary>
-    /// 
+    ///
     [ServiceContract]
     public interface ISpecialDeleteService
     {
@@ -60,8 +59,8 @@ namespace Sunplus.Accounting.WcfServiceLibrary.SpecialDelete
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        Result DeleteSpecialEarlyKO(string matchId, string bettype, string betteam1378, string betteam515, 
-            string hdp, string uname, string userId, string pass, string DelOption, string transids, string kickoffdate, 
+        Result DeleteSpecialEarlyKO(string matchId, string bettype, string betteam1378, string betteam515,
+            string hdp, string uname, string userId, string pass, string DelOption, string transids, string kickoffdate,
             string DelOption_BD, string transids_BD, string DelOption_12EU, string transids_12EU, string DelOption_MHC,
             string transids_MHC, string betteam430, string betteam6, string betteam14, string betteam16, Message message, int SAFilter);
 
@@ -87,7 +86,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.SpecialDelete
             string DelOption_BD, string transids_BD,
             string DelOption_12EU, string transids_12EU,
             string DelOption_MHC, string transids_MHC,
-            string betteam430, string betteam6, string betteam14, string betteam16, string Fromtransdate, string Totransdate, string ParlayType, 
+            string betteam430, string betteam6, string betteam14, string betteam16, string Fromtransdate, string Totransdate, string ParlayType,
             MessageMP message);
 
         [OperationContract]

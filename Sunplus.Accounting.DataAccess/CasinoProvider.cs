@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Casino;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
 
 /// <summary>
 /// Summary description for CasinoProvider
@@ -19,10 +17,9 @@ namespace Sunplus.Accounting.DataAccess
 
         public static CasinoProvider Instance
         {
-            get { return (CasinoProvider) Activator.CreateInstance(Type.GetType(Globals.IBCSetting.Casino.ProviderType)); }
+            get { return (CasinoProvider)Activator.CreateInstance(Type.GetType(Globals.IBCSetting.Casino.ProviderType)); }
             set { _Instance = value; }
         }
-
 
         /// <summary>
         /// Update Casino status to SP database
@@ -32,10 +29,13 @@ namespace Sunplus.Accounting.DataAccess
         /// <param name="bDisabledCS"></param>
         /// <returns></returns>
         public abstract bool UpdateCSStatus(int custid, bool bSyncCS, bool bDisabledCS, string siteName);
+
         public abstract bool UpdateCSStatusAfterSync(int custid, bool bSyncCS, bool bDisabledCS, int userId, string ip);
 
         public abstract bool UpdateCSStatusWithoutSync(int custid, bool bSyncCS, bool bDisabledCS, bool isUpdDownline);
+
         public abstract bool UpdateCSStatus(int custid, bool bSyncCS, bool bDisabledCS, bool isUpdDownline, string siteName);
+
         public abstract CSCustomerDetail GetCustInfoIBC(string custid, Hashtable r);
 
         public abstract List<GameKindDetail> GetGameKinds(string siteName);
@@ -47,10 +47,9 @@ namespace Sunplus.Accounting.DataAccess
         /// </summary>
         public abstract List<GameKindDetail> GetGameKinds(string casinoNo, string siteName);
 
-
         public abstract List<GameKindDetail> GetGameKinds(int custId, string siteName);
-        public abstract List<GameKindDetail> GetGameKinds_EditMember(int memberId);
 
+        public abstract List<GameKindDetail> GetGameKinds_EditMember(int memberId);
 
         /// <summary>
         /// Get game type list of a certain game kind
@@ -60,6 +59,7 @@ namespace Sunplus.Accounting.DataAccess
         public abstract List<GameTypeDetail> GetGameType(int gameKindID, string siteName);
 
         public abstract List<GameTypeDetail> GetGameType(int custId, int gameKindID, string siteName);
+
         public abstract List<GameTypeDetail> GetGameTypes_EditMember(int memberId, int gameKindID, string siteName);
 
         /// <summary>
@@ -69,7 +69,6 @@ namespace Sunplus.Accounting.DataAccess
         /// <param name="gameTypeID"></param>
         /// <returns></returns>
         public abstract List<StakeLevelDetail> GetCustStakeLevels(int custId, int gameTypeID, string siteName);
-
 
         /// <summary>
         /// Get game type stake levels list
@@ -129,7 +128,7 @@ namespace Sunplus.Accounting.DataAccess
 
         //Full Reset Max Transfer
         //FromSystem	Tinyint	2:update from agent site
-        //                      3:update from account site	
+        //                      3:update from account site
         public virtual bool FullResetMaxTransfer(string listIBCCustID, string FromIP, int ModifyBy,
                                                  string ModifyByUsername, int FromSystem, string siteName)
         {
@@ -169,7 +168,6 @@ namespace Sunplus.Accounting.DataAccess
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -185,7 +183,6 @@ namespace Sunplus.Accounting.DataAccess
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }

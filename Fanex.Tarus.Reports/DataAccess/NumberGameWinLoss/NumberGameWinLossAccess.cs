@@ -21,7 +21,7 @@ namespace Fanex.Tarus.Reports.DataAccess.NumberGameWinLoss
             DataTable dt = new DataTable();
             try
             {
-                using (ObjectDb db = new ObjectDb("CustomerSetting_ExchangeSel"))
+                using (ObjectDb db = new ObjectDb("Acc_ExchangeSel"))
                 {
                     db.AddInParameter("system", DbType.String, "ACCOUNTING");
                     var result = db.ExecuteDataSet();

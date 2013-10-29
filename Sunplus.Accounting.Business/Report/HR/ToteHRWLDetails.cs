@@ -8,13 +8,10 @@ using DNAide.Data;
 using DNAide.Utils;
 using DNAide.Web;
 using Sunplus.Accounting.Core.Cache;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
-using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
 
 /// <summary>
 /// Summary description for TOddsHRWLDetails
@@ -58,19 +55,18 @@ public partial class ReportHTML
             db = (string.IsNullOrEmpty(db)) ? "rep" : db;
 
             DbResult rs = null;
-            
-            if (wldate>ReportUtils.BalanceUp.MoveBetsDay)
+
+            if (wldate > ReportUtils.BalanceUp.MoveBetsDay)
                 rs = MatchWinLostReport.WinlostHR_Details(wldate, db);
-            else if(wldate>=ReportUtils.BalanceUp.BalanceUpDay)
+            else if (wldate >= ReportUtils.BalanceUp.BalanceUpDay)
                 rs = MatchWinLostReport.WinlostHR_Details_14(wldate);
             else
                 rs = MatchWinLostReport.WinlostHR_Details_WH(wldate);
-                
 
             #region Sort sub total by group currency
 
             DataTable dtWL = rs.ResultSet.Tables[0];
-            dtWL.Columns.Add("Order", typeof (int));
+            dtWL.Columns.Add("Order", typeof(int));
             int cid = 0, cid_p = 0, last_cid_usd = 101, last_cid_thb = 101, last_cid_in = 101;
             foreach (DataRow dr in dtWL.Rows)
             {
@@ -86,7 +82,7 @@ public partial class ReportHTML
                 }
             }
 
-            #endregion
+            #endregion Sort sub total by group currency
 
             DataView dv = dtWL.DefaultView;
             dv.Sort = "Order asc, currency asc, leagueid asc ";
@@ -110,8 +106,8 @@ public partial class ReportHTML
                    bgcolorCurrency = "#d3e1c8",
                    bgcolorCurrency_sub = "#ffffc4";
             string condition_Meeting = "", strTitleMeeting = "", strTotalMeeting = "", bgcolorMeeting = "#ffeedd";
-                // #d0e3ca
-            string trBlank = "<tr><td colspan='29' class='l fontbold white'></td></tr>"; //#efefef            
+            // #d0e3ca
+            string trBlank = "<tr><td colspan='29' class='l fontbold white'></td></tr>"; //#efefef
             string meeting_currency = "",
                    strConditionSubTotalGroupCurrencyUSD = "",
                    strConditionSubTotalGroupCurrencyTHB = "",
@@ -124,7 +120,7 @@ public partial class ReportHTML
                 cid_thb = 0,
                 cid_in = 0;
 
-            #endregion
+            #endregion Declare Variable
 
             #region get lastest currency id
 
@@ -165,7 +161,7 @@ public partial class ReportHTML
             if (CountCurrencyGroupTHB < 2) IsTotalTHB = true;
             if (CountCurrencyGroupIN < 2) IsTotalIN = true;
 
-            #endregion
+            #endregion get lastest currency id
 
             #region strConditionSubTotalGroupCurrencyUSD
 
@@ -175,7 +171,7 @@ public partial class ReportHTML
             }
             strConditionSubTotalGroupCurrencyUSD += " currency = 0";
 
-            #endregion
+            #endregion strConditionSubTotalGroupCurrencyUSD
 
             #region strConditionSubTotalGroupCurrencyTHB
 
@@ -185,7 +181,7 @@ public partial class ReportHTML
             }
             strConditionSubTotalGroupCurrencyTHB += " currency = 0";
 
-            #endregion
+            #endregion strConditionSubTotalGroupCurrencyTHB
 
             #region strConditionSubTotalGroupCurrencyIN
 
@@ -195,11 +191,10 @@ public partial class ReportHTML
             }
             strConditionSubTotalGroupCurrencyIN += " currency = 0";
 
-            #endregion
+            #endregion strConditionSubTotalGroupCurrencyIN
 
             var CurrencyIDs = new ArrayList();
             var CurrencyNames = new ArrayList();
-
 
             // for testing loop
             // for (int i = 0; i < 30; i++)
@@ -235,7 +230,7 @@ public partial class ReportHTML
                             strTotalMeeting = ToteRowTotalMeeting(dt, strTitleMeeting, bgcolorMeeting, condition_Meeting);
                             rows.Append(strTotalMeeting);
 
-                            #endregion
+                            #endregion Total Meeting
 
                             #region Total Currency
 
@@ -260,7 +255,7 @@ public partial class ReportHTML
                             rows.Replace("{rowspan}", (m_index).ToString());
                             rows.Append(trBlank);
 
-                            #endregion
+                            #endregion Total Currency
 
                             #region Sub Total Currency by USD
 
@@ -275,7 +270,7 @@ public partial class ReportHTML
                                 IsTotalUSD = true;
                             }
 
-                            #endregion
+                            #endregion Sub Total Currency by USD
 
                             #region Sub Total Currency by THB
 
@@ -290,7 +285,7 @@ public partial class ReportHTML
                                 IsTotalTHB = true;
                             }
 
-                            #endregion
+                            #endregion Sub Total Currency by THB
 
                             #region Sub Total Currency by IN
 
@@ -305,7 +300,7 @@ public partial class ReportHTML
                                 IsTotalIN = true;
                             }
 
-                            #endregion
+                            #endregion Sub Total Currency by IN
 
                             c_index = 0;
                             meetingid = 0;
@@ -316,7 +311,7 @@ public partial class ReportHTML
                         m_index = 0;
                     }
 
-                    #endregion
+                    #endregion Each Currency
 
                     #region Each Meeting
 
@@ -335,7 +330,6 @@ public partial class ReportHTML
                             strTotalMeeting = ToteRowTotalMeeting(dt, strTitleMeeting, bgcolorMeeting, condition_Meeting);
                             rows.Append(strTotalMeeting);
 
-
                             rows.Append(trBlank);
 
                             meeting_currency = CacheRef.GetLeagueName(meetingid_p) + " - " + currency_p;
@@ -349,10 +343,9 @@ public partial class ReportHTML
                         TemplateHandler.RemoveBlock(ref row, "Blank2");
                     }
 
-
                     m_index++;
 
-                    #endregion
+                    #endregion Each Meeting
 
                     #region Assign Each Row
 
@@ -405,11 +398,11 @@ public partial class ReportHTML
 
                     rows.Append(row);
 
-                    #endregion
+                    #endregion Assign Each Row
                 }
                 rows.Replace("{rowspan}", m_index.ToString());
 
-                #endregion
+                #endregion foreach
             }
 
             #region Total
@@ -424,7 +417,7 @@ public partial class ReportHTML
             strTotalMeeting = TemplateHandler.RemoveComment(strTotalMeeting);
             rows.Append(strTotalMeeting);
 
-            #endregion
+            #endregion Total Meeting
 
             #region Total Currency
 
@@ -445,7 +438,7 @@ public partial class ReportHTML
                 rows.Append(trBlank);
             }
 
-            #endregion
+            #endregion Total Currency
 
             #region Sub Total Currency by USD
 
@@ -460,7 +453,7 @@ public partial class ReportHTML
                 IsTotalUSD = true;
             }
 
-            #endregion
+            #endregion Sub Total Currency by USD
 
             #region Sub Total Currency by THB
 
@@ -475,7 +468,7 @@ public partial class ReportHTML
                 IsTotalTHB = true;
             }
 
-            #endregion
+            #endregion Sub Total Currency by THB
 
             #region Sub Total Currency by IN
 
@@ -490,7 +483,7 @@ public partial class ReportHTML
                 IsTotalIN = true;
             }
 
-            #endregion
+            #endregion Sub Total Currency by IN
 
             #region Grand Total
 
@@ -500,23 +493,22 @@ public partial class ReportHTML
 
             rows.Append(strGrandTotal);
 
-            #endregion
+            #endregion Grand Total
 
-            #endregion
+            #endregion Total
 
             TemplateHandler.ReplaceBlock(ref tpl, "content", rows.ToString());
             html.Append(tpl);
         }
         catch (Exception ex)
         {
-            
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             html.Append(ex.Message);
         }
         return html.ToString();
     }
 
-    #endregion
+    #endregion ToteHRWLReport
 
     #region ToteRowTotalMeeting
 
@@ -580,12 +572,12 @@ public partial class ReportHTML
 
         strGrandTotal += "</tr>";
 
-        #endregion
+        #endregion GrandTotal
 
         return strGrandTotal;
     }
 
-    #endregion
+    #endregion ToteRowTotalMeeting
 
     #region ToteRowTotalCurrency
 
@@ -655,7 +647,7 @@ public partial class ReportHTML
 
         strGrandTotal += "</tr>";
 
-        #endregion
+        #endregion Total Currency
 
         #region Total Base (RM)
 
@@ -715,14 +707,14 @@ public partial class ReportHTML
 
         strGrandTotal += "</tr>";
 
-        #endregion
+        #endregion Total Base (RM)
 
-        #endregion
+        #endregion GrandTotal
 
         return strGrandTotal;
     }
 
-    #endregion
+    #endregion ToteRowTotalCurrency
 
     #region ToteRowGrandTotalBaseRM
 
@@ -737,7 +729,6 @@ public partial class ReportHTML
         strGrandTotal += "<tr id='trFooter'  style='font-weight:bold;'>";
         strGrandTotal += "<td class='total' colspan='2' style=\"text-align:center;\"><b>Grand Total:</b></td>";
         strGrandTotal += "<td class='total' style=\"text-align:center;\"><b>Base (RM)</b></td>";
-
 
         strGrandTotal += "<td class='total' style=\"text-align:right;\"><b>" +
                          NumberFormat.DecFormat(dt.Compute("sum(winTO_Agency)", condition), 2) + "</b></td>";
@@ -795,12 +786,12 @@ public partial class ReportHTML
         if (HttpContext.Current.Request["IsExport"] == null)
             strGrandTotal += "</tfoot>";
 
-        #endregion
+        #endregion Grand Total Base (RM)
 
         return strGrandTotal;
     }
 
-    #endregion
+    #endregion ToteRowGrandTotalBaseRM
 
-    #endregion
+    #endregion Tote Odds HR WL Report HTML
 }

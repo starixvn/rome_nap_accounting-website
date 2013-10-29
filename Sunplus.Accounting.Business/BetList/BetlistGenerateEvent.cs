@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Data;
 using DNAide.Core;
-using DNAide.Data;
 using DNAide.Utils;
 using DNAide.Web;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
-using Sunplus.Accounting.Core.Common;
+
 /// <summary>
 /// Summary description for BetlistGenerateEvent
 /// </summary>
@@ -21,7 +20,8 @@ namespace Sunplus.Accounting.Business.BetList
         {
             return "<span class='bl_num'><b> @ " + NumberFormat.DecFormat(odds, 3) + "</b></span>";
         }
-        #endregion
+
+        #endregion oddMP
 
         private string normalOdd(decimal odds)
         {
@@ -84,7 +84,6 @@ namespace Sunplus.Accounting.Business.BetList
             string sportypeName = CacheRef.GetSportName(bl.Sporttype);
             string leagueName = CacheRef.GetLeagueName(bl.LeagueID);
 
-
             if (isMP) choice += oddMP(odds);
 
             choice += liveScore;
@@ -97,7 +96,6 @@ namespace Sunplus.Accounting.Business.BetList
                 sportypeName = string.Format("<s>{0}</s>", sportypeName);
                 leagueName = string.Format("<s>{0}</s>", leagueName);
                 Event = string.Format("<s>{0}</s>", Event);
-
             }
 
             TemplateHandler.Assign(ref eventItem, "{choice}", choice);
@@ -106,7 +104,8 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref eventItem, "{sporttype}", sportypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", leagueName);
         }
-        #endregion
+
+        #endregion GenHdpEvent
 
         #region GenOEEvent
 
@@ -141,7 +140,8 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref eventItem, "{sporttype}", sportypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", leagueName);
         }
-        #endregion
+
+        #endregion GenOEEvent
 
         #region GenOUEvent
 
@@ -161,7 +161,6 @@ namespace Sunplus.Accounting.Business.BetList
             string bettypeName = Fanex.Tarus.Infrastructure.Helper.SportHelper.Bettype.GetBettype(bl.Bettype);
             string sportypeName = CacheRef.GetSportName(bl.Sporttype);
             string leagueName = CacheRef.GetLeagueName(bl.LeagueID);
-
 
             string choice = "";
             if (betteam == "h") choice = "OVER " + NumberFormat.DecFormat(Math.Abs(hdp1), 2) + liveScore;
@@ -184,7 +183,8 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref eventItem, "{sporttype}", sportypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", leagueName);
         }
-        #endregion
+
+        #endregion GenOUEvent
 
         #region GenCSEvent
 
@@ -198,7 +198,7 @@ namespace Sunplus.Accounting.Business.BetList
             string leagueName = CacheRef.GetLeagueName(bl.LeagueID);
 
             decimal odds = bl.Odds;
-          
+
             string choice = "";
             choice = (betteam == "5:0" || betteam == "0:5") ? betteam + " UP" : betteam;
             if (bl.Bettype == 30)
@@ -206,7 +206,6 @@ namespace Sunplus.Accounting.Business.BetList
                 choice = (betteam == "4:0" || betteam == "0:4") ? betteam + " UP" : betteam;
             }
             if (isMP) choice += oddMP(odds);
-
 
             var Event = home + " -VS- " + away;
             if (bl.StatusId == 102)
@@ -224,7 +223,8 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref eventItem, "{sporttype}", sportypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", leagueName);
         }
-        #endregion
+
+        #endregion GenCSEvent
 
         #region Gen1x2Event
 
@@ -249,7 +249,6 @@ namespace Sunplus.Accounting.Business.BetList
             else
                 choice = "FT." + bl.Betteam;
 
-
             if (isMP) choice += oddMP(odds);
 
             var Event = home + " -VS- " + away;
@@ -268,7 +267,8 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref eventItem, "{sporttype}", sportypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", leagueName);
         }
-        #endregion
+
+        #endregion Gen1x2Event
 
         #region GenTGEvent
 
@@ -300,10 +300,12 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref eventItem, "{sporttype}", sportypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", leagueName);
         }
-        #endregion
+
+        #endregion GenTGEvent
 
         #region GenOutrightRow
-        void GenOutrightRow(ref string eventItem, BetlistRow bl)
+
+        private void GenOutrightRow(ref string eventItem, BetlistRow bl)
         {
             string home = CacheRef.GetTeamName(bl.HomeID);
             string bettypeName = Fanex.Tarus.Infrastructure.Helper.SportHelper.Bettype.GetBettype(bl.Bettype);
@@ -318,13 +320,13 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.RemoveBlock(ref eventItem, "event");
             TemplateHandler.Assign(ref eventItem, "{sporttype}", sportypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", leagueName);
-
-
         }
-        #endregion
+
+        #endregion GenOutrightRow
 
         #region GenHorseracingRow
-        void GenHorseracingRow(ref string eventItem, BetlistRow bl)
+
+        private void GenHorseracingRow(ref string eventItem, BetlistRow bl)
         {
             string home = bl.MatchCode + " - " + CacheRef.GetHorseTeamName(bl.HomeID);
             string bettypeName = Fanex.Tarus.Infrastructure.Helper.SportHelper.Bettype.GetBettype(bl.Bettype);
@@ -339,10 +341,12 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref eventItem, "{sporttype}", sportypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", leagueName);
         }
-        #endregion
+
+        #endregion GenHorseracingRow
 
         #region GenFinancialRow
-        void GenFinancialRow(ref string eventItem, BetlistRow bl)
+
+        private void GenFinancialRow(ref string eventItem, BetlistRow bl)
         {
             decimal hdp1 = bl.hdp1;
             string betteam = bl.Betteam;
@@ -353,7 +357,6 @@ namespace Sunplus.Accounting.Business.BetList
             string leagueName = CacheRef.GetLeagueName(bl.LeagueID);
             string indexName = CacheRef.GetFncIndexName(bl.HomeID);
 
-
             string choice = GetFIBettypeName(betteam, bl.Bettype) + " <font color='#606060'>" + DNAide.Utils.FormatHandler.FormatNumber2C(hdp1, "E") + "</font>";
 
             TemplateHandler.Assign(ref eventItem, "{choice}", choice);
@@ -361,8 +364,8 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref eventItem, "{event}", indexName);
             TemplateHandler.Assign(ref eventItem, "{sporttype}", sportypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", leagueName);
-
         }
+
         private bool IsFIOU(int bettype)
         {
             switch (bettype)
@@ -378,6 +381,7 @@ namespace Sunplus.Accounting.Business.BetList
                     return false;
             }
         }
+
         private bool IsFIOE(int bettype)
         {
             switch (bettype)
@@ -393,6 +397,7 @@ namespace Sunplus.Accounting.Business.BetList
                     return false;
             }
         }
+
         private string GetFIBettypeName(string betteam, int bettype)
         {
             if (IsFIOU(bettype))
@@ -406,10 +411,11 @@ namespace Sunplus.Accounting.Business.BetList
             return "";
         }
 
-        #endregion
+        #endregion GenFinancialRow
 
         #region GenNextGoalEvent
-        void GenNextGoalEvent(ref string eventItem, BetlistRow bl)
+
+        private void GenNextGoalEvent(ref string eventItem, BetlistRow bl)
         {
             bool liveStyle = bl.Liveindicator;
             string liveHomeScore = bl.Livehomescore.ToString();
@@ -429,7 +435,6 @@ namespace Sunplus.Accounting.Business.BetList
             string sportypeName = CacheRef.GetSportName(bl.Sporttype);
             string leagueName = CacheRef.GetLeagueName(bl.LeagueID);
             bool isNeutral = bl.isNeutral;
-
 
             string choice = "";
             if (hdp1 > hdp2)
@@ -472,15 +477,15 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref eventItem, "{event}", FirstGoal_LastGoal(home, away, betstatus, isNeutral));
             TemplateHandler.Assign(ref eventItem, "{sporttype}", sportypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", leagueName);
-
         }
-        #endregion
+
+        #endregion GenNextGoalEvent
 
         #region GenMixParlay
+
         public string GenMixParlay(string refno)
         {
             string tplEventItem = WebUtils.LoadTemplate("BetList\\BetlistEvent1.htm");
-
 
             DataTable dtMP = new DataTable();
 
@@ -489,7 +494,6 @@ namespace Sunplus.Accounting.Business.BetList
             if (rs != null && rs.Tables.Count > 0)
                 dtMP = rs.Tables[0];
 
-
             DataRowCollection rows = dtMP.Rows;
             string eventItem = "";
             string e = "";
@@ -537,25 +541,32 @@ namespace Sunplus.Accounting.Business.BetList
                     case 1206:
                         GenTGEvent(ref e, blMP, true);
                         break;
+
                     case 13:
                         GenCleanSheetEvent(ref e, blMP, true);
                         break;
+
                     case 24:
                     case 1224:
                         GenDoubleChanceEvent(ref e, blMP, true);
                         break;
+
                     case 25:
                         GenDrawNoBetEvent(ref e, blMP, true);
                         break;
+
                     case 26:
                         GenBothOneNeitherEvent(ref e, blMP, true);
                         break;
+
                     case 27:
                         GenToWinToNilEvent(ref e, blMP, true);
                         break;
+
                     case 28:
                         GenThreeWayHandicap(ref e, blMP, true);
                         break;
+
                     case 121:
                     case 122:
                     case 123:
@@ -573,14 +584,12 @@ namespace Sunplus.Accounting.Business.BetList
                 eventItem += e;
             }
             return eventItem;
-
         }
 
         public string GenMixParlay(DataTable dtMP)
         {
             string tplEventItem = WebUtils.LoadTemplate("BetList\\BetlistEvent1.htm");
 
-
             DataRowCollection rows = dtMP.Rows;
             string eventItem = "";
             string e = "";
@@ -629,31 +638,37 @@ namespace Sunplus.Accounting.Business.BetList
                     case 1206:
                         GenTGEvent(ref e, blMP, true);
                         break;
+
                     case 13:
                         GenCleanSheetEvent(ref e, blMP, true);
                         break;
+
                     case 24:
                     case 1224:
                         GenDoubleChanceEvent(ref e, blMP, true);
                         break;
+
                     case 25:
                         GenDrawNoBetEvent(ref e, blMP, true);
                         break;
+
                     case 26:
                         GenBothOneNeitherEvent(ref e, blMP, true);
                         break;
+
                     case 27:
                         GenToWinToNilEvent(ref e, blMP, true);
                         break;
+
                     case 28:
                         GenThreeWayHandicap(ref e, blMP, true);
                         break;
+
                     case 121:
                     case 122:
                     case 123:
                         GenHomeAwayDrawNoBet(ref e, blMP, true);
                         break;
-
                 }
                 if (CastAide.AsInt32(drMP["liveindicator"]) == 1)
                 {
@@ -666,13 +681,13 @@ namespace Sunplus.Accounting.Business.BetList
                 eventItem += e;
             }
             return eventItem;
-
         }
+
         #region GenMixParlay_WithHorizontalLine
+
         public string GenMixParlay_WithHorizontalLine(DataTable dtMP)
         {
             string tplEventItem = WebUtils.LoadTemplate("BetList\\BetlistEvent1.htm");
-
 
             DataRowCollection rows = dtMP.Rows;
             string eventItem = "";
@@ -719,32 +734,40 @@ namespace Sunplus.Accounting.Business.BetList
                     case 1205:
                         Gen1x2Event(ref e, blMP, true);
                         break;
+
                     case 121:
                     case 122:
                     case 123:
                         GenHomeAwayDrawNoBet(ref e, blMP, true);
                         break;
+
                     case 6:
                     case 16:
                     case 1206:
                         GenTGEvent(ref e, blMP, true);
                         break;
+
                     case 13:
                         GenCleanSheetEvent(ref e, blMP, true);
                         break;
+
                     case 24:
                     case 1224:
                         GenDoubleChanceEvent(ref e, blMP, true);
                         break;
+
                     case 25:
                         GenDrawNoBetEvent(ref e, blMP, true);
                         break;
+
                     case 26:
                         GenBothOneNeitherEvent(ref e, blMP, true);
                         break;
+
                     case 27:
                         GenToWinToNilEvent(ref e, blMP, true);
                         break;
+
                     case 28:
                         GenThreeWayHandicap(ref e, blMP, true);
                         break;
@@ -760,13 +783,15 @@ namespace Sunplus.Accounting.Business.BetList
                 eventItem += e;
             }
             return eventItem;
-
         }
-        #endregion
-        #endregion
+
+        #endregion GenMixParlay_WithHorizontalLine
+
+        #endregion GenMixParlay
 
         #region FirstGoal_LastGoal
-        string FirstGoal_LastGoal(string home, string away, string betstatus, bool isNeutral)
+
+        private string FirstGoal_LastGoal(string home, string away, string betstatus, bool isNeutral)
         {
             string fglg = WebUtils.LoadTemplate("BetList/FirstGoal_LastGoal.html");
             string eventstatus = betstatus.Trim();
@@ -784,7 +809,6 @@ namespace Sunplus.Accounting.Business.BetList
                 string[] refundArr = _betStatus.Split(';');
                 if (refundArr.Length == 2 && refundArr[1].ToString() != "")
                 {
-
                     if (!string.IsNullOrEmpty(refundArr[1].ToString()) && refundArr[1].ToString().Contains(":"))
                     {
                         string[] bstas = refundArr[1].ToString().Split(':');
@@ -902,7 +926,8 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref fglg, "away", away);
             return fglg.Replace("\r\n", "");
         }
-        #endregion
+
+        #endregion FirstGoal_LastGoal
 
         #region GenCasino
 
@@ -922,12 +947,15 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref eventItem, "{sporttype}", "");
             TemplateHandler.Assign(ref eventItem, "{leaguename}", "");
         }
-        #endregion
+
+        #endregion GenCasino
 
         #region GenNumberGame (bettype = 81-> 90)
+
         protected void GenEvent_NumberGame(ref string eventItem, BetlistRow bl, bool isMP)
         {
             #region private varialbes
+
             var choice = string.Empty;
             var bettypeName = Fanex.Tarus.Infrastructure.Helper.SportHelper.Bettype.GetBettype(bl.Bettype);
             string sportypeName = CacheRef.GetSportName(bl.Sporttype);
@@ -935,9 +963,11 @@ namespace Sunplus.Accounting.Business.BetList
             var bettype = bl.Bettype;
             var betteam = bl.Betteam;
             var liveScore = bl.Liveindicator ? string.Format(" [{0}]", bl.BetID) : string.Empty;
-            #endregion
+
+            #endregion private varialbes
 
             #region check bettype & apply betty name
+
             if (bettype == 81 || bettype == 82 || bettype == 85)
             {
                 var maxBall = (double.Parse(Bingo.Core.BingoSettings.MaxBall.ToString()) / 2);
@@ -956,30 +986,37 @@ namespace Sunplus.Accounting.Business.BetList
                 choice = betteam.ToLower() == "h" ? "HIGH " : "LOW ";
                 choice += liveScore;
             }
-            else if (bettype == 88)//warrior            
+            else if (bettype == 88)//warrior
                 choice = betteam.ToLower() == "h" ? "2nd ball to win " : "3rd ball to win ";
             else if (bettype == 89)//next combo
             {
                 #region number group - bettypes
+
                 switch (betteam.ToLower())
                 {
                     case "1:1":
                         choice = "Over/Odd ";
                         break;
+
                     case "1:2":
                         choice = "Over/Even ";
                         break;
+
                     case "2:1":
                         choice = "Under/Odd ";
                         break;
+
                     case "2:2":
                         choice = "Under/Even ";
                         break;
+
                     default:
                         choice = "Over/Odd ";
                         break;
                 }
-                #endregion
+
+                #endregion number group - bettypes
+
                 var maxBall = (double.Parse(Bingo.Core.BingoSettings.MaxBall.ToString()) / 2);
                 choice += bl.Liveindicator ? string.Format("<span class='bl-bettype'>{0}</span>", maxBall) : string.Empty;
                 choice += liveScore;
@@ -989,7 +1026,8 @@ namespace Sunplus.Accounting.Business.BetList
                 choice = Fanex.Tarus.BetList.Helper.ChoiceHelper.GetNumberWheelChoice(CastAide.AsInt32(bl.hdp1), CastAide.AsInt32(bl.Betteam));
                 choice += liveScore;
             }
-            #endregion
+
+            #endregion check bettype & apply betty name
 
             TemplateHandler.Assign(ref eventItem, "{choice}", choice);
 
@@ -1002,12 +1040,14 @@ namespace Sunplus.Accounting.Business.BetList
                 case 90:
                     bettypeFormat = bettypeName;
                     break;
+
                 case 81:
                 case 82:
                 case 83:
                 case 84:
                     bettypeFormat = (!bl.Liveindicator ? string.Empty : "Next ") + bettypeName;
                     break;
+
                 default:
                     bettypeFormat = (!bl.Liveindicator ? "FT. " : "Next ") + bettypeName;
                     break;
@@ -1019,16 +1059,18 @@ namespace Sunplus.Accounting.Business.BetList
 
             TemplateHandler.Assign(ref eventItem, "{sporttype}", sportypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", leagueName);
-
-
         }
-        #endregion
+
+        #endregion GenNumberGame (bettype = 81-> 90)
 
         #region Soccer - new bettypes
+
         #region Double Chance (bettype = 24)
+
         protected void GenDoubleChanceEvent(ref string eventItem, BetlistRow bl, bool isMP)
         {
             #region private variables
+
             bool liveStyle = bl.Liveindicator;
             var liveHomeScore = bl.Livehomescore;
             var liveAwayScore = bl.Liveawayscore;
@@ -1042,9 +1084,11 @@ namespace Sunplus.Accounting.Business.BetList
             var leagueName = CacheRef.GetLeagueName(bl.LeagueID);
             var statusId = bl.StatusId;
             var odds = bl.Odds;
-            #endregion
+
+            #endregion private variables
 
             #region assign value for choice parameter
+
             if (betteam.ToLower().Equals("1x"))
                 choice = string.Format("{0} <span style='color: #000; font-weight: normal;'>or</span> Draw", home.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
             else if (betteam.ToLower().Equals("2x"))
@@ -1054,18 +1098,24 @@ namespace Sunplus.Accounting.Business.BetList
                     away.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
 
             if (isMP) choice += oddMP(odds);
-            #endregion
+
+            #endregion assign value for choice parameter
 
             #region assign template
+
             AssignDataForEventColumn(ref eventItem, choice, liveScore, bettypeName, sporttypeName, leagueName, home, away, statusId);
-            #endregion
+
+            #endregion assign template
         }
-        #endregion
+
+        #endregion Double Chance (bettype = 24)
 
         #region Draw no bet (bettype = 25)
+
         protected void GenDrawNoBetEvent(ref string eventItem, BetlistRow bl, bool isMP)
         {
             #region private variables
+
             bool liveStyle = bl.Liveindicator;
             var liveHomeScore = bl.Livehomescore;
             var liveAwayScore = bl.Liveawayscore;
@@ -1078,27 +1128,35 @@ namespace Sunplus.Accounting.Business.BetList
             var leagueName = CacheRef.GetLeagueName(bl.LeagueID);
             var liveScore = (!liveStyle) ? string.Empty : " <span class='bl-bettype'>[" + liveHomeScore + "-" + liveAwayScore + "]</span>";
             var odds = bl.Odds;
-            #endregion
+
+            #endregion private variables
 
             #region assign value for choice parameter
+
             if (betteam.ToLower().Equals("h"))
                 choice = string.Format("{0}", home.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
             else if (betteam.ToLower().Equals("a"))
                 choice = string.Format("{0}", away.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
 
             if (isMP) choice += oddMP(odds);
-            #endregion
+
+            #endregion assign value for choice parameter
 
             #region assign template
+
             AssignDataForEventColumn(ref eventItem, choice, liveScore, bettypeName, sporttypeName, leagueName, home, away, bl.StatusId);
-            #endregion
+
+            #endregion assign template
         }
-        #endregion
+
+        #endregion Draw no bet (bettype = 25)
 
         #region Both/One/Neither team to score (bettype = 26)
+
         protected void GenBothOneNeitherEvent(ref string eventItem, BetlistRow bl, bool isMP)
         {
             #region private variables
+
             bool liveStyle = bl.Liveindicator;
             var liveHomeScore = bl.Livehomescore;
             var liveAwayScore = bl.Liveawayscore;
@@ -1111,9 +1169,11 @@ namespace Sunplus.Accounting.Business.BetList
             var leagueName = CacheRef.GetLeagueName(bl.LeagueID);
             var liveScore = (!liveStyle) ? string.Empty : " <span class='bl-bettype'>[" + liveHomeScore + "-" + liveAwayScore + "]</span>";
             var odds = bl.Odds;
-            #endregion
+
+            #endregion private variables
 
             #region assign value for choice parameter
+
             if (betteam.ToLower().Equals("b"))
                 choice = "Both";
             else if (betteam.ToLower().Equals("o"))
@@ -1122,18 +1182,24 @@ namespace Sunplus.Accounting.Business.BetList
                 choice = "No Goal";
 
             if (isMP) choice += oddMP(odds);
-            #endregion
+
+            #endregion assign value for choice parameter
 
             #region assign template
+
             AssignDataForEventColumn(ref eventItem, choice, liveScore, bettypeName, sporttypeName, leagueName, home, away, bl.StatusId);
-            #endregion
+
+            #endregion assign template
         }
-        #endregion
+
+        #endregion Both/One/Neither team to score (bettype = 26)
 
         #region To win to nil (bettype = 27)
+
         protected void GenToWinToNilEvent(ref string eventItem, BetlistRow bl, bool isMP)
         {
             #region private variables
+
             bool liveStyle = bl.Liveindicator;
             var liveHomeScore = bl.Livehomescore;
             var liveAwayScore = bl.Liveawayscore;
@@ -1146,27 +1212,35 @@ namespace Sunplus.Accounting.Business.BetList
             var leagueName = CacheRef.GetLeagueName(bl.LeagueID);
             var liveScore = (!liveStyle) ? string.Empty : " <span class='bl-bettype'>[" + liveHomeScore + "-" + liveAwayScore + "]</span>";
             var odds = bl.Odds;
-            #endregion
+
+            #endregion private variables
 
             #region assign value for choice parameter
+
             if (betteam.ToLower().Equals("h"))
                 choice = string.Format("{0}", home.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
             else if (betteam.ToLower().Equals("a"))
                 choice = string.Format("{0}", away.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""));
 
             if (isMP) choice += oddMP(odds);
-            #endregion
+
+            #endregion assign value for choice parameter
 
             #region assign template
+
             AssignDataForEventColumn(ref eventItem, choice, liveScore, bettypeName, sporttypeName, leagueName, home, away, bl.StatusId);
-            #endregion
+
+            #endregion assign template
         }
-        #endregion
+
+        #endregion To win to nil (bettype = 27)
 
         #region Clean sheet (bettype = 13)
+
         protected void GenCleanSheetEvent(ref string eventItem, BetlistRow bl, bool isMP)
         {
             #region private variables
+
             bool liveStyle = bl.Liveindicator;
             var liveHomeScore = bl.Livehomescore;
             var liveAwayScore = bl.Liveawayscore;
@@ -1180,7 +1254,8 @@ namespace Sunplus.Accounting.Business.BetList
             var statusId = bl.StatusId;
             var liveScore = (!liveStyle) ? string.Empty : " <span class='bl-bettype'>[" + liveHomeScore + "-" + liveAwayScore + "]</span>";
             decimal odds = bl.Odds;
-            #endregion
+
+            #endregion private variables
 
             #region assign value for choice parameter
 
@@ -1194,18 +1269,24 @@ namespace Sunplus.Accounting.Business.BetList
                 choice = string.Format("{0} <span style='color:#000;'>{1}</span>", away.Replace(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "IsNeutral"), ""), "NO");
 
             if (isMP) choice += oddMP(odds);
-            #endregion
+
+            #endregion assign value for choice parameter
 
             #region assign template
+
             AssignDataForEventColumn(ref eventItem, choice, liveScore, bettypeName, sporttypeName, leagueName, home, away, statusId);
-            #endregion
+
+            #endregion assign template
         }
-        #endregion
+
+        #endregion Clean sheet (bettype = 13)
 
         #region 3-way handicap (bettype = 28)
+
         protected void GenThreeWayHandicap(ref string eventItem, BetlistRow bl, bool isMP)
         {
             #region private variables
+
             bool liveStyle = bl.Liveindicator;
             var liveHomeScore = bl.Livehomescore;
             var liveAwayScore = bl.Liveawayscore;
@@ -1221,9 +1302,11 @@ namespace Sunplus.Accounting.Business.BetList
             var hdp1 = bl.hdp1;
             var hdp2 = bl.hdp2;
             var odds = bl.Odds;
-            #endregion
+
+            #endregion private variables
 
             #region assign value for choice parameter
+
             if (betteam.ToLower().Equals("1"))
             {
                 hdpResult = (int)(hdp1 - hdp2 > 0 ? -(hdp1 - hdp2) : Math.Abs(hdp1 - hdp2));
@@ -1248,19 +1331,23 @@ namespace Sunplus.Accounting.Business.BetList
                     (int)(Math.Abs(hdp1 - hdp2)));*/
                 choice = string.Format("Draw <span style='color:#000'>(<span style='color:#ff0000;'>{0}</span> +{1})</span>", hdp1 - hdp2 > 0 ? "A" : "H", (int)(Math.Abs(hdp1 - hdp2)));
             if (isMP) choice += oddMP(odds);
-            #endregion
+
+            #endregion assign value for choice parameter
 
             #region assign template
+
             AssignDataForEventColumn(ref eventItem, choice, liveScore, bettypeName, sporttypeName, leagueName, home, away, bl.StatusId);
-            #endregion
+
+            #endregion assign template
         }
-        #endregion
+
+        #endregion 3-way handicap (bettype = 28)
 
         #region assign event column
+
         protected void AssignDataForEventColumn(ref string eventItem, string choice, string liveScore, string bettypeName,
             string sporttypeName, string leagueName, string home, string away, int statusId)
         {
-
             var Event = home + " -VS- " + away;
             if (statusId == 102)
             {
@@ -1277,23 +1364,22 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref eventItem, "{sporttype}", sporttypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", leagueName);
         }
-        #endregion
-        #endregion
+
+        #endregion assign event column
+
+        #endregion Soccer - new bettypes
 
         #region BettypeWirror
 
         public void AssignWriror(ref string eventItem, BetlistRow bl)
         {
-
             int BetType = bl.Bettype;
             string betteam = bl.Betteam;
-
 
             string eventBettype = "Number Game No " + bl.MatchCode;
             string bettypeName = Fanex.Tarus.Infrastructure.Helper.SportHelper.Bettype.GetBettype(bl.Bettype);
             string sportypeName = CacheRef.GetSportName(bl.Sporttype);
             string leagueName = CacheRef.GetLeagueName(bl.LeagueID);
-
 
             string choice = betteam == "h" ? "2nd ball win" : "3rd ball win";
 
@@ -1304,7 +1390,7 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref eventItem, "{leaguename}", leagueName);
         }
 
-        #endregion
+        #endregion BettypeWirror
 
         #region Bettype Next Combo
 
@@ -1338,9 +1424,9 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref eventItem, "{event}", eventBettype);
             TemplateHandler.Assign(ref eventItem, "{sporttype}", sportypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", leagueName);
-
         }
-        #endregion
+
+        #endregion Bettype Next Combo
 
         #region P2PGames
 
@@ -1354,7 +1440,7 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.RemoveBlock(ref eventItem, "P2Premove");
         }
 
-        #endregion
+        #endregion P2PGames
 
         #region combination mp
 
@@ -1387,8 +1473,7 @@ namespace Sunplus.Accounting.Business.BetList
             eventItem += "</table></div>";
         }
 
-
-        #endregion
+        #endregion combination mp
 
         #region GenerateEvent
 
@@ -1428,6 +1513,7 @@ namespace Sunplus.Accounting.Business.BetList
 
                     Gen1x2Event(ref evt, bl, false);
                     break;
+
                 case 15://1st 1x2
 
                     Gen1x2Event(ref evt, bl, false);
@@ -1442,11 +1528,13 @@ namespace Sunplus.Accounting.Business.BetList
                 case 10:
                     GenOutrightRow(ref evt, bl);
                     break;
+
                 case 121:
                 case 122:
                 case 123:
                     GenHomeAwayDrawNoBet(ref evt, bl, false);
                     break;
+
                 case 31:
                 case 32:
                 case 33:
@@ -1477,9 +1565,11 @@ namespace Sunplus.Accounting.Business.BetList
                           "' class='hide'></div><a class='lnk' href='javascript:void(\"\");' onclick='showMP(\"" +
                           bl.RefNO + "\");' id='hidden0'>Mix Parlay</a>";
                     break;
+
                 case 22:
                     GenNextGoalEvent(ref evt, bl);
                     break;
+
                 case 71:
                 case 72:
                 case 112:
@@ -1487,6 +1577,7 @@ namespace Sunplus.Accounting.Business.BetList
                 case 114:
                     GenCasino(ref evt, bl.Bettype);
                     break;
+
                 case 81://Number Game
                 case 82:
                 case 83:
@@ -1497,9 +1588,11 @@ namespace Sunplus.Accounting.Business.BetList
                 case 90:
                     GenEvent_NumberGame(ref evt, bl, false);
                     break;
+
                 case 88:
                     AssignWriror(ref evt, bl);
                     break;
+
                 case 89:
                     AssignNextCombo(ref evt, bl);
                     break;
@@ -1508,31 +1601,37 @@ namespace Sunplus.Accounting.Business.BetList
                 case 1224:
                     GenDoubleChanceEvent(ref evt, bl, false);
                     break;
+
                 case 25:
                     GenDrawNoBetEvent(ref evt, bl, false);
                     break;
+
                 case 26:
                     GenBothOneNeitherEvent(ref evt, bl, false);
                     break;
+
                 case 27:
                     GenToWinToNilEvent(ref evt, bl, false);
                     break;
+
                 case 13:
                     GenCleanSheetEvent(ref evt, bl, false);
                     break;
+
                 case 28:
                     GenThreeWayHandicap(ref evt, bl, false);
                     break;
+
                 case 1000:
                     GenP2PGamesEvent(ref evt);
                     break;
+
                 case 29:
                     GenCombinationMP(ref evt, bl); ;
                     break;
             }
             return evt;
         }
-
 
         private void GenHomeAwayDrawNoBet(ref string eventItem, BetlistRow bl, bool isMP)
         {
@@ -1553,17 +1652,17 @@ namespace Sunplus.Accounting.Business.BetList
             if (bl.Bettype == 121)
             {
                 if (bl.Betteam == "x") choice = "Draw";
-                else if(bl.Betteam == "a") choice = away;
+                else if (bl.Betteam == "a") choice = away;
             }
             else if (bl.Bettype == 122)
             {
                 if (bl.Betteam == "h") choice = home;
-                else if(bl.Betteam == "x") choice = "Draw";
+                else if (bl.Betteam == "x") choice = "Draw";
             }
             else if (bl.Bettype == 123)
             {
                 if (bl.Betteam == "h") choice = "Draw";
-                else if(bl.Betteam == "a") choice = "No Draw";
+                else if (bl.Betteam == "a") choice = "No Draw";
             }
 
             decimal odds = bl.Odds;
@@ -1581,7 +1680,8 @@ namespace Sunplus.Accounting.Business.BetList
             TemplateHandler.Assign(ref eventItem, "{sporttype}", sportypeName);
             TemplateHandler.Assign(ref eventItem, "{leaguename}", leagueName);
         }
-        #endregion
+
+        #endregion GenerateEvent
 
         public string GenerateEventLiveCasino(string eventItem, BetlistRow blRow, System.Collections.Generic.List<Fanex.Tarus.LiveCasino.Entities.Betlist.BetlistEvent> betlistEvent)
         {

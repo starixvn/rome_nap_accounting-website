@@ -5,7 +5,6 @@ using System.Web;
 using Sunplus.Accounting.Business.ExChangeRate;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess;
-using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using System.Collections;
 using System.Web.SessionState;

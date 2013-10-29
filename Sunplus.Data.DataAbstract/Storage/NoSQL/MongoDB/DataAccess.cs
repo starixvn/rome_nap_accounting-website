@@ -6,8 +6,8 @@ namespace Sunplus.Data.DataAbstract.Storage.NoSQL.MongoDB
 {
     public class DataAccess
     {
-
         protected NoSQLElement NoSqlElement;
+
         public DataAccess()
         {
             NoSqlElement = StorageConfiguration.NoSQL();

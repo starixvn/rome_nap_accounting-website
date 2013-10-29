@@ -3,15 +3,12 @@ using System.Collections;
 using System.Data;
 using DNAide.Data;
 
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
-using Sunplus.Core.LoggingLib;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.AgentReport
 {
     public static class WinLoss
     {
-        
         public static IDataReader CustomerSelAllWinLoss(int custId, DateTime fdate, DateTime tdate)
         {
             IDataReader dr = null;
@@ -26,8 +23,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.AgentReport
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dr;
         }
@@ -38,7 +34,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.AgentReport
             {
                 var sps = ReportSession.Instance[storeCollection];
                 return sps != null ? sps[aliasName] : null;
-
             }
         }
     }

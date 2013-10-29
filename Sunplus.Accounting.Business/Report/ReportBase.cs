@@ -24,6 +24,7 @@ namespace BLL.Report
         public string KeyCaching = "";
         public ExcelFile excelFile;
         public Workbook workBook;
+
         public abstract string RenderHTML(Hashtable input);
 
         public virtual void Export2Excel(Hashtable input)
@@ -116,6 +117,6 @@ namespace BLL.Report
             return strDateTimeSingle;
         }
 
-        #endregion
+        #endregion CreateHeader
     }
 }

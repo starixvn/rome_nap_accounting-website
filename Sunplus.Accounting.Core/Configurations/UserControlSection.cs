@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace Sunplus.Accounting.Core.Configurations
 {
-    public class UserControlSection:ConfigurationSection
+    public class UserControlSection : ConfigurationSection
     {
         public enum StoreCollection
         {
             Racing, Licensee
         }
-
 
         [ConfigurationProperty("Report", IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(UserControlCollection),
@@ -30,8 +23,7 @@ namespace Sunplus.Accounting.Core.Configurations
                 return spCollection;
             }
         }
-      
-        
+
         public static UserControlSection Instance
         {
             get
@@ -42,23 +34,18 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-
-        public UserControlCollection  this[StoreCollection name ]
+        public UserControlCollection this[StoreCollection name]
         {
             get
             {
-                
                 var spCollection = (UserControlCollection)this.GetType().GetProperty(name.ToString()).GetValue(this, System.Reflection.BindingFlags.GetField, null, null, null);
-                return spCollection; 
+                return spCollection;
             }
         }
-
-        
     }
 
-    public class UserControlCollection:ConfigurationElementCollection
+    public class UserControlCollection : ConfigurationElementCollection
     {
-
         public UserControlCollection()
         {
             //var storeProcedure = (UserControlElement) CreateNewElement();
@@ -73,7 +60,7 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-        public void Add(UserControlElement  userControlElement)
+        public void Add(UserControlElement userControlElement)
         {
             BaseAdd(userControlElement);
         }
@@ -104,7 +91,6 @@ namespace Sunplus.Accounting.Core.Configurations
             BaseClear();
         }
 
-
         public UserControlElement this[int index]
         {
             get
@@ -134,7 +120,6 @@ namespace Sunplus.Accounting.Core.Configurations
             return BaseIndexOf(userControlElement);
         }
 
-
         protected override sealed ConfigurationElement CreateNewElement()
         {
             return new UserControlElement();
@@ -148,12 +133,9 @@ namespace Sunplus.Accounting.Core.Configurations
 
     public class UserControlElement : ConfigurationElement
     {
-        
-
 
         public UserControlElement()
         {
-
         }
 
         [ConfigurationProperty("alias", IsRequired = true, IsKey = true)]

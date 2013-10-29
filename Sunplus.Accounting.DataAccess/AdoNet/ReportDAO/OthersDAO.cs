@@ -7,7 +7,7 @@ using Sunplus.Accounting.DataAccess.Report;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 {
-    public class OthersDAO: DataAccess, IReportDAO.IOthersDAO
+    public class OthersDAO : DataAccess, IReportDAO.IOthersDAO
     {
         public DbResult GetMenuList(string system)
         {
@@ -41,7 +41,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             return DbHelper.Execute(spElement.Name, hashtable, spElement.DbName, 600);
         }
 
-
         public DataSet GetCheckBet(DateTime winlostDate)
         {
             using (ObjectDb objDb = new ObjectDb("Acc_checkhack2", 180))
@@ -53,6 +52,5 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                 return objDb.ExecuteDataSet();
             }
         }
-
     }
 }

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web;
 
 namespace Sunplus.Accounting.Core.Extensions
@@ -13,6 +10,7 @@ namespace Sunplus.Accounting.Core.Extensions
             Casino, ErrorMsg, Language, MiniTemplate, Viewlog, MoveCust, Racing, ViewlogV2, CategorizeStatus,
             VirtualSports
         }
+
         public static string GetResourceValue(Resources resource, string key)
         {
             try
@@ -21,10 +19,8 @@ namespace Sunplus.Accounting.Core.Extensions
             }
             catch (Exception)
             {
-                
                 throw new Exception("Key: " + key + " does not exist in resource: " + resource.ToString());
             }
-            
         }
     }
 }

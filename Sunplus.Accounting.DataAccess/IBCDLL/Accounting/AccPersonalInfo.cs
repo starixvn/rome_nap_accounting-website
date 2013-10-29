@@ -1,27 +1,23 @@
 ﻿using System;
 using System.Collections;
 using System.Data;
+using DNAide.Core;
 using DNAide.Data;
-
-using Sunplus.Accounting.Core.Common;
+using Fanex.Data;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
-using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
-using Sunplus.Core.LoggingLib;
-using Fanex.Data;
 using Sunplus.Accounting.Entities;
-using DNAide.Core;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
     public sealed class AccPersonalInfo
     {
-
         private static StoreProcedureElement GetStoreProcedure(SportbookPtSession.StoreCollection storeCollection, string aliasName)
         {
             var sps = SportbookPtSession.Instance[storeCollection];
             return sps != null ? sps[aliasName] : null;
         }
+
         private static StoreProcedureElement GetUserStoreProcedure(UserControlSession.StoreCollection storeCollection, string aliasName)
         {
             var sps = UserControlSession.Instance[storeCollection];
@@ -29,10 +25,10 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         }
 
         public static Result AccPasswordVerify(string accName, int accId, string pass)
-        {   
+        {
             var result = new Result();
             try
-            {  
+            {
                 using (ObjectDb objDB = new ObjectDb("Acc_Con_AdminSelPwdVerify"))
                 {
                     var param = new Hashtable();
@@ -44,7 +40,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 
                     objDB.AssignParamValues(param);
                     objDB.ExecuteNonQuery();
-                    
+
                     result.ErrorCode = CastAide.AsInt32(objDB.GetParameterValue("errcode"));
                     result.ErrorMessage = CastAide.AsString(objDB.GetParameterValue("errmsg"));
                 }
@@ -70,8 +66,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
         }
@@ -79,7 +74,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         public static void AccInformationUpdate(Hashtable param)
         {
             try
-            {                
+            {
                 using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdUserInfo"))
                 {
                     param.Add("errcode", 0);
@@ -100,7 +95,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }

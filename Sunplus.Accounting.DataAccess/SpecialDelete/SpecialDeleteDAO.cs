@@ -1,29 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Data;
-using System.Linq;
-using System.Text;
 using System.Web;
 using DNAide.Core;
 using DNAide.Data;
-using System.Collections;
 using DNAide.Utils;
 using Fanex.Data;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using Sunplus.Accounting.Entities.SpecialDelete;
-using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Entities;
+using Sunplus.Accounting.Entities.SpecialDelete;
 
 namespace Sunplus.Accounting.DataAccess.SpecialDelete
 {
     public class SpecialDeleteDAO : DataAccess, ISpecialDeleteDAO
     {
-        public DbResult SelSpecialDeleteNumberGame(int matchId, long fromRefNo, long toRefNo, string live, string dead , string userName)
+        public DbResult SelSpecialDeleteNumberGame(int matchId, long fromRefNo, long toRefNo, string live, string dead, string userName)
         {
             Hashtable hashtable = new Hashtable();
             hashtable.Add("matchid", matchId);
@@ -38,7 +31,6 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
             //return DbHelper.Execute("Acc_BettransSelSpecialDel_NumberGame", hashtable, DBType.ARCHIVE, 600);
         }
 
-
         public DbResult SelMatchInfo(int matchId, long transid)
         {
             Hashtable hashtable = new Hashtable();
@@ -50,10 +42,8 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
             //return DbHelper.Execute("Acc_MatchSelByID", hashtable, DBType.ARCHIVE, 600);
         }
 
-
         public DeleteResult DeleteSpecialTransactionNumberGame(int matchId, long frefno, long trefno, string live, string dead, string username, int custId, string userpwd, int DelOption, string transids, int DelOption_BD, string transids_BD, int DelOption_12EU, string transids_12EU, int DelOption_MHC, string transids_MHC, string ip, string reason)
         {
-
             using (ObjectDb objDb = new ObjectDb("Acc_BettransDelSpecial_NumberGame", 600))
             {
                 Hashtable hashtable = new Hashtable();
@@ -90,7 +80,6 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
                         ErrorMessage = CastAide.AsString(objDb.GetParameterValue("errmsg"))
                     },
                     PrivateMessage = privateMessage
-
                 };
             }
         }
@@ -104,7 +93,6 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
                                                        string betteam6, string betteam14, string betteam16, string homescore, string awayscore, string fromtransdate, string totransdate, int SAFilter,
                                                        string reason)
         {
-            
             using (ObjectDb objDb = new ObjectDb("Acc_BettransDelSpecial", 300))
             {
                 var hash = new Hashtable();
@@ -166,7 +154,6 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
                     hash.Add("totransdate", CastAide.AsDateTime(totransdate).AddHours(-12));
                 }
 
-
                 objDb.AssignParamValues(hash);
 
                 var privateMessage = objDb.ExecuteDataSet();
@@ -179,7 +166,6 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
                         ErrorMessage = CastAide.AsString(objDb.GetParameterValue("errmsg"))
                     },
                     PrivateMessage = privateMessage
-
                 };
             }
         }
@@ -193,7 +179,6 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
             return DbHelper.Execute(spElement.Name, hashtable, spElement.DbName, 600);
             //return DbHelper.Execute("Acc_BettransSelRecoverSpecialBets", hashtable, DBType.ARCHIVE, 600);
         }
-
 
         public DeleteResult RecoverSpecialBets(string transid)
         {
@@ -210,13 +195,13 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
                 var result = objDb.ExecuteDataSet();
                 return new DeleteResult()
                 {
-                    Error = new Result() { 
+                    Error = new Result()
+                    {
                         ErrorCode = CastAide.AsInt32(objDb.GetParameterValue("errcode")),
                         ErrorMessage = string.Format("{0}", objDb.GetParameterValue("errmsg"))
                     },
                     PrivateMessage = result
                 };
-
             }
         }
 
@@ -230,7 +215,6 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
             return DbHelper.Execute(spElement.Name, hashtable, spElement.DbName);
             //return DbHelper.Execute("Acc_Msg_Remove", hashtable, DBType.MESSAGE);
         }
-
 
         public DbResult BettransSelSpecialDel(SpecialDeleteParam deleteParam)
         {
@@ -297,7 +281,9 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
 
             //return DbHelper.Execute("Acc_BettransSelBet_BatchMsg", param, DBType.REPORT, 600);
         }
+
         #region EarlyKOBet
+
         /// <summary>
         /// SelectEarlyKOBet
         /// </summary>
@@ -323,10 +309,11 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
             param.Add("safilter", deleteParam.SAFilter);
 
             var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SpecialDeleteGroupSection.StoreCollection.EarlyKO, "GetEarlyKOBet");
-            
+
             //return DbHelper.Execute("Acc_BettransSelSpecialDel_EarlyKO", param, DBType.ARCHIVE, 600);
             return DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
         }
+
         /// <summary>
         /// bobby.nguyen: SelectEarlyKOBet
         /// </summary>
@@ -343,16 +330,16 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
 
             return DbHelper.Execute(spElement.Name, param, spElement.DbName, 600);
         }
+
         public DeleteResult DeleteSpecialEarlyKO(string matchId, string bettype,
                                                        string betteam1378, string betteam515, string hdp, string uname,
                                                        string userId, string pass, string DelOption, string transids,
                                                        string kickoffdate, string DelOption_BD, string transids_BD,
                                                        string DelOption_12EU, string transids_12EU,
-                                                       string DelOption_MHC, string transids_MHC, string betteam430, 
+                                                       string DelOption_MHC, string transids_MHC, string betteam430,
                                                        string betteam6, string betteam14, string betteam16, int SAFilter,
                                                        string reason)
-        {             
-
+        {
             using (ObjectDb objDb = new ObjectDb("Acc_BettransDelSpecialDel_EarlyKO", 1000))
             {
                 var hash = new Hashtable();
@@ -393,17 +380,20 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
 
                 return new DeleteResult()
                 {
-                    Error = new Result(){
+                    Error = new Result()
+                    {
                         ErrorCode = CastAide.AsInt32(objDb.GetParameterValue("errcode")),
                         ErrorMessage = CastAide.AsString(objDb.GetParameterValue("errmsg"))
                     },
                     PrivateMessage = privateMessage
-                    
                 };
             }
         }
-        #endregion
+
+        #endregion EarlyKOBet
+
         #region Mixparlay
+
         /// <summary>
         /// GetMPList
         /// </summary>
@@ -445,6 +435,7 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
             var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SpecialDeleteGroupSection.StoreCollection.Mixparlay, "GetMPList");
             return DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
         }
+
         public DbResult GetMPTicket(string refno)
         {
             Hashtable param = new Hashtable();
@@ -469,17 +460,16 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
             var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SpecialDeleteGroupSection.StoreCollection.Sportbook, "CheckRefno");
             return DbHelper.Execute(spElement.Name, param, spElement.DbName, 600);
         }
+
         public DeleteResult DeleteSpecialMixparlay(string matchId, int Type, string HomeScore, string AwayScore, string bettypes,
                                           string betteam1378, string betteam515, string hdp, string uname,
-                                          string userId, string pass, 
+                                          string userId, string pass,
                                           string DelOption, string transids,
-                                          string DelOption_D, string transids_D,      
+                                          string DelOption_D, string transids_D,
                                           string DelOption_BD, string transids_BD, string DelOption_12EU,
                                           string transids_12EU, string DelOption_MHC, string transids_MHC, string betteam430,
                                           string betteam6, string betteam14, string betteam16, string Fromtransdate, string Totransdate, string ParlayType, string reason)
         {
-
-
 
             using (ObjectDb objDb = new ObjectDb("Acc_BettransDelSpecialDel_MixParlay", 1000))
             {
@@ -503,7 +493,7 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
                     hash.Add("liveawayscore", AwayScore);
                     hash.Add("fromtransdate", CastAide.AsDateTime(Fromtransdate).AddHours(-12));
                     hash.Add("totransdate", CastAide.AsDateTime(Totransdate).AddHours(-12));
-                }        
+                }
 
                 hash.Add("hdp", DNAide.Core.CastAide.AsDecimal(hdp, 999));
                 hash.Add("bettypes", bettypes);
@@ -544,12 +534,11 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
                         ErrorMessage = CastAide.AsString(objDb.GetParameterValue("errmsg"))
                     },
                     PrivateMessage = privateMessage
-
                 };
             }
         }
-        #endregion
 
+        #endregion Mixparlay
 
         public DbResult SelBettype(int type)
         {
@@ -559,7 +548,6 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
             var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SportbookPtSession.StoreCollection.SportBooksPtControl, "BetTypeSel");
             return DbHelper.Execute(spElement.Name, hashtable, spElement.DbName);
         }
-
 
         public DataTable SelBetBatchMsg(string transId)
         {
@@ -583,14 +571,13 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
             return dt;
         }
 
-
         public DataTable SelMailingList()
         {
             DataTable dt = new DataTable();
             try
             {
                 using (ObjectDb objDB = new ObjectDb("Acc_MailingListSel"))
-                {                    
+                {
                     DataSet ds = objDB.ExecuteDataSet();
                     if (ds != null && ds.Tables[0].Rows.Count > 0)
                     {
@@ -605,5 +592,4 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
             return dt;
         }
     }
-
 }

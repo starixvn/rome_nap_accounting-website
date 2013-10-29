@@ -14,7 +14,8 @@ namespace Sunplus.Accounting.Core.Helper.IP
     /// </summary>
     public class AccountingIPFormat : IPFormat
     {
-        public AccountingIPFormat(string ip) : base(ip)
+        public AccountingIPFormat(string ip)
+            : base(ip)
         {
         }
 

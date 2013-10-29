@@ -1,25 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.SessionState;
 using DNAide.Core;
 using DNAide.Utils;
-
+using ExcelUtil.Spreadsheet;
 using Sunplus.Accounting.Business;
-using Sunplus.Accounting.Core.Cache;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.IReportDAO;
-using Sunplus.Accounting.Entities.ViewModel;
-using Sunplus.Core.LoggingLib;
-using ExcelUtil.Spreadsheet;
-using System.Drawing;
-using Sunplus.Accounting.DataAccess.Report;
 using Sunplus.Accounting.Entities.Report.Mixparlay;
-
-
+using Sunplus.Accounting.Entities.ViewModel;
 
 /// <summary>
 /// Summary description for Winloss12Bet
@@ -29,21 +22,25 @@ namespace Sunplus.Accounting.Report.CombinationMixparlay
     public class CombinationMixparlayWon : BaseManager, IRequiresSessionState, ICombinationMixparlayWon
     {
         #region private varialbes
+
         private static string CombinationMixparlayWon_SessionKey = "CombinationMixparlayWon";
         private readonly IOthersDAO _reportMenuDao;
-        #endregion
+
+        #endregion private varialbes
+
         public CombinationMixparlayWon(IOthersDAO reportDAO)
         {
             _reportMenuDao = reportDAO;
         }
+
         public MixparlayDataGridBO GetList_CombinationMixparlayWon(bool isSoccer, string date, int pageIndex, int pageSize, bool fromcache)
         {
             MixparlayDataGridBO mixparlaywongrid = new MixparlayDataGridBO();
             var mixparlaydatagrid_session = SessionExtension.GetSession(HttpContext.Current.Session, CombinationMixparlayWon_SessionKey);
             if (mixparlaydatagrid_session == null || fromcache == false)
             {
-
                 #region get data
+
                 DataTable dt = null;
                 DateTime _date = CastAide.AsDateTime(date, DateTime.Today);
                 dt = _reportMenuDao.CombinationGetMixParlayWonList(isSoccer, _date).ResultSet.Tables[0];
@@ -55,7 +52,7 @@ namespace Sunplus.Accounting.Report.CombinationMixparlay
 
                 decimal sumbasestake = 0;
                 decimal sumbasewinloss = 0;
-              
+
                 int i = 1;
                 mixparlaywongrid.total = dt.Rows.Count;
                 foreach (DataRow row in dt.Rows)
@@ -87,7 +84,7 @@ namespace Sunplus.Accounting.Report.CombinationMixparlay
                 MixparlayWonBO totalitem = new MixparlayWonBO();
                 totalitem.BaseStake = NumberFormat.DecFormat(sumbasestake, 2);
                 totalitem.BaseWinloss = NumberFormat.DecFormat(sumbasewinloss, 2);
-                totalitem.UserName ="Total";
+                totalitem.UserName = "Total";
 
                 mixparlaywongrid.rows = lsrow;
                 mixparlaywongrid.footer = new List<MixparlayWonBO>();
@@ -95,36 +92,40 @@ namespace Sunplus.Accounting.Report.CombinationMixparlay
 
                 SessionExtension.AddSession(HttpContext.Current.Session, CombinationMixparlayWon_SessionKey, mixparlaywongrid);
 
-                #endregion
+                #endregion get data
             }
             else
             {
                 mixparlaywongrid = (MixparlayDataGridBO)mixparlaydatagrid_session;
             }
-            
+
             #region paging
-        
+
             MixparlayDataGridBO mixparlaydatagridpaging = new MixparlayDataGridBO();
-            mixparlaydatagridpaging.rows =  mixparlaywongrid.rows.Select(c => c).Skip(pageSize * (pageIndex - 1)).Take(pageSize).ToList();
+            mixparlaydatagridpaging.rows = mixparlaywongrid.rows.Select(c => c).Skip(pageSize * (pageIndex - 1)).Take(pageSize).ToList();
             mixparlaydatagridpaging.total = mixparlaywongrid.total;
             mixparlaydatagridpaging.footer = mixparlaywongrid.footer;
 
-            #endregion
+            #endregion paging
+
             return mixparlaydatagridpaging;
         }
 
-
         #region Export 2 excel file
+
         public void CombinationMixparlayWonExportToExcel(bool isSoccer, string date)
         {
             var mixparlaydatagridSession = SessionExtension.GetSession(HttpContext.Current.Session, CombinationMixparlayWon_SessionKey);
             var mixparlayData = new MixparlayDataGridBO();
+
             #region get data
+
             if (mixparlaydatagridSession != null)
-                mixparlayData = (MixparlayDataGridBO) mixparlaydatagridSession;
+                mixparlayData = (MixparlayDataGridBO)mixparlaydatagridSession;
             else
                 mixparlayData = GetList_CombinationMixparlayWon(isSoccer, date, 1, 50, false);
-            #endregion
+
+            #endregion get data
 
             #region export excel
 
@@ -136,23 +137,24 @@ namespace Sunplus.Accounting.Report.CombinationMixparlay
             var wsMixparlayWon = excelFile.Worksheets.Add(reportName);
             var bgFormat = ExcelFormat(Color.FromArgb(159, 183, 213), HorizontalAlignmentStyle.Center,
                                        ExcelFont.BoldWeight, false);
+
             #region Header
 
-            wsMixparlayWon.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex, startRowIndex + (nextRow+=1),
+            wsMixparlayWon.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex, startRowIndex + (nextRow += 1),
                                                      startColumnIndex).Merged = true;
             wsMixparlayWon.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex, startRowIndex + (nextRow),
                                                      startColumnIndex).Style = bgFormat;
             wsMixparlayWon.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex, startRowIndex + (nextRow),
                                                      startColumnIndex).Value = "TransId";
 
-            wsMixparlayWon.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex + (nextColumn+=1), startRowIndex + (nextRow),
-                                                     startColumnIndex+ nextColumn).Merged = true;
+            wsMixparlayWon.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex + (nextColumn += 1), startRowIndex + (nextRow),
+                                                     startColumnIndex + nextColumn).Merged = true;
             wsMixparlayWon.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex + (nextColumn), startRowIndex + (nextRow),
                                                      startColumnIndex + nextColumn).Style = bgFormat;
             wsMixparlayWon.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex + (nextColumn), startRowIndex + (nextRow),
                                                      startColumnIndex + nextColumn).Value = "UserName";
 
-            wsMixparlayWon.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex + (nextColumn+=1), startRowIndex + (nextRow),
+            wsMixparlayWon.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex + (nextColumn += 1), startRowIndex + (nextRow),
                                                      startColumnIndex + nextColumn).Merged = true;
             wsMixparlayWon.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex + (nextColumn), startRowIndex + (nextRow),
                                                      startColumnIndex + nextColumn).Style = bgFormat;
@@ -166,8 +168,8 @@ namespace Sunplus.Accounting.Report.CombinationMixparlay
             wsMixparlayWon.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex + (nextColumn), startRowIndex + (nextRow),
                                                      startColumnIndex + nextColumn).Value = "Exchange";
 
-            wsMixparlayWon.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex + (nextColumn+=1), startRowIndex,
-                                                     startColumnIndex + (nextColumn+=1)).Merged = true;
+            wsMixparlayWon.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex + (nextColumn += 1), startRowIndex,
+                                                     startColumnIndex + (nextColumn += 1)).Merged = true;
             wsMixparlayWon.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex + (nextColumn), startRowIndex,
                                                      startColumnIndex + nextColumn).Style = bgFormat;
             wsMixparlayWon.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex + (nextColumn), startRowIndex,
@@ -178,7 +180,7 @@ namespace Sunplus.Accounting.Report.CombinationMixparlay
             wsMixparlayWon.Cells[startRowIndex + 1, nextColumn].Value = "WinLost";
 
             wsMixparlayWon.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex + (nextColumn += 1), startRowIndex,
-                                                     startColumnIndex + (nextColumn+=1)).Merged = true;
+                                                     startColumnIndex + (nextColumn += 1)).Merged = true;
             wsMixparlayWon.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex + (nextColumn), startRowIndex,
                                                      startColumnIndex + nextColumn).Style = bgFormat;
             wsMixparlayWon.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex + (nextColumn), startRowIndex,
@@ -202,29 +204,32 @@ namespace Sunplus.Accounting.Report.CombinationMixparlay
             wsMixparlayWon.Cells.GetSubrangeAbsolute(startRowIndex, startColumnIndex + (nextColumn), startRowIndex + (nextRow),
                                                      startColumnIndex + nextColumn).Value = "Win Odds";
 
-            #endregion
+            #endregion Header
 
             #region Body
-            if(mixparlayData.rows != null && mixparlayData.rows.Count > 0)
+
+            if (mixparlayData.rows != null && mixparlayData.rows.Count > 0)
             {
                 var rowColor = Color.FromArgb(248, 248, 248);
                 var rowColorOdd = Color.FromArgb(223, 234, 255);
 
                 var detailNumberFormat = ExcelFormat(rowColor, HorizontalAlignmentStyle.Right,
                                                      ExcelFont.NormalWeight, true);
-                var normalFormat =  ExcelFormat(rowColor, HorizontalAlignmentStyle.Left,
+                var normalFormat = ExcelFormat(rowColor, HorizontalAlignmentStyle.Left,
                                                      ExcelFont.NormalWeight, false);
 
                 var baseCurrencyFormat = ExcelFormat(Color.FromArgb(204, 255, 204), HorizontalAlignmentStyle.Right,
                                                      ExcelFont.NormalWeight, false);
 
                 var selectionFormat = ExcelFormat(rowColor, HorizontalAlignmentStyle.Right,
-                                                     ExcelFont.NormalWeight, false );
+                                                     ExcelFont.NormalWeight, false);
                 foreach (var row in mixparlayData.rows)
                 {
                     nextColumn = 1;
                     nextRow++;
+
                     #region assign colort for each row
+
                     var currentColor = nextRow % 2 == 0 ? rowColor : rowColorOdd;
                     detailNumberFormat = ExcelFormat(currentColor, HorizontalAlignmentStyle.Right,
                                                      ExcelFont.NormalWeight, true);
@@ -232,7 +237,9 @@ namespace Sunplus.Accounting.Report.CombinationMixparlay
                                                      ExcelFont.NormalWeight, false);
                     selectionFormat = ExcelFormat(currentColor, HorizontalAlignmentStyle.Right,
                                                      ExcelFont.NormalWeight, false);
-                    #endregion
+
+                    #endregion assign colort for each row
+
                     wsMixparlayWon.Cells[startRowIndex + nextRow, startColumnIndex].Value = row.TransID;
                     wsMixparlayWon.Cells[startRowIndex + nextRow, startColumnIndex].Style = normalFormat;
 
@@ -241,7 +248,7 @@ namespace Sunplus.Accounting.Report.CombinationMixparlay
 
                     wsMixparlayWon.Cells[startRowIndex + nextRow, startColumnIndex + nextColumn++].Value = row.Currency;
                     wsMixparlayWon.Cells[startRowIndex + nextRow, startColumnIndex + (nextColumn - 1)].Style = normalFormat;
-                    
+
                     wsMixparlayWon.Cells[startRowIndex + nextRow, startColumnIndex + nextColumn++].Value = CastAide.AsDecimal(row.Exchange);
                     wsMixparlayWon.Cells[startRowIndex + nextRow, startColumnIndex + (nextColumn - 1)].Style = detailNumberFormat;
 
@@ -253,7 +260,7 @@ namespace Sunplus.Accounting.Report.CombinationMixparlay
 
                     wsMixparlayWon.Cells[startRowIndex + nextRow, startColumnIndex + nextColumn++].Value = CastAide.AsDecimal(row.BaseStake);
                     wsMixparlayWon.Cells[startRowIndex + nextRow, startColumnIndex + (nextColumn - 1)].Style = baseCurrencyFormat;
-                    
+
                     wsMixparlayWon.Cells[startRowIndex + nextRow, startColumnIndex + nextColumn++].Value = CastAide.AsDecimal(row.BaseWinloss);
                     wsMixparlayWon.Cells[startRowIndex + nextRow, startColumnIndex + (nextColumn - 1)].Style = baseCurrencyFormat;
 
@@ -261,14 +268,14 @@ namespace Sunplus.Accounting.Report.CombinationMixparlay
                     wsMixparlayWon.Cells[startRowIndex + nextRow, startColumnIndex + (nextColumn - 1)].Style = selectionFormat;
 
                     wsMixparlayWon.Cells[startRowIndex + nextRow, startColumnIndex + nextColumn++].Value = CastAide.AsDecimal(row.WinOdds);
-                    wsMixparlayWon.Cells[startRowIndex + nextRow, startColumnIndex + (nextColumn-1)].Style = detailNumberFormat;
-                    
+                    wsMixparlayWon.Cells[startRowIndex + nextRow, startColumnIndex + (nextColumn - 1)].Style = detailNumberFormat;
                 }
             }
 
-            #endregion
+            #endregion Body
 
             #region Footer
+
             nextRow += 1;
             if (mixparlayData.footer != null && mixparlayData.footer.Count > 0)
             {
@@ -280,7 +287,7 @@ namespace Sunplus.Accounting.Report.CombinationMixparlay
                     wsMixparlayWon.Cells[startRowIndex + nextRow, startColumnIndex].Style = bgFormat;
 
                     wsMixparlayWon.Cells[startRowIndex + nextRow, startColumnIndex + nextColumn++].Value = "Total";
-                    wsMixparlayWon.Cells[startRowIndex + nextRow, startColumnIndex + (nextColumn-1)].Style = bgFormat;
+                    wsMixparlayWon.Cells[startRowIndex + nextRow, startColumnIndex + (nextColumn - 1)].Style = bgFormat;
 
                     wsMixparlayWon.Cells[startRowIndex + nextRow, startColumnIndex + nextColumn++].Value = string.Empty;
                     wsMixparlayWon.Cells[startRowIndex + nextRow, startColumnIndex + (nextColumn - 1)].Style = bgFormat;
@@ -307,17 +314,20 @@ namespace Sunplus.Accounting.Report.CombinationMixparlay
                     wsMixparlayWon.Cells[startRowIndex + nextRow, startColumnIndex + (nextColumn - 1)].Style = bgFormat;
                 }
             }
-            #endregion
 
-            #endregion
+            #endregion Footer
+
+            #endregion export excel
 
             #region response
+
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
             excelFile.SaveXls(response.OutputStream);
-            #endregion
+
+            #endregion response
         }
 
         private static CellStyle ExcelFormat(Color backgroundColor, HorizontalAlignmentStyle alignmentStyle, int font, bool isDecFormat)
@@ -336,6 +346,7 @@ namespace Sunplus.Accounting.Report.CombinationMixparlay
                 excelFormat.NumberFormat = "#,##0.00_);[RED](-#,##0.00);";
             return excelFormat;
         }
-        #endregion
+
+        #endregion Export 2 excel file
     }
 }

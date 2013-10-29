@@ -26,7 +26,9 @@ namespace Sunplus.Data.DataAbstract.Queue
     public class ItemQueue
     {
         public ActionType Action { get; set; }
+
         public ItemType Type { get; set; }
+
         public byte[] Data { get; set; }
     }
 
@@ -34,6 +36,7 @@ namespace Sunplus.Data.DataAbstract.Queue
     public class ItemNotify
     {
         public ActionType Action { get; set; }
+
         public BetListDetail Data { get; set; }
     }
 
@@ -41,6 +44,7 @@ namespace Sunplus.Data.DataAbstract.Queue
     public class ItemMonitor
     {
         public ActionType Action { get; set; }
+
         public object Data { get; set; }
     }
 
@@ -48,14 +52,23 @@ namespace Sunplus.Data.DataAbstract.Queue
     public class QueueData
     {
         public ActionType Action { get; set; }
+
         public ItemType Type { get; set; }
+
         public Bettran Bettran { get; set; }
+
         public Match Match { get; set; }
+
         public League League { get; set; }
+
         public BetType Bettype { get; set; }
+
         public Sport Sport { get; set; }
+
         public Team Team { get; set; }
+
         public Outright OutRight { get; set; }
+
         public Exchange Exchange { get; set; }
     }
 
@@ -63,7 +76,9 @@ namespace Sunplus.Data.DataAbstract.Queue
     public class ItemSocket
     {
         public ActionType Action { get; set; }
+
         public ItemType Type { get; set; }
+
         public string Data { get; set; }
     }
 }

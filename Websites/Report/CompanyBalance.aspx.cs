@@ -1,20 +1,16 @@
 using System;
 using System.Data;
 using System.Text;
-using DNAide.Web;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using IBCUtils;
 using DNAide.Data;
-
+using DNAide.Web;
+using IBCUtils;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
 public partial class Report_CompanyBalance : PageBase
 {
-
     private DateTime fDate;
     private string headerTpl, contentTpl, footerTpl, noDataTpl;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request["fdate"] != null)
@@ -24,18 +20,19 @@ public partial class Report_CompanyBalance : PageBase
             GenCompanyBalanceContent();
         }
     }
+
     private void GenCompanyBalanceContent()
     {
         headerTpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("CompBalance/CompanyBalanceHeader.tpl");
         contentTpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("CompBalance/CompanyBalanceRow.tpl");
         footerTpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("CompBalance/CompanyBalanceFooter.tpl");
-        noDataTpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("NoInformation.tpl"); 
+        noDataTpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("NoInformation.tpl");
         try
         {
             DbResult ds = AccountReport.RptCompanyDebitCredit(fDate);
             if (ds != null)
             {
-                double debitRunningTotal =FormatHandler.GetDouble(ds.Outputs["totalbasedebitrunning"]);
+                double debitRunningTotal = FormatHandler.GetDouble(ds.Outputs["totalbasedebitrunning"]);
                 double debitCompletedTotal = FormatHandler.GetDouble(ds.Outputs["totalbasedebitcomplete"]);
                 double creditTotal = FormatHandler.GetDouble(ds.Outputs["totalbasecredit"]);
                 if (ds.ResultSet.Tables[0] != null)
@@ -58,6 +55,7 @@ public partial class Report_CompanyBalance : PageBase
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
     }
+
     private string GenDebitRunning(DataTable tbl, double total)
     {
         StringBuilder htmlDR = new StringBuilder();
@@ -71,11 +69,11 @@ public partial class Report_CompanyBalance : PageBase
             htmlDR.Append(headerStr);
             if (tbl.Rows.Count > 0)
             {
-                for(int i=0;i<tbl.Rows.Count;i++)
-                {                
+                for (int i = 0; i < tbl.Rows.Count; i++)
+                {
                     string contentStr = contentTpl;
                     string currStr = (tbl.Rows[i]["currency"] as string) ?? string.Empty;
-                    TemplateHandler.Assign(ref contentStr, "{currency}",currStr);
+                    TemplateHandler.Assign(ref contentStr, "{currency}", currStr);
                     TemplateHandler.Assign(ref contentStr, "{foreign}", FormatHandler.FormatNumber20(tbl.Rows[i]["foreigndebit"]));
                     TemplateHandler.Assign(ref contentStr, "{base}", FormatHandler.FormatNumber20(tbl.Rows[i]["basedebit"]));
                     htmlDR.Append(contentStr);
@@ -84,7 +82,6 @@ public partial class Report_CompanyBalance : PageBase
                 TemplateHandler.Assign(ref footerStr, "{total}", Resources.Language.GrandToTal);
                 TemplateHandler.Assign(ref footerStr, "{totalvalue}", FormatHandler.FormatNumber20(total));
                 htmlDR.Append(footerStr);
-
             }
             else
             {
@@ -92,9 +89,9 @@ public partial class Report_CompanyBalance : PageBase
                 TemplateHandler.Assign(ref noDataStr, "{tdno}", "5");
                 TemplateHandler.Assign(ref noDataStr, "{nodate}", Resources.Language.thereisnodata);
                 htmlDR.Append(noDataStr);
-            }            
+            }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
@@ -116,10 +113,10 @@ public partial class Report_CompanyBalance : PageBase
             if (tbl.Rows.Count > 0)
             {
                 for (int i = 0; i < tbl.Rows.Count; i++)
-                {                   
+                {
                     string contentStr = contentTpl;
                     string currStr = (tbl.Rows[i]["currency"] as string) ?? string.Empty;
-                    TemplateHandler.Assign(ref contentStr, "{currency}",currStr);
+                    TemplateHandler.Assign(ref contentStr, "{currency}", currStr);
                     TemplateHandler.Assign(ref contentStr, "{foreign}", FormatHandler.FormatNumber20(tbl.Rows[i]["foreigndebit"]));
                     TemplateHandler.Assign(ref contentStr, "{base}", FormatHandler.FormatNumber20(tbl.Rows[i]["basedebit"]));
                     htmlDR.Append(contentStr);
@@ -128,7 +125,6 @@ public partial class Report_CompanyBalance : PageBase
                 TemplateHandler.Assign(ref footerStr, "{total}", Resources.Language.GrandToTal);
                 TemplateHandler.Assign(ref footerStr, "{totalvalue}", FormatHandler.FormatNumber20(total));
                 htmlDR.Append(footerStr);
-
             }
             else
             {
@@ -138,13 +134,14 @@ public partial class Report_CompanyBalance : PageBase
                 htmlDR.Append(noDataStr);
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
         htmlDR.Append("</table>");
         return htmlDR.ToString();
     }
+
     private string GenCredit(DataTable tbl, double total)
     {
         StringBuilder htmlDR = new StringBuilder();
@@ -162,8 +159,8 @@ public partial class Report_CompanyBalance : PageBase
                 {
                     string contentStr = contentTpl;
                     string currStr = (tbl.Rows[i]["currency"] as string) ?? string.Empty;
-                    TemplateHandler.Assign(ref contentStr, "{currency}",currStr);
-                    TemplateHandler.Assign(ref contentStr, "{foreign}",FormatHandler.FormatNumber20(tbl.Rows[i]["foreigncredit"]));
+                    TemplateHandler.Assign(ref contentStr, "{currency}", currStr);
+                    TemplateHandler.Assign(ref contentStr, "{foreign}", FormatHandler.FormatNumber20(tbl.Rows[i]["foreigncredit"]));
                     TemplateHandler.Assign(ref contentStr, "{base}", FormatHandler.FormatNumber20(tbl.Rows[i]["basecredit"]));
                     htmlDR.Append(contentStr);
                 }
@@ -171,7 +168,6 @@ public partial class Report_CompanyBalance : PageBase
                 TemplateHandler.Assign(ref footerStr, "{total}", Resources.Language.GrandToTal);
                 TemplateHandler.Assign(ref footerStr, "{totalvalue}", FormatHandler.FormatNumber20(total));
                 htmlDR.Append(footerStr);
-
             }
             else
             {
@@ -181,9 +177,9 @@ public partial class Report_CompanyBalance : PageBase
                 htmlDR.Append(noDataStr);
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex); 
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
         htmlDR.Append("</table>");
         return htmlDR.ToString();

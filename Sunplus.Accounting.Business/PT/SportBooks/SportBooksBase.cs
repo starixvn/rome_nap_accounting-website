@@ -1,20 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Data;
-using DNAide.Web;
-
-using DNAide.Core;
-using IBCUtils;
 using System.Text;
+using DNAide.Core;
+using DNAide.Web;
+using IBCUtils;
 using Sunplus.Accounting.Business.Customer;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
-using Sunplus.Core.LoggingLib;
-
-using Sunplus.Accounting.Core.Helper;
 using Sunplus.Bingo.Core;
 
 /// <summary>
@@ -25,35 +17,41 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
 {
     public abstract class SportBooksBase
     {
-
         public virtual string GetSuperPtSetting(DataRow data, int custId)
         {
             throw new NotImplementedException();
         }
+
         public virtual string GetMasterPtSetting_AddNew(DataRow data, ref string strHidden)
         {
             throw new NotImplementedException();
         }
+
         public virtual string GetMasterPtSetting_Edit(DataRow data, ref string strHidden)
         {
             throw new NotImplementedException();
         }
+
         public virtual string GetAgentPtSetting_AddNew(DataRow data, ref string strHidden)
         {
             throw new NotImplementedException();
         }
+
         public virtual string GetAgentPtSetting_Edit(DataRow data, bool IsEnabledAutoMaster, ref string strHidden)
         {
             throw new NotImplementedException();
         }
+
         public virtual string GetMemberPtSetting(DataRow data, bool IsAddNew)
         {
             throw new NotImplementedException();
         }
+
         public virtual string GetSuperOnMemberPtSetting(DataRow data, ref string strHidden)
         {
             throw new NotImplementedException();
         }
+
         public virtual string GetMasterOnMemberPtSetting(DataRow data, bool isEnabledAutoMaster, ref string strHidden)
         {
             throw new NotImplementedException();
@@ -75,7 +73,7 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                 double minbet = 0, maxbet = 0, maxpermatch = 0;
                 if (data != null)
                 {
-                    if (sporttype ==1)
+                    if (sporttype == 1)
                     {
                         minbet = CastAide.AsDouble(data["minbet"]);
                         maxbet = CastAide.AsDouble(data["maxbet"]);
@@ -102,7 +100,6 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -159,7 +156,6 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -176,12 +172,12 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             StringBuilder html = new StringBuilder();
             try
             {
-                if (BingoSettings.NumberGame.Enabled)                
+                if (BingoSettings.NumberGame.Enabled)
                 {
                     double max = 0, current = 0;
-                    
+
                     switch (RoleId)
-                    { 
+                    {
                         case 4:
                             if (IsAddNew)
                             {
@@ -194,6 +190,7 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                                 current = CastAide.AsDouble(dr["discountnumber"]);
                             }
                             break;
+
                         case 3:
                         case 2:
                             if (IsAddNew)
@@ -201,21 +198,22 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                             else
                             {
                                 max = CastAide.AsDouble(dr["discountnumber_max"]);
-                                current = CastAide.AsDouble(dr["discountnumber"]);        
+                                current = CastAide.AsDouble(dr["discountnumber"]);
                             }
                             break;
+
                         case 1:
                             if (IsAddNew)
                                 current = max = CastAide.AsDouble(dr["discountnumber"]);
                             else
                             {
                                 max = CastAide.AsDouble(dr["discountnumber"]);
-                                current = CastAide.AsDouble(dr["playerdiscountnumber"]);                             
+                                current = CastAide.AsDouble(dr["playerdiscountnumber"]);
                             }
                             TemplateHandler.Assign(ref strAccInfo, "DiscountNB", max);
                             break;
                     }
-                    
+
                     html.Append(CustomerUtils.GetListGroup(max, current));
                 }
                 else
@@ -227,19 +225,17 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
             }
-            
         }
 
         public virtual void GetMaxPerBall(DataRow dr, int RoleId, bool IsAddNew, ref string strAccInfo)
         {
             //IBCUtils.FormatHandler.FormatNumber1(minbet)
             try
-            {                
+            {
                 if (BingoSettings.NumberGame.Enabled)
                 {
                     string tpl = WebUtils.LoadTemplate("Customer/v2/NumberGame/MaxPerBall.htm");
@@ -258,6 +254,7 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                                 TemplateHandler.Assign(ref tpl, "mbMin", "hide");
                             }
                             break;
+
                         case 3:
                         case 2:
                         case 1:
@@ -271,7 +268,7 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                                 TemplateHandler.Assign(ref tpl, "txtMaxPerBall-val", FormatHandler.FormatNumber1(dr["MaxPerBallv161_Max"]));
                                 TemplateHandler.Assign(ref tpl, "maxbet-161", FormatHandler.FormatNumber1(dr["maxbetv161_Min"]));
                                 TemplateHandler.Assign(ref tpl, "maxpermatch-161", FormatHandler.FormatNumber1(maxPerBall));
-                                
+
                                 //if(MaxBet == 0 && MaxPerMatch == 0)
                                 //    TemplateHandler.Assign(ref tpl, "mbMin", "hide");
                                 //else
@@ -281,7 +278,6 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                             }
                             else
                             {
-
                                 TemplateHandler.Assign(ref tpl, "txtMaxPerBall-val", FormatHandler.FormatNumber1(dr["maxperballv161"]));
                                 TemplateHandler.Assign(ref tpl, "maxbet-161", FormatHandler.FormatNumber1(dr["maxbetv161"]));
                                 TemplateHandler.Assign(ref tpl, "maxpermatch-161", FormatHandler.FormatNumber1(maxPerBall));
@@ -289,7 +285,6 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
                                 TemplateHandler.Assign(ref tpl, "mbMin", maxPerBall > 0 ? "" : "hide");
                             }
                             break;
-                            
                     }
                     TemplateHandler.Assign(ref strAccInfo, "MaxPerBall", tpl);
                 }
@@ -300,19 +295,11 @@ namespace Sunplus.Accounting.Business.PT.SportBooks
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
             }
         }
-        
     }
-
-    
-
- 
-    
-
 
 }

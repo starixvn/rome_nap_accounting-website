@@ -72,6 +72,11 @@ using Fanex.Tarus.SpecialDelete.Entity;
             {
                 var result = _ILiveCasinoManager.GetTickets(matchid, f_transid, t_transid);
 
+                if (result == null)
+                {
+                    result = new Entity.LiveCasino.Tickets();
+                }
+
                 var jsonResult = Json(result);
                 jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
                 return jsonResult;

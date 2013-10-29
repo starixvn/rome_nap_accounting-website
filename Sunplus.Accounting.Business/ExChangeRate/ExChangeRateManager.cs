@@ -1,30 +1,27 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.OleDb;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel.Activation;
-using System.Web;
 using System.Text;
-using System.Data;
-using System.IO;
-using System.Data.OleDb;
+using System.Web;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Web;
 using ExcelUtil.Spreadsheet;
-
 using Sunplus.Accounting.Business.CacheManager;
-using Sunplus.Accounting.DataAccess.AdoNet;
-using Sunplus.Accounting.Entities;
-using System.Collections;
-using Sunplus.Accounting.Core.Cache;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Business.Security;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.DataAccess.AdoNet;
+using Sunplus.Accounting.Entities;
 
 /// <summary>
 /// Summary description for ExchangeRateManager
@@ -35,7 +32,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
     public class ExchangeRateManager : IExchangeRateService
     {
         private readonly Sunplus.Accounting.DataAccess.IExchangeRateDAO _exchangeRateDAO;
-        private ILogger _logger;
 
         public ExchangeRateManager()
         { }
@@ -44,7 +40,9 @@ namespace Sunplus.Accounting.Business.ExChangeRate
         {
             _exchangeRateDAO = exchangeRateDAO;
         }
+
         #region GenHeader
+
         public string GenHeader()
         {
             StringBuilder html = new StringBuilder();
@@ -59,9 +57,11 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             }
             return html.ToString();
         }
-        #endregion
+
+        #endregion GenHeader
 
         #region GenNewRate
+
         public string GenNewRate()
         {
             StringBuilder html = new StringBuilder();
@@ -91,6 +91,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             }
             return html.ToString();
         }
+
         public string GenNewRate4Update()
         {
             StringBuilder html = new StringBuilder();
@@ -105,9 +106,11 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             }
             return html.ToString();
         }
-        #endregion
+
+        #endregion GenNewRate
 
         #region ExportExRate
+
         public ExcelFile ExportExRate()
         {
             ExcelFile excelFile = new ExcelFile();
@@ -136,9 +139,10 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                     ws.Cells[1, i].Style = gembox.GetStyleTitle(181, 196, 208);
                 }
 
-                #endregion
+                #endregion Header
 
                 #region content
+
                 int indexrow = 2;
                 DataRow[] Rows = rs.ResultSet.Tables[0].Select();
                 string[] arrContent = { "currency", "currencyCode", "ActualRate", "MinBet", "MinBetLive", "GBPRate", "AUDRate", "ZARRate", "EURORate", "US$Rate" };
@@ -148,7 +152,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 {
                     int exid = CastAide.AsInt32(dr["exchangeid"]);
                     var exchangeRate = new ExChangeRate();
-                    bool f =exchangeRate.IsHideCurrencies(exid);
+                    bool f = exchangeRate.IsHideCurrencies(exid);
                     if (f) continue;
 
                     if (indexrow % 2 == 0)
@@ -170,29 +174,31 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                     }
                     indexrow++;
                 }
-                #endregion
 
+                #endregion content
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return excelFile;
         }
-        #endregion
+
+        #endregion ExportExRate
 
         #region IsHideCurrencies
-        bool IsHideCurrencies(int exid)
+
+        private bool IsHideCurrencies(int exid)
         {
             int[] exids = { 25, 26, 27, 28, 29 };
             return exids.Where(n => n == exid).Count() > 0;
         }
-        #endregion
 
+        #endregion IsHideCurrencies
 
         #region IsValidExtension
-        bool IsValidExtension(string fileName, ref string ext)
+
+        private bool IsValidExtension(string fileName, ref string ext)
         {
             bool f = false;
             try
@@ -205,15 +211,14 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             }
             catch (Exception ex)
             {
-
-                (new EntLibLogger()).Error(ex.Message + "bool IsValidExtension()", ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return f;
         }
-        #endregion
 
-        DataTable GetDataFromExcel(string ExcelPath)
+        #endregion IsValidExtension
+
+        private DataTable GetDataFromExcel(string ExcelPath)
         {
             DataTable dtb = new DataTable();
             string strConn = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + ExcelPath + ";Extended Properties=Excel 8.0;";
@@ -227,7 +232,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 objAdap.Fill(dtb);
                 excelCon.Close();
                 excelCon.Dispose();
-                dtb.Rows.RemoveAt(0);//Remove the first (title) row 
+                dtb.Rows.RemoveAt(0);//Remove the first (title) row
                 return dtb;
             }
             catch (Exception ex)
@@ -250,7 +255,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             bool IsUploadFileSuccess = true;
             try
             {
-
                 if (HttpContext.Current.Request.ContentLength < 1024000)
                 {
                     if (HttpContext.Current.Request.Files.Count == 0)
@@ -290,7 +294,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                                     result.ErrorMessage = ex.ToString();
                                     return result;
                                 }
-
                             }
                             else
                             {
@@ -332,7 +335,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                 }
                 else
                 {
-
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     //throw;
                     result.ErrorCode = 1;
@@ -345,7 +347,6 @@ namespace Sunplus.Accounting.Business.ExChangeRate
 
         public List<ExchangeRate> LoadExchangeRateOpenTote()
         {
-
             List<ExchangeRate> ListExRate = new List<ExchangeRate>();
             try
             {
@@ -393,9 +394,8 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                                 exrate.Result = new ResultBO(ExchangeRate.InvalidCurrencyError, ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "ExRate_Error_InvalidCurrency"));
                             }
 
-
                         exrate.ActualRate = row[2].ToString();
-                        
+
                         exrate.AUDRate = row[6].ToString();
 
                         if (exrate.AUDRate.IndexOf("e-") == -1)
@@ -460,17 +460,13 @@ namespace Sunplus.Accounting.Business.ExChangeRate
                         if (!isValidData)
                             exrate.Result = new ResultBO(ExchangeRate.InvalidDataError, ResourceExtension.GetResourceValue(ResourceExtension.Resources.ErrorMsg, "ExRate_Error_InvalidData"));
                         ListExRate.Add(exrate);
-
                     }
                 }
             }
             catch (Exception ex)
             {
-
             }
             return ListExRate;
-
-
         }
 
         [DataContract]
@@ -479,6 +475,7 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             [DataMember]
             public List<ExchangeRate> ListExchangeRate
             { get; set; }
+
             [DataMember]
             public ResultBO Result
             { get; set; }
@@ -495,13 +492,30 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             }
             try
             {
+                List<string> listMsg = new List<string>();
                 foreach (ExchangeRate exrate in ExRateList)
                 {
                     ExchangeRateDAO exratedao = new ExchangeRateDAO();
-                    exratedao.ExChangeRateUpdateOpenTote(exrate.Currency, exrate.GBPRate, exrate.AUDRate, exrate.ZARRate, exrate.EURORate, exrate.USDRate);
+                    int errcode = 0;
+                    string errmsg = string.Empty;
+
+                    exratedao.ExChangeRateUpdateOpenTote(exrate.Currency, exrate.GBPRate, exrate.AUDRate, exrate.ZARRate, exrate.EURORate, exrate.USDRate, ref errcode, ref errmsg);
+                    if (errcode > 0 && !string.IsNullOrEmpty(errmsg))
+                    {
+                        listMsg.Add(errmsg);
+                    }
                 }
-                result.ErrorCode = 0;
-                result.ErrorMessage = "Update Exchange Rate Open Tote successful.";
+                if (listMsg.Count > 0)
+                {
+                    result.ErrorCode = 100;
+                    var listMsgDistinct = listMsg.Distinct().ToList();
+                    result.ErrorMessage = string.Join(", ", listMsgDistinct); 
+                }
+                else
+                {
+                    result.ErrorCode = 0;
+                    result.ErrorMessage = "Update Exchange Rate Open Tote successful.";
+                }
             }
             catch (Exception ex)
             {
@@ -510,6 +524,5 @@ namespace Sunplus.Accounting.Business.ExChangeRate
             }
             return result;
         }
-        
     }
 }

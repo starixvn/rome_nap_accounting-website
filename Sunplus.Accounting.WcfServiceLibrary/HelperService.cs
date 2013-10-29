@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ServiceModel.Activation;
 using System.Web;
 using Sunplus.Accounting.Business;
 using Sunplus.Accounting.Business.BootStrappers;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.ViewModel;
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Core.Common;
 
 // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "HelperService" in code, svc and config file together.
 
@@ -42,11 +41,11 @@ namespace Sunplus.Accounting.WcfServiceLibrary
             if (objSystem != null)
             {
                 var helper = CommonBootStrapper.Locator.GetInstance<IHelper>();
-                
-                listSite = helper.GetSites((Enumerations.AccountingSystem) objSystem);
+
+                listSite = helper.GetSites((Enumerations.AccountingSystem)objSystem);
             }
 
-            return listSite;            
+            return listSite;
         }
 
         public List<SiteDTO> GetSiteList_Report_Licensee()
@@ -62,6 +61,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary
             return listSite;
         }
 
-        #endregion
+        #endregion IHelperService Members
     }
 }

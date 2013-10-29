@@ -1,9 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="BACustomerService.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
+﻿
 namespace Fanex.Tarus.Admin.Business.BACustomer
 {
     using System;
@@ -11,7 +6,7 @@ namespace Fanex.Tarus.Admin.Business.BACustomer
     using System.Linq;
     using System.Text;
     using Fanex.Tarus.Admin.Entities;
-using Fanex.Tarus.Admin.DataAccess.BACustomer;
+    using Fanex.Tarus.Admin.DataAccess.BACustomer;
     using System.Data;
     using DNAide.Core;
     using Sunplus.Accounting.Core.Extensions;
@@ -37,6 +32,10 @@ using Fanex.Tarus.Admin.DataAccess.BACustomer;
             _baCustomerAccess = baCustomerAccess ?? new BACustomerAccess();
         }
 
+        /// <summary>
+        /// Gets the licensee ba.
+        /// </summary>
+        /// <returns></returns>
         public List<Licensee> GetLicenseeBA()
         {
             var licenseeList = new List<Licensee>();
@@ -64,6 +63,13 @@ using Fanex.Tarus.Admin.DataAccess.BACustomer;
         }
 
 
+        /// <summary>
+        /// Selects the ba customer list from database.
+        /// </summary>
+        /// <param name="LicenseeId">The licensee identifier.</param>
+        /// <param name="Status">The status.</param>
+        /// <param name="Username">The username.</param>
+        /// <returns></returns>
         public List<FollowedCustomer> SelBACustomerListFromDB(int LicenseeId, int Status, string Username)
         {
             
@@ -90,6 +96,16 @@ using Fanex.Tarus.Admin.DataAccess.BACustomer;
             return followedCustomerList;
         }
 
+        /// <summary>
+        /// Sels the ba customer list.
+        /// </summary>
+        /// <param name="LicenseeId">The licensee identifier.</param>
+        /// <param name="Status">The status.</param>
+        /// <param name="Username">The username.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="pageIndex">Index of the page.</param>
+        /// <param name="fromCache">From cache.</param>
+        /// <returns></returns>
         public FollowedCustomerDTO SelBACustomerList(int LicenseeId, int Status, string Username, int pageSize, int pageIndex, int fromCache)
         {
             var followedCusPaging = new FollowedCustomerDTO();

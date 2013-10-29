@@ -1,13 +1,10 @@
 using System;
 using System.Data;
-using DNAide.Web;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
-using IBCUtils;
 using System.Text;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using DNAide.Data;
-
+using DNAide.Web;
+using IBCUtils;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
 public partial class Report_StatementAll : System.Web.UI.Page
 {
@@ -22,7 +19,8 @@ public partial class Report_StatementAll : System.Web.UI.Page
         GenReportContent(ref html);
         RepContentHtml.Text = html.ToString();
     }
-    void GenReportContent(ref StringBuilder reportStr)
+
+    private void GenReportContent(ref StringBuilder reportStr)
     {
         string fdateStr = Request["fdate"];
         string tdateStr = Request["tdate"];
@@ -53,7 +51,7 @@ public partial class Report_StatementAll : System.Web.UI.Page
                     TemplateHandler.Assign(ref rowHtml, "{type}", transType);
                     TemplateHandler.Assign(ref rowHtml, "{total}", string.Format("{0:n}", total));
                     TemplateHandler.Assign(ref rowHtml, "{accum_total}", string.Format("{0:n}", accTotal));
-                    
+
                     reportStr.Append(rowHtml);
                     //reportStr.Append(Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("StatementAllRow.tpl", new string[] { "{odd_even}", "{date}", "{type}", "{total}", "{accum_total}" },
                     //    new string[] { even_odd_row, date, transType, string.Format("{0:n}", total), string.Format("{0:n}", accTotal) }));
@@ -62,12 +60,10 @@ public partial class Report_StatementAll : System.Web.UI.Page
 
             reportStr.Append("</table>");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             reportStr.Append("<tr><td colspan='4'>ERROR WHILE GETTING DATA</td></tr></table>");
-           
         }
     }
 }
-

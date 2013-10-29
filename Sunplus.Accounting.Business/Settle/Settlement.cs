@@ -2,16 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Text;
 using DNAide.Core;
+using DNAide.Web;
 using Sunplus.Accounting.Business.Settlement;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.Settlement;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Settle;
-using DNAide.Web;
 
 namespace Sunplus.Accounting.Business.Settle
 {
@@ -29,12 +28,11 @@ namespace Sunplus.Accounting.Business.Settle
             : this(null)
         {
             //_settlementDao = new SettlementDAO();
-
         }
 
-
         #region DefineStatus
-        Hashtable DefineStatus()
+
+        private Hashtable DefineStatus()
         {
             Hashtable hashtable = new Hashtable();
             hashtable.Add("100closed", "Pending");
@@ -45,9 +43,11 @@ namespace Sunplus.Accounting.Business.Settle
             AppSession.AddSession(System.Web.HttpContext.Current.Session, _keyDefineStatus, hashtable);
             return hashtable;
         }
-        #endregion
+
+        #endregion DefineStatus
 
         #region SelStatusConfirming
+
         public string SelStatusConfirming(DataRow dataRow, ref bool isPending)
         {
             string stastus = string.Empty;
@@ -80,16 +80,20 @@ namespace Sunplus.Accounting.Business.Settle
             }
             return stastus;
         }
-        #endregion
+
+        #endregion SelStatusConfirming
 
         #region IsPending
+
         public bool IsPending(DataRow dataRow)
         {
             return CastAide.AsInt32(dataRow["IsPending"]) == 1;
         }
-        #endregion
+
+        #endregion IsPending
 
         #region UdpMatch_Pending
+
         public Result UdpMatch_Pending(string matchid, bool ispending)
         {
             Result result = new Result(0, string.Empty);
@@ -105,7 +109,8 @@ namespace Sunplus.Accounting.Business.Settle
             }
             return result;
         }
-        #endregion
+
+        #endregion UdpMatch_Pending
 
         public string ReCalcNumberGame(int matchid, int firstball_value, int secondball_value, int thirdball_value, string ip)
         {
@@ -153,10 +158,8 @@ namespace Sunplus.Accounting.Business.Settle
             return listResult;
         }
 
-
         public void UpdBallNoByMatchID(int matchid, string ballNo, string siteNo, int adminid, string adminname, string ip)
         {
-
             try
             {
                 var resultNG = _settlementDao.UpdBallNoByMatchID(matchid, ballNo, siteNo, adminid, adminname, ip);
@@ -167,7 +170,6 @@ namespace Sunplus.Accounting.Business.Settle
             {
                 LogExtensions.ExceptionHandler(ex);
             }
-
         }
 
         public string RefundRunningBetDaqTickets(int Matchid, int Creator, string IP)
@@ -176,10 +178,9 @@ namespace Sunplus.Accounting.Business.Settle
         }
 
         public void AssignDataUnDecided(ref string tpl, string permission, DataRow dr)
-        { 
+        {
             try
             {
-
                 bool isUndecided = CastAide.AsBoolean(dr["isUndecided"]);
                 string matchId = CastAide.AsString(dr["matchid"]);
                 string matchcode = CastAide.AsString(dr["matchcode"]);
@@ -209,7 +210,6 @@ namespace Sunplus.Accounting.Business.Settle
                     TemplateHandler.Assign(ref tpl, "hand", "hand");
                     TemplateHandler.Assign(ref tpl, "event", _event);
                 }
-
             }
             catch (Exception ex)
             {
@@ -222,7 +222,6 @@ namespace Sunplus.Accounting.Business.Settle
             return permission.IndexOf("[D]") > -1;
         }
 
-
         public void SetMatchIsUndecided(int matchId, bool isUndecided, int userId)
         {
             var permissions = Sunplus.Accounting.Business.Security.Permissions.CheckHostPermissionSettle(userId);
@@ -230,9 +229,7 @@ namespace Sunplus.Accounting.Business.Settle
             {
                 _settlementDao.SetMatchIsUndecided(matchId, isUndecided, userId);
             }
-
         }
-
 
         public void AssignApplyHedgingMatch(ref string tpl, int matchid)
         {
@@ -250,7 +247,6 @@ namespace Sunplus.Accounting.Business.Settle
                     string matchids_hedging = string.Empty;
                     //for (int i = 0; i <= 2; i++)
                     {
-
                         foreach (DataRow row in rows)
                         {
                             string _row = tplItem;
@@ -265,7 +261,6 @@ namespace Sunplus.Accounting.Business.Settle
                             html.Append(_row);
                         }
                     }
-
 
                     TemplateHandler.ReplaceBlock(ref tplHedging, "Item", html.ToString());
                     TemplateHandler.Assign(ref tplHedging, "matchids_hedging", matchids_hedging);

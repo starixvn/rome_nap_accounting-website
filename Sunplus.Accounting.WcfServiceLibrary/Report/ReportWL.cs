@@ -37,6 +37,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
             return "get";
         }
 
-        #endregion
+        #endregion IReportWL Members
     }
 }

@@ -18,9 +18,8 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.Extentions
                     Cache = new MemcachedClient("memcached");
                 }
             }
-            catch (Exception ex)
+            catch
             {
-
             }
         }
 
@@ -32,8 +31,6 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.Extentions
             }
         }
 
-        
-
         public bool Set(string key, object value)
         {
             try
@@ -41,9 +38,8 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.Extentions
                 Cache.Store(StoreMode.Set, key, value);
                 return true;
             }
-            catch (Exception ex)
+            catch 
             {
-
             }
             return false;
         }
@@ -55,21 +51,20 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.Extentions
                 Cache.Store(StoreMode.Set, key, value, expire);
                 return true;
             }
-            catch (Exception ex)
+            catch 
             {
-
             }
             return false;
         }
+
         public object Get(string key)
         {
             try
             {
                 return Cache.Get(key);
             }
-            catch (Exception ex)
+            catch
             {
-
             }
             return null;
         }
@@ -113,7 +108,6 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.Extentions
             }
             catch (Exception ex)
             {
-
             }
             return false;
         }
@@ -154,7 +148,6 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.Extentions
             }
             catch (Exception ex)
             {
-
             }
             return default(T);
         }
@@ -167,7 +160,6 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.Extentions
             }
             catch (Exception ex)
             {
-
             }
         }
 
@@ -178,6 +170,5 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.Extentions
             //});
             return new List<T>();
         }
-
     }
 }

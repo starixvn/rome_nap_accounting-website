@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-using Newtonsoft.Json;
 
 namespace Sunplus.Data.DataAbstract.Storage.Cache
 {
     [DataContract]
     public class CacheDataStorage : IDataStorage
     {
-
         private Storage.Cache.Manager _cache = new Manager();
-       
 
         #region public method
 
@@ -42,10 +39,9 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache
 
             inserted = _cache.Insert(key, data);
 
-
             return inserted;
         }
-        
+
         #endregion public method
 
         public object Get(string key)
@@ -57,7 +53,6 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache
         {
             return _cache.Get<T>(key);
         }
-
 
         public bool Delete<T>(string key, object value)
         {
@@ -97,12 +92,11 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache
 
         #region IDataStorage Members
 
-
         public bool Insert<T>(string key, T data, TimeSpan expire)
         {
             throw new NotImplementedException();
         }
 
-        #endregion
+        #endregion IDataStorage Members
     }
 }

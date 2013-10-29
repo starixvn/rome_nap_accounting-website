@@ -408,3 +408,28 @@ select,.select
 .hand {
     cursor: pointer;
 }
+#tabs
+{
+    min-width: 819px;
+    min-height: 223px;
+}
+.ui-state-default a
+{
+    background-color: #557280 !important;
+    color: #FFF !important;
+}
+.ui-state-active a
+{
+    background-color: #FFF !important;
+    color: #2489CE !important;
+    border: none !important;
+    border-left-radius: 3px;
+    border-top-radius: 3px;
+}
+li
+{
+    border: 1px solid #7C98A4 !important;
+    border-bottom: none !important;
+    border-left-radius: 3px;
+    border-top-radius: 3px;
+}

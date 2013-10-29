@@ -2,7 +2,6 @@
 using System.ServiceModel.Activation;
 using Sunplus.Accounting.Business.UserControl;
 using Sunplus.Accounting.Entities;
-using Sunplus.Accounting.Services;
 
 namespace Sunplus.Accounting.WcfServiceLibrary
 {
@@ -29,6 +28,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary
             return userControlMng.GetUserPolicyList(userId);
         }
 
-        #endregion
+        #endregion IUserControlService Members
     }
 }

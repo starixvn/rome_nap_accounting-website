@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -71,6 +71,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\IBCUtils.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Newtonsoft.Json.dll</HintPath>
@@ -84,6 +88,14 @@
     </Reference>
     <Reference Include="NPOI.OpenXml4Net">
       <HintPath>..\Dependency\NPoi\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Bingo.Core, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Bingo\Sunplus.Bingo.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Bingo.Services, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Bingo\Sunplus.Bingo.Services.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Libraries.AOP">
       <HintPath>..\Dependency\Sunplus.Libraries.AOP.dll</HintPath>
@@ -124,6 +136,7 @@
   <ItemGroup>
     <Compile Include="Business\CreditCustomer\CustomerSettingService.cs" />
     <Compile Include="Business\CreditCustomer\ICustomerSettingService.cs" />
+    <Compile Include="Business\CustomerCoreService.cs" />
     <Compile Include="Business\CustomerList\CustomerListService.cs" />
     <Compile Include="Business\CustomerList\ICustomerListService.cs" />
     <Compile Include="Business\CustomerLogin\CustomerSecurityCodeService.cs" />
@@ -137,10 +150,15 @@
     <Compile Include="Business\SettingCustomer\IAbnormalBetService.cs" />
     <Compile Include="Business\SettingCustomer\SMATurnover\ISMATurnoverService.cs" />
     <Compile Include="Business\SettingCustomer\SMATurnover\SMATurnoverService.cs" />
+    <Compile Include="Business\ViewPT\IViewPTService.cs" />
+    <Compile Include="Business\ViewPT\ViewPTService.cs" />
+    <Compile Include="Constants\RoleIdConstants.cs" />
+    <Compile Include="Controller\ViewPTController.cs" />
     <Compile Include="Criteria\SMATurnover\AddSMAListCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\UploadSMAListCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\CheckSMAListCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\GetMatchInfo_AddSMAListCriteria.cs" />
+    <Compile Include="Criteria\ViewPT\GetPTSettingCriteria.cs" />
     <Compile Include="DataAccess\SettingCustomer\SMATurnover\ISMATurnoverAccess.cs" />
     <Compile Include="DataAccess\SettingCustomer\SMATurnover\SMATurnoverAccess.cs" />
     <Compile Include="Controller\Credit\AddNewAgentController.cs" />
@@ -182,12 +200,15 @@
     <Compile Include="DataAccess\SettingCustomer\CasinoComm\CasinoCommAccess.cs" />
     <Compile Include="DataAccess\SettingCustomer\CasinoComm\ICasinoCommAccess.cs" />
     <Compile Include="DataAccess\SettingCustomer\IAbnormalBetAccess.cs" />
+    <Compile Include="DataAccess\ViewPT\IViewPTRepository.cs" />
+    <Compile Include="DataAccess\ViewPT\ViewPTRepository.cs" />
     <Compile Include="Entities\BaseModel.cs" />
     <Compile Include="Entities\CreditCustomer\Currency.cs" />
     <Compile Include="Entities\CreditCustomer\CustomerSettingView.cs" />
     <Compile Include="Entities\CreditCustomer\MemberGroup.cs" />
     <Compile Include="Entities\CreditCustomer\Site.cs" />
     <Compile Include="Entities\CreditCustomer\Sites.cs" />
+    <Compile Include="Entities\CustomerInfo.cs" />
     <Compile Include="Entities\CustomerList\CustomerList.cs" />
     <Compile Include="Entities\Racing\CustomerSettingView.cs" />
     <Compile Include="Entities\Result.cs" />
@@ -197,9 +218,19 @@
     <Compile Include="Entities\SettingCustomer\SMATurnover\League.cs" />
     <Compile Include="Entities\SettingCustomer\SMATurnover\MatchInfo.cs" />
     <Compile Include="Entities\SettingCustomer\SMATurnover\Sport.cs" />
+    <Compile Include="Entities\ViewPT\PostionTakingInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Customer_Labels.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Customer_Labels.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.Tarus.Infrastructure\Fanex.Tarus.Infrastructure.csproj">
+      <Project>{CCC0446A-42E7-4850-B09C-4DAC278F23B3}</Project>
+      <Name>Fanex.Tarus.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sunplus.Accounting.Business\Sunplus.Accounting.Business.csproj">
       <Project>{C7EB1617-765A-44E2-9267-96865EB5C096}</Project>
       <Name>Sunplus.Accounting.Business</Name>
@@ -223,7 +254,12 @@
   <ItemGroup>
     <Content Include="accounting-site5_02.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Customer_Labels.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Customer_Labels.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -3,8 +3,6 @@ using DNAide.Core;
 using SharedCache.WinServiceCommon.Provider.Cache;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Core.LoggingLib;
-
 
 namespace Sunplus.Accounting.Core.Cache
 {
@@ -46,7 +44,6 @@ namespace Sunplus.Accounting.Core.Cache
                 }
                 catch (Exception ex)
                 {
-                    
                     {
                         Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     }
@@ -69,7 +66,6 @@ namespace Sunplus.Accounting.Core.Cache
                 }
                 catch (Exception ex)
                 {
-                    
                     {
                         Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     }
@@ -78,10 +74,10 @@ namespace Sunplus.Accounting.Core.Cache
             }
             set
             {
-                
                 IndexusDistributionCache.SharedCache.Add("accreport2amatchwl." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
+
         public static string REPORT_TRADER_DETAIL
         {
             get
@@ -92,7 +88,6 @@ namespace Sunplus.Accounting.Core.Cache
                 }
                 catch (Exception ex)
                 {
-                    
                     {
                         Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     }
@@ -115,7 +110,6 @@ namespace Sunplus.Accounting.Core.Cache
                 }
                 catch (Exception ex)
                 {
-                    
                     {
                         Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     }
@@ -127,6 +121,7 @@ namespace Sunplus.Accounting.Core.Cache
                 IndexusDistributionCache.SharedCache.Add("accsupermovementbase." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
+
         public static string REPORT_SUPER_MOVEMENT_ORIGINAL
         {
             get
@@ -137,7 +132,6 @@ namespace Sunplus.Accounting.Core.Cache
                 }
                 catch (Exception ex)
                 {
-                    
                     {
                         Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     }
@@ -149,6 +143,7 @@ namespace Sunplus.Accounting.Core.Cache
                 IndexusDistributionCache.SharedCache.Add("accsupermovementoriginal." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
+
         public static string REPORT_STATEMENT_COMPANY
         {
             get
@@ -159,7 +154,6 @@ namespace Sunplus.Accounting.Core.Cache
                 }
                 catch (Exception ex)
                 {
-                    
                     {
                         Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     }
@@ -171,6 +165,7 @@ namespace Sunplus.Accounting.Core.Cache
                 IndexusDistributionCache.SharedCache.Add("accreportcomstatement." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
+
         public static string REPORT_STATEMENT
         {
             get
@@ -181,7 +176,6 @@ namespace Sunplus.Accounting.Core.Cache
                 }
                 catch (Exception ex)
                 {
-                    
                     {
                         Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     }
@@ -193,6 +187,7 @@ namespace Sunplus.Accounting.Core.Cache
                 IndexusDistributionCache.SharedCache.Add("accreportstatement." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
+
         public static string REPORT_STATEMENT_DETAIL
         {
             get
@@ -203,7 +198,6 @@ namespace Sunplus.Accounting.Core.Cache
                 }
                 catch (Exception ex)
                 {
-                    
                     {
                         Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     }
@@ -215,6 +209,7 @@ namespace Sunplus.Accounting.Core.Cache
                 IndexusDistributionCache.SharedCache.Add("accreportstatementdetail." + AppSession.Username, value, DateTime.Now.AddMinutes(WebSettings.CacheExpire));
             }
         }
+
         public static string REPORT_STATEMENT_AUDIT
         {
             get
@@ -225,7 +220,6 @@ namespace Sunplus.Accounting.Core.Cache
                 }
                 catch (Exception ex)
                 {
-                    
                     {
                         Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     }

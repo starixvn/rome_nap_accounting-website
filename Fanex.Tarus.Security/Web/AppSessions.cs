@@ -1,24 +1,33 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="AppSettings.cs" company="">
-// TODO: Update copyright text.
+﻿// ***********************************************************************
+// <copyright file="AppSessions.cs" company="Nexcel Solution Vietnam">
+//     Copyright (c) Nexcel Solution Vietnam. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
-
-using System.Web;
-using System.Collections.Generic;
-
+// <summary></summary>
+// ***********************************************************************
 namespace Fanex.Tarus.Security.Web
 {
+    using System.Collections.Generic;
+    using System.Web;
+
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     internal class AppSessions
     {
+        /// <summary>
+        /// Gets or sets the role access.
+        /// </summary>
+        /// <value>The role access.</value>
         public static Dictionary<string, int> RoleAccess
         {
             get { return (Dictionary<string, int>)HttpContext.Current.Session["RoleAccess"]; }
             set { HttpContext.Current.Session["RoleAccess"] = value; }
         }
+
+        /// <summary>
+        /// Gets or sets the page access.
+        /// </summary>
+        /// <value>The page access.</value>
         public static Dictionary<string, int> PageAccess
         {
             get { return (Dictionary<string, int>)HttpContext.Current.Session["PageAccess"]; }

@@ -190,8 +190,6 @@ namespace Fanex.Tarus.SpecialDelete.Business.LiveCasino
             if (ds == null) return tickets;
 
             tickets.Licensees = AssignDataforLicensee_RecoverBet(ds);
-
-            int index = 0;
             
             return tickets;
         }
@@ -208,7 +206,7 @@ namespace Fanex.Tarus.SpecialDelete.Business.LiveCasino
 
             tickets.Licensees = AssignDataforLicensee(ds);
 
-            int index = 0;
+          
 
             return tickets;
         }
@@ -640,7 +638,7 @@ namespace Fanex.Tarus.SpecialDelete.Business.LiveCasino
             {
                 rs = base.CheckMatchIDwithRefno(matchid, f_transid, t_transid, sportType);
             }
-            catch (Exception ex)
+            catch
             {
                 //LogExtensions.ExceptionHandler(ex);
                 rs = "You have entered an invalid matchId or refno.";

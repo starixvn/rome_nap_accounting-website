@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Admin>
+<<<<<<< HEAD
+	<ExternalSite>
+		<add alias="SelectGroupName" name="Acc_CustGroupSelGroup" db="DBAGE.bodb_AGE"></add>
+		<add alias="SelectInfoCust" name="Acc_CustGroupSel" db="DBAGE.bodb_AGE"></add>
+		<add alias="DeleteCustomer" name="Acc_CustGroupDel" db="DBAGE.bodb_AGE"></add>
+		<add alias="AddExistCustomer" name="Acc_CustGroupAddByUsername" db="DBAGE.bodb_AGE"></add>
+	</ExternalSite>
+=======
+  <ExternalSite>
+      <add alias="SelectGroupName" name="Acc_CustGroupSelGroup" db="DBAGE.bodb_AGE"></add>
+      <add alias="SelectInfoCust" name="Acc_CustGroupSel" db="DBAGE.bodb_AGE"></add>
+      <add alias="DeleteCustomer" name="Acc_CustGroupDel" db="DBAGE.bodb_AGE"></add>
+      <add alias="AddExistCustomer" name="Acc_CustGroupAddByUsername" db="DBAGE.bodb_AGE"></add>
+  </ExternalSite>
+>>>>>>> origin/master
+</Admin>
+

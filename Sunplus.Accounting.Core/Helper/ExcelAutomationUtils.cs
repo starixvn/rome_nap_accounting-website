@@ -2,9 +2,6 @@
 using System.Diagnostics;
 using Microsoft.Office.Interop.Excel;
 
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
-
 namespace Sunplus.Accounting.Core.Helper
 {
     /// <summary>
@@ -24,7 +21,7 @@ namespace Sunplus.Accounting.Core.Helper
             Grey = 16
         }
 
-        #endregion
+        #endregion ColorCode
 
         #region CleanExcelProcess
 
@@ -40,14 +37,13 @@ namespace Sunplus.Accounting.Core.Helper
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
             }
         }
 
-        #endregion
+        #endregion CleanExcelProcess
 
         #region OpenWorksheetFromTemplate
 
@@ -64,7 +60,6 @@ namespace Sunplus.Accounting.Core.Helper
             }
             catch (Exception ex)
             {
-
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -73,7 +68,7 @@ namespace Sunplus.Accounting.Core.Helper
             return excelWorkbook;
         }
 
-        #endregion
+        #endregion OpenWorksheetFromTemplate
 
         #region SetValueRangeStyle
 
@@ -94,7 +89,7 @@ namespace Sunplus.Accounting.Core.Helper
             return range;
         }
 
-        #endregion
+        #endregion SetValueRangeStyle
 
         #region SetValueAtCellStyle
 
@@ -113,7 +108,7 @@ namespace Sunplus.Accounting.Core.Helper
             return range;
         }
 
-        #endregion
+        #endregion SetValueAtCellStyle
 
         #region SetValueAtCellStyleNumber
 
@@ -133,6 +128,6 @@ namespace Sunplus.Accounting.Core.Helper
             return range;
         }
 
-        #endregion
+        #endregion SetValueAtCellStyleNumber
     }
 }

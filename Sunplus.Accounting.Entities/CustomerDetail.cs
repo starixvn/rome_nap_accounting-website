@@ -5,7 +5,6 @@
 /// </summary>
 namespace Sunplus.Accounting.Entities
 {
-
     [Serializable]
     public class CustomerDetail
     {
@@ -29,6 +28,7 @@ namespace Sunplus.Accounting.Entities
 
         //@Huynguyen edited
         private bool _IsClosed = false;
+
         private bool _IsSuspended = false;
         private bool _IsAutoSuspend = false;
         private bool _IsDisableCasino = false;
@@ -53,10 +53,8 @@ namespace Sunplus.Accounting.Entities
 
         private string _SuperUserName;
         private string _MasterUserName;
-        
 
         public int Currency { get; set; }
-
 
         public CustomerDetail()
         {
@@ -66,8 +64,9 @@ namespace Sunplus.Accounting.Entities
         }
 
         #region Properties
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int CustID
         {
@@ -82,7 +81,7 @@ namespace Sunplus.Accounting.Entities
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int RoleId
         {
@@ -95,8 +94,9 @@ namespace Sunplus.Accounting.Entities
                 _RoleId = value;
             }
         }
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public int UplineId
         {
@@ -110,9 +110,8 @@ namespace Sunplus.Accounting.Entities
             }
         }
 
-     
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string UserName2
         {
@@ -127,7 +126,7 @@ namespace Sunplus.Accounting.Entities
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string UserName
         {
@@ -142,7 +141,7 @@ namespace Sunplus.Accounting.Entities
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string FirstName
         {
@@ -157,7 +156,7 @@ namespace Sunplus.Accounting.Entities
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string LastName
         {
@@ -172,7 +171,7 @@ namespace Sunplus.Accounting.Entities
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string Phone
         {
@@ -187,7 +186,7 @@ namespace Sunplus.Accounting.Entities
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string MobilePhone
         {
@@ -202,7 +201,7 @@ namespace Sunplus.Accounting.Entities
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string Email
         {
@@ -216,10 +215,8 @@ namespace Sunplus.Accounting.Entities
             }
         }
 
-
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public string Fax
         {
@@ -234,7 +231,7 @@ namespace Sunplus.Accounting.Entities
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public bool IsDisabledFI
         {
@@ -248,10 +245,8 @@ namespace Sunplus.Accounting.Entities
             }
         }
 
-
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public bool IsDisabledFIDL
         {
@@ -266,7 +261,7 @@ namespace Sunplus.Accounting.Entities
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public bool IsDisabledFIUL
         {
@@ -281,7 +276,7 @@ namespace Sunplus.Accounting.Entities
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public bool IsDisabledHR
         {
@@ -295,10 +290,8 @@ namespace Sunplus.Accounting.Entities
             }
         }
 
-
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public bool IsDisabledHRDL
         {
@@ -311,13 +304,14 @@ namespace Sunplus.Accounting.Entities
                 _IsDisabledHRDL = value;
             }
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// 
 
         /// <summary>
-        /// 
+        ///
+        /// </summary>
+        ///
+
+        /// <summary>
+        ///
         /// </summary>
         public bool IsDisabledOpenTote
         {
@@ -331,10 +325,8 @@ namespace Sunplus.Accounting.Entities
             }
         }
 
-
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public bool IsDisabledOpenToteDL
         {
@@ -347,8 +339,9 @@ namespace Sunplus.Accounting.Entities
                 _IsDisabledOpenToteDL = value;
             }
         }
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public bool IsDisabledHRUL
         {
@@ -363,7 +356,7 @@ namespace Sunplus.Accounting.Entities
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public bool IsDisabledOpenToteUL
         {
@@ -412,7 +405,6 @@ namespace Sunplus.Accounting.Entities
                 _IsAutoSuspend = value;
             }
         }
-       
 
         public bool IsDisableCasino
         {
@@ -425,7 +417,6 @@ namespace Sunplus.Accounting.Entities
                 _IsDisableCasino = value;
             }
         }
-
 
         public bool IsCasinoSync
         {
@@ -451,7 +442,6 @@ namespace Sunplus.Accounting.Entities
             }
         }
 
-
         public bool IsSpecial
         {
             get
@@ -475,7 +465,6 @@ namespace Sunplus.Accounting.Entities
                 _IsAllowMasterAutoPT = value;
             }
         }
-
 
         public bool IsDisableOutright
         {
@@ -604,14 +593,16 @@ namespace Sunplus.Accounting.Entities
         }
 
         public bool IsDisableLiveCasino { get; set; }
+
         public bool IsLiveCasinoSync { get; set; }
+
         public int SuperId { get; set; }
+
         public int MasterId { get; set; }
 
         public bool IsDisableVirtualSports { get; set; }
         public bool IsHideVirtualSports { get; set; }
-        #endregion
-
-
+            		
+        #endregion Properties
     }
 }

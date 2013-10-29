@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Sunplus.Accounting.Entities.Report.MatchWL
 {
-
-
     [Serializable]
     [DataContract]
     public class WLbyBettypeDTO
@@ -18,7 +14,6 @@ namespace Sunplus.Accounting.Entities.Report.MatchWL
         [DataMember]
         public WLbyBettype Total { get; set; }
     }
-   
 
     [Serializable]
     [DataContract]
@@ -54,13 +49,9 @@ namespace Sunplus.Accounting.Entities.Report.MatchWL
 
         [DataMember]
         public MatchWL2aBONEW GrandTotal2 { get; set; }
-
-
     }
 
     /*----------------------------------------------------------*/
-
-    
 
     [Serializable]
     [DataContract]
@@ -84,7 +75,6 @@ namespace Sunplus.Accounting.Entities.Report.MatchWL
         public int TotalRow { get; set; }
     }
 
-   
     [Serializable]
     [DataContract]
     public class MatchWL2aBySport
@@ -93,10 +83,7 @@ namespace Sunplus.Accounting.Entities.Report.MatchWL
         public List<MatchWL2aByBettype> Items { get; set; }
 
         [DataMember]
-        public MatchWL2aBONEW Total { get; set; } 
+        public MatchWL2aBONEW Total { get; set; }
     }
 
-
-
-   
 }

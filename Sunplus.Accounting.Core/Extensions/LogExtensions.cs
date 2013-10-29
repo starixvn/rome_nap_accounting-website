@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Configuration;
-using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.Core.Common;
-
-
 
 namespace Sunplus.Accounting.Core.Extensions
 {
@@ -17,6 +11,7 @@ namespace Sunplus.Accounting.Core.Extensions
      * @Author: bobby.nguyen
      * @Date: 11012011
      **/
+
     public static class LogExtensions
     {
         private static BackgroundWorker _worker = null;
@@ -24,18 +19,18 @@ namespace Sunplus.Accounting.Core.Extensions
         /**
          * Function: Exception Handler
          */
+
         public static void ExceptionHandler(Exception ex)
         {
             string message = ex.Message +
-                             "<br>\r\nSOURCE: " + ex.Source +
-                             "<br>\r\nDOMAIN: " + HttpContext.Current.Request.Headers["Host"] +
-                             "<br>\r\nREFERRER: " + HttpContext.Current.Request.UrlReferrer +
-                             "<br>\r\nFORM: " + HttpContext.Current.Request.Form.ToString() +
-                             "<br>\r\nQUERYSTRING: " + HttpContext.Current.Request.QueryString.ToString() +
-                             "<br>\r\nTARGETSITE: " + ex.TargetSite +
-                             "<br>\r\nSTACKTRACE: " + ex.StackTrace;
+                             "\r\nSOURCE: " + ex.Source +
+                             "\r\nDOMAIN: " + HttpContext.Current.Request.Headers["Host"] +
+                             "\r\nREFERRER: " + HttpContext.Current.Request.UrlReferrer +
+                             "\r\nFORM: " + HttpContext.Current.Request.Form.ToString() +
+                             "\r\nQUERYSTRING: " + HttpContext.Current.Request.QueryString.ToString() +
+                             "\r\nTARGETSITE: " + ex.TargetSite +
+                             "\r\nSTACKTRACE: " + ex.StackTrace;
             Fanex.Logging.Logger.Log.Error(message);
         }
-
     }
 }

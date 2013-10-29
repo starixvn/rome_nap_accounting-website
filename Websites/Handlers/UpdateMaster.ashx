@@ -6,7 +6,6 @@ using System.Collections;
 using System.Web.Security;
 using System.Web.SessionState;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
 
 
 public class UpdateMaster : IHttpHandler,IRequiresSessionState {

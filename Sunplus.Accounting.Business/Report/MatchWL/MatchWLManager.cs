@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data;
 using System.Text;
-using System.Web;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
@@ -9,13 +8,10 @@ using DNAide.Web;
 
 using Sunplus.Accounting.Business.Report;
 using Sunplus.Accounting.Core.Cache;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
 
 /// <summary>
 /// Summary description for MatchWL
@@ -31,7 +27,6 @@ namespace BLL.Report.MatchWL
         {
             string colspanHeader = "14";
 
-
             var html = new StringBuilder();
 
             string norow = WebUtils.LoadTemplate("NoInformation.htm");
@@ -44,9 +39,9 @@ namespace BLL.Report.MatchWL
 
                 string tpl = WebUtils.LoadTemplate("WinLost/Report2AMatchWL.htm");
                 string tplHeader = TemplateHandler.CopyBlock(tpl, "Header");
-                    //Sunplus.Accounting.Core.Helper.WebUtils.LoadTemplate("WinLost/MatchWinLoss2AllHeaderV2.htm");
+                //Sunplus.Accounting.Core.Helper.WebUtils.LoadTemplate("WinLost/MatchWinLoss2AllHeaderV2.htm");
                 string rows = TemplateHandler.CopyBlock(tpl, "Rows");
-                    //Sunplus.Accounting.Core.Helper.WebUtils.LoadTemplate("WinLost/MatchWinLoss2AllRowV2.htm");
+                //Sunplus.Accounting.Core.Helper.WebUtils.LoadTemplate("WinLost/MatchWinLoss2AllRowV2.htm");
 
                 switch (type)
                 {
@@ -56,6 +51,7 @@ namespace BLL.Report.MatchWL
                         TemplateHandler.Assign(ref rows, "{WidthHome}", "192");
                         TemplateHandler.Assign(ref rows, "{WidthAway}", "192");
                         break;
+
                     default:
                         TemplateHandler.Assign(ref tplHeader, "{WidthMath}", "250");
                         TemplateHandler.Assign(ref rows, "{WidthHome}", "120");
@@ -64,21 +60,21 @@ namespace BLL.Report.MatchWL
                 }
 
                 string tplTotal1 = TemplateHandler.CopyBlock(tpl, "Total1");
-                    //Sunplus.Accounting.Core.Helper.WebUtils.LoadTemplate("WinLost/MatchWinLoss2Total1V2.htm"); // for bettype and leaguename
+                //Sunplus.Accounting.Core.Helper.WebUtils.LoadTemplate("WinLost/MatchWinLoss2Total1V2.htm"); // for bettype and leaguename
                 string tplTotal2 = TemplateHandler.CopyBlock(tpl, "Total2");
-                    //Sunplus.Accounting.Core.Helper.WebUtils.LoadTemplate("WinLost/MatchWinLoss2Total2V2.htm");// for 8RM
+                //Sunplus.Accounting.Core.Helper.WebUtils.LoadTemplate("WinLost/MatchWinLoss2Total2V2.htm");// for 8RM
                 string tplTotal3 = TemplateHandler.CopyBlock(tpl, "Total3");
-                    //Sunplus.Accounting.Core.Helper.WebUtils.LoadTemplate("WinLost/MatchWinLoss2Total3V2.htm"); // for grand total
+                //Sunplus.Accounting.Core.Helper.WebUtils.LoadTemplate("WinLost/MatchWinLoss2Total3V2.htm"); // for grand total
 
                 TemplateHandler.Assign(ref tplHeader, "{fdate}", wldate.ToShortDateString());
                 TemplateHandler.Assign(ref tplHeader, "{tdate}", wldate.ToShortDateString());
-                string[] arrBlock_V = {"Virtual-Comm", "ExRisk", "Virtual-ExRisk", "Virtual-LineTotal", "Variance"};
-                string[] arrBlock_A = {"Comm", "ExRisk", "Virtual-ExRisk", "LineTotal", "Variance"};
+                string[] arrBlock_V = { "Virtual-Comm", "ExRisk", "Virtual-ExRisk", "Virtual-LineTotal", "Variance" };
+                string[] arrBlock_A = { "Comm", "ExRisk", "Virtual-ExRisk", "LineTotal", "Variance" };
                 string[] arrBlock_VA = {
                                            "Comm", "ExRisk", "LineTotal", "Variance", "Virtual-Comm", "Virtual-ExRisk",
                                            "Virtual-LineTotal"
                                        };
-                string[] arrBlock_VA_Exrisk_VirtualExrisk = {"ExRisk", "Virtual-ExRisk"};
+                string[] arrBlock_VA_Exrisk_VirtualExrisk = { "ExRisk", "Virtual-ExRisk" };
 
                 switch (type)
                 {
@@ -101,6 +97,7 @@ namespace BLL.Report.MatchWL
                         TemplateHandler.Assign(ref tplTotal2, "{cols}", "8");
                         colspanHeader = "9";
                         break;
+
                     case "v":
                         Reports.RemoveBlock(ref tplHeader, arrBlock_A);
                         Reports.RemoveBlock(ref rows, arrBlock_A);
@@ -120,6 +117,7 @@ namespace BLL.Report.MatchWL
                         TemplateHandler.Assign(ref tplTotal2, "{cols}", "8");
                         colspanHeader = "9";
                         break;
+
                     default:
                         Reports.RemoveBlock(ref tplHeader, arrBlock_VA_Exrisk_VirtualExrisk);
                         Reports.RemoveBlock(ref rows, arrBlock_VA_Exrisk_VirtualExrisk);
@@ -133,7 +131,6 @@ namespace BLL.Report.MatchWL
                         Reports.RemoveTag(ref tplTotal2, arrBlock_VA);
                         Reports.RemoveTag(ref tplTotal3, arrBlock_VA);
 
-
                         TemplateHandler.Assign(ref norow, "{tdno}", "12");
                         TemplateHandler.Assign(ref tplHeader, "{cols}", "12");
                         TemplateHandler.Assign(ref tplTotal1, "{cols}", "9");
@@ -144,7 +141,7 @@ namespace BLL.Report.MatchWL
 
                 html.Append(tplHeader);
 
-                #endregion
+                #endregion //header , rows, totalrows
 
                 DbResult rs = null;
                 if (wldate > ReportUtils.BalanceUp.MoveBetsDay)
@@ -153,11 +150,11 @@ namespace BLL.Report.MatchWL
                     rs = IBCProvider.ReportProvider.MatchWL(DataAccess.DAOClient.AdoNet, DataAccess.DataSource.SqlServer).MatchWL14(wldate);
                 else
                     rs = IBCProvider.ReportProvider.MatchWL(DataAccess.DAOClient.AdoNet, DataAccess.DataSource.SqlServer).MatchWL_WH(wldate);
-                
+
                 DataTable dt1 = rs.ResultSet.Tables[0];
                 DataTable dt2 = rs.ResultSet.Tables[1];
 
-                //all rows 
+                //all rows
 
                 string odd_even = "";
                 string leaguename = "empty", bettypename = "";
@@ -181,7 +178,7 @@ namespace BLL.Report.MatchWL
                         #region //total footer
 
                         grandtotal += CastAide.AsDecimal(dr["LineTotal"]);
-                            //CastAide.AsDecimal(dr["winlost"]) + CastAide.AsDecimal(dr["pos"]) +  CastAide.AsDecimal(dr["comm"]);
+                        //CastAide.AsDecimal(dr["winlost"]) + CastAide.AsDecimal(dr["pos"]) +  CastAide.AsDecimal(dr["comm"]);
                         com += CastAide.AsDecimal(dr["comm"]);
                         grandvirtual += CastAide.AsDecimal(dr["VirtualLineTotal"]);
                         grandvariance += (CastAide.AsDecimal(dr["LineTotal"]) -
@@ -189,7 +186,7 @@ namespace BLL.Report.MatchWL
 
                         comvirtual += CastAide.AsDecimal(dr["VirtualComm"]);
 
-                        #endregion
+                        #endregion //total footer
 
                         #region bettype or live
 
@@ -217,7 +214,7 @@ namespace BLL.Report.MatchWL
                             index++;
                         }
 
-                        #endregion
+                        #endregion bettype or live
 
                         #region leaguename
 
@@ -242,7 +239,7 @@ namespace BLL.Report.MatchWL
                             oldleague = leaguename;
                         }
 
-                        #endregion
+                        #endregion leaguename
 
                         #region total of bettype or live
 
@@ -254,20 +251,20 @@ namespace BLL.Report.MatchWL
 
                         comvirtualbet += CastAide.AsDecimal(dr["VirtualComm"]);
 
-                        #endregion
+                        #endregion total of bettype or live
 
                         #region total of league
 
                         combetb += CastAide.AsDecimal(dr["comm"]);
                         grandtotalbetb += CastAide.AsDecimal(dr["LineTotal"]);
-                            //CastAide.AsDecimal(dr["winlost"]) + CastAide.AsDecimal(dr["pos"]) + CastAide.AsDecimal(dr["comm"]);
+                        //CastAide.AsDecimal(dr["winlost"]) + CastAide.AsDecimal(dr["pos"]) + CastAide.AsDecimal(dr["comm"]);
                         grandvirtualbetb += CastAide.AsDecimal(dr["VirtualLineTotal"]);
                         grandvariancebetb += (CastAide.AsDecimal(dr["LineTotal"]) -
                                               CastAide.AsDecimal(dr["VirtualLineTotal"]));
 
                         comvirtualbetb += CastAide.AsDecimal(dr["VirtualComm"]);
 
-                        #endregion
+                        #endregion total of league
 
                         #region earch row
 
@@ -290,7 +287,6 @@ namespace BLL.Report.MatchWL
                                       CastAide.AsDateTime(kickofftime).ToShortTimeString();
                         TemplateHandler.Assign(ref row, "{date}", strTime);
 
-
                         if (CastAide.AsInt32(dr["awayid"]) == 0)
                         {
                             string td = "<td colspan='3' align='center'>" + CacheRef.GetTeamName(dr["homeid"]) + "</td>";
@@ -306,14 +302,11 @@ namespace BLL.Report.MatchWL
                                                         : string.Empty));
                         }
 
-
                         TemplateHandler.Assign(ref row, "{winlost}", NumberFormat.DecFormat((dr["winlost"]), 2));
                         TemplateHandler.Assign(ref row, "{position}", NumberFormat.DecFormat((dr["pos"]), 2));
                         TemplateHandler.Assign(ref row, "{com}", NumberFormat.DecFormat((dr["comm"]), 2));
 
-
                         TemplateHandler.Assign(ref row, "{virtual-com}", NumberFormat.DecFormat((dr["VirtualComm"]), 2));
-
 
                         TemplateHandler.Assign(ref row, "{linetotal}",
                                                "<b>" + NumberFormat.DecFormat((dr["linetotal"]), 2) + "</b>");
@@ -334,7 +327,7 @@ namespace BLL.Report.MatchWL
 
                         html.Append(row);
 
-                        #endregion
+                        #endregion earch row
                     }
                 }
 
@@ -351,7 +344,7 @@ namespace BLL.Report.MatchWL
                 grandvirtualbet = 0;
                 grandvariancebet = 0;
 
-                #endregion
+                #endregion total of bettype
 
                 #region total of league
 
@@ -366,7 +359,7 @@ namespace BLL.Report.MatchWL
                 grandvirtualbetb = 0;
                 grandvariancebetb = 0;
 
-                #endregion
+                #endregion total of league
 
                 #region grand total
 
@@ -377,7 +370,7 @@ namespace BLL.Report.MatchWL
                          "ralign", comvirtual);
                 html.Append(totalrowend);
 
-                #endregion
+                #endregion grand total
 
                 #region winlost_8rm
 
@@ -391,7 +384,7 @@ namespace BLL.Report.MatchWL
                 TemplateHandler.Assign(ref tplTotal2, "{Total-Variance}", NumberFormat.DecFormat(Variance8RM, 2));
                 html.Append(tplTotal2);
 
-                #endregion
+                #endregion winlost_8rm
 
                 #region Mixparlay - OutRigth - FI - HR - 12BET - 3rdparty - Casino;
 
@@ -424,7 +417,8 @@ namespace BLL.Report.MatchWL
                     string bettype = CastAide.AsString(dr["bettype"]);
 
                     #region Link to Casino and ToteHR
-                    if (wldate>=ReportUtils.BalanceUp.BalanceUpDay)
+
+                    if (wldate >= ReportUtils.BalanceUp.BalanceUpDay)
                     {
                         if (bettype.ToLower().Equals("fodds hr"))
                         {
@@ -458,10 +452,8 @@ namespace BLL.Report.MatchWL
                                   Convert.ToDateTime(dr["winlostdate"]).ToShortDateString() + "&db=" + db +
                                   "' target='_blank'>" + bettype + "</a>";
                     }
-                    #endregion
 
-
-
+                    #endregion Link to Casino and ToteHR
 
                     if (CastAide.AsString(dr["bettype"]).ToLower().Equals("12bet agents")
                         || CastAide.AsString(dr["bettype"]).ToLower().Equals("fi 3rd-party"))
@@ -485,9 +477,11 @@ namespace BLL.Report.MatchWL
                             case "a":
                                 td = "<td colspan='7' align='center'></td>";
                                 break;
+
                             case "v":
                                 td = "<td colspan='7' align='center'></td>";
                                 break;
+
                             default:
                                 td = "<td colspan='8' align='center'></td>";
                                 break;
@@ -548,7 +542,7 @@ namespace BLL.Report.MatchWL
                     parlayGrandTotal += parlayTotal;
                 }
 
-                #endregion
+                #endregion Mixparlay - OutRigth - FI - HR - 12BET - 3rdparty - Casino;
 
                 html.Append("</tbody>");
                 html.Append("<tfoot>");
@@ -571,18 +565,16 @@ namespace BLL.Report.MatchWL
 
                 html.Append(tplTotal3);
 
-                #endregion
+                #endregion // Grand total footer;
 
                 html.Append("</tfoot>");
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 string msg = ex.Message;
 
                 TemplateHandler.Assign(ref norow, "{nodata}", msg);
-
 
                 html.Append(norow);
                 html.Append("</table>");
@@ -598,7 +590,7 @@ namespace BLL.Report.MatchWL
             str += "</script>";
             html.Append(str);
 
-            #endregion
+            #endregion add summary bettype
 
             // add more to export to excel
             //html.Append(Sunplus.Accounting.Core.Helper.WebUtils.LoadTemplate("TableBlank.tpl"));
@@ -620,22 +612,21 @@ namespace BLL.Report.MatchWL
             TemplateHandler.Assign(ref totalrow, "{Total-variance}", NumberFormat.DecFormat(grandvariancebet, 2));
             TemplateHandler.Assign(ref totalrow, "{grand}",
                                    (string.Compare(TypeorLeague.Trim(), "type", true) == 0) ? grand : TypeorLeague);
-                //TypeorLeague);
+            //TypeorLeague);
             TemplateHandler.Assign(ref totalrow, "{color1}", color1);
             TemplateHandler.Assign(ref totalrow, "{color2}", color2);
             //TemplateHandler.Assign(ref totalrow, "{grand}", grand);
             TemplateHandler.Assign(ref totalrow, "{align}", align);
         }
 
-        #endregion
+        #endregion void ToTalRow(ref string totalrow, double combet, double grandtotalexbet, double grandtotalbet)
 
-        #endregion
+        #endregion MatchWL2a
 
         #region WLByBettype
 
         public string WLByBettype(string db, string fdate)
         {
-            
             DateTime wldate = CastAide.AsDateTime(fdate);
             db = "rep";
             var html = new StringBuilder();
@@ -656,7 +647,7 @@ namespace BLL.Report.MatchWL
                     rs = IBCProvider.ReportProvider.MatchWL(DataAccess.DAOClient.AdoNet, DataAccess.DataSource.SqlServer).WinLossByBettype14(wldate);
                 else
                     rs = IBCProvider.ReportProvider.MatchWL(DataAccess.DAOClient.AdoNet, DataAccess.DataSource.SqlServer).WinLossByBettype_WH(wldate);
-                
+
                 DataTable dt = rs.ResultSet.Tables[0];
                 decimal FI_3rdShare = CastAide.AsDecimal(rs.Outputs["fi_3rdshare"]);
 
@@ -664,7 +655,6 @@ namespace BLL.Report.MatchWL
                 drFI_3rdShare["bettype"] = 150;
                 drFI_3rdShare["LineTotal_others"] = FI_3rdShare;
                 dt.Rows.Add(drFI_3rdShare);
-
 
                 decimal LineTotal_soccer_live = 0,
                         VirtualLineTotal_soccer_live = 0,
@@ -722,7 +712,7 @@ namespace BLL.Report.MatchWL
                             case 400: //8rm
                             case 150: //3rdparty
                             case 200: //12bet
-                            case 71: //CASINO- 71 
+                            case 71: //CASINO- 71
                             case 72: //P2P-72
                                 DataRow dr2 = dt2.NewRow();
                                 for (int i = 0; i < dr.ItemArray.Length; i++)
@@ -759,7 +749,7 @@ namespace BLL.Report.MatchWL
                             case 63: //30 min OE
                             case 64: //45 min OE
                             case 65: //60 min OE
-                            case 66: //End of day OE                        
+                            case 66: //End of day OE
                                 VirtualLineTotal_soccer_live = 0;
                                 VirtualLineTotal_soccer = 0;
                                 VirtualLineTotal_others_live = 0;
@@ -789,6 +779,7 @@ namespace BLL.Report.MatchWL
                                 Virtual = 0;
                                 Variance = 0;
                                 break;
+
                             default:
                                 Real = LineTotal_soccer_live + LineTotal_soccer + LineTotal_others_live +
                                        LineTotal_others;
@@ -852,7 +843,7 @@ namespace BLL.Report.MatchWL
                         rows.Append(row);
                     }
 
-                    #endregion
+                    #endregion for each row
 
                     #region for each row for bettype = 9, 10, 31, 32, 33, 400, 150, 200, CASINO- 71 AND P2P-72
 
@@ -897,12 +888,14 @@ namespace BLL.Report.MatchWL
                             case 150:
                                 typename = "FI 3rd-Party";
                                 break;
+
                             case 400:
                                 typename = "8RM";
                                 break;
+
                             case 71:
                                 typename = "CASINO";
-                                break; //CASINO- 71 
+                                break; //CASINO- 71
                             case 72:
                                 typename = "P2P";
                                 break; //P2P-72
@@ -914,16 +907,15 @@ namespace BLL.Report.MatchWL
 
                         TemplateHandler.Assign(ref row, "{Bettype}", typename);
 
-
                         switch (CastAide.AsInt32(dr["bettype"]))
                         {
                             case 31: //win Tote Odds
                             case 32: //place Tote Odds
-                            case 33: //win-place Tote Odds                       
+                            case 33: //win-place Tote Odds
                             case 41: //win Fixed Odds
                             case 42: //place Fixed Odds
-                            case 43: //win-place Fixed Odds                        
-                            case 150: //3rdparty 
+                            case 43: //win-place Fixed Odds
+                            case 150: //3rdparty
                             case 71: //casino
                             case 72: //p2p
                                 TemplateHandler.Assign(ref row, "{VirtualLineTotal_soccer_live}", "N/A");
@@ -953,6 +945,7 @@ namespace BLL.Report.MatchWL
                                     }
                                 }
                                 break;
+
                             case 200: //12bet
                                 IsNoData = true;
                                 for (int i = 2; i < dr.ItemArray.Length; i++)
@@ -974,16 +967,17 @@ namespace BLL.Report.MatchWL
                         {
                             case 31: //win Tote Odds
                             case 32: //place Tote Odds
-                            case 33: //win-place Tote Odds                        
+                            case 33: //win-place Tote Odds
                             case 41: //win Fixed Odds
                             case 42: //place Fixed Odds
                             case 43: //win-place Fixed Odds
-                            case 150: //3rdparty   
+                            case 150: //3rdparty
                             case 71: //casino
                             case 72: //p2p
                                 Virtual = 0;
                                 Variance = 0;
                                 break;
+
                             default:
                                 Virtual = VirtualLineTotal_soccer_live + VirtualLineTotal_soccer +
                                           VirtualLineTotal_others_live + VirtualLineTotal_others;
@@ -1030,7 +1024,7 @@ namespace BLL.Report.MatchWL
                         rows.Append(row);
                     }
 
-                    #endregion
+                    #endregion for each row for bettype = 9, 10, 31, 32, 33, 400, 150, 200, CASINO- 71 AND P2P-72
 
                     #region Grand Total
 
@@ -1066,15 +1060,14 @@ namespace BLL.Report.MatchWL
                     int rsp = dt.Rows.Count - CountHiddenRows + 1;
                     rows.Replace("{rowspan}", rsp.ToString());
 
-                    #endregion
+                    #endregion Grand Total
 
                     TemplateHandler.ReplaceBlock(ref tplMain, "content", rows.ToString());
                 }
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 string msg = ex.Message;
                 TemplateHandler.Assign(ref tplMain, "{nodata}", msg);
                 TemplateHandler.ReplaceBlock(ref tplMain, "content", "");
@@ -1084,6 +1077,6 @@ namespace BLL.Report.MatchWL
             return html.ToString();
         }
 
-        #endregion
+        #endregion WLByBettype
     }
 }

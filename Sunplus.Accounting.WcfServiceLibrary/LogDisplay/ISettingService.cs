@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Web;
-using Sunplus.Accounting.Entities;
-using Sunplus.Accounting.Entities.LogDisplay;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.LogDisplay
 {
@@ -21,7 +18,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.LogDisplay
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogLogin(string custName, DateTime fromDate, DateTime toDate, int page, int pageSize);
-
 
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]

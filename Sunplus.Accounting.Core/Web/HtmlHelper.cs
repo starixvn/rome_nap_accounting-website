@@ -4,7 +4,6 @@ using DNAide.Core;
 using DNAide.Web;
 
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
 
 namespace Sunplus.Accounting.Core.Web
 {
@@ -13,7 +12,6 @@ namespace Sunplus.Accounting.Core.Web
     /// </summary>
     public class HtmlHelper
     {
-        
         public static string GenSelectOption(double maxValue, double currentVal, int interval, bool disabled, string id,
                                              string onChangeFunc)
         {
@@ -22,9 +20,9 @@ namespace Sunplus.Accounting.Core.Web
                 string tplSelect = WebUtils.LoadTemplate(Globals.TPL_CTR_SELECTOPTION);
                 var options = new StringBuilder();
                 //int groupValue = Convert.ToInt32(maxValue * 100000);
-                int groupValue = Convert.ToInt32(maxValue*10000);
-                currentVal = Math.Round(currentVal*10000)/10000;
-                maxValue = Math.Round(maxValue*10000)/10000;
+                int groupValue = Convert.ToInt32(maxValue * 10000);
+                currentVal = Math.Round(currentVal * 10000) / 10000;
+                maxValue = Math.Round(maxValue * 10000) / 10000;
                 if (currentVal > maxValue)
                 {
                     //currentVal = maxValue;
@@ -35,7 +33,7 @@ namespace Sunplus.Accounting.Core.Web
                 while (groupValue >= 0)
                 {
                     //double selValue = Convert.ToDouble(groupValue) / 100000;
-                    double selValue = Convert.ToDouble(groupValue)/10000;
+                    double selValue = Convert.ToDouble(groupValue) / 10000;
                     if (currentVal == selValue)
                         options.Append("<option value='" + selValue + "' id='" + id + Globals.SEP_GAMEKIND_GAMETYPE +
                                        Globals.CTR_OPTIONS_PREFIX + Globals.SEP_GAMEKIND_GAMETYPE + selValue +
@@ -65,20 +63,20 @@ namespace Sunplus.Accounting.Core.Web
         {
             try
             {
-                maxValue =Math.Min(Math.Max(maxValue, 0),0.9);
+                maxValue = Math.Min(Math.Max(maxValue, 0), 0.9);
                 minValue = Math.Min(Math.Max(minValue, 0), 0.9);
 
                 string tplSelect = WebUtils.LoadTemplate(Globals.TPL_CTR_SELECTOPTION);
                 var options = new StringBuilder();
                 minValue = Math.Min(maxValue, minValue);
                 //int groupValue = Convert.ToInt32(maxValue * 100000);
-                int groupValue = Convert.ToInt32(maxValue*10000);
-                int min = CastAide.AsInt32(minValue*10000);
-              
-                currentVal = Math.Round(currentVal*10000)/10000;
-                maxValue = Math.Round(maxValue*10000)/10000;
-                minValue = Math.Round(minValue*10000)/10000;
-                if (currentVal > maxValue || currentVal<0)
+                int groupValue = Convert.ToInt32(maxValue * 10000);
+                int min = CastAide.AsInt32(minValue * 10000);
+
+                currentVal = Math.Round(currentVal * 10000) / 10000;
+                maxValue = Math.Round(maxValue * 10000) / 10000;
+                minValue = Math.Round(minValue * 10000) / 10000;
+                if (currentVal > maxValue || currentVal < 0)
                 {
                     options.Append("<option value='" + currentVal + "' id='" + id + Globals.SEP_GAMEKIND_GAMETYPE +
                                    Globals.CTR_OPTIONS_PREFIX + Globals.SEP_GAMEKIND_GAMETYPE + currentVal +
@@ -87,7 +85,7 @@ namespace Sunplus.Accounting.Core.Web
                 while (groupValue >= min)
                 {
                     //double selValue = Convert.ToDouble(groupValue) / 100000;
-                    double selValue = Convert.ToDouble(groupValue)/10000;
+                    double selValue = Convert.ToDouble(groupValue) / 10000;
                     if (currentVal == selValue)
                         options.Append("<option value='" + selValue + "' id='" + id + Globals.SEP_GAMEKIND_GAMETYPE +
                                        Globals.CTR_OPTIONS_PREFIX + Globals.SEP_GAMEKIND_GAMETYPE + selValue +
@@ -125,18 +123,17 @@ namespace Sunplus.Accounting.Core.Web
                 var options = new StringBuilder();
                 minValue = Math.Min(maxValue, minValue);
                 //int groupValue = Convert.ToInt32(maxValue * 100000);
-                int groupValue = Convert.ToInt32(maxValue*10000);
-                int min = CastAide.AsInt32(minValue*10000);
-             
-             
-                currentVal = Math.Round(currentVal*10000)/10000;
-                maxValue = Math.Round(maxValue*10000)/10000;
-                minValue = Math.Round(minValue*10000)/10000;
+                int groupValue = Convert.ToInt32(maxValue * 10000);
+                int min = CastAide.AsInt32(minValue * 10000);
+
+                currentVal = Math.Round(currentVal * 10000) / 10000;
+                maxValue = Math.Round(maxValue * 10000) / 10000;
+                minValue = Math.Round(minValue * 10000) / 10000;
                 //if (currentVal > maxValue)
                 //{
                 //    currentVal = maxValue;
                 //}
-                if (currentVal > maxValue || currentVal<0)
+                if (currentVal > maxValue || currentVal < 0)
                 {
                     //double selValue = Convert.ToInt32(currentVal * 10000) / 10000;
                     options.Append("<option value='" + currentVal + "' id='" + id + Globals.SEP_GAMEKIND_GAMETYPE +
@@ -146,7 +143,7 @@ namespace Sunplus.Accounting.Core.Web
                 while (groupValue >= min)
                 {
                     //double selValue = Convert.ToDouble(groupValue) / 100000;
-                    double selValue = Convert.ToDouble(groupValue)/10000;
+                    double selValue = Convert.ToDouble(groupValue) / 10000;
                     if (currentVal == selValue)
                         options.Append("<option value='" + selValue + "' id='" + id + Globals.SEP_GAMEKIND_GAMETYPE +
                                        Globals.CTR_OPTIONS_PREFIX + Globals.SEP_GAMEKIND_GAMETYPE + selValue +
@@ -172,7 +169,6 @@ namespace Sunplus.Accounting.Core.Web
             }
         }
 
-
         public static string GenSelectOption(double maxValue, double currentVal, int interval, bool disabled, string id,
                                              string onChangeFunc, string classStyle)
         {
@@ -181,7 +177,7 @@ namespace Sunplus.Accounting.Core.Web
                 string tplSelect = WebUtils.LoadTemplate(Globals.TPL_CTR_SELECTOPTION);
                 var options = new StringBuilder();
                 //int groupValue = Convert.ToInt32(maxValue * 100000);
-                int groupValue = Convert.ToInt32(maxValue*10000);
+                int groupValue = Convert.ToInt32(maxValue * 10000);
                 currentVal = Math.Max(currentVal, 0);
                 if (currentVal > maxValue)
                 {
@@ -190,7 +186,7 @@ namespace Sunplus.Accounting.Core.Web
                 while (groupValue >= 0)
                 {
                     //double selValue = Convert.ToDouble(groupValue) / 100000;
-                    double selValue = Convert.ToDouble(groupValue)/10000;
+                    double selValue = Convert.ToDouble(groupValue) / 10000;
                     if (currentVal == selValue)
                         options.Append("<option value='" + selValue + "' id='" + id + Globals.SEP_GAMEKIND_GAMETYPE +
                                        Globals.CTR_OPTIONS_PREFIX + Globals.SEP_GAMEKIND_GAMETYPE + selValue +
@@ -261,7 +257,6 @@ namespace Sunplus.Accounting.Core.Web
                 return string.Empty;
             }
         }
-
 
         public static string GenHidden(string id, string value)
         {
@@ -373,7 +368,7 @@ namespace Sunplus.Accounting.Core.Web
                                  string.Format(Globals.BTN_CHANGEPT_CLICK, "this", Globals.CONST_CHANGEPT_10));
                 return btn;
             }
-            catch (Exception ex)
+            catch
             {
                 return string.Empty;
             }
@@ -423,7 +418,6 @@ namespace Sunplus.Accounting.Core.Web
                 return string.Empty;
             }
         }
-
 
         public static string GenChangePTButtons(string id, bool disabled, bool isFI)
         {
@@ -476,6 +470,7 @@ namespace Sunplus.Accounting.Core.Web
                         TemplateHandler.Assign(ref tplInput, "onclick", funcClick);
                         TemplateHandler.Assign(ref tplInput, "class", classStyle);
                         break;
+
                     case Globals.InputType.Hidden:
                         TemplateHandler.Assign(ref tplInput, "type", Globals.GetInputType(Globals.InputType.Hidden));
                         TemplateHandler.Assign(ref tplInput, "inputId", id);
@@ -486,6 +481,7 @@ namespace Sunplus.Accounting.Core.Web
                         TemplateHandler.Assign(ref tplInput, "checked", "");
                         TemplateHandler.Assign(ref tplInput, "class", "");
                         break;
+
                     case Globals.InputType.Text:
                         TemplateHandler.Assign(ref tplInput, "type", Globals.GetInputType(Globals.InputType.Text));
                         TemplateHandler.Assign(ref tplInput, "inputId", id);
@@ -497,6 +493,7 @@ namespace Sunplus.Accounting.Core.Web
                         TemplateHandler.Assign(ref tplInput, "checked", "");
                         TemplateHandler.Assign(ref tplInput, "class", classStyle);
                         break;
+
                     case Globals.InputType.CheckBox:
                         TemplateHandler.Assign(ref tplInput, "type", Globals.GetInputType(Globals.InputType.CheckBox));
                         TemplateHandler.Assign(ref tplInput, "inputId", id);
@@ -536,6 +533,7 @@ namespace Sunplus.Accounting.Core.Web
                         TemplateHandler.Assign(ref tplInput, "onclick", funcClick);
                         TemplateHandler.Assign(ref tplInput, "class", classStyle);
                         break;
+
                     case Globals.InputType.Hidden:
                         TemplateHandler.Assign(ref tplInput, "type", Globals.GetInputType(Globals.InputType.Hidden));
                         TemplateHandler.Assign(ref tplInput, "inputId", id);
@@ -546,6 +544,7 @@ namespace Sunplus.Accounting.Core.Web
                         TemplateHandler.Assign(ref tplInput, "checked", "");
                         TemplateHandler.Assign(ref tplInput, "class", "");
                         break;
+
                     case Globals.InputType.Text:
                         TemplateHandler.Assign(ref tplInput, "type", Globals.GetInputType(Globals.InputType.Text));
                         TemplateHandler.Assign(ref tplInput, "inputId", id);
@@ -556,6 +555,7 @@ namespace Sunplus.Accounting.Core.Web
                         TemplateHandler.Assign(ref tplInput, "checked", "");
                         TemplateHandler.Assign(ref tplInput, "class", classStyle);
                         break;
+
                     case Globals.InputType.CheckBox:
                         TemplateHandler.Assign(ref tplInput, "type", Globals.GetInputType(Globals.InputType.CheckBox));
                         TemplateHandler.Assign(ref tplInput, "inputId", id);
@@ -595,6 +595,7 @@ namespace Sunplus.Accounting.Core.Web
                         TemplateHandler.Assign(ref tplInput, "onclick", funcClick);
                         TemplateHandler.Assign(ref tplInput, "class", classStyle);
                         break;
+
                     case Globals.InputType.Hidden:
                         TemplateHandler.Assign(ref tplInput, "type", Globals.GetInputType(Globals.InputType.Hidden));
                         TemplateHandler.Assign(ref tplInput, "inputId", id);
@@ -605,6 +606,7 @@ namespace Sunplus.Accounting.Core.Web
                         TemplateHandler.Assign(ref tplInput, "checked", "");
                         TemplateHandler.Assign(ref tplInput, "class", "");
                         break;
+
                     case Globals.InputType.Text:
                         TemplateHandler.Assign(ref tplInput, "type", Globals.GetInputType(Globals.InputType.Text));
                         TemplateHandler.Assign(ref tplInput, "inputId", id);
@@ -615,6 +617,7 @@ namespace Sunplus.Accounting.Core.Web
                         TemplateHandler.Assign(ref tplInput, "checked", "");
                         TemplateHandler.Assign(ref tplInput, "class", classStyle);
                         break;
+
                     case Globals.InputType.CheckBox:
                         TemplateHandler.Assign(ref tplInput, "type", Globals.GetInputType(Globals.InputType.CheckBox));
                         TemplateHandler.Assign(ref tplInput, "inputId", id);

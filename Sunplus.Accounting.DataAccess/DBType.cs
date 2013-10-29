@@ -25,10 +25,8 @@ namespace Sunplus.Accounting.DataAccess
 
         private static readonly string _maintenance = "maintenance";
 
-
         private static readonly string _punter = "punter";
         private static readonly string _external = "ex";
-
 
         public static string MiniGame
         {
@@ -39,7 +37,6 @@ namespace Sunplus.Accounting.DataAccess
         {
             get { return _maintenance; }
         }
-
 
         public static string PUNTER
         {
@@ -70,7 +67,6 @@ namespace Sunplus.Accounting.DataAccess
                            : _report + "_" + _external;
             }
         }
-
 
         public static string ARCHIVE
         {

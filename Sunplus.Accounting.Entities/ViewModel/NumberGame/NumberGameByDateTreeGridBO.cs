@@ -1,6 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
 using System.Collections.Generic;
-using System;
+using System.Runtime.Serialization;
 
 namespace Sunplus.Accounting.Entities.ViewModel
 {
@@ -10,10 +10,13 @@ namespace Sunplus.Accounting.Entities.ViewModel
     {
         [DataMember]
         public List<NumberGameWinLostByDateBO> rows { get; set; }
+
         [DataMember]
         public int total { get; set; }
+
         [DataMember]
         public int pageindex { get; set; }
+
         [DataMember]
         public NumberGameWinLostByDateBO totalrow;
     }

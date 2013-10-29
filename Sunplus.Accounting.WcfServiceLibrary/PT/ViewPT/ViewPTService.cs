@@ -6,7 +6,7 @@ using Sunplus.Accounting.Entities.Customer.PT.ViewPT;
 namespace Sunplus.Accounting.WcfServiceLibrary.PT.ViewPT
 {
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
-    public class ViewPTService:IViewPTService
+    public class ViewPTService : IViewPTService
     {
         public SportDTO GetPtSportType(string userName)
         {
@@ -19,7 +19,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.PT.ViewPT
             var ptService = CommonBootStrapper.Locator.GetInstance<IViewPtManager>();
             return ptService.GetPtBetType(sportId);
         }
-
 
         public ViewPtDTO ViewPositionTaking(string userName, int sportId, int bettypeId, bool isLive)
         {

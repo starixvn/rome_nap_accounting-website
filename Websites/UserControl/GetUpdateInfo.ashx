@@ -5,7 +5,6 @@ using System.Web;
 using System.Data;
 using System.Web.SessionState;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
 using IBCUtils.Web;
 using IBCUtils.DAL;
 using DNAide.Core;

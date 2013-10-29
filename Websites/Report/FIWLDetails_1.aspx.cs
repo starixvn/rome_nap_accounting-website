@@ -1,31 +1,13 @@
 ﻿using System;
-using System.Data;
-using System.Configuration;
 using System.Collections;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using DNAide.Core;
-using DNAide.Data;
-using DNAide.Web;
-using DNAide.Utils;
 using System.Text;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Web;
-using IBCUtils.DAL;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-
 using BLL.Report.FI;
-
-using Sunplus.Core.LoggingLib;
+using DNAide.Core;
 
 public partial class Report_FIWLDetails : PageBase
 {
-
     public StringBuilder html = new StringBuilder();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         Title = Sunplus.Accounting.Business.Report.Reports.Title;
@@ -61,12 +43,8 @@ public partial class Report_FIWLDetails : PageBase
         }
         catch (InvalidOperationException invalidOEx)
         {
-
-
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(invalidOEx);
             RedirectDeny();
         }
     }
-
-    
 }

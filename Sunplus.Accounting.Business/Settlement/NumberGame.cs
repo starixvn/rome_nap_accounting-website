@@ -2,12 +2,11 @@
 /// Summary description for NumberGame
 /// </summary>
 
-using Sunplus.Accounting.Entities;
 using System.Collections.Generic;
+using Sunplus.Accounting.Entities;
 
 namespace Sunplus.Accounting.Business.Settlement
 {
-
     public class NumberGame
     {
         public NumberGame()

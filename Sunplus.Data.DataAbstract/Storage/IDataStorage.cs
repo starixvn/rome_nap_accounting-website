@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Sunplus.Data.DataAbstract.Storage
 {
@@ -28,7 +28,5 @@ namespace Sunplus.Data.DataAbstract.Storage
         bool Update<T>(string key, T data);
 
         object GetCollection<T>();
-
-
     }
 }

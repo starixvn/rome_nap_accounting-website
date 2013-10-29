@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Web;
-using DNAide.Data;
-using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.Report;
 using Sunplus.Accounting.Entities.Report.CheckBet;
-using Sunplus.Accounting.Entities.Report.Licensee;
 using Sunplus.Accounting.Entities.Report.MatchWL;
+using Sunplus.Accounting.Entities.Report.MemberStatistics;
 using Sunplus.Accounting.Entities.Report.Mixparlay;
 using Sunplus.Accounting.Entities.ViewModel;
-using Sunplus.Accounting.Entities.Report.MemberStatistics;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.Report
 {
@@ -48,7 +44,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         CheckBet GetCheckBet(string fromDate);
- 
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]

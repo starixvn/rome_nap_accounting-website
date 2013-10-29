@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Runtime.Serialization;
 
 namespace Sunplus.Accounting.Entities.Report.DailyTurnover
@@ -52,7 +50,6 @@ namespace Sunplus.Accounting.Entities.Report.DailyTurnover
         public string CNT { get; set; }
     }
 
-
     [Serializable]
     [DataContract]
     public class DetailTurnoverActionDTO
@@ -95,7 +92,6 @@ namespace Sunplus.Accounting.Entities.Report.DailyTurnover
     [DataContract]
     public class ActionDetail
     {
-
         [DataMember]
         public string Detail { get; set; }
 
@@ -137,7 +133,6 @@ namespace Sunplus.Accounting.Entities.Report.DailyTurnover
 
         [DataMember]
         public string RejectCNT { get; set; }
-
     }
 
     [Serializable]
@@ -153,10 +148,7 @@ namespace Sunplus.Accounting.Entities.Report.DailyTurnover
         [DataMember]
         public string ActionName { get; set; }
 
-
         [DataMember]
         public ActionDetail ActionDetail { get; set; }
-
     }
-
 }

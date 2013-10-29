@@ -6,7 +6,8 @@ namespace Sunplus.Data.DataAbstract.Business
     public class TableManager
     {
         private readonly IDataStorage _strorageDAO;
-        public TableManager() 
+
+        public TableManager()
         {
             _strorageDAO = CommonBootStrapper.Locator.GetInstance<IDataStorage>();
         }
@@ -19,17 +20,20 @@ namespace Sunplus.Data.DataAbstract.Business
         public bool Store<T>(T data, Queue.ActionType action, object identify)
         {
             bool result = false;
-            switch(action)
+            switch (action)
             {
                 case Queue.ActionType.Insert:
                     result = _strorageDAO.Insert<T>(string.Empty, data);
                     break;
+
                 case Queue.ActionType.Update:
                     result = _strorageDAO.Update<T>(string.Empty, data);
                     break;
+
                 case Queue.ActionType.Delete:
                     result = _strorageDAO.Delete<T>(string.Empty, identify);
                     break;
+
                 default:
                     break;
             }

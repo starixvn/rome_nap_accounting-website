@@ -11,7 +11,6 @@ using Microsoft.Office.Interop.Excel;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess;
-using Sunplus.Core.LoggingLib;
 using DataTable = System.Data.DataTable;
 
 //using Font = Microsoft.Office.Interop.Excel.Font;
@@ -40,9 +39,11 @@ namespace BLL.Report.Punter
                 case 12:
                     day = 31;
                     break;
+
                 case 2:
                     day = 28;
                     break;
+
                 case 4:
                 case 6:
                 case 9:
@@ -53,7 +54,7 @@ namespace BLL.Report.Punter
             return day;
         }
 
-        #endregion
+        #endregion GetMaxDayByMonth
 
         #region GenerateChartByCustId
 
@@ -69,8 +70,7 @@ namespace BLL.Report.Punter
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
 
@@ -95,7 +95,7 @@ namespace BLL.Report.Punter
                 DbResult rs;
                 var dataTable = new DataTable();
                 var dtTotal = new DataTable();
-                DataRow[] dataRows = {};
+                DataRow[] dataRows = { };
                 int totalColumn = 0;
 
                 try
@@ -109,8 +109,8 @@ namespace BLL.Report.Punter
                 {
                     hashError = true;
                     msg = ex.Message;
-                    
-                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
 
                 if (!hashError)
@@ -131,7 +131,7 @@ namespace BLL.Report.Punter
                                            ExcelAutomationUtils.ColorCode.Grey, XlHAlign.xlHAlignCenter,
                                            XlVAlign.xlVAlignCenter, true);
 
-                    #endregion
+                    #endregion Title
 
                     #region Get Data to mapping chart
 
@@ -154,7 +154,6 @@ namespace BLL.Report.Punter
                         }
                     }
 
-
                     foreach (DataRow dr in dataRows)
                     {
                         DataRow drNewRow = dtData.NewRow();
@@ -176,7 +175,7 @@ namespace BLL.Report.Punter
                         dtData.Rows.Add(drNewRow);
                     }
 
-                    #endregion
+                    #endregion Get Data to mapping chart
 
                     int rowindex = 53;
 
@@ -212,7 +211,6 @@ namespace BLL.Report.Punter
                                            ExcelAutomationUtils.ColorCode.Grey, XlHAlign.xlHAlignCenter,
                                            XlVAlign.xlVAlignCenter, true);
 
-
                     if (fYear != tYear)
                     {
                         xls.SetValueRangeStyle(ws, rowindex - 2, CastAide.AsInt32(hashYear[fYear]) + 2, rowindex - 2,
@@ -221,7 +219,7 @@ namespace BLL.Report.Punter
                                                XlVAlign.xlVAlignCenter, true);
                     }
 
-                    #endregion
+                    #endregion Header Data
 
                     #region Content Data
 
@@ -251,7 +249,7 @@ namespace BLL.Report.Punter
                         rowindex++;
                     }
 
-                    #endregion
+                    #endregion Content Data
 
                     #region Saves the Excel file.
 
@@ -268,15 +266,14 @@ namespace BLL.Report.Punter
 
                     CleanExcelProcess();
 
-                    #endregion
+                    #endregion Saves the Excel file.
 
-                    #endregion
+                    #endregion export
                 }
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 msg += " " + ex.Message;
             }
 
@@ -289,7 +286,6 @@ namespace BLL.Report.Punter
         /*
         public string GenerateChartByCustId_bk(string custId, string username, string fMonth, string fYear, string tMonth, string tYear)
         {
-
             string fromdate = fMonth + "/01/" + fYear;
             string todate = tMonth + "/" + GetMaxDayByMonth(tMonth).ToString() + "/" + tYear;
             string msg = "", fullpath = "";
@@ -327,6 +323,7 @@ namespace BLL.Report.Punter
                 if (!hashError)
                 {
                     #region export
+
                     string path = HttpContext.Current.Server.MapPath("TemplateAgencyAnalysisChart.xlsx");
 
                     ExcelFile ef = new ExcelFile();
@@ -417,7 +414,6 @@ namespace BLL.Report.Punter
                                     ws.Cells[i, j - 4].Style = GetStyleText();
                                 else
                                     ws.Cells[i, j - 4].Style = GetStyleNumber(CastAide.AsDecimal(dr[j]), spec);
-
                             }
                             i++;
                             indexrow++;
@@ -439,7 +435,6 @@ namespace BLL.Report.Punter
                                     ws.Cells[i, j].Style = GetStyleText();
                                 else
                                     ws.Cells[i, j].Style = GetStyleNumber(CastAide.AsDecimal(dr[j]), spec);
-
                             }
                             i++;
                             indexrow++;
@@ -454,7 +449,8 @@ namespace BLL.Report.Punter
 
                     ef.SaveXlsx(fullpath);
                     ef.ClosePreservedXlsx();
-                    #endregion
+
+                    #endregion export
                 }
             }
             catch (Exception ex)
@@ -469,7 +465,7 @@ namespace BLL.Report.Punter
         }
          * */
 
-        #endregion
+        #endregion GenerateChartByCustId
 
         public override string RenderHTML(Hashtable input)
         {

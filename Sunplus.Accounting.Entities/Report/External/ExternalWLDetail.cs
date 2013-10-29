@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Sunplus.Accounting.Entities.Report.External
 {
@@ -120,7 +118,6 @@ namespace Sunplus.Accounting.Entities.Report.External
 
         [DataMember]
         public Sorting Sorting { get; set; }
-
     }
 
     [Serializable]
@@ -129,8 +126,10 @@ namespace Sunplus.Accounting.Entities.Report.External
     {
         [DataMember]
         public string fieldName { get; set; }
+
         [DataMember]
         public bool IsDecimal { get; set; }
+
         [DataMember]
         public int sortType { get; set; }
     }

@@ -7,8 +7,6 @@ using DNAide.Core;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Core.LoggingLib;
-
 
 public class NewsImageUpload : IHttpHandler, IRequiresSessionState
 {

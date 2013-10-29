@@ -5,7 +5,6 @@ using System.Web;
 using System.Text;
 using System.Data.SqlClient;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
 using IBCUtils.Web;
 using IBCUtils;
 using Sunplus.Accounting.DataAccess.IBCDLL;

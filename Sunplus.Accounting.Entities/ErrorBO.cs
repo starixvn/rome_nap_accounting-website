@@ -5,7 +5,6 @@ namespace Sunplus.Accounting.Entities
     [DataContract]
     public class ResultBO
     {
-
         public ResultBO()
         {
             //
@@ -22,10 +21,9 @@ namespace Sunplus.Accounting.Entities
         [DataMember]
         public int ErrorCode
         { get; set; }
+
         [DataMember]
         public string ErrorMessage
         { get; set; }
     }
-
 }
-

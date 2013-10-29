@@ -11,7 +11,6 @@ namespace Sunplus.Accounting.Business
     /// </summary>
     public class CasinoAPILogger : IAPILogger
     {
-
         public void Write(int actionId, string functionName, string trackingValue, string returnValue, int returnCode)
         {
             var param = new Hashtable();
@@ -24,7 +23,6 @@ namespace Sunplus.Accounting.Business
             param.Add("returnvalue", returnValue);
             param.Add("returncode", returnCode);
             DbHelper.Execute("WriteLog_UserLog_CasinoAPI", param, DBType.LOG);
-
         }
     }
 }

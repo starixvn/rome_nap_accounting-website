@@ -2294,7 +2294,7 @@ The message is ready to be sent with the attached file {2}.</value>
     <value>Unchecking all stake levels\' {0} will affect and apply to all downlines.</value>
   </data>
   <data name="UnCheckBettingLimitMember" xml:space="preserve">
-    <value>do not have any Betting Limit becaue the upline UNCHECK all, it is effetced to downline. By default, it will be taken the smallest Betting Limit from UPLINE</value>
+    <value>do not have any Betting Limit because the upline UNCHECK all, it is effetced to downline. By default, it will be taken the smallest Betting Limit from UPLINE</value>
   </data>
   <data name="CheckSynchronize" xml:space="preserve">
     <value>If moved Master/Agent is already Synced Live Casino and new Super/Master is UnSynced then not allow to move</value>

@@ -12,6 +12,7 @@ namespace Sunplus.Accounting.Entities
         public double TotalAmount { get; set; }
 
         public int TransTypeId { get; set; }
+
         public string TransType { get; set; }
 
         public string TransDescription { get; set; }

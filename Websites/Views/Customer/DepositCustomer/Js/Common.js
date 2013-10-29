@@ -102,11 +102,12 @@ common.init = function () {
     while (pt > 0) {
         val = parseFloat(pt.toFixed(2));
         $("#selSBPT").append("<option value='" + val + "'>" + val + "</option>");
-        $("#selNGPT").append("<option value='" + val + "'>" + val + "</option>");
         pt = pt - 0.01;
     }
     $("#selSBPT").append("<option selected='selected' value='0'>0</option>");
-    $("#selNGPT").append("<option selected='selected' value='0'>0</option>");
+
+    //NumberGame
+    PTRenderManager.renderNumberGameOptions();
 
     //Racing
     //init comm
@@ -178,7 +179,7 @@ common.init = function () {
             $("#divRacingContainer").find("input[copyto]").removeAttr("disabled");
             $("#divRacingContainer").find("select[copyto]").removeAttr("disabled");
         }
-    });    
+    });
 };
 
 common.resetValues = function () {
@@ -231,7 +232,7 @@ common.initConstraint = function () {
     });
 };
 
-common.isNumber = function(n) {
+common.isNumber = function (n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 };
 

@@ -47,7 +47,6 @@ namespace Sunplus.Accounting.DataAccess.Provider.SpecialDelete
             throw new NotImplementedException();
         }
 
-
         public virtual DbResult BettransSelDelSpecial_Outright(Hashtable param)
         {
             throw new NotImplementedException();

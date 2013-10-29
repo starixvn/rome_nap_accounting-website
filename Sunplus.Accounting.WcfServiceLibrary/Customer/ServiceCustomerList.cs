@@ -1,14 +1,11 @@
-﻿using System;
-using System.ServiceModel.Activation;
-using System.Data;
-using System.Collections.Generic;
+﻿using System.ServiceModel.Activation;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.Customer
 {
     /// <summary>
     /// Summary description for ServiceCustomerList
     /// </summary>
-    /// 
+    ///
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class ServiceCustomerList : IServiceCustomerList
     {
@@ -39,7 +36,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Customer
         public string GenOperatorListContent(string searchText, string selectAlpha, int PageIndex)
         {
             var customerService = new Sunplus.Accounting.Business.ServiceCustomerList();
-            return customerService.GenOperatorListContent( searchText,  selectAlpha,  PageIndex);
+            return customerService.GenOperatorListContent(searchText, selectAlpha, PageIndex);
         }
     }
 }

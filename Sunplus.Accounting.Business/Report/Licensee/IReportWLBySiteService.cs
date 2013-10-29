@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
-using System.ServiceModel.Web;
-using System.Text;
-using DNAide.Data;
 using ExcelUtil.Spreadsheet;
 using Sunplus.Accounting.Entities.Report.Deposit;
 using Sunplus.Accounting.Entities.Report.Licensee;
-using Sunplus.Accounting.Entities.SpecialDelete;
-using Sunplus.Accounting.Entities;
 
 namespace Sunplus.Accounting.Business.Report.Deposit
 {
@@ -50,6 +43,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
         void Export2ExcelReportByLicensee(string reportTitle, int licenseeId, int currency, int BaseCurrency, string fromDate,
                                           string toDate, int showSb, int showRb, int showNg, int reportType, int drawFilter, int excludeTest, int BAFilter,
                                           int pageIndex, int pageSize, int reportSelected, int custId);
+
         void Export2ExcelReportByLicenseeV2(string reportTitle, int licenseeId, int currency, int BaseCurrency, string fromDate,
                                           string toDate, int showSb, int showRb, int showNg, int showBa, int showLc, int ShowVS, int ShowCS, int reportType, int drawFilter, int excludeTest,
                                           int pageIndex, int pageSize, int reportSelected, int custId);
@@ -69,6 +63,7 @@ namespace Sunplus.Accounting.Business.Report.Deposit
         NegativeBalanceMemberSendMailFail SendMailNegativeBalanceReport(List<NegativeBalanceMemberMailFormat> mails, string reportTitle, string subject, string mailContent);
 
         //void Export2ExcelReportByLicensee(string reportTitle, int licensseId, int currency, int baseCurrency, string fromDate, string toDate, int showSb, int showRb, int reportType, int drawFilter, int excludeTest, int BAFilter, int pageIndex, int pageSize, int reportSelected, int custId);
+
         #region NAPExport
 
         void ExportCurrencyReport(string reportTitle, int licenseeId,

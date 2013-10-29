@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Web.Configuration;
 using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Core.LoggingLib;
 
 namespace Sunplus.Accounting.Core.Common
 {
@@ -10,15 +9,14 @@ namespace Sunplus.Accounting.Core.Common
     /// </summary>
     public static class Globals
     {
-   
-
         public static readonly IBCAccounting IBCSetting =
-            (IBCAccounting) WebConfigurationManager.GetSection("IBCAccounting");
+            (IBCAccounting)WebConfigurationManager.GetSection("IBCAccounting");
 
         public static readonly string DELIMITER_RESPONSE = "|";
 
         //tag block definition
         public static readonly int ErrorCodeInvalid = 1000;
+
         public static readonly string ErrorMsgInvalid = "Invalid Data format!";
         public static readonly string ErrorResource = "ErrorMsg";
 
@@ -38,13 +36,13 @@ namespace Sunplus.Accounting.Core.Common
 
         //path to template
         public static readonly string CASINO_PT_TEMPLATE = "Customer/v2/CasinoPT.htm";
+
         public static readonly string CASINO_PT_HEADER_TEMPLATE = "Customer/v2/CasinoPTHeader.htm";
 
         public static readonly string CASINO_P2P_PT_TEMPLATE = "Customer/v2/CasinoP2PPT.htm";
         public static readonly string CASINO_OTHERS_PT_TEMPLATE = "Customer/v2/CasinoOthersPT.htm";
 
         ////////////////////////////////
-
 
         public static readonly string GAME_P2P = "P2P";
         public static readonly int GAME_P2P_ID = 10;
@@ -56,12 +54,13 @@ namespace Sunplus.Accounting.Core.Common
 
         //path to controls template (hidden, text, checkbox, button..)
         public static readonly string TPL_CTR_SELECTOPTION = "Controls/SelectOption.htm";
+
         public static readonly string TPL_CTR_CHECKBOX = "Controls/CheckBox.htm";
         public static readonly string TPL_CTR_HIDDEN = "Hidden.htm";
         public static readonly string TPL_CTR_BUTTON = "Controls/Button.htm";
         public static readonly string TPL_CTR_TEXTBOX = "Controls/TextBox.htm";
         public static readonly string TPL_CTR_INPUT = "Controls/Input.htm";
-        public static readonly string TPL_CTR_LABEL= "Controls/Label.htm";
+        public static readonly string TPL_CTR_LABEL = "Controls/Label.htm";
         public static readonly string TPL_CTR_LINK = "Controls/Link.htm";
         // /////////////////////////
 
@@ -86,6 +85,7 @@ namespace Sunplus.Accounting.Core.Common
 
         //Define max value of Min, Max, Auto, Preset PT, Comm
         public static readonly double MAX_MaxPTValue = 0.9;
+
         public static readonly double MAX_MinPTValue = 0.9;
         public static readonly double MAX_AutoPTValue = 0.9;
         public static readonly double MAX_PresetPTValue = 0.9;
@@ -100,7 +100,6 @@ namespace Sunplus.Accounting.Core.Common
         public static readonly int INTERVAL_PT = 100;
         public static readonly int INTERVAL_COMM = 5;
 
-
         public static readonly string CHKGROUP = "ChkGroupSetting";
         public static readonly string strCHKAUTO = "ChkAuto";
         public static readonly string strCHK = "Chk";
@@ -108,9 +107,9 @@ namespace Sunplus.Accounting.Core.Common
 
         public static readonly string SEP_GAMEKIND_GAMETYPE = "_";
 
-   
         //hidden
         public static readonly string HIDDEN_CustId = "custid";
+
         public static readonly string HIDDEN_Role = "roleid";
         public static readonly string HIDDEN_UplineId = "uplineid";
         public static readonly string HIDDEN_GAMEDATA = "hidCSData";
@@ -147,14 +146,16 @@ namespace Sunplus.Accounting.Core.Common
         public static readonly string SEP_PT_VALUE = ":";
         public static readonly string SEP_PT = "|";
 
-    
         //class stylesheet
         public static readonly string CLASS_HIDDEN = "hidden";
+
         public static readonly string CLASS_ERROR_MAXVALUE = "errMaxValue";
         public static readonly string CLASS_SELECT_COMMISSION = "selectcomm";
         public static readonly string CLASS_SUBMIT = "b_add";
+
         //Group increase, decrease PT button class, suffix and click function
         public static readonly string BTN_INC1_CLASS = "btn-inc1 btn-enabled";
+
         public static readonly string BTN_INC10_CLASS = "btn-inc10 btn-enabled";
         public static readonly string BTN_DEC1_CLASS = "btn-dec1 btn-enabled";
         public static readonly string BTN_DEC10_CLASS = "btn-dec10 btn-enabled";
@@ -169,9 +170,9 @@ namespace Sunplus.Accounting.Core.Common
         public static readonly string BTN_DEC1_SUFFIX = "BtnDec_1";
         public static readonly string BTN_DEC10_SUFFIX = "BtnDec_10";
 
-
         //SESSION
         public static readonly string SESSION_CUSTOMER = "customer";
+
         //CS PT setting id
 
         public static readonly string TXT_MAXWINID = "txtMaxWin";
@@ -182,9 +183,9 @@ namespace Sunplus.Accounting.Core.Common
         //nolimited value
         public static readonly int CS_NOLIMITED_WINLOSE = 0;
 
-    
         //class style
         public static readonly string CLASS_CHECKBOX_HIDDEN = "chk-hidden";
+
         /////////
 
         //END
@@ -209,7 +210,6 @@ namespace Sunplus.Accounting.Core.Common
 
         public static readonly string m3MaxAuto = "m3MaxAuto", n3MaxAuto = "n3MaxAuto";
 
-
         public static readonly string CTR_INPUT_BUTTON = "button";
         public static readonly string CTR_INPUT_HIDDEN = "hidden";
         public static readonly string CTR_INPUT_TEXTBOX = "text";
@@ -219,6 +219,7 @@ namespace Sunplus.Accounting.Core.Common
 
         //Define ID
         public static readonly string ID_CHECKBOX_DISABLEDCASINO = "chkDisabledCasino";
+
         public static readonly string ID_CHECKBOX_DISABLEDCASINO_DL = "chkDisabledCasino_DL";
         public static readonly string ID_SPAN_DOWNLINE_OPT = "spanDownlineOpt";
         public static readonly string ID_CHECKBOX_CLOSED = "chkClosed";
@@ -226,14 +227,15 @@ namespace Sunplus.Accounting.Core.Common
 
         //define prefix of control
         public static readonly string CTR_LABEL_PREFIX = "error";
+
         public static readonly string PREFIX_CHECKBOX = "chk";
 
         //Hard code value
         public static readonly int CONST_LangID; // hard code
+
         public static readonly int CONST_CountryID; // hard code
         public static readonly double CONST_CHANGEPT_1 = 0.01;
         public static readonly double CONST_CHANGEPT_10 = 0.1;
-
 
         //Casino Javascript Variables
 
@@ -250,7 +252,9 @@ namespace Sunplus.Accounting.Core.Common
 
         //button click
         public static readonly string BTN_CLICK_INC_DEC_FUNC = "";
+
         public static readonly string BTN_CLICK_RESET_CS_PT_FUNC = "";
+
         /// <summary>
         /// {0}: button control, "this"
         /// {1}: value
@@ -268,39 +272,44 @@ namespace Sunplus.Accounting.Core.Common
 
         public static readonly string CS_SELECTOPTION_ONCHANGE_PRESET_FUNC = "ChangePresetPT({0})";
         public static readonly string CS_SELECTOPTION_ONCHANGE_PRESET_PARAM = "this";
+
         //checkbox click
         public static readonly string CS_ChkAUTO_CLICK_FUNC = "CheckAuto({0})";
+
         public static readonly string CS_ChkGROUP_CLICK_FUNC = "CheckGroupSetting({0})"; //{0}: arguments of this funciton
         public static readonly string CS_ChkAutoGROUP_CLICK_FUNC = "CheckGroupAuto({0})"; //{0}: arguments of this funciton
 
         //submit function
         public static readonly string CS_SUBMIT_HREF = "javascript:void();";
+
         public static readonly string CS_SUBMIT_FUNC = "DelayReloadPage(); obj('btnSubmit').click();";
         //////////END
 
         //Define provider type
         public static readonly string PROVIDER_CS_API = "DAL.APIClient.APICasinoProvider";
+
         public static readonly string PROVIDER_IBC_LIB = "DAL.APIClient.IBCLibProvider";
         ///////
 
         //Cust Info Setting
         public static readonly string CUSTINFO_HTM_TEMPLATE = "settingcontrol.htm";
+
         //
         //Cust Menu
         public static readonly string CUSTMENU_HTM_TEMPLATE = "linkmenu.htm";
-    
 
         //EditPTOnMemberType:
         public enum PTType : int
         {
-            Default = 0, SuperOnMember = 1, MasterOnMember = 2, AgentOnMember = 3, MinMaxPT=4
+            Default = 0, SuperOnMember = 1, MasterOnMember = 2, AgentOnMember = 3, MinMaxPT = 4
         }
-    
+
         //Account type
-        public enum AccountType:int
+        public enum AccountType : int
         {
             Super = 4, Master = 3, Agent = 2, Member = 1
         }
+
         //Input control type
         public enum InputType
         {
@@ -331,7 +340,6 @@ namespace Sunplus.Accounting.Core.Common
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -339,12 +347,11 @@ namespace Sunplus.Accounting.Core.Common
             }
         }
 
-
         public static string GetInputType(InputType input)
         {
             try
             {
-                switch(input)
+                switch (input)
                 {
                     case InputType.Button:
                         return CTR_INPUT_BUTTON;
@@ -357,12 +364,10 @@ namespace Sunplus.Accounting.Core.Common
                 }
                 return "";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-           
                 return string.Empty;
             }
-       
         }
 
         public enum CasinoError : int
@@ -372,7 +377,7 @@ namespace Sunplus.Accounting.Core.Common
 
         public static string GetCasinoError(CasinoError errorCode)
         {
-            switch(errorCode)
+            switch (errorCode)
             {
                 case CasinoError.Not_Casino_Customer:
                     return "Not casino's Customer";
@@ -380,14 +385,10 @@ namespace Sunplus.Accounting.Core.Common
             return "";
         }
 
-
-        
-
         //User type
         public enum UserType : int
         {
-            None =0, Betting = 1, Internal = 2
+            None = 0, Betting = 1, Internal = 2
         }
-
     }
 }

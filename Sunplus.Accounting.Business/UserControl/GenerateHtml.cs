@@ -7,13 +7,11 @@ using DNAide.Utils;
 using DNAide.Web;
 
 using Sunplus.Accounting.Business.CacheManager;
-using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using Sunplus.Core.LoggingLib;
 
 namespace Sunplus.Accounting.Business.UI
 {
@@ -31,7 +29,6 @@ namespace Sunplus.Accounting.Business.UI
             string themePath = WebSettings.ThemePath;
             int counter = 0;
             var Content = new StringBuilder();
-
 
             try
             {
@@ -75,13 +72,11 @@ namespace Sunplus.Accounting.Business.UI
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
                 throw;
             }
-            return string.Empty;
         }
 
         public static string GenLinkPopup(string rootpath, string pageurl, string title, int width, int height, int left,
@@ -102,7 +97,6 @@ namespace Sunplus.Accounting.Business.UI
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }

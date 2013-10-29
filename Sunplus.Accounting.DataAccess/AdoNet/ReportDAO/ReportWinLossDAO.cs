@@ -4,7 +4,7 @@ using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 {
-    public class ReportWinLossDAO: DataAccessReport, IReportWinLossDAO
+    public class ReportWinLossDAO : DataAccessReport, IReportWinLossDAO
     {
         public DbResult SelLeagueWLbySports(string winlostdate)
         {
@@ -12,13 +12,11 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             var rs = ReportSession.Instance[ReportSession.StoreCollection.WinLoss]["LeagueWL_Sporttype" + subfix];
             Hashtable hashtable = new Hashtable();
             hashtable.Add("winlostdate", winlostdate);
-            hashtable.Add("winlost_8rm",0);
+            hashtable.Add("winlost_8rm", 0);
             hashtable.Add("winlost_barm", 0);
-
 
             return DbHelper.Execute(rs.Name, hashtable, rs.DbName, 600);
         }
-
 
         public DbResult SelLeagueWLByBettype(int sportId, int leagueId, string winlostDate)
         {
@@ -33,7 +31,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
             return DbHelper.Execute(rs.Name, hashtable, rs.DbName, 600);
         }
-
 
         public DbResult SeleLeagueWLDetailByBettype(string winlostDate, int sportId, int leagueId, int bettypeId, bool isLive, bool isHedge)
         {
@@ -51,7 +48,5 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
             return DbHelper.Execute(rs.Name, hashtable, rs.DbName, 600);
         }
-
-       
     }
 }

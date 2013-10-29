@@ -237,6 +237,78 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
     var bettings = model.bettingLimitItems;
     var length = bettings.length;
 
+    this.IsValid = function (min, max, maxPerMatch, minMin, maxMax, maxPerMatchMax, betting, isNumberGame, maxPerBall, maxPerBallMax) {
+        var subFix = isNumberGame ? '1' : '';
+
+        if (isNaN(min)) {
+            Validators.show($('#txt' + betting.resourceKey + 'Min' + subFix).get(0), betting.name + ' - Min Bet should be a value', undefined, undefined, 3000);
+
+            return false;
+        }
+
+        if (isNaN(max)) {
+            Validators.show($('#txt' + betting.resourceKey + 'Max' + subFix).get(0), betting.name + ' - Max Bet should be a value', undefined, undefined, 3000);
+
+            return false;
+        }
+
+        if (isNaN(maxPerMatch)) {
+            Validators.show($('#txt' + betting.resourceKey + 'MaxPerMatch' + subFix).get(0), betting.name + ' - Max Per Match should be a value', undefined, undefined, 3000);
+
+            return false;
+        }
+
+        if (isNumberGame && isNaN(maxPerBall)) {
+            Validators.show($('#txt' + betting.resourceKey + 'MaxPerBall1').get(0), betting.name + ' - Max Per Ball should be a value', undefined, undefined, 3000);
+
+            return false;
+        }
+
+        if (minMin != 0 && min < minMin) {
+            Validators.show($('#txt' + betting.resourceKey + 'Min' + subFix).get(0), betting.name + ' - Min Bet should be greater than or equals to ' + minMin.formatNumber(), undefined, undefined, 3000);
+
+            return false;
+        }
+
+        if (min > max) {
+            Validators.show($('#txt' + betting.resourceKey + 'Min' + subFix).get(0), betting.name + ' - Min Bet should be less than or equals to Max Bet', undefined, undefined, 3000);
+
+            return false;
+        }
+
+        if (min > maxPerMatch) {
+            Validators.show($('#txt' + betting.resourceKey + 'Min' + subFix).get(0), betting.name + ' - Min Bet should be less than or equals to Max Per Match', undefined, undefined, 3000);
+
+            return false;
+        }
+
+        if (maxMax != 0 && max > maxMax) {
+            Validators.show($('#txt' + betting.resourceKey + 'Max' + subFix).get(0), betting.name + ' - Max Bet should be less than or equals to ' + maxMax, undefined, undefined, 3000);
+
+            return false;
+        }
+
+        if (max > maxPerMatch) {
+            Validators.show($('#txt' + betting.resourceKey + 'Max' + subFix).get(0), betting.name + ' - Max Bet should be less than or equals to Max Per Match', undefined, undefined, 3000);
+
+            return false;
+        }
+
+        if (maxPerMatchMax != 0 && maxPerMatch > maxPerMatchMax) {
+            Validators.show($('#txt' + betting.resourceKey + 'MaxPerMatch' + subFix).get(0), betting.name + ' - Max Per Match should be less than or equals to ' + maxPerMatchMax.formatNumber(), undefined, undefined, 3000);
+
+            return false;
+        }
+
+        if (isNumberGame && maxPerBallMax != 0 && maxPerBall > maxPerBallMax) {
+            Validators.show($('#txt' + betting.resourceKey + 'MaxPerBall1').get(0), betting.name + ' - Max Per Ball should be less than or equals to ' + maxPerBallMax.formatNumber(), undefined, undefined, 3000);
+
+            return false;
+        }
+
+        return true;
+    };
+
     for (var i = 0; i < length; i++) {
         var betting = bettings[i];
 
@@ -246,92 +318,19 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
         var curValMaxPerMatch = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll(betting.maxPerMatchFormated, ',', ''));
         var curValMaxPerMatchMax = betting.maxPerMatchMax;
 
+        var curValMinMin = betting.minBetMin;
+        var curValMaxMax = betting.maxBetMin;
+
         if (typeof betting.maxPerBall != 'undefined') {
-            if (isNaN(curValMinBet)) {
-                Validators.show($('#txt' + betting.resourceKey + 'Min1').get(0), betting.name + ' - Min Bet should be a value', undefined, undefined, 3000);
-
-                return;
-            }
-
-            if (isNaN(curValMaxBet)) {
-                Validators.show($('#txt' + betting.resourceKey + 'Max1').get(0), betting.name + ' - Max Bet should be a value', undefined, undefined, 3000);
-
-                return;
-            }
-
-            if (isNaN(curValMaxPerMatch)) {
-                Validators.show($('#txt' + betting.resourceKey + 'MaxPerMatch1').get(0), betting.name + ' - Max Per Match should be a value', undefined, undefined, 3000);
-
-                return;
-            }
-
-            if (curValMinBet != 0 && curValMaxBet != 0 && curValMinBet > curValMaxBet) {
-                Validators.show($('#txt' + betting.resourceKey + 'Min1').get(0), betting.name + ' - Min Bet should be less than or equals to Max Bet', undefined, undefined, 3000);
-
-                return;
-            }
-
-            if (curValMaxBet != 0 && curValMaxPerMatch != 0 && curValMaxBet > curValMaxPerMatch) {
-                Validators.show($('#txt' + betting.resourceKey + 'Max1').get(0), betting.name + ' - Max Bet should be less than or equals to Max Per Match', undefined, undefined, 3000);
-
-                return;
-            }
-
-            if (curValMaxPerMatch != 0 && curValMaxPerMatchMax != 0 && curValMaxPerMatch > curValMaxPerMatchMax) {
-                Validators.show($('#txt' + betting.resourceKey + 'MaxPerMatch1').get(0), betting.name + ' - Max Per Match should be less than or equals to ' + curValMaxPerMatchMax.formatNumber(), undefined, undefined, 3000);
-
-                return;
-            }
-
             var curValMaxPerBall = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll(betting.maxPerBallFormated, ',', ''));
             var maxPerBallMax = betting.maxPerBallMax;
 
-            if (isNaN(curValMaxPerBall)) {
-                Validators.show($('#txt' + betting.resourceKey + 'MaxPerBall1').get(0), betting.name + ' - Max Per Ball should be a value', undefined, undefined, 3000);
-
-                return;
-            }
-
-            if (curValMaxPerBall != 0 && maxPerBallMax != 0 && curValMaxPerBall > maxPerBallMax) {
-                Validators.show($('#txt' + betting.resourceKey + 'MaxPerBall1').get(0), betting.name + ' - Max Per Ball should be less than or equals to ' + maxPerBallMax.formatNumber(), undefined, undefined, 3000);
-
+            if (!this.IsValid(curValMinBet, curValMaxBet, curValMaxPerMatch, curValMinMin, curValMaxMax, curValMaxPerMatchMax, betting, true, curValMaxPerBall, maxPerBallMax)) {
                 return;
             }
         }
         else {
-            if (isNaN(curValMinBet)) {
-                Validators.show($('#txt' + betting.resourceKey + 'Min').get(0), betting.name + ' - Min Bet should be a value', undefined, undefined, 3000);
-
-                return;
-            }
-
-            if (isNaN(curValMaxBet)) {
-                Validators.show($('#txt' + betting.resourceKey + 'Max').get(0), betting.name + ' - Max Bet should be a value', undefined, undefined, 3000);
-
-                return;
-            }
-
-            if (isNaN(curValMaxPerMatch)) {
-                Validators.show($('#txt' + betting.resourceKey + 'MaxPerMatch').get(0), betting.name + ' - Max Per Match should be a value', undefined, undefined, 3000);
-
-                return;
-            }
-
-            if (curValMinBet != 0 && curValMaxBet != 0 && curValMinBet > curValMaxBet) {
-                Validators.show($('#txt' + betting.resourceKey + 'Min').get(0), betting.name + ' - Min Bet should be less than or equals to Max Bet', undefined, undefined, 3000);
-
-                return;
-            }
-
-            if (curValMaxBet != 0 && curValMaxPerMatch != 0 && curValMaxBet > curValMaxPerMatch) {
-                Validators.show($('#txt' + betting.resourceKey + 'Max').get(0), betting.name + ' - Max Bet should be less than or equals to Max Per Match', undefined, undefined, 3000);
-
-                return;
-            }
-
-            if (curValMaxPerMatch != 0 && curValMaxPerMatchMax != 0 && curValMaxPerMatch > curValMaxPerMatchMax) {
-                Validators.show($('#txt' + betting.resourceKey + 'MaxPerMatch').get(0), betting.name + ' - Max Per Match should be less than or equals to ' + curValMaxPerMatchMax.formatNumber(), undefined, undefined, 3000);
-
+            if (!this.IsValid(curValMinBet, curValMaxBet, curValMaxPerMatch, curValMinMin, curValMaxMax, curValMaxPerMatchMax, betting)) {
                 return;
             }
         }
@@ -347,7 +346,8 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
             id: custId,
             uplineId: uplineId,
             userId: userId,
-            txtCustomerObject: JSON.stringify(model)
+            txtCustomerObject: JSON.stringify(model),
+            siteName: siteName
         }
     })
     .success(function (data) {
@@ -357,6 +357,7 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
             $('#errMsg').show();
         }
         else {
+            $('#errMsg').attr('class', 'errMsg');
             $('#errMsg').html(data.errorMessage.formatErrorMessage());
             $('#errMsg').show();
         }
@@ -372,6 +373,7 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
             console.log(data);
 
         if (JSON.parse(data.responseText).ErrorCode) {
+            $('#errMsg').attr('class', 'errMsg');
             $('#errMsg').html(JSON.parse(data.responseText).ErrorMessage.formatErrorMessage());
             $('#errMsg').show();
         }

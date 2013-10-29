@@ -5,14 +5,12 @@ using System.Web;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Web;
+using IBCUtils;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using IBCUtils;
-
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Cache;
-using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.Report;
 
 /// <summary>
@@ -24,7 +22,6 @@ public partial class ReportHTML
                                                     int IsSoccer)
     {
         var html = new StringBuilder();
-
 
         DateTime fdate, tdate;
         if (!Validator.ValidDateMMDDYYYYNotNull(fromdate, out fdate).IsSuccess() ||
@@ -38,8 +35,7 @@ public partial class ReportHTML
         string tpl = WebUtils.LoadTemplate(@"Report\TraderPerformanceDetail.htm");
         tpl = TemplateHandler.CopyBlock(tpl, "Content");
 
-
-        //apply style sheet 
+        //apply style sheet
         //Load CSS for freeze headline
         string styleSheet = string.Empty;
         string cellspacing = "1";
@@ -53,7 +49,6 @@ public partial class ReportHTML
         }
         TemplateHandler.Assign(ref tpl, "cellspacing", cellspacing);
         TemplateHandler.Assign(ref tpl, "StyleSheet", styleSheet);
-
 
         if (IsSoccer == 0)
         {
@@ -70,10 +65,8 @@ public partial class ReportHTML
         TemplateHandler.ReplaceBlock(ref tpl, "trader-total", "");
         TemplateHandler.ReplaceBlock(ref tpl, "trader-grand-total", "");
 
-
         var reportRows = new StringBuilder();
         var dt1 = new DataTable();
-
 
         DbResult rs = null;
         if (tdate < ReportUtils.BalanceUp.MoveBetsDay)
@@ -97,7 +90,6 @@ public partial class ReportHTML
 
         DataTable dt = dtView.ToTable();
 
-
         //assign row count
         if (dt != null && dt.Rows.Count > 0)
             TemplateHandler.Assign(ref tpl, "RowCnt_vl", dt.Rows.Count);
@@ -106,7 +98,7 @@ public partial class ReportHTML
 
         if (dt.Rows.Count > 0)
         {
-            int traderRowNo = 1, currentCustid = CastAide.AsInt32(dt.Rows[0]["custid"]);
+            int currentCustid = CastAide.AsInt32(dt.Rows[0]["custid"]);
 
             //the rest rows of each trader
             var traderStr = new StringBuilder();
@@ -117,7 +109,9 @@ public partial class ReportHTML
 
             int no = 0, TraderNo = 1;
             int custid = 0, custid_p = 0, subCount = 0;
+
             #region turnover
+
             decimal to_hthdp = 0,
                     to_hdp = 0,
                     to_htou = 0,
@@ -166,9 +160,11 @@ public partial class ReportHTML
                     Grand_to_overall = 0,
                     Grand_to_1stoe = 0,
                     Grand_to_oe = 0;
-            #endregion
+
+            #endregion turnover
 
             #region livebetcount
+
             decimal livebetcount_hthdp = 0,
                     livebetcount_hdp = 0,
                     livebetcount_htou = 0,
@@ -214,9 +210,11 @@ public partial class ReportHTML
                     Grand_livebetcount_overall = 0,
                     Grand_livebetcount_1stoe = 0,
                     Grand_livebetcount_oe = 0;
-            #endregion
+
+            #endregion livebetcount
 
             #region winlost
+
             decimal wl_hthdp = 0,
                     wl_hdp = 0,
                     wl_htou = 0,
@@ -265,9 +263,11 @@ public partial class ReportHTML
                     Grand_wl_overall = 0,
                     Grand_wl_1stoe = 0,
                     Grand_wl_oe = 0;
-            #endregion
+
+            #endregion winlost
 
             #region comm
+
             decimal comm_hthdp = 0,
                     comm_hdp = 0,
                     comm_htou = 0,
@@ -316,9 +316,11 @@ public partial class ReportHTML
                     Grand_comm_overall = 0,
                     Grand_comm_1stoe = 0,
                     Grand_comm_oe = 0;
-            #endregion
+
+            #endregion comm
 
             #region margin
+
             string m_hthdp = string.Empty,
                    m_hdp = string.Empty,
                    m_htou = string.Empty,
@@ -367,14 +369,15 @@ public partial class ReportHTML
                    Grand_m_overall = string.Empty,
                    Grand_m_1stoe = string.Empty,
                    Grand_m_oe = string.Empty;
-            #endregion
+
+            #endregion margin
 
             foreach (DataRow dr in dt.Rows)
             {
                 username_p = dr["username"].ToString();
                 custid_p = CastAide.AsInt32(dr["custid"]);
                 //the first row of each trader
-                trader1Row = (string) traderTpl.Clone();
+                trader1Row = (string)traderTpl.Clone();
 
                 if (no == 0)
                 {
@@ -417,7 +420,9 @@ public partial class ReportHTML
                         TotalRow = traderTotalTpl.Clone().ToString();
 
                         TemplateHandler.Assign(ref TotalRow, "trader", username);
+
                         #region turnover
+
                         TemplateHandler.Assign(ref TotalRow, "to-hthdp", AccCommon.DecFormat(Total_to_hthdp, 0));
                         TemplateHandler.Assign(ref TotalRow, "to-hdp", AccCommon.DecFormat(Total_to_hdp, 0));
                         TemplateHandler.Assign(ref TotalRow, "to-htou", AccCommon.DecFormat(Total_to_htou, 0));
@@ -435,8 +440,11 @@ public partial class ReportHTML
                         TemplateHandler.Assign(ref TotalRow, "to-overall", AccCommon.DecFormat(Total_to_overall, 0));
                         TemplateHandler.Assign(ref TotalRow, "to-1stoe", AccCommon.DecFormat(Total_to_1stoe, 0));
                         TemplateHandler.Assign(ref TotalRow, "to-oe", AccCommon.DecFormat(Total_to_oe, 0));
-                        #endregion
+
+                        #endregion turnover
+
                         #region livebetcount
+
                         TemplateHandler.Assign(ref TotalRow, "livebetcount-hthdp", AccCommon.DecFormat(Total_livebetcount_hthdp, 0));
                         TemplateHandler.Assign(ref TotalRow, "livebetcount-hdp", AccCommon.DecFormat(Total_livebetcount_hdp, 0));
                         TemplateHandler.Assign(ref TotalRow, "livebetcount-htou", AccCommon.DecFormat(Total_livebetcount_htou, 0));
@@ -453,8 +461,11 @@ public partial class ReportHTML
                         TemplateHandler.Assign(ref TotalRow, "livebetcount-overall", AccCommon.DecFormat(Total_livebetcount_overall, 0));
                         TemplateHandler.Assign(ref TotalRow, "livebetcount-1stoe", AccCommon.DecFormat(Total_livebetcount_1stoe, 0));
                         TemplateHandler.Assign(ref TotalRow, "livebetcount-oe", AccCommon.DecFormat(Total_livebetcount_oe, 0));
-                        #endregion
+
+                        #endregion livebetcount
+
                         #region winlost
+
                         TemplateHandler.Assign(ref TotalRow, "wl-hthdp", AccCommon.DecFormat(Total_wl_hthdp, 0));
                         TemplateHandler.Assign(ref TotalRow, "wl-hdp", AccCommon.DecFormat(Total_wl_hdp, 0));
                         TemplateHandler.Assign(ref TotalRow, "wl-htou", AccCommon.DecFormat(Total_wl_htou, 0));
@@ -472,8 +483,11 @@ public partial class ReportHTML
                         TemplateHandler.Assign(ref TotalRow, "wl-overall", AccCommon.DecFormat(Total_wl_overall, 0));
                         TemplateHandler.Assign(ref TotalRow, "wl-1stoe", AccCommon.DecFormat(Total_wl_1stoe, 0));
                         TemplateHandler.Assign(ref TotalRow, "wl-oe", AccCommon.DecFormat(Total_wl_oe, 0));
-                        #endregion
+
+                        #endregion winlost
+
                         #region comm
+
                         TemplateHandler.Assign(ref TotalRow, "comm-hthdp", AccCommon.DecFormat(Total_comm_hthdp, 0));
                         TemplateHandler.Assign(ref TotalRow, "comm-hdp", AccCommon.DecFormat(Total_comm_hdp, 0));
                         TemplateHandler.Assign(ref TotalRow, "comm-htou", AccCommon.DecFormat(Total_comm_htou, 0));
@@ -494,8 +508,11 @@ public partial class ReportHTML
                         TemplateHandler.Assign(ref TotalRow, "comm-overall", AccCommon.DecFormat(Total_comm_overall, 0));
                         TemplateHandler.Assign(ref TotalRow, "comm-1stoe", AccCommon.DecFormat(Total_comm_1stoe, 0));
                         TemplateHandler.Assign(ref TotalRow, "comm-oe", AccCommon.DecFormat(Total_comm_oe, 0));
-                        #endregion
+
+                        #endregion comm
+
                         #region margin
+
                         TemplateHandler.Assign(ref TotalRow, "m-hthdp", Total_m_hthdp);
                         TemplateHandler.Assign(ref TotalRow, "m-hdp", Total_m_hdp);
                         TemplateHandler.Assign(ref TotalRow, "m-htou", Total_m_htou);
@@ -512,13 +529,13 @@ public partial class ReportHTML
                         TemplateHandler.Assign(ref TotalRow, "m-overall", Total_m_overall);
                         TemplateHandler.Assign(ref TotalRow, "m-1stoe", Total_m_1stoe);
                         TemplateHandler.Assign(ref TotalRow, "m-oe", Total_m_oe);
-                        #endregion
+
+                        #endregion margin
 
                         traderStr.Append(TotalRow);
 
                         rowsTrader = traderStr.ToString();
                         TemplateHandler.Assign(ref rowsTrader, "rows", subCount);
-
 
                         //If not unassigned rows
                         if (custid != 0)
@@ -531,9 +548,11 @@ public partial class ReportHTML
                         {
                             row_unassigned = rowsTrader;
                         }
-                        
+
                         subCount = 0;
+
                         #region turnover
+
                         Total_to_hthdp = 0;
                         Total_to_hdp = 0;
                         Total_to_htou = 0;
@@ -550,8 +569,11 @@ public partial class ReportHTML
                         Total_to_1stoe = 0;
                         Total_to_oe = 0;
                         Total_to_NextCorner = 0;
-                        #endregion
+
+                        #endregion turnover
+
                         #region livebetcount
+
                         Total_livebetcount_hthdp = 0;
                         Total_livebetcount_hdp = 0;
                         Total_livebetcount_htou = 0;
@@ -568,8 +590,11 @@ public partial class ReportHTML
                         Total_livebetcount_1stoe = 0;
                         Total_livebetcount_oe = 0;
                         Total_livebetcount_NextCorner = 0;
-                        #endregion
+
+                        #endregion livebetcount
+
                         #region winlost
+
                         Total_wl_hthdp = 0;
                         Total_wl_hdp = 0;
                         Total_wl_htou = 0;
@@ -586,8 +611,11 @@ public partial class ReportHTML
                         Total_wl_1stoe = 0;
                         Total_wl_oe = 0;
                         Total_wl_NextCorner = 0;
-                        #endregion
+
+                        #endregion winlost
+
                         #region comm
+
                         Total_comm_hthdp = 0;
                         Total_comm_hdp = 0;
                         Total_comm_htou = 0;
@@ -604,8 +632,11 @@ public partial class ReportHTML
                         Total_comm_1stoe = 0;
                         Total_comm_oe = 0;
                         Total_comm_NextCorner = 0;
-                        #endregion
+
+                        #endregion comm
+
                         #region margin
+
                         Total_m_hthdp = string.Empty;
                         Total_m_hdp = string.Empty;
                         Total_m_htou = string.Empty;
@@ -622,10 +653,12 @@ public partial class ReportHTML
                         Total_m_1stoe = string.Empty;
                         Total_m_oe = string.Empty;
                         Total_m_NextCorner = string.Empty;
-                        #endregion
+
+                        #endregion margin
+
                         traderStr = new StringBuilder();
 
-                        trader1Row = (string) traderTpl.Clone();
+                        trader1Row = (string)traderTpl.Clone();
                         TemplateHandler.Assign(ref trader1Row, "no-cell",
                                                "<td class='a5' rowspan=\"{rows}\">{no_value}</td>");
                         TemplateHandler.Assign(ref trader1Row, "trader-cell1",
@@ -639,14 +672,16 @@ public partial class ReportHTML
                                                    username_p + "</td>");
                     }
 
-                    #endregion
+                    #endregion if (subCount > 0)
 
                     custid = custid_p;
                     username = username_p;
                 }
                 subCount++;
                 no++;
+
                 #region turnover
+
                 to_hthdp = CastAide.AsDecimal(dr["stake_1sthdp"]);
                 to_hdp = CastAide.AsDecimal(dr["stake_hdp"]);
                 to_htou = CastAide.AsDecimal(dr["stake_1stou"]);
@@ -662,12 +697,14 @@ public partial class ReportHTML
                 to_1stoe = CastAide.AsDecimal(dr["stake_1stoe"]);
                 to_oe = CastAide.AsDecimal(dr["stake_oe"]);
                 to_NextCorner = CastAide.AsDecimal(dr["stake_NextCorner"]);
-                
+
                 to_overall = to_hthdp + to_hdp + to_htou + to_ou + to_ht1x2 + to_1x2 + to_1stcorner + to_corner +
-                             to_15mou + to_1stYellowCard + to_YellowCard+ to_1stoe+ to_oe + to_NextCorner;
-                #endregion
+                             to_15mou + to_1stYellowCard + to_YellowCard + to_1stoe + to_oe + to_NextCorner;
+
+                #endregion turnover
 
                 #region livebetcount
+
                 livebetcount_hthdp = CastAide.AsDecimal(dr["bet_1sthdp"]);
                 livebetcount_hdp = CastAide.AsDecimal(dr["bet_hdp"]);
                 livebetcount_htou = CastAide.AsDecimal(dr["bet_1stou"]);
@@ -683,13 +720,15 @@ public partial class ReportHTML
                 livebetcount_1stoe = CastAide.AsDecimal(dr["bet_1stoe"]);
                 livebetcount_oe = CastAide.AsDecimal(dr["bet_oe"]);
                 livebetcount_NextCorner = CastAide.AsDecimal(dr["bet_NextCorner"]);
-                
+
                 livebetcount_overall = livebetcount_hthdp + livebetcount_hdp + livebetcount_htou + livebetcount_ou + livebetcount_ht1x2 +
                     livebetcount_1x2 + livebetcount_1stcorner + livebetcount_corner +
                              livebetcount_15mou + livebetcount_1stYellowCard + livebetcount_YellowCard + livebetcount_1stoe + livebetcount_oe + livebetcount_NextCorner;
-                #endregion
+
+                #endregion livebetcount
 
                 #region winlost
+
                 wl_hthdp = CastAide.AsDecimal(dr["winlost_1sthdp"]);
                 wl_hdp = CastAide.AsDecimal(dr["winlost_hdp"]);
                 wl_htou = CastAide.AsDecimal(dr["winlost_1stou"]);
@@ -708,9 +747,11 @@ public partial class ReportHTML
 
                 wl_overall = wl_hthdp + wl_hdp + wl_htou + wl_ou + wl_ht1x2 + wl_1x2 + wl_1stcorner + wl_corner +
                              wl_15mou + wl_1stYellowCard + wl_YellowCard + wl_1stoe + wl_oe + wl_NextCorner;
-                #endregion
+
+                #endregion winlost
 
                 #region comm
+
                 comm_hthdp = CastAide.AsDecimal(dr["comm_1sthdp"]);
                 comm_hdp = CastAide.AsDecimal(dr["comm_hdp"]);
                 comm_htou = CastAide.AsDecimal(dr["comm_1stou"]);
@@ -729,9 +770,11 @@ public partial class ReportHTML
 
                 comm_overall = comm_hthdp + comm_hdp + comm_htou + comm_ou + comm_ht1x2 + comm_1x2 +
                                comm_1stcorner + comm_corner + comm_15mou + comm_1stYellowCard + comm_YellowCard + comm_1stoe + comm_oe + comm_NextCorner;
-                #endregion
+
+                #endregion comm
 
                 #region margin
+
                 m_hthdp = AccCommon.PercentFormat(CastAide.AsDecimal(dr["margin_1sthdp"]), 2);
                 m_hdp = AccCommon.PercentFormat(CastAide.AsDecimal(dr["margin_hdp"]), 2);
                 m_htou = AccCommon.PercentFormat(CastAide.AsDecimal(dr["margin_1stou"]), 2);
@@ -749,10 +792,13 @@ public partial class ReportHTML
                 m_NextCorner = AccCommon.PercentFormat(CastAide.AsDecimal(dr["margin_NextCorner"]), 2);
 
                 m_overall = AccCommon.PercentFormat(CastAide.AsDecimal(dr["overall_margin"]), 2);
-                #endregion
+
+                #endregion margin
 
                 #region total
+
                 #region turnover
+
                 Total_to_hthdp += to_hthdp;
                 Total_to_hdp += to_hdp;
                 Total_to_htou += to_htou;
@@ -769,8 +815,11 @@ public partial class ReportHTML
                 Total_to_1stoe += to_1stoe;
                 Total_to_oe += to_oe;
                 Total_to_NextCorner += to_NextCorner;
-                #endregion
+
+                #endregion turnover
+
                 #region livebetcount
+
                 Total_livebetcount_hthdp += livebetcount_hthdp;
                 Total_livebetcount_hdp += livebetcount_hdp;
                 Total_livebetcount_htou += livebetcount_htou;
@@ -787,8 +836,11 @@ public partial class ReportHTML
                 Total_livebetcount_1stoe += livebetcount_1stoe;
                 Total_livebetcount_oe += livebetcount_oe;
                 Total_livebetcount_NextCorner += livebetcount_NextCorner;
-                #endregion
+
+                #endregion livebetcount
+
                 #region winlost
+
                 Total_wl_hthdp += wl_hthdp;
                 Total_wl_hdp += wl_hdp;
                 Total_wl_htou += wl_htou;
@@ -808,8 +860,11 @@ public partial class ReportHTML
                 Total_wl_overall = Total_wl_hthdp + Total_wl_hdp + Total_wl_htou + Total_wl_ou + Total_wl_ht1x2 +
                                    Total_wl_1x2 + Total_wl_1stcorner + Total_wl_corner + Total_wl_15mou +
                                    Total_wl_1stYellowCard + Total_wl_YellowCard + Total_wl_1stoe + Total_wl_oe + Total_wl_NextCorner;
-                #endregion
+
+                #endregion winlost
+
                 #region comm
+
                 Total_comm_hthdp += comm_hthdp;
                 Total_comm_hdp += comm_hdp;
                 Total_comm_htou += comm_htou;
@@ -826,42 +881,45 @@ public partial class ReportHTML
                 Total_comm_oe += comm_oe;
                 Total_comm_overall += comm_overall;
                 Total_comm_NextCorner += comm_NextCorner;
-                #endregion
+
+                #endregion comm
+
                 #region margin
+
                 //Total_m_hthdp = AccCommon.PercentFormat(CastAide.AsDecimal(dr["sum_margin_1sthdp"]), 2);
                 if (Total_to_hthdp == 0)
                     Total_m_hthdp = AccCommon.PercentFormat(Total_wl_hthdp, 2);
                 else
-                    Total_m_hthdp = AccCommon.PercentFormat(Total_wl_hthdp/Total_to_hthdp, 2);
+                    Total_m_hthdp = AccCommon.PercentFormat(Total_wl_hthdp / Total_to_hthdp, 2);
 
                 //Total_m_hdp = AccCommon.PercentFormat(CastAide.AsDecimal(dr["sum_margin_hdp"]), 2);
                 if (Total_to_hdp == 0)
                     Total_m_hdp = AccCommon.PercentFormat(Total_wl_hdp, 2);
                 else
-                    Total_m_hdp = AccCommon.PercentFormat(Total_wl_hdp/Total_to_hdp, 2);
+                    Total_m_hdp = AccCommon.PercentFormat(Total_wl_hdp / Total_to_hdp, 2);
 
                 //Total_m_htou = AccCommon.PercentFormat(CastAide.AsDecimal(dr["sum_margin_1stou"]), 2);
                 if (Total_to_htou == 0)
                     Total_m_htou = AccCommon.PercentFormat(Total_wl_htou, 2);
                 else
-                    Total_m_htou = AccCommon.PercentFormat(Total_wl_htou/Total_to_htou, 2);
+                    Total_m_htou = AccCommon.PercentFormat(Total_wl_htou / Total_to_htou, 2);
 
                 //Total_m_ou = AccCommon.PercentFormat(CastAide.AsDecimal(dr["sum_margin_ou"]), 2);
                 if (Total_to_ou == 0)
                     Total_m_ou = AccCommon.PercentFormat(Total_wl_ou, 2);
                 else
-                    Total_m_ou = AccCommon.PercentFormat(Total_wl_ou/Total_to_ou, 2);
+                    Total_m_ou = AccCommon.PercentFormat(Total_wl_ou / Total_to_ou, 2);
 
                 if (Total_to_ht1x2 == 0)
                     Total_m_ht1x2 = AccCommon.PercentFormat(Total_wl_ht1x2, 2);
                 else
-                    Total_m_ht1x2 = AccCommon.PercentFormat(Total_wl_ht1x2/Total_to_ht1x2, 2);
+                    Total_m_ht1x2 = AccCommon.PercentFormat(Total_wl_ht1x2 / Total_to_ht1x2, 2);
 
                 //Total_m_ou = AccCommon.PercentFormat(CastAide.AsDecimal(dr["sum_margin_ou"]), 2);
                 if (Total_to_1x2 == 0)
                     Total_m_1x2 = AccCommon.PercentFormat(Total_wl_1x2, 2);
                 else
-                    Total_m_1x2 = AccCommon.PercentFormat(Total_wl_1x2/Total_to_1x2, 2);
+                    Total_m_1x2 = AccCommon.PercentFormat(Total_wl_1x2 / Total_to_1x2, 2);
 
                 //if (Total_to_ng == 0)
                 //    Total_m_ng = AccCommon.PercentFormat(Total_wl_ng, 2);
@@ -871,28 +929,27 @@ public partial class ReportHTML
                 if (Total_to_1stcorner == 0)
                     Total_m_1stcorner = AccCommon.PercentFormat(Total_wl_1stcorner, 2);
                 else
-                    Total_m_1stcorner = AccCommon.PercentFormat(Total_wl_1stcorner/Total_to_1stcorner, 2);
+                    Total_m_1stcorner = AccCommon.PercentFormat(Total_wl_1stcorner / Total_to_1stcorner, 2);
 
                 if (Total_to_corner == 0)
                     Total_m_corner = AccCommon.PercentFormat(Total_wl_corner, 2);
                 else
-                    Total_m_corner = AccCommon.PercentFormat(Total_wl_corner/Total_to_corner, 2);
+                    Total_m_corner = AccCommon.PercentFormat(Total_wl_corner / Total_to_corner, 2);
 
                 if (Total_to_15mou == 0)
                     Total_m_15mou = AccCommon.PercentFormat(Total_wl_15mou, 2);
                 else
-                    Total_m_15mou = AccCommon.PercentFormat(Total_wl_15mou/Total_to_15mou, 2);
-
+                    Total_m_15mou = AccCommon.PercentFormat(Total_wl_15mou / Total_to_15mou, 2);
 
                 if (Total_to_1stYellowCard == 0)
                     Total_m_1stYellowCard = AccCommon.PercentFormat(Total_wl_1stYellowCard, 2);
                 else
-                    Total_m_1stYellowCard = AccCommon.PercentFormat(Total_wl_1stYellowCard/Total_to_1stYellowCard, 2);
+                    Total_m_1stYellowCard = AccCommon.PercentFormat(Total_wl_1stYellowCard / Total_to_1stYellowCard, 2);
 
                 if (Total_to_YellowCard == 0)
                     Total_m_YellowCard = AccCommon.PercentFormat(Total_wl_YellowCard, 2);
                 else
-                    Total_m_YellowCard = AccCommon.PercentFormat(Total_wl_YellowCard/Total_to_YellowCard, 2);
+                    Total_m_YellowCard = AccCommon.PercentFormat(Total_wl_YellowCard / Total_to_YellowCard, 2);
 
                 if (Total_to_1stoe == 0)
                     Total_m_1stoe = AccCommon.PercentFormat(Total_wl_1stoe, 2);
@@ -904,22 +961,25 @@ public partial class ReportHTML
                 else
                     Total_m_oe = AccCommon.PercentFormat(Total_wl_oe / Total_to_oe, 2);
 
-
                 //Total_m_overall = AccCommon.PercentFormat(CastAide.AsDecimal(dr["sum_overall_margin"]), 2);
                 if (Total_to_overall == 0)
                     Total_m_overall = AccCommon.PercentFormat(Total_wl_overall, 2);
                 else
-                    Total_m_overall = AccCommon.PercentFormat(Total_wl_overall/Total_to_overall, 2);
+                    Total_m_overall = AccCommon.PercentFormat(Total_wl_overall / Total_to_overall, 2);
 
                 if (Total_to_NextCorner == 0)
                     Total_m_NextCorner = AccCommon.PercentFormat(Total_wl_NextCorner, 2);
                 else
-                    Total_m_NextCorner = AccCommon.PercentFormat(Total_wl_NextCorner/Total_to_NextCorner, 2);
-                #endregion
-                #endregion
+                    Total_m_NextCorner = AccCommon.PercentFormat(Total_wl_NextCorner / Total_to_NextCorner, 2);
+
+                #endregion margin
+
+                #endregion total
 
                 #region grand total
+
                 #region turnover
+
                 Grand_to_hthdp += to_hthdp;
                 Grand_to_hdp += to_hdp;
                 Grand_to_htou += to_htou;
@@ -936,8 +996,11 @@ public partial class ReportHTML
                 Grand_to_oe += to_oe;
                 Grand_to_overall += to_overall;
                 Grand_to_NextCorner += to_NextCorner;
-                #endregion
+
+                #endregion turnover
+
                 #region livebetcount
+
                 Grand_livebetcount_hthdp += livebetcount_hthdp;
                 Grand_livebetcount_hdp += livebetcount_hdp;
                 Grand_livebetcount_htou += livebetcount_htou;
@@ -954,8 +1017,11 @@ public partial class ReportHTML
                 Grand_livebetcount_oe += livebetcount_oe;
                 Grand_livebetcount_overall += livebetcount_overall;
                 Grand_livebetcount_NextCorner += livebetcount_NextCorner;
-                #endregion
+
+                #endregion livebetcount
+
                 #region winlost
+
                 Grand_wl_hthdp += wl_hthdp;
                 Grand_wl_hdp += wl_hdp;
                 Grand_wl_htou += wl_htou;
@@ -970,10 +1036,13 @@ public partial class ReportHTML
                 Grand_wl_YellowCard += wl_YellowCard;
                 Grand_wl_1stoe += wl_1stoe;
                 Grand_wl_oe += wl_oe;
-                Grand_wl_overall += wl_overall; 
+                Grand_wl_overall += wl_overall;
                 Grand_wl_NextCorner += wl_NextCorner;
+
                 #endregion winlost
+
                 #region comm
+
                 Grand_comm_hthdp += comm_hthdp;
                 Grand_comm_hdp += comm_hdp;
                 Grand_comm_htou += comm_htou;
@@ -990,8 +1059,11 @@ public partial class ReportHTML
                 Grand_comm_oe += comm_oe;
                 Grand_comm_overall += comm_overall;
                 Grand_comm_NextCorner += comm_NextCorner;
-                #endregion
+
+                #endregion comm
+
                 #region margin
+
                 Grand_m_hthdp = AccCommon.PercentFormat(Grand_wl_hthdp, Grand_to_hthdp, 2);
                 Grand_m_hdp = AccCommon.PercentFormat(Grand_wl_hdp, Grand_to_hdp, 2);
                 Grand_m_htou = AccCommon.PercentFormat(Grand_wl_htou, Grand_to_htou, 2);
@@ -1008,10 +1080,13 @@ public partial class ReportHTML
                 Grand_m_oe = AccCommon.PercentFormat(Grand_wl_oe, Grand_to_oe, 2);
                 Grand_m_overall = AccCommon.PercentFormat(Grand_wl_overall, Grand_to_overall, 2);
                 Grand_m_NextCorner = AccCommon.PercentFormat(Grand_wl_NextCorner, Grand_to_NextCorner, 2);
-                #endregion
-                #endregion
+
+                #endregion margin
+
+                #endregion grand total
 
                 #region assign values
+
                 TemplateHandler.Assign(ref trader1Row, "date", CastAide.AsDateTime(dr["eventdate"]).ToString("dd MMM"));
                 TemplateHandler.Assign(ref trader1Row, "League", CacheRef.GetLeagueName(dr["LeagueID"]));
                 //TemplateHandler.Assign(ref trader1Row, "match", dr["hometeam"] + " - " + dr["awayteam"]);
@@ -1022,7 +1097,9 @@ public partial class ReportHTML
                 TemplateHandler.Assign(ref trader1Row, "match", strMatch);
                 TemplateHandler.Assign(ref trader1Row, "score-ht", dr["hthomescore"] + " -- " + dr["htawayscore"]);
                 TemplateHandler.Assign(ref trader1Row, "score-ft", dr["fthomescore"] + " -- " + dr["ftawayscore"]);
+
                 #region turnover
+
                 TemplateHandler.Assign(ref trader1Row, "to-hthdp", AccCommon.DecFormat(to_hthdp, 0));
                 TemplateHandler.Assign(ref trader1Row, "to-hdp", AccCommon.DecFormat(to_hdp, 0));
                 TemplateHandler.Assign(ref trader1Row, "to-htou", AccCommon.DecFormat(to_htou, 0));
@@ -1039,8 +1116,11 @@ public partial class ReportHTML
                 TemplateHandler.Assign(ref trader1Row, "to-oe", AccCommon.DecFormat(to_oe, 0));
                 TemplateHandler.Assign(ref trader1Row, "to-overall", AccCommon.DecFormat(to_overall, 0));
                 TemplateHandler.Assign(ref trader1Row, "to-nextcorner", AccCommon.DecFormat(to_NextCorner, 0));
-                #endregion
+
+                #endregion turnover
+
                 #region livebetcount
+
                 TemplateHandler.Assign(ref trader1Row, "livebetcount-hthdp", AccCommon.DecFormat(livebetcount_hthdp, 0));
                 TemplateHandler.Assign(ref trader1Row, "livebetcount-hdp", AccCommon.DecFormat(livebetcount_hdp, 0));
                 TemplateHandler.Assign(ref trader1Row, "livebetcount-htou", AccCommon.DecFormat(livebetcount_htou, 0));
@@ -1057,8 +1137,11 @@ public partial class ReportHTML
                 TemplateHandler.Assign(ref trader1Row, "livebetcount-oe", AccCommon.DecFormat(livebetcount_oe, 0));
                 TemplateHandler.Assign(ref trader1Row, "livebetcount-overall", AccCommon.DecFormat(livebetcount_overall, 0));
                 TemplateHandler.Assign(ref trader1Row, "livebetcount-nextcorner", AccCommon.DecFormat(livebetcount_NextCorner, 0));
-                #endregion
+
+                #endregion livebetcount
+
                 #region winlost
+
                 TemplateHandler.Assign(ref trader1Row, "wl-hthdp", AccCommon.DecFormat(wl_hthdp, 0));
                 TemplateHandler.Assign(ref trader1Row, "wl-hdp", AccCommon.DecFormat(wl_hdp, 0));
                 TemplateHandler.Assign(ref trader1Row, "wl-htou", AccCommon.DecFormat(wl_htou, 0));
@@ -1075,8 +1158,11 @@ public partial class ReportHTML
                 TemplateHandler.Assign(ref trader1Row, "wl-oe", AccCommon.DecFormat(wl_oe, 0));
                 TemplateHandler.Assign(ref trader1Row, "wl-overall", AccCommon.DecFormat(wl_overall, 0));
                 TemplateHandler.Assign(ref trader1Row, "wl-nextcorner", AccCommon.DecFormat(wl_NextCorner, 0));
-                #endregion 
+
+                #endregion winlost
+
                 #region comm
+
                 TemplateHandler.Assign(ref trader1Row, "comm-hthdp", AccCommon.DecFormat(comm_hthdp, 0));
                 TemplateHandler.Assign(ref trader1Row, "comm-hdp", AccCommon.DecFormat(comm_hdp, 0));
                 TemplateHandler.Assign(ref trader1Row, "comm-htou", AccCommon.DecFormat(comm_htou, 0));
@@ -1093,8 +1179,11 @@ public partial class ReportHTML
                 TemplateHandler.Assign(ref trader1Row, "comm-oe", AccCommon.DecFormat(comm_oe, 0));
                 TemplateHandler.Assign(ref trader1Row, "comm-overall", AccCommon.DecFormat(comm_overall, 0));
                 TemplateHandler.Assign(ref trader1Row, "comm-nextcorner", AccCommon.DecFormat(comm_NextCorner, 0));
-                #endregion
+
+                #endregion comm
+
                 #region margin
+
                 TemplateHandler.Assign(ref trader1Row, "m-hthdp", m_hthdp);
                 TemplateHandler.Assign(ref trader1Row, "m-hdp", m_hdp);
                 TemplateHandler.Assign(ref trader1Row, "m-htou", m_htou);
@@ -1111,16 +1200,22 @@ public partial class ReportHTML
                 TemplateHandler.Assign(ref trader1Row, "m-oe", m_oe);
                 TemplateHandler.Assign(ref trader1Row, "m-overall", m_overall);
                 TemplateHandler.Assign(ref trader1Row, "m-nextcorner", m_NextCorner);
-                #endregion
-                #endregion
+
+                #endregion margin
+
+                #endregion assign values
 
                 traderStr.Append(trader1Row);
             }
 
             TotalRow = traderTotalTpl.Clone().ToString();
+
             #region assign total
+
             TemplateHandler.Assign(ref TotalRow, "trader", username);
+
             #region turnover
+
             TemplateHandler.Assign(ref TotalRow, "to-hthdp", AccCommon.DecFormat(Total_to_hthdp, 0));
             TemplateHandler.Assign(ref TotalRow, "to-hdp", AccCommon.DecFormat(Total_to_hdp, 0));
             TemplateHandler.Assign(ref TotalRow, "to-htou", AccCommon.DecFormat(Total_to_htou, 0));
@@ -1137,8 +1232,11 @@ public partial class ReportHTML
             TemplateHandler.Assign(ref TotalRow, "to-oe", AccCommon.DecFormat(Total_to_oe, 0));
             TemplateHandler.Assign(ref TotalRow, "to-overall", AccCommon.DecFormat(Total_to_overall, 0));
             TemplateHandler.Assign(ref TotalRow, "to-nextcorner", AccCommon.DecFormat(Total_to_NextCorner, 0));
-            #endregion
+
+            #endregion turnover
+
             #region livebetcount
+
             TemplateHandler.Assign(ref TotalRow, "livebetcount-hthdp", AccCommon.DecFormat(Total_livebetcount_hthdp, 0));
             TemplateHandler.Assign(ref TotalRow, "livebetcount-hdp", AccCommon.DecFormat(Total_livebetcount_hdp, 0));
             TemplateHandler.Assign(ref TotalRow, "livebetcount-htou", AccCommon.DecFormat(Total_livebetcount_htou, 0));
@@ -1155,8 +1253,11 @@ public partial class ReportHTML
             TemplateHandler.Assign(ref TotalRow, "livebetcount-oe", AccCommon.DecFormat(Total_livebetcount_oe, 0));
             TemplateHandler.Assign(ref TotalRow, "livebetcount-overall", AccCommon.DecFormat(Total_livebetcount_overall, 0));
             TemplateHandler.Assign(ref TotalRow, "livebetcount-nextcorner", AccCommon.DecFormat(Total_livebetcount_NextCorner, 0));
-            #endregion
+
+            #endregion livebetcount
+
             #region winlost
+
             TemplateHandler.Assign(ref TotalRow, "wl-hthdp", AccCommon.DecFormat(Total_wl_hthdp, 0));
             TemplateHandler.Assign(ref TotalRow, "wl-hdp", AccCommon.DecFormat(Total_wl_hdp, 0));
             TemplateHandler.Assign(ref TotalRow, "wl-htou", AccCommon.DecFormat(Total_wl_htou, 0));
@@ -1173,8 +1274,11 @@ public partial class ReportHTML
             TemplateHandler.Assign(ref TotalRow, "wl-oe", AccCommon.DecFormat(Total_wl_oe, 0));
             TemplateHandler.Assign(ref TotalRow, "wl-overall", AccCommon.DecFormat(Total_wl_overall, 0));
             TemplateHandler.Assign(ref TotalRow, "wl-nextcorner", AccCommon.DecFormat(Total_wl_NextCorner, 0));
-            #endregion
+
+            #endregion winlost
+
             #region comm
+
             TemplateHandler.Assign(ref TotalRow, "comm-hthdp", AccCommon.DecFormat(Total_comm_hthdp, 0));
             TemplateHandler.Assign(ref TotalRow, "comm-hdp", AccCommon.DecFormat(Total_comm_hdp, 0));
             TemplateHandler.Assign(ref TotalRow, "comm-htou", AccCommon.DecFormat(Total_comm_htou, 0));
@@ -1191,8 +1295,11 @@ public partial class ReportHTML
             TemplateHandler.Assign(ref TotalRow, "comm-oe", AccCommon.DecFormat(Total_comm_oe, 0));
             TemplateHandler.Assign(ref TotalRow, "comm-overall", AccCommon.DecFormat(Total_comm_overall, 0));
             TemplateHandler.Assign(ref TotalRow, "comm-nextcorner", AccCommon.DecFormat(Total_comm_NextCorner, 0));
-            #endregion
+
+            #endregion comm
+
             #region margin
+
             TemplateHandler.Assign(ref TotalRow, "m-hthdp", Total_m_hthdp);
             TemplateHandler.Assign(ref TotalRow, "m-hdp", Total_m_hdp);
             TemplateHandler.Assign(ref TotalRow, "m-htou", Total_m_htou);
@@ -1209,15 +1316,16 @@ public partial class ReportHTML
             TemplateHandler.Assign(ref TotalRow, "m-oe", Total_m_oe);
             TemplateHandler.Assign(ref TotalRow, "m-overall", Total_m_overall);
             TemplateHandler.Assign(ref TotalRow, "m-nextcorner", Total_m_NextCorner);
-            #endregion
-            #endregion
+
+            #endregion margin
+
+            #endregion assign total
 
             traderStr.Append(TotalRow);
 
             rowsTrader = traderStr.ToString();
             TemplateHandler.Assign(ref rowsTrader, "rows", subCount);
             TemplateHandler.Assign(ref rowsTrader, "no_value", TraderNo);
-
 
             reportRows.Append(rowsTrader);
 
@@ -1233,7 +1341,9 @@ public partial class ReportHTML
             TotalRow = traderGrandTotalTpl.Clone().ToString();
 
             #region assing grand total
+
             #region turnover
+
             TemplateHandler.Assign(ref TotalRow, "to-hthdp", AccCommon.DecFormat(Grand_to_hthdp, 0));
             TemplateHandler.Assign(ref TotalRow, "to-hdp", AccCommon.DecFormat(Grand_to_hdp, 0));
             TemplateHandler.Assign(ref TotalRow, "to-htou", AccCommon.DecFormat(Grand_to_htou, 0));
@@ -1250,8 +1360,11 @@ public partial class ReportHTML
             TemplateHandler.Assign(ref TotalRow, "to-oe", AccCommon.DecFormat(Grand_to_oe, 0));
             TemplateHandler.Assign(ref TotalRow, "to-overall", AccCommon.DecFormat(Grand_to_overall, 0));
             TemplateHandler.Assign(ref TotalRow, "to-nextcorner", AccCommon.DecFormat(Grand_to_NextCorner, 0));
-            #endregion
+
+            #endregion turnover
+
             #region livebetcount
+
             TemplateHandler.Assign(ref TotalRow, "livebetcount-hthdp", AccCommon.DecFormat(Grand_livebetcount_hthdp, 0));
             TemplateHandler.Assign(ref TotalRow, "livebetcount-hdp", AccCommon.DecFormat(Grand_livebetcount_hdp, 0));
             TemplateHandler.Assign(ref TotalRow, "livebetcount-htou", AccCommon.DecFormat(Grand_livebetcount_htou, 0));
@@ -1268,8 +1381,11 @@ public partial class ReportHTML
             TemplateHandler.Assign(ref TotalRow, "livebetcount-oe", AccCommon.DecFormat(Grand_livebetcount_oe, 0));
             TemplateHandler.Assign(ref TotalRow, "livebetcount-overall", AccCommon.DecFormat(Grand_livebetcount_overall, 0));
             TemplateHandler.Assign(ref TotalRow, "livebetcount-nextcorner", AccCommon.DecFormat(Grand_livebetcount_NextCorner, 0));
-            #endregion
+
+            #endregion livebetcount
+
             #region winlost
+
             TemplateHandler.Assign(ref TotalRow, "wl-hthdp", AccCommon.DecFormat(Grand_wl_hthdp, 0));
             TemplateHandler.Assign(ref TotalRow, "wl-hdp", AccCommon.DecFormat(Grand_wl_hdp, 0));
             TemplateHandler.Assign(ref TotalRow, "wl-htou", AccCommon.DecFormat(Grand_wl_htou, 0));
@@ -1286,8 +1402,11 @@ public partial class ReportHTML
             TemplateHandler.Assign(ref TotalRow, "wl-oe", AccCommon.DecFormat(Grand_wl_oe, 0));
             TemplateHandler.Assign(ref TotalRow, "wl-overall", AccCommon.DecFormat(Grand_wl_overall, 0));
             TemplateHandler.Assign(ref TotalRow, "wl-nextcorner", AccCommon.DecFormat(Grand_wl_NextCorner, 0));
-            #endregion
+
+            #endregion winlost
+
             #region comm
+
             TemplateHandler.Assign(ref TotalRow, "comm-hthdp", AccCommon.DecFormat(Grand_comm_hthdp, 0));
             TemplateHandler.Assign(ref TotalRow, "comm-hdp", AccCommon.DecFormat(Grand_comm_hdp, 0));
             TemplateHandler.Assign(ref TotalRow, "comm-htou", AccCommon.DecFormat(Grand_comm_htou, 0));
@@ -1304,8 +1423,11 @@ public partial class ReportHTML
             TemplateHandler.Assign(ref TotalRow, "comm-oe", AccCommon.DecFormat(Grand_comm_oe, 0));
             TemplateHandler.Assign(ref TotalRow, "comm-overall", AccCommon.DecFormat(Grand_comm_overall, 0));
             TemplateHandler.Assign(ref TotalRow, "comm-nextcorner", AccCommon.DecFormat(Grand_comm_NextCorner, 0));
-            #endregion
+
+            #endregion comm
+
             #region margin
+
             TemplateHandler.Assign(ref TotalRow, "m-hthdp", Grand_m_hthdp);
             TemplateHandler.Assign(ref TotalRow, "m-hdp", Grand_m_hdp);
             TemplateHandler.Assign(ref TotalRow, "m-htou", Grand_m_htou);
@@ -1322,8 +1444,11 @@ public partial class ReportHTML
             TemplateHandler.Assign(ref TotalRow, "m-oe", Grand_m_oe);
             TemplateHandler.Assign(ref TotalRow, "m-overall", Grand_m_overall);
             TemplateHandler.Assign(ref TotalRow, "m-nextcorner", Grand_m_NextCorner);
-            #endregion
-            #endregion
+
+            #endregion margin
+
+            #endregion assing grand total
+
             reportRows.Append(TotalRow);
         }
         else

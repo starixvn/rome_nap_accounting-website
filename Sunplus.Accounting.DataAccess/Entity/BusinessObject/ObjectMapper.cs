@@ -4,9 +4,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Reflection;
 
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
-
 /// <summary>
 /// Summary description for ObjectMapper
 /// </summary>
@@ -28,7 +25,7 @@ namespace Sunplus.Accounting.DataAccess.Entity.BusinessObject
             foreach (PropertyInfo info in objType.GetProperties())
             {
                 var mapAttr =
-                    (DataMappingAttribute) Attribute.GetCustomAttribute(info, typeof (DataMappingAttribute));
+                    (DataMappingAttribute)Attribute.GetCustomAttribute(info, typeof(DataMappingAttribute));
 
                 if (mapAttr != null)
                 {
@@ -79,7 +76,6 @@ namespace Sunplus.Accounting.DataAccess.Entity.BusinessObject
                     }
                     catch (IndexOutOfRangeException ex)
                     {
-                        
                         {
                             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                         }
@@ -108,11 +104,10 @@ namespace Sunplus.Accounting.DataAccess.Entity.BusinessObject
                     try
                     {
                         ordinals[i] = dr.Table.Columns[propMapList[i].DataFieldName].Ordinal;
-                            //dr.GetOrdinal(propMapList[i].DataFieldName);
+                        //dr.GetOrdinal(propMapList[i].DataFieldName);
                     }
                     catch (IndexOutOfRangeException ex)
                     {
-                        
                         {
                             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                         }
@@ -160,7 +155,7 @@ namespace Sunplus.Accounting.DataAccess.Entity.BusinessObject
                         try
                         {
                             // need to handle enumeration types differently than other base types.
-                            if (type.BaseType.Equals(typeof (Enum)))
+                            if (type.BaseType.Equals(typeof(Enum)))
                             {
                                 propInfoList[i].PropertyInfo.SetValue(
                                     obj, Enum.ToObject(type, value), null);
@@ -175,7 +170,7 @@ namespace Sunplus.Accounting.DataAccess.Entity.BusinessObject
                         catch (Exception ex)
                         {
                             // error assigning the datareader value to a property
-                            
+
                             {
                                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                             }
@@ -224,7 +219,7 @@ namespace Sunplus.Accounting.DataAccess.Entity.BusinessObject
                         try
                         {
                             // need to handle enumeration types differently than other base types.
-                            if (type.BaseType.Equals(typeof (Enum)))
+                            if (type.BaseType.Equals(typeof(Enum)))
                             {
                                 propInfoList[i].PropertyInfo.SetValue(
                                     obj, Enum.ToObject(type, value), null);
@@ -239,7 +234,7 @@ namespace Sunplus.Accounting.DataAccess.Entity.BusinessObject
                         catch (Exception ex)
                         {
                             // error assigning the datareader value to a property
-                            
+
                             {
                                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                             }
@@ -266,7 +261,7 @@ namespace Sunplus.Accounting.DataAccess.Entity.BusinessObject
             //{
             List<PropertyMappingInfo> mapInfo = GetProperties(objType);
             int[] ordinals = GetOrdinals(mapInfo, dr);
-            if (((SqlDataReader) dr).HasRows)
+            if (((SqlDataReader)dr).HasRows)
             {
                 obj = CreateObject<T>(dr, mapInfo, ordinals);
             }
@@ -316,7 +311,7 @@ namespace Sunplus.Accounting.DataAccess.Entity.BusinessObject
         /// <param name="objType">Type of object to add to the collection.</param>
         /// <param name="dr">IDataReader that contains the data for the collection.</param>
         /// <param name="collection">ICollection object to populate.</param>
-        /// 
+        ///
         public static C FillCollection<T, C>(Type objType, IDataReader dr)
             where T : class, new()
             where C : ICollection<T>, new()

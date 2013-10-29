@@ -8,7 +8,7 @@ namespace Sunplus.Accounting.Business
     /// <summary>
     /// Summary description for IMenuManager
     /// </summary>
-    /// 
+    ///
     [ServiceContract]
     public interface IMenuManager
     {
@@ -39,6 +39,7 @@ namespace Sunplus.Accounting.Business
         void GetUserMenu();
 
         void GetReportMenu(string system);
+
         void GetBAMenu();
     }
 }

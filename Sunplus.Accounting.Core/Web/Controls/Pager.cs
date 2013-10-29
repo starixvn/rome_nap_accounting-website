@@ -42,7 +42,7 @@ namespace Sunplus.Accounting.Core.Web.Controls
 
                 if (cpage >= 4)
                 {
-                    pageIndex = (string) pageItem.Clone();
+                    pageIndex = (string)pageItem.Clone();
                     TemplateHandler.Assign(ref pageIndex, "{jsonclick}", jsonclick);
                     TemplateHandler.Assign(ref pageIndex, "{PageText}", "1");
                     if ((cpage - 2) == 2)
@@ -56,7 +56,7 @@ namespace Sunplus.Accounting.Core.Web.Controls
 
                 for (int i = startpage; i < endpage; ++i)
                 {
-                    pageIndex = (string) pageItem.Clone();
+                    pageIndex = (string)pageItem.Clone();
 
                     TemplateHandler.Assign(ref pageIndex, "{jsonclick}", jsonclick);
                     if (cpage == (i + 1))
@@ -72,7 +72,7 @@ namespace Sunplus.Accounting.Core.Web.Controls
 
                 if ((endpage + 1) < pageNum)
                 {
-                    pageIndex = (string) pageItem.Clone();
+                    pageIndex = (string)pageItem.Clone();
                     TemplateHandler.Assign(ref pageIndex, "{jsonclick}", jsonclick);
                     TemplateHandler.Assign(ref pageIndex, "{PageText}", "" + pageNum);
                     pageList += " ... " + pageIndex;

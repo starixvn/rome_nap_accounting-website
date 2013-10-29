@@ -1,26 +1,25 @@
 using System;
 using System.Data;
 using System.Text;
-using DNAide.Web;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using IBCUtils;
 using DNAide.Data;
-
+using DNAide.Web;
+using IBCUtils;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
 public partial class Report_AllCustomerBalance : System.Web.UI.Page
 {
     private DateTime fDate;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request["fdate"] != null)
         {
             fDate = Convert.ToDateTime(Request["fdate"]);
-            CustBalanceHeaderStr.Text = Resources.Language.AllCustBalance + " at: "+ fDate;
+            CustBalanceHeaderStr.Text = Resources.Language.AllCustBalance + " at: " + fDate;
             CustBalanceContentHtml.Text = GenCustBalance();
         }
     }
+
     private string GenCustBalance()
     {
         StringBuilder html = new StringBuilder();
@@ -39,11 +38,11 @@ public partial class Report_AllCustomerBalance : System.Web.UI.Page
                 double pBalance = tbl.Rows[0].IsNull("positivebalance") ? 0 : FormatHandler.GetDouble(tbl.Rows[0]["positivebalance"]);
                 if (pBalance > 0)
                 {
-                    totalCurr=pBalance;
+                    totalCurr = pBalance;
                 }
                 else
                 {
-                    totalCurr =tbl.Rows[0].IsNull("negativebalance")?0: FormatHandler.GetDouble(tbl.Rows[0]["negativebalance"]);
+                    totalCurr = tbl.Rows[0].IsNull("negativebalance") ? 0 : FormatHandler.GetDouble(tbl.Rows[0]["negativebalance"]);
                 }
 
                 string odd_even = "";
@@ -51,10 +50,10 @@ public partial class Report_AllCustomerBalance : System.Web.UI.Page
                 {
                     row = content;
                     odd_even = (odd_even == "") ? "evenrow" : "";
-                    string strCurrency=tbl.Rows[i]["currency"] as string ?? string.Empty;
-                    string strUsername= tbl.Rows[i]["username"] as string ?? string.Empty;
+                    string strCurrency = tbl.Rows[i]["currency"] as string ?? string.Empty;
+                    string strUsername = tbl.Rows[i]["username"] as string ?? string.Empty;
                     TemplateHandler.Assign(ref row, "{odd_even}", odd_even);
-                    TemplateHandler.Assign(ref row, "{username}",strUsername);
+                    TemplateHandler.Assign(ref row, "{username}", strUsername);
                     TemplateHandler.Assign(ref row, "{currency}", strCurrency);
                     TemplateHandler.Assign(ref row, "{+}", FormatHandler.FormatNumber20(tbl.Rows[i]["positivebalance"]));
                     TemplateHandler.Assign(ref row, "{-}", FormatHandler.FormatNumber20(tbl.Rows[i]["negativebalance"]));
@@ -65,7 +64,7 @@ public partial class Report_AllCustomerBalance : System.Web.UI.Page
                     row = content;
                     if (i < tbl.Rows.Count - 1)
                     {
-                        nextCurrency = tbl.Rows[i+1]["currency"] as string ?? string.Empty;
+                        nextCurrency = tbl.Rows[i + 1]["currency"] as string ?? string.Empty;
                     }
                     if (string.Compare(strCurrency, nextCurrency, true) != 0 || (i == tbl.Rows.Count - 1))
                     {
@@ -87,7 +86,7 @@ public partial class Report_AllCustomerBalance : System.Web.UI.Page
                         }
                         else
                         {
-                            totalCurr +=tbl.Rows[i].IsNull("negativebalance")?0:FormatHandler.GetDouble(tbl.Rows[i]["negativebalance"]);
+                            totalCurr += tbl.Rows[i].IsNull("negativebalance") ? 0 : FormatHandler.GetDouble(tbl.Rows[i]["negativebalance"]);
                         }
                     }
                 }
@@ -100,7 +99,7 @@ public partial class Report_AllCustomerBalance : System.Web.UI.Page
                         new string[] { "6", Resources.Language.thereisnodata }));
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             Response.Write(ex.Message);

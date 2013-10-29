@@ -29,4 +29,4 @@ namespace Sunplus.Accounting.WcfServiceLibrary
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         List<SiteDTO> GetSiteList_Report_Licensee();
     }
-    }
+}

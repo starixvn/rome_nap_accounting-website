@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Sunplus.Accounting.Entities.Report.DailyWL
 {
@@ -33,6 +30,5 @@ namespace Sunplus.Accounting.Entities.Report.DailyWL
 
         [DataMember]
         public string Margin { get; set; }
-
     }
 }

@@ -6,12 +6,9 @@
 
 namespace Fanex.Tarus.LiveCasino.Business.Setting
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using Fanex.Tarus.LiveCasino.Entities.Setting;
     using Fanex.Tarus.LiveCasino.Entities;
+    using Fanex.Tarus.LiveCasino.Entities.Setting;
 
     /// <summary>
     /// TODO: Update summary.

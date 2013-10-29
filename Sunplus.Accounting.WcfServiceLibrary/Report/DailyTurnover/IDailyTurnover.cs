@@ -1,6 +1,6 @@
-﻿using System.ServiceModel;
+﻿using System.Collections.Generic;
+using System.ServiceModel;
 using System.ServiceModel.Web;
-using System.Collections.Generic;
 using Sunplus.Accounting.Entities.Report.DailyTurnover;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.Report.DailyTurnover
@@ -24,9 +24,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report.DailyTurnover
 
         void DetailTurnoverExportExcel(string date);
 
-
         void DetailActionTurnoverExportExcel(string datetime, string action, string username);
     }
-
-   
 }

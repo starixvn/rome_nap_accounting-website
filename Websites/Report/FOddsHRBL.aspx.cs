@@ -1,29 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Data;
 using System.Text;
-using Sunplus.Accounting.Core.Cache;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using DNAide.Web;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
-
-using RemotingRef;
-
-
+using DNAide.Web;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
+using Sunplus.Accounting.DataAccess.Report;
 
 public partial class Report_HRBL : PageBase
 {
-
     public StringBuilder html = new StringBuilder();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         Title = Sunplus.Accounting.Business.Report.Reports.Title;
@@ -32,8 +22,8 @@ public partial class Report_HRBL : PageBase
 
     /// <summary>
     /// Generate report body
-    /// </summary>    
-    void GenReport()
+    /// </summary>
+    private void GenReport()
     {
         DbResult ds = null;
 
@@ -100,7 +90,7 @@ public partial class Report_HRBL : PageBase
                             TemplateHandler.Assign(ref row, "WinOddsSet", NumberFormat.DecFormat(dr["Odds"], 2));
                             if (NumberFormat.DecFormat(dr["mOdds"], 2) != NumberFormat.DecFormat(dr["Odds"], 2) && CastAide.AsString(dr["status"]).ToUpper() == Status.WIN)
                             {
-                                TemplateHandler.Assign(ref row, "{Odds}","");                                
+                                TemplateHandler.Assign(ref row, "{Odds}", "");
                                 TemplateHandler.Assign(ref row, "WinOdds", NumberFormat.DecFormat(dr["mOdds"], 2));
                             }
                             else
@@ -112,14 +102,14 @@ public partial class Report_HRBL : PageBase
                         else
                         {
                             TemplateHandler.Assign(ref row, "{Odds}", "");
-                            TemplateHandler.Assign(ref row, "lblWinOdds", Resources.Language.wBetAt);                                                        
-                            TemplateHandler.Assign(ref row, "lblPlaceOdds", Resources.Language.pBetAt);                            
+                            TemplateHandler.Assign(ref row, "lblWinOdds", Resources.Language.wBetAt);
+                            TemplateHandler.Assign(ref row, "lblPlaceOdds", Resources.Language.pBetAt);
                             TemplateHandler.Assign(ref row, "WinStatus", dr["winStatus"]);
                             TemplateHandler.Assign(ref row, "PlaceStatus", dr["placeStatus"]);
                             TemplateHandler.Assign(ref row, "Status", "");
                             TemplateHandler.Assign(ref row, "WinOddsSet", (CastAide.AsString(dr["winStatus"]).ToUpper() != Status.WIN) ? "0.00" : NumberFormat.DecFormat(dr["WinOdds"], 2));
                             TemplateHandler.Assign(ref row, "PlaceOddsSet", (CastAide.AsString(dr["placeStatus"]).ToUpper() != Status.WIN) ? "0.00" : NumberFormat.DecFormat(dr["PlaceOdds"], 2));
-                            if (NumberFormat.DecFormat(dr["finalodds"], 2) != NumberFormat.DecFormat(dr["WinOdds"], 2) && CastAide.AsString(dr["winStatus"]).ToUpper()==Status.WIN)
+                            if (NumberFormat.DecFormat(dr["finalodds"], 2) != NumberFormat.DecFormat(dr["WinOdds"], 2) && CastAide.AsString(dr["winStatus"]).ToUpper() == Status.WIN)
                             {
                                 TemplateHandler.Assign(ref row, "lblWinOddsSet", Resources.Language.WSettle);
                                 TemplateHandler.Assign(ref row, "WinOdds", NumberFormat.DecFormat(dr["finalodds"], 2));
@@ -165,13 +155,10 @@ public partial class Report_HRBL : PageBase
                 }
             }
             html.Append(tpl);
-
         }
         catch (Exception ex)
         {
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
-
-
     }
 }

@@ -26,10 +26,8 @@ namespace Sunplus.Accounting.Business.Transaction
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         bool UnVerifyTransaction(string refNo);
 
-
         void ExportToExcelforDailyAllTxn(string date, string type, string creator, int totalRows);
 
         void ExportToExcelDailyFinance(string date, int status, string type, string creator, string verifyBy);
-        
     }
 }

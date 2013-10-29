@@ -1,13 +1,11 @@
 ﻿using System;
-using System.ServiceModel.Activation;
-
-using Sunplus.Accounting.Business.BootStrappers;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Entities.Customer;
-using Sunplus.Accounting.Business.Customer;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.Entities;
 using System.Collections.Generic;
+using System.ServiceModel.Activation;
+using Sunplus.Accounting.Business.BootStrappers;
+using Sunplus.Accounting.Business.Customer;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Entities;
+using Sunplus.Accounting.Entities.Customer;
 
 // NOTE: If you change the class name "ServiceCustomerInfo" here, you must also update the reference to "ServiceCustomerInfo" in Web.config.
 namespace Sunplus.Accounting.WcfServiceLibrary.Customer
@@ -18,7 +16,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Customer
         public string GenDownlineList(int custId, int roleId, int pageIndex)
         {
             var customerService = new Sunplus.Accounting.Business.ServiceCustomerInfo();
-            return customerService.GenDownlineList( custId,  roleId,  pageIndex);
+            return customerService.GenDownlineList(custId, roleId, pageIndex);
         }
 
         public string GenOnlineList(int custId)
@@ -37,18 +35,14 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Customer
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
-           
+
             return customer;
         }
 
-
         public Result UpdateCustomerSite(int custId, string newSite)
         {
-
             var result = new Result();
             try
             {
@@ -57,9 +51,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Customer
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
@@ -95,7 +87,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Customer
             var enableNG = CommonBootStrapper.Locator.GetInstance<ICustomerManager>();
             return enableNG.UpdateBetSettingNGDownline(username, isEnable, maxbet, minbet, maxpermatch, maxperball);
         }
-
 
         public BetSettingNG SelBetSettingUpline(string username)
         {

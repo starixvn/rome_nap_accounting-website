@@ -11,7 +11,7 @@ namespace Sunplus.Accounting.Business.Report.Other
         TraderPerformanceDTO GetTraderPerformance(string fromDate, string toDate, int isSoccer);
 
         [OperationContract]
-        void TraderPerformanceExport2Excel(string  fromDate, string toDate, int isSoccer);
+        void TraderPerformanceExport2Excel(string fromDate, string toDate, int isSoccer);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]

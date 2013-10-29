@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-
-using System.Configuration;
-using Sunplus.Accounting.Core.Common;
+﻿using System.Configuration;
 
 namespace Sunplus.Accounting.Core.Configurations
 {
@@ -31,8 +24,6 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-
-
         public static TransactionSection Instance
         {
             get
@@ -43,23 +34,18 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-
         public TransactionCollection this[StoreCollection name]
         {
             get
             {
-
                 var spCollection = (TransactionCollection)this.GetType().GetProperty(name.ToString()).GetValue(this, System.Reflection.BindingFlags.GetField, null, null, null);
                 return spCollection;
             }
         }
-
-
     }
 
     public class TransactionCollection : ConfigurationElementCollection
     {
-
         public TransactionCollection()
         {
             //var BA = (BAElement) CreateNewElement();
@@ -105,7 +91,6 @@ namespace Sunplus.Accounting.Core.Configurations
             BaseClear();
         }
 
-
         public TransactionElement this[int index]
         {
             get
@@ -135,7 +120,6 @@ namespace Sunplus.Accounting.Core.Configurations
             return BaseIndexOf(transactionElement);
         }
 
-
         protected override sealed ConfigurationElement CreateNewElement()
         {
             return new TransactionElement();
@@ -150,11 +134,8 @@ namespace Sunplus.Accounting.Core.Configurations
     public class TransactionElement : ConfigurationElement
     {
 
-
-
         public TransactionElement()
         {
-
         }
 
         [ConfigurationProperty("name", IsRequired = true, IsKey = true)]
@@ -212,7 +193,6 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-
         [ConfigurationProperty("stores", IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(TransactionCollection),
             AddItemName = "add",
@@ -227,7 +207,5 @@ namespace Sunplus.Accounting.Core.Configurations
                 return stores;
             }
         }
-
-
     }
 }

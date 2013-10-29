@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.SessionState;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 using IBCUtils.DAL;
 using DNAide.Data;
@@ -22,13 +21,15 @@ public class CheckUserName : IHttpHandler, IRequiresSessionState
         try
         {
             string strType = context.Request["listType"] as string ?? string.Empty;
-            DbResult ds = SelectCustomer.CustSelByUsername(username, AppSession.SYSTEM);
+            var ds = SelectCustomer.CustSelByUsername(username, AppSession.SYSTEM);
             if (ds != null)
             {
-                if (ds.ResultSet.Tables.Count> 0 && ds.ResultSet.Tables[0].Rows.Count > 0)
+                if (ds.Tables.Count> 0 && ds.Tables[0].Rows.Count > 0)
                 {
+                    var row = ds.Tables[0].Rows[0];
                     int roleId = 0;
-                    int.TryParse(ds.ResultSet.Tables[0].Rows[0]["roleid"].ToString(), out roleId);
+                    int.TryParse(ds.Tables[0].Rows[0]["roleid"].ToString(), out roleId);
+                    
                     bool isDeposit = Sunplus.Accounting.Core.Configurations.WebSettings.IsApplySplitingDepositeCustomer ?  IsDeposit(username) : false;
                     //bool isDeposit = IsDeposit(username);
                     if ((string.Compare(strType, "member", true) == 0 && roleId != 2) || (string.Compare(strType, "member", true) == 0 && isDeposit))
@@ -41,7 +42,7 @@ public class CheckUserName : IHttpHandler, IRequiresSessionState
                     }
                     else
                     {
-                        context.Response.Write("parent.OpenFormAdd(" + ds.ResultSet.Tables[0].Rows[0]["custid"] + "," + ds.ResultSet.Tables[0].Rows[0]["roleid"] + ");");
+                        context.Response.Write("parent.OpenFormAdd(" + ds.Tables[0].Rows[0]["custid"] + "," + ds.Tables[0].Rows[0]["roleid"] + ");");
                     }
                 }
                 else

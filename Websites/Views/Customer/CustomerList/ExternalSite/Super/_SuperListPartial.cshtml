@@ -58,14 +58,20 @@
     bool isShowBettingSetting = false;
     if (!String.IsNullOrEmpty(bettingSetting) && bettingSetting.Contains("|"))
     {
-        int groupId = CastAide.AsInt32(bettingSetting.Split(new char[] { '|' })[0], 0);
-        if (groupId != AppSession.GroupID)
-        {
-            isShowBettingSetting = false;
+        try{
+            var groupId = bettingSetting.Split(new char[] { '|' })[0].Split(new char[]{','});
+        
+            if (!groupId.Contains(AppSession.GroupID.ToString()))
+            {
+                isShowBettingSetting = false;
+            }
+            else
+            {
+                isShowBettingSetting=true;
+            }
         }
-        else
-        {
-            isShowBettingSetting=true;
+        catch{
+             isShowBettingSetting = false;
         }
     }
    

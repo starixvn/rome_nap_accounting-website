@@ -91,8 +91,8 @@
             url: window.rootUrl + BetListByCustInfo.URL,
             data: params,
             success: function (result) {
-                BetListByCustInfo.gridOpts.isShowPager = true;
                 $("#betListContent").html(result);
+                BetListByCustInfo.gridOpts.isShowPager = ((_length == 0 || _length == 1) ? false : true);
                 $("#BetlistByCustInfo").initGrid(BetListByCustInfo.gridOpts);
                 $('#BetlistByCustInfo').removeClass("display-none").gridScroller(BetListByCustInfo.gridOpts);
                 BetListByCustInfo.initPager(_length, BetListByCustInfo.paramGetBetBetlist.PageSize, BetListByCustInfo.paramGetBetBetlist.PageIndex - 1);    

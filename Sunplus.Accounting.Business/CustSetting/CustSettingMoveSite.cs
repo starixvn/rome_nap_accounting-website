@@ -1,10 +1,8 @@
 ﻿using System.Data;
-using DNAide.Core;
 using DNAide.Data;
 using Sunplus.Accounting.Business.CacheManager;
-using Sunplus.Accounting.Core.Cache;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Business.Security;
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Web.TplCore.App_Templates.Customer.App_Templates.Customer;
 using Sunplus.Accounting.DataAccess.AdoNet.SqlServer.CustSetting;
 
@@ -16,13 +14,14 @@ namespace Sunplus.Accounting.Business.CustSetting
     public class CustSettingMoveSite
     {
         #region GetSiteNameByCustId
+
         public string GetSiteNameByCustId(int custId, int roleId, string siteName, string userName)
         {
             var cust = new CustSettingProviderClient();
             bool isAllow = false;
             if (AppSession.SYSTEM.Equals(Enumerations.AccountingSystem.Accounting))
                 isAllow = Permissions.GetHostPermission(Enumerations.Functions.Customer.MoveSite) && roleId != 1;
-            
+
             if (isAllow)
                 siteName = "<div id='dvSite'><a target='centerFr' href='Customer/ChangeSite.aspx?CustId=" + custId +
                            "&Site=" + siteName + "&UserName=" + userName + "&RoleId=" + roleId +
@@ -32,8 +31,11 @@ namespace Sunplus.Accounting.Business.CustSetting
 
             return siteName;
         }
-        #endregion
+
+        #endregion GetSiteNameByCustId
+
         #region LoadChangSiteForm
+
         public string LoadChangSiteForm(string CurrentSite, string UserName, int RoleId, int CustId)
         {
             var html = new ChangeSite_Template();
@@ -44,12 +46,15 @@ namespace Sunplus.Accounting.Business.CustSetting
                 case 1:
                     level = "Member";
                     break;
+
                 case 2:
                     level = "Agent";
                     break;
+
                 case 3:
                     level = "Master";
                     break;
+
                 case 4:
                     level = "Super";
                     break;
@@ -76,9 +81,11 @@ namespace Sunplus.Accounting.Business.CustSetting
             else html.IsSameLine = "1";
             return html.ToString();
         }
-        #endregion
+
+        #endregion LoadChangSiteForm
 
         #region GetAllSiteNames
+
         public string GetAllSiteNames()
         {
             string site = "";
@@ -101,19 +108,22 @@ namespace Sunplus.Accounting.Business.CustSetting
 
             return site;
         }
-        #endregion
+
+        #endregion GetAllSiteNames
 
         #region UpdateMoveSite
+
         public string UpdateMoveSite(int CustId, string NewSite)
         {
             var cust = new CustSettingProviderClient();
-            var rs = cust.CustomerUdpMoveSite(AppSession.AccId, CustId, NewSite);            
+            var rs = cust.CustomerUdpMoveSite(AppSession.AccId, CustId, NewSite);
             string Msg = "no|" + rs.ErrorMessage;
             if (rs.ErrorCode == 0)
                 Msg = "ok|Move site for this customer and downlines successfully";
 
             return Msg;
         }
-        #endregion
+
+        #endregion UpdateMoveSite
     }
 }

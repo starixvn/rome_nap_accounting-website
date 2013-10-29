@@ -10,8 +10,10 @@ namespace Sunplus.Accounting.Entities
     {
         [DataMember]
         public string Reciver { get; set; }
+
         [DataMember]
         public bool IsSuccess { get; set; }
+
         [DataMember]
         public string ErrorMessage { get; set; }
     }
@@ -22,6 +24,7 @@ namespace Sunplus.Accounting.Entities
     {
         [DataMember]
         public bool IsFail { get; set; }
+
         [DataMember]
         public List<SendMailToReciverResult> Recivers { get; set; }
     }
@@ -32,10 +35,13 @@ namespace Sunplus.Accounting.Entities
     {
         [DataMember]
         public string Reciver { get; set; }
+
         [DataMember]
         public string To { get; set; }
+
         [DataMember]
         public string Cc { get; set; }
+
         [DataMember]
         public string Bcc { get; set; }
     }

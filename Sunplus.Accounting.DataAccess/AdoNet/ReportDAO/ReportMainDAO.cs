@@ -3,13 +3,8 @@ using System.Collections;
 using DNAide.Core;
 using DNAide.Data;
 
-using Sunplus.Accounting.Core.Configurations;
-using System.Data;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 using Sunplus.Accounting.DataAccess.IReportDAO;
-using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 {
@@ -38,9 +33,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }

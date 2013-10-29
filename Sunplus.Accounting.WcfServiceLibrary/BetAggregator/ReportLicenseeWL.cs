@@ -11,7 +11,6 @@ namespace Sunplus.Accounting.WcfServiceLibrary.BetAggregator
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class ReportLicenseeWL : IReportLicenseeWL
     {
-
         public List<Item> SelLicensees(bool IsAll)
         {
             var licenseeList = CommonBootStrapper.Locator.GetInstance<IReportWLBABySiteService>();
@@ -30,42 +29,39 @@ namespace Sunplus.Accounting.WcfServiceLibrary.BetAggregator
             return deposit.GetDatetimeOption(dateOption);
         }
 
-
-        public Report_LicenseeWLBA_DTO SelReportByLicensee(int LicenseeID, int Currency, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter,int excludeTest, int pageIndex, int pageSize, int fromCache)
+        public Report_LicenseeWLBA_DTO SelReportByLicensee(int LicenseeID, int Currency, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache)
         {
             var licenseeList = CommonBootStrapper.Locator.GetInstance<IReportWLBABySiteService>();
             return licenseeList.SelReportByLicensee(LicenseeID, Currency, baseCurrency, FromDate, ToDate, showSB, ShowRB, ShowNG,
-                                                        ReportType, drawfilter,excludeTest, 1 , pageIndex, pageSize, fromCache);
+                                                        ReportType, drawfilter, excludeTest, 1, pageIndex, pageSize, fromCache);
         }
 
-
-        public Report_LicenseeWLBA_DTO SelReportByLicenseeDetail_Ag(int LicenseeID, int Currency, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter,int excludeTest, int pageIndex, int pageSize, int fromCache)
+        public Report_LicenseeWLBA_DTO SelReportByLicenseeDetail_Ag(int LicenseeID, int Currency, int baseCurrency, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache)
         {
             var licenseeList = CommonBootStrapper.Locator.GetInstance<IReportWLBABySiteService>();
             return licenseeList.SelReportByLicenseeDetail_Ag(LicenseeID, Currency, baseCurrency, FromDate, ToDate, showSB, ShowRB, ShowNG,
-                                                        ReportType, drawfilter,excludeTest, 1 , pageIndex, pageSize, fromCache);
-            
+                                                        ReportType, drawfilter, excludeTest, 1, pageIndex, pageSize, fromCache);
         }
 
-        public Report_LicenseeWLBA_DTO SelReportByLicenseeDetail(int LicenseeID, int Currency, int baseCurrency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter,int excludeTest, int pageIndex, int pageSize, int fromCache)
+        public Report_LicenseeWLBA_DTO SelReportByLicenseeDetail(int LicenseeID, int Currency, int baseCurrency, int CustId, string FromDate, string ToDate, int showSB, int ShowRB, int ShowNG, int ReportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache)
         {
             var licenseeList = CommonBootStrapper.Locator.GetInstance<IReportWLBABySiteService>();
             return licenseeList.SelReportByLicenseeDetail(LicenseeID, Currency, baseCurrency, CustId, FromDate, ToDate, showSB, ShowRB, ShowNG,
-                                                        ReportType, drawfilter,excludeTest, 1, pageIndex, pageSize, fromCache);
+                                                        ReportType, drawfilter, excludeTest, 1, pageIndex, pageSize, fromCache);
         }
 
-        public List<BetListDetail> BetlistDepositReport(int custId, string fdate, string tdate, bool showsb, bool showng, int showba, bool showrb, bool showlc,  int drawFilter)
+        public List<BetListDetail> BetlistDepositReport(int custId, string fdate, string tdate, bool showsb, bool showng, int showba, bool showrb, bool showlc, int drawFilter)
         {
             var betlist = CommonBootStrapper.Locator.GetInstance<IReportWLBABySiteService>();
             return betlist.SelBetlistDepositReport(custId, fdate, tdate, showsb, showng, showrb, showba, showlc, drawFilter);
         }
-
 
         public LicenseeWinLossCommDTO LicenseeWinLossByCommLevel(int licenseeId, int currencyId, bool isExcludeTest, string fromDate, string toDate, int drawFilter)
         {
             var licenseeList = CommonBootStrapper.Locator.GetInstance<IReportWLBABySiteService>();
             return licenseeList.LicenseeWinLossByCommLevel(licenseeId, currencyId, isExcludeTest, fromDate, toDate, drawFilter);
         }
+
         public LicenseesWLBA SelReportByLicensees(int licenseeId, int currency, int baseCurrency, string fromDate, string toDate, int reportType, int drawfilter, int excludeTest, int pageIndex, int pageSize, int fromCache)
         {
             var licenseeList = CommonBootStrapper.Locator.GetInstance<IReportWLBABySiteService>();

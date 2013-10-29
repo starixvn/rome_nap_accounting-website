@@ -4,24 +4,28 @@ using System.Threading.Tasks;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.Entities.Casino;
+using Fanex.CustomerSetting.Module.ProgressiveBonus.Criteria;
+using Fanex.CustomerSetting.Module.ProgressiveBonus.Repositories.Impl;
 
 namespace Sunplus.Accounting.Business.PT.Casino
 {
-    public class CasinoManager:ICasinoManager
+    public class CasinoManager : ICasinoManager
     {
         public CasinoManager()
         {
         }
-      
+
         public void AutoInsertCasinoAccount(CSCustomerDetail customerInfo, int userId, string userName, string ip)
         {
             var casinoLibray = new CasinoLibrary.SBAgent.Customer();
-            //casinoLibray.SiteName = customerInfo.SiteName;                  
+            //casinoLibray.SiteName = customerInfo.SiteName;
             try
             {
                 Task.Factory.StartNew(() =>
                 {
-                      
+                    bool EnableBonus = false;
+                    bool EnableJackpot = false;
+ 
                     var isSuccess = casinoLibray.AutoInsertAccount(customerInfo.CasinoNo, customerInfo.IBCCustID,
                                                                     customerInfo.UserName, customerInfo.UserName2,
                                                                     customerInfo.FirstName, customerInfo.LastName,
@@ -31,6 +35,8 @@ namespace Sunplus.Accounting.Business.PT.Casino
                                                                     customerInfo.Suspend, customerInfo.IsEnablePT,
                                                                     customerInfo.SIBCCustID, customerInfo.MIBCCustID,
                                                                     customerInfo.AIBCCustID, customerInfo.RoleId.ToString(),
+                                                                    EnableBonus,
+                                                                    EnableJackpot,
                                                                     DateTime.Today,
                                                                     ip, userId, userName, 3);
                     Thread.Sleep(1000);
@@ -43,12 +49,10 @@ namespace Sunplus.Accounting.Business.PT.Casino
                         casinoLibray.RemoveAccount(customerInfo.UserName, ip, userId, userName, 3);
                     }
                 });
-
-                
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);                
+                LogExtensions.ExceptionHandler(ex);
                 casinoLibray.RemoveAccount(customerInfo.UserName, ip, userId, userName, 3);
             }
         }

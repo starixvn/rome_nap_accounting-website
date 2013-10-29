@@ -4,16 +4,12 @@ using System.Data;
 using System.Text;
 using DNAide.Core;
 using DNAide.Web;
+using IBCUtils;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using IBCUtils;
-
-
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Core.LoggingLib;
 
 /// <summary>
 /// Summary description for DeleteBet
@@ -94,24 +90,24 @@ namespace BLL.Report
                         }
                         TemplateHandler.Assign(ref row, "{Type/BET}", typebet);
 
-                        double stake = FormatHandler.GetDouble(dr["stake"])*FormatHandler.GetDouble(dr["actualrate"]);
+                        double stake = FormatHandler.GetDouble(dr["stake"]) * FormatHandler.GetDouble(dr["actualrate"]);
                         TemplateHandler.Assign(ref row, "{Stake}", FormatHandler.FormatNumber2(stake));
 
-                        double winlost = FormatHandler.GetDouble(dr["winlost"])*
+                        double winlost = FormatHandler.GetDouble(dr["winlost"]) *
                                          FormatHandler.GetDouble(dr["actualrate"]) -
-                                         FormatHandler.GetDouble(dr["actual_stake"])*
+                                         FormatHandler.GetDouble(dr["actual_stake"]) *
                                          FormatHandler.GetDouble(dr["actualrate"]);
                         TemplateHandler.Assign(ref row, "{Winlost}", FormatHandler.FormatNumber2(winlost));
 
-                        double awinlost = FormatHandler.GetDouble(dr["awinlost"])*
+                        double awinlost = FormatHandler.GetDouble(dr["awinlost"]) *
                                           FormatHandler.GetDouble(dr["actualrate"]);
                         TemplateHandler.Assign(ref row, "{A.Winlost}", FormatHandler.FormatNumber2(awinlost));
 
-                        double mwinlost = FormatHandler.GetDouble(dr["mwinlost"])*
+                        double mwinlost = FormatHandler.GetDouble(dr["mwinlost"]) *
                                           FormatHandler.GetDouble(dr["actualrate"]);
                         TemplateHandler.Assign(ref row, "{M.Winlost}", FormatHandler.FormatNumber2(mwinlost));
 
-                        double swinlost = FormatHandler.GetDouble(dr["swinlost"])*
+                        double swinlost = FormatHandler.GetDouble(dr["swinlost"]) *
                                           FormatHandler.GetDouble(dr["actualrate"]);
                         TemplateHandler.Assign(ref row, "{S.Winlost}", FormatHandler.FormatNumber2(swinlost));
                         TemplateHandler.Assign(ref row, "{Status}", Convert.ToString(dr["Status"]));
@@ -127,8 +123,7 @@ namespace BLL.Report
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw;
             }
             html.Append("</table>");

@@ -20,6 +20,7 @@ var WL2hShowHideDivManager = {
             $("#dailyWLReportDiv").addClass("hidden");
             WL2hShowHideDivManager.updateShareElement();
             $("#combinationMixParlayReport").addClass("hidden");
+            $("#txtfromdate").datepicker("option", "minDate", '1/01/2011');
             DailyWinLoss2hManager.reloadGrid(sportId, wldate);
         } else {
             showAlertMessage("InformationMssg", "Permission is denied.", 1);

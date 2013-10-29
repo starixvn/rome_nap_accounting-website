@@ -1,33 +1,28 @@
 ﻿using System;
-using System.Data;
-using System.Web;
-using System.Text;
 using System.Collections;
+using System.Data;
+using System.Text;
+using DNAide.Core;
+using DNAide.Data;
+using DNAide.Utils;
+using DNAide.Web;
 using Sunplus.Accounting.Business;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using DNAide.Data;
-using DNAide.Core;
-using DNAide.Web;
-using DNAide.Utils;
-
-using ExcelUtil.Spreadsheet;
-
 
 /// <summary>
 /// Summary description for HRGroupDailyReport
 /// </summary>
 namespace BLL.Report.HR.GroupDaily
 {
-    public class HRGroupDailyOpenToteManager:ReportBase
+    public class HRGroupDailyOpenToteManager : ReportBase
     {
         #region AssignValueTotal
-        void AssignValueTotal(ref string row, DataTable dtGroup, string condition)
+
+        private void AssignValueTotal(ref string row, DataTable dtGroup, string condition)
         {
             TemplateHandler.Assign(ref row, "TO_Agent", NumberFormat.DecFormat(dtGroup.Compute("sum(turnoverAgents)", condition), 2));
             TemplateHandler.Assign(ref row, "TO_IBC", NumberFormat.DecFormat(dtGroup.Compute("sum(turnoverIBC)", condition), 2));
@@ -44,7 +39,7 @@ namespace BLL.Report.HR.GroupDaily
 
             TemplateHandler.Assign(ref row, "GroupTotal", NumberFormat.DecFormat(dtGroup.Compute("sum(groupTotalIncome)", condition), 2));
 
-            decimal turnover3rd = CastAide.AsDecimal( dtGroup.Compute("sum(turnover3rd)", condition));
+            decimal turnover3rd = CastAide.AsDecimal(dtGroup.Compute("sum(turnover3rd)", condition));
             decimal DividendWon3rd = CastAide.AsDecimal(dtGroup.Compute("sum(DividendWon3rd)", condition));
             decimal ExpComm3rd = CastAide.AsDecimal(dtGroup.Compute("sum(ExpComm3rd)", condition));
             decimal Fees3rd = CastAide.AsDecimal(dtGroup.Compute("sum(Fees3rd)", condition));
@@ -56,10 +51,12 @@ namespace BLL.Report.HR.GroupDaily
             TemplateHandler.Assign(ref row, "Fees_3rd", NumberFormat.DecFormat(Fees3rd, 2));
             TemplateHandler.Assign(ref row, "AmountDueto_3rd", NumberFormat.DecFormat(AmountDueto3rd, 2));
         }
-        #endregion
+
+        #endregion AssignValueTotal
 
         #region AssignValueRow
-        void AssignValueRow(ref string row, DataRow dr)
+
+        private void AssignValueRow(ref string row, DataRow dr)
         {
             TemplateHandler.Assign(ref row, "TO_Agent", NumberFormat.DecFormat(dr["turnoverAgents"], 2));
             TemplateHandler.Assign(ref row, "TO_IBC", NumberFormat.DecFormat(dr["turnoverIBC"], 2));
@@ -87,11 +84,12 @@ namespace BLL.Report.HR.GroupDaily
             TemplateHandler.Assign(ref row, "CommExpense_3rd", NumberFormat.DecFormat(ExpComm3rd, 2));
             TemplateHandler.Assign(ref row, "Fees_3rd", NumberFormat.DecFormat(Fees3rd, 2));
             TemplateHandler.Assign(ref row, "AmountDueto_3rd", NumberFormat.DecFormat(AmountDueto3rd, 2));
-
         }
-        #endregion
+
+        #endregion AssignValueRow
 
         #region HRGroupDaily
+
         public string HRGroupDaily(string fromdate, string todate, bool IsSendMail)
         {
             string tpl = WebUtils.LoadTemplate("Report/HRGroupDaily/HRGroupDailyOpenTote.htm");
@@ -141,6 +139,7 @@ namespace BLL.Report.HR.GroupDaily
                     }
 
                     #region Combine group daily into group
+
                     dtGroup = rsGroup.ResultSet.Tables[0];
                     if (rsGroupDaily != null)
                     {
@@ -155,24 +154,27 @@ namespace BLL.Report.HR.GroupDaily
                             dtGroup.Rows.Add(drGroup);
                         }
                     }
-                    #endregion
+
+                    #endregion Combine group daily into group
                 }
 
                 #region Cache
+
                 CacheData(HRGroupDailyCommon.keyCacheHRGroupDaily, dtGroup, DateTime.Now.AddHours(1));
-                #endregion
+
+                #endregion Cache
 
                 #region for each row
+
                 string row = "", bgcolor = "#f7f0f7", bgTotal = "#f7f0f7";
-                string strRowTotal = TemplateHandler.CopyBlock(tpl, "Total"), rowtotal = "";                
+                string strRowTotal = TemplateHandler.CopyBlock(tpl, "Total"), rowtotal = "";
                 string hrTypeName = "", date_p = "", date_c = "";
                 string condition = "", style = "";
                 int countdate = 0;
-                int countFixed = 0, hrType = 0;
+                int countFixed = 0;
 
                 foreach (DataRow dr in dtGroup.Rows)
                 {
-
                     row = tplcontent;
                     //hrType = CastAide.AsInt32(dr["HRType"]);
                     hrTypeName = CastAide.AsString(dr["Partner"]);//HRGroupDailyCommon.getHRType(hrType);
@@ -215,8 +217,6 @@ namespace BLL.Report.HR.GroupDaily
                         TemplateHandler.RemoveBlock(ref row, "date");
                     }
 
-
-
                     TemplateHandler.Assign(ref row, "style", "bgcolor=" + bgcolor + "");
                     TemplateHandler.Assign(ref row, "Date", CastAide.AsDateTime(dr["winlostdate"]).ToShortDateString());
                     TemplateHandler.Assign(ref row, "Bettype", hrTypeName);
@@ -225,9 +225,11 @@ namespace BLL.Report.HR.GroupDaily
                     rows.Append(row);
                     countdate++;
                 }
-                #endregion
+
+                #endregion for each row
 
                 #region Sub total
+
                 condition = "winlostdate='" + date_p + "'";
                 countdate = CastAide.AsInt32(dtGroup.Compute("count(winlostdate)", condition));
                 if (countdate > 1)
@@ -244,7 +246,8 @@ namespace BLL.Report.HR.GroupDaily
                     rows.Append(rowtotal);
                     rows = rows.Replace("{rowspan}", countdate.ToString());
                 }
-                #endregion
+
+                #endregion Sub total
 
                 rows.Append("<tr height='20' bgcolor='white'><td colspan='18'></td></tr>");
 
@@ -268,12 +271,12 @@ namespace BLL.Report.HR.GroupDaily
 
                     AssignValueTotal(ref rowtotal, dtGroup, condition);
                     strTotal.Append(rowtotal);
-
                 }
 
-                #endregion
+                #endregion Grand total's partner
 
                 #region Grand Total
+
                 rowtotal = strRowTotal;
                 condition = "";
                 style = "bgcolor='#c4d0d7' style='font-weight:bold;'";
@@ -286,7 +289,8 @@ namespace BLL.Report.HR.GroupDaily
                 AssignValueTotal(ref rowtotal, dtGroup, condition);
                 strTotal.Append(rowtotal);
                 TemplateHandler.ReplaceBlock(ref tpl, "Total", strTotal.ToString());
-                #endregion
+
+                #endregion Grand Total
 
                 TemplateHandler.ReplaceBlock(ref tpl, "content", rows.ToString());
 
@@ -307,8 +311,7 @@ namespace BLL.Report.HR.GroupDaily
                     }
                     catch (Exception ex)
                     {
-                        
-                            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                         strErrMsg = "<span style='font-weight:bold; color:red'>" + ex.Message + "</span>"; Logs.Write(ex.Message);
                     }
 
@@ -318,8 +321,8 @@ namespace BLL.Report.HR.GroupDaily
                 {
                     TemplateHandler.RemoveBlock(ref tpl, "footer-send-email");
                 }
-                #endregion
 
+                #endregion Send Email
 
                 hashtable.Add("data", tpl);
                 hashtable.Add("msg", strErrMsg);
@@ -331,15 +334,14 @@ namespace BLL.Report.HR.GroupDaily
                 TemplateHandler.ReplaceBlock(ref tpl, "content", "<tr bgcolor='white'><td colspan='18' class='c error-message'>" + exception.Message + "</td></tr>");
                 hashtable.Add("data", tpl);
                 hashtable.Add("msg", "");
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
 
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(exception);
             }
-
 
             return JsonUtil.ToJson(hashtable);
         }
-        #endregion
+
+        #endregion HRGroupDaily
 
         public override string RenderHTML(Hashtable input)
         {

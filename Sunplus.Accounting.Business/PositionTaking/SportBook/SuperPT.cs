@@ -5,9 +5,8 @@ using System.Data;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
 
-//using Sunplus.Core.LoggingLib;
+
 
 namespace Sunplus.Accounting.Business.PositionTaking.SportBook
 {
@@ -33,12 +32,10 @@ namespace Sunplus.Accounting.Business.PositionTaking.SportBook
                         new JValue(JsonConvert.SerializeObject(GetSportPt(sportId, ptType, data)));
                 }
 
-
                 return base.Select(ptType);
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return string.Empty;
             }

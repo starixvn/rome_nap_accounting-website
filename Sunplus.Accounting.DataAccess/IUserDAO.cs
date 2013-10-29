@@ -1,11 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using DNAide.Data;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.ViewModel;
-using Sunplus.Accounting.Core.Common;
-using System.Data;
-using System.Collections;
 
 namespace Sunplus.Accounting.DataAccess
 {
@@ -15,8 +14,11 @@ namespace Sunplus.Accounting.DataAccess
     public interface IUserDAO
     {
         DbResult InsResetWinning(DateTime dateTime, int userId, string[] arrDesc, string IP);
+
         List<ResetWinning> GetResetWinning(DateTime dtmMoveBetDate, DateTime dtmTodate);
+
         List<FinanceTransaction> GetResetWinning_ByDate(DateTime transDate, bool isReset);
+
         DateTime MoveBetDateSel();
 
         DataSet InsDataTmpExcel(int userId, string arrFromCust, string arrToCust, string arrAmount, string arrExRate,
@@ -28,6 +30,7 @@ namespace Sunplus.Accounting.DataAccess
                                         string arrToAmount, string arrDescription);
 
         bool DelDataTmpExcel(int userId);
+
         DataSet UpdFinanceTransferMul(int userId, string fileName, int fileSize, string IP, ref Hashtable error);
 
         DataSet UpdFinanceCrossTransferMul(int userId, string fileName, int fileSize, string IP, string forexName, ref Hashtable error);
@@ -35,7 +38,8 @@ namespace Sunplus.Accounting.DataAccess
         List<DailyTransaction> GetDailyTransaction(DateTime transDate, int pageIndex, int pageSize,
                                                    int status, string type, string creator, ref int totalPages,
                                                    string verifyBy);
-        List<DailyTransaction>GetDailyAllTransaction(DateTime transDate, int pageIndex, int pageSize, string type, string creator, ref int totalPages);
+
+        List<DailyTransaction> GetDailyAllTransaction(DateTime transDate, int pageIndex, int pageSize, string type, string creator, ref int totalPages);
 
         DbResult GetDailyAllTransaction(DateTime transDate, string type, string creator);
 

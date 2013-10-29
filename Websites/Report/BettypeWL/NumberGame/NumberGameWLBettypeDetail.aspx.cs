@@ -1,31 +1,25 @@
 using System;
 using System.Data;
-using System.Web;
-using System.Web.UI;
 using System.Text;
+using System.Web;
+using DNAide.Core;
+using DNAide.Data;
 using DNAide.Web;
+using IBCUtils;
 using Sunplus.Accounting.Business.Report;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Business.Security;
-using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Report;
 using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
-using IBCUtils;
-using DNAide.Core;
-using DNAide.Data;
-
-using System.Collections.Specialized;
 
 /// <summary>
 /// CITS
 /// </summary>
 public partial class NumberGameWLBettypeDetail : PageBase
 {
-
     public string param = "";
     private string keyReport = "NumberGameDailyWLByBettypeDetail";
+
     protected void Page_Load(object sender, EventArgs e)
     {
         int sporttype = 161;
@@ -33,7 +27,7 @@ public partial class NumberGameWLBettypeDetail : PageBase
         keyReport += AppSession.AccUserName;
         string btnExport = Request["btnExport"];
         if (btnExport != null)
-        {            
+        {
             string fileName = Request["path"].Replace(" ", "-");
             var objData = AppSession.GetSession(Session, keyReport);
             var data = string.Empty;
@@ -54,7 +48,7 @@ public partial class NumberGameWLBettypeDetail : PageBase
         }
     }
 
-    string gencontent()
+    private string gencontent()
     {
         StringBuilder html = new StringBuilder();
         try
@@ -80,13 +74,11 @@ public partial class NumberGameWLBettypeDetail : PageBase
                     "&tdate=" + Request["tdate"] + "&sporttype=" + Request["sporttype"] + "&sportname=" +
                     Request["sportname"] + "&path=" + Request["path"] + "&mode=" + mode;
 
-
             string rows = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Report/NumberGame/BettypeWL/WinLostSummaryDetailAllRow.htm");
             string row = "";
-           
-                TemplateHandler.Assign(ref rows, "{align}", "r");
-                TemplateHandler.Assign(ref rows, "{col}", "1");
-            
+
+            TemplateHandler.Assign(ref rows, "{align}", "r");
+            TemplateHandler.Assign(ref rows, "{col}", "1");
 
             string totalrows =
                 Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Report/NumberGame/BettypeWL/WinLostSummaryDetailTotalRow.htm");
@@ -105,15 +97,11 @@ public partial class NumberGameWLBettypeDetail : PageBase
 
             TemplateHandler.Assign(ref norow, "{bgcolor-nodata}", "bgcolor-nodata");
 
-
-
             TemplateHandler.Assign(ref totalrows, "{cols}", "1");
             TemplateHandler.Assign(ref norow, "{tdno}", "9");
             TemplateHandler.Assign(ref bettyperows, "{cols}", "9");
             TemplateHandler.Assign(ref totalBettyperows, "{cols}", "1");
             TemplateHandler.Assign(ref headers, "{matchcode}", "");
-
-
 
             string odd_even = "";
 
@@ -126,7 +114,6 @@ public partial class NumberGameWLBettypeDetail : PageBase
             double Win = 0, Pos = 0, Com = 0, TurnOver = 0, LineTotal = 0;
             double total8rm = 0;
             double virtualLT = 0d, virtualLTBettype = 0d, virtualLTSport = 0d, virtualLTLeague = 0;
-
 
             int pBetType = 0, BetType = 0, index = 0, League = 0, pLeague = 0;
             bool pLive = false, Live = false;
@@ -159,7 +146,7 @@ public partial class NumberGameWLBettypeDetail : PageBase
             DataTable dt = rs.ResultSet.Tables[0];
             //header
             html.Append(Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("Report/NumberGame/BettypeWL/WinLostSummaryDetailAllHeader.htm",
-                                                                      new string[] {"{msg}", "{cols}"},
+                                                                      new string[] { "{msg}", "{cols}" },
                                                                       new string[]
                                                                           {
                                                                               header + " WIN/LOSS REPORT",
@@ -169,12 +156,10 @@ public partial class NumberGameWLBettypeDetail : PageBase
             {
                 foreach (DataRow dr in dt.Rows)
                 {
-
                     //for Soccer and other sport
                     BetType = FormatHandler.GetInt(dr["BType"]);
                     Live = FormatHandler.GetBool(dr["LiveIndicator"]);
 
-                     
                     bTypeName = CacheRef.GetBettype(BetType);
                     League = FormatHandler.GetInt(dr["leagueid"]);
 
@@ -185,7 +170,7 @@ public partial class NumberGameWLBettypeDetail : PageBase
                         {
                             //total league
                             totalrow = totalrows.Clone().ToString();
-                            
+
                             genrow(ref totalrow, LeagueWin, LeaguePos, LeagueCom, LeagueTurnOver, virtualLTLeague);
 
                             html.Append(totalrow);
@@ -197,8 +182,6 @@ public partial class NumberGameWLBettypeDetail : PageBase
                             color = "class=bgTotal";
                             TemplateHandler.Assign(ref totalBettyperow, "{color}", color);
 
-
-
                             genrow(ref totalBettyperow, bTypeWin, bTypePos, bTypeCom, bTypeTurnOver, virtualLTBettype);
                             TemplateHandler.Assign(ref totalBettyperow, "{bettype}", bt);
                             html.Append(totalBettyperow);
@@ -206,7 +189,7 @@ public partial class NumberGameWLBettypeDetail : PageBase
                         LeagueWin = LeaguePos = LeagueCom = LeagueTurnOver = LeagueLineTotal = 0;
                         bTypeWin = bTypePos = bTypeCom = bTypeTurnOver = BTypeLineTotal = 0;
 
-                        //bettype                        
+                        //bettype
                         bt = (Live) ? "<font color='red'>Live! </font>" : "";
                         bt += bTypeName;
                         bettyperow = bettyperows.Clone().ToString();
@@ -239,7 +222,6 @@ public partial class NumberGameWLBettypeDetail : PageBase
 
                         TemplateHandler.Assign(ref leaguerow, "{cols}", "8");
 
-
                         TemplateHandler.Assign(ref leaguerow, "{league}", CacheRef.GetLeagueName(dr["LeagueId"]));
                         html.Append(leaguerow);
                         pLeague = League;
@@ -251,12 +233,10 @@ public partial class NumberGameWLBettypeDetail : PageBase
                     TurnOver = FormatHandler.GetDouble(dr["TurnOver"]);
                     virtualLT = FormatHandler.GetDouble(dr["VirtualLineTotal"]);
 
-
                     //row
                     row = rows.Clone().ToString();
                     odd_even = (odd_even == "") ? "evenrow" : "";
                     TemplateHandler.Assign(ref row, "{odd_even}", odd_even);
-
 
                     //for Soccer and Other sport
                     TemplateHandler.Assign(ref row, "{matchcode}", dr["matchcode"].ToString());
@@ -304,7 +284,6 @@ public partial class NumberGameWLBettypeDetail : PageBase
                 color = "class=bgTotal";
                 TemplateHandler.Assign(ref totalBettyperow, "{color}", color);
 
-
                 genrow(ref totalBettyperow, bTypeWin, bTypePos, bTypeCom, bTypeTurnOver, virtualLTBettype);
 
                 TemplateHandler.Assign(ref totalBettyperow, "{bettype}", bt);
@@ -332,7 +311,8 @@ public partial class NumberGameWLBettypeDetail : PageBase
     }
 
     #region string colorvalue(object value)
-    static string colorvalue(object value)
+
+    private static string colorvalue(object value)
     {
         string str = "";
         if (FormatHandler.GetDouble(value) > 0) str = "<font color ='red'>" + FormatHandler.FormatNumber20(value) + "</font>";
@@ -342,10 +322,12 @@ public partial class NumberGameWLBettypeDetail : PageBase
         }
         return str;
     }
-    #endregion 
+
+    #endregion string colorvalue(object value)
 
     #region void genrow(ref string row, double win, double pos, double com, double, double admin2)
-    static void genrow(ref string row, double win, double pos, double com, double turnOver, double virtualLt)
+
+    private static void genrow(ref string row, double win, double pos, double com, double turnOver, double virtualLt)
     {
         TemplateHandler.Assign(ref row, "{WinLost}", FormatHandler.FormatNumber20(colorvalue(win)));
         TemplateHandler.Assign(ref row, "{Position}", FormatHandler.FormatNumber20(pos));
@@ -359,10 +341,11 @@ public partial class NumberGameWLBettypeDetail : PageBase
         TemplateHandler.Assign(ref row, "{Margin}", Reports.colorvalue(Margin, "%"));
         TemplateHandler.Assign(ref row, "{Variance}", FormatHandler.FormatNumber20(variance));
     }
-    
-    #endregion
+
+    #endregion void genrow(ref string row, double win, double pos, double com, double, double admin2)
 
     #region ExportToExcel
+
     public void ExportToExcel(string FileName, string data)
     {
         string strStyle = "";
@@ -378,6 +361,6 @@ public partial class NumberGameWLBettypeDetail : PageBase
         Response.Write(data);
         Response.End();
     }
-    #endregion
+
+    #endregion ExportToExcel
 }
- 

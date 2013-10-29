@@ -4,7 +4,6 @@ using System;
 using System.Web;
 using System.Web.Security;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
 
 
 public class LogOut : IHttpHandler,System.Web.SessionState.IRequiresSessionState {

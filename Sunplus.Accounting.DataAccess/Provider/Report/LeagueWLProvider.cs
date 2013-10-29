@@ -41,7 +41,6 @@ namespace Sunplus.Accounting.DataAccess.Provider.Report
                                                GetDataSource(source))));
         }
 
-
         public virtual DbResult LeagueWL_Sporttype(DateTime wldate)
         {
             throw new NotImplementedException();

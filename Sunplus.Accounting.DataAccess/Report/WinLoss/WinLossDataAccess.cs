@@ -2,11 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using DNAide.Core;
 using DNAide.Data;
-using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Entities.Report;
 using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Entities.Report;
 
 namespace Sunplus.Accounting.DataAccess.Report.WinLoss
 {
@@ -71,7 +69,7 @@ namespace Sunplus.Accounting.DataAccess.Report.WinLoss
             var spElement =
                 GetStoreProcedure(Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.External,
                                   "WinLossDetail_MAg_New");
-            
+
             using (IDataReader reader =
                 DbHelper.ExecuteReader(spElement.Name, param, spElement.DbName, 300))
             {
@@ -95,7 +93,7 @@ namespace Sunplus.Accounting.DataAccess.Report.WinLoss
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
@@ -104,12 +102,12 @@ namespace Sunplus.Accounting.DataAccess.Report.WinLoss
             var spElement =
                 GetStoreProcedure(Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.External,
                                   "WinLossDetail_SAg");
-            
+
             return GetReportData(param, spElement.Name, spElement.DbName);
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
@@ -122,7 +120,7 @@ namespace Sunplus.Accounting.DataAccess.Report.WinLoss
             return GetReportData(param, spElement.Name, spElement.DbName);
         }
 
-        #endregion
+        #endregion IWinLossDataAccess Members
 
         /// <summary>
         /// Company and super
@@ -170,7 +168,7 @@ namespace Sunplus.Accounting.DataAccess.Report.WinLoss
         #region Read data from data reader
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="param"></param>
         /// <param name="hasGetFromBestTrans14"></param>
@@ -215,7 +213,7 @@ namespace Sunplus.Accounting.DataAccess.Report.WinLoss
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="reader"></param>
@@ -231,7 +229,7 @@ namespace Sunplus.Accounting.DataAccess.Report.WinLoss
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="reader"></param>
@@ -243,11 +241,11 @@ namespace Sunplus.Accounting.DataAccess.Report.WinLoss
                                  Comm = Convert.ToDouble(reader["PlayerComm"])
                              };
 
-            ((MemberWinLoss) entity).Member = member;
+            ((MemberWinLoss)entity).Member = member;
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="reader"></param>
@@ -259,11 +257,11 @@ namespace Sunplus.Accounting.DataAccess.Report.WinLoss
                                  WinLoss = Convert.ToDouble(reader["MAgWinlost"])
                              };
 
-            ((AgentWinLoss) entity).Master = master;
+            ((AgentWinLoss)entity).Master = master;
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="reader"></param>
@@ -275,7 +273,7 @@ namespace Sunplus.Accounting.DataAccess.Report.WinLoss
                                 WinLoss = Convert.ToDouble(reader["SAgWinlost"])
                             };
 
-            ((MasterWinLoss) entity).Super = super;
+            ((MasterWinLoss)entity).Super = super;
         }
 
         /// <summary>
@@ -293,12 +291,15 @@ namespace Sunplus.Accounting.DataAccess.Report.WinLoss
                 case 1:
                     SpName = (hasGetFromBestTrans14) ? "Acc_Rpt_WinLossDaily_SAgEx14" : "Acc_Rpt_WinLossDaily_SAgEx";
                     break;
+
                 case 2:
                     SpName = (hasGetFromBestTrans14) ? "Acc_Rpt_WinLossDaily_MAgEx14" : "Acc_Rpt_WinLossDaily_MAgEx";
                     break;
+
                 case 3:
                     SpName = (hasGetFromBestTrans14) ? "Acc_Rpt_WinLossDaily_AgEx14" : "Acc_Rpt_WinLossDaily_AgEx";
                     break;
+
                 default:
                     SpName = (hasGetFromBestTrans14) ? "Acc_Rpt_WinLossDaily_ComEx14" : "Acc_Rpt_WinLossDaily_ComEx";
                     break;
@@ -308,7 +309,7 @@ namespace Sunplus.Accounting.DataAccess.Report.WinLoss
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="reader"></param>
         /// <returns></returns>
@@ -344,6 +345,6 @@ namespace Sunplus.Accounting.DataAccess.Report.WinLoss
             return entity;
         }
 
-        #endregion
+        #endregion Read data from data reader
     }
 }

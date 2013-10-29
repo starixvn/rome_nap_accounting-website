@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Sunplus.Data.DataAbstract.Entity;
-using Sunplus.Data.DataAbstract.Storage.Cache;
 
 namespace Sunplus.Data.DataAbstract.Storage.Cache.MemTable
 {
@@ -11,18 +7,19 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.MemTable
     {
         private Manager _MemClient = null;
         private string _identify = "match_d_{0}";
-        public MatchMem() 
+
+        public MatchMem()
         {
             _MemClient = new Manager();
         }
 
-        public Match this[int matchid] 
+        public Match this[int matchid]
         {
-            get 
+            get
             {
-                return _MemClient.Get<Match>(string.Format(_identify, matchid.ToString())); 
+                return _MemClient.Get<Match>(string.Format(_identify, matchid.ToString()));
             }
-            set 
+            set
             {
                 if (value == null)
                 {
@@ -38,7 +35,7 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.MemTable
 
         public IEnumerator<Match> Rows
         {
-            get 
+            get
             {
                 return null;
             }
@@ -47,6 +44,10 @@ namespace Sunplus.Data.DataAbstract.Storage.Cache.MemTable
                 ;
             }
         }
-        ~MatchMem() { _MemClient = null; }
+
+        ~MatchMem()
+        {
+            _MemClient = null;
+        }
     }
 }

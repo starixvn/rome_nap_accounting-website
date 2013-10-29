@@ -4,11 +4,8 @@ using System.Collections.Generic;
 using System.Web;
 using DNAide.Core;
 
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Core.LoggingLib;
 
-//using Sunplus.Core.LoggingLib;
 
 
 /// <summary>
@@ -19,6 +16,7 @@ namespace Sunplus.Accounting.Business.PositionTaking
     public partial class HRPositionTakingManager
     {
         #region Add Params
+
         public static void AddParamsCopyPreset(HttpRequest r, List<int> bettype, ref Hashtable paramsHR)
         {
             try
@@ -415,7 +413,6 @@ namespace Sunplus.Accounting.Business.PositionTaking
             }
         }
 
-        
-        #endregion
+        #endregion Add Params
     }
 }

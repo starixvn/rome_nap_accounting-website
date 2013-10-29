@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ServiceModel.Activation;
-using ExcelUtil.Spreadsheet;
 using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business.CreditTerm;
 using Sunplus.Accounting.Entities;
@@ -24,22 +22,22 @@ namespace Sunplus.Accounting.WcfServiceLibrary.CreditTerm
             return creditManager.UpdateConsolidationReportAllowStatus(custId, isViewReport);
         }
 
-		public void ExportAllGroup(string searchKey, string sortOrder, string sortName)
-		{
-			var creditManager = CommonBootStrapper.Locator.GetInstance<ICreditTermManager>();
-			creditManager.ExportExcelAllGroup(searchKey, sortOrder, sortName);
-		}
+        public void ExportAllGroup(string searchKey, string sortOrder, string sortName)
+        {
+            var creditManager = CommonBootStrapper.Locator.GetInstance<ICreditTermManager>();
+            creditManager.ExportExcelAllGroup(searchKey, sortOrder, sortName);
+        }
 
-		public List<GroupEditing> GetMemberByGroupId(int groupId)
-		{
-			var creditManager = CommonBootStrapper.Locator.GetInstance<ICreditTermManager>();
-			return creditManager.GetMemberByGroupId(groupId);
-		}
+        public List<GroupEditing> GetMemberByGroupId(int groupId)
+        {
+            var creditManager = CommonBootStrapper.Locator.GetInstance<ICreditTermManager>();
+            return creditManager.GetMemberByGroupId(groupId);
+        }
 
-		public void ExportExcelMemberByGroupId(int groupId)
-		{
-			var creditManager = CommonBootStrapper.Locator.GetInstance<ICreditTermManager>();
-			creditManager.ExportExcelMemberByGroupId(groupId);
-		}
-	}
+        public void ExportExcelMemberByGroupId(int groupId)
+        {
+            var creditManager = CommonBootStrapper.Locator.GetInstance<ICreditTermManager>();
+            creditManager.ExportExcelMemberByGroupId(groupId);
+        }
+    }
 }

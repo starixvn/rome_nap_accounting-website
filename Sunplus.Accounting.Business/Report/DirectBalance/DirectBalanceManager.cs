@@ -10,14 +10,10 @@ using DNAide.Web;
 
 using Sunplus.Accounting.Business.CacheManager;
 using Sunplus.Accounting.Core.Cache;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using Sunplus.Core.LoggingLib;
-//using Sunplus.Core.LoggingLib;
+
 
 
 namespace BLL.Report.DirectBalance
@@ -45,7 +41,6 @@ namespace BLL.Report.DirectBalance
                 TemplateHandler.Assign(ref tpl, "{Balance}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Balance"));
                 TemplateHandler.Assign(ref tpl, "{Base}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Base"));
 
-
                 //Get data
                 DataTable dt = null;
                 if (displayType == "member")
@@ -67,7 +62,6 @@ namespace BLL.Report.DirectBalance
                     dt = IBCProvider.ReportProvider.DirectBalance().Balance_Direct_Master(db).ResultSet.Tables[0];
                 }
 
-
                 //Load Rows
                 if (dt != null && dt.Rows.Count > 0)
                 {
@@ -81,8 +75,6 @@ namespace BLL.Report.DirectBalance
                     foreach (DataRow dr in rows)
                     {
                         dec_Total += CastAide.AsDecimal(dr["basebalance"]);
-
-
 
                         odd_even = index % 2 > 0 ? "" : "evenrow";
 
@@ -113,7 +105,6 @@ namespace BLL.Report.DirectBalance
                         TemplateHandler.Assign(ref row, "{Base_vl}", NumberFormat.DecFormat(dr["basebalance"], 2));
                         html.Append(row);
                         index++;
-                        
                     }
                     TemplateHandler.ReplaceBlock(ref tpl, "Rows", html.ToString());
                     TemplateHandler.Assign(ref tpl, "{total}", NumberFormat.DecFormat(dec_Total, 2));
@@ -130,8 +121,7 @@ namespace BLL.Report.DirectBalance
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             ReportCache.REPORT_DIRECT_BAL = tpl;
             return tpl;
@@ -144,7 +134,6 @@ namespace BLL.Report.DirectBalance
 
             string tpl = WebUtils.LoadTemplate("DirectBalance/DirectBalance_Downline.htm");
             tpl = TemplateHandler.CopyBlock(tpl, "Content");
-
 
             //Load Header
             TemplateHandler.Assign(ref tpl, "{No}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "No"));
@@ -165,7 +154,6 @@ namespace BLL.Report.DirectBalance
                             IBCProvider.ReportProvider.DirectBalance().Balance_Direct_MasterDownline(db, custid).
                                 ResultSet.Tables[0];
                     }
-
 
                     else if (roleid == 2 || (roleid == 3 && pcustid != 0))
                     {
@@ -277,10 +265,8 @@ namespace BLL.Report.DirectBalance
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
-
 
             ReportCache.REPORT_DIRECT_BAL = tpl;
             return tpl;
@@ -295,7 +281,7 @@ namespace BLL.Report.DirectBalance
             if (roleid == 3)
             {
                 strHeader = "<a href='DirectBalance.aspx?display=master'>" + ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "DirectMaster") + "</a>"
-                            //View_DL(roleid, user, custid, puser, pcustid)
+                    //View_DL(roleid, user, custid, puser, pcustid)
                             +
                             (!string.IsNullOrEmpty(puser)
                                  ? (" > <a href='#' onclick=\"View_DL(3, '" + puser + "'," + pcustid + ",'" + "" + "','" +

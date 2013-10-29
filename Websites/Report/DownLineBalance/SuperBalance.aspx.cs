@@ -1,25 +1,19 @@
 using System;
 using System.Data;
-using DNAide.Web;
-using Sunplus.Accounting.Business.Customer;
-using Sunplus.Accounting.Business.Report;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Web;
-using IBCUtils;
 using DNAide.Core;
+using DNAide.Web;
+using IBCUtils;
+using Sunplus.Accounting.Business.Customer;
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.Report;
 using SCCACHE = SharedCache.WinServiceCommon.Provider.Cache.IndexusDistributionCache;
 
-
-using Sunplus.Core.LoggingLib;
 /// <summary>
 /// CITS
 /// </summary>
 public partial class SuperBalance : PageBase
 {
-
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -107,15 +101,15 @@ public partial class SuperBalance : PageBase
         catch (InvalidOperationException invalidOEx)
         {
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(invalidOEx);
-            
+
             RedirectDeny();
         }
         catch (Exception ex)
         {
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-            
         }
     }
+
     private string COMP_DIFF_STATEMENT
     {
         get
@@ -126,7 +120,6 @@ public partial class SuperBalance : PageBase
             }
             catch (Exception ex)
             {
-                
                 return string.Empty;
             }
         }
@@ -135,11 +128,11 @@ public partial class SuperBalance : PageBase
             SCCACHE.SharedCache.Add("comp_diff_value", value, DateTime.Now.AddMinutes(10));
         }
     }
+
     private string colorValue(decimal value)
     {
         if (value >= 0)
             return "<font color='blue'>" + FormatHandler.FormatNumber20(value) + "</font>";
         else return "<font color='red'>" + FormatHandler.FormatNumber20(value) + "</font>";
     }
-    
 }

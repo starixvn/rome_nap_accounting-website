@@ -5,7 +5,6 @@ namespace Sunplus.Accounting.Entities
     [Serializable]
     public class SettingControl
     {
-
         private string _cssclass = "";
         private bool _hidden = true;
         private bool _isdisabledownlines = true;
@@ -17,7 +16,6 @@ namespace Sunplus.Accounting.Entities
         private string _statusname;
         private string _type = "";
         private object _value = false;
-
 
         public SettingControl(string lable, bool value, bool hidden, string jsonclick, string jsonmouseout,
                               string jsonmouseover, string cssclass, string statusname, int roleid, bool isdisabledownlines,

@@ -567,6 +567,8 @@ Fanex.CustomerSetting.Core = {
         if (evt.keyCode === 9) return true; // Ignore TAB key
         var obj = evt.currentTarget ? evt.currentTarget : evt.srcElement; // Fix for IE7
         var value = obj.value;
+        value = !$.isNumeric(this.ReplaceAll(value, ',', '')) ? '' : value;
+        obj.value = value;
 
         if (value == '') return true;
 

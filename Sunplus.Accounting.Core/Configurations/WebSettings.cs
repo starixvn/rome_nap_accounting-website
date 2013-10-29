@@ -6,9 +6,8 @@ using System.Web;
 using DNAide.Core;
 
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
 
-//using Sunplus.Core.LoggingLib;
+
 
 namespace Sunplus.Accounting.Core.Configurations
 {
@@ -24,19 +23,19 @@ namespace Sunplus.Accounting.Core.Configurations
         private static readonly string _internalAgentUrl;
         private static readonly string _directBAUrl;
         private static readonly string _directABSUrl;
-       
+
         private static readonly string _getCountry;
         private static readonly string _getDateMixparlayDailyWL;
         private static readonly string _virtualDir;
         private static readonly bool _isSslLogin;
 
-
-
-        //Phuong.Nguyen 
+        //Phuong.Nguyen
         //Create disable horseracing property
         private static readonly bool _disabledHR;
+
         //Financial disable option
         private static readonly bool _disabledFI;
+
         private static double _UkMeetingMax = 0.03;
         private static double _OtherMeetingMax = 0.05;
         private static double _UkMeeting = 0.03;
@@ -60,13 +59,12 @@ namespace Sunplus.Accounting.Core.Configurations
         private static readonly string _calendarTheme;
         private static readonly string _ipvnreplace;
 
-
         private static string _iplocation;
         private static readonly bool _isAllowMoveToBingo;
-    
 
         //henry
         private static readonly string _version;
+
         private static readonly bool _disableM88BetList;
         private static readonly bool _disableVR;
 
@@ -82,12 +80,12 @@ namespace Sunplus.Accounting.Core.Configurations
 
         public static List<string> NotAuthenticateAction { get; set; }
 
-        static bool _IsApply50PercentRacingReport = false;
+        private static bool _IsApply50PercentRacingReport = false;
 
-        static bool _IsApplySplitingDepositeCustomer = false;
+        private static bool _IsApplySplitingDepositeCustomer = false;
 
         public static readonly int _isShowCustomerSettingRenovation = 0;
-        
+
         // private static bool _useNewSpecialDelete;
         static WebSettings()
         {
@@ -111,7 +109,7 @@ namespace Sunplus.Accounting.Core.Configurations
 
                 _directABSUrl = ConfigurationManager.AppSettings["link_ABS_url"];
 
-               // _baseCurr = ConfigurationManager.AppSettings["Fanex.Tarus.BaseCurrency"];
+                // _baseCurr = ConfigurationManager.AppSettings["Fanex.Tarus.BaseCurrency"];
                 //Phuong.Nguyen
                 //Get Horseracing visibility from Web.config
                 _disabledHR = (ConfigurationManager.AppSettings["disabledHR"] == "1");
@@ -134,8 +132,6 @@ namespace Sunplus.Accounting.Core.Configurations
                 _IncludeAccuBalInStatement = (ConfigurationManager.AppSettings["IncludeAccuBalInStatement"] == "1");
                 //_useNewSpecialDelete = (System.Configuration.ConfigurationManager.AppSettings["useNewSpecialDelete"] == "1");
                 _CacheExpire = CastAide.AsInt32(ConfigurationManager.AppSettings["CacheExpire"]);
-
-
 
                 //henry
                 _version = ConfigurationManager.AppSettings["version"];
@@ -173,10 +169,11 @@ namespace Sunplus.Accounting.Core.Configurations
                 _IsApplySplitingDepositeCustomer = ConfigurationManager.AppSettings["IsApplySplitingDepositeCustomer"] == "1";
 
                 _isShowCustomerSettingRenovation = CastAide.AsInt32(ConfigurationManager.AppSettings["IsShowCustomerSettingRenovation"]);
+
+				EnableProgressiveBonus = (ConfigurationManager.AppSettings["EnableProgressiveBonus"] == "1");
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -186,7 +183,6 @@ namespace Sunplus.Accounting.Core.Configurations
             }
         }
 
-
         public static string LbServiceUrl { get; set; }
 
         public static bool IsUMTime { get; set; }
@@ -195,7 +191,6 @@ namespace Sunplus.Accounting.Core.Configurations
         {
             get { return _directABSUrl; }
         }
-
 
         public static bool OpenMiniGame { get; set; }
 
@@ -212,26 +207,32 @@ namespace Sunplus.Accounting.Core.Configurations
         {
             get { return _templateFolder; }
         }
+
         public static int ServerId
         {
             get { return _serverId; }
         }
+
         public static string ThemePath
         {
             get { return _themePath; }
         }
+
         public static string Theme
         {
             get { return _theme; }
         }
+
         public static string InternalAgentUrl
         {
             get { return _internalAgentUrl; }
         }
+
         public static string DirectBAUrl
         {
-            get { return _directBAUrl;  }
+            get { return _directBAUrl; }
         }
+
         public static string getCountryName
         {
             get { return _getCountry; }
@@ -241,14 +242,17 @@ namespace Sunplus.Accounting.Core.Configurations
         {
             get { return _getDateMixparlayDailyWL; }
         }
+
         public static bool VirtualDir
         {
             get { return _virtualDir == "1"; }
         }
+
         public static bool IsSslLogin
         {
             get { return _isSslLogin; }
         }
+
         public static bool IsLocalTest
         {
             get { return (ConfigurationManager.AppSettings["LocalTest"] == "1"); }
@@ -258,7 +262,7 @@ namespace Sunplus.Accounting.Core.Configurations
         //{
         //    get { return _baseCurr; }
         //}
-        //Phuong.Nguyen 
+        //Phuong.Nguyen
         //Create horseracing visibility property
         public static bool disabledHR
         {
@@ -269,6 +273,7 @@ namespace Sunplus.Accounting.Core.Configurations
         {
             get { return _disabledFI; }
         }
+
         public static bool disableAutoM
         {
             get { return _disableAutoM; }
@@ -298,14 +303,17 @@ namespace Sunplus.Accounting.Core.Configurations
         {
             get { return _UkMeetingMax; }
         }
+
         public static double OtherMeetingMax
         {
             get { return _OtherMeetingMax; }
         }
+
         public static double UkMeeting
         {
             get { return _UkMeeting; }
         }
+
         public static double OtherMeeting
         {
             get { return _OtherMeeting; }
@@ -315,7 +323,6 @@ namespace Sunplus.Accounting.Core.Configurations
         {
             get { return _MaxPTFI; }
         }
-
 
         public static bool DisableMinPTFI
         {
@@ -332,7 +339,6 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return _Group1x2Max; }
         }
 
-
         public static bool DisableHRPT_Tote
         {
             get { return _DisableHRPT_Tote; }
@@ -342,6 +348,7 @@ namespace Sunplus.Accounting.Core.Configurations
         {
             get { return _DisableHRPT_OpenTote; }
         }
+
         public static bool DisableInternal
         {
             get { return _disableInternal; }
@@ -351,6 +358,7 @@ namespace Sunplus.Accounting.Core.Configurations
         {
             get { return _calendarTheme; }
         }
+
         //public static bool UseNewSpecialDelete
         //{
         //    get { return _useNewSpecialDelete; }
@@ -360,26 +368,27 @@ namespace Sunplus.Accounting.Core.Configurations
         /// Get time from DB server for timeout of internal url
         /// </summary>
         /// <returns></returns>
-       
 
         public static int CacheExpire
         {
             get { return _CacheExpire; }
         }
+
         public static string IPVNReplace
         {
             get { return _ipvnreplace; }
         }
 
-
         public static string Version
         {
             get { return _version; }
         }
+
         public static bool DisableM88BetList
         {
             get { return _disableM88BetList; }
         }
+
         public static bool DisableVR
         {
             get { return _disableVR; }
@@ -389,16 +398,18 @@ namespace Sunplus.Accounting.Core.Configurations
         {
             get { return _iplocation; }
         }
+
         public static bool IncludeAccuBalInStatement
         {
             get { return _IncludeAccuBalInStatement; }
         }
+
         public static string IgnoreGroups
         {
             get { return _IgnoreGroups; }
         }
 
-        public static Dictionary<string,string> ExternalSite
+        public static Dictionary<string, string> ExternalSite
         {
             get
             {
@@ -406,6 +417,7 @@ namespace Sunplus.Accounting.Core.Configurations
                 return exDomain.ToDictionary(domain => domain);
             }
         }
+
         public static bool IsAllowMoveToBingo
         {
             get { return _isAllowMoveToBingo; }
@@ -416,7 +428,7 @@ namespace Sunplus.Accounting.Core.Configurations
             get { return _maxTransLength; }
         }
 
-        public static  bool EnableLiveCasino { get; set; }
+        public static bool EnableLiveCasino { get; set; }
 
         public static bool EnableAbnormal { get; set; }
 
@@ -432,7 +444,7 @@ namespace Sunplus.Accounting.Core.Configurations
 
         public static bool IsApply50PercentRacingReport
         {
-            get{return _IsApply50PercentRacingReport;}
+            get { return _IsApply50PercentRacingReport; }
         }
 
         public static bool IsApplySplitingDepositeCustomer
@@ -444,7 +456,9 @@ namespace Sunplus.Accounting.Core.Configurations
         {
             get { return _isShowCustomerSettingRenovation; }
         }
+
         public static bool EnableVirtualSports { get { return (ConfigurationManager.AppSettings["EnableVirtualSports"] == "1"); } }
+
         public static bool OfferDoubleComm
         {
             get
@@ -452,12 +466,21 @@ namespace Sunplus.Accounting.Core.Configurations
                 return (ConfigurationManager.AppSettings["OfferDoubleCommission"] == "1");
             }
         }
+	public static bool EnableProgressiveBonus { get; set; }
 
-       public static string ExternalBettingLimitConfig
+        public static string ExternalBettingLimitConfig
         {
             get
             {
                 return (ConfigurationManager.AppSettings["ExternalBettingLimitConfig"].ToString());
+            }
+        }
+
+        public static string[] ExternalAdminUsersEditSuperStatus
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["AdminUsersEditSuperStatus"].Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
             }
         }
     }

@@ -1,37 +1,19 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.ServiceModel.Activation;
-using System.Text;
-using DNAide.Data;
-using DNAide.Utils;
-using DNAide.Web;
-
-using Sunplus.Accounting.Business.CacheManager;
-using Sunplus.Accounting.Core.Cache;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.Business.Security;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Accounting.DataAccess.SpecialDelete;
-using Sunplus.Accounting.Entities;
-using Sunplus.Accounting.Entities.SpecialDelete;
 using System.Data;
 using DNAide.Core;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.Business.Security;
+using DNAide.Data;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.Entities.SpecialDelete;
 
 namespace Sunplus.Accounting.Business.SpecialDelete.NumberGame
 {
-    
     public partial class SpecialDeleteService
     {
         #region BettransSelSpecialDel
+
         public SpecialDeleteDTO BettransSelSpecialDel(SpecialDeleteParam param)
         {
             SpecialDeleteDTO specialDeleteDto = new SpecialDeleteDTO();
@@ -43,7 +25,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete.NumberGame
             try
             {
                 DbResult dbResult = _specialDeleteDao.BettransSelSpecialDel(param);
-                if(dbResult != null && dbResult.ResultSet.Tables.Count>0)
+                if (dbResult != null && dbResult.ResultSet.Tables.Count > 0)
                 {
                     DataSet dataSet = dbResult.ResultSet;
                     var collections = SpecialDeleteSection.Instance.DeleteBet;
@@ -51,14 +33,13 @@ namespace Sunplus.Accounting.Business.SpecialDelete.NumberGame
                     int index = 0;
                     foreach (DataTable dataTable in dataSet.Tables)
                     {
-                        
                         SpecialDeleteByType deleteByType = new SpecialDeleteByType();
                         List<SpecialDeleteBO> lstByType = new List<SpecialDeleteBO>();
 
                         SpecialDeleteElement element = collections[index];
 
                         string type = element.Name;
-                        
+
                         AssignData(dataTable, type, ref lstByType);
 
                         deleteByType.Type = type;
@@ -93,13 +74,11 @@ namespace Sunplus.Accounting.Business.SpecialDelete.NumberGame
                     }
                 }
 
-
                 if (!IsHasData)
                 {
                     specialDeleteDto.ErrorCode = 100;
                     specialDeleteDto.ErrorMessage = "NO MATCH WITH SUCH MATCH ID";
                 }
-             
             }
             catch (Exception ex)
             {
@@ -107,6 +86,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete.NumberGame
             }
             return specialDeleteDto;
         }
-        #endregion
+
+        #endregion BettransSelSpecialDel
     }
 }

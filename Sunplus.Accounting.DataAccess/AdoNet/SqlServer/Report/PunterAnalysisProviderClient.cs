@@ -2,9 +2,7 @@
 using System.Collections;
 using DNAide.Data;
 
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess.Provider.Report;
-using Sunplus.Core.LoggingLib;
 
 /// <summary>
 /// Summary description for PunterAnalysisProviderClient
@@ -23,7 +21,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Report
             catch (Exception ex)
             {
                 // error assigning the datareader value to a property
-                
+
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }

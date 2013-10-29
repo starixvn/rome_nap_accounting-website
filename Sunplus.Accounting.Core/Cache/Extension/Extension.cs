@@ -22,6 +22,7 @@ namespace Sunplus.Accounting.Core.Cache.Extension
                 //TODO
             }
         }
+
         public static void Set(string key, object value, DateTime expire)
         {
             if (!Cached)
@@ -37,7 +38,7 @@ namespace Sunplus.Accounting.Core.Cache.Extension
                 //TODO
             }
         }
-       
+
         public static T Get<T>(string key)
         {
             if (!Cached)

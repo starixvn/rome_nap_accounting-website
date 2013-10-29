@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Sunplus.Accounting.Entities.Settle;
+﻿using Sunplus.Accounting.Entities.Settle;
 
 namespace Sunplus.Accounting.Business.Settle
 {

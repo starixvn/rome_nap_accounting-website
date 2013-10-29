@@ -1,27 +1,16 @@
 ﻿using System;
 using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using DNAide.Web;
 using DNAide.Core;
-using Sunplus.Accounting.Business.BetList;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Core.LoggingLib;
-
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Accounting.Business.BootStrappers;
 using Sunplus.Accounting.Business;
+using Sunplus.Accounting.Business.BetList;
+using Sunplus.Accounting.Business.BootStrappers;
+using Sunplus.Accounting.Core.Extensions;
 
 public partial class BetList_SystemParlayDetail : RequiredAuthorizationPage
 {
     public string transId = string.Empty;
     public int custId = 0;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -47,8 +36,6 @@ public partial class BetList_SystemParlayDetail : RequiredAuthorizationPage
                 BetlistByStatement betlist = new BetlistByStatement();
                 reportHeader.Text = betlist.CreateHeader(null);
             }
-
-
         }
         catch (Exception ex)
         {
@@ -61,7 +48,7 @@ public partial class BetList_SystemParlayDetail : RequiredAuthorizationPage
     {
         get
         {
-            return CastAide.AsInt32(HttpContext.Current.Session["CustId"],0);
+            return CastAide.AsInt32(HttpContext.Current.Session["CustId"], 0);
         }
     }
 

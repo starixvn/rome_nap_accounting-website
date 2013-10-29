@@ -9,7 +9,6 @@ using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Business.Security;
 using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
-using Sunplus.Core.LoggingLib;
 using System.Collections;
 using DNAide.Core;
 

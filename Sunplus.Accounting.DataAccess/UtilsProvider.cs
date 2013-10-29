@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Entities;
 
 namespace Sunplus.Accounting.DataAccess
 {
@@ -19,7 +19,7 @@ namespace Sunplus.Accounting.DataAccess
                 if (null == _Instance)
                 {
                     _Instance =
-                        (UtilsProvider) Activator.CreateInstance(Type.GetType(Globals.IBCSetting.Utils.ProviderType));
+                        (UtilsProvider)Activator.CreateInstance(Type.GetType(Globals.IBCSetting.Utils.ProviderType));
                 }
                 return _Instance;
             }

@@ -1,11 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using DNAide.Data;
-using Sunplus.Accounting.Core.Common;
+using System.Data;
 using Sunplus.Accounting.Entities;
 using Sunplus.Accounting.Entities.ViewModel;
-using System.Collections;
-using System.Data;
 
 namespace Sunplus.Accounting.Business
 {
@@ -15,7 +13,9 @@ namespace Sunplus.Accounting.Business
     public interface IUserService
     {
         bool InsResetWinning(DateTime dateTime, int userId, string[] arrDesc, string IP, ref string ErrMsg);
+
         List<ResetWinning> GetResetWinning();
+
         List<FinanceTransaction> GetResetWinning_ByDate(DateTime transDate, bool isReset);
 
         DataSet InsDataTmpExcel(int userId, string arrFromCust, string arrToCust, string arrAmount, string arrExRate,
@@ -27,6 +27,7 @@ namespace Sunplus.Accounting.Business
                                         string arrToAmount, string arrDescription);
 
         bool DelDataTmpExcel(int UserId);
+
         DataSet UpdFinanceTransferMul(int userId, string fileName, int fileSize, string IP, ref Hashtable error);
 
         DataSet UpdFinanceCrossTransferMul(int userId, string fileName, int fileSize, string IP, string forexName, ref Hashtable error);
@@ -34,11 +35,13 @@ namespace Sunplus.Accounting.Business
         List<DailyTransaction> GetDailyTransaction(DateTime transDate, int pageIndex, int pageSize,
                                                    int status, string type, string creator, ref int totalPages,
                                                    string verifyBy);
+
         List<DailyTransaction> GetDailyAllTransaction(DateTime transDate, string type, string creator, int pageIndex, int pageSize, ref int totalPage);
 
         //DailyTransactionDTO GetDailyAllTransaction(DateTime transDate, string type, string creator, int pageIndex, int pageSize, int fromcache);
 
         bool VerfiyDailyTransactions(User user, string refNos);
+
         bool UnverifyTransaction(User user, string refNo);
 
         /// <summary>
@@ -47,7 +50,7 @@ namespace Sunplus.Accounting.Business
         /// </summary>
         /// <param name="transList"></param>
         /// <returns></returns>
-       Dictionary<string, int> GetListTotalTransPerGroup(List<DailyTransaction> transList);
+        Dictionary<string, int> GetListTotalTransPerGroup(List<DailyTransaction> transList);
 
         int GetListTotalTransPerGroup(List<DailyTransaction> transList, string RefNo);
 

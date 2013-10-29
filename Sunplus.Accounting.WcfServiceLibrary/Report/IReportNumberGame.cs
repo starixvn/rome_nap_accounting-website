@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.ServiceModel;
+using System.ServiceModel.Web;
 using Sunplus.Accounting.Entities.Report.NumberGame;
 using Sunplus.Accounting.Entities.ViewModel;
-using System.ServiceModel.Web;
-using Sunplus.Accounting.Entities;
 
 namespace Sunplus.Accounting.WcfServiceLibrary.Report
 {
@@ -54,7 +51,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
-        NumberGameByDateTreeGridBO NumberGameWinLossByDate(string companies, string  currencies, string  bettypes, string  fromdate, string  todate);
+        NumberGameByDateTreeGridBO NumberGameWinLossByDate(string companies, string currencies, string bettypes, string fromdate, string todate);
 
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
@@ -69,6 +66,7 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         BettypeWinLossDetailDTO NumberGameWinLossDetailByBettypeNew(string date, int isLive, int bettype,
                                                                     string companies, string currencies);
+
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         NumberGameTreeGridBO NumberGameWinLossByMatch(string date, string companies, string currencies, string bettypes);
@@ -76,8 +74,5 @@ namespace Sunplus.Accounting.WcfServiceLibrary.Report
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         NumberGameDataGridBO NumberGameWinLossByMatchDetail(string date, bool islive, int matchid, string companies, string currencies, int bettype);
-
     }
-
-   
 }

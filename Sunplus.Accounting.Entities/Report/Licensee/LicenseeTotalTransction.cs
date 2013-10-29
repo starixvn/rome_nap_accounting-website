@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Sunplus.Accounting.Entities.Report.Licensee
 {
@@ -19,7 +17,7 @@ namespace Sunplus.Accounting.Entities.Report.Licensee
 
     [Serializable]
     [DataContract]
-    public class  LicenseeTotalTransctionDTO
+    public class LicenseeTotalTransctionDTO
     {
         [DataMember]
         public List<Reseller> Items { get; set; }
@@ -40,7 +38,7 @@ namespace Sunplus.Accounting.Entities.Report.Licensee
 
         [DataMember]
         public string LicenseeName { get; set; }
-        
+
         [DataMember]
         public string Total { get; set; }
 
@@ -60,9 +58,10 @@ namespace Sunplus.Accounting.Entities.Report.Licensee
 
         [DataMember]
         public string Total { get; set; }
+
         [DataMember]
         public string EURCost { get; set; }
-        
+
         [DataMember]
         public List<Licensee> Licensees { get; set; }
     }

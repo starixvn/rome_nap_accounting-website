@@ -11,6 +11,7 @@ using Sunplus.Accounting.DataAccess.Report;
 using Sunplus.Accounting.Entities.Report.Monitor;
 using Sunplus.Core.LoggingLib;
 using DNAide.Core;
+using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 {
@@ -38,30 +39,23 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
         #region GetCurrency
         public DataTable GetCurrency()
         {
-            
-            StoreProcedureElement spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.HelperSession.StoreCollection.HelperControl, GetKeySpMapping.GetCurrenies.ToString());
-
-            //var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.HelperSession.StoreCollection.HelperControl, "GetCurrenies");
 
             DataTable dataTable = new DataTable();
             try
             {
-                string db = spElement.DbName;
-                string sp = spElement.Name;
-
-                DbResult dbResult = DbHelper.Execute(sp, db);
-                if (dbResult != null && dbResult.ResultSet.Tables.Count > 0)
-                    dataTable = dbResult.ResultSet.Tables[0];
-                else
-                    return null;
+                using (ObjectDb objDB = new ObjectDb("Acc_ExchangeSel", 600))
+                {
+                    var dataset = objDB.ExecuteDataSet();
+                    if (dataset != null && dataset.Tables.Count > 0)
+                    {
+                        dataTable = dataset.Tables[0];
+                    }
+                }   
             }
             catch (Exception ex)
             {
                 
-                {
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-                }
-                return null;
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dataTable;
         }

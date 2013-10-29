@@ -2,23 +2,17 @@ using System;
 using System.Data;
 using System.Text;
 using DNAide.Web;
+using IBCUtils;
 using Sunplus.Accounting.Business;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Core.LoggingLib;
-using IBCUtils;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-
 
 public partial class UsedCreditDetail : RequiredAuthorizationPage
 {
     private System.Globalization.CultureInfo cult = System.Globalization.CultureInfo.CurrentCulture;
     private int _accid = -1;
     private Boolean hasData = false;
-
-
-
 
     protected override int CustId
     {
@@ -28,10 +22,8 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
         }
     }
 
-
     protected void Page_Load(object sender, EventArgs e)
     {
-     
         string _s = string.Empty;
         try
         {
@@ -41,7 +33,7 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
             int _custid = CustId;
             int _roleid = Convert.ToInt32(Session["CustRoleId"] as object ?? -1);
             if (_custid == -1 || _roleid == -1) throw new AccException(IbcError.USERNAME_UNAVAILABLE_MSG);
-            
+
             string _resetclosedonly = Request["resetClosed"] as string ?? string.Empty;
             string _resetall = Request["resetAll"] as string ?? string.Empty;
             if (!string.IsNullOrEmpty(_resetclosedonly))
@@ -59,22 +51,25 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
                     case 2: //agent
                         _s = "<form method=\"post\">" + AgentCredit(_custid) + "</form>";
                         break;
+
                     case 3: //master
                         _s = MasterCredit(_custid);
                         break;
+
                     case 4: // super
                         _s = SuperCredit(_custid);
                         break;
+
                     default:
-                        throw new AccException(IbcError.USERID_INVALID_MSG);                        
+                        throw new AccException(IbcError.USERID_INVALID_MSG);
                 }
             }
-        }        
+        }
         catch (AccException ex)
         {
             _s = AlertMessage.GetMsg(ex.Message.ToString(), AlertMessage.MsgType.Error);
             Logs.Write(ex.Message);
-        }        
+        }
         catch (Exception ex)
         {
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
@@ -96,12 +91,12 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
             bool hasInactive = false;
             double _activeSum = 0.0, _inactiveSum = 0.0;
             string odd_even = "";
-            using (IDataReader dr = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.SelectAgentCredit(_custid))
-            {                
-                while (dr.Read())
+            using (DataTable dt = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.SelectAgentCredit(_custid))
+            {
+                foreach(DataRow dr in dt.Rows)
                 {
-                    string _s = _sRow;                                                
-                    _hasClosed =Convert.ToBoolean(dr["closed"]);
+                    string _s = _sRow;
+                    _hasClosed = Convert.ToBoolean(dr["closed"]);
                     odd_even = (odd_even == "") ? "evenrow" : "";
                     TemplateHandler.Assign(ref _s, "{odd_even}", odd_even);
                     TemplateHandler.Assign(ref _s, "{username}", dr["username"].ToString());
@@ -121,7 +116,7 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
                         sbrActive.Append(_s);
                         _activeSum += _credit;
                     }
-                }                
+                }
             }
             if (hasActive || hasInactive)
             {
@@ -150,12 +145,11 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
             {
                 TemplateHandler.RemoveBlock(ref sAgent, "no-intotal");
                 TemplateHandler.Assign(ref sAgent, "{inactiveContent}", AccCommon.GenNoInformation("4"));
-            }            
+            }
         }
         catch (Exception ex)
         {
-
-            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex); 
+            Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
         return sAgent;
     }
@@ -166,16 +160,16 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
         try
         {
             sMaster = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("UserCredit/MasterCredit.htm");
-            StringBuilder sbrRows = new StringBuilder();            
+            StringBuilder sbrRows = new StringBuilder();
             string _sRow = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("UserCredit/MasterRow.htm");
             double _SumGiven = 0.0, _SumUsed = 0.0;
             string odd_even = "";
-            using (IDataReader dr = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.SelectMasterCredit(_custid))
-            {                
-                while (dr.Read())
+            using (DataTable dt = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.SelectMasterCredit(_custid))
+            {
+                foreach(DataRow dr in dt.Rows)
                 {
                     hasData = true;
-                    string _s = _sRow;                    
+                    string _s = _sRow;
                     double _givenCredit = Convert.IsDBNull(dr["givencredit"]) ? 0.00 : Convert.ToDouble(dr["givencredit"]);
                     double _usedCredit = Convert.IsDBNull(dr["usedcredit"]) ? 0.00 : Convert.ToDouble(dr["usedcredit"]);
                     odd_even = (odd_even == "") ? "evenrow" : "";
@@ -200,7 +194,7 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
                 TemplateHandler.Assign(ref sMaster, "{content}", AccCommon.GenNoInformation("3"));
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
@@ -217,24 +211,24 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
             string _sRow = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("UserCredit/SuperRow.htm");
             double _SumGiven = 0.0, _SumUsed = 0.0;
             string odd_even = "";
-            using (IDataReader dr = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.SelectSuperCredit(_custid))
+            DataTable dt = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.SelectSuperCredit(_custid);
+            
+            foreach(DataRow dr in dt.Rows)
             {
-                while (dr.Read())
-                {
-                    hasData = true;
-                    string _s = _sRow;
-                    double _givenCredit = Convert.IsDBNull(dr["givencredit"]) ? 0.00 : Convert.ToDouble(dr["givencredit"]);
-                    double _usedCredit = Convert.IsDBNull(dr["usedcredit"]) ?0.00 : Convert.ToDouble(dr["usedcredit"]);
-                    odd_even = (odd_even == "") ? "evenrow" : "";
-                    TemplateHandler.Assign(ref _s, "{odd_even}", odd_even);
-                    TemplateHandler.Assign(ref _s, "{username}", dr["mastername"].ToString());
-                    TemplateHandler.Assign(ref _s, "{givencredit}", string.Format(cult, "{0:#,##0.00}", _givenCredit));
-                    TemplateHandler.Assign(ref _s, "{usedcredit}", string.Format(cult, "{0:#,##0.00}", _usedCredit));
-                    sbrRows.Append(_s);
-                    _SumGiven += _givenCredit;
-                    _SumUsed += _usedCredit;
-                }
+                hasData = true;
+                string _s = _sRow;
+                double _givenCredit = Convert.IsDBNull(dr["givencredit"]) ? 0.00 : Convert.ToDouble(dr["givencredit"]);
+                double _usedCredit = Convert.IsDBNull(dr["usedcredit"]) ?0.00 : Convert.ToDouble(dr["usedcredit"]);
+                odd_even = (odd_even == "") ? "evenrow" : "";
+                TemplateHandler.Assign(ref _s, "{odd_even}", odd_even);
+                TemplateHandler.Assign(ref _s, "{username}", dr["mastername"].ToString());
+                TemplateHandler.Assign(ref _s, "{givencredit}", string.Format(cult, "{0:#,##0.00}", _givenCredit));
+                TemplateHandler.Assign(ref _s, "{usedcredit}", string.Format(cult, "{0:#,##0.00}", _usedCredit));
+                sbrRows.Append(_s);
+                _SumGiven += _givenCredit;
+                _SumUsed += _usedCredit;
             }
+           
             if (hasData)
             {
                 TemplateHandler.Assign(ref sSuper, "{content}", sbrRows.ToString());
@@ -247,7 +241,7 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
                 TemplateHandler.Assign(ref sSuper, "{content}", AccCommon.GenNoInformation("3"));
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
@@ -258,17 +252,17 @@ public partial class UsedCreditDetail : RequiredAuthorizationPage
     {
         string str = string.Empty;
         try
-        {            
-            Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.ResetMemberCredit(_accid, _custid, _isClosedOnly);            
+        {
+            Sunplus.Accounting.DataAccess.IBCDLL.Accounting.UserCredit.ResetMemberCredit(_accid, _custid, _isClosedOnly);
             string msg = (_isClosedOnly) ? "Reset All Closed Account Credit Successfully!" : "Reset All Account Credit Successfully!";
             str = AlertMessage.GetMsg(msg, AlertMessage.MsgType.Success);
-            str += "<input class='btn' type='button' value='BACK' onclick='javascript:document.location.replace(document.location);'/>";            
+            str += "<input class='btn' type='button' value='BACK' onclick='javascript:document.location.replace(document.location);'/>";
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             str = AlertMessage.GetMsg(ex.Message, AlertMessage.MsgType.Error);
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-        }        
+        }
         return str;
     }
 }

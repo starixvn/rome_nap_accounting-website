@@ -13,7 +13,6 @@ namespace Sunplus.Accounting.DataAccess.Entity.SqlServer.SpecialDelete
 {
     public class SpecialDeleteProviderClient : SpecialDeleteProvider
     {
-
         public override List<MatchInfoRow> MatchSeById(int MatchId)
         {
             Hashtable hashtable = new Hashtable();
@@ -231,7 +230,7 @@ namespace Sunplus.Accounting.DataAccess.Entity.SqlServer.SpecialDelete
         }
     }
 
-    #endregion
+    #endregion SpecialDeleteRow
 
     #region MatchInfoRow
 
@@ -310,5 +309,5 @@ namespace Sunplus.Accounting.DataAccess.Entity.SqlServer.SpecialDelete
         }
     }
 
-    #endregion
+    #endregion MatchInfoRow
 }

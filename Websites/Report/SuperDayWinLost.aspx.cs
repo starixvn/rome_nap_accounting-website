@@ -2,19 +2,14 @@ using System;
 using System.Data;
 using System.Text;
 using DNAide.Web;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Core.LoggingLib;
 using IBCUtils;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-
 
 /// <summary>
 /// CITS
 /// </summary>
 public partial class SuperDayWinLost : PageBase
 {
-
     protected void Page_Load(object sender, EventArgs e)
     {
         int roleid, custid;
@@ -29,13 +24,14 @@ public partial class SuperDayWinLost : PageBase
         DateTime matchday;
         if (string.IsNullOrEmpty(Request["matchday"])) matchday = DateTime.Today;
         else matchday = Convert.ToDateTime(Request["matchday"]);
-            
+
         content.Text = gencontent(roleid, custid, matchday);
     }
-    string gencontent(int roleid,  int custid, DateTime matchdate )
+
+    private string gencontent(int roleid, int custid, DateTime matchdate)
     {
         StringBuilder html = new StringBuilder();
-        try 
+        try
         {
             html.Append(Sunplus.Accounting.Core.Web.WebUtils.LoadHtml("Balance/SuperBalanceAllHeader.htm", new string[] { "{username}", "{currentcy}", "{balance}", "{base}" },
             new string[] { Resources.Language.UserName, Resources.Language.Currency, Resources.Language.Balance, Resources.Language.Base }));
@@ -72,13 +68,11 @@ public partial class SuperDayWinLost : PageBase
             }
             html.Append("</table>");
         }
-        catch (Exception ex) 
+        catch (Exception ex)
         {
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
         }
 
-
-        
         return html.ToString();
     }
 }

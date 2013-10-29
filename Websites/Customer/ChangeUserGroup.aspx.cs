@@ -1,12 +1,9 @@
 using System;
+using System.Linq;
 using DNAide.Web;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Core.LoggingLib;
-
 using Sunplus.Accounting.Core.Configurations;
-using System.Linq;
+using Sunplus.Accounting.Core.Extensions;
 
 public partial class Customer_ChangeUserGroup : PageBase
 {
@@ -17,18 +14,19 @@ public partial class Customer_ChangeUserGroup : PageBase
 
     protected string strClear = "";
     public string script = "";
+
     protected void Page_Load(object sender, EventArgs e)
     {
         try
         {
-            strClear = Request["clear"] as string ?? string.Empty;            
+            strClear = Request["clear"] as string ?? string.Empty;
             string strHtml = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Customer/EditUserName.htm");
             if (strClear == "1")
             {
                 ChangeUGroupHeaderStr.Text = "Clear Credit";
                 TemplateHandler.Assign(ref strHtml, "{txtName1}", "txtUname");
                 TemplateHandler.Assign(ref strHtml, "{oldUname}", "Username");
-                TemplateHandler.RemoveBlock(ref strHtml, "hidden-clear");                
+                TemplateHandler.RemoveBlock(ref strHtml, "hidden-clear");
             }
             else
             {
@@ -39,11 +37,10 @@ public partial class Customer_ChangeUserGroup : PageBase
                 {
                     foreach (var group in groups.First().Group.ToString().Split(','))
                     {
-                        options += ("<option value=\"" + group + "\">" + group + "</option>");    
+                        options += ("<option value=\"" + group + "\">" + group + "</option>");
                     }
-                    
                 }
-                
+
                 ChangeUGroupHeaderStr.Text = "Change User Group";
                 TemplateHandler.Assign(ref strHtml, "{txtName1}", "txtUname");
                 TemplateHandler.Assign(ref strHtml, "{oldUname}", "Username");

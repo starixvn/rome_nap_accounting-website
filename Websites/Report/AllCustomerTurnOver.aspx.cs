@@ -1,23 +1,18 @@
 using System;
 using System.Data;
 using System.Text;
-using DNAide.Web;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Web;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using DNAide.Data;
-
-
+using DNAide.Web;
+using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 
 public partial class AllCustomerTurnOver : PageBase
 {
-
     protected void Page_Load(object sender, EventArgs e)
     {
         custTurnOverHeaderStr.Text = Resources.Language.AllCustomerTurnOver;
         custTurnOverContentHtml.Text = GenCustTurnOver();
     }
+
     private string GenCustTurnOver()
     {
         StringBuilder html = new StringBuilder();
@@ -28,7 +23,7 @@ public partial class AllCustomerTurnOver : PageBase
         try
         {
             DbResult ds = null;
-            if (Request["fdate"] == null || Request["tdate"] == null) return "";            
+            if (Request["fdate"] == null || Request["tdate"] == null) return "";
             ds = CustomerTurnOver.RptCustomerTurnOver(fDate, tDate);
             string row = "";
             if (ds != null)
@@ -41,7 +36,7 @@ public partial class AllCustomerTurnOver : PageBase
                     num = i + 1;
                     row = content;
                     odd_even = (odd_even == "") ? "evenrow" : "";
-                    string strUsername=tbl.Rows[i]["username"] as string ?? string.Empty;
+                    string strUsername = tbl.Rows[i]["username"] as string ?? string.Empty;
                     TemplateHandler.Assign(ref row, "{odd_even}", odd_even);
                     TemplateHandler.Assign(ref row, "{no}", num.ToString());
                     TemplateHandler.Assign(ref row, "{user}", strUsername);

@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Data;
-using DNAide.Data;
-
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
-using Sunplus.Core.LoggingLib;
-using Fanex.Data;
 using DNAide.Core;
+using DNAide.Data;
+using Fanex.Data;
+using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
@@ -18,8 +15,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             var sps = ExchangeRateSession.Instance[ExchangeRateSession.StoreCollection.ExchangeRateControl];
 
             return sps != null ? sps[aliasName] : null;
-
         }
+
         /// <summary>
         /// private constructor
         /// </summary>
@@ -27,9 +24,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
         }
 
-
         /// <summary>
-        /// call store CustomerPwdUpd 
+        /// call store CustomerPwdUpd
         /// @author: Vu Thi Hong Hanh
         /// </summary>
         /// <param name="custId">custId</param>
@@ -51,8 +47,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return isUpdate;
         }
@@ -75,8 +70,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
@@ -93,7 +87,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <returns></returns>
         public static string[] ExchangeDel(int uid, int exid, string lang)
         {
-            string[] res = {"", ""};
+            string[] res = { "", "" };
             try
             {
                 var hash = new Hashtable();
@@ -113,8 +107,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return res;
         }
@@ -135,7 +128,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                                            string lang)
         {
             DbResult rs = null;
-            string[] res = {"", "", ""};
+            string[] res = { "", "", "" };
             try
             {
                 var hash = new Hashtable();
@@ -159,8 +152,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return res;
         }
@@ -176,7 +168,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         public static string[] ExchangeSelByID(int exid)
         {
             DbResult rs = null;
-            string[] res = {"", "", ""};
+            string[] res = { "", "", "" };
             try
             {
                 var hash = new Hashtable();
@@ -195,8 +187,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return res;
         }
@@ -214,7 +205,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <returns></returns>
         public static string[] ExchangeUpd(int exid, double rate, double minbet, int uid, string ip)
         {
-            string[] res = {"", ""};
+            string[] res = { "", "" };
             try
             {
                 var hash = new Hashtable();
@@ -236,8 +227,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return res;
         }
@@ -255,8 +245,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return ds;
         }
@@ -275,8 +264,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw;
             }
             return dbr;
@@ -302,8 +290,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dbr;
         }
@@ -336,13 +323,11 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 htb.Add("errmsg", "");
                 htb.Add("language", "E");
 
-
                 dbr = DbHelper.ExecuteCmd("Acc_ExchangeRateIns", htb, DBType.DB03);
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw;
             }
             return dbr;
@@ -365,13 +350,11 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 htb.Add("errmsg", "");
                 htb.Add("language", "E");
 
-
                 dbr = DbHelper.ExecuteCmd("Acc_ExchangeRateUpd", htb, DBType.DB03);
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw;
             }
             return dbr;
@@ -393,7 +376,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 htb.Add("fromexchangeid", ExRateFromId);
                 htb.Add("toexchangeid", ExRateToId);
 
-
                 dbr = DbHelper.ExecuteReader("Acc_ExchangeRateSelHistory", htb, DBType.DB03);
             }
             catch
@@ -410,22 +392,24 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <returns></returns>
         public static DbResult ExchangeSelCurrency()
         {
-            DbResult dbr = null;
+            DbResult dbResult = null; 
             try
             {
-                var spElement = GetExchangeStoreProcedure("ExchangeSel");
-
-                dbr = DbHelper.Execute(spElement.Name, spElement.DbName);
+                using (ObjectDb objDB = new ObjectDb("Acc_ExchangeSel", 600))
+                {
+                    var dataset = objDB.ExecuteDataSet();
+                    dbResult = new DbResult(objDB.GetOuputParams(), dataset);
+                    return dbResult;
+                }   
+            
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
-            return dbr;
+            return dbResult;
         }
     }
-
 
     public sealed class CustomerBalance
     {
@@ -434,8 +418,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             var sps = CustomerSession.Instance[CustomerSession.StoreCollection.CustomerControl];
 
             return sps != null ? sps[aliasName] : null;
-
         }
+
         /// <summary>
         /// Select Customer Balance for agent
         /// SP: Update Given Credit Successfully
@@ -457,7 +441,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 throw;
             }
         }
-
 
         /// <summary>
         /// Update Customer Balance for agent

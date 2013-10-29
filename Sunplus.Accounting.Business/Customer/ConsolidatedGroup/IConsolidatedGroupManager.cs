@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Sunplus.Accounting.Entities.Customer.ConsolidatedGroup;
 
 namespace Sunplus.Accounting.Business.Customer.ConsolidatedGroup

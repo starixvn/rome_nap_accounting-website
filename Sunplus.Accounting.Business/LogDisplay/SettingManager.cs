@@ -1,25 +1,19 @@
 ﻿using System;
-using System.Threading;
-using System.Web;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using Sunplus.Accounting.Entities.LogDisplay;
-using Sunplus.Accounting.Entities.LogDisplay.SettingPT;
-using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.DataAccess.ILogDisplay;
-using DNAide.Core;
-using System.Xml;
-using System.Xml.Linq;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Sunplus.Accounting.Core.Configurations;
-using System.Configuration;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.Common.IPs;
-using Sunplus.Accounting.Core.Cache;
-using Sunplus.Accounting.Entities.Customer;
+using System.Xml.Linq;
+using DNAide.Core;
 using Sunplus.Accounting.Business.Customer;
+using Sunplus.Accounting.Core.Cache;
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Accounting.DataAccess.ILogDisplay;
+using Sunplus.Accounting.Entities.Customer;
+using Sunplus.Accounting.Entities.LogDisplay;
+using Sunplus.Accounting.Entities.LogDisplay.SettingPT;
 
 namespace Sunplus.Accounting.Business.LogDisplay
 {
@@ -31,13 +25,14 @@ namespace Sunplus.Accounting.Business.LogDisplay
         {
             _logDAO = logDAO;
         }
-        public Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogDisplay(LogParam param) 
-        { 
+
+        public Sunplus.Accounting.Entities.LogDisplay.ResultLog GetLogDisplay(LogParam param)
+        {
             ResultLog logResult = new ResultLog();
             logResult.Type = param.Type;
             param.FromDate = new DateTime(param.FromDate.Year, param.FromDate.Month, param.FromDate.Day, 0, 0, 0);
             param.ToDate = new DateTime(param.ToDate.Year, param.ToDate.Month, param.ToDate.Day, 23, 59, 59);
-           
+
             switch (param.Type)
             {
                 case (int)ELogType.Setting:
@@ -45,26 +40,31 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     logResult.Total = resultSetting.Total;
                     logResult.Setting = resultSetting.Rows;
                     break;
+
                 case (int)ELogType.Status:
-                    var resultStatus = GetLogStatus( param.CustName, param.FromDate, param.ToDate, param.Page, param.PageSize);
+                    var resultStatus = GetLogStatus(param.CustName, param.FromDate, param.ToDate, param.Page, param.PageSize);
                     logResult.Total = resultStatus.Total;
                     logResult.Status = resultStatus.Rows;
                     break;
+
                 case (int)ELogType.Credit:
-                    var resultCredit = GetLogCredit( param.CustName, param.FromDate, param.ToDate, param.Page, param.PageSize);
+                    var resultCredit = GetLogCredit(param.CustName, param.FromDate, param.ToDate, param.Page, param.PageSize);
                     logResult.Total = resultCredit.Total;
                     logResult.Credit = resultCredit.Rows;
                     break;
+
                 case (int)ELogType.Login:
                     var resultLogin = GetLogLogin(param.CustName, param.FromDate, param.ToDate, param.Page, param.PageSize);
                     logResult.Total = resultLogin.Total;
                     logResult.Login = resultLogin.Rows;
                     break;
+
                 default:
                     break;
             }
             return logResult;
         }
+
         /**
             @Function GetLogSetting
             @CustId INT,
@@ -78,6 +78,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             @PageIndex INT,
             @PageSize INT
          **/
+
         public Sunplus.Accounting.Entities.LogDisplay.ResultSp GetLogSetting(string custName, DateTime fromDate, DateTime toDate, int viewBy, int page, int pageSize)
         {
             ResultSp logResult = new ResultSp();
@@ -85,7 +86,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             {
                 int custId = GetCustIDByUsername(custName);
                 string logType = "setting";
-                int totalRow = 0;
+              
                 var param = new Hashtable();
                 param.Add("custid", custId);
                 param.Add("custname", custName);
@@ -100,7 +101,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 param.Add("LowerActionId", null);
                 param.Add("UpperActionId", null);
 
-                param.Add("pageindex", page>0? page-1: 0);
+                param.Add("pageindex", page > 0 ? page - 1 : 0);
                 param.Add("pagesize", pageSize);
                 DataTable data = null;
                 if (custId != -1)
@@ -111,7 +112,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 {
                     logResult.Total = _logDAO.GetLogDisplayTotal(param, logType);
                     logResult.Rows = new List<RecordSp>();
-                    foreach (DataRow row in data.Rows) {
+                    foreach (DataRow row in data.Rows)
+                    {
                         // get record value
                         var record = _GetLogRecord(row);
                         // get tracking value
@@ -136,6 +138,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             }
             return logResult;
         }
+
         /**
             @Function GetLogStatus
             @CustId INT,
@@ -149,6 +152,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             @PageIndex INT,
             @PageSize INT
          **/
+
         public Sunplus.Accounting.Entities.LogDisplay.ResultSp GetLogStatus(string custName, DateTime fromDate, DateTime toDate, int page, int pageSize)
         {
             ResultSp logResult = new ResultSp();
@@ -156,7 +160,6 @@ namespace Sunplus.Accounting.Business.LogDisplay
             {
                 int custId = GetCustIDByUsername(custName);
                 string logType = "status";
-                int totalRow = 0;
                 var param = new Hashtable();
                 param.Add("custid", custId);
                 param.Add("custname", custName);
@@ -164,7 +167,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 param.Add("fromdate", fromDate);
                 param.Add("todate", toDate);
 
-                param.Add("actiontypeid", null); 
+                param.Add("actiontypeid", null);
 
                 // hard code
                 param.Add("isinternal", 1);
@@ -207,15 +210,17 @@ namespace Sunplus.Accounting.Business.LogDisplay
             }
             return logResult;
         }
+
         /**
             @UserId INT,
 	        @UserName AS VARCHAR(50),
             @FromDate DATETIME,
-            @ToDate DATETIME,    
+            @ToDate DATETIME,
             @IsAdminAccess BIT = 0,
             @PageIndex INT,
             @PageSize INT
          **/
+
         public Sunplus.Accounting.Entities.LogDisplay.ResultLogin GetLogLogin(string custName, DateTime fromDate, DateTime toDate, int page, int pageSize)
         {
             ResultLogin logResult = new ResultLogin();
@@ -273,15 +278,17 @@ namespace Sunplus.Accounting.Business.LogDisplay
             }
             return logResult;
         }
+
         /**
             @CustID INT ,
 	        @CustName varchar(50) = '',
             @FromDate DATETIME ,
-            @ToDate DATETIME ,    
+            @ToDate DATETIME ,
             @IsInternal TINYINT ,
             @PageIndex INT ,
             @PageSize INT
          **/
+
         public Sunplus.Accounting.Entities.LogDisplay.ResultCredit GetLogCredit(string custName, DateTime fromDate, DateTime toDate, int page, int pageSize)
         {
             ResultCredit logResult = new ResultCredit();
@@ -341,7 +348,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             return logResult;
         }
 
-        private RecordSp _GetLogRecord(DataRow row) 
+        private RecordSp _GetLogRecord(DataRow row)
         {
             var record = new RecordSp();
             record.ID = CastAide.AsInt32(row["logid"], 0);
@@ -355,7 +362,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             return record;
         }
 
-        string FormatPermissionSubAccount(string trackingVal)
+        private string FormatPermissionSubAccount(string trackingVal)
         {
             Regex regx = new Regex("[A]|[B]|[C]|[D]|[E]|[G]|[H]", RegexOptions.IgnoreCase);
             if (regx.IsMatch(trackingVal))
@@ -375,7 +382,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
         private TrackingLog _ParseTrackingValue(string trackingVal, int actionId)
         {
             var tracking = new TrackingLog();
-            if (!string.IsNullOrEmpty(trackingVal)) 
+            if (!string.IsNullOrEmpty(trackingVal))
             {
                 try
                 {
@@ -385,17 +392,17 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     trackingTemplate = trackingTemplate ?? LogSection.Instance.DefaultTracking;
 
                     // set tracking level
-                    tracking.Level  = trackingTemplate.Level;
+                    tracking.Level = trackingTemplate.Level;
 
                     // parse XML
                     XElement xmlLoad = null;
 
                     Regex regx = new Regex("[ ]+(1x2)|(\a)|(1101)|(1102)|(1103)|(AddFrom)|[A]|[B]|[C]|[D]|[E]|[G]|[H]", RegexOptions.IgnoreCase);
-                    if (regx.IsMatch(trackingVal)) 
+                    if (regx.IsMatch(trackingVal))
                     {
                         trackingVal = trackingVal.Replace("1x2", "OnexTwo");
                         trackingVal = trackingVal.Replace("\a", ";");
-                            
+
                         trackingVal = trackingVal.Replace("BetTypeId=\"1101\"", string.Format("BetTypeId=\"{0}\"", ResourceExtension.GetResourceValue(ResourceExtension.Resources.ViewlogV2, "g1101")));
                         trackingVal = trackingVal.Replace("BetTypeId=\"1102\"", string.Format("BetTypeId=\"{0}\"", ResourceExtension.GetResourceValue(ResourceExtension.Resources.ViewlogV2, "g1102")));
                         trackingVal = trackingVal.Replace("BetTypeId=\"1103\"", string.Format("BetTypeId=\"{0}\"", ResourceExtension.GetResourceValue(ResourceExtension.Resources.ViewlogV2, "g1103")));
@@ -404,15 +411,16 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         trackingVal = trackingVal.Replace("AddFrom=\"1\"", string.Format("AddFrom=\"{0}\"", ResourceExtension.GetResourceValue(ResourceExtension.Resources.ViewlogV2, "addfrom01")));
                         trackingVal = trackingVal.Replace("AddFrom=\"2\"", string.Format("AddFrom=\"{0}\"", ResourceExtension.GetResourceValue(ResourceExtension.Resources.ViewlogV2, "addfrom02")));
 
-                        
-
                     }
 
                     trackingVal = trackingVal.ToLower();
+
                     #region bettypes
+
                     Regex regxBettype = new Regex("bettype=\"[0-9]+\"", RegexOptions.IgnoreCase);
                     var bettypeMatchs = regxBettype.Matches(trackingVal);
-                    if(bettypeMatchs.Count > 0){
+                    if (bettypeMatchs.Count > 0)
+                    {
                         foreach (Match bettypeMatch in bettypeMatchs)
                         {
                             var regxBettypeId = new Regex("[0-9]+");
@@ -423,8 +431,11 @@ namespace Sunplus.Accounting.Business.LogDisplay
                             trackingVal = trackingVal.Replace(bettypeText, replaceText);
                         }
                     }
-                    #endregion
+
+                    #endregion bettypes
+
                     #region sporttypes
+
                     Regex regxSporttype = new Regex("sporttype=\"[0-9]+\"", RegexOptions.IgnoreCase);
                     var sporttypeMatchs = regxSporttype.Matches(trackingVal);
                     if (sporttypeMatchs.Count > 0)
@@ -439,14 +450,16 @@ namespace Sunplus.Accounting.Business.LogDisplay
                             trackingVal = trackingVal.Replace(sporttypeText, replaceText);
                         }
                     }
-                    #endregion
+
+                    #endregion sporttypes
+
                     xmlLoad = XElement.Parse(trackingVal);
-                
+
                     if (xmlLoad == null) { return tracking; }
 
-                    tracking.SP     = xmlLoad.Name.ToString();
-                    tracking.Attrs  = new List<TrackingElement>();
-                    tracking.Vals   = new List<TrackingNode>();
+                    tracking.SP = xmlLoad.Name.ToString();
+                    tracking.Attrs = new List<TrackingElement>();
+                    tracking.Vals = new List<TrackingNode>();
 
                     // check hidden param
                     var hiddenDefault = trackingTemplate.HiddenDefault.Split(',');
@@ -481,7 +494,6 @@ namespace Sunplus.Accounting.Business.LogDisplay
                             var trackingNode = AssignGroupAttribute(node, trackingTemplate, filter, hiddenField);
                             tracking.Vals.Add(trackingNode);
                         }
-                        
                     }
                 }
                 catch (Exception ex)
@@ -497,15 +509,15 @@ namespace Sunplus.Accounting.Business.LogDisplay
             var groups = new List<TrackingGroup>();
             var logGroup = LogSection.Instance.Groups.Cast<GroupElement>();
             var sports = (from sp in
-                          (from gr in logGroup
-                           where gr.Name == groupName
-                           select gr).SingleOrDefault<GroupElement>().Sports.Cast<SportElement>()
-                      select sp).ToList();
-            foreach(var sport in sports)
+                              (from gr in logGroup
+                               where gr.Name == groupName
+                               select gr).SingleOrDefault<GroupElement>().Sports.Cast<SportElement>()
+                          select sp).ToList();
+            foreach (var sport in sports)
             {
                 Regex rex = null;
                 var sportVals = new List<TrackingElement>();
-                if(sport.Id==1|| sport.Id == 180 || sport.Id == 186) // soccer, virtual soccer, virtual tennis
+                if (sport.Id == 1 || sport.Id == 180 || sport.Id == 186) // soccer, virtual soccer, virtual tennis
                 {
                     rex = new Regex("v[0-9]", RegexOptions.IgnoreCase);
                     sportVals = (from attr in attrs
@@ -517,10 +529,8 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     sportVals = (from attr in attrs
                                  where GetMixedSportTag(attr.Name.ToString()) && !hidden.Contains<string>(attr.Name.ToString())
                                  select new TrackingElement() { N = LogFormater.GetResourceName(attr.Name.ToString()), Val = attr.Value, P = attr.Name.ToString() }).ToList();
-
-                    
                 }
-                else 
+                else
                 {
                     var strId = "v" + sport.Id;
                     rex = new Regex(strId, RegexOptions.IgnoreCase);
@@ -606,8 +616,6 @@ namespace Sunplus.Accounting.Business.LogDisplay
             var diffs = new List<TrackingValue>();
             if (!trackingValue.Equals(trackingValue2) && !string.IsNullOrEmpty(trackingValue2))
             {
-
-
                 trackingValue = trackingValue.Replace("\a", "").ToLower();
                 trackingValue2 = trackingValue2.Replace("\a", "").ToLower();
 
@@ -616,7 +624,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
                 if (listVal.Count == listVal2.Count)
                 {
-                    // check diff 
+                    // check diff
                     //listVal.AsParallel().ForEach(elm =>
                     //{
                     //    var elm2 = listVal2[elm.Key];
@@ -647,7 +655,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             return diffs;
         }
 
-        private Dictionary<string, TrackingValue> _GetTrackingParams(string trackingValue) 
+        private Dictionary<string, TrackingValue> _GetTrackingParams(string trackingValue)
         {
             var listVal = new Dictionary<string, TrackingValue>();
             try
@@ -683,7 +691,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     listVal.Add(attr.Name.ToString(), LogFormater.FormatValue(attr));
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }

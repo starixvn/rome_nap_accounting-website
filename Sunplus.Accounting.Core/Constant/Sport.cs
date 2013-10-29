@@ -49,7 +49,6 @@ namespace Sunplus.Accounting.Core.Constant
                                                                  Motorsports, OtherSports
                                                              };
 
-
         public static string GetSportName(int sportId)
         {
             switch (sportId)
@@ -119,7 +118,6 @@ namespace Sunplus.Accounting.Core.Constant
         /// </summary>
         public static int ToLiveBettype = 1000;
 
-
         public static readonly int Handicap = 1;
         public static readonly int OddEven = 2;
         public static readonly int OverUnder = 3;
@@ -171,7 +169,6 @@ namespace Sunplus.Accounting.Core.Constant
         public static readonly int FirstHandicapLive = 7 + ToLiveBettype;
         public static readonly int FirstOverUnderLive = 8 + ToLiveBettype;
 
-
         public static IEnumerable<int> SoccerBettypes = new[]
                                                             {
                                                                 Handicap, OverUnder, FirstHandicap, FirstOverUnder, OddEven
@@ -188,42 +185,55 @@ namespace Sunplus.Accounting.Core.Constant
                 case 1:
                     typename = "Handicap";
                     break;
+
                 case 2:
                     typename = "OddEven";
                     break;
+
                 case 12:
                     typename = "FirstOddEven";
                     break;
+
                 case 3:
                     typename = "OverUnder";
                     break;
+
                 case 4:
                     typename = "CorrectScore";
                     break;
+
                 case 5:
                     typename = "FT1X2";
                     break;
+
                 case 6:
                     typename = "TotalGoal";
                     break;
+
                 case 7:
                     typename = "FirstHandicap";
                     break;
+
                 case 8:
                     typename = "FirstOverUnder";
                     break;
+
                 case 14:
                     typename = "FirstGoalLastGoal";
                     break;
+
                 case 15:
                     typename = "First1X2";
                     break;
+
                 case 16:
                     typename = "HTFT";
                     break;
+
                 case 20:
                     typename = "MoneyLine";
                     break;
+
                 default:
                     typename = "NA";
                     break;

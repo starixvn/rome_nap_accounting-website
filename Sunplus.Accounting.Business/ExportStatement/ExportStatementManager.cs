@@ -7,9 +7,9 @@ using System.Text;
 using System.Web;
 using DNAide.Core;
 using DNAide.Data;
+using DNAide.Utils;
 using DNAide.Web;
 using ExcelUtil.Spreadsheet;
-
 using Sunplus.Accounting.Business.CacheManager;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
@@ -18,10 +18,6 @@ using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.IBCDLL;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
-using DNAide.Utils;
-
-//using Sunplus.Core.LoggingLib;
 
 /// <summary>
 /// Summary description for ExportStatement
@@ -33,6 +29,7 @@ namespace Sunplus.Accounting.Business.ExportStatement
         private readonly string key = "accexportstatementtoexcel." + AppSession.Username;
 
         #region ReadUsers
+
         public string ReadUsers()
         {
             string userslistvalid = "";
@@ -154,7 +151,8 @@ namespace Sunplus.Accounting.Business.ExportStatement
 
             return html + "|" + userslistvalid + "|" + success;
         }
-        #endregion
+
+        #endregion ReadUsers
 
         #region IsValidExtension
 
@@ -171,16 +169,17 @@ namespace Sunplus.Accounting.Business.ExportStatement
             }
             catch (Exception ex)
             {
-                
-                    (new EntLibLogger()).Error(ex.Message + "bool IsValidExtension()", ex);
-                
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+
             }
             return f;
         }
-        #endregion
+
+        #endregion IsValidExtension
 
         #region ListUsers
-        string ListUsers(DataTable dtb, ref string userlistvalid)
+
+        private string ListUsers(DataTable dtb, ref string userlistvalid)
         {
             StringBuilder userlist = new StringBuilder();
             StringBuilder RowValid = new StringBuilder();
@@ -202,7 +201,7 @@ namespace Sunplus.Accounting.Business.ExportStatement
 
             int IndexInValid = 0, IndexValid = 0;
             userlist = new StringBuilder();
-            string row = "", row1="";
+            string row = "", row1 = "";
             foreach (DataRow dr in Rows)
             {
                 if (CastAide.AsBoolean(dr["Isvalid"]))
@@ -237,9 +236,11 @@ namespace Sunplus.Accounting.Business.ExportStatement
             CacheData(key, ValidUsers, DateTime.Today.AddHours(5));
             return tpl;
         }
-        #endregion
+
+        #endregion ListUsers
 
         #region AllStatement_UsersList
+
         public string AllStatement_UsersList(string userslistvalid, string fdate, string tdate)
         {
             string tpl = WebUtils.LoadTemplate("Statement/ExportStatementResult.htm");
@@ -299,7 +300,7 @@ namespace Sunplus.Accounting.Business.ExportStatement
                     else
                     {
                         TemplateHandler.Assign(ref row, "Credit", "");
-                        TemplateHandler.Assign(ref row, "Debit", NumberFormat.DecFormat(Total*(-1), 2));
+                        TemplateHandler.Assign(ref row, "Debit", NumberFormat.DecFormat(Total * (-1), 2));
                     }
                     Balance += Total;
                     TemplateHandler.Assign(ref row, "Balance", NumberFormat.DecFormat(Balance, 2));
@@ -329,7 +330,8 @@ namespace Sunplus.Accounting.Business.ExportStatement
 
             return tpl;
         }
-        #endregion
+
+        #endregion AllStatement_UsersList
 
         #region GetRoleName
 
@@ -341,24 +343,30 @@ namespace Sunplus.Accounting.Business.ExportStatement
                 case 1:
                     str = "Member";
                     break;
+
                 case 2:
                     str = "Agent";
                     break;
+
                 case 3:
                     str = "Master";
                     break;
+
                 case 4:
                     str = "Super";
                     break;
+
                 default:
                     str = "Unknow";
                     break;
             }
             return str;
         }
-        #endregion
+
+        #endregion GetRoleName
 
         #region Export2Excel
+
         public ExcelFile Export2Excel(string userslistvalid, string fdate, string todate)
         {
             var excelFile = new ExcelFile();
@@ -398,30 +406,30 @@ namespace Sunplus.Accounting.Business.ExportStatement
             cellNumberNormal.Borders.SetBorders(MultipleBorders.Outside, Color.Gray, LineStyle.Thin);
             cellNumberNormal.NumberFormat = "#,##0.00";
 
-
             var cellTextNormal = new CellStyle();
             cellTextNormal.VerticalAlignment = VerticalAlignmentStyle.Center;
             cellTextNormal.HorizontalAlignment = HorizontalAlignmentStyle.Left;
             cellTextNormal.Borders.SetBorders(MultipleBorders.Outside, Color.Gray, LineStyle.Thin);
             cellTextNormal.WrapText = true;
 
-            #endregion
+            #endregion declare format cell
 
             #region columnwidth
 
-            ws.Columns[0].Width = 10*256;
-            ws.Columns[1].Width = 8*256;
-            ws.Columns[2].Width = 20*256;
-            ws.Columns[3].Width = 10*256;
-            ws.Columns[4].Width = 40*256;
-            ws.Columns[5].Width = 10*256;
-            ws.Columns[6].Width = 10*256;
-            ws.Columns[7].Width = 10*256;
-            ws.Columns[8].Width = 10*256;
+            ws.Columns[0].Width = 10 * 256;
+            ws.Columns[1].Width = 8 * 256;
+            ws.Columns[2].Width = 20 * 256;
+            ws.Columns[3].Width = 10 * 256;
+            ws.Columns[4].Width = 40 * 256;
+            ws.Columns[5].Width = 10 * 256;
+            ws.Columns[6].Width = 10 * 256;
+            ws.Columns[7].Width = 10 * 256;
+            ws.Columns[8].Width = 10 * 256;
 
-            #endregion
+            #endregion columnwidth
 
             #region Header
+
             ws.Cells[0, 0].Value = "Date";
             ws.Cells[0, 1].Value = "Role";
             ws.Cells[0, 2].Value = "Account";
@@ -433,7 +441,7 @@ namespace Sunplus.Accounting.Business.ExportStatement
             ws.Cells[0, 8].Value = "Balance";
             ws.Cells.GetSubrangeAbsolute(0, 0, 0, 8).Style = celltitle;
 
-            #endregion
+            #endregion Header
 
             var param = new Hashtable();
             param.Add("userlist", userslistvalid);
@@ -445,6 +453,7 @@ namespace Sunplus.Accounting.Business.ExportStatement
             DataRow[] Rows = rs.ResultSet.Tables[0].Select();
 
             #region Content
+
             int i = 1, countOpenBalance = 0;
             decimal Balance = 0;
             string username = "", username_p = "", transtype = "", transdesc = "";
@@ -474,9 +483,7 @@ namespace Sunplus.Accounting.Business.ExportStatement
                     if (countOpenBalance > 1) continue;
                 }
 
-                
-
-                if (i%2 == 0)
+                if (i % 2 == 0)
                 {
                     bgcolorText = cellTextNormal;
                     bgcolorNumber = cellNumberNormal;
@@ -505,7 +512,6 @@ namespace Sunplus.Accounting.Business.ExportStatement
                 ws.Cells[i, 4].Value = transtype + " - " + transdesc;
                 ws.Cells[i, 4].Style = bgcolorText;
 
-
                 decimal Total = CastAide.AsDecimal(dr["totalamt"]);
                 ws.Cells[i, 5].Value = Total;
                 ws.Cells[i, 5].Style = bgcolorNumber;
@@ -523,7 +529,7 @@ namespace Sunplus.Accounting.Business.ExportStatement
                     ws.Cells[i, 7].Value = "";
                     ws.Cells[i, 7].Style = bgcolorText;
 
-                    ws.Cells[i, 6].Value = Total*(-1);
+                    ws.Cells[i, 6].Value = Total * (-1);
                     ws.Cells[i, 6].Style = bgcolorNumber;
                 }
                 Balance += Total;
@@ -534,8 +540,10 @@ namespace Sunplus.Accounting.Business.ExportStatement
             }
 
             return excelFile;
-            #endregion
+
+            #endregion Content
         }
-        #endregion
+
+        #endregion Export2Excel
     }
 }

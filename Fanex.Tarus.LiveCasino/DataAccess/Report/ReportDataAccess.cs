@@ -361,7 +361,7 @@ namespace Fanex.Tarus.LiveCasino.DataAccess.Report
         public DataTable GetCurrency()
         {
             var datatable = new DataTable();
-            using (ObjectDb objDB = new ObjectDb("GameStatistics_SelCurrency"))
+            using (ObjectDb objDB = new ObjectDb("Acc_ExchangeSel"))
             {
                 var ds = objDB.ExecuteDataSet();
                 if (ds != null && ds.Tables.Count > 0)

@@ -3,10 +3,9 @@ using System.Data;
 using System.Text;
 using DNAide.Core;
 using DNAide.Web;
+using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using Sunplus.Accounting.Core.Helper;
-using Sunplus.Accounting.Core.Extensions;
 
 /// <summary>
 /// Summary description for VirtualRateHistory
@@ -28,7 +27,7 @@ namespace BLL.Report
                 foreach (DataRow row in dtRow)
                 {
                     string sRow = strRow;
-                    string rowBgClass = (i%2 == 0) ? "report-row-even" : "report-row-odd";
+                    string rowBgClass = (i % 2 == 0) ? "report-row-even" : "report-row-odd";
                     i += 1;
                     TemplateHandler.Assign(ref sRow, "{bgrow}", rowBgClass);
                     TemplateHandler.Assign(ref sRow, "{no}", i.ToString());

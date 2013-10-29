@@ -107,7 +107,6 @@
     <Compile Include="Helper.cs" />
     <Compile Include="DataAccess\Helper\HelperAccess.cs" />
     <Compile Include="DataAccess\Helper\IHelperAccess.cs" />
-    <Compile Include="Infrastructure\Configurations\AppSettings.cs" />
     <Compile Include="Model\Customer\CustomerList.cs" />
     <Compile Include="Model\PostParam.cs" />
     <Compile Include="Model\Statement\FinaceStatementModel.cs" />

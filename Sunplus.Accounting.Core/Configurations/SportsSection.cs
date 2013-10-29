@@ -72,7 +72,6 @@ namespace Sunplus.Accounting.Core.Configurations
             BaseClear();
         }
 
-
         public SportsElement this[int index]
         {
             get
@@ -102,7 +101,6 @@ namespace Sunplus.Accounting.Core.Configurations
             return BaseIndexOf(sportsElement);
         }
 
-
         protected override sealed ConfigurationElement CreateNewElement()
         {
             return new SportsElement();
@@ -116,7 +114,6 @@ namespace Sunplus.Accounting.Core.Configurations
 
     public class SportsElement : ConfigurationElement
     {
-
         [ConfigurationProperty("id", DefaultValue = "0", IsRequired = true, IsKey = true)]
         public string Id
         {

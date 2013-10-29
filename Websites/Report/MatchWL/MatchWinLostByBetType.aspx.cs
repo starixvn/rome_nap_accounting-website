@@ -1,11 +1,7 @@
 using System;
 using System.Collections;
-using DNAide.Core;
 using BLL.Report;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Web;
-
-using Sunplus.Core.LoggingLib;
+using DNAide.Core;
 
 public partial class MatchWinLostByBetType : PageBase
 {
@@ -13,6 +9,7 @@ public partial class MatchWinLostByBetType : PageBase
     protected string MinDay = "";
     protected string FDay = "";
     protected string TDay = "";
+
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -40,11 +37,8 @@ public partial class MatchWinLostByBetType : PageBase
         }
         catch (InvalidOperationException invalidOEx)
         {
-
             Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(invalidOEx);
             RedirectDeny();
         }
     }
 }
-
-

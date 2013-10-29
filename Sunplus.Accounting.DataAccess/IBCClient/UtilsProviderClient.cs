@@ -6,8 +6,6 @@ using DNAide.Data;
 
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Entities;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
 
 /// <summary>
 /// Summary description for UtilsProviderClient
@@ -35,7 +33,6 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
             //}
             //catch (Exception ex)
             //{
-                
             //    {
             //        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             //    }
@@ -67,7 +64,6 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -76,7 +72,7 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
             ;
         }
 
-        private class SpConfig: DataAccess
+        private class SpConfig : DataAccess
         {
             public StoreProcedureElement GetExchangeStoreProcedure(Core.Configurations.StoreProcedureGroup.ExchangeRateSession.StoreCollection storeCollection, string aliasName)
             {

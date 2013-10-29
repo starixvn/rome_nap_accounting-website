@@ -3,18 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using DNAide.Core;
-using DNAide.Data;
 using IBCUtils;
 
 using Sunplus.Accounting.Business.CacheManager;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web.TplCore.App_Templates.SpecialDelete.App_Templates.SpecialDelete;
 using Sunplus.Accounting.DataAccess.Entity.SqlServer.SpecialDelete;
 using Sunplus.Accounting.DataAccess.Provider.SpecialDelete;
-using Sunplus.Core.LoggingLib;
 
 /// <summary>
 /// Summary description for SpecialDelete
@@ -28,39 +25,37 @@ namespace Sunplus.Accounting.Business.SpecialDelete
 
         public string GetSpecialDelete(Hashtable param)
         {
-           
             int matchid = 0;
             if (param.ContainsKey("matchid"))
                 matchid = CastAide.AsInt32(param["matchid"]);
-          
+
             if (!CheckMatchById(matchid))
             {
-                return AlertMessage.GetMsg("NO MATCH WITH SUCH MATCH ID", AlertMessage.MsgType.Error); 
+                return AlertMessage.GetMsg("NO MATCH WITH SUCH MATCH ID", AlertMessage.MsgType.Error);
             }
             else
             {
-                return BuildDeleteFormNew(param);   
+                return BuildDeleteFormNew(param);
             }
         }
 
-        #endregion
+        #endregion GetSpecialDelete
 
         #region GetMatchInfoById
 
         private bool CheckMatchById(int matchid)
         {
-
             bool result = true;
             List<MatchInfoRow> lst = SpecialDeleteProvider.Instance(DataAccess.DataAccess.DAOClient.Entity).MatchSeById(matchid);
             if (lst.Count == 0)
             {
                 result = false;
             }
-          
+
             return result;
         }
 
-        #endregion
+        #endregion GetMatchInfoById
 
         #region AssignDatarow
 
@@ -85,6 +80,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 case 22:
                     transrow_normal.Hdp = FormatHandler.FormatNumber2(row.hdp2 - row.hdp1);
                     break;
+
                 default:
                     transrow_normal.Hdp = "--";
                     break;
@@ -99,7 +95,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             //return transrow_normal;
         }
 
-        #endregion
+        #endregion AssignDatarow
 
         #region AssignDatarow
 
@@ -125,6 +121,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 case 22:
                     transRowTpl_SB.Hdp = FormatHandler.FormatNumber2(row.hdp2 - row.hdp1);
                     break;
+
                 default:
                     transRowTpl_SB.Hdp = "--";
                     break;
@@ -143,7 +140,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             transRowTpl_SB.IsDelete = IsDelete;
         }
 
-        #endregion
+        #endregion AssignDatarow
 
         #region Mapping
 
@@ -168,7 +165,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             return row;
         }
 
-        #endregion
+        #endregion Mapping
 
         #region BuildDeleteFormNew
 
@@ -204,14 +201,13 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
 
             return string.Empty;
         }
 
-        #endregion
+        #endregion BuildDeleteFormNew
 
         #region GetHeaderSpecialBets
 
@@ -223,6 +219,6 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             header.SB = GetSpecialBettype(type);
         }
 
-        #endregion
+        #endregion GetHeaderSpecialBets
     }
 }

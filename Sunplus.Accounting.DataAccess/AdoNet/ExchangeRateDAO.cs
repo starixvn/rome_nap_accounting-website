@@ -2,6 +2,9 @@
 using Sunplus.Accounting.Core.Common;
 using DNAide.Data;
 using System.Collections;
+using Fanex.Data;
+using System;
+using Fanex.Tarus.Infrastructure.Extensions;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet
 {
@@ -31,26 +34,43 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
             return DbHelper.Execute("Acc_ExchangeUpdateBaseRate", hash, DBType.MAIN, 300);
         }
-        public DbResult ExChangeRateUpdateOpenTote(string currency, string GBPRate, string AUDRate, string ZARRate, string EURORate, string USDRate)
+        public void ExChangeRateUpdateOpenTote(string currency, string GBPRate, string AUDRate, string ZARRate, string EURORate, string USDRate, ref int errcode, ref string errmsg)
         {
-            Hashtable hash = new Hashtable();
-            hash.Add("userid", AppSession.AccId);
-            hash.Add("currency", currency.Trim());
-            if (GBPRate.Length != 0)
-                hash.Add("gbprate", GBPRate);
-            if (AUDRate.Length != 0)
-                hash.Add("audrate", AUDRate);
-            if (ZARRate.Length != 0)
-                hash.Add("zarrate", ZARRate);
-            if (EURORate.Length != 0)
-                hash.Add("eurorate", EURORate);
-            if (USDRate.Length != 0)
-                hash.Add("us$rate", USDRate);
-            hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
-            hash.Add("errcode", 0);
-            hash.Add("errmsg", "");
+            try
+            {
+                using (ObjectDb objDB = new ObjectDb("Acc_ExchangeUpdateOpenToteRate", 600))
+                {
+                    Hashtable hash = new Hashtable();
+                    hash.Add("userid", AppSession.AccId);
+                    hash.Add("currency", currency.Trim());
+                    if (GBPRate.Length != 0)
+                        hash.Add("gbprate", GBPRate);
+                    if (AUDRate.Length != 0)
+                        hash.Add("audrate", AUDRate);
+                    if (ZARRate.Length != 0)
+                        hash.Add("zarrate", ZARRate);
+                    if (EURORate.Length != 0)
+                        hash.Add("eurorate", EURORate);
+                    if (USDRate.Length != 0)
+                        hash.Add("us$rate", USDRate);
+                    hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
+                    hash.Add("errcode", 0);
+                    hash.Add("errmsg", "");
 
-            return DbHelper.Execute("Acc_ExchangeUpdateOpenToteRate", hash, DBType.MAIN, 300);
+                    objDB.AssignParamValues(hash);
+
+                    objDB.ExecuteNonQuery();
+
+                    errcode = Convert.ToInt32(objDB.GetParameterValue("errcode"));
+                    errmsg = Convert.ToString(objDB.GetParameterValue("errmsg"));
+                }
+            }
+            catch (Exception ex)
+            {
+                errcode = 100;
+                errmsg = ex.Message;
+                LogExtensions.ExceptionHandler(ex);
+            }
         }
     }
 }

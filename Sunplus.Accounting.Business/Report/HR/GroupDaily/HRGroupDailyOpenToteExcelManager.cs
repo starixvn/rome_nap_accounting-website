@@ -1,20 +1,11 @@
 ﻿using System;
-using System.Data;
-using System.Web;
-using System.Text;
 using System.Collections;
-using Sunplus.Accounting.Core.Common;
+using System.Data;
+using DNAide.Core;
+using DNAide.Data;
+using ExcelUtil.Spreadsheet;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.DataAccess;
-using Sunplus.Core.LoggingLib;
-using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
-using DNAide.Data;
-using DNAide.Core;
-using DNAide.Web;
-using DNAide.Utils;
-
-using ExcelUtil.Spreadsheet;
-
 
 /// <summary>
 /// Summary description for HRGroupDailyReport
@@ -23,9 +14,9 @@ namespace BLL.Report.HR.GroupDaily
 {
     public class HRGroupDailyOpenToteExcelManager : ReportBase
     {
-
         #region ExcelAssignTotal_HRGroupDaily
-        void ExcelAssignTotal_HRGroupDaily(ref ExcelWorksheet ws, DataTable dtGroup, string condition, string title, int red, int green, int blue, ref int indexRow, ExcelGemboxUtils gembox)
+
+        private void ExcelAssignTotal_HRGroupDaily(ref ExcelWorksheet ws, DataTable dtGroup, string condition, string title, int red, int green, int blue, ref int indexRow, ExcelGemboxUtils gembox)
         {
             string[] arr = {"turnoverAgents", "turnoverIBC", "turnover3rd", "totalTurnover",
                             "incomeIBCPT", "incomeIBCNetComm", "totalIBCIncome",
@@ -35,11 +26,11 @@ namespace BLL.Report.HR.GroupDaily
 
             ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 1).Value = title + " Total";
             ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 1).Style = gembox.GetStyleTextTotal(red, green, blue);
-            ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 1).Merged = true;            
+            ws.Cells.GetSubrangeAbsolute(indexRow, 0, indexRow, 1).Merged = true;
 
             for (int i = 0; i < arr.Length; i++)
             {
-                ws.Cells[indexRow, i + 2].Value = CastAide.AsDecimal( dtGroup.Compute("sum(" + arr[i] + ")", condition));
+                ws.Cells[indexRow, i + 2].Value = CastAide.AsDecimal(dtGroup.Compute("sum(" + arr[i] + ")", condition));
                 ws.Cells[indexRow, i + 2].Style = gembox.GetStyleNumberTotal(0, "", red, green, blue);
             }
 
@@ -54,10 +45,12 @@ namespace BLL.Report.HR.GroupDaily
 
             indexRow++;
         }
-        #endregion
+
+        #endregion ExcelAssignTotal_HRGroupDaily
 
         #region ExcelAssignRow_HRGroupDaily
-        void ExcelAssignRow_HRGroupDaily(ref ExcelWorksheet ws, DataRow dr, int red, int green, int blue, ref int indexRow, ExcelGemboxUtils gembox)
+
+        private void ExcelAssignRow_HRGroupDaily(ref ExcelWorksheet ws, DataRow dr, int red, int green, int blue, ref int indexRow, ExcelGemboxUtils gembox)
         {
             string[] arr = { "Partner",
                             "turnoverAgents", "turnoverIBC", "turnover3rd", "totalTurnover",
@@ -75,7 +68,7 @@ namespace BLL.Report.HR.GroupDaily
                 }
                 else
                 {
-                    ws.Cells[indexRow, i + 1].Value = CastAide.AsDecimal( dr[arr[i]]);
+                    ws.Cells[indexRow, i + 1].Value = CastAide.AsDecimal(dr[arr[i]]);
                     ws.Cells[indexRow, i + 1].Style = gembox.GetStyleNumber(0, "", red, green, blue);
                 }
             }
@@ -91,9 +84,11 @@ namespace BLL.Report.HR.GroupDaily
 
             indexRow++;
         }
-        #endregion
+
+        #endregion ExcelAssignRow_HRGroupDaily
 
         #region ExportExcelHRGroupDaily
+
         public ExcelFile ExportExcelHRGroupDaily(string fromdate, string todate)
         {
             ExcelFile excelFile = new ExcelFile();
@@ -103,12 +98,13 @@ namespace BLL.Report.HR.GroupDaily
 
                 var objData = GetCachedObjData(HRGroupDailyCommon.keyCacheHRGroupDaily);
 
-                if(objData != null && !objData.GetType().Equals(typeof(string)))
+                if (objData != null && !objData.GetType().Equals(typeof(string)))
                     dtGroup = (DataTable)objData;
 
                 if (dtGroup == null)
                 {
                     #region getdate
+
                     DateTime fdate = CastAide.AsDateTime(fromdate);
                     DateTime tdate = CastAide.AsDateTime(todate);
 
@@ -135,6 +131,7 @@ namespace BLL.Report.HR.GroupDaily
                         }
 
                         #region Combine group daily into group
+
                         dtGroup = rsGroup.ResultSet.Tables[0];
                         if (rsGroupDaily != null)
                         {
@@ -149,12 +146,15 @@ namespace BLL.Report.HR.GroupDaily
                                 dtGroup.Rows.Add(drGroup);
                             }
                         }
-                        #endregion
+
+                        #endregion Combine group daily into group
                     }
-                    #endregion
+
+                    #endregion getdate
                 }
 
                 #region init excel
+
                 ExcelGemboxUtils gembox = new ExcelGemboxUtils();
 
                 ExcelWorksheetCollection worksheets = excelFile.Worksheets;
@@ -163,9 +163,11 @@ namespace BLL.Report.HR.GroupDaily
                 ExcelWorksheet ws = null;
                 string tag = "Horse Racing Group Daily";
                 ws = worksheets.Add(tag);
-                #endregion
+
+                #endregion init excel
 
                 #region Header
+
                 ws.Cells.GetSubrangeAbsolute(0, 0, 0, 17).Style = gembox.GetStyleTitle(255, 171, 171);
                 ws.Cells.GetSubrangeAbsolute(0, 0, 0, 17).Value = "Horse Racing Group Daily from " + fromdate + " to " + todate;
                 ws.Cells.GetSubrangeAbsolute(0, 0, 0, 17).Merged = true;
@@ -242,11 +244,13 @@ namespace BLL.Report.HR.GroupDaily
 
                 ws.Cells[2, 17].Value = "Amount Due to";
                 ws.Cells[2, 17].Style = gembox.GetStyleTitle(208, 232, 251);
-                #endregion
+
+                #endregion Header
 
                 #region Content
+
                 string date_p = "", date_c = "";
-                string condition = "", style = "";
+                string condition = "";
                 int countdate = 0;
                 int countFixed = 0, rowindexDate = 0;
 
@@ -258,7 +262,6 @@ namespace BLL.Report.HR.GroupDaily
                 foreach (DataRow dr in dtGroup.Rows)
                 {
                     hrType = CastAide.AsString(dr["Partner"]);
-                    
 
                     if (!hashPartner.ContainsKey(hrType))
                         hashPartner.Add(hrType, hrType);
@@ -300,9 +303,11 @@ namespace BLL.Report.HR.GroupDaily
 
                     ExcelAssignRow_HRGroupDaily(ref ws, dr, red, green, blue, ref indexrow, gembox);
                 }
-                #endregion
+
+                #endregion Content
 
                 #region lastest total by date
+
                 condition = "winlostdate='" + date_p + "'";
                 countdate = CastAide.AsInt32(dtGroup.Compute("count(winlostdate)", condition));
 
@@ -314,13 +319,16 @@ namespace BLL.Report.HR.GroupDaily
                 {
                     ExcelAssignTotal_HRGroupDaily(ref ws, dtGroup, condition, "", red, green, blue, ref indexrow, gembox);
                 }
-                #endregion
+
+                #endregion lastest total by date
 
                 #region colspan before cal grand total
+
                 ws.Cells.GetSubrangeAbsolute(indexrow, 0, indexrow, 17).Merged = true;
                 ws.Cells.GetSubrangeAbsolute(indexrow, 0, indexrow, 17).Style = gembox.GetStyleText(true);
                 indexrow++;
-                #endregion
+
+                #endregion colspan before cal grand total
 
                 #region grand total
 
@@ -336,17 +344,18 @@ namespace BLL.Report.HR.GroupDaily
                 //grand total
                 condition = "";
                 ExcelAssignTotal_HRGroupDaily(ref ws, dtGroup, condition, "Grand", 196, 208, 215, ref indexrow, gembox);
-                #endregion
+
+                #endregion grand total
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
 
             return excelFile;
         }
-        #endregion
+
+        #endregion ExportExcelHRGroupDaily
 
         public override string RenderHTML(Hashtable input)
         {

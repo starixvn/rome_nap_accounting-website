@@ -12,7 +12,7 @@ namespace Sunplus.Accounting.Entities.Report.Racebook
 
         [DataMember]
         public string ibcTO { get; set; }
-        
+
         [DataMember]
         public string ibcDividendWon { get; set; }
 

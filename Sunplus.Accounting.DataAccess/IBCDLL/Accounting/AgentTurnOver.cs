@@ -3,9 +3,6 @@ using System.Collections;
 using DNAide.Data;
 using IBCUtils;
 
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
-
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
     /// <summary>
@@ -20,7 +17,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <summary>
         /// call store procedure "Rpt_AgentTurnover"
         /// </summary>
-        /// Phuong.Nguyen updated 
+        /// Phuong.Nguyen updated
         /// <param name="fromdate">fromdate</param>
         /// <param name="todate">todate</param>
         /// <returns>dataresult </returns>
@@ -33,13 +30,11 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("fromdate", FormatHandler.ResetStartDate(fromdate));
                 p.Add("todate", FormatHandler.ResetEndDate(todate));
 
-
                 result = DbHelper.Execute("Acc_Rpt_AgentTurnover", p, DBType.WAREHOUSE, 300);
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
             return result;

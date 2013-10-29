@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Sunplus.Accounting.Entities.SpecialDelete.Mixparlay
@@ -90,7 +87,7 @@ namespace Sunplus.Accounting.Entities.SpecialDelete.Mixparlay
 
         [DataMember]
         public string Account { get; set; }
-        
+
         [DataMember]
         public string Refno { get; set; }
 
@@ -126,13 +123,13 @@ namespace Sunplus.Accounting.Entities.SpecialDelete.Mixparlay
 
         [DataMember]
         public string SPT { get; set; } // super PT
-        
+
         [DataMember]
         public string MPT { get; set; } // master PT
-        
+
         [DataMember]
         public string APT { get; set; } // agent PT
-        
+
         [DataMember]
         public string Choice { get; set; }
 

@@ -27,7 +27,6 @@ namespace Sunplus.Accounting.DataAccess.Provider.Report
             throw new NotImplementedException();
         }
 
-
         public virtual DbResult BalanceCompHistory()
         {
             throw new NotImplementedException();
@@ -37,7 +36,5 @@ namespace Sunplus.Accounting.DataAccess.Provider.Report
         {
             throw new NotImplementedException();
         }
-
-
     }
 }

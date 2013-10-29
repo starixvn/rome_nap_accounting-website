@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
-using System.Text;
+﻿using System.Net.Mail;
 
 namespace Sunplus.Accounting.Core.Helper
 {
@@ -30,9 +26,9 @@ namespace Sunplus.Accounting.Core.Helper
             bccMail = bccMail.Replace(";", ",");
 
             msg.To.Add(tomail);
-            if (ccMail.Length>0)
+            if (ccMail.Length > 0)
                 msg.CC.Add(ccMail);
-            if(bccMail.Length>0)
+            if (bccMail.Length > 0)
                 msg.Bcc.Add(bccMail);
 
             msg.From = new MailAddress(frommail, title, System.Text.Encoding.UTF8);

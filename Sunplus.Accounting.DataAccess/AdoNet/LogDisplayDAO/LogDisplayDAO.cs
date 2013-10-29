@@ -1,12 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using Sunplus.Accounting.DataAccess.ILogDisplay;
-using DNAide.Data;
-using System.Collections;
-using Sunplus.Accounting.Core.Configurations;
+﻿using System.Collections;
 using System.Data;
+using System.Linq;
 using DNAide.Core;
+using DNAide.Data;
+using Sunplus.Accounting.DataAccess.ILogDisplay;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.LogDisplayDAO
 {
@@ -16,24 +13,26 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.LogDisplayDAO
         {
             DbResult dbResult = null;
             string spMaping = string.Empty;
-            switch (logType) 
+            switch (logType)
             {
                 case "setting":
                 case "status":
                     spMaping = "GetLogSetting";
                     break;
+
                 case "login":
                     spMaping = "GetLogLogin";
                     break;
+
                 case "credit":
                     spMaping = "GetLogCredit";
                     break;
+
                 default:
                     break;
             }
             if (!string.IsNullOrEmpty(spMaping))
             {
-               
                 var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.LogDisplaySection.StoreCollection.Stores, spMaping);
                 dbResult = DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
                 if (dbResult != null && dbResult.ResultSet != null && dbResult.ResultSet.Tables.Count > 0)
@@ -52,12 +51,15 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.LogDisplayDAO
                 case "status":
                     spMaping = "GetLogSettingTotal";
                     break;
+
                 case "login":
                     spMaping = "GetLogLoginTotal";
                     break;
+
                 case "credit":
                     spMaping = "GetLogCreditTotal";
                     break;
+
                 default:
                     break;
             }
@@ -68,8 +70,9 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.LogDisplayDAO
                 if (dbResult != null && dbResult.ResultSet != null && dbResult.ResultSet.Tables.Count > 0)
                 {
                     DataRow[] rows = dbResult.ResultSet.Tables[0].Select();
-                    if (rows.Count() > 0) { 
-                        total = CastAide.AsInt32(rows[0].ItemArray[0].ToString()); 
+                    if (rows.Count() > 0)
+                    {
+                        total = CastAide.AsInt32(rows[0].ItemArray[0].ToString());
                     }
                 }
             }

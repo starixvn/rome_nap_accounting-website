@@ -4,30 +4,29 @@ using System.Data;
 using DNAide.Core;
 using DNAide.Data;
 using Fanex.Data;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Core.LoggingLib;
 
 /// <summary>
 /// Summary description for Betlist
 /// </summary>
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
-    public class Betlist:DataAccess
+    public class Betlist : DataAccess
     {
         public static StoreProcedureElement GetBetListStoreProcedure(string alias)
         {
             var sps = BetListSection.Instance[BetListSection.StoreCollection.BetListStores];
             return sps != null ? sps[alias] : null;
         }
+
         public static StoreProcedureElement GetReportStoreProcedure(ReportSession.StoreCollection storeCollection, string alias)
         {
             var sps = ReportSession.Instance[storeCollection];
             return sps != null ? sps[alias] : null;
         }
-        
+
         public static DbResult M88_BetList(int custid, DateTime fromdate, DateTime todate, DateTime movebetsday, bool showsb, bool showhr)
         {
             DbResult result = null;
@@ -45,12 +44,11 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
+
         public static DbResult AB88_BetList(int custid, DateTime fromdate, DateTime todate, DateTime movebetsday, bool showsb, bool showhr)
         {
             DbResult result = null;
@@ -68,12 +66,11 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
+
         public static DbResult BetList_12Bet(int custid, DateTime fromdate, DateTime todate, DateTime movebetsday, bool showsb, bool showhr)
         {
             DbResult result = null;
@@ -91,12 +88,11 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
+
         public static DbResult ALog_BetList(int custid, DateTime fromdate, DateTime todate, DateTime movebetsday, bool showsb, bool showhr)
         {
             DbResult result = null;
@@ -114,12 +110,11 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
+
         public static DbResult M88_BetList_History(int custid, DateTime fromdate, DateTime todate, bool showsb, bool showhr)
         {
             DbResult result = null;
@@ -136,12 +131,11 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
+
         public static DbResult AB88_BetList_History(int custid, DateTime fromdate, DateTime todate, bool showsb, bool showhr)
         {
             DbResult result = null;
@@ -158,12 +152,11 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
+
         public static DbResult BetList_History_12BET(int custid, DateTime fromdate, DateTime todate, bool showsb, bool showhr)
         {
             DbResult result = null;
@@ -180,12 +173,11 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
+
         public static DbResult ALog_BetList_History(int custid, DateTime fromdate, DateTime todate, bool showsb, bool showhr)
         {
             DbResult result = null;
@@ -202,9 +194,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
@@ -212,7 +202,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         public static DataSet BetList_SelMixParlay(string refno)
         {
             try
-            {                
+            {
                 using (ObjectDb db = new ObjectDb("Acc_BetsSelBetCheckM_All", 300))
                 {
                     Hashtable p = new Hashtable();
@@ -249,7 +239,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     result = db.ExecuteDataSet();
                     outStading = CastAide.AsDouble(db.GetParameterValue("outstanding"));
                 }
-                
             }
             catch (Exception ex)
             {
@@ -275,7 +264,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 }
             }
             catch (Exception ex)
-            {                
+            {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return null;
             }
@@ -297,10 +286,11 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             return result;
         }
+
         public static DataSet BetList_SBResults(int matchID)
         {
             try
-            {                
+            {
                 using (ObjectDb objDB = new ObjectDb("Acc_BetList_SelMatchResult", 300))
                 {
                     var p = new Hashtable();
@@ -312,7 +302,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 }
             }
             catch (Exception ex)
-            {                
+            {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return null;
             }
@@ -337,11 +327,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 }
             }
             catch (Exception ex)
-            {                
+            {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return null;
             }
         }
+
         public static DataSet BetsSelBetList(DateTime fromdate, DateTime todate, int custid, int bettype)
         {
             var result = new DataSet();
@@ -361,12 +352,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
             return result;
         }
+
         public static DataSet BetsSelBetList_Old(DateTime fromdate, DateTime todate, int custid, int bettype)
         {
             var result = new DataSet();
@@ -379,7 +370,6 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("custid", custid);
                 p.Add("bettype", bettype);
 
-
                 using (ObjectDb db = new ObjectDb("Acc_BetsSelBetList_Old", 180))
                 {
                     db.AssignParamValues(p);
@@ -388,12 +378,11 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
+
         public static DataSet BetsSelBetList_ByTransID(int custid, string transID)
         {
             var result = new DataSet();
@@ -410,13 +399,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 }
             }
             catch (Exception ex)
-            {                
+            {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
-
             }
             return result;
         }
+
         public static DataSet BetListByDayAll(int custid, DateTime fromdate, int transTypeId)
         {
             var result = new DataSet();
@@ -435,12 +424,11 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
+
         public static DbResult BetList_SelMatchResultFinance(long transID)
         {
             DbResult result = null;
@@ -455,14 +443,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
-        
+
         #region spondemo
+
         public static DbResult SpondemoBetList(int custId, DateTime fromDate, DateTime toDate, DateTime moveBetsDay, bool showSB, bool showHR)
         {
             DbResult result = null;
@@ -480,9 +467,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
@@ -503,15 +488,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
-        #endregion
+
+        #endregion spondemo
 
         #region Dela
+
         public static DbResult DelaBetList(int custId, DateTime fromDate, DateTime toDate, DateTime moveBetsDay, bool showSB, bool showHR)
         {
             DbResult result = null;
@@ -529,9 +514,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
@@ -552,15 +535,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
-        #endregion
+
+        #endregion Dela
 
         #region TCL
+
         public static DbResult TLC_BetList(int custid, DateTime fromdate, DateTime todate, DateTime movebetsday, bool showsb, bool showhr)
         {
             DbResult result = null;
@@ -578,9 +561,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
@@ -601,15 +582,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
-        #endregion
+
+        #endregion TCL
 
         #region Fun88
+
         public static DbResult Fun88_BetList(int custid, DateTime fromdate, DateTime todate, DateTime movebetsday, bool showsb, bool showhr)
         {
             DbResult result = null;
@@ -627,9 +608,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
@@ -650,13 +629,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
-        #endregion
+
+        #endregion Fun88
+
         /// <summary>
         /// Get Bingo Game Result
         /// </summary>
@@ -666,7 +645,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             var result = new DataTable();
             try
             {
-                var p = new Hashtable {{"matchid", matchID}};
+                var p = new Hashtable { { "matchid", matchID } };
                 var spElement = GetBetListStoreProcedure("SelMatchResultNumberGame");
                 var dbResult = DbHelper.Execute(spElement.Name, p, spElement.DbName, 180);
                 if (dbResult.ResultSet != null && dbResult.ResultSet.Tables.Count > 0)
@@ -674,9 +653,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return result;
         }
@@ -688,23 +665,17 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 using (ObjectDb objDB = new ObjectDb("SoprtingSolutionBetlistResult"))
                 {
-                    objDB.AddInParameter("matchid", DbType.Int32, matchID );
-                    objDB.AddInParameter("resourceid", DbType.String, resourceId );
+                    objDB.AddInParameter("matchid", DbType.Int32, matchID);
+                    objDB.AddInParameter("resourceid", DbType.String, resourceId);
                     var ds = objDB.ExecuteDataSet();
                     if (ds != null)
                         result = ds.Tables[0];
                 }
 
-
-
-
-                
             }
             catch (Exception ex)
             {
-
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
-
             }
             return result;
         }

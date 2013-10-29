@@ -7,14 +7,13 @@ using System.Linq;
 using System.Web;
 using DNAide.Core;
 using DNAide.Data;
+using DNAide.Utils;
 using ExcelUtil.Spreadsheet;
+using IBCUtils;
+using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.IBCDLL.Accounting;
 using Sunplus.Accounting.Entities.Report;
-using DNAide.Utils;
-using IBCUtils;
-using Sunplus.Accounting.DataAccess.Report;
-using Sunplus.Accounting.Core.Cache;
 
 namespace Sunplus.Accounting.Business.Report.Other
 {
@@ -26,9 +25,11 @@ namespace Sunplus.Accounting.Business.Report.Other
         private const string TraderPerformanceDetailIsNoSoccerSessionKey = "traderperformancedetailisnosoccerkey";
 
         #region get traderperformance sum
+
         public TraderPerformanceDTO GetTraderPerformance(string fromDate, string toDate, int isSoccer)
         {
             #region local variables
+
             var result = new TraderPerformanceDTO();
             var traderData = new List<TraderPerformance>();
             var traderTotal = new List<TraderPerformance>();
@@ -36,7 +37,8 @@ namespace Sunplus.Accounting.Business.Report.Other
             //result = (TraderPerformanceDTO)SessionExtension.GetSession(HttpContext.Current.Session, isSoccer == 1 ? TraderPerformanceIsSoccerSessionKey : TraderPerformanceIsNotSoccerSessionKey);
             //if (result != null)
             //    return result;
-            #endregion
+
+            #endregion local variables
 
             var reportData = GetTraderPerformanceData(fromDate, toDate, isSoccer);
             try
@@ -44,12 +46,16 @@ namespace Sunplus.Accounting.Business.Report.Other
                 if (reportData != null && reportData.Count > 0)
                 {
                     #region private variables
+
                     result = new TraderPerformanceDTO();
                     var dt = reportData.ToList();
+
                     #region grand total
 
                     var totalMatch = 0;
+
                     #region wl
+
                     decimal wlHdpTotal = 0,
                             wl1stHdpTotal = 0,
                             wl1stOu = 0,
@@ -70,8 +76,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                             wlCorners15minOu = 0,
                             wl10minOu = 0,
                             wlSingleTeamOu = 0;
-                    #endregion
+
+                    #endregion wl
+
                     #region comm
+
                     decimal comHdpTotal = 0,
                             com1stHdpTotal = 0,
                             com1stOu = 0,
@@ -92,8 +101,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                             comCorners15minOu = 0,
                             com10minOu = 0,
                             comSingleTeamOu = 0;
-                    #endregion
+
+                    #endregion comm
+
                     #region turn over
+
                     decimal toHdpTotal = 0,
                             to1stHdpTotal = 0,
                             to1stOu = 0,
@@ -114,8 +126,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                             toCorners15minOu = 0,
                             to10minOu = 0,
                             toSingleTeamOu = 0;
-                    #endregion
+
+                    #endregion turn over
+
                     #region margin
+
                     decimal mgHdpTotal = 0,
                             mg1stHdpTotal = 0,
                             mg1stOu = 0,
@@ -136,8 +151,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                             mgCorners15minOu = 0,
                             mg10minOu = 0,
                             mgSingleTeamOu = 0;
-                    #endregion
+
+                    #endregion margin
+
                     #region live betcount
+
                     decimal liHdpTotal = 0,
                             li1stHdpTotal = 0,
                             li1stOu = 0,
@@ -158,9 +176,12 @@ namespace Sunplus.Accounting.Business.Report.Other
                             liCorners15minOu = 0,
                             li10minOu = 0,
                             liSingleTeamOu = 0;
-                    #endregion
-                    #endregion
-                    #endregion
+
+                    #endregion live betcount
+
+                    #endregion grand total
+
+                    #endregion private variables
 
                     foreach (var dr in dt)
                     {
@@ -172,6 +193,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 MatchNo = CastAide.AsString(dr["matchno"]),
 
                                 #region win-lost
+
                                 WinLostHdp = NumberFormat.DecFormat(CastAide.AsDecimal(dr["winlost_hdp"], 0), 2),
                                 WinLost1stHdp = NumberFormat.DecFormat(CastAide.AsDecimal(dr["winlost_1sthdp"]), 2),
                                 WinLost1stOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["winlost_1stou"]), 2),
@@ -199,8 +221,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 WinLostCorners15minsOU = NumberFormat.DecFormat(CastAide.AsDecimal(dr["winlost_15minCorners"]), 2),
                                 WinLostNextBookings = NumberFormat.DecFormat(CastAide.AsDecimal(dr["winlost_NextBooking"]), 2),
                                 WinLostSingleTeamOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["winlost_SingleTeamOU"]), 2),
-                                #endregion
+
+                                #endregion win-lost
+
                                 #region comm
+
                                 CommHdp = NumberFormat.DecFormat(CastAide.AsDecimal(dr["comm_hdp"], 0), 2),
                                 Comm1stHdp = NumberFormat.DecFormat(CastAide.AsDecimal(dr["comm_1sthdp"], 0), 2),
                                 Comm1stOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["comm_1stou"], 0), 2),
@@ -236,8 +261,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 CommCorners15minsOU = NumberFormat.DecFormat(CastAide.AsDecimal(dr["Comm_15minCorners"]), 2),
                                 CommNextBookings = NumberFormat.DecFormat(CastAide.AsDecimal(dr["Comm_NextBooking"]), 2),
                                 CommSingleTeamOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["Comm_SingleTeamOU"]), 2),
-                                #endregion
+
+                                #endregion comm
+
                                 #region turn-over
+
                                 TurnOverHdp = NumberFormat.DecFormat(CastAide.AsDecimal(dr["stake_hdp"], 0), 2),
                                 TurnOver1stHdp = NumberFormat.DecFormat(CastAide.AsDecimal(dr["stake_1sthdp"], 0), 2),
                                 TurnOver1stOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["stake_1stou"], 0), 2),
@@ -270,8 +298,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 TurnOverCorners15minsOU = NumberFormat.DecFormat(CastAide.AsDecimal(dr["stake_15minCorners"]), 2),
                                 TurnOverNextBookings = NumberFormat.DecFormat(CastAide.AsDecimal(dr["stake_NextBooking"]), 2),
                                 TurnOverSingleTeamOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["stake_SingleTeamOU"]), 2),
-                                #endregion
+
+                                #endregion turn-over
+
                                 #region margin
+
                                 Margin1stHdp = NumberFormat.DecFormat(CastAide.AsDecimal(dr["margin_1sthdp"]) * 100, 2),
                                 MarginHdp = NumberFormat.DecFormat(CastAide.AsDecimal(dr["margin_hdp"]) * 100, 2),
                                 Margin1stOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["margin_1stou"]) * 100, 2),
@@ -305,8 +336,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 MarginCorners15minsOU = NumberFormat.DecFormat(CastAide.AsDecimal(dr["Margin_15minCorners"]), 2),
                                 MarginNextBookings = NumberFormat.DecFormat(CastAide.AsDecimal(dr["Margin_NextBooking"]), 2),
                                 MarginSingleTeamOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["Margin_SingleTeamOU"]), 2),
-                                #endregion
+
+                                #endregion margin
+
                                 #region live bet count
+
                                 LiveBetCountHdp = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_hdp"], 0), 0),
                                 LiveBetCount1stHdp = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_1sthdp"], 0), 0),
                                 LiveBetCount1stOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_1stou"], 0), 0),
@@ -338,12 +372,16 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 LiveBetCountCorners15minsOU = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_15minCorners"]), 0),
                                 LiveBetCountNextBookings = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_NextBooking"]), 0),
                                 LiveBetCountSingleTeamOu = NumberFormat.DecFormat(CastAide.AsDecimal(dr["bet_SingleTeamOU"]), 0)
-                                #endregion
+
+                                #endregion live bet count
                             };
 
                             #region assign GrandTotal data
+
                             totalMatch += CastAide.AsInt16Invariant(dr["matchno"]);
+
                             #region win-lost
+
                             wlHdpTotal += CastAide.AsDecimal(dr["winlost_hdp"]);
                             wl1stHdpTotal += CastAide.AsDecimal(dr["winlost_1sthdp"]);
                             wl1stOu += CastAide.AsDecimal(dr["winlost_1stou"]);
@@ -380,8 +418,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                             wlCorners15minOu += CastAide.AsDecimal(dr["winlost_15minCorners"]);
                             wl10minOu += CastAide.AsDecimal(dr["winlost_10minOU"]);
                             wlSingleTeamOu += CastAide.AsDecimal(dr["winlost_SingleTeamOU"]);
-                            #endregion
+
+                            #endregion win-lost
+
                             #region comm
+
                             comHdpTotal += CastAide.AsDecimal(dr["comm_hdp"]);
                             com1stHdpTotal += CastAide.AsDecimal(dr["comm_1sthdp"]);
                             com1stOu += CastAide.AsDecimal(dr["comm_1stou"]);
@@ -417,8 +458,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                             comCorners15minOu += CastAide.AsDecimal(dr["comm_15minCorners"]);
                             com10minOu += CastAide.AsDecimal(dr["comm_10minOU"]);
                             comSingleTeamOu += CastAide.AsDecimal(dr["comm_SingleTeamOU"]);
-                            #endregion
+
+                            #endregion comm
+
                             #region turn-over
+
                             toHdpTotal += CastAide.AsDecimal(dr["stake_hdp"]);
                             to1stHdpTotal += CastAide.AsDecimal(dr["stake_1sthdp"]);
                             to1stOu += CastAide.AsDecimal(dr["stake_1stou"]);
@@ -452,8 +496,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                             toCorners15minOu += CastAide.AsDecimal(dr["stake_15minCorners"]);
                             to10minOu += CastAide.AsDecimal(dr["stake_10minOU"]);
                             toSingleTeamOu += CastAide.AsDecimal(dr["stake_SingleTeamOU"]);
-                            #endregion
+
+                            #endregion turn-over
+
                             #region margin
+
                             mgHdpTotal += CastAide.AsDecimal(dr["margin_hdp"]);
                             mg1stHdpTotal += CastAide.AsDecimal(dr["margin_1sthdp"]);
                             mg1stOu += CastAide.AsDecimal(dr["margin_1stou"]);
@@ -487,8 +534,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                             mgCorners15minOu += CastAide.AsDecimal(dr["margin_15minCorners"]);
                             mg10minOu += CastAide.AsDecimal(dr["margin_10minOU"]);
                             mgSingleTeamOu += CastAide.AsDecimal(dr["margin_SingleTeamOU"]);
-                            #endregion
+
+                            #endregion margin
+
                             #region live bet count
+
                             liHdpTotal += CastAide.AsDecimal(dr["bet_hdp"]);
                             li1stHdpTotal += CastAide.AsDecimal(dr["bet_1sthdp"]);
                             li1stOu += CastAide.AsDecimal(dr["bet_1stou"]);
@@ -519,8 +569,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                             liCorners15minOu += CastAide.AsDecimal(dr["bet_15minCorners"]);
                             li10minOu += CastAide.AsDecimal(dr["bet_10minOU"]);
                             liSingleTeamOu += CastAide.AsDecimal(dr["bet_SingleTeamOU"]);
-                            #endregion
-                            #endregion
+
+                            #endregion live bet count
+
+                            #endregion assign GrandTotal data
+
                             if (CastAide.AsInt32(dr["custid"]) == 0 && CastAide.AsDecimal(dr["overall_st"], 0) == 0)
                                 continue;
                             traderData.Add(traderDetail);
@@ -528,11 +581,14 @@ namespace Sunplus.Accounting.Business.Report.Other
                     }
 
                     #region Grandtotal format
+
                     var traderGrandTotal = new TraderPerformance
                     {
                         MatchNo = totalMatch.ToString(),
                         UserName = string.Empty,
+
                         #region win-lost
+
                         WinLostHdp = NumberFormat.DecFormat(CastAide.AsDecimal(wlHdpTotal, 0), 2),
                         WinLost1stHdp = NumberFormat.DecFormat(CastAide.AsDecimal(wl1stHdpTotal, 0), 2),
                         WinLost1stOu = NumberFormat.DecFormat(CastAide.AsDecimal(wl1stOu, 0), 2),
@@ -560,8 +616,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         WinLostCorners15minsOU = NumberFormat.DecFormat(CastAide.AsDecimal(wlCorners15minOu, 0), 2),
                         WinLostNextBookings = NumberFormat.DecFormat(CastAide.AsDecimal(wlNextBooking, 0), 2),
                         WinLostSingleTeamOu = NumberFormat.DecFormat(CastAide.AsDecimal(wlSingleTeamOu, 0), 2),
-                        #endregion
+
+                        #endregion win-lost
+
                         #region comm
+
                         CommHdp = NumberFormat.DecFormat(CastAide.AsDecimal(comHdpTotal, 0), 2),
                         Comm1stHdp = NumberFormat.DecFormat(CastAide.AsDecimal(com1stHdpTotal, 0), 2),
                         Comm1stOu = NumberFormat.DecFormat(CastAide.AsDecimal(com1stOu, 0), 2),
@@ -588,8 +647,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         CommCorners15minsOU = NumberFormat.DecFormat(CastAide.AsDecimal(comCorners15minOu, 0), 2),
                         CommNextBookings = NumberFormat.DecFormat(CastAide.AsDecimal(comNextBooking, 0), 2),
                         CommSingleTeamOu = NumberFormat.DecFormat(CastAide.AsDecimal(comSingleTeamOu, 0), 2),
-                        #endregion
+
+                        #endregion comm
+
                         #region turn-over
+
                         TurnOverHdp = NumberFormat.DecFormat(CastAide.AsDecimal(toHdpTotal, 0), 2),
                         TurnOver1stHdp = NumberFormat.DecFormat(CastAide.AsDecimal(to1stHdpTotal, 0), 2),
                         TurnOver1stOu = NumberFormat.DecFormat(CastAide.AsDecimal(to1stOu, 0), 2),
@@ -616,7 +678,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                         TurnOverCorners15minsOU = NumberFormat.DecFormat(CastAide.AsDecimal(toCorners15minOu, 0), 2),
                         TurnOverNextBookings = NumberFormat.DecFormat(CastAide.AsDecimal(toNextBooking, 0), 2),
                         TurnOverSingleTeamOu = NumberFormat.DecFormat(CastAide.AsDecimal(toSingleTeamOu, 0), 2),
-                        #endregion
+
+                        #endregion turn-over
+
                         #region margin
 
                         MarginHdp = NumberFormat.DecFormat((CastAide.AsDecimal(toHdpTotal, 0) != 0 ? CastAide.AsDecimal(wlHdpTotal, 0) * 100 / CastAide.AsDecimal(toHdpTotal, 0) : 0), 2),
@@ -645,8 +709,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         MarginCorners15minsOU = NumberFormat.DecFormat((CastAide.AsDecimal(toOverall, 0) != 0 ? (CastAide.AsDecimal(wlOverall, 0) * 100 / CastAide.AsDecimal(toOverall, 0)) : 0), 2),
                         MarginNextBookings = NumberFormat.DecFormat((CastAide.AsDecimal(toNextBooking, 0) != 0 ? (CastAide.AsDecimal(wlNextBooking, 0) * 100 / CastAide.AsDecimal(toNextBooking, 0)) : 0), 2),
                         MarginSingleTeamOu = NumberFormat.DecFormat((CastAide.AsDecimal(toSingleTeamOu, 0) != 0 ? (CastAide.AsDecimal(wlSingleTeamOu, 0) * 100 / CastAide.AsDecimal(toSingleTeamOu, 0)) : 0), 2),
-                        #endregion
+
+                        #endregion margin
+
                         #region live bet count
+
                         LiveBetCountHdp = NumberFormat.DecFormat(CastAide.AsDecimal(liHdpTotal, 0), 0),
                         LiveBetCount1stHdp = NumberFormat.DecFormat(CastAide.AsDecimal(li1stHdpTotal, 0), 0),
                         LiveBetCount1stOu = NumberFormat.DecFormat(CastAide.AsDecimal(li1stOu, 0), 0),
@@ -674,10 +741,12 @@ namespace Sunplus.Accounting.Business.Report.Other
                         LiveBetCountCorners15minsOU = NumberFormat.DecFormat(CastAide.AsDecimal(liCorners15minOu, 0), 0),
                         LiveBetCountNextBookings = NumberFormat.DecFormat(CastAide.AsDecimal(liNextBooking, 0), 0),
                         LiveBetCountSingleTeamOu = NumberFormat.DecFormat(CastAide.AsDecimal(liSingleTeamOu, 0), 0)
-                        #endregion
+
+                        #endregion live bet count
                     };
                     traderTotal.Add(traderGrandTotal);
-                    #endregion
+
+                    #endregion Grandtotal format
 
                     result.rows = traderData;
                     result.footers = traderTotal;
@@ -693,9 +762,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                     case 1:
                         SessionExtension.AddSession(HttpContext.Current.Session, TraderPerformanceIsSoccerSessionKey, result);
                         break;
+
                     case 0:
                         SessionExtension.AddSession(HttpContext.Current.Session, TraderPerformanceIsNotSoccerSessionKey, result);
                         break;
+
                     default:
                         break;
                 }
@@ -709,19 +780,23 @@ namespace Sunplus.Accounting.Business.Report.Other
             var hashTbl = new Hashtable { { "fromdate", fromDate }, { "todate", toDate }, { "issoccer", isSoccer } };
 
             #region get data
+
             var rs = AccountReport.Acc_TraderPerformanceSum(hashTbl);
             if (rs != null && rs.ResultSet.Tables.Count > 0)
             {
                 result = rs.ResultSet.Tables[0];
             }
-            #endregion
+
+            #endregion get data
 
             var query = (from traderData in result.AsEnumerable() select traderData).ToList();
             return query;
         }
-        #endregion
+
+        #endregion get traderperformance sum
 
         #region Export 2 excel
+
         public void TraderPerformanceExport2Excel(string fromDate, string toDate, int isSoccer)
         {
             var trader = new TraderPerformanceDTO();
@@ -733,6 +808,7 @@ namespace Sunplus.Accounting.Business.Report.Other
         private void TraderPerformanceExport2ExcelFormat(TraderPerformanceDTO trader, int isSoccer, string fromDate, string toDate)
         {
             #region local variables
+
             const string firstOneXTwo = "1st 1x2";
             const string oneXTwo = "1x2";
             const string firstHdp = "1st HDP";
@@ -761,13 +837,16 @@ namespace Sunplus.Accounting.Business.Report.Other
             var nextRow = 0;
             var wsTraderPerformanceReport = excelFile.Worksheets.Add(reportName);
             var mergedTotalColumns = isSoccer == 1 ? 19 : 8;
-            #endregion
+
+            #endregion local variables
 
             #region Header
+
             var bgHeaderFormat = ExcelFormat(Color.FromArgb(159, 183, 213), HorizontalAlignmentStyle.Center, ExcelFont.BoldWeight, false, false);
             var nextHeaderColumn = 0;
 
             #region first row
+
             wsTraderPerformanceReport.Cells[startRowIndex - 3, startColumnIndex].Style.Font.Weight = ExcelFont.BoldWeight;
             wsTraderPerformanceReport.Cells[startRowIndex - 3, startColumnIndex].Value =
                 string.Format("Trader Performance For {0} From {1} To {2}", (isSoccer == 1 ? "SOCCER SPORT" : "OTHER SPORTS"), fromDate, toDate);
@@ -788,7 +867,6 @@ namespace Sunplus.Accounting.Business.Report.Other
                                                                startRowIndex - 1,
                                                                startColumnIndex + (nextHeaderColumn++)).Value = "No";
 
-
             wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColumnIndex + (nextHeaderColumn),
                                                     startRowIndex - 1,
                                                     startColumnIndex + (nextHeaderColumn)).Merged =
@@ -805,7 +883,6 @@ namespace Sunplus.Accounting.Business.Report.Other
                                                                 startRowIndex - 1,
                                                                 startColumnIndex + (nextHeaderColumn++)).Value =
                 "Trader";
-
 
             wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColumnIndex + (nextHeaderColumn),
                                                     startRowIndex - 1,
@@ -911,7 +988,6 @@ namespace Sunplus.Accounting.Business.Report.Other
             wsTraderPerformanceReport.Cells[startRowIndex - 2, startColumnIndex + (nextHeaderColumn++)].Style =
                     bgHeaderFormat;
 
-
             wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColumnIndex + (nextHeaderColumn),
                                                   startRowIndex - 1,
                                                   startColumnIndex + (nextHeaderColumn)).Merged =
@@ -929,7 +1005,8 @@ namespace Sunplus.Accounting.Business.Report.Other
                                                                 startColumnIndex + (nextHeaderColumn)).Value =
                 "Trader";
 
-            #endregion
+            #endregion first row
+
             //second row
             nextHeaderColumn = 0;
             wsTraderPerformanceReport.Rows[startRowIndex - 1].Height = 400;
@@ -938,6 +1015,7 @@ namespace Sunplus.Accounting.Business.Report.Other
             wsTraderPerformanceReport.Columns[nextHeaderColumn++].Width = 2000;
 
             #region group header
+
             for (var i = 0; i < 5; i++)
             {
                 wsTraderPerformanceReport.Columns[nextHeaderColumn].Width = 4000;
@@ -1105,13 +1183,14 @@ namespace Sunplus.Accounting.Business.Report.Other
                 wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style.VerticalAlignment = VerticalAlignmentStyle.Center;
                 wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn++)].Value =
                     overall;
-
             }
 
             wsTraderPerformanceReport.Columns[nextHeaderColumn].Width = 4000;
 
-            #endregion
-            #endregion
+            #endregion group header
+
+            #endregion Header
+
             if (trader != null && trader.rows != null && trader.rows.Count() > 0)
             {
                 #region Body
@@ -1156,7 +1235,8 @@ namespace Sunplus.Accounting.Business.Report.Other
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                         Value = reportDetail.MatchNo;
-                    #endregion
+
+                    #endregion group1: No; Trader; Match
 
                     #region win-lose
 
@@ -1355,7 +1435,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                         Value = null;
 
-                    #endregion
+                    #endregion win-lose
 
                     #region TurnOver
 
@@ -1554,7 +1634,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                         Value = null;
 
-                    #endregion
+                    #endregion TurnOver
 
                     #region Live BetCount
 
@@ -1756,7 +1836,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                         Value = null;
 
-                    #endregion
+                    #endregion Live BetCount
 
                     #region Margin
 
@@ -1957,8 +2037,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                        Value = null;
 
-
-                    #endregion
+                    #endregion Margin
 
                     #region Commission
 
@@ -2158,8 +2237,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextColumn++)].
                         Value = null;
 
-
-                    #endregion
+                    #endregion Commission
 
                     #region last group
 
@@ -2175,13 +2253,15 @@ namespace Sunplus.Accounting.Business.Report.Other
                         =
                         reportDetail.UserName;
 
-                    #endregion
+                    #endregion last group
 
                     nextRow++;
                 }
-                #endregion
+
+                #endregion Body
 
                 #region Footer
+
                 var nextTotalColumn = 0;
                 var footerTextStyleSheet = ExcelFormat(Color.FromArgb(159, 183, 213),
                                                             HorizontalAlignmentStyle.Center, ExcelFont.BoldWeight, false, false);
@@ -2198,6 +2278,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                 foreach (var reportFooter in trader.footers)
                 {
                     #region group 1
+
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Style =
                         footerTextStyleSheet;
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
@@ -2210,9 +2291,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Right;
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value =
                         reportFooter.MatchNo;
-                    #endregion
+
+                    #endregion group 1
 
                     #region win-lose
+
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
                         footerStyleSheet;
                     if (CastAide.AsDecimal(reportFooter.WinLost1st1x2) != 0)
@@ -2396,9 +2479,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                             CastAide.AsDecimal(reportFooter.WinLostOverall);
                     else
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value = null;
-                    #endregion
+
+                    #endregion win-lose
 
                     #region TurnOver
+
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
                         footerStyleSheet;
                     if (CastAide.AsDecimal(reportFooter.TurnOver1st1x2) != 0)
@@ -2582,9 +2667,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                             CastAide.AsDecimal(reportFooter.TurnOverOverall);
                     else
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value = null;
-                    #endregion
+
+                    #endregion TurnOver
 
                     #region Live BetCount
+
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
                         footerIntStyleSheet;
                     if (CastAide.AsDecimal(reportFooter.LiveBetCount1st1x2) != 0)
@@ -2768,9 +2855,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                             CastAide.AsDecimal(reportFooter.LiveBetCountOverall);
                     else
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value = null;
-                    #endregion
+
+                    #endregion Live BetCount
 
                     #region Margin
+
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
                         footerStyleSheetPercent;
                     if (CastAide.AsDecimal(reportFooter.Margin1st1x2) != 0)
@@ -2954,9 +3043,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                             CastAide.AsDecimal(reportFooter.MarginOverall) / 100;
                     else
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value = null;
-                    #endregion
+
+                    #endregion Margin
 
                     #region Comm
+
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
                         footerStyleSheet;
                     if (CastAide.AsDecimal(reportFooter.Comm1st1x2) != 0)
@@ -3140,12 +3231,14 @@ namespace Sunplus.Accounting.Business.Report.Other
                             CastAide.AsDecimal(reportFooter.CommOverall);
                     else
                         wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn++)].Value = null;
-                    #endregion
+
+                    #endregion Comm
 
                     wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (nextTotalColumn)].Style =
                         footerStyleSheet;
                 }
-                #endregion
+
+                #endregion Footer
             }
             else
             {
@@ -3167,13 +3260,16 @@ namespace Sunplus.Accounting.Business.Report.Other
                 wsTraderPerformanceReport.Cells[nextRow + startRowIndex, startColumnIndex + (3)].
                     Value = "There is no information available.";
             }
+
             #region response excel file
+
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
             excelFile.SaveXls(response.OutputStream);
-            #endregion
+
+            #endregion response excel file
         }
 
         public void TraderPerformanceDetailExport2Excel(string fromDate, string toDate, int isSoccer)
@@ -3187,6 +3283,7 @@ namespace Sunplus.Accounting.Business.Report.Other
         private void TraderPerformanceDetailExport2ExcelFormat(TraderPerformanceDetailDTO trader, int isSoccer, string fromDate, string toDate)
         {
             #region local variables
+
             const string firstOneXTwo = "1st 1x2";
             const string oneXTwo = "1x2";
             const string firstHdp = "1st HDP";
@@ -3217,8 +3314,11 @@ namespace Sunplus.Accounting.Business.Report.Other
             var nextRow = 0;
             var wsTraderPerformanceReport = excelFile.Worksheets.Add(reportName);
             var mergedTotalColumns = isSoccer == 1 ? 19 : 8;
-            #endregion
+
+            #endregion local variables
+
             #region Header
+
             var bgHeaderFormat = ExcelFormat(Color.FromArgb(159, 183, 213), HorizontalAlignmentStyle.Center, ExcelFont.BoldWeight, false, false);
             var nextHeaderColumn = 0;
 
@@ -3226,7 +3326,9 @@ namespace Sunplus.Accounting.Business.Report.Other
             wsTraderPerformanceReport.Cells[startRowIndex - 3, startColumnIndex].Style.Font.Weight = ExcelFont.BoldWeight;
             wsTraderPerformanceReport.Cells[startRowIndex - 3, startColumnIndex].Value =
                 string.Format("{0} RISK CONTROLLER REPORT BY MATCH FROM {1} TO {2}", (isSoccer == 1 ? "SOCCER SPORT" : "OTHER SPORTS"), fromDate, toDate);
+
             #region first row
+
             wsTraderPerformanceReport.Cells.GetSubrangeAbsolute(startRowIndex - 2, startColumnIndex + (nextHeaderColumn),
                                        startRowIndex - 1,
                                        startColumnIndex + (nextHeaderColumn)).Merged =
@@ -3429,8 +3531,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                                                                startRowIndex - 1,
                                                                startColumnIndex + (nextHeaderColumn)).Value =
                 "Trader";
-            #endregion
+
+            #endregion first row
+
             #region second row
+
             nextHeaderColumn = 0;
             wsTraderPerformanceReport.Rows[startRowIndex - 1].Height = 400;
             wsTraderPerformanceReport.Columns[nextHeaderColumn++].Width = 2000;
@@ -3452,8 +3557,11 @@ namespace Sunplus.Accounting.Business.Report.Other
             wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style.VerticalAlignment = VerticalAlignmentStyle.Center;
             wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn++)].Value =
                 "FT";
-            #endregion
+
+            #endregion second row
+
             #region group header
+
             for (var i = 0; i < 5; i++)
             {
                 wsTraderPerformanceReport.Columns[nextHeaderColumn].Width = 4000;
@@ -3621,17 +3729,18 @@ namespace Sunplus.Accounting.Business.Report.Other
                 wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn)].Style.VerticalAlignment = VerticalAlignmentStyle.Center;
                 wsTraderPerformanceReport.Cells[startRowIndex - 1, startColumnIndex + (nextHeaderColumn++)].Value =
                     overall;
-
             }
 
-            #endregion
+            #endregion group header
 
             wsTraderPerformanceReport.Columns[nextHeaderColumn].Width = 4000;
 
-            #endregion
+            #endregion Header
+
             if (trader != null && trader.rows != null && trader.rows.Count() > 0)
             {
                 #region Body
+
                 var parentIndex = 1;
 
                 foreach (var traderReportDetail in trader.rows)
@@ -3651,18 +3760,20 @@ namespace Sunplus.Accounting.Business.Report.Other
                                                           ref nextColumn, startRowIndex, startColumnIndex, isSoccer, false);
                     parentIndex++;
 
-                    #endregion
+                    #endregion group1: No; Trader; Date; League; Match
                 }
 
-                #endregion
+                #endregion Body
 
                 #region Footer
+
                 var nextColumnFooter = 0;
                 TraderPerformanceDetaiRenderLeftTotal(trader.footer, ref wsTraderPerformanceReport, ref nextRow,
                                                       ref nextColumnFooter, startRowIndex, startColumnIndex, true);
                 TraderPerformanceDetailRenderRightRow(trader.footer, ref wsTraderPerformanceReport, ref nextRow,
                                                       ref nextColumnFooter, startRowIndex, startColumnIndex, isSoccer, true);
-                #endregion
+
+                #endregion Footer
             }
             else
             {
@@ -3685,19 +3796,20 @@ namespace Sunplus.Accounting.Business.Report.Other
             }
 
             #region response excel file
+
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
             excelFile.SaveXls(response.OutputStream);
-            #endregion
+
+            #endregion response excel file
         }
 
         private static void TraderPerformanceDetailRenderLeftRow(TraderPerformanceDetailBO trader, ref ExcelWorksheet worksheet, ref int rowIndex,
             ref int colIndex, int startRow, int startCol, int isSoccer, int parentIndex)
         {
             var childIndex = 0;
-            var childrenIndex = 0;
             int maxTextLengthPerLine = 39;
             int currentTextLength = 0;
             int currentRowHeight = 0;
@@ -3713,7 +3825,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                                      ExcelFont.NormalWeight, false, false);
                 var bgPercentFormat = ExcelFormat(childIndex % 2 == 0 ? Color.FromArgb(248, 248, 248) : Color.FromArgb(217, 232, 235), HorizontalAlignmentStyle.Right,
                                      ExcelFont.NormalWeight, false, true);
+
                 #region leftcolumn
+
                 currentTextLength = (traderDetail.League.Length > traderDetail.Match.Length) ? traderDetail.League.Length : traderDetail.Match.Length;
                 if (maxTextLengthPerLine != 0 && currentTextLength > 0)
                 {
@@ -3826,9 +3940,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                     = bgTextFormat;
                 worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                     Value = traderDetail.FT;
-                #endregion
+
+                #endregion leftcolumn
 
                 #region win-lose
+
                 bgFormat = ExcelFormat(Color.FromArgb(231, 237, 169), HorizontalAlignmentStyle.Right,
                                        ExcelFont.NormalWeight, true, false);
 
@@ -4025,10 +4141,10 @@ namespace Sunplus.Accounting.Business.Report.Other
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                     Value = null;
 
-
-                #endregion
+                #endregion win-lose
 
                 #region turnover
+
                 bgFormat = ExcelFormat(Color.FromArgb(209, 227, 231), HorizontalAlignmentStyle.Right,
                                        ExcelFont.NormalWeight, true, false);
                 worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].Style
@@ -4224,9 +4340,10 @@ namespace Sunplus.Accounting.Business.Report.Other
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                         Value = null;
 
-                #endregion
+                #endregion turnover
 
                 #region live betcount
+
                 bgFormat = ExcelIntFormat(Color.FromArgb(253, 207, 246),
                                        HorizontalAlignmentStyle.Right, ExcelFont.NormalWeight, true, false);
                 worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].Style
@@ -4422,10 +4539,10 @@ namespace Sunplus.Accounting.Business.Report.Other
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                     Value = null;
 
-
-                #endregion
+                #endregion live betcount
 
                 #region margin
+
                 bgPercentFormat = ExcelFormat(Color.FromArgb(202, 222, 230),
                                   HorizontalAlignmentStyle.Right, ExcelFont.NormalWeight, false, true);
 
@@ -4622,10 +4739,10 @@ namespace Sunplus.Accounting.Business.Report.Other
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                     Value = null;
 
-
-                #endregion
+                #endregion margin
 
                 #region comm
+
                 bgFormat = ExcelFormat(Color.FromArgb(255, 255, 238),
                                        HorizontalAlignmentStyle.Right, ExcelFont.NormalWeight, true, false);
                 worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].Style
@@ -4819,8 +4936,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                     worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                     Value = null;
 
-
-                #endregion
+                #endregion comm
 
                 #region last column
 
@@ -4843,7 +4959,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                                                         startCol + (colIndex++)).Value = traderDetail.UserName;
                 }
 
-                #endregion
+                #endregion last column
 
                 childIndex++;
                 rowIndex++;
@@ -4855,7 +4971,6 @@ namespace Sunplus.Accounting.Business.Report.Other
         {
             var bgFormat = ExcelFormat(isGrandTotal ? Color.FromArgb(159, 183, 213) : Color.FromArgb(204, 255, 204), HorizontalAlignmentStyle.Left,
                                        ExcelFont.BoldWeight, false, false);
-
 
             worksheet.Cells.GetSubrangeAbsolute(rowIndex + startRowIndex, startColumnIndex + (colIndex),
                                                                 startRowIndex + rowIndex,
@@ -4871,7 +4986,6 @@ namespace Sunplus.Accounting.Business.Report.Other
             worksheet.Cells[rowIndex + startRowIndex, startColumnIndex + (colIndex + 4)].
                 Value = isGrandTotal ? "Grand Total" : trader.UserName;
             colIndex += 5;
-
         }
 
         private static void TraderPerformanceDetailRenderRightRow(TraderPerformanceDetail trader, ref ExcelWorksheet worksheet,
@@ -4896,7 +5010,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                                                           startCol + (colIndex + 1)).
                 Value = null;
             colIndex += 2;
+
             #region win-lose
+
             worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].Style
                 = bgFormat;
             if (CastAide.AsDecimal(trader.WinLost1st1x2) != 0)
@@ -5089,9 +5205,10 @@ namespace Sunplus.Accounting.Business.Report.Other
                 worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                 Value = null;
 
-            #endregion
+            #endregion win-lose
 
             #region turnover
+
             worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].Style
                 = bgFormat;
             if (CastAide.AsDecimal(trader.TurnOver1st1x2) != 0)
@@ -5284,9 +5401,10 @@ namespace Sunplus.Accounting.Business.Report.Other
                 worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                 Value = null;
 
-            #endregion
+            #endregion turnover
 
             #region live betcount
+
             bgFormat = ExcelIntFormat(isGrandTotal ? Color.FromArgb(159, 183, 213) : Color.FromArgb(204, 255, 204), HorizontalAlignmentStyle.Right,
                                     ExcelFont.BoldWeight, true, false);
             worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].Style
@@ -5481,9 +5599,10 @@ namespace Sunplus.Accounting.Business.Report.Other
                 worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                 Value = null;
 
-            #endregion
+            #endregion live betcount
 
             #region margin
+
             worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].Style
                 = bgPercentFormat;
             if (CastAide.AsDecimal(trader.Margin1st1x2) != 0)
@@ -5677,9 +5796,10 @@ namespace Sunplus.Accounting.Business.Report.Other
                 worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                 Value = null;
 
-            #endregion
+            #endregion margin
 
             #region comm
+
             bgFormat = ExcelFormat(isGrandTotal ? Color.FromArgb(159, 183, 213) : Color.FromArgb(204, 255, 204), HorizontalAlignmentStyle.Right,
                                     ExcelFont.BoldWeight, true, false);
             worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].Style
@@ -5874,8 +5994,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                 worksheet.Cells[rowIndex + startRow, startCol + (colIndex++)].
                 Value = null;
 
-
-            #endregion
+            #endregion comm
 
             worksheet.Cells[rowIndex + startRow, startCol + (colIndex)].Style
                 = bgTextFormat;
@@ -5922,12 +6041,14 @@ namespace Sunplus.Accounting.Business.Report.Other
             return excelFormat;
         }
 
-        #endregion
+        #endregion Export 2 excel
 
         #region get traderperformance report detail
+
         public TraderPerformanceDetailDTO GetTraderPerformanceDetail(string fromDate, string toDate, int isSoccer, bool isGetNewData)
         {
             #region get old data
+
             if (isGetNewData == false)
             {
                 var getOldData = new TraderPerformanceDetailDTO();
@@ -5935,9 +6056,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                          GetTraderPerformanceDetail(fromDate, toDate, isSoccer, true);
                 return getOldData;
             }
-            #endregion
+
+            #endregion get old data
 
             #region get new data
+
             var result = new TraderPerformanceDetailDTO();
             DateTime fDate, tDate;
             if (!Validator.ValidDateMMDDYYYYNotNull(fromDate, out fDate).IsSuccess() ||
@@ -5946,12 +6069,15 @@ namespace Sunplus.Accounting.Business.Report.Other
                 return result;
             }
             tDate = new DateTime(tDate.Year, tDate.Month, tDate.Day, 23, 59, 59);
+
             #region get data
+
             DbResult rs = null;
             //if (tDate < ReportUtils.BalanceUp.MoveBetsDay)
             //    return result;
             rs = AccountReport.Acc_TraderPerformanceDetail(fDate, tDate, isSoccer);
-            #endregion
+
+            #endregion get data
 
             var traderDataBO = new TraderPerformanceDetailBO();
             try
@@ -5963,6 +6089,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                     var preUsername = string.Empty;
 
                     #region turnover
+
                     decimal to_hthdp = 0,
                             to_hdp = 0,
                             to_htou = 0,
@@ -6023,9 +6150,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                             Grand_to_Corners15minOu = 0,
                             Grand_to_10minOu = 0,
                             Grand_to_SingleTeamOu = 0;
-                    #endregion
+
+                    #endregion turnover
 
                     #region livebetcount
+
                     decimal livebetcount_hthdp = 0,
                             livebetcount_hdp = 0,
                             livebetcount_htou = 0,
@@ -6086,9 +6215,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                             Grand_livebetcount_Corners15minOu = 0,
                             Grand_livebetcount_10minOu = 0,
                             Grand_livebetcount_SingleTeamOu = 0;
-                    #endregion
+
+                    #endregion livebetcount
 
                     #region winlost
+
                     decimal wl_hthdp = 0,
                             wl_hdp = 0,
                             wl_htou = 0,
@@ -6149,9 +6280,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                             Grand_wl_Corners15minOu = 0,
                             Grand_wl_10minOu = 0,
                             Grand_wl_SingleTeamOu = 0;
-                    #endregion
+
+                    #endregion winlost
 
                     #region comm
+
                     decimal comm_hthdp = 0,
                             comm_hdp = 0,
                             comm_htou = 0,
@@ -6212,9 +6345,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                             Grand_comm_Corners15minOu = 0,
                             Grand_comm_10minOu = 0,
                             Grand_comm_SingleTeamOu = 0;
-                    #endregion
+
+                    #endregion comm
 
                     #region margin
+
                     decimal m_hthdp = 0,
                             m_hdp = 0,
                             m_htou = 0,
@@ -6275,7 +6410,8 @@ namespace Sunplus.Accounting.Business.Report.Other
                             Grand_m_Corners15minOu = 0,
                             Grand_m_10minOu = 0,
                             Grand_m_SingleTeamOu = 0;
-                    #endregion
+
+                    #endregion margin
 
                     var subCount = 0;
                     var traderChildren = new List<TraderPerformanceDetail>();
@@ -6297,6 +6433,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                             if (subCount > 0)
                             {
                                 #region assign total row
+
                                 var traderTotal = new TraderPerformanceDetail()
                                 {
                                     Comm15minOu = NumberFormat.DecFormat(Total_comm_15mou, 2),
@@ -6410,9 +6547,9 @@ namespace Sunplus.Accounting.Business.Report.Other
                                     Match = string.Empty,
                                     HT = string.Empty,
                                     FT = string.Empty
-
                                 };
-                                #endregion
+
+                                #endregion assign total row
 
                                 traderDataBO.total = traderTotal;
                                 traderDataBO.children = traderChildren;
@@ -6420,6 +6557,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 traderChildren = new List<TraderPerformanceDetail>();
                                 traderDataBO = new TraderPerformanceDetailBO();
                                 subCount = 0;
+
                                 #region turnover
 
                                 Total_to_hthdp = 0;
@@ -6443,7 +6581,8 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 Total_to_10minOu = 0;
                                 Total_to_SingleTeamOu = 0;
 
-                                #endregion
+                                #endregion turnover
+
                                 #region livebetcount
 
                                 Total_livebetcount_hthdp = 0;
@@ -6467,7 +6606,8 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 Total_livebetcount_10minOu = 0;
                                 Total_livebetcount_SingleTeamOu = 0;
 
-                                #endregion
+                                #endregion livebetcount
+
                                 #region winlost
 
                                 Total_wl_hthdp = 0;
@@ -6491,7 +6631,8 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 Total_wl_10minOu = 0;
                                 Total_wl_SingleTeamOu = 0;
 
-                                #endregion
+                                #endregion winlost
+
                                 #region comm
 
                                 Total_comm_hthdp = 0;
@@ -6515,7 +6656,8 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 Total_comm_10minOu = 0;
                                 Total_comm_SingleTeamOu = 0;
 
-                                #endregion
+                                #endregion comm
+
                                 #region margin
 
                                 Total_m_hthdp = 0;
@@ -6539,7 +6681,7 @@ namespace Sunplus.Accounting.Business.Report.Other
                                 Total_m_10minOu = 0;
                                 Total_m_SingleTeamOu = 0;
 
-                                #endregion
+                                #endregion margin
                             }
 
                             preCusId = currentCustId;
@@ -6547,8 +6689,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         }
 
                         subCount++;
+
                         #region for each row
+
                         #region turnover
+
                         to_hthdp = CastAide.AsDecimal(dr["stake_1sthdp"]);
                         to_hdp = CastAide.AsDecimal(dr["stake_hdp"]);
                         to_htou = CastAide.AsDecimal(dr["stake_1stou"]);
@@ -6569,8 +6714,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         to_Corners15minOu = CastAide.AsDecimal(dr["stake_15minCorners"]);
                         to_10minOu = CastAide.AsDecimal(dr["stake_10minOU"]);
                         to_SingleTeamOu = CastAide.AsDecimal(dr["stake_SingleTeamOU"]);
-                        #endregion
+
+                        #endregion turnover
+
                         #region livebetcount
+
                         livebetcount_hthdp = CastAide.AsDecimal(dr["bet_1sthdp"]);
                         livebetcount_hdp = CastAide.AsDecimal(dr["bet_hdp"]);
                         livebetcount_htou = CastAide.AsDecimal(dr["bet_1stou"]);
@@ -6591,8 +6739,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         livebetcount_Corners15minOu = CastAide.AsDecimal(dr["bet_15minCorners"]);
                         livebetcount_10minOu = CastAide.AsDecimal(dr["bet_10minOU"]);
                         livebetcount_SingleTeamOu = CastAide.AsDecimal(dr["bet_SingleTeamOU"]);
-                        #endregion
+
+                        #endregion livebetcount
+
                         #region winlost
+
                         wl_hthdp = CastAide.AsDecimal(dr["winlost_1sthdp"]);
                         wl_hdp = CastAide.AsDecimal(dr["winlost_hdp"]);
                         wl_htou = CastAide.AsDecimal(dr["winlost_1stou"]);
@@ -6613,8 +6764,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         wl_Corners15minOu = CastAide.AsDecimal(dr["winlost_15minCorners"]);
                         wl_10minOu = CastAide.AsDecimal(dr["winlost_10minOU"]);
                         wl_SingleTeamOu = CastAide.AsDecimal(dr["winlost_SingleTeamOU"]);
-                        #endregion
+
+                        #endregion winlost
+
                         #region comm
+
                         comm_hthdp = CastAide.AsDecimal(dr["comm_1sthdp"]);
                         comm_hdp = CastAide.AsDecimal(dr["comm_hdp"]);
                         comm_htou = CastAide.AsDecimal(dr["comm_1stou"]);
@@ -6635,8 +6789,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         comm_Corners15minOu = CastAide.AsDecimal(dr["comm_15minCorners"]);
                         comm_10minOu = CastAide.AsDecimal(dr["comm_10minOU"]);
                         comm_SingleTeamOu = CastAide.AsDecimal(dr["comm_SingleTeamOU"]);
-                        #endregion
+
+                        #endregion comm
+
                         #region margin
+
                         m_hthdp = CastAide.AsDecimal(dr["margin_1sthdp"]);
                         m_hdp = CastAide.AsDecimal(dr["margin_hdp"]);
                         m_htou = CastAide.AsDecimal(dr["margin_1stou"]);
@@ -6657,9 +6814,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         m_Corners15minOu = CastAide.AsDecimal(dr["margin_15minCorners"]);
                         m_10minOu = CastAide.AsDecimal(dr["margin_10minOU"]);
                         m_SingleTeamOu = CastAide.AsDecimal(dr["margin_SingleTeamOU"]);
-                        #endregion
+
+                        #endregion margin
 
                         #region assign data
+
                         var traderDataDetail = new TraderPerformanceDetail()
                         {
                             Comm15minOu = NumberFormat.DecFormat(comm_15mou, 2),
@@ -6778,12 +6937,17 @@ namespace Sunplus.Accounting.Business.Report.Other
                             HT = string.Format("{0} -- {1}", dr["hthomescore"], dr["htawayscore"]),
                             FT = string.Format("{0} -- {1}", dr["fthomescore"], dr["ftawayscore"])
                         };
-                        #endregion
+
+                        #endregion assign data
+
                         traderChildren.Add(traderDataDetail);
-                        #endregion
+
+                        #endregion for each row
 
                         #region total
+
                         #region turnover
+
                         Total_to_hthdp += to_hthdp;
                         Total_to_hdp += to_hdp;
                         Total_to_htou += to_htou;
@@ -6804,8 +6968,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Total_to_Corners15minOu += to_Corners15minOu;
                         Total_to_10minOu += to_10minOu;
                         Total_to_SingleTeamOu += to_SingleTeamOu;
-                        #endregion
+
+                        #endregion turnover
+
                         #region livebetcount
+
                         Total_livebetcount_hthdp += livebetcount_hthdp;
                         Total_livebetcount_hdp += livebetcount_hdp;
                         Total_livebetcount_htou += livebetcount_htou;
@@ -6826,8 +6993,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Total_livebetcount_Corners15minOu += livebetcount_Corners15minOu;
                         Total_livebetcount_10minOu += livebetcount_10minOu;
                         Total_livebetcount_SingleTeamOu += livebetcount_SingleTeamOu;
-                        #endregion
+
+                        #endregion livebetcount
+
                         #region winlost
+
                         Total_wl_hthdp += wl_hthdp;
                         Total_wl_hdp += wl_hdp;
                         Total_wl_htou += wl_htou;
@@ -6848,8 +7018,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Total_wl_Corners15minOu += wl_Corners15minOu;
                         Total_wl_10minOu += wl_10minOu;
                         Total_wl_SingleTeamOu += wl_SingleTeamOu;
-                        #endregion
+
+                        #endregion winlost
+
                         #region comm
+
                         Total_comm_hthdp += comm_hthdp;
                         Total_comm_hdp += comm_hdp;
                         Total_comm_htou += comm_htou;
@@ -6870,8 +7043,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Total_comm_Corners15minOu += comm_Corners15minOu;
                         Total_comm_10minOu += comm_10minOu;
                         Total_comm_SingleTeamOu += comm_SingleTeamOu;
-                        #endregion
+
+                        #endregion comm
+
                         #region margin
+
                         Total_m_hthdp = Total_to_hthdp == 0 ? 0 : Total_wl_hthdp / Total_to_hthdp;
                         Total_m_hdp = Total_to_hdp == 0 ? 0 : Total_wl_hdp / Total_to_hdp;
                         Total_m_htou = Total_to_htou == 0 ? 0 : Total_wl_htou / Total_to_htou;
@@ -6898,11 +7074,15 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Total_m_Corners15minOu = Total_to_Corners15minOu == 0 ? 0 : Total_wl_Corners15minOu / Total_to_Corners15minOu;
                         Total_m_10minOu = Total_to_10minOu == 0 ? 0 : Total_wl_10minOu / Total_to_10minOu;
                         Total_m_SingleTeamOu = Total_to_SingleTeamOu == 0 ? 0 : Total_wl_SingleTeamOu / Total_to_SingleTeamOu;
-                        #endregion
-                        #endregion
+
+                        #endregion margin
+
+                        #endregion total
 
                         #region grand total
+
                         #region turnover
+
                         Grand_to_hthdp += to_hthdp;
                         Grand_to_hdp += to_hdp;
                         Grand_to_htou += to_htou;
@@ -6923,8 +7103,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Grand_to_Corners15minOu += to_Corners15minOu;
                         Grand_to_10minOu += to_10minOu;
                         Grand_to_SingleTeamOu += to_SingleTeamOu;
-                        #endregion
+
+                        #endregion turnover
+
                         #region livebetcount
+
                         Grand_livebetcount_hthdp += livebetcount_hthdp;
                         Grand_livebetcount_hdp += livebetcount_hdp;
                         Grand_livebetcount_htou += livebetcount_htou;
@@ -6945,8 +7128,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Grand_livebetcount_Corners15minOu += livebetcount_Corners15minOu;
                         Grand_livebetcount_10minOu += livebetcount_10minOu;
                         Grand_livebetcount_SingleTeamOu += livebetcount_SingleTeamOu;
-                        #endregion
+
+                        #endregion livebetcount
+
                         #region winlost
+
                         Grand_wl_hthdp += wl_hthdp;
                         Grand_wl_hdp += wl_hdp;
                         Grand_wl_htou += wl_htou;
@@ -6967,8 +7153,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Grand_wl_Corners15minOu += wl_Corners15minOu;
                         Grand_wl_10minOu += wl_10minOu;
                         Grand_wl_SingleTeamOu += wl_SingleTeamOu;
+
                         #endregion winlost
+
                         #region comm
+
                         Grand_comm_hthdp += comm_hthdp;
                         Grand_comm_hdp += comm_hdp;
                         Grand_comm_htou += comm_htou;
@@ -6989,8 +7178,11 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Grand_comm_Corners15minOu += comm_Corners15minOu;
                         Grand_comm_10minOu += comm_10minOu;
                         Grand_comm_SingleTeamOu += comm_SingleTeamOu;
-                        #endregion
+
+                        #endregion comm
+
                         #region margin
+
                         Grand_m_hthdp = Grand_to_hthdp != 0 ? Grand_wl_hthdp / Grand_to_hthdp : 0;
                         Grand_m_hdp = Grand_to_hdp != 0 ? Grand_wl_hdp / Grand_to_hdp : 0;
                         Grand_m_htou = Grand_to_htou != 0 ? Grand_wl_htou / Grand_to_htou : 0;
@@ -7011,11 +7203,16 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Grand_m_Corners15minOu = Grand_to_Corners15minOu == 0 ? Grand_wl_Corners15minOu : Grand_wl_Corners15minOu / Grand_to_Corners15minOu;
                         Grand_m_10minOu = Grand_to_10minOu == 0 ? Grand_wl_10minOu : Grand_wl_10minOu / Grand_to_10minOu;
                         Grand_m_SingleTeamOu = Grand_to_SingleTeamOu == 0 ? Grand_wl_SingleTeamOu : Grand_wl_SingleTeamOu / Grand_to_SingleTeamOu;
-                        #endregion
-                        #endregion
+
+                        #endregion margin
+
+                        #endregion grand total
                     }
+
                     #region last user
+
                     #region assign total row
+
                     var traderTotalLastUser = new TraderPerformanceDetail()
                     {
                         Comm15minOu = NumberFormat.DecFormat(Total_comm_15mou, 2),
@@ -7129,17 +7326,22 @@ namespace Sunplus.Accounting.Business.Report.Other
                         Match = string.Empty,
                         HT = string.Empty,
                         FT = string.Empty
-
                     };
-                    #endregion
+
+                    #endregion assign total row
 
                     traderDataBO.total = traderTotalLastUser;
                     traderDataBO.children = traderChildren;
                     traderDataList.Add(traderDataBO);
-                    #endregion
+
+                    #endregion last user
+
                     result.rows = traderDataList;
+
                     #region footer
+
                     #region assign footer
+
                     var traderFooter = new TraderPerformanceDetail()
                     {
                         Comm15minOu = NumberFormat.DecFormat(Grand_comm_15mou, 2),
@@ -7251,9 +7453,12 @@ namespace Sunplus.Accounting.Business.Report.Other
                         League = string.Empty,
                         Match = string.Empty
                     };
-                    #endregion
+
+                    #endregion assign footer
+
                     result.footer = traderFooter;
-                    #endregion
+
+                    #endregion footer
                 }
             }
             catch
@@ -7262,23 +7467,28 @@ namespace Sunplus.Accounting.Business.Report.Other
             finally
             {
                 #region assign session
+
                 switch (isSoccer)
                 {
                     case 1:
                         SessionExtension.AddSession(HttpContext.Current.Session, TraderPerformanceDetailIsSoccerSessionKey, result);
                         break;
+
                     case 0:
                         SessionExtension.AddSession(HttpContext.Current.Session, TraderPerformanceDetailIsNoSoccerSessionKey, result);
                         break;
+
                     default:
                         break;
                 }
-                #endregion
+
+                #endregion assign session
             }
             return result;
-            #endregion
+
+            #endregion get new data
         }
 
-        #endregion
+        #endregion get traderperformance report detail
     }
 }

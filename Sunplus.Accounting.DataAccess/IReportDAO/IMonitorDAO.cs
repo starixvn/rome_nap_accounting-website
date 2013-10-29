@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Data;
-using DNAide.Data;
-using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Entities.Report.Monitor;
 
 namespace Sunplus.Accounting.DataAccess.IReportDAO

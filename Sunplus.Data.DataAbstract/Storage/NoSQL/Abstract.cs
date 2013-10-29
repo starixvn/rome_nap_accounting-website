@@ -6,7 +6,8 @@ namespace Sunplus.Data.DataAbstract.Storage.NoSQL
     {
         private static Configurations.StorageSection.NoSQLType _NoSQLType;
 
-        public Abstract() : base()
+        public Abstract()
+            : base()
         {
             _NoSQLType = Configurations.StorageConfiguration.NoSQLType();
         }
@@ -17,10 +18,8 @@ namespace Sunplus.Data.DataAbstract.Storage.NoSQL
             return bettrans;
         }
 
-        
-
-        ~Abstract() { }
+        ~Abstract()
+        {
+        }
     }
-
-   
 }

@@ -5,19 +5,16 @@ using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Web;
 using ExcelUtil.Spreadsheet;
-
-using Sunplus.Accounting.Entities.Report;
-
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess.Report;
 using Sunplus.Accounting.DataAccess.Report.WinLoss;
+using Sunplus.Accounting.Entities.Report;
 using Sunplus.Core.CachingLib;
-using Sunplus.Core.LoggingLib;
 
 namespace Sunplus.Accounting.Services.ReportServices
 {
     //using Sunplus.Core.CachingLib;
-        //using Sunplus.Core.LoggingLib;
+    
 
     /// <summary>
     /// Summary description for WinLossService
@@ -45,7 +42,7 @@ namespace Sunplus.Accounting.Services.ReportServices
         public const string ReportNameMemberWinLossDetail = "Report_MemberWinLossDetail_{0}";
         public const string ReportNameWinLossDaily = "Report_WinLossDaily_{0}";
 
-        #endregion
+        #endregion Report Name
 
         private readonly ICache _cache;
         private readonly IWinLossDataAccess _winLossDao;
@@ -84,11 +81,10 @@ namespace Sunplus.Accounting.Services.ReportServices
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             //add to cache for export to excel file later
-            _cache.Add(string.Format(ReportNameSuperWinLossDetail, AppSession.AccUserName), entityList, 10*60*1000);
+            _cache.Add(string.Format(ReportNameSuperWinLossDetail, AppSession.AccUserName), entityList, 10 * 60 * 1000);
             return entityList;
         }
 
@@ -114,8 +110,7 @@ namespace Sunplus.Accounting.Services.ReportServices
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
 
             _cache.Add(string.Format(ReportNameMasterWinLossDetail, AppSession.AccUserName), entityList);
@@ -123,7 +118,7 @@ namespace Sunplus.Accounting.Services.ReportServices
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="custId"></param>
         /// <param name="fromDate"></param>
@@ -144,15 +139,14 @@ namespace Sunplus.Accounting.Services.ReportServices
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             _cache.Add(string.Format(ReportNameAgentWinLossDetail, AppSession.AccUserName), entityList);
             return entityList;
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="custId"></param>
         /// <param name="fromDate"></param>
@@ -173,14 +167,13 @@ namespace Sunplus.Accounting.Services.ReportServices
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             _cache.Add(string.Format(ReportNameMemberWinLossDetail, AppSession.AccUserName), entityList);
             return entityList;
         }
 
-        #endregion
+        #endregion Get Data
 
         #region Export Excel
 
@@ -230,7 +223,7 @@ namespace Sunplus.Accounting.Services.ReportServices
                                        });
             }
 
-            #endregion
+            #endregion Add value to cell
 
             //create total row
             MasterWinLoss totalItem = (new MasterWinLossService()).CreateTotalItem(entityList);
@@ -266,7 +259,7 @@ namespace Sunplus.Accounting.Services.ReportServices
                 {
                     entityList.ForEach(entity =>
                                            {
-                                               //base info                    
+                                               //base info
                                                ExcelRenderBaseInfo(ws, i, entity);
                                                //Member
                                                ExcelRenderMemberSection(ws, i, entity);
@@ -283,7 +276,7 @@ namespace Sunplus.Accounting.Services.ReportServices
                                            });
                 }
 
-                #endregion
+                #endregion Add value to cell
 
                 //add value to lasted row
                 //create total row
@@ -348,7 +341,7 @@ namespace Sunplus.Accounting.Services.ReportServices
                                            });
                 }
 
-                #endregion
+                #endregion Add value to cell
 
                 //add value to lasted row
                 AgentWinLoss totalItem = AgentWinLossService.CreateTotalItem(entityList);
@@ -398,9 +391,9 @@ namespace Sunplus.Accounting.Services.ReportServices
                                            });
                 }
 
-                #endregion
+                #endregion Add value to cell
 
-                //add value to lasted row            
+                //add value to lasted row
                 //CreateTotalRows("ABCDEFGHIJ", ws, startIndex, i);
                 //add more format
                 MemberWinLoss totalItem = MemberWinLossReportService.CreateTotalRow(entityList);
@@ -411,7 +404,7 @@ namespace Sunplus.Accounting.Services.ReportServices
             return excelFile;
         }
 
-        #endregion
+        #endregion Create ExcelFile
 
         private readonly Color _titleColor = Color.FromArgb(153, 204, 255);
 
@@ -423,7 +416,7 @@ namespace Sunplus.Accounting.Services.ReportServices
             var cellStyle = new CellStyle
                                 {
                                     HorizontalAlignment = HorizontalAlignmentStyle.Right,
-                                    Font = {Weight = ExcelFont.BoldWeight}
+                                    Font = { Weight = ExcelFont.BoldWeight }
                                 };
             cellStyle.FillPattern.SetSolid(_titleColor);
 
@@ -473,7 +466,7 @@ namespace Sunplus.Accounting.Services.ReportServices
             var cellStyle = new CellStyle
                                 {
                                     HorizontalAlignment = HorizontalAlignmentStyle.Right,
-                                    Font = {Weight = ExcelFont.BoldWeight}
+                                    Font = { Weight = ExcelFont.BoldWeight }
                                 };
             cellStyle.FillPattern.SetSolid(_titleColor);
 
@@ -512,7 +505,6 @@ namespace Sunplus.Accounting.Services.ReportServices
             ws.Cells.GetSubrangeAbsolute(lastRowDataIndex, 0, lastRowDataIndex, 12).Style = cellStyle;
         }
 
-
         private void CreateTotalRows(MemberWinLoss totalItem, ExcelWorksheet ws, int firstRowDataIndex,
                                      int lastRowDataIndex)
         {
@@ -520,7 +512,7 @@ namespace Sunplus.Accounting.Services.ReportServices
             var cellStyle = new CellStyle
                                 {
                                     HorizontalAlignment = HorizontalAlignmentStyle.Right,
-                                    Font = {Weight = ExcelFont.BoldWeight}
+                                    Font = { Weight = ExcelFont.BoldWeight }
                                 };
             cellStyle.FillPattern.SetSolid(_titleColor);
 
@@ -556,13 +548,11 @@ namespace Sunplus.Accounting.Services.ReportServices
             ws.Cells.GetSubrangeAbsolute(lastRowDataIndex, 0, lastRowDataIndex, 9).Style = cellStyle;
         }
 
-
         private static void ExcelRenderSuperSection(ExcelWorksheet ws, int i, MasterWinLoss entity)
         {
             //ws.Cells["M" + i.ToString()].Value = entity.Super.WinLoss;
             //ws.Cells["N" + i.ToString()].Value = entity.Super.Comm;
             //ws.Cells["O" + i.ToString()].Value = entity.Super.Total;
-
 
             ws.Columns[WinLossDetailColumns.SuperWinLoss].Cells[i].Value = entity.Super.WinLoss;
             ws.Columns[WinLossDetailColumns.SuperComm].Cells[i].Value = entity.Super.Comm;
@@ -611,9 +601,9 @@ namespace Sunplus.Accounting.Services.ReportServices
             ws.Columns[WinLossDetailColumns.GrossComm].Cells[i].Value = entity.GrossComm;
         }
 
-        #endregion
+        #endregion Render excel
 
-        #endregion
+        #endregion Export Excel
 
         #region Utilities
 
@@ -623,12 +613,12 @@ namespace Sunplus.Accounting.Services.ReportServices
         /// </summary>
         /// <param name="fromDate"></param>
         /// <param name="toDate"></param>
-        /// <param name="option">5 digits binary [0-1]{5}</param>        
+        /// <param name="option">5 digits binary [0-1]{5}</param>
         /// <returns>Hashtable</returns>
         private static Hashtable CreateParams(DateTime fromDate, DateTime toDate, string option)
         {
             var param = new Hashtable
-                {               
+                {
                     {"fromdate", fromDate},
                     {"todate", toDate},
                     {"showsb", option[1] == '1'},
@@ -638,7 +628,6 @@ namespace Sunplus.Accounting.Services.ReportServices
                     {"showng", option[6] == '1'},
                     {"showbi", option[5] == '1'},
                     {"balanceupday", ReportUtils.BalanceUp.BalanceUpDay},
-                     
                 };
             return param;
         }
@@ -663,12 +652,12 @@ namespace Sunplus.Accounting.Services.ReportServices
             return IsValid;
         }
 
-        #endregion
+        #endregion Utilities
 
         #region MemberWinLoss
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="list"></param>
         public MemberWinLoss CreateTotalLastItem(List<MemberWinLoss> list)
@@ -703,12 +692,12 @@ namespace Sunplus.Accounting.Services.ReportServices
             return lastItem;
         }
 
-        #endregion
+        #endregion MemberWinLoss
 
         #region AgentWinLoss
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="list"></param>
         public AgentWinLoss CreateTotalLastItem(List<AgentWinLoss> list)
@@ -720,7 +709,6 @@ namespace Sunplus.Accounting.Services.ReportServices
             lastItem.Member = new WinLossComm();
             lastItem.Agent = new WinLossComm();
             lastItem.Master = new WinLossComm();
-
 
             if (list != null)
                 list.ForEach(item =>
@@ -749,12 +737,12 @@ namespace Sunplus.Accounting.Services.ReportServices
             return lastItem;
         }
 
-        #endregion
+        #endregion AgentWinLoss
 
         #region MasterWinLoss
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="list"></param>
         public MasterWinLoss CreateTotalLastItem(List<MasterWinLoss> list)
@@ -801,7 +789,7 @@ namespace Sunplus.Accounting.Services.ReportServices
             return lastItem;
         }
 
-        #endregion
+        #endregion MasterWinLoss
 
         #region Daily report
 
@@ -895,11 +883,11 @@ namespace Sunplus.Accounting.Services.ReportServices
             var cellStyle = new CellStyle
                                 {
                                     HorizontalAlignment = HorizontalAlignmentStyle.Right,
-                                    Font = {Weight = ExcelFont.BoldWeight}
+                                    Font = { Weight = ExcelFont.BoldWeight }
                                 };
             cellStyle.FillPattern.SetSolid(_titleColor);
 
-            //setbackground color for lasted row            
+            //setbackground color for lasted row
             ws.Cells[rowIndex, 0].Value = "Grand Total";
 
             FillWinLossDailyCellValue(ws, rowIndex, totalItem);
@@ -912,7 +900,6 @@ namespace Sunplus.Accounting.Services.ReportServices
             //ws.Columns[WinLossDailyColumns.MasterPositionTaking].Cells[rowIndex].Value = totalItem.MA.GetPositionTaking(totalItem.TotalTO); ;
             //ws.Columns[WinLossDailyColumns.AgentPositionTaking].Cells[rowIndex].Value = totalItem.Agent.GetPositionTaking(totalItem.TotalTO);
 
-
             //Create style for Grand Total cell
             ws.Cells.GetSubrangeAbsolute(rowIndex, 0, rowIndex, 1).Merged = true;
             ws.Cells[rowIndex, 0].Style = cellStyle;
@@ -921,7 +908,7 @@ namespace Sunplus.Accounting.Services.ReportServices
             ws.Cells[rowIndex, 0].Style.FillPattern.SetSolid(_titleColor);
             ws.Cells[rowIndex, 0].Style.Font.Name = "Times New Roman";
 
-            //winloss & margin 
+            //winloss & margin
             cellStyle.FillPattern.SetSolid(Color.FromArgb(153, 204, 255));
             //ws.Columns[WinLossDailyColumns.CompanyMargin].Cells[rowIndex].Value = totalItem.Company.Margin;
             //ws.Columns[WinLossDailyColumns.SuperMargin].Cells[rowIndex].Value = totalItem.SA.Margin;
@@ -935,7 +922,6 @@ namespace Sunplus.Accounting.Services.ReportServices
         //        cellDown + rowIndex.ToString(), cellUp + rowIndex.ToString());
         //    ws.Cells[cellResult + rowIndex.ToString()].Style = cellStyle;
         //}
-
 
         private static void FillWinLossDailyCellValue(ExcelWorksheet ws, int rowIndex, WinLossDailyView entity)
         {
@@ -975,7 +961,6 @@ namespace Sunplus.Accounting.Services.ReportServices
             ws.Columns[WinLossDailyColumns.AgentMargin].Cells[rowIndex].Value = entity.Agent.Margin;
             //#endregion
         }
-
 
         /// <summary>
         /// Validate requested date show report daily
@@ -1037,8 +1022,7 @@ namespace Sunplus.Accounting.Services.ReportServices
             }
             catch (Exception ex)
             {
-                
-                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
 
             return 0;
@@ -1061,6 +1045,6 @@ namespace Sunplus.Accounting.Services.ReportServices
             return "Super Win/Loss Daily";
         }
 
-        #endregion
+        #endregion Daily report
     }
 }

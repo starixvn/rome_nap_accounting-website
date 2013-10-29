@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Web.UI.WebControls;
+using System.Reflection;
+using System.Web;
 using DNAide.Core;
 using DNAide.Data;
 using DNAide.Utils;
@@ -15,12 +13,10 @@ using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.DataAccess.IReportDAO;
 using Sunplus.Accounting.Entities.Report.External;
-using System.Web;
-using System.Reflection;
 
 namespace Sunplus.Accounting.Business.Report.External
 {
-    public class ExternalReport:IExternalReport
+    public class ExternalReport : IExternalReport
     {
         private IExternalReportDAO _externalReportDao;
         private string _ExternalWinlossDailySuperSessionKey = "externalwinlossdailyv2sessionkeysuper";
@@ -32,6 +28,7 @@ namespace Sunplus.Accounting.Business.Report.External
         private string _ExternalWinlossDailyDetailMasterSessionKey = "externalwinlossdailydetailv2sessionkeymaster";
         private string _ExternalWinlossDailyDetailAgentSessionKey = "externalwinlossdailydetailv2sessionkeyagent";
         private string _ExternalWinlossDailyDetailMemberSessionKey = "externalwinlossdailydetailv2sessionkeymember";
+
         public ExternalReport()
         {
         }
@@ -56,17 +53,18 @@ namespace Sunplus.Accounting.Business.Report.External
                 DataRow[] rows = dataTable.Select();
 
                 #region foreach
+
                 foreach (DataRow row in rows)
                 {
                     ExternalWLDailyRow e = new ExternalWLDailyRow();
                     e.UserName = CastAide.AsString(row["username"]);
                     e.CustId = CastAide.AsInt32(row["custid"]);
-                    
+
                     e.TotalTO = NumberFormat.DecFormat(row["totalTO"], 2);
                     e.CompanyTO = NumberFormat.DecFormat(row["ComTO"], 2);
                     e.CompanyPT = (CastAide.AsDecimal(e.TotalTO) == 0)
                                       ? "0"
-                                      : NumberFormat.DecFormat(CastAide.AsDecimal(e.CompanyTO)/CastAide.AsDecimal(e.TotalTO)*100, 2);
+                                      : NumberFormat.DecFormat(CastAide.AsDecimal(e.CompanyTO) / CastAide.AsDecimal(e.TotalTO) * 100, 2);
 
                     e.SuperTO = NumberFormat.DecFormat(row["SAgTO"], 2);
                     e.SuperPT = (CastAide.AsDecimal(e.TotalTO) == 0)
@@ -102,22 +100,23 @@ namespace Sunplus.Accounting.Business.Report.External
                     e.AgentMargin = (CastAide.AsDecimal(e.AgentTO) == 0)
                                     ? "0"
                                     : NumberFormat.DecFormat(CastAide.AsDecimal(e.AgentWL) / CastAide.AsDecimal(e.AgentTO) * 100, 2);
-                    
 
                     external.Items.Add(e);
                 }
-                #endregion
+
+                #endregion foreach
 
                 #region Total
+
                 external.Total = new ExternalWLDailyRow();
                 external.Total.UserName = "Grand Total";
-                
-                external.Total.TotalTO = NumberFormat.DecFormat(external.Items.Sum(s => CastAide.AsDecimal(s.TotalTO)),2);
-                
+
+                external.Total.TotalTO = NumberFormat.DecFormat(external.Items.Sum(s => CastAide.AsDecimal(s.TotalTO)), 2);
+
                 external.Total.CompanyTO = NumberFormat.DecFormat(external.Items.Sum(s => CastAide.AsDecimal(s.CompanyTO)), 2);
                 external.Total.CompanyPT = (CastAide.AsDecimal(external.Total.CompanyTO) == 0)
                                                ? "0"
-                                               : NumberFormat.DecFormat( CastAide.AsDecimal(external.Total.CompanyTO) / CastAide.AsDecimal(external.Total.TotalTO)*100,2) ;
+                                               : NumberFormat.DecFormat(CastAide.AsDecimal(external.Total.CompanyTO) / CastAide.AsDecimal(external.Total.TotalTO) * 100, 2);
 
                 external.Total.SuperTO = NumberFormat.DecFormat(external.Items.Sum(s => CastAide.AsDecimal(s.SuperTO)), 2);
                 external.Total.SuperPT = (CastAide.AsDecimal(external.Total.TotalTO) == 0)
@@ -154,18 +153,18 @@ namespace Sunplus.Accounting.Business.Report.External
                                                ? "0"
                                                : NumberFormat.DecFormat(CastAide.AsDecimal(external.Total.AgentWL) / CastAide.AsDecimal(external.Total.AgentTO) * 100, 2);
 
-                #endregion
+                #endregion Total
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex); 
+                LogExtensions.ExceptionHandler(ex);
             }
             SessionExtension.AddSession(HttpContext.Current.Session, _ExternalWinlossDailySuperSessionKey, external);
             return external;
         }
 
-
         #region export 2 excel - Winloss daily by com
+
         public void Export2ExcelWinLossDailyByCom(string wlDate, string reportTitle, bool isExcludeMargin)
         {
             if (isExcludeMargin)
@@ -173,6 +172,7 @@ namespace Sunplus.Accounting.Business.Report.External
             else
                 Export2ExcelWinLossDailyByComIncludeMargin(wlDate, reportTitle);
         }
+
         private void Export2ExcelWinLossDailyByComIncludeMargin(string wlDate, string reportTitle)
         {
             try
@@ -200,7 +200,7 @@ namespace Sunplus.Accounting.Business.Report.External
                     reportTitle;
                 Export2ExcelWinLossDailyByComAssignHeader(ref wsReport, startCol, startRow);
 
-                #endregion
+                #endregion Header
 
                 #region content
 
@@ -221,7 +221,7 @@ namespace Sunplus.Accounting.Business.Report.External
                                                               getData.Total);
                 }
 
-                #endregion
+                #endregion content
 
                 #region response file
 
@@ -231,13 +231,14 @@ namespace Sunplus.Accounting.Business.Report.External
                 response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
                 excelFile.SaveXls(response.OutputStream);
 
-                #endregion
+                #endregion response file
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
         }
+
         private void Export2ExcelWinLossDailyByComExcludeMargin(string wlDate, string reportTitle)
         {
             try
@@ -265,7 +266,7 @@ namespace Sunplus.Accounting.Business.Report.External
                     reportTitle;
                 Export2ExcelWinLossDailyByComAssignHeaderExcludeMargin(ref wsReport, startCol, startRow);
 
-                #endregion
+                #endregion Header
 
                 #region content
 
@@ -286,7 +287,7 @@ namespace Sunplus.Accounting.Business.Report.External
                                                               getData.Total);
                 }
 
-                #endregion
+                #endregion content
 
                 #region response file
 
@@ -296,7 +297,7 @@ namespace Sunplus.Accounting.Business.Report.External
                 response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
                 excelFile.SaveXls(response.OutputStream);
 
-                #endregion
+                #endregion response file
             }
             catch (Exception ex)
             {
@@ -309,6 +310,7 @@ namespace Sunplus.Accounting.Business.Report.External
             var groupColTurnover = 10;
             var groupColWinloss = 8;
             var headerFormart = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
+
             #region first row
 
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + groupColTurnover).Merged
@@ -327,9 +329,11 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + groupColTurnover + 1, startRow - 2,
                                                startCol + groupColTurnover + groupColWinloss).Value
                 = "Win/Loss & Margin";
-            #endregion
-            
+
+            #endregion first row
+
             #region second row
+
             var nextCol = 0;
             wsReport.Cells[startRow - 1, startCol].Style = headerFormart;
             wsReport.Cells[startRow - 1, startCol].Value = "No.";
@@ -378,13 +382,16 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = "Agent";
             wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = headerFormart;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = "%";
-            #endregion
+
+            #endregion second row
         }
+
         private void Export2ExcelWinLossDailyByComAssignHeaderExcludeMargin(ref ExcelWorksheet wsReport, int startCol, int startRow)
         {
             var groupColTurnover = 10;
             var groupColWinloss = 4;
             var headerFormart = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
+
             #region first row
 
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + groupColTurnover).Merged
@@ -403,9 +410,11 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + groupColTurnover + 1, startRow - 2,
                                                startCol + groupColTurnover + groupColWinloss).Value
                 = "Win/Loss";
-            #endregion
+
+            #endregion first row
 
             #region second row
+
             var nextCol = 0;
             wsReport.Cells[startRow - 1, startCol].Style = headerFormart;
             wsReport.Cells[startRow - 1, startCol].Value = "No.";
@@ -446,7 +455,8 @@ namespace Sunplus.Accounting.Business.Report.External
 
             wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = headerFormart;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = "Agent";
-            #endregion
+
+            #endregion second row
         }
 
         private void Export2ExcelWinLossDailyByComAssignContent(ref ExcelWorksheet wsReport, int startCol, int startRow, ref int nextRow, ExternalWLDailyRow row, int index)
@@ -505,6 +515,7 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
             wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(row.AgentMargin);
         }
+
         private void Export2ExcelWinLossDailyByComAssignContentExcludeMargin(ref ExcelWorksheet wsReport, int startCol, int startRow, ref int nextRow, ExternalWLDailyRow row, int index)
         {
             var color = Color.FromArgb(255, 255, 255);
@@ -553,14 +564,14 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
             wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(row.AgentWL);
         }
-        
+
         private void Export2ExcelWinLossDailyByComAssignFooter(ref ExcelWorksheet wsReport, int startCol, int startRow, ref int nextRow, ExternalWLDailyRow row)
         {
             var color = Color.FromArgb(211, 225, 200);
             var bgFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", color, true, false);
 
             var nextCol = 0;
-            
+
             wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 1).Merged =
                 true;
             wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, startRow + nextRow, startCol + 1).Style =
@@ -611,6 +622,7 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
             wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(row.AgentMargin);
         }
+
         private void Export2ExcelWinLossDailyByComAssignFooterExcludeMargin(ref ExcelWorksheet wsReport, int startCol, int startRow, ref int nextRow, ExternalWLDailyRow row)
         {
             var color = Color.FromArgb(211, 225, 200);
@@ -660,9 +672,11 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
             wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(row.AgentWL);
         }
-        #endregion
+
+        #endregion export 2 excel - Winloss daily by com
 
         #region export 2 excel - Winloss daily by Super
+
         public void Export2ExcelWinLossDailyBySuper(string wlDate, int uplineId, string reportTitle, bool isExcludeMargin)
         {
             if (isExcludeMargin)
@@ -670,6 +684,7 @@ namespace Sunplus.Accounting.Business.Report.External
             else
                 Export2ExcelWinLossDailyBySuperIncludeMargin(wlDate, uplineId, reportTitle);
         }
+
         private void Export2ExcelWinLossDailyBySuperIncludeMargin(string wlDate, int uplineId, string reportTitle)
         {
             try
@@ -697,7 +712,7 @@ namespace Sunplus.Accounting.Business.Report.External
                     reportTitle;
                 Export2ExcelWinLossDailyBySuperAssignHeader(ref wsReport, startCol, startRow);
 
-                #endregion
+                #endregion Header
 
                 #region content
 
@@ -718,7 +733,7 @@ namespace Sunplus.Accounting.Business.Report.External
                                                               getData.Total);
                 }
 
-                #endregion
+                #endregion content
 
                 #region response file
 
@@ -728,13 +743,14 @@ namespace Sunplus.Accounting.Business.Report.External
                 response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
                 excelFile.SaveXls(response.OutputStream);
 
-                #endregion
+                #endregion response file
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
         }
+
         private void Export2ExcelWinLossDailyBySuperExcludeMargin(string wlDate, int uplineId, string reportTitle)
         {
             try
@@ -762,7 +778,7 @@ namespace Sunplus.Accounting.Business.Report.External
                     reportTitle;
                 Export2ExcelWinLossDailyBySuperAssignHeaderExcludeMargin(ref wsReport, startCol, startRow);
 
-                #endregion
+                #endregion Header
 
                 #region content
 
@@ -783,7 +799,7 @@ namespace Sunplus.Accounting.Business.Report.External
                                                               getData.Total);
                 }
 
-                #endregion
+                #endregion content
 
                 #region response file
 
@@ -793,7 +809,7 @@ namespace Sunplus.Accounting.Business.Report.External
                 response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
                 excelFile.SaveXls(response.OutputStream);
 
-                #endregion
+                #endregion response file
             }
             catch (Exception ex)
             {
@@ -806,6 +822,7 @@ namespace Sunplus.Accounting.Business.Report.External
             var groupColTurnover = 10;
             var groupColWinloss = 8;
             var headerFormart = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
+
             #region first row
 
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + groupColTurnover).Merged
@@ -824,9 +841,11 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + groupColTurnover + 1, startRow - 2,
                                                startCol + groupColTurnover + groupColWinloss).Value
                 = "Win/Loss & Margin";
-            #endregion
+
+            #endregion first row
 
             #region second row
+
             var nextCol = 0;
             wsReport.Cells[startRow - 1, startCol].Style = headerFormart;
             wsReport.Cells[startRow - 1, startCol].Value = "No.";
@@ -875,8 +894,10 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = "Agent";
             wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = headerFormart;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = "%";
-            #endregion
+
+            #endregion second row
         }
+
         private void Export2ExcelWinLossDailyBySuperAssignContent(ref ExcelWorksheet wsReport, int startCol, int startRow, ref int nextRow, ExternalWLDailyRow row, int index)
         {
             var color = Color.FromArgb(255, 255, 255);
@@ -933,6 +954,7 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
             wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(row.AgentMargin);
         }
+
         private void Export2ExcelWinLossDailyBySuperAssignFooter(ref ExcelWorksheet wsReport, int startCol, int startRow, ref int nextRow, ExternalWLDailyRow row)
         {
             var color = Color.FromArgb(211, 225, 200);
@@ -996,6 +1018,7 @@ namespace Sunplus.Accounting.Business.Report.External
             var groupColTurnover = 10;
             var groupColWinloss = 4;
             var headerFormart = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
+
             #region first row
 
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + groupColTurnover).Merged
@@ -1014,9 +1037,11 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + groupColTurnover + 1, startRow - 2,
                                                startCol + groupColTurnover + groupColWinloss).Value
                 = "Win/Loss";
-            #endregion
+
+            #endregion first row
 
             #region second row
+
             var nextCol = 0;
             wsReport.Cells[startRow - 1, startCol].Style = headerFormart;
             wsReport.Cells[startRow - 1, startCol].Value = "No.";
@@ -1057,8 +1082,10 @@ namespace Sunplus.Accounting.Business.Report.External
 
             wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = headerFormart;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = "Agent";
-            #endregion
+
+            #endregion second row
         }
+
         private void Export2ExcelWinLossDailyBySuperAssignContentExcludeMargin(ref ExcelWorksheet wsReport, int startCol, int startRow, ref int nextRow, ExternalWLDailyRow row, int index)
         {
             var color = Color.FromArgb(255, 255, 255);
@@ -1107,6 +1134,7 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
             wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(row.AgentWL);
         }
+
         private void Export2ExcelWinLossDailyBySuperAssignFooterExcludeMargin(ref ExcelWorksheet wsReport, int startCol, int startRow, ref int nextRow, ExternalWLDailyRow row)
         {
             var color = Color.FromArgb(211, 225, 200);
@@ -1156,9 +1184,11 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
             wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(row.AgentWL);
         }
-        #endregion
+
+        #endregion export 2 excel - Winloss daily by Super
 
         #region export 2 excel - Winloss daily by Master
+
         public void Export2ExcelWinLossDailyByMaster(string wlDate, int uplineId, string reportTitle, bool isExcludeMargin)
         {
             if (isExcludeMargin)
@@ -1166,6 +1196,7 @@ namespace Sunplus.Accounting.Business.Report.External
             else
                 Export2ExcelWinLossDailyByMasterIncludeMargin(wlDate, uplineId, reportTitle);
         }
+
         private void Export2ExcelWinLossDailyByMasterIncludeMargin(string wlDate, int uplineId, string reportTitle)
         {
             try
@@ -1193,7 +1224,7 @@ namespace Sunplus.Accounting.Business.Report.External
                     reportTitle;
                 Export2ExcelWinLossDailyByMasterAssignHeader(ref wsReport, startCol, startRow);
 
-                #endregion
+                #endregion Header
 
                 #region content
 
@@ -1214,7 +1245,7 @@ namespace Sunplus.Accounting.Business.Report.External
                                                               getData.Total);
                 }
 
-                #endregion
+                #endregion content
 
                 #region response file
 
@@ -1224,13 +1255,14 @@ namespace Sunplus.Accounting.Business.Report.External
                 response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
                 excelFile.SaveXls(response.OutputStream);
 
-                #endregion
+                #endregion response file
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
         }
+
         private void Export2ExcelWinLossDailyByMasterExcludeMargin(string wlDate, int uplineId, string reportTitle)
         {
             try
@@ -1258,7 +1290,7 @@ namespace Sunplus.Accounting.Business.Report.External
                     reportTitle;
                 Export2ExcelWinLossDailyByMasterAssignHeaderExcludeMargin(ref wsReport, startCol, startRow);
 
-                #endregion
+                #endregion Header
 
                 #region content
 
@@ -1279,7 +1311,7 @@ namespace Sunplus.Accounting.Business.Report.External
                                                               getData.Total);
                 }
 
-                #endregion
+                #endregion content
 
                 #region response file
 
@@ -1289,7 +1321,7 @@ namespace Sunplus.Accounting.Business.Report.External
                 response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
                 excelFile.SaveXls(response.OutputStream);
 
-                #endregion
+                #endregion response file
             }
             catch (Exception ex)
             {
@@ -1302,6 +1334,7 @@ namespace Sunplus.Accounting.Business.Report.External
             var groupColTurnover = 10;
             var groupColWinloss = 8;
             var headerFormart = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
+
             #region first row
 
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + groupColTurnover).Merged
@@ -1320,9 +1353,11 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + groupColTurnover + 1, startRow - 2,
                                                startCol + groupColTurnover + groupColWinloss).Value
                 = "Win/Loss & Margin";
-            #endregion
+
+            #endregion first row
 
             #region second row
+
             var nextCol = 0;
             wsReport.Cells[startRow - 1, startCol].Style = headerFormart;
             wsReport.Cells[startRow - 1, startCol].Value = "No.";
@@ -1371,8 +1406,10 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = "Agent";
             wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = headerFormart;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = "%";
-            #endregion
+
+            #endregion second row
         }
+
         private void Export2ExcelWinLossDailyByMasterAssignContent(ref ExcelWorksheet wsReport, int startCol, int startRow, ref int nextRow, ExternalWLDailyRow row, int index)
         {
             var color = Color.FromArgb(255, 255, 255);
@@ -1429,6 +1466,7 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
             wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(row.AgentMargin);
         }
+
         private void Export2ExcelWinLossDailyByMasterAssignFooter(ref ExcelWorksheet wsReport, int startCol, int startRow, ref int nextRow, ExternalWLDailyRow row)
         {
             var color = Color.FromArgb(211, 225, 200);
@@ -1492,6 +1530,7 @@ namespace Sunplus.Accounting.Business.Report.External
             var groupColTurnover = 10;
             var groupColWinloss = 4;
             var headerFormart = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
+
             #region first row
 
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + groupColTurnover).Merged
@@ -1510,9 +1549,11 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + groupColTurnover + 1, startRow - 2,
                                                startCol + groupColTurnover + groupColWinloss).Value
                 = "Win/Loss";
-            #endregion
+
+            #endregion first row
 
             #region second row
+
             var nextCol = 0;
             wsReport.Cells[startRow - 1, startCol].Style = headerFormart;
             wsReport.Cells[startRow - 1, startCol].Value = "No.";
@@ -1553,8 +1594,10 @@ namespace Sunplus.Accounting.Business.Report.External
 
             wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = headerFormart;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = "Agent";
-            #endregion
+
+            #endregion second row
         }
+
         private void Export2ExcelWinLossDailyByMasterAssignContentExcludeMargin(ref ExcelWorksheet wsReport, int startCol, int startRow, ref int nextRow, ExternalWLDailyRow row, int index)
         {
             var color = Color.FromArgb(255, 255, 255);
@@ -1603,6 +1646,7 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
             wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(row.AgentWL);
         }
+
         private void Export2ExcelWinLossDailyByMasterAssignFooterExcludeMargin(ref ExcelWorksheet wsReport, int startCol, int startRow, ref int nextRow, ExternalWLDailyRow row)
         {
             var color = Color.FromArgb(211, 225, 200);
@@ -1652,17 +1696,19 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
             wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(row.AgentWL);
         }
-        #endregion
+
+        #endregion export 2 excel - Winloss daily by Master
 
         #region export 2 excel - Winloss daily by Agent
+
         public void Export2ExcelWinLossDailyByAgent(string wlDate, int uplineId, string reportTitle, bool isExcludeMargin)
         {
             if (isExcludeMargin)
                 Export2ExcelWinLossDailyByAgentExcludeMargin(wlDate, uplineId, reportTitle);
             else
                 Export2ExcelWinLossDailyByAgentIncludeMargin(wlDate, uplineId, reportTitle);
-            
         }
+
         private void Export2ExcelWinLossDailyByAgentIncludeMargin(string wlDate, int uplineId, string reportTitle)
         {
             try
@@ -1690,7 +1736,7 @@ namespace Sunplus.Accounting.Business.Report.External
                     reportTitle;
                 Export2ExcelWinLossDailyByAgentAssignHeader(ref wsReport, startCol, startRow);
 
-                #endregion
+                #endregion Header
 
                 #region content
 
@@ -1711,7 +1757,7 @@ namespace Sunplus.Accounting.Business.Report.External
                                                               getData.Total);
                 }
 
-                #endregion
+                #endregion content
 
                 #region response file
 
@@ -1721,13 +1767,14 @@ namespace Sunplus.Accounting.Business.Report.External
                 response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
                 excelFile.SaveXls(response.OutputStream);
 
-                #endregion
+                #endregion response file
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
         }
+
         private void Export2ExcelWinLossDailyByAgentExcludeMargin(string wlDate, int uplineId, string reportTitle)
         {
             try
@@ -1755,7 +1802,7 @@ namespace Sunplus.Accounting.Business.Report.External
                     reportTitle;
                 Export2ExcelWinLossDailyByAgentAssignHeaderExcludeMargin(ref wsReport, startCol, startRow);
 
-                #endregion
+                #endregion Header
 
                 #region content
 
@@ -1776,7 +1823,7 @@ namespace Sunplus.Accounting.Business.Report.External
                                                               getData.Total);
                 }
 
-                #endregion
+                #endregion content
 
                 #region response file
 
@@ -1786,7 +1833,7 @@ namespace Sunplus.Accounting.Business.Report.External
                 response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
                 excelFile.SaveXls(response.OutputStream);
 
-                #endregion
+                #endregion response file
             }
             catch (Exception ex)
             {
@@ -1799,6 +1846,7 @@ namespace Sunplus.Accounting.Business.Report.External
             var groupColTurnover = 10;
             var groupColWinloss = 8;
             var headerFormart = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
+
             #region first row
 
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + groupColTurnover).Merged
@@ -1817,9 +1865,11 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + groupColTurnover + 1, startRow - 2,
                                                startCol + groupColTurnover + groupColWinloss).Value
                 = "Win/Loss & Margin";
-            #endregion
+
+            #endregion first row
 
             #region second row
+
             var nextCol = 0;
             wsReport.Cells[startRow - 1, startCol].Style = headerFormart;
             wsReport.Cells[startRow - 1, startCol].Value = "No.";
@@ -1868,8 +1918,10 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = "Agent";
             wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = headerFormart;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = "%";
-            #endregion
+
+            #endregion second row
         }
+
         private void Export2ExcelWinLossDailyByAgentAssignContent(ref ExcelWorksheet wsReport, int startCol, int startRow, ref int nextRow, ExternalWLDailyRow row, int index)
         {
             var color = Color.FromArgb(255, 255, 255);
@@ -1926,6 +1978,7 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
             wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(row.AgentMargin);
         }
+
         private void Export2ExcelWinLossDailyByAgentAssignFooter(ref ExcelWorksheet wsReport, int startCol, int startRow, ref int nextRow, ExternalWLDailyRow row)
         {
             var color = Color.FromArgb(211, 225, 200);
@@ -1989,6 +2042,7 @@ namespace Sunplus.Accounting.Business.Report.External
             var groupColTurnover = 10;
             var groupColWinloss = 4;
             var headerFormart = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
+
             #region first row
 
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol, startRow - 2, startCol + groupColTurnover).Merged
@@ -2007,9 +2061,11 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + groupColTurnover + 1, startRow - 2,
                                                startCol + groupColTurnover + groupColWinloss).Value
                 = "Win/Loss";
-            #endregion
+
+            #endregion first row
 
             #region second row
+
             var nextCol = 0;
             wsReport.Cells[startRow - 1, startCol].Style = headerFormart;
             wsReport.Cells[startRow - 1, startCol].Value = "No.";
@@ -2050,8 +2106,10 @@ namespace Sunplus.Accounting.Business.Report.External
 
             wsReport.Cells[startRow - 1, startCol + (nextCol += 1)].Style = headerFormart;
             wsReport.Cells[startRow - 1, startCol + (nextCol)].Value = "Agent";
-            #endregion
+
+            #endregion second row
         }
+
         private void Export2ExcelWinLossDailyByAgentAssignContentExcludeMargin(ref ExcelWorksheet wsReport, int startCol, int startRow, ref int nextRow, ExternalWLDailyRow row, int index)
         {
             var color = Color.FromArgb(255, 255, 255);
@@ -2100,6 +2158,7 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
             wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(row.AgentWL);
         }
+
         private void Export2ExcelWinLossDailyByAgentAssignFooterExcludeMargin(ref ExcelWorksheet wsReport, int startCol, int startRow, ref int nextRow, ExternalWLDailyRow row)
         {
             var color = Color.FromArgb(211, 225, 200);
@@ -2149,7 +2208,8 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
             wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(row.AgentWL);
         }
-        #endregion
+
+        #endregion export 2 excel - Winloss daily by Agent
 
         public ExternalWLDailyBO SelWinLossDailyBySuper(string winlostdate, int custid)
         {
@@ -2166,6 +2226,7 @@ namespace Sunplus.Accounting.Business.Report.External
                 DataRow[] rows = dataTable.Select();
 
                 #region foreach
+
                 foreach (DataRow row in rows)
                 {
                     ExternalWLDailyRow e = new ExternalWLDailyRow();
@@ -2213,12 +2274,13 @@ namespace Sunplus.Accounting.Business.Report.External
                                     ? "0"
                                     : NumberFormat.DecFormat(CastAide.AsDecimal(e.AgentWL) / CastAide.AsDecimal(e.AgentTO) * 100, 2);
 
-
                     external.Items.Add(e);
                 }
-                #endregion
+
+                #endregion foreach
 
                 #region Total
+
                 external.Total = new ExternalWLDailyRow();
                 external.Total.UserName = "Grand Total";
 
@@ -2264,7 +2326,7 @@ namespace Sunplus.Accounting.Business.Report.External
                                                ? "0"
                                                : NumberFormat.DecFormat(CastAide.AsDecimal(external.Total.AgentWL) / CastAide.AsDecimal(external.Total.AgentTO) * 100, 2);
 
-                #endregion
+                #endregion Total
             }
             catch (Exception ex)
             {
@@ -2273,7 +2335,7 @@ namespace Sunplus.Accounting.Business.Report.External
             SessionExtension.AddSession(HttpContext.Current.Session, _ExternalWinlossDailyMasterSessionKey, external);
             return external;
         }
-        
+
         public ExternalWLDailyBO SelWinLossDailyByMaster(string winlostdate, int custid)
         {
             ExternalWLDailyBO external = new ExternalWLDailyBO();
@@ -2289,6 +2351,7 @@ namespace Sunplus.Accounting.Business.Report.External
                 DataRow[] rows = dataTable.Select();
 
                 #region foreach
+
                 foreach (DataRow row in rows)
                 {
                     ExternalWLDailyRow e = new ExternalWLDailyRow();
@@ -2336,12 +2399,13 @@ namespace Sunplus.Accounting.Business.Report.External
                                     ? "0"
                                     : NumberFormat.DecFormat(CastAide.AsDecimal(e.AgentWL) / CastAide.AsDecimal(e.AgentTO) * 100, 2);
 
-
                     external.Items.Add(e);
                 }
-                #endregion
+
+                #endregion foreach
 
                 #region Total
+
                 external.Total = new ExternalWLDailyRow();
                 external.Total.UserName = "Grand Total";
 
@@ -2387,7 +2451,7 @@ namespace Sunplus.Accounting.Business.Report.External
                                                ? "0"
                                                : NumberFormat.DecFormat(CastAide.AsDecimal(external.Total.AgentWL) / CastAide.AsDecimal(external.Total.AgentTO) * 100, 2);
 
-                #endregion
+                #endregion Total
             }
             catch (Exception ex)
             {
@@ -2396,7 +2460,6 @@ namespace Sunplus.Accounting.Business.Report.External
             SessionExtension.AddSession(HttpContext.Current.Session, _ExternalWinlossDailyAgentSessionKey, external);
             return external;
         }
-
 
         public ExternalWLDailyBO SelWinLossDailyByAgent(string winlostdate, int custid)
         {
@@ -2413,6 +2476,7 @@ namespace Sunplus.Accounting.Business.Report.External
                 DataRow[] rows = dataTable.Select();
 
                 #region foreach
+
                 foreach (DataRow row in rows)
                 {
                     ExternalWLDailyRow e = new ExternalWLDailyRow();
@@ -2460,12 +2524,13 @@ namespace Sunplus.Accounting.Business.Report.External
                                     ? "0"
                                     : NumberFormat.DecFormat(CastAide.AsDecimal(e.AgentWL) / CastAide.AsDecimal(e.AgentTO) * 100, 2);
 
-
                     external.Items.Add(e);
                 }
-                #endregion
+
+                #endregion foreach
 
                 #region Total
+
                 external.Total = new ExternalWLDailyRow();
                 external.Total.UserName = "Grand Total";
 
@@ -2511,7 +2576,7 @@ namespace Sunplus.Accounting.Business.Report.External
                                                ? "0"
                                                : NumberFormat.DecFormat(CastAide.AsDecimal(external.Total.AgentWL) / CastAide.AsDecimal(external.Total.AgentTO) * 100, 2);
 
-                #endregion
+                #endregion Total
             }
             catch (Exception ex)
             {
@@ -2521,7 +2586,6 @@ namespace Sunplus.Accounting.Business.Report.External
             return external;
         }
 
-        
         public ExternalWLDetail SelWinLossDetailByCom(string param, Sorting sorting)
         {
             ExternalWLDetail external = new ExternalWLDetail();
@@ -2577,7 +2641,7 @@ namespace Sunplus.Accounting.Business.Report.External
                                                });
                     }
 
-                    #endregion
+                    #endregion foreach
 
                     #region total
 
@@ -2636,52 +2700,47 @@ namespace Sunplus.Accounting.Business.Report.External
                                                      external.Items.Sum(s => CastAide.AsDecimal(s.Company)), 2),
                                          };
 
-                    #endregion
+                    #endregion total
 
                     SessionExtension.AddSession(HttpContext.Current.Session, _ExternalWinlossDailyDetailSuperSessionKey, external);
                 }
-                
+
                 SortList(external.Items, sorting);
                 SortByIndicatorUser(external.Items, sorting);
-                
-
-
-
 
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
-            
-            
+
             return external;
         }
 
-        void SortByIndicatorUser(List<ExternalWLDetailRow> dataSource, Sorting sorting)
+        private void SortByIndicatorUser(List<ExternalWLDetailRow> dataSource, Sorting sorting)
         {
-            if(sorting == null)
+            if (sorting == null)
                 return;
-            if(sorting.IsDecimal)
+            if (sorting.IsDecimal)
                 return;
 
             var external = ExternalSection.Instance[ExternalSection.ExternalCollections.Sorting];
             foreach (ExternalElement element in external)
             {
-                string [] usernames = element.Users.Split(',');
+                string[] usernames = element.Users.Split(',');
                 foreach (string username in usernames)
                 {
                     var lst = dataSource.Select(s => s).Where(s => s.UserName.ToLower() == username.ToLower()).ToList();
                     foreach (ExternalWLDetailRow row in lst)
                     {
                         dataSource.Remove(row);
-                        dataSource.Insert(element.Index-1, row);
+                        dataSource.Insert(element.Index - 1, row);
                     }
                 }
             }
         }
 
-        void SortList<T>(List<T> dataSource, Sorting sorting)
+        private void SortList<T>(List<T> dataSource, Sorting sorting)
         {
             if (sorting == null)
                 return;
@@ -2690,9 +2749,8 @@ namespace Sunplus.Accounting.Business.Report.External
 
             PropertyInfo propInfo = typeof(T).GetProperty(sorting.fieldName);
 
-            if(propInfo == null)
+            if (propInfo == null)
                 return;
-            
 
             bool IsAsc = false;
             if (sorting.sortType == 1)
@@ -2709,8 +2767,6 @@ namespace Sunplus.Accounting.Business.Report.External
                     return valueA is IComparable ? ((IComparable)valueA).CompareTo(valueB) : 0;
                 };
                 dataSource.Sort(compare);
-
-                
             }
             else
             {
@@ -2721,9 +2777,8 @@ namespace Sunplus.Accounting.Business.Report.External
 
                     return valueA is IComparable ? ((IComparable)valueA).CompareTo(valueB) : 0;
                 };
-                dataSource.Sort(compare);    
+                dataSource.Sort(compare);
             }
-            
         }
 
         public ExternalWLDetail SelWinLossDetailBySuper(int custid, string param, Sorting sorting, int pageIndex, int pageSize)
@@ -2781,7 +2836,7 @@ namespace Sunplus.Accounting.Business.Report.External
                                                });
                     }
 
-                    #endregion
+                    #endregion foreach
 
                     #region total
 
@@ -2840,7 +2895,7 @@ namespace Sunplus.Accounting.Business.Report.External
                                                      external.Items.Sum(s => CastAide.AsDecimal(s.Company)), 2),
                                          };
 
-                    #endregion
+                    #endregion total
 
                     SessionExtension.AddSession(HttpContext.Current.Session, _ExternalWinlossDailyDetailMasterSessionKey, external);
                 }
@@ -2852,10 +2907,9 @@ namespace Sunplus.Accounting.Business.Report.External
             {
                 LogExtensions.ExceptionHandler(ex);
             }
-            
+
             return external;
         }
-
 
         public ExternalWLDetail SelWinLossDetailByMaster(int custid, string param, Sorting sorting, int pageIndex, int pageSize)
         {
@@ -2904,13 +2958,11 @@ namespace Sunplus.Accounting.Business.Report.External
                                                    MComm = NumberFormat.DecFormat(row["magcomm"], 2),
                                                    MTotal = NumberFormat.DecFormat(row["magtotal"], 2),
 
-
-
                                                    Company = NumberFormat.DecFormat(row["company"], 2),
                                                });
                     }
 
-                    #endregion
+                    #endregion foreach
 
                     #region total
 
@@ -2959,7 +3011,7 @@ namespace Sunplus.Accounting.Business.Report.External
                                                      external.Items.Sum(s => CastAide.AsDecimal(s.Company)), 2),
                                          };
 
-                    #endregion
+                    #endregion total
 
                     SessionExtension.AddSession(HttpContext.Current.Session, _ExternalWinlossDailyDetailAgentSessionKey, external);
                 }
@@ -2971,7 +3023,7 @@ namespace Sunplus.Accounting.Business.Report.External
             {
                 LogExtensions.ExceptionHandler(ex);
             }
-            
+
             return external;
         }
 
@@ -3018,12 +3070,11 @@ namespace Sunplus.Accounting.Business.Report.External
                                                    AComm = NumberFormat.DecFormat(row["agcomm"], 2),
                                                    ATotal = NumberFormat.DecFormat(row["agtotal"], 2),
 
-
                                                    Company = NumberFormat.DecFormat(row["company"], 2),
                                                });
                     }
 
-                    #endregion
+                    #endregion foreach
 
                     #region total
 
@@ -3057,13 +3108,12 @@ namespace Sunplus.Accounting.Business.Report.External
                                                  NumberFormat.DecFormat(
                                                      external.Items.Sum(s => CastAide.AsDecimal(s.ATotal)), 2),
 
-
                                              Company =
                                                  NumberFormat.DecFormat(
                                                      external.Items.Sum(s => CastAide.AsDecimal(s.Company)), 2),
                                          };
 
-                    #endregion
+                    #endregion total
 
                     SessionExtension.AddSession(HttpContext.Current.Session, _ExternalWinlossDailyDetailMemberSessionKey, external);
                 }
@@ -3075,11 +3125,12 @@ namespace Sunplus.Accounting.Business.Report.External
             {
                 LogExtensions.ExceptionHandler(ex);
             }
-            
+
             return external;
         }
 
         #region export 2 excel - Winloss detail by com
+
         public void Export2ExcelWinLossDetailByCom(string reportTitle, Param param)
         {
             var startRow = 3;
@@ -3090,6 +3141,7 @@ namespace Sunplus.Accounting.Business.Report.External
             var nextRow = 0;
 
             #region Header
+
             var headerMergeCols = 15;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 3, startCol, startRow - 3, startCol + headerMergeCols).
                 Merged = true;
@@ -3104,14 +3156,15 @@ namespace Sunplus.Accounting.Business.Report.External
                 reportTitle;
             Export2ExcelWinLossDetailByComAssignHeader(ref wsReport, startCol, startRow);
 
-            #endregion
+            #endregion Header
+
             #region content
 
             var getData =
                 (ExternalWLDetail)
                 SessionExtension.GetSession(HttpContext.Current.Session, _ExternalWinlossDailyDetailSuperSessionKey);
-            
-            if(getData!= null && getData.Items!= null && getData.Items.Count > 0)
+
+            if (getData != null && getData.Items != null && getData.Items.Count > 0)
             {
                 foreach (var item in getData.Items)
                 {
@@ -3123,7 +3176,8 @@ namespace Sunplus.Accounting.Business.Report.External
                                                                 true);
             }
 
-            #endregion
+            #endregion content
+
             #region response file
 
             var response = HttpContext.Current.Response;
@@ -3132,10 +3186,10 @@ namespace Sunplus.Accounting.Business.Report.External
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
             excelFile.SaveXls(response.OutputStream);
 
-            #endregion
+            #endregion response file
         }
 
-        private  void Export2ExcelWinLossDetailByComAssignHeader(ref ExcelWorksheet wsReport, int startCol, int startRow)
+        private void Export2ExcelWinLossDetailByComAssignHeader(ref ExcelWorksheet wsReport, int startCol, int startRow)
         {
             var headerFormart = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
             var nextCol = 0;
@@ -3223,7 +3277,7 @@ namespace Sunplus.Accounting.Business.Report.External
 
         private void Export2ExcelWinLossDetailByComAssignContent(ref ExcelWorksheet wsReport, int startCol, int startRow, ref int nextRow, ExternalWLDetailRow row, bool isFooter)
         {
-            var color = isFooter ? Color.FromArgb(211, 225, 200): Color.FromArgb(255, 255, 255);
+            var color = isFooter ? Color.FromArgb(211, 225, 200) : Color.FromArgb(255, 255, 255);
             var bgFormat = new Core.Helper.ExcelGemboxUtils().GetStyleIntNumber(".00", color, isFooter, false, false);
             var nextCol = 0;
 
@@ -3231,8 +3285,8 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells[startRow + nextRow, startCol].Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
             wsReport.Cells[startRow + nextRow, startCol].Value = row.UserName;
 
-            wsReport.Cells[startRow + nextRow, startCol+(nextCol+=1)].Style = bgFormat;
-            wsReport.Cells[startRow + nextRow, startCol+ nextCol].Value = CastAide.AsDouble(row.Turnover);
+            wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
+            wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.Turnover);
 
             wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
             wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.GrossComm);
@@ -3269,9 +3323,10 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.Company);
         }
 
-        #endregion
+        #endregion export 2 excel - Winloss detail by com
 
         #region export 2 excel - Winloss detail by super
+
         public void Export2ExcelWinLossDetailBySuper(string reportTitle, Param param)
         {
             var startRow = 3;
@@ -3282,6 +3337,7 @@ namespace Sunplus.Accounting.Business.Report.External
             var nextRow = 0;
 
             #region Header
+
             var headerMergeCols = 15;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 3, startCol, startRow - 3, startCol + headerMergeCols).
                 Merged = true;
@@ -3296,7 +3352,8 @@ namespace Sunplus.Accounting.Business.Report.External
                 reportTitle;
             Export2ExcelWinLossDetailBySuperAssignHeader(ref wsReport, startCol, startRow);
 
-            #endregion
+            #endregion Header
+
             #region content
 
             var getData =
@@ -3315,7 +3372,8 @@ namespace Sunplus.Accounting.Business.Report.External
                                                                 true);
             }
 
-            #endregion
+            #endregion content
+
             #region response file
 
             var response = HttpContext.Current.Response;
@@ -3324,7 +3382,7 @@ namespace Sunplus.Accounting.Business.Report.External
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
             excelFile.SaveXls(response.OutputStream);
 
-            #endregion
+            #endregion response file
         }
 
         private void Export2ExcelWinLossDetailBySuperAssignHeader(ref ExcelWorksheet wsReport, int startCol, int startRow)
@@ -3339,12 +3397,12 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol, startRow - 1, startCol + nextCol).Style = headerFormart;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol, startRow - 1, startCol + nextCol).Value = "Turnover";
             wsReport.Columns[startCol + nextCol].Width = 120 * 40;
-	
+
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol += 1), startRow - 1, startCol + nextCol).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol, startRow - 1, startCol + nextCol).Style = headerFormart;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol, startRow - 1, startCol + nextCol).Value = "GrossComm";
             wsReport.Columns[startCol + nextCol].Width = 120 * 40;
-	
+
             //Member group title
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol + 1), startRow - 2, startCol + (nextCol + 3)).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol + 1), startRow - 2, startCol + (nextCol + 3)).Style = headerFormart;
@@ -3369,7 +3427,7 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol, startRow - 1, startCol + nextCol).Style = headerFormart;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol, startRow - 1, startCol + nextCol).Value = "Company";
             wsReport.Columns[startCol + nextCol].Width = 120 * 40;
-	
+
             var nextCol2 = 2;
             //group detail - member
             wsReport.Cells[startRow - 1, startCol + (nextCol2 += 1)].Style = headerFormart;
@@ -3461,9 +3519,10 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.Company);
         }
 
-        #endregion
+        #endregion export 2 excel - Winloss detail by super
 
         #region export 2 excel - Winloss detail by master
+
         public void Export2ExcelWinLossDetailByMaster(string reportTitle, Param param)
         {
             var startRow = 3;
@@ -3474,6 +3533,7 @@ namespace Sunplus.Accounting.Business.Report.External
             var nextRow = 0;
 
             #region Header
+
             var headerMergeCols = 12;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 3, startCol, startRow - 3, startCol + headerMergeCols).
                 Merged = true;
@@ -3488,7 +3548,8 @@ namespace Sunplus.Accounting.Business.Report.External
                 reportTitle;
             Export2ExcelWinLossDetailByMasterAssignHeader(ref wsReport, startCol, startRow);
 
-            #endregion
+            #endregion Header
+
             #region content
 
             var getData =
@@ -3507,7 +3568,8 @@ namespace Sunplus.Accounting.Business.Report.External
                                                                 true);
             }
 
-            #endregion
+            #endregion content
+
             #region response file
 
             var response = HttpContext.Current.Response;
@@ -3516,7 +3578,7 @@ namespace Sunplus.Accounting.Business.Report.External
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
             excelFile.SaveXls(response.OutputStream);
 
-            #endregion
+            #endregion response file
         }
 
         private void Export2ExcelWinLossDetailByMasterAssignHeader(ref ExcelWorksheet wsReport, int startCol, int startRow)
@@ -3531,12 +3593,12 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol, startRow - 1, startCol + nextCol).Style = headerFormart;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol, startRow - 1, startCol + nextCol).Value = "Turnover";
             wsReport.Columns[startCol + nextCol].Width = 120 * 40;
-	
+
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol += 1), startRow - 1, startCol + nextCol).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol, startRow - 1, startCol + nextCol).Style = headerFormart;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol, startRow - 1, startCol + nextCol).Value = "GrossComm";
             wsReport.Columns[startCol + nextCol].Width = 120 * 40;
-	
+
             //Member group title
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol + 1), startRow - 2, startCol + (nextCol + 3)).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol + 1), startRow - 2, startCol + (nextCol + 3)).Style = headerFormart;
@@ -3556,7 +3618,7 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol, startRow - 1, startCol + nextCol).Style = headerFormart;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol, startRow - 1, startCol + nextCol).Value = "Company";
             wsReport.Columns[startCol + nextCol].Width = 120 * 40;
-	
+
             var nextCol2 = 2;
             //group detail - member
             wsReport.Cells[startRow - 1, startCol + (nextCol2 += 1)].Style = headerFormart;
@@ -3631,9 +3693,10 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.Company);
         }
 
-        #endregion
+        #endregion export 2 excel - Winloss detail by master
 
         #region export 2 excel - Winloss detail by agent
+
         public void Export2ExcelWinLossDetailByAgent(string reportTitle, Param param)
         {
             var startRow = 3;
@@ -3644,6 +3707,7 @@ namespace Sunplus.Accounting.Business.Report.External
             var nextRow = 0;
 
             #region Header
+
             var headerMergeCols = 9;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 3, startCol, startRow - 3, startCol + headerMergeCols).
                 Merged = true;
@@ -3658,7 +3722,8 @@ namespace Sunplus.Accounting.Business.Report.External
                 reportTitle;
             Export2ExcelWinLossDetailByAgentAssignHeader(ref wsReport, startCol, startRow);
 
-            #endregion
+            #endregion Header
+
             #region content
 
             var getData =
@@ -3677,7 +3742,8 @@ namespace Sunplus.Accounting.Business.Report.External
                                                                 true);
             }
 
-            #endregion
+            #endregion content
+
             #region response file
 
             var response = HttpContext.Current.Response;
@@ -3686,7 +3752,7 @@ namespace Sunplus.Accounting.Business.Report.External
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
             excelFile.SaveXls(response.OutputStream);
 
-            #endregion
+            #endregion response file
         }
 
         private void Export2ExcelWinLossDetailByAgentAssignHeader(ref ExcelWorksheet wsReport, int startCol, int startRow)
@@ -3701,12 +3767,12 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol, startRow - 1, startCol + nextCol).Style = headerFormart;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol, startRow - 1, startCol + nextCol).Value = "Turnover";
             wsReport.Columns[startCol + nextCol].Width = 120 * 40;
-	
+
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol += 1), startRow - 1, startCol + nextCol).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol, startRow - 1, startCol + nextCol).Style = headerFormart;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol, startRow - 1, startCol + nextCol).Value = "GrossComm";
             wsReport.Columns[startCol + nextCol].Width = 120 * 40;
-	
+
             //Member group title
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol + 1), startRow - 2, startCol + (nextCol + 3)).Merged = true;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + (nextCol + 1), startRow - 2, startCol + (nextCol + 3)).Style = headerFormart;
@@ -3721,7 +3787,7 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol, startRow - 1, startCol + nextCol).Style = headerFormart;
             wsReport.Cells.GetSubrangeAbsolute(startRow - 2, startCol + nextCol, startRow - 1, startCol + nextCol).Value = "Company";
             wsReport.Columns[startCol + nextCol].Width = 120 * 40;
-	
+
             var nextCol2 = 2;
             //group detail - member
             wsReport.Cells[startRow - 1, startCol + (nextCol2 += 1)].Style = headerFormart;
@@ -3779,9 +3845,7 @@ namespace Sunplus.Accounting.Business.Report.External
             wsReport.Cells[startRow + nextRow, startCol + nextCol].Value = CastAide.AsDouble(row.Company);
         }
 
-        #endregion
+        #endregion export 2 excel - Winloss detail by agent
     }
 
-
-    
 }

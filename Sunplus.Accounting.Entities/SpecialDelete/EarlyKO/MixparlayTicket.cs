@@ -1,6 +1,6 @@
-﻿using Sunplus.Accounting.Entities.SpecialDelete;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Collections.Generic;
+
 namespace Sunplus.Accounting.Entities.SpecialDelete.EarlyKO
 {
     [DataContract]
@@ -26,8 +26,6 @@ namespace Sunplus.Accounting.Entities.SpecialDelete.EarlyKO
 
         [DataMember]
         public string Currency { get; set; }
-
-        
     }
 
     [DataContract]
@@ -44,7 +42,7 @@ namespace Sunplus.Accounting.Entities.SpecialDelete.EarlyKO
 
         [DataMember]
         public string SubTransId { get; set; }
-        
+
         [DataMember]
         public string IsDelete { get; set; }
 

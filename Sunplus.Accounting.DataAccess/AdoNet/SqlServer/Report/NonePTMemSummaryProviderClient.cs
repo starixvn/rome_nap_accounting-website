@@ -19,6 +19,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Report
             {
                 throw invalidOEx;
             }
-        }  
+        }
     }
 }

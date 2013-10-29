@@ -1,7 +1,5 @@
 ﻿using System;
 using DNAide.Web;
-using Sunplus.Accounting.Core.Common;
-using Sunplus.Core.LoggingLib;
 
 namespace Sunplus.Accounting.Core.Web
 {
@@ -16,6 +14,7 @@ namespace Sunplus.Accounting.Core.Web
             // TODO: Add constructor logic here
             //
         }
+
         //----Paging
         public static string GenPagingFooter(string url, int pageNum, int cpage)
         {
@@ -52,7 +51,7 @@ namespace Sunplus.Accounting.Core.Web
 
                 if (cpage >= 4)
                 {
-                    var pageIndex = (string) pageIndexTpl.Clone();
+                    var pageIndex = (string)pageIndexTpl.Clone();
                     TemplateHandler.Assign(ref pageIndex, "{Url}", url);
                     TemplateHandler.Assign(ref pageIndex, "{CurrentPage}", string.Empty);
                     TemplateHandler.Assign(ref pageIndex, "{PageText}", "1");
@@ -68,7 +67,7 @@ namespace Sunplus.Accounting.Core.Web
 
                 for (int i = startpage; i < endpage; ++i)
                 {
-                    var pageIndex = (string) pageIndexTpl.Clone();
+                    var pageIndex = (string)pageIndexTpl.Clone();
 
                     TemplateHandler.Assign(ref pageIndex, "{Url}", url);
                     if (cpage == (i + 1))
@@ -86,7 +85,7 @@ namespace Sunplus.Accounting.Core.Web
 
                 if ((endpage + 1) < pageNum)
                 {
-                    var pageIndex = (string) pageIndexTpl.Clone();
+                    var pageIndex = (string)pageIndexTpl.Clone();
                     TemplateHandler.Assign(ref pageIndex, "{Url}", url);
                     TemplateHandler.Assign(ref pageIndex, "{CurrentPage}", string.Empty);
                     TemplateHandler.Assign(ref pageIndex, "{PageText}", pageNum);
@@ -109,13 +108,13 @@ namespace Sunplus.Accounting.Core.Web
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
                 return string.Empty;
             }
         }
+
         public static string GenPagingFooter_Betlist(int pageNum, int cpage)
         {
             try
@@ -150,7 +149,7 @@ namespace Sunplus.Accounting.Core.Web
 
                 if (cpage >= 4)
                 {
-                    var pageIndex = (string) pageIndexTpl.Clone();
+                    var pageIndex = (string)pageIndexTpl.Clone();
                     TemplateHandler.Assign(ref pageIndex, "{CurrentPage}", string.Empty);
                     TemplateHandler.Assign(ref pageIndex, "{PageText}", "1");
                     TemplateHandler.Assign(ref pageIndex, "{Page}", "1");
@@ -165,7 +164,7 @@ namespace Sunplus.Accounting.Core.Web
 
                 for (int i = startpage; i < endpage; ++i)
                 {
-                    var pageIndex = (string) pageIndexTpl.Clone();
+                    var pageIndex = (string)pageIndexTpl.Clone();
 
                     if (cpage == (i + 1))
                     {
@@ -182,7 +181,7 @@ namespace Sunplus.Accounting.Core.Web
 
                 if ((endpage + 1) < pageNum)
                 {
-                    var pageIndex = (string) pageIndexTpl.Clone();
+                    var pageIndex = (string)pageIndexTpl.Clone();
                     TemplateHandler.Assign(ref pageIndex, "{CurrentPage}", string.Empty);
                     TemplateHandler.Assign(ref pageIndex, "{PageText}", pageNum);
                     TemplateHandler.Assign(ref pageIndex, "{Page}", pageNum);
@@ -202,7 +201,6 @@ namespace Sunplus.Accounting.Core.Web
             }
             catch (Exception ex)
             {
-                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }

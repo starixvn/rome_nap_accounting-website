@@ -17,7 +17,6 @@ using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.AdoNet;
-using Sunplus.Core.LoggingLib;
 
 using System.Text.RegularExpressions;
 using Sunplus.Bingo.Core;
@@ -49,6 +48,7 @@ public partial class ExcelData1234 : System.Web.UI.Page
         }
 
     }
+
 
     protected void Export2ExcelDailyWLDirectRacing(string winlossDate)
     {

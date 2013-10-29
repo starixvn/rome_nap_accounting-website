@@ -1,8 +1,7 @@
-using System.Collections;
+using System;
 using System.Data;
 using DNAide.Data;
 using Sunplus.Accounting.Core.Common;
-using System;
 
 namespace Sunplus.Accounting.DataAccess.IReportDAO
 {
@@ -15,7 +14,7 @@ namespace Sunplus.Accounting.DataAccess.IReportDAO
         DataTable WinlostRacingTote_Details(string winlossDate, string poolCurrency, string partnerId);
 
         DataTable WinlostRacingTote_DetailsNew(string winlossDate, string poolCurrency, string partnerId);
-        
+
         DataTable WinlostRacingToteDumpFiles(string winlossdate, int reportType);
 
         DataTable WinlostRacingToteBetlist(string winlossdate, string leagueid, string raceNo, string currency);

@@ -5,17 +5,16 @@ using System.Text;
 using System.Web;
 using CasinoLibrary.SBAgent;
 using DNAide.Core;
-using Sunplus.Accounting.Entities.Casino;
+using DNAide.Utils;
+using DNAide.Web;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
-using DNAide.Web;
-using DNAide.Utils;
 using Sunplus.Accounting.DataAccess.AdoNet;
+using Sunplus.Accounting.Entities.Casino;
 
 
-//using Sunplus.Core.LoggingLib;
 
 /// <summary>
 /// Manage class for Casino Business
@@ -68,6 +67,7 @@ namespace Sunplus.Accounting.Business
         private static string JS_AssignHashtableData = "{0}.put('{1}', {2});";
 
         private static string Game_Mini = "Mini";
+
         /// <summary>
         /// Update Customer Close status
         /// </summary>
@@ -172,6 +172,7 @@ namespace Sunplus.Accounting.Business
         {
             return GetCasinoStatus(custId).CasinoDisabled;
         }
+
         /// <summary>
         /// Check customer casino synchronize
         /// </summary>
@@ -181,6 +182,7 @@ namespace Sunplus.Accounting.Business
         {
             return GetCasinoStatus(custId).CasinoSync;
         }
+
         /// <summary>
         /// Update Casino status
         /// </summary>
@@ -208,6 +210,7 @@ namespace Sunplus.Accounting.Business
                 throw ex;
             }
         }
+
         public static void GetCustSettingCS(ref CSCustomerDetail _cust)
         {
             try
@@ -246,6 +249,7 @@ namespace Sunplus.Accounting.Business
                 throw ex;
             }
         }
+
         /// <summary>
         /// Get Casino game kind list
         /// </summary>
@@ -264,7 +268,6 @@ namespace Sunplus.Accounting.Business
                 throw ex;
             }
         }
-
 
         public static List<GameKindDetail> GetGameKinds(int _IBCCustId, string siteName)
         {
@@ -431,7 +434,7 @@ namespace Sunplus.Accounting.Business
             {
                 TemplateHandler.RemoveBlock(ref tplPT, "HideUpdate");
             }
-            var accountType = (Globals.AccountType) (_cust.RoleId);
+            var accountType = (Globals.AccountType)(_cust.RoleId);
             AssignCommonHeader(ref tplPT);
             try
             {
@@ -536,7 +539,7 @@ namespace Sunplus.Accounting.Business
                 TemplateHandler.RemoveBlock(ref tplData, Globals.AUTO_PT);
                 TemplateHandler.ReplaceBlock(ref tplData, Globals.TAG_HEADER, tplHeader);
 
-                // get games kind detail from the casino system if this customer 
+                // get games kind detail from the casino system if this customer
                 //have already been synchronized
                 List<GameKindDetail> lsGameKind = (_cust.CasinoSync)
                                                       ? GetGameKinds(_cust.IBCCustID, _cust.SiteName)
@@ -574,7 +577,7 @@ namespace Sunplus.Accounting.Business
                             string strSCommGroupID = gameKindName + sep + Globals.CS_GAME_GROUP + sep + strSComm;
                             string funcOnChangeGroupSetting = string.Format(
                                 Globals.CS_SELECTOPTION_ONCHANGE_GROUP_FUNC,
-                                Globals.CS_SELECTOPTION_ONCHANGE_GROUP_PARAM + ", " + (int) Globals.AccountType.Super);
+                                Globals.CS_SELECTOPTION_ONCHANGE_GROUP_PARAM + ", " + (int)Globals.AccountType.Super);
                             string funcOnChange = string.Format(Globals.CS_SELECTOPTION_ONCHANGE_FUNC,
                                                                 Globals.CS_SELECTOPTION_ONCHANGE_PARAM);
                             string funcOnChangePreset = string.Format(Globals.CS_SELECTOPTION_ONCHANGE_PRESET_FUNC,
@@ -648,7 +651,6 @@ namespace Sunplus.Accounting.Business
                             TemplateHandler.Assign(ref tmpTplPrivate, "comm_pt_error",
                                                    HtmlHelper.GenLabel(strSCommID + sep + Globals.CTR_LABEL_PREFIX, "",
                                                                    Globals.CLASS_ERROR_MAXVALUE));
-
 
                             //assign gamekind name
                             //get betting limit list
@@ -762,7 +764,6 @@ namespace Sunplus.Accounting.Business
                                                    HtmlHelper.GenLabel(strSCommID + sep + Globals.CTR_LABEL_PREFIX, "",
                                                                    Globals.CLASS_ERROR_MAXVALUE));
 
-
                             gameTypeData.Append(tmpTplPrivate);
                             totalGameType++;
                             //assign gamekind name
@@ -793,7 +794,6 @@ namespace Sunplus.Accounting.Business
                 TemplateHandler.ReplaceBlock(ref tplPT, "data", data.ToString());
                 TemplateHandler.Assign(ref tplPT, "display_tr_gametype", (useGroupPT) ? "none" : "");
                 TemplateHandler.Assign(ref tplPT, "display_td_gametype", (useGroupPT) ? "" : "none");
-
 
                 AssignCSCustInfo(ref tplPT, _cust, false);
 
@@ -879,10 +879,14 @@ namespace Sunplus.Accounting.Business
             //build content
             TemplateHandler.ReplaceBlock(ref tplData, Globals.TAG_HEADER, tplHeader);
             //_cust.CasinoSync = true;
+
             #region get upline's rng site name
-            var customerDAO = new CustomerDAO();            
+
+            var customerDAO = new CustomerDAO();
             var uplineRngSite = customerDAO.GetRNGSiteNameByCustId(_cust.UpperCustID);//upline level
-            #endregion
+
+            #endregion get upline's rng site name
+
             List<GameKindDetail> lsGameKind = (_cust.CasinoSync)
                                                   ? GetGameKinds(_cust.IBCCustID, _cust.SiteName)
                                                   : GetGameKinds(_cust.UpperCustID, uplineRngSite);
@@ -962,7 +966,7 @@ namespace Sunplus.Accounting.Business
                         s3 = gameTypeDetail.SPositionTaking;
                         //super auto pt
                         u3Max = s4;
-                        //max group s auto 
+                        //max group s auto
                         maxGroupSAutoPT = Math.Max(u3Max, maxGroupSAutoPT);
                         u3 = (_cust.CasinoSync) ? gameTypeDetail.AutoPositionTaking : u3Max;
                         /////////END Super///////////////
@@ -974,7 +978,7 @@ namespace Sunplus.Accounting.Business
                         //group max M PT
                         maxGroupMPT = Math.Max(m3Max, maxGroupMPT);
                         m3 = (_cust.CasinoSync) ? (Math.Min(gameTypeDetail.MPositionTaking, m3Max)) : m3Max;
-                            //current master preset pt
+                        //current master preset pt
                         //master min pt
                         n3Max = m3;
                         maxGroupMMinPT = Math.Max(maxGroupMMinPT, n3Max);
@@ -1058,7 +1062,6 @@ namespace Sunplus.Accounting.Business
                                                HtmlHelper.GenLabel(strMCommID + sep + Globals.CTR_LABEL_PREFIX, "",
                                                                Globals.CLASS_ERROR_MAXVALUE));
 
-
                         //assign gamekind name
                         //get betting limit list
 
@@ -1130,7 +1133,7 @@ namespace Sunplus.Accounting.Business
                             m3Max = Math.Max(maxGroupMPT, m3Max);
                             //master max pt
                             m3 = (_cust.CasinoSync) ? (Math.Min(gameKindDetail.MPositionTaking, m3Max)) : m3Max;
-                                //current master preset pt
+                            //current master preset pt
                             //master min pt
                             n3Max = m3;
                             n3 = (_cust.CasinoSync) ? gameKindDetail.MinPositionTaking : 0;
@@ -1160,7 +1163,7 @@ namespace Sunplus.Accounting.Business
                             TemplateHandler.Assign(ref tmpTplData, "chkGroupSetting",
                                                    HtmlHelper.GenCheckBox(gameKindName + sep + Globals.CHKGROUP, false,
                                                                       useGroupPT, "", Globals.CLASS_CHECKBOX_HIDDEN));
-                                //remove group setting check box
+                            //remove group setting check box
                             TemplateHandler.Assign(ref tmpTplData, "lblGroupSetting", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblGroupSetting"));
                             TemplateHandler.Assign(ref tmpTplData, "group_max_pt",
                                                    HtmlHelper.GenSelectOption(maxGroupMPT, MPTGroup, intervalPT,
@@ -1186,7 +1189,6 @@ namespace Sunplus.Accounting.Business
                                                                           !gameKindDetail.IsAutoPositionTaking,
                                                                           strSAutoPTGroupID, funcOnChangeGroup,
                                                                           "select-pt"));
-
 
                             TemplateHandler.Assign(ref tmpTplData, "chkGroupAuto",
                                                    HtmlHelper.GenCheckBox(strChkSAutoPTGroupID, false,
@@ -1221,7 +1223,8 @@ namespace Sunplus.Accounting.Business
                         }
                     }
                 }
-                    #region P2P game
+
+                #region P2P game
 
                 else
                 {
@@ -1275,7 +1278,6 @@ namespace Sunplus.Accounting.Business
                                                HtmlHelper.GenLabel(strMCommID + sep + Globals.CTR_LABEL_PREFIX, "",
                                                                Globals.CLASS_ERROR_MAXVALUE));
 
-
                         gameTypeData.Append(tmpTplPrivate);
                         totalGameType++;
                         //assign gamekind name
@@ -1322,7 +1324,8 @@ namespace Sunplus.Accounting.Business
                         }
                     }
                 }
-                #endregion
+
+                #endregion P2P game
             }
 
             TemplateHandler.ReplaceBlock(ref tplPT, "data", data.ToString());
@@ -1399,10 +1402,14 @@ namespace Sunplus.Accounting.Business
             //build content
             TemplateHandler.RemoveBlock(ref tplData, Globals.AUTO_PT);
             TemplateHandler.ReplaceBlock(ref tplData, Globals.TAG_HEADER, tplHeader);
+
             #region get upline's rng site name
+
             var customerDAO = new CustomerDAO();
             var uplineRngSite = customerDAO.GetRNGSiteNameByCustId(_cust.UpperCustID);//upline level
-            #endregion
+
+            #endregion get upline's rng site name
+
             List<GameKindDetail> lsGameKind = (_cust.CasinoSync)
                                                   ? GetGameKinds(_cust.IBCCustID, _cust.SiteName)
                                                   : GetGameKinds(_cust.UpperCustID, uplineRngSite);
@@ -1420,7 +1427,6 @@ namespace Sunplus.Accounting.Business
                 string strMPresetPTGroupID = gameKindName + sep + Globals.CS_GAME_GROUP + sep + strMPresetPT;
                 string funcOnChangeGroup = string.Format(Globals.CS_SELECTOPTION_ONCHANGE_GROUP_FUNC,
                                                          Globals.CS_SELECTOPTION_ONCHANGE_GROUP_PARAM);
-
 
                 List<GameTypeDetail> lsGameType = (_cust.CasinoSync)
                                                       ? GetGameType(_cust.IBCCustID, gameKindDetail.CodeID, _cust.SiteName)
@@ -1524,7 +1530,6 @@ namespace Sunplus.Accounting.Business
                                                HtmlHelper.GenLabel(strACommID + sep + Globals.CTR_LABEL_PREFIX, "",
                                                                Globals.CLASS_ERROR_MAXVALUE));
 
-
                         //assign gamekind name
                         //get betting limit list
 
@@ -1610,7 +1615,7 @@ namespace Sunplus.Accounting.Business
                             TemplateHandler.Assign(ref tmpTplData, "chkGroupSetting",
                                                    HtmlHelper.GenCheckBox(gameKindName + sep + Globals.CHKGROUP, false,
                                                                       useGroupPT, "", Globals.CLASS_CHECKBOX_HIDDEN));
-                                //remove group setting check box
+                            //remove group setting check box
                             TemplateHandler.Assign(ref tmpTplData, "lblGroupSetting", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblGroupSetting"));
                             TemplateHandler.Assign(ref tmpTplData, "group_max_pt",
                                                    HtmlHelper.GenSelectOption(maxGroupAPT, APTGroup, intervalPT,
@@ -1640,7 +1645,6 @@ namespace Sunplus.Accounting.Business
                                                    HtmlHelper.GenChangePTButtons(strMPresetPTGroupID, false));
                             //END
 
-
                             TemplateHandler.Assign(ref tmpTplData, "row-span-gamekind",
                                                    GetGameKindRowSpan(totalGameType, useGroupPT, gameKindDetail.CodeName));
                             TemplateHandler.Assign(ref tmpTplData, "gamekind", gameKindDetail.CodeName);
@@ -1656,7 +1660,8 @@ namespace Sunplus.Accounting.Business
                         }
                     }
                 }
-                    #region P2P game
+
+                #region P2P game
 
                 else
                 {
@@ -1721,7 +1726,6 @@ namespace Sunplus.Accounting.Business
                                                HtmlHelper.GenLabel(strACommID + sep + Globals.CTR_LABEL_PREFIX, "",
                                                                Globals.CLASS_ERROR_MAXVALUE));
 
-
                         gameTypeData.Append(tmpTplPrivate);
                         totalGameType++;
                         //assign gamekind name
@@ -1742,9 +1746,9 @@ namespace Sunplus.Accounting.Business
                         }
                     }
                 }
-                #endregion
-            }
 
+                #endregion P2P game
+            }
 
             TemplateHandler.ReplaceBlock(ref tplPT, "data", data.ToString());
             TemplateHandler.Assign(ref tplPT, "display_tr_gametype", (useGroupPT) ? "none" : "");
@@ -1771,7 +1775,7 @@ namespace Sunplus.Accounting.Business
         /// <returns></returns>
         private static string GenCSHTMLMember(string tplPT, CSCustomerDetail _cust, string csGroup,
                                               Globals.PTType editType)
-        {               
+        {
             switch (editType)
             {
                 case Globals.PTType.SuperOnMember:
@@ -1959,7 +1963,6 @@ namespace Sunplus.Accounting.Business
                                                    HtmlHelper.GenLabel(strAPTID + sep + Globals.CTR_LABEL_PREFIX, "",
                                                                    Globals.CLASS_ERROR_MAXVALUE));
 
-
                             //assign gamekind name
                             //get betting limit list
 
@@ -2022,7 +2025,7 @@ namespace Sunplus.Accounting.Business
                                 TemplateHandler.Assign(ref tmpTplData, "chkGroupSetting",
                                                        HtmlHelper.GenCheckBox(gameKindName + sep + Globals.CHKGROUP, false,
                                                                           useGroupPT, Globals.CLASS_CHECKBOX_HIDDEN, ""));
-                                    //remove group setting check box
+                                //remove group setting check box
                                 TemplateHandler.Assign(ref tmpTplData, "lblGroupSetting", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblGroupSetting"));
                                 //master pt
                                 TemplateHandler.Assign(ref tmpTplData, "group_max_pt",
@@ -2044,7 +2047,6 @@ namespace Sunplus.Accounting.Business
                                                                               strSAutoPTGroupID, funcOnChangeGroup,
                                                                               "select-pt"));
 
-
                                 TemplateHandler.Assign(ref tmpTplData, "chkGroupAuto",
                                                        HtmlHelper.GenCheckBox(strChkSAutoPTGroupID, false,
                                                                           gameKindDetail.IsAutoPositionTaking,
@@ -2062,7 +2064,7 @@ namespace Sunplus.Accounting.Business
                                 //END
 
                                 TemplateHandler.Assign(ref tmpTplData, "row-span-gamekind",
-                                                       useGroupPT ? (totalGameType + 1) : ((totalGameType*2) + 1));
+                                                       useGroupPT ? (totalGameType + 1) : ((totalGameType * 2) + 1));
                                 TemplateHandler.Assign(ref tmpTplData, "gamekind", gameKindDetail.CodeName);
 
                                 TemplateHandler.ReplaceBlock(ref tmpTplData, Globals.TAG_PRIVATE_SETTING,
@@ -2121,10 +2123,10 @@ namespace Sunplus.Accounting.Business
                 string tplPrivate;
                 double maxMPT = Globals.MAX_PresetPTValue, maxMPresetPT = Globals.MAX_PresetPTValue; //max value
                 double maxGroupMPT = Globals.MAX_PresetPTValue, maxGroupAPT = Globals.MAX_PresetPTValue;
-                    //max group value
+                //max group value
 
                 double MPTGroup = Globals.CURRENT_PresetPTValue, APTGroup = Globals.MAX_PresetPTValue;
-                    //current GROUP value
+                //current GROUP value
                 double MPT = Globals.CURRENT_MaxPTValue, APT = Globals.MAX_PresetPTValue; //current value
                 string strMPT = Globals.Master + Globals.strPT, strAPT = Globals.Agent + Globals.strPT;
                 int intervalPT = Globals.INTERVAL_PT; //interval of select options
@@ -2268,7 +2270,7 @@ namespace Sunplus.Accounting.Business
                                 TemplateHandler.Assign(ref tmpTplData, "chkGroupSetting",
                                                        HtmlHelper.GenCheckBox(gameKindName + sep + Globals.CHKGROUP, false,
                                                                           useGroupPT, Globals.CLASS_CHECKBOX_HIDDEN, ""));
-                                    //remove group setting check box
+                                //remove group setting check box
                                 TemplateHandler.Assign(ref tmpTplData, "lblGroupSetting", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblGroupSetting"));
                                 //member commission
                                 TemplateHandler.Assign(ref tmpTplData, "group_preset_pt",
@@ -2280,7 +2282,7 @@ namespace Sunplus.Accounting.Business
                                 TemplateHandler.Assign(ref tmpTplData, "group_preset_pt_btn", "");
                                 //END Group
                                 TemplateHandler.Assign(ref tmpTplData, "row-span-gamekind",
-                                                       useGroupPT ? (totalGameType + 1) : ((totalGameType*2) + 1));
+                                                       useGroupPT ? (totalGameType + 1) : ((totalGameType * 2) + 1));
                                 TemplateHandler.Assign(ref tmpTplData, "gamekind", gameKindDetail.CodeName);
 
                                 TemplateHandler.ReplaceBlock(ref tmpTplData, Globals.TAG_PRIVATE_SETTING,
@@ -2334,10 +2336,10 @@ namespace Sunplus.Accounting.Business
                 string tplPrivate;
                 double maxMComm = Globals.MAX_Comm, maxAPresetPT = Globals.MAX_PresetPTValue; //max value
                 double maxGroupMComm = Globals.MAX_Comm, maxGroupAPresetPT = Globals.MAX_PresetPTValue;
-                    //max group value
+                //max group value
 
                 double MCommGroup = Globals.CURRENT_Comm, APresetPTGroup = Globals.MAX_PresetPTValue;
-                    //current GROUP value
+                //current GROUP value
                 double MComm = Globals.CURRENT_Comm, APresetPT = Globals.MAX_PresetPTValue; // current value
                 string strMComm = Globals.Member + Globals.Comm, strAPresetPT = Globals.Agent + Globals.strPresetPT;
                 int intervalPT = Globals.INTERVAL_PT; //interval of select options
@@ -2362,10 +2364,14 @@ namespace Sunplus.Accounting.Business
                 TemplateHandler.RemoveBlock(ref tplData, Globals.MAX_PT);
                 TemplateHandler.RemoveBlock(ref tplData, Globals.MIN_PT);
                 TemplateHandler.ReplaceBlock(ref tplData, Globals.TAG_HEADER, tplHeader);
+
                 #region get upline's rng site name
+
                 var customerDAO = new CustomerDAO();
                 var uplineRngSite = customerDAO.GetRNGSiteNameByCustId(_cust.UpperCustID);//upline level
-                #endregion
+
+                #endregion get upline's rng site name
+
                 List<GameKindDetail> lsGameKind = (_cust.CasinoSync)
                                                       ? GetGameKinds(_cust.IBCCustID, _cust.SiteName)
                                                       : GetGameKinds(_cust.UpperCustID, uplineRngSite);
@@ -2431,7 +2437,7 @@ namespace Sunplus.Accounting.Business
                             maxMComm = (!_cust.PTByGameType) ? Globals.MAX_Comm : Math.Min(maxMComm, Globals.MAX_Comm);
                             MComm = Math.Min(MComm, Globals.MAX_Comm);
 
-                            maxAPresetPT = (!_cust.PTByGameType) ? Globals.MAX_MaxPTValue : a1Max;                            
+                            maxAPresetPT = (!_cust.PTByGameType) ? Globals.MAX_MaxPTValue : a1Max;
                             //group value
                             maxGroupMComm = Math.Max(maxMComm, maxGroupMComm);
                             maxGroupAPresetPT = Math.Max(maxGroupAPresetPT, maxAPresetPT);
@@ -2525,7 +2531,7 @@ namespace Sunplus.Accounting.Business
                                 TemplateHandler.Assign(ref tmpTplData, "chkGroupSetting",
                                                        HtmlHelper.GenCheckBox(gameKindName + sep + Globals.CHKGROUP, false,
                                                                           useGroupPT, "", Globals.CLASS_CHECKBOX_HIDDEN));
-                                    //remove group setting check box
+                                //remove group setting check box
                                 TemplateHandler.Assign(ref tmpTplData, "lblGroupSetting", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblGroupSetting"));
                                 TemplateHandler.Assign(ref tmpTplData, "group_comm_pt",
                                                        HtmlHelper.GenSelectOption(maxGroupMComm, MCommGroup, intervalComm,
@@ -2577,8 +2583,8 @@ namespace Sunplus.Accounting.Business
                 throw ex;
             }
         }
-        //End Member
 
+        //End Member
 
         private static void AssignJavaScript(ref string tplPT, List<string> lsData)
         {
@@ -2618,7 +2624,7 @@ namespace Sunplus.Accounting.Business
                         totalGameType = 0;
 
                         List<GameTypeDetail> lsGameType = (htGameType[gameKindDetail.CodeID] != null)
-                                                              ? (List<GameTypeDetail>) htGameType[gameKindDetail.CodeID]
+                                                              ? (List<GameTypeDetail>)htGameType[gameKindDetail.CodeID]
                                                               : null;
                         if (lsGameType != null && lsGameType.Count > 0)
                         {
@@ -2669,7 +2675,6 @@ namespace Sunplus.Accounting.Business
             }
         }
 
-
         private static bool IsP2PGame(string gameKindName)
         {
             if (gameKindName.ToLower().IndexOf(Globals.GAME_P2P.ToLower()) == -1)
@@ -2698,7 +2703,6 @@ namespace Sunplus.Accounting.Business
             return true;
         }
 
-
         private static void AssignCSCustInfo(ref string tplCSPT, CSCustomerDetail cust)
         {
             try
@@ -2721,7 +2725,6 @@ namespace Sunplus.Accounting.Business
                                            (!cust.IsMaxTransfer ? ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "unlimited") : cust.TotalWinLoss.ToString()), ""));
 
                 TemplateHandler.Assign(ref tplCSPT, "unlimited", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "unlimited"));
-                
 
                 TemplateHandler.Assign(ref tplCSPT, "maxTransferCredit", HtmlHelper.GenTextBox(Globals.TXT_MAXTRANSTERCREDIT, CastAide.AsString(cust.MaxTransferCredit, ""), "", !cust.IsMaxTransfer, ""));
 
@@ -2765,7 +2768,6 @@ namespace Sunplus.Accounting.Business
                 TemplateHandler.Assign(ref tplCSPT, "lblMaxLose", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMaxLoseAllowed"));
                 TemplateHandler.Assign(ref tplCSPT, "lblMin", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblMin"));
 
-
                 TemplateHandler.Assign(ref tplCSPT, "Reset",
                                        (readOnly || !cust.CasinoSync)
                                            ? ""
@@ -2790,12 +2792,10 @@ namespace Sunplus.Accounting.Business
                                                  )
                     );
 
-
                 TemplateHandler.Assign(ref tplCSPT, "cbxAutoResetchecked",
                                        (cust.IsAutoReset || !cust.CasinoSync) ? "checked" : "");
 
                 TemplateHandler.Assign(ref tplCSPT, "autoReset", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "autoReset"));
-
 
                 TemplateHandler.Assign(ref tplCSPT, "isSync", (!cust.CasinoSync).ToString().ToLower());
                 TemplateHandler.Assign(ref tplCSPT, "exitConfirmMsg",
@@ -2870,9 +2870,11 @@ namespace Sunplus.Accounting.Business
                     case 3:
                         parentId = cust.SIBCCustID;
                         break;
+
                     case 2:
                         parentId = cust.MIBCCustID;
                         break;
+
                     case 1:
                         parentId = cust.AIBCCustID;
                         break;
@@ -2880,7 +2882,6 @@ namespace Sunplus.Accounting.Business
                 bool disableChkStatus = false;
                 if (cust.RoleId != 4 && Security.Permissions.IsDisabledCS(parentId))
                     disableChkStatus = true;
-
 
                 string strCbxLB1 = "";
                 string strCbxLB2 = "";
@@ -2942,7 +2943,7 @@ namespace Sunplus.Accounting.Business
                 strHiddens += HtmlHelper.GenHidden(Globals.HIDDEN_PTByGameType, cust.PTByGameType.ToString());
                 strHiddens += HtmlHelper.GenHidden(Globals.HIDDEN_LangID, Globals.CONST_LangID.ToString()); // Hard code
                 strHiddens += HtmlHelper.GenHidden(Globals.HIDDEN_CountryID, Globals.CONST_CountryID.ToString());
-                    // Hard code
+                // Hard code
                 return strHiddens;
             }
             catch (Exception ex)
@@ -2959,7 +2960,7 @@ namespace Sunplus.Accounting.Business
                 strHiddens += HtmlHelper.GenHidden(Globals.HIDDEN_RoldID, cust.RoleId.ToString()); //master role id = 3
                 strHiddens += HtmlHelper.GenHidden(Globals.HIDDEN_LangID, Globals.CONST_LangID.ToString()); // Hard code
                 strHiddens += HtmlHelper.GenHidden(Globals.HIDDEN_CountryID, Globals.CONST_CountryID.ToString());
-                    // Hard code
+                // Hard code
                 IDictionaryEnumerator _enumerator = datas.GetEnumerator();
                 while (_enumerator.MoveNext())
                 {
@@ -2991,7 +2992,7 @@ namespace Sunplus.Accounting.Business
         {
             if (_cust == null)
                 return 0;
-            switch ((Globals.AccountType) _cust.RoleId)
+            switch ((Globals.AccountType)_cust.RoleId)
             {
                 case Globals.AccountType.Master:
                     return _cust.SIBCCustID;
@@ -3021,18 +3022,19 @@ namespace Sunplus.Accounting.Business
                     string version = HttpContext.Current.Request.Browser.Version;
                     if (version.Equals("8.0"))
                     {
-                        rowSpan = useGroupSetting ? totalGameType + 1 : (totalGameType*2) + 1;
+                        rowSpan = useGroupSetting ? totalGameType + 1 : (totalGameType * 2) + 1;
                     }
                     else
                     {
-                        rowSpan = (totalGameType*2) + 1;
+                        rowSpan = (totalGameType * 2) + 1;
                     }
                 }
                 else
-                    rowSpan = useGroupSetting ? (totalGameType + 1) : ((totalGameType*2) + 1);
+                    rowSpan = useGroupSetting ? (totalGameType + 1) : ((totalGameType * 2) + 1);
             }
             return rowSpan;
         }
+
         /// <summary>
         /// Full reset casino max transfer
         /// </summary>

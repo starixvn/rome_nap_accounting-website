@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Sunplus.Accounting.Entities.Report.MatchWL
 {
@@ -10,7 +7,6 @@ namespace Sunplus.Accounting.Entities.Report.MatchWL
     [DataContract]
     public class MatchWL2aBO
     {
-
         [DataMember]
         public string matchcode { get; set; }
 

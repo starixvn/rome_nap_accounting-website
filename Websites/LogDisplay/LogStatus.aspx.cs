@@ -5,7 +5,6 @@ using System.Web.UI;
 using Sunplus.Accounting.Business;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Core.LoggingLib;
 using Sunplus.Shared.ViewLogLib;
 using Sunplus.Shared.ViewLogLib.Model;
 using Sunplus.Shared.ViewLogLib.ServiceLayger;
