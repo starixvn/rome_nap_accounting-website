@@ -274,4 +274,10 @@
   <Function Name="Customer - Update Live Casino Comm">
     <Setting Key="GetCustIdByUsername" SpName="Acc_GetCustIdByUsername" DbName="DBACC.bodb02.bodbAdminNet"/>
   </Function>
+
+  <Function Name="Special Delete - Batch MSG">
+    <Setting Key="BatchMsg" SpName="Acc_BettransSelBet_BatchMsg" DbName="DBACC.bodb02.bodbAdminNet"/>
+    <Setting Key="TicketsListing" SpName="Acc_Rpt_TicketsListing" DbName="DBACC.bodb02.bodbAdminNet"/>
+  </Function>
+  
 </Functions>

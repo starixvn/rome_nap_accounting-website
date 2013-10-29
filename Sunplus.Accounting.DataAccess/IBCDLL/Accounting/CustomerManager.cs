@@ -11,6 +11,7 @@ using Sunplus.Accounting.Entities;
 using System.Collections.Generic;
 using Fanex.Data;
 using DNAide.Core;
+using Fanex.Tarus.Infrastructure.Extensions;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
@@ -248,26 +249,27 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 
         public static DbResult GetHRBetSetting(int custId)
         {
-            #region DNAide Db
-
-            DbResult dsHRBetSetting = null;
+            DbResult result = null;
             try
             {
                 var param = new Hashtable();
                 param.Add("custid", custId);
-                var spElement = GetHRStoreProcedure(RacingSession.StoreCollection.MeetingComm, "CustomerSelMinMaxBetHR");
-                dsHRBetSetting = DbHelper.Execute(spElement.Name, param, spElement.DbName);
+
+                using (ObjectDb db = new ObjectDb("CustomerSelMinMaxBetHR", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var dataset = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, dataset);
+                }
             }
-            catch
+            catch (Exception ex)
             {
-#if DEBUG
-                throw;
-#endif
+                LogExtensions.ExceptionHandler(ex);
             }
-
-            #endregion
-
-            return dsHRBetSetting;
+            return result;
         }
 
         public static DbResult GetHRCommission(int custId)
@@ -279,8 +281,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var param = new Hashtable();
                 param.Add("custid", custId);
-                var spElement = GetHRStoreProcedure(RacingSession.StoreCollection.MeetingComm, "CustomerSelCommissionHR");
-                dsHRBetSetting = DbHelper.Execute(spElement.Name, param, spElement.DbName);
+                
+                using (ObjectDb db = new ObjectDb("CustomerSelCommissionHR", 600))
+                {
+                    db.AssignParamValues(param);
+                    var dataset = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    dsHRBetSetting = new DbResult(output, dataset);
+                }
             }
             catch (Exception ex)
             {

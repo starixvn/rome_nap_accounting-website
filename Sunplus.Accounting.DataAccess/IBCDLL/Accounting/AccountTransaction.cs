@@ -246,10 +246,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             DbResult rs = null;
             try
             {
-                var spElement =
-                    new SpecialDeleteStoreProcedure().GetSpecialDeleteStoreProcedure(
-                        SpecialDeleteGroupSection.StoreCollection.Sportbook, "BettransDelSpecial_LeagueSelOutright");
-                rs = DbHelper.Execute(spElement.Name, spElement.DbName);
+                using (ObjectDb db = new ObjectDb("BettransDelSpecial_LeagueSelOutright", 600))
+                {
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -271,10 +274,16 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var hash = new Hashtable();
                 hash.Add("leagueid", LeagueID);
-                var spElement =
-                    new SpecialDeleteStoreProcedure().GetSpecialDeleteStoreProcedure(
-                        SpecialDeleteGroupSection.StoreCollection.Sportbook, "Special_OutrightSel");
-                rs = DbHelper.Execute(spElement.Name, hash, spElement.DbName);
+                
+                using (ObjectDb db = new ObjectDb("Special_OutrightSel", 600))
+                {
+                    db.AssignParamValues(hash);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -294,10 +303,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             DbResult rs = null;
             try
             {
-                var spElement =
-                    new SpecialDeleteStoreProcedure().GetSpecialDeleteStoreProcedure(
-                        SpecialDeleteGroupSection.StoreCollection.Sportbook, "Special_Outright");
-                rs = DbHelper.Execute(spElement.Name, hash, spElement.DbName);
+                using (ObjectDb db = new ObjectDb("Special_Outright", 600))
+                {
+                    db.AssignParamValues(hash);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {

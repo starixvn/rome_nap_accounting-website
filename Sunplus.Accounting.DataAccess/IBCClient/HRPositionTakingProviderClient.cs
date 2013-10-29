@@ -203,40 +203,42 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
 
         public override DbResult GetMinMaxPT(int custId, Globals.AccountType accountType)
         {
-            //return base.GetPT(custId);
-            //return base.GetPT(custId);
+            DbResult result = null;
             try
             {
                 var param = new Hashtable();
                 param.Add("custid", custId);
 
+                string spKey = "";
+
                 switch (accountType)
                 {
                     case Globals.AccountType.Super:
-                        var spElementS =
-                            new HRSpConfig().GetHRStoreProcedure(
-                                Core.Configurations.StoreProcedureGroup.RacingSession.StoreCollection.RacingControl,
-                                "GetSuperMin");
-                        return DbHelper.Execute(spElementS.Name, param, spElementS.DbName);
+                        spKey = "GetSuperMin";
+                        break;
                     case Globals.AccountType.Master:
-                        var spElementM =
-                            new HRSpConfig().GetHRStoreProcedure(
-                                Core.Configurations.StoreProcedureGroup.RacingSession.StoreCollection.RacingControl,
-                                "GetMasterMinMax");
-                        return DbHelper.Execute(spElementM.Name, param, spElementM.DbName);
+                        spKey = "GetMasterMinMax";
+                        break;
                     case Globals.AccountType.Agent:
-                        var spElementA =
-                            new HRSpConfig().GetHRStoreProcedure(
-                                Core.Configurations.StoreProcedureGroup.RacingSession.StoreCollection.RacingControl,
-                                "GetAgentMinMax");
-                        return DbHelper.Execute(spElementA.Name, param, spElementA.DbName);
+                        spKey = "GetAgentMinMax";
+                        break;
                 }
-                return null;
+
+                using (ObjectDb db = new ObjectDb(spKey, 600))
+                {
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+
+            return result;
         }
 
         public override ErrorDetail UpdateMinMaxPT(Globals.AccountType accountType, Hashtable param)

@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using DNAide.Data;
 using Sunplus.Accounting.DataAccess.PositionTaking.Racing;
+using System;
+using Fanex.Tarus.Infrastructure.Extensions;
+using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking.Racing
 {
@@ -8,15 +11,46 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking.Racing
     {
         public DbResult GetPartnerList()
         {
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.RacingSession.StoreCollection.MeetingComm, "GetPartnerList");
-            return DbHelper.Execute(spElement.Name, null, spElement.DbName, 1000);
+            DbResult result = null;
+            try
+            {
+                using (ObjectDb db = new ObjectDb("GetPartnerList", 600))
+                {
+                    var dataset = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, dataset);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         public DbResult GetPartnerDetail(int partnerId)
         {
-            var param = new Hashtable { { "partnerid", partnerId } };
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.RacingSession.StoreCollection.MeetingComm, "GetPartnerDetail");
-            return DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
+            DbResult result = null;
+            try
+            {
+                var param = new Hashtable { { "partnerid", partnerId } };
+
+                using (ObjectDb db = new ObjectDb("GetPartnerDetail", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var dataset = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, dataset);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;            
         }
     }
 }

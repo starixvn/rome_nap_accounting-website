@@ -320,26 +320,73 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
 
         public DbResult BettransDelSpecial_OutrightSel(int LeagueID)
         {
-            var param = new Hashtable();
-            param.Add("leagueid", LeagueID);
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SpecialDeleteGroupSection.StoreCollection.Sportbook, "Special_OutrightSel");
-            return DbHelper.Execute(spElement.Name, param, spElement.DbName, 600);
-            //return DbHelper.Execute("Acc_BettransDelSpecial_OutrightSel", param, DBType.ARCHIVE, 200);
+            DbResult result = null;
+            try
+            {
+                var param = new Hashtable();
+                param.Add("leagueid", LeagueID);
+
+                using (ObjectDb db = new ObjectDb("Special_OutrightSel", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return result;
         }
 
         public DbResult BettransSelDelSpecial_Outright(Hashtable param)
         {
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SpecialDeleteGroupSection.StoreCollection.Sportbook, "Special_Outright");
-            return DbHelper.Execute(spElement.Name, param, spElement.DbName, 600);
-            //return DbHelper.Execute("Acc_BettransSelDelSpecial_Outright", param, DBType.ARCHIVE, 600);
+            DbResult result = null;
+            try
+            {
+                using (ObjectDb db = new ObjectDb("Special_Outright", 600))
+                {
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);                
+            }
+
+            return result;
         }
 
         public DbResult BettransSelBet_BatchMsg(Hashtable param)
         {
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SpecialDeleteGroupSection.StoreCollection.Sportbook, "BatchMsg");
-            return DbHelper.Execute(spElement.Name, param, spElement.DbName, 600);
+            DbResult result = null;
+            try
+            {
+                using (ObjectDb db = new ObjectDb("BatchMsg", 600))
+                {
+                    db.AssignParamValues(param);
 
-            //return DbHelper.Execute("Acc_BettransSelBet_BatchMsg", param, DBType.REPORT, 600);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return result;
         }
 
         #region EarlyKOBet
@@ -351,27 +398,41 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
         /// <returns></returns>
         public DbResult SelectEarlyKOBet(SpecialDeleteParamEarlyKO deleteParam)
         {
-            DateTime koDate = DateTime.Parse(deleteParam.KichOffDate).AddHours(-12);
-            Hashtable param = new Hashtable();
-            param.Add("matchid", deleteParam.MatchId);
-            //param.Add("kickoffdate", deleteParam.KichOffDate);
-            param.Add("kickoffdate", koDate);
-            param.Add("hdp", deleteParam.Hdp);
-            param.Add("bettypes", deleteParam.Bettypes);
-            param.Add("betteam1378", deleteParam.Betteam1378);
-            param.Add("betteam515", deleteParam.Betteam515);
-            param.Add("betteam430", deleteParam.Betteam430);
-            param.Add("username", AppSession.Username);
-            //add filter option
-            param.Add("betteam6", deleteParam.Betteam6);
-            param.Add("betteam14", deleteParam.Betteam14);
-            param.Add("betteam16", deleteParam.Betteam16);
-            param.Add("safilter", deleteParam.SAFilter);
+            DbResult result = null;
+            try
+            {
+                DateTime koDate = DateTime.Parse(deleteParam.KichOffDate).AddHours(-12);
+                Hashtable param = new Hashtable();
+                param.Add("matchid", deleteParam.MatchId);
+                //param.Add("kickoffdate", deleteParam.KichOffDate);
+                param.Add("kickoffdate", koDate);
+                param.Add("hdp", deleteParam.Hdp);
+                param.Add("bettypes", deleteParam.Bettypes);
+                param.Add("betteam1378", deleteParam.Betteam1378);
+                param.Add("betteam515", deleteParam.Betteam515);
+                param.Add("betteam430", deleteParam.Betteam430);
+                param.Add("username", AppSession.Username);
+                //add filter option
+                param.Add("betteam6", deleteParam.Betteam6);
+                param.Add("betteam14", deleteParam.Betteam14);
+                param.Add("betteam16", deleteParam.Betteam16);
+                param.Add("safilter", deleteParam.SAFilter);
 
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SpecialDeleteGroupSection.StoreCollection.EarlyKO, "GetEarlyKOBet");
+                using (ObjectDb db = new ObjectDb("GetEarlyKOBet", 600))
+                {
+                    db.AssignParamValues(param);
 
-            //return DbHelper.Execute("Acc_BettransSelSpecialDel_EarlyKO", param, DBType.ARCHIVE, 600);
-            return DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         /// <summary>

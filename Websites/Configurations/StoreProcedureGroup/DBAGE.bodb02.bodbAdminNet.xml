@@ -108,8 +108,13 @@
   </Function>
 
   <Function Name="Sepcial Delete - Sportbook">    
-    <Setting Key="BettransSelSpecialDel" SpName="Acc_BettransSelSpecialDel" DbName="DBAGE.bodb02.bodbAdminNet" />    
+    <Setting Key="BettransSelSpecialDel" SpName="Acc_BettransSelSpecialDel" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="GetEarlyKOBet" SpName="Acc_BettransSelSpecialDel_EarlyKO" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Special_Outright" SpName="Acc_BettransSelDelSpecial_Outright" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Special_OutrightSel" SpName="Acc_BettransDelSpecial_OutrightSel" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="BettransDelSpecial_LeagueSelOutright" SpName="Acc_BettransDelSpecial_LeagueSelOutright" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
+  
   <Function Name="Sepcial Delete - Virtual Sports - Delete Bets">    
     <Setting Key="BettransSelSpecialDel_VirtualSports" SpName="Acc_BettransSelSpecialDel_VirtualSports" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
@@ -221,9 +226,38 @@
 
     <Setting Key="SelectDisableP2P" SpName="Acc_CustomerSelP2PStatus" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="SelectDefaultSettingP2P" SpName="Acc_P2PSelDefaultSetting" DbName="DBAGE.bodb02.bodbAdminNet"  />
-
-    <add alias="SelectEnableCustomer" name="Acc_CustomerSelCheckEnable" db="db053"></add>
+    <Setting Key="SelectEnableCustomer" SpName="Acc_CustomerSelCheckEnable" DbName="DBAGE.bodb02.bodbAdminNet"  />
   </Function>
 
+  <Function Name="Racing Control">
+    <Setting Key="GetRacingStatus" SpName="Acc_CustomerSelRBStatus" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="GetSuperMin" SpName="Acc_CustomerSelHRComEditOverride_SAg" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="GetMasterMinMax" SpName="Acc_CustomerSelHRComEditOverride_MAg" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="GetAgentMinMax" SpName="Acc_CustomerSelHRComEditOverride_Ag" DbName="DBAGE.bodb02.bodbAdminNet"  />    
+  </Function>
+
+  <Function Name="Meeting Comm">
+    <Setting Key="GetPartnerList" SpName="Acc_SelRacingPartner" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="GetPartnerDetail" SpName="Acc_SelRacingCommbyPartner_Details" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="CustomerSelMinMaxBetHR" SpName="Acc_CustomerSelMinMaxBetHR" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="CustomerSelCommissionHR" SpName="Acc_CustomerSelCommissionHR" DbName="DBAGE.bodb02.bodbAdminNet"  />    
+  </Function>
+
+  <Function Name="Meeting Comm">
+    <add alias="CustomerSelComEditOverride_Ag" name="acc_CustomerSelComEditOverride_Ag" db="db053"/>
+    <add alias="CustomerSelComEditOverride_MAg" name="acc_CustomerSelComEditOverride_MAg" db="db053"/>
+    <add alias="CustomerSelComEditOverride_SAg" name="acc_CustomerSelComEditOverride_SAg" db="db053"/>
+    <add alias="CustomerSelEditCustomer_SAg" name="Acc_CustomerSelEditCustomer_SAg" db="db053"/>
+    <add alias="CustomerSelEditCustomer_MAg" name="Acc_CustomerSelEditCustomer_MAg" db="db053"/>
+    <add alias="CustomerSelFIEditSuper" name="Acc_CustomerSelFIEditCustomer_Com" db="db053" ></add>
+    <add alias="CustomerSelFIEditMaster" name="Acc_CustomerSelFIEditCustomer_SAg" db="db053" ></add>
+    <add alias="CustomerSelFIEditAgent" name="Acc_CustomerSelFIEditCustomer_MAg" db="db053" ></add>
+    <add alias="CustomerSelFIEditMember" name="Acc_CustomerSelFIEditCustomer_Ag" db="db053" ></add>
+    <add alias="CustomerSelFIMasterEditMember" name="Acc_CustomerSelFIEditMember_MAg" db="db053" ></add>
+    <add alias="CustomerSelFISuperEditMember" name="Acc_CustomerSelFIEditMember_SAg" db="db053" ></add>
+    <add alias="CustomerSelFISuperGetMinMaxPt" name="Acc_CustomerSelFIComEditOverride_SAg" db="db053" ></add>
+    <add alias="CustomerSelFIMasterGetMinMaxPt" name="Acc_CustomerSelFIComEditOverride_MAg" db="db053" ></add>
+    <add alias="CustomerSelFIAgentGetMinMaxPt" name="Acc_CustomerSelFIComEditOverride_Ag" db="db053" ></add>
+  </Function>
 </Functions>
 

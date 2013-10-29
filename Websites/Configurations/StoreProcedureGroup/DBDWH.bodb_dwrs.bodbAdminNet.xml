@@ -48,8 +48,7 @@
   </Function>
 
   <Function Name="Gaming">
-    <Setting Key="WinLoss_CS_Detail_WH" SpName="Acc_Rpt_WinlostCA_Details_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />
-    <Setting Key="GameStatistics_DW" SpName="Acc_Rpt_LiveCasino_GameStatistics_DW" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
+    <Setting Key="WinLoss_CS_Detail_WH" SpName="Acc_Rpt_WinlostCA_Details_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet" />    
     <Setting Key="Acc_Rpt_NumberGame_Old" SpName="Acc_Rpt_NumberGame_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
     <Setting Key="Acc_Rpt_NumberGame_Details_Old" SpName="Acc_Rpt_NumberGame_Details_Old" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />
     <Setting Key="Acc_Rpt_NumberGameWinlossByDate" SpName="Acc_Rpt_NumberGameWinlossByDate" DbName="DBDWH.bodb_dwrs.bodbAdminNet"  />

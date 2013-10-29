@@ -212,16 +212,32 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking
         public DbResult SelectEnableCustomer(int custId)
         {
             DbResult dbResult = null;
-            Hashtable Params = new Hashtable();
-            Params.Add("custid", custId);
-            Params.Add("errcode", 0);
-            Params.Add("errmsg", "");
-            string spMaping = "SelectEnableCustomer";
 
-            if (!string.IsNullOrEmpty(spMaping))
+            try
             {
-                var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.P2PSession.StoreCollection.P2PControl, spMaping);
-                dbResult = DbHelper.Execute(spElement.Name, Params, spElement.DbName, 2000);
+                Hashtable Params = new Hashtable();
+                Params.Add("custid", custId);
+                Params.Add("errcode", 0);
+                Params.Add("errmsg", "");
+                string spMaping = "SelectEnableCustomer";
+
+                if (!string.IsNullOrEmpty(spMaping))
+                {
+                    using (ObjectDb db = new ObjectDb("SelectEnableCustomer", 600))
+                    {
+                        db.AssignParamValues(Params);
+
+                        var ds = db.ExecuteDataSet();
+                        var output = db.GetOuputParams();
+
+                        dbResult = new DbResult(output, ds);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
             }
 
             return dbResult;
