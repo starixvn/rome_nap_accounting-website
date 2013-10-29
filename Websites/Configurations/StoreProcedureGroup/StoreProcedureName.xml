@@ -848,6 +848,6 @@
     <Setting Key="Customer_SMATurnover_AddSMAList" SpName="Acc_SMATurnoverIns" DbName="DBAGE.BODB02" />
   </Function>
   <Function Name="Customer - Replicate Licensee Settings">
-    <Setting Key="Customer_ReplicateLicenseeSettings_DoAction" SpName="Acc_ExchangeSel" DbName="main"  />
+    <Setting Key="Customer_ReplicateLicenseeSettings_DoAction" SpName="Acc_Dep_SyncLicenseeSetting" DbName="DBLIC.bodb_Licensee.bodbAdminNet"  />
   </Function>
 </Functions>

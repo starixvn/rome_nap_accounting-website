@@ -10,6 +10,7 @@
 namespace Fanex.Tarus.Customer.DataAccess.ReplicateLicenseeSettings
 {
     using System.Collections;
+    using DNAide.Core;
     using Fanex.Data;
     using Fanex.Tarus.Customer.Criteria.ReplicateLicenseeSettings;
     using Fanex.Tarus.Customer.Entities;
@@ -28,7 +29,9 @@ namespace Fanex.Tarus.Customer.DataAccess.ReplicateLicenseeSettings
         public Result DoReplicateLicenseeSettings(DoReplicateLicenseeSettingsCriteria criteria, ref Hashtable outputParams)
         {
             Hashtable param = new Hashtable();
-            param.Add("licenseename", criteria.LicenseeName);
+            param.Add("name", criteria.LicenseeName);
+            param.Add("errcode", 0);
+            param.Add("errmsg", string.Empty);
             using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 objDb.AssignParamValues(param);
@@ -38,8 +41,8 @@ namespace Fanex.Tarus.Customer.DataAccess.ReplicateLicenseeSettings
 
             return new Result
             {
-                ErrorCode = 0,
-                ErrorMessage = "Something is wrong!"
+                ErrorCode = CastAide.AsInt32(outputParams["errcode"]),
+                ErrorMessage = CastAide.AsString(outputParams["errmsg"])
             };
         }
     }
