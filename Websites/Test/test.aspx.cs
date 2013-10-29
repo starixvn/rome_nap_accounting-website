@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -32,7 +33,24 @@ public partial class test : System.Web.UI.Page
         try
         {
             //_cacheManager.Set(
-            System.Web.HttpUtility.UrlDecode("VNM-CICV-CASH+INH");
+            //System.Web.HttpUtility.UrlDecode("VNM-CICV-CASH+INH");
+
+            var domains = ConfigurationManager.AppSettings;
+            /*
+            foreach (string key in Domains.Configuration.GetKeys())
+            {
+                if (Domains.Configuration.Get(key).Contains(baseUrl))
+                {
+                    return key;
+                }
+            }*/
+            foreach (string key in domains.AllKeys)
+            {
+                //if (domains[key].Contains(baseUrl))
+                {
+                    var test = domains[key];
+                }
+            }
 
         }
         catch (Exception ex)
