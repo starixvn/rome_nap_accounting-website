@@ -67,8 +67,8 @@
     <Setting Key="Acc_BetsSelBetCheckM_All" SpName="Acc_BetsSelBetCheckM_All" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_BetsSelBetList_ByTransID" SpName="Acc_BetsSelBetList_ByTransID" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="BetList_RefNoSel" SpName="Acc_BetsSelBetList_ByTransID_Advance" DbName="DBAGE.bodb02.bodbAdminNet"  />
-
     <Setting Key="BetsSelBetList" SpName="Acc_BetsSelBetList" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="AllStatement" SpName="Acc_AllStatement" DbName="DBAGE.bodb02.bodbAdminNet"  />
   </Function>
   <Function Name="Customer - New Customer (NEW)">
     <Setting Key="Acc_CustomerSelAgentInfo" SpName="Acc_CustomerSelAgentInfo" DbName="DBAGE.bodb02.bodbAdminNet"/>
@@ -137,9 +137,10 @@
   </Function>
   <Function Name="Bet List - Score Information">
     <Setting Key="SportingSolutionBetlistResult" SpName="Acc_BetList_SelMatchResultSS" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="Acc_BetsSelBetCheckM" SpName="Acc_BetsSelBetCheckM" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_BetsSelBetCheckM" SpName="Acc_BetsSelBetCheckM" DbName="DBAGE.bodb02.bodbAdminNet"  />    
     
   </Function>
+  
   <Function Name="Finance - Cross Transfer">
     <Setting Key="Acc_customerSelExRate" SpName="Acc_customerSelExRate" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_ExchangeSelCodeforCrossTransfer" SpName="Acc_ExchangeSelCodeforCrossTransfer" DbName="DBAGE.bodb02.bodbAdminNet"  />
@@ -209,7 +210,20 @@
   <Function Name="Helper">
     <Setting Key="SelHRAllowedCurrency" SpName="Acc_SelHRAllowedCurrency" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="SiteSel_Report_Licensee" SpName="Acc_ActivelicenseeSel" DbName="DBAGE.bodb02.bodbAdminNet"  />    
   </Function>
-  
+
+  <Function Name="P2P Control">
+    <Setting Key="GetSuperSetting" SpName="Acc_CustomerSelP2PSuper_All" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="GetMasterSetting" SpName="Acc_CustomerSelP2PMaster_All" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="GetAgentSetting" SpName="Acc_CustomerSelP2PAgent_All" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="GetMemberSetting" SpName="Acc_CustomerSelP2PMember_All" DbName="DBAGE.bodb02.bodbAdminNet"  />
+
+    <Setting Key="SelectDisableP2P" SpName="Acc_CustomerSelP2PStatus" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="SelectDefaultSettingP2P" SpName="Acc_P2PSelDefaultSetting" DbName="DBAGE.bodb02.bodbAdminNet"  />
+
+    <add alias="SelectEnableCustomer" name="Acc_CustomerSelCheckEnable" db="db053"></add>
+  </Function>
+
 </Functions>
 

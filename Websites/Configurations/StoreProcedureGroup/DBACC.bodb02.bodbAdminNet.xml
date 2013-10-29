@@ -244,10 +244,13 @@
   </Function>
 
   <Function Name="Betlist">
-    <add alias="BABetlist" name="Acc_BA_BetList" db="DBACC.bodb02.bodbAdminNet"></add>
-    <add alias="ByIPOtherSports" name="Acc_BetListByIP_OtherSports" db="DBACC.bodb02.bodbAdminNet"></add>
-    <add alias="BetListByIP_Soccer" name="Acc_BetListByIP_Soccer" db="DBACC.bodb02.bodbAdminNet"></add>
-    <add alias="BetlistByIp_Username" name="Acc_BetListbyIP_Username" db="DBACC.bodb02.bodbAdminNet" function=""></add>
+    <Setting Key="ByIPOtherSports" SpName="Acc_BetListByIP_OtherSports" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="BetListByIP_Soccer" SpName="Acc_BetListByIP_Soccer" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="BetlistByIp_Username" SpName="Acc_BetListbyIP_Username" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_AllStatement_FULL2" SpName="Acc_AllStatement_FULL2" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_Statement" SpName="Acc_Statement" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_AllStatement4Agent" SpName="Acc_AllStatement4Agent" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_AllStatementCompany" SpName="Acc_AllStatementCompany" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
 
   <Function Name="Bet List - ScoreInformation">

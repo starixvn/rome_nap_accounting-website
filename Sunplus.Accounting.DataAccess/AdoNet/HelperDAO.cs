@@ -12,6 +12,7 @@ using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 using Fanex.Data;
 using DNAide.Core;
+using Fanex.Tarus.Infrastructure.Extensions;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet
 {
@@ -83,23 +84,35 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
         public DataTable GetSites_Report_Licensee(Enumerations.AccountingSystem system)
         {
-            DbResult ds = null;
-            var param = new Hashtable { 
+            DataTable result = null;
+            try
+            {
+                DbResult ds = null;
+                var param = new Hashtable { 
                 { 
                     "system", 
                     system.ToString().ToUpper()
-                } 
-            };
+                }};
 
-            var spElement =
-                GetStoreProcedure(HelperSession.StoreCollection.HelperControl, "SiteSel_Report_Licensee");
-            ds = DbHelper.Execute(spElement.Name, param, spElement.DbName);
-            DataTable result = null;
-            if (ds != null && ds.ResultSet != null && ds.ResultSet.Tables.Count > 0)
-            {
-                result = ds.ResultSet.Tables[0];
+                using (ObjectDb db = new ObjectDb("SiteSel_Report_Licensee", 600))
+                {
+                    db.AssignParamValues(param);
+                    var dataset = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    ds = new DbResult(output, dataset);
+                }
+
+                if (ds != null && ds.ResultSet != null && ds.ResultSet.Tables.Count > 0)
+                {
+                    result = ds.ResultSet.Tables[0];
+                }
+
             }
-
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
             return result;
         }
 

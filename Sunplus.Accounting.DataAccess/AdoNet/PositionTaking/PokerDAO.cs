@@ -4,6 +4,8 @@ using DNAide.Data;
 using Fanex.Data;
 using Sunplus.Accounting.DataAccess.PositionTaking;
 using Sunplus.Accounting.Entities;
+using System;
+using Fanex.Tarus.Infrastructure.Extensions;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking
 {
@@ -12,16 +14,29 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking
         public DbResult GetCustomerStatus(int custId)
         {
             DbResult dbResult = null;
-            string spMaping = "SelectDisableP2P";
-            var param = new Hashtable { { "custid", custId } };
 
-            if (!string.IsNullOrEmpty(spMaping))
+            try
             {
-                var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.P2PSession.StoreCollection.P2PControl, spMaping);
-                dbResult = DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
-                return dbResult;
+                string spMaping = "SelectDisableP2P";
+                var param = new Hashtable { { "custid", custId } };
+
+                if (!string.IsNullOrEmpty(spMaping))
+                {
+                    using (ObjectDb db = new ObjectDb(spMaping, 600))
+                    {
+                        db.AssignParamValues(param);
+                        var ds = db.ExecuteDataSet();
+                        var output = db.GetOuputParams();
+
+                        dbResult = new DbResult(output, ds);
+                    }
+                }
             }
-            return null;
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return dbResult;
         }
 
         public DbResult GetCustomerSetting(int custId, int roleId)
@@ -52,8 +67,14 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking
             }
             if (!string.IsNullOrEmpty(spMaping))
             {
-                var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.P2PSession.StoreCollection.P2PControl, spMaping);
-                dbResult = DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
+                using (ObjectDb db = new ObjectDb(spMaping, 600))
+                {
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    dbResult = new DbResult(output, ds);
+                }
                 return dbResult;
             }
             return null;
@@ -146,16 +167,31 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking
         public DbResult GetDefaultSetting()
         {
             DbResult dbResult = null;
-            string spMaping = "SelectDefaultSettingP2P";
-            var param = new Hashtable();
 
-            if (!string.IsNullOrEmpty(spMaping))
+            try
             {
-                var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.P2PSession.StoreCollection.P2PControl, spMaping);
-                dbResult = DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
-                return dbResult;
+                string spMaping = "SelectDefaultSettingP2P";
+                var param = new Hashtable();
+
+                if (!string.IsNullOrEmpty(spMaping))
+                {
+                    using (ObjectDb db = new ObjectDb(spMaping, 600))
+                    {
+                        db.AssignParamValues(param);
+
+                        var ds = db.ExecuteDataSet();
+                        var output = db.GetOuputParams();
+
+                        dbResult = new DbResult(output, ds);
+                    }
+                }
             }
-            return null;
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return dbResult;
         }
 
         public Result UpdateDefaultSettingP2P(Hashtable Params)

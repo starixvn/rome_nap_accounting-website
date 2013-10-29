@@ -33,30 +33,40 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             p.Add("username", username);
             p.Add("fromdate", FormatHandler.ResetStartDate(fromdate));
             p.Add("todate", FormatHandler.ResetEndDate(todate));
+
+            string spKey = "";
             try
             {
                 if (allStatementNumber == 1)
                 {
-                    var spElement = new BetListStoreProcedure().GetBetListStoreProcedure(BetListSection.StoreCollection.BetListStores, "AllStatement");
-                    result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
+                    spKey = "AllStatement";
                 }
                 else if (allStatementNumber == 2)
                 {
                     p.Add("showuser", 0);
-
-                    result = DbHelper.Execute("Acc_AllStatement_FULL2", p, DBType.WAREHOUSE, 300);
+                    spKey = "Acc_AllStatement_FULL2";
                 }
                 else if (allStatementNumber == 3)
                 {
-                    result = DbHelper.Execute("Acc_Statement", p, DBType.WAREHOUSE, 300);
+                    spKey = "Acc_Statement";
                 }
                 else if (allStatementNumber == 4)
                 {
-                    result = DbHelper.Execute("Acc_AllStatement4Agent", p, DBType.REPORT, 300);
+                    spKey = "Acc_AllStatement4Agent";
                 }
                 else if (allStatementNumber == 5)
                 {
-                    result = DbHelper.Execute("Acc_AllStatementCompany", p, DBType.REPORT, 300);
+                    spKey = "Acc_AllStatementCompany";
+                }
+
+                using (ObjectDb db = new ObjectDb(spKey, 600))
+                {
+                    db.AssignParamValues(p);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
                 }
             }
             catch (Exception ex)
