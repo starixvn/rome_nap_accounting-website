@@ -614,10 +614,10 @@ function UpdateDangerousCustomer(typename, type, level) {
         var param = { "custId": custId, "updateDownline": updateDownline, "dangerType": type, "dangerLevel": level };
         var resultDialog = false;
         if (updateDownline == "0") {
-            resultDialog = confirm("Are you sure you want to change " + typename + " dangerous level to '" + level + "' for this customer?");
+            resultDialog = confirm("Are you sure you want to change " + typename.replace("ABT", "Non Live") + " dangerous level to '" + level + "' for this customer?");
         }
         else {
-            resultDialog = confirm("Are you sure you want to change " + typename + " dangerous level to '" + level + "' for this customer and all downlines?");
+            resultDialog = confirm("Are you sure you want to change " + typename.replace("ABT", "Non Live") + " dangerous level to '" + level + "' for this customer and all downlines?");
         }
         if (resultDialog) {
             if (PTBlockUI) PTBlockUI();
