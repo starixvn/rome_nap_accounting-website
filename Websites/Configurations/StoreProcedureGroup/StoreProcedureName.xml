@@ -250,10 +250,10 @@
 		<Setting Key="CustomerSetting_SiteSel" SpName="Acc_SiteSel" DbName="db053" />
 		<Setting Key="CustomerSetting_CustomerSelCustomerInfo" SpName="Acc_CustomerSelCustomerInfo" DbName="db053" />
 
-		<Setting Key="Acc_CustomerSelMEditCustomer" SpName="Acc_CustomerSelMEditCustomer" DbName="db053" />
-		<Setting Key="Acc_CustomerSelSEditCustomer" SpName="Acc_CustomerSelSEditCustomer" DbName="db053"/>
-		<Setting Key="Acc_CustomerSelCEditCustomer" SpName="Acc_CustomerSelCEditCustomer" DbName="db053"/>
-		<Setting Key="Acc_CustomerSelEditCustomer" SpName="Acc_CustomerSelEditCustomer" DbName="db053"/>
+		
+		
+		
+		
 		
 		<Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="db053"/>
 		
@@ -288,11 +288,11 @@
     <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="main_ex" Plain="0" />
     <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="archive_ex" Plain="0" />
     <Setting Key="Acc_Con_FileNameSelByCustID" SpName="Acc_Con_FileNameSelByCustID" DbName="archive_ex" Plain="0" />
-	  <Setting Key="Acc_CustomerSelComEditOverride_SAg" SpName="Acc_CustomerSelComEditOverride_SAg" DbName="archive" />
-	  <Setting Key="Acc_CustomerSelComEditOverride_MAg" SpName="Acc_CustomerSelComEditOverride_MAg" DbName="archive" />
-	  <Setting Key="Acc_CustomerSelComEditOverride_Ag" SpName="Acc_CustomerSelComEditOverride_Ag" DbName="archive" />
-	  <Setting Key="Acc_CustomerSelEditCustomer_SAg" SpName="Acc_CustomerSelEditCustomer_SAg" DbName="archive" />
-	  <Setting Key="Acc_CustomerSelEditCustomer_MAg" SpName="Acc_CustomerSelEditCustomer_MAg" DbName="archive" />
+	  
+	  
+	  
+	  
+	  
 	  
   </Function>
 
@@ -438,12 +438,6 @@
 
 		<Setting Key="Acc_CustomerSelStatusVS" SpName="Acc_CustomerSelStatusVS" DbName="DBAGE.BODB02" Plain="0" />
 		
-		
-		
-
-		
-		
-		
 		<Setting Key="Acc_CustomerSelSEditCustomerVS" SpName="Acc_CustomerSelSEditCustomerVS" DbName="DBAGE.BODB02" Plain="0" />
 
 		<Setting Key="NewLicensee_AdNewSuper_VirtualSports" SpName="Acc_Dep_CustomerInsMemberVirtualSports_Com" DbName="main" />
@@ -480,10 +474,10 @@
 	</Function>
 	
 	<Function Name="Customer List">
-		<Setting Key="Acc_CustomerSelBySAg" SpName="Acc_CustomerSelBySAg" DbName="db053"  />
-		<Setting Key="Acc_CustomerSelMAgByCom" SpName="Acc_CustomerSelMAgByCom" DbName="db053"  />
-		<Setting Key="Acc_CustomerSelByMAg" SpName="Acc_CustomerSelByMAg" DbName="db053"  />
-		<Setting Key="Acc_CustomerSelByAg" SpName="Acc_CustomerSelByAg" DbName="db053"  />
+		
+		
+		
+		
 	</Function>
 	
 	<Function Name="Report - Licensee">
@@ -544,15 +538,12 @@
 		<Setting Key="Acc_CustomerUpdConsolidatedGroupHeader" SpName="Acc_CustomerUpdConsolidatedGroupHeader" DbName="DBAGE.bodb_AGE" />
 	</Function>
 	<Function Name="Customer - Sportsbook-NG-Bingo Settings">
-		<Setting Key="Acc_CustomerSelAgentInfo" SpName="Acc_CustomerSelAgentInfo" DbName="DBAGE.BODB02"/>
-		<Setting Key="Acc_CustomerSelMAgentInfo" SpName="Acc_CustomerSelMAgentInfo" DbName="DBAGE.BODB02"/>
-		<Setting Key="Acc_CustomerSelSAgentInfo" SpName="Acc_CustomerSelSAgentInfo" DbName="DBAGE.BODB02"/>
-		<Setting Key="Acc_CustomerSelSAg" SpName="Acc_CustomerSelSAg" DbName="DBAGE.BODB02"  />
+		
+		
+		
 		<Setting Key="Acc_CustomerSelSAgList" SpName="Acc_CustomerSelSAgList" DbName="DBAGE.BODB02"  />
 		<Setting Key="Acc_CustomerSelNGUpline" SpName="Acc_CustomerSelNGUpline" DbName="DBAGE.BODB02"  />
 		<Setting Key="Acc_CustomerSelByUserName" SpName="Acc_CustomerSelByUserName" DbName="DBAGE.BODB02"  />
-		
-		
 	</Function>
 	
 	<Function Name="Bet List - Result">

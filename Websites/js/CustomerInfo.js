@@ -241,7 +241,7 @@ function ChangeDangerousLevel(typename, level, name, color) {
     }
     else {
         var curLevel = document.getElementById('currentLevel' + typename.replace(/ /, "")).value;
-        if (curLevel == level || !confirm("Are you sure you want to change " + typename + " dangerous level to '" + name + "' for this customer?")) {
+        if (curLevel == level || !confirm("Are you sure you want to change " + typename.replace("ABT", "Non Live") + " dangerous level to '" + name + "' for this customer?")) {
             if (currlevelbox != "") {
                 $("#" + currlevelbox).css('display', 'none');
             }
