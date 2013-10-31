@@ -144,8 +144,8 @@ var BACustomer = {
             $("#errMsgDig").show().find("div:first").width(350);
             return;
         }
-        else if (parseFloat(rate) < 0.5 || parseFloat(rate) > 3) {
-            showAlertMessage("errMsgDig", "Invalid Rate! Rate must be greater than or equal to 0.5 and less than or equal to 3.", 1);
+        else if (parseFloat(rate) < 0.3 || parseFloat(rate) > 3) {
+            showAlertMessage("errMsgDig", "Invalid Rate! Rate must be greater than or equal to 0.3 and less than or equal to 3.", 1);
             $("#errMsgDig").show().find("div:first").width(350);
             return;
         }
