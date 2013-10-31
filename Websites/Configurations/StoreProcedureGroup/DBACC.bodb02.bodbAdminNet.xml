@@ -279,5 +279,17 @@
     <Setting Key="BatchMsg" SpName="Acc_BettransSelBet_BatchMsg" DbName="DBACC.bodb02.bodbAdminNet"/>
     <Setting Key="TicketsListing" SpName="Acc_Rpt_TicketsListing" DbName="DBACC.bodb02.bodbAdminNet"/>
   </Function>
+
+  <Function Name="Statement">
+    <Setting Key="AllStatement_Full" SpName="Acc_AllStatement_Full" DbName="DBACC.bodb02.bodbAdminNet"/>
+    <Setting Key="AgentStatement" SpName="Rpt_AgentStatement" DbName="DBACC.bodb02.bodbAdminNet"/>
+    <Setting Key="AllStatementCompany" SpName="Acc_Rpt_AllStatementCompany" DbName="DBACC.bodb02.bodbAdminNet"/>
+  </Function>
+
+  <Function Name="Balance Movement">
+    <Setting Key="Acc_Rpt_OriginalBalMovement_SAg" SpName="Acc_Rpt_OriginalBalMovement_SAg" DbName="DBACC.bodb02.bodbAdminNet"/>
+    <Setting Key="Acc_Rpt_BaseBalMovement_SAg" SpName="Acc_Rpt_BaseBalMovement_SAg" DbName="DBACC.bodb02.bodbAdminNet"/>
+    
+  </Function>
   
 </Functions>

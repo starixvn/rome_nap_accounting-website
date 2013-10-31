@@ -224,18 +224,22 @@
             try
             {
                 var param = new Hashtable();
-
+                string spKey = string.Empty;
                 if (isBase)
                 {
-                    StoreProcedureElement spElement =
-                        ReportSession.Instance[ReportSession.StoreCollection.Trader]["Acc_Rpt_BaseBalMovement_SAg"];
-                    result = DbHelper.Execute(spElement.Name, param, spElement.DbName, 600);
+                    spKey = "Acc_Rpt_BaseBalMovement_SAg";
                 }
                 else
                 {
-                    StoreProcedureElement spElement =
-                        ReportSession.Instance[ReportSession.StoreCollection.Trader]["Acc_Rpt_OriginalBalMovement_SAg"];
-                    result = DbHelper.Execute(spElement.Name, param, spElement.DbName, 600);
+                    spKey = "Acc_Rpt_OriginalBalMovement_SAg";
+                }
+
+                using (ObjectDb db = new ObjectDb(spKey, 600))
+                {
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
                 }
             }
             catch (Exception ex)
@@ -1971,9 +1975,15 @@
                 param.Add("fromdate", FormatHandler.ResetStartDate(fromDate));
                 param.Add("todate", FormatHandler.ResetEndDate(toDate));
 
-                StoreProcedureElement spElement = GetReportStoreProcedure(
-                    ReportSession.StoreCollection.Others, "AllStatementCompany");
-                ds = DbHelper.Execute(spElement.Name, param, spElement.DbName, 180);
+                using (ObjectDb db = new ObjectDb("AllStatementCompany", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var dataset = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    ds = new DbResult(output, dataset);
+                }
             }
             catch (Exception ex)
             {
@@ -2000,9 +2010,15 @@
                 hash.Add("totalbasedebitcomplete", 0);
                 hash.Add("totalbasecredit", 0);
                 hash.Add("totalbasecompanybalance", 0);
-                StoreProcedureElement spElement = GetReportStoreProcedure(
-                    ReportSession.StoreCollection.Others, "CompanyCreditDebit");
-                rs = DbHelper.Execute(spElement.Name, hash, spElement.DbName, 300);
+                
+                using (ObjectDb db = new ObjectDb("CompanyCreditDebit", 600))
+                {
+                    db.AssignParamValues(hash);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {

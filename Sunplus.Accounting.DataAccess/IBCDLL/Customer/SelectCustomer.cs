@@ -742,9 +742,18 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         /// <returns></returns>
         public static IDataReader GetPTSportType()
         {
-            //var spElement = new SelectCustomerAdapter().GetStoreProcedureInfo(StoreProcedureSection.StoreCollection.ViewPt, "GetSportType");
-            var spElement = new SelectCustomerAdapter().GetStoreProcedureInfo(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ViewPtSession.StoreCollection.ViewPtControl, "GetSportType");
-            return DbHelper.ExecuteReader(spElement.Name, spElement.DbName);
+            IDataReader reader = null; 
+            try
+            {
+                ObjectDb db = new ObjectDb("GetSportType", 600);
+                reader = db.ExecuteReader();
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return reader;
+                
         }
 
         /// <summary>
@@ -769,18 +778,33 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         /// <returns></returns>
         public static DbResult GetPT(string username, int sportID, int bettype, bool isLive, bool hasComm)
         {
-            var p = new Hashtable();
-            p.Add("username", username);
-            p.Add("sporttype", sportID);
-            p.Add("bettype", bettype);
-            p.Add("islive", isLive);
-            p.Add("hascomm", hasComm);
-            p.Add("errcode", 0);
-            p.Add("errmsg", string.Empty);
+            DbResult result = null;
+            try
+            {
+                var p = new Hashtable();
+                p.Add("username", username);
+                p.Add("sporttype", sportID);
+                p.Add("bettype", bettype);
+                p.Add("islive", isLive);
+                p.Add("hascomm", hasComm);
+                p.Add("errcode", 0);
+                p.Add("errmsg", string.Empty);
 
-            //var spElement = new SelectCustomerAdapter().GetStoreProcedureInfo(StoreProcedureSection.StoreCollection.ViewPt, "GetPT");
-            var spElement = new SelectCustomerAdapter().GetStoreProcedureInfo(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ViewPtSession.StoreCollection.ViewPtControl, "GetPT");
-            return DbHelper.Execute(spElement.Name, p, spElement.DbName);
+                using (ObjectDb db = new ObjectDb("GetPT", 600))
+                {
+                    db.AssignParamValues(p);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         /// <summary>
@@ -913,9 +937,16 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             {
                 var p = new Hashtable();
                 p.Add("username", username);
+                
+                using (ObjectDb db = new ObjectDb("GetLiveCSPT", 600))
+                {
+                    db.AssignParamValues(p);
 
-                var spElement = new SelectCustomerAdapter().GetStoreProcedureInfo(ViewPtSession.StoreCollection.ViewPtControl, "GetLiveCSPT");
-                dr = DbHelper.Execute(spElement.Name, p, spElement.DbName);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    dr = new DbResult(output, ds);
+                }
                 
             }
             catch (Exception ex)

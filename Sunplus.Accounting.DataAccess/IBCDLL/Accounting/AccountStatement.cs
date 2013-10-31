@@ -90,12 +90,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 
             try
             {
-                var spElement = new BetListStoreProcedure().GetBetListStoreProcedure(Core.Configurations.StoreProcedureGroup.BetListSection.StoreCollection.BetListStores, "AllStatement_Full");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 120);
+                using (ObjectDb db = new ObjectDb("AllStatement_Full", 600))
+                {
+                    db.AssignParamValues(p);
+                    
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
 
-                //SqlDataReader reader = DbHelper.ExecuteReader("Acc_AllStatement_Full", p, DBType.REPORT, 120) as SqlDataReader;
-                //DataSet ds = DbHelper.ConvertDataReaderToDataSet(reader);
-                //result = new DbResult(null, ds);
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -239,8 +242,16 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var p = new Hashtable();
                 p.Add("custid", custid);
-                var spElement = new BetListStoreProcedure().GetBetListStoreProcedure(BetListSection.StoreCollection.BetListStores, "AgentStatement");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
+
+                using (ObjectDb db = new ObjectDb("AgentStatement", 600))
+                {
+                    db.AssignParamValues(p);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -266,7 +277,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("custid", custid);
                 p.Add("fromdate", fromdate);
 
-                using (ObjectDb db = new ObjectDb("BetListByDayAll"))
+                using (ObjectDb db = new ObjectDb("BetListByDayAll",600))
                 {
                     db.AssignParamValues(p);
                     result = db.ExecuteDataSet();

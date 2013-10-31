@@ -714,10 +714,16 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             var param = new Hashtable {{"custid", custId}};
             param.Add("roleid", roleId);
             param.Add("system", system.ToString().ToUpper());
-            var spElement =
-                GetStoreProcedure(
-                    Core.Configurations.StoreProcedureGroup.UserControlSession.StoreCollection.AccountInfo, "CustGroupIns");
-            ds = DbHelper.ExecuteCmd(spElement.Name, param, spElement.DbName, 600);
+
+            using (ObjectDb db = new ObjectDb("CustGroupIns", 600))
+            {
+                db.AssignParamValues(param);
+
+                var dataset = db.ExecuteDataSet();
+                var output = db.GetOuputParams();
+
+                ds = new DbResult(output, dataset);
+            }
 
             if (ds != null)
             {

@@ -4,6 +4,7 @@ using System.Data;
 using DNAide.Data;
 using Fanex.Data;
 using Sunplus.Accounting.DataAccess.Report;
+using Fanex.Tarus.Infrastructure.Extensions;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 {
@@ -19,26 +20,60 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
         public DbResult GetMixParlayWonList(bool isSoccer, DateTime date)
         {
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.Others, "MixparlayWon");
+            DbResult result = null;
+            try
+            {
+                Hashtable hashtable = new Hashtable();
+                hashtable.Add("issoccer", isSoccer);
+                hashtable.Add("winlostdate", date);
+                hashtable.Add("movebetsday", ReportUtils.BalanceUp.MoveBetsDay);
+                hashtable.Add("balanceupday", ReportUtils.BalanceUp.BalanceUpDay);
 
-            Hashtable hashtable = new Hashtable();
-            hashtable.Add("issoccer", isSoccer);
-            hashtable.Add("winlostdate", date);
-            hashtable.Add("movebetsday", ReportUtils.BalanceUp.MoveBetsDay);
-            hashtable.Add("balanceupday", ReportUtils.BalanceUp.BalanceUpDay);
-            return DbHelper.Execute(spElement.Name, hashtable, spElement.DbName, 600);
+                using (ObjectDb db = new ObjectDb("MixparlayWon", 600))
+                {
+                    db.AssignParamValues(hashtable);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         public DbResult CombinationGetMixParlayWonList(bool isSoccer, DateTime date)
         {
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.Others, "CombinationMixparlayWon");
-            Hashtable hashtable = new Hashtable();
-            hashtable.Add("issoccer", isSoccer);
-            hashtable.Add("winlostdate", date);
-            hashtable.Add("movebetsday", ReportUtils.BalanceUp.MoveBetsDay);
-            hashtable.Add("balanceupday", ReportUtils.BalanceUp.BalanceUpDay);
-            hashtable.Add("bettype", 29);
-            return DbHelper.Execute(spElement.Name, hashtable, spElement.DbName, 600);
+            DbResult result = null;
+            try
+            {
+                
+                Hashtable hashtable = new Hashtable();
+                hashtable.Add("issoccer", isSoccer);
+                hashtable.Add("winlostdate", date);
+                hashtable.Add("movebetsday", ReportUtils.BalanceUp.MoveBetsDay);
+                hashtable.Add("balanceupday", ReportUtils.BalanceUp.BalanceUpDay);
+                hashtable.Add("bettype", 29);
+
+                using (ObjectDb db = new ObjectDb("MixparlayWon", 600))
+                {
+                    db.AssignParamValues(hashtable);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         public DataSet GetCheckBet(DateTime winlostDate)

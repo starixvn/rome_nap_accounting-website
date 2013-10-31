@@ -136,9 +136,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
             param.Add("roleid", 0);
             try
             {
-                var spElement = GetUserControlStoreProcedure(UserControlSession.StoreCollection.Login, "CustomerSelBelonging");
-                rs = DbHelper.ExecuteCmd(spElement.Name, param, spElement.DbName);
-                roleId = Convert.ToInt32(rs.Outputs["roleid"]);
+                using (ObjectDb db = new ObjectDb("CustomerSelBelonging", 600))
+                {
+                    db.AssignParamValues(param);
+                    var output = db.GetOuputParams();
+
+                    roleId = Convert.ToInt32(rs.Outputs["roleid"]);
+                }
             }
             catch (Exception ex)
             {

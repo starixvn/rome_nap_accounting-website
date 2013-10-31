@@ -521,14 +521,21 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         public DataTable GetBettype()
         {
             var dataTable = new DataTable();
-            var bettype = new BettypeDTO();
-            StoreProcedureElement procedureElement = GetBetListStoreProcedure("GetBettype");
-            string spName = procedureElement.Name;
-            string db = procedureElement.DbName;
-            DbResult dbResult = DbHelper.Execute(spName, db);
-            if (dbResult != null && dbResult.ResultSet.Tables.Count > 0)
+            try
             {
-                dataTable = dbResult.ResultSet.Tables[0];
+                
+                using (ObjectDb db = new ObjectDb("GetBettype", 600))
+                {
+                    var ds = db.ExecuteDataSet();
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        dataTable = ds.Tables[0];
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
             }
 
             return dataTable;
