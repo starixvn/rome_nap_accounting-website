@@ -24,6 +24,8 @@
 
     void Application_Start(object sender, EventArgs e) 
     {
+        
+        
         // Code that runs on application startup    
         BootStrapperManager.Initialize(new UnityBootStrapper());
         //For Data Replication System
@@ -36,9 +38,6 @@
         //manager.Register(typeof(CasinoLibrary.SBAgent.BasicInfo), pattern);
 
         Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
-
-
-       
         RegisterGlobalFilters(GlobalFilters.Filters);
         
         RegisterRoutes(RouteTable.Routes);
