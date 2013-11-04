@@ -103,7 +103,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                 
                 DbResult drCustomer = null;
 
-                using (ObjectDb db = new ObjectDb("CustomerSelUserInfo", 600))
+                using (ObjectDb db = new ObjectDb("Age_CustomerSelUserInfo", 600))
                 {
                     db.AssignParamValues(param);
 
