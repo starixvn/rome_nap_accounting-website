@@ -224,7 +224,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             var result = new DataSet();
             try
             {
-                using (ObjectDb db = new ObjectDb("Acc_BetlistCombinationParlay_Details"))
+                using (ObjectDb db = new ObjectDb("Acc_BetlistCombinationParlay_Details",600))
                 {
                     var p = new Hashtable();
                     p.Add("refno", refno);
@@ -688,7 +688,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             var result = new DataTable();
             try
             {
-                using (ObjectDb objDB = new ObjectDb("SportingSolutionBetlistResult"))
+                using (ObjectDb objDB = new ObjectDb("SportingSolutionBetlistResult",600))
                 {
                     objDB.AddInParameter("matchid", DbType.Int32, matchID);
                     objDB.AddInParameter("resourceid", DbType.String, resourceId);

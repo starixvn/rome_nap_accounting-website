@@ -284,12 +284,22 @@
     <Setting Key="AllStatement_Full" SpName="Acc_AllStatement_Full" DbName="DBACC.bodb02.bodbAdminNet"/>
     <Setting Key="AgentStatement" SpName="Rpt_AgentStatement" DbName="DBACC.bodb02.bodbAdminNet"/>
     <Setting Key="AllStatementCompany" SpName="Acc_Rpt_AllStatementCompany" DbName="DBACC.bodb02.bodbAdminNet"/>
+    <Setting Key="Acc_AllStatement_SelCheckUsersList" SpName="Acc_AllStatement_SelCheckUsersList" DbName="DBACC.bodb02.bodbAdminNet"/>
+    <Setting Key="Acc_AllStatement_UsersList" SpName="Acc_AllStatement_UsersList" DbName="DBACC.bodb02.bodbAdminNet"/>
   </Function>
 
   <Function Name="Balance Movement">
     <Setting Key="Acc_Rpt_OriginalBalMovement_SAg" SpName="Acc_Rpt_OriginalBalMovement_SAg" DbName="DBACC.bodb02.bodbAdminNet"/>
-    <Setting Key="Acc_Rpt_BaseBalMovement_SAg" SpName="Acc_Rpt_BaseBalMovement_SAg" DbName="DBACC.bodb02.bodbAdminNet"/>
-    
+    <Setting Key="Acc_Rpt_BaseBalMovement_SAg" SpName="Acc_Rpt_BaseBalMovement_SAg" DbName="DBACC.bodb02.bodbAdminNet"/>    
   </Function>
-  
+
+  <Function Name="Reset Winning">
+    <Setting Key="Acc_ResetWinning_Sel" SpName="Acc_ResetWinning_Sel" DbName="DBACC.bodb02.bodbAdminNet"/>
+  </Function>
+
+  <Function Name="Report">
+    <Setting Key="Acc_Rpt_TreeWinlost" SpName="Acc_Rpt_TreeWinlost" DbName="DBACC.bodb02.bodbAdminNet"/>
+    <Setting Key="Acc_AllStatementCompanyDetail" SpName="Acc_AllStatementCompanyDetail" DbName="DBACC.bodb02.bodbAdminNet"/>
+    <Setting Key="Acc_Rpt_Balance_Company" SpName="Acc_Rpt_Balance_Company" DbName="DBACC.bodb02.bodbAdminNet"/>
+  </Function>
 </Functions>

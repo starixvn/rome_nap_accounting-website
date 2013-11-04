@@ -131,7 +131,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             DataTable dataTable = new DataTable();
             try
             {
-                using (ObjectDb db = new ObjectDb("Monitor_LeagueSel"))
+                using (ObjectDb db = new ObjectDb("Monitor_LeagueSel", 600))
                 {
                     Hashtable hashtable = new Hashtable();
 

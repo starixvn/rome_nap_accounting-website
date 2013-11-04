@@ -117,7 +117,16 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             p.Add("todate", todate);
             try
             {
-                result = DbHelper.Execute("Acc_Statement", p, DBType.WAREHOUSE, 300);
+                
+                using (ObjectDb db = new ObjectDb("Acc_Statement", 600))
+                {
+                    db.AssignParamValues(p);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -134,7 +143,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             p.Add("custid", custid);
             try
             {
-                result = DbHelper.Execute("Acc_AllStatement4Agent", p, DBType.REPORT, 300);
+                using (ObjectDb db = new ObjectDb("Acc_AllStatement4Agent", 600))
+                {
+                    db.AssignParamValues(p);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -151,7 +168,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             p.Add("todate", todate);
             try
             {
-                result = DbHelper.Execute("Acc_AllStatementCompany", p, DBType.REPORT, 300);
+                using (ObjectDb db = new ObjectDb("Acc_AllStatementCompany", 600))
+                {
+                    db.AssignParamValues(p);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -175,7 +200,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             p.Add("transtype", transtype);
             try
             {
-                result = DbHelper.Execute("Acc_AllStatementCompanyDetail", p, DBType.REPORT, 300);
+                using (ObjectDb db = new ObjectDb("Acc_AllStatementCompanyDetail", 600))
+                {
+                    db.AssignParamValues(p);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {

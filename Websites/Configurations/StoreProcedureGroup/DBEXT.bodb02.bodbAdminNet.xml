@@ -63,9 +63,11 @@
   </Function>
 
   <Function Name="ResetWinning">
-    <Setting Key="ResetWinningMain" SpName="Acc_ResetWinning_SelByDate" DbName="db054"  />
-    <Setting Key="ResetWinningMain14" SpName="Acc_ResetWinning_SelByDate14" DbName="db054"  />
-    <Setting Key="ResetWinningRep" SpName="Acc_ResetWinning_SelByDate" DbName="db054"  />
-    <Setting Key="ResetWinningRep14" SpName="Acc_ResetWinning_SelByDate14" DbName="db054"  />
+    <Setting Key="ResetWinningMain" SpName="Acc_ResetWinning_SelByDate" DbName="DBEXT.bodb02.bodbAdminNet"  />
+    <Setting Key="ResetWinningMain14" SpName="Acc_ResetWinning_SelByDate14" DbName="DBEXT.bodb02.bodbAdminNet"  />
+    <Setting Key="ResetWinningRep" SpName="Acc_ResetWinning_SelByDate" DbName="DBEXT.bodb02.bodbAdminNet"  />
+    <Setting Key="ResetWinningRep14" SpName="Acc_ResetWinning_SelByDate14" DbName="DBEXT.bodb02.bodbAdminNet"  />
   </Function>
+  
+  
 </Functions>

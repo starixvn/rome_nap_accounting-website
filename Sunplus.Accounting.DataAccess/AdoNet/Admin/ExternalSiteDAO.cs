@@ -27,7 +27,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.Admin
             DataTable dtResult = null;
             try
             {
-                using (ObjectDb db = new ObjectDb("SelectGroupName"))
+                using (ObjectDb db = new ObjectDb("SelectGroupName",600))
                 {
                     var ds = db.ExecuteDataSet();
                     if (ds != null && ds.Tables.Count > 0)
@@ -53,7 +53,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.Admin
                 var param = new Hashtable();
                 param.Add("groupname", groupName);
 
-                using (ObjectDb db = new ObjectDb("SelectInfoCust"))
+                using (ObjectDb db = new ObjectDb("SelectInfoCust",600))
                 {
                     db.AssignParamValues(param);
 

@@ -240,7 +240,8 @@
     <Setting Key="GetRacingStatus" SpName="Acc_CustomerSelRBStatus" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="GetSuperMin" SpName="Acc_CustomerSelHRComEditOverride_SAg" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="GetMasterMinMax" SpName="Acc_CustomerSelHRComEditOverride_MAg" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="GetAgentMinMax" SpName="Acc_CustomerSelHRComEditOverride_Ag" DbName="DBAGE.bodb02.bodbAdminNet"  />    
+    <Setting Key="GetAgentMinMax" SpName="Acc_CustomerSelHRComEditOverride_Ag" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_Set_HR_ResultSCRSel" SpName="Acc_Set_HR_ResultSCRSel" DbName="DBAGE.bodb02.bodbAdminNet"  />
   </Function>
 
   <Function Name="Meeting Comm">
@@ -289,8 +290,7 @@
     <Setting Key="GetPT" SpName="Acc_MT_GetPT" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="GetSportType" SpName="Acc_MT_SportTypeSel" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="GetBetType" SpName="Acc_MT_BetTypeSel" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="GetLiveCSPT" SpName="Acc_MT_GetLiveCSPT" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    
+    <Setting Key="GetLiveCSPT" SpName="Acc_MT_GetLiveCSPT" DbName="DBAGE.bodb02.bodbAdminNet"  />    
   </Function>
   
 </Functions>

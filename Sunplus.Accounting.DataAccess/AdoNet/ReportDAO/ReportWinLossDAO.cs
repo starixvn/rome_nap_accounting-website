@@ -17,7 +17,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                 string subfix = GetStoreMappingSubfix(DNAide.Core.CastAide.AsDateTime(winlostdate));
                 string spName = "LeagueWL_Sporttype" + subfix;
                 
-                using (ObjectDb db = new ObjectDb(spName))
+                using (ObjectDb db = new ObjectDb(spName, 600))
                 {
                     Hashtable hashtable = new Hashtable();
                     hashtable.Add("winlostdate", winlostdate);
@@ -47,7 +47,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                 var subfix = GetStoreMappingSubfix(DNAide.Core.CastAide.AsDateTime(winlostDate));
                 string spName = "LeagueWL_Bettype" + subfix;                
 
-                using (ObjectDb db = new ObjectDb(spName))
+                using (ObjectDb db = new ObjectDb(spName, 600))
                 {
                     var hashtable = new Hashtable();
                     hashtable.Add("winlostdate", winlostDate);
@@ -79,7 +79,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                 var subfix = GetStoreMappingSubfix(DNAide.Core.CastAide.AsDateTime(winlostDate));
                 string spName = "LeagueWL_BettypeDetail" + subfix;
 
-                using (ObjectDb db = new ObjectDb(spName))
+                using (ObjectDb db = new ObjectDb(spName, 600))
                 {
                     var hashtable = new Hashtable();
                     hashtable.Add("winlostdate", winlostDate);

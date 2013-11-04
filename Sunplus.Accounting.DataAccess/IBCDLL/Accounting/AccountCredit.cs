@@ -32,7 +32,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 var hash = new Hashtable();
                 hash.Add("custid", custid);
                 
-                using (ObjectDb db = new ObjectDb("CustomerSelCredit"))
+                using (ObjectDb db = new ObjectDb("CustomerSelCredit", 600))
                 {
                     db.AssignParamValues(hash);
 
@@ -97,7 +97,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 var hash = new Hashtable();
                 hash.Add("groupid", groupid);
                 
-                using (ObjectDb db = new ObjectDb("CreditTermSelByGroupID"))
+                using (ObjectDb db = new ObjectDb("CreditTermSelByGroupID",600))
                 {
                     db.AssignParamValues(hash);
 
@@ -126,7 +126,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
             try
             {
-                using (ObjectDb objdb = new ObjectDb("Acc_CreditTermUpdAddToGroup"))
+                using (ObjectDb objdb = new ObjectDb("Acc_CreditTermUpdAddToGroup",600))
                 {
                     var hash = new Hashtable();
                     hash.Add("username", username);
@@ -167,7 +167,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
             try
             {
-                using (ObjectDb objdb = new ObjectDb("Acc_CreditTermUpdRemoveFromGroup"))
+                using (ObjectDb objdb = new ObjectDb("Acc_CreditTermUpdRemoveFromGroup",600))
                 {
                     var hash = new Hashtable();
                     hash.Add("custidlist", CustIDList);
@@ -209,7 +209,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
             try
             {
-                using (ObjectDb objdb = new ObjectDb("Acc_CreditTermUpdSetGroupHeadline"))
+                using (ObjectDb objdb = new ObjectDb("Acc_CreditTermUpdSetGroupHeadline",600))
                 {
                     var hash = new Hashtable();
                     hash.Add("custid", custid);
@@ -255,7 +255,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 var hash = new Hashtable();
                 hash.Add("custid", custid);
                 
-                using (ObjectDb db = new ObjectDb("CreditTermSelByCustID"))
+                using (ObjectDb db = new ObjectDb("CreditTermSelByCustID",600))
                 {
                     db.AssignParamValues(hash);
 
@@ -316,7 +316,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 var hash = new Hashtable();
                 hash.Add("groupid", groupid);
 
-                using (ObjectDb db = new ObjectDb("CreditTermSelGroupHeadlineByGroupID"))
+                using (ObjectDb db = new ObjectDb("CreditTermSelGroupHeadlineByGroupID",600))
                 {
                     db.AssignParamValues(hash);
                     var ds = db.ExecuteDataSet();
@@ -355,7 +355,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
             try
             {
-                using (ObjectDb objdb = new ObjectDb("Acc_CreditTermUpdCustomer"))
+                using (ObjectDb objdb = new ObjectDb("Acc_CreditTermUpdCustomer",600))
                 {
                     var hash = new Hashtable();
                     hash.Add("custid", custid);

@@ -104,7 +104,16 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 var p = new Hashtable();
                 p.Add("userid", accid);
                 p.Add("custid", custid);
-                rs = DbHelper.Execute("Acc_CustomerSyncUpd", p, DBType.MAIN, 120);
+                
+                using (ObjectDb db = new ObjectDb("Acc_CustomerSyncUpd", 600))
+                {
+                    db.AssignParamValues(p);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {

@@ -47,7 +47,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 var param = new Hashtable();
                 param.Add("custid", custId);
 
-                using (ObjectDb db = new ObjectDb("CheckAllowedShow"))
+                using (ObjectDb db = new ObjectDb("CheckAllowedShow", 600))
                 {
                     db.AssignParamValues(param);
 
@@ -79,7 +79,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 param.Add("custid", custId);
                 
                 DbResult result = null;
-                using (ObjectDb db = new ObjectDb("CustomerSelDisableHR"))
+                using (ObjectDb db = new ObjectDb("CustomerSelDisableHR", 600))
                 {
                     db.AssignParamValues(param);
                     var ds = db.ExecuteDataSet();
@@ -145,7 +145,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 param.Add("custid", custId);
 
                 DbResult result = null;
-                using (ObjectDb db = new ObjectDb("CustomerSelDisableOutright"))
+                using (ObjectDb db = new ObjectDb("CustomerSelDisableOutright",600))
                 {
                     db.AssignParamValues(param);
                     var ds = db.ExecuteDataSet();
@@ -385,20 +385,31 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 #region DNAide lib
 
                 DbResult ds = null;
+                string spKey = "";
                 switch (roleId)
                 {
                     case 1:
-                        ds = DbHelper.ExecuteCmd("Acc_CustomerUpdMember_MinMaxBetHR", hParams, DBType.MAIN, 600);
+                        spKey = "Acc_CustomerUpdMember_MinMaxBetHR";
                         break;
                     case 2:
-                        ds = DbHelper.ExecuteCmd("Acc_CustomerUpdAgent_MinMaxBetHR", hParams, DBType.MAIN, 600);
+                        spKey = "Acc_CustomerUpdAgent_MinMaxBetHR";
                         break;
                     case 3:
-                        ds = DbHelper.ExecuteCmd("Acc_CustomerUpdMaster_MinMaxBetHR", hParams, DBType.MAIN, 600);
+                        spKey = "Acc_CustomerUpdMaster_MinMaxBetHR";
                         break;
                     case 4:
-                        ds = DbHelper.ExecuteCmd("Acc_CustomerUpdSuper_MinMaxBetHR", hParams, DBType.MAIN, 600);
+                        spKey = "Acc_CustomerUpdSuper_MinMaxBetHR";
                         break;
+                }
+
+                using (ObjectDb db = new ObjectDb(spKey, 600))
+                {
+                    db.AssignParamValues(hParams);
+                    
+                    var dataset = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    ds = new DbResult(output, dataset);
                 }
 
                 if (ds != null)
@@ -446,7 +457,16 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 #region DNAide lib
 
                 DbResult ds = null;
-                ds = DbHelper.ExecuteCmd("Acc_CustomerUpdAllSettingHR", hParams, DBType.MAIN, 600);
+
+                using (ObjectDb db = new ObjectDb("Acc_CustomerUpdAllSettingHR", 600))
+                {
+                    db.AssignParamValues(hParams);
+                    var dataset = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    ds = new DbResult(output, dataset);
+                }
+
                 if (ds != null)
                 {
                     hResult.Add("errCode", ds.Outputs["errcode"]);
@@ -514,10 +534,21 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
             try
             {
-                var sp = CustomerSession.Instance[CustomerSession.StoreCollection.CustomerControl]["Acc_customerSelExRate"];
+
                 var param = new Hashtable();
                 param.Add("username", username);
-                DbResult dbResult = DbHelper.Execute(sp.Name, param, sp.DbName);
+
+                DbResult dbResult = null;
+
+                using (ObjectDb db = new ObjectDb("Acc_customerSelExRate", 600))
+                {
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    dbResult = new DbResult(output, ds);
+                }
+
                 if (dbResult.ResultSet.Tables.Count > 0 && dbResult.ResultSet.Tables[0].Rows.Count > 0)
                 {
                     DataRow row = dbResult.ResultSet.Tables[0].Rows[0];
@@ -542,7 +573,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
             try
             {                
-                using (ObjectDb objDb = new ObjectDb("Acc_BettransInsCrossTransfer"))
+                using (ObjectDb objDb = new ObjectDb("Acc_BettransInsCrossTransfer", 600))
                 {
                     var param = new Hashtable();
                     param.Add("fromcustid", fromCustID);
@@ -578,7 +609,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 var listForexAccount = new List<Sunplus.Accounting.Entities.Customer.ForexAccount>();
                 DbResult dbResult = null;
 
-                using (ObjectDb db = new ObjectDb("Acc_CustomerSelForexAccount"))
+                using (ObjectDb db = new ObjectDb("Acc_CustomerSelForexAccount", 600))
                 {
                     var ds = db.ExecuteDataSet();
                     var output = db.GetOuputParams();

@@ -439,10 +439,19 @@ namespace Sunplus.Accounting.DataAccess.APIClient
             try
             {
                 var param = new Hashtable();
-                param.Add("username", username);
-                var spElement = new StoreCustomerProcedureConfiguration().GetStoreProcedureInfo(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.CustomerSession.StoreCollection.CustomerControl, "CustomerSelCustomerInfo");
+                param.Add("username", username);                
 
-                DbResult drCustomer = DbHelper.Execute(spElement.Name, param, spElement.DbName, 300);
+                DbResult drCustomer = null;
+                
+                using (ObjectDb db = new ObjectDb("CustomerSetting_CustomerSelCustomerInfo", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    drCustomer = new DbResult(output, ds);
+                }
 
                 if (drCustomer.ResultSet.Tables[0].Rows.Count > 0)
                 {

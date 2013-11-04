@@ -81,6 +81,9 @@
     <Setting Key="Acc_BettransDelTransaction" SpName="Acc_BettransDelTransaction" DbName="DBTXN.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_BettransInsCrossTransfer" SpName="Acc_BettransInsCrossTransfer" DbName="DBTXN.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_BettransInsTransfer" SpName="Acc_BettransInsTransfer" DbName="DBTXN.bodb02.bodbAdminNet"  />
+    <Setting Key="BettransInsTransfer_Admin" SpName="BettransInsTransfer_Admin" DbName="DBTXN.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_BettransInsTransfer_Confirm" SpName="Acc_BettransInsTransfer_Confirm" DbName="DBTXN.bodb02.bodbAdminNet"  />
+    
   </Function>
 
   <Function Name="Exchange Daily">
@@ -88,7 +91,26 @@
     <Setting Key="Acc_ExchangeIns" SpName="Acc_ExchangeIns" DbName="DBTXN.bodb02.bodbAdminNet"/>
     <Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="EchangeUpd" SpName="Acc_ExchangeUpd" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeUpdateBaseRate" SpName="Acc_ExchangeUpdateBaseRate" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
 
+  <Function Name="Reset Winning">
+    <Setting Key="Acc_ResetWinning_Ins" SpName="Acc_ResetWinning_Ins" DbName="DBTXN.bodb02.bodbAdminNet" />
+  </Function>
+
+  <Function Name="User Info">
+    <Setting Key="Acc_CustomerPwdUpd" SpName="Acc_CustomerPwdUpd" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSyncUpd" SpName="Acc_CustomerSyncUpd" DbName="DBTXN.bodb02.bodbAdminNet" />
+  </Function>
+
+  <Function Name="Customer - HR">
+    <Setting Key="Acc_CustomerUpdMember_MinMaxBetHR" SpName="Acc_CustomerUpdMember_MinMaxBetHR" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdAgent_MinMaxBetHR" SpName="Acc_CustomerUpdAgent_MinMaxBetHR" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdMaster_MinMaxBetHR" SpName="Acc_CustomerUpdMaster_MinMaxBetHR" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdSuper_MinMaxBetHR" SpName="Acc_CustomerUpdSuper_MinMaxBetHR" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdAllSettingHR" SpName="Acc_CustomerUpdAllSettingHR" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdDisableHR" SpName="Acc_CustomerUpdDisableHR" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdDisableOpenTote" SpName="Acc_CustomerUpdDisableOpenTote" DbName="DBTXN.bodb02.bodbAdminNet" />
+  </Function>
 
 </Functions>

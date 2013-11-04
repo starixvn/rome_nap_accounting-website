@@ -30,20 +30,40 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
         public DbResult InsResetWinning(DateTime dateTime, int userId, string[] arrDesc, string IP)
         {
-            var hsParam = new Hashtable();
-            hsParam.Add("winlostdate", dateTime);
-            hsParam.Add("userid", userId);
-            hsParam.Add("ip", IP);
-
-            for (int i = 0; i < arrDesc.Length; i++)
+            DbResult result = null;
+            try
             {
-                if (!string.IsNullOrEmpty(arrDesc[i]) && arrDesc[i] != "undefined")
-                    hsParam.Add("transdesc" + (i + 1), arrDesc[i]);
+                var hsParam = new Hashtable();
+                hsParam.Add("winlostdate", dateTime);
+                hsParam.Add("userid", userId);
+                hsParam.Add("ip", IP);
+
+                for (int i = 0; i < arrDesc.Length; i++)
+                {
+                    if (!string.IsNullOrEmpty(arrDesc[i]) && arrDesc[i] != "undefined")
+                        hsParam.Add("transdesc" + (i + 1), arrDesc[i]);
+                }
+
+                hsParam.Add("errcode", 0);
+                hsParam.Add("errmsg", string.Empty);
+
+                //return DbHelper.Execute("Acc_ResetWinning_Ins", hsParam, DBType.MAIN);
+                using (ObjectDb db = new ObjectDb("Acc_ResetWinning_Ins", 600))
+                {
+                    db.AssignParamValues(hsParam);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
             }
 
-            hsParam.Add("errcode", 0);
-            hsParam.Add("errmsg", string.Empty);
-            return DbHelper.Execute("Acc_ResetWinning_Ins", hsParam, DBType.MAIN);
+            return result;
         }
 
         public List<ResetWinning> GetResetWinning(DateTime dtmMoveBetDate, DateTime dtmTodate)
@@ -53,11 +73,12 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             var hsParam = new Hashtable();
             hsParam.Add("movebetdate", dtmMoveBetDate);
             hsParam.Add("todate", dtmTodate);
-
-
-            using (IDataReader reader = DbHelper.ExecuteReader("Acc_ResetWinning_Sel",
-                                                               hsParam, DBType.WAREHOUSE, 120))
+            
+            using (ObjectDb db = new ObjectDb("Acc_ResetWinning_Sel", 600))
             {
+                db.AssignParamValues(hsParam);
+                var reader = db.ExecuteReader();
+
                 if (reader != null)
                 {
                     while (reader.Read())
@@ -83,9 +104,11 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             hsParam.Add("winlostdate", transDate);
             hsParam.Add("isreset", isReset);
 
-            using (IDataReader reader = DbHelper.ExecuteReader("Acc_ResetWinning_SelByDate",
-                                                               hsParam, DBType.WAREHOUSE, 120))
+            using (ObjectDb db = new ObjectDb("Acc_ResetWinning_SelByDate", 600))
             {
+                db.AssignParamValues(hsParam);
+                var reader = db.ExecuteReader();
+
                 if (reader != null)
                 {
                     while (reader.Read())

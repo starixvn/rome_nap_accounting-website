@@ -95,7 +95,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 hash.Add("liveindicator", liveindicator);
                 hash.Add("username", username);
 
-                using (ObjectDb db = new ObjectDb("BettransSelSpecialDel"))
+                using (ObjectDb db = new ObjectDb("BettransSelSpecialDel", 600))
                 {
                     db.AssignParamValues(hash);
 
@@ -119,9 +119,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             DbResult rs = null;
             try
             {
-                var spElement = new SportbookPtStoreProcedure().GetSportbookPtStoreProcedure(
-                           SportbookPtSession.StoreCollection.SportBooksPtControl, "BetTypeSel");
-                rs = DbHelper.Execute(spElement.Name, spElement.DbName);
+                using (ObjectDb db = new ObjectDb("Acc_BetTypeSel", 600))
+                {
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -140,7 +144,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 var hash = new Hashtable();
                 hash.Add("matchid", matchId);
 
-                using (ObjectDb db = new ObjectDb("SelMatchInfo"))
+                using (ObjectDb db = new ObjectDb("SelMatchInfo", 600))
                 {
                     db.AssignParamValues(hash);
                     var ds = db.ExecuteDataSet();

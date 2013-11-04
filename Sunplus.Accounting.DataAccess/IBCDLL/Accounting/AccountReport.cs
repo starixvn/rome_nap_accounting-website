@@ -73,7 +73,7 @@
             DbResult rs = null;
             try
             {
-                using (ObjectDb db = new ObjectDb("Acc_BettransSelDelSpecial_MixParlay"))
+                using (ObjectDb db = new ObjectDb("Acc_BettransSelDelSpecial_MixParlay", 600))
                 {
                     db.AssignParamValues(param);
 
@@ -136,7 +136,7 @@
                 param.Add("transid", TransID);
                 param.Add("creator", Creator);
 
-                using (ObjectDb db = new ObjectDb("HedgeDel"))
+                using (ObjectDb db = new ObjectDb("HedgeDel",600))
                 {
                     db.AssignParamValues(param);
                     var ds = db.ExecuteDataSet();
@@ -165,7 +165,7 @@
                 var param = new Hashtable();
                 param.Add("transid", TransID); //Acc_HedgeSel
 
-                using (ObjectDb db = new ObjectDb("HedgeSel"))
+                using (ObjectDb db = new ObjectDb("HedgeSel",600))
                 {
                     db.AssignParamValues(param);
                     var ds = db.ExecuteDataSet();
@@ -193,7 +193,7 @@
             try
             {
 
-                using (ObjectDb db = new ObjectDb("HedgeUpd"))
+                using (ObjectDb db = new ObjectDb("HedgeUpd",600))
                 {
                     db.AssignParamValues(hash);
 
@@ -262,7 +262,7 @@
                 var p = new Hashtable();
                 p.Add("actual_stake", actual_stake);
 
-                using (ObjectDb db = new ObjectDb("BetRatioByUser"))
+                using (ObjectDb db = new ObjectDb("BetRatioByUser",600))
                 {
                     db.AssignParamValues(p);
                     var ds = db.ExecuteDataSet();
@@ -291,7 +291,7 @@
                 var p = new Hashtable();
                 p.Add("actual_stake", actual_stake);
 
-                using (ObjectDb db = new ObjectDb("BetRatioByUser_14"))
+                using (ObjectDb db = new ObjectDb("BetRatioByUser_14",600))
                 {
                     db.AssignParamValues(p);
                     var ds = db.ExecuteDataSet();
@@ -318,7 +318,7 @@
             DbResult result = null;
             try
             {
-                using (ObjectDb db = new ObjectDb("CreditTerm"))
+                using (ObjectDb db = new ObjectDb("CreditTerm",600))
                 {
                     db.AssignParamValues(p);
 
@@ -352,7 +352,7 @@
                 p.Add("site", sitefilter);
                 p.Add("from", fromfilter);
 
-                using (ObjectDb db = new ObjectDb("CustomerTurnoverBySite"))
+                using (ObjectDb db = new ObjectDb("CustomerTurnoverBySite",600))
                 {
                     db.AssignParamValues(p);
                     var ds = db.ExecuteDataSet();
@@ -380,9 +380,15 @@
             {
                 var p = new Hashtable();
                 p.Add("fdate", fdate);
-                StoreProcedureElement spElement = GetReportStoreProcedure(
-                    ReportSession.StoreCollection.Others, "Delebet");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName);
+                
+                using (ObjectDb db = new ObjectDb("Delebet", 600))
+                {
+                    db.AssignParamValues(p);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -409,7 +415,7 @@
                 param.Add("custid", CustId);
                 param.Add("isallow", 0);
 
-                using (ObjectDb db = new ObjectDb("HedgeRecord"))
+                using (ObjectDb db = new ObjectDb("HedgeRecord", 600))
                 {
                     db.AssignParamValues(param);
                     var ds = db.ExecuteDataSet();
@@ -463,7 +469,7 @@
             DbResult result = null;
             try
             {
-                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameMemberWinlossByMatch"))
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameMemberWinlossByMatch", 600))
                 {
                     var param = new Hashtable();
                     param.Add("date", date);
@@ -487,7 +493,7 @@
             DbResult result = null;
             try
             {
-                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameMemberWinlossByMatch"))
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameMemberWinlossByMatch", 600))
                 {
                     var param = new Hashtable();
                     param.Add("date", date);
@@ -514,7 +520,7 @@
             DbResult result = null;
             try
             {
-                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameMemberWinlossByMatch_details"))
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameMemberWinlossByMatch_details", 600))
                 {
                     var param = new Hashtable();
                     param.Add("date", date);
@@ -542,7 +548,7 @@
             DbResult result = null;
             try
             {
-                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameMemberWinlossByMatch_details"))
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameMemberWinlossByMatch_details", 600))
                 {
                     var param = new Hashtable();
                     param.Add("date", date);
@@ -573,7 +579,7 @@
             DbResult result = null;
             try
             {
-                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameWinlossByDate"))
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameWinlossByDate", 600))
                 {
                     var param = new Hashtable();
                     param.Add("fromdate", fdate);
@@ -598,7 +604,7 @@
             DbResult result = null;
             try
             {
-                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameWinlossByDate"))
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameWinlossByDate", 600))
                 {
                     var param = new Hashtable();
                     param.Add("fromdate", fdate);
@@ -1058,7 +1064,7 @@
                 param.Add("winlost_8rm", 0);
 
 
-                using (ObjectDb objectDb = new ObjectDb("WinLoss_Sporttype"))
+                using (ObjectDb objectDb = new ObjectDb("WinLoss_Sporttype",600))
                 {
                     objectDb.AssignParamValues(param);
                     var ds = objectDb.ExecuteDataSet();
@@ -1307,10 +1313,7 @@
 
             try
             {
-                StoreProcedureElement spElement =
-                    ReportSession.Instance[ReportSession.StoreCollection.Trader]["Acc_Rpt_TraderPerformanceDetail_14"];
-                result = DbHelper.Execute(spElement.Name, param, spElement.DbName, 600);
-
+                
                 using (ObjectDb db = new ObjectDb("Acc_Rpt_TraderPerformanceDetail_14", 600))
                 {
                     db.AssignParamValues(param);
@@ -1383,7 +1386,7 @@
         {
             try
             {
-                using (ObjectDb objDb = new ObjectDb("Acc_BettransDelBet"))
+                using (ObjectDb objDb = new ObjectDb("Acc_BettransDelBet",600))
                 {
                     var p = new Hashtable();
                     p.Add("transid", transno);
@@ -1424,7 +1427,7 @@
             var error = new IbcError();
             try
             {
-                using (ObjectDb objDb = new ObjectDb("Acc_BettransDelBet_Parlay"))
+                using (ObjectDb objDb = new ObjectDb("Acc_BettransDelBet_Parlay",600))
                 {
                     var p = new Hashtable();
                     p.Add("transid", transId);
@@ -1522,8 +1525,15 @@
                 p.Add("fromdate", FormatHandler.ResetStartDate(fromdate));
                 p.Add("ip", ip);
 
-                StoreProcedureElement spElement = GetBetListStoreProcedure("BetlistByIp_Username");
-                rs = DbHelper.Execute(spElement.Name, p, spElement.DbName, 180);
+                using (ObjectDb db = new ObjectDb("BetlistByIp_Username", 600))
+                {
+                    db.AssignParamValues(p);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -1781,9 +1791,16 @@
                 p.Add("leagueid", leagueid);
                 p.Add("raceno", raceno);
                 p.Add("eventdate", eventdate);
-                StoreProcedureElement spElement = GetReportStoreProcedure(
-                    ReportSession.StoreCollection.Racing, "Set_HR_ResultSCRSel");
-                rs = DbHelper.Execute(spElement.Name, p, spElement.DbName, 180);
+
+                using (ObjectDb db = new ObjectDb("Acc_Set_HR_ResultSCRSel", 600))
+                {
+                    db.AssignParamValues(p);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -1798,7 +1815,7 @@
             DbResult result = null;
             try
             {
-                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameWinlossByDate"))
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameWinlossByDate",600))
                 {
                     var param = new Hashtable();
                     param.Add("fromdate", fdate);
@@ -1827,7 +1844,7 @@
             DbResult result = null;
             try
             {
-                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameMemberWinlossByMatch"))
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameMemberWinlossByMatch",600))
                 {
                     var param = new Hashtable();
                     param.Add("date", date);
@@ -1856,7 +1873,7 @@
             DbResult result = null;
             try
             {
-                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameMemberWinlossByMatch_details"))
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_NumberGameMemberWinlossByMatch_details",600))
                 {
                     var param = new Hashtable();
                     param.Add("date", date);
@@ -2290,6 +2307,16 @@
                 StoreProcedureElement spElement = GetReportStoreProcedure(
                     ReportSession.StoreCollection.Others, "TreeWinLoss");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 600);
+
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_TreeWinlost", 600))
+                {
+                    db.AssignParamValues(p);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {

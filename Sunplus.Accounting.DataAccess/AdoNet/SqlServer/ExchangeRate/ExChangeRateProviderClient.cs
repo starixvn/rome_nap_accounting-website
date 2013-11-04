@@ -16,7 +16,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.ExchangeRate
             DbResult result = null;
             try
             {
-                using (ObjectDb db = new ObjectDb("EchangeSelAcc"))
+                using (ObjectDb db = new ObjectDb("EchangeSelAcc", 600))
                 {
                     var ds = db.ExecuteDataSet();
                     var output = db.GetOuputParams();

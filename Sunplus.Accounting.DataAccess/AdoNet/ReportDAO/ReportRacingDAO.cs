@@ -51,7 +51,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             param.Add("reporttype", ((int)reportType));
             string strMapping = SpAlias.WinlostRacingTote.ToString() + GetStoreMappingSubfix(CastAide.AsDateTime(winlossDate));
                       
-            using (ObjectDb db = new ObjectDb(strMapping))
+            using (ObjectDb db = new ObjectDb(strMapping, 600))
             {
                 db.AssignParamValues(param);
                 var ds = db.ExecuteDataSet();
@@ -280,7 +280,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             {
                 param = new Hashtable();
                 param.Add("winlostdate", fromdate);
-                using (ObjectDb objDB = new ObjectDb("Acc_Rpt_WinlostRacing_Group_Daily"))
+                using (ObjectDb objDB = new ObjectDb("Acc_Rpt_WinlostRacing_Group_Daily", 600))
                 {
                     objDB.AssignParamValues(param);
                     var dsResult = objDB.ExecuteDataSet();
@@ -293,7 +293,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                 param = new Hashtable();
                 param.Add("fromdate", fromdate);
                 param.Add("todate", todate);                
-                using (ObjectDb objDB = new ObjectDb("Acc_Rpt_WinlostRacing_Group"))
+                using (ObjectDb objDB = new ObjectDb("Acc_Rpt_WinlostRacing_Group", 600))
                 {
                     objDB.AssignParamValues(param);
                     var dsResult = objDB.ExecuteDataSet();
@@ -305,7 +305,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                     param = new Hashtable();
                     param.Add("winlostdate", todate);
                     
-                    using (ObjectDb objDB = new ObjectDb("Acc_Rpt_WinlostRacing_Group_Daily"))
+                    using (ObjectDb objDB = new ObjectDb("Acc_Rpt_WinlostRacing_Group_Daily", 600))
                     {
                         objDB.AssignParamValues(param);
                         var dsDailyResult = objDB.ExecuteDataSet();
@@ -362,7 +362,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             {
                 Hashtable hashtable = new Hashtable();
                 hashtable.Add("productprefix", "RB");
-                using (ObjectDb db = new ObjectDb("WinlostRacingLicensee_SiteSel"))
+                using (ObjectDb db = new ObjectDb("WinlostRacingLicensee_SiteSel", 600))
                 {
                     db.AssignParamValues(hashtable);
 
@@ -429,7 +429,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
                  hashtable.Add("raceno", raceNo);
                  hashtable.Add("currency", currency);
 
-                 using (ObjectDb db = new ObjectDb(strMapping))
+                 using (ObjectDb db = new ObjectDb(strMapping, 600))
                  {
                      db.AssignParamValues(hashtable);
                      var ds = db.ExecuteDataSet();

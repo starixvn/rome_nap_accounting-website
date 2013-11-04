@@ -57,7 +57,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     hash.Add("language", "E");
                 }
 
-                DbHelper.ExecuteCmd("BettransInsTransfer_Admin", hash, DBType.MAIN);
+                using (ObjectDb db = new ObjectDb("BettransInsTransfer_Admin", 600))
+                {
+                    db.AssignParamValues(hash);
+                    db.ExecuteNonQuery();                    
+                }
+
                 isUpdated = true;
             }
             catch (Exception ex)
@@ -84,7 +89,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 hash.Add("custid", custId);
                 hash.Add("closed", closed);
                 
-                using (ObjectDb db = new ObjectDb("CustomerSelMultipleTransfer"))
+                using (ObjectDb db = new ObjectDb("CustomerSelMultipleTransfer", 600))
                 {
                     db.AssignParamValues(hash);
                     var ds = db.ExecuteDataSet();
@@ -121,7 +126,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
             try
             {
-                using (ObjectDb objDb = new ObjectDb("Acc_BettransInsTransfer"))
+                using (ObjectDb objDb = new ObjectDb("Acc_BettransInsTransfer", 600))
                 {
                     var p = new Hashtable();
                     p.Add("userid", _accId); // int
@@ -182,7 +187,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("errmsg", string.Empty);
                 p.Add("language", "E");
 
-                dr = DbHelper.Execute("Acc_BettransInsTransfer_Confirm", p, DBType.MAIN, 120);
+                using (ObjectDb db = new ObjectDb("Acc_BettransInsTransfer_Confirm", 600))
+                {
+                    db.AssignParamValues(p);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    dr = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {

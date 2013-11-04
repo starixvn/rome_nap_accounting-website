@@ -469,7 +469,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         public List<BetListDetail> GetMixParlayTickets(string refNo)
         {
             var betList = new List<BetListDetail>();           
-            using (ObjectDb objDb = new ObjectDb("Acc_BetsSelBetCheckM_All"))
+            using (ObjectDb objDb = new ObjectDb("Acc_BetsSelBetCheckM_All",600))
             {
                 objDb.AssignParamValues(new Hashtable() { { "refno", refNo } });
                 
@@ -583,7 +583,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
         public CombinationDetailMP GetCombinationDetailMP(string refNo)
         {            
-            using (ObjectDb db = new ObjectDb("Acc_BetlistCombinationParlay_Details"))
+            using (ObjectDb db = new ObjectDb("Acc_BetlistCombinationParlay_Details",600))
             {
                 var combinationDetailMP = new CombinationDetailMP();
                 double totalWLComm = 0.00;

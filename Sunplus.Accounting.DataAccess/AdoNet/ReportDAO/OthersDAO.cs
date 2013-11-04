@@ -12,10 +12,28 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
     {
         public DbResult GetMenuList(string system)
         {
-            Hashtable hashtable = new Hashtable();
-            hashtable.Add("custid", Sunplus.Accounting.Core.Common.AppSession.AccId);
-            hashtable.Add("system", system);
-            return DbHelper.Execute("Acc_MenuSelByCustID", hashtable, DBType.DB03, 600);
+            DbResult result = null;
+            try
+            {
+                Hashtable hashtable = new Hashtable();
+                hashtable.Add("custid", Sunplus.Accounting.Core.Common.AppSession.AccId);
+                hashtable.Add("system", system);
+
+                using (ObjectDb db = new ObjectDb("Acc_MenuSelByCustID", 600))
+                {
+                    db.AssignParamValues(hashtable);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         public DbResult GetMixParlayWonList(bool isSoccer, DateTime date)

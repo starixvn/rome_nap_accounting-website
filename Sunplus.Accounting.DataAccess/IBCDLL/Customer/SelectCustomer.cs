@@ -74,8 +74,17 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             try
             {
                 var param = new Hashtable {{"system", system.ToString().ToUpper()}};
-                var spElement = GetStoreProcedure("SiteSel");
-                rs = DbHelper.Execute(spElement.Name, param, spElement.DbName);
+
+                using (ObjectDb db = new ObjectDb("CustomerSetting_SiteSel", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
+
             }
             catch (Exception ex)
             {
@@ -330,9 +339,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
             try
             {
                 param.Add("custid", custid);
-                var spElement = GetStoreProcedure("CustomerSelCustomerInfo");
+                
+                using (ObjectDb db = new ObjectDb("CustomerSetting_CustomerSelCustomerInfo", 600))
+                {
+                    db.AssignParamValues(param);
+                    var dataset = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
 
-                ds = DbHelper.Execute(spElement.Name, param, spElement.DbName);
+                    ds = new DbResult(output, dataset);
+                }
             }
             catch (Exception ex)
             {

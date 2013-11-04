@@ -30,7 +30,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 var param = new System.Collections.Hashtable();
                 param.Add("username", username);
 
-                using (ObjectDb db = new ObjectDb("Acc_CustomerSelSiteByUserName"))
+                using (ObjectDb db = new ObjectDb("Acc_CustomerSelSiteByUserName",600))
                 {
                     db.AssignParamValues(param);
 

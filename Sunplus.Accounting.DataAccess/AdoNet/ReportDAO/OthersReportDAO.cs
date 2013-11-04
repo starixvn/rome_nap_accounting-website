@@ -16,7 +16,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             DataTable dt = new DataTable();
             try
             {
-                using (ObjectDb db = new ObjectDb("CreditSiteBetCount"))
+                using (ObjectDb db = new ObjectDb("CreditSiteBetCount", 600))
                 {
                     var param = new Hashtable();
                     param.Add("datestart", fromDate);
@@ -49,7 +49,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             {
                 Hashtable hashtable = new Hashtable();
                 hashtable.Add("date", wldate);
-                using (ObjectDb db = new ObjectDb("SelDuplicateTickets"))
+                using (ObjectDb db = new ObjectDb("SelDuplicateTickets", 600))
                 {
                     db.AssignParamValues(hashtable);
 

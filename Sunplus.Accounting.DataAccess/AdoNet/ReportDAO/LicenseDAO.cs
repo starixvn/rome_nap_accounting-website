@@ -46,7 +46,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             DbResult dbResult = null;
             try
             {
-                using (ObjectDb db = new ObjectDb("SelCurrencyByLicensee"))
+                using (ObjectDb db = new ObjectDb("SelCurrencyByLicensee",600))
                 {
                     Hashtable h = new Hashtable();
                     h.Add("licenseeid", site);
@@ -74,7 +74,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             DbResult dbResult = null;
             try
             {
-                using (ObjectDb db = new ObjectDb("LicWinloss"))
+                using (ObjectDb db = new ObjectDb("LicWinloss",600))
                 {
                     Hashtable param = new Hashtable();
                     
@@ -148,7 +148,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             DataTable dtResult = new DataTable();
             try
             {
-                using (ObjectDb db = new ObjectDb("ConcurrentUserReport"))
+                using (ObjectDb db = new ObjectDb("ConcurrentUserReport",600))
                 {
                     var param = new Hashtable();
                     param.Add("fromdate", fromDate);
@@ -179,7 +179,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             {
                 Hashtable param = new Hashtable();
                 
-                using (ObjectDb db = new ObjectDb("LicWinlossDetail_Ag"))
+                using (ObjectDb db = new ObjectDb("LicWinlossDetail_Ag",600))
                 {
                     param.Add("licenseeid", LicenseeID);
                     param.Add("currency", Math.Abs(Currency));
@@ -219,7 +219,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             DbResult dbResult = null;
             try
             {
-                using (ObjectDb db = new ObjectDb("LicWinlossDetail"))
+                using (ObjectDb db = new ObjectDb("LicWinlossDetail",600))
                 {
                     Hashtable param = new Hashtable();
                  
@@ -312,7 +312,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             DataTable dataTable = new DataTable();
             try
             {
-                using (ObjectDb db = new ObjectDb("GetLicenseesByResellers"))
+                using (ObjectDb db = new ObjectDb("GetLicenseesByResellers",600))
                 {
                     var ds = db.ExecuteDataSet();
                     if (ds != null && ds.Tables.Count > 0)
@@ -336,7 +336,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             DataTable dataTable = new DataTable();
             try
             {
-                using (ObjectDb db = new ObjectDb("LicGetTotalTicket"))
+                using (ObjectDb db = new ObjectDb("LicGetTotalTicket",600))
                 {
                     Hashtable h = new Hashtable();
 
@@ -376,7 +376,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             DataTable dataTable = new DataTable();
             try
             {
-                using (ObjectDb db = new ObjectDb("LicGetResellerRates"))
+                using (ObjectDb db = new ObjectDb("LicGetResellerRates",600))
                 {
                     var param = new Hashtable { { "inputdate", date } };
                     db.AssignParamValues(param);
@@ -436,7 +436,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             DbResult dbResult = null;
             try
             {
-                using (ObjectDb db = new ObjectDb("LicWinloss_new"))
+                using (ObjectDb db = new ObjectDb("LicWinloss_new", 600))
                 {
                     Hashtable param = new Hashtable();
                  
@@ -481,7 +481,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             {
                 Hashtable param = new Hashtable();
               
-                using (ObjectDb db = new ObjectDb("LicWinlossDetail_AgV2"))
+                using (ObjectDb db = new ObjectDb("LicWinlossDetail_AgV2", 600))
                 {
                     param.Add("licenseeid", LicenseeID);
                     param.Add("currency", Math.Abs(Currency));
@@ -526,7 +526,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             {
                 Hashtable param = new Hashtable();
                 
-                using (ObjectDb db = new ObjectDb("LicWinlossDetailV2"))
+                using (ObjectDb db = new ObjectDb("LicWinlossDetailV2",600))
                 {
                     param.Add("licenseeid", LicenseeID);
                     param.Add("currency", Math.Abs(Currency));
@@ -736,7 +736,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             {
                 Hashtable param = new Hashtable();
                 
-                using (ObjectDb db = new ObjectDb("LicWinlossDetail_SAgV2"))
+                using (ObjectDb db = new ObjectDb("LicWinlossDetail_SAgV2",600))
                 {
                     param.Add("licenseeid", LicenseeID);
                     param.Add("currency", Math.Abs(Currency));
@@ -779,7 +779,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
             {
                 Hashtable param = new Hashtable();
                 
-                using (ObjectDb db = new ObjectDb("LicWinlossDetail_MAgV2"))
+                using (ObjectDb db = new ObjectDb("LicWinlossDetail_MAgV2", 600))
                 {
                     param.Add("licenseeid", LicenseeID);
                     param.Add("currency", Math.Abs(Currency));

@@ -10,7 +10,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.CreditTermDAO
     {
         public DataTable GetAllGroup()
         {
-            using (ObjectDb objDB = new ObjectDb("GetAllGroup"))
+            using (ObjectDb objDB = new ObjectDb("GetAllGroup",600))
             {
                 var ds = objDB.ExecuteDataSet();
                 if (ds.Tables.Count > 0)
@@ -24,7 +24,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.CreditTermDAO
         public Result UpdateConsolidationReportAllowStatus(int custId, bool isViewReport, int userID)
         {
             var result = new Result();
-            using (ObjectDb objDB = new ObjectDb("Acc_CreditTermUpdIsViewReport"))
+            using (ObjectDb objDB = new ObjectDb("Acc_CreditTermUpdIsViewReport",600))
             {
                 objDB.AddInParameter("CustId", DbType.Int32, custId);
                 objDB.AddInParameter("IsRptConsol", DbType.Boolean, isViewReport);
