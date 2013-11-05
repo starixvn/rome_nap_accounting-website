@@ -9,7 +9,7 @@
 </head>
 <body>
 
- 
+ <a href="CustomerSetting/ProgressiveBonus/Casino">Test</a>
 </body>
 
 

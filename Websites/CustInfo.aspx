@@ -14,7 +14,7 @@
     <link href="App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
     <link href="js/jQuery/message/jquery.msg.css" rel="stylesheet" type="text/css" />
     <script src="js/jQuery/jquery.js" type="text/javascript"></script>
-    <script src="js/jQuery/jquery.json-1.3.js" type="text/javascript"></script>
+    <script src="js/jQuery/jquery.json-1.3.js" type="text/javascript"></script>        
     <script type="text/javascript" src="js/jQuery/scrollbar/jquery.mousewheel.js"></script>
     <script type="text/javascript" src="js/jQuery/scrollbar/jScrollPane.js"></script>
     <script type="text/javascript" src="js/common.js?v=<%=AccCommon.Version() %>"></script>
@@ -260,7 +260,15 @@
             var width = 305;
             var height = 260;
             parent.OpenPopup(url, title, width, height, true, true, window, 2000, null, null);
-        }       
+        }
+         function showhideCasinoBonus(id, roleid, username) {
+        	var title = 'Update Progressive Bonus';
+        	var url = 'CustomerSetting/ProgressiveBonus/CasinoBonus/Index?custId=' + id;
+        	var width = 500;
+        	var height = 190;
+        	parent.OpenPopup(url, title, width, height, true, false, window, 2000, null, null);
+        }
+       
     </script>
 </head>
 <body>
