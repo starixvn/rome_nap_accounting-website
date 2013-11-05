@@ -233,6 +233,7 @@ function parseBool2(str) {
         'yes': true,
         'YES': true,
         'TRUE': true,
+        'True': true,
         'true': true
     };
 
