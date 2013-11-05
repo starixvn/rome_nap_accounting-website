@@ -21,6 +21,8 @@ var AutoSuspendStatus = function () {
 
     self.Tables = {
         settingContent: null,
+
+        buttonUpdateContainer: null,
         buttonUpdate: null,
         resultMessage: null,
         customerInfoTitle: null,
@@ -144,7 +146,10 @@ var AutoSuspendStatus = function () {
 
     self.cachedDOMElements = function () {
         self.Tables.settingContent = $("#setting-content");
-        self.Tables.buttonUpdate = $("#button-update");
+
+        self.Tables.buttonUpdateContainer = $("#button-update-container");
+        self.Tables.buttonUpdate = self.Tables.buttonUpdateContainer.find("#button-update");
+
         self.Tables.resultMessage = $("#result-message");
         self.Tables.customerInfoTitle = $("#customer-info-title");
 
@@ -310,6 +315,13 @@ var AutoSuspendStatus = function () {
             self.Tables.labelEnableAutosuspendOthersports.removeClass("disabled");
             self.Tables.checkboxEnableAutosuspendOthersports.removeClass("display-none");
             self.Tables.checkboxEnableAutosuspendOthersports.attr("disabled", null);
+        }
+
+        if (!viewResources.HasHostPermission) {
+            self.Tables.buttonUpdate.unbind("click");
+            self.Tables.buttonUpdateContainer.addClass("display-none");
+            self.Tables.checkboxEnableAutosuspendSoccer.attr("disabled", "disabled");
+            self.Tables.checkboxEnableAutosuspendOthersports.attr("disabled", "disabled");
         }
 
         self.Tables.settingContent.removeClass("display-none");

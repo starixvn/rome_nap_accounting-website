@@ -49,7 +49,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <table cellspacing="0" cellpadding="0" border="0">
+                <table cellspacing="0" cellpadding="0" border="0" id="button-update-container">
                     <tr>
                         <td class="custBtn1">
                         </td>

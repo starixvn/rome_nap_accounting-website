@@ -20,6 +20,8 @@ namespace Fanex.Tarus.Customer.Entities.AutoSuspend
 
         public int CurrentRole { get; set; }
 
+        public bool HasHostPermission { get; set; }
+
         public string PageMD5Key { get; set; }
 
         public Dictionary<string, string> Labels { get; set; }
