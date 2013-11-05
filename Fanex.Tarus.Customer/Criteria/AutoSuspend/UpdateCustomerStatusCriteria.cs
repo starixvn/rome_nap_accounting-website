@@ -51,7 +51,7 @@ namespace Fanex.Tarus.Customer.Criteria.AutoSuspend
 
         public string GetSettingKey()
         {
-            return "Customer_AutoSuspend_UpdateCustomerStatus";
+            return "Acc_CustomerUpdAutoSuspend";
         }
 
         public bool IsValid()
