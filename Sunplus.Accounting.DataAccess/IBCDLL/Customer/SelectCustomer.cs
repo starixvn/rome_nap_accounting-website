@@ -780,10 +780,10 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
         {
             var p = new Hashtable();
             if (sportID != 0) p.Add("sporttype", sportID);
-
-            //var spElement = new SelectCustomerAdapter().GetStoreProcedureInfo(StoreProcedureSection.StoreCollection.ViewPt, "GetBetType");
-            var spElement = new SelectCustomerAdapter().GetStoreProcedureInfo(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ViewPtSession.StoreCollection.ViewPtControl, "GetBetType");
-            return DbHelper.ExecuteReader(spElement.Name, p, spElement.DbName);
+            
+            ObjectDb db = new ObjectDb("GetBetType", 600);
+            db.AssignParamValues(p);
+            return db.ExecuteReader();
         }
 
         /// <summary>
