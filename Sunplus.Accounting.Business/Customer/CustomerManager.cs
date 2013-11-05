@@ -693,18 +693,9 @@ namespace Sunplus.Accounting.Business.Customer
 
                             // Louis: Auto suspend status
                             var hasReadPermission_AutoSuspend = Permissions.HasPermission(Enumerations.Functions.Customer.AutoSuspend);
-                            var hasHostPermission_AutoSuspend = Permissions.HasHostPermission(Enumerations.Functions.Customer.AutoSuspend);
                             if (!hasReadPermission_AutoSuspend)
                             {
                                 TemplateHandler.RemoveBlock(ref htmlcontent, "autosuspendstatus");
-                            }
-                            else if (!hasHostPermission_AutoSuspend)
-                            {
-                                TemplateHandler.RemoveBlock(ref htmlcontent, "autosuspendstatusenable");
-                            }
-                            else
-                            {
-                                TemplateHandler.RemoveBlock(ref htmlcontent, "autosuspendstatusdisable");
                             }
 
 							if (Functions.Settings.IsVisibleSpecial)
@@ -1063,8 +1054,9 @@ namespace Sunplus.Accounting.Business.Customer
 
 			#region Auto Suspend
 
-			if (Functions.Settings.IsVisibleAutoSuspend)
-				sg.Add(GetSettingControlAutoSuspend(roleId, isManageCustomerAccess, "AutoSuspend", !autosuspend, (roleId > 1), UplineAutoSuspend, CastAide.AsBoolean(row1["Enabled"])));
+            // Louis: Auto suspend status
+            //if (Functions.Settings.IsVisibleAutoSuspend)
+            //    sg.Add(GetSettingControlAutoSuspend(roleId, isManageCustomerAccess, "AutoSuspend", !autosuspend, (roleId > 1), UplineAutoSuspend, CastAide.AsBoolean(row1["Enabled"])));
 
             #endregion Auto Suspend
 
