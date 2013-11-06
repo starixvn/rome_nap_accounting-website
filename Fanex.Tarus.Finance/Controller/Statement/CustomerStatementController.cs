@@ -1,27 +1,26 @@
-﻿using Fanex.Tarus.Infrastructure.Extensions;
-
-namespace Fanex.Tarus.Finance.Controller.Statement
+﻿namespace Fanex.Tarus.Finance.Controller.Statement
 {
-    using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
-    using Fanex.Tarus.Web.Controllers;
-    using Sunplus.Accounting.Core.Common;
-    using Fanex.Tarus.Finance.Model.Statement;
-    using Fanex.Tarus.Finance.Business.Statement;
-    
     using DNAide.Core;
+    using Fanex.Tarus.Finance.Business.Statement;
     using Fanex.Tarus.Finance.Entities;
-    using Sunplus.Accounting.Core.Common;
+    using Fanex.Tarus.Finance.Model.Statement;
+    using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
+    using Sunplus.Accounting.Core.Common;
 
     public class CustomerStatementController : BaseController
     {
-         IFinanceStatementBusiness _financeStatemenetService= null;
+        private IFinanceStatementBusiness _financeStatemenetService = null;
 
-         private Helper _helper;
-         
-        public CustomerStatementController() : this(null) { }
+        private Helper _helper;
+
+        public CustomerStatementController()
+            : this(null)
+        {
+        }
+
         public CustomerStatementController(IFinanceStatementBusiness financeStatemenetServices)
         {
             _financeStatemenetService = financeStatemenetServices ?? new FinanceStatementBusiness();
@@ -29,9 +28,9 @@ namespace Fanex.Tarus.Finance.Controller.Statement
         }
 
         [AuthenticateRead]
-        public ActionResult Index(int? CustID, string CustName) 
+        public ActionResult Index(int? CustID, string CustName)
         {
-            ViewBag.Banlance = _helper.BalanceUpDate; 
+            ViewBag.Banlance = _helper.BalanceUpDate;
             ViewBag.CustID = CustID;
             ViewBag.CustName = System.Web.HttpUtility.UrlDecode(CustName);
             return View("~/Views/Finance/Statement/Index.cshtml");
@@ -40,7 +39,6 @@ namespace Fanex.Tarus.Finance.Controller.Statement
         [HttpPost]
         public JsonResult GetFinanceStatement(string refNo, string custName, string filterBy, string fromdate, string toDay, string balanceUpDay, int includeAccBall)
         {
-            
             if (!_helper.CheckIsInternal(custName) && (custName != string.Empty))
             {
                 return new JsonResult { Data = new { errorMessage = "This function supports to view statement of Finance Accounts only!" } };
@@ -48,10 +46,11 @@ namespace Fanex.Tarus.Finance.Controller.Statement
 
             balanceUpDay = _helper.BalanceUpDate.ToShortDateString();
 
-            List<StatementDetail>  result;
-            if(CastAide.AsDateTime(fromdate) != CastAide.AsDateTime(balanceUpDay) && refNo == "-1"){
+            List<StatementDetail> result;
+            if (CastAide.AsDateTime(fromdate) != CastAide.AsDateTime(balanceUpDay) && refNo == "-1")
+            {
                 includeAccBall = 1;
-            } 
+            }
             result = _financeStatemenetService.GetFinanceStatementBusiness(refNo, custName, filterBy, fromdate, toDay, balanceUpDay, includeAccBall);
             var jsonResult = Json(result);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
@@ -71,8 +70,8 @@ namespace Fanex.Tarus.Finance.Controller.Statement
             {
                 statementDetail.CheckerTime = string.Empty;
             }
-            
-            result = _financeStatemenetService.GetFinanceStatementDetail(statementDetail,username);
+
+            result = _financeStatemenetService.GetFinanceStatementDetail(statementDetail, username);
 
             var jsonResult = Json(result);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
@@ -99,9 +98,9 @@ namespace Fanex.Tarus.Finance.Controller.Statement
             return jsonResult;
         }
 
-        public void ExportExcelFinanceStatement(string refNo, string custName, string filterBy, string fromdate, string toDay, string balanceUpDay, int IncludeAccBall , string reportTitle)
+        public void ExportExcelFinanceStatement(string refNo, string custName, string filterBy, string fromdate, string toDay, string balanceUpDay, int IncludeAccBall, string reportTitle)
         {
-            _financeStatemenetService.ExportExcelFinanceStatement(refNo, custName, filterBy,  fromdate,  toDay,  balanceUpDay,  IncludeAccBall, reportTitle);
+            _financeStatemenetService.ExportExcelFinanceStatement(refNo, custName, filterBy, fromdate, toDay, balanceUpDay, IncludeAccBall, reportTitle);
         }
     }
 }

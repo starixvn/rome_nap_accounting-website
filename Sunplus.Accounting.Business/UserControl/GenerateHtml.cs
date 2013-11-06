@@ -77,7 +77,6 @@ namespace Sunplus.Accounting.Business.UI
                 }
                 throw;
             }
-            return string.Empty;
         }
 
         public static string GenLinkPopup(string rootpath, string pageurl, string title, int width, int height, int left,

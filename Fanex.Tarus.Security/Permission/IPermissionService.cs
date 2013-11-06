@@ -1,11 +1,4 @@
 ﻿// ***********************************************************************
-// Assembly         : Fanex.Tarus.Security
-// Author           : ethan.nguyen
-// Created          : 08-16-2013
-//
-// Last Modified By : ethan.nguyen
-// Last Modified On : 09-17-2013
-// ***********************************************************************
 // <copyright file="IPermissionService.cs" company="Microsoft">
 //     Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>

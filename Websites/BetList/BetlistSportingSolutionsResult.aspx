@@ -93,9 +93,6 @@
         </div>
     </div>
     <iframe id="frm" width="0" height="0" frameborder="0" style="display: none"></iframe>
-    <script type="text/javascript">
-
-    </script>
 </body>
 </html>
 

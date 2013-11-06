@@ -92,7 +92,7 @@ namespace Sunplus.Accounting.Business.Customer
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
             }
             return html.ToString();

@@ -241,7 +241,6 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 return ex.Message;
             }
-            return string.Empty;
         }
 
         public static string GetActionEditForm(string aID)

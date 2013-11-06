@@ -424,6 +424,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                 _cust.IsDisableVirtualSports = WebSettings.EnableVirtualSports ?
                     CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["disablevirtualsports"], false) : false;
                 _cust.IsEnableDoubleCommLosing = WebSettings.OfferDoubleComm ? (CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DoubleCommLosing"], false)) : false;
+
                 return _cust;
             }
             catch (Exception ex)
