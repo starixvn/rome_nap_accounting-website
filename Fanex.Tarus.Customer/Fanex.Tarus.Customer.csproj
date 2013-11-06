@@ -55,12 +55,13 @@
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.PTEngine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Fanex\Fanex.PTEngine.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.PTRacing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex\Fanex.PTRacing.dll</HintPath>
-    </Reference>
-    <Reference Include="Fanex.PTVirtualSports">
-      <HintPath>..\Dependency\VirtualSports\Fanex.PTVirtualSports.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Tarus.Web.Controllers">
       <HintPath>..\Dependency\Fanex\Fanex.Tarus.Web.Controllers.dll</HintPath>
@@ -228,13 +229,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\sportsbook-engine-hrfixedodds\Fanex.PTEngine\Fanex.PTEngine.csproj">
-      <Project>{B16E08F3-B4F3-4878-A9B4-DBD098222B11}</Project>
-      <Name>Fanex.PTEngine</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Infrastructure\Fanex.Tarus.Infrastructure.csproj">
       <Project>{CCC0446A-42E7-4850-B09C-4DAC278F23B3}</Project>
       <Name>Fanex.Tarus.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.Tarus.VirtualSport\Fanex.Tarus.VirtualSport.csproj">
+      <Project>{5775926B-FF15-4333-96EA-898D184DACBF}</Project>
+      <Name>Fanex.Tarus.VirtualSport</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sunplus.Accounting.Business\Sunplus.Accounting.Business.csproj">
       <Project>{C7EB1617-765A-44E2-9267-96865EB5C096}</Project>
