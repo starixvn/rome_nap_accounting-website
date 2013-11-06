@@ -294,6 +294,10 @@
     <Setting Key="GetBetType" SpName="Acc_MT_BetTypeSel" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="GetLiveCSPT" SpName="Acc_MT_GetLiveCSPT" DbName="DBAGE.bodb02.bodbAdminNet"  />    
   </Function>
+
+  <Function Name="Progressive Bonus">
+    <Setting Key="CustomerSelCasinoBonusStatus" SpName="Acc_CustomerSelCasinoBonusStatus" DbName="DBAGE.bodb02.bodbAdminNet" />
+  </Function>
   
 </Functions>
 

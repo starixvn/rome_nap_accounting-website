@@ -113,4 +113,8 @@
     <Setting Key="Acc_CustomerUpdDisableOpenTote" SpName="Acc_CustomerUpdDisableOpenTote" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
 
+  <Function Name="Progressive Bonus">
+    <Setting Key="CustomerUpdDisableCasinoBonus" SpName="Acc_CustomerUpdDisableCasinoBonus" DbName="DBTXN.bodb02.bodbAdminNet" />
+  </Function>
+
 </Functions>

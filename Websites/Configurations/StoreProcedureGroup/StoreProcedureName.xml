@@ -1,24 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions>
-		
-		
-		
-		
-	  
-	  
-	  
-	  
-	  
-		
-		
-		
-		
-		
-		
-		
-  </Function>
-
-  <Function Name="Progressive Bonus">
-	  <Setting Key="CustomerSelCasinoBonusStatus" SpName="Acc_CustomerSelCasinoBonusStatus" DbName="DBAGE.BODB02" />
-	  <Setting Key="CustomerUpdDisableCasinoBonus" SpName="Acc_CustomerUpdDisableCasinoBonus" DbName="DBTXN.BODB02" />
+  
 </Functions>
