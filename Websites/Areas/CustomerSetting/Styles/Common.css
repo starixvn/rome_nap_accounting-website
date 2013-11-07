@@ -377,6 +377,7 @@ select,.select
 .ui-tabs .ui-tabs-nav li
 {
     margin: 0;
+    font-size: 11px;
 }
 .hidden
 {
