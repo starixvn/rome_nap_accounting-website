@@ -54,7 +54,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.PTEngine, Version=1.0.5052.23526, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Fanex.PTEngine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex\Fanex.PTEngine.dll</HintPath>
     </Reference>
@@ -248,10 +248,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.Tarus.Admin\Fanex.Tarus.Admin.csproj">
-      <Project>{B7FD958B-43DB-45EE-895E-2105971893E3}</Project>
-      <Name>Fanex.Tarus.Admin</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.Tarus.Business.Implement\Fanex.Tarus.Business.Implement.csproj">
       <Project>{BE4A5642-A3B6-4329-BB8F-4973446E7FA9}</Project>
       <Name>Fanex.Tarus.Business.Implement</Name>
