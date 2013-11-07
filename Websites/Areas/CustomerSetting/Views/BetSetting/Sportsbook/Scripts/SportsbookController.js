@@ -6,6 +6,10 @@ Fanex.CustomerSetting.Betting = {};
 
 Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
     $scope.model = model;
+
+    if (!model)
+        return;
+
     $scope.bettingLimits = $scope.model.bettingLimitItems;
 
     var length = $scope.model.bettingLimitItems.length;
@@ -262,7 +266,7 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
             return false;
         }
 
-        if (minMin != 0 && min < minMin) {
+        if (minMin != 0 && min  < minMin) {
             Validators.show($('#txt' + betting.resourceKey + 'Min' + subFix).get(0), betting.name + ' - Min Bet should be greater than or equals to ' + minMin.formatNumber(), undefined, undefined, 3000);
 
             return false;
