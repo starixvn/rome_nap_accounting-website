@@ -6,6 +6,8 @@ using Fanex.Data;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess.Provider.CustSetting;
 using Sunplus.Accounting.Entities;
+using System;
+using Fanex.Tarus.Infrastructure.Extensions;
 
 /// <summary>
 /// Summary description for CustSetting
@@ -56,9 +58,23 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.CustSetting
         }
 
         public override DbResult GetAllSiteNames()
-        {
-            var spElement = new SpConfig().GetStoreProcedure("SiteSel");
-            return DbHelper.Execute(spElement.Name, spElement.DbName);
+        {            
+            DbResult result = null;
+            try
+            {
+                using (ObjectDb db = new ObjectDb("CustomerSetting_SiteSel", 600))
+                {
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         private class SpConfig : DataAccess

@@ -70,15 +70,27 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
         public DataTable GetSites(Enumerations.AccountingSystem system)
         {
-            DbResult ds = null;
             var param = new Hashtable { { "system", system.ToString().ToUpper() } };
-            var spElement =
-                GetStoreProcedure(HelperSession.StoreCollection.HelperControl, "SiteSel");
-            ds = DbHelper.Execute(spElement.Name, param, spElement.DbName);
+            DataTable result = new DataTable();
 
-            DataTable result = null;
-            if (ds != null && ds.ResultSet != null && ds.ResultSet.Tables.Count > 0)
-                result = ds.ResultSet.Tables[0];
+            try
+            {
+                using (ObjectDb db = new ObjectDb("CustomerSetting_SiteSel", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        result = ds.Tables[0];
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
             return result;
         }
 
