@@ -281,13 +281,7 @@ namespace Sunplus.Accounting.Business.Customer
 						string mobile = row1["mobilephone"] + "";
 						string fax = row1["fax"] + "";
 						string nickname = CastAide.AsString(row1["username2"], string.Empty);
-                            int parentId = 0;
-                            string lastTxnDate = string.Empty;
-                            string lastTxnTime = string.Empty;
-                            string phone = row1["phone"] + "";
-                            string mobile = row1["mobilephone"] + "";
-                            string fax = row1["fax"] + "";
-                            string nickname = CastAide.AsString(row1["username2"], string.Empty);
+                          
 
                             virtualRate = virtualRate * 100;
                             actualRate = (virtualRate + 100) * actualRate / 100;
@@ -2589,24 +2583,6 @@ namespace Sunplus.Accounting.Business.Customer
             }
             var progressiveStatus = new ProgressiveRepository().GetStatusProgressiveBonus(new GetProductCriteria()
             {
-                CustId = custId
-            });
-
-            return !progressiveStatus.DisableUplinesCasinoBonus;
-		}
-
-		private static bool IsAllowEditProgressiveBonus(int parentId, int custId)
-		{
-			bool webSetting = ProgressiveSection.Instance.Active;
-			if (!webSetting)
-			{
-				return false;
-			}
-			if (parentId == 0) // Super
-			{
-				return true;
-			}
-            var progressiveStatus = new ProgressiveRepository().GetStatusProgressiveBonus(new GetProductCriteria() {
                 CustId = custId
             });
 
