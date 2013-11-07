@@ -179,7 +179,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking
                         db.AssignParamValues(param);
 
                         var ds = db.ExecuteDataSet();
-                        var output = db.GetOuputParams();
+                        var output = db.GetOuputParams() ?? new Hashtable();
 
                         dbResult = new DbResult(output, ds);
                     }
