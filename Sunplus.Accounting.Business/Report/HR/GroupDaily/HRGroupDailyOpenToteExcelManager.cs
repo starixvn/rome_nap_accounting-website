@@ -250,7 +250,7 @@ namespace BLL.Report.HR.GroupDaily
                 #region Content
 
                 string date_p = "", date_c = "";
-                string condition = "", style = "";
+                string condition = "";
                 int countdate = 0;
                 int countFixed = 0, rowindexDate = 0;
 

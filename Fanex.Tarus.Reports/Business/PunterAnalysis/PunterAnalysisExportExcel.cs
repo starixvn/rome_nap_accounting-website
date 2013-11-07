@@ -121,9 +121,6 @@ namespace Fanex.Tarus.Reports.Business.PunterAnalysis
 
             var excelGemboxUtils = new ExcelGemboxUtils();
 
-            var endCol = startCol;
-            var currentCol = startCol;
-
             #endregion ExcelFormat
 
             #region Header

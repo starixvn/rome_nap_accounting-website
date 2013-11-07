@@ -98,7 +98,7 @@ public partial class ReportHTML
 
         if (dt.Rows.Count > 0)
         {
-            int traderRowNo = 1, currentCustid = CastAide.AsInt32(dt.Rows[0]["custid"]);
+            int currentCustid = CastAide.AsInt32(dt.Rows[0]["custid"]);
 
             //the rest rows of each trader
             var traderStr = new StringBuilder();

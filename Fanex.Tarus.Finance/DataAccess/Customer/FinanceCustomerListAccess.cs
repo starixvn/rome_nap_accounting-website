@@ -1,11 +1,12 @@
-﻿using System.Data;
-using Fanex.Data;
-using System.Collections;
-using Fanex.Tarus.Finance.Model;
+﻿using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using DNAide.Core;
-using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
+using Fanex.Data;
+using Fanex.Tarus.Finance.Model;
 using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
+
 namespace Fanex.Tarus.Finance.DataAccess.Customer
 {
     public class FinanceCustomerListAccess : IFinanceCustomerListAccess
@@ -32,14 +33,12 @@ namespace Fanex.Tarus.Finance.DataAccess.Customer
             }
         }
 
-
         public DataTable GetCurrencyList()
         {
             var ds = SelectCustomer.ExchangeSelRpt(AppSession.SYSTEM);
             if (ds == null || ds.ResultSet.Tables.Count == 0) return null;
             return ds.ResultSet.Tables[0];
         }
-
 
         public DataTable GetMasterList(List<PostParam> postParams, out long total)
         {

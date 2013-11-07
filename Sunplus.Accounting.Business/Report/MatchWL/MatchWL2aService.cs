@@ -179,7 +179,7 @@ namespace Sunplus.Accounting.Business.Report.MatchWL
                 string expression = "";
 
                 MatchWL2aBO data = new MatchWL2aBO();
-                int k = 0;
+              
                 for (int i = beginrow; i <= endrow; i++)
                 {
                     DataRow dataRow = dataTable1.Rows[i];

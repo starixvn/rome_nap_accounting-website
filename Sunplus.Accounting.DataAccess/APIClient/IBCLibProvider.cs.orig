@@ -394,15 +394,12 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                     CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["hidevirtualsports"], false) : false;
                 _cust.IsDisableVirtualSports = WebSettings.EnableVirtualSports ?
                     CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["disablevirtualsports"], false) : false;
-                _cust.IsEnableDoubleCommLosing = WebSettings.OfferDoubleComm ? (CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DoubleCommLosing"], false)) : false;
-
 <<<<<<< HEAD
+                _cust.IsEnableDoubleCommLosing = WebSettings.OfferDoubleComm ? (CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DoubleCommLosing"], false)) : false;
 =======
-                _cust.IsEnableHorseRacingFixedOdds = WebSettings.OfferHorseRacingFixedOdds ?
-                    !CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DisableHRFixedOdds"], false) :
-                    false;
+                _cust.IsEnableDoubleCommLosing = WebSettings.OfferDoubleComm ? (CastAide.AsBoolean(drCustomer.ResultSet.Tables[0].Rows[0]["DoubleCommLosing"],false)): false;
 
->>>>>>> c9561674316de1cb6c5af2bd60f843e783d4bda2
+>>>>>>> origin/Merge-UAT-20130801-ProgressiveBonus
                 return _cust;
             }
             catch (Exception ex)

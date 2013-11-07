@@ -128,7 +128,6 @@ namespace Sunplus.Accounting.Business.Report.Deposit
 
             const int startCol = 0;
             const int startRow = 2;
-            var nextRow = 1;
 
             var reportName = reportTitle.Replace(" ", "");
             var excelFile = new ExcelFile();
