@@ -18,7 +18,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
     /// <summary>
     /// Summary description for UserDAO
     /// </summary>
-    public class UserDAO :DataAccess, IUserDAO
+    public class UserDAO : DataAccess, IUserDAO
     {
         #region IUserDAO Members
 
@@ -73,7 +73,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             var hsParam = new Hashtable();
             hsParam.Add("movebetdate", dtmMoveBetDate);
             hsParam.Add("todate", dtmTodate);
-            
+
             using (ObjectDb db = new ObjectDb("Acc_ResetWinning_Sel", 600))
             {
                 db.AssignParamValues(hsParam);
@@ -141,7 +141,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                     if (dt != null && dt.Rows.Count > 0)
                     {
                         datetime = CastAide.AsDateTime(dt.Rows[0]["MoveBetsDay"], DateTime.Now);
-                    }                    
+                    }
                 }
             }
             return datetime;
@@ -149,7 +149,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
         public DataSet InsDataTmpExcel(int userId, string arrFromCust, string arrToCust, string arrAmount,
                                         string arrExRate, string arrDescription, ref Hashtable error)
-        {           
+        {
             using (ObjectDb objDb = new ObjectDb("Acc_FinanceTransferMulInsTmpExcel", 6000))
             {
                 var hsParam = new Hashtable();
@@ -172,7 +172,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         }
 
         public DataSet InsDataTmpExcel(int userId, string xml, ref Hashtable error)
-        {            
+        {
             using (ObjectDb objDb = new ObjectDb("Acc_FinanceTransferMulInsTmpExcel", 6000))
             {
                 var hsParam = new Hashtable();
@@ -215,7 +215,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         }
 
         public bool DelDataTmpExcel(int userId)
-        {            
+        {
             using (ObjectDb objDb = new ObjectDb("Acc_FinanceTransferMulDelTmpExcel"))
             {
                 var hsParam = new Hashtable();
@@ -231,7 +231,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         }
 
         public DataSet UpdFinanceTransferMul(int userId, string fileName, int fileSize, string IP, ref Hashtable error)
-        {            
+        {
             using (ObjectDb objDb = new ObjectDb("Acc_FinanceTransferMulUpd"))
             {
                 var hsParam = new Hashtable();
@@ -252,7 +252,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
         public DataSet UpdFinanceCrossTransferMul(int userId, string fileName, int fileSize, string IP, string forexName, ref Hashtable error)
         {
-            
+
             using (ObjectDb objDb = new ObjectDb("Acc_FinanceCrossTransferMulUpd"))
             {
                 var hsParam = new Hashtable();
@@ -288,7 +288,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                                                           int status, string type, string creator, ref int totalPages,
                                                           string verifyBy)
         {
-            var entityList = new List<DailyTransaction>();            
+            var entityList = new List<DailyTransaction>();
             var paramList = new Hashtable();
             paramList.Add("fromdate", transDate);
             paramList.Add("pageindex", pageIndex);
@@ -298,7 +298,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             paramList.Add("checkerid", status);
             paramList.Add("checkername", verifyBy);
 
-            
+
             using (ObjectDb db = new ObjectDb("SelDailyFinanceTxn"))
             {
                 db.AssignParamValues(paramList);
@@ -309,13 +309,13 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                     {
                         var entity = new DailyTransaction();
                         //entity.TransId = (long)(reader["transid"]);
-                        entity.RefNo =  CastAide.AsString(reader["refno"]);
-                        entity.Username = (string) reader["username"];
-                        entity.transDate = (string) reader["transdate"];
+                        entity.RefNo = CastAide.AsString(reader["refno"]);
+                        entity.Username = (string)reader["username"];
+                        entity.transDate = (string)reader["transdate"];
                         entity.Amount = Convert.ToDouble(reader["amount"]);
-                        entity.Description = (string) reader["transdesc"];
-                        entity.Type = (string) reader["typenamee"];
-                        entity.Creator = (string) reader["creator"];
+                        entity.Description = (string)reader["transdesc"];
+                        entity.Type = (string)reader["typenamee"];
+                        entity.Creator = (string)reader["creator"];
                         entity.CheckerName = reader.IsDBNull(reader.GetOrdinal("checkerName"))
                                                  ? string.Empty
                                                  : reader["checkerName"].ToString();
@@ -342,12 +342,12 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
         public List<DailyTransaction> GetDailyAllTransaction(DateTime transDate, int pageIndex, int pageSize, string type, string creator, ref int totalPages)
         {
-            var entityList = new List<DailyTransaction>();            
+            var entityList = new List<DailyTransaction>();
             var paramList = new Hashtable();
             paramList.Add("fromdate", transDate);
             paramList.Add("pageindex", pageIndex);
             paramList.Add("totalpages", totalPages);
-            paramList.Add("pagesize", pageSize);            
+            paramList.Add("pagesize", pageSize);
             paramList.Add("type", type);
             paramList.Add("creator", creator);
 
@@ -373,18 +373,18 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                     entity.Type = (string)dr["typenamee"];
                     entity.Creator = (string)dr["creator"];
                     entity.RowIndex = Convert.ToInt32(dr["rownumber"]);
-                    entityList.Add(entity);    
-                }              
-                    
+                    entityList.Add(entity);
+                }
+
                 //get total record                
                 totalPages = (int)dbResult.Outputs["totalpages"];
-            }           
+            }
 
             return entityList;
         }
 
         public bool UpdateVerifyStatus(User user, string refNoList, bool isVerified)
-        {            
+        {
             using (ObjectDb db = new ObjectDb("Acc_DailyTxn_UpdChecker", 1200))
             {
                 var parms = new Hashtable();
@@ -393,7 +393,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 parms.Add("refnos", refNoList);
                 parms.Add("ip", user.LastLoginIP);
                 parms.Add("isverified", isVerified);
-                
+
                 db.AssignParamValues(parms);
                 db.ExecuteNonQuery();
                 return (CastAide.AsInt32(db.GetParameterValue("errcode")) != 0 ? false : true);
@@ -420,19 +420,20 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             p.Add("fromdate", fromDate);
             p.Add("todate", toDate);
             p.Add("balanceupday", balanceUpDay);
-            p.Add("movebetday", Sunplus.Accounting.DataAccess.Report.ReportUtils.BalanceUp.MoveBetsDay);            
+            p.Add("movebetday", Sunplus.Accounting.DataAccess.Report.ReportUtils.BalanceUp.MoveBetsDay);
             p.Add("includeaccbal", isInlucdeAccBal);
-
-
             var spElement = GetStoreProcedure(Core.Configurations.StoreProcedureGroup.BetListSection.StoreCollection.BetListStores, "AllStatement_Full");
-            using (IDataReader reader = DbHelper.ExecuteReader(spElement.Name, p, spElement.DbName, 600))
+
+            ObjectDb db = new ObjectDb("AllStatement_Full", 600);
+            db.AssignParamValues(p);
+            using (var reader = db.ExecuteReader())
             {
                 if (reader != null)
                 {
                     while (reader.Read())
                     {
                         var entity = new Statement();
-                        entity.RefNo = (long) (reader["refno"]);
+                        entity.RefNo = (long)(reader["refno"]);
                         entity.CreatedDate = Convert.ToDateTime(reader["accdate"]);
                         entity.TotalAmount = Convert.ToDouble(reader["totalamt"]);
                         entity.TransType = reader.IsDBNull(reader.GetOrdinal("transtype"))
@@ -466,7 +467,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                             entity.CheckedTime = Convert.ToDateTime(reader["checkTime"]);
                         }
 
-                        if (!reader.IsDBNull(reader.GetOrdinal("transtypeid")))                        
+                        if (!reader.IsDBNull(reader.GetOrdinal("transtypeid")))
                             entity.TransTypeId = CastAide.AsInt32(reader["transtypeid"]);
                         else
                             entity.TransTypeId = 0;
@@ -487,9 +488,11 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             int custId;
             var p = new Hashtable();
             p.Add("custname", custname);
-
-            custId = Convert.ToInt32(DbHelper.ExecuteScalar("Acc_GetCustIdByUsername",
-                                                            p, DBType.REPORT, 120));
+            using (var objectDb = new ObjectDb("GetCustIdByUsername", 120))
+            {
+                objectDb.AssignParamValues(p);
+                custId = Convert.ToInt32(objectDb.ExecuteScalar());
+            }
 
             return custId;
         }
@@ -499,7 +502,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         {
             var listMenu = new List<MenuBO>();
             var parms = new Hashtable();
-            parms.Add("custid", custId);            
+            parms.Add("custid", custId);
             parms.Add("system", AppSession.CurrentSystemNAME.ToString());
 
             DbResult result = null;
@@ -576,7 +579,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             }
             catch (Exception ex)
             {
-                
+
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     rs.ErrorCode = 100;
@@ -612,11 +615,11 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
                     rs.ErrorCode = CastAide.AsInt32(output["errcode"]);
                     rs.ErrorMessage = CastAide.AsString(output["errmsg"]);
-                }                
+                }
             }
             catch (Exception ex)
             {
-                
+
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     rs.ErrorCode = 100;
@@ -642,7 +645,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             }
             catch (Exception ex)
             {
-                
+
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                     rs.ErrorCode = 100;
@@ -670,9 +673,9 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
                     result = new DbResult(output, ds);
                 }
-                
+
                 var dt = new DataTable();
-                if (result.ResultSet.Tables.Count > 0) 
+                if (result.ResultSet.Tables.Count > 0)
                 {
                     dt = result.ResultSet.Tables[0];
                     foreach (DataRow dr in dt.Select())
@@ -685,7 +688,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             }
             catch (Exception ex)
             {
-                
+
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -715,7 +718,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             }
             catch (Exception ex)
             {
-                
+
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -732,9 +735,9 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         /// <returns></returns>
         public Result InsertCustomerToGroup(int custId, int roleId, string system)
         {
-            var result = new Result {ErrorCode = 0, ErrorMessage = string.Empty};
+            var result = new Result { ErrorCode = 0, ErrorMessage = string.Empty };
             DbResult ds = null;
-            var param = new Hashtable {{"custid", custId}};
+            var param = new Hashtable { { "custid", custId } };
             param.Add("roleid", roleId);
             param.Add("system", system.ToString().ToUpper());
 
@@ -752,7 +755,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             {
                 result.ErrorCode = CastAide.AsInt32(ds.Outputs["errcode"]);
                 result.ErrorMessage = CastAide.AsString(ds.Outputs["errmsg"]);
-               
+
             }
             return result;
         }
@@ -763,7 +766,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             var parms = new Hashtable();
             parms.Add("custid", custId);
             parms.Add("system", system);
-            
+
             DbResult result = null;
 
             using (ObjectDb db = new ObjectDb("Acc_MenuSelByCustID"))
@@ -807,7 +810,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 var listSubMenu = new List<MenuBO>();
                 RecursionMenu(dt, ref listSubMenu, menuItem.Id);
                 menuItem.SubMenu = listSubMenu;
-                               
+
 
                 listMenu.Add(menuItem);
             }
@@ -836,7 +839,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
 
 
-       
+
 
         public DailyTransactionDTO GetDailyTransaction(DateTime transDate, int status, string type, string creator, string verifyBy)
         {
@@ -860,7 +863,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 {
                     while (reader.Read())
                     {
-                        count ++;
+                        count++;
                         var entity = new DailyTransaction();
                         //entity.TransId = (long)(reader["transid"]);
                         entity.RefNo = CastAide.AsString(reader["refno"]);
@@ -890,6 +893,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             return dailyFinance;
         }
 
-   
+
     }
 }
