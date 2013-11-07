@@ -817,28 +817,23 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
         #region IUserDAO Members
 
-
         public DbResult GetDailyAllTransaction(DateTime transDate, string type, string creator)
         {
-            var spElement = GetTransactionStoreProcedure("SelDailyAllTxn");
             var paramList = new Hashtable();
             paramList.Add("fromdate", transDate);
             paramList.Add("type", type);
             paramList.Add("creator", creator);
-
-            /*DbResult dbResult = DbHelper.Execute("Acc_RptStatementDaily_XTEST",
-                                                               paramList, DBType.WAREHOUSE, 120);*/
-
-            DbResult dbResult = DbHelper.Execute(spElement.Name,
-                                                               paramList, spElement.DbName, 6000);
-            return dbResult;
+            using (ObjectDb objectDb = new ObjectDb("SelDailyAllTxn", 6000))
+            {
+                objectDb.AssignParamValues(paramList);
+                var dataset = objectDb.ExecuteDataSet();
+                var outputParams = objectDb.GetOuputParams();
+                DbResult dbResult = new DbResult(outputParams, dataset);
+                return dbResult;
+            }
         }
 
         #endregion
-
-
-
-
 
         public DailyTransactionDTO GetDailyTransaction(DateTime transDate, int status, string type, string creator, string verifyBy)
         {
