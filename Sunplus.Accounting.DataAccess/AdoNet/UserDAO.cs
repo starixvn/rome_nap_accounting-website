@@ -298,7 +298,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             paramList.Add("checkerid", status);
             paramList.Add("checkername", verifyBy);
 
-
             using (ObjectDb db = new ObjectDb("SelDailyFinanceTxn"))
             {
                 db.AssignParamValues(paramList);
@@ -424,9 +423,9 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             p.Add("includeaccbal", isInlucdeAccBal);
             var spElement = GetStoreProcedure(Core.Configurations.StoreProcedureGroup.BetListSection.StoreCollection.BetListStores, "AllStatement_Full");
 
-            ObjectDb db = new ObjectDb("AllStatement_Full", 600);
-            db.AssignParamValues(p);
-            using (var reader = db.ExecuteReader())
+            ObjectDb objectDb = new ObjectDb("AllStatement_Full", 600);
+            objectDb.AssignParamValues(p);
+            using (var reader = objectDb.ExecuteReader())
             {
                 if (reader != null)
                 {
@@ -845,7 +844,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         {
             var dailyFinance = new DailyTransactionDTO();
             dailyFinance.items = new List<DailyTransaction>();
-            var spElement = GetTransactionStoreProcedure("SelDailyFinanceTxn");
             int count = 0;
             var paramList = new Hashtable();
             paramList.Add("fromdate", transDate);
@@ -854,10 +852,9 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             paramList.Add("checkerid", status);
             paramList.Add("checkername", verifyBy);
 
-            /*using (IDataReader reader = DbHelper.ExecuteReader("Acc_DailyTxn_Sel_xtest",
-                                                               paramList, DBType.WAREHOUSE, 120))*/
-            using (IDataReader reader = DbHelper.ExecuteReader(spElement.Name,
-                                                               paramList, spElement.DbName, 120))
+            ObjectDb objectDb = new ObjectDb("SelDailyFinanceTxn", 120);
+            objectDb.AssignParamValues(paramList);
+            using (var reader = objectDb.ExecuteReader())
             {
                 if (reader != null)
                 {
@@ -888,7 +885,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                     dailyFinance.totalRows = count;
                 }
             }
-
 
             return dailyFinance;
         }
