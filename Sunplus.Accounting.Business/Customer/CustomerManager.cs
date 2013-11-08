@@ -1054,8 +1054,9 @@ namespace Sunplus.Accounting.Business.Customer
 
 			#region Auto Suspend
 
-			if (Functions.Settings.IsVisibleAutoSuspend)
-				sg.Add(GetSettingControlAutoSuspend(roleId, isManageCustomerAccess, "AutoSuspend", !autosuspend, (roleId > 1), UplineAutoSuspend, CastAide.AsBoolean(row1["Enabled"])));
+            ////Remove checkbox autosuspend on left menu
+			//if (Functions.Settings.IsVisibleAutoSuspend)
+			//	sg.Add(GetSettingControlAutoSuspend(roleId, isManageCustomerAccess, "AutoSuspend", !autosuspend, (roleId > 1), UplineAutoSuspend, CastAide.AsBoolean(row1["Enabled"])));
             //    sg.Add(GetSettingControlAutoSuspend(roleId, isManageCustomerAccess, "AutoSuspend", !autosuspend, (roleId > 1), UplineAutoSuspend, CastAide.AsBoolean(row1["Enabled"])));
 
             #endregion Auto Suspend
