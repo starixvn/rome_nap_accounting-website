@@ -570,11 +570,19 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 hash.Add("order", menu.Order);
                 hash.Add("errcode", 0);
                 hash.Add("errmsg", "");
-                //hash.Add("level", menu.Level);
-                DbResult dbrs = DbHelper.Execute("Acc_MenuIns", hash, DBType.DB03);
 
-                rs.ErrorCode = CastAide.AsInt32(dbrs.Outputs["errcode"]);
-                rs.ErrorMessage = CastAide.AsString(dbrs.Outputs["errmsg"]);
+                Hashtable output = new Hashtable();
+                using (ObjectDb db = new ObjectDb("Acc_MenuIns", 600))
+                {
+                    db.AssignParamValues(hash);
+
+                    db.ExecuteNonQuery();
+
+                    output = db.GetOuputParams() ?? new Hashtable();
+                }
+
+                rs.ErrorCode = CastAide.AsInt32(output["errcode"]);
+                rs.ErrorMessage = CastAide.AsString(output["errmsg"]);
             }
             catch (Exception ex)
             {
@@ -637,10 +645,17 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
                 hash.Add("menuid", menuId);
                 hash.Add("errcode", 0);
                 hash.Add("errmsg", "");
-                DbResult dbrs = DbHelper.Execute("Acc_MenuDel", hash, DBType.DB03);
+                
+                var output = new Hashtable();
+                using (ObjectDb db = new ObjectDb("Acc_MenuDel", 600))
+                {
+                    db.AssignParamValues(hash);
+                    db.ExecuteNonQuery();
+                    output = db.GetOuputParams() ?? new Hashtable();
+                }
 
-                rs.ErrorCode = CastAide.AsInt32(dbrs.Outputs["errcode"]);
-                rs.ErrorMessage = CastAide.AsString(dbrs.Outputs["errmsg"]);
+                rs.ErrorCode = CastAide.AsInt32(output["errcode"]);
+                rs.ErrorMessage = CastAide.AsString(output["errmsg"]);
             }
             catch (Exception ex)
             {

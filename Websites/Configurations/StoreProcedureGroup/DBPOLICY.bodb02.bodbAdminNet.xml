@@ -8,7 +8,9 @@
   <Function Name="Manage Menu">
     <Setting Key="Acc_MenuSelList" SpName="Acc_MenuSelList" DbName="DBPOLICY.bodb02.bodbAdminNet" />
     <Setting Key="Acc_MenuUpd" SpName="Acc_MenuUpd" DbName="DBPOLICY.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_MenuSelGroupFunc" SpName="Acc_MenuSelGroupFunc" DbName="DBPOLICY.bodb02.bodbAdminNet" />    
+    <Setting Key="Acc_MenuSelGroupFunc" SpName="Acc_MenuSelGroupFunc" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_MenuIns" SpName="Acc_MenuIns" DbName="DBPOLICY.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_MenuDel" SpName="Acc_MenuDel" DbName="DBPOLICY.bodb02.bodbAdminNet" />
   </Function>
     
   <Function Name="User - Account Management">
