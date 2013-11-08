@@ -1054,9 +1054,7 @@ namespace Sunplus.Accounting.Business.Customer
 
 			#region Auto Suspend
 
-            // Louis: Auto suspend status
-            //if (Functions.Settings.IsVisibleAutoSuspend)
-            //    sg.Add(GetSettingControlAutoSuspend(roleId, isManageCustomerAccess, "AutoSuspend", !autosuspend, (roleId > 1), UplineAutoSuspend, CastAide.AsBoolean(row1["Enabled"])));
+          
 
             #endregion Auto Suspend
 

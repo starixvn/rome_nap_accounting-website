@@ -1055,13 +1055,14 @@ namespace Sunplus.Accounting.Business.Customer
 			#region Auto Suspend
 
 <<<<<<< HEAD
-			if (Functions.Settings.IsVisibleAutoSuspend)
-				sg.Add(GetSettingControlAutoSuspend(roleId, isManageCustomerAccess, "AutoSuspend", !autosuspend, (roleId > 1), UplineAutoSuspend, CastAide.AsBoolean(row1["Enabled"])));
-=======
             // Louis: Auto suspend status
             //if (Functions.Settings.IsVisibleAutoSuspend)
+=======
+            ////Remove checkbox autosuspend on left menu
+			//if (Functions.Settings.IsVisibleAutoSuspend)
+			//	sg.Add(GetSettingControlAutoSuspend(roleId, isManageCustomerAccess, "AutoSuspend", !autosuspend, (roleId > 1), UplineAutoSuspend, CastAide.AsBoolean(row1["Enabled"])));
+>>>>>>> Hide checkbox auto suspended
             //    sg.Add(GetSettingControlAutoSuspend(roleId, isManageCustomerAccess, "AutoSuspend", !autosuspend, (roleId > 1), UplineAutoSuspend, CastAide.AsBoolean(row1["Enabled"])));
->>>>>>> fix bug 7559: Acc - Separate "Auto suspend" feature: Auto Suspend link is Read Only when user only has Read permission
 
             #endregion Auto Suspend
 
