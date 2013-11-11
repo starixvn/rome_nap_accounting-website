@@ -9,7 +9,7 @@
     <Setting Key="Acc_CustomerUpdMemberHR_SAg" SpName="Acc_CustomerUpdMemberHR_SAg" DbName="DBCUST.CustDB"/>
     <Setting Key="Acc_CustomerUpdMemberHR_MAg" SpName="Acc_CustomerUpdMemberHR_MAg" DbName="DBCUST.CustDB"/>
     <Setting Key="Acc_RacingBetSettingUpd" SpName="Acc_RacingBetSettingUpd" DbName="DBCUST.CustDB"/>
-    <Setting Key="UpdateStatus" SpName="Acc_CustomerUpdRBStatus" DbName="DBCUST.CustDB"/>
+    <Setting Key="UpdateStatus" SpName="Acc_CustomerUpdRBStatus" DbName="DBCUST.CustDB"/>    
   </Function>
 
   <Function Name="Customer - Setting">
@@ -19,6 +19,7 @@
     <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg" DbName="DBCUST.CustDB"/>
     <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg" DbName="DBCUST.CustDB"/>
     <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="DBCUST.CustDB"/>
+    <Setting Key="LeftPanel_CustomerInfo_UpdateDisableHRFixedOdds" SpName="Acc_CustomerUpdDisableHRFixedOdds_xpre" DbName="DBCUST.CustDB" Plain="0" />
   </Function>
 
   <Function Name="Live Casino">
@@ -69,8 +70,6 @@
     <Setting Key="Acc_CustomerUpdVS_Enable" SpName="Acc_CustomerUpdVS_Enable" DbName="DBCUST.CustDB" Plain="0" />
     <Setting Key="Acc_CustomerUpdVS_MinMaxBet" SpName="Acc_CustomerUpdVS_MinMaxBet" DbName="DBCUST.CustDB" Plain="0" />
     <Setting Key="Acc_CustomerUpdSuperVS_MinMaxBet" SpName="Acc_CustomerUpdSuperVS_MinMaxBet" DbName="DBCUST.CustDB" Plain="0" />
-
-    <Setting Key="LeftPanel_CustomerInfo_UpdateDisableHRFixedOdds" SpName="Acc_CustomerUpdDisableHRFixedOdds" DbName="DBCUST.CustDB" Plain="0" />
   </Function>
 
   <Function Name="Sportbook">
@@ -160,7 +159,7 @@
     <Setting Key="Acc_AutoFollowBetInsCustomer" SpName="Acc_AutoFollowBetInsCustomer" DbName="DBCUST.CustDB"/>
     <Setting Key="AutoFollowBetSelBACus" SpName="Acc_AutoFollowBetSelBACustomer" DbName="DBCUST.CustDB"/>
     <Setting Key="Acc_AutoFollowBetSelCustomer" SpName="Acc_AutoFollowBetSelCustomer" DbName="DBCUST.CustDB"/>
-    <Setting Key="Acc_AutoFollowBetUpdCustomer" SpName="Acc_AutoFollowBetUpdRate" DbName="DBCUST.CustDB"/>
+    <Setting Key="Acc_AutoFollowBetUpdCustomer" SpName="Acc_AutoFollowBetUpdRate" DbName="DBCUST.CustDB"/>    
   </Function>
 
   <Function Name="Transfer">
@@ -187,7 +186,7 @@
   </Function>
 
   <Function Name="Customer - Login">
-    <Setting Key="Acc_LoginAdmin" SpName="Acc_LoginAdmin" DbName="DBCUST.CustDB"  />
+    <Setting Key="Acc_LoginAdmin" SpName="Acc_LoginAdmin" DbName="DBCUST.CustDB"  />    
   </Function>
 
   <Function Name="Finance">
@@ -199,5 +198,5 @@
     <Setting Key="Acc_CustomerUpdDisableFI" SpName="Acc_CustomerUpdDisableFI" DbName="DBCUST.CustDB"/>
     <Setting Key="Acc_CustomerUpdMemberFI_MAg" SpName="Acc_CustomerUpdMemberFI_MAg" DbName="DBCUST.CustDB"/>
     <Setting Key="Acc_CustomerUpdMemberFI_SAg" SpName="Acc_CustomerUpdMemberFI_SAg" DbName="DBCUST.CustDB"/>
-  </Function>
+  </Function>  
 </Functions>
