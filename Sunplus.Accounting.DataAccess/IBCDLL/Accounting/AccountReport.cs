@@ -1496,7 +1496,7 @@
                 else
                 {
                     p.Add("movebetsday", ReportUtils.BalanceUp.BalanceUpDay);
-                    using (var db = new ObjectDb("BetsSelBetList", 180))
+                    using (var db = new ObjectDb("BetList_CustInfo", 180))
                     {
                         db.AssignParamValues(p);
                         rs = db.ExecuteDataSet();
@@ -1525,7 +1525,7 @@
                 p.Add("fromdate", FormatHandler.ResetStartDate(fromdate));
                 p.Add("ip", ip);
 
-                using (ObjectDb db = new ObjectDb("BetlistByIp_Username", 600))
+                using (ObjectDb db = new ObjectDb("BetList_IP_Username", 600))
                 {
                     db.AssignParamValues(p);
 
@@ -1559,7 +1559,7 @@
                 p.Add("custid", custid);
                 p.Add("ip", ip);
 
-                using (var db = new ObjectDb("ByIPOtherSports", 180))
+                using (var db = new ObjectDb("BetList_IP_OtherSports", 180))
                 {
                     db.AssignParamValues(p);
                     rs = db.ExecuteDataSet();
@@ -1589,7 +1589,7 @@
                 p.Add("custid", custid);
                 p.Add("ip", ip);
 
-                using (var db = new ObjectDb("BetListByIP_Soccer", 180))
+                using (var db = new ObjectDb("BetList_IP_Soccer", 180))
                 {
                     db.AssignParamValues(p);
                     rs = db.ExecuteDataSet();

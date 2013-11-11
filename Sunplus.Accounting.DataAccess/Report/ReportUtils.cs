@@ -114,7 +114,7 @@ namespace Sunplus.Accounting.DataAccess.Report
                 DbResult result = null;
                 try
                 {
-                    using (ObjectDb db = new ObjectDb("SelBalanceUpDay"))
+                    using (ObjectDb db = new ObjectDb("Core_ReportService_GetBalanceUpDay"))
                     {
                         var ds = db.ExecuteDataSet();
                         var output = db.GetOuputParams();

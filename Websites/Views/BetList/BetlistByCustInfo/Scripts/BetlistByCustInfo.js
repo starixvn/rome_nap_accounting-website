@@ -1,20 +1,20 @@
 ﻿var BetListByCustInfo = {
     paramGetBetBetlist: {
-        FromDate: null,
-        ToDate: null,
-        CustID: null,
-        Bettype: 0,
-        PageIndex: 1,
-        PageSize: 100,
-        IsCache: false
+        fromDate: null,
+        toDate: null,
+        custId: null,
+        betType: 0,
+        pageIndex: 1,
+        pageSize: 100,
+        isCache: false
     },
     paramGetBetBetlistbyRefno: {
-        CustID: null,
-        TransID: null
+        customerId: null,
+        transactionId: null
     },
     paramGetBetlistSystemParlay: {
-        CustID: null,
-        TransID: null
+        customerId: null,
+        transactionId: null
     },
     URL: null,
     gridOpts: {
@@ -49,9 +49,9 @@
     },
 
     getBetListSystemParlay: function () {
-        BetListByCustInfo.paramGetBetlistSystemParlay.CustID = _custID;
-        BetListByCustInfo.paramGetBetlistSystemParlay.TransID = $('#txtRefNoSystemParaly').val();
-      
+        BetListByCustInfo.paramGetBetlistSystemParlay.customerId = _custID;
+        BetListByCustInfo.paramGetBetlistSystemParlay.transactionId = $('#txtRefNoSystemParaly').val();
+
         try { parent.BlockUI(); } catch (e) { }
         $.ajax({
             type: "POST",
@@ -62,7 +62,9 @@
                 $("#betListSystemParlayContent").html(result);
                 $("#BetlistSystemParlay").initGrid(BetListByCustInfo.gridOpts);
                 $('#BetlistSystemParlay').removeClass("display-none").gridScroller(BetListByCustInfo.gridOpts);
-                BetListByCustInfo.initPager(_length, BetListByCustInfo.paramGetBetBetlist.PageSize, BetListByCustInfo.paramGetBetBetlist.PageIndex - 1);
+                BetListByCustInfo.initPager(_length,
+                    BetListByCustInfo.paramGetBetBetlist.pageSize,
+                    BetListByCustInfo.paramGetBetBetlist.pageIndex - 1);
 
                 $("#betListSystemParlayContent").find(".detail").remove();
                 $("#betListSystemParlayContent").find("#hidden0").removeAttr("href");
@@ -84,7 +86,7 @@
 
     getBetListByCustInfo: function (isCache) {
         var params = BetListByCustInfo.getParams();
-        BetListByCustInfo.paramGetBetBetlist.IsCache = isCache;
+        BetListByCustInfo.paramGetBetBetlist.isCache = isCache;
         try { parent.BlockUI(); } catch (e) { }
         $.ajax({
             type: "POST",
@@ -95,7 +97,9 @@
                 BetListByCustInfo.gridOpts.isShowPager = ((_length == 0 || _length == 1) ? false : true);
                 $("#BetlistByCustInfo").initGrid(BetListByCustInfo.gridOpts);
                 $('#BetlistByCustInfo').removeClass("display-none").gridScroller(BetListByCustInfo.gridOpts);
-                BetListByCustInfo.initPager(_length, BetListByCustInfo.paramGetBetBetlist.PageSize, BetListByCustInfo.paramGetBetBetlist.PageIndex - 1);    
+                BetListByCustInfo.initPager(_length,
+                    BetListByCustInfo.paramGetBetBetlist.pageSize,
+                    BetListByCustInfo.paramGetBetBetlist.pageIndex - 1);
             },
             error: function () {
                 try { parent.jQuery.unblockUI(); } catch (e) { }
@@ -111,26 +115,28 @@
             var toDateTmp = $('#txttodate').val();
             var bettypeTmp = $('#ddlBettype').val() == null ? 0 : $('#ddlBettype').val();
 
-            if (BetListByCustInfo.paramGetBetBetlist.FromDate == fromDateTmp && BetListByCustInfo.paramGetBetBetlist.ToDate == toDateTmp && BetListByCustInfo.paramGetBetBetlist.Bettype == bettypeTmp) {
-                BetListByCustInfo.paramGetBetBetlist.IsCache = true;
+            if (BetListByCustInfo.paramGetBetBetlist.fromDate == fromDateTmp &&
+                BetListByCustInfo.paramGetBetBetlist.toDate == toDateTmp &&
+                BetListByCustInfo.paramGetBetBetlist.betType == bettypeTmp) {
+                BetListByCustInfo.paramGetBetBetlist.isCache = true;
             }
             else {
-                BetListByCustInfo.paramGetBetBetlist.IsCache = false;
-                BetListByCustInfo.paramGetBetBetlist.PageIndex = 1;
-                BetListByCustInfo.paramGetBetBetlist.PageSize = 100;
+                BetListByCustInfo.paramGetBetBetlist.isCache = false;
+                BetListByCustInfo.paramGetBetBetlist.pageIndex = 1;
+                BetListByCustInfo.paramGetBetBetlist.pageSize = 100;
             }
-            BetListByCustInfo.paramGetBetBetlist.FromDate = fromDateTmp;
-            BetListByCustInfo.paramGetBetBetlist.ToDate = toDateTmp;
-            BetListByCustInfo.paramGetBetBetlist.CustID = _custID;
-            BetListByCustInfo.paramGetBetBetlist.Bettype = bettypeTmp;
+            BetListByCustInfo.paramGetBetBetlist.fromDate = fromDateTmp;
+            BetListByCustInfo.paramGetBetBetlist.toDate = toDateTmp;
+            BetListByCustInfo.paramGetBetBetlist.custId = _custID;
+            BetListByCustInfo.paramGetBetBetlist.betType = bettypeTmp;
 
 
             BetListByCustInfo.URL = "TarusBetList/GetBetListByCustInfo_DateRange";
             return BetListByCustInfo.paramGetBetBetlist;
         }
         else {
-            BetListByCustInfo.paramGetBetBetlistbyRefno.CustID = _custID;
-            BetListByCustInfo.paramGetBetBetlistbyRefno.TransID = $('#txtRefNo').val();
+            BetListByCustInfo.paramGetBetBetlistbyRefno.customerId = _custID;
+            BetListByCustInfo.paramGetBetBetlistbyRefno.transactionId = $('#txtRefNo').val();
 
             BetListByCustInfo.URL = "BetList/GetBetListByCustInfo_Refno";
             return BetListByCustInfo.paramGetBetBetlistbyRefno;
@@ -201,8 +207,8 @@
         var max_page = Math.ceil(_length / _items_per_page);
         page_index = page_index < max_page ? page_index : max_page - 1;
 
-        BetListByCustInfo.paramGetBetBetlist.PageIndex = page_index + 1;
-        BetListByCustInfo.paramGetBetBetlist.PageSize = _items_per_page;
+        BetListByCustInfo.paramGetBetBetlist.pageIndex = page_index + 1;
+        BetListByCustInfo.paramGetBetBetlist.pageSize = _items_per_page;
         BetListByCustInfo.getBetListByCustInfo(true);
         return false;
     },

@@ -292,7 +292,7 @@ namespace Fanex.Tarus.LiveCasino.DataAccess.Report
         protected Dictionary<string, DateTime> GetBalanceUpDate()
         {
             var arrdate = new Dictionary<string, DateTime>();
-            using (ObjectDb objDB = new ObjectDb("SelBalanceUpDay"))
+            using (ObjectDb objDB = new ObjectDb("Core_ReportService_GetBalanceUpDay"))
             {
                 var ds = objDB.ExecuteDataSet();
                 DataRow rs = ds.Tables[0].Rows[0];

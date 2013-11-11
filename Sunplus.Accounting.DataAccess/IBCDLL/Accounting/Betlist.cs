@@ -203,7 +203,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
             try
             {
-                using (ObjectDb db = new ObjectDb("Acc_BetsSelBetCheckM_All", 300))
+                using (ObjectDb db = new ObjectDb("BetList_MixParlayBetsSel", 300))
                 {
                     Hashtable p = new Hashtable();
                     p.Add("refno", refno);
@@ -353,7 +353,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("custid", custid);
                 p.Add("bettype", bettype);
                 p.Add("movebetsday", ReportUtils.BalanceUp.MoveBetsDay);
-                using (ObjectDb db = new ObjectDb("BetsSelBetList", 180))
+                using (ObjectDb db = new ObjectDb("BetList_CustInfo", 180))
                 {
                     db.AssignParamValues(p);
                     result = db.ExecuteDataSet();

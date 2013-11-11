@@ -132,7 +132,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         public DateTime MoveBetDateSel()
         {
             DateTime datetime = DateTime.Today;
-            using (ObjectDb db = new ObjectDb("SelBalanceUpDay"))
+            using (ObjectDb db = new ObjectDb("Core_ReportService_GetBalanceUpDay"))
             {
                 var ds = db.ExecuteDataSet();
                 if (ds != null && ds.Tables.Count > 0)

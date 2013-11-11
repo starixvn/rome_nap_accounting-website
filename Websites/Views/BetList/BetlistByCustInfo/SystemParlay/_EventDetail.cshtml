@@ -1,5 +1,6 @@
 ﻿@using Fanex.BetList.Accounting.Models
 @using Fanex.BetList.Accounting.Core
+@using Fanex.BetList.Accounting.Extensions;
 @using Fanex.BetList.Core.TicketHelper;
 @{
     var systemParlayDetail = Model.SystemParlayDetail;
@@ -98,7 +99,7 @@
                                     {
                                         var match = eventTmp.MatchList[j];
                                         <div>
-                                            <span>@CacheRef.GetTeamName(match.HomeID) </span>- <span>@CacheRef.GetTeamName(match.AwayID)
+                                            <span>@Fanex.BetList.Accounting.Core.CacheRef.GetTeamName(match.HomeID) </span>- <span>@Fanex.BetList.Accounting.Core.CacheRef.GetTeamName(match.AwayID)
                                             </span>
                                         </div>
                                     }

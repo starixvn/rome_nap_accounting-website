@@ -468,8 +468,8 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
         public List<BetListDetail> GetMixParlayTickets(string refNo)
         {
-            var betList = new List<BetListDetail>();           
-            using (ObjectDb objDb = new ObjectDb("Acc_BetsSelBetCheckM_All",600))
+            var betList = new List<BetListDetail>();
+            using (ObjectDb objDb = new ObjectDb("BetList_MixParlayBetsSel", 600))
             {
                 objDb.AssignParamValues(new Hashtable() { { "refno", refNo } });
                 
@@ -629,9 +629,9 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
         public DataSet GetBetListSystemParlayByTransId(string transId, int custId, DateTime moveBetDay, DateTime balaceUpDay)
         {
-            DataSet result = null;           
+            DataSet result = null;
 
-            using (ObjectDb db = new ObjectDb("Acc_BetlistCombinationParlay_ByTransID", 180))
+            using (ObjectDb db = new ObjectDb("BetList_CustInfo_SystemParlay", 180))
             {
                 var param = new Hashtable { { "transid", transId }, { "custid", custId }, { "movebetday", moveBetDay }, { "balanceupday", balaceUpDay } };
                 db.AssignParamValues(param);

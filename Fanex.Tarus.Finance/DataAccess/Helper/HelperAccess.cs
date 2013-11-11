@@ -29,7 +29,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Helper
         {
             DataTable datatable;
             var balmoveday = new Dictionary<string, DateTime>();
-            using (var objDb = new ObjectDb("SelBalanceUpDay"))
+            using (var objDb = new ObjectDb("Core_ReportService_GetBalanceUpDay"))
             {
                 var ds = objDb.ExecuteDataSet();
                 datatable = ds.Tables[0];
