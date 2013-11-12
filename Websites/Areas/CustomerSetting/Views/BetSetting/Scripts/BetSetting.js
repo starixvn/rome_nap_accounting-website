@@ -1,8 +1,8 @@
 ﻿var module = angular.module("bettingApp", []);
 
-angular.element(document.getElementById('ng-app')).ready(function () {
-    $('#tabs').show();
-    parent.$('#tabs').show();
+angular.element($('#ng-app')).ready(function () {
+    $('#ng-app').show();
+    parent.$('#ng-app').show();
 });
 
 function LoadSB() {
