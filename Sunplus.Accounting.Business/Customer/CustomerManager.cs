@@ -691,6 +691,13 @@ namespace Sunplus.Accounting.Business.Customer
 								TemplateHandler.RemoveBlock(ref htmlcontent, "p2pstatus");
 							}
 
+                            // Louis: Auto suspend status
+                            var hasReadPermission_AutoSuspend = Permissions.HasPermission(Enumerations.Functions.Customer.AutoSuspend);
+                            if (!hasReadPermission_AutoSuspend)
+                            {
+                                TemplateHandler.RemoveBlock(ref htmlcontent, "autosuspendstatus");
+                            }
+
 							if (Functions.Settings.IsVisibleSpecial)
 							{
 								TemplateHandler.Assign(ref htmlcontent, "{specialCustomer}", StatusSpan(isManageCustomerAccess, "special", important, (roleId > 1)));
@@ -892,7 +899,8 @@ namespace Sunplus.Accounting.Business.Customer
 
                             string bettingSetting = WebSettings.ExternalBettingLimitConfig;
                             //AppSession.GroupID
-                            try {
+                            try
+                            {
                                 if (!String.IsNullOrEmpty(bettingSetting) && bettingSetting.Contains("|"))
                                 {
                                     var groupId = bettingSetting.Split(new char[] { '|' })[0].Split(new char[] { ',' });
@@ -910,11 +918,12 @@ namespace Sunplus.Accounting.Business.Customer
                                     TemplateHandler.RemoveBlock(ref htmlcontent, "edit-BetSetting");
                                 }
                             }
-                            catch {
+                            catch
+                            {
                                 TemplateHandler.RemoveBlock(ref htmlcontent, "edit-BetSetting");
                             }
 
-                           
+
 
 							//---- for menu details -----------
 							AssignEditFinance(ref htmlcontent, roleId);
@@ -1045,8 +1054,10 @@ namespace Sunplus.Accounting.Business.Customer
 
 			#region Auto Suspend
 
-			if (Functions.Settings.IsVisibleAutoSuspend)
-				sg.Add(GetSettingControlAutoSuspend(roleId, isManageCustomerAccess, "AutoSuspend", !autosuspend, (roleId > 1), UplineAutoSuspend, CastAide.AsBoolean(row1["Enabled"])));
+            ////Remove checkbox autosuspend on left menu
+			//if (Functions.Settings.IsVisibleAutoSuspend)
+			//	sg.Add(GetSettingControlAutoSuspend(roleId, isManageCustomerAccess, "AutoSuspend", !autosuspend, (roleId > 1), UplineAutoSuspend, CastAide.AsBoolean(row1["Enabled"])));
+            //    sg.Add(GetSettingControlAutoSuspend(roleId, isManageCustomerAccess, "AutoSuspend", !autosuspend, (roleId > 1), UplineAutoSuspend, CastAide.AsBoolean(row1["Enabled"])));
 
             #endregion Auto Suspend
 
