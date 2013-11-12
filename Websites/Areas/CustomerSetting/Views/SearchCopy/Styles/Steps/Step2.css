@@ -1,0 +1,39 @@
+﻿/*step2*/
+#step2 .tab-active, #step2 .tab-inactive
+{
+    width: auto;
+    display: inline;
+    float: left;
+    margin-right: 1px;
+    padding: 0px 10px;
+    font-size: 14px;
+}
+
+#step2 .tab-active
+{
+    border: 1px solid #90c4d8;
+    background: #B6C4D1;
+    font-weight: bold;
+}
+#step2 .tab-inactive
+{
+    border: 1px solid #d7d7d7;
+    background: #4CABC4;
+}
+
+#step2 .tabsports
+{
+    cursor: pointer;
+    line-height:19px;
+    height:13px;
+}
+
+#step2 input.ng-invalid.ng-dirty
+{
+    background-color: #FF7700;
+}
+
+#step2 input.ng-valid.ng-dirty
+{
+    background-color: #FFFFFF;
+}

@@ -1,0 +1,104 @@
+﻿@using Fanex.PTEngine
+@model Fanex.CustomerSetting.Module.SearchCopy.ViewModels.CustomerSettingView
+@{
+    ViewBag.Title = "Search and Copy Super";
+    Layout = "~/Areas/CustomerSetting/Views/SearchCopy/Shared/_Layout.cshtml";
+}
+@section Styles
+{
+    <link rel="Stylesheet" href="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Styles/Steps/Step1.css")" />
+    <link rel="Stylesheet" href="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Styles/Steps/Step2.css")" />
+}
+@section Scripts
+{    
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/ModuleSearchCopy.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/SearchCopyController.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/RemoveSetting.js")"></script>
+}
+<div id="divSearchCopy" ng-controller="SearchCopyController">
+    <input type="hidden" id="currentURL" value= '@ViewBag.CurrentURL' />
+    <div id="errorMsg" class="validation-summary-errors hidden">
+    </div>
+    <div class="formPanel">
+        <div id="panelStep1">
+            <span id="spanstep1" class="step step1-active">Step 1: Search Existing Supper</span></div>
+        <div id="panelStep2">
+            <span id="spanstep2" class="step step2-inactive">Step 2: Enter Information</span></div>
+    </div>
+    @using (Html.BeginForm("Home", "Index", FormMethod.Post, new { id = "formSearchExistingSupper", @novalidate = "" }))
+    {                                 
+        <div id="step1">
+            <div style="clear: both; height: 1px">
+                &nbsp;</div>
+            @Html.Partial("~/Areas/CustomerSetting/Views/SearchCopy/Super/SearchForm.cshtml")
+        </div>
+        <div id="step2">
+            <div class="newline">
+                &nbsp;</div>
+            <div class="row tabsports">
+                <div id="tabGenealInformation" class="tab-active" ng-click="showSetting('#divGeneralInformation','tabGenealInformation');">
+                    <span>General Information</span></div>
+                <div id="tabSportsbook" class="tab-inactive" ng-click="showSetting('#divSportsbook','tabSportsbook');">
+                    <span>Sportsbook</span></div>
+                <div id="tabSportsbookMinPT" class="tab-inactive" ng-click="showSetting('#divSportsbookMinPT','tabSportsbookMinPT');">
+                    <span>Sportsbook Min PT</span></div>
+                @if (!Model.StatusSports.DisableRacing)
+                {
+                    <div id="tabRacing" class="tab-inactive" ng-click="showSetting('#divRacing','tabRacing');">
+                        <span>Racing</span></div>
+                    <div id="tabRacingMinPT" class="tab-inactive" ng-click="showSetting('#divRacingMinPT','tabRacingMinPT');">
+                        <span>Racing Min PT</span></div>
+                }
+                @if (!Model.StatusSports.DisableCasino)
+                {
+                    <div id="tabCasino" class="tab-inactive" ng-click="showSetting('#divCasino','tabCasino');">
+                        <span>Casino</span></div>
+                }
+                @if (!Model.StatusSports.DisableVirtualSports)
+                {
+                    <div id="tabVirtualSports" class="tab-inactive" ng-click="showSetting('#divVirtualSports','tabVirtualSports');">
+                        <span>Virtual Sports</span></div>
+                }
+                @if (!Model.StatusSports.DisableBingo)
+                {
+                    <div id="tabBingo" class="tab-inactive" ng-click="showSetting('#divBingo','tabBingo');">
+                        <span>Bingo</span></div>
+                }
+                @if (!Model.StatusSports.DisableLiveCasino)
+                {
+                    <div id="tabLiveCasino" class="tab-inactive" ng-click="showSetting('#divLiveCasino','tabLiveCasino');">
+                        <span>Live Casino</span></div>
+                }
+            </div>
+            <div class="settingInfo" style="overflow: auto">
+                @Html.Partial("~/Areas/CustomerSetting/Views/SearchCopy/Super/GeneralInformation.cshtml")
+                 <div id="divSport" class="bg_table" style="width: 100%">
+                    <iframe id="frmSport" onload='setFrameLoaded();' scrolling="auto" frameborder="0" style="width: 100%; height: 903px;"
+                        hspace="0" vspace="0" marginheight="0" marginwidth="0" src=""
+                        name="frmSport"></iframe>
+                </div>
+            </div>
+            <div class="newline">
+                &nbsp;</div>
+            <div class="row">
+                <div class="grid3">
+                    <input id="step2Back" type="button" class="btnStep" value="< Previous" />
+                </div>
+                <div class="grid3">
+                    <input id="step2Submit" type="button" class="btnStep" value="Submit" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script type="text/javascript">
+    
+    function toUrl(relativeUrl) {
+        return '@Url.Content("~/CustomerSetting/SearchCopy/")' + relativeUrl;
+    };
+
+    function setFrameLoaded() {
+        PTSetting.SportType.SetFrameLoaded();
+    };
+
+</script>

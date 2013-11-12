@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html ng-app="SearchCopy">
+<head>
+    <meta name="viewport" content="width=device-width" http-equiv="X-FRAME-Options"/>
+    <title>@ViewBag.Title</title>
+    <link rel="Stylesheet" type="text/css" href="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Areas/CustomerSetting/Views/SearchCopy/CommonCss")" />
+    @RenderSection("Styles", false)    
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/Libs/jquery.js")"></script>            
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/Libs/jquery.formattyping.js")"></script>            
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/Libs/jquery.caret.1.02.js")"></script>            
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/Libs/jquery.setcaretposition.js")"></script>            
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/Libs/numeral.js")"></script>                
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js")"></script>
+</head>
+<body>
+    @RenderBody()
+    <script type="text/javascript">
+
+        window.rootUrl = '@ViewBag.RootUrl';
+
+    </script>
+    @*<script type="text/javascript" src="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Areas/CustomerSetting/Views/SearchCopy/CommonJs")" ></script>*@
+    @RenderSection("scripts", required: false)
+</body>
+</html>
