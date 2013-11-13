@@ -613,7 +613,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
             }
 
             var addResult = NewLicenseeAddNewDummyUser(ref newLicenseePostParam, roleId);
-            if (result.ErrorCode != 0)
+            if (addResult.ErrorCode != 0)
             {
                 result = addResult;
                 return result;
