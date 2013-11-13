@@ -458,40 +458,45 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
 
             if (result.ErrorCode != 0)
             {
+                result.ErrorMessage += " (" + newLicenseePostParam.SuperName + ")";
                 return result;
             }
 
-            List<int> succeededIdList = new List<int>();
-            succeededIdList.Add(newLicenseePostParam.SuperId);
+            List<string> succeededIdList = new List<string>();
+            succeededIdList.Add("Super: " + newLicenseePostParam.SuperName.ToString());
             if (string.IsNullOrWhiteSpace(newLicenseePostParam.MasterName))
             {
-                result.ErrorMessage = string.Join(",", succeededIdList);
+                result.SuccessMessageList = succeededIdList;
                 return result;
             }
 
             result = NewLicenseeAddNewMaster(newLicenseePostParam);
             if (result.ErrorCode != 0)
             {
+                result.ErrorMessage += " (" + newLicenseePostParam.MasterName + ")";
+                result.SuccessMessageList = succeededIdList;
                 return result;
             }
 
-            succeededIdList.Add(newLicenseePostParam.MasterId);
+            succeededIdList.Add("Master: " + newLicenseePostParam.MasterName.ToString());
             if (string.IsNullOrWhiteSpace(newLicenseePostParam.AgentName))
             {
-                result.ErrorMessage = string.Join(",", succeededIdList);
+                result.SuccessMessageList = succeededIdList;
                 return result;
             }
 
             result = NewLicenseeAddNewAgent(newLicenseePostParam);
             if (result.ErrorCode != 0)
             {
+                result.ErrorMessage += " (" + newLicenseePostParam.AgentName + ")";
+                result.SuccessMessageList = succeededIdList;
                 return result;
             }
 
-            succeededIdList.Add(newLicenseePostParam.AgentId);
+            succeededIdList.Add("Agent: " + newLicenseePostParam.AgentName.ToString());
             if (string.IsNullOrWhiteSpace(newLicenseePostParam.DummyMasterName))
             {
-                result.ErrorMessage = string.Join(",", succeededIdList);
+                result.SuccessMessageList = succeededIdList;
                 return result;
             }
 
@@ -501,6 +506,8 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 ref succeededIdList);
             if (result.ErrorCode != 0)
             {
+                result.ErrorMessage += " (" + newLicenseePostParam.DummyMasterName + ")";
+                result.SuccessMessageList = succeededIdList;
                 return result;
             }
 
@@ -516,12 +523,14 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 ref succeededIdList);
             if (result.ErrorCode != 0)
             {
+                result.ErrorMessage += " (" + newLicenseePostParam.DummyAgentName + ")";
+                result.SuccessMessageList = succeededIdList;
                 return result;
             }
 
             if (string.IsNullOrWhiteSpace(newLicenseePostParam.DummyMemberName))
             {
-                result.ErrorMessage = string.Join(",", succeededIdList);
+                result.SuccessMessageList = succeededIdList;
                 return result;
             }
 
@@ -535,11 +544,13 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                     ref succeededIdList);
                 if (result.ErrorCode != 0)
                 {
+                    result.ErrorMessage += " (" + dummyMemberName + ")";
+                    result.SuccessMessageList = succeededIdList;
                     return result;
                 }
             }
 
-            result.ErrorMessage = string.Join(",", succeededIdList);
+            result.SuccessMessageList = succeededIdList;
             return result;
         }
 
@@ -580,14 +591,14 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
         private Result NewLicenseeAddNewDummyUser(ref NewLicenseePostParam newLicenseePostParam,
             int roleId,
             ref Result result,
-            ref List<int> succeededIdList)
+            ref List<string> succeededIdList)
         {
             switch (roleId)
             {
                 case RoleConstants.Master:
                     if (string.IsNullOrWhiteSpace(newLicenseePostParam.DummyMasterName))
                     {
-                        result.ErrorMessage = string.Join(",", succeededIdList);
+                        result.SuccessMessageList = succeededIdList;
                         return result;
                     }
 
@@ -595,7 +606,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 case RoleConstants.Agent:
                     if (string.IsNullOrWhiteSpace(newLicenseePostParam.DummyAgentName))
                     {
-                        result.ErrorMessage = string.Join(",", succeededIdList);
+                        result.SuccessMessageList = succeededIdList;
                         return result;
                     }
 
@@ -603,7 +614,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 case RoleConstants.Member:
                     if (string.IsNullOrWhiteSpace(newLicenseePostParam.DummyMemberName))
                     {
-                        result.ErrorMessage = string.Join(",", succeededIdList);
+                        result.SuccessMessageList = succeededIdList;
                         return result;
                     }
 
@@ -622,13 +633,13 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
             switch (roleId)
             {
                 case RoleConstants.Master:
-                    succeededIdList.Add(newLicenseePostParam.DummyMasterId);
+                    succeededIdList.Add("Dummy Master: " + newLicenseePostParam.DummyMasterName);
                     break;
                 case RoleConstants.Agent:
-                    succeededIdList.Add(newLicenseePostParam.DummyAgentId);
+                    succeededIdList.Add("Dummy Agent: " + newLicenseePostParam.DummyAgentName);
                     break;
                 case RoleConstants.Member:
-                    succeededIdList.Add(newLicenseePostParam.DummyMemberId);
+                    succeededIdList.Add("Dummy Member: " + newLicenseePostParam.DummyMemberName);
                     break;
                 default:
                     break;

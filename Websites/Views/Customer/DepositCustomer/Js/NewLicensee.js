@@ -304,49 +304,28 @@ newLic.submit = function () {
         data: $.toJSON(this.getPostParam()),
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
-            if (parseInt(data.ErrorCode) != 0) {
-                common.showErr(data.ErrorMessage);
-            }
-            else {
-                var infoList = [];
+            if (data.SuccessMessageList && data.SuccessMessageList.length > 0) {
                 var infoPrefix = "";
                 for (var i = 0; i < 17; i++) {
                     infoPrefix += "&nbsp;";
                 }
 
-                infoList.push(infoPrefix + "super: " + $("#tbxSuperName").val());
-                var masterName = $("#tbxMasterName").val();
-                if (masterName != "") {
-                    infoList.push(infoPrefix + "master: " + masterName);
-                }
-
-                var agentName = $("#tbxAgentName").val();
-                if (agentName != "") {
-                    infoList.push(infoPrefix + "agent: " + agentName);
-                }
-
-                var dummyInfoList = [];
-                var dummyMasterName = $("#tbxDummyMasterName").val();
-                if (dummyMasterName != "") {
-                    infoList.push(infoPrefix + "dummy master: " + dummyMasterName);
-                }
-
-                var dummyAgentName = $("#tbxDummyAgentName").val();
-                if (dummyAgentName != "") {
-                    infoList.push(infoPrefix + "dummy agent: " + dummyAgentName);
-                }
-
-                var dummyMemberName = $("#tbxDummyMemberName").val();
-                if (dummyMemberName != "") {
-                    infoList.push(infoPrefix + "dummy member: " + dummyMemberName);
-                }
-
-                var msg = "Add new: " + "<br />" +
-                          infoList.join("<br />") +
+                var msg = "Add new: " + "<br />" + infoPrefix +
+                          data.SuccessMessageList.join("<br />" + infoPrefix) +
                           "<br />" + "successfully!";
-                common.showSuccess(msg);
+                showAlertMessage("divSuccess", msg, 0);
+                $("#divSuccess").show().find("div:first");
+            } else {
+                $("#divSuccess").hide();
+            }
+
+            if (parseInt(data.ErrorCode) != 0) {
+                common.showErr(data.ErrorMessage);
+            }
+            else {
                 common.resetValues();
             }
+
             common.unBlock();
         }
     });

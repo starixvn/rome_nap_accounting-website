@@ -241,6 +241,7 @@ common.isNumber = function (n) {
 
 common.hideDivMsg = function () {
     $("#divErr").hide();
+    $("#divSuccess").hide();
 };
 
 common.showErr = function (text) {
