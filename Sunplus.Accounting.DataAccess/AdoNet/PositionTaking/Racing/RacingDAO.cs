@@ -7,6 +7,7 @@ using Sunplus.Accounting.Entities.PositionTaking.Racing;
 using Fanex.Data;
 using System;
 using DNAide.Core;
+using System.Data;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking.Racing
 {
@@ -14,74 +15,101 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.PositionTaking.Racing
     {
         public System.Data.DataTable GetRacingStatus(int custId)
         {
-            DbResult dbResult = null;
-            string spMaping = "GetRacingStatus";
-            var param = new Hashtable { { "custid", custId } };
-            if (!string.IsNullOrEmpty(spMaping))
+            DataTable dataTable = new DataTable();
+            try
             {
-                var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.RacingSession.StoreCollection.RacingControl, spMaping);
-                dbResult = DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
-                if (dbResult != null && dbResult.ResultSet != null && dbResult.ResultSet.Tables.Count > 0)
-                    return dbResult.ResultSet.Tables[0];
+                string spMaping = "GetRacingStatus";
+                var param = new Hashtable { { "custid", custId } };
+                if (!string.IsNullOrEmpty(spMaping))
+                {
+                    using (ObjectDb db = new ObjectDb(spMaping, 600))
+                    {
+                        db.AssignParamValues(param);
+                        var ds = db.ExecuteDataSet();
+
+                        if (ds != null && ds.Tables.Count > 0)
+                        {
+                            dataTable = ds.Tables[0];
+                        }
+                    }
+                }
             }
-            return null;
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return dataTable;
         }
 
         public System.Data.DataTable GetRacingSetting(int custId, int roleId)
         {
-            DbResult dbResult = null;
-            string spMaping = null;
-            var param = new Hashtable { { "custid", custId } };
-            switch (roleId)
+            DataTable dataTable = new DataTable();
+            try
             {
-                case (int)CustInfo.Roles.Super:
-                    spMaping = "GetSuperSetting";
-                    break;
+                DbResult dbResult = null;
+                string spMaping = null;
+                var param = new Hashtable { { "custid", custId } };
+                switch (roleId)
+                {
+                    case (int)CustInfo.Roles.Super:
+                        spMaping = "GetSuperSetting";
+                        break;
 
-                case (int)CustInfo.Roles.Master:
-                    spMaping = "GetMasterSetting";
-                    break;
+                    case (int)CustInfo.Roles.Master:
+                        spMaping = "GetMasterSetting";
+                        break;
 
-                case (int)CustInfo.Roles.Agent:
-                    spMaping = "GetAgentSetting";
-                    break;
+                    case (int)CustInfo.Roles.Agent:
+                        spMaping = "GetAgentSetting";
+                        break;
 
-                case (int)CustInfo.Roles.Member:
-                    spMaping = "GetMemberSetting";
-                    break;
+                    case (int)CustInfo.Roles.Member:
+                        spMaping = "GetMemberSetting";
+                        break;
 
-                case (int)CustInfo.Roles.SuperOnMember: //*******Super on Member params*****
-                    spMaping = "GetSuperOnMember";
-                    break;
+                    case (int)CustInfo.Roles.SuperOnMember: //*******Super on Member params*****
+                        spMaping = "GetSuperOnMember";
+                        break;
 
-                case (int)CustInfo.Roles.MasterOnMember: //*******Master on Member params*****
-                    spMaping = "GetMasterOnMember";
-                    break;
+                    case (int)CustInfo.Roles.MasterOnMember: //*******Master on Member params*****
+                        spMaping = "GetMasterOnMember";
+                        break;
 
-                case (int)CustInfo.Roles.SuperMin: //*******Super Min params*****
-                    spMaping = "GetSuperMin";
-                    break;
+                    case (int)CustInfo.Roles.SuperMin: //*******Super Min params*****
+                        spMaping = "GetSuperMin";
+                        break;
 
-                case (int)CustInfo.Roles.MasterMinMax: //*******Master Min/Max params*****
-                    spMaping = "GetMasterMinMax";
-                    break;
+                    case (int)CustInfo.Roles.MasterMinMax: //*******Master Min/Max params*****
+                        spMaping = "GetMasterMinMax";
+                        break;
 
-                case (int)CustInfo.Roles.AgentMinMax: //*******Agent Min/Max params*****
-                    spMaping = "GetAgentMinMax";
-                    break;
+                    case (int)CustInfo.Roles.AgentMinMax: //*******Agent Min/Max params*****
+                        spMaping = "GetAgentMinMax";
+                        break;
 
-                default:
-                    break;
+                    default:
+                        break;
+                }
+                if (!string.IsNullOrEmpty(spMaping))
+                {
+                    using (ObjectDb db = new ObjectDb(spMaping, 600))
+                    {
+                        db.AssignParamValues(param);
+                        var ds = db.ExecuteDataSet();
+
+                        if (ds != null && ds.Tables.Count > 0)
+                        {
+                            dataTable = ds.Tables[0];
+                        }
+                    }
+                }
             }
-            if (!string.IsNullOrEmpty(spMaping))
+            catch (Exception ex)
             {
-                //var spElement = GetStoreProcedure(StoreProcedureSection.StoreCollection.Racing, spMaping);
-                var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.RacingSession.StoreCollection.RacingControl, spMaping);
-                dbResult = DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
-                if (dbResult != null && dbResult.ResultSet != null && dbResult.ResultSet.Tables.Count > 0)
-                    return dbResult.ResultSet.Tables[0];
+                LogExtensions.ExceptionHandler(ex);
             }
-            return null;
+
+            return dataTable;
         }
 
         public Result UpdateRacingStatus(Hashtable settingParams)

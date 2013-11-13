@@ -9,20 +9,20 @@ using IBCUtils;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
+using Sunplus.Core.LoggingLib;
 using Encryption = DNAide.Utils.Encryption;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL
 {
     using Fanex.Data;
 
-    public class UserController : DataAccess
+    public class UserController:DataAccess
     {
         public static StoreProcedureElement GetUserControlStoreProcedure(UserControlSession.StoreCollection storeCollection, string alias)
         {
             var sps = UserControlSession.Instance[storeCollection];
             return sps != null ? sps[alias] : null;
         }
-
         public static StoreProcedureElement GetCustomerStoreProcedure(string alias)
         {
             var sps = CustomerSession.Instance[CustomerSession.StoreCollection.CustomerControl];
@@ -32,7 +32,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
         private static readonly CultureInfo cult = CultureInfo.CurrentCulture;
 
         /// <summary>
-        /// Execute SP On_UserUpd.
+        /// Execure SP On_UserUpd
         /// @PhuongDN
         /// </summary>
         /// <param name="onlineUserId"></param>
@@ -49,10 +49,14 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
             param.Add("iskickedout", online);
             try
             {
-                var spElement = new UserController().GetStoreProcedure(UserControlSession.StoreCollection.Login, "UserUpd");
+                using (ObjectDb db = new ObjectDb("UserUpd"))
+                {
+                    db.AssignParamValues(param);
+                    db.ExecuteNonQuery();
 
-                DbResult rs = DbHelper.ExecuteCmd(spElement.Name, param, spElement.DbName);
-                online = !Convert.ToBoolean(rs.Outputs["iskickedout"], cult);
+                    var output = db.GetOuputParams();
+                    online = !Convert.ToBoolean(output["iskickedout"]);
+                }                
             }
             catch
             {
@@ -132,9 +136,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
             param.Add("roleid", 0);
             try
             {
-                var spElement = GetUserControlStoreProcedure(UserControlSession.StoreCollection.Login, "CustomerSelBelonging");
-                rs = DbHelper.ExecuteCmd(spElement.Name, param, spElement.DbName);
-                roleId = Convert.ToInt32(rs.Outputs["roleid"]);
+                using (ObjectDb db = new ObjectDb("CustomerSelBelonging", 600))
+                {
+                    db.AssignParamValues(param);
+                    var output = db.GetOuputParams();
+
+                    roleId = Convert.ToInt32(rs.Outputs["roleid"]);
+                }
             }
             catch (Exception ex)
             {
@@ -155,8 +163,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
             {
                 var param = new Hashtable();
                 param.Add("custid", custId);
-                var spElement = GetCustomerStoreProcedure("CustomerSelDownLineList");
-                rs = DbHelper.Execute(spElement.Name, param, spElement.DbName);
+                
+                using (ObjectDb db = new ObjectDb("CustomerSelDownLineList", 180))
+                {
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -222,7 +237,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
             {
                 error.ErrorCode = IbcError.INTERNAL_ERROR;
                 error.ErrorMsg = ex.Message;
-
+                
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return error;
@@ -235,7 +250,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
             system = "";
             var error = new IbcError(IbcError.SUCCESS, IbcError.SUCCESS_MSG);
             try
-            {
+            {                  
                 using (ObjectDb objDb = new ObjectDb("Acc_LoginAdmin"))
                 {
                     var param = new Hashtable();
@@ -272,12 +287,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
             {
                 error.ErrorCode = IbcError.INTERNAL_ERROR;
                 error.ErrorMsg = ex.Message;
-
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return error;
         }
 
+        
         /// <summary>
         /// Insert into on_user table for accountant log-in
         /// </summary>
@@ -290,22 +306,26 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
             int onUserId = 0;
             try
             {
-                var param = new Hashtable();
-                param.Add("custid", custId);
-                param.Add("serverid", serverId);
-                param.Add("ip", ip);
-                param.Add("on_userid", 0);
-                param.Add("subaccid", 3);
-                param.Add("netsessionid", HttpContext.Current.Session.SessionID);
+                using (ObjectDb db = new ObjectDb("Checkin"))
+                {
+                    var param = new Hashtable();
+                    param.Add("custid", custId);
+                    param.Add("serverid", serverId);
+                    param.Add("ip", ip);
+                    param.Add("on_userid", 0);
+                    param.Add("subaccid", 3);
+                    param.Add("netsessionid", HttpContext.Current.Session.SessionID);
 
-                var spElement = new UserController().GetStoreProcedure(UserControlSession.StoreCollection.Login, "Checkin");
-
-                DbResult ds = DbHelper.ExecuteCmd(spElement.Name, param, spElement.DbName);
-                onUserId = Convert.ToInt32(ds.Outputs["on_userid"]);
+                    db.AssignParamValues(param);
+                    db.ExecuteNonQuery();
+                    var output = db.GetOuputParams();
+                    onUserId = Convert.ToInt32(output["on_userid"]);
+                }                
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return onUserId;
         }
@@ -318,13 +338,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
         {
             try
             {
-                var param = new Hashtable();
-                param.Add("on_userid", onAccId);
-                param.Add("roleid", AppSession.RoleID);
+                using (ObjectDb db = new ObjectDb("UserUpdLogout"))
+                {
+                    var param = new Hashtable();
+                    param.Add("on_userid", onAccId);
+                    param.Add("roleid", AppSession.RoleID);
 
-                var spElement = new UserController().GetStoreProcedure(UserControlSession.StoreCollection.Login, "UserUpdLogout");
-
-                DbHelper.ExecuteCmd(spElement.Name, param, spElement.DbName);
+                    db.AssignParamValues(param);
+                    db.ExecuteNonQuery();
+                }                
             }
             catch (Exception ex)
             {
@@ -340,14 +362,16 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
         {
             try
             {
-                var param = new Hashtable();
-                param.Add("on_userid", onAccId);
-                param.Add("username", username);
-                param.Add("roleid", AppSession.RoleID);
+                using (ObjectDb db = new ObjectDb("UserUpdLogout"))
+                {
+                    var param = new Hashtable();
+                    param.Add("on_userid", onAccId);
+                    param.Add("username", username);
+                    param.Add("roleid", AppSession.RoleID);
 
-                var spElement = new UserController().GetStoreProcedure(UserControlSession.StoreCollection.Login, "UserUpdLogout");
-
-                DbHelper.ExecuteCmd(spElement.Name, param, spElement.DbName);
+                    db.AssignParamValues(param);
+                    db.ExecuteNonQuery();
+                }                
             }
             catch (Exception ex)
             {
@@ -359,9 +383,18 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
         {
             var param = new Hashtable();
             param.Add("inputuser", id);
-            var spElement = GetCustomerStoreProcedure("DBA_GetAgent");
-            DbResult ds = DbHelper.Execute(spElement.Name, param, spElement.DbName);
-            if (ds != null && ds.ResultSet.Tables.Count > 0 && ds.ResultSet.Tables[0].Rows.Count > 0)
+            
+            DbResult ds = null;
+            using (ObjectDb db = new ObjectDb("DBA_GetAgent"))
+            {
+                db.AssignParamValues(param);
+                var dataset = db.ExecuteDataSet();
+                var output = db.GetOuputParams();
+
+                ds = new DbResult(output, dataset);
+            }
+
+            if (ds.ResultSet.Tables[0].Rows.Count > 0)
             {
                 if (!Convert.IsDBNull(ds.ResultSet.Tables[0].Rows[0]["membername"]))
                     return ds.ResultSet.Tables[0].Rows[0]["membername"].ToString();
@@ -372,7 +405,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
                 if (!Convert.IsDBNull(ds.ResultSet.Tables[0].Rows[0]["superName"]))
                     return ds.ResultSet.Tables[0].Rows[0]["superName"].ToString();
             }
-            return string.Empty;
+            return "";
         }
 
         /// <summary>
@@ -392,11 +425,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
                     obj.AssignParamValues(param);
                     var ds = obj.ExecuteDataSet();
                     if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0) return ds.Tables[0].Rows;
+                    
                 }
             }
             catch (Exception ex)
             {
-                Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                    Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return null;
         }

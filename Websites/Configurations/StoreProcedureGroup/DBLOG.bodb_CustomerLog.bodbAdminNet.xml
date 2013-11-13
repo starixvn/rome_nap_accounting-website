@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+  <Function Name="Report for balance difference">
+    <Setting Key="Acc_Rpt_Balance_Company_History" SpName="Acc_Rpt_Balance_Company_History" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />    
+  </Function>
+  <Function Name="User - Account Management">
+    <Setting Key="UserLog_UserControlSel" SpName="Acc_UserLog_UserControlSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>
+    <Setting Key="UserLog_UserControlSelTotalRecords" SpName="Acc_UserLog_UserControlSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>
+  </Function>
+
+  <Function Name="Customer">
+    <Setting Key="CustomerSelVirtualRateHistory" SpName="Acc_CustomerSelVirtualRateHistory" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>    
+  </Function>
+
+  <Function Name="Customer - Log">
+    <Setting Key="GetLogSetting" SpName="Acc_UserLog_RunSPSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>
+    <Setting Key="GetLogSettingTotal" SpName="Acc_UserLog_RunSPSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>
+    <Setting Key="GetLogLogin" SpName="Acc_UserLog_LoginSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>
+    <Setting Key="GetLogLoginTotal" SpName="Acc_UserLog_LoginSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>
+    <Setting Key="GetLogCredit" SpName="Acc_UserLog_CreditSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>
+    <Setting Key="GetLogCreditTotal" SpName="Acc_UserLog_CreditSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>
+  </Function>
+
+  <Function Name="Report - WinLoss">
+    <Setting Key="Acc_CustomerSelVirtualRateHistory" SpName="Acc_CustomerSelVirtualRateHistory" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
+  </Function>
+
+  <Function Name="Live Casino - Stake Level Setting">
+    <Setting Key="WriteLog_UserLog_RunSP" SpName="WriteLog_UserLog_RunSP" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"  />
+  </Function>
+</Functions>

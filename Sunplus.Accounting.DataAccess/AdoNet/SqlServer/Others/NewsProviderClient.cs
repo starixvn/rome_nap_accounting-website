@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using DNAide.Data;
 using Sunplus.Accounting.DataAccess.Provider.Others;
+using System;
+using Fanex.Tarus.Infrastructure.Extensions;
+using Fanex.Data;
 
 /// <summary>
 /// Summary description for NewsProviderClient
@@ -12,37 +15,156 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Others
     {
         public override DbResult NewsIns(Hashtable param)
         {
-            return DbHelper.Execute("Acc_NewsIns", param, DBType.MAINTENANCE, 300);
+            DbResult result = null;
+            try
+            {
+                using (ObjectDb db = new ObjectDb("Acc_NewsIns", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         public override DbResult NewsUpd(Hashtable param)
         {
-            return DbHelper.Execute("Acc_NewsUpd", param, DBType.MAINTENANCE, 300);
+            DbResult result = null;
+            try
+            {
+                using (ObjectDb db = new ObjectDb("Acc_NewsUpd", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         public override DbResult NewsDel(Hashtable param)
         {
-            return DbHelper.Execute("Acc_NewsDel", param, DBType.MAINTENANCE, 300);
+            DbResult result = null;
+            try
+            {
+                using (ObjectDb db = new ObjectDb("Acc_NewsDel", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         public override DbResult NewsSel(Hashtable param)
         {
-            return DbHelper.Execute("Acc_NewsSel", param, DBType.MAINTENANCE, 300);
+            DbResult result = null;
+            try
+            {
+                using (ObjectDb db = new ObjectDb("Acc_NewsSel", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         public override DbResult NewsSelAll(Hashtable param)
         {
-            return DbHelper.Execute("Acc_NewsSelAll", param, DBType.MAINTENANCE, 300);
+            DbResult result = null;
+            try
+            {
+                using (ObjectDb db = new ObjectDb("Acc_NewsSelAll", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         public override DbResult NewsSelFeature(Hashtable param)
         {
-            return DbHelper.Execute("Acc_NewsSelFeature", param, DBType.MAINTENANCE, 300);
+            DbResult result = null;
+            try
+            {
+                using (ObjectDb db = new ObjectDb("Acc_NewsSelFeature", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         public override DbResult NewsUpdFeature(Hashtable param)
         {
-            return DbHelper.Execute("Acc_NewsUpdFeature", param, DBType.MAINTENANCE, 300);
+            DbResult result = null;
+            try
+            {
+                using (ObjectDb db = new ObjectDb("Acc_NewsUpdFeature", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
     }
 }

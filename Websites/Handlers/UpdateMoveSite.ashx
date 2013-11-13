@@ -26,7 +26,18 @@ public class UpdateMoveCust : IHttpHandler,IRequiresSessionState {
             case "1"://get site info from username
                 System.Collections.Hashtable param = new System.Collections.Hashtable();
                 param.Add("username", context.Request["CustId"]);
-                DNAide.Data.DbResult ds = DNAide.Data.DbHelper.Execute("Acc_CustomerSelSiteByUserName", param, DBType.ARCHIVE);
+                DNAide.Data.DbResult ds = null;
+
+                using (Fanex.Data.ObjectDb db = new Fanex.Data.ObjectDb("Acc_CustomerSelSiteByUserName", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var datatset = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    ds = new DNAide.Data.DbResult(output, datatset);
+                }
+                
                 //Site|RoleId|CustId|CustRoleId
                 string str = "";
                 if (ds.ResultSet.Tables.Count > 0)

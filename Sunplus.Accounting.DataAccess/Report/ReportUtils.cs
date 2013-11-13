@@ -1,13 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Text;
 using System.Web;
 using DNAide.Core;
 using DNAide.Data;
 using Microsoft.Practices.EnterpriseLibrary.Caching;
 using Microsoft.Practices.EnterpriseLibrary.Caching.Expirations;
-using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
+using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
+using Fanex.Tarus.Infrastructure.Extensions;
+using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.Report
 {
@@ -17,10 +23,9 @@ namespace Sunplus.Accounting.DataAccess.Report
         {
             var sps = ReportSession.Instance[storeCollection];
             return sps != null ? sps[aliasName] : null;
+
         }
-
         #region IsRepDB
-
         /// <summary>
         /// if isRep = true then get data from Replication(DatabaseType.ARCHIVE_1)
         /// else then get data from Main(DatabaseType.MAIN)
@@ -29,6 +34,7 @@ namespace Sunplus.Accounting.DataAccess.Report
         {
             get
             {
+
                 string IsRep = HttpContext.Current.Request["db"];
                 IsRep = string.IsNullOrEmpty(IsRep) ? "Rep" : IsRep;
                 if (IsRep.Equals("Rep"))
@@ -49,8 +55,10 @@ namespace Sunplus.Accounting.DataAccess.Report
                 else return "Main";
             }
         }
+        #endregion
 
-        #endregion IsRepDB
+
+
 
         public static class BalanceUp
         {
@@ -103,8 +111,22 @@ namespace Sunplus.Accounting.DataAccess.Report
 
             private static DbResult Age_BalDaySel()
             {
-                var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Others, "SelBalanceUpDay");
-                return DbHelper.Execute(spElement.Name, spElement.DbName);
+                DbResult result = null;
+                try
+                {
+                    using (ObjectDb db = new ObjectDb("Core_ReportService_GetBalanceUpDay"))
+                    {
+                        var ds = db.ExecuteDataSet();
+                        var output = db.GetOuputParams();
+
+                        result = new DbResult(output, ds);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogExtensions.ExceptionHandler(ex);
+                }
+                return result;                
             }
         }
     }

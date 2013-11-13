@@ -13,7 +13,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Helper
     {
         public DataTable GetForexAccounts()
         {
-            using (var objDb = new ObjectDb("SelForexAccount"))
+            using (var objDb = new ObjectDb("Acc_CustomerSelForexAccount"))
             {
                 var dataSet = objDb.ExecuteDataSet();
                 if (dataSet == null || dataSet.Tables.Count == 0)
@@ -29,7 +29,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Helper
         {
             DataTable datatable;
             var balmoveday = new Dictionary<string, DateTime>();
-            using (var objDb = new ObjectDb("SelBalanceUpDay"))
+            using (var objDb = new ObjectDb("Core_ReportService_GetBalanceUpDay"))
             {
                 var ds = objDb.ExecuteDataSet();
                 datatable = ds.Tables[0];

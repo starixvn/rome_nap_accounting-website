@@ -2,8 +2,12 @@
 using System.Collections;
 using DNAide.Core;
 using DNAide.Data;
-using Sunplus.Accounting.DataAccess;
+
 using Sunplus.Accounting.Entities.SpecialDelete;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.DataAccess;
+using Sunplus.Core.LoggingLib;
+using Fanex.Data;
 
 /// <summary>
 /// Summary description for Messenger
@@ -40,6 +44,7 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 Msg.Content_ko = CorrectSpace(Msg.Content_ko);
                 Msg.Content_es = CorrectSpace(Msg.Content_es);
 
+
                 p.Add("ispublic", 0);
                 p.Add("msgtype", 1);
                 p.Add("issticky", 0);
@@ -58,7 +63,14 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                 p.Add("content_ko", Msg.Content_ko);
                 p.Add("content_es", Msg.Content_es);
 
-                rs = DbHelper.Execute("Dot_Msg_SetMessage", p, DBType.MESSAGE, 120);
+                using (ObjectDb db = new ObjectDb("Dot_Msg_SetMessage"))
+                {
+                    db.AssignParamValues(p);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
 
                 Msg.MessageId = CastAide.AsInt32(rs.ResultSet.Tables[0].Rows[0]["MessageId"]);
                 if (Msg.MessageId > 0)
@@ -68,7 +80,8 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return Msg.MessageId;
         }
@@ -96,13 +109,18 @@ namespace Sunplus.Accounting.Business.SpecialDelete
                     // set user or role via SP
                     if (TargetId[i] != 0)
                     {
-                        DbHelper.Execute("Dot_Msg_SetUsrMessage", p, DBType.MESSAGE, 120);
+                        using (ObjectDb db = new ObjectDb("Dot_Msg_SetUsrMessage"))
+                        {
+                            db.AssignParamValues(p);
+                            db.ExecuteNonQuery();
+                        }
                     }
                 }
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
         }
 
@@ -121,8 +139,10 @@ namespace Sunplus.Accounting.Business.SpecialDelete
             }
             else
             {
-                if (scontent.Substring(index - 1, 1).Trim().Length > 0)
-                    scontent = scontent.Replace("@@", " @@");
+               if (scontent.Substring(index - 1, 1).Trim().Length > 0)
+                    scontent = scontent.Replace("@@", " @@");    
+                
+                
             }
             return scontent;
         }

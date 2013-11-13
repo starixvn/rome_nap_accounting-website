@@ -1,16 +1,21 @@
 ﻿using System;
-using System.Collections;
 using DNAide.Data;
+
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
+using Sunplus.Core.LoggingLib;
+using Sunplus.Accounting.Core.Common;
+using System.Collections;
+using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.Report.MemberStatistics
 {
-    public class GamesActiveMembers : DataAccess, IGamesActiveMembers
+    public class GamesActiveMembers :DataAccess, IGamesActiveMembers
     {
         private static Core.Configurations.StoreProcedureElement GetReportStoreProcedure(ReportSession.StoreCollection storeCollection, string aliasName)
         {
             var sps = ReportSession.Instance[storeCollection];
             return sps != null ? sps[aliasName] : null;
+
         }
 
         public DbResult GetNumberOfActiveMembers(DateTime fromDate, DateTime toDate, DateTime balanceUpDay)
@@ -22,12 +27,21 @@ namespace Sunplus.Accounting.DataAccess.Report.MemberStatistics
                 param.Add("fromdate", fromDate);
                 param.Add("todate", toDate);
                 param.Add("balanceupday", balanceUpDay);
-                var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Gaming, "GamesActiveMember");
-                dbResult = DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
+
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_GamesActiveMember", 1000))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    dbResult = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dbResult;
         }

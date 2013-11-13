@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using DNAide.Core;
 using DNAide.Data;
+using Fanex.Data;
 using Sunplus.Accounting.Business.PositionTaking;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
@@ -144,7 +145,14 @@ namespace Sunplus.Accounting.Business.Security
             hash.Add("iscrosstransfer", 0);
             hash.Add("errcode", 0);
             hash.Add("errmsg", string.Empty);
-            DbResult rs = DbHelper.Execute("Acc_CustomerSelIsCrossTransfer", hash, DBType.WAREHOUSE);
+            DbResult rs;
+            using (ObjectDb objectDb = new ObjectDb("Acc_CustomerSelIsCrossTransfer"))
+            {
+                objectDb.AssignParamValues(hash);
+                var dataset = objectDb.ExecuteDataSet();
+                var outputParams = objectDb.GetOuputParams();
+                rs = new DbResult(outputParams, dataset);
+            }
 
             int errcode = CastAide.AsInt32(rs.Outputs["errcode"]);
             errmsg = CastAide.AsString(rs.Outputs["errmsg"]);
