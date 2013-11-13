@@ -52,15 +52,9 @@
                 Site
             </td>
             <td class="l" style="width: 45%">
-                @*<select id="listSite" ng-model="existedUser.selectedSite.site" ng-options="s.site for s in existedUser.sites"></select><br>*@
-                @*    <select ng-init="selectedValue1 = 0">
-                                    <option ng-repeat="site in existedUser.sites" value="site.siteid" ng-selected="{{site.site==selectedSite1}}">{{site.site}}</option>
-                                 </select><br>*@
-                <select id="listSite">
-                    <option value="{{site.site}}" ng-repeat="site in existedUser.sites" ng-model="site.site"
-                        ng-selected="{{site.site == existedUser.selectedSite.site}}">{{site.site}}</option>
-                </select>
-            </td>
+                <select id="listSite" ng-model="existedUser.selectedSite" ng-options="s.SiteName for s in existedUser.sites">                
+                </select>                
+            </td>            
             <td class="l" style="width: 12%">
                 Fax
             </td>

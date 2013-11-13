@@ -5,7 +5,7 @@
     <title>@ViewBag.Title</title>
     <link rel="Stylesheet" type="text/css" href="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Areas/CustomerSetting/Views/SearchCopy/CommonCss")" />
     @RenderSection("Styles", false)    
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/Libs/jquery.js")"></script>            
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/Libs/jquery-1.10.2.min.js")"></script>                
     <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/Libs/jquery.formattyping.js")"></script>            
     <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/Libs/jquery.caret.1.02.js")"></script>            
     <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/Libs/jquery.setcaretposition.js")"></script>            
@@ -20,6 +20,6 @@
 
     </script>
     @*<script type="text/javascript" src="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Areas/CustomerSetting/Views/SearchCopy/CommonJs")" ></script>*@
-    @RenderSection("scripts", required: false)
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

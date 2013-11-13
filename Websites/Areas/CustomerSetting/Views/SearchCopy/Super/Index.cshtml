@@ -16,6 +16,7 @@
     <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Scripts/RemoveSetting.js")"></script>
 }
 <div id="divSearchCopy" ng-controller="SearchCopyController">
+    <input type="hidden" id="currentUserId" value= '@ViewBag.CurrentUserId' />
     <input type="hidden" id="currentURL" value= '@ViewBag.CurrentURL' />
     <div id="errorMsg" class="validation-summary-errors hidden">
     </div>
@@ -98,7 +99,10 @@
     };
 
     function setFrameLoaded() {
-        PTSetting.SportType.SetFrameLoaded();
+        if ($('#frmSport').attr('src') != "")
+        {            
+            PTSetting.SportType.SetFrameLoaded();
+        }
     };
 
 </script>

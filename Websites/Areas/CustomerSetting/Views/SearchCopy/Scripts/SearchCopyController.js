@@ -18,14 +18,14 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         ],
         internaluser: false
     };
-    
-    $scope.existedUser = { userid: -1, username: '', selectedSite: { siteid: 0, site: '' }, sites: [], selectedCurrency: '', maxCredit: '' };
+
+    $scope.existedUser = { userid: -1, username: '', selectedSite: {}, sites: [], selectedCurrency: '', maxCredit: '' };
     $scope.newUser = {};
 
     /* initialization */
     $scope.init = function () {
         $scope.newUser = angular.copy(user);
-        $("#step2").hide();        
+        $("#step2").hide();
         $scope.addEvents();
         $("#maxCredit").ForceDecimalOnly().ForceCurrencyOnly();
     };
@@ -38,9 +38,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         });
 
         $("#existedUserName").focusout(function () {
-            $scope.searchExistingUser(this.value);
             $("#checkExisted").show();
-
+            $scope.searchExistingUser(this.value);            
         });
 
         $("#panelStep1").click(function () {
@@ -50,7 +49,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $("#panelStep2").click(function () {
             $scope.step1Next();
         });
-        
+
         $("#step1Next").click(function () {
             $scope.step1Next();
         });
@@ -73,7 +72,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         else {
             if ($scope.existedUser.userid != "-1") {
                 message.hideAlertMessage("errorMsg");
-        
+
                 $("#step1").hide();
                 $("#step2").show();
                 $(".settingInfo div").hide();
@@ -81,7 +80,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
 
                 $("#step2 .tab-active").attr("class", "tab-inactive");
                 $("#tabGenealInformation").attr("class", "tab-active");
-                
+
                 $("#spanstep1").removeClass("step1-active");
                 $("#spanstep1").addClass("step1-inactive");
 
@@ -106,7 +105,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $("#spanstep2").removeClass("step2-active");
         $("#spanstep2").addClass("step2-inactive");
     };
-        
+
     $scope.validateData = function () {
         if ($scope.newUser.username == undefined || $scope.newUser.username == "") {
             message.showAlertMessage("errorMsg", "The username is required !", 1);
@@ -130,8 +129,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 return;
             }
             else {
-                message.hideAlertMessage("errorMsg");                          
-            }            
+                message.hideAlertMessage("errorMsg");
+            }
         }
 
         $(".settingInfo div").hide();
@@ -179,9 +178,9 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.existedUser.userid = custid;
                 if (custid != "-1") {
                     message.hideAlertMessage("errorMsg");
-                    $("#checkExisted").addClass('success');
                     $("#checkExisted").removeClass('not_success');
-                    $scope.getSiteAndCurrencyByUserId(custid);
+                    $("#checkExisted").addClass('success');                    
+                    $scope.getSiteCreditAndCurrencyByUserId(custid);
                 }
                 else {
                     $("#checkExisted").removeClass('success');
@@ -195,7 +194,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         });
     };
 
-    $scope.getSiteAndCurrencyByUserId = function (custid) {
+    $scope.getSiteCreditAndCurrencyByUserId = function (custid) {
         var param = {
             custid: custid
         };
@@ -209,7 +208,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             success: function (result) {
                 message.hideAlertMessage("errorMsg");
                 var site_currency = result.split(',');
-                $scope.existedUser.selectedSite.site = site_currency[0];
+                $scope.existedUser.selectedSite.SiteName = site_currency[0];
                 $scope.existedUser.maxCredit = numeral(site_currency[1]).format("0,0");
                 $scope.existedUser.selectedCurrency = site_currency[2];
                 $scope.getAllSites();
@@ -227,13 +226,20 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: null,
-            success: function (result) {
+            success: function (data) {
                 message.hideAlertMessage("errorMsg");
-                $scope.$apply(function () {
-                    $scope.existedUser.sites = result;
-                });
 
-                $("select#listSite option").each(function () { this.selected = (this.text == $scope.existedUser.selectedSite.site); });
+                //get selected index.
+                var index = 0;
+                while(index < data.length && $scope.existedUser.selectedSite.SiteName != data[index].SiteName)
+                {
+                    index ++;
+                }
+                
+                $scope.$apply(function () {
+                    $scope.existedUser.sites = data;
+                    $scope.existedUser.selectedSite = $scope.existedUser.sites[index];
+                });                
             }
             , error: function (xhr, ajaxOptions, thrownError) {
                 message.showAlertMessage("errorMsg", "Error for getting sites of existing user !", 1);
@@ -249,12 +255,12 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             LastName: $scope.newUser.lastname,
             Phone: $scope.newUser.phone,
             MobilePhone: $scope.newUser.mobilephone,
-            Site: $("#listSite option:selected").text(), //$scope.existedUser.selectedSite.site,
+            Site: $scope.existedUser.selectedSite.SiteName,
             Fax: $scope.newUser.fax,
             Credit: $scope.existedUser.maxCredit,
             IsInternal: $scope.newUser.internaluser,
             ExistingCustId: $scope.existedUser.userid,
-            Creator: 0 //todo
+            Creator: $("#currentUserId").val()
         };
 
         $.ajax({
