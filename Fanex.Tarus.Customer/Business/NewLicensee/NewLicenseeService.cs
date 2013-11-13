@@ -43,6 +43,14 @@ namespace Fanex.Tarus.Customer.Business.NewLicensee
             try
             {
                 var rawData = _newLicenseeRepository.GetCurrenciesBySystem(criteria);
+                for (var i = 0; i < rawData.Count; i++)
+                {
+                    if (string.Equals(rawData[i].Value, "INH", StringComparison.OrdinalIgnoreCase))
+                    {
+                        rawData[i].Code = string.Empty;
+                    }
+                }
+
                 return rawData;
             }
             catch (Exception ex)
