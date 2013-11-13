@@ -203,7 +203,6 @@
     <Setting Key="CustGroupIns" SpName="Acc_CustGroupIns" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="CustomerSelCasinoBonusStatus" SpName="Acc_CustomerSelCasinoBonusStatus" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Customer_AutoSuspend_GetCustomerStatus" SpName="Acc_CustomerSelAutoSuspendStatus" DbName="DBAGE.bodb02.bodbAdminNet"/>
-    
   </Function>
 
   <Function Name="User Control">
