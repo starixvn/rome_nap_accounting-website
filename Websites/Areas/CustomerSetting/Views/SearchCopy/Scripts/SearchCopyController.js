@@ -39,7 +39,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
 
         $("#existedUserName").focusout(function () {
             $("#checkExisted").show();
-            $scope.searchExistingUser(this.value);            
+            $(".tabsports div").show();
+            $scope.searchExistingUser(this.value);
         });
 
         $("#panelStep1").click(function () {
@@ -157,6 +158,25 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         };
     };
 
+    $scope.disableSports = function (statusSports) {
+        if (statusSports.DisableRacing == true) {
+            $("#tabRacing").hide();
+            $("#tabRacingMinPT").hide();
+        }
+        if (statusSports.DisableCasino == true) {
+            $("#tabCasino").hide();
+        }
+        if (statusSports.DisableVirtualSports == true) {
+            $("#tabVirtualSports").hide();
+        }
+        if (statusSports.DisableBingo == true) {
+            $("#tabBingo").hide();
+        }
+        if (statusSports.DisableLiveCasino == true) {
+            $("#tabLiveCasino").hide();
+        }
+    };
+
     $scope.searchExistingUser = function (username) {
         if (username == "") {
             $("#checkExisted").removeClass('success');
@@ -174,12 +194,20 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify(param),
-            success: function (custid) {
+            success: function (customerSettingView) {
+                var custid = customerSettingView.UserId;
+                var statusSports = customerSettingView.StatusSports;
+
                 $scope.existedUser.userid = custid;
                 if (custid != "-1") {
+                    //step1
                     message.hideAlertMessage("errorMsg");
                     $("#checkExisted").removeClass('not_success');
-                    $("#checkExisted").addClass('success');                    
+                    $("#checkExisted").addClass('success');
+
+                    //step2                    
+                    $scope.disableSports(statusSports);
+
                     $scope.getSiteCreditAndCurrencyByUserId(custid);
                 }
                 else {
@@ -231,15 +259,14 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
 
                 //get selected index.
                 var index = 0;
-                while(index < data.length && $scope.existedUser.selectedSite.SiteName != data[index].SiteName)
-                {
-                    index ++;
+                while (index < data.length && $scope.existedUser.selectedSite.SiteName != data[index].SiteName) {
+                    index++;
                 }
-                
+
                 $scope.$apply(function () {
                     $scope.existedUser.sites = data;
                     $scope.existedUser.selectedSite = $scope.existedUser.sites[index];
-                });                
+                });
             }
             , error: function (xhr, ajaxOptions, thrownError) {
                 message.showAlertMessage("errorMsg", "Error for getting sites of existing user !", 1);
@@ -277,6 +304,9 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 } else {
                     if (result != null) {
                         message.showAlertMessage("errorMsg", result.Message, 1);
+                    }
+                    else {
+                        message.showAlertMessage("errorMsg", "Created Super Un-successfully !", 1);
                     }
                 }
             }

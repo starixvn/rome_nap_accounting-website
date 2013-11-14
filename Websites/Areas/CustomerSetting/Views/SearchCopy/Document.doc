@@ -1,13 +1,8 @@
 ﻿
 1. Dependencies
-• Sunplus.Accouting.Bussiness.dll
-• Sunplus.Accouting.Core.dll
-• Fanex.Tarus.Customer.dll
-//• Fanex.PTEngine.dll
-//• Fanex.PTRacing.dll
+• _Core.dll
 • Fanex.Data.dll
 • Fanex.Common.dll
-• Fanex.Logging.dll
 • Fanex.NAP.Framework.dll
 
 2. Configuration 
@@ -15,36 +10,15 @@
 - Additional below config inner configuration tag.
 <configuration>
 
-<configSections>
-
-		<sectionGroup name="CustomerSetting">
-    			  <section name="Security" type="Fanex.CustomerSetting.Security.Configurations.CustomerSettingSection, 				Fanex.CustomerSetting.Security"/>
-   		 </sectionGroup>
-
-    
-     <!--RacingSetting-->
-    <section name="PTRacingMappingSection" type="Fanex.PTRacing.XmlMapping.PTRacingMappingSection"  		allowLocation="true" allowDefinition="Everywhere"/>
-    <section name="RacingBettingCommSettingMappingSection" 	type="Fanex.PTRacing.XmlMapping.RacingBettingCommSettingMappingSection"  allowLocation="true" 		allowDefinition="Everywhere"/>
-    <!--/RacingSetting-->
-
-</configSections>
-
-
-	<CustomerSetting>
-    		<Security allowDirectDownline="false" allowGroups="222|" 		authenticateFactory="Fanex.CustomerSetting.Security.Authenticate.DefaultAuthenticate, Fanex.CustomerSetting.Security"/>
-	  </CustomerSetting>
-
-
-<!--RacingSetting-->
-  <PTRacingMappingSection configSource="Web.Configuration\CustomerSetting\Racing\PTRacingMappingSection.config"/>
-  <RacingBettingCommSettingMappingSection configSource="Web.Configuration\CustomerSetting\Racing\RacingBettingCommSettingMappingSection.config"/>
-  <!--/RacingSetting-->
-
+  <appSettings> 
+	<add key="AccIdSessionName" value="AccId"/>   
+    <add key="CurrentURL" value="http://localhost:53906/Websites"/>
+  </appSettings>
 
 
 </configuration>
 
-- Copy Racing configuration files from Fanex.Toco.Website\Areas\CustomerSetting\Views\Racebook\Config\ 
+- Copy Racing configuration files from Fanex.Toco.Website\Areas\CustomerSetting\Views\SearchCopy\Config\ 
 
 • Store procedure
 
@@ -67,7 +41,7 @@
 
 </configuration>
 
-- Copy Racing store procedure definition from Areas\CustomerSetting\Views\Racebook\Config\Store
+- Copy Racing store procedure definition from Areas\CustomerSetting\Views\SearchCopy\Config\Store
 
 
 3. Action in detail
