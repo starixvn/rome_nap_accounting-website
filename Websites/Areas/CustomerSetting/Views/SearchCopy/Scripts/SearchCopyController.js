@@ -1,4 +1,4 @@
-﻿var searchCopyController = angular.module('SearchCopy', ['SearchCopy.service', 'SearchCopy.directive', 'SearchCopy.filter']);
+﻿var searchCopyController = angular.module('SearchCopy', [searchCopyService, searchCopyDirective, searchCopyFilter]);
 
 // A Controller for your app
 searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'validate', function ($scope, message, validate) {

@@ -1,4 +1,8 @@
-﻿angular.module('SearchCopy.service', []).
+﻿var searchCopyService = 'SearchCopy.service';
+var searchCopyDirective = 'SearchCopy.directive';
+var searchCopyFilter = 'SearchCopy.filter';
+
+angular.module(searchCopyService, []).
  value('message', {
      // Success=0, Error=1, Warning=2
      showAlertMessage: function (containerid, msg, type) {
@@ -30,5 +34,5 @@
      }
  });
 
-angular.module('SearchCopy.directive', []);
-angular.module('SearchCopy.filter', []);
+angular.module(searchCopyDirective, []);
+angular.module(searchCopyFilter, []);
