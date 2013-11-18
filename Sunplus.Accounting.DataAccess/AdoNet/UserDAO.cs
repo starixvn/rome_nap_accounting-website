@@ -715,18 +715,21 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             var lst = new List<FinanceBettype>();
             try
             {
-                DbResult rs = DbHelper.Execute("Acc_DailyTxn_FinanceBettype_Sel", DBType.WAREHOUSE);
-                var dt = new DataTable();
-                if (rs.ResultSet.Tables.Count > 0)
+                using (ObjectDb db = new ObjectDb("Acc_DailyTxn_FinanceBettype_Sel"))
                 {
-                    dt = rs.ResultSet.Tables[0];
-                    foreach (DataRow dr in dt.Select())
+                    var ds = db.ExecuteDataSet();
+                    var dt = new DataTable();
+                    if (ds!=null && ds.Tables.Count > 0)
                     {
-                        var f = new FinanceBettype();
-                        f.BetType = CastAide.AsInt32(dr["typeid"]);
-                        f.TypeName = CastAide.AsString(dr["typenamee"]);
+                        dt = ds.Tables[0];
+                        foreach (DataRow dr in dt.Select())
+                        {
+                            var f = new FinanceBettype();
+                            f.BetType = CastAide.AsInt32(dr["typeid"]);
+                            f.TypeName = CastAide.AsString(dr["typenamee"]);
 
-                        lst.Add(f);
+                            lst.Add(f);
+                        }
                     }
                 }
             }
