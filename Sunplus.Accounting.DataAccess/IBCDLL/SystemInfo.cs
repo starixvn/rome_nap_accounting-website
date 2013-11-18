@@ -1,5 +1,6 @@
 ﻿using System;
 using DNAide.Core;
+using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL
 {
@@ -13,8 +14,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
             p.Add("logintime", null);
             try
             {
-                dr = DNAide.Data.DbHelper.Execute("Age_LoginAdminVerifyTicket", p, DBType.MAIN);
-                loginTime = CastAide.AsDateTime(dr.Outputs["logintime"]);
+                using (ObjectDb db = new ObjectDb("Age_LoginAdminVerifyTicket", 600))
+                {
+                    db.AssignParamValues(p);
+
+                    db.ExecuteNonQuery();
+
+                    var output = db.GetOuputParams();
+                    loginTime = CastAide.AsDateTime(output["logintime"]);
+                }
             }
             catch { throw; }
 

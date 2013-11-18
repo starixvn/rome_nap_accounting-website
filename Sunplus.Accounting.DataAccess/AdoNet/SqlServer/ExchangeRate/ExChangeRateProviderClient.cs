@@ -43,8 +43,19 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.ExchangeRate
         public override DbResult ExchangeSelByID(int exid)
         {
             var hash = new Hashtable { { "exchangeid", exid } };
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ExchangeRateSession.StoreCollection.ExchangeRateControl, "EchangeSelById");
-            return DbHelper.Execute(spElement.Name, hash, spElement.DbName, 300);
+
+            DbResult result = null;
+            using (ObjectDb db = new ObjectDb("EchangeSelById", 600))
+            {
+                db.AssignParamValues(hash);
+
+                var ds = db.ExecuteDataSet();
+                var output = db.GetOuputParams();
+
+                result = new DbResult(output, ds);
+            }
+
+            return result;
         }
 
         public override void ExchangeUpd(Hashtable param, ref int errcode, ref string errmsg)
