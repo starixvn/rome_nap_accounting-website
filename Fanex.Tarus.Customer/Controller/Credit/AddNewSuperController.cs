@@ -45,6 +45,16 @@
         }
 
         /// <summary>
+        /// This funtion will return a result binding to view
+        /// </summary>
+        /// <returns></returns>
+        [AuthenticateRead]
+        public ActionResult SearchCopyAddNewSuperPage()
+        {            
+            return View("~/Views/Customer/CreditCustomer/SearchCopyAddNewSuper.cshtml");
+        }        
+
+        /// <summary>
         /// Get Customer
         /// </summary>
         /// <param name="requestContext">Constext Of Get customer</param>
