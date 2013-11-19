@@ -280,7 +280,6 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
                 {
                     db.AssignParamValues(param);
                     db.ExecuteNonQuery();
-
                     output = db.GetOuputParams();
                 }
 
