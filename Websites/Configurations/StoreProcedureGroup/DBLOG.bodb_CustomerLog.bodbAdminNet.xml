@@ -28,4 +28,7 @@
   <Function Name="Live Casino - Stake Level Setting">
     <Setting Key="WriteLog_UserLog_RunSP" SpName="WriteLog_UserLog_RunSP" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"  />
   </Function>
+  <Function Name="Casino">
+    <Setting Key="WriteLog_UserLog_CasinoAPI" SpName="WriteLog_UserLog_CasinoAPI" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"  />
+  </Function>
 </Functions>

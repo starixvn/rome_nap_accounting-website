@@ -1,7 +1,6 @@
 ﻿using System.Collections;
-using DNAide.Data;
+using Fanex.Data;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.DataAccess;
 using Sunplus.Libraries.APILogger;
 
 namespace Sunplus.Accounting.Business
@@ -22,7 +21,12 @@ namespace Sunplus.Accounting.Business
             param.Add("trackingvalue", trackingValue);
             param.Add("returnvalue", returnValue);
             param.Add("returncode", returnCode);
-            DbHelper.Execute("WriteLog_UserLog_CasinoAPI", param, DBType.LOG);
+            //DbHelper.Execute("WriteLog_UserLog_CasinoAPI", param, DBType.LOG);
+            using (ObjectDb db = new ObjectDb("WriteLog_UserLog_CasinoAPI", 600))
+            {
+                db.AssignParamValues(param);
+                var ds = db.ExecuteNonQuery();
+            }
         }
     }
 }
