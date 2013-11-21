@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Fanex.Tarus.Finance.Entities
+﻿namespace Fanex.Tarus.Finance.Entities
 {
     public class Result
     {
@@ -18,9 +13,9 @@ namespace Fanex.Tarus.Finance.Entities
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
         }
-        
+
         public int ErrorCode { get; set; }
-        
+
         public string ErrorMessage { get; set; }
     }
 }

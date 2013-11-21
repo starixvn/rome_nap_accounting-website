@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using DNAide.Core;
 
 namespace Fanex.Tarus.Finance
@@ -13,11 +12,12 @@ namespace Fanex.Tarus.Finance
 
     public class Helper
     {
-        private  IHelperAccess _helperAccess;
+        private IHelperAccess _helperAccess;
 
         private const string ForexAccountsKey = "Accounting_Finance_ForexAccounts";
 
         public DateTime BalanceUpDate { get; set; }
+
         public DateTime MovebetsDate { get; set; }
 
         public Helper()
@@ -31,11 +31,9 @@ namespace Fanex.Tarus.Finance
             var listForexAccount = new List<string>();
             try
             {
-
                 var objForexAccounts = CacheHelper.Get(ForexAccountsKey);
 
                 if (objForexAccounts != null) return objForexAccounts as List<string>;
-                
 
                 var dtFoxexAccount = _helperAccess.GetForexAccounts();
                 if (dtFoxexAccount != null && dtFoxexAccount.Rows.Count > 0)
@@ -50,15 +48,7 @@ namespace Fanex.Tarus.Finance
             }
 
             return listForexAccount;
-            
         }
-
-
-
-     
-
-       
-       
 
         private void GetBalanceDateInfo()
         {
@@ -74,7 +64,6 @@ namespace Fanex.Tarus.Finance
             }
             catch (Exception exception)
             {
-
                 LogExtensions.ExceptionHandler(exception);
             }
         }
@@ -88,6 +77,5 @@ namespace Fanex.Tarus.Finance
         {
             return null;
         }
-
     }
 }

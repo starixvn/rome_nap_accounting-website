@@ -2,28 +2,29 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Data;
+    using System.Drawing;
+    using System.Linq;
+    using System.Web;
     using DNAide.Core;
     using DNAide.Utils;
-
-    using Fanex.Tarus.Infrastructure.Utils;
-
-    using Sunplus.Accounting.Core.Extensions;
-    using Fanex.Tarus.Finance.Model.Statement;
+    using ExcelUtil.Spreadsheet;
     using Fanex.Tarus.Finance.DataAccess.Statement;
     using Fanex.Tarus.Finance.Entities;
-    using ExcelUtil.Spreadsheet;
-    using System.Web;
-    using System.Drawing;
+    using Fanex.Tarus.Finance.Model.Statement;
+    using Fanex.Tarus.Infrastructure.Utils;
+    using Sunplus.Accounting.Core.Extensions;
 
     public class FinanceStatementBusiness : IFinanceStatementBusiness
     {
-        IFinanceStatementAccess _FinanceStatementAccess = null;
+        private IFinanceStatementAccess _FinanceStatementAccess = null;
         private const string FinanceStatementAccess = "FinanceStatement";
         private const string FianceStatementSession = "fanex.tarus.business.statement.financestatement";
-        public FinanceStatementBusiness() : this(null) { }
+
+        public FinanceStatementBusiness()
+            : this(null)
+        {
+        }
 
         private Helper _helper;
 
@@ -79,7 +80,7 @@
                         trans.TransDate = transDate;
 
                         statementDetail.ListTrans.Add(trans);
-                        
+
                         if (statementDetail.IsOpeningBalance)
                         {
                             if (accumAmount == 0.0)
@@ -103,7 +104,7 @@
                             }
                             accumAmount = amount;
                         }
-                        else 
+                        else
                         {
                             trans.AccumTotal = "";
                             if ((statementDetail.IsAccummulated || !statementDetail.IsReverse) && (refNoParam == "-1"))
@@ -111,11 +112,9 @@
                                 accumAmount = amount + accumAmount;
                                 trans.AccumTotal = IBCUtils.FormatHandler.FormatNumber20(accumAmount);
                             }
-                       
                         }
 
                         InsertToStatement(ref statement, statementDetail, trans);
-
                     }
                 }
                 SessionExtension.AddSession(HttpContext.Current.Session, FianceStatementSession, statement);
@@ -167,13 +166,11 @@
 
                         InsertToTrans(ref listTrans, trans, subTrans, isForex);
                     }
-
                 }
                 var transCount = statementDetail.ListTrans.Count;
 
                 for (var i = 0; i < transCount; i++)
                 {
-
                     var trans = listTrans.Where(t => t.TransId == statementDetail.ListTrans[i].TransId).FirstOrDefault();
                     if (trans != null)
                     {
@@ -194,7 +191,7 @@
         {
             if (statement != null && statementDetail != null && trans != null)
             {
-                //If this statement detail is not exist in statement, add statement detail to statement              
+                //If this statement detail is not exist in statement, add statement detail to statement
 
                 var isExistedStatementDetail = (statement.Find(item => item.RefNo.Equals(statementDetail.RefNo) && item.WinLossDate.Equals(statementDetail.WinLossDate)) != null);
 
@@ -208,14 +205,12 @@
                     {
                         if (item.RefNo.Equals(statementDetail.RefNo) && item.WinLossDate.Equals(statementDetail.WinLossDate))
                         {
-
                             item.ListTrans.Add(trans);
                             return item;
                         }
                         else return item;
                     })).ToList();
                 }
-
             }
         }
 
@@ -223,8 +218,6 @@
         {
             if (listTrans != null && subTrans != null)
             {
-
-
                 var subTransAmount = Convert.ToDouble(subTrans.Amount);
 
                 subTrans.Amount = DNAide.Utils.NumberFormat.DoubleFormat(subTrans.Amount, 2);
@@ -240,23 +233,19 @@
                     }
                     else
                     {
-
                         listTrans = (listTrans.Select(item =>
                         {
-                            if (item.TransDate.Equals(trans.TransDate) && (item.ListSubTrans.Count < 2) && IsEqualToRemarkAmount(item.Remark, Convert.ToDouble(item.Total), subTrans.Remark , subTransAmount) && subTrans.IsOwner != item.IsOwner)
+                            if (item.TransDate.Equals(trans.TransDate) && (item.ListSubTrans.Count < 2) && IsEqualToRemarkAmount(item.Remark, Convert.ToDouble(item.Total), subTrans.Remark, subTransAmount) && subTrans.IsOwner != item.IsOwner)
                             {
                                 item.ListSubTrans.Add(subTrans);
                                 if (subTrans.IsOwner)
                                 {
                                     item.TransId = subTrans.TransId;
-
                                 }
                                 return item;
                             }
                             else return item;
                         })).ToList();
-
-
                     }
                 }
                 else
@@ -286,69 +275,55 @@
                     }
                 }
             }
-
         }
 
         private static bool IsEqualToRemarkAmount(string remark, double transAmount, string subTransRemark, double subTransAmount)
         {
-
             if (string.IsNullOrEmpty(remark)) return false;
 
             var arrSplitExRate = remark.Split(new string[] { "Ex.Rate" }, StringSplitOptions.None);
 
             var arrRemark = arrSplitExRate[0].Trim().Split(' ');
 
-            
-
             if (arrSplitExRate.Count() > 1)
             {
                 var arrRate = arrSplitExRate[1].Split(':');
-                if(arrRate.Count() > 1)
+                if (arrRate.Count() > 1)
                 {
                     var exRate = Convert.ToDouble(arrRate[1].Trim());
 
-                   
-
-                        if ((subTransAmount).Equals(RoundNumber(-exRate * transAmount, 4))
-                            || RoundNumber(subTransAmount, 2).Equals(RoundNumber(-exRate * transAmount, 2))) return true;
-                        else
+                    if ((subTransAmount).Equals(RoundNumber(-exRate * transAmount, 4))
+                        || RoundNumber(subTransAmount, 2).Equals(RoundNumber(-exRate * transAmount, 2))) return true;
+                    else
+                    {
+                        var arrSplitSubTransRemark = subTransRemark.Split(
+                            new string[] { "Ex.Rate" }, StringSplitOptions.None);
+                        if (arrSplitSubTransRemark.Count() > 1)
                         {
-                            var arrSplitSubTransRemark = subTransRemark.Split(
-                                new string[] { "Ex.Rate" }, StringSplitOptions.None);
-                            if (arrSplitSubTransRemark.Count() > 1)
-                            {
-                                var arrSubTransExRate = arrSplitSubTransRemark[1].Split(':');
+                            var arrSubTransExRate = arrSplitSubTransRemark[1].Split(':');
 
-                                var subExRate = Convert.ToDouble(arrSubTransExRate[1].Trim());
+                            var subExRate = Convert.ToDouble(arrSubTransExRate[1].Trim());
 
-                                if (transAmount.Equals(RoundNumber(-subTransAmount * subExRate, 4))
-                                    || RoundNumber(transAmount, 2).Equals(RoundNumber(-subTransAmount * subExRate, 2))) return true;
-                            }
+                            if (transAmount.Equals(RoundNumber(-subTransAmount * subExRate, 4))
+                                || RoundNumber(transAmount, 2).Equals(RoundNumber(-subTransAmount * subExRate, 2))) return true;
                         }
-                    
-
+                    }
                 }
             }
             else
             {
                 foreach (string s in arrRemark)
                 {
-
                     if (NumberUtil.IsNumber(s))
                     {
                         var remarkAmount = Math.Abs(Convert.ToDouble(s));
                         if (remarkAmount.Equals(subTransAmount) || remarkAmount.Equals(Math.Round(subTransAmount))
                             || remarkAmount.Equals(Math.Round(subTransAmount, 2)) || remarkAmount.Equals(Math.Round(subTransAmount, 1))) return true;
-
                     }
                 }
             }
-            
-
 
             return false;
-
-
         }
 
         private static double RoundNumber(double number, uint digits = 0u)
@@ -359,7 +334,6 @@
                 return Math.Round(number, (int)digits);
             else
                 return Math.Round(number);
-
         }
 
         public Result VerifyTransactionBusiness(string refNo, bool isVerify, string checkerName, int checkerId)
@@ -374,6 +348,7 @@
                 return new Result { ErrorCode = 1, ErrorMessage = "Update Error" };
             }
         }
+
         public Result DeleteTransBusiness(string refNo, int custId, int userId)
         {
             try
@@ -388,6 +363,7 @@
         }
 
         #region export 2 excel
+
         public void ExportExcelFinanceStatement(string refNoParam, string custName, string filterBy, string fromdate, string toDay, string balanceUpDay, int IncludeAccBall, string reportTitle)
         {
             var startCol = 0;
@@ -395,13 +371,17 @@
             var reportName = "FinanceStatement";
             var excelFile = new ExcelFile();
             var wsReport = excelFile.Worksheets.Add(reportName);
+
             #region assign header
+
             ExportExcelFinanceStatementAssignHeader(startRow, startCol, ref wsReport, reportTitle);
-            #endregion
+
+            #endregion assign header
 
             #region content
+
             List<StatementDetail> finaceStatement = (List<StatementDetail>)SessionExtension.GetSession(HttpContext.Current.Session, FianceStatementSession);
-            finaceStatement = finaceStatement != null ? finaceStatement : GetFinanceStatementBusiness(refNoParam,custName,  filterBy, fromdate,toDay, balanceUpDay, IncludeAccBall);
+            finaceStatement = finaceStatement != null ? finaceStatement : GetFinanceStatementBusiness(refNoParam, custName, filterBy, fromdate, toDay, balanceUpDay, IncludeAccBall);
             if (finaceStatement != null && finaceStatement.Count > 0)
             {
                 var nextRow = 0;
@@ -414,15 +394,18 @@
             {
                 wsReport.Cells[startRow, startCol].Value = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "EmptyReportMessage"); ;
             }
-            #endregion
+
+            #endregion content
 
             #region response file
+
             var response = HttpContext.Current.Response;
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", String.Format("attachment; filename={0}.xls", reportName));
             excelFile.SaveXls(response.OutputStream);
-            #endregion
+
+            #endregion response file
         }
 
         private void ExportExcelFinanceStatementAssignHeader(int startRow, int startCol, ref ExcelWorksheet wsReport, string title)
@@ -485,7 +468,6 @@
                     {
                         bgColor = Color.FromArgb(255, 255, 255);
                     }
-
                 }
                 if (statementDetail.IsOpeningBalance || statementDetail.IsAccummulated)
                 {
@@ -501,32 +483,38 @@
                 foreach (Transaction transaction in statementDetail.ListTrans)
                 {
                     var nextCol = 0;
+
                     #region winloss date
+
                     if (detailIndex == 0)
                     {
-
                         wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, (startRow + nextRow + totalTrans - 1), startCol).Merged = true;
                         wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, (startRow + nextRow + totalTrans - 1), startCol).Style = bgFormat;
                         wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, (startRow + nextRow + totalTrans - 1), startCol).Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
                         wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol, (startRow + nextRow + totalTrans - 1), startCol).Value = statementDetail.WinLossDate.Replace("<br>", "\n");
-                       
                     }
-                    #endregion
+
+                    #endregion winloss date
 
                     #region remark
+
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = transaction.Remark.Replace("<br>", "\n"); ;
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Left;
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.Font.Weight = ExcelFont.BoldWeight;
                     wsReport.Rows[startRow + nextRow].Height = 255 * 3;
-                    #endregion
+
+                    #endregion remark
 
                     #region total
+
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(transaction.Total);
-                    #endregion
+
+                    #endregion total
 
                     #region accumulated total
+
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
                     if (statementDetail.IsOpeningBalance)
                     {
@@ -536,30 +524,32 @@
                     else
                         wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = CastAide.AsDouble(transaction.AccumTotal);
 
-                    #endregion
+                    #endregion accumulated total
 
                     #region transaction date
+
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol += 1)].Style = bgFormat;
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = transaction.TransDate.Replace("<br>", "\n");
                     wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
-                    #endregion
 
-
+                    #endregion transaction date
 
                     if (detailIndex == 0)
                     {
                         #region refno
+
                         nextCol += 1;
                         wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), (startRow + nextRow + totalTrans - 1), startCol + (nextCol)).Merged = true;
                         wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), (startRow + nextRow + totalTrans - 1), startCol + (nextCol)).Style = bgFormat;
                         wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), (startRow + nextRow + totalTrans - 1), startCol + (nextCol)).Value = statementDetail.RefNo;
-                        #endregion
+
+                        #endregion refno
                     }
+
                     #region creator
 
                     if (statementDetail.HasMultipleCreator)
                     {
-
                         nextCol += detailIndex == 0 ? 1 : 2;
                         wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Style = bgFormat;
                         wsReport.Cells[startRow + nextRow, startCol + (nextCol)].Value = transaction.Creator;
@@ -576,7 +566,9 @@
                             wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), (startRow + nextRow + totalTrans - 1), startCol + (nextCol)).Value = transaction.Creator;
                         }
                     }
-                    #endregion
+
+                    #endregion creator
+
                     if (detailIndex == 0)
                     {
                         #region verify by
@@ -586,15 +578,18 @@
                         wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), (startRow + nextRow + totalTrans - 1), startCol + (nextCol)).Style = bgFormat;
                         wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), (startRow + nextRow + totalTrans - 1), startCol + (nextCol)).Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
                         wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), (startRow + nextRow + totalTrans - 1), startCol + (nextCol)).Value = statementDetail.CheckerName;
-                        #endregion
+
+                        #endregion verify by
 
                         #region checked time
+
                         nextCol += 1;
                         wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), (startRow + nextRow + totalTrans - 1), startCol + (nextCol)).Merged = true;
                         wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), (startRow + nextRow + totalTrans - 1), startCol + (nextCol)).Style = bgFormat;
                         wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), (startRow + nextRow + totalTrans - 1), startCol + (nextCol)).Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
                         wsReport.Cells.GetSubrangeAbsolute(startRow + nextRow, startCol + (nextCol), (startRow + nextRow + totalTrans - 1), startCol + (nextCol)).Value = statementDetail.CheckerTime;
-                        #endregion
+
+                        #endregion checked time
                     }
 
                     detailIndex++;
@@ -603,6 +598,7 @@
                 //nextRow++;
             }
         }
-        #endregion
+
+        #endregion export 2 excel
     }
 }

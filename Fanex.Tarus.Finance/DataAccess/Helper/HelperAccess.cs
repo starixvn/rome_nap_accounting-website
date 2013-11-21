@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Fanex.Tarus.Finance.DataAccess.Helper
 {
@@ -9,7 +7,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Helper
 
     using Fanex.Data;
 
-    public class HelperAccess: IHelperAccess
+    public class HelperAccess : IHelperAccess
     {
         public DataTable GetForexAccounts()
         {
@@ -20,7 +18,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Helper
                 {
                     return null;
                 }
-               
+
                 return dataSet.Tables[0];
             }
         }
@@ -33,7 +31,6 @@ namespace Fanex.Tarus.Finance.DataAccess.Helper
             {
                 var ds = objDb.ExecuteDataSet();
                 datatable = ds.Tables[0];
-
             }
             return datatable;
         }
@@ -53,7 +50,6 @@ namespace Fanex.Tarus.Finance.DataAccess.Helper
 
         public void Countries()
         {
-
         }
     }
 }
