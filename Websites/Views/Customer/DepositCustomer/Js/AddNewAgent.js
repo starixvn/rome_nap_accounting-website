@@ -296,11 +296,13 @@ addNewAgent.fillRacingSettingAndPT = function (dataJson) {
             uplineValMax = parseFloat(dataJson["v" + racing.Id + "discount_" + tote.Id]);
             if (isNaN(uplineValMax)) uplineValMax = 0;
 
-            var maxRacingComm = parseFloat(dataJson["v" + racing.Id + "discount_" + tote.Id]).formatMoneyFromVal();
+            var maxRacingComm = this.roleId == 1 ?
+                parseFloat(dataJson["v" + racing.Id + "discount_" + tote.Id]).formatMoneyFromVal() :
+                parseFloat(dataJson["v" + racing.Id + "discount_" + tote.Id + "_max"]).formatMoneyFromVal();
             $("#v" + racing.Id + "discount_" + tote.Id).find("option").each(function () {
-                if (parseFloat($(this).val()) > uplineValMax) $(this).remove();
+                if (parseFloat($(this).val()) > maxRacingComm) $(this).remove();
             });
-            $("#v" + racing.Id + "discount_" + tote.Id).removeAttr("selected").find("option[value='" + maxRacingComm + "']").attr("selected", "selected");
+            $("#v" + racing.Id + "discount_" + tote.Id).removeAttr("selected").find("option[value='" + parseFloat(dataJson["v" + racing.Id + "discount_" + tote.Id]).formatMoneyFromVal() + "']").attr("selected", "selected");
 
             //win place pt
             if (this.roleId == 3) {

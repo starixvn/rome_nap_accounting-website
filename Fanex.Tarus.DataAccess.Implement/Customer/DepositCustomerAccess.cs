@@ -985,7 +985,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
 
         public DataSet GetMasterSettingForAddNew(int custId)
         {
-            using (var objDb = new ObjectDb("CustomerSelMember_MAgInfo"))
+            using (var objDb = new ObjectDb("NewLicensee_GetAgentSetting"))
             {
                 var hashParam = new Hashtable { { "custid", custId } };
                 objDb.AssignParamValues(hashParam);
@@ -995,7 +995,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
 
         public DataSet GetAgentSettingForAddNew(int custId)
         {
-            using (var objDb = new ObjectDb("CustomerSelMember_AgInfo"))
+            using (var objDb = new ObjectDb("NewLicensee_GetMemberSetting"))
             {
                 var hashParam = new Hashtable { { "custid", custId } };
                 objDb.AssignParamValues(hashParam);

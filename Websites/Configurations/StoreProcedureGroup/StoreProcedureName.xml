@@ -290,10 +290,7 @@
     <Setting Key="NewLicensee_GetMasterSetting" SpName="Acc_Dep_CustomerSelMember_SAg_Copy" DbName="archive" />
     <Setting Key="NewLicensee_GetAgentSetting" SpName="Acc_Dep_CustomerSelMember_MAg_Copy" DbName="archive" />
     <Setting Key="NewLicensee_GetMemberSetting" SpName="Acc_Dep_CustomerSelMember_Ag_Copy" DbName="archive" />
-
-    <Setting Key="CustomerSelMember_MAgInfo" SpName="Acc_Dep_CustomerSelMember_MAgInfo" DbName="archive" />
-    <Setting Key="CustomerSelMember_AgInfo" SpName="Acc_Dep_CustomerSelMember_AgInfo" DbName="archive" />
-
+  
     <Setting Key="DepositCust_UpdateSuperSetting" SpName="Acc_Dep_CustomerUpdMember_Com_Copy" DbName="main" />
     <Setting Key="DepositCust_UpdateMasterSetting" SpName="Acc_Dep_CustomerUpdMember_SAg_Copy" DbName="main" />
     <Setting Key="DepositCust_UpdateAgentSetting" SpName="Acc_Dep_CustomerUpdMember_MAg_Copy" DbName="main" />
