@@ -141,9 +141,11 @@ updSuperSetting.fillRacingSettingAndPT = function (dataJson) {
                 if (isNaN(uplineValMax)) uplineValMax = 0;
                 uplineValMin = parseFloat(dataJson["v" + racing.Id + "discount_" + tote.Id + "_min"]);
                 if (isNaN(uplineValMin)) uplineValMin = 0;
+
+                var maxRacingComm = parseFloat(dataJson["v" + racing.Id + "discount_" + tote.Id]).formatMoneyFromVal();
                 $("#v" + racing.Id + "discount_" + tote.Id).find("option").each(function () {
-                    if (parseFloat($(this).val()) > uplineValMax) $(this).remove();
-                    if (parseFloat($(this).val()) < uplineValMin) $(this).remove();
+                    if (parseFloat($(this).val()) > maxRacingComm) $(this).remove();
+                    //                    if (parseFloat($(this).val()) < uplineValMin) $(this).remove();
                 });
             }
 
