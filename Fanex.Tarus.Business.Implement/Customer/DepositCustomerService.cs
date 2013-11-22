@@ -389,18 +389,27 @@ namespace Fanex.Tarus.Business.Implement.Customer
             }
         }
 
-        private string BuildSettingJsonDataStringForAddNew(DataRow row, DataTable tbl)
+        private string BuildSettingJsonDataStringForAddNew(DataRow row, DataTable tbl, int roleId)
         {
             var listProp = new List<string>();
             for (var i = 0; i < tbl.Columns.Count; i++)
             {
                 var columName = tbl.Columns[i].ColumnName;
-                listProp.Add("\"" + columName.ToLower() + "\":\"" + DNAide.Core.CastAide.AsString(row[columName]) + "\"");
+                if (columName == "VirtualSportList")
+                {
+                    continue;
+                }
+
+                listProp.Add("\"\"" + columName.ToLower() + "\"\":\"\"" + CastAide.AsString(row[columName]) + "\"\"");
             }
+
+            var virtualSportsParams = CastAide.AsString(row["VirtualSportList"]);
+            var virtualSportsSettingInfoList = GetVirtualSportsSettingInfoList(virtualSportsParams, roleId);
+            listProp.Add("\"\"VirtualSportsSettingInfo\"\":\"\"" + JsonConvert.SerializeObject(virtualSportsSettingInfoList) + "\"\"");
             return "{" + string.Join(",", listProp.ToArray()) + "}";
         }
 
-        public string GetMasterSettingForAddNew(int custId)
+        public string GetMasterSettingForAddNew(int custId, int roleId)
         {
             try
             {
@@ -408,7 +417,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
                 if (ds.Tables.Count == 0 || ds.Tables[0].Rows.Count == 0) return string.Empty;
                 var tbl = ds.Tables[0];
                 var row = ds.Tables[0].Rows[0];
-                return BuildSettingJsonDataStringForAddNew(row, tbl);
+                return BuildSettingJsonDataStringForAddNew(row, tbl, roleId);
             }
             catch (Exception ex)
             {
@@ -417,7 +426,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
             }
         }
 
-        public string GetAgentSettingForAddNew(int custId)
+        public string GetAgentSettingForAddNew(int custId, int roleId)
         {
             try
             {
@@ -425,7 +434,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
                 if (ds.Tables.Count == 0 || ds.Tables[0].Rows.Count == 0) return string.Empty;
                 var tbl = ds.Tables[0];
                 var row = ds.Tables[0].Rows[0];
-                return BuildSettingJsonDataStringForAddNew(row, tbl);
+                return BuildSettingJsonDataStringForAddNew(row, tbl, roleId);
             }
             catch (Exception ex)
             {
