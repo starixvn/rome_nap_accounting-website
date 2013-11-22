@@ -68,7 +68,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
 
     $scope.step1Next = function () {
         if ($scope.existedUser.username == undefined || $scope.existedUser.username == "") {
-            message.showAlertMessage("errorMsg", "Please Enter User Name.", 1);
+            validate.setRequired("#existedUserName");
+            message.showAlertMessage("errorMsg", "Please Enter User Name.", 1);            
         }
         else {
             if ($scope.existedUser.userid != "-1") {
