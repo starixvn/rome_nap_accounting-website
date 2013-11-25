@@ -111,14 +111,25 @@
 
         //PT
         var uplineValMax, selectedValue;
+
+        var v180Settings = null;
+        for (var i = 0; i < uplineData.VirtualSportsSettingInfo.length; i++) {
+            var settingInfo = uplineData.VirtualSportsSettingInfo[i];
+            if (settingInfo.Id == 180) {
+                for (var j = 0; j < settingInfo.SettingInfo.length; j++) {
+                    uplineData[settingInfo.SettingInfo[j].Name] = settingInfo.SettingInfo[j].Value;
+                }
+            }
+        }
+
         if (vsDownlineSettings.roleId == 3) {
-            uplineValMax = parseFloat(uplineData["v180spositiontaking_1201"]);
+            uplineValMax = parseFloat(uplineData["v180spositiontaking"]);
         }
         else if (vsDownlineSettings.roleId == 2) {
-            uplineValMax = parseFloat(uplineData["v180mpositiontaking_1201"]);
+            uplineValMax = parseFloat(uplineData["v180mpositiontaking"]);
         }
         else {
-            uplineValMax = parseFloat(uplineData["v180apositiontaking_1201"]);
+            uplineValMax = parseFloat(uplineData["v180apositiontaking"]);
         }
 
         if (isNaN(uplineValMax)) uplineValMax = 0;
