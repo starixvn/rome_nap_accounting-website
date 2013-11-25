@@ -153,7 +153,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
             }
         }
 
-        private List<VirtualSportsSettingInfo> GetVirtualSportsSettingInfoList(string virtualSportsParams, int roleId)
+        private List<VirtualSportsSettingInfo> GetVirtualSportsSettingInfoList(string virtualSportsParams, int roleId, bool isAddNew)
         {
             var virtualSports = VirtualSportsSection.Instance.Sports;
             Dictionary<string, bool> activeVirtualSportsInfo = new Dictionary<string, bool>();
@@ -179,6 +179,8 @@ namespace Fanex.Tarus.Business.Implement.Customer
                     roleName = SMALevelNameConstants.Master;
                     break;
                 case RoleIdConstants.Agent:
+                    roleName = isAddNew ? SMALevelNameConstants.Master : SMALevelNameConstants.Agent;
+                    break;
                 case RoleIdConstants.Member:
                     roleName = SMALevelNameConstants.Agent;
                     break;
@@ -308,7 +310,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
             }
 
             var virtualSportsParams = CastAide.AsString(row["VirtualSportList"]);
-            var virtualSportsSettingInfoList = GetVirtualSportsSettingInfoList(virtualSportsParams, roleId);
+            var virtualSportsSettingInfoList = GetVirtualSportsSettingInfoList(virtualSportsParams, roleId, false);
             listProp.Add("\"\"VirtualSportsSettingInfo\"\":\"\"" + JsonConvert.SerializeObject(virtualSportsSettingInfoList) + "\"\"");
             return "{" + string.Join(",", listProp.ToArray()) + "}";
         }
@@ -404,7 +406,7 @@ namespace Fanex.Tarus.Business.Implement.Customer
             }
 
             var virtualSportsParams = CastAide.AsString(row["VirtualSportList"]);
-            var virtualSportsSettingInfoList = GetVirtualSportsSettingInfoList(virtualSportsParams, roleId);
+            var virtualSportsSettingInfoList = GetVirtualSportsSettingInfoList(virtualSportsParams, roleId, true);
             listProp.Add("\"\"VirtualSportsSettingInfo\"\":\"\"" + JsonConvert.SerializeObject(virtualSportsSettingInfoList) + "\"\"");
             return "{" + string.Join(",", listProp.ToArray()) + "}";
         }
