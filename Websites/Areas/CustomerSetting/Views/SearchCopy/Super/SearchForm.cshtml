@@ -1,10 +1,9 @@
-﻿<div class="formauto">
+﻿<div class="form550">
+    <div style="height: 30px; background-color: #B6C4D1">
+    </div>
     <div class="row username">
         <div class="grid2">
-        </div>
-        <div class="grid2">
-            <label>
-                Username</label></div>
+            <span style="margin-left: 13px">Username</span></div>
         <div class="grid6">
             <input id="existedUserName" type="text" ng-model="existedUser.username" size="30"
                 required />
@@ -14,22 +13,20 @@
     <div class="newdoubleline">
         &nbsp;</div>
     <div class="row">
-        <div class="grid1">
-        </div>
         <div class="grid8">
-            <span class="start">All settings will be copied from username existed.</span>
+            <span class="start" style="font-weight: bold">All settings will be copied from username
+                existed.</span>
             <br />
-            <span class="start">Special, AutoSuspend and Internal status will not be copied from
-                the existing super.</span>
+            <span class="start" style="font-weight: bold">Special, AutoSuspend and Internal status
+                will not be copied from the existing super.</span>
         </div>
     </div>
     <div class="newdoubleline">
         &nbsp;</div>
-    <div class="row">
-        <div class="grid1">
-        </div>
-        <div class="grid2">
-            <input id="step1Next" type="button" class="btnStep" value="Next >" />
-        </div>
-    </div>
+</div>
+<div class="newline">
+    &nbsp;</div>
+<div  class="btnNextR hand"  ng-click="step1Next();">
+    <div class="btnNextL">
+    <span>Next ></span></div>
 </div>

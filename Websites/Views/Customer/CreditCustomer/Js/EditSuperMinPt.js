@@ -13,7 +13,7 @@ var edm = {
         edm.initContext();
     },
     initContext: function () {//get context of form
-        try { parent.BlockUI(); } catch (e) { parent.parent.BlockUI(); }
+        //try { parent.BlockUI(); } catch (e) { parent.parent.BlockUI(); }
         $.ajax({
             type: "POST",
             url: "GetContextObject",

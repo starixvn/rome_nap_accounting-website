@@ -285,8 +285,8 @@ input[disabled].btn-dec1{background:url(images/dec2_disable.gif) no-repeat !impo
 .btn-dec10{cursor:pointer; width:16px; height:16px; background:url(images/dec4.gif) no-repeat; border:none}
 input[disabled].btn-dec10{background:url(images/dec4_disable.gif) no-repeat !important;}
 
-.custBtn1{background:transparent url(images/btUpdateL.gif) no-repeat top left; width:26px; height:24px; cursor:pointer;}
-.custBtn2{background:transparent url(images/btUpdateR.gif) no-repeat top left; text-align:left; width:96px; padding-left:12px; height:24px; font-size:10pt; font-weight:bold; color:#fff;cursor:pointer;}
+.custBtn1{background:transparent url(styles/images/btUpdateL.gif) no-repeat top left; width:26px; height:24px; cursor:pointer;}
+.custBtn2{background:transparent url(styles/images/btUpdateR.gif) no-repeat top left; text-align:left; width:96px; padding-left:12px; height:24px; font-size:10pt; font-weight:bold; color:#fff;cursor:pointer;}
 
 #btntop td{height:21px}
 td.btnleft{background:transparent url(images/ptL.gif) no-repeat top left; width:22px; height:21px}

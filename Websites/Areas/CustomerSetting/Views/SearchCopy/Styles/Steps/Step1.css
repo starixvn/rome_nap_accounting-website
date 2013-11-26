@@ -2,8 +2,7 @@
 {
     border: 1px solid #d7d7d7;
     background: #F7F1E5;
-    padding:0px;
-    width:700px;
+    padding:0px;    
     height:25px;
     margin-top:-10px;
 }
@@ -33,7 +32,7 @@
 .start
 {
     background: url("../Images/more.gif") no-repeat scroll left center;
-    padding-left: 20px;   
+    padding-left: 15px;       
 }
 
 .success

@@ -5,7 +5,7 @@
 @section Styles
 {
     <link rel="Stylesheet" href="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Styles/Steps/Step1.css")" />
-    <link rel="Stylesheet" href="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Styles/Steps/Step2.css")" />
+    <link rel="Stylesheet" href="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Styles/Steps/Step2.css")" />    
 }
 @section Scripts
 {
@@ -16,13 +16,16 @@
 <div id="divSearchCopy" ng-controller="SearchCopyController">
     <input type="hidden" id="currentUserId" value= '@ViewBag.CurrentUserId' />
     <input type="hidden" id="currentURL" value= '@ViewBag.CurrentURL' />
-    <div id="errorMsg" class="validation-summary-errors hidden">
+    <div id="errorMsg" class="errMsg maincontent_box" style="width: 850px;">
     </div>
     <div class="formPanel">
         <div id="panelStep1">
-            <span id="spanstep1" class="step step1-active">Step 1: Search Existing Supper</span></div>
+            <span id="spanstep1" class="step step1-active">Step 1: <span style="font-weight: bold">
+                Search Existing Supper</span> </span>
+        </div>
         <div id="panelStep2">
-            <span id="spanstep2" class="step step2-inactive">Step 2: Enter Information</span></div>
+            <span id="spanstep2" class="step step2-inactive">Step 2: <span style="font-weight: bold">
+                Enter Information</span></span></div>
     </div>
     @using (Html.BeginForm("Home", "Index", FormMethod.Post, new { id = "formSearchExistingSupper", @novalidate = "" }))
     {                                 
@@ -58,20 +61,20 @@
                 @Html.Partial("~/Areas/CustomerSetting/Views/SearchCopy/Super/GeneralInformation.cshtml")
                 <div id="divSport" class="bg_table" style="width: 100%">
                     <iframe id="frmSport" onload='setFrameLoaded();' scrolling="auto" frameborder="0"
-                        style="width: 100%; height: 903px;" hspace="0" vspace="0" marginheight="0" marginwidth="0"
+                        style="width: 100%; height: 700px;" hspace="0" vspace="0" marginheight="0" marginwidth="0"
                         src="" name="frmSport"></iframe>
                 </div>
             </div>
             <div class="newline">
                 &nbsp;</div>
-            <div class="row">
-                <div class="grid3">
-                    <input id="step2Back" type="button" class="btnStep" value="< Previous" />
-                </div>
-                <div class="grid3">
-                    <input id="step2Submit" type="button" class="btnStep" value="Submit" />
-                </div>
+            <div class="btnNextR hand grid3" ng-click="step2Back();">
+                <div class="btnNextL">
+                    <span>< Previous</span></div>
             </div>
+            <div class="btnNextR hand grid3" ng-click="step2Submit();">
+                <div class="btnNextL">
+                    <span>Submit</span></div>
+            </div>            
         </div>
     }
 </div>

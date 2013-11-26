@@ -1,128 +1,4 @@
-﻿body
-{
-    font-family: Tahoma,Arial ,helvetica ,sans-serif;
-    font-size: 8pt;
-    margin: 0px;
-}
-
-.newline
-{
-    clear: both;
-    height: 10px;
-}
-
-.newdoubleline
-{
-    clear: both;
-    height: 20px;
-}
-
-.btnStep
-{
-    background: transparent url(Styles/Images/btUpdateR.gif) no-repeat top left;
-    text-align: center;
-    width: 96px;
-    padding-left: 12px;
-    height: 24px;
-    font-size: 10pt;
-    font-weight: bold;
-    color: #fff;
-    cursor: pointer;
-}
-
-/*divSearchCopy*/
-
-#divSearchCopy
-{
-    min-width: 600px;
-    clear: both;
-    zoom: 1;
-    padding: 2px 0px 0px 2px;
-}
-
-#divSearchCopy .step
-{    
-    display: inline;
-    float: left;    
-    padding: 10px;
-    font-size: 12px;    
-    margin-top:-2px;
-    height: 6px;
-    width: 183px;
-    background-image: url("Styles/Images/bgSteps.png");
-}
-
-#divSearchCopy .step1-active
-{        
-    background-position: -8px 0px;       
-    font-weight: bold;
-    color:White;    
-}
-
-#divSearchCopy .step1-inactive
-{     
-    background-position: -8px -25px;     
-    font-weight: normal;
-    color:Black;
-}
-
-#spanstep1:hover
-{        
-    background-position: -8px -50px;       
-    font-weight: bold;
-    color:Black;
-    cursor:pointer;
-}
-
-#divSearchCopy .step2-active
-{        
-    background-position: -8px -75px;       
-    margin-left:-7px;
-    font-weight: bold;
-    color:White;
-}
-
-#divSearchCopy .step2-inactive
-{        
-    background-position: -8px -100px;       
-    margin-left:-7px;
-    font-weight: normal;
-    color:Black;
-}
-
-#spanstep2:hover
-{        
-    background-position: -8px -125px;   
-    margin-left:-10px;    
-    font-weight: bold;
-    color:Black;
-    cursor:pointer;
-}
-
-/*form*/
-.formauto
-{
-    width: auto;
-    border: 1px solid #cfcfcf;
-    background: #E6E9F0;
-    padding: 10px;
-    zoom: 1;
-    display: block;
-}
-
-.formPanel
-{
-    width: auto;
-    border: 1px solid #cfcfcf;
-    background: #E6E9F0;
-    padding-bottom: 23px;
-    zoom: 1;
-    display: block;
-}
-
-/*//todo: remove after here */
-
-/*
+﻿/*
 /*--Remove dot line onclick button--*/
 button::-moz-focus-inner, input[type="reset"]::-moz-focus-inner, input[type="button"]::-moz-focus-inner, input[type="submit"]::-moz-focus-inner, input[type="file"] > input[type="button"]::-moz-focus-inner
 {
@@ -256,11 +132,6 @@ a:hover
     color: #D66D35;
     text-decoration: none;
 }
-a.current
-{
-    color: #D66D35 !important;
-    cursor: pointer;
-}
 
 .lnk
 {
@@ -336,7 +207,7 @@ span.cannotchangeinternal:hover
 }
 .maincontent_box
 {
-    background: #FFF url(images/banner/bg_head_tb.jpg) repeat-x left bottom;
+    background: #FFF url(Styles/images/bg_head_tb.jpg) repeat-x left bottom;
     border: solid 1px #7c98a4;
     padding: 4px 2px;
     display: table;
