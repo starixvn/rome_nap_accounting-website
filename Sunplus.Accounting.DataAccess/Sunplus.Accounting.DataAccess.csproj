@@ -121,9 +121,6 @@
     <Compile Include="Entity\SqlServer\Report\MatchWLRow.cs" />
     <Compile Include="Entity\SqlServer\Report\WLProviderClient.cs" />
     <Compile Include="Entity\SqlServer\SpecialDelete\SpecialDeleteProviderClient.cs" />
-    <Compile Include="IBCClient\HRPositionTakingProviderClient.cs" />
-    <Compile Include="IBCClient\PositionTakingProviderClient.cs" />
-    <Compile Include="IBCClient\UtilsProviderClient.cs" />
     <Compile Include="IBCCustomerProvider.cs" />
     <Compile Include="IBCDLL\Accounting\AccException.cs" />
     <Compile Include="IBCDLL\Accounting\AccountCredit.cs" />
@@ -251,8 +248,9 @@
     <Reference Include="IBCUtils">
       <HintPath>..\Dependency\IBCUtils.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching">
-      <HintPath>..\Dependency\Fanex\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=4.1.0.0, Culture=neutral, PublicKeyToken=e44a2bc38ed2c13c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -332,7 +330,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_UseGlobalSettings="True" BuildVersion_ReplaceNonNumerics="False" />
+      <UserProperties BuildVersion_ReplaceNonNumerics="False" BuildVersion_UseGlobalSettings="True" BuildVersion_BuildVersioningStyle="None.None.Increment.Increment" BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
