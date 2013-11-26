@@ -11,7 +11,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
         {
             DateTime loginTime;
             var param = new Hashtable();
-            param.Add("logintime", string.Empty);
+            param.Add("logintime", null);
             using (ObjectDb db = new ObjectDb("Age_LoginAdminVerifyTicket"))
             {
                 db.AssignParamValues(param);

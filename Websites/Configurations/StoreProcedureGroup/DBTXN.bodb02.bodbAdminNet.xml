@@ -3,6 +3,7 @@
 
   <Function Name="Helper">
     <Setting Key="InsertCountry" SpName="Acc_InsCountry" DbName="DBTXN.bodb02.bodbAdminNet"/>
+    <Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="DBTXN.bodb02.bodbAdminNet"/>
   </Function>
   
   <Function Name="Report">
