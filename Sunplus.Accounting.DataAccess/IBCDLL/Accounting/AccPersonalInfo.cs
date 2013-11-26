@@ -55,7 +55,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             return result;
         }
 
-        public static IDataReader AccInformationSelect(int custid)
+        public static DataSet AccInformationSelect(int custid)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 using (ObjectDb db = new ObjectDb("CustomerSelUserInfo", 600))
                 {
                     db.AssignParamValues(param);
-                    return db.ExecuteReader();
+                    return db.ExecuteDataSet();
                 }
             }
             catch (Exception ex)
