@@ -17,7 +17,7 @@
             break;
         case 182:
             URL = "BetList/GetVirtualHRPopup?MatchID=" + matchID + "&RaceNo=" + raceNo;
-            title = "Virtual Horse Greyhound";
+            title = "Virtual Greyhound";
             heightTmp = 200;
             widthTmp = 750;
             break;
