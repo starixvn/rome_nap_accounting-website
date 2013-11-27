@@ -36,9 +36,9 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
 
             var hashParams = new Hashtable();
             hashParams.Add("creator", dictionaryParams["creator"]);
-            hashParams.Add("site", dictionaryParams["site"]);
-            hashParams.Add("currency", dictionaryParams["currency"]);
-            hashParams.Add("disablenumber", dictionaryParams["disablenumber"]);
+            hashParams.Add("site", dictionaryParams.ContainsKey("site") ? dictionaryParams["site"] : null);
+            hashParams.Add("currency", dictionaryParams.ContainsKey("currency") ? dictionaryParams["currency"] : null);
+            hashParams.Add("disablenumber", dictionaryParams.ContainsKey("currency") ? dictionaryParams["disablenumber"] : null);
 
             #region Sportsbook
 
@@ -165,19 +165,19 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                     foreach (var betType in betTypes)
                     {
                         paramName = "v" + racing.Id + "discount_" + betType;
-                        hashParams.Add(paramName, dictionaryParams[paramName]);
+                        hashParams.Add(paramName, dictionaryParams.ContainsKey(paramName) ? dictionaryParams[paramName] : null);
                         paramName = "v" + racing.Id + "spositiontaking_" + betType;
-                        hashParams.Add(paramName, dictionaryParams[paramName]);
+                        hashParams.Add(paramName, dictionaryParams.ContainsKey(paramName) ? dictionaryParams[paramName] : null);
                         paramName = "v" + racing.Id + "mpositiontaking_" + betType;
-                        hashParams.Add(paramName, dictionaryParams[paramName]);
+                        hashParams.Add(paramName, dictionaryParams.ContainsKey(paramName) ? dictionaryParams[paramName] : null);
                         paramName = "v" + racing.Id + "apositiontaking_" + betType;
-                        hashParams.Add(paramName, dictionaryParams[paramName]);
+                        hashParams.Add(paramName, dictionaryParams.ContainsKey(paramName) ? dictionaryParams[paramName] : null);
                         paramName = "v" + racing.Id + "ibcpositiontaking_" + betType;
-                        hashParams.Add(paramName, dictionaryParams[paramName]);
+                        hashParams.Add(paramName, dictionaryParams.ContainsKey(paramName) ? dictionaryParams[paramName] : null);
                     }
 
                     paramName = "disable" + racing.Id + "_" + tote.Id;
-                    hashParams.Add(paramName, dictionaryParams[paramName]);
+                    hashParams.Add(paramName, dictionaryParams.ContainsKey(paramName) ? dictionaryParams[paramName] : null);
                 }
             }
 
@@ -188,7 +188,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
             var virtualSports = VirtualSportsSection.Instance.Sports;
 
             paramName = "disablevirtualsports";
-            hashParams.Add(paramName, dictionaryParams[paramName]);
+            hashParams.Add(paramName, dictionaryParams.ContainsKey(paramName) ? dictionaryParams[paramName] : null);
             var virtualSportsParams = "<products>";
             foreach (VirtualSportsElement sport in virtualSports)
             {
