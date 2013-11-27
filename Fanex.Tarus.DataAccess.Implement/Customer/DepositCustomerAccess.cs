@@ -220,6 +220,17 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
 
             #endregion VirtualSports
 
+            foreach (var param in newLicenseePostParam.PostParams)
+            {
+                paramName = param.Name.ToLower();
+                if (hashParams.ContainsKey(paramName))
+                {
+                    continue;
+                }
+
+                hashParams.Add(paramName, param.Value);
+            }
+
             return hashParams;
         }
 
@@ -425,6 +436,17 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
             hashParam.Add("virtualsportlist", virtualSportsParams);
 
             #endregion VirtualSports
+            
+            foreach (var param in newLicenseePostParam.PostParams)
+            {
+                paramName = param.Name.ToLower();
+                if (hashParam.ContainsKey(paramName))
+                {
+                    continue;
+                }
+
+                hashParam.Add(paramName, 0);
+            }
 
             return hashParam;
         }

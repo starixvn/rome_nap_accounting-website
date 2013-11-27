@@ -518,10 +518,9 @@ namespace Sunplus.Accounting.Business.LogDisplay
             {
                 Regex rex = null;
                 var sportVals = new List<TrackingElement>();
-                if (sport.Id == 1 ||
-                    sport.Id == 180 ||
-                    sport.Id == 186) // soccer, virtual soccer, virtual tennis
+                if (sport.Id == 1)
                 {
+                    // soccer
                     rex = new Regex("v[0-9]", RegexOptions.IgnoreCase);
                     sportVals = (from attr in attrs
                                  where !rex.IsMatch(attr.Name.ToString()) && !hidden.Contains<string>(attr.Name.ToString().ToLower())
