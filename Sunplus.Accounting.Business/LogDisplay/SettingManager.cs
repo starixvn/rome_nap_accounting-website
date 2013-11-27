@@ -119,7 +119,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         // get tracking value
                         string trackingvalue = FormatPermissionSubAccount(CastAide.AsString(row["trackingvalue"]));
                         string trackingvalueold = FormatPermissionSubAccount(CastAide.AsString(row["trackingvalueold"]));
-                        var trackingVal = _ParseTrackingValue(trackingvalue, CastAide.AsInt32(row["actionid"], 0));
+                        var trackingVal = _ParseTrackingValue(trackingvalue, CastAide.AsInt32(row["actionid"], 0), CastAide.AsString(row["actionname"]));
                         record.Detail = trackingVal;
                         var diffVals = _DiffsTrackingValue(trackingvalue, CastAide.AsString(trackingvalueold, string.Empty));
                         record.Diffs = diffVals;
@@ -192,13 +192,13 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         // get record value
                         var record = _GetLogRecord(row);
                         // get tracking value
-                        var trackingVal = _ParseTrackingValue(CastAide.AsString(row["trackingvalue"]), CastAide.AsInt32(row["actionid"], 0));
+                        var trackingVal = _ParseTrackingValue(CastAide.AsString(row["trackingvalue"]), CastAide.AsInt32(row["actionid"], 0), CastAide.AsString(row["actionname"]));
                         record.Detail = trackingVal;
                         var diffVals = _DiffsTrackingValue(CastAide.AsString(row["trackingvalue"], string.Empty), CastAide.AsString(row["trackingvalueold"], string.Empty));
                         record.Diffs = diffVals;
                         if (diffVals.Count<TrackingValue>() > 0)
                         {
-                            record.Old = _ParseTrackingValue(CastAide.AsString(row["trackingvalueold"]), CastAide.AsInt32(row["actionid"], 0));
+                            record.Old = _ParseTrackingValue(CastAide.AsString(row["trackingvalueold"]), CastAide.AsInt32(row["actionid"], 0), CastAide.AsString(row["actionname"]));
                         }
 
                         logResult.Rows.Add(record);
@@ -380,7 +380,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             return trackingVal;
         }
 
-        private TrackingLog _ParseTrackingValue(string trackingVal, int actionId)
+        private TrackingLog _ParseTrackingValue(string trackingVal, int actionId, string actionName)
         {
             var tracking = new TrackingLog();
             if (!string.IsNullOrEmpty(trackingVal))
@@ -474,6 +474,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     if (xmlLoad.HasAttributes)
                     {
                         var trackingNode = AssignGroupAttribute(xmlLoad, trackingTemplate, filter, hiddenField);
+                        trackingNode.N = actionName;
                         tracking.Vals.Add(trackingNode);
                     }
                     // check HasElements
