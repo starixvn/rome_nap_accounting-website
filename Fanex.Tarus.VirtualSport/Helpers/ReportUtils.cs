@@ -98,7 +98,7 @@ namespace Fanex.Tarus.VirtualSport.DataAccess
             private static DataSet Age_BalDaySel()
             {
                 DataSet result = null;
-                using (ObjectDb objDB = new ObjectDb("SelBalanceUpDay"))
+                using (ObjectDb objDB = new ObjectDb("Core_ReportService_GetBalanceUpDay"))
                 {
                     result = objDB.ExecuteDataSet();
                 }

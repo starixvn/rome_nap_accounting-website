@@ -10,7 +10,7 @@ namespace Fanex.Tarus.Reports.DataAccess.Gaming.NumberGame
     {
         public DataSet GetNumberGameMonthlyWinLossReport(DateTime fromDate, DateTime toDate)
         {
-            using (ObjectDb objDb = new ObjectDb("Acc_Rpt_NumberGameFinanceWinlossByMonth", 180))
+            using (ObjectDb objDb = new ObjectDb("Acc_Rpt_NumberGameFinanceWinlossByMonth", 10000))
             {
                 var hParams = new Hashtable();
                 hParams.Add("datestart", fromDate);

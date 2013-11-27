@@ -21,7 +21,7 @@ namespace Fanex.Tarus.VirtualSport.DataAccess.SpecialDelete
         {
             DataSet result = null;
 
-            using (ObjectDb objDB = new ObjectDb("CheckRefno"))
+            using (ObjectDb objDB = new ObjectDb("Acc_SpecialDel_CheckMatchIDwithRefno"))
             {
                 objDB.AddInParameter("type", DbType.Int64, _virtualSportType);
                 objDB.AddInParameter("matchid", DbType.Int64, matchid);

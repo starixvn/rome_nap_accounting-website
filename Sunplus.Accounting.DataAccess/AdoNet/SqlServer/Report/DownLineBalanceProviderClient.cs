@@ -2,7 +2,10 @@
 using System.Collections;
 using DNAide.Data;
 
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.DataAccess.Provider.Report;
+using Sunplus.Core.LoggingLib;
+using Fanex.Data;
 
 /// <summary>
 /// Summary description for PunterAnalysisProviderClient
@@ -16,7 +19,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Report
         {
             return GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.ReportSession.StoreCollection.Balance, aliasName);
         }
-
         public override DbResult RptMABalance(string db, int roleid, int custid, bool isYesterday, string username,
                                               string firstletter, string currency)
         {
@@ -33,34 +35,39 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Report
 
                 if (!string.IsNullOrEmpty(currency) && !currency.Equals("0"))
                     p.Add("currency", currency);
-
-                //if (string.IsNullOrEmpty(db)) db = "rep";
-                //string dbType = (string.Compare(db, "rep", true) == 0) ? DBType.REPORT : DBType.MAIN;
-
-                var spElement = new Core.Configurations.StoreProcedureElement();
+                
+                string spName = "";
 
                 if (roleid == 3) //master
                 {
-                    p.Add("superid", custid);
-                    spElement = GetStoreProcedure(isYesterday ? "masterbalanceyesterday" : "masterbalance");
+                    p.Add("superid", custid);                    
+                    spName = isYesterday ? "masterbalanceyesterday" : "masterbalance";
                 }
                 else if (roleid == 2) //Agent
                 {
-                    p.Add("masterid", custid);
-                    spElement = GetStoreProcedure(isYesterday ? "agentbalanceyesterday" : "agentbalance");
+                    p.Add("masterid", custid);                    
+                    spName = isYesterday ? "agentbalanceyesterday" : "agentbalance";
+                    
                 }
                 else if (roleid == 1) //member
                 {
-                    p.Add("agentid", custid);
-                    spElement = GetStoreProcedure(isYesterday ? "memberbalanceyesterday" : "memberbalance");
+                    p.Add("agentid", custid);                    
+                    spName = isYesterday ? "memberbalanceyesterday" : "memberbalance";
                 }
 
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 600);
+                using (ObjectDb objectDb = new ObjectDb(spName, 600))
+                {
+                    objectDb.AssignParamValues(p);
+                    var ds = objectDb.ExecuteDataSet();
+                    var output = objectDb.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
                 // error assigning the datareader value to a property
-
+                
                 {
                     Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 }
@@ -74,8 +81,15 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Report
             DbResult result = null;
             try
             {
-                var spElement = GetStoreProcedure(isYesterday ? "superbalanceyesterday" : "superbalance");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 600);
+                string spName = isYesterday ? "superbalanceyesterday" : "superbalance";
+                using (ObjectDb objectDb = new ObjectDb(spName, 600))
+                {
+                    objectDb.AssignParamValues(p);
+                    var ds = objectDb.ExecuteDataSet();
+                    var output = objectDb.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -89,28 +103,46 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Report
 
         public override DbResult BalanceCompHistory()
         {
+            DbResult result = null;                
             try
             {
-                return DbHelper.Execute("Acc_Rpt_Balance_Company_History", DBType.LOG);
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_Balance_Company_History"))
+                {
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (InvalidOperationException invalidOEx)
             {
                 throw invalidOEx;
             }
+            return result;
         }
 
         public override DbResult BalanceCompHistory(DateTime BalanceUpDay)
         {
+            DbResult result = null;
             try
-            {
+            {                
                 var param = new Hashtable();
                 param.Add("balanceupday", BalanceUpDay);
-                return DbHelper.Execute("Acc_Rpt_Balance_Company_History", param, DBType.LOG);
+                
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_Balance_Company_History"))
+                {
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (InvalidOperationException invalidOEx)
             {
                 throw invalidOEx;
             }
+            return result;
         }
     }
 }

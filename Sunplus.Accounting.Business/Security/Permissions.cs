@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using DNAide.Core;
 using DNAide.Data;
+using Fanex.Data;
 using Sunplus.Accounting.Business.PositionTaking;
 using Sunplus.Accounting.Core.Cache;
 using Sunplus.Accounting.Core.Common;
@@ -144,7 +145,14 @@ namespace Sunplus.Accounting.Business.Security
             hash.Add("iscrosstransfer", 0);
             hash.Add("errcode", 0);
             hash.Add("errmsg", string.Empty);
-            DbResult rs = DbHelper.Execute("Acc_CustomerSelIsCrossTransfer", hash, DBType.WAREHOUSE);
+            DbResult rs;
+            using (ObjectDb objectDb = new ObjectDb("Acc_CustomerSelIsCrossTransfer"))
+            {
+                objectDb.AssignParamValues(hash);
+                var dataset = objectDb.ExecuteDataSet();
+                var outputParams = objectDb.GetOuputParams();
+                rs = new DbResult(outputParams, dataset);
+            }
 
             int errcode = CastAide.AsInt32(rs.Outputs["errcode"]);
             errmsg = CastAide.AsString(rs.Outputs["errmsg"]);
@@ -187,14 +195,24 @@ namespace Sunplus.Accounting.Business.Security
             hash.Add("istransfer", 0);
             hash.Add("errcode", 0);
             hash.Add("errmsg", string.Empty);
-            DbResult rs = DbHelper.Execute("Acc_CustomerSelFITransferStatus", hash, DBType.WAREHOUSE);
 
-            int errcode = CastAide.AsInt32(rs.Outputs["errcode"]);
-            errmsg = CastAide.AsString(rs.Outputs["errmsg"]);
+            //DbResult rs = DbHelper.Execute("Acc_CustomerSelFITransferStatus", hash, DBType.WAREHOUSE);
 
+            int errcode;
+            //errmsg = CastAide.AsString(rs.Outputs["errmsg"]);
+
+            using (ObjectDb db = new ObjectDb("Acc_CustomerSelFITransferStatus", 600))
+            {
+                db.AssignParamValues(hash);
+                db.ExecuteNonQuery();
+                errcode = CastAide.AsInt32(db.GetParameterValue("errcode"));
+                errmsg = string.Format("{0}", db.GetParameterValue("errmsg"));
+                IsTransfer = CastAide.AsBoolean(db.GetParameterValue("istransfer"));
+            }
+            
             if (errcode > 0)
                 return false;
-            IsTransfer = CastAide.AsBoolean(rs.Outputs["istransfer"]);
+           
             return IsTransfer;
         }
 

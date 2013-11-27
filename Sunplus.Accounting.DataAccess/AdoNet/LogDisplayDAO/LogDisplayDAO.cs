@@ -4,6 +4,9 @@ using System.Linq;
 using DNAide.Core;
 using DNAide.Data;
 using Sunplus.Accounting.DataAccess.ILogDisplay;
+using Fanex.Data;
+using System;
+using Fanex.Tarus.Infrastructure.Extensions;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet.LogDisplayDAO
 {
@@ -11,71 +14,98 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.LogDisplayDAO
     {
         public System.Data.DataTable GetLogDisplay(Hashtable param, string logType)
         {
-            DbResult dbResult = null;
-            string spMaping = string.Empty;
-            switch (logType)
+            DataTable dataTable = new DataTable();
+            try
             {
-                case "setting":
-                case "status":
-                    spMaping = "GetLogSetting";
-                    break;
+                string spMaping = string.Empty;
+                switch (logType)
+                {
+                    case "setting":
+                    case "status":
+                        spMaping = "GetLogSetting";
+                        break;
 
-                case "login":
-                    spMaping = "GetLogLogin";
-                    break;
+                    case "login":
+                        spMaping = "GetLogLogin";
+                        break;
 
-                case "credit":
-                    spMaping = "GetLogCredit";
-                    break;
+                    case "credit":
+                        spMaping = "GetLogCredit";
+                        break;
 
-                default:
-                    break;
+                    default:
+                        break;
+                }
+                if (!string.IsNullOrEmpty(spMaping))
+                {
+                    using (ObjectDb db = new ObjectDb(spMaping, 600))
+                    {
+                        db.AssignParamValues(param);
+                        var ds = db.ExecuteDataSet();
+                        if (ds != null && ds.Tables.Count > 0)
+                        {
+                            dataTable =  ds.Tables[0];
+                        }
+                    }
+                }
             }
-            if (!string.IsNullOrEmpty(spMaping))
+            catch (Exception ex)
             {
-                var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.LogDisplaySection.StoreCollection.Stores, spMaping);
-                dbResult = DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
-                if (dbResult != null && dbResult.ResultSet != null && dbResult.ResultSet.Tables.Count > 0)
-                    return dbResult.ResultSet.Tables[0];
+                LogExtensions.ExceptionHandler(ex);
             }
-            return null;
+            return dataTable;
         }
 
         public int GetLogDisplayTotal(Hashtable param, string logType)
         {
             DbResult dbResult = null; int total = 0;
-            string spMaping = string.Empty;
-            switch (logType)
+            try
             {
-                case "setting":
-                case "status":
-                    spMaping = "GetLogSettingTotal";
-                    break;
-
-                case "login":
-                    spMaping = "GetLogLoginTotal";
-                    break;
-
-                case "credit":
-                    spMaping = "GetLogCreditTotal";
-                    break;
-
-                default:
-                    break;
-            }
-            if (!string.IsNullOrEmpty(spMaping))
-            {
-                var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.LogDisplaySection.StoreCollection.Stores, spMaping);
-                dbResult = DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
-                if (dbResult != null && dbResult.ResultSet != null && dbResult.ResultSet.Tables.Count > 0)
+                string spMaping = string.Empty;
+                switch (logType)
                 {
-                    DataRow[] rows = dbResult.ResultSet.Tables[0].Select();
-                    if (rows.Count() > 0)
+                    case "setting":
+                    case "status":
+                        spMaping = "GetLogSettingTotal";
+                        break;
+
+                    case "login":
+                        spMaping = "GetLogLoginTotal";
+                        break;
+
+                    case "credit":
+                        spMaping = "GetLogCreditTotal";
+                        break;
+
+                    default:
+                        break;
+                }
+                if (!string.IsNullOrEmpty(spMaping))
+                {
+                    using (ObjectDb db = new ObjectDb(spMaping, 1000))
                     {
-                        total = CastAide.AsInt32(rows[0].ItemArray[0].ToString());
+                        db.AssignParamValues(param);
+                        var ds = db.ExecuteDataSet();
+                        var output = db.GetOuputParams();
+
+                        dbResult = new DbResult(output, ds);
+                    }
+
+                    if (dbResult != null && dbResult.ResultSet != null && dbResult.ResultSet.Tables.Count > 0)
+                    {
+                        DataRow[] rows = dbResult.ResultSet.Tables[0].Select();
+                        if (rows.Count() > 0)
+                        {
+                            total = CastAide.AsInt32(rows[0].ItemArray[0].ToString());
+                        }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
             return total;
         }
     }

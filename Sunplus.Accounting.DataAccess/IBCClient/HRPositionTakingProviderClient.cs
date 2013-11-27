@@ -4,10 +4,11 @@ using System.Web;
 using DNAide.Core;
 using DNAide.Data;
 using IBCUtils;
-using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Entities;
+using Sunplus.Accounting.Core.Common;
+using Sunplus.Accounting.Core.Helper;
+using Fanex.Data;
 
 /// <summary>
 /// Summary description for PositionTakingProviderClient
@@ -64,6 +65,7 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
                 var param = new Hashtable();
                 param.Add("custid", custId);
                 param.Add("agentid", uplineId);
+
                 var spElement =
                             new HRSpConfig().GetHRStoreProcedure(
                                 Core.Configurations.StoreProcedureGroup.RacingSession.StoreCollection.RacingControl, "GetMasterOnMember");
@@ -114,19 +116,16 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
                                 Core.Configurations.StoreProcedureGroup.RacingSession.StoreCollection.RacingControl, "UpdateSuperSetting");
                         result = DbHelper.Execute(spElementS.Name, param, spElementS.DbName);
                         break;
-
                     case Globals.AccountType.Master:
                         var spElementM = new HRSpConfig().GetHRStoreProcedure(
                                 Core.Configurations.StoreProcedureGroup.RacingSession.StoreCollection.RacingControl, "UpdateMasterSetting");
                         result = DbHelper.Execute(spElementM.Name, param, spElementM.DbName);
                         break;
-
                     case Globals.AccountType.Agent:
                         var spElementA = new HRSpConfig().GetHRStoreProcedure(
                                 Core.Configurations.StoreProcedureGroup.RacingSession.StoreCollection.RacingControl, "UpdateAgentSetting");
                         result = DbHelper.Execute(spElementA.Name, param, spElementA.DbName);
                         break;
-
                     case Globals.AccountType.Member:
                         var spElementMe = new HRSpConfig().GetHRStoreProcedure(
                                 Core.Configurations.StoreProcedureGroup.RacingSession.StoreCollection.RacingControl, "UpdateMemberSetting");
@@ -204,40 +203,42 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
 
         public override DbResult GetMinMaxPT(int custId, Globals.AccountType accountType)
         {
-            //return base.GetPT(custId);
-            //return base.GetPT(custId);
+            DbResult result = null;
             try
             {
                 var param = new Hashtable();
                 param.Add("custid", custId);
 
+                string spKey = "";
+
                 switch (accountType)
                 {
                     case Globals.AccountType.Super:
-                        var spElementS =
-                            new HRSpConfig().GetHRStoreProcedure(
-                                Core.Configurations.StoreProcedureGroup.RacingSession.StoreCollection.RacingControl,
-                                "GetSuperMin");
-                        return DbHelper.Execute(spElementS.Name, param, spElementS.DbName);
+                        spKey = "GetSuperMin";
+                        break;
                     case Globals.AccountType.Master:
-                        var spElementM =
-                            new HRSpConfig().GetHRStoreProcedure(
-                                Core.Configurations.StoreProcedureGroup.RacingSession.StoreCollection.RacingControl,
-                                "GetMasterMinMax");
-                        return DbHelper.Execute(spElementM.Name, param, spElementM.DbName);
+                        spKey = "GetMasterMinMax";
+                        break;
                     case Globals.AccountType.Agent:
-                        var spElementA =
-                            new HRSpConfig().GetHRStoreProcedure(
-                                Core.Configurations.StoreProcedureGroup.RacingSession.StoreCollection.RacingControl,
-                                "GetAgentMinMax");
-                        return DbHelper.Execute(spElementA.Name, param, spElementA.DbName);
+                        spKey = "GetAgentMinMax";
+                        break;
                 }
-                return null;
+
+                using (ObjectDb db = new ObjectDb(spKey, 600))
+                {
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+
+            return result;
         }
 
         public override ErrorDetail UpdateMinMaxPT(Globals.AccountType accountType, Hashtable param)
@@ -256,7 +257,6 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
                                 "UpdateMinMaxPt");
                         result = DbHelper.Execute(spElementS.Name, param, spElementS.DbName);
                         break;
-
                     case Globals.AccountType.Master:
                         var spElementM =
                             new HRSpConfig().GetHRStoreProcedure(
@@ -264,7 +264,6 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
                                 "UpdateMinMaxPt");
                         result = DbHelper.Execute(spElementM.Name, param, spElementM.DbName);
                         break;
-
                     case Globals.AccountType.Agent:
                         var spElementA =
                             new HRSpConfig().GetHRStoreProcedure(
@@ -272,7 +271,6 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
                                 "UpdateMinMaxPt");
                         result = DbHelper.Execute(spElementA.Name, param, spElementA.DbName);
                         break;
-
                     default:
                         var spElementD =
                             new HRSpConfig().GetHRStoreProcedure(
@@ -296,10 +294,12 @@ namespace Sunplus.Accounting.DataAccess.IBCClient
 
         private class HRSpConfig : DataAccess
         {
+
             public StoreProcedureElement GetHRStoreProcedure(Core.Configurations.StoreProcedureGroup.RacingSession.StoreCollection storeCollection, string aliasName)
             {
                 return GetStoreProcedure(storeCollection, aliasName);
             }
+
         }
     }
 }

@@ -9,13 +9,17 @@ using CasinoLibrary.Model.Common;
 using DNAide.Data;
 using JSoft.Utility;
 
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
+using Sunplus.Core.LoggingLib;
+using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
     public static class CasinoSynchronise
     {
+        
         private static CultureInfo cult = CultureInfo.CurrentCulture;
 
         /// <summary>
@@ -31,12 +35,21 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 var p = new Hashtable();
                 p.Add("searchby", searchby);
                 p.Add("keyword", username);
-                var spElement = SpConfig.GetCasinoStoreProcedure("CasinoSynchronise");
-                rs = DbHelper.Execute(spElement.Name, p, spElement.DbName, 180);
+
+                using(ObjectDb db = new ObjectDb("CasinoSynchronise", 180))
+                {
+                    db.AssignParamValues(p);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
@@ -73,13 +86,14 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dtb;
         }
 
         /// <summary>
-        /// Update SyncCasino = 1.
+        /// Update SyncCasino = 1.	
         /// Simon@20090704
         /// </summary>
         public static DbResult Acc_CustomerSyncUpd(int accid, int custid)
@@ -90,16 +104,26 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 var p = new Hashtable();
                 p.Add("userid", accid);
                 p.Add("custid", custid);
-                rs = DbHelper.Execute("Acc_CustomerSyncUpd", p, DBType.MAIN, 120);
+                
+                using (ObjectDb db = new ObjectDb("Acc_CustomerSyncUpd", 600))
+                {
+                    db.AssignParamValues(p);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
 
-        private class SpConfig : DataAccess
+        private class SpConfig: DataAccess
         {
             public static StoreProcedureElement GetCasinoStoreProcedure(string alias)
             {
