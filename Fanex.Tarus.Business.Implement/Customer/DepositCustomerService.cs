@@ -266,27 +266,27 @@ namespace Fanex.Tarus.Business.Implement.Customer
                         Name = "v" + sportId + roleName + "positiontaking_max",
                         Value = positionTakingValue_Max
                     });
+                }
 
-                    if (roleId != RoleIdConstants.Super)
+                if (roleId != RoleIdConstants.Super)
+                {
+                    virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
                     {
-                        virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
-                        {
-                            Name = "minbetv" + sportId + "_max",
-                            Value = childrenNode.Attributes["MinBet_Max"].Value
-                        });
+                        Name = "minbetv" + sportId + "_max",
+                        Value = childrenNode.Attributes["MinBet_Max"].Value
+                    });
 
-                        virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
-                        {
-                            Name = "maxbetv" + sportId + "_min",
-                            Value = childrenNode.Attributes["MaxBet_Min"].Value
-                        });
+                    virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+                    {
+                        Name = "maxbetv" + sportId + "_min",
+                        Value = childrenNode.Attributes["MaxBet_Min"].Value
+                    });
 
-                        virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
-                        {
-                            Name = "maxpermatchv" + sportId + "_max",
-                            Value = childrenNode.Attributes["MaxPerMatch_Max"].Value
-                        });
-                    }
+                    virtualSportsSettingInfo.SettingInfo.Add(new SettingInfo
+                    {
+                        Name = "maxpermatchv" + sportId + "_max",
+                        Value = childrenNode.Attributes["MaxPerMatch_Max"].Value
+                    });
                 }
 
                 virtualSportsSettingInfoList.Add(virtualSportsSettingInfo);

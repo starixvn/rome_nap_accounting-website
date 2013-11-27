@@ -102,14 +102,9 @@
 
             }
             else {
-                if (vsDownlineSettings.roleId == 2) {
-                    $("#" + minBetv).get(0).uplineVal = parseFloat(settingInfoDictionary[minBetv + '_min']);
-                    $("#" + maxBetv).get(0).uplineVal = parseFloat(settingInfoDictionary[maxBetv + '_max']);
-                }
-                else {
-                    $("#" + minBetv).get(0).uplineVal = parseFloat(settingInfoDictionary[minBetv + '_max']);
-                    $("#" + maxBetv).get(0).uplineVal = parseFloat(settingInfoDictionary[maxBetv + '_min']);
-                }
+                $("#" + minBetv).get(0).uplineVal = parseFloat(settingInfoDictionary[minBetv + '_max']);
+                $("#" + maxBetv).get(0).uplineVal = parseFloat(settingInfoDictionary[maxBetv + '_min']);
+            
                 $("#" + maxPerMatchv).get(0).uplineVal = parseFloat(settingInfoDictionary[maxPerMatchv + '_max']);
             }
 
