@@ -103,7 +103,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.ReportDAO
 
             string strMapping = "WinlostRacingToteDetail" + GetStoreMappingSubfix(CastAide.AsDateTime(winlossDate));
 
-            using (ObjectDb db = new ObjectDb("WinlostRacingToteDetail", 600))
+            using (ObjectDb db = new ObjectDb(strMapping, 600))
             {
                 db.AssignParamValues(param);
                 var ds = db.ExecuteDataSet();
