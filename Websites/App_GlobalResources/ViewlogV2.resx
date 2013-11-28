@@ -891,4 +891,121 @@
   <data name="mpmv186" xml:space="preserve">
     <value>Max Per Match</value>
   </data>
+  <data name="v151maxb_31" xml:space="preserve">
+    <value>SA Tote - Max Bet</value>
+  </data>
+  <data name="v151maxb_41" xml:space="preserve">
+    <value>UK/Irish Tote - Max Bet</value>
+  </data>
+  <data name="v151maxb_51" xml:space="preserve">
+    <value>Aust Tote - Max  Bet</value>
+  </data>
+  <data name="v151minb_31" xml:space="preserve">
+    <value>SA Tote - Min Bet</value>
+  </data>
+  <data name="v151minb_41" xml:space="preserve">
+    <value>UK/Irish Tote - Min Bet</value>
+  </data>
+  <data name="v151minb_51" xml:space="preserve">
+    <value>Aust Tote - Min Bet</value>
+  </data>
+  <data name="v151mpm_31" xml:space="preserve">
+    <value>SA Tote - Max Per Match</value>
+  </data>
+  <data name="v151mpm_41" xml:space="preserve">
+    <value>UK/Irish Tote - Max Per Match</value>
+  </data>
+  <data name="v151mpm_51" xml:space="preserve">
+    <value>Aust Tote - Max Per Match</value>
+  </data>
+  <data name="v152maxb_41" xml:space="preserve">
+    <value>UK/Irish Tote - Max Bet</value>
+  </data>
+  <data name="v152maxb_51" xml:space="preserve">
+    <value>Aust Tote - Max Bet</value>
+  </data>
+  <data name="v152minb_41" xml:space="preserve">
+    <value>UK/Irish Tote - Min Bet</value>
+  </data>
+  <data name="v152minb_51" xml:space="preserve">
+    <value>Aust Tote - Min Bet</value>
+  </data>
+  <data name="v152mpm_41" xml:space="preserve">
+    <value>UK/Irish Tote - Max Per Match</value>
+  </data>
+  <data name="v152mpm_51" xml:space="preserve">
+    <value>Aust Tote - Max Per Match</value>
+  </data>
+  <data name="v153maxb_51" xml:space="preserve">
+    <value>Aust Tote - Max Bet</value>
+  </data>
+  <data name="v153minb_51" xml:space="preserve">
+    <value>Aust Tote - Min Bet</value>
+  </data>
+  <data name="v153mpm_51" xml:space="preserve">
+    <value>Aust Tote - Max Per Match</value>
+  </data>
+  <data name="v180maxb" xml:space="preserve">
+    <value>Max Bet</value>
+  </data>
+  <data name="v180minb" xml:space="preserve">
+    <value>Min Bet</value>
+  </data>
+  <data name="v180mpm" xml:space="preserve">
+    <value>Max Per Match</value>
+  </data>
+  <data name="v181maxb" xml:space="preserve">
+    <value>Max Bet</value>
+  </data>
+  <data name="v181minb" xml:space="preserve">
+    <value>Min Bet</value>
+  </data>
+  <data name="v181mpm" xml:space="preserve">
+    <value>Max Per Match</value>
+  </data>
+  <data name="v182maxb" xml:space="preserve">
+    <value>Max Bet</value>
+  </data>
+  <data name="v182minb" xml:space="preserve">
+    <value>Min Bet</value>
+  </data>
+  <data name="v182mpm" xml:space="preserve">
+    <value>Max Per Match</value>
+  </data>
+  <data name="v183maxb" xml:space="preserve">
+    <value>Max Bet</value>
+  </data>
+  <data name="v183minb" xml:space="preserve">
+    <value>Min Bet</value>
+  </data>
+  <data name="v183mpm" xml:space="preserve">
+    <value>Max Per Match</value>
+  </data>
+  <data name="v184maxb" xml:space="preserve">
+    <value>Max Bet</value>
+  </data>
+  <data name="v184minb" xml:space="preserve">
+    <value>Min Bet</value>
+  </data>
+  <data name="v184mpm" xml:space="preserve">
+    <value>Max Per Match</value>
+  </data>
+  <data name="v185maxb" xml:space="preserve">
+    <value>Max Bet</value>
+  </data>
+  <data name="v185minb" xml:space="preserve">
+    <value>Min Bet</value>
+  </data>
+  <data name="v185mpm" xml:space="preserve">
+    <value>Max Per Match</value>
+  </data>
+  <data name="v186maxb" xml:space="preserve">
+    <value>Max Bet</value>
+  </data>
+  <data name="v186minb" xml:space="preserve">
+    <value>Min Bet</value>
+  </data>
+  <data name="v186mpm" xml:space="preserve">
+    <value>Max Per Match</value>
+  </data>
 </root>
