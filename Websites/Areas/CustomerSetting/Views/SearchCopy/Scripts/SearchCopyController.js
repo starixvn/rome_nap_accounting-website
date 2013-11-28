@@ -55,7 +55,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
     $scope.step1Next = function () {
         if ($scope.existedUser.username == undefined || $scope.existedUser.username == "") {
             validate.setRequired("#existedUserName");
-            message.showAlertMessage("errorMsg", "Please Enter User Name.", 1);            
+            message.showAlertMessage("errorMsg", "Please Enter User Name.", 1);
         }
         else {
             if ($scope.existedUser.userid != "-1") {
@@ -116,39 +116,53 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
     };
 
     $scope.showSetting = function (settingInfoId, tabId) {
-        if (tabId != 'tabGenealInformation') {
-            if ($scope.newUser.username == undefined || $scope.newUser.username == "") {
-                message.showAlertMessage("errorMsg", "Please Enter User Name.", 1);
-                validate.setRequired("#username");
-                return;
-            }
-            else {
-                message.hideAlertMessage("errorMsg");
-            }
+        if (tabId == "tabGenealInformation") {
+            return;
         }
 
+        $(".sport").hide();
         $(".settingInfo div").hide();
         $("#step2 .tab-active").attr("class", "tab-inactive");
         $('#' + tabId).attr("class", "tab-active");
 
         var url = $("#currentURL").val();
         switch (tabId) {
-            case 'tabSportsbook': url += "/EditSuper/EditSuperPage?custId=" + $scope.existedUser.userid + "&uname=" + $scope.existedUser.username; break;
-            case 'tabSportsbookMinPT': url += "/EditSuperMinPt/EditSuperMinPtPage?&custId=" + $scope.existedUser.userid + "&uname=" + $scope.existedUser.username; break;
-            case 'tabRacing': url += "/EditSuperPTRacing/Index?custid=" + $scope.existedUser.userid; break;
-            case 'tabRacingMinPT': url += "/customer/pt/racing/SuperMinUpdate.aspx?custId=" + $scope.existedUser.userid; break;
-            case 'tabCasino': url += "/Customer/PositionTakingCS.aspx?custId=" + $scope.existedUser.userid; break;
-            case 'tabVirtualSports': url += "/VirtualSportSuperPT/EditSuper?custId=" + $scope.existedUser.userid + "&uname=" + $scope.existedUser.username + "&roleId=4"; break;
-            case 'tabBingo': url += "/Customer/PT/Bingo/SuperUpdate.aspx?custId=" + $scope.existedUser.userid; break;
-            case 'tabLiveCasino': url += "/LiveCasino/PTSetting/EditSuper.aspx?custId=" + $scope.existedUser.userid + "&exchangeId=20&roleId=4"; break;
+            case 'tabSportsbook':
+                url += "/EditSuper/EditSuperPage?custId=" + $scope.existedUser.userid + "&uname=" + $scope.existedUser.username;
+                $scope.loadData("#frmSportbook", url);
+                break;
+            case 'tabSportsbookMinPT': url += "/EditSuperMinPt/EditSuperMinPtPage?&custId=" + $scope.existedUser.userid + "&uname=" + $scope.existedUser.username;
+                $scope.loadData("#frmSportbookMinPT", url);
+                break;
+            case 'tabRacing': url += "/EditSuperPTRacing/Index?custid=" + $scope.existedUser.userid;
+                $scope.loadData("#frmRacing", url);
+                break;
+            case 'tabRacingMinPT': url += "/customer/pt/racing/SuperMinUpdate.aspx?custId=" + $scope.existedUser.userid;
+                $scope.loadData("#frmRacingMinPT", url);
+                break;
+            case 'tabCasino': url += "/Customer/PositionTakingCS.aspx?custId=" + $scope.existedUser.userid;
+                $scope.loadData("#frmCasino", url);
+                break;
+            case 'tabVirtualSports': url += "/VirtualSportSuperPT/EditSuper?custId=" + $scope.existedUser.userid + "&uname=" + $scope.existedUser.username + "&roleId=4";
+                $scope.loadData("#frmVirtualSports", url);
+                break;
+            case 'tabBingo': url += "/Customer/PT/Bingo/SuperUpdate.aspx?custId=" + $scope.existedUser.userid;
+                $scope.loadData("#frmBingo", url);
+                break;
+            case 'tabLiveCasino': url += "/LiveCasino/PTSetting/EditSuper.aspx?custId=" + $scope.existedUser.userid + "&exchangeId=20&roleId=4";
+                $scope.loadData("#frmLiveCasino", url); break;
             case 'tabGenealInformation': $("#divGeneralInformation").show();
         }
 
-        if (tabId != 'tabGenealInformation') {
-            $('#frmSport').attr('src', url)
-            $("#divSport").show();
-            $("#divSport div").show();
-        };
+        $("#divSport").show();
+        $("#divSport div").show();
+    };
+
+    $scope.loadData = function (frameId, url) {
+        if ($(frameId).attr('src') == "") {
+            $(frameId).attr('src', url);
+        }
+        $(frameId).show();
     };
 
     $scope.disableSports = function (statusSports) {
@@ -277,7 +291,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             MobilePhone: $scope.newUser.mobilephone,
             Site: $scope.existedUser.selectedSite.SiteName,
             Fax: $scope.newUser.fax,
-            Credit: $scope.existedUser.maxCredit,
+            Credit: $scope.existedUser.maxCredit.replace(/,/g, ''),
             IsInternal: $scope.newUser.internaluser,
             ExistingCustId: $scope.existedUser.userid,
             Creator: $("#currentUserId").val()

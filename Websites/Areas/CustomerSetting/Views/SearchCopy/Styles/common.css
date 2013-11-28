@@ -208,7 +208,7 @@ span.cannotchangeinternal:hover
 .maincontent_box
 {
     background: #FFF url(Styles/images/bg_head_tb.jpg) repeat-x left bottom;
-    border: solid 1px #7c98a4;
+    /*border: solid 1px #7c98a4;*/
     padding: 4px 2px;
     display: table;
     width: 99%;
@@ -221,7 +221,7 @@ span.cannotchangeinternal:hover
     border: solid 1px #7c98a4;
     display: table;
     width: 99%;
-    margin-top: 2px;
+    /*margin-top: 2px;*/
 }
 
 

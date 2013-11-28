@@ -3,8 +3,8 @@ PTSetting.SportType = new function () {
 
     var delayTime = 500;
 
-    var RemoveButtons = function () {
-        var $content = $("#frmSport").contents();
+    var RemoveButtons = function (frameId) {
+        var $content = $(frameId).contents();
         setTimeout(function () {
             $content.find('.maincontent_header').remove();
             $content.find('table:has(td.custBtn1)').remove();
@@ -14,7 +14,7 @@ PTSetting.SportType = new function () {
     };
 
     var RemoveSportBookCustInfo = function () {
-        var $content = $("#frmSport").contents();
+        var $content = $("#frmSportbook").contents();
         for (var i = 0; i < 6; i++) {
             $content.find(".tblcollapse tr:eq(0)").remove();
         }
@@ -28,7 +28,7 @@ PTSetting.SportType = new function () {
     };
 
     var RemoveSportBookMinPT = function () {
-        var $content = $("#frmSport").contents();
+        var $content = $("#frmSportbookMinPT").contents();
         $content.find('.tblcollapse')[0].remove();
         //disable edit
         setTimeout(function () {
@@ -39,7 +39,7 @@ PTSetting.SportType = new function () {
     };
 
     var RemoveRacingCustInfo = function () {
-        var $content = $("#frmSport").contents();
+        var $content = $("#frmRacing").contents();
         $content.find('#divCustInfo').remove();
         //disable edit
         setTimeout(function () {
@@ -50,12 +50,12 @@ PTSetting.SportType = new function () {
     };
 
     var RemoveRacingMinPT = function () {
-        var $content = $("#frmSport").contents();
+        var $content = $("#frmRacingMinPT").contents();
         setTimeout(function () {
             $content.find('.maincontent_box').remove();
             $content = $content.find('#SettingContent');
             $content.find('.tblcollapse')[0].remove();
-        }, 100);
+        }, delayTime);
 
         //disable edit
         setTimeout(function () {
@@ -65,7 +65,7 @@ PTSetting.SportType = new function () {
     };
 
     var RemoveCasinoCustInfo = function () {
-        var $content = $("#frmSport").contents();
+        var $content = $("#frmCasino").contents();
         for (var i = 0; i < 2; i++) {
             $content.find('.tblcollapse tr:eq(0)').remove();
         }
@@ -81,7 +81,7 @@ PTSetting.SportType = new function () {
     };
 
     var RemoveVirtualSportsCustInfo = function () {
-        var $content = $("#frmSport").contents();
+        var $content = $("#frmVirtualSports").contents();
         $content.find('.tblcollapse')[0].remove();
         //disable edit
         setTimeout(function () {
@@ -92,7 +92,7 @@ PTSetting.SportType = new function () {
     };
 
     var RemoveBingoCustInfo = function () {
-        var $content = $("#frmSport").contents();
+        var $content = $("#frmBingo").contents();
         for (var i = 0; i < 5; i++) {
             $content.find('.tblcollapse tr:eq(0)').remove();
         }
@@ -109,7 +109,7 @@ PTSetting.SportType = new function () {
     };
 
     var RemoveLiveCasinoCustInfo = function () {
-        var $content = $("#frmSport").contents();
+        var $content = $("#frmLiveCasino").contents();
         for (var i = 0; i < 2; i++) {
             $content.find('.tblcollapse tr:eq(0)').remove();
         }
@@ -131,16 +131,14 @@ PTSetting.SportType = new function () {
         });
         //remove settings
         switch (tabId) {
-            case 'tabSportsbook': RemoveSportBookCustInfo(); break;
-            case 'tabSportsbookMinPT': RemoveSportBookMinPT(); break;
-            case 'tabRacing': RemoveRacingCustInfo(); break;
-            case 'tabRacingMinPT': RemoveRacingMinPT(); break;
-            case 'tabCasino': RemoveCasinoCustInfo(); break;
-            case 'tabVirtualSports': RemoveVirtualSportsCustInfo(); break;
-            case 'tabBingo': RemoveBingoCustInfo(); break;
-            case 'tabLiveCasino': RemoveLiveCasinoCustInfo(); break;
+            case 'tabSportsbook': RemoveSportBookCustInfo(); RemoveButtons('#frmSportbook'); break;
+            case 'tabSportsbookMinPT': RemoveSportBookMinPT(); RemoveButtons('#frmSportbookMinPT'); break;
+            case 'tabRacing': RemoveRacingCustInfo(); RemoveButtons('#frmRacing'); break;
+            case 'tabRacingMinPT': RemoveRacingMinPT(); RemoveButtons('#frmRacingMinPT'); break;
+            case 'tabCasino': RemoveCasinoCustInfo(); RemoveButtons('#frmCasino'); break;
+            case 'tabVirtualSports': RemoveVirtualSportsCustInfo(); RemoveButtons('#frmVirtualSports'); break;
+            case 'tabBingo': RemoveBingoCustInfo(); RemoveButtons('#frmBingo'); break;
+            case 'tabLiveCasino': RemoveLiveCasinoCustInfo(); RemoveButtons('#frmLiveCasino'); break;
         }
-
-        RemoveButtons();
     }
 };

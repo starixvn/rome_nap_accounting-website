@@ -5,7 +5,7 @@
 @section Styles
 {
     <link rel="Stylesheet" href="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Styles/Steps/Step1.css")" />
-    <link rel="Stylesheet" href="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Styles/Steps/Step2.css")" />    
+    <link rel="Stylesheet" href="@Url.Content("~/Areas/CustomerSetting/Views/SearchCopy/Styles/Steps/Step2.css")" />
 }
 @section Scripts
 {
@@ -21,7 +21,7 @@
     <div class="formPanel">
         <div id="panelStep1">
             <span id="spanstep1" class="step step1-active">Step 1: <span style="font-weight: bold">
-                Search Existing Supper</span> </span>
+                Search Existing Super</span> </span>
         </div>
         <div id="panelStep2">
             <span id="spanstep2" class="step step2-inactive">Step 2: <span style="font-weight: bold">
@@ -35,7 +35,7 @@
             @Html.Partial("~/Areas/CustomerSetting/Views/SearchCopy/Super/SearchForm.cshtml")
         </div>
         <div id="step2">
-            <div class="newline">
+            <div style="clear: both; height: 1px">
                 &nbsp;</div>
             <div class="row tabsports">
                 <div id="tabGenealInformation" class="tab-active" ng-click="showSetting('#divGeneralInformation','tabGenealInformation');">
@@ -57,12 +57,33 @@
                 <div id="tabLiveCasino" class="tab-inactive" ng-click="showSetting('#divLiveCasino','tabLiveCasino');">
                     <span>Live Casino</span></div>
             </div>
-            <div class="settingInfo" style="overflow: auto">
+            <div class="settingInfo" style="overflow: auto; margin-top: -2px">
                 @Html.Partial("~/Areas/CustomerSetting/Views/SearchCopy/Super/GeneralInformation.cshtml")
                 <div id="divSport" class="bg_table" style="width: 100%">
-                    <iframe id="frmSport" onload='setFrameLoaded();' scrolling="auto" frameborder="0"
-                        style="width: 100%; height: 700px;" hspace="0" vspace="0" marginheight="0" marginwidth="0"
-                        src="" name="frmSport"></iframe>
+                    <iframe id="frmSportbook" onload='setFrameLoaded();' scrolling="auto" frameborder="0" class="sport"
+                        style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0" marginwidth="0"
+                        src="" name="frmSportbook"></iframe>
+                    <iframe id="frmSportbookMinPT" onload='setFrameLoaded();' scrolling="auto" frameborder="0" class="sport"
+                        style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0" marginwidth="0"
+                        src="" name="frmSportbookMinPT"></iframe>
+                    <iframe id="frmRacing" onload='setFrameLoaded();' scrolling="auto" frameborder="0" class="sport"
+                        style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0" marginwidth="0"
+                        src="" name="frmRacing"></iframe>
+                    <iframe id="frmRacingMinPT" onload='setFrameLoaded();' scrolling="auto" frameborder="0" class="sport"
+                        style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0" marginwidth="0"
+                        src="" name="frmRacingMinPT"></iframe>
+                    <iframe id="frmCasino" onload='setFrameLoaded();' scrolling="auto" frameborder="0" class="sport"
+                        style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0" marginwidth="0"
+                        src="" name="frmCasino"></iframe>
+                    <iframe id="frmVirtualSports" onload='setFrameLoaded();' scrolling="auto" frameborder="0" class="sport"
+                        style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0" marginwidth="0"
+                        src="" name="frmVirtualSports"></iframe>
+                    <iframe id="frmBingo" onload='setFrameLoaded();' scrolling="auto" frameborder="0" class="sport"
+                        style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0" marginwidth="0"
+                        src="" name="frmBingo"></iframe>
+                    <iframe id="frmLiveCasino" onload='setFrameLoaded();' scrolling="auto" frameborder="0" class="sport"
+                        style="width: 100%; height: 680px;" hspace="0" vspace="0" marginheight="0" marginwidth="0"
+                        src="" name="frmLiveCasino"></iframe>
                 </div>
             </div>
             <div class="newline">
@@ -74,7 +95,7 @@
             <div class="btnNextR hand grid3" ng-click="step2Submit();">
                 <div class="btnNextL">
                     <span>Submit</span></div>
-            </div>            
+            </div>
         </div>
     }
 </div>
@@ -85,7 +106,7 @@
     };
 
     function setFrameLoaded() {
-        if ($('#frmSport').attr('src') != "") {
+        if ($(this).attr('src') != "") {
             PTSetting.SportType.SetFrameLoaded();
         }
     };
