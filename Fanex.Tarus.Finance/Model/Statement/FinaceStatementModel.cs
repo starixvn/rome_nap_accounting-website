@@ -1,5 +1,4 @@
-﻿
-namespace Fanex.Tarus.Finance.Model.Statement
+﻿namespace Fanex.Tarus.Finance.Model.Statement
 {
     using System;
     using System.Collections.Generic;
@@ -8,7 +7,6 @@ namespace Fanex.Tarus.Finance.Model.Statement
     [Serializable]
     public class StatementDetail
     {
-
         private const string AccBalance = "ACCUMULATED BALANCE";
         private const string OpeningBalance = "opening balance";
         private const string Dep = "Dep";
@@ -37,27 +35,23 @@ namespace Fanex.Tarus.Finance.Model.Statement
                 if (ListTrans.Count.Equals(0))
                     return false;
                 var groupCreator = from t in ListTrans
-                                   group t by new { t.Creator}
-                                   into g
-                                   select g;
+                                   group t by new { t.Creator }
+                                       into g
+                                       select g;
 
-                     
                 return groupCreator.Count() > 1;
             }
         }
-
-
-        
 
         public bool IsAccummulated
         {
             get
             {
                 //return this.RefNo.Equals("0");
-                if(ListTrans.Count.Equals(0))
+                if (ListTrans.Count.Equals(0))
                     return false;
                 return this.ListTrans[0].Remark.ToLower().Contains(AccBalance.ToLower());
-            }            
+            }
         }
 
         public bool IsOpeningBalance
@@ -79,39 +73,47 @@ namespace Fanex.Tarus.Finance.Model.Statement
         }
     }
 
-     [Serializable]
+    [Serializable]
     public class Transaction
     {
-        
-
         public string Total { get; set; }
+
         public string AccumTotalExcel { get; set; }
+
         public string AccumTotal { get; set; }
+
         public string Remark { get; set; }
+
         public string TransDate { get; set; }
+
         public string TransId { get; set; }
+
         public string Creator { get; set; }
+
         public string TransType { get; set; }
+
         public bool IsOwner { get; set; }
-        
 
-
-        public List<SubTransaction> ListSubTrans { get;set;}
+        public List<SubTransaction> ListSubTrans { get; set; }
 
         public Transaction()
         {
-            
         }
     }
 
-     [Serializable]
+    [Serializable]
     public class SubTransaction
     {
         public string TransDate { get; set; }
+
         public string Amount { get; set; }
+
         public string Remark { get; set; }
+
         public string Creator { get; set; }
+
         public string TransId { get; set; }
+
         public bool IsOwner { get; set; }
     }
 }

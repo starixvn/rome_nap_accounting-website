@@ -2,13 +2,15 @@
 using System.Collections;
 using DNAide.Data;
 using DNAide.Utils;
-
 //using IBCUtils;
 
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.DataAccess.Report;
+using Sunplus.Core.LoggingLib;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
 using Sunplus.Accounting.Core.Extensions;
-using Sunplus.Accounting.DataAccess.Report;
+using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
@@ -19,11 +21,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             var sps = ReportSession.Instance[storeCollection];
             return sps != null ? sps[alias] : null;
         }
-
-        private MatchWinLostReport()
-        {
-        }
-
+        private MatchWinLostReport() { }
         /// <summary>
         /// Get Match Win/Loss content for Account MatchWinLoss report
         /// @PhuongDN
@@ -47,10 +45,10 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
-
         /// <summary>
         /// Get Commission content for Account MatchWinLoss report
         /// @PhuongDN
@@ -74,10 +72,10 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
-
         /// <summary>
         /// Get Match PositionTalking content for Account MatchWinLoss report
         /// @PhuongDN
@@ -99,10 +97,10 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
-
         /// <summary>
         /// Get currency Currency Win/Los Detail
         /// @PhuongDN
@@ -124,10 +122,10 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
-
         /// <summary>
         ///Execute Rpt_MatchWinlossReportByBetType pocedure
         /// @PhuongDN
@@ -142,16 +140,19 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 Hashtable p = new Hashtable();
 
-                p.Add("winlostdate", wldate);
+                p.Add("winlostdate", wldate);                
                 p.Add("winlost_8rm", -1);
                 p.Add("fi_3rdshare", -1);
-
+                
                 if (db.Equals("rep")) result = DbHelper.Execute("Acc_Rpt_MatchWinLoss2", p, DBType.REPORT, 600);//DatabaseType.ARCHIVE_1
                 else if (db.Equals("main")) result = DbHelper.Execute("Acc_Rpt_MatchWinLoss2", p, DBType.MAIN, 600);//DatabaseType.MAIN
+
+
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -170,15 +171,17 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 Hashtable p = new Hashtable();
 
-                p.Add("winlostdate", wldate);
+                p.Add("winlostdate", wldate );
                 p.Add("fi_3rdshare", 0);
 
                 if (db.Equals("rep")) result = DbHelper.Execute("Acc_Rpt_WinLossByBettype", p, DBType.REPORT, 600);//DatabaseType.ARCHIVE_1
                 else if (db.Equals("main")) result = DbHelper.Execute("Acc_Rpt_WinLossByBettype", p, DBType.MAIN, 600);//DatabaseType.MAINs
+
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -189,7 +192,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <param name="fromDate"></param>
         /// <param name="toDate"></param>
         /// <returns></returns>
-        public static DbResult Acc_Rpt_WinLossByBettype_14(DateTime wldate)
+        public static DbResult Acc_Rpt_WinLossByBettype_14(DateTime wldate )
         {
             DbResult result = null;
             try
@@ -199,10 +202,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("winlostdate", wldate);
 
                 result = DbHelper.Execute("Acc_Rpt_WinLossByBettype14", p, DBType.REPORT, 600); //DatabaseType.ARCHIVE_1
+
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -220,7 +225,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 Hashtable p = new Hashtable();
 
-                p.Add("winlostdate", wldate);
+                p.Add("winlostdate", wldate);                
                 p.Add("winlost_8rm", -1);
                 p.Add("virtualwinlost_8rm", -1);
                 p.Add("winlost_8rm_live", -1);
@@ -230,6 +235,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -259,6 +265,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -281,18 +288,27 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("fromdate", (fromDate));
                 p.Add("todate", (toDate));
                 p.Add("_details", 0);
-                var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Main, "WinLossSummaryReport");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
+                
+
+                using (ObjectDb db = new ObjectDb("WinLossSummaryReport"))
+                {
+                    db.AssignParamValues(p);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
 
         /// <summary>
-        /// @Khoa.Tran
+        /// @Khoa.Tran   
         /// </summary>
         /// <param name="fromDate"></param>
         /// <param name="toDate"></param>
@@ -303,7 +319,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             try
             {
                 Hashtable p = new Hashtable();
-                p.Add("winlostdate", (wldate));
+                p.Add("winlostdate", (wldate));                
                 p.Add("linetotal", 0);
                 p.Add("winlost_8rm", 0);
 
@@ -313,6 +329,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -323,7 +340,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             try
             {
                 Hashtable p = new Hashtable();
-                p.Add("winlostdate", (wldate));
+                p.Add("winlostdate", (wldate));                
                 p.Add("linetotal", 0);
                 p.Add("winlost_8rm", 0);
                 p.Add("winlost_barm", 0);
@@ -333,9 +350,11 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
+
 
         public static DbResult Acc_Rpt_DailyWLDirect_Sporttype_WH(DateTime wldate)
         {
@@ -354,6 +373,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -385,6 +405,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -413,6 +434,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -432,6 +454,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -452,6 +475,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -472,6 +496,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -493,6 +518,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -520,6 +546,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -539,6 +566,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -557,6 +585,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -578,6 +607,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -598,7 +628,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -620,6 +652,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -631,13 +664,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 Hashtable p = new Hashtable();
 
-                p.Add("winlostdate", wldate);
+                p.Add("winlostdate", wldate);                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Main, "DailyWLDirect_soccer_bettype");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -649,14 +684,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 Hashtable p = new Hashtable();
 
-                p.Add("winlostdate", wldate);
-
+                p.Add("winlostdate", wldate);                
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Main, "DailyWLDirect_soccer_bettype_14");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -674,7 +710,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -686,14 +724,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 Hashtable p = new Hashtable();
 
-                p.Add("winlostdate", wldate);
-
+                p.Add("winlostdate", wldate);                
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Main, "DailyWLDirect_HorseRacing");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -712,7 +751,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -722,16 +763,22 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             DbResult result = null;
             try
             {
-                Hashtable p = new Hashtable();
+                using (ObjectDb db = new ObjectDb("DailyWLDirect_HorseRacing_WH"))
+                {
+                    Hashtable p = new Hashtable();
+                    p.Add("winlostdate", wldate);
+                    db.AssignParamValues(p);
 
-                p.Add("winlostdate", wldate);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
 
-                var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Main, "DailyWLDirect_HorseRacing_WH");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
+                    result = new DbResult(output, ds);
+                }                
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -756,6 +803,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -766,20 +814,21 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             try
             {
                 Hashtable p = new Hashtable();
-                p.Add("winlostdate", wldate);
+                p.Add("winlostdate", wldate);                
                 p.Add("sporttype", sporttype);
                 p.Add("liveindicator", liveindicator);
                 p.Add("bettype", bettype);
                 p.Add("winlost_8rm", 0);
                 p.Add("winlost_barm", 0);
                 p.Add("ishedge", IsHedge);
-
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Main, "DailyWLDirect_Detail");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -790,20 +839,21 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             try
             {
                 Hashtable p = new Hashtable();
-                p.Add("winlostdate", wldate);
+                p.Add("winlostdate", wldate);                
                 p.Add("sporttype", sporttype);
                 p.Add("liveindicator", liveindicator);
                 p.Add("bettype", bettype);
                 p.Add("winlost_8rm", 0);
                 p.Add("winlost_barm", 0);
                 p.Add("ishedge", IsHedge);
-
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Main, "DailyWLDirect_Detail_14");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -821,13 +871,14 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("winlost_8rm", 0);
                 p.Add("winlost_barm", 0);
                 p.Add("ishedge", IsHedge);
-
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Main, "DailyWLDirect_Detail_WH");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -838,7 +889,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             try
             {
                 Hashtable p = new Hashtable();
-                p.Add("winlostdate", wldate);
+                p.Add("winlostdate", wldate);                
                 p.Add("bettype", bettype);
 
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Main, "DailyWLDirect_HorseRacing_Detail");
@@ -847,6 +898,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -857,7 +909,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             try
             {
                 Hashtable p = new Hashtable();
-                p.Add("winlostdate", wldate);
+                p.Add("winlostdate", wldate);                
                 p.Add("bettype", bettype);
 
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Main, "DailyWLDirect_HorseRacing_Detail_14");
@@ -866,6 +918,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -875,16 +928,25 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             DbResult result = null;
             try
             {
-                Hashtable p = new Hashtable();
-                p.Add("winlostdate", wldate);
-                p.Add("bettype", bettype);
+                using (ObjectDb db = new ObjectDb("DailyWLDirect_HorseRacing_Detail_WH"))
+                {
+                    Hashtable p = new Hashtable();
+                    p.Add("winlostdate", wldate);
+                    p.Add("bettype", bettype);
 
-                var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Main, "DailyWLDirect_HorseRacing_Detail_WH");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
+                    db.AssignParamValues(p);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+                
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -895,15 +957,16 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             try
             {
                 Hashtable p = new Hashtable();
-                p.Add("winlostdate", wldate);
+                p.Add("winlostdate", wldate);                
                 p.Add("bettype", bettype);
-
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Main, "DailyWLDirect_Finance_Detail");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -914,15 +977,17 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             try
             {
                 Hashtable p = new Hashtable();
-                p.Add("winlostdate", wldate);
+                p.Add("winlostdate", wldate);                
                 p.Add("bettype", bettype);
-
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Main, "DailyWLDirect_Finance_Detail_14");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -935,13 +1000,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 Hashtable p = new Hashtable();
                 p.Add("winlostdate", wldate);
                 p.Add("bettype", bettype);
-
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Main, "DailyWLDirect_Finance_Detail_WH");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -959,12 +1026,20 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 Hashtable p = new Hashtable();
                 p.Add("winlostdate", (date));
-                var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "TaskWinLossUpdateTable");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);//DatabaseType.REPORT
+                
+                using (ObjectDb db = new ObjectDb("TaskWinLossUpdateTable"))
+                {
+                    db.AssignParamValues(p);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -991,19 +1066,28 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("sporttype", sType);
                 p.Add("bettype", bType);
                 p.Add("liveindicator", live);
-                var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "WinLossDetail");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);//DatabaseType.REPORT
+
+                using (ObjectDb db = new ObjectDb("WinLossDetail"))
+                {
+                    db.AssignParamValues(p);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
 
         /// <summary>
         /// Khoa Tran
-        /// </summary>
+        /// </summary>        
         public static DbResult WinlostHR_Details(DateTime wldate, string db)
         {
             DbResult result = null;
@@ -1011,13 +1095,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 Hashtable p = new Hashtable();
                 p.Add("winlostdate", wldate);
-
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "WinLoss_HorseRacing_Detail");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1029,13 +1115,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 Hashtable p = new Hashtable();
                 p.Add("winlostdate", wldate);
-
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "WinLoss_HorseRacing_Detail_14");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1045,15 +1133,24 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             DbResult result = null;
             try
             {
-                Hashtable p = new Hashtable();
-                p.Add("winlostdate", wldate);
+                using (ObjectDb db = new ObjectDb("WinLoss_HorseRacing_Detail_WH"))
+                {
+                    Hashtable p = new Hashtable();
+                    p.Add("winlostdate", wldate);
 
-                var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "WinLoss_HorseRacing_Detail_WH");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
+                    db.AssignParamValues(p);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+                
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1073,7 +1170,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1093,7 +1192,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1105,14 +1206,16 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 Hashtable p = new Hashtable();
                 p.Add("fromdate", fdate);
-                p.Add("todate", tdate);
-
+                p.Add("todate", tdate);                
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "WinLoss_HorseRacing_Group");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1124,13 +1227,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 Hashtable p = new Hashtable();
                 p.Add("winlostdate", wldate);
-
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "WinLoss_HorseRacing_Group_Daily");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1147,7 +1252,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1159,13 +1266,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 Hashtable p = new Hashtable();
                 p.Add("winlostdate", wldate);
-
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "WinLoss_FI_Detail_14");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1177,14 +1286,16 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 Hashtable p = new Hashtable();
 
-                p.Add("winlostdate", wldate);
-
+                p.Add("winlostdate", wldate);                
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Main, "DailyWLDirect_Finance");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1199,11 +1310,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("winlostdate", wldate);
 
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Main, "DailyWLDirect_Finance_14");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
+                result = DbHelper.Execute(spElement.Name , p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1213,16 +1326,24 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             DbResult result = null;
             try
             {
-                Hashtable p = new Hashtable();
+                using (ObjectDb db = new ObjectDb("DailyWLDirect_Finance_WH"))
+                {
+                    Hashtable p = new Hashtable();
+                    p.Add("winlostdate", wldate);
 
-                p.Add("winlostdate", wldate);
+                    db.AssignParamValues(p);
 
-                var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Main, "DailyWLDirect_Finance_WH");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1235,12 +1356,21 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 Hashtable p = new Hashtable();
                 p.Add("winlostdate", wldate);
 
-                var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "WinLoss_CS_Detail");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
+                using (ObjectDb objectDb = new ObjectDb("WinLoss_CS_Detail"))
+                {
+                    objectDb.AssignParamValues(p);
+                    var ds = objectDb.ExecuteDataSet();
+                    var output = objectDb.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1252,12 +1382,21 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 Hashtable p = new Hashtable();
                 p.Add("winlostdate", wldate);
-                var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "WinLoss_CS_Detail_14");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
+                
+                using (ObjectDb db = new ObjectDb("WinLoss_CS_Detail_14"))
+                {
+                    db.AssignParamValues(p);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1270,13 +1409,22 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 Hashtable p = new Hashtable();
                 p.Add("fromdate", wldate);
                 p.Add("todate", wldate);
-                var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "WinLoss_CS_Detail_WH");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
+                
+                using (ObjectDb db = new ObjectDb("WinLoss_CS_Detail_WH"))
+                {
+                    db.AssignParamValues(p);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
                 throw ex;
+
             }
             return result;
         }
@@ -1293,11 +1441,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
-
+       
         public static DbResult WinlostHR12BET_Details_14(DateTime wldate)
         {
             DbResult result = null;
@@ -1310,7 +1460,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1330,7 +1482,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1351,7 +1505,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1364,13 +1520,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 Hashtable p = new Hashtable();
 
                 p.Add("winlostdate", wldate);
-
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "DailyWLDirect_Casino_Detail");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1382,14 +1540,16 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 Hashtable p = new Hashtable();
 
-                p.Add("winlostdate", wldate);
-
+                p.Add("winlostdate", wldate);                
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "DailyWLDirect_Casino_Detail_14");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1408,7 +1568,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1424,8 +1586,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("errcode", 0);
                 p.Add("errmsg", string.Empty);
 
-                var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Others, "AutoDummyTransfer_Finance");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
+                using (ObjectDb db = new ObjectDb("AutoDummyTransfer_Finance"))
+                {
+                    db.AssignParamValues(p);
+                    var ds =db.ExecuteDataSet();
+                    result = new DbResult(db.GetOuputParams(), ds);
+                }                
             }
             catch (Exception ex)
             {
@@ -1446,7 +1612,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1463,7 +1631,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1483,7 +1653,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1498,13 +1670,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("raceno", raceNo);
                 p.Add("currency", currency);
                 p.Add("winlostdate", wldate);
-
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "WinLoss_HRM88_Betlist_Detail_14");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1521,7 +1695,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1538,7 +1714,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1553,13 +1731,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("raceno", raceNo);
                 p.Add("currency", currency);
                 p.Add("winlostdate", wldate);
-
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "WinLoss_FOddsHR_Betlist_Detail");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1580,7 +1760,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1597,7 +1779,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1609,13 +1793,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 Hashtable p = new Hashtable();
                 p.Add("winlostdate", wldate);
-
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "WinLoss_FOddsHR12Bet_Detail_14");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1630,13 +1816,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("raceno", raceNo);
                 p.Add("currency", currency);
                 p.Add("winlostdate", wldate);
-
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "WinLoss_FOddsHR12Bet_Betlist_Detail");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
+                result = DbHelper.Execute(spElement.Name  , p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1651,13 +1839,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("raceno", raceNo);
                 p.Add("currency", currency);
                 p.Add("winlostdate", wldate);
-
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "WinLoss_FOddsHR12Bet_Betlist_Detail_14");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1674,7 +1864,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1691,7 +1883,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1706,13 +1900,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("raceno", raceNo);
                 p.Add("currency", currency);
                 p.Add("winlostdate", wldate);
-
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "WinLoss_FOddsHRMS88_Betlist_Detail");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1727,13 +1923,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("raceno", raceNo);
                 p.Add("currency", currency);
                 p.Add("winlostdate", wldate);
-
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "WinLoss_FOddsHRMS88_Betlist_Detail_14");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1750,7 +1948,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1768,7 +1968,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1789,7 +1991,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1804,13 +2008,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("raceno", raceNo);
                 p.Add("currency", currency);
                 p.Add("winlostdate", wldate);
-
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "WinLoss_HRAB88_Betlist_Detail_14");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1827,7 +2033,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1839,13 +2047,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 Hashtable p = new Hashtable();
                 p.Add("winlostdate", wldate);
-
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "WinLoss_FOddsHRAB88_Detail_14");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1865,7 +2075,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1880,13 +2092,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("raceno", raceNo);
                 p.Add("currency", currency);
                 p.Add("winlostdate", wldate);
-
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "WinLoss_FOddsHRAB88_Betlist_Detail_14");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1903,7 +2117,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1920,7 +2136,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1930,13 +2148,22 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             DbResult result = null;
             try
             {
-                var p = new Hashtable { { "winlostdate", wldate } };
-                var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "WinLoss_Bingo_Detail");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
+                var p = new Hashtable {{"winlostdate", wldate}};
+
+                using (ObjectDb objectDb = new ObjectDb("WinLoss_Bingo_Detail"))
+                {
+                    objectDb.AssignParamValues(p);
+                    var ds = objectDb.ExecuteDataSet();
+                    var output = objectDb.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1946,14 +2173,22 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             DbResult result = null;
             try
             {
-                var p = new Hashtable { { "winlostdate", wldate } };
+                var p = new Hashtable {{"winlostdate", wldate}};
 
-                var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "WinLoss_Bingo_Detail_14");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
+                using (ObjectDb db = new ObjectDb("WinLoss_Bingo_Detail_14"))
+                {
+                    db.AssignParamValues(p);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
-                LogExtensions.ExceptionHandler(ex);
+                
+                    LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1963,14 +2198,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             DbResult result = null;
             try
             {
-                var p = new Hashtable { { "winlostdate", wldate } };
-
+                var p = new Hashtable {{"winlostdate", wldate}};
+                
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Main, "DailyWLDirect_Bingo");
                 result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -1990,6 +2226,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -2009,6 +2246,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -2025,6 +2263,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -2041,6 +2280,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
@@ -2057,13 +2297,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
-
         public static DbResult WinLostHRALog_Details_14(DateTime wldate)
         {
-            DbResult result = null;
+            DbResult result = null; 
             try
             {
                 var p = new Hashtable { { "winlostdate", wldate } };
@@ -2073,10 +2313,10 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
-
         public static DbResult WinlostHRALog_BetList_Details(int leagueid, string raceNo, int currency, DateTime wldate, string db)
         {
             DbResult result = null;
@@ -2093,10 +2333,10 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }
-
         public static DbResult WinlostHRALog_BetList_Details_14(int leagueid, string raceNo, int currency, DateTime wldate)
         {
             DbResult result = null;
@@ -2108,11 +2348,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("currency", currency);
                 p.Add("winlostdate", wldate);
                 var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.WinLoss, "WinLoss_HRAlog_Betlist_Detail_14");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
+                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);                
             }
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
+
             }
             return result;
         }

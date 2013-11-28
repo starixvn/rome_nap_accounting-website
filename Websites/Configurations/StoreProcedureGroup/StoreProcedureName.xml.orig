@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 
 <Functions>
 
@@ -235,17 +236,8 @@
 	<Setting Key="Gaming_SelFinancialReport" SpName="Acc_Rpt_LiveCasinoFinance" DbName="punter"  />
   </Function>
 
-<<<<<<< HEAD
-  <Function Name="Customer">
-    <Setting Key="Acc_CustomerSelStatus" SpName="Acc_CustomerSelStatus" DbName="db053"  />
-    <Setting Key="CustomerUpdMoveDepositMaster" SpName="Acc_Dep_CustomerUpdMoveMaster" DbName="main"  />
-    <Setting Key="CustomerUpdMoveDepositAgent" SpName="Acc_Dep_CustomerUpdMoveAgent" DbName="main"  />
-
-    <Setting Key="Customer_ViewPTSel" SpName="Acc_MT_GetBingoPT" DbName="CS_LBBackupDB" Plain="1" />
-=======
   <Function Name="Live Casino - Betlist">
     <Setting Key="SelBetlistResultLC" SpName="Acc_BetList_SelMatchResult" DbName="db053"  />
->>>>>>> 4b788f056e691a53bc041fa90d7b657711891d2f
   </Function>
 
   <Function Name="Customer">
@@ -293,28 +285,16 @@
   </Function>
 
   <Function Name="PT Setting">
-<<<<<<< HEAD
     <Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="archive_ex" Plain="0" />
     <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="main_ex" Plain="0" />
     <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="archive_ex" Plain="0" />
     <Setting Key="Acc_Con_FileNameSelByCustID" SpName="Acc_Con_FileNameSelByCustID" DbName="archive_ex" Plain="0" />
-
-    <Setting Key="Acc_CustomerSelComEditOverride_SAg" SpName="Acc_CustomerSelComEditOverride_SAg" DbName="archive" />
-    <Setting Key="Acc_CustomerSelComEditOverride_MAg" SpName="Acc_CustomerSelComEditOverride_MAg" DbName="archive" />
-    <Setting Key="Acc_CustomerSelComEditOverride_Ag" SpName="Acc_CustomerSelComEditOverride_Ag" DbName="archive" />
-    <Setting Key="Acc_CustomerSelEditCustomer_SAg" SpName="Acc_CustomerSelEditCustomer_SAg" DbName="archive" />
-
-    <Setting Key="Acc_CustomerSelEditCustomer_MAg" SpName="Acc_CustomerSelEditCustomer_MAg" DbName="archive" />
-
-    <Setting Key="Acc_CustOverrideUpd" SpName="Acc_CustOverrideUpd" DbName="main" />
-=======
 	  <Setting Key="Acc_CustomerSelComEditOverride_SAg" SpName="Acc_CustomerSelComEditOverride_SAg" DbName="archive" />
 	  <Setting Key="Acc_CustomerSelComEditOverride_MAg" SpName="Acc_CustomerSelComEditOverride_MAg" DbName="archive" />
 	  <Setting Key="Acc_CustomerSelComEditOverride_Ag" SpName="Acc_CustomerSelComEditOverride_Ag" DbName="archive" />
 	  <Setting Key="Acc_CustomerSelEditCustomer_SAg" SpName="Acc_CustomerSelEditCustomer_SAg" DbName="archive" />
 	  <Setting Key="Acc_CustomerSelEditCustomer_MAg" SpName="Acc_CustomerSelEditCustomer_MAg" DbName="archive" />
 	  
->>>>>>> 4b788f056e691a53bc041fa90d7b657711891d2f
   </Function>
 
   <Function Name="Users">
@@ -375,269 +355,6 @@
 	  <Setting Key="CustomerSelMember_AgInfo" SpName="Acc_Dep_CustomerSelMember_AgInfo" DbName="archive" />
   </Function>
 
-<<<<<<< HEAD
-  <Function Name="Report - Racing">
-    <Setting Key="Acc_Rpt_RacingActiveMember" SpName="Acc_Rpt_RacingActiveMember" DbName="db053"  />
-  </Function>
-
-  <Function Name="Report - Licensee">
-    <Setting Key="OA_LicenseesGetByResellerID" SpName="OA_LicenseesGetByResellerID" DbName="licensee"  />
-    <Setting Key="OA_Rpt_NumberGameWinloss" SpName="OA_Rpt_NumberGameWinloss" DbName="archive"  />
-  </Function>
-
-  <Function Name="Gaming Report - Poker Winloss">
-    <Setting Key="PokerWinloss" SpName="Acc_Rpt_WinlostP2P" DbName="warehouse"  />
-    <Setting Key="PokerWinlossDetail" SpName="Acc_Rpt_WinlostP2P_Details" DbName="warehouse"  />
-    <Setting Key="PokerWinlossDetail_14" SpName="Acc_Rpt_WinlostP2P_Details14" DbName="warehouse"  />
-    <Setting Key="PokerWinloss_WH" SpName="Acc_Rpt_WinlostP2P_DW" DbName="punter"  />
-    <Setting Key="PokerWinlossDetail_WH" SpName="Acc_Rpt_WinlostP2P_DW_Detail" DbName="punter"  />
-  </Function>
-
-  <Function Name="Customer List">
-
-    <Setting Key="Acc_CustomerSelBySAg" SpName="Acc_CustomerSelBySAg" DbName="db053"  />
-    <Setting Key="Acc_CustomerSelMAgByCom" SpName="Acc_CustomerSelMAgByCom" DbName="db053"  />
-    <Setting Key="Acc_CustomerSelByMAg" SpName="Acc_CustomerSelByMAg" DbName="db053"  />
-    <Setting Key="Acc_CustomerSelByAg" SpName="Acc_CustomerSelByAg" DbName="db053"  />
-
-  </Function>
-  <Function Name="Report - Licensee">
-    <Setting Key="GetGameType" SpName="Acc_LiveCasinoGetGameType" DbName="archive"  />
-    <Setting Key="GetLicenseesByResellers" SpName="Acc_LicenseeByResellerSel" DbName="licensee"  />
-    <Setting Key="GetLicenseesByResellers" SpName="Acc_LicenseeByResellerSel" DbName="licensee"  />
-    <Setting Key="GetLiveCasinoWLByLicensee" SpName="Acc_Rpt_LicLiveCasinoWinloss" DbName="archive"  />
-    <Setting Key="NumberGameWinlossByLicensee" SpName="Acc_Rpt_LicNumberGameWinloss" DbName="archive"  />
-    <Setting Key="GetSportTypeVirtualSport" SpName="Acc_SporttypeGetVirtualSport" DbName="archive"  />
-    <Setting Key="VirtualSportWinlossByLicensee" SpName="Acc_Rpt_LicVirtualSportWinloss" DbName="archive"  />
-    <Setting Key="OA_Get_ResellerProductCharge" SpName="OA_Get_ResellerProductCharge" DbName="archive"  />
-  </Function>
-
-  <Function Name="Admin-SMA Management">
-    <Setting Key="Acc_SiteSel_Credit" SpName="Acc_SiteSel_Credit" DbName="db053" />
-    <Setting Key="Acc_CustomerSelByGroupHeadline" SpName="Acc_CustomerSelByGroupHeadline" DbName="archive" />
-  </Function>
-
-
-  <Function Name="Admin-LegendManagement">
-    <Setting Key="SelMenuListBySystem" SpName="Acc_MenuSelList" DbName="db03"  />
-  </Function>
-
-  <Function Name="Report - WinLoss">
-    <Setting Key="Acc_Rpt_TreeWinlostByProduct" SpName="Acc_Rpt_TreeWinlostByProduct" DbName="warehouse" />
-    <Setting Key="Acc_Rpt_TreeWinlostByProduct_Old" SpName="Acc_Rpt_TreeWinlostByProduct_Old" DbName="punter" />
-
-    <Setting Key="Acc_Rpt_TreeWinlostByCom" SpName="Acc_Rpt_TreeWinlostByCom" DbName="warehouse" />
-    <Setting Key="Acc_Rpt_TreeWinlostByCom_Old" SpName="Acc_Rpt_TreeWinlostByCom_Old" DbName="punter" />
-
-    <Setting Key="Acc_Rpt_TreeWinlostBySAg" SpName="Acc_Rpt_TreeWinlostBySAg" DbName="warehouse" />
-    <Setting Key="Acc_Rpt_TreeWinlostBySAg_Old" SpName="Acc_Rpt_TreeWinlostBySAg_Old" DbName="punter" />
-
-    <Setting Key="Acc_Rpt_TreeWinlostByMAg" SpName="Acc_Rpt_TreeWinlostByMAg" DbName="warehouse" />
-    <Setting Key="Acc_Rpt_TreeWinlostByMAg_Old" SpName="Acc_Rpt_TreeWinlostByMAg_Old" DbName="punter" />
-
-    <Setting Key="Acc_Rpt_TreeWinlostByAg" SpName="Acc_Rpt_TreeWinlostByAg" DbName="warehouse" />
-    <Setting Key="Acc_Rpt_TreeWinlostByAg_Old" SpName="Acc_Rpt_TreeWinlostByAg_Old" DbName="punter" />
-
-    <Setting Key="Acc_CustomerSelVirtualRateHistory" SpName="Acc_CustomerSelVirtualRateHistory" DbName="log" />
-  </Function>
-
-  <Function Name="Special Delete - NumberGame">
-    <Setting Key="SelSpecialDel_NumberGame" SpName="Acc_BettransSelSpecialDel_NumberGame_xtest" DbName="db053"  />
-    <Setting Key="Acc_BettransDelSpecial_NumberGame" SpName="Acc_BettransDelSpecial_NumberGame" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_BettransSelRecoverBet_NumberGame" SpName="Acc_BettransSelRecoverBet_NumberGame" DbName="db053"  />
-    <Setting Key="Acc_BettransRecoverBet_NumberGame" SpName="Acc_BettransRecoverBet_NumberGame" DbName="DBTXN.BODB02"  />
-  </Function>
-
-  <Function Name="Special delete - Early KickOff">
-    <Setting Key="Acc_BettransDelSpecialDel_EarlyKO" SpName="Acc_BettransDelSpecialDel_EarlyKO" DbName="DBTXN.BODB02"  />
-  </Function>
-  <Function Name="Special delete - Ticket Listing">
-    <Setting Key="Acc_Rpt_TicketsListingDetail" SpName="Acc_Rpt_TicketsListingDetail" DbName="DBACC.BODB02"  />
-  </Function>
-
-  <Function Name="Customer - Login">
-    <Setting Key="Acc_LoginAdmin" SpName="Acc_LoginAdmin" DbName="DBTXN.BODB02"  />
-    <Setting Key="CustomerUpdSecurityCode" SpName="Acc_CustomerUpdSecurityCode" DbName="DBTXN.BODB02"  />
-  </Function>
-
-  <Function Name="RNG Casino - Customer">
-    <Setting Key="Acc_SiteSel_RNGCS" SpName="Acc_SiteSel_RNGCS" DbName="DBAGE.BODB02"  />
-  </Function>
-
-  <Function Name="Admin-Mailing">
-    <Setting Key="Acc_MailingListIns" SpName="Acc_MailingListIns" DbName="DBACC.BODB_ACC" />
-    <Setting Key="Acc_MailingListSel" SpName="Acc_MailingListSel" DbName="DBACC.BODB_ACC" />
-    <Setting Key="Acc_MailingListUpd" SpName="Acc_MailingListUpd" DbName="DBACC.BODB_ACC" />
-  </Function>
-
-  <Function Name="Consolidated Group">
-    <Setting Key="Acc_CustomerDelConsolidatedGroup" SpName="Acc_CustomerDelConsolidatedGroup" DbName="DBAGE.bodb_AGE" />
-    <Setting Key="Acc_CustomerInsConsolidatedGroup_User" SpName="Acc_CustomerInsConsolidatedGroup_User" DbName="DBAGE.bodb_AGE" />
-    <Setting Key="Acc_CustomerSelByConsolidatedGroupID" SpName="Acc_CustomerSelByConsolidatedGroupID" DbName="DBAGE.bodb_AGE" />
-    <Setting Key="Acc_CustomerSelConsolidatedGroup" SpName="Acc_CustomerSelConsolidatedGroup" DbName="DBAGE.bodb_AGE" />
-    <Setting Key="Acc_CustomerUpdConsolidatedGroup" SpName="Acc_CustomerUpdConsolidatedGroup" DbName="DBAGE.bodb_AGE" />
-    <Setting Key="Acc_CustomerUpdConsolidatedGroupHeader" SpName="Acc_CustomerUpdConsolidatedGroupHeader" DbName="DBAGE.bodb_AGE" />
-  </Function>
-
-  <Function Name="Customer - Sportsbook-NG-Bingo Settings">
-    <Setting Key="Acc_CustomerSelAgentInfo" SpName="Acc_CustomerSelAgentInfo" DbName="DBAGE.BODB02"/>
-    <Setting Key="Acc_CustomerSelMAgentInfo" SpName="Acc_CustomerSelMAgentInfo" DbName="DBAGE.BODB02"/>
-    <Setting Key="Acc_CustomerSelSAgentInfo" SpName="Acc_CustomerSelSAgentInfo" DbName="DBAGE.BODB02"/>
-    <Setting Key="Acc_CustomerSelSAg" SpName="Acc_CustomerSelSAg" DbName="DBAGE.BODB02"  />
-    <Setting Key="Acc_CustomerSelSAgList" SpName="Acc_CustomerSelSAgList" DbName="DBAGE.BODB02"  />
-    <Setting Key="Acc_CustomerSelNGUpline" SpName="Acc_CustomerSelNGUpline" DbName="DBAGE.BODB02"  />
-    <Setting Key="Acc_CustomerSelByUserName" SpName="Acc_CustomerSelByUserName" DbName="DBAGE.BODB02"  />
-    <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag" DbName="DBTXN.BODB02"/>
-    <Setting Key="CustomerSetting_InsertSuper" SpName="Acc_CustomerInsMember_Com" DbName="DBTXN.BODB02" />
-    <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg" DbName="DBTXN.BODB02"/>
-    <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg" DbName="DBTXN.BODB02"/>
-    <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CustomerUpdAgent_All" SpName="Acc_CustomerUpdAgent_All" DbName="DBTXN.BODB02"/>
-    <Setting Key="Acc_CustomerUpdClosed" SpName="Acc_CustomerUpdClosed" DbName="DBTXN.BODB02" />
-    <Setting Key="Acc_CustomerUpdCredit" SpName="Acc_CustomerUpdCredit" DbName="DBTXN.BODB02" />
-    <Setting Key="Acc_CustomerUpdDisableNumber" SpName="Acc_CustomerUpdDisableNumber" DbName="DBTXN.BODB02" />
-    <Setting Key="Acc_CustomerUpdDisableOutright" SpName="Acc_CustomerUpdDisableOutright" DbName="DBTXN.BODB02" />
-    <Setting Key="Acc_CustomerUpdMaster_All" SpName="Acc_CustomerUpdMaster_All" DbName="DBTXN.BODB02"/>
-    <Setting Key="Acc_CustomerUpdMaster_DisableAutoMPT" SpName="Acc_CustomerUpdMaster_DisableAutoMPT" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CustomerUpdMember_All" SpName="Acc_CustomerUpdMember_All" DbName="DBTXN.BODB02"/>
-    <Setting Key="Acc_CustomerUpdMember_Master" SpName="Acc_CustomerUpdMember_Master" DbName="DBTXN.BODB02" />
-    <Setting Key="Acc_CustomerUpdMember_Super" SpName="Acc_CustomerUpdMember_Super" DbName="DBTXN.BODB02" />
-    <Setting Key="Acc_CustomerUpdNGEnableBetSetting" SpName="Acc_CustomerUpdNGEnableBetSetting" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CustomerUpdSuper_All" SpName="Acc_CustomerUpdSuper_All" DbName="DBTXN.BODB02"/>
-    <Setting Key="Acc_CustomerUpdSuspended" SpName="Acc_CustomerUpdSuspended" DbName="DBTXN.BODB02" />
-    <Setting Key="Acc_CustomerUpdUserInfo" SpName="Acc_CustomerUpdUserInfo" DbName="DBTXN.BODB02" />
-    <Setting Key="Acc_UpdBingoStatus" SpName="Acc_UpdBingoStatus" DbName="DBTXN.BODB02" />
-  </Function>
-
-  <Function Name="Customer Credit">
-    <Setting Key="Acc_CustomerUpdClearCredit" SpName="Acc_CustomerUpdClearCredit" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CustomerUpdResetMemberCredit" SpName="Acc_CustomerUpdResetMemberCredit" DbName="DBTXN.BODB02"  />
-  </Function>
-
-  <Function Name="Bet List - Result">
-    <Setting Key="Acc_BetlistCombinationParlay_Details" SpName="Acc_BetlistCombinationParlay_Details" DbName="DBAGE.BODB02"  />
-    <Setting Key="Acc_BetList_HRResults" SpName="Acc_BetList_HRResults" DbName="DBAGE.BODB02"  />
-    <Setting Key="Acc_BetList_SelBettype" SpName="Acc_BetList_SelBettype" DbName="DBAGE.BODB02"  />
-    <Setting Key="Acc_BetList_SelMatchResult" SpName="Acc_BetList_SelMatchResult" DbName="DBAGE.BODB02"  />
-    <Setting Key="Acc_BetlistCombinationParlay_ByTransID" SpName="Acc_BetlistCombinationParlay_ByTransID" DbName="DBAGE.BODB02"  />
-    <Setting Key="Acc_BetsSelBetCheckM_All" SpName="Acc_BetsSelBetCheckM_All" DbName="DBAGE.BODB02"  />
-    <Setting Key="Acc_BetsSelBetList_ByTransID" SpName="Acc_BetsSelBetList_ByTransID" DbName="DBAGE.BODB02"  />
-    <Setting Key="BetList_RefNoSel" SpName="Acc_BetsSelBetList_ByTransID_Advance" DbName="DBAGE.BODB02"  />
-    <Setting Key="Acc_BetsSelBetList_Old" SpName="Acc_BetsSelBetList_Old" DbName="DBACC.BODB_ARCHIVE"  />
-  </Function>
-
-  <Function Name="Virtual sports - Setting">
-    <Setting Key="Acc_CustomerUpdVS_MinMaxBet" SpName="Acc_CustomerUpdVS_MinMaxBet" DbName="DBTXN.BODB02" Plain="0" />
-    <Setting Key="Acc_CustomerUpdSuperVS_MinMaxBet" SpName="Acc_CustomerUpdSuperVS_MinMaxBet" DbName="DBTXN.BODB02" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMasterVS_MinMaxBet" SpName="Acc_CustomerUpdMasterVS_MinMaxBet" DbName="DBTXN.BODB02" Plain="0" />
-    <Setting Key="Acc_CustomerUpdAgentVS_MinMaxBet" SpName="Acc_CustomerUpdAgentVS_MinMaxBet" DbName="DBTXN.BODB02" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMemberVS_MinMaxBet" SpName="Acc_CustomerUpdMemberVS_MinMaxBet" DbName="DBTXN.BODB02" Plain="0" />
-    <Setting Key="Acc_CustomerUpdAgentVS_PositionTaking" SpName="Acc_CustomerUpdAgentVS_PositionTaking" DbName="DBTXN.BODB02" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMasterVS_Positiontaking" SpName="Acc_CustomerUpdMasterVS_Positiontaking" DbName="DBTXN.BODB02" Plain="0" />
-    <Setting Key="Acc_CustomerUpdSuperVS_Positiontaking" SpName="Acc_CustomerUpdSuperVS_Positiontaking" DbName="DBTXN.BODB02" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMemberVS_Positiontaking" SpName="Acc_CustomerUpdMemberVS_Positiontaking" DbName="DBTXN.BODB02" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMemberVS_MAg" SpName="Acc_CustomerUpdMemberVS_MAg" DbName="DBTXN.BODB02" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMemberVS_SAg" SpName="Acc_CustomerUpdMemberVS_SAg" DbName="DBTXN.BODB02" Plain="0" />
-    <Setting Key="Acc_CustomerUpdDisableVS" SpName="Acc_CustomerUpdDisableVS" DbName="DBTXN.BODB02" Plain="0" />
-    <Setting Key="Acc_CustomerUpdVS_Enable" SpName="Acc_CustomerUpdVS_Enable" DbName="DBTXN.BODB02" Plain="0" />
-  </Function>
-
-  <Function Name="Move Customer">
-    <Setting Key="Acc_CustomerCheckMoveAgent" SpName="Acc_CustomerCheckMoveAgent" DbName="DBAGE.BODB02"/>
-    <Setting Key="Acc_CustomerUpdMoveAgent" SpName="Acc_CustomerUpdMoveAgent" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CustomerUpdMoveMaster" SpName="Acc_CustomerUpdMoveMaster" DbName="DBTXN.BODB02"  />
-  </Function>
-
-  <Function Name="Move Site">
-    <Setting Key="Acc_CustomerSelCheckMoveSite" SpName="Acc_CustomerSelCheckMoveSite" DbName="DBAGE.BODB02"  />
-    <Setting Key="Acc_CustomerUpdMoveSite" SpName="Acc_CustomerUpdMoveSite" DbName="DBTXN.BODB02"  />
-  </Function>
-
-  <Function Name="P2P Settings">
-    <Setting Key="Acc_P2PUpdDefaultSetting" SpName="Acc_P2PUpdDefaultSetting" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CustomerUpdDisableP2P" SpName="Acc_CustomerUpdDisableP2P" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CustomerUpdP2PAgent_Commission" SpName="Acc_CustomerUpdP2PAgent_Commission" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CustomerUpdP2PAgent_GameSetting" SpName="Acc_CustomerUpdP2PAgent_GameSetting" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CustomerUpdP2PAgent_MaxTransfer" SpName="Acc_CustomerUpdP2PAgent_MaxTransfer" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CustomerUpdP2PMaster_Commission" SpName="Acc_CustomerUpdP2PMaster_Commission" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CustomerUpdP2PMaster_GameSetting" SpName="Acc_CustomerUpdP2PMaster_GameSetting" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CustomerUpdP2PMaster_MaxTransfer" SpName="Acc_CustomerUpdP2PMaster_MaxTransfer" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CustomerUpdP2PMember_Commission" SpName="Acc_CustomerUpdP2PMember_Commission" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CustomerUpdP2PMember_GameSetting" SpName="Acc_CustomerUpdP2PMember_GameSetting" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CustomerUpdP2PMember_MaxTransfer" SpName="Acc_CustomerUpdP2PMember_MaxTransfer" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CustomerUpdP2PSuper_Commission" SpName="Acc_CustomerUpdP2PSuper_Commission" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CustomerUpdP2PSuper_GameSetting" SpName="Acc_CustomerUpdP2PSuper_GameSetting" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CustomerUpdP2PSuper_MaxTransfer" SpName="Acc_CustomerUpdP2PSuper_MaxTransfer" DbName="DBTXN.BODB02"  />
-  </Function>
-
-
-  <Function Name="Credit term">
-    <Setting Key="Acc_CreditTermUpdAddToGroup" SpName="Acc_CreditTermUpdAddToGroup" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CreditTermUpdCustomer" SpName="Acc_CreditTermUpdCustomer" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CreditTermUpdRemark" SpName="Acc_CreditTermUpdRemark" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CreditTermUpdRemoveFromGroup" SpName="Acc_CreditTermUpdRemoveFromGroup" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CreditTermUpdSetGroupHeadline" SpName="Acc_CreditTermUpdSetGroupHeadline" DbName="DBTXN.BODB02"  />
-    <Setting Key="GetAllGroup" SpName="Acc_CreditTermSelGroupHeadline" DbName="DBAGE.BODB02"/>
-    <Setting Key="Acc_CreditTermUpdIsViewReport" SpName="Acc_CreditTermUpdIsRptConsol" DbName="DBTXN.BODB02"/>
-
-  </Function>
-
-  <Function Name="Accounting Transfer">
-    <Setting Key="Acc_FinanceCrossTransferMulInsTmpExcel" SpName="Acc_FinanceCrossTransferMulInsTmpExcel" DbName="DBACC.BODB02"></Setting>
-    <Setting Key="Acc_FinanceCrossTransferMulUpd" SpName="Acc_FinanceCrossTransferMulUpd" DbName="DBTXN.BODB02"></Setting>
-    <Setting Key="Acc_FinanceTransferMulDelTmpExcel" SpName="Acc_FinanceTransferMulDelTmpExcel" DbName="DBACC.BODB02"></Setting>
-    <Setting Key="Acc_FinanceTransferMulInsTmpExcel" SpName="Acc_FinanceTransferMulInsTmpExcel" DbName="DBACC.BODB02"></Setting>
-    <Setting Key="Acc_FinanceTransferMulUpd" SpName="Acc_FinanceTransferMulUpd" DbName="DBTXN.BODB02"></Setting>
-    <Setting Key="Acc_BettransInsTransaction" SpName="Acc_BettransInsTransaction" DbName="DBTXN.BODB02"></Setting>
-    <Setting Key="Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance" DbName="DBTXN.BODB02"></Setting>
-    <Setting Key="Acc_BettransInsTransferAllMembers" SpName="Acc_BettransInsTransferAllMembers" DbName="DBTXN.BODB02"></Setting>
-    <Setting Key="Acc_ClearBalanceAllDownlines" SpName="Acc_ClearBalanceAllDownlines" DbName="DBTXN.BODB02"></Setting>
-    <Setting Key="Acc_CustomerUpdTransferOption" SpName="Acc_CustomerUpdTransferOption" DbName="DBTXN.BODB02"></Setting>
-    <Setting Key="Acc_DailyTxn_UpdChecker" SpName="Acc_DailyTxn_UpdChecker" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_BettransDelTransaction" SpName="Acc_BettransDelTransaction" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_BettransInsCrossTransfer" SpName="Acc_BettransInsCrossTransfer" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_BettransInsTransfer" SpName="Acc_BettransInsTransfer" DbName="DBTXN.BODB02"  />
-  </Function>
-
-  <Function Name="Special Status - Function">
-    <Setting Key="Acc_CustomerUpdAutoSuspend" SpName="Acc_CustomerUpdAutoSuspend" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CustomerUpdDangercust" SpName="Acc_CustomerUpdDangercust" DbName="DBTXN.BODB02"  />
-    <Setting Key="UpdateCustomerStatusAbnormal" SpName="Acc_CustomerUpdAbnormal" DbName="DBTXN.BODB02"/>
-    <Setting Key="Acc_CustomerUpdImportant" SpName="Acc_CustomerUpdImportant" DbName="DBTXN.BODB02"/>
-    <Setting Key="Acc_CustomerUpdVirtualMultiplier" SpName="Acc_CustomerUpdVirtualMultiplier" DbName="DBTXN.BODB02"/>
-    <Setting Key="Acc_CustomerUpdSyncLiveCS" SpName="Acc_CustomerUpdSyncLiveCS" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CustomerUpdMatchLimit" SpName="Acc_CustomerUpdMatchLimit" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CustomerUpdInternal" SpName="Acc_CustomerUpdInternal" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CustomerUpdIPLimit" SpName="Acc_CustomerUpdIPLimit" DbName="DBTXN.BODB02"  />
-    <Setting Key="Acc_CustAllowListDel" SpName="Acc_CustAllowListDel" DbName="DBTXN.BODB02" />
-    <Setting Key="Acc_CustAllowListIns" SpName="Acc_CustAllowListIns" DbName="DBTXN.BODB02" />
-    <Setting Key="Acc_CustAllowListUpd" SpName="Acc_CustAllowListUpd" DbName="DBTXN.BODB02" />
-    <Setting Key="Acc_CustomerUpdSelectedBetting" SpName="Acc_CustomerUpdSelectedBetting" DbName="DBTXN.BODB02" />
-    <Setting Key="Acc_CustomerUpdUserGroup" SpName="Acc_CustomerUpdUserGroup" DbName="DBTXN.BODB02" />
-    <Setting Key="Acc_CustomerUpdUserName" SpName="Acc_CustomerUpdUserName" DbName="DBTXN.BODB02" />
-    <Setting Key="Acc_CustomerUpdPwdReset" SpName="Acc_CustomerUpdPwdReset" DbName="DBTXN.BODB02" />
-  </Function>
-
-  <Function Name="User Control">
-    <Setting Key="RemoveAccount" SpName="Acc_Con_AdminDel" DbName="DBPOLICY.BODB02"/>
-    <Setting Key="Con_AdminIns" SpName="Acc_Con_AdminIns" DbName="DBTXN.BODB02"/>
-    <Setting Key="Con_AdminInsFromExisted" SpName="Acc_Con_AdminInsFromExisted" DbName="DBPOLICY.BODB02"/>
-    <Setting Key="AdminPolicy" SpName="Acc_Con_AdminPolicyUpd" DbName="DBPOLICY.BODB02"/>
-    <Setting Key="Acc_Con_AdminSelPwdVerify" SpName="Acc_Con_AdminSelPwdVerify" DbName="DBTXN.BODB02"/>
-    <Setting Key="Con_AdminUpd" SpName="Acc_Con_AdminUpd" DbName="DBTXN.BODB02"/>
-    <Setting Key="AdminUpdClosed" SpName="Acc_Con_AdminUpdClosed" DbName="DBTXN.BODB02"/>
-    <Setting Key="FuncInfoDel" SpName="Acc_Con_FuncInfoDel" DbName="DBPOLICY.BODB02"/>
-    <Setting Key="FuncInfoIns" SpName="Acc_Con_FuncInfoIns" DbName="DBPOLICY.BODB02"/>
-    <Setting Key="FuncInfoUpd" SpName="Acc_Con_FuncInfoUpd" DbName="DBPOLICY.BODB02"/>
-    <Setting Key="GroupInfoDel" SpName="Acc_Con_GroupInfoDel" DbName="DBPOLICY.BODB02"/>
-    <Setting Key="GroupInfoIns" SpName="Acc_Con_GroupInfoIns" DbName="DBPOLICY.BODB02"/>
-    <Setting Key="GroupInfoUpd" SpName="Acc_Con_GroupInfoUpd" DbName="DBPOLICY.BODB02"/>
-    <Setting Key="Acc_OperatorDel" SpName="Acc_OperatorDel" DbName="DBTXN.BODB02"/>
-    <Setting Key="Acc_OperatorIns" SpName="Acc_OperatorIns" DbName="DBTXN.BODB02"/>
-    <Setting Key="Acc_OperatorUpd" SpName="Acc_OperatorUpd" DbName="DBTXN.BODB02"/>
-  </Function>
-
-=======
 	<Function Name="Admin-BACustomer">
 		<Setting Key="LicenseeSelAll" SpName="Acc_LicenseeSelAll" DbName="archive"/>
 	</Function>
@@ -948,7 +665,6 @@
 		
 		
 	</Function>
->>>>>>> 4b788f056e691a53bc041fa90d7b657711891d2f
 
   <Function Name="Admin-SecurityCode">
     <Setting Key="Admin_SecurityCode_GetUserList" SpName="ACC_CustomerValidation" DbName="DBACC.BODB02" />
@@ -988,4 +704,18 @@
     <Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel" DbName="DBTXN.BODB02" />
     <Setting Key="EchangeUpd" SpName="Acc_ExchangeUpd" DbName="DBTXN.BODB02" />
   </Function>
+
+  <Function Name="Progressive Bonus">
+	  <Setting Key="CustomerSelCasinoBonusStatus" SpName="Acc_CustomerSelCasinoBonusStatus" DbName="DBAGE.BODB02" />
+	  <Setting Key="CustomerUpdDisableCasinoBonus" SpName="Acc_CustomerUpdDisableCasinoBonus" DbName="DBTXN.BODB02" />
+  </Function>
+
+  <Function Name="SearchCopy">
+    <Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="db053"  Plain="0"/>
+    <Setting Key="Acc_CustomerInsMember_CloneSetting_Com" SpName="Acc_CustomerInsMember_CloneSetting_Com" DbName="main"  Plain="0"/>
+  </Function>
+  
+=======
+<Functions> 
+>>>>>>> origin/master
 </Functions>

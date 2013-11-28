@@ -1,5 +1,6 @@
 ﻿@using Fanex.BetList.Accounting.Models
 @using Fanex.BetList.Accounting.Core
+@using Fanex.BetList.Accounting.Extensions;
 @using System.Globalization;
 @using Fanex.BetList.Core.Entities;
 @using Fanex.BetList.Core.TicketHelper;
@@ -91,7 +92,8 @@
                                    {
                                        <span> - </span>;
                                    }
-                                   else{
+                                   else
+                                   {
                                       <a onclick="BetListByIP_SportType.getBetListByIP_Soccer(@betListByIP_Username.CustID, '@ViewBag.FromDate', '@ViewBag.IP', true)">@betListByIP_Username.SoccerBets</a><br />;
                                    }
                                 </div>

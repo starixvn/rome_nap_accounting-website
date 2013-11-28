@@ -66,44 +66,53 @@ namespace Sunplus.Accounting.Business.Statement
                 int custId = userService.GetCustomerIdByUsername(
                     WebUtils.GetQueryStringValue("custname", string.Empty));
 
-                if (custId > 0 && ds.ResultSet.Tables.Count > 0 && ds.ResultSet.Tables[0].Rows.Count > 0)
+                if (custId > 0)
                 {
                     ds = AccountStatement.Acc_AuditStatement(custId);
-                    foreach (DataRow row in ds.ResultSet.Tables[0].Rows)
+                    if (ds.ResultSet.Tables.Count > 0 && ds.ResultSet.Tables[0].Rows.Count > 0)
                     {
-                        index++;
-                        string rowHtml = rowTpl;
-                        //string accDate = FormatHandler.FormatDateOptionalTime(row["accdate"]);
-                        string strAccDate = string.Empty;
-                        DateTime accDate = CastAide.AsDateTime(row["accdate"]);
-                        string remark = CastAide.AsString(row["transdesc"]);
-                        string type = CastAide.AsString(row["transtype"]);
-                        decimal total = CastAide.AsDecimal(row["totalamt"]);
-                        total2 += total;
+                        foreach (DataRow row in ds.ResultSet.Tables[0].Rows)
+                        {
+                            index++;
+                            string rowHtml = rowTpl;
+                            //string accDate = FormatHandler.FormatDateOptionalTime(row["accdate"]);
+                            string strAccDate = string.Empty;
+                            DateTime accDate = CastAide.AsDateTime(row["accdate"]);
+                            string remark = CastAide.AsString(row["transdesc"]);
+                            string type = CastAide.AsString(row["transtype"]);
+                            decimal total = CastAide.AsDecimal(row["totalamt"]);
+                            total2 += total;
 
-                        strAccDate = accDate.DayOfWeek + " <!--nobr--><br><!--/nobr-->" +
-                                        FormatHandler.FormatDateOptionalTime(accDate);
-                        TemplateHandler.Assign(ref rowHtml, "{Date}", strAccDate);
+                            strAccDate = accDate.DayOfWeek + " <!--nobr--><br><!--/nobr-->" +
+                                            FormatHandler.FormatDateOptionalTime(accDate);
+                            TemplateHandler.Assign(ref rowHtml, "{Date}", strAccDate);
 
-                        TemplateHandler.Assign(ref rowHtml, "{Total2}", FormatHandler.FormatNumber20(total2));
+                            TemplateHandler.Assign(ref rowHtml, "{Total2}", FormatHandler.FormatNumber20(total2));
 
-                        if (index % 2 != 0)
-                            TemplateHandler.Assign(ref rowHtml, "{odd_even}", "evenrow");
-                        else
-                            TemplateHandler.Assign(ref rowHtml, "odd_even", string.Empty);
+                            if (index % 2 != 0)
+                                TemplateHandler.Assign(ref rowHtml, "{odd_even}", "evenrow");
+                            else
+                                TemplateHandler.Assign(ref rowHtml, "odd_even", string.Empty);
 
-                        TemplateHandler.Assign(ref rowHtml, "{Remark}", remark);
-                        TemplateHandler.Assign(ref rowHtml, "{Type}", type);
-                        TemplateHandler.Assign(ref rowHtml, "{Total}", FormatHandler.FormatNumber20(total));
+                            TemplateHandler.Assign(ref rowHtml, "{Remark}", remark);
+                            TemplateHandler.Assign(ref rowHtml, "{Type}", type);
+                            TemplateHandler.Assign(ref rowHtml, "{Total}", FormatHandler.FormatNumber20(total));
 
-                        htmlReport.Append(rowHtml);
-                        TemplateHandler.RemoveBlock(ref rowHtml, "nobr");
-                        excelRows.Append(rowHtml);
+                            htmlReport.Append(rowHtml);
+                            TemplateHandler.RemoveBlock(ref rowHtml, "nobr");
+                            excelRows.Append(rowHtml);
+                        }
+
+                        TemplateHandler.ReplaceBlock(ref tpl, "ReportContent", htmlReport.ToString());
+                        //Excel
+                        TemplateHandler.ReplaceBlock(ref excelTpl, "ReportContent", excelRows.ToString());
                     }
-
-                    TemplateHandler.ReplaceBlock(ref tpl, "ReportContent", htmlReport.ToString());
-                    //Excel
-                    TemplateHandler.ReplaceBlock(ref excelTpl, "ReportContent", excelRows.ToString());
+                    else
+                    {
+                        TemplateHandler.ReplaceBlock(ref tpl, "ReportContent", AccCommon.GenNoInformation("5"));
+                        //Excel
+                        TemplateHandler.ReplaceBlock(ref excelTpl, "ReportContent", AccCommon.GenNoInformation("5"));
+                    }
                 }
                 else
                 {
@@ -266,42 +275,50 @@ namespace Sunplus.Accounting.Business.Statement
                 var userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
                 int custId = userService.GetCustomerIdByUsername(WebUtils.GetQueryStringValue("custname", string.Empty));
 
-                if (custId > 0 && ds.ResultSet.Tables.Count > 0 && ds.ResultSet.Tables[0].Rows.Count > 0)
+                if (custId > 0)
                 {
                     ds = AccountStatement.Acc_DetailStatement(fdt, tdt, custId);
-                    candelete = Permissions.GetHostPermission(Enumerations.Functions.Transfer.DeleteTrans);
-                    foreach (DataRow row in ds.ResultSet.Tables[0].Rows)
+                    if (ds.ResultSet.Tables.Count > 0 && ds.ResultSet.Tables[0].Rows.Count > 0)
                     {
-                        index++;
-                        string rowHtml = rowTpl;
-                        string transDate = FormatHandler.FormatDateOptionalTime(row["transdate"]);
-                        string remark = CastAide.AsString(row["transdesc"]);
-                        string creator = CastAide.AsString(row["creator"]);
-                        decimal creditAmt = CastAide.AsDecimal(row["creditamt"]);
-                        decimal debitAmt = CastAide.AsDecimal(row["debitamt"]);
+                        candelete = Permissions.GetHostPermission(Enumerations.Functions.Transfer.DeleteTrans);
+                        foreach (DataRow row in ds.ResultSet.Tables[0].Rows)
+                        {
+                            index++;
+                            string rowHtml = rowTpl;
+                            string transDate = FormatHandler.FormatDateOptionalTime(row["transdate"]);
+                            string remark = CastAide.AsString(row["transdesc"]);
+                            string creator = CastAide.AsString(row["creator"]);
+                            decimal creditAmt = CastAide.AsDecimal(row["creditamt"]);
+                            decimal debitAmt = CastAide.AsDecimal(row["debitamt"]);
 
-                        if (index % 2 != 0)
-                            TemplateHandler.Assign(ref rowHtml, "odd_even", "evenrow");
-                        else
-                            TemplateHandler.Assign(ref rowHtml, "odd_even", string.Empty);
+                            if (index % 2 != 0)
+                                TemplateHandler.Assign(ref rowHtml, "odd_even", "evenrow");
+                            else
+                                TemplateHandler.Assign(ref rowHtml, "odd_even", string.Empty);
 
-                        TemplateHandler.Assign(ref rowHtml, "{Remark}", remark);
-                        TemplateHandler.Assign(ref rowHtml, "{Date}", transDate);
-                        TemplateHandler.Assign(ref rowHtml, "{Creator}", creator);
-                        TemplateHandler.Assign(ref rowHtml, "{Refno}", CastAide.AsString(row["refno"]));
-                        TemplateHandler.Assign(ref rowHtml, "{Debit}", FormatHandler.FormatNumber20(debitAmt));
-                        TemplateHandler.Assign(ref rowHtml, "{Credit}", FormatHandler.FormatNumber20(creditAmt));
-                        TemplateHandler.Assign(ref rowHtml, "{Total}", FormatHandler.FormatNumber20(row["runningtotal"]));
+                            TemplateHandler.Assign(ref rowHtml, "{Remark}", remark);
+                            TemplateHandler.Assign(ref rowHtml, "{Date}", transDate);
+                            TemplateHandler.Assign(ref rowHtml, "{Creator}", creator);
+                            TemplateHandler.Assign(ref rowHtml, "{Refno}", CastAide.AsString(row["refno"]));
+                            TemplateHandler.Assign(ref rowHtml, "{Debit}", FormatHandler.FormatNumber20(debitAmt));
+                            TemplateHandler.Assign(ref rowHtml, "{Credit}", FormatHandler.FormatNumber20(creditAmt));
+                            TemplateHandler.Assign(ref rowHtml, "{Total}", FormatHandler.FormatNumber20(row["runningtotal"]));
 
-                        total += creditAmt - debitAmt;
-                        if (!CastAide.AsBoolean(row["allowdelete"], true) || !candelete)
-                            TemplateHandler.RemoveBlock(ref rowHtml, "DelLink");
+                            total += creditAmt - debitAmt;
+                            if (!CastAide.AsBoolean(row["allowdelete"], true) || !candelete)
+                                TemplateHandler.RemoveBlock(ref rowHtml, "DelLink");
 
-                        htmlReport.Append(rowHtml);
+                            htmlReport.Append(rowHtml);
+                        }
+                        TemplateHandler.ReplaceBlock(ref tpl, "ReportContent", htmlReport.ToString());
+                        //total
+                        TemplateHandler.Assign(ref tpl, "{total}", FormatHandler.FormatNumber40(total));
                     }
-                    TemplateHandler.ReplaceBlock(ref tpl, "ReportContent", htmlReport.ToString());
-                    //total
-                    TemplateHandler.Assign(ref tpl, "{total}", FormatHandler.FormatNumber40(total));
+                    else
+                    {
+                        TemplateHandler.ReplaceBlock(ref tpl, "ReportContent", AccCommon.GenNoInformation("8"));
+                        TemplateHandler.RemoveBlock(ref tpl, "ReportFooter");
+                    }
                 }
                 else
                 {

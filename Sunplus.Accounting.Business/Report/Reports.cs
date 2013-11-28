@@ -334,11 +334,9 @@ namespace Sunplus.Accounting.Business.Report
         public static string GetDateTimeSingle(string strFdate, string TextValue, string TitleReport, int displaydays)
         {
             int displayMonths = 0;
-            bool ShowOtherDay = false;
             if (DateTime.Today.AddDays(-displaydays).Month != DateTime.Today.Month)
             {
                 displayMonths = 1;
-                ShowOtherDay = true;
             }
             string tpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Report/DateTimeSingle.html");
             TemplateHandler.Assign(ref tpl, "{FromDateCal}", Calendar.GenCalendarControl("fdate", "../", "fdateTrigger", strFdate, false, false, displayMonths, displaydays, string.Empty));//Phuong.Nguyen@Updated: <2009-01-03>, show others day of next month
@@ -350,8 +348,6 @@ namespace Sunplus.Accounting.Business.Report
 
         public static string GetDateTimeSingle(string strFdate, string TextValue, string TitleReport, int displaydays, string path, string sitemap, string eventfunction)
         {
-            int displayMonths = 0;
-
             string tpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Report/DateTimeSinglePath.html");
             TemplateHandler.Assign(ref tpl, "{FromDateCal}", "<input type=\"text\" id=\"fdate\" readonly=\"readonly\" class=\"txtdate\" style=\"width: 100px; background-color: white;\" />");//Phuong.Nguyen@Updated: <2009-01-03>, show others day of next month
             TemplateHandler.Assign(ref tpl, "{Text-value}", TextValue);
@@ -378,8 +374,7 @@ namespace Sunplus.Accounting.Business.Report
 
         public static string GetDateTimeSingleMaxDays(string strFdate, string TextValue, string TitleReport, int displaydays, int maxdays, string path, string sitemap, string eventfunction)
         {
-            int displayMonths = 0;
-
+          
             string tpl = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplate("Report/DateTimeSinglePath.html");
             TemplateHandler.Assign(ref tpl, "{FromDateCal}", "<input type=\"text\" id=\"fdate\" readonly=\"readonly\" class=\"txtdate\" style=\"width: 100px; background-color: white;\" />");//Phuong.Nguyen@Updated: <2009-01-03>, show others day of next month
             TemplateHandler.Assign(ref tpl, "{Text-value}", TextValue);
@@ -515,11 +510,9 @@ namespace Sunplus.Accounting.Business.Report
                     return html.ToString();
                 }
                 int displayMonths = 0;
-                bool ShowOtherDay = false;
                 if (DateTime.Today.AddDays(-displaydays).Month != DateTime.Today.Month)
                 {
                     displayMonths = 1;
-                    ShowOtherDay = true;
                 }
                 TemplateHandler.Assign(ref tpl, "{FromDateCal}", Calendar.GenCalendarControl("fdate", "../" + path, "fdateTrigger", fdate.ToShortDateString(), false, false, displayMonths, displaydays, eventfunction)); //PHuong.Nguyen <2009-01-03>
                 TemplateHandler.Assign(ref tpl, "{ToDateCal}", Calendar.GenCalendarControl("tdate", "../" + path, "tdateTrigger", tdate.ToShortDateString(), true, false, displayMonths, displaydays, eventfunction));   //END

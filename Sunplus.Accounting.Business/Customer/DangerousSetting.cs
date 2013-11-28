@@ -178,7 +178,7 @@ namespace Sunplus.Accounting.Business.Customer
                 {
                     s_ = (string)s.Clone();
                     TemplateHandler.Assign(ref s_, "{name}", names[i].Replace(" ", ""));
-                    TemplateHandler.Assign(ref s_, "{type}", names[i]);
+                    TemplateHandler.Assign(ref s_, "{dangername}", names[i].Replace("ABT", "Non Live"));
                     TemplateHandler.Assign(ref s_, "{value}", GetDangerousLevelName(levels[i], names[i].Replace(" ", ""), isBA));
                     TemplateHandler.Assign(ref s_, "{dangerColor}", GetDangerousLevelColor(levels[i], names[i].Replace(" ", ""), isBA));
                     TemplateHandler.Assign(ref s_, "{currentLevel}", levels[i].ToString());
@@ -204,6 +204,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     //TemplateHandler.Assign(ref row, "{LevelName}", st.name);
                                     // TemplateHandler.Assign(ref row, "{}", st.color);
                                     // set popup downline for agent(roleid = 2)););
+                                    
                                     TemplateHandler.Assign(ref row, "{type}", names[i]);
                                     var dangerousTpe = GetDanerousType(names[i]);
                                     TemplateHandler.Assign(ref row, "{dangerousType}", dangerousTpe);
@@ -228,6 +229,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     //TemplateHandler.Assign(ref row, "{LevelName}", st.name);
                                     //TemplateHandler.Assign(ref row, "{}", st.color);
                                     // set popup downline for agent(roleid = 2)););
+                                    
                                     TemplateHandler.Assign(ref row, "{type}", names[i]);
                                     var dangerousTpe = GetDanerousType(names[i]);
                                     TemplateHandler.Assign(ref row, "{dangerousType}", dangerousTpe);
@@ -252,6 +254,7 @@ namespace Sunplus.Accounting.Business.Customer
                                     //TemplateHandler.Assign(ref row, "{LevelName}", st.name);
                                     //TemplateHandler.Assign(ref row, "{}", st.color);
                                     // set popup downline for agent(roleid = 2)););
+                                    
                                     TemplateHandler.Assign(ref row, "{type}", names[i]);
                                     var dangerousTpe = GetDanerousType(names[i]);
                                     TemplateHandler.Assign(ref row, "{dangerousType}", dangerousTpe);

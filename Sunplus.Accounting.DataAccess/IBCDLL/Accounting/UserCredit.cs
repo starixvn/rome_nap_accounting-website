@@ -23,8 +23,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var param = new Hashtable();
                 param.Add("custid", _custId);
-
-                return DbHelper.ExecuteReader("CustomerSelCredit", param, DBType.MAIN, 120);
+                
+                using (ObjectDb db = new ObjectDb("CustomerSelCredit"))
+                {
+                    db.AssignParamValues(param);
+                    return db.ExecuteReader();
+                }
             }
             catch (Exception ex)
             {

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+  <Function Name="Report - CheckBet">
+    <Setting Key="Acc_checkhack2" SpName="Acc_checkhack2" DbName="DBBET.BK.bodbAdminNet"  />
+    <Setting Key="CheckBet" SpName="Acc_Rpt_CheckBet" DbName="DBBET.BK.bodbAdminNet"  />
+    <Setting Key="CheckBetNormal" SpName="Acc_Rpt_CheckBet_Normal" DbName="DBBET.BK.bodbAdminNet"  />
+    <Setting Key="CheckBetReject" SpName="Acc_Rpt_CheckBet_Reject" DbName="DBBET.BK.bodbAdminNet"  />
+  </Function>
+</Functions>

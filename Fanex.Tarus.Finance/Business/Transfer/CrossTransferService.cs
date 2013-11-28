@@ -1,24 +1,18 @@
 ﻿namespace Fanex.Tarus.Finance.Business.Transfer
 {
     using System;
-
-    using DNAide.Data;
+    using System.Collections.Generic;
+    using System.Data;
+    using DNAide.Core;
     using DNAide.Utils;
-
-    using Fanex.Tarus.Finance.Entities;
     using Fanex.Tarus.Finance.DataAccess.Transfer;
+    using Fanex.Tarus.Finance.Entities;
     using Fanex.Tarus.Finance.Model.Transfer;
-
+    using Sunplus.Accounting.Business;
     using Sunplus.Accounting.Business.BootStrappers;
-    using Sunplus.Accounting.Business.Customer;
     using Sunplus.Accounting.Business.Security;
     using Sunplus.Accounting.Core.Common;
     using Sunplus.Accounting.Core.Extensions;
-    using System.Collections.Generic;
-    using DNAide.Core;
-    using System.Data;
-    using Sunplus.Accounting.Business;
-    using Sunplus.Accounting.Core.Web;
 
     public class CrossTransferService : ICrossTransferService
     {
@@ -27,7 +21,6 @@
         public CrossTransferService()
             : this(null)
         {
-
         }
 
         public CrossTransferService(ICrossTransferAccess crossTransferAccess)
@@ -63,7 +56,6 @@
             }
             catch (Exception ex)
             {
-
                 LogExtensions.ExceptionHandler(ex);
             }
             return new Result { ErrorCode = 1, ErrorMessage = "System Error" };
@@ -82,16 +74,13 @@
             }
             catch (Exception exception)
             {
-
                 LogExtensions.ExceptionHandler(exception);
                 return new Result { ErrorCode = 1, ErrorMessage = "System Error" };
             }
-
         }
 
         public CustomerExRate SelectCustomerExRate(string username)
         {
-
             return _crossTransferAccess.SelectCustomerExRate(username);
         }
 
@@ -119,7 +108,6 @@
                 return new List<ForexAccount>();
             }
         }
-
 
         public List<ExchangeRate> SelectAllExchangeRate()
         {

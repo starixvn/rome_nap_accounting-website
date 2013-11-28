@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
+using System.Linq;
+using System.Text;
 using DNAide.Data;
 using Sunplus.Accounting.Core.Common;
-using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
+using Sunplus.Accounting.DataAccess.IBCDLL.Customer;
 using Sunplus.Accounting.Entities;
+using System.Data;
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
+using Fanex.Data;
+using DNAide.Core;
+using Fanex.Tarus.Infrastructure.Extensions;
 
 namespace Sunplus.Accounting.DataAccess.AdoNet
 {
@@ -43,20 +50,19 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
         {
             var result = new Result();
 
-            var spElement =
-                GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.HelperSession.StoreCollection.HelperControl,
-                                  "InsertCountry");
-            var db = GetDatabase(spElement.DbName);
-            using (var dbCommand = db.GetStoredProcCommand(spElement.Name))
+            using (ObjectDb db = new ObjectDb("InsertCountry"))
             {
-                db.AddInParameter(dbCommand, "name", DbType.String, countryName);
-                db.AddOutParameter(dbCommand, "ErrCode", DbType.Int32, 4);
-                db.AddOutParameter(dbCommand, "ErrMsg", DbType.String, 4000);
+                Hashtable p = new Hashtable();
+                p.Add("name", countryName);
+                db.AssignParamValues(p);
 
-                int numberOfRecordsAffected = db.ExecuteNonQuery(dbCommand);
+                db.ExecuteNonQuery();
 
-                result.ErrorCode = Convert.ToInt32(db.GetParameterValue(dbCommand, "ErrCode"));
-                result.ErrorMessage = Convert.ToString(db.GetParameterValue(dbCommand, "ErrMsg"));
+                var errcode = CastAide.AsInt32(db.GetParameterValue("errcode"));
+                var errmsg = CastAide.AsString(db.GetParameterValue("errmsg"));
+
+                result.ErrorCode = errcode;
+                result.ErrorMessage = errmsg;
             }
 
             return result;
@@ -64,37 +70,61 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
         public DataTable GetSites(Enumerations.AccountingSystem system)
         {
-            DbResult ds = null;
             var param = new Hashtable { { "system", system.ToString().ToUpper() } };
-            var spElement =
-                GetStoreProcedure(HelperSession.StoreCollection.HelperControl, "SiteSel");
-            ds = DbHelper.Execute(spElement.Name, param, spElement.DbName);
+            DataTable result = new DataTable();
 
-            DataTable result = null;
-            if (ds != null && ds.ResultSet != null && ds.ResultSet.Tables.Count > 0)
-                result = ds.ResultSet.Tables[0];
+            try
+            {
+                using (ObjectDb db = new ObjectDb("CustomerSetting_SiteSel", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    if (ds != null && ds.Tables.Count > 0)
+                    {
+                        result = ds.Tables[0];
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
             return result;
         }
 
         public DataTable GetSites_Report_Licensee(Enumerations.AccountingSystem system)
         {
-            DbResult ds = null;
-            var param = new Hashtable {
-                {
-                    "system",
-                    system.ToString().ToUpper()
-                }
-            };
-
-            var spElement =
-                GetStoreProcedure(HelperSession.StoreCollection.HelperControl, "SiteSel_Report_Licensee");
-            ds = DbHelper.Execute(spElement.Name, param, spElement.DbName);
             DataTable result = null;
-            if (ds != null && ds.ResultSet != null && ds.ResultSet.Tables.Count > 0)
+            try
             {
-                result = ds.ResultSet.Tables[0];
-            }
+                DbResult ds = null;
+                var param = new Hashtable { 
+                { 
+                    "system", 
+                    system.ToString().ToUpper()
+                }};
 
+                using (ObjectDb db = new ObjectDb("SiteSel_Report_Licensee", 600))
+                {
+                    db.AssignParamValues(param);
+                    var dataset = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    ds = new DbResult(output, dataset);
+                }
+
+                if (ds != null && ds.ResultSet != null && ds.ResultSet.Tables.Count > 0)
+                {
+                    result = ds.ResultSet.Tables[0];
+                }
+
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
             return result;
         }
 
