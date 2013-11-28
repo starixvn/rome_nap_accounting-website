@@ -1,12 +1,8 @@
-﻿
-namespace Fanex.Tarus.Finance.Business.Statement
+﻿namespace Fanex.Tarus.Finance.Business.Statement
 {
-    using System;
     using System.Collections.Generic;
-    using System.Data;
-    using Fanex.Tarus.Finance.DataAccess.Statement;
-    using Fanex.Tarus.Finance.Model.Statement;
     using Fanex.Tarus.Finance.Entities;
+    using Fanex.Tarus.Finance.Model.Statement;
 
     public interface IFinanceStatementBusiness
     {

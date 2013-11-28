@@ -185,12 +185,22 @@
                 <tr>
                     <td class="l" colspan="2" ><span class="canchange" onclick="showhideRacebooksStatus({CustId},{RoleId})">Enable Racing</span></td>
                     <td class="l" colspan="2"><span class="canchange" onclick="showhideP2PStatus({CustId},{RoleId})">Enable Poker</span></td>
-                </tr>
-				<!--ProgressiveBonus-->
-				<tr>
+                </tr>   
+                 <tr>  
+		<!--ProgressiveBonus-->
+		<tr>
                     <td class="l" colspan="2"><span class="canchange" onclick="showhideCasinoBonus({CustId},{RoleId},'{UserName}')">Enable Bonus</span></td>
-				</tr>
-				<!--/ProgressiveBonus-->
+	            <td class="l" colspan="2"></td>
+                </tr>   
+                <!--/ProgressiveBonus-->
+                 <!--autosuspendstatus-->
+                <tr>
+                    <!--autosuspendstatusenable-->             
+                    <td class="l" colspan="2" ><span class="canchange" onclick="updateAutoSuspendStatus({CustId},{RoleId})">Auto Suspend</span></td>
+                    <!--/autosuspendstatusenable-->
+                    <td class="l" colspan="2"></td>
+                </tr> 
+                 <!--/autosuspendstatus-->         
                 <tr>
                     <td style="width: 100px;" class="l">
                         Special

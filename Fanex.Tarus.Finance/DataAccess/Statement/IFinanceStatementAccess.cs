@@ -1,10 +1,5 @@
-﻿
-namespace Fanex.Tarus.Finance.DataAccess.Statement
+﻿namespace Fanex.Tarus.Finance.DataAccess.Statement
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Data;
     using Fanex.Tarus.Finance.Entities;
 

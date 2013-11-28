@@ -33,13 +33,27 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
 
         public DbResult SelMatchInfo(int matchId, long transid)
         {
-            Hashtable hashtable = new Hashtable();
-            hashtable.Add("matchid", matchId);
-            hashtable.Add("transid", transid);
+            DbResult result = null;
+            try
+            {
+                Hashtable hashtable = new Hashtable();
+                hashtable.Add("matchid", matchId);
+                hashtable.Add("transid", transid);
 
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SpecialDeleteGroupSection.StoreCollection.Sportbook, "SelMatchInfo");
-            return DbHelper.Execute(spElement.Name, hashtable, spElement.DbName, 600);
-            //return DbHelper.Execute("Acc_MatchSelByID", hashtable, DBType.ARCHIVE, 600);
+                using (ObjectDb db = new ObjectDb("SelMatchInfo"))
+                {
+                    db.AssignParamValues(hashtable);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         public DeleteResult DeleteSpecialTransactionNumberGame(int matchId, long frefno, long trefno, string live, string dead, string username, int custId, string userpwd, int DelOption, string transids, int DelOption_BD, string transids_BD, int DelOption_12EU, string transids_12EU, int DelOption_MHC, string transids_MHC, string ip, string reason)
@@ -172,12 +186,26 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
 
         public DbResult SelRecoverSpecialBets(string transid)
         {
-            Hashtable hashtable = new Hashtable();
-            hashtable.Add("transid", transid);
+            DbResult result = null;
+            try
+            {
+                Hashtable hashtable = new Hashtable();
+                hashtable.Add("transid", transid);
 
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SpecialDeleteGroupSection.StoreCollection.Sportbook, "BettransSelRecoverSpecialBets");
-            return DbHelper.Execute(spElement.Name, hashtable, spElement.DbName, 600);
-            //return DbHelper.Execute("Acc_BettransSelRecoverSpecialBets", hashtable, DBType.ARCHIVE, 600);
+                using (ObjectDb db = new ObjectDb("BettransSelRecoverSpecialBets"))
+                {
+                    db.AssignParamValues(hashtable);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         public DeleteResult RecoverSpecialBets(string transid)
@@ -207,79 +235,158 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
 
         public DbResult RemovePrivateMsg(string transid, int UserID)
         {
-            Hashtable hashtable = new Hashtable();
-            hashtable.Add("transid", transid);
-            hashtable.Add("userid", UserID);
+            DbResult result = null;
+            try
+            {
+                Hashtable hashtable = new Hashtable();
+                hashtable.Add("transid", transid);
+                hashtable.Add("userid", UserID);
 
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SpecialDeleteGroupSection.StoreCollection.Sportbook, "Msg_Remove");
-            return DbHelper.Execute(spElement.Name, hashtable, spElement.DbName);
-            //return DbHelper.Execute("Acc_Msg_Remove", hashtable, DBType.MESSAGE);
+                using (ObjectDb db = new ObjectDb("Acc_Msg_Remove"))
+                {
+                    db.AssignParamValues(hashtable);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }                
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return result;
         }
 
         public DbResult BettransSelSpecialDel(SpecialDeleteParam deleteParam)
         {
-            Hashtable param = new Hashtable();
-            param.Add("matchid", deleteParam.MatchId);
-            param.Add("fromrefno", deleteParam.FromRefNo);
-            param.Add("torefno", deleteParam.ToRefNo);
-            param.Add("hdp", deleteParam.Hdp);
-            param.Add("liveindicator", deleteParam.Liveindicator);
-            param.Add("bettypes", deleteParam.Bettypes);
-            param.Add("betteam1378", deleteParam.Betteam1378);
-            param.Add("betteam515", deleteParam.Betteam515);
-            param.Add("betteam430", deleteParam.Betteam430);
-            param.Add("username", AppSession.Username);
-            //adding filter option
-            param.Add("betteam6", deleteParam.Betteam6);
-            param.Add("betteam14", deleteParam.Betteam14);
-            param.Add("betteam16", deleteParam.Betteam16);
-            param.Add("safilter", deleteParam.SAFilter);
+            DbResult result = null;
 
-            if (deleteParam.HomeScore.Length > 0 && deleteParam.AwayScore.Length > 0 && deleteParam.FromTransdate.Length == 0 && deleteParam.ToTransdate.Length == 0)
+            try
             {
-                param.Add("livehomescore", deleteParam.HomeScore);
-                param.Add("liveawayscore", deleteParam.AwayScore);
+                Hashtable param = new Hashtable();
+                param.Add("matchid", deleteParam.MatchId);
+                param.Add("fromrefno", deleteParam.FromRefNo);
+                param.Add("torefno", deleteParam.ToRefNo);
+                param.Add("hdp", deleteParam.Hdp);
+                param.Add("liveindicator", deleteParam.Liveindicator);
+                param.Add("bettypes", deleteParam.Bettypes);
+                param.Add("betteam1378", deleteParam.Betteam1378);
+                param.Add("betteam515", deleteParam.Betteam515);
+                param.Add("betteam430", deleteParam.Betteam430);
+                param.Add("username", AppSession.Username);
+                //adding filter option
+                param.Add("betteam6", deleteParam.Betteam6);
+                param.Add("betteam14", deleteParam.Betteam14);
+                param.Add("betteam16", deleteParam.Betteam16);
+                param.Add("safilter", deleteParam.SAFilter);
+
+                if (deleteParam.HomeScore.Length > 0 && deleteParam.AwayScore.Length > 0 && deleteParam.FromTransdate.Length == 0 && deleteParam.ToTransdate.Length == 0)
+                {
+                    param.Add("livehomescore", deleteParam.HomeScore);
+                    param.Add("liveawayscore", deleteParam.AwayScore);
+                }
+                else if (deleteParam.FromTransdate.Length > 0 && deleteParam.ToTransdate.Length > 0 && deleteParam.HomeScore.Length == 0 && deleteParam.AwayScore.Length == 0)
+                {
+                    param.Add("fromtransdate", CastAide.AsDateTime(deleteParam.FromTransdate).AddHours(-12));
+                    param.Add("totransdate", CastAide.AsDateTime(deleteParam.ToTransdate).AddHours(-12));
+                }
+                else if (deleteParam.HomeScore.Length > 0 && deleteParam.AwayScore.Length > 0 && deleteParam.FromTransdate.Length > 0 && deleteParam.ToTransdate.Length > 0)
+                {
+                    param.Add("livehomescore", deleteParam.HomeScore);
+                    param.Add("liveawayscore", deleteParam.AwayScore);
+                    param.Add("fromtransdate", CastAide.AsDateTime(deleteParam.FromTransdate).AddHours(-12));
+                    param.Add("totransdate", CastAide.AsDateTime(deleteParam.ToTransdate).AddHours(-12));
+                }
+
+                using (ObjectDb db = new ObjectDb("BettransSelSpecialDel"))
+                {
+                    db.AssignParamValues(param);
+                    
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
-            else if (deleteParam.FromTransdate.Length > 0 && deleteParam.ToTransdate.Length > 0 && deleteParam.HomeScore.Length == 0 && deleteParam.AwayScore.Length == 0)
+            catch (Exception ex)
             {
-                param.Add("fromtransdate", CastAide.AsDateTime(deleteParam.FromTransdate).AddHours(-12));
-                param.Add("totransdate", CastAide.AsDateTime(deleteParam.ToTransdate).AddHours(-12));
-            }
-            else if (deleteParam.HomeScore.Length > 0 && deleteParam.AwayScore.Length > 0 && deleteParam.FromTransdate.Length > 0 && deleteParam.ToTransdate.Length > 0)
-            {
-                param.Add("livehomescore", deleteParam.HomeScore);
-                param.Add("liveawayscore", deleteParam.AwayScore);
-                param.Add("fromtransdate", CastAide.AsDateTime(deleteParam.FromTransdate).AddHours(-12));
-                param.Add("totransdate", CastAide.AsDateTime(deleteParam.ToTransdate).AddHours(-12));
+                LogExtensions.ExceptionHandler(ex);
             }
 
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SpecialDeleteGroupSection.StoreCollection.Sportbook, "BettransSelSpecialDel");
-            return DbHelper.Execute(spElement.Name, param, spElement.DbName, 600);
-            //return DbHelper.Execute("Acc_BettransSelSpecialDel", param, DBType.ARCHIVE, 600);
+            return result;
         }
 
         public DbResult BettransDelSpecial_OutrightSel(int LeagueID)
         {
-            var param = new Hashtable();
-            param.Add("leagueid", LeagueID);
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SpecialDeleteGroupSection.StoreCollection.Sportbook, "Special_OutrightSel");
-            return DbHelper.Execute(spElement.Name, param, spElement.DbName, 600);
-            //return DbHelper.Execute("Acc_BettransDelSpecial_OutrightSel", param, DBType.ARCHIVE, 200);
+            DbResult result = null;
+            try
+            {
+                var param = new Hashtable();
+                param.Add("leagueid", LeagueID);
+
+                using (ObjectDb db = new ObjectDb("Special_OutrightSel", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return result;
         }
 
         public DbResult BettransSelDelSpecial_Outright(Hashtable param)
         {
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SpecialDeleteGroupSection.StoreCollection.Sportbook, "Special_Outright");
-            return DbHelper.Execute(spElement.Name, param, spElement.DbName, 600);
-            //return DbHelper.Execute("Acc_BettransSelDelSpecial_Outright", param, DBType.ARCHIVE, 600);
+            DbResult result = null;
+            try
+            {
+                using (ObjectDb db = new ObjectDb("Special_Outright", 600))
+                {
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);                
+            }
+
+            return result;
         }
 
         public DbResult BettransSelBet_BatchMsg(Hashtable param)
         {
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SpecialDeleteGroupSection.StoreCollection.Sportbook, "BatchMsg");
-            return DbHelper.Execute(spElement.Name, param, spElement.DbName, 600);
+            DbResult result = null;
+            try
+            {
+                using (ObjectDb db = new ObjectDb("BatchMsg", 600))
+                {
+                    db.AssignParamValues(param);
 
-            //return DbHelper.Execute("Acc_BettransSelBet_BatchMsg", param, DBType.REPORT, 600);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return result;
         }
 
         #region EarlyKOBet
@@ -291,27 +398,41 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
         /// <returns></returns>
         public DbResult SelectEarlyKOBet(SpecialDeleteParamEarlyKO deleteParam)
         {
-            DateTime koDate = DateTime.Parse(deleteParam.KichOffDate).AddHours(-12);
-            Hashtable param = new Hashtable();
-            param.Add("matchid", deleteParam.MatchId);
-            //param.Add("kickoffdate", deleteParam.KichOffDate);
-            param.Add("kickoffdate", koDate);
-            param.Add("hdp", deleteParam.Hdp);
-            param.Add("bettypes", deleteParam.Bettypes);
-            param.Add("betteam1378", deleteParam.Betteam1378);
-            param.Add("betteam515", deleteParam.Betteam515);
-            param.Add("betteam430", deleteParam.Betteam430);
-            param.Add("username", AppSession.Username);
-            //add filter option
-            param.Add("betteam6", deleteParam.Betteam6);
-            param.Add("betteam14", deleteParam.Betteam14);
-            param.Add("betteam16", deleteParam.Betteam16);
-            param.Add("safilter", deleteParam.SAFilter);
+            DbResult result = null;
+            try
+            {
+                DateTime koDate = DateTime.Parse(deleteParam.KichOffDate).AddHours(-12);
+                Hashtable param = new Hashtable();
+                param.Add("matchid", deleteParam.MatchId);
+                //param.Add("kickoffdate", deleteParam.KichOffDate);
+                param.Add("kickoffdate", koDate);
+                param.Add("hdp", deleteParam.Hdp);
+                param.Add("bettypes", deleteParam.Bettypes);
+                param.Add("betteam1378", deleteParam.Betteam1378);
+                param.Add("betteam515", deleteParam.Betteam515);
+                param.Add("betteam430", deleteParam.Betteam430);
+                param.Add("username", AppSession.Username);
+                //add filter option
+                param.Add("betteam6", deleteParam.Betteam6);
+                param.Add("betteam14", deleteParam.Betteam14);
+                param.Add("betteam16", deleteParam.Betteam16);
+                param.Add("safilter", deleteParam.SAFilter);
 
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SpecialDeleteGroupSection.StoreCollection.EarlyKO, "GetEarlyKOBet");
+                using (ObjectDb db = new ObjectDb("GetEarlyKOBet", 600))
+                {
+                    db.AssignParamValues(param);
 
-            //return DbHelper.Execute("Acc_BettransSelSpecialDel_EarlyKO", param, DBType.ARCHIVE, 600);
-            return DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         /// <summary>
@@ -321,14 +442,29 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
         /// <returns></returns>
         public DbResult SelectEarlyKOMixparlay_Notuse(string refno, string transid, int curency)
         {
-            Hashtable param = new Hashtable();
-            param.Add("refno", refno);
-            param.Add("transid", transid);
-            param.Add("currencyid", curency);
+            DbResult result = null;
+            try
+            {
+                Hashtable param = new Hashtable();
+                param.Add("refno", refno);
+                param.Add("transid", transid);
+                param.Add("currencyid", curency);
 
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SpecialDeleteGroupSection.StoreCollection.EarlyKO, "GetEarlyKOBet_MixParlay");
+                using (ObjectDb db = new ObjectDb("Acc_BettransSelSpecialDel_MixParlay", 600))
+                {
+                    db.AssignParamValues(param);
 
-            return DbHelper.Execute(spElement.Name, param, spElement.DbName, 600);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         public DeleteResult DeleteSpecialEarlyKO(string matchId, string bettype,
@@ -401,64 +537,115 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
         /// <returns></returns>
         public DbResult GetMPList(SpecialDeleteParam deleteParam)
         {
-            Hashtable param = new Hashtable();
-            param.Add("matchid", deleteParam.MatchId);
-            param.Add("hdp", deleteParam.Hdp);
-            param.Add("bettypes", deleteParam.Bettypes);
-            param.Add("betteam1378", deleteParam.Betteam1378);
-            param.Add("betteam515", deleteParam.Betteam515);
-            param.Add("betteam430", deleteParam.Betteam430);
-            param.Add("betteam6", deleteParam.Betteam6);
-            param.Add("betteam14", deleteParam.Betteam14);
-            param.Add("betteam16", deleteParam.Betteam16);
-            param.Add("type", deleteParam.Type);
-            param.Add("bettype", deleteParam.SelectBettype);
+            DbResult result = null;
+            try
+            {
+                Hashtable param = new Hashtable();
+                param.Add("matchid", deleteParam.MatchId);
+                param.Add("hdp", deleteParam.Hdp);
+                param.Add("bettypes", deleteParam.Bettypes);
+                param.Add("betteam1378", deleteParam.Betteam1378);
+                param.Add("betteam515", deleteParam.Betteam515);
+                param.Add("betteam430", deleteParam.Betteam430);
+                param.Add("betteam6", deleteParam.Betteam6);
+                param.Add("betteam14", deleteParam.Betteam14);
+                param.Add("betteam16", deleteParam.Betteam16);
+                param.Add("type", deleteParam.Type);
+                param.Add("bettype", deleteParam.SelectBettype);
 
-            if (deleteParam.HomeScore.Length > 0 && deleteParam.AwayScore.Length > 0 && deleteParam.FromTransdate.Length == 0 && deleteParam.ToTransdate.Length == 0)
-            {
-                param.Add("livehomescore", deleteParam.HomeScore);
-                param.Add("liveawayscore", deleteParam.AwayScore);
+                if (deleteParam.HomeScore.Length > 0 && deleteParam.AwayScore.Length > 0 && deleteParam.FromTransdate.Length == 0 && deleteParam.ToTransdate.Length == 0)
+                {
+                    param.Add("livehomescore", deleteParam.HomeScore);
+                    param.Add("liveawayscore", deleteParam.AwayScore);
+                }
+                else if (deleteParam.FromTransdate.Length > 0 && deleteParam.ToTransdate.Length > 0 && deleteParam.HomeScore.Length == 0 && deleteParam.AwayScore.Length == 0)
+                {
+                    param.Add("fromtransdate", CastAide.AsDateTime(deleteParam.FromTransdate).AddHours(-12));
+                    param.Add("totransdate", CastAide.AsDateTime(deleteParam.ToTransdate).AddHours(-12));
+                }
+                else if (deleteParam.HomeScore.Length > 0 && deleteParam.AwayScore.Length > 0 && deleteParam.FromTransdate.Length > 0 && deleteParam.ToTransdate.Length > 0)
+                {
+                    param.Add("livehomescore", deleteParam.HomeScore);
+                    param.Add("liveawayscore", deleteParam.AwayScore);
+                    param.Add("fromtransdate", CastAide.AsDateTime(deleteParam.FromTransdate).AddHours(-12));
+                    param.Add("totransdate", CastAide.AsDateTime(deleteParam.ToTransdate).AddHours(-12));
+                }
+
+                using (ObjectDb db = new ObjectDb("Acc_BettransSelDelSpecial_MixParlay", 600))
+                {
+                    db.AssignParamValues(param);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
-            else if (deleteParam.FromTransdate.Length > 0 && deleteParam.ToTransdate.Length > 0 && deleteParam.HomeScore.Length == 0 && deleteParam.AwayScore.Length == 0)
+            catch (Exception ex)
             {
-                param.Add("fromtransdate", CastAide.AsDateTime(deleteParam.FromTransdate).AddHours(-12));
-                param.Add("totransdate", CastAide.AsDateTime(deleteParam.ToTransdate).AddHours(-12));
-            }
-            else if (deleteParam.HomeScore.Length > 0 && deleteParam.AwayScore.Length > 0 && deleteParam.FromTransdate.Length > 0 && deleteParam.ToTransdate.Length > 0)
-            {
-                param.Add("livehomescore", deleteParam.HomeScore);
-                param.Add("liveawayscore", deleteParam.AwayScore);
-                param.Add("fromtransdate", CastAide.AsDateTime(deleteParam.FromTransdate).AddHours(-12));
-                param.Add("totransdate", CastAide.AsDateTime(deleteParam.ToTransdate).AddHours(-12));
+                LogExtensions.ExceptionHandler(ex);
             }
 
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SpecialDeleteGroupSection.StoreCollection.Mixparlay, "GetMPList");
-            return DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
+            return result;
         }
 
         public DbResult GetMPTicket(string refno)
         {
-            Hashtable param = new Hashtable();
-            param.Add("refno", refno);
-            param.Add("transid", 0);
-            param.Add("currencyid", 0);
-            param.Add("language", "E");
+            DbResult result = null;
+            try
+            {
+                Hashtable param = new Hashtable();
+                param.Add("refno", refno);
+                param.Add("transid", 0);
+                param.Add("currencyid", 0);
+                param.Add("language", "E");
+                
+                using (ObjectDb db = new ObjectDb("Acc_BettransSelSpecialDel_MixParlay", 1000))
+                {
+                    db.AssignParamValues(param);
 
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SpecialDeleteGroupSection.StoreCollection.Mixparlay, "GetMPTicket");
-            return DbHelper.Execute(spElement.Name, param, spElement.DbName, 1000);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return result;
         }
 
         public DbResult CheckRefno(string matchid, string fromRefno, string toRefno, string type)
         {
-            Hashtable param = new Hashtable();
-            param.Add("type", type);
-            param.Add("matchid", matchid);
-            param.Add("fromrefno", fromRefno);
-            param.Add("torefno", toRefno);
-            param.Add("errcode", 0);
-            param.Add("errmsg", string.Empty);
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SpecialDeleteGroupSection.StoreCollection.Sportbook, "CheckRefno");
-            return DbHelper.Execute(spElement.Name, param, spElement.DbName, 600);
+            DbResult result = null;
+            try
+            {
+                Hashtable param = new Hashtable();
+                param.Add("type", type);
+                param.Add("matchid", matchid);
+                param.Add("fromrefno", fromRefno);
+                param.Add("torefno", toRefno);
+                param.Add("errcode", 0);
+                param.Add("errmsg", string.Empty);
+
+                using (ObjectDb db = new ObjectDb("Acc_SpecialDel_CheckMatchIDwithRefno"))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         public DeleteResult DeleteSpecialMixparlay(string matchId, int Type, string HomeScore, string AwayScore, string bettypes,
@@ -542,11 +729,27 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete
 
         public DbResult SelBettype(int type)
         {
-            Hashtable hashtable = new Hashtable();
-            hashtable.Add("mode", type);
+            DbResult result = null;
+            try
+            {
+                Hashtable hashtable = new Hashtable();
+                hashtable.Add("mode", type);
 
-            var spElement = GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SportbookPtSession.StoreCollection.SportBooksPtControl, "BetTypeSel");
-            return DbHelper.Execute(spElement.Name, hashtable, spElement.DbName);
+                using (ObjectDb db = new ObjectDb("Acc_BetTypeSel"))
+                {
+                    db.AssignParamValues(hashtable);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         public DataTable SelBetBatchMsg(string transId)

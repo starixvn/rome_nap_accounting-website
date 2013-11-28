@@ -20,7 +20,7 @@ namespace Fanex.Tarus.BetList.Criteria.SportingSolutions
 
         public string GetSettingKey()
         {
-            return "SoprtingSolutionBetlistResult";
+            return "SportingSolutionBetlistResult";
         }
 
         public bool IsValid()

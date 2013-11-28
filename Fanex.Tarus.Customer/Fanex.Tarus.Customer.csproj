@@ -146,6 +146,8 @@
     <Compile Include="Business\CustomerList\ICustomerListService.cs" />
     <Compile Include="Business\CustomerLogin\CustomerSecurityCodeService.cs" />
     <Compile Include="Business\CustomerLogin\ICustomerSecurityCodeService.cs" />
+    <Compile Include="Business\AutoSuspend\AutoSuspendService.cs" />
+    <Compile Include="Business\AutoSuspend\IAutoSuspendService.cs" />
     <Compile Include="Business\Racing\IRacingSettingService.cs" />
     <Compile Include="Business\Racing\RacingSettingService.cs" />
     <Compile Include="Business\ReportService.cs" />
@@ -158,12 +160,17 @@
     <Compile Include="Business\ViewPT\IViewPTService.cs" />
     <Compile Include="Business\ViewPT\ViewPTService.cs" />
     <Compile Include="Constants\RoleIdConstants.cs" />
+    <Compile Include="Controller\AutoSuspendController.cs" />
     <Compile Include="Controller\ViewPTController.cs" />
+    <Compile Include="Criteria\AutoSuspend\GetCustomerStatusCriteria.cs" />
+    <Compile Include="Criteria\AutoSuspend\UpdateCustomerStatusCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\AddSMAListCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\UploadSMAListCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\CheckSMAListCriteria.cs" />
     <Compile Include="Criteria\SMATurnover\GetMatchInfo_AddSMAListCriteria.cs" />
     <Compile Include="Criteria\ViewPT\GetPTSettingCriteria.cs" />
+    <Compile Include="DataAccess\AutoSuspend\AutoSuspendRepository.cs" />
+    <Compile Include="DataAccess\AutoSuspend\IAutoSuspendRepository.cs" />
     <Compile Include="DataAccess\SettingCustomer\SMATurnover\ISMATurnoverAccess.cs" />
     <Compile Include="DataAccess\SettingCustomer\SMATurnover\SMATurnoverAccess.cs" />
     <Compile Include="Controller\Credit\AddNewAgentController.cs" />
@@ -207,6 +214,8 @@
     <Compile Include="DataAccess\SettingCustomer\IAbnormalBetAccess.cs" />
     <Compile Include="DataAccess\ViewPT\IViewPTRepository.cs" />
     <Compile Include="DataAccess\ViewPT\ViewPTRepository.cs" />
+    <Compile Include="Entities\AutoSuspend\CustomerInfo.cs" />
+    <Compile Include="Entities\AutoSuspend\ViewResources.cs" />
     <Compile Include="Entities\BaseModel.cs" />
     <Compile Include="Entities\CreditCustomer\Currency.cs" />
     <Compile Include="Entities\CreditCustomer\CustomerSettingView.cs" />
@@ -268,6 +277,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

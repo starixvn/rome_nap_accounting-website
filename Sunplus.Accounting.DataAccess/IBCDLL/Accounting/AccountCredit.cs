@@ -31,8 +31,16 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var hash = new Hashtable();
                 hash.Add("custid", custid);
-                var spElement = GetStoreProcedure("CustomerSelCredit");
-                rs = DbHelper.Execute(spElement.Name, hash, spElement.DbName, 300);
+                
+                using (ObjectDb db = new ObjectDb("CustomerSelCredit", 600))
+                {
+                    db.AssignParamValues(hash);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch
             {
@@ -52,17 +60,27 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <returns></returns>
         public static DbResult Acc_CreditTermSelGroupHeadline()
         {
+            DbResult result = null;
             try
             {
                 var hash = new Hashtable();
-                var spElement = GetStoreProcedure("CreditTermSelGroupHeadline");
-                return DbHelper.Execute(spElement.Name, hash, spElement.DbName);
+                //var spElement = GetStoreProcedure("CreditTermSelGroupHeadline");
+                //return DbHelper.Execute(spElement.Name, hash, spElement.DbName);
+
+                using (ObjectDb db = new ObjectDb("GetAllGroup", 600))
+                {
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
+            return result;
         }
 
         /// <summary>
@@ -73,18 +91,28 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <returns></returns>
         public static DbResult Acc_CreditTermSelByGroupID(int groupid)
         {
+            DbResult result = null;
             try
             {
                 var hash = new Hashtable();
                 hash.Add("groupid", groupid);
-                var spElement = GetStoreProcedure("CreditTermSelByGroupID");
-                return DbHelper.Execute(spElement.Name, hash, spElement.DbName);
+                
+                using (ObjectDb db = new ObjectDb("CreditTermSelByGroupID",600))
+                {
+                    db.AssignParamValues(hash);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
+            return result;
         }
 
         /// <summary>
@@ -98,7 +126,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
             try
             {
-                using (ObjectDb objdb = new ObjectDb("Acc_CreditTermUpdAddToGroup"))
+                using (ObjectDb objdb = new ObjectDb("Acc_CreditTermUpdAddToGroup",600))
                 {
                     var hash = new Hashtable();
                     hash.Add("username", username);
@@ -139,7 +167,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
             try
             {
-                using (ObjectDb objdb = new ObjectDb("Acc_CreditTermUpdRemoveFromGroup"))
+                using (ObjectDb objdb = new ObjectDb("Acc_CreditTermUpdRemoveFromGroup",600))
                 {
                     var hash = new Hashtable();
                     hash.Add("custidlist", CustIDList);
@@ -181,7 +209,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
             try
             {
-                using (ObjectDb objdb = new ObjectDb("Acc_CreditTermUpdSetGroupHeadline"))
+                using (ObjectDb objdb = new ObjectDb("Acc_CreditTermUpdSetGroupHeadline",600))
                 {
                     var hash = new Hashtable();
                     hash.Add("custid", custid);
@@ -221,18 +249,28 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <returns></returns>
         public static DbResult Acc_CreditTermSelByCustID(int custid)
         {
+            DbResult result = null;
             try
             {
                 var hash = new Hashtable();
                 hash.Add("custid", custid);
-                var spElement = GetStoreProcedure("CreditTermSelByCustID");
-                return DbHelper.Execute(spElement.Name, hash, spElement.DbName);
+                
+                using (ObjectDb db = new ObjectDb("CreditTermSelByCustID",600))
+                {
+                    db.AssignParamValues(hash);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
+            return result;
         }
 
         /// <summary>
@@ -244,15 +282,23 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <returns></returns>
         public static DbResult Acc_CreditTermSelCheckerList()
         {
+            DbResult result = null;
             try
             {
-                return DbHelper.Execute("Acc_CreditTermSelCheckerList", DBType.DB03);
+                using (ObjectDb db = new ObjectDb("Acc_CreditTermSelCheckerList", 600))
+                {
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
+            return result;
         }
 
         /// <summary>
@@ -264,18 +310,27 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <returns></returns>
         public static DbResult Acc_CreditTermSelGroupHeadlineByGroupID(int groupid)
         {
+            DbResult result = null;
             try
             {
                 var hash = new Hashtable();
                 hash.Add("groupid", groupid);
-                var spElement = GetStoreProcedure("CreditTermSelGroupHeadlineByGroupID");
-                return DbHelper.Execute(spElement.Name, hash, spElement.DbName);
+
+                using (ObjectDb db = new ObjectDb("CreditTermSelGroupHeadlineByGroupID",600))
+                {
+                    db.AssignParamValues(hash);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
+            return result;
         }
 
         /// <summary>
@@ -300,7 +355,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
             try
             {
-                using (ObjectDb objdb = new ObjectDb("Acc_CreditTermUpdCustomer"))
+                using (ObjectDb objdb = new ObjectDb("Acc_CreditTermUpdCustomer",600))
                 {
                     var hash = new Hashtable();
                     hash.Add("custid", custid);

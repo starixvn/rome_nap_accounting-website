@@ -5,27 +5,28 @@
 </head>
 <body>
 @using Fanex.BetList.Accounting.Models
-@using Fanex.BetList.Accounting.Core
+@using Fanex.BetList.Accounting.Extensions;
+@using Fanex.BetList.Accounting.Core;
 
 @{
     VirtualHRPopupModel virtualPopupModel = new VirtualHRPopupModel();
 }
 
 @functions {
-public string Placing(int number)
-{
-    string result = string.Empty;
-    switch(number)
+    public string Placing(int number)
     {
-        case 1: result = "1st";
-            break;
-        case 2:result = "2nd";
-             break;
-        case 3:result = "3rd";
-             break;
+        string result = string.Empty;
+        switch (number)
+        {
+            case 1: result = "1st";
+                break;
+            case 2: result = "2nd";
+                break;
+            case 3: result = "3rd";
+                break;
+        }
+        return result;
     }
-    return result;
-}
 
 }
 <div>

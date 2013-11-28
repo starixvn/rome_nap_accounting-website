@@ -326,7 +326,7 @@ var agentBalance = {
             data: JSON.stringify(data),
             success: function (rs) {
                 if (rs && rs.DownLineBalane && rs.DownLineBalane.length > 0) {
-                    agentBalance.title = 'Agent ' + (agentBalance.isYesterDay ? 'Yesterday Balance' : 'Total Balance');
+                    agentBalance.title = 'Agent ' + (agentBalance.isYesterday ? 'Yesterday Balance' : 'Total Balance');
                     $('#agentBalanceTitle').html(agentBalance.title);
                     var arr = [];
                     for (var i = 0; i < rs.DownLineBalane.length; i++) {
@@ -348,7 +348,7 @@ var agentBalance = {
     renderBalanceRow: function (row, css, index) {
         var html = '<tr class="' + css + '">';
         html += '<td><div class="col40 c ">' + index + '</div></td>';
-        html += '<td><div class="col200 c" ><a href="#" onclick="memberBalance.getMemberBalanceReport(' + row.CustId + ',' + row.RoleId + ',' + agentBalance.isYesterDay + ',\'' + agentBalance.firstLetter + '\',\'' + agentBalance.keyword + '\',\'' + row.CurrencyId + '\');">' + row.Username + '</a></div></td>';
+        html += '<td><div class="col200 c" ><a href="#" onclick="memberBalance.getMemberBalanceReport(' + row.CustId + ',' + row.RoleId + ',' + agentBalance.isYesterday + ',\'' + agentBalance.firstLetter + '\',\'' + agentBalance.keyword + '\',\'' + row.CurrencyId + '\');">' + row.Username + '</a></div></td>';
         html += '<td><div class="col60 c">' + row.Currency + '</div></td>';
         html += '<td><div class="col140 r">' + row.Balance + '</div></td>';
         html += '<td><div class="col140 r">' + row.BaseBalance + '</div></td>';

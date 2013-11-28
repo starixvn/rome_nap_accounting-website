@@ -1,5 +1,6 @@
 ﻿@using Fanex.BetList.Accounting.Models
 @using Fanex.BetList.Core.Entities;
+@using Fanex.BetList.Accounting.Extensions;
 @using Fanex.BetList.Accounting.Core;
 @{
     var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
@@ -75,7 +76,7 @@
             <div id="stautus_@betdetail.Ticket.TransId" class="width100 table-cell">
              @Html.Raw(betdetail.StatusHtml)
                  @{
-                    var ip = @Sunplus.Accounting.Business.IpManagement.ReplaceVNIP(betdetail.Ticket.IP);
+                     var ip = @Sunplus.Accounting.Business.IpManagement.ReplaceVNIP(betdetail.Ticket.IP);
                 }
                 @if (ip != "-")
                 {

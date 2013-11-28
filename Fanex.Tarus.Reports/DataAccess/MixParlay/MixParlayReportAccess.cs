@@ -36,7 +36,7 @@ namespace Fanex.Tarus.Reports.DataAccess.MixParlay
             string strMapping = "DailyWLDirect_MixParlayAdvance";
             if (isViewDW)
                 strMapping += "_WH";
-            using (ObjectDb objDB = new ObjectDb(strMapping))
+            using (ObjectDb objDB = new ObjectDb(strMapping, 600))
             {
                 objDB.AddInParameter("fromdate", DbType.DateTime, fromDate);
                 objDB.AddInParameter("todate", DbType.DateTime, toDate);

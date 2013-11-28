@@ -123,7 +123,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Language.resx</DependentUpon>
     </Compile>
-    <Compile Include="test.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
