@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Data;
+using DNAide.Core;
+using Fanex.Tarus.Finance.DataAccess.Customer;
 using Fanex.Tarus.Finance.Entities;
 using Fanex.Tarus.Finance.Model;
-using Sunplus.Accounting.Core.Extensions;
-using Fanex.Tarus.Finance.DataAccess.Customer;
-using DNAide.Core;
-using System.Data;
 using Fanex.Tarus.Finance.Model.Customer;
-using Sunplus.Accounting.Core.Configurations;
-using Sunplus.Bingo.Core;
 using Sunplus.Accounting.Business.Customer;
+using Sunplus.Accounting.Core.Configurations;
+using Sunplus.Accounting.Core.Extensions;
+using Sunplus.Bingo.Core;
 
 namespace Fanex.Tarus.Finance.Business.Customer
 {
@@ -88,7 +86,6 @@ namespace Fanex.Tarus.Finance.Business.Customer
             return custInfo;
         }
 
-
         public List<Exchange> GetCurrencyList()
         {
             try
@@ -98,7 +95,7 @@ namespace Fanex.Tarus.Finance.Business.Customer
                 if (table == null) return lisEntity;
                 foreach (DataRow row in table.Rows)
                 {
-                    lisEntity.Add(new Exchange 
+                    lisEntity.Add(new Exchange
                     {
                         Id = CastAide.AsInt32(row["exchangeid"]),
                         Name = CastAide.AsString(row["currency"])
@@ -112,7 +109,6 @@ namespace Fanex.Tarus.Finance.Business.Customer
                 return new List<Exchange>();
             }
         }
-
 
         public CustomerList GetMasterList(List<PostParam> postParams)
         {

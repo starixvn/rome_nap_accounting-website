@@ -10,6 +10,7 @@ using DNAide.Core;
 using DNAide.Utils;
 using DNAide.Data;
 using System.Collections;
+using Sunplus.Accounting.Core.Extensions;
 
 
 namespace Fanex.Tarus.LiveCasino.DataAccess.Report
@@ -42,216 +43,226 @@ namespace Fanex.Tarus.LiveCasino.DataAccess.Report
 
         public GameStatisticsBO GetGameStatistic(GameStatisticsParams dbparams)
         {
-            using (ObjectDb objDB = new ObjectDb("GameStatistics_DW", 1200))
+            var result = new GameStatisticsBO();
+            result.Items = new List<GameStatisticsDTO>();
+            result.GrandTotal = new List<GameStatisticsDTO>();
+
+            try
             {
-                var result = new GameStatisticsBO();
-                result.Items = new List<GameStatisticsDTO>();
-                result.GrandTotal = new List<GameStatisticsDTO>();
-
-                var list = new List<GameStatisticsDTO>();
-                objDB.AddInParameter("fromdate", DbType.String, dbparams.fromdate);
-                objDB.AddInParameter("todate", DbType.String, dbparams.todate);
-                objDB.AddInParameter("MoveBetDay", DbType.String, dbparams.movebetsday);
-                //objDB.AddInParameter("BalanceUpDay", DbType.String, dbparams.balanceupday);
-                objDB.AddInParameter("username", DbType.String, dbparams.username);
-                objDB.AddInParameter("excludeTest", DbType.Boolean, dbparams.excludetest);
-                objDB.AddInParameter("SiteID", DbType.Int32, dbparams.site);
-                objDB.AddInParameter("GameTypeID", DbType.Int32, dbparams.gametype);
-                objDB.AddInParameter("GameTableID", DbType.Int32, dbparams.gametable);
-                objDB.AddInParameter("currency", DbType.Int32, dbparams.currency);
-                objDB.AddInParameter("ReportBy", DbType.Int32, dbparams.reporttype);
-                var ds = objDB.ExecuteDataSet();
-                //CacheUtils.GetExchangeName(CastAide.AsInt32(dataRow["currency"]));
-
-                if (ds.Tables.Count > 0)
+                using (ObjectDb objDB = new ObjectDb("GameStatistics_DW", 1200))
                 {
-                    #region items
-                    foreach (DataRow row in ds.Tables[0].Rows)
+
+                    var list = new List<GameStatisticsDTO>();
+                    objDB.AddInParameter("fromdate", DbType.String, dbparams.fromdate);
+                    objDB.AddInParameter("todate", DbType.String, dbparams.todate);
+                    objDB.AddInParameter("MoveBetDay", DbType.String, dbparams.movebetsday);
+                    //objDB.AddInParameter("BalanceUpDay", DbType.String, dbparams.balanceupday);
+                    objDB.AddInParameter("username", DbType.String, dbparams.username);
+                    objDB.AddInParameter("excludeTest", DbType.Boolean, dbparams.excludetest);
+                    objDB.AddInParameter("SiteID", DbType.Int32, dbparams.site);
+                    objDB.AddInParameter("GameTypeID", DbType.Int32, dbparams.gametype);
+                    objDB.AddInParameter("GameTableID", DbType.Int32, dbparams.gametable);
+                    objDB.AddInParameter("currency", DbType.Int32, dbparams.currency);
+                    objDB.AddInParameter("ReportBy", DbType.Int32, dbparams.reporttype);
+                    var ds = objDB.ExecuteDataSet();
+                    //CacheUtils.GetExchangeName(CastAide.AsInt32(dataRow["currency"]));
+
+                    if (ds.Tables.Count > 0)
                     {
-                        var item = new GameStatisticsDTO()
+                        #region items
+                        foreach (DataRow row in ds.Tables[0].Rows)
                         {
-                            ReportType = GetBettypeName(dbparams.reporttype, row),
-                            NoPlayers = dbparams.reporttype != (int)FilterGameCondition.Username ? NumberFormat.DecFormat(row["NoOfPlayers"], 0) : "0",
-                            NoGames = NumberFormat.DecFormat(row["NoOfGames"], 0),
-                            CurrencyName = CastAide.AsString(row["Currency"]),
-                            TotalBets = NumberFormat.DecFormat(row["TotalBets"], 2),
-                            TotalBetsRM = NumberFormat.DecFormat(row["TotalBets_RM"], 2),
-                            TotalWins = NumberFormat.DecFormat(row["TotalWins"], 2),
-                            TotalWinsRM = NumberFormat.DecFormat(row["TotalWins_RM"], 2),
-                            GameIncome = NumberFormat.DecFormat(row["GameIncome"], 2),
-                            GameIncomeRM = NumberFormat.DecFormat(row["GameIncome_RM"], 2),
-                            GamePayout = NumberFormat.DecFormat(row["GamePayout"], 2) + "%",
-                            GamePayoutRM = NumberFormat.DecFormat(row["GamePayout_RM"], 2) + "%",
-                            TotalRefund = NumberFormat.DecFormat(row["TotalRefund"], 2),
-                            TotalRefundRM = NumberFormat.DecFormat(row["TotalRefund_RM"], 2),
-                            Company = NumberFormat.DecFormat(row["CompanyNetIncome"], 2),
-                            CompanyRM = NumberFormat.DecFormat(row["CompanyNetIncome_RM"], 2),
-                            CompanyTO = NumberFormat.DecFormat(row["CompanyTurnOver"], 2),
-                            CompanyTORM = NumberFormat.DecFormat(row["CompanyTurnOver_RM"], 2),
-                            CompanyComm = NumberFormat.DecFormat(row["CompanyComm"], 2),
-                            CompanyCommRM = NumberFormat.DecFormat(row["CompanyComm_RM"], 2)
-                        };
-
-                        list.Add(item);
-                    }
-                    result.Items = list;
-
-                    #endregion
-
-                    #region total and grand total
-                    var dtGrandTotal = ds.Tables[1];
-                    var totalRows = dtGrandTotal.Rows.Count;
-                    if (totalRows > 0)
-                    {
-                        #region total - each currency
-
-                        result.TotalItems = new List<GameStatisticsDTO>();
-
-                        for (int i = 0; i < totalRows - 1; i++)
-                        {
-                            result.TotalItems.Add(new GameStatisticsDTO()
+                            var item = new GameStatisticsDTO()
                             {
-                                ReportType =
-                                    string.Format("Total {0}",
-                                                  dtGrandTotal.Rows[i]["Currency"]),
+                                ReportType = GetBettypeName(dbparams.reporttype, row),
+                                NoPlayers = dbparams.reporttype != (int)FilterGameCondition.Username ? NumberFormat.DecFormat(row["NoOfPlayers"], 0) : "0",
+                                NoGames = NumberFormat.DecFormat(row["NoOfGames"], 0),
+                                CurrencyName = CastAide.AsString(row["Currency"]),
+                                TotalBets = NumberFormat.DecFormat(row["TotalBets"], 2),
+                                TotalBetsRM = NumberFormat.DecFormat(row["TotalBets_RM"], 2),
+                                TotalWins = NumberFormat.DecFormat(row["TotalWins"], 2),
+                                TotalWinsRM = NumberFormat.DecFormat(row["TotalWins_RM"], 2),
+                                GameIncome = NumberFormat.DecFormat(row["GameIncome"], 2),
+                                GameIncomeRM = NumberFormat.DecFormat(row["GameIncome_RM"], 2),
+                                GamePayout = NumberFormat.DecFormat(row["GamePayout"], 2) + "%",
+                                GamePayoutRM = NumberFormat.DecFormat(row["GamePayout_RM"], 2) + "%",
+                                TotalRefund = NumberFormat.DecFormat(row["TotalRefund"], 2),
+                                TotalRefundRM = NumberFormat.DecFormat(row["TotalRefund_RM"], 2),
+                                Company = NumberFormat.DecFormat(row["CompanyNetIncome"], 2),
+                                CompanyRM = NumberFormat.DecFormat(row["CompanyNetIncome_RM"], 2),
+                                CompanyTO = NumberFormat.DecFormat(row["CompanyTurnOver"], 2),
+                                CompanyTORM = NumberFormat.DecFormat(row["CompanyTurnOver_RM"], 2),
+                                CompanyComm = NumberFormat.DecFormat(row["CompanyComm"], 2),
+                                CompanyCommRM = NumberFormat.DecFormat(row["CompanyComm_RM"], 2)
+                            };
+
+                            list.Add(item);
+                        }
+                        result.Items = list;
+
+                        #endregion
+
+                        #region total and grand total
+                        var dtGrandTotal = ds.Tables[1];
+                        var totalRows = dtGrandTotal.Rows.Count;
+                        if (totalRows > 0)
+                        {
+                            #region total - each currency
+
+                            result.TotalItems = new List<GameStatisticsDTO>();
+
+                            for (int i = 0; i < totalRows - 1; i++)
+                            {
+                                result.TotalItems.Add(new GameStatisticsDTO()
+                                {
+                                    ReportType =
+                                        string.Format("Total {0}",
+                                                      dtGrandTotal.Rows[i]["Currency"]),
+                                    NoPlayers =
+                                        dbparams.reporttype != (int)FilterGameCondition.Username
+                                            ? NumberFormat.DecFormat(
+                                                dtGrandTotal.Rows[i]["NoOfPlayers"], 0)
+                                            : "0",
+                                    NoGames =
+                                        NumberFormat.DecFormat(dtGrandTotal.Rows[i]["NoOfGames"],
+                                                               0),
+                                    CurrencyName =
+                                        CastAide.AsString(dtGrandTotal.Rows[i]["Currency"]),
+                                    TotalBets =
+                                        NumberFormat.DecFormat(dtGrandTotal.Rows[i]["TotalBets"],
+                                                               2),
+                                    TotalWins =
+                                        NumberFormat.DecFormat(dtGrandTotal.Rows[i]["TotalWins"],
+                                                               2),
+                                    GameIncome =
+                                        NumberFormat.DecFormat(
+                                            dtGrandTotal.Rows[i]["GameIncome"], 2),
+                                    GamePayout =
+                                        NumberFormat.DecFormat(
+                                            dtGrandTotal.Rows[i]["GamePayout"], 2) + "%",
+                                    TotalRefund =
+                                        NumberFormat.DecFormat(
+                                            dtGrandTotal.Rows[i]["TotalRefund"], 2),
+                                    Company =
+                                        NumberFormat.DecFormat(
+                                            dtGrandTotal.Rows[i]["CompanyNetIncome"], 2),
+                                    CompanyTO =
+                                            NumberFormat.DecFormat(
+                                                dtGrandTotal.Rows[i]["CompanyTurnOver"], 2),
+                                    CompanyComm = NumberFormat.DecFormat(
+                                                dtGrandTotal.Rows[i]["CompanyComm"], 2)
+                                });
+                            }
+
+                            #endregion
+
+                            #region grand total
+
+                            #region differency RM
+
+                            if (dbparams.currency != -1 && dbparams.currency != 0 && totalRows >= 2)
+                            {
+                                var currencyName = CacheUtils.GetExchangeName(dbparams.currency);
+
+                                result.GrandTotal.Add(new GameStatisticsDTO
+                                {
+                                    ReportType = "Grand Total " + currencyName,
+                                    NoPlayers =
+                                        dbparams.reporttype != (int)FilterGameCondition.Username
+                                            ? NumberFormat.DecFormat(
+                                                dtGrandTotal.Rows[totalRows - 2]["NoOfPlayers"], 0)
+                                            : "0",
+                                    NoGames =
+                                        NumberFormat.DecFormat(
+                                            dtGrandTotal.Rows[totalRows - 2]["NoOfGames"], 0),
+                                    CurrencyName =
+                                        CastAide.AsString(
+                                            dtGrandTotal.Rows[totalRows - 2]["Currency"]),
+                                    TotalBets =
+                                        NumberFormat.DecFormat(
+                                            dtGrandTotal.Rows[totalRows - 2]["TotalBets"], 2),
+                                    TotalWins =
+                                        NumberFormat.DecFormat(
+                                            dtGrandTotal.Rows[totalRows - 2]["TotalWins"], 2),
+                                    GameIncome =
+                                        NumberFormat.DecFormat(
+                                            dtGrandTotal.Rows[totalRows - 2]["GameIncome"], 2),
+                                    GamePayout =
+                                        NumberFormat.DecFormat(
+                                            dtGrandTotal.Rows[totalRows - 2]["GamePayout"], 2) +
+                                        "%",
+                                    TotalRefund =
+                                        NumberFormat.DecFormat(
+                                            dtGrandTotal.Rows[totalRows - 2]["TotalRefund"], 2),
+                                    Company =
+                                        NumberFormat.DecFormat(
+                                            dtGrandTotal.Rows[totalRows - 2]["CompanyNetIncome"],
+                                            2),
+                                    CompanyTO =
+                                            NumberFormat.DecFormat(
+                                                dtGrandTotal.Rows[totalRows - 2]["CompanyTurnOver"], 2),
+                                    CompanyComm = NumberFormat.DecFormat(
+                                                dtGrandTotal.Rows[totalRows - 2]["CompanyComm"], 2)
+                                });
+                            }
+
+                            #endregion
+
+                            #region base RM
+
+                            result.GrandTotal.Add(new GameStatisticsDTO()
+                            {
+                                ReportType = "Grand Total RM",
                                 NoPlayers =
                                     dbparams.reporttype != (int)FilterGameCondition.Username
                                         ? NumberFormat.DecFormat(
-                                            dtGrandTotal.Rows[i]["NoOfPlayers"], 0)
-                                        : "0",
-                                NoGames =
-                                    NumberFormat.DecFormat(dtGrandTotal.Rows[i]["NoOfGames"],
-                                                           0),
-                                CurrencyName =
-                                    CastAide.AsString(dtGrandTotal.Rows[i]["Currency"]),
-                                TotalBets =
-                                    NumberFormat.DecFormat(dtGrandTotal.Rows[i]["TotalBets"],
-                                                           2),
-                                TotalWins =
-                                    NumberFormat.DecFormat(dtGrandTotal.Rows[i]["TotalWins"],
-                                                           2),
-                                GameIncome =
-                                    NumberFormat.DecFormat(
-                                        dtGrandTotal.Rows[i]["GameIncome"], 2),
-                                GamePayout =
-                                    NumberFormat.DecFormat(
-                                        dtGrandTotal.Rows[i]["GamePayout"], 2) + "%",
-                                TotalRefund =
-                                    NumberFormat.DecFormat(
-                                        dtGrandTotal.Rows[i]["TotalRefund"], 2),
-                                Company =
-                                    NumberFormat.DecFormat(
-                                        dtGrandTotal.Rows[i]["CompanyNetIncome"], 2),
-                                CompanyTO =
-                                        NumberFormat.DecFormat(
-                                            dtGrandTotal.Rows[i]["CompanyTurnOver"], 2),
-                                CompanyComm = NumberFormat.DecFormat(
-                                            dtGrandTotal.Rows[i]["CompanyComm"], 2)
-                            });
-                        }
-
-                        #endregion
-
-                        #region grand total
-
-                        #region differency RM
-
-                        if (dbparams.currency != -1 && dbparams.currency != 0 && totalRows >= 2)
-                        {
-                            var currencyName = CacheUtils.GetExchangeName(dbparams.currency);
-
-                            result.GrandTotal.Add(new GameStatisticsDTO
-                            {
-                                ReportType = "Grand Total " + currencyName,
-                                NoPlayers =
-                                    dbparams.reporttype != (int)FilterGameCondition.Username
-                                        ? NumberFormat.DecFormat(
-                                            dtGrandTotal.Rows[totalRows - 2]["NoOfPlayers"], 0)
+                                            dtGrandTotal.Rows[totalRows - 1]["NoOfPlayers"], 0)
                                         : "0",
                                 NoGames =
                                     NumberFormat.DecFormat(
-                                        dtGrandTotal.Rows[totalRows - 2]["NoOfGames"], 0),
-                                CurrencyName =
-                                    CastAide.AsString(
-                                        dtGrandTotal.Rows[totalRows - 2]["Currency"]),
+                                        dtGrandTotal.Rows[totalRows - 1]["NoOfGames"], 0),
+                                CurrencyName = "RM",
                                 TotalBets =
                                     NumberFormat.DecFormat(
-                                        dtGrandTotal.Rows[totalRows - 2]["TotalBets"], 2),
+                                        dtGrandTotal.Rows[totalRows - 1]["TotalBets"], 2),
                                 TotalWins =
                                     NumberFormat.DecFormat(
-                                        dtGrandTotal.Rows[totalRows - 2]["TotalWins"], 2),
+                                        dtGrandTotal.Rows[totalRows - 1]["TotalWins"], 2),
                                 GameIncome =
                                     NumberFormat.DecFormat(
-                                        dtGrandTotal.Rows[totalRows - 2]["GameIncome"], 2),
+                                        dtGrandTotal.Rows[totalRows - 1]["GameIncome"], 2),
                                 GamePayout =
                                     NumberFormat.DecFormat(
-                                        dtGrandTotal.Rows[totalRows - 2]["GamePayout"], 2) +
-                                    "%",
+                                        dtGrandTotal.Rows[totalRows - 1]["GamePayout"], 2) + "%",
                                 TotalRefund =
                                     NumberFormat.DecFormat(
-                                        dtGrandTotal.Rows[totalRows - 2]["TotalRefund"], 2),
+                                        dtGrandTotal.Rows[totalRows - 1]["TotalRefund"], 2),
                                 Company =
                                     NumberFormat.DecFormat(
-                                        dtGrandTotal.Rows[totalRows - 2]["CompanyNetIncome"],
-                                        2),
+                                        dtGrandTotal.Rows[totalRows - 1]["CompanyNetIncome"], 2),
                                 CompanyTO =
                                         NumberFormat.DecFormat(
-                                            dtGrandTotal.Rows[totalRows - 2]["CompanyTurnOver"], 2),
+                                            dtGrandTotal.Rows[totalRows - 1]["CompanyTurnOver"], 2),
                                 CompanyComm = NumberFormat.DecFormat(
-                                            dtGrandTotal.Rows[totalRows - 2]["CompanyComm"], 2)
+                                            dtGrandTotal.Rows[totalRows - 1]["CompanyComm"], 2)
                             });
+
+                            #endregion
+
+                            #endregion
                         }
-
-                        #endregion
-
-                        #region base RM
-
-                        result.GrandTotal.Add(new GameStatisticsDTO()
-                        {
-                            ReportType = "Grand Total RM",
-                            NoPlayers =
-                                dbparams.reporttype != (int)FilterGameCondition.Username
-                                    ? NumberFormat.DecFormat(
-                                        dtGrandTotal.Rows[totalRows - 1]["NoOfPlayers"], 0)
-                                    : "0",
-                            NoGames =
-                                NumberFormat.DecFormat(
-                                    dtGrandTotal.Rows[totalRows - 1]["NoOfGames"], 0),
-                            CurrencyName = "RM",
-                            TotalBets =
-                                NumberFormat.DecFormat(
-                                    dtGrandTotal.Rows[totalRows - 1]["TotalBets"], 2),
-                            TotalWins =
-                                NumberFormat.DecFormat(
-                                    dtGrandTotal.Rows[totalRows - 1]["TotalWins"], 2),
-                            GameIncome =
-                                NumberFormat.DecFormat(
-                                    dtGrandTotal.Rows[totalRows - 1]["GameIncome"], 2),
-                            GamePayout =
-                                NumberFormat.DecFormat(
-                                    dtGrandTotal.Rows[totalRows - 1]["GamePayout"], 2) + "%",
-                            TotalRefund =
-                                NumberFormat.DecFormat(
-                                    dtGrandTotal.Rows[totalRows - 1]["TotalRefund"], 2),
-                            Company =
-                                NumberFormat.DecFormat(
-                                    dtGrandTotal.Rows[totalRows - 1]["CompanyNetIncome"], 2),
-                            CompanyTO =
-                                    NumberFormat.DecFormat(
-                                        dtGrandTotal.Rows[totalRows - 1]["CompanyTurnOver"], 2),
-                            CompanyComm = NumberFormat.DecFormat(
-                                        dtGrandTotal.Rows[totalRows - 1]["CompanyComm"], 2)
-                        });
-
-                        #endregion
 
                         #endregion
                     }
-
-                    #endregion
+                    
                 }
-                return result;
+
             }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
         
         public DataTable GetDailyWinlossLC(string winlossdate)
@@ -281,7 +292,7 @@ namespace Fanex.Tarus.LiveCasino.DataAccess.Report
         protected Dictionary<string, DateTime> GetBalanceUpDate()
         {
             var arrdate = new Dictionary<string, DateTime>();
-            using (ObjectDb objDB = new ObjectDb("SelBalanceUpDay"))
+            using (ObjectDb objDB = new ObjectDb("Core_ReportService_GetBalanceUpDay"))
             {
                 var ds = objDB.ExecuteDataSet();
                 DataRow rs = ds.Tables[0].Rows[0];

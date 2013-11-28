@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Data;
-using DNAide.Core;
 using DNAide.Data;
-using Fanex.Data;
+
+using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
+using Sunplus.Core.LoggingLib;
+using Fanex.Data;
+using DNAide.Core;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
 {
@@ -15,8 +18,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             var sps = ExchangeRateSession.Instance[ExchangeRateSession.StoreCollection.ExchangeRateControl];
 
             return sps != null ? sps[aliasName] : null;
-        }
 
+        }
         /// <summary>
         /// private constructor
         /// </summary>
@@ -24,8 +27,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
         }
 
+
         /// <summary>
-        /// call store CustomerPwdUpd
+        /// call store CustomerPwdUpd 
         /// @author: Vu Thi Hong Hanh
         /// </summary>
         /// <param name="custId">custId</param>
@@ -42,12 +46,18 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 hash.Add("userpwd", userPwd);
                 hash.Add("userid", userId);
 
-                DbHelper.ExecuteCmd("Acc_CustomerPwdUpd", hash, DBType.MAIN);
+                using (ObjectDb db = new ObjectDb("Acc_CustomerPwdUpd", 600))
+                {
+                    db.AssignParamValues(hash);
+                    db.ExecuteNonQuery();
+                }
+
                 isUpdate = true;
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return isUpdate;
         }
@@ -64,13 +74,18 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             DbResult rs = null;
             try
             {
-                var hash = new Hashtable();
-                var spElement = GetExchangeStoreProcedure("EchangeSelAcc");
-                rs = DbHelper.Execute(spElement.Name, hash, spElement.DbName, 300);
+                using (ObjectDb db = new ObjectDb("EchangeSelAcc", 600))
+                {
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
@@ -87,7 +102,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <returns></returns>
         public static string[] ExchangeDel(int uid, int exid, string lang)
         {
-            string[] res = { "", "" };
+            string[] res = {"", ""};
             try
             {
                 var hash = new Hashtable();
@@ -107,7 +122,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return res;
         }
@@ -128,7 +144,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                                            string lang)
         {
             DbResult rs = null;
-            string[] res = { "", "", "" };
+            string[] res = {"", "", ""};
             try
             {
                 var hash = new Hashtable();
@@ -142,7 +158,16 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 hash.Add("errcode", 0);
                 hash.Add("errmsg", "");
 
-                rs = DbHelper.ExecuteCmd("Acc_ExchangeIns", hash, DBType.MAIN, 300);
+                using (ObjectDb db = new ObjectDb("Acc_ExchangeIns", 600))
+                {
+                    db.AssignParamValues(hash);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
+
                 if (rs != null)
                 {
                     res[0] = rs.Outputs["exchangeid"].ToString();
@@ -152,7 +177,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return res;
         }
@@ -167,8 +193,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <returns></returns>
         public static string[] ExchangeSelByID(int exid)
         {
-            DbResult rs = null;
-            string[] res = { "", "", "" };
+            DbResult rs = null;            
+            string[] res = {"", "", ""};
             try
             {
                 var hash = new Hashtable();
@@ -196,7 +222,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return res;
         }
@@ -214,7 +241,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <returns></returns>
         public static string[] ExchangeUpd(int exid, double rate, double minbet, int uid, string ip)
         {
-            string[] res = { "", "" };
+            string[] res = {"", ""};
             try
             {
                 var hash = new Hashtable();
@@ -227,7 +254,18 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 hash.Add("ip", ip);
                 DbResult ds = null;
 
-                ds = DbHelper.ExecuteCmd("Acc_ExchangeUpd", hash, DBType.MAIN, 300);
+                //ds = DbHelper.ExecuteCmd("Acc_ExchangeUpd", hash, DBType.MAIN, 300);
+
+                using (ObjectDb db = new ObjectDb("Acc_ExchangeUpd", 600))
+                {
+                    db.AssignParamValues(hash);
+
+                    var dataset = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    ds = new DbResult(output, dataset);
+                }
+
                 if (ds != null)
                 {
                     res[0] = ds.Outputs["errcode"].ToString();
@@ -236,7 +274,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return res;
         }
@@ -250,11 +289,18 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             DbResult ds = null;
             try
             {
-                ds = DbHelper.Execute("Acc_Rpt_Balance_Company", DBType.REPORT); // swich to DB06 to reduce loading
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_Balance_Company", 600))
+                {
+                    var dataset = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    ds = new DbResult(output, dataset);
+                }
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return ds;
         }
@@ -269,11 +315,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             IDataReader dbr = null;
             try
             {
-                dbr = DbHelper.ExecuteReader("Acc_ExchangeRateSel", DBType.DB03);
+                ObjectDb db = new ObjectDb("Acc_ExchangeRateSel", 600);
+                dbr = db.ExecuteReader();
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw;
             }
             return dbr;
@@ -295,11 +343,14 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             ht.Add("todate", todate);
             try
             {
-                dbr = DbHelper.ExecuteReader("Acc_ExchangeRateSelInvalid", ht, DBType.DB03);
+                ObjectDb db = new ObjectDb("Acc_ExchangeRateSelInvalid", 600);
+                db.AssignParamValues(ht);
+                dbr = db.ExecuteReader();
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dbr;
         }
@@ -331,12 +382,21 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 htb.Add("errcode", 0);
                 htb.Add("errmsg", "");
                 htb.Add("language", "E");
+                
+                using (ObjectDb db = new ObjectDb("Acc_ExchangeRateIns", 600))
+                {
+                    db.AssignParamValues(htb);
 
-                dbr = DbHelper.ExecuteCmd("Acc_ExchangeRateIns", htb, DBType.DB03);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    dbr = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw;
             }
             return dbr;
@@ -359,11 +419,21 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 htb.Add("errmsg", "");
                 htb.Add("language", "E");
 
-                dbr = DbHelper.ExecuteCmd("Acc_ExchangeRateUpd", htb, DBType.DB03);
+                using (ObjectDb db = new ObjectDb("Acc_ExchangeRateUpd", 600))
+                {
+                    db.AssignParamValues(htb);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    dbr = new DbResult(output, ds);
+                }
+
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw;
             }
             return dbr;
@@ -385,7 +455,10 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 htb.Add("fromexchangeid", ExRateFromId);
                 htb.Add("toexchangeid", ExRateToId);
 
-                dbr = DbHelper.ExecuteReader("Acc_ExchangeRateSelHistory", htb, DBType.DB03);
+                ObjectDb db = new ObjectDb("Acc_ExchangeRateSelHistory", 600);
+                db.AssignParamValues(htb);
+
+                dbr = db.ExecuteReader();
             }
             catch
             {
@@ -414,11 +487,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return dbResult;
         }
     }
+
 
     public sealed class CustomerBalance
     {
@@ -427,8 +502,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             var sps = CustomerSession.Instance[CustomerSession.StoreCollection.CustomerControl];
 
             return sps != null ? sps[aliasName] : null;
-        }
 
+        }
         /// <summary>
         /// Select Customer Balance for agent
         /// SP: Update Given Credit Successfully
@@ -438,18 +513,29 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         /// <returns></returns>
         public static DbResult CustomerSelectClearBalance(int _custid)
         {
+            DbResult result = null;
             try
             {
                 var param = new Hashtable();
                 param.Add("custid", _custid);
-                var spElement = GetCustomerStoreProcedure("CustomerSelClearBalance");
-                return DbHelper.Execute(spElement.Name, param, spElement.DbName);
+                
+                using (ObjectDb db = new ObjectDb("CustomerSelClearBalance", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch
             {
                 throw;
             }
+            return result;
         }
+
 
         /// <summary>
         /// Update Customer Balance for agent

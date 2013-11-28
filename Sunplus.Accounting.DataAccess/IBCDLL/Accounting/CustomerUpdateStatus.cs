@@ -299,9 +299,17 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 param.Add("ip", Ip);
                 param.Add("disabledownline", isDisableDownline);
 
-                DbResult dr = DbHelper.ExecuteCmd("Acc_CustomerUpdDisableHR", param, DBType.MAIN);
-                if ((int)dr.Outputs["errcode"] > 0)
-                    throw new AccException(dr.Outputs["errmsg"].ToString());
+                var output = new Hashtable();
+
+                using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableHR", 600))
+                {
+                    db.AssignParamValues(param);
+                    db.ExecuteNonQuery();
+                    output = db.GetOuputParams();
+                }
+                
+                if ((int)output["errcode"] > 0)
+                    throw new AccException(output["errmsg"].ToString());
             }
             catch (AccException accException)
             {
@@ -334,9 +342,19 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 param.Add("ip", Ip);
                 param.Add("disabledownline", isDisableDownline);
 
-                DbResult dr = DbHelper.ExecuteCmd("Acc_CustomerUpdDisableOpenTote", param, DBType.MAIN);
-                if ((int)dr.Outputs["errcode"] > 0)
-                    throw new AccException(dr.Outputs["errmsg"].ToString());
+                //DbResult dr = DbHelper.ExecuteCmd("Acc_CustomerUpdDisableOpenTote", param, DBType.MAIN);
+                Hashtable output = new Hashtable();
+                using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableOpenTote", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteNonQuery();
+                    output = db.GetOuputParams();
+                }
+
+
+                if ((int)output["errcode"] > 0)
+                    throw new AccException(output["errmsg"].ToString());
             }
             catch (AccException accException)
             {

@@ -26,7 +26,7 @@
 
         public ActionResult Index()
         {
-            var crossTransferModel = new CrossTransfer 
+            var crossTransferModel = new CrossTransfer
             {
                 IsHadPermissionOnCrossCurrencyTransfer = Sunplus.Accounting.Business.Security.Permissions.HasPermission("FinanceTransfer"),
                 IsHadPermissionOnYesterdayTransfer = Sunplus.Accounting.Business.Security.Permissions.HasPermission("OtherTrans"),
@@ -55,7 +55,6 @@
 
         public JsonResult CrossCurrencyTransferInsert(FinanceCrossCurrencyTransfer param)
         {
-            
             return Json(_crossTransferService.CrossCurrencyTransferInsert(param), JsonRequestBehavior.AllowGet);
         }
 

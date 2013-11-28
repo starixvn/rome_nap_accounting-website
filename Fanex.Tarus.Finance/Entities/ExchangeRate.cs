@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Fanex.Tarus.Finance.Entities
+﻿namespace Fanex.Tarus.Finance.Entities
 {
     public class ExchangeRate
     {
         public string Code { get; set; }
+
         public double ActualRate { get; set; }
+
         public string Currency { get; set; }
+
         public int ExchangeId { get; set; }
     }
 }

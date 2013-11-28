@@ -22,17 +22,34 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
 
         public DbResult ExChangeRateUpdateBaseRate(string currency, string baserate, string minbet, string minbetlive)
         {
-            Hashtable hash = new Hashtable();
-            hash.Add("userid", AppSession.AccId);
-            hash.Add("actualrate", baserate);
-            hash.Add("currency", currency.Trim());
-            hash.Add("minbet", minbet);
-            hash.Add("minbetlive", minbetlive);
-            hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
-            hash.Add("errcode", 0);
-            hash.Add("errmsg", "");
+            DbResult result = null;
+            try
+            {
+                Hashtable hash = new Hashtable();
+                hash.Add("userid", AppSession.AccId);
+                hash.Add("actualrate", baserate);
+                hash.Add("currency", currency.Trim());
+                hash.Add("minbet", minbet);
+                hash.Add("minbetlive", minbetlive);
+                hash.Add("ip", HttpContext.Current.Request.UserHostAddress);
+                hash.Add("errcode", 0);
+                hash.Add("errmsg", "");
 
-            return DbHelper.Execute("Acc_ExchangeUpdateBaseRate", hash, DBType.MAIN, 300);
+                using (ObjectDb db = new ObjectDb("Acc_ExchangeUpdateBaseRate", 600))
+                {
+                    db.AssignParamValues(hash);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
         public void ExChangeRateUpdateOpenTote(string currency, string GBPRate, string AUDRate, string ZARRate, string EURORate, string USDRate, ref int errcode, ref string errmsg)
         {

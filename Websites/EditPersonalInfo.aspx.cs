@@ -36,23 +36,46 @@ public partial class EditPersonalInfo : System.Web.UI.Page
         {
             s = Sunplus.Accounting.Core.Web.WebUtils.LoadTemplateBySystem("EditPersonalInfo.htm", true);
             TemplateHandler.Assign(ref s, "{resetpassParam}", "uname=" + accname + "&uid=" + accid.ToString());
-            using (IDataReader dr = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.AccPersonalInfo.AccInformationSelect(accid))
+            using (DataSet dr = Sunplus.Accounting.DataAccess.IBCDLL.Accounting.AccPersonalInfo.AccInformationSelect(accid))
             {
-                dr.Read();
-                string sBirthday = Calendar.GenCalendarControl("birthday", "", "trigger_from", Convert.ToDateTime(dr["birthday"]).ToString("MM/dd/yyyy"), false, false, 0, 0, ""); //Phuong.Nguyen, show others day of next month
-                TemplateHandler.Assign(ref s, "{birthday}", sBirthday);
-                TemplateHandler.Assign(ref s, "{username}", accname);
-                TemplateHandler.Assign(ref s, "{firstname}", dr["firstname"].ToString());
-                TemplateHandler.Assign(ref s, "{lastname}", dr["lastname"].ToString());
-                TemplateHandler.Assign(ref s, "{email}", dr["email"].ToString());
-                TemplateHandler.Assign(ref s, "{address}", dr["address"].ToString());
-                TemplateHandler.Assign(ref s, "{postal}", dr["postal"].ToString());
-                TemplateHandler.Assign(ref s, "{state}", dr["state"].ToString());
-                TemplateHandler.Assign(ref s, "{phone}", dr["phone"].ToString());
-                TemplateHandler.Assign(ref s, "{mobile}", dr["mobilephone"].ToString());
-                TemplateHandler.Assign(ref s, "{fax}", dr["fax"].ToString());
-                TemplateHandler.Assign(ref s, "{city}", dr["city"].ToString());
-                TemplateHandler.Assign(ref s, "{country}", dr["country"].ToString());
+                if (dr != null &&
+                    dr.Tables.Count > 0 &&
+                    dr.Tables[0].Rows.Count > 0)
+                {
+                    var firstRow = dr.Tables[0].Rows[0];
+                    string sBirthday = Calendar.GenCalendarControl("birthday", "", "trigger_from", Convert.ToDateTime(firstRow["birthday"]).ToString("MM/dd/yyyy"), false, false, 0, 0, ""); //Phuong.Nguyen, show others day of next month
+                    TemplateHandler.Assign(ref s, "{birthday}", sBirthday);
+                    TemplateHandler.Assign(ref s, "{username}", accname);
+                    TemplateHandler.Assign(ref s, "{firstname}", firstRow["firstname"].ToString());
+                    TemplateHandler.Assign(ref s, "{lastname}", firstRow["lastname"].ToString());
+                    TemplateHandler.Assign(ref s, "{email}", firstRow["email"].ToString());
+                    TemplateHandler.Assign(ref s, "{address}", firstRow["address"].ToString());
+                    TemplateHandler.Assign(ref s, "{postal}", firstRow["postal"].ToString());
+                    TemplateHandler.Assign(ref s, "{state}", firstRow["state"].ToString());
+                    TemplateHandler.Assign(ref s, "{phone}", firstRow["phone"].ToString());
+                    TemplateHandler.Assign(ref s, "{mobile}", firstRow["mobilephone"].ToString());
+                    TemplateHandler.Assign(ref s, "{fax}", firstRow["fax"].ToString());
+                    TemplateHandler.Assign(ref s, "{city}", firstRow["city"].ToString());
+                    TemplateHandler.Assign(ref s, "{country}", firstRow["country"].ToString());
+                }
+
+                //while (dr.Read())
+                //{
+                //    string sBirthday = Calendar.GenCalendarControl("birthday", "", "trigger_from", Convert.ToDateTime(dr["birthday"]).ToString("MM/dd/yyyy"), false, false, 0, 0, ""); //Phuong.Nguyen, show others day of next month
+                //    TemplateHandler.Assign(ref s, "{birthday}", sBirthday);
+                //    TemplateHandler.Assign(ref s, "{username}", accname);
+                //    TemplateHandler.Assign(ref s, "{firstname}", dr["firstname"].ToString());
+                //    TemplateHandler.Assign(ref s, "{lastname}", dr["lastname"].ToString());
+                //    TemplateHandler.Assign(ref s, "{email}", dr["email"].ToString());
+                //    TemplateHandler.Assign(ref s, "{address}", dr["address"].ToString());
+                //    TemplateHandler.Assign(ref s, "{postal}", dr["postal"].ToString());
+                //    TemplateHandler.Assign(ref s, "{state}", dr["state"].ToString());
+                //    TemplateHandler.Assign(ref s, "{phone}", dr["phone"].ToString());
+                //    TemplateHandler.Assign(ref s, "{mobile}", dr["mobilephone"].ToString());
+                //    TemplateHandler.Assign(ref s, "{fax}", dr["fax"].ToString());
+                //    TemplateHandler.Assign(ref s, "{city}", dr["city"].ToString());
+                //    TemplateHandler.Assign(ref s, "{country}", dr["country"].ToString());
+                //}
             }
         }
         catch (Exception ex)

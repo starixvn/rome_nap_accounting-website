@@ -19,7 +19,7 @@ namespace Fanex.Tarus.VirtualSport.DataAccess.SpecialDelete
         {
             DataSet result = null;
 
-            using (ObjectDb objDB = new ObjectDb("BetTypeSel_VirtualSports"))
+            using (ObjectDb objDB = new ObjectDb("Acc_BetTypeSel"))
             {
                 objDB.AddInParameter("mode", DbType.Int64, type);
                 result = objDB.ExecuteDataSet();

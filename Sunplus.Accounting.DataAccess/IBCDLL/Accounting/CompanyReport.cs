@@ -76,8 +76,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             DbResult rs = null;
             try
             {
-                var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Racing, "SelHRComm_Company");
-                rs = DbHelper.Execute(spElement.Name, spElement.DbName);
+                using (ObjectDb db = new ObjectDb("SelHRComm_Company", 600))
+                {
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -93,8 +98,13 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             DbResult rs = null;
             try
             {
-                var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Racing, "SelHRCommbyPartner");
-                rs = DbHelper.Execute(spElement.Name, spElement.DbName);
+                using (ObjectDb db = new ObjectDb("SelHRCommbyPartner", 600))
+                {
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -113,8 +123,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             p.Add("partnertype", PartnerType);
             try
             {
-                var spElement = GetReportStoreProcedure(ReportSession.StoreCollection.Racing, "SelHRCommbyPartner_Details");
-                rs = DbHelper.Execute(spElement.Name, p, spElement.DbName);
+                using (ObjectDb db = new ObjectDb("SelHRCommbyPartner_Details", 600))
+                {
+                    db.AssignParamValues(p);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {

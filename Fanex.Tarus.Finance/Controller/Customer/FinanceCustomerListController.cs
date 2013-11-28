@@ -1,10 +1,10 @@
 ﻿namespace Fanex.Tarus.Finance.Controller.Customer
 {
-    using Fanex.Tarus.Web.Controllers;
-    using System.Web.Mvc;
     using System.Collections.Generic;
+    using System.Web.Mvc;
+    using Fanex.Tarus.Finance.Business.Customer;
     using Fanex.Tarus.Finance.Model;
-using Fanex.Tarus.Finance.Business.Customer;
+    using Fanex.Tarus.Web.Controllers;
 
     public class FinanceCustomerListController : BaseController
     {
@@ -39,12 +39,15 @@ using Fanex.Tarus.Finance.Business.Customer;
                 case 4:
                     customerList = _financeCustomerListService.GetSuperList(postParams);
                     break;
+
                 case 3:
                     customerList = _financeCustomerListService.GetMasterList(postParams);
                     break;
+
                 case 2:
                     customerList = _financeCustomerListService.GetAgentList(postParams);
                     break;
+
                 case 1:
                     customerList = _financeCustomerListService.GetMemberList(postParams);
                     break;
