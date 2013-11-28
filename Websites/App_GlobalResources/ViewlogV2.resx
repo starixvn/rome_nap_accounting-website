@@ -1008,4 +1008,13 @@
   <data name="v186mpm" xml:space="preserve">
     <value>Max Per Match</value>
   </data>
+  <data name="maxbv1" xml:space="preserve">
+    <value>Max Bet</value>
+  </data>
+  <data name="minbv1" xml:space="preserve">
+    <value>Min Bet</value>
+  </data>
+  <data name="mpmv1" xml:space="preserve">
+    <value>Max Per Match</value>
+  </data>
 </root>
