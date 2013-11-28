@@ -305,6 +305,6 @@
   <Function Name="Left Panel - Transfer">
     <Setting Key="Acc_CustomerSelIsCrossTransfer" SpName="Acc_CustomerSelIsCrossTransfer" DbName="DBACC.bodb02.bodbAdminNet"/>
     <Setting Key="Acc_DailyTxn_FinanceBettype_Sel" SpName="Acc_DailyTxn_FinanceBettype_Sel" DbName="DBACC.bodb02.bodbAdminNet"/>
-    
+    <Setting Key="Acc_CustomerSelFITransferStatus" SpName="Acc_CustomerSelFITransferStatus" DbName="DBACC.bodb02.bodbAdminNet"/>
   </Function>
 </Functions>
