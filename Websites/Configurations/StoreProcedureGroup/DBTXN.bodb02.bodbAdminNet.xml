@@ -83,7 +83,7 @@
     <Setting Key="Acc_BettransInsCrossTransfer" SpName="Acc_BettransInsCrossTransfer" DbName="DBTXN.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_BettransInsTransfer" SpName="Acc_BettransInsTransfer" DbName="DBTXN.bodb02.bodbAdminNet"  />
     <Setting Key="BettransInsTransfer_Admin" SpName="BettransInsTransfer_Admin" DbName="DBTXN.bodb02.bodbAdminNet"  />
-    <Setting Key="Acc_BettransInsTransfer_Confirm" SpName="Acc_BettransInsTransfer_Confirm" DbName="DBTXN.bodb02.bodbAdminNet"  />
+    
     
   </Function>
 
