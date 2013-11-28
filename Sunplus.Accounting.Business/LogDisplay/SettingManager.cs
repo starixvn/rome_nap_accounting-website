@@ -527,6 +527,37 @@ namespace Sunplus.Accounting.Business.LogDisplay
             int actionId)
         {
             var groups = new List<TrackingGroup>();
+            if (actionId == 2412 ||
+                actionId == 2413 ||
+                actionId == 2414 ||
+                actionId == 2415)
+            {
+                // Add the general information for Super/Master/Agent/Member
+                // Action Id: 2412-Super, 2413-Master, 2414-Agent, 2415-Member
+                var groupVals = (from attr in attrs
+                                 where !GetMixedSportTag(attr.Name.ToString()) &&
+                                     !hidden.Contains<string>(attr.Name.ToString())
+                                 select LogFormater.FormatElement(attr)).ToList();
+                var group = new TrackingGroup { N = LogFormater.GetResourceName("Detail"), Vals = groupVals };
+                groups.Add(group);
+                return groups;
+            }
+
+            if (actionId == 2202 ||
+                actionId == 2203 ||
+                actionId == 2204 ||
+                actionId == 2205)
+            {
+                // Add the initial statuses for Super/Master/Agent/Member
+                // Action Id: 2202-Super, 2203-Master, 2204-Agent, 2205-Member
+                var groupVals = (from attr in attrs
+                                 where !hidden.Contains<string>(attr.Name.ToString().ToLower())
+                                 select LogFormater.FormatElement(attr)).ToList();
+                var group = new TrackingGroup { N = LogFormater.GetResourceName("Detail"), Vals = groupVals };
+                groups.Add(group);
+                return groups;
+            }
+
             var logGroup = LogSection.Instance.Groups.Cast<GroupElement>();
             var sports = (from sp in
                               (from gr in logGroup
@@ -545,18 +576,6 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         rex = new Regex("v[0-9]", RegexOptions.IgnoreCase);
                         sportVals = (from attr in attrs
                                      where !rex.IsMatch(attr.Name.ToString()) && !hidden.Contains<string>(attr.Name.ToString().ToLower())
-                                     select LogFormater.FormatElement(attr)).ToList();
-                    }
-                    else if (actionId == 2412 ||
-                            actionId == 2413 ||
-                            actionId == 2414 ||
-                            actionId == 2415)
-                    {
-                        // Add the general information fot Super/Master/Agent/Member
-                        // Action Id: 2412-Super, 2413-Master, 2414-Agent, 2415-Member
-                        sportVals = (from attr in attrs
-                                     where !GetMixedSportTag(attr.Name.ToString()) &&
-                                         !hidden.Contains<string>(attr.Name.ToString())
                                      select LogFormater.FormatElement(attr)).ToList();
                     }
                     else
