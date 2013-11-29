@@ -516,12 +516,19 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 }
             }
 
-            result = new Result
+            if (duplicateNames.Count > 0)
             {
-                ErrorCode = 1,
-                ErrorMessage = string.Join(", ", duplicateNames) +
-                    (duplicateNames.Count > 1 ? " are" : " is") + " not available."
-            };
+                result = new Result
+                {
+                    ErrorCode = 1,
+                    ErrorMessage = string.Join(", ", duplicateNames) +
+                        (duplicateNames.Count > 1 ? " are" : " is") + " not available."
+                };
+            }
+            else
+            {
+                result = new Result();
+            }
 
             return result;
         }

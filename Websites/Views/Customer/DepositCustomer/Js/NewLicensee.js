@@ -329,6 +329,9 @@ newLic.submit = function () {
                           "<br />" + "successfully!";
                 showAlertMessage("divSuccess", msg, 0);
                 $("#divSuccess").show().find("div:first");
+                setTimeout(function () {
+                    $("#divSuccess").hide();
+                }, 4000);
             } else {
                 $("#divSuccess").hide();
             }
