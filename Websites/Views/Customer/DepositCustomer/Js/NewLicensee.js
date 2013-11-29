@@ -347,7 +347,7 @@ newLic.submit = function () {
 
 newLic.GenerateSampleName = function () {
     var siteName = $("#selSites").find("option:selected").html();
-    var currencyCode = $("#selCurrency").find("option:selected").attr("data-currencycode");
+    var currencyName = $("#selCurrency").find("option:selected").attr("data-currencyname");
 
     var superName = $("#tbxSuperName").val();
     var masterName = $("#tbxMasterName").val();
@@ -365,17 +365,17 @@ newLic.GenerateSampleName = function () {
         return;
     }
 
-    $("#tbxSuperName").val(siteName + "Super" + currencyCode);
-    $("#tbxMasterName").val(siteName + currencyCode);
-    $("#tbxAgentName").val(siteName + currencyCode + "01");
+    $("#tbxSuperName").val(siteName + "Super" + currencyName);
+    $("#tbxMasterName").val(siteName + currencyName);
+    $("#tbxAgentName").val(siteName + currencyName + "01");
 
-    $("#tbxDummyMasterName").val(siteName + "ACC" + currencyCode);
-    $("#tbxDummyAgentName").val(siteName + "ACC" + currencyCode + "01");
+    $("#tbxDummyMasterName").val(siteName + "ACC" + currencyName);
+    $("#tbxDummyAgentName").val(siteName + "ACC" + currencyName + "01");
 
-    var dummyMemberName = siteName + "Transfer" + currencyCode + "," +
-                          siteName + "Charges" + currencyCode + "," +
-                          siteName + "Bonus" + currencyCode + "," +
-                          siteName + "Winthdrawal" + currencyCode;
+    var dummyMemberName = siteName + "Transfer" + currencyName + "," +
+                          siteName + "Charges" + currencyName + "," +
+                          siteName + "Bonus" + currencyName + "," +
+                          siteName + "Winthdrawal" + currencyName;
     $("#tbxDummyMemberName").val(dummyMemberName);
 };
 
