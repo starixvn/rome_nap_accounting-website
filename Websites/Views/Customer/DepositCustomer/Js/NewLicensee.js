@@ -9,6 +9,11 @@ newLic.init = function () {
     $("#selCurrency").change(function () {
         newLic.GenerateSampleName();
     });
+
+    $("#btnResetUsenName").unbind("click");
+    $("#btnResetUsenName").click(function () {
+        newLic.ResetUsenName();
+    });
 };
 
 newLic.verifyData = function () {
@@ -372,6 +377,16 @@ newLic.GenerateSampleName = function () {
                           siteName + "Bonus" + currencyCode + "," +
                           siteName + "Winthdrawal" + currencyCode;
     $("#tbxDummyMemberName").val(dummyMemberName);
+};
+
+newLic.ResetUsenName = function () {
+    $("#tbxSuperName").val('');
+    $("#tbxMasterName").val('');
+    $("#tbxAgentName").val('');
+
+    $("#tbxDummyMasterName").val('');
+    $("#tbxDummyAgentName").val('');
+    $("#tbxDummyMemberName").val('');
 };
 
 $(document).ready(function () {
