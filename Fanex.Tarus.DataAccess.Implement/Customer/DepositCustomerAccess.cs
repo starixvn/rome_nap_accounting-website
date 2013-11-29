@@ -436,7 +436,7 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
             hashParam.Add("virtualsportlist", virtualSportsParams);
 
             #endregion VirtualSports
-            
+
             foreach (var param in newLicenseePostParam.PostParams)
             {
                 paramName = param.Name.ToLower();
@@ -451,8 +451,90 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
             return hashParam;
         }
 
+        private Result CheckDuplicateUsername(string username)
+        {
+            var hashParams = new Hashtable();
+            hashParams.Add("username", username);
+            hashParams.Add("errcode", 0);
+            hashParams.Add("errmsg", string.Empty);
+            Result result;
+            using (var objDb = new ObjectDb("Customer_NewLicensee_CheckUsername"))
+            {
+                objDb.AssignParamValues(hashParams);
+                objDb.ExecuteNonQuery();
+                result = new Result
+                {
+                    ErrorCode = CastAide.AsInt32(objDb.GetParameterValue("ErrCode")),
+                    ErrorMessage = CastAide.AsString(objDb.GetParameterValue("ErrMsg"))
+                };
+            }
+
+            return result;
+        }
+
+        private Result CheckDuplicateUsername(NewLicenseePostParam newLicenseePostParam)
+        {
+            Result result;
+            var singleNameCheck = CheckDuplicateUsername(newLicenseePostParam.SuperName);
+            List<string> duplicateNames = new List<string>();
+            if (singleNameCheck.ErrorCode != 0)
+            {
+                duplicateNames.Add(newLicenseePostParam.SuperName);
+            }
+
+            singleNameCheck = CheckDuplicateUsername(newLicenseePostParam.MasterName);
+            if (singleNameCheck.ErrorCode != 0)
+            {
+                duplicateNames.Add(newLicenseePostParam.MasterName);
+            }
+
+            singleNameCheck = CheckDuplicateUsername(newLicenseePostParam.AgentName);
+            if (singleNameCheck.ErrorCode != 0)
+            {
+                duplicateNames.Add(newLicenseePostParam.AgentName);
+            }
+
+            singleNameCheck = CheckDuplicateUsername(newLicenseePostParam.DummyMasterName);
+            if (singleNameCheck.ErrorCode != 0)
+            {
+                duplicateNames.Add(newLicenseePostParam.DummyMasterName);
+            }
+
+            singleNameCheck = CheckDuplicateUsername(newLicenseePostParam.DummyAgentName);
+            if (singleNameCheck.ErrorCode != 0)
+            {
+                duplicateNames.Add(newLicenseePostParam.DummyAgentName);
+            }
+
+            var dummyMemberNameList = newLicenseePostParam.DummyMemberName.Split(new char[] { ',' });
+            foreach (var dummyMemberName in dummyMemberNameList)
+            {
+                singleNameCheck = CheckDuplicateUsername(dummyMemberName);
+                if (singleNameCheck.ErrorCode != 0)
+                {
+                    duplicateNames.Add(dummyMemberName);
+                }
+            }
+
+            result = new Result
+            {
+                ErrorCode = 1,
+                ErrorMessage = string.Join(", ", duplicateNames) +
+                    (duplicateNames.Count > 1 ? " are" : " is") + " not available."
+            };
+
+            return result;
+        }
+
         public Result NewLicenseeAddNewSuper(NewLicenseePostParam newLicenseePostParam)
         {
+            Result result;
+            result = CheckDuplicateUsername(newLicenseePostParam);
+            if (result.ErrorCode != 0)
+            {
+                return result;
+            }
+
             var hashParam = GetAddNewHashTableParams(newLicenseePostParam);
             hashParam.Add("username", newLicenseePostParam.SuperName);
             hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
@@ -464,7 +546,6 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 hashParam.Add("userpwd", Encryption.CfsEnCode("123qwe"));
             }
 
-            Result result;
             using (var objDb = new ObjectDb("NewLicensee_AdNewSuper"))
             {
                 objDb.AssignParamValues(hashParam);

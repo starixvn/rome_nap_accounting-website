@@ -300,6 +300,8 @@
     <Setting Key="DepositCust_UpdateMemberSetting" SpName="Acc_Dep_CustomerUpdMember_Ag_Copy" DbName="main" />
 
     <Setting Key="Customer_NewLicensee_GetCurrencies" SpName="Acc_CurrencySel" DbName="DB052.BODB02"  />
+
+    <Setting Key="Customer_NewLicensee_CheckUsername" SpName="Acc_Dep_LicenseeUsernameCheck" DbName="DBEXT.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Edit Licensee">
     <Setting Key="Customer_EditLicensee_GetLicenseeInfo" SpName="Acc_ExchangeSel" DbName="main"  />
