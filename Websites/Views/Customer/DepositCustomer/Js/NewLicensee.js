@@ -17,23 +17,26 @@ newLic.verifyData = function () {
         return false;
     }
 
-    if (!common.isEmpty($("#tbxAgentName").val()) && common.isEmpty($("#tbxMasterName").val())) {
+    if (common.isEmpty($("#tbxMasterName").val())) {
         common.showErr("Please input Master's Username!");
         return false;
     }
 
-    if (!common.isEmpty($("#tbxMasterName").val())) {
-        if (!common.validateUserName($("#tbxMasterName").val())) {
-            common.showErr("Master's Username is invalid!");
-            return false;
-        }
+    if (!common.isEmpty($("#tbxMasterName").val()) &&
+        !common.validateUserName($("#tbxMasterName").val())) {
+        common.showErr("Master's Username is invalid!");
+        return false;
     }
 
-    if (!common.isEmpty($("#tbxAgentName").val())) {
-        if (!common.validateUserName($("#tbxAgentName").val())) {
-            common.showErr("Agent's Username is invalid!");
-            return false;
-        }
+    if (common.isEmpty($("#tbxAgentName").val())) {
+        common.showErr("Please input Agent's Username!");
+        return false;
+    }
+
+    if (!common.isEmpty($("#tbxAgentName").val()) &&
+        !common.validateUserName($("#tbxAgentName").val())) {
+        common.showErr("Agent's Username is invalid!");
+        return false;
     }
 
     var dummyMasterName = $("#tbxDummyMasterName").val();
