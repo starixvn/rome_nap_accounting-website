@@ -57,12 +57,12 @@
 
             if (isFirst)
             {
-    @:<option selected="selected" value="@currency.Id">@currencyOptionText</option>";
+    @:<option selected="selected" value="@currency.Id" data-currencycode="@currency.Code">@currencyOptionText</option>";
                 isFirst = false;
             }
             else
             {
-    @:<option value="@currency.Id">@currencyOptionText</option>";
+    @:<option value="@currency.Id" data-currencycode="@currency.Code">@currencyOptionText</option>";
         }
         }
 }

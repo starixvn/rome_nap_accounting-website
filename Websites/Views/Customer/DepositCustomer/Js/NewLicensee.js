@@ -4,37 +4,43 @@ newLic.init = function () {
     $("#tblAdd").click(function () {
         newLic.submit();
     });
+
+    $("#selCurrency").unbind("change");
+    $("#selCurrency").change(function () {
+        newLic.GenerateSampleName();
+    });
 };
 
 newLic.verifyData = function () {
-    if (common.isEmpty($("#tbxSuperName").val())) {
+    var superName = $("#tbxSuperName").val();
+    if (common.isEmpty(superName)) {
         common.showErr("Please input Super's Username!");
         return false;
     }
 
-    if (!common.validateUserName($("#tbxSuperName").val())) {
+    if (!common.validateUserName(superName)) {
         common.showErr("Super's Username is invalid!");
         return false;
     }
 
-    if (common.isEmpty($("#tbxMasterName").val())) {
+    var masterName = $("#tbxMasterName").val();
+    if (common.isEmpty(masterName)) {
         common.showErr("Please input Master's Username!");
         return false;
     }
 
-    if (!common.isEmpty($("#tbxMasterName").val()) &&
-        !common.validateUserName($("#tbxMasterName").val())) {
+    if (!common.validateUserName(masterName)) {
         common.showErr("Master's Username is invalid!");
         return false;
     }
 
-    if (common.isEmpty($("#tbxAgentName").val())) {
+    var agentName = $("#tbxAgentName").val();
+    if (common.isEmpty(agentName)) {
         common.showErr("Please input Agent's Username!");
         return false;
     }
 
-    if (!common.isEmpty($("#tbxAgentName").val()) &&
-        !common.validateUserName($("#tbxAgentName").val())) {
+    if (!common.validateUserName(agentName)) {
         common.showErr("Agent's Username is invalid!");
         return false;
     }
@@ -332,6 +338,40 @@ newLic.submit = function () {
             common.unBlock();
         }
     });
+};
+
+newLic.GenerateSampleName = function () {
+    var siteName = $("#selSites").find("option:selected").html();
+    var currencyCode = $("#selCurrency").find("option:selected").attr("data-currencycode");
+
+    var superName = $("#tbxSuperName").val();
+    var masterName = $("#tbxMasterName").val();
+    var agentName = $("#tbxAgentName").val();
+    var dummyMasterName = $("#tbxDummyMasterName").val();
+    var dummyAgentName = $("#tbxDummyAgentName").val();
+    var dummyMemberName = $("#tbxDummyMemberName").val();
+
+    if (!common.isEmpty(superName) ||
+        !common.isEmpty(masterName) ||
+        !common.isEmpty(agentName) ||
+        !common.isEmpty(dummyMasterName) ||
+        !common.isEmpty(dummyAgentName) ||
+        !common.isEmpty(dummyMemberName)) {
+        return;
+    }
+
+    $("#tbxSuperName").val(siteName + "Super" + currencyCode);
+    $("#tbxMasterName").val(siteName + currencyCode);
+    $("#tbxAgentName").val(siteName + currencyCode + "01");
+
+    $("#tbxDummyMasterName").val(siteName + "ACC" + currencyCode);
+    $("#tbxDummyAgentName").val(siteName + "ACC" + currencyCode + "01");
+
+    var dummyMemberName = siteName + "Transfer" + currencyCode + "," +
+                          siteName + "Charges" + currencyCode + "," +
+                          siteName + "Bonus" + currencyCode + "," +
+                          siteName + "Winthdrawal" + currencyCode;
+    $("#tbxDummyMemberName").val(dummyMemberName);
 };
 
 $(document).ready(function () {
