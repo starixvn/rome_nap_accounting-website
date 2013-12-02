@@ -2428,4 +2428,7 @@ The message is ready to be sent with the attached file {2}.</value>
   <data name="lblHRFixedOddsPrivateGameComm" xml:space="preserve">
     <value>HR Fixed Odds</value>
   </data>
+  <data name="HorseRacingFixedOdds" xml:space="preserve">
+    <value>Horse Racing Fixed Odds</value>
+  </data>
 </root>
