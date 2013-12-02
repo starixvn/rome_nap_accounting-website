@@ -560,7 +560,7 @@ Fanex.CustomerSetting.Core = {
         return src;
     },
 
-    CheckNumber: function (event, ele) {
+    CheckNumber: function (event, ele, isFloat) {
         var value = ele.value;
 
         var evt = event ? event : window.event; // Fix for IE7
@@ -729,7 +729,7 @@ String.prototype.formatFloat = function () {
     if (number == '') return 0;
     var sign;
     if (isNaN(number)) {
-        number = String.Empty;
+        number = '';
     }
 
     sign = (number == (number = Math.abs(number)));
