@@ -20,7 +20,9 @@
     <Setting Key="AdminUpd" SpName="Acc_AccAdminUpd" DbName="DBTXN.bodb02.bodbAdminNet"/>
     <Setting Key="AdminSelByID" SpName="Acc_AccAdminSelByID" DbName="DBTXN.bodb02.bodbAdminNet"/>
   </Function>
-
+  <Function Name="External Betting Limit">
+    <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="DBTXN.bodb02.bodbAdminNet_ex" Plain="0" />
+  </Function>
   <Function Name="Live Casino">
     <Setting Key="Acc_CustomerSelWinLimitLiveCS" SpName="Acc_CustomerSelWinLimitLiveCS" DbName="DBTXN.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_CustomerUpdMemberLiveCS_Master" SpName="Acc_CustomerUpdMemberLiveCS_Master" DbName="DBTXN.bodb02.bodbAdminNet"  />

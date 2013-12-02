@@ -266,11 +266,7 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
             return false;
         }
 
-<<<<<<< HEAD
-        if (minMin != 0 && min < minMin) {
-=======
         if (minMin != 0 && min  < minMin) {
->>>>>>> 274775faa29e22052c9a09f38501a25278dd7821
             Validators.show($('#txt' + betting.resourceKey + 'Min' + subFix).get(0), betting.name + ' - Min Bet should be greater than or equals to ' + minMin.formatNumber(), undefined, undefined, 3000);
 
             return false;
