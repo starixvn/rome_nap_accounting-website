@@ -3875,7 +3875,7 @@ namespace Fanex.Tarus.SpecialDelete.Business
                                     string ToMailCSD = "";
                                     string CC = "", BCC = "";
 
-                                    bool isSendBoth = false;
+                                    //bool isSendBoth = false;
 
                                     ToMailCSD = dataforMailing.To;
                                     CC = dataforMailing.Cc;
