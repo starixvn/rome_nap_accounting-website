@@ -15,6 +15,18 @@
             heightTmp = 200;
             widthTmp = 750;
             break;
+        case 182:
+            URL = "BetList/GetVirtualHRPopup?MatchID=" + matchID + "&RaceNo=" + raceNo;
+            title = "Virtual Greyhound";
+            heightTmp = 200;
+            widthTmp = 750;
+            break;
+        case 184:
+            URL = "BetList/GetVirtualHRPopup?MatchID=" + matchID + "&RaceNo=" + raceNo;
+            title = "Virtual Motor Racing";
+            heightTmp = 200;
+            widthTmp = 750;
+            break;
         case 186:
             URL = "BetList/GetVirtualTennisPopup?MatchID=" + matchID + "&RaceNo=" + raceNo;
             title = "Tennis - Virtual Tennis";
@@ -30,5 +42,6 @@
 
 
 function ViewIP(ip) {
-    window.open('http://anonym.to/?http://legacytools.dnsstuff.com/tools/ipall.ch?tool_id=67&token=&toolhandler_redirect=0&j=1&ip=' + ip);
+    //    window.open('http://anonym.to/?http://legacytools.dnsstuff.com/tools/ipall.ch?tool_id=67&token=&toolhandler_redirect=0&j=1&ip=' + ip);
+    window.open('http://www.iplocationfinder.com/' + ip);
 } 

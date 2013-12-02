@@ -29,7 +29,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             var result = new Result();
             try
             {
-                using (ObjectDb objDB = new ObjectDb("Acc_Con_AdminSelPwdVerify"))
+                using (ObjectDb objDB = new ObjectDb("Acc_Con_AdminSelPwdVerify", 600))
                 {
                     var param = new Hashtable();
                     param.Add("username", accName);
@@ -55,14 +55,18 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             return result;
         }
 
-        public static IDataReader AccInformationSelect(int custid)
+        public static DataSet AccInformationSelect(int custid)
         {
             try
             {
                 var param = new Hashtable();
                 param.Add("custid", custid);
-                var spElement = GetUserStoreProcedure(UserControlSession.StoreCollection.AccountInfo, "CustomerSelUserInfo");
-                return DbHelper.ExecuteReader(spElement.Name, param, spElement.DbName);
+                
+                using (ObjectDb db = new ObjectDb("CustomerSelUserInfo", 600))
+                {
+                    db.AssignParamValues(param);
+                    return db.ExecuteDataSet();
+                }
             }
             catch (Exception ex)
             {
@@ -75,7 +79,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
             try
             {
-                using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdUserInfo"))
+                using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdUserInfo", 600))
                 {
                     param.Add("errcode", 0);
                     param.Add("errmsg", string.Empty);

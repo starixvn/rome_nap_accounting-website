@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Fanex.Tarus.Finance.Entities;
 
 namespace Fanex.Tarus.Finance.Model.Customer
@@ -7,7 +6,9 @@ namespace Fanex.Tarus.Finance.Model.Customer
     public class CustomerList
     {
         public List<CustomerInfo> Customers { get; set; }
+
         public long Total { get; set; }
+
         public CustomerList()
         {
             Customers = new List<CustomerInfo>();

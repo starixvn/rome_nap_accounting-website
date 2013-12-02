@@ -1125,11 +1125,12 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Customer
                 param.Add("search", search);
                 param.Add("firstname", firstname);
                 param.Add("lastname", lastname);
-
-                //var spElement = new UpdateCustomer().GetStoreProcedure(StoreProcedureSection.StoreCollection.SportBooksPt, "UpdateUserSearch");
-                var spElement = new UpdateCustomer().GetStoreProcedure(Sunplus.Accounting.Core.Configurations.StoreProcedureGroup.SportbookPtSession.StoreCollection.SportBooksPtControl, "UpdateUserSearch");
-                var ds = DbHelper.ExecuteCmd(spElement.Name, param, spElement.DbName, 600);
-                //DbResult ds = DbHelper.ExecuteCmd("Acc_CustomerUpdUserSearch", param, DBType.ARCHIVE);
+                
+                using (ObjectDb db = new ObjectDb("UpdateUserSearch", 600))
+                {
+                    db.AssignParamValues(param);
+                    db.ExecuteNonQuery();
+                }
             }
             catch (Exception ex)
             {

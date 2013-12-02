@@ -1,11 +1,9 @@
-﻿
-namespace Fanex.Tarus.Finance.DataAccess.Statement
+﻿namespace Fanex.Tarus.Finance.DataAccess.Statement
 {
     using System;
     using System.Data;
-    using Fanex.Data;
     using DNAide.Core;
-    using Fanex.Tarus.Finance.Model.Statement;
+    using Fanex.Data;
     using Fanex.Tarus.Finance.Entities;
 
     public class FinanceStatementAccess : IFinanceStatementAccess
@@ -15,7 +13,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
             using (ObjectDb db = new ObjectDb("Acc_StatementFinance", 1200))
             {
                 db.AddInParameter("RefNo", DbType.Int64, CastAide.AsInt64(refNoParam));
-                db.AddInParameter("Username", DbType.String,custName);
+                db.AddInParameter("Username", DbType.String, custName);
                 db.AddInParameter("FilterBy", DbType.String, filterBy);
                 db.AddInParameter("FromDate", DbType.DateTime, CastAide.AsDateTime(fromdate));
                 db.AddInParameter("ToDate", DbType.DateTime, CastAide.AsDateTime(toDay));
@@ -33,8 +31,8 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
             {
                 db.AddInParameter("RefNo", DbType.Int64, CastAide.AsInt64(refNo));
                 db.AddInParameter("Username", DbType.String, userName);
-                db.AddInParameter("FromDate", DbType.DateTime,  CastAide.AsDateTime(winLossDate));
-                db.AddInParameter("ToDate", DbType.DateTime,  CastAide.AsDateTime(winLossDate));
+                db.AddInParameter("FromDate", DbType.DateTime, CastAide.AsDateTime(winLossDate));
+                db.AddInParameter("ToDate", DbType.DateTime, CastAide.AsDateTime(winLossDate));
 
                 var result = db.ExecuteDataSet();
                 return result;
@@ -67,8 +65,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
             {
                 return new Result { ErrorCode = 1, ErrorMessage = e.Message };
             }
-           
-       }
+        }
 
         public Result DeleteTransAccess(string RefNo, int CustID, int UserID)
         {
@@ -79,7 +76,7 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
                     db.AddInParameter("custid", DbType.Int32, CustID);
                     db.AddInParameter("userid", DbType.Int32, UserID);
                     db.AddInParameter("refno", DbType.String, RefNo);
-  
+
                     db.AddOutParameter("errmsg", DbType.String, 500);
                     db.AddOutParameter("errcode", DbType.Int32, sizeof(int));
 
@@ -94,7 +91,6 @@ namespace Fanex.Tarus.Finance.DataAccess.Statement
             {
                 return new Result { ErrorCode = 1, ErrorMessage = e.Message };
             }
-           
         }
     }
 }

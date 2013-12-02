@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Data;
 using DNAide.Core;
 using Sunplus.Accounting.DataAccess.Provider.SpecialDelete;
+using Fanex.Tarus.Infrastructure.Extensions;
+using Fanex.Data;
 
 /// <summary>
 /// Summary description for SpecialDeleteProvider
@@ -15,29 +17,40 @@ namespace Sunplus.Accounting.DataAccess.Entity.SqlServer.SpecialDelete
     {
         public override List<MatchInfoRow> MatchSeById(int MatchId)
         {
-            Hashtable hashtable = new Hashtable();
-            hashtable.Add("matchid", MatchId);
-            var spElement =
-                GetStoreProcedure(
-                    Core.Configurations.StoreProcedureGroup.SpecialDeleteGroupSection.StoreCollection.Sportbook, "SelMatchInfo");
-            IDataReader dataReader = DNAide.Data.DbHelper.ExecuteReader(spElement.Name, hashtable, spElement.DbName, 600);
-
             List<MatchInfoRow> lst = new List<MatchInfoRow>();
-            while (dataReader.Read())
+            try
             {
-                MatchInfoRow infoRow = new MatchInfoRow();
-                infoRow.awayid = CastAide.AsInt32(dataReader["awayid"]);
-                infoRow.homeid = CastAide.AsInt32(dataReader["homeid"]);
-                infoRow.eventdate = CastAide.AsDateTime(dataReader["eventdate"]);
-                infoRow.IsNeutral = CastAide.AsBoolean(dataReader["IsNeutral"]);
-                infoRow.leagueid = CastAide.AsInt32(dataReader["leagueid"]);
-                infoRow.matchcode = CastAide.AsString(dataReader["matchcode"]);
+                Hashtable hashtable = new Hashtable();
+                hashtable.Add("matchid", MatchId);
+                
+                IDataReader dataReader = null;
+                using (ObjectDb db = new ObjectDb("SelMatchInfo", 600))
+                {
+                    db.AssignParamValues(hashtable);
+                    dataReader = db.ExecuteReader();
+                }
+                if (dataReader == null)
+                    return lst;
 
-                lst.Add(infoRow);
+                while (dataReader.Read())
+                {
+                    MatchInfoRow infoRow = new MatchInfoRow();
+                    infoRow.awayid = CastAide.AsInt32(dataReader["awayid"]);
+                    infoRow.homeid = CastAide.AsInt32(dataReader["homeid"]);
+                    infoRow.eventdate = CastAide.AsDateTime(dataReader["eventdate"]);
+                    infoRow.IsNeutral = CastAide.AsBoolean(dataReader["IsNeutral"]);
+                    infoRow.leagueid = CastAide.AsInt32(dataReader["leagueid"]);
+                    infoRow.matchcode = CastAide.AsString(dataReader["matchcode"]);
+
+                    lst.Add(infoRow);
+                }
+
+                dataReader.Close();
             }
-
-            dataReader.Close();
-
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
             return lst;
         }
     }

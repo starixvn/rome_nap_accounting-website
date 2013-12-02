@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using DNAide.Core;
 using DNAide.Data;
+using Fanex.Data;
+using Fanex.Tarus.Infrastructure.Extensions;
 using Sunplus.Accounting.Core.Configurations;
 
 namespace Sunplus.Accounting.DataAccess.SpecialDelete.TicketsListing
@@ -14,8 +17,22 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete.TicketsListing
 
         public DbResult SelAllLicensee()
         {
-            var element = getSPMapping("SelAllLicensee");
-            return DbHelper.Execute(element.Name, element.DbName);
+            DbResult result = null;
+            try
+            {
+                using (ObjectDb db = new ObjectDb("SelAllLicensee"))
+                {
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         public DbResult SelBettype()
@@ -28,32 +45,49 @@ namespace Sunplus.Accounting.DataAccess.SpecialDelete.TicketsListing
 
         public DbResult SelTicketsListing(int matchID, int licenseeID, string betTypes, string betTypesLive, int Type, string LiveType, string HomeScore, string AwayScore, string FromTransDate, string ToTransDate, int SAFilter)
         {
-            var element = getSPMapping("TicketsListing");
-            Hashtable hashtable = new Hashtable();
-            hashtable.Add("matchid", matchID);
-            hashtable.Add("licenseeid", licenseeID);
-            hashtable.Add("bettypes", betTypes);
-            hashtable.Add("bettypeslive", betTypesLive);
-            hashtable.Add("type", Type);
-            hashtable.Add("safilter", SAFilter);
-            hashtable.Add("errcode", 0);
-            hashtable.Add("errmsg", "");
-            hashtable.Add("livetype", DNAide.Core.CastAide.AsString(LiveType, "0"));
-            if (Type == 0) //sport book
+            DbResult result = null;
+            try
             {
-                if (HomeScore.Length > 0 && AwayScore.Length > 0)
+                Hashtable hashtable = new Hashtable();
+                hashtable.Add("matchid", matchID);
+                hashtable.Add("licenseeid", licenseeID);
+                hashtable.Add("bettypes", betTypes);
+                hashtable.Add("bettypeslive", betTypesLive);
+                hashtable.Add("type", Type);
+                hashtable.Add("safilter", SAFilter);
+                hashtable.Add("errcode", 0);
+                hashtable.Add("errmsg", "");
+                hashtable.Add("livetype", DNAide.Core.CastAide.AsString(LiveType, "0"));
+                if (Type == 0) //sport book
                 {
-                    hashtable.Add("livehomescore", HomeScore);
-                    hashtable.Add("liveawayscore", AwayScore);
+                    if (HomeScore.Length > 0 && AwayScore.Length > 0)
+                    {
+                        hashtable.Add("livehomescore", HomeScore);
+                        hashtable.Add("liveawayscore", AwayScore);
+                    }
+                    if (FromTransDate.Length > 0 && ToTransDate.Length > 0)
+                    {
+                        hashtable.Add("fromtransdate", CastAide.AsDateTime(FromTransDate).AddHours(-12));
+                        hashtable.Add("totransdate", CastAide.AsDateTime(ToTransDate).AddHours(-12));
+                    }
                 }
-                if (FromTransDate.Length > 0 && ToTransDate.Length > 0)
+                
+                using (ObjectDb db = new ObjectDb("TicketsListing", 6000))
                 {
-                    hashtable.Add("fromtransdate", CastAide.AsDateTime(FromTransDate).AddHours(-12));
-                    hashtable.Add("totransdate", CastAide.AsDateTime(ToTransDate).AddHours(-12));
+                    db.AssignParamValues(hashtable);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
                 }
             }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
 
-            return DbHelper.Execute(element.Name, hashtable, element.DbName, 6000);
+            return result;
         }
     }
 }

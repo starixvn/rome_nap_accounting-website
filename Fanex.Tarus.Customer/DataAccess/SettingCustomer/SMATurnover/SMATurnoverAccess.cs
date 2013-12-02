@@ -27,7 +27,7 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
         {
             var datatable = new DataTable();
             var balmoveday = new Dictionary<string, DateTime>();
-            using (ObjectDb objDB = new ObjectDb("SelBalanceUpDay"))
+            using (ObjectDb objDB = new ObjectDb("Core_ReportService_GetBalanceUpDay"))
             {
                 var ds = objDB.ExecuteDataSet();
                 datatable = ds.Tables[0];
@@ -136,7 +136,7 @@ namespace Fanex.Tarus.Customer.DataAccess.SettingCustomer.SMATurnover
             var result = new Result();
             try
             {
-                using (ObjectDb objDB = new ObjectDb("AddSMATurnover"))
+                using (ObjectDb objDB = new ObjectDb("Customer_SMATurnover_AddSMAList"))
                 {
                     objDB.AddInParameter("matchid", DbType.Int32, matchId);
                     objDB.AddInParameter("username", DbType.String, custName);

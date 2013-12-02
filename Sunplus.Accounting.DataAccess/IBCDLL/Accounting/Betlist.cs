@@ -203,7 +203,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
             try
             {
-                using (ObjectDb db = new ObjectDb("Acc_BetsSelBetCheckM_All", 300))
+                using (ObjectDb db = new ObjectDb("BetList_MixParlayBetsSel", 300))
                 {
                     Hashtable p = new Hashtable();
                     p.Add("refno", refno);
@@ -224,7 +224,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             var result = new DataSet();
             try
             {
-                using (ObjectDb db = new ObjectDb("Acc_BetlistCombinationParlay_Details"))
+                using (ObjectDb db = new ObjectDb("Acc_BetlistCombinationParlay_Details",600))
                 {
                     var p = new Hashtable();
                     p.Add("refno", refno);
@@ -277,8 +277,17 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 Hashtable p = new Hashtable();
                 p.Add("refno", refno);
-                var spElement = GetBetListStoreProcedure("Age_BetList_SelMatchResultParlay");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 300);
+
+                using (ObjectDb db = new ObjectDb("Age_BetList_SelMatchResultParlay", 600))
+                {
+                    db.AssignParamValues(p);
+
+                    var ds = db.ExecuteDataSet();
+                    var outout = db.GetOuputParams();
+
+                    result = new DbResult(outout, ds);
+                }
+
             }
             catch
             {
@@ -344,7 +353,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("custid", custid);
                 p.Add("bettype", bettype);
                 p.Add("movebetsday", ReportUtils.BalanceUp.MoveBetsDay);
-                using (ObjectDb db = new ObjectDb("BetsSelBetList", 180))
+                using (ObjectDb db = new ObjectDb("BetList_CustInfo", 180))
                 {
                     db.AssignParamValues(p);
                     result = db.ExecuteDataSet();
@@ -438,8 +447,15 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 p.Add("transid", transID);
                 p.Add("balanceupday", ReportUtils.BalanceUp.BalanceUpDay);
                 p.Add("movebetsday", ReportUtils.BalanceUp.MoveBetsDay);
-                var spElement = GetBetListStoreProcedure("Age_BetList_SelMatchResultFinance");
-                result = DbHelper.Execute(spElement.Name, p, spElement.DbName, 180);
+                
+                using (ObjectDb db = new ObjectDb("Age_BetList_SelMatchResultFinance", 600))
+                {
+                    db.AssignParamValues(p);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
@@ -646,9 +662,18 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             try
             {
                 var p = new Hashtable { { "matchid", matchID } };
-                var spElement = GetBetListStoreProcedure("SelMatchResultNumberGame");
-                var dbResult = DbHelper.Execute(spElement.Name, p, spElement.DbName, 180);
-                if (dbResult.ResultSet != null && dbResult.ResultSet.Tables.Count > 0)
+                
+                DbResult dbResult = null;
+                using (ObjectDb db = new ObjectDb("SelMatchResultNumberGame", 600))
+                {
+                    db.AssignParamValues(p);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    dbResult = new DbResult(output, ds);
+                }
+
+                if (dbResult != null && dbResult.ResultSet.Tables.Count > 0)
                     result = dbResult.ResultSet.Tables[0];
             }
             catch (Exception ex)
@@ -663,7 +688,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             var result = new DataTable();
             try
             {
-                using (ObjectDb objDB = new ObjectDb("SoprtingSolutionBetlistResult"))
+                using (ObjectDb objDB = new ObjectDb("SportingSolutionBetlistResult",600))
                 {
                     objDB.AddInParameter("matchid", DbType.Int32, matchID);
                     objDB.AddInParameter("resourceid", DbType.String, resourceId);

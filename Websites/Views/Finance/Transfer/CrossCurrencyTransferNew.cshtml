@@ -1,6 +1,6 @@
 ﻿@using System.Configuration;
 @helper GenerateCurrencyCodes(){
-    var group = ConfigurationManager.AppSettings["Fanex.Tarus.Finance.CrossBaseCurrency"]; ;
+    var group = ConfigurationManager.AppSettings["Fanex.Tarus.Finance.CrossBaseCurrency"];
     var listCurrencyCodes = group.Split(',');
     <option value="">[Select]</option>
     foreach(string code in listCurrencyCodes)

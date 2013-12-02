@@ -1,12 +1,9 @@
 ﻿namespace Fanex.Tarus.Finance.DataAccess.Transfer
 {
-    using Fanex.Data;
-    using System.Data;
-    
     using System;
-
+    using System.Data;
+    using Fanex.Data;
     using Fanex.Tarus.Finance.Entities;
-    using DNAide.Core;
 
     public class CrossTransferAccess : ICrossTransferAccess
     {
@@ -65,14 +62,12 @@
                     var errCode = DNAide.Core.CastAide.AsInt32(objDB.GetParameterValue("errcode"));
                     return new Result { ErrorCode = errCode, ErrorMessage = errMsg };
                 }
-
             }
             catch (Exception e)
             {
                 return new Result { ErrorCode = 1, ErrorMessage = e.Message };
             }
         }
-
 
         public CustomerExRate SelectCustomerExRate(string username)
         {
@@ -103,7 +98,6 @@
             }
         }
 
-
         public DataSet SelectAllForexAccount()
         {
             using (ObjectDb objDB = new ObjectDb("Acc_CustomerSelForexAccount"))
@@ -111,7 +105,6 @@
                 return objDB.ExecuteDataSet();
             }
         }
-
 
         public DataSet SelectAllExchangeRate()
         {

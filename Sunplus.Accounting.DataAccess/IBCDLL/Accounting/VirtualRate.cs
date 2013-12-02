@@ -7,6 +7,7 @@ using DNAide.Data;
 
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Configurations.StoreProcedureGroup;
+using Sunplus.Core.LoggingLib;
 using Fanex.Data;
 using Sunplus.Accounting.Entities;
 
@@ -21,8 +22,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
         {
             var sps = CustomerSession.Instance[CustomerSession.StoreCollection.CustomerControl];
             return sps != null ? sps[aliasName] : null;
-        }
 
+        }
         public static DataTable GetDataFromExcel(string ExcelPath)
         {
             var dtb = new DataTable();
@@ -44,8 +45,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 excelCon.Close();
                 excelCon.Dispose();
-
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
                 throw ex;
             }
             return null;
@@ -56,15 +57,28 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             DbResult rs = null;
             try
             {
+
+                arrUsernames = arrUsernames.Replace('\b', Convert.ToChar(8));
+
                 var hash = new Hashtable();
                 hash.Add("userid", AppSession.AccId);
                 hash.Add("arrusernames", arrUsernames);
-                hash.Add("arrvirtualrates", arrVirtualRates);
-                rs = DbHelper.Execute("Acc_VirtualRateMulInsTmpExcel", hash, DBType.WAREHOUSE);
+                hash.Add("arrvirtualrates", arrVirtualRates);                
+
+                using (ObjectDb db = new ObjectDb("Acc_VirtualRateMulInsTmpExcel"))
+                {
+                    db.AssignParamValues(hash);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
@@ -76,11 +90,20 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var hash = new Hashtable();
                 hash.Add("userid", AppSession.AccId);
-                rs = DbHelper.Execute("Acc_VirtualRateMulSelCheck", hash, DBType.WAREHOUSE);
+                using (ObjectDb db = new ObjectDb("Acc_VirtualRateMulSelCheck"))
+                {
+                    db.AssignParamValues(hash);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
 
             return rs;
@@ -93,11 +116,20 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             {
                 var hash = new Hashtable();
                 hash.Add("userid", AppSession.AccId);
-                rs = DbHelper.Execute("Acc_VirtualRateMulDelTmpExcel", hash, DBType.WAREHOUSE);
+                
+                using (ObjectDb db = new ObjectDb("Acc_VirtualRateMulDelTmpExcel"))
+                {
+                    db.AssignParamValues(hash);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }
@@ -134,12 +166,19 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             DbResult rs = null;
             try
             {
-                var spElement = GetStoreProcedure("CustomerSelVirtualRateHistory");
-                return DbHelper.Execute(spElement.Name, hash, spElement.DbName);
+                using (ObjectDb db = new ObjectDb("CustomerSelVirtualRateHistory"))
+                {
+                    db.AssignParamValues(hash);
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    rs = new DbResult(output, ds);
+                }
             }
             catch (Exception ex)
             {
-                Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
+                
+                    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
             return rs;
         }

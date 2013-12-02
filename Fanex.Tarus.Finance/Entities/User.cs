@@ -1,9 +1,9 @@
-﻿
-namespace Fanex.Tarus.Finance.Entities
+﻿namespace Fanex.Tarus.Finance.Entities
 {
     public class User
     {
         private string _userName;
+
         public int Id { get; set; }
 
         public string Username

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using DNAide.Core;
+using Fanex.Data;
 
 namespace Sunplus.Accounting.DataAccess.IBCDLL
 {
@@ -7,17 +9,17 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
     {
         public static DateTime GetDBTime()
         {
-            DNAide.Data.DbResult dr = null;
             DateTime loginTime;
-            var p = new System.Collections.Hashtable();
-            p.Add("logintime", null);
-            try
+            var param = new Hashtable();
+            param.Add("logintime", null);
+            using (ObjectDb db = new ObjectDb("Age_LoginAdminVerifyTicket"))
             {
-                dr = DNAide.Data.DbHelper.Execute("Age_LoginAdminVerifyTicket", p, DBType.MAIN);
-                loginTime = CastAide.AsDateTime(dr.Outputs["logintime"]);
+                db.AssignParamValues(param);
+                db.ExecuteNonQuery();
+                var output = db.GetOuputParams();
+                loginTime = CastAide.AsDateTime(output["logintime"]);                  
+                
             }
-            catch { throw; }
-
             return loginTime;
         }
     }

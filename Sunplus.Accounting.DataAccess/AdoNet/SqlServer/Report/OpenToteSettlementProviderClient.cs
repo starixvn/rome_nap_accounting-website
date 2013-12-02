@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using DNAide.Data;
 using Sunplus.Accounting.DataAccess.Provider.Report;
+using Fanex.Tarus.Infrastructure.Extensions;
+using System;
+using Fanex.Data;
 
 /// <summary>
 /// Summary description for PunterAnalysisProviderClient
@@ -12,41 +15,134 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.SqlServer.Report
     {
         public override DbResult WinlostHR_OpenTote(Hashtable param)
         {
-            string db = DBType.MAIN;
-            if (param["db"].ToString() == "rep")
-                db = DBType.WAREHOUSE;
-            return DbHelper.Execute("Acc_Rpt_WinlostHR_OpenTote", param, db, 600);
+            DbResult result = null;
+            try
+            {
+                using(ObjectDb db = new ObjectDb("Acc_Rpt_WinlostHR_OpenTote",600))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         public override DbResult WinlostHR_OpenTote14(Hashtable param)
         {
-            return DbHelper.Execute("Acc_Rpt_WinlostHR_OpenTote14", param, DBType.WAREHOUSE, 600);
+            DbResult result = null;
+            try
+            {
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_WinlostHR_OpenTote14", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         public override DbResult WinlostHR_OpenTote_Details(Hashtable param)
-        {
-            string db = DBType.MAIN;
-            if (param["db"].ToString() == "rep")
-                db = DBType.WAREHOUSE;
-            return DbHelper.Execute("Acc_Rpt_WinlostHR_OpenTote_Details", param, db, 600);
+        {          
+            DbResult result = null;
+            try
+            {
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_WinlostHR_OpenTote_Details", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         public override DbResult WinlostHR_OpenTote_Details14(Hashtable param)
         {
-            return DbHelper.Execute("Acc_Rpt_WinlostHR_OpenTote_Details14", param, DBType.WAREHOUSE, 600);
+            DbResult result = null;
+            try
+            {
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_WinlostHR_OpenTote_Details14", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         public override DbResult WinlostHR_OpenTote_BetList(Hashtable param)
         {
-            string db = DBType.MAIN;
-            if (param["db"].ToString() == "rep")
-                db = DBType.WAREHOUSE;
-            return DbHelper.Execute("Acc_Rpt_WinlostHR_OpenTote_BetList", param, db, 600);
+            DbResult result = null;
+            try
+            {
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_WinlostHR_OpenTote_BetList", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         public override DbResult WinlostHR_OpenTote_BetList14(Hashtable param)
         {
-            return DbHelper.Execute("Acc_Rpt_WinlostHR_OpenTote_BetList14", param, DBType.WAREHOUSE, 600);
+            DbResult result = null;
+            try
+            {
+                using (ObjectDb db = new ObjectDb("Acc_Rpt_WinlostHR_OpenTote_BetList14", 600))
+                {
+                    db.AssignParamValues(param);
+
+                    var ds = db.ExecuteDataSet();
+                    var output = db.GetOuputParams();
+
+                    result = new DbResult(output, ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+            return result;
         }
 
         public override DbResult Horse_OpenToteTO3rd(Hashtable param)

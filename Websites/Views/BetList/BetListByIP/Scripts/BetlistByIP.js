@@ -21,9 +21,9 @@
     params_UsernameBetlist: {
         ip: '',
         fromDate: null,
-        PageIndex: 1,
-        PageSize: 100,
-        IsCache: false
+        pageIndex: 1,
+        pageSize: 100,
+        isCache: false
     },
     getBetListByIP_Username: function (isLink, ip, fromdate) {
         if (fromdate == 'nodate') { return false; }
@@ -32,14 +32,14 @@
         var fromDateTmp = isLink == "True" ? fromdate : $("#txtfromdate").val();
 
         if (BetListByIP.params_UsernameBetlist.ip == ipTmp && BetListByIP.params_UsernameBetlist.fromDate == fromDateTmp) {
-            BetListByIP.params_UsernameBetlist.IsCache = true;
+            BetListByIP.params_UsernameBetlist.isCache = true;
         }
         else {
             BetListByIP.params_UsernameBetlist.ip = ipTmp;
             BetListByIP.params_UsernameBetlist.fromDate = fromDateTmp;
-            BetListByIP.params_UsernameBetlist.IsCache = false;
-            BetListByIP.params_UsernameBetlist.PageIndex = 1;
-            BetListByIP.params_UsernameBetlist.PageSize = 100;
+            BetListByIP.params_UsernameBetlist.isCache = false;
+            BetListByIP.params_UsernameBetlist.pageIndex = 1;
+            BetListByIP.params_UsernameBetlist.pageSize = 100;
         }
         try { parent.BlockUI(); } catch (e) { }
         $.ajax({
@@ -53,7 +53,8 @@
                 $("#BetlistByIP_Username").initGrid(BetListByIP.gridOpts_Username);
                 $('#BetlistByIP_Username').removeClass("display-none").gridScroller(BetListByIP.gridOpts_Username);
 
-                BetListByIP.initPager(_length, BetListByIP.params_UsernameBetlist.PageSize, BetListByIP.params_UsernameBetlist.PageIndex - 1);
+                BetListByIP.initPager(_length, BetListByIP.params_UsernameBetlist.pageSize,
+                    BetListByIP.params_UsernameBetlist.pageIndex - 1);
             },
             error: function () {
                 try { parent.jQuery.unblockUI(); } catch (e) { }
@@ -78,8 +79,8 @@
         var max_page = Math.ceil(_length / _items_per_page);
         page_index = page_index < max_page ? page_index : max_page - 1;
 
-        BetListByIP.params_UsernameBetlist.PageIndex = page_index + 1;
-        BetListByIP.params_UsernameBetlist.PageSize = _items_per_page;
+        BetListByIP.params_UsernameBetlist.pageIndex = page_index + 1;
+        BetListByIP.params_UsernameBetlist.pageSize = _items_per_page;
         BetListByIP.getBetListByIP_Username();
         return false;
     }
@@ -108,27 +109,30 @@ var BetListByIP_SportType = {
     },
     params_SportType:
     {
-        CustID: '',
-        IP: '',
-        FromDate: null,
-        IsSoccer: null,
-        PageIndex: 1,
-        PageSize: 50,
-        IsCache: false
+        customerId: '',
+        ip: '',
+        fromDate: null,
+        isSoccer: null,
+        pageIndex: 1,
+        pageSize: 50,
+        isCache: false
     },
 
     getBetListByIP_Soccer: function (custID, fromdate, ip, isSoccer) {
-        if (BetListByIP_SportType.params_SportType.IP == ip && BetListByIP_SportType.params_SportType.FromDate == fromdate && BetListByIP_SportType.params_SportType.CustID == custID && BetListByIP_SportType.params_SportType.IsSoccer == isSoccer) {
-            BetListByIP_SportType.params_SportType.IsCache = true;
+        if (BetListByIP_SportType.params_SportType.ip == ip &&
+            BetListByIP_SportType.params_SportType.fromDate == fromdate &&
+            BetListByIP_SportType.params_SportType.customerId == custID &&
+            BetListByIP_SportType.params_SportType.isSoccer == isSoccer) {
+            BetListByIP_SportType.params_SportType.isCache = true;
         }
         else {
-            BetListByIP_SportType.params_SportType.CustID = custID;
-            BetListByIP_SportType.params_SportType.IP = ip;
-            BetListByIP_SportType.params_SportType.FromDate = fromdate
-            BetListByIP_SportType.params_SportType.IsSoccer = isSoccer;
-            BetListByIP_SportType.params_SportType.IsCache = false;
-            BetListByIP_SportType.params_SportType.PageIndex = 1;
-            BetListByIP_SportType.params_SportType.PageSize = 50;
+            BetListByIP_SportType.params_SportType.customerId = custID;
+            BetListByIP_SportType.params_SportType.ip = ip;
+            BetListByIP_SportType.params_SportType.fromDate = fromdate
+            BetListByIP_SportType.params_SportType.isSoccer = isSoccer;
+            BetListByIP_SportType.params_SportType.isCache = false;
+            BetListByIP_SportType.params_SportType.pageIndex = 1;
+            BetListByIP_SportType.params_SportType.pageSize = 50;
         }
 
         try { parent.BlockUI(); } catch (e) { }
@@ -142,7 +146,9 @@ var BetListByIP_SportType = {
                 BetListByIP_SportType.gridOpts_Soccer.isShowPager = _lengthSprortype == 0 ? false : true;
                 $("#BetlistByIP_Soccer").initGrid(BetListByIP_SportType.gridOpts_Soccer);
                 $('#BetlistByIP_Soccer').removeClass("display-none").gridScroller(BetListByIP_SportType.gridOpts_Soccer);
-                BetListByIP_SportType.initPager(_lengthSprortype, BetListByIP_SportType.params_SportType.PageSize, BetListByIP_SportType.params_SportType.PageIndex - 1);
+                BetListByIP_SportType.initPager(_lengthSprortype,
+                    BetListByIP_SportType.params_SportType.pageSize, 
+                    BetListByIP_SportType.params_SportType.pageIndex - 1);
 
 //                $("#filter").css("width", "").attr('style', 'width:' + $("#betListContent").width() + 'px !important;');
             },
@@ -167,9 +173,12 @@ var BetListByIP_SportType = {
         var max_page = Math.ceil(_length / _items_per_page);
         page_index = page_index < max_page ? page_index : max_page - 1;
 
-        BetListByIP_SportType.params_SportType.PageIndex = page_index + 1;
-        BetListByIP_SportType.params_SportType.PageSize = _items_per_page;
-        BetListByIP_SportType.getBetListByIP_Soccer(BetListByIP_SportType.params_SportType.CustID, BetListByIP_SportType.params_SportType.FromDate, BetListByIP_SportType.params_SportType.IP, BetListByIP_SportType.params_SportType.IsSoccer);
+        BetListByIP_SportType.params_SportType.pageIndex = page_index + 1;
+        BetListByIP_SportType.params_SportType.pageSize = _items_per_page;
+        BetListByIP_SportType.getBetListByIP_Soccer(BetListByIP_SportType.params_SportType.customerId,
+            BetListByIP_SportType.params_SportType.fromDate,
+            BetListByIP_SportType.params_SportType.ip,
+            BetListByIP_SportType.params_SportType.isSoccer);
         return false;
     }
 };

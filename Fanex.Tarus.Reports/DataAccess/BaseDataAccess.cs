@@ -21,7 +21,7 @@ namespace Fanex.Tarus.Reports.DataAccess
         public static DataTable SelBalanceUpDay()
         {
             DataTable dt = new DataTable();
-            using (ObjectDb db = new ObjectDb("SelBalanceUpDay"))
+            using (ObjectDb db = new ObjectDb("Core_ReportService_GetBalanceUpDay"))
             {
                 var result = db.ExecuteDataSet();
                 if (result.Tables.Count > 0)
