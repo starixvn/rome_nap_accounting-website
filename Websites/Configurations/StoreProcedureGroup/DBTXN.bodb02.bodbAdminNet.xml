@@ -8,8 +8,10 @@
   
   <Function Name="Report">
     <Setting Key="Delebet" SpName="Acc_Rpt_DeleteBet" DbName="DBTXN.bodb02.bodbAdminNet"/>    
-  </Function> 
-
+  </Function>
+  <Function Name="Customer Status">
+    <Setting Key="LeftPanel_CustomerInfo_UpdateDisableHRFixedOdds" SpName="Acc_CustomerUpdDisableHRFixedOdds_xpre" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" />
+  </Function>
   <Function Name="UserControl">    
     <Setting Key="AdminSel" SpName="Acc_AccAdminSel" DbName="DBTXN.bodb02.bodbAdminNet"/><!--not use-->
     <Setting Key="AdminUpdPageAccess" SpName="Acc_AccAdminUpdPageAccess" DbName="DBTXN.bodb02.bodbAdminNet"/>
