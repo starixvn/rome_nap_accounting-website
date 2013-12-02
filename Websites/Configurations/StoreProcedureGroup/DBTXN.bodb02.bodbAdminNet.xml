@@ -40,7 +40,7 @@
     <Setting Key="Licensee_UpdAgent_VirtualSports" SpName="Acc_Dep_CustomerUpdMemberVirtualSports_MAg" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="NewLicensee_AdNewMember_VirtualSports" SpName="Acc_Dep_CustomerInsMemberVirtualSports_Ag" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Licensee_UpdMember_VirtualSports" SpName="Acc_Dep_CustomerUpdMemberVirtualSports_Ag" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdSuperVS_MinMaxBet" SpName="Acc_CustomerUpdSuperVS_MinMaxBet" DbName="DBTXN.bodb02.bodbAdminNet" Plain="0" />
+    
   </Function>
 
   <Function Name="Special Delete">
@@ -69,9 +69,7 @@
     
   </Function>
 
-  <Function Name="P2P">
-    <Setting Key="Acc_P2PUpdDefaultSetting" SpName="Acc_P2PUpdDefaultSetting" DbName="DBTXN.bodb02.bodbAdminNet"  />
-  </Function>
+  
 
   <Function Name="Transfer">
     <Setting Key="Acc_FinanceCrossTransferMulUpd" SpName="Acc_FinanceCrossTransferMulUpd" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
@@ -85,15 +83,11 @@
     <Setting Key="Acc_BettransInsCrossTransfer" SpName="Acc_BettransInsCrossTransfer" DbName="DBTXN.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_BettransInsTransfer" SpName="Acc_BettransInsTransfer" DbName="DBTXN.bodb02.bodbAdminNet"  />
     <Setting Key="BettransInsTransfer_Admin" SpName="BettransInsTransfer_Admin" DbName="DBTXN.bodb02.bodbAdminNet"  />
-    <Setting Key="Acc_BettransInsTransfer_Confirm" SpName="Acc_BettransInsTransfer_Confirm" DbName="DBTXN.bodb02.bodbAdminNet"  />
+    
     
   </Function>
 
   <Function Name="Exchange Daily">
-    <Setting Key="Acc_ExchangeUpdateOpenToteRate" SpName="Acc_ExchangeUpdateOpenToteRate" DbName="DBTXN.bodb02.bodbAdminNet"/>
-    <Setting Key="Acc_ExchangeIns" SpName="Acc_ExchangeIns" DbName="DBTXN.bodb02.bodbAdminNet"/>
-    <Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="EchangeUpd" SpName="Acc_ExchangeUpd" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Acc_ExchangeUpdateBaseRate" SpName="Acc_ExchangeUpdateBaseRate" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
 

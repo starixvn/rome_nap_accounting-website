@@ -17,7 +17,8 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
                 db.AssignParamValues(param);
                 db.ExecuteNonQuery();
                 var output = db.GetOuputParams();
-                loginTime = CastAide.AsDateTime(output["logintime"]);
+                loginTime = CastAide.AsDateTime(output["logintime"]);                  
+                
             }
             return loginTime;
         }

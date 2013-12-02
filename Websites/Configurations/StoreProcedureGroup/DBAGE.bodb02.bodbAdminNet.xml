@@ -11,8 +11,7 @@
 
   <Function Name="Exchange Rate">
     <Setting Key="Acc_ExchangeCurrencySel" SpName="Acc_ExchangeCurrencySel" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="EchangeSelAcc" SpName="Acc_ExchangeSelAccount" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="EchangeSelById" SpName="Acc_ExchangeSelByID" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="EchangeSelAcc" SpName="Acc_ExchangeSelAccount" DbName="DBAGE.bodb02.bodbAdminNet"  />    
   </Function>
 
   <Function Name="Gaming">

@@ -48,6 +48,7 @@
     <Setting Key="Acc_CustomerUpdP2PSuper_Commission" SpName="Acc_CustomerUpdP2PSuper_Commission" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="Acc_CustomerUpdP2PSuper_GameSetting" SpName="Acc_CustomerUpdP2PSuper_GameSetting" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="Acc_CustomerUpdP2PSuper_MaxTransfer" SpName="Acc_CustomerUpdP2PSuper_MaxTransfer" DbName="DBTXN.CustDB.bodbAdminNet"  />
+    <Setting Key="Acc_P2PUpdDefaultSetting" SpName="Acc_P2PUpdDefaultSetting" DbName="DBTXN.CustDB.bodbAdminNet"  />
   </Function>
 
   <Function Name="RNG Casino">
@@ -67,6 +68,7 @@
     <Setting Key="Acc_CustomerUpdSuperVS_Positiontaking" SpName="Acc_CustomerUpdSuperVS_Positiontaking" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdVS_Enable" SpName="Acc_CustomerUpdVS_Enable" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdVS_MinMaxBet" SpName="Acc_CustomerUpdVS_MinMaxBet" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdSuperVS_MinMaxBet" SpName="Acc_CustomerUpdSuperVS_MinMaxBet" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" />
   </Function>
 
   <Function Name="Sportbook">
@@ -162,6 +164,7 @@
 
   <Function Name="Transfer">
     <Setting Key="Acc_CustomerUpdTransferOption" SpName="Acc_CustomerUpdTransferOption" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="Acc_BettransInsTransfer_Confirm" SpName="Acc_BettransInsTransfer_Confirm" DbName="DBTXN.CustDB.bodbAdminNet"  />
   </Function>
 
   <Function Name="Credit Term">
@@ -188,6 +191,13 @@
   <Function Name="Customer - Login">
     <Setting Key="Acc_LoginAdmin" SpName="Acc_LoginAdmin" DbName="DBTXN.CustDB.bodbAdminNet"  />    
   </Function>
-    
+
+  <Function Name="Exchange Daily">
+    <Setting Key="Acc_ExchangeUpdateOpenToteRate" SpName="Acc_ExchangeUpdateOpenToteRate" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_ExchangeIns" SpName="Acc_ExchangeIns" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel" DbName="DBTXN.CustDB.bodbAdminNet" />
+    <Setting Key="EchangeUpd" SpName="Acc_ExchangeUpd" DbName="DBTXN.CustDB.bodbAdminNet" />
+    <Setting Key="EchangeSelById" SpName="Acc_ExchangeSelByID" DbName="DBTXN.CustDB.bodbAdminNet"  />
+  </Function>
     
 </Functions>
