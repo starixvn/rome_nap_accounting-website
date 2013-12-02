@@ -190,6 +190,13 @@
   <Function Name="Customer - Login">
     <Setting Key="Acc_LoginAdmin" SpName="Acc_LoginAdmin" DbName="DBTXN.CustDB.bodbAdminNet"  />    
   </Function>
-    
+
+  <Function Name="Exchange Daily">
+    <Setting Key="Acc_ExchangeUpdateOpenToteRate" SpName="Acc_ExchangeUpdateOpenToteRate" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_ExchangeIns" SpName="Acc_ExchangeIns" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel" DbName="DBTXN.CustDB.bodbAdminNet" />
+    <Setting Key="EchangeUpd" SpName="Acc_ExchangeUpd" DbName="DBTXN.CustDB.bodbAdminNet" />
+    <Setting Key="EchangeSelById" SpName="Acc_ExchangeSelByID" DbName="DBTXN.CustDB.bodbAdminNet"  />
+  </Function>
     
 </Functions>
