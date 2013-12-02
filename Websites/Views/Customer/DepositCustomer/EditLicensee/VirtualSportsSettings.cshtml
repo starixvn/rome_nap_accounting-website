@@ -1,0 +1,134 @@
+﻿@using Fanex.Tarus.Infrastructure.Configurations;
+<script type="text/javascript">
+    var virtualSports = [];
+  (function () {
+    @{
+        @:var sport;
+            var sports = VirtualSportsSection.Instance.Sports;
+            foreach (VirtualSportsElement virtualSportsElement in sports)
+            {
+                if (!virtualSportsElement.Active)
+                {
+                    continue;
+                }
+
+            @:sport = {Id: '@virtualSportsElement.Id.ToLower()', BetType: [], Name: '@virtualSportsElement.Name'};
+            if (virtualSportsElement.Bettype != null &&
+                virtualSportsElement.Bettype != "NA" &&
+                virtualSportsElement.Bettype != string.Empty &&
+                !string.IsNullOrWhiteSpace(virtualSportsElement.Bettype.Trim()))
+            {
+                var betTypes = virtualSportsElement.Bettype.Split(new char[] { ',' });
+                foreach (var betType in betTypes)
+                {
+                    @:sport.BetType.push(@betType);
+                }
+            }
+            
+            @:window.virtualSports.push(sport);
+        }
+    }
+    })();
+</script>
+@helper GenerateBetSettingVirtualSports()
+    {
+        var virtualSports = VirtualSportsSection.Instance.Sports;
+        foreach (VirtualSportsElement sport in virtualSports)
+        {
+            if (!sport.Active)
+            {
+                continue;
+            }
+
+            var sportId = @sport.Id.ToLower();
+            var minBetv = "minbetv" + sportId;
+            var maxBetv = "maxbetv" + sportId;
+            var maxPerMatchv = "maxpermatchv" + sportId;
+            var virtualSports_SportRowId = "virtualsports_sport" + sportId;
+        
+    <tr class="display-none virtualsports_sportrow @virtualSports_SportRowId">
+        <td align="left" style="padding-left: 4px">
+            <span>@sport.Name</span>
+        </td>
+        <td>
+            <input id="@minBetv" minbet="true" type="text" class="setting-input" value="@sport.Minbet" />
+        </td>
+        <td>
+            <input id="@maxBetv" maxbet="true" type="text" class="setting-input" value="@sport.Maxbet" />
+        </td>
+        <td>
+            <input id="@maxPerMatchv" maxpermatch="true" type="text" class="setting-input" value="@sport.Maxpermatch" />
+        </td>
+    </tr>
+        }
+}
+<table id="tab-virtualsports-settings" cellspacing="0" cellpadding="0" border="0"
+    class="table-positiontaking-header">
+    <tbody>
+        <tr id="btntop">
+            <td class="btnleft">
+            </td>
+            <td class="btnmiddle">
+                <span class="mp">Virtual Sports</span>
+            </td>
+            <td class="md2 btnright" arrow="true">
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div id="div-virtualsports-container">
+    <table border="0">
+        <tbody>
+            <tr>
+                <td align="left">
+                    <input id="checkbox-enable-virtualsports" type="checkbox" />
+                </td>
+                <td>
+                    <label class="label-for-checkbox" for="checkbox-enable-virtualsports">
+                        Enable Virtual Sports</label>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="tblcollapse table-betsettings">
+        <tbody>
+            <tr class="title">
+                <td colspan="4" class="align-center">
+                    <span class="bold">Bet Setting</span>
+                </td>
+            </tr>
+            <tr class="title">
+                <td class="header-title">
+                </td>
+                <td class="header-title">
+                    <span>Min Bet</span>
+                </td>
+                <td class="header-title">
+                    <span>Max Bet</span>
+                </td>
+                <td class="header-title">
+                    <span>Max Per Match</span>
+                </td>
+            </tr>
+            @GenerateBetSettingVirtualSports()
+        </tbody>
+    </table>
+    <table class="tblcollapse table-positiontaking">
+        <tbody>
+            <tr class="title">
+                <td colspan="2" class="header-title">
+                    <span>Position Taking</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="align-left column-sportgroup">
+                    <span>Sportsbook</span>
+                </td>
+                <td class="align-left">
+                    <select id="dropwdown-virtualsports-positiontaking">
+                    </select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

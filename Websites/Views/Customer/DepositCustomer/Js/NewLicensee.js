@@ -4,36 +4,85 @@ newLic.init = function () {
     $("#tblAdd").click(function () {
         newLic.submit();
     });
+
+    $("#selCurrency").unbind("change");
+    $("#selCurrency").change(function () {
+        newLic.GenerateSampleName();
+    });
+
+    $("#btnResetUsenName").unbind("click");
+    $("#btnResetUsenName").click(function () {
+        newLic.ResetUsenName();
+    });
 };
 
 newLic.verifyData = function () {
-    if (common.isEmpty($("#tbxSuperName").val())) {
+    var superName = $("#tbxSuperName").val();
+    if (common.isEmpty(superName)) {
         common.showErr("Please input Super's Username!");
         return false;
     }
 
-    if (!common.validateUserName($("#tbxSuperName").val())) {
+    if (!common.validateUserName(superName)) {
         common.showErr("Super's Username is invalid!");
         return false;
     }
 
-    if (!common.isEmpty($("#tbxAgentName").val()) && common.isEmpty($("#tbxMasterName").val())) {
+    var masterName = $("#tbxMasterName").val();
+    if (common.isEmpty(masterName)) {
         common.showErr("Please input Master's Username!");
         return false;
     }
 
-    if (!common.isEmpty($("#tbxMasterName").val())) {
-        if (!common.validateUserName($("#tbxMasterName").val())) {
-            common.showErr("Master's Username is invalid!");
-            return false;
-        }
+    if (!common.validateUserName(masterName)) {
+        common.showErr("Master's Username is invalid!");
+        return false;
     }
 
-    if (!common.isEmpty($("#tbxAgentName").val())) {
-        if (!common.validateUserName($("#tbxAgentName").val())) {
-            common.showErr("Agent's Username is invalid!");
-            return false;
-        }
+    var agentName = $("#tbxAgentName").val();
+    if (common.isEmpty(agentName)) {
+        common.showErr("Please input Agent's Username!");
+        return false;
+    }
+
+    if (!common.validateUserName(agentName)) {
+        common.showErr("Agent's Username is invalid!");
+        return false;
+    }
+
+    var dummyMasterName = $("#tbxDummyMasterName").val();
+    if (common.isEmpty(dummyMasterName)) {
+        common.showErr("Please input Dummy Master's Username!");
+        return false;
+    }
+
+    if (!common.validateUserName(dummyMasterName)) {
+        common.showErr("Dummy Master's Username is invalid!");
+        return false;
+    }
+
+    var dummyAgentName = $("#tbxDummyAgentName").val();
+    if (common.isEmpty(dummyAgentName)) {
+        common.showErr("Please input Dummy Agent's Username!");
+        return false;
+    }
+
+    if (!common.validateUserName(dummyAgentName)) {
+        common.showErr("Dummy Agent's Username is invalid!");
+        return false;
+    }
+
+    var dummyMemberName = $("#tbxDummyMemberName").val();
+    if (common.isEmpty(dummyMemberName)) {
+        common.showErr("Please input Dummy Member's Username!");
+        return false;
+    }
+
+    var dummyMemberNameList = dummyMemberName.split(',');
+    if (!common.validateUserName(dummyMemberName) ||
+         $.inArray("", dummyMemberNameList) != -1) {
+        common.showErr("Dummy Member's Usernames is invalid!");
+        return false;
     }
 
     return true;
@@ -121,7 +170,7 @@ newLic.assignNumberGamePT = function (params) {
         var type = arr[i];
 
         var bettypes = window.arrNumberGameBettypes;
-        
+
         for (var j = 0; j < bettypes.length; j++) {
             params.push({
                 Name: "v" + id + type + "positiontaking_" + bettypes[j]
@@ -133,7 +182,7 @@ newLic.assignNumberGamePT = function (params) {
             params.push({
                 Name: "v" + id + type + "livepositiontaking_" + bettypes[k]
                 , Value: $("#selNGPT").val()
-            }); 
+            });
         }
     }
 };
@@ -157,14 +206,14 @@ newLic.assignRacingBetSettingComPT = function (params) {
                 Name: "v" + racing.Id + "maxpermatch_" + tote.Id
                 , Value: $("#v" + racing.Id + "maxpermatch_" + tote.Id).getNumberValue()
             });
-            
+
             for (var i = 0; i < tote.Bettype.length; i++) {
                 //commision
                 params.push({
                     Name: "v" + racing.Id + "discount_" + tote.Bettype[i]
                     , Value: $("#v" + racing.Id + "discount_" + tote.Id).val()
                 });
-                
+
                 //win place pt
                 params.push({
                     Name: "v" + racing.Id + "spositiontaking_" + tote.Bettype[i]
@@ -230,16 +279,19 @@ newLic.getPostParam = function () {
         , Value: !$("#cbxEnableNumberGame").is(":checked")
     });
 
-    //virutal sports
+    //virtual sports
     if (typeof vsSuperSetting != 'undefined') {
         vsSuperSetting.assignVirtualSportsSettings(params);
     }
     return {
         postParam: {
-            SuperName: $("#tbxSuperName").val()
-            , MasterName: $("#tbxMasterName").val()
-            , AgentName: $("#tbxAgentName").val()
-            , PostParams: params
+            SuperName: $("#tbxSuperName").val(),
+            MasterName: $("#tbxMasterName").val(),
+            AgentName: $("#tbxAgentName").val(),
+            DummyMasterName: $("#tbxDummyMasterName").val(),
+            DummyAgentName: $("#tbxDummyAgentName").val(),
+            DummyMemberName: $("#tbxDummyMemberName").val(),
+            PostParams: params
         }
     };
 };
@@ -266,27 +318,78 @@ newLic.submit = function () {
         data: $.toJSON(this.getPostParam()),
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
+            if (data.SuccessMessageList && data.SuccessMessageList.length > 0) {
+                var infoPrefix = "";
+                for (var i = 0; i < 17; i++) {
+                    infoPrefix += "&nbsp;";
+                }
+
+                var msg = "Add new: " + "<br />" + infoPrefix +
+                          data.SuccessMessageList.join("<br />" + infoPrefix) +
+                          "<br />" + "successfully!";
+                showAlertMessage("divSuccess", msg, 0);
+                $("#divSuccess").show().find("div:first");
+                setTimeout(function () {
+                    $("#divSuccess").hide();
+                }, 4000);
+            } else {
+                $("#divSuccess").hide();
+            }
+
             if (parseInt(data.ErrorCode) != 0) {
                 common.showErr(data.ErrorMessage);
             }
             else {
-                var msg = "Add new super: " + $("#tbxSuperName").val();
-                if ($("#tbxMasterName").val() != "") {
-                    msg += ", master: " + $("#tbxMasterName").val();
-                }
-
-                if ($("#tbxAgentName").val() != "") {
-                    msg += ", agent: " + $("#tbxAgentName").val();
-                }
-
-                msg += " successfully!";
-
-                common.showSuccess(msg);
                 common.resetValues();
             }
+
             common.unBlock();
         }
     });
+};
+
+newLic.GenerateSampleName = function () {
+    var siteName = $("#selSites").find("option:selected").html();
+    var currencyName = $("#selCurrency").find("option:selected").attr("data-currencyname");
+
+    var superName = $("#tbxSuperName").val();
+    var masterName = $("#tbxMasterName").val();
+    var agentName = $("#tbxAgentName").val();
+    var dummyMasterName = $("#tbxDummyMasterName").val();
+    var dummyAgentName = $("#tbxDummyAgentName").val();
+    var dummyMemberName = $("#tbxDummyMemberName").val();
+
+    if (!common.isEmpty(superName) ||
+        !common.isEmpty(masterName) ||
+        !common.isEmpty(agentName) ||
+        !common.isEmpty(dummyMasterName) ||
+        !common.isEmpty(dummyAgentName) ||
+        !common.isEmpty(dummyMemberName)) {
+        return;
+    }
+
+    $("#tbxSuperName").val(siteName + "Super" + currencyName);
+    $("#tbxMasterName").val(siteName + currencyName);
+    $("#tbxAgentName").val(siteName + currencyName + "01");
+
+    $("#tbxDummyMasterName").val(siteName + "ACC" + currencyName);
+    $("#tbxDummyAgentName").val(siteName + "ACC" + currencyName + "01");
+
+    var dummyMemberName = siteName + "Transfer" + currencyName + "," +
+                          siteName + "Charges" + currencyName + "," +
+                          siteName + "Bonus" + currencyName + "," +
+                          siteName + "Winthdrawal" + currencyName;
+    $("#tbxDummyMemberName").val(dummyMemberName);
+};
+
+newLic.ResetUsenName = function () {
+    $("#tbxSuperName").val('');
+    $("#tbxMasterName").val('');
+    $("#tbxAgentName").val('');
+
+    $("#tbxDummyMasterName").val('');
+    $("#tbxDummyAgentName").val('');
+    $("#tbxDummyMemberName").val('');
 };
 
 $(document).ready(function () {

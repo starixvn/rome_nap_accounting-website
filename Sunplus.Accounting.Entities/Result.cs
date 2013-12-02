@@ -28,6 +28,9 @@ namespace Sunplus.Accounting.Entities
         public string ErrorMessage { get; set; }
 
         [DataMember]
+        public List<string> SuccessMessageList { get; set; }
+
+        [DataMember]
         public Dictionary<int, string> ErrorHandler { get; set; }
 
         public void HandleError(ref Result result, DbResult ds, string fileResource)

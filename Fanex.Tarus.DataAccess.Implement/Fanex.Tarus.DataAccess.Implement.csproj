@@ -49,6 +49,7 @@
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -60,6 +61,7 @@
     <Compile Include="AdminAccess.cs" />
     <Compile Include="BaseAccess.cs" />
     <Compile Include="Constants\DbTypeSize.cs" />
+    <Compile Include="Constants\RoleConstants.cs" />
     <Compile Include="Customer\DepositCustomerAccess.cs" />
     <Compile Include="HelperAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -76,6 +78,10 @@
     <ProjectReference Include="..\Fanex.Tarus.Entities\Fanex.Tarus.Entities.csproj">
       <Project>{0D0F3C0D-F85C-4B0D-B033-16424E1AE5E0}</Project>
       <Name>Fanex.Tarus.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.Tarus.Infrastructure\Fanex.Tarus.Infrastructure.csproj">
+      <Project>{CCC0446A-42E7-4850-B09C-4DAC278F23B3}</Project>
+      <Name>Fanex.Tarus.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sunplus.Accounting.Core\Sunplus.Accounting.Core.csproj">
       <Project>{09B74F02-6C21-4C5E-A52C-B6D56595A262}</Project>
