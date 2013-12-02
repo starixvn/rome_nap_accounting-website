@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Functions> 
+<Functions>
+  <Function Name="Customer - Add Licensee">
     <Setting Key="NewLicensee_AdNewSuper" SpName="Acc_Dep_CustomerInsMember_Com_Copy" DbName="main" />
     <Setting Key="NewLicensee_AdNewMaster" SpName="Acc_Dep_CustomerInsMember_SAg_Copy" DbName="main" />
     <Setting Key="NewLicensee_AdNewAgent" SpName="Acc_Dep_CustomerInsMember_MAg_Copy" DbName="main" />
@@ -18,13 +19,12 @@
 
     <Setting Key="Customer_NewLicensee_GetCurrencies" SpName="Acc_CurrencySel" DbName="DB052.BODB02"  />
 
-    <Setting Key="Customer_NewLicensee_CheckUsername" SpName="Acc_Dep_LicenseeUsernameCheck" DbName="DBEXT.bodb02.bodbAdminNet" />
+    
   </Function>
   <Function Name="Customer - Edit Licensee">
     <Setting Key="Customer_EditLicensee_GetLicenseeInfo" SpName="Acc_ExchangeSel" DbName="main"  />
     <Setting Key="Customer_EditLicensee_UpdateLicenseeInfo" SpName="Acc_ExchangeSel" DbName="main"  />
 
   </Function>
-  <Function Name="Customer - Replicate Licensee Settings">
-    <Setting Key="Customer_ReplicateLicenseeSettings_DoAction" SpName="Acc_Dep_SyncLicenseeSetting" DbName="DBLIC.bodb_Licensee.bodbAdminNet"  />
+ 
 </Functions>

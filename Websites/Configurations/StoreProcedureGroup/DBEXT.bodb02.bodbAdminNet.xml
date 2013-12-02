@@ -69,5 +69,7 @@
     <Setting Key="ResetWinningRep14" SpName="Acc_ResetWinning_SelByDate14" DbName="DBEXT.bodb02.bodbAdminNet"  />
   </Function>
   
-  
+  <Function Name="Customer NewLicensee">
+    <Setting Key="Customer_NewLicensee_CheckUsername" SpName="Acc_Dep_LicenseeUsernameCheck" DbName="DBEXT.bodb02.bodbAdminNet" />
+  </Function>
 </Functions>
