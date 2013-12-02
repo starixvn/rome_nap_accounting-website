@@ -67,9 +67,7 @@
     
   </Function>
 
-  <Function Name="P2P">
-    <Setting Key="Acc_P2PUpdDefaultSetting" SpName="Acc_P2PUpdDefaultSetting" DbName="DBTXN.bodb02.bodbAdminNet"  />
-  </Function>
+  
 
   <Function Name="Transfer">
     <Setting Key="Acc_FinanceCrossTransferMulUpd" SpName="Acc_FinanceCrossTransferMulUpd" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
