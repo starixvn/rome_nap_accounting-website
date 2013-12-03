@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions> 
 
-  <Function Name="SearchCopy">
+  <!--<Function Name="SearchCopy">
     <Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="db053"  Plain="0"/>
     <Setting Key="Acc_CustomerInsMember_CloneSetting_Com" SpName="Acc_CustomerInsMember_CloneSetting_Com" DbName="main"  Plain="0"/>
-  </Function>
+  </Function>-->
   
 </Functions>

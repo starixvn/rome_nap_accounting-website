@@ -5,6 +5,11 @@
     margin: 0px;
 }
 
+body.wait *, body.wait 
+{
+    cursor:wait !important;
+}
+
 /*form*/
 .form550
 {

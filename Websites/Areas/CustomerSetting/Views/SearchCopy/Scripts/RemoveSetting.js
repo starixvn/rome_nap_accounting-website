@@ -123,22 +123,18 @@ PTSetting.SportType = new function () {
     };
 
     this.SetFrameLoaded = function () {
-        var tabId = '';
-        $(".tabsports div").each(function () {
-            if (this.className.indexOf('tab-active') > -1) {
-                tabId = this.id;
-            }
-        });
+        var tabId = $("#listSports").val();
+        
         //remove settings
         switch (tabId) {
-            case 'tabSportsbook': RemoveSportBookCustInfo(); RemoveButtons('#frmSportbook'); break;
-            case 'tabSportsbookMinPT': RemoveSportBookMinPT(); RemoveButtons('#frmSportbookMinPT'); break;
-            case 'tabRacing': RemoveRacingCustInfo(); RemoveButtons('#frmRacing'); break;
-            case 'tabRacingMinPT': RemoveRacingMinPT(); RemoveButtons('#frmRacingMinPT'); break;
-            case 'tabCasino': RemoveCasinoCustInfo(); RemoveButtons('#frmCasino'); break;
-            case 'tabVirtualSports': RemoveVirtualSportsCustInfo(); RemoveButtons('#frmVirtualSports'); break;
-            case 'tabBingo': RemoveBingoCustInfo(); RemoveButtons('#frmBingo'); break;
-            case 'tabLiveCasino': RemoveLiveCasinoCustInfo(); RemoveButtons('#frmLiveCasino'); break;
+            case '1': RemoveSportBookCustInfo(); RemoveButtons('#frmSportbook'); break;
+            case '2': RemoveSportBookMinPT(); RemoveButtons('#frmSportbookMinPT'); break;
+            case '3': RemoveRacingCustInfo(); RemoveButtons('#frmRacing'); break;
+            case '4': RemoveRacingMinPT(); RemoveButtons('#frmRacingMinPT'); break;
+            case '5': RemoveCasinoCustInfo(); RemoveButtons('#frmCasino'); break;
+            case '6': RemoveVirtualSportsCustInfo(); RemoveButtons('#frmVirtualSports'); break;
+            case '7': RemoveBingoCustInfo(); RemoveButtons('#frmBingo'); break;
+            case '8': RemoveLiveCasinoCustInfo(); RemoveButtons('#frmLiveCasino'); break;
         }
     }
 };

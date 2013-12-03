@@ -22,6 +22,19 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
     $scope.existedUser = { userid: -1, username: '', selectedSite: {}, sites: [], selectedCurrency: '', maxCredit: '' };
     $scope.newUser = {};
 
+    $scope.sports = [
+            { sportname: '-- choose sport --', sportvalue: 'choosesport' },
+            { sportname: 'Sportsbook', sportvalue: 'tabSportsbook' },
+            { sportname: 'Sportsbook Min PT', sportvalue: 'tabSportsbookMinPT' },
+            { sportname: 'Racing', sportvalue: 'tabRacing' },
+            { sportname: 'Racing Min PT', sportvalue: 'tabRacingMinPT' },
+            { sportname: 'Casino', sportvalue: 'tabCasino' },
+            { sportname: 'Virtual Sports', sportvalue: 'tabVirtualSports' },
+            { sportname: 'Bingo', sportvalue: 'tabBingo' },
+            { sportname: 'Live Casino', sportvalue: 'tabLiveCasino' }
+    ];
+    $scope.selectedSport = $scope.sports[0];
+
     /* initialization */
     $scope.init = function () {
         $scope.newUser = angular.copy(user);
@@ -115,15 +128,22 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         return true;
     };
 
-    $scope.showSetting = function (settingInfoId, tabId) {
-        if (tabId == "tabGenealInformation") {
+    $scope.showSetting = function (tabId) {
+        if (tabId == "choosesport") {
             return;
         }
 
         $(".sport").hide();
         $(".settingInfo div").hide();
         $("#step2 .tab-active").attr("class", "tab-inactive");
-        $('#' + tabId).attr("class", "tab-active");
+
+        if (tabId == undefined || tabId == "" || tabId == "tabSports") {
+            tabId = $scope.selectedSport.sportvalue;
+            $("#tabSports").attr("class", "tab-active");
+        }
+        else {
+            $('#' + tabId).attr("class", "tab-active");
+        }
 
         var url = $("#currentURL").val();
         switch (tabId) {
@@ -166,21 +186,21 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
     };
 
     $scope.disableSports = function (statusSports) {
-        if (statusSports.DisableRacing == true) {
-            $("#tabRacing").hide();
-            $("#tabRacingMinPT").hide();
+        if (statusSports.HideRacing == true) {
+            $("#listSports option[value='3']").remove();
+            $("#listSports option[value='4']").remove();            
         }
-        if (statusSports.DisableCasino == true) {
-            $("#tabCasino").hide();
+        if (statusSports.HideCasino == true) {
+            $("#listSports option[value='5']").remove();            
         }
-        if (statusSports.DisableVirtualSports == true) {
-            $("#tabVirtualSports").hide();
+        if (statusSports.HideVirtualSports == true) {
+            $("#listSports option[value='6']").remove();            
         }
-        if (statusSports.DisableBingo == true) {
-            $("#tabBingo").hide();
+        if (statusSports.HideBingo == true) {
+            $("#listSports option[value='7']").remove();            
         }
-        if (statusSports.DisableLiveCasino == true) {
-            $("#tabLiveCasino").hide();
+        if (statusSports.HideLiveCasino == true) {
+            $("#listSports option[value='8']").remove();            
         }
     };
 
@@ -191,9 +211,15 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             return;
         }
 
+        $scope.existedUser.userid = -1;
+
         var param = {
             username: username
         };
+
+        try { parent.parent.BlockUI(); } catch (e) { }
+        try { parent.BlockUI(); } catch (e) { }
+        $("body").addClass("wait");        
 
         $.ajax({
             type: "POST",
@@ -202,6 +228,10 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             dataType: "json",
             data: JSON.stringify(param),
             success: function (customerSettingView) {
+                try { parent.parent.jQuery.unblockUI(); } catch (e) { }
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+                $('body').removeClass('wait');                
+
                 var custid = customerSettingView.UserId;
                 var statusSports = customerSettingView.StatusSports;
 
@@ -214,7 +244,6 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
 
                     //step2                    
                     $scope.disableSports(statusSports);
-
                     $scope.getSiteCreditAndCurrencyByUserId(custid);
                 }
                 else {

@@ -6,7 +6,7 @@
     float: left;
     margin-right: 1px;
     padding: 0px 10px;
-    font-size: 14px;
+    /*font-size: 14px;*/
 }
 
 #step2 .tab-active
@@ -18,7 +18,7 @@
 #step2 .tab-inactive
 {
     border: 1px solid #d7d7d7;
-    background: #4CABC4;
+    background: #F2EDE6;
 }
 
 #step2 .tabsports
