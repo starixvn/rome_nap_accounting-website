@@ -122,6 +122,9 @@
   <Function Name="Customer - Auto Suspend">
     <Setting Key="Customer_AutoSuspend_UpdateCustomerStatus" SpName="Acc_CustomerUpdAutoSuspend" DbName="DBTXN.bodb02.bodbAdminNet"/>
   </Function>
+  <Function Name="External Betting Limit">
+    <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="DBTXN.bodb02.bodbAdminNet_ex" Plain="0" />
+  </Function>
   <Function Name="Customer - Add Licensee">
     <Setting Key="NewLicensee_AdNewSuper" SpName="Acc_Dep_CustomerInsMember_Com_Copy" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="NewLicensee_AdNewMaster" SpName="Acc_Dep_CustomerInsMember_SAg_Copy" DbName="DBTXN.bodb02.bodbAdminNet" />
