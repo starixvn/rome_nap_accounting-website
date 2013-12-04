@@ -76,8 +76,7 @@
     <Setting Key="BetList_CustInfo" SpName="Acc_BetsSelBetList" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="AllStatement" SpName="Acc_AllStatement" DbName="DBAGE.bodb02.bodbAdminNet"  />
   </Function>
-  <Function Name="Customer - New Customer (NEW)">
-    <Setting Key="Acc_CustomerSelAgentInfo" SpName="Acc_CustomerSelAgentInfo" DbName="DBAGE.bodb02.bodbAdminNet"/>
+  <Function Name="Customer - New Customer (NEW)">    
     <Setting Key="Acc_CustomerSelMAgentInfo" SpName="Acc_CustomerSelMAgentInfo" DbName="DBAGE.bodb02.bodbAdminNet"/>
     <Setting Key="Acc_CustomerSelSAgentInfo" SpName="Acc_CustomerSelSAgentInfo" DbName="DBAGE.bodb02.bodbAdminNet"/>
     <Setting Key="Acc_CustomerSelSAg" SpName="Acc_CustomerSelSAg" DbName="DBAGE.bodb02.bodbAdminNet"  />
@@ -101,9 +100,7 @@
   </Function>
   <Function Name="Customer - Customer List">
     <Setting Key="Acc_CustomerSelBySAg" SpName="Acc_CustomerSelBySAg" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="Acc_CustomerSelMAgByCom" SpName="Acc_CustomerSelMAgByCom" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="Acc_CustomerSelByMAg" SpName="Acc_CustomerSelByMAg" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="Acc_CustomerSelByAg" SpName="Acc_CustomerSelByAg" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="Acc_CustomerSelMAgByCom" SpName="Acc_CustomerSelMAgByCom" DbName="DBAGE.bodb02.bodbAdminNet"  />    
   </Function>
   <Function Name="PTVirtualSports - Setting">
     <Setting Key="Acc_CustomerSelEditSuperVS" SpName="Acc_CustomerSelEditSuperVS" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
@@ -202,6 +199,7 @@
     <Setting Key="CustGroupIns" SpName="Acc_CustGroupIns" DbName="DBAGE.bodb02.bodbAdminNet"  />
     <Setting Key="CustomerSelCasinoBonusStatus" SpName="Acc_CustomerSelCasinoBonusStatus" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="Customer_AutoSuspend_GetCustomerStatus" SpName="Acc_CustomerSelAutoSuspendStatus" DbName="DBAGE.bodb02.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerSelSEditCustomerVS" SpName="Acc_CustomerSelSEditCustomerVS" DbName="DBAGE.bodb02.bodbAdminNet" Plain="0" />
   </Function>
 
   <Function Name="User Control">

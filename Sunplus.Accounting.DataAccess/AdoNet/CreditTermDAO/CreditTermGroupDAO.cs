@@ -28,7 +28,7 @@ namespace Sunplus.Accounting.DataAccess.AdoNet.CreditTermDAO
             {
                 objDB.AddInParameter("CustId", DbType.Int32, custId);
                 objDB.AddInParameter("IsRptConsol", DbType.Boolean, isViewReport);
-                objDB.AddInParameter("UserID", DbType.Boolean, userID);
+                objDB.AddInParameter("UserID", DbType.Int32, userID); 
                 objDB.AddOutParameter("ErrCode", DbType.Int32, sizeof(int));
                 objDB.AddOutParameter("ErrMsg", DbType.String, 4000);
                 objDB.ExecuteNonQuery();
