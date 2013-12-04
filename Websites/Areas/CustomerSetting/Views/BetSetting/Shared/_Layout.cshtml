@@ -1,4 +1,19 @@
-﻿<!DOCTYPE html>
+﻿@using Fanex.CustomerSetting.Module.Core
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
+@{
+    var id = Utils.ToInt32(Request.RequestContext.RouteData.Values["id"]);
+    var uplineId = Utils.ToInt32(Request.RequestContext.RouteData.Values["uplineId"]);
+    var userId = Utils.ToInt32(Request.RequestContext.RouteData.Values["userId"]);
+    var siteName = Request.RequestContext.RouteData.Values["siteName"];
+    var customer = new Fanex.CustomerSetting.Module.BetSetting.Services.Impl.CustomerService();
+    var custInfo = JsonConvert.SerializeObject(customer.UserInfo(id), Formatting.None, new JsonSerializerSettings
+    {
+        ContractResolver = new CamelCasePropertyNamesContractResolver(),
+        NullValueHandling = NullValueHandling.Ignore
+    });    
+}
+<!DOCTYPE html>
 <html lang="en">
    <head>
         <meta charset="utf-8">
@@ -7,47 +22,81 @@
         <meta content="" name="description">
         <meta content="" name="author">       
         <link href="@Url.Content("~/Areas/CustomerSetting/Styles/jquery-ui.css")" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css?ver=1")" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Validators.css")" rel="stylesheet" type="text/css" />
-        @RenderSection("Styles", false)
+        <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
     </head>
     <body>
-    <div id="tabs" style="float: left; width: auto">
+    <div id="tabs" style="float: left; width: 850px; border: none">
         <ul class="tabs">
             <li id="tab1" onclick="LoadSB()"><a href="#tabs-1">Sportsbook</a></li>
             <li id="tab2" onclick="LoadRacing()"><a href="#tabs-2">Racing</a></li>
-            <!--<li id="tab3"><a href="#tabs-3" class="hidden">Virtual Sports</a></li>
-            <li id="tab4"><a href="#tabs-4" class="hidden">RNG Casino</a></li>
-            <li id="tab5"><a href="#tabs-5" class="hidden">Live Casino</a></li>
-            <li id="tab6"><a href="#tabs-6" class="hidden">Bingo</a></li>-->
+            <li id="tab3" onclick="LoadVirtualSports()"><a href="#tabs-3">Virtual Sports</a></li>
+            <li id="tab4" onclick="LoadLiveCasino()"><a href="#tabs-4">Live Casino</a></li>
+            <li id="tab5" onclick="LoadBingo()"><a href="#tabs-5">Bingo</a></li>
+            <li id="tab6" onclick="LoadCasino()"><a href="#tabs-6">Casino</a></li>
         </ul>
-        <div id="tabs-1">     
-            @RenderSection("Sportsbook", false)             
+        <div id="tabs-1">
+            @RenderSection("Sportsbook", false)
+        </div>
+        <div id="tabs-2">
+            @RenderSection("Racing", false)
+        </div>
+        <div id="tabs-3">
+            @RenderSection("VirtualSports", false)
+        </div>
+        <div id="tabs-4">          
+            @RenderSection("LiveCasino", false)
         </div>                
-        <div id="tabs-2" class="hidden">          
-            @RenderSection("Racing", false)             
+        <div id="tabs-5">   
+            @RenderSection("Bingo", false)       
         </div>                
-        <!--<div id="tabs-3" class="hidden">          
-        </div>                
-        <div id="tabs-4" class="hidden">          
-        </div>                
-        <div id="tabs-5" class="hidden">          
-        </div>                
-        <div id="tabs-6" class="hidden">          
-        </div>-->
-    </div>                    
+        <div id="tabs-6">          
+            @RenderSection("Casino", false)
+        </div>
+    </div>                        
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery-ui-1.9.1.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Validators.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Views/BetSetting/Scripts/BetSetting.js")" type="text/javascript"></script>
-    @RenderSection("Scripts", false)
     <script type="text/javascript">
+        function toUrl(relativeUrl) {
+            return '@Url.Content("~/CustomerSetting/BetSetting/")' + relativeUrl;
+        }
+
         $(document).ready(function () {
-            $('#tabs').tabs();
+            var url = document.URL.toLowerCase();
+            var index = url.indexOf('sportsbook') != -1 ? 0 :
+                url.indexOf('racingbetting') != -1 ? 1 :
+                url.indexOf('virtualsportsbetting') != -1 ? 2 :
+                url.indexOf('livecasinobetting') != -1 ? 3 :
+                url.indexOf('bingobetting') != -1 ? 4 :
+                url.indexOf('casinobetting') != -1 ? 5 : 0;
+
+            $('#tabs').tabs({ selected: index });
+
+            var custInfo = JSON.parse(Fanex.CustomerSetting.Core.DecodeHtml('@custInfo'));
+
+            if (!custInfo.syncCasino) {
+                $('#tab6').remove();
+                $('#tabs-6').remove();
+            }
+
+            if (!custInfo.syncBingo) {
+                $('#tab5').remove();
+                $('#tabs-5').remove();
+            }
+
+            if (!custInfo.syncLiveCasino) {
+                $('#tab4').remove();
+                $('#tabs-4').remove();
+            }
         });
-    </script>    
+
+        var custId = parseInt('@id');
+        var uplineId = parseInt('@uplineId');
+        var userId = parseInt('@userId');
+        var siteName = '@siteName';        
+    </script>
     </body>
 </html>
