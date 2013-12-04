@@ -57,6 +57,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
             DbResult rs = null;
             try
             {
+
+                arrUsernames = arrUsernames.Replace('\b', Convert.ToChar(8));
+
                 var hash = new Hashtable();
                 hash.Add("userid", AppSession.AccId);
                 hash.Add("arrusernames", arrUsernames);

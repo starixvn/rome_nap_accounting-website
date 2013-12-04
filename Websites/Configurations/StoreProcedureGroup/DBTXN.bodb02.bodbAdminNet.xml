@@ -8,8 +8,10 @@
   
   <Function Name="Report">
     <Setting Key="Delebet" SpName="Acc_Rpt_DeleteBet" DbName="DBTXN.bodb02.bodbAdminNet"/>    
-  </Function> 
-
+  </Function>
+  <Function Name="Customer Status">
+    <Setting Key="LeftPanel_CustomerInfo_UpdateDisableHRFixedOdds" SpName="Acc_CustomerUpdDisableHRFixedOdds_xpre" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" />
+  </Function>
   <Function Name="UserControl">    
     <Setting Key="AdminSel" SpName="Acc_AccAdminSel" DbName="DBTXN.bodb02.bodbAdminNet"/><!--not use-->
     <Setting Key="AdminUpdPageAccess" SpName="Acc_AccAdminUpdPageAccess" DbName="DBTXN.bodb02.bodbAdminNet"/>
@@ -120,4 +122,23 @@
   <Function Name="Customer - Auto Suspend">
     <Setting Key="Customer_AutoSuspend_UpdateCustomerStatus" SpName="Acc_CustomerUpdAutoSuspend" DbName="DBTXN.bodb02.bodbAdminNet"/>
   </Function>
+  <Function Name="External Betting Limit">
+    <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="DBTXN.bodb02.bodbAdminNet_ex" Plain="0" />
+  </Function>
+  <Function Name="Customer - Add Licensee">
+    <Setting Key="NewLicensee_AdNewSuper" SpName="Acc_Dep_CustomerInsMember_Com_Copy" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="NewLicensee_AdNewMaster" SpName="Acc_Dep_CustomerInsMember_SAg_Copy" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="NewLicensee_AdNewAgent" SpName="Acc_Dep_CustomerInsMember_MAg_Copy" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="NewLicensee_AdNewMember" SpName="Acc_Dep_CustomerInsMember_Ag_Copy" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="DepositCust_UpdateSuperSetting" SpName="Acc_Dep_CustomerUpdMember_Com_Copy" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="DepositCust_UpdateMasterSetting" SpName="Acc_Dep_CustomerUpdMember_SAg_Copy" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="DepositCust_UpdateAgentSetting" SpName="Acc_Dep_CustomerUpdMember_MAg_Copy" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="DepositCust_UpdateMemberSetting" SpName="Acc_Dep_CustomerUpdMember_Ag_Copy" DbName="DBTXN.bodb02.bodbAdminNet" />
+  </Function>
+  <Function Name="Customer - Edit Licensee">
+    <Setting Key="Customer_EditLicensee_GetLicenseeInfo" SpName="Acc_ExchangeSel" DbName="DBTXN.bodb02.bodbAdminNet"  />
+    <Setting Key="Customer_EditLicensee_UpdateLicenseeInfo" SpName="Acc_ExchangeSel" DbName="DBTXN.bodb02.bodbAdminNet"  />
+
+  </Function>
+
 </Functions>

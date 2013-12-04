@@ -205,9 +205,9 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                     db.AssignParamValues(hash);
 
                     var ds = db.ExecuteDataSet();
-                    var outout = db.GetOuputParams();
+                    var output = db.GetOuputParams();
 
-                    rs = new DbResult(outout, ds);
+                    rs = new DbResult(output, ds);
                 }
 
                 if (rs != null)

@@ -355,7 +355,6 @@ select,.select
 .ui-tabs .ui-tabs-panel
 {
     padding: 2px;
-    max-height: 300px;
     border: 1px solid #7C98A4 !important;
 }
 .ui-tabs-anchor
@@ -378,6 +377,7 @@ select,.select
 .ui-tabs .ui-tabs-nav li
 {
     margin: 0;
+    font-size: 11px;
 }
 .hidden
 {
@@ -432,4 +432,8 @@ li
     border-bottom: none !important;
     border-left-radius: 3px;
     border-top-radius: 3px;
+}
+.floatLeft
+{
+    float: left;
 }
