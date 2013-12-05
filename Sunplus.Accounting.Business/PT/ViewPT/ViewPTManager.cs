@@ -386,6 +386,15 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                               ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language,
                                                                                  "lbl1x2")
                                       };
+
+                    var hrFixedOdd = new AllowViewSport()
+                    {
+                        Status = WebSettings.OfferHorseRacingFixedOdds,
+                        Name =
+                            ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language,
+                                                               "lblHRFixedOddsPrivateGameComm")
+                    };
+
                     var liveCasino = new AllowViewSport()
                                          {
                                              Status = WebSettings.EnableLiveCasino,
@@ -561,7 +570,12 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                                NumberFormat.DecFormat(rComm[string.Format(_com1x2, 4)],
                                                                                       4)
                                                        },
-
+                                               HRFixedOdds = new AllowViewSport()
+                                               {
+                                                   Status = hrFixedOdd.Status,
+                                                   Name = hrFixedOdd.Name,
+                                                   Comm = NumberFormat.DecFormat(rComm["HRFixedOddsComm_4"], 4)
+                                               },
                                                HorseRacing = superRacingInfo,
                                                Greyhound = superGreyhoundInfo,
                                                Harness = superHarnessInfo,
@@ -774,7 +788,12 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                             Comm =
                                                                 NumberFormat.DecFormat(rComm[string.Format(_com1x2, 3)], 4)
                                                         },
-
+                                                HRFixedOdds = new AllowViewSport()
+                                                {
+                                                    Status = hrFixedOdd.Status,
+                                                    Name = hrFixedOdd.Name,
+                                                    Comm = NumberFormat.DecFormat(rComm["HRFixedOddsComm_3"], 4)
+                                                },
                                                 HorseRacing = masterRacingInfo,
                                                 Greyhound = masterGreyhoundInfo,
                                                 Harness = masterHarnessInfo,
@@ -986,6 +1005,12 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                            Comm =
                                                                NumberFormat.DecFormat(rComm[string.Format(_com1x2, 2)], 4)
                                                        },
+                                               HRFixedOdds = new AllowViewSport()
+                                               {
+                                                   Status = hrFixedOdd.Status,
+                                                   Name = hrFixedOdd.Name,
+                                                   Comm = NumberFormat.DecFormat(rComm["HRFixedOddsComm_2"], 4)
+                                               },
 
                                                HorseRacing = agentRacingStatus,
                                                Greyhound = agentGreyhoundInfo,
@@ -1198,7 +1223,12 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                             Name = onexTwo.Name,
                                                             Comm = NumberFormat.DecFormat(rComm["comm_5"], 4)
                                                         },
-
+                                                HRFixedOdds = new AllowViewSport()
+                                                {
+                                                    Status = hrFixedOdd.Status,
+                                                    Name = hrFixedOdd.Name,
+                                                    Comm = NumberFormat.DecFormat(rComm["HRFixedOddsComm"], 4)
+                                                },
                                                 HorseRacing = memberRacingInfo,
                                                 Greyhound = memberGreyhoundInfo,
                                                 Harness = memberHarnessInfo,

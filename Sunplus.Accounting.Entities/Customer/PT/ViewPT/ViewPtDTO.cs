@@ -244,6 +244,9 @@ namespace Sunplus.Accounting.Entities.Customer.PT.ViewPT
         [DataMember]
         public AllowViewSport OneXTwo { get; set; }
 
+        [DataMember]
+        public AllowViewSport HRFixedOdds { get; set; }
+
         //[DataMember]
         //public string OneXTwo { get; set; }
         [DataMember]

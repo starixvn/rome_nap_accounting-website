@@ -42,6 +42,7 @@
         
         RegisterRoutes(RouteTable.Routes);
         // ViewEngines.Engines.Add(new CustomView());
+        
         AreaRegistration.RegisterAllAreas();
     }
 
