@@ -104,12 +104,12 @@ body.wait *, body.wait
     color:Black;
 }
 
-#spanstep1:hover
+.step1-inactive:hover
 {        
-    background-position: -8px -50px;       
-    font-weight: bold;
-    color:Black;
-    cursor:pointer;
+    background-position: -8px -50px !important;       
+    font-weight: bold !important;
+    color:Black !important;
+    cursor:pointer !important;
 }
 
 #divSearchCopy .step2-active
@@ -128,11 +128,10 @@ body.wait *, body.wait
     color:Black;
 }
 
-#spanstep2:hover
+.step2-inactive:hover
 {        
-    background-position: -8px -125px;   
-    margin-left:-10px;    
-    font-weight: bold;
-    color:Black;
-    cursor:pointer;
+    background-position: -8px -125px !important;   
+    margin-left:-10px !important;        
+    color:Black !important;
+    cursor:pointer !important;
 }

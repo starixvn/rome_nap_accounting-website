@@ -69,6 +69,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         if ($scope.existedUser.username == undefined || $scope.existedUser.username == "") {
             validate.setRequired("#existedUserName");
             message.showAlertMessage("errorMsg", "Please Enter User Name.", 1);
+            $("#errorMsg").width("550");
         }
         else {
             if ($scope.existedUser.userid != "-1") {
@@ -87,12 +88,13 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
 
                 $("#spanstep2").removeClass("step2-inactive");
                 $("#spanstep2").addClass("step2-active");
-                
+
                 $scope.selectedSport = $scope.sports[0];
                 $scope.resetFrameSource();
             }
             else {
                 message.showAlertMessage("errorMsg", "The super doesn’t exist!", 1);
+                $("#errorMsg").width("550");
             }
         }
     };
@@ -119,11 +121,13 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
     $scope.validateData = function () {
         if ($scope.newUser.username == undefined || $scope.newUser.username == "") {
             message.showAlertMessage("errorMsg", "The username is required !", 1);
+            $("#errorMsg").width("700");
             validate.setRequired("#username");
             return false;
         }
         if ($scope.newUser.password == undefined || $scope.newUser.password == "") {
             message.showAlertMessage("errorMsg", "The password is required !", 1);
+            $("#errorMsg").width("700");
             validate.setRequired("#password");
             return false;
         }
@@ -264,10 +268,12 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                     $("#checkExisted").removeClass('success');
                     $("#checkExisted").addClass('not_success');
                     message.showAlertMessage("errorMsg", "The super doesn’t exist !", 1);
+                    $("#errorMsg").width("550");
                 }
             }
             , error: function (xhr, ajaxOptions, thrownError) {
                 message.showAlertMessage("errorMsg", "Error for searching existing user !", 1);
+                $("#errorMsg").width("550");
             }
         });
     };
@@ -293,6 +299,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             }
                 , error: function (xhr, ajaxOptions, thrownError) {
                     message.showAlertMessage("errorMsg", "Error for getting site by user id !", 1);
+                    $("#errorMsg").width("700");
                 }
         });
     };
@@ -320,6 +327,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             }
             , error: function (xhr, ajaxOptions, thrownError) {
                 message.showAlertMessage("errorMsg", "Error for getting sites of existing user !", 1);
+                $("#errorMsg").width("700");
             }
         });
     };
@@ -351,17 +359,21 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 if (success) {
                     message.hideAlertMessage("errorMsg");
                     message.showAlertMessage("errorMsg", "Created Super Successfully !", 0);
+                    $("#errorMsg").width("700");
                 } else {
                     if (result != null) {
                         message.showAlertMessage("errorMsg", result.Message, 1);
+                        $("#errorMsg").width("700");
                     }
                     else {
                         message.showAlertMessage("errorMsg", "Created Super Un-successfully !", 1);
+                        $("#errorMsg").width("700");
                     }
                 }
             }
             , error: function (xhr, ajaxOptions, thrownError) {
                 message.showAlertMessage("errorMsg", "Error for copying existing user !", 1);
+                $("#errorMsg").width("700");
             }
         });
     };
