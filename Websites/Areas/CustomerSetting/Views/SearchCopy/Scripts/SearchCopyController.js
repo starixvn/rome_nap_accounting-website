@@ -87,6 +87,9 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
 
                 $("#spanstep2").removeClass("step2-inactive");
                 $("#spanstep2").addClass("step2-active");
+                
+                $scope.selectedSport = $scope.sports[0];
+                $scope.resetFrameSource();
             }
             else {
                 message.showAlertMessage("errorMsg", "The super doesn’t exist!", 1);
@@ -126,6 +129,17 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         }
 
         return true;
+    };
+
+    $scope.resetFrameSource = function () {
+        $("#frmSportbook").attr('src', "");
+        $("#frmSportbookMinPT").attr('src', "");
+        $("#frmRacing").attr('src', "");
+        $("#frmRacingMinPT").attr('src', "");
+        $("#frmCasino").attr('src', "");
+        $("#frmVirtualSports").attr('src', "");
+        $("#frmBingo").attr('src', "");
+        $("#frmLiveCasino").attr('src', "");
     };
 
     $scope.showSetting = function (tabId) {
@@ -188,19 +202,19 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
     $scope.disableSports = function (statusSports) {
         if (statusSports.HideRacing == true) {
             $("#listSports option[value='3']").remove();
-            $("#listSports option[value='4']").remove();            
+            $("#listSports option[value='4']").remove();
         }
         if (statusSports.HideCasino == true) {
-            $("#listSports option[value='5']").remove();            
+            $("#listSports option[value='5']").remove();
         }
         if (statusSports.HideVirtualSports == true) {
-            $("#listSports option[value='6']").remove();            
+            $("#listSports option[value='6']").remove();
         }
         if (statusSports.HideBingo == true) {
-            $("#listSports option[value='7']").remove();            
+            $("#listSports option[value='7']").remove();
         }
         if (statusSports.HideLiveCasino == true) {
-            $("#listSports option[value='8']").remove();            
+            $("#listSports option[value='8']").remove();
         }
     };
 
@@ -219,7 +233,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
 
         try { parent.parent.BlockUI(); } catch (e) { }
         try { parent.BlockUI(); } catch (e) { }
-        $("body").addClass("wait");        
+        $("body").addClass("wait");
 
         $.ajax({
             type: "POST",
@@ -230,7 +244,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             success: function (customerSettingView) {
                 try { parent.parent.jQuery.unblockUI(); } catch (e) { }
                 try { parent.jQuery.unblockUI(); } catch (e) { }
-                $('body').removeClass('wait');                
+                $('body').removeClass('wait');
 
                 var custid = customerSettingView.UserId;
                 var statusSports = customerSettingView.StatusSports;
