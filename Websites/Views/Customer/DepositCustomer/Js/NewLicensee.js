@@ -378,7 +378,7 @@ newLic.GenerateSampleName = function () {
     var dummyMemberName = siteName + "Transfer" + currencyName + "," +
                           siteName + "Charges" + currencyName + "," +
                           siteName + "Bonus" + currencyName + "," +
-                          siteName + "Winthdrawal" + currencyName;
+                          siteName + "Withdrawal" + currencyName;
     $("#tbxDummyMemberName").val(dummyMemberName);
 };
 
