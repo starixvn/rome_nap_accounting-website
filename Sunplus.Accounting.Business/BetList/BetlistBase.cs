@@ -2761,6 +2761,10 @@ namespace Sunplus.Accounting.Business.BetList
                         sportName = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Basketball");
                         html = BasketballHTML(r, sportName);
                         break;
+                    case 154:
+                        sportName = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "HorseRacingFixedOdds");
+                        html = BilliardHTML(r, sportName);
+                        break;
 
                     case 32: //netball
                         sportName = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "Netball");
