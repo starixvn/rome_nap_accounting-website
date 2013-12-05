@@ -307,7 +307,7 @@
     bettingSetting: function (custId, uplineId, accId, groupName) {
         showPopup(" Edit Betting Limit"
                 , "customersetting/betsetting/sportsbook/index/" + custId + "/" + uplineId + "/" + accId + "/" + groupName
-                , 0, 0, 860, 480, false, 2000, null);
+                , 0, 0, 900, 680, false, 2000, null);
     },
     reCalculateGrid: function () {
         var initWidth = 1385;

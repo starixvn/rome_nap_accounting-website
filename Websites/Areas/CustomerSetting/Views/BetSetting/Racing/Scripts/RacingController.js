@@ -1,13 +1,14 @@
-﻿angular.module('racingApp', []);
-
-if (typeof Fanex == 'undefined' || typeof Fanex.CustomerSetting == 'undefined' || typeof Fanex.CustomerSetting.Core == 'undefined') {
+﻿if (typeof Fanex == 'undefined' || typeof Fanex.CustomerSetting == 'undefined' || typeof Fanex.CustomerSetting.Core == 'undefined') {
     alert('Require Fanex.CustomerSetting.Core.js');
 };
 
 Fanex.CustomerSetting.Betting = {};
 
-Fanex.CustomerSetting.Betting.Racing = function ($scope, $http) {
+Fanex.CustomerSetting.Betting.Racing = function ($scope, $element) {
     $scope.model = model;
+
+    if (!model)
+        return;
 
     $scope.bettingLimits = $scope.model.settings.sportTypes;
 
@@ -16,8 +17,6 @@ Fanex.CustomerSetting.Betting.Racing = function ($scope, $http) {
     };
 
     $scope.Copy = function (scope) {
-        var tmp = scope;
-
         if (scope.betting.id == 151 && scope.bet.id == 41) {
             if (scope.bet.className == true && scope.bet.bgClass == '') {
                 scope.bet.className = 'copied';
@@ -238,11 +237,12 @@ Fanex.CustomerSetting.Betting.Racing.Update = function (ondone) {
             id: custId,
             uplineId: uplineId,
             userId: userId,
-            txtCustomerObject: JSON.stringify(model)
+            txtCustomerObject: JSON.stringify(model),
+            siteName: siteName
         }
     })
     .success(function (data) {
-        var errorCodes = data.errorCode.split('\u0007');
+        var errorCodes = data.errorCode.toString().indexOf('\u0007') != -1 ? data.errorCode.split('\u0007') : [data.errorCode];
         var success = true;
 
         $(errorCodes).each(function (i, error) {
@@ -255,33 +255,28 @@ Fanex.CustomerSetting.Betting.Racing.Update = function (ondone) {
             $('#errMsg').attr('class', 'successMsg');
             $('#errMsg').html('<font color="Blue">Updated successfully</font>');
             $('#errMsg').show();
-
-            Fanex.CustomerSetting.Core.UnBlockUI();
-
-            if (typeof ondone == 'function') {
-                ondone({ errorCode: '0' });
-            }
-
-            return true;
         }
         else {
+            $('#errMsg').attr('class', 'errMsg');
             $('#errMsg').html(data.errorMessage.formatErrorMessage());
             $('#errMsg').show();
+        }
 
-            Fanex.CustomerSetting.Core.UnBlockUI();
+        Fanex.CustomerSetting.Core.UnBlockUI();
 
-            if (typeof ondone == 'function') {
-                ondone({ errorCode: '1' });
-            }
-
-            return false;
-        }        
+        if (typeof ondone == 'function') {
+            ondone({
+                errorCode: data.errorCode == "0" || data.errorCode == "" || success ? "0" : "1",
+                errorMessage: data.errorMessage
+            });
+        }
     })
     .error(function (data) {
         if (typeof console != 'undefined')
             console.log(data);
 
         if (JSON.parse(data.responseText).ErrorCode) {
+            $('#errMsg').attr('class', 'errMsg');
             $('#errMsg').html(JSON.parse(data.responseText).ErrorMessage.formatErrorMessage());
             $('#errMsg').show();
         }
