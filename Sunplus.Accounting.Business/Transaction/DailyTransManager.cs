@@ -268,7 +268,7 @@ namespace Sunplus.Accounting.Business.Transaction
             var userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
             /*List<DailyTransaction> entityList = userService
                 .GetDailyTransaction(transDate, PageIndex, PAGE_SIZE, status,
-                                     type, creator, ref TotalPages, verifyBy);*/
+                                     type, creator, ref TotalPages, verifyBy);*/            
 
             var strBuilder = new StringBuilder();
 
@@ -319,11 +319,13 @@ namespace Sunplus.Accounting.Business.Transaction
 
                     itemContent = itemTemplate;
 
+                 
                     #region Assign to template data
 
                     TemplateHandler.Assign(ref itemContent, "{date}",
                                            entity.transDate);
 
+                   
                     //change row style for transaction group
                     //use ref no to seperate row style
                     if (prevRefNo != entity.RefNo || rowIndexOnCurrentPage == 1)
@@ -340,6 +342,7 @@ namespace Sunplus.Accounting.Business.Transaction
                         {
                             //do not remove first row
                             TemplateHandler.RemoveBlock(ref itemContent, "CheckBoxBlock");
+                            TemplateHandler.RemoveBlock(ref itemContent, "UnVerifiedButtonBlock");
                             TemplateHandler.RemoveBlock(ref itemContent, "UnVerifiedButtonBlock");
                         }
                         else
@@ -823,6 +826,9 @@ namespace Sunplus.Accounting.Business.Transaction
             var _userDAO = CommonBootStrapper.Locator.GetInstance<IUserDAO>();
             dailyFinance = _userDAO.GetDailyTransaction(CastAide.AsDateTime(date), status, type, creator, verifyBy);
             //AppSession.AddSession(System.Web.HttpContext.Current.Session, _keyDailyFinanceTxn, dailyFinance);
+
+            dailyFinance.items = dailyFinance.items.OrderBy(s => s.RefNo).ToList<DailyTransaction>();
+
             CacheExtension.Set(_keyDailyFinanceTxn, dailyFinance);
             var dailyTransactionDTO = CacheExtension.Get<DailyTransactionDTO>(_keyDailyFinanceTxn);
             return dailyFinance;
@@ -865,132 +871,140 @@ namespace Sunplus.Accounting.Business.Transaction
 
         public void ExportToExcelDailyFinance(string date, int status, string type, string creator, string verifyBy)
         {
-            var excelFile = new ExcelFile();
-            var startRow = 2;
-            var MaxRowInSheet = 65000;
-            var objgetDailyAllTxn = (DailyTransactionDTO)CacheExtension.Get<DailyTransactionDTO>(_keyDailyFinanceTxn);
-            var objdailyAllTxn = objgetDailyAllTxn != null
-                                        ? (DailyTransactionDTO)objgetDailyAllTxn
-                                        : GetDailyTransDatafromDB(date, type, status, creator, verifyBy);
-            var totalRows = objdailyAllTxn.totalRows;
-            var totalSheets = totalRows % MaxRowInSheet > 0 ? (totalRows / MaxRowInSheet) + 1 : (totalRows / MaxRowInSheet);
-            string prevRefNo = objdailyAllTxn.items[0].RefNo;
-            var index = 0;
-            for (int i = 0; i < totalSheets; i++)
+            try
             {
-                #region assign data
-
-                var ws = excelFile.Worksheets.Add("DailyFinanceTransacion" + (i + 1));
-                ws.Columns[0].Width = 5 * 256;
-                ws.Columns[1].Width = 20 * 256;
-                ws.Columns[2].Width = 10 * 256;
-                ws.Columns[3].Width = 30 * 256;
-                ws.Columns[4].Width = 10 * 256;
-                ws.Columns[5].Width = 10 * 256;
-                ws.Columns[6].Width = 15 * 256;
-                ws.Columns[7].Width = 10 * 256;
-                ws.Columns[8].Width = 20 * 256;
-                ws.Cells.GetSubrangeAbsolute(0, 0, 0, 4).Merged = true;
-                ws.Cells.GetSubrangeAbsolute(0, 0, 0, 4).Style.Font.Weight = ExcelFont.BoldWeight;
-                ws.Cells.GetSubrangeAbsolute(0, 0, 0, 4).Value = "Daily Finance Transactions - " + string.Format("{0:MM/dd/yyyy}", date);
-                var bgHeaderNormalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
-                ws.Cells[1, 0].Style = bgHeaderNormalFormat;
-                ws.Cells[1, 0].Value = "No";
-                ws.Cells[1, 1].Style = bgHeaderNormalFormat;
-                ws.Cells[1, 1].Value = "Date";
-                ws.Cells[1, 2].Style = bgHeaderNormalFormat;
-                ws.Cells[1, 2].Value = "User Name";
-                ws.Cells[1, 3].Style = bgHeaderNormalFormat;
-                ws.Cells[1, 3].Value = "Description";
-                ws.Cells[1, 4].Style = bgHeaderNormalFormat;
-                ws.Cells[1, 4].Value = "Type";
-                ws.Cells[1, 5].Style = bgHeaderNormalFormat;
-                ws.Cells[1, 5].Value = "Amount";
-                ws.Cells[1, 6].Style = bgHeaderNormalFormat;
-                ws.Cells[1, 6].Value = "Creator";
-                ws.Cells[1, 7].Style = bgHeaderNormalFormat;
-                ws.Cells[1, 7].Value = "Verify by";
-                ws.Cells[1, 8].Style = bgHeaderNormalFormat;
-                ws.Cells[1, 8].Value = "Checked Time";
-
-                //var objdailyAllTxn = (DailyTransactionDTO)AppSession.GetSession(System.Web.HttpContext.Current.Session, _keyDailyFinanceTxn);
-
-                //objdailyAllTxn = objdailyAllTxn ?? GetDailyTransDatafromDB(date, type, status, creator, verifyBy);
-                int r = 0, g = 0, b = 0;
-
-                var userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
-                Dictionary<string, int> list = userService.GetListTotalTransPerGroup(objdailyAllTxn.items);
-                int rowIndexOnCurrentPage = 0;
-                var bgRow1 = new Core.Helper.ExcelGemboxUtils().GetStyleText(217, 232, 235, HorizontalAlignmentStyle.Center);
-                var bgRow2 = new Core.Helper.ExcelGemboxUtils().GetStyleText(248, 248, 248, HorizontalAlignmentStyle.Center);
-                var totalRowinSheet = (totalSheets - 1 == i) ? totalRows - (MaxRowInSheet * i) : MaxRowInSheet;
-                for (int j = 0; j < totalRowinSheet; j++)
+                var excelFile = new ExcelFile();
+                var startRow = 2;
+                var MaxRowInSheet = 65000;
+                var objgetDailyAllTxn = (DailyTransactionDTO)CacheExtension.Get<DailyTransactionDTO>(_keyDailyFinanceTxn);
+                var objdailyAllTxn = objgetDailyAllTxn != null
+                                            ? (DailyTransactionDTO)objgetDailyAllTxn
+                                            : GetDailyTransDatafromDB(date, type, status, creator, verifyBy);
+                var totalRows = objdailyAllTxn.totalRows;
+                var totalSheets = totalRows % MaxRowInSheet > 0 ? (totalRows / MaxRowInSheet) + 1 : (totalRows / MaxRowInSheet);
+                string prevRefNo = objdailyAllTxn.items[0].RefNo;
+                var index = 0;
+                for (int i = 0; i < totalSheets; i++)
                 {
-                    rowIndexOnCurrentPage++;
-                    if (rowIndexOnCurrentPage == 1)
+                    #region assign data
+
+                    var ws = excelFile.Worksheets.Add("DailyFinanceTransacion" + (i + 1));
+                    ws.Columns[0].Width = 5 * 256;
+                    ws.Columns[1].Width = 20 * 256;
+                    ws.Columns[2].Width = 10 * 256;
+                    ws.Columns[3].Width = 30 * 256;
+                    ws.Columns[4].Width = 10 * 256;
+                    ws.Columns[5].Width = 10 * 256;
+                    ws.Columns[6].Width = 15 * 256;
+                    ws.Columns[7].Width = 10 * 256;
+                    ws.Columns[8].Width = 20 * 256;
+                    ws.Cells.GetSubrangeAbsolute(0, 0, 0, 4).Merged = true;
+                    ws.Cells.GetSubrangeAbsolute(0, 0, 0, 4).Style.Font.Weight = ExcelFont.BoldWeight;
+                    ws.Cells.GetSubrangeAbsolute(0, 0, 0, 4).Value = "Daily Finance Transactions - " + string.Format("{0:MM/dd/yyyy}", date);
+                    var bgHeaderNormalFormat = new Core.Helper.ExcelGemboxUtils().GetStyleTitle(Color.FromArgb(205, 222, 255));
+                    ws.Cells[1, 0].Style = bgHeaderNormalFormat;
+                    ws.Cells[1, 0].Value = "No";
+                    ws.Cells[1, 1].Style = bgHeaderNormalFormat;
+                    ws.Cells[1, 1].Value = "Date";
+                    ws.Cells[1, 2].Style = bgHeaderNormalFormat;
+                    ws.Cells[1, 2].Value = "User Name";
+                    ws.Cells[1, 3].Style = bgHeaderNormalFormat;
+                    ws.Cells[1, 3].Value = "Description";
+                    ws.Cells[1, 4].Style = bgHeaderNormalFormat;
+                    ws.Cells[1, 4].Value = "Type";
+                    ws.Cells[1, 5].Style = bgHeaderNormalFormat;
+                    ws.Cells[1, 5].Value = "Amount";
+                    ws.Cells[1, 6].Style = bgHeaderNormalFormat;
+                    ws.Cells[1, 6].Value = "Creator";
+                    ws.Cells[1, 7].Style = bgHeaderNormalFormat;
+                    ws.Cells[1, 7].Value = "Verify by";
+                    ws.Cells[1, 8].Style = bgHeaderNormalFormat;
+                    ws.Cells[1, 8].Value = "Checked Time";
+
+                    //var objdailyAllTxn = (DailyTransactionDTO)AppSession.GetSession(System.Web.HttpContext.Current.Session, _keyDailyFinanceTxn);
+
+                    //objdailyAllTxn = objdailyAllTxn ?? GetDailyTransDatafromDB(date, type, status, creator, verifyBy);
+                    int r = 0, g = 0, b = 0;
+
+                    var userService = CommonBootStrapper.Locator.GetInstance<IUserService>();
+                    Dictionary<string, int> list = userService.GetListTotalTransPerGroup(objdailyAllTxn.items);
+                    int rowIndexOnCurrentPage = 0;
+                    var bgRow1 = new Core.Helper.ExcelGemboxUtils().GetStyleText(217, 232, 235, HorizontalAlignmentStyle.Center);
+                    var bgRow2 = new Core.Helper.ExcelGemboxUtils().GetStyleText(248, 248, 248, HorizontalAlignmentStyle.Center);
+                    var totalRowinSheet = (totalSheets - 1 == i) ? totalRows - (MaxRowInSheet * i) : MaxRowInSheet;
+                    for (int j = 0; j < totalRowinSheet; j++)
                     {
-                        r = 217;
-                        g = 232;
-                        b = 235;
-                    }
-                    else
-                    {
-                        if (prevRefNo != objdailyAllTxn.items[index].RefNo)
+                        rowIndexOnCurrentPage++;
+                        if (rowIndexOnCurrentPage == 1)
                         {
-                            if (r == 217)
+                            r = 217;
+                            g = 232;
+                            b = 235;
+                        }
+                        else
+                        {
+                            if (prevRefNo != objdailyAllTxn.items[index].RefNo)
                             {
-                                r = 248;
-                                g = 248;
-                                b = 248;
-                            }
-                            else
-                            {
-                                r = 217;
-                                g = 232;
-                                b = 235;
+                                if (r == 217)
+                                {
+                                    r = 248;
+                                    g = 248;
+                                    b = 248;
+                                }
+                                else
+                                {
+                                    r = 217;
+                                    g = 232;
+                                    b = 235;
+                                }
                             }
                         }
+
+                        ws.Cells[j + startRow, 0].Style = new Core.Helper.ExcelGemboxUtils().GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
+                        ws.Cells[j + startRow, 0].Value = rowIndexOnCurrentPage;
+                        ws.Cells[j + startRow, 1].Style = new Core.Helper.ExcelGemboxUtils().GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
+                        ws.Cells[j + startRow, 1].Value = objdailyAllTxn.items[index].transDate;
+                        ws.Cells[j + startRow, 2].Style = new Core.Helper.ExcelGemboxUtils().GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
+                        ws.Cells[j + startRow, 2].Value = objdailyAllTxn.items[index].Username;
+                        ws.Cells[j + startRow, 3].Style = new Core.Helper.ExcelGemboxUtils().GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
+                        ws.Cells[j + startRow, 3].Value = objdailyAllTxn.items[index].Description;
+                        ws.Cells[j + startRow, 4].Style = new Core.Helper.ExcelGemboxUtils().GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
+                        ws.Cells[j + startRow, 4].Value = objdailyAllTxn.items[index].Type;
+                        ws.Cells[j + startRow, 5].Style = new Core.Helper.ExcelGemboxUtils().GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
+                        ws.Cells[j + startRow, 5].Value = objdailyAllTxn.items[index].Amount;
+                        if (prevRefNo != objdailyAllTxn.items[index].RefNo || rowIndexOnCurrentPage == 1)
+                        {
+                            int key = list[objdailyAllTxn.items[index].RefNo];
+                            ws.Cells.GetSubrangeAbsolute(j + startRow, 6, j + startRow + key - 1, 6).Merged = true;
+                            ws.Cells.GetSubrangeAbsolute(j + startRow, 6, j + startRow + key - 1, 6).Value = objdailyAllTxn.items[index].Creator;
+                            ws.Cells.GetSubrangeAbsolute(j + startRow, 6, j + startRow + key - 1, 6).Style = new Core.Helper.ExcelGemboxUtils().GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
+                            ws.Cells.GetSubrangeAbsolute(j + startRow, 7, j + startRow + key - 1, 7).Merged = true;
+                            ws.Cells.GetSubrangeAbsolute(j + startRow, 7, j + startRow + key - 1, 7).Value = objdailyAllTxn.items[index].CheckerName;
+                            ws.Cells.GetSubrangeAbsolute(j + startRow, 6, j + startRow + key - 1, 7).Style = new Core.Helper.ExcelGemboxUtils().GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
+                            ws.Cells.GetSubrangeAbsolute(j + startRow, 8, j + startRow + key - 1, 8).Merged = true;
+                            ws.Cells.GetSubrangeAbsolute(j + startRow, 8, j + startRow + key - 1, 8).Value = (CastAide.AsDateTime(objdailyAllTxn.items[index].CheckedTime) != DateTime.MinValue)
+                                                        ? objdailyAllTxn.items[index].CheckedTime
+                                                        : string.Empty;
+                            ws.Cells.GetSubrangeAbsolute(j + startRow, 6, j + startRow + key - 1, 8).Style = new Core.Helper.ExcelGemboxUtils().GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
+                        }
+
+                        prevRefNo = objdailyAllTxn.items[index].RefNo;
+                        index++;
                     }
 
-                    ws.Cells[j + startRow, 0].Style = new Core.Helper.ExcelGemboxUtils().GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
-                    ws.Cells[j + startRow, 0].Value = rowIndexOnCurrentPage;
-                    ws.Cells[j + startRow, 1].Style = new Core.Helper.ExcelGemboxUtils().GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
-                    ws.Cells[j + startRow, 1].Value = objdailyAllTxn.items[index].transDate;
-                    ws.Cells[j + startRow, 2].Style = new Core.Helper.ExcelGemboxUtils().GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
-                    ws.Cells[j + startRow, 2].Value = objdailyAllTxn.items[index].Username;
-                    ws.Cells[j + startRow, 3].Style = new Core.Helper.ExcelGemboxUtils().GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
-                    ws.Cells[j + startRow, 3].Value = objdailyAllTxn.items[index].Description;
-                    ws.Cells[j + startRow, 4].Style = new Core.Helper.ExcelGemboxUtils().GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
-                    ws.Cells[j + startRow, 4].Value = objdailyAllTxn.items[index].Type;
-                    ws.Cells[j + startRow, 5].Style = new Core.Helper.ExcelGemboxUtils().GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
-                    ws.Cells[j + startRow, 5].Value = objdailyAllTxn.items[index].Amount;
-                    if (prevRefNo != objdailyAllTxn.items[index].RefNo || rowIndexOnCurrentPage == 1)
-                    {
-                        int key = list[objdailyAllTxn.items[index].RefNo];
-                        ws.Cells.GetSubrangeAbsolute(j + startRow, 6, j + startRow + key - 1, 6).Merged = true;
-                        ws.Cells.GetSubrangeAbsolute(j + startRow, 6, j + startRow + key - 1, 6).Value = objdailyAllTxn.items[index].Creator;
-                        ws.Cells.GetSubrangeAbsolute(j + startRow, 6, j + startRow + key - 1, 6).Style = new Core.Helper.ExcelGemboxUtils().GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
-                        ws.Cells.GetSubrangeAbsolute(j + startRow, 7, j + startRow + key - 1, 7).Merged = true;
-                        ws.Cells.GetSubrangeAbsolute(j + startRow, 7, j + startRow + key - 1, 7).Value = objdailyAllTxn.items[index].CheckerName;
-                        ws.Cells.GetSubrangeAbsolute(j + startRow, 6, j + startRow + key - 1, 7).Style = new Core.Helper.ExcelGemboxUtils().GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
-                        ws.Cells.GetSubrangeAbsolute(j + startRow, 8, j + startRow + key - 1, 8).Merged = true;
-                        ws.Cells.GetSubrangeAbsolute(j + startRow, 8, j + startRow + key - 1, 8).Value = (CastAide.AsDateTime(objdailyAllTxn.items[index].CheckedTime) != DateTime.MinValue)
-                                                    ? objdailyAllTxn.items[index].CheckedTime
-                                                    : string.Empty;
-                        ws.Cells.GetSubrangeAbsolute(j + startRow, 6, j + startRow + key - 1, 8).Style = new Core.Helper.ExcelGemboxUtils().GetStyleText(r, g, b, HorizontalAlignmentStyle.Center);
-                    }
-
-                    prevRefNo = objdailyAllTxn.items[index].RefNo;
-                    index++;
+                    #endregion assign data
                 }
+                var response = HttpContext.Current.Response;
+                response.Clear();
+                response.ContentType = "Application/x-msexcel";
+                response.AddHeader("Content-Disposition", "attachment; filename=DailyFinanceTransaction-" + date + ".xls");
+                excelFile.SaveXls(response.OutputStream);
 
-                #endregion assign data
             }
-            var response = HttpContext.Current.Response;
-            response.Clear();
-            response.ContentType = "Application/x-msexcel";
-            response.AddHeader("Content-Disposition", "attachment; filename=DailyFinanceTransaction-" + date + ".xls");
-            excelFile.SaveXls(response.OutputStream);
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
         }
     }
 }

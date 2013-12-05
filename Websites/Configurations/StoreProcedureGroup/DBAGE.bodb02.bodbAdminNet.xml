@@ -11,8 +11,7 @@
 
   <Function Name="Exchange Rate">
     <Setting Key="Acc_ExchangeCurrencySel" SpName="Acc_ExchangeCurrencySel" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="EchangeSelAcc" SpName="Acc_ExchangeSelAccount" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="EchangeSelById" SpName="Acc_ExchangeSelByID" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="EchangeSelAcc" SpName="Acc_ExchangeSelAccount" DbName="DBAGE.bodb02.bodbAdminNet"  />    
   </Function>
 
   <Function Name="Gaming">
@@ -297,7 +296,12 @@
 
   <Function Name="Progressive Bonus">
     <Setting Key="CustomerSelCasinoBonusStatus" SpName="Acc_CustomerSelCasinoBonusStatus" DbName="DBAGE.bodb02.bodbAdminNet" />
+    
   </Function>
-  
+
+  <Function Name="External Betting Limit">
+    <Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="DBAGE.bodb02.bodbAdminNet_ex" Plain="0" />
+    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBAGE.bodb02.bodbAdminNet_ex" Plain="0" />
+  </Function>
 </Functions>
 
