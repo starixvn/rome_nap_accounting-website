@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <?xml-stylesheet type="text/xsl" href="PTGrid.xslt"?>
 <PTGrid name="ptGrid1">
+  <NumerousSportType>13</NumerousSportType>
   <SportTypes>
-
     <SportType id="1" name="Soccer" collapsed="false">
       <BetTypeGroupSets>
         <BetTypeGroupSet isLive="false" showGroupSetLabel="true">
@@ -209,6 +209,36 @@
             <BetTypeGroup>
               <BetTypes>
                 <BetType id="9" name="Mix Parlay">
+                </BetType>
+              </BetTypes>
+            </BetTypeGroup>
+          </BetTypeGroups>
+        </BetTypeGroupSet>
+      </BetTypeGroupSets>
+    </SportType>
+
+    <SportType id="154" name="HR Fixed Odds">
+      <BetTypeGroupSets>
+        <BetTypeGroupSet isLive="false">
+          <BetTypeGroups>
+            <BetTypeGroup>
+              <BetTypes>
+                <BetType id="20" name="Money Line">
+                </BetType>
+              </BetTypes>
+            </BetTypeGroup>
+          </BetTypeGroups>
+        </BetTypeGroupSet>
+      </BetTypeGroupSets>
+    </SportType>
+
+    <SportType id="154" name="HR Fixed Odds" key ="HR Fixed Odds" resourcekey="HRFixedOdds">
+      <BetTypeGroupSets>
+        <BetTypeGroupSet isLive="false">
+          <BetTypeGroups>
+            <BetTypeGroup>
+              <BetTypes>
+                <BetType id="20" name="Money Line"   minWidth="140"  resourcekey="moneyline">
                 </BetType>
               </BetTypes>
             </BetTypeGroup>

@@ -439,7 +439,7 @@ var ViewPT = {
     TplCom: '<div style="padding-left: 20px;">\
             {{tmpl($data.CustomerInfo) ViewPT.TplCustInfo}}\
             {{if ($data.Comm != null && $data.Comm.length > 0)}}\
-                <table class="layout_table ViewPTTable c" style="width: 900px;">\
+                <table class="layout_table ViewPTTable c" style="width: 968px;">\
                     <tr class="ViewPTHeader b">\
                         <td rowspan="2" width="60">&nbsp;</td>\
                         <td rowspan="2">Group A</td>\
@@ -450,6 +450,9 @@ var ViewPT = {
                         <!--1X2-->\
                             <td rowspan="2">1x2</td>\
                         <!--/1X2-->\
+                         <!--hrFixedOdds-->\
+                            <td rowspan="2">HR Fixed Odds</td>\
+                        <!--/hrFixedOdds-->\
                         <!--racing-->\
                         {{if ($data.Comm[0].HorseRacing != null && $data.Comm[0].HorseRacing.AllowViewTotes != null)}}\
                             <td colspan="${$data.Comm[0].HorseRacing.AllowViewTotes.length}">Horse Racing</td>\
@@ -511,6 +514,11 @@ var ViewPT = {
 				                <td>${OneXTwo.Comm}</td>\
 			                {{/if}}\
 			                <!--/1X2-->\
+                              <!--hrFixedOdds-->\
+			                {{if (HRFixedOdds != null && HRFixedOdds.Status)}}\
+				                <td>${HRFixedOdds.Comm}</td>\
+			                {{/if}}\
+			                <!--/hrFixedOdds-->\
                             {{if (HorseRacing != null)}}\
                                 {{each(ihr, hr) HorseRacing.AllowViewTotes}}\
                                     <td>${Comm}</td>\

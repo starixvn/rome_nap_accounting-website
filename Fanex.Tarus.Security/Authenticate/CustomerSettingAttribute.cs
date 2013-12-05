@@ -72,5 +72,10 @@ namespace Fanex.Tarus.Security.Authenticate
         {
             return _permissionService.GetHostPermission(action, AppSessions.PageAccess);
         }
+
+        public bool IsBelong(int custId, string username, string groupName = null, bool getUplineInfo = true)
+        {
+            return true;
+        }
     }
 }

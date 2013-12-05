@@ -765,4 +765,49 @@
   <data name="updatepositiontakingv153_51" xml:space="preserve">
     <value>Update Harness - Aust Tote</value>
   </data>
+  <data name="a_v154mpt_20" xml:space="preserve">
+    <value>Money Line</value>
+  </data>
+  <data name="a_v154spt_20" xml:space="preserve">
+    <value>Money Line</value>
+  </data>
+  <data name="hrfixedodds" xml:space="preserve">
+    <value>HR Fixed Odds</value>
+  </data>
+  <data name="isa_v154mpt_20" xml:space="preserve">
+    <value>Money Line</value>
+  </data>
+  <data name="isa_v154spt_20" xml:space="preserve">
+    <value>Money Line</value>
+  </data>
+  <data name="maxbv154" xml:space="preserve">
+    <value>Max Bet</value>
+  </data>
+  <data name="maxv154pt_20" xml:space="preserve">
+    <value>Max Money Line</value>
+  </data>
+  <data name="minbv154" xml:space="preserve">
+    <value>Min Bet</value>
+  </data>
+  <data name="minv154pt_20" xml:space="preserve">
+    <value>Min Money Line</value>
+  </data>
+  <data name="mpmv154" xml:space="preserve">
+    <value>Max Per Match</value>
+  </data>
+  <data name="ummbv154" xml:space="preserve">
+    <value>Update Min-Max Bet</value>
+  </data>
+  <data name="updptv154" xml:space="preserve">
+    <value>Update Position Taking HR Fixed Odds</value>
+  </data>
+  <data name="v154apt_20" xml:space="preserve">
+    <value>Money Line</value>
+  </data>
+  <data name="v154mpt_20" xml:space="preserve">
+    <value>Money Line</value>
+  </data>
+  <data name="v154spt_20" xml:space="preserve">
+    <value>Money Line</value>
+  </data>
 </root>
