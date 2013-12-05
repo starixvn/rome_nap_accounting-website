@@ -66,7 +66,6 @@
     <Reference Include="Fanex.PTVirtualSports">
       <HintPath>..\Dependency\VirtualSports\Fanex.PTVirtualSports.dll</HintPath>
     </Reference>
-      <HintPath>..\Dependency\Fanex\Fanex.Tarus.Web.Controllers.dll</HintPath>
     <Reference Include="IBCFile">
       <HintPath>..\Dependency\Fanex\IBCFile.dll</HintPath>
     </Reference>
@@ -266,9 +265,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="accounting-site5_02.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Customer_Labels.resx">

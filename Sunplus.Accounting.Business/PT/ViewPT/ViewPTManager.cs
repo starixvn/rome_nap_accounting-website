@@ -570,6 +570,7 @@ namespace Sunplus.Accounting.Business.PT.ViewPT
                                                                NumberFormat.DecFormat(rComm[string.Format(_com1x2, 4)],
                                                                                       4)
                                                        },
+
                                                HRFixedOdds = new AllowViewSport()
                                                {
                                                    Status = hrFixedOdd.Status,
