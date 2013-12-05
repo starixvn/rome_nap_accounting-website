@@ -140,8 +140,6 @@
     <Compile Include="Business\CustomerList\ICustomerListService.cs" />
     <Compile Include="Business\CustomerLogin\CustomerSecurityCodeService.cs" />
     <Compile Include="Business\CustomerLogin\ICustomerSecurityCodeService.cs" />
-     <Compile Include="Business\AutoSuspend\AutoSuspendService.cs" />
-
     <Compile Include="Business\EditLicensee\EditLicenseeService.cs" />
     <Compile Include="Business\EditLicensee\IEditLicenseeService.cs" />
     <Compile Include="Business\NewLicensee\INewLicenseeService.cs" />
@@ -285,9 +283,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="accounting-site5_02.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Customer_Labels.resx">
