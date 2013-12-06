@@ -267,7 +267,7 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
         }
 
 <<<<<<< HEAD
-        if (minMin != 0 && min < minMin) {
+        if (minMin != 0 && min  < minMin) {
 =======
         if (minMin != 0 && min  < minMin) {
 >>>>>>> 274775faa29e22052c9a09f38501a25278dd7821
