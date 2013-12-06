@@ -718,5 +718,46 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL.Accounting
                 LogExtensions.ExceptionHandler(ex);
             }
         }
+
+        public void CustomerUpdateDisableHorseRacingFixedOdds(
+            int userId,
+            int custId,
+            bool isDisable,
+            string ip,
+            bool isDisableDownlines)
+        {
+            try
+            {
+                Hashtable param = new Hashtable();
+                param.Add("userid", userId);
+                param.Add("custid", custId);
+                param.Add("disablehrfixedodds", isDisable);
+                param.Add("enabledownlineshrfixedodds", !isDisableDownlines);
+                param.Add("language", "E");
+                param.Add("ip", ip);
+                param.Add("errcode", 0);
+                param.Add("errmsg", string.Empty);
+
+                using (ObjectDb db = new ObjectDb("LeftPanel_CustomerInfo_UpdateDisableHRFixedOdds", 120))
+                {
+                    db.AssignParamValues(param);
+                    db.ExecuteNonQuery();
+                    var errorCode = CastAide.AsInt32(db.GetParameterValue("errcode"));
+                    var errorMessage = CastAide.AsString(db.GetParameterValue("errmsg"));
+                    if (errorCode > 0)
+                    {
+                        throw new AccException(errorMessage);
+                    }
+                }
+            }
+            catch (AccException accException)
+            {
+                throw accException;
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+        }
     }
 }

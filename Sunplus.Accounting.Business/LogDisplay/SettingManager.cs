@@ -86,7 +86,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             {
                 int custId = GetCustIDByUsername(custName);
                 string logType = "setting";
-              
+
                 var param = new Hashtable();
                 param.Add("custid", custId);
                 param.Add("custname", custName);
@@ -684,10 +684,21 @@ namespace Sunplus.Accounting.Business.LogDisplay
 
                 foreach (var attr in xmlValue.Attributes())
                 {
+                    if (listVal.ContainsKey(attr.Name.ToString()))
+                    {
+                        continue;
+                    }
+
                     listVal.Add(attr.Name.ToString(), LogFormater.FormatValue(attr));
                 }
+
                 foreach (var attr in xmlValue.Nodes().Cast<XElement>().Attributes())
                 {
+                    if (listVal.ContainsKey(attr.Name.ToString()))
+                    {
+                        continue;
+                    }
+
                     listVal.Add(attr.Name.ToString(), LogFormater.FormatValue(attr));
                 }
             }
@@ -695,6 +706,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             {
                 LogExtensions.ExceptionHandler(ex);
             }
+
             return listVal;
         }
 

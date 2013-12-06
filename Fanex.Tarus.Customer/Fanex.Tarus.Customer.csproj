@@ -55,11 +55,16 @@
     <Reference Include="Fanex.Data">
       <HintPath>..\Dependency\Fanex\Fanex.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.PTEngine">
+    <Reference Include="Fanex.PTEngine, Version=1.0.4758.30536, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex\Fanex.PTEngine.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.PTRacing">
+    <Reference Include="Fanex.PTRacing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex\Fanex.PTRacing.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.PTVirtualSports">
+      <HintPath>..\Dependency\VirtualSports\Fanex.PTVirtualSports.dll</HintPath>
     </Reference>
     <Reference Include="IBCFile">
       <HintPath>..\Dependency\Fanex\IBCFile.dll</HintPath>
@@ -262,13 +267,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="accounting-site5_02.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\Customer_Labels.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Customer_Labels.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
