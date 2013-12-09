@@ -544,6 +544,7 @@ namespace Sunplus.Accounting.Business
                 List<GameKindDetail> lsGameKind = (_cust.CasinoSync)
                                                       ? GetGameKinds(_cust.IBCCustID, _cust.SiteName)
                                                       : GetGameKinds(csGroup, _cust.SiteName);
+
                 listGameKind = lsGameKind;
                 bool useGroupPT = (_cust.NoCSData) ? true : !_cust.PTByGameType;
                 string postGameData = "";
