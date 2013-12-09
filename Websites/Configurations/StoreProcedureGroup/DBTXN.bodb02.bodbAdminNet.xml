@@ -9,9 +9,7 @@
   <Function Name="Report">
     <Setting Key="Delebet" SpName="Acc_Rpt_DeleteBet" DbName="DBTXN.bodb02.bodbAdminNet"/>    
   </Function>
-  <Function Name="Customer Status">
-    <Setting Key="LeftPanel_CustomerInfo_UpdateDisableHRFixedOdds" SpName="Acc_CustomerUpdDisableHRFixedOdds_xpre" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" />
-  </Function>
+  
   <Function Name="UserControl">    
     <Setting Key="AdminSel" SpName="Acc_AccAdminSel" DbName="DBTXN.bodb02.bodbAdminNet"/><!--not use-->
     <Setting Key="AdminUpdPageAccess" SpName="Acc_AccAdminUpdPageAccess" DbName="DBTXN.bodb02.bodbAdminNet"/>
@@ -110,9 +108,7 @@
     <Setting Key="Acc_CustomerUpdDisableOpenTote" SpName="Acc_CustomerUpdDisableOpenTote" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
 
-  <Function Name="Progressive Bonus">
-    <Setting Key="CustomerUpdDisableCasinoBonus" SpName="Acc_CustomerUpdDisableCasinoBonus" DbName="DBTXN.bodb02.bodbAdminNet" />
-  </Function>
+  
   
   <Function Name="External Betting Limit">
     <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="DBTXN.bodb02.bodbAdminNet_ex" Plain="0" />

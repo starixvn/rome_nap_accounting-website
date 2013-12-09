@@ -19,6 +19,11 @@
     <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="DBTXN.CustDB.bodbAdminNet"/>
+
+    <Setting Key="Acc_CustomerUpdMember_CommissionHR" SpName="Acc_CustomerUpdMember_CommissionHR" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerUpdAgent_CommissionHR" SpName="Acc_CustomerUpdAgent_CommissionHR" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerUpdMaster_CommissionHR" SpName="Acc_CustomerUpdMaster_CommissionHR" DbName="DBTXN.CustDB.bodbAdminNet"/>
+    <Setting Key="Acc_CustomerUpdSuper_CommissionHR" SpName="Acc_CustomerUpdSuper_CommissionHR" DbName="DBTXN.CustDB.bodbAdminNet"/>
   </Function>
 
   <Function Name="Live Casino">
@@ -53,6 +58,10 @@
 
   <Function Name="RNG Casino">
     <Setting Key="Acc_UpdCSStatus" SpName="Acc_UpdCSStatus_Cust" DbName="DBTXN.CustDB.bodbAdminNet"/>
+  </Function>
+
+  <Function Name="Customer Status">
+    <Setting Key="LeftPanel_CustomerInfo_UpdateDisableHRFixedOdds" SpName="Acc_CustomerUpdDisableHRFixedOdds" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" />
   </Function>
 
   <Function Name="Virtual Sport">
@@ -123,7 +132,7 @@
     <Setting Key="Acc_CustomerUpdSelectedBetting" SpName="Acc_CustomerUpdSelectedBetting" DbName="DBTXN.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdUserGroup" SpName="Acc_CustomerUpdUserGroup" DbName="DBTXN.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdUserName" SpName="Acc_CustomerUpdUserName" DbName="DBTXN.CustDB.bodbAdminNet" />
-    <Setting Key="CustomerUpdDisableCasinoBonus" SpName="Acc_CustomerUpdDisableCasinoBonus" DbName="DBTXN.CustDB.bodbAdminNet" />
+    
   </Function>
 
   <Function Name="Move Customer">
