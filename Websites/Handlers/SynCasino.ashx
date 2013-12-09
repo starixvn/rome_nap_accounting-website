@@ -319,7 +319,7 @@ public class UpdateCSSetting : BaseHandler
                     AppSession.AccId,
                     AppSession.Username,
                     3,
-                    isDepositCustomer                    
+                    isDepositCustomer ? "1" : "0"                    
                 });
 
 
@@ -386,7 +386,7 @@ public class UpdateCSSetting : BaseHandler
                             AppSession.AccId, 
                             AppSession.Username, 
                             3,
-                            isDepositCustomer
+                            isDepositCustomer ? "1" : "0"
                         });
                     }
                 }
