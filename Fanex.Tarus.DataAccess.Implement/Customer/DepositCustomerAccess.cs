@@ -1,97 +1,687 @@
-﻿using System.Data;
-using DNAide.Utils;
-using Fanex.Data;
-using Fanex.Tarus.Entities.Customer.DepositCustomer;
-using Sunplus.Accounting.Entities;
-using DNAide.Core;
-
-
+﻿
 namespace Fanex.Tarus.DataAccess.Implement.Customer
 {
-    using Fanex.Tarus.DataAccess.Interface.Customer;
+    using System;
     using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using DNAide.Core;
+    using DNAide.Utils;
+    using Fanex.Data;
+    using Fanex.Tarus.DataAccess.Implement.Constants;
+    using Fanex.Tarus.DataAccess.Interface.Customer;
+    using Fanex.Tarus.Entities.Customer.DepositCustomer;
+    using Fanex.Tarus.Infrastructure.Configurations;
+    using Sunplus.Accounting.Core.Configurations;
+    using Sunplus.Accounting.Core.Helper;
+    using Sunplus.Accounting.Entities;
 
-    public class DepositCustomerAccess: BaseAccess, IDepositCustomerAccess
+    public class DepositCustomerAccess : BaseAccess, IDepositCustomerAccess
     {
-        public Result NewLicenseeAddNewSuper(NewLicenseePostParam newLicenseePostParam)
+        private Hashtable GetAddNewHashTableParams(NewLicenseePostParam newLicenseePostParam)
         {
-            using (var objDb = new ObjectDb("NewLicensee_AdNewSuper"))
+            string paramName;
+            string sportId;
+            Dictionary<string, object> dictionaryParams = new Dictionary<string, object>();
+            foreach (var param in newLicenseePostParam.PostParams)
             {
-                var hashParam = new Hashtable();
-                foreach (var param in newLicenseePostParam.PostParams)
+                paramName = param.Name.ToLower();
+                if (dictionaryParams.ContainsKey(paramName))
                 {
-                    hashParam.Add(param.Name.ToLower(), param.Value);
+                    continue;
                 }
-                hashParam.Add("username", newLicenseePostParam.SuperName);
-                hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
 
-                hashParam.Add("custid", 0);
-                hashParam.Add("errcode", 0);
-                hashParam.Add("errmsg", string.Empty);
+                dictionaryParams.Add(paramName, param.Value);
+            }
 
-                if (!hashParam.ContainsKey("userpwd"))
+            var hashParams = new Hashtable();
+            hashParams.Add("creator", dictionaryParams["creator"]);
+            hashParams.Add("site", dictionaryParams.ContainsKey("site") ? dictionaryParams["site"] : null);
+            hashParams.Add("currency", dictionaryParams.ContainsKey("currency") ? dictionaryParams["currency"] : null);
+            hashParams.Add("disablenumber", dictionaryParams.ContainsKey("currency") ? dictionaryParams["disablenumber"] : null);
+
+            #region Sportsbook
+
+            var sports = SportsSection.Instance.Sports;
+            foreach (SportsElement sport in SportsSection.Instance.Sports)
+            {
+                sportId = sport.Id.ToLower();
+                if (string.Equals(sportId, "161", StringComparison.OrdinalIgnoreCase))
                 {
-                    hashParam.Add("userpwd", Encryption.CfsEnCode("123qwe"));
+                    continue;
                 }
-                
-                objDb.AssignParamValues(hashParam);
-                
-                objDb.ExecuteNonQuery();
-                var errCode = CastAide.AsInt32(objDb.GetParameterValue("ErrCode"));
-                var errMsg = CastAide.AsString(objDb.GetParameterValue("ErrMsg"));
 
-                if (errCode == 0)
+                paramName = "minbetv" + sportId;
+                hashParams.Add(paramName, dictionaryParams[paramName]);
+
+                paramName = "maxbetv" + sportId;
+                hashParams.Add(paramName, dictionaryParams[paramName]);
+
+                paramName = "maxpermatchv" + sportId;
+                hashParams.Add(paramName, dictionaryParams[paramName]);
+
+                if (string.Equals(sportId, "99mp", StringComparison.OrdinalIgnoreCase))
                 {
-                    newLicenseePostParam.SuperId = CastAide.AsInt32(objDb.GetParameterValue("custid"));
-                    errMsg = string.Format("{0},", newLicenseePostParam.SuperId);
-                    if (!string.IsNullOrWhiteSpace(newLicenseePostParam.MasterName))
-                    {                        
-                        var result = NewLicenseeAddNewMaster(newLicenseePostParam);
-                        if (result.ErrorCode == 0)
-                        {
-                            errMsg += string.Format("{0},", newLicenseePostParam.MasterId);
-                            if (!string.IsNullOrWhiteSpace(newLicenseePostParam.AgentName))
-                            {
-                                result = NewLicenseeAddNewAgent(newLicenseePostParam);
-                                if (result.ErrorCode != 0) return result;
-                                else
-                                    errMsg += string.Format("{0}", newLicenseePostParam.AgentId);
-                            }
-                        }
-                        else return result;
+                    continue;
+                }
+
+                var betTypes = sport.Bettype.Split(new char[] { ',' });
+                var betTypesLength = betTypes.Length;
+                for (var l = 0; l < betTypesLength; l++)
+                {
+                    paramName = "v" + sportId + "spositiontaking_" + betTypes[l];
+                    hashParams.Add(paramName, dictionaryParams[paramName]);
+
+                    paramName = "v" + sportId + "mpositiontaking_" + betTypes[l];
+                    hashParams.Add(paramName, dictionaryParams[paramName]);
+
+                    paramName = "v" + sportId + "apositiontaking_" + betTypes[l];
+                    hashParams.Add(paramName, dictionaryParams[paramName]);
+
+                    if (sportId == "1")
+                    {
+                        paramName = "v" + sportId + "slivepositiontaking_" + betTypes[l];
+                        hashParams.Add(paramName, dictionaryParams[paramName]);
+
+                        paramName = "v" + sportId + "mlivepositiontaking_" + betTypes[l];
+                        hashParams.Add(paramName, dictionaryParams[paramName]);
+
+                        paramName = "v" + sportId + "alivepositiontaking_" + betTypes[l];
+                        hashParams.Add(paramName, dictionaryParams[paramName]);
                     }
                 }
-                else
-                {
-                    return new Result(errCode, errMsg);
-                }
-                return new Result(0, errMsg);
             }
+
+            #endregion Sportsbook
+            #region NumberGame
+
+            sportId = "161";
+            paramName = "minbetv" + sportId;
+            hashParams.Add(paramName, dictionaryParams[paramName]);
+            paramName = "maxbetv" + sportId;
+            hashParams.Add(paramName, dictionaryParams[paramName]);
+            paramName = "maxpermatchv" + sportId;
+            hashParams.Add(paramName, dictionaryParams[paramName]);
+            paramName = "maxperballv" + sportId;
+            hashParams.Add(paramName, dictionaryParams[paramName]);
+
+            var levelType = new string[] { "s", "m", "a" };
+            var levelTypeLength = levelType.Length;
+            for (var i = 0; i < levelTypeLength; i++)
+            {
+                var type = levelType[i];
+                foreach (SportsElement sport in sports)
+                {
+                    if (!string.Equals(sport.Id.Trim(), sportId) ||
+                        string.IsNullOrWhiteSpace(sport.Bettype) ||
+                        sport.Bettype == "NA")
+                    {
+                        continue;
+                    }
+
+                    var betTypes = sport.Bettype.Split(new char[] { ',' });
+                    foreach (var betType in betTypes)
+                    {
+                        var betTypeAfterTrim = betType.Trim();
+                        paramName = "v" + sportId + type + "positiontaking_" + betTypeAfterTrim;
+                        hashParams.Add(paramName, dictionaryParams[paramName]);
+                        paramName = "v" + sportId + type + "livepositiontaking_" + betTypeAfterTrim;
+                        hashParams.Add(paramName, dictionaryParams[paramName]);
+                    }
+                }
+            }
+
+            #endregion NumberGame
+            #region Racing
+
+            var racings = RacingSection.Instance.Racings;
+            foreach (RacingElement racing in racings)
+            {
+                if (!racing.Active)
+                {
+                    continue;
+                }
+
+                foreach (ToteElement tote in racing.Totes)
+                {
+                    if (!tote.Active)
+                    {
+                        continue;
+                    }
+
+                    paramName = "v" + racing.Id + "minbet_" + tote.Id;
+                    hashParams.Add(paramName, dictionaryParams[paramName]);
+                    paramName = "v" + racing.Id + "maxbet_" + tote.Id;
+                    hashParams.Add(paramName, dictionaryParams[paramName]);
+                    paramName = "v" + racing.Id + "maxpermatch_" + tote.Id;
+                    hashParams.Add(paramName, dictionaryParams[paramName]);
+                    if (string.IsNullOrWhiteSpace(tote.BetType) ||
+                        tote.BetType == "NA")
+                    {
+                        continue;
+                    }
+
+                    var betTypes = tote.BetType.Split(new char[] { ',' });
+                    foreach (var betType in betTypes)
+                    {
+                        paramName = "v" + racing.Id + "discount_" + betType;
+                        hashParams.Add(paramName, dictionaryParams.ContainsKey(paramName) ? dictionaryParams[paramName] : null);
+                        paramName = "v" + racing.Id + "spositiontaking_" + betType;
+                        hashParams.Add(paramName, dictionaryParams.ContainsKey(paramName) ? dictionaryParams[paramName] : null);
+                        paramName = "v" + racing.Id + "mpositiontaking_" + betType;
+                        hashParams.Add(paramName, dictionaryParams.ContainsKey(paramName) ? dictionaryParams[paramName] : null);
+                        paramName = "v" + racing.Id + "apositiontaking_" + betType;
+                        hashParams.Add(paramName, dictionaryParams.ContainsKey(paramName) ? dictionaryParams[paramName] : null);
+                        paramName = "v" + racing.Id + "ibcpositiontaking_" + betType;
+                        hashParams.Add(paramName, dictionaryParams.ContainsKey(paramName) ? dictionaryParams[paramName] : null);
+                    }
+
+                    paramName = "disable" + racing.Id + "_" + tote.Id;
+                    hashParams.Add(paramName, dictionaryParams.ContainsKey(paramName) ? dictionaryParams[paramName] : null);
+                }
+            }
+
+
+            #endregion Racing
+            #region VirtualSports
+
+            var virtualSports = VirtualSportsSection.Instance.Sports;
+
+            paramName = "disablevirtualsports";
+            hashParams.Add(paramName, dictionaryParams.ContainsKey(paramName) ? dictionaryParams[paramName] : null);
+            var virtualSportsParams = "<products>";
+            foreach (VirtualSportsElement sport in virtualSports)
+            {
+                if (!sport.Active)
+                {
+                    continue;
+                }
+
+                sportId = sport.Id;
+
+                virtualSportsParams += string.Format("<product SportType=\"{0}\"" +
+                    " MaxBet=\"{1}\"" +
+                    " MinBet=\"{2}\"" +
+                    " MaxPerMatch=\"{3}\"" +
+                    " sPositionTaking=\"{4}\"" +
+                    " mPositionTaking=\"{5}\"" +
+                    " aPositionTaking=\"{6}\"></product>",
+                    sportId,
+                    dictionaryParams["v" + sportId + "maxbet"],
+                    dictionaryParams["v" + sportId + "minbet"],
+                    dictionaryParams["v" + sportId + "maxpermatch"],
+                    dictionaryParams["v" + sportId + "spositiontaking"],
+                    dictionaryParams["v" + sportId + "mpositiontaking"],
+                    dictionaryParams["v" + sportId + "apositiontaking"]);
+            }
+
+            virtualSportsParams += "</products>";
+            hashParams.Add("virtualsportlist", virtualSportsParams);
+
+            #endregion VirtualSports
+
+            foreach (var param in newLicenseePostParam.PostParams)
+            {
+                paramName = param.Name.ToLower();
+                if (hashParams.ContainsKey(paramName))
+                {
+                    continue;
+                }
+
+                hashParams.Add(paramName, param.Value);
+            }
+
+            return hashParams;
+        }
+
+        private Hashtable GetAddNewHashTableParams_DummyUser(NewLicenseePostParam newLicenseePostParam)
+        {
+            string paramName;
+            string sportId;
+            Dictionary<string, object> dictionaryParam = new Dictionary<string, object>();
+            foreach (var param in newLicenseePostParam.PostParams)
+            {
+                paramName = param.Name.ToLower();
+                if (dictionaryParam.ContainsKey(paramName))
+                {
+                    continue;
+                }
+
+                dictionaryParam.Add(paramName, param.Value);
+            }
+
+            var hashParam = new Hashtable();
+            hashParam.Add("creator", dictionaryParam["creator"]);
+            hashParam.Add("site", dictionaryParam["site"]);
+            hashParam.Add("currency", dictionaryParam["currency"]);
+            hashParam.Add("disablenumber", dictionaryParam["disablenumber"]);
+
+            #region Sportsbook
+
+            var sports = SportsSection.Instance.Sports;
+            foreach (SportsElement sport in SportsSection.Instance.Sports)
+            {
+                sportId = sport.Id.ToLower();
+                if (string.Equals(sportId, "161", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                paramName = "minbetv" + sportId;
+                hashParam.Add(paramName, 0);
+
+                paramName = "maxbetv" + sportId;
+                hashParam.Add(paramName, 0);
+
+                paramName = "maxpermatchv" + sportId;
+                hashParam.Add(paramName, 0);
+
+                if (string.Equals(sportId, "99mp", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                var betTypes = sport.Bettype.Split(new char[] { ',' });
+                var betTypesLength = betTypes.Length;
+                for (var l = 0; l < betTypesLength; l++)
+                {
+                    paramName = "v" + sportId + "spositiontaking_" + betTypes[l];
+                    hashParam.Add(paramName, 0);
+
+                    paramName = "v" + sportId + "mpositiontaking_" + betTypes[l];
+                    hashParam.Add(paramName, 0);
+
+                    paramName = "v" + sportId + "apositiontaking_" + betTypes[l];
+                    hashParam.Add(paramName, 0);
+
+                    if (sportId == "1")
+                    {
+                        paramName = "v" + sportId + "slivepositiontaking_" + betTypes[l];
+                        hashParam.Add(paramName, 0);
+
+                        paramName = "v" + sportId + "mlivepositiontaking_" + betTypes[l];
+                        hashParam.Add(paramName, 0);
+
+                        paramName = "v" + sportId + "alivepositiontaking_" + betTypes[l];
+                        hashParam.Add(paramName, 0);
+                    }
+                }
+            }
+
+            #endregion Sportsbook
+            #region NumberGame
+
+            sportId = "161";
+            paramName = "minbetv" + sportId;
+            hashParam.Add(paramName, 0);
+            paramName = "maxbetv" + sportId;
+            hashParam.Add(paramName, 0);
+            paramName = "maxpermatchv" + sportId;
+            hashParam.Add(paramName, 0);
+            paramName = "maxperballv" + sportId;
+            hashParam.Add(paramName, 0);
+
+            var levelType = new string[] { "s", "m", "a" };
+            var levelTypeLength = levelType.Length;
+            for (var i = 0; i < levelTypeLength; i++)
+            {
+                var type = levelType[i];
+                foreach (SportsElement sport in sports)
+                {
+                    if (!string.Equals(sport.Id.Trim(), sportId) ||
+                        string.IsNullOrWhiteSpace(sport.Bettype) ||
+                        sport.Bettype == "NA")
+                    {
+                        continue;
+                    }
+
+                    var betTypes = sport.Bettype.Split(new char[] { ',' });
+                    foreach (var betType in betTypes)
+                    {
+                        var betTypeAfterTrim = betType.Trim();
+                        paramName = "v" + sportId + type + "positiontaking_" + betTypeAfterTrim;
+                        hashParam.Add(paramName, 0);
+                        paramName = "v" + sportId + type + "livepositiontaking_" + betTypeAfterTrim;
+                        hashParam.Add(paramName, 0);
+                    }
+                }
+            }
+
+            #endregion NumberGame
+            #region Racing
+
+            var racings = RacingSection.Instance.Racings;
+            foreach (RacingElement racing in racings)
+            {
+                if (!racing.Active)
+                {
+                    continue;
+                }
+
+                foreach (ToteElement tote in racing.Totes)
+                {
+                    if (!tote.Active)
+                    {
+                        continue;
+                    }
+
+                    paramName = "v" + racing.Id + "minbet_" + tote.Id;
+                    hashParam.Add(paramName, 0);
+                    paramName = "v" + racing.Id + "maxbet_" + tote.Id;
+                    hashParam.Add(paramName, 0);
+                    paramName = "v" + racing.Id + "maxpermatch_" + tote.Id;
+                    hashParam.Add(paramName, 0);
+                    if (string.IsNullOrWhiteSpace(tote.BetType) ||
+                        tote.BetType == "NA")
+                    {
+                        continue;
+                    }
+
+                    var betTypes = tote.BetType.Split(new char[] { ',' });
+                    foreach (var betType in betTypes)
+                    {
+                        paramName = "v" + racing.Id + "discount_" + betType;
+                        hashParam.Add(paramName, 0);
+                        paramName = "v" + racing.Id + "spositiontaking_" + betType;
+                        hashParam.Add(paramName, 0);
+                        paramName = "v" + racing.Id + "mpositiontaking_" + betType;
+                        hashParam.Add(paramName, 0);
+                        paramName = "v" + racing.Id + "apositiontaking_" + betType;
+                        hashParam.Add(paramName, 0);
+                        paramName = "v" + racing.Id + "ibcpositiontaking_" + betType;
+                        hashParam.Add(paramName, 0);
+                    }
+
+                    paramName = "disable" + racing.Id + "_" + tote.Id;
+                    hashParam.Add(paramName, dictionaryParam[paramName]);
+                }
+            }
+
+
+            #endregion Racing
+            #region VirtualSports
+
+            var virtualSports = VirtualSportsSection.Instance.Sports;
+
+            paramName = "disablevirtualsports";
+            hashParam.Add(paramName, dictionaryParam[paramName]);
+            var virtualSportsParams = "<products>";
+            foreach (VirtualSportsElement sport in virtualSports)
+            {
+                if (!sport.Active)
+                {
+                    continue;
+                }
+
+                var betTypes = sport.Bettype;
+                sportId = sport.Id;
+
+                virtualSportsParams += string.Format("<product SportType = \"{0}\"" +
+                    " MaxBet=\"{1}\"" +
+                    " MinBet=\"{2}\"" +
+                    " MaxPerMatch=\"{3}\"" +
+                    " sPositionTaking=\"{4}\"" +
+                    " mPositionTaking=\"{5}\"" +
+                    " aPositionTaking=\"{6}\"></product>",
+                    sportId,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0);
+            }
+
+            virtualSportsParams += "</products>";
+            hashParam.Add("virtualsportlist", virtualSportsParams);
+
+            #endregion VirtualSports
+
+            foreach (var param in newLicenseePostParam.PostParams)
+            {
+                paramName = param.Name.ToLower();
+                if (hashParam.ContainsKey(paramName))
+                {
+                    continue;
+                }
+
+                hashParam.Add(paramName, 0);
+            }
+
+            return hashParam;
+        }
+
+        private Result CheckDuplicateUsername(string username)
+        {
+            var hashParams = new Hashtable();
+            hashParams.Add("username", username);
+            hashParams.Add("errcode", 0);
+            hashParams.Add("errmsg", string.Empty);
+            Result result;
+            using (var objDb = new ObjectDb("Customer_NewLicensee_CheckUsername"))
+            {
+                objDb.AssignParamValues(hashParams);
+                objDb.ExecuteNonQuery();
+                result = new Result
+                {
+                    ErrorCode = CastAide.AsInt32(objDb.GetParameterValue("ErrCode")),
+                    ErrorMessage = CastAide.AsString(objDb.GetParameterValue("ErrMsg"))
+                };
+            }
+
+            return result;
+        }
+
+        private Result CheckDuplicateUsername(NewLicenseePostParam newLicenseePostParam)
+        {
+            Result result;
+            var singleNameCheck = CheckDuplicateUsername(newLicenseePostParam.SuperName);
+            List<string> duplicateNames = new List<string>();
+            if (singleNameCheck.ErrorCode != 0)
+            {
+                duplicateNames.Add(newLicenseePostParam.SuperName);
+            }
+
+            singleNameCheck = CheckDuplicateUsername(newLicenseePostParam.MasterName);
+            if (singleNameCheck.ErrorCode != 0)
+            {
+                duplicateNames.Add(newLicenseePostParam.MasterName);
+            }
+
+            singleNameCheck = CheckDuplicateUsername(newLicenseePostParam.AgentName);
+            if (singleNameCheck.ErrorCode != 0)
+            {
+                duplicateNames.Add(newLicenseePostParam.AgentName);
+            }
+
+            singleNameCheck = CheckDuplicateUsername(newLicenseePostParam.DummyMasterName);
+            if (singleNameCheck.ErrorCode != 0)
+            {
+                duplicateNames.Add(newLicenseePostParam.DummyMasterName);
+            }
+
+            singleNameCheck = CheckDuplicateUsername(newLicenseePostParam.DummyAgentName);
+            if (singleNameCheck.ErrorCode != 0)
+            {
+                duplicateNames.Add(newLicenseePostParam.DummyAgentName);
+            }
+
+            var dummyMemberNameList = newLicenseePostParam.DummyMemberName.Split(new char[] { ',' });
+            foreach (var dummyMemberName in dummyMemberNameList)
+            {
+                singleNameCheck = CheckDuplicateUsername(dummyMemberName);
+                if (singleNameCheck.ErrorCode != 0)
+                {
+                    duplicateNames.Add(dummyMemberName);
+                }
+            }
+
+            if (duplicateNames.Count > 0)
+            {
+                result = new Result
+                {
+                    ErrorCode = 1,
+                    ErrorMessage = string.Join(", ", duplicateNames) +
+                        (duplicateNames.Count > 1 ? " are" : " is") + " not available."
+                };
+            }
+            else
+            {
+                result = new Result();
+            }
+
+            return result;
+        }
+
+        public Result NewLicenseeAddNewSuper(NewLicenseePostParam newLicenseePostParam)
+        {
+            Result result;
+            result = CheckDuplicateUsername(newLicenseePostParam);
+            if (result.ErrorCode != 0)
+            {
+                return result;
+            }
+
+            var hashParam = GetAddNewHashTableParams(newLicenseePostParam);
+            hashParam.Add("username", newLicenseePostParam.SuperName);
+            hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+            hashParam.Add("custid", 0);
+            hashParam.Add("errcode", 0);
+            hashParam.Add("errmsg", string.Empty);
+            if (!hashParam.ContainsKey("userpwd"))
+            {
+                hashParam.Add("userpwd", Encryption.CfsEnCode("123qwe"));
+            }
+
+            using (var objDb = new ObjectDb("NewLicensee_AdNewSuper"))
+            {
+                objDb.AssignParamValues(hashParam);
+                objDb.ExecuteNonQuery();
+
+                newLicenseePostParam.SuperId = CastAide.AsInt32(objDb.GetParameterValue("custid"));
+                result = new Result
+                {
+                    ErrorCode = CastAide.AsInt32(objDb.GetParameterValue("ErrCode")),
+                    ErrorMessage = CastAide.AsString(objDb.GetParameterValue("ErrMsg"))
+                };
+            }
+
+            if (result.ErrorCode != 0)
+            {
+                result.ErrorMessage += " (" + newLicenseePostParam.SuperName + ")";
+                return result;
+            }
+
+            List<string> succeededIdList = new List<string>();
+            succeededIdList.Add("Super: " + newLicenseePostParam.SuperName.ToString());
+            if (string.IsNullOrWhiteSpace(newLicenseePostParam.MasterName))
+            {
+                result.SuccessMessageList = succeededIdList;
+                return result;
+            }
+
+            result = NewLicenseeAddNewMaster(newLicenseePostParam);
+            if (result.ErrorCode != 0)
+            {
+                result.ErrorMessage += " (" + newLicenseePostParam.MasterName + ")";
+                result.SuccessMessageList = succeededIdList;
+                return result;
+            }
+
+            succeededIdList.Add("Master: " + newLicenseePostParam.MasterName.ToString());
+            if (string.IsNullOrWhiteSpace(newLicenseePostParam.AgentName))
+            {
+                result.SuccessMessageList = succeededIdList;
+                return result;
+            }
+
+            result = NewLicenseeAddNewAgent(newLicenseePostParam);
+            if (result.ErrorCode != 0)
+            {
+                result.ErrorMessage += " (" + newLicenseePostParam.AgentName + ")";
+                result.SuccessMessageList = succeededIdList;
+                return result;
+            }
+
+            succeededIdList.Add("Agent: " + newLicenseePostParam.AgentName.ToString());
+            if (string.IsNullOrWhiteSpace(newLicenseePostParam.DummyMasterName))
+            {
+                result.SuccessMessageList = succeededIdList;
+                return result;
+            }
+
+            result = NewLicenseeAddNewDummyUser(ref newLicenseePostParam,
+                RoleConstants.Master,
+                ref result,
+                ref succeededIdList);
+            if (result.ErrorCode != 0)
+            {
+                result.ErrorMessage += " (" + newLicenseePostParam.DummyMasterName + ")";
+                result.SuccessMessageList = succeededIdList;
+                return result;
+            }
+
+            if (string.IsNullOrWhiteSpace(newLicenseePostParam.DummyAgentName))
+            {
+                result.ErrorMessage = string.Join(",", succeededIdList);
+                return result;
+            }
+
+            result = NewLicenseeAddNewDummyUser(ref newLicenseePostParam,
+                RoleConstants.Agent,
+                ref result,
+                ref succeededIdList);
+            if (result.ErrorCode != 0)
+            {
+                result.ErrorMessage += " (" + newLicenseePostParam.DummyAgentName + ")";
+                result.SuccessMessageList = succeededIdList;
+                return result;
+            }
+
+            if (string.IsNullOrWhiteSpace(newLicenseePostParam.DummyMemberName))
+            {
+                result.SuccessMessageList = succeededIdList;
+                return result;
+            }
+
+            var dummyMemberNameList = newLicenseePostParam.DummyMemberName.Split(new char[] { ',' });
+            foreach (var dummyMemberName in dummyMemberNameList)
+            {
+                newLicenseePostParam.DummyMemberName = dummyMemberName;
+                result = NewLicenseeAddNewDummyUser(ref newLicenseePostParam,
+                    RoleConstants.Member,
+                    ref result,
+                    ref succeededIdList);
+                if (result.ErrorCode != 0)
+                {
+                    result.ErrorMessage += " (" + dummyMemberName + ")";
+                    result.SuccessMessageList = succeededIdList;
+                    return result;
+                }
+            }
+
+            result.SuccessMessageList = succeededIdList;
+            return result;
         }
 
         public Result NewLicenseeAddNewMaster(NewLicenseePostParam newLicenseePostParam)
         {
+            var hashParam = GetAddNewHashTableParams(newLicenseePostParam);
+            hashParam.Add("srecommend", newLicenseePostParam.SuperId);
+            hashParam.Add("username", newLicenseePostParam.MasterName);
+            hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+
+            hashParam.Add("custid", 0);
+            hashParam.Add("errcode", 0);
+            hashParam.Add("errmsg", string.Empty);
+
+            if (!hashParam.ContainsKey("userpwd"))
+            {
+                hashParam.Add("userpwd", Encryption.CfsEnCode("123qwe"));
+            }
+
             using (var objDb = new ObjectDb("NewLicensee_AdNewMaster"))
             {
-                var hashParam = new Hashtable();
-                foreach (var param in newLicenseePostParam.PostParams)
-                {
-                    hashParam.Add(param.Name.ToLower(), param.Value);
-                }
-
-                hashParam.Add("srecommend", newLicenseePostParam.SuperId);
-                hashParam.Add("username", newLicenseePostParam.MasterName);
-                hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
-
-                hashParam.Add("custid", 0);
-                hashParam.Add("errcode", 0);
-                hashParam.Add("errmsg", string.Empty);
-
-                if (!hashParam.ContainsKey("userpwd"))
-                {
-                    hashParam.Add("userpwd", Encryption.CfsEnCode("123qwe"));
-                }
-
                 objDb.AssignParamValues(hashParam);
 
                 objDb.ExecuteNonQuery();
@@ -108,29 +698,163 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
             }
         }
 
+        private Result NewLicenseeAddNewDummyUser(ref NewLicenseePostParam newLicenseePostParam,
+            int roleId,
+            ref Result result,
+            ref List<string> succeededIdList)
+        {
+            switch (roleId)
+            {
+                case RoleConstants.Master:
+                    if (string.IsNullOrWhiteSpace(newLicenseePostParam.DummyMasterName))
+                    {
+                        result.SuccessMessageList = succeededIdList;
+                        return result;
+                    }
+
+                    break;
+                case RoleConstants.Agent:
+                    if (string.IsNullOrWhiteSpace(newLicenseePostParam.DummyAgentName))
+                    {
+                        result.SuccessMessageList = succeededIdList;
+                        return result;
+                    }
+
+                    break;
+                case RoleConstants.Member:
+                    if (string.IsNullOrWhiteSpace(newLicenseePostParam.DummyMemberName))
+                    {
+                        result.SuccessMessageList = succeededIdList;
+                        return result;
+                    }
+
+                    break;
+                default:
+                    break;
+            }
+
+            var addResult = NewLicenseeAddNewDummyUser(ref newLicenseePostParam, roleId);
+            if (addResult.ErrorCode != 0)
+            {
+                result = addResult;
+                return result;
+            }
+
+            switch (roleId)
+            {
+                case RoleConstants.Master:
+                    succeededIdList.Add("Dummy Master: " + newLicenseePostParam.DummyMasterName);
+                    break;
+                case RoleConstants.Agent:
+                    succeededIdList.Add("Dummy Agent: " + newLicenseePostParam.DummyAgentName);
+                    break;
+                case RoleConstants.Member:
+                    succeededIdList.Add("Dummy Member: " + newLicenseePostParam.DummyMemberName);
+                    break;
+                default:
+                    break;
+            }
+
+            return result;
+        }
+
+        private Result NewLicenseeAddNewDummyUser(ref NewLicenseePostParam newLicenseePostParam,
+            int roleId)
+        {
+            if (roleId != RoleConstants.Master &&
+                roleId != RoleConstants.Agent &&
+                roleId != RoleConstants.Member)
+            {
+                return new Result(1, "Wrong role ID level!");
+            }
+
+            var hashParam = GetAddNewHashTableParams_DummyUser(newLicenseePostParam);
+            hashParam.Add("ip", Utils.GetClientIP());
+            hashParam.Add("custid", 0);
+            hashParam.Add("errcode", 0);
+            hashParam.Add("errmsg", string.Empty);
+            if (!hashParam.ContainsKey("userpwd"))
+            {
+                hashParam.Add("userpwd", Encryption.CfsEnCode("123qwe"));
+            }
+
+            string storeProcedureName = string.Empty;
+            switch (roleId)
+            {
+                case RoleConstants.Master:
+                    storeProcedureName = "NewLicensee_AdNewMaster";
+                    hashParam.Add("srecommend", newLicenseePostParam.SuperId);
+                    hashParam.Add("username", newLicenseePostParam.DummyMasterName);
+                    break;
+                case RoleConstants.Agent:
+                    storeProcedureName = "NewLicensee_AdNewAgent";
+                    hashParam.Add("mrecommend", newLicenseePostParam.DummyMasterId);
+                    hashParam.Add("username", newLicenseePostParam.DummyAgentName);
+                    break;
+                case RoleConstants.Member:
+                    storeProcedureName = "NewLicensee_AdNewMember";
+                    hashParam.Add("recommend", newLicenseePostParam.DummyAgentId);
+                    hashParam.Add("username", newLicenseePostParam.DummyMemberName);
+                    break;
+                default:
+                    return new Result(1, "Wrong role ID level!");
+            }
+
+            int errCode = 0;
+            string errMsg = string.Empty;
+            int custid = 0;
+            using (var objDb = new ObjectDb(storeProcedureName))
+            {
+                objDb.AssignParamValues(hashParam);
+                objDb.ExecuteNonQuery();
+                errCode = CastAide.AsInt32(objDb.GetParameterValue("ErrCode"));
+                errMsg = CastAide.AsString(objDb.GetParameterValue("ErrMsg"));
+                custid = CastAide.AsInt32(objDb.GetParameterValue("custid"));
+            }
+
+            if (errCode != 0)
+            {
+                return new Result(errCode, errMsg);
+            }
+
+            switch (roleId)
+            {
+                case RoleConstants.Master:
+                    newLicenseePostParam.DummyMasterId = custid;
+                    break;
+                case RoleConstants.Agent:
+                    newLicenseePostParam.DummyAgentId = custid;
+                    break;
+                case RoleConstants.Member:
+                    newLicenseePostParam.DummyMemberId = custid;
+                    break;
+                default:
+                    errCode = 0;
+                    errMsg = string.Empty;
+                    break;
+            }
+
+            return new Result(errCode, errMsg);
+        }
+
         public Result NewLicenseeAddNewAgent(NewLicenseePostParam newLicenseePostParam)
         {
+            var hashParam = GetAddNewHashTableParams(newLicenseePostParam);
+            hashParam.Add("mrecommend", newLicenseePostParam.MasterId);
+            hashParam.Add("username", newLicenseePostParam.AgentName);
+            hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+
+            hashParam.Add("custid", 0);
+            hashParam.Add("errcode", 0);
+            hashParam.Add("errmsg", string.Empty);
+
+            if (!hashParam.ContainsKey("userpwd"))
+            {
+                hashParam.Add("userpwd", Encryption.CfsEnCode("123qwe"));
+            }
+
             using (var objDb = new ObjectDb("NewLicensee_AdNewAgent"))
             {
-                var hashParam = new Hashtable();
-                foreach (var param in newLicenseePostParam.PostParams)
-                {
-                    hashParam.Add(param.Name.ToLower(), param.Value);
-                }
-
-                hashParam.Add("mrecommend", newLicenseePostParam.MasterId);
-                hashParam.Add("username", newLicenseePostParam.AgentName);
-                hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
-
-                hashParam.Add("custid", 0);
-                hashParam.Add("errcode", 0);
-                hashParam.Add("errmsg", string.Empty);
-
-                if (!hashParam.ContainsKey("userpwd"))
-                {
-                    hashParam.Add("userpwd", Encryption.CfsEnCode("123qwe"));
-                }
-
                 objDb.AssignParamValues(hashParam);
 
                 objDb.ExecuteNonQuery();
@@ -149,27 +873,22 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
 
         public Result NewLicenseeAddNewMember(NewLicenseePostParam newLicenseePostParam)
         {
+            var hashParam = GetAddNewHashTableParams(newLicenseePostParam);
+            hashParam.Add("recommend", newLicenseePostParam.AgentId);
+            hashParam.Add("username", newLicenseePostParam.MemberName);
+            hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+
+            hashParam.Add("custid", 0);
+            hashParam.Add("errcode", 0);
+            hashParam.Add("errmsg", string.Empty);
+
+            if (!hashParam.ContainsKey("userpwd"))
+            {
+                hashParam.Add("userpwd", Encryption.CfsEnCode("123qwe"));
+            }
+
             using (var objDb = new ObjectDb("NewLicensee_AdNewMember"))
             {
-                var hashParam = new Hashtable();
-                foreach (var param in newLicenseePostParam.PostParams)
-                {
-                    hashParam.Add(param.Name.ToLower(), param.Value);
-                }
-
-                hashParam.Add("recommend", newLicenseePostParam.AgentId);
-                hashParam.Add("username", newLicenseePostParam.MemberName);
-                hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
-
-                hashParam.Add("custid", 0);
-                hashParam.Add("errcode", 0);
-                hashParam.Add("errmsg", string.Empty);
-
-                if (!hashParam.ContainsKey("userpwd"))
-                {
-                    hashParam.Add("userpwd", Encryption.CfsEnCode("123qwe"));
-                }
-
                 objDb.AssignParamValues(hashParam);
 
                 objDb.ExecuteNonQuery();
@@ -226,48 +945,99 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
             }
         }
 
+        private Dictionary<string, object> GetUpdateSettingsDictionary(NewLicenseePostParam criteria)
+        {
+            Dictionary<string, object> dictionaryParams = new Dictionary<string, object>();
+            string paramName;
+            foreach (var sportsSettingInfo in criteria.VirtualSportsSettingInfo)
+            {
+                foreach (var param in sportsSettingInfo.SettingInfo)
+                {
+                    paramName = param.Name.ToLower();
+                    if (dictionaryParams.ContainsKey(paramName))
+                    {
+                        continue;
+                    }
+
+                    dictionaryParams.Add(paramName, param.Value);
+                }
+            }
+
+            return dictionaryParams;
+        }
+
+        private void GetUpdateSettingsHashTableParams_VirtualSports(
+            NewLicenseePostParam criteria,
+            Dictionary<string, object> updateSettingsDictionary,
+            ref Hashtable hashtableParams)
+        {
+            string sportId;
+            var virtualSports = criteria.VirtualSportsSettingInfo;
+
+            var virtualSportsParams = "<products>";
+            foreach (VirtualSportsSettingInfo sport in virtualSports)
+            {
+                sportId = sport.Id;
+                virtualSportsParams += string.Format("<product SportType=\"{0}\"" +
+                    " MinBet=\"{1}\"" +
+                    " MaxBet=\"{2}\"" +
+                    " MaxPerMatch=\"{3}\"" +
+                    " sPositionTaking=\"{4}\"" +
+                    " mPositionTaking=\"{5}\"" +
+                    " aPositionTaking=\"{6}\"></product>",
+                    sportId,
+                    updateSettingsDictionary["v" + sportId + "minbet"],
+                    updateSettingsDictionary["v" + sportId + "maxbet"],
+                    updateSettingsDictionary["v" + sportId + "maxpermatch"],
+                    updateSettingsDictionary["v" + sportId + "spositiontaking"],
+                    updateSettingsDictionary["v" + sportId + "mpositiontaking"],
+                    updateSettingsDictionary["v" + sportId + "apositiontaking"]);
+            }
+
+            virtualSportsParams += "</products>";
+            hashtableParams.Add("virtualsportlist", virtualSportsParams);
+        }
+
+        private Hashtable GetUpdateSettingsHashTableParams(NewLicenseePostParam criteria)
+        {
+            var updateSettingsDictionary = GetUpdateSettingsDictionary(criteria);
+            var hashtableParams = new Hashtable();
+            foreach (var param in criteria.PostParams)
+            {
+                hashtableParams.Add(param.Name.ToLower(), param.Value);
+            }
+
+            GetUpdateSettingsHashTableParams_VirtualSports(criteria, updateSettingsDictionary, ref hashtableParams);
+            return hashtableParams;
+        }
+
         public Result UpdateSuperSetting(NewLicenseePostParam newLicenseePostParam)
         {
+            var hashtableParams = GetUpdateSettingsHashTableParams(newLicenseePostParam);
+            hashtableParams.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+            hashtableParams.Add("errcode", 0);
+            hashtableParams.Add("errmsg", string.Empty);
+
             using (var objDb = new ObjectDb("DepositCust_UpdateSuperSetting"))
             {
-                var hashParam = new Hashtable();
-                foreach (var param in newLicenseePostParam.PostParams)
-                {
-                    hashParam.Add(param.Name.ToLower(), param.Value);
-                }
-
-                hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
-
-                hashParam.Add("errcode", 0);
-                hashParam.Add("errmsg", string.Empty);
-
-                objDb.AssignParamValues(hashParam);
-
+                objDb.AssignParamValues(hashtableParams);
                 objDb.ExecuteNonQuery();
                 var errCode = CastAide.AsInt32(objDb.GetParameterValue("ErrCode"));
                 var errMsg = CastAide.AsString(objDb.GetParameterValue("ErrMsg"));
-
                 return new Result(errCode, errMsg);
             }
         }
 
         public Result UpdateMasterSetting(NewLicenseePostParam newLicenseePostParam)
         {
+            var hashtableParams = GetUpdateSettingsHashTableParams(newLicenseePostParam);
+            hashtableParams.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+            hashtableParams.Add("errcode", 0);
+            hashtableParams.Add("errmsg", string.Empty);
+
             using (var objDb = new ObjectDb("DepositCust_UpdateMasterSetting"))
             {
-                var hashParam = new Hashtable();
-                foreach (var param in newLicenseePostParam.PostParams)
-                {
-                    hashParam.Add(param.Name.ToLower(), param.Value);
-                }
-
-                hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
-
-                hashParam.Add("errcode", 0);
-                hashParam.Add("errmsg", string.Empty);
-
-                objDb.AssignParamValues(hashParam);
-
+                objDb.AssignParamValues(hashtableParams);
                 objDb.ExecuteNonQuery();
                 var errCode = CastAide.AsInt32(objDb.GetParameterValue("ErrCode"));
                 var errMsg = CastAide.AsString(objDb.GetParameterValue("ErrMsg"));
@@ -278,20 +1048,14 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
 
         public Result UpdateAgentSetting(NewLicenseePostParam newLicenseePostParam)
         {
+            var hashtableParams = GetUpdateSettingsHashTableParams(newLicenseePostParam);
+            hashtableParams.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+            hashtableParams.Add("errcode", 0);
+            hashtableParams.Add("errmsg", string.Empty);
+
             using (var objDb = new ObjectDb("DepositCust_UpdateAgentSetting"))
             {
-                var hashParam = new Hashtable();
-                foreach (var param in newLicenseePostParam.PostParams)
-                {
-                    hashParam.Add(param.Name.ToLower(), param.Value);
-                }
-
-                hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
-
-                hashParam.Add("errcode", 0);
-                hashParam.Add("errmsg", string.Empty);
-
-                objDb.AssignParamValues(hashParam);
+                objDb.AssignParamValues(hashtableParams);
 
                 objDb.ExecuteNonQuery();
                 var errCode = CastAide.AsInt32(objDb.GetParameterValue("ErrCode"));
@@ -303,21 +1067,14 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
 
         public Result UpdateMemberSetting(NewLicenseePostParam newLicenseePostParam)
         {
+            var hashtableParams = GetUpdateSettingsHashTableParams(newLicenseePostParam);
+            hashtableParams.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
+            hashtableParams.Add("errcode", 0);
+            hashtableParams.Add("errmsg", string.Empty);
+
             using (var objDb = new ObjectDb("DepositCust_UpdateMemberSetting"))
             {
-                var hashParam = new Hashtable();
-                foreach (var param in newLicenseePostParam.PostParams)
-                {
-                    hashParam.Add(param.Name.ToLower(), param.Value);
-                }
-
-                hashParam.Add("ip", Sunplus.Accounting.Core.Helper.Utils.GetClientIP());
-
-                hashParam.Add("errcode", 0);
-                hashParam.Add("errmsg", string.Empty);
-
-                objDb.AssignParamValues(hashParam);
-
+                objDb.AssignParamValues(hashtableParams);
                 objDb.ExecuteNonQuery();
                 var errCode = CastAide.AsInt32(objDb.GetParameterValue("ErrCode"));
                 var errMsg = CastAide.AsString(objDb.GetParameterValue("ErrMsg"));
@@ -325,7 +1082,6 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 return new Result(errCode, errMsg);
             }
         }
-
 
         public DataTable SelAllLicensee()
         {
@@ -336,7 +1092,6 @@ namespace Fanex.Tarus.DataAccess.Implement.Customer
                 return dataSet.Tables[0];
             }
         }
-
 
         public DataSet GetMasterSettingForAddNew(int custId)
         {

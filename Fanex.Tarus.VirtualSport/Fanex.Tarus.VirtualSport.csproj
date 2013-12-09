@@ -146,7 +146,6 @@
     </Compile>
     <Compile Include="Controllers\Report\VirtualSportReportController.cs" />
     <Compile Include="Controllers\SpecialDelete\SpecialDeleteController.cs" />
-    <Compile Include="Core\Configurations\VirtualSportsSection.cs" />
     <Compile Include="DataAccess\Customer\DepositCustomer\CustomerAccess.cs" />
     <Compile Include="DataAccess\Customer\DepositCustomer\ICustomerAccess.cs" />
     <Compile Include="DataAccess\Customer\EnableVirtualSports\EnableAccess.cs" />
@@ -223,6 +222,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Business\Customer\PTSetting\" />
+    <Folder Include="Core\" />
     <Folder Include="DataAccess\PTSetting\" />
   </ItemGroup>
   <ItemGroup>

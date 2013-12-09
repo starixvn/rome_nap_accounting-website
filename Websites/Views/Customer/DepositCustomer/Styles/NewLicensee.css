@@ -1,0 +1,29 @@
+﻿.column-label-username
+{
+    text-align: left;
+    width: 170px;
+    padding-left: 4px;
+    background-color: #B5C4D0 !important;
+}
+
+.column-textbox-username
+{
+    background-color: white;
+}
+
+.textbox-username
+{
+    font-family: Tahoma,Arial,helvetica,sans-serif;
+    font-size: 12px;
+    height: 20px;
+    width: 280px;
+}
+
+#selCurrency
+{
+    width: 140px;
+}
+
+
+
+

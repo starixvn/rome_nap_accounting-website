@@ -119,7 +119,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         // get tracking value
                         string trackingvalue = FormatPermissionSubAccount(CastAide.AsString(row["trackingvalue"]));
                         string trackingvalueold = FormatPermissionSubAccount(CastAide.AsString(row["trackingvalueold"]));
-                        var trackingVal = _ParseTrackingValue(trackingvalue, CastAide.AsInt32(row["actionid"], 0));
+                        var trackingVal = _ParseTrackingValue(trackingvalue, CastAide.AsInt32(row["actionid"], 0), CastAide.AsString(row["actionname"]));
                         record.Detail = trackingVal;
                         var diffVals = _DiffsTrackingValue(trackingvalue, CastAide.AsString(trackingvalueold, string.Empty));
                         record.Diffs = diffVals;
@@ -191,13 +191,13 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         // get record value
                         var record = _GetLogRecord(row);
                         // get tracking value
-                        var trackingVal = _ParseTrackingValue(CastAide.AsString(row["trackingvalue"]), CastAide.AsInt32(row["actionid"], 0));
+                        var trackingVal = _ParseTrackingValue(CastAide.AsString(row["trackingvalue"]), CastAide.AsInt32(row["actionid"], 0), CastAide.AsString(row["actionname"]));
                         record.Detail = trackingVal;
                         var diffVals = _DiffsTrackingValue(CastAide.AsString(row["trackingvalue"], string.Empty), CastAide.AsString(row["trackingvalueold"], string.Empty));
                         record.Diffs = diffVals;
                         if (diffVals.Count<TrackingValue>() > 0)
                         {
-                            record.Old = _ParseTrackingValue(CastAide.AsString(row["trackingvalueold"]), CastAide.AsInt32(row["actionid"], 0));
+                            record.Old = _ParseTrackingValue(CastAide.AsString(row["trackingvalueold"]), CastAide.AsInt32(row["actionid"], 0), CastAide.AsString(row["actionname"]));
                         }
 
                         logResult.Rows.Add(record);
@@ -379,7 +379,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
             return trackingVal;
         }
 
-        private TrackingLog _ParseTrackingValue(string trackingVal, int actionId)
+        private TrackingLog _ParseTrackingValue(string trackingVal, int actionId, string actionName)
         {
             var tracking = new TrackingLog();
             if (!string.IsNullOrEmpty(trackingVal))
@@ -472,9 +472,17 @@ namespace Sunplus.Accounting.Business.LogDisplay
                     // check HasAttributes
                     if (xmlLoad.HasAttributes)
                     {
-                        var trackingNode = AssignGroupAttribute(xmlLoad, trackingTemplate, filter, hiddenField);
+                        var trackingNode = AssignGroupAttribute(
+                            xmlLoad,
+                            trackingTemplate,
+                            filter,
+                            hiddenField,
+                            false,
+                            actionId);
+                        trackingNode.N = actionName;
                         tracking.Vals.Add(trackingNode);
                     }
+
                     // check HasElements
                     if (xmlLoad.HasElements)
                     {
@@ -491,7 +499,13 @@ namespace Sunplus.Accounting.Business.LogDisplay
                         //});
                         foreach (XElement node in xmlLoad.Nodes())
                         {
-                            var trackingNode = AssignGroupAttribute(node, trackingTemplate, filter, hiddenField);
+                            var trackingNode = AssignGroupAttribute(
+                                node,
+                                trackingTemplate,
+                                filter,
+                                hiddenField,
+                                true,
+                                actionId);
                             tracking.Vals.Add(trackingNode);
                         }
                     }
@@ -504,9 +518,45 @@ namespace Sunplus.Accounting.Business.LogDisplay
             return tracking;
         }
 
-        private List<TrackingGroup> _GetSportGroup(IEnumerable<XAttribute> attrs, string groupName, string[] hidden)
+        private List<TrackingGroup> _GetSportGroup(
+            IEnumerable<XAttribute> attrs,
+            string groupName,
+            string[] hidden,
+            bool hasElements,
+            int actionId)
         {
             var groups = new List<TrackingGroup>();
+            if (actionId == 2412 ||
+                actionId == 2413 ||
+                actionId == 2414 ||
+                actionId == 2415)
+            {
+                // Add the general information for Super/Master/Agent/Member
+                // Action Id: 2412-Super, 2413-Master, 2414-Agent, 2415-Member
+                var groupVals = (from attr in attrs
+                                 where !GetMixedSportTag(attr.Name.ToString()) &&
+                                     !hidden.Contains<string>(attr.Name.ToString())
+                                 select LogFormater.FormatElement(attr)).ToList();
+                var group = new TrackingGroup { N = LogFormater.GetResourceName("Detail"), Vals = groupVals };
+                groups.Add(group);
+                return groups;
+            }
+
+            if (actionId == 2202 ||
+                actionId == 2203 ||
+                actionId == 2204 ||
+                actionId == 2205)
+            {
+                // Add the initial statuses for Super/Master/Agent/Member
+                // Action Id: 2202-Super, 2203-Master, 2204-Agent, 2205-Member
+                var groupVals = (from attr in attrs
+                                 where !hidden.Contains<string>(attr.Name.ToString().ToLower())
+                                 select LogFormater.FormatElement(attr)).ToList();
+                var group = new TrackingGroup { N = LogFormater.GetResourceName("Detail"), Vals = groupVals };
+                groups.Add(group);
+                return groups;
+            }
+
             var logGroup = LogSection.Instance.Groups.Cast<GroupElement>();
             var sports = (from sp in
                               (from gr in logGroup
@@ -517,12 +567,24 @@ namespace Sunplus.Accounting.Business.LogDisplay
             {
                 Regex rex = null;
                 var sportVals = new List<TrackingElement>();
-                if (sport.Id == 1 || sport.Id == 180 || sport.Id == 186) // soccer, virtual soccer, virtual tennis
+                if (sport.Id == 1)
                 {
-                    rex = new Regex("v[0-9]", RegexOptions.IgnoreCase);
-                    sportVals = (from attr in attrs
-                                 where !rex.IsMatch(attr.Name.ToString()) && !hidden.Contains<string>(attr.Name.ToString().ToLower())
-                                 select LogFormater.FormatElement(attr)).ToList();
+                    // soccer
+                    if (hasElements)
+                    {
+                        rex = new Regex("v[0-9]", RegexOptions.IgnoreCase);
+                        sportVals = (from attr in attrs
+                                     where !rex.IsMatch(attr.Name.ToString()) && !hidden.Contains<string>(attr.Name.ToString().ToLower())
+                                     select LogFormater.FormatElement(attr)).ToList();
+                    }
+                    else
+                    {
+                        sportVals = (from attr in attrs
+                                     where !GetMixedSportTag(attr.Name.ToString()) &&
+                                         attr.Name.ToString().EndsWith("v1") &&
+                                         !hidden.Contains<string>(attr.Name.ToString())
+                                     select LogFormater.FormatElement(attr)).ToList();
+                    }
                 }
                 else if (sport.Id == 999) //mix sport parlay
                 {
@@ -563,7 +625,12 @@ namespace Sunplus.Accounting.Business.LogDisplay
             return false;
         }
 
-        private TrackingNode AssignGroupAttribute(XElement node, TrackingTemplate trackingTemplate, ActionElement filter, string[] hiddenField)
+        private TrackingNode AssignGroupAttribute(XElement node,
+            TrackingTemplate trackingTemplate,
+            ActionElement filter,
+            string[] hiddenField,
+            bool hasElements,
+            int actionId)
         {
             var trackingNode = new TrackingNode();
             trackingNode.N = LogFormater.GetResourceName(node.Name.ToString());
@@ -575,7 +642,11 @@ namespace Sunplus.Accounting.Business.LogDisplay
                 {
                     // group elements
                     var groupName = string.IsNullOrEmpty(filter.GroupName) ? trackingTemplate.GroupDefault : filter.GroupName;
-                    var groups = _GetSportGroup(node.Attributes(), groupName, hiddenField);
+                    var groups = _GetSportGroup(node.Attributes(),
+                        groupName,
+                        hiddenField,
+                        hasElements,
+                        actionId);
                     trackingNode.Groups = groups;
                 }
                 else
