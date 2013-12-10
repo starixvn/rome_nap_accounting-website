@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Web;
 using CasinoLibrary.SBAgent;
 using DNAide.Core;
 using DNAide.Utils;
 using DNAide.Web;
+using Fanex.Tarus.DataAccess.Implement.Customer;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.AdoNet;
 using Sunplus.Accounting.Entities.Casino;
-
-
 
 /// <summary>
 /// Manage class for Casino Business
@@ -826,6 +826,7 @@ namespace Sunplus.Accounting.Business
             //if (!Globals.IBCSetting.Casino.ShowBetSetting)
 
             int custId = _cust.IBCCustID;
+            bool isCreditCustomer = !IsDepositSite(_cust.SiteName);
             string gameKindName = "Live";
             //string tplPT = Sunplus.Accounting.Core.Helper.WebUtils.LoadTemplate(Globals.CASINO_PT_TEMPLATE);
             //Others game kind
@@ -997,16 +998,26 @@ namespace Sunplus.Accounting.Business
                         maxMPT = (!_cust.PTByGameType) ? Globals.MAX_MaxPTValue : m3Max;
                         maxMMinPT = (!_cust.PTByGameType) ? Globals.MAX_MaxPTValue : n3Max;
                         //Commission
-                        maxMComm = (_cust.CasinoSync)
-                                       ? gameTypeDetail.SMAgentRollingRateUpline
-                                       : gameTypeDetail.SMAgentRollingRate;
+                        if (isCreditCustomer)
+                        {
+                            maxMComm = (_cust.CasinoSync) ?
+                                gameTypeDetail.SMAgentRollingRateUpline :
+                                gameTypeDetail.SMAgentRollingRate;
+                        }
+                        else
+                        {
+                            maxMComm = (_cust.CasinoSync) ?
+                                gameTypeDetail.MAgentRollingRate :
+                                gameTypeDetail.SMAgentRollingRate;
+                        }
+
                         maxMComm = (!_cust.PTByGameType) ? Globals.MAX_Comm : Math.Min(maxMComm, Globals.MAX_Comm);
                         //max group comm
                         maxGroupMComm = Math.Max(maxGroupMComm, maxMComm);
+                        MComm = (_cust.CasinoSync) ?
+                            gameTypeDetail.MAgentRollingRate :
+                            gameTypeDetail.SMAgentRollingRate;
 
-                        MComm = (_cust.CasinoSync)
-                                    ? gameTypeDetail.MAgentRollingRate
-                                    : gameTypeDetail.SMAgentRollingRate;
                         MComm = Math.Min(MComm, Globals.MAX_Comm);
                         //////////END Commission///////
                         SPresetPT = s3;
@@ -1107,9 +1118,10 @@ namespace Sunplus.Accounting.Business
                             if (_cust.CasinoSync)
                             {
                                 s4 = (!_cust.PTByGameType) ? gameKindDetail.SPositionTakingUpline : maxGroupSPresetPT;
-                                maxGroupMComm = (!_cust.PTByGameType)
-                                                    ? gameKindDetail.SMAgentRollingRateUpline
-                                                    : maxGroupMComm;
+                                if (!_cust.PTByGameType && isCreditCustomer)
+                                {
+                                    maxGroupMComm = gameKindDetail.SMAgentRollingRateUpline;
+                                }
                             }
                             else
                             {
@@ -1152,9 +1164,10 @@ namespace Sunplus.Accounting.Business
 
                             //Commission
 
-                            MCommGroup = (_cust.CasinoSync)
-                                             ? Math.Min(gameKindDetail.MAgentRollingRate, maxGroupMComm)
-                                             : Math.Min(gameKindDetail.SMAgentRollingRate, maxGroupMComm);
+                            MCommGroup = (_cust.CasinoSync || !isCreditCustomer) ?
+                                Math.Min(gameKindDetail.MAgentRollingRate, maxGroupMComm) :
+                                Math.Min(gameKindDetail.SMAgentRollingRate, maxGroupMComm);
+
                             //////////END Commission///////
                             SPresetPTGroup = s3;
                             SAutoPTGroup = u3;
@@ -1256,12 +1269,22 @@ namespace Sunplus.Accounting.Business
                                                             Globals.CS_SELECTOPTION_ONCHANGE_PARAM);
                         postGameData += gameTypeDetail.GameTypeID + Globals.SEP_GAMETYPE;
 
-                        maxMComm = (_cust.CasinoSync)
-                                       ? gameTypeDetail.SMAgentRollingRateUpline
-                                       : gameTypeDetail.SMAgentRollingRate;
-                        MComm = (_cust.CasinoSync)
-                                    ? gameTypeDetail.MAgentRollingRate
-                                    : gameKindDetail.SMAgentRollingRate;
+                        if (isCreditCustomer)
+                        {
+                            maxMComm = (_cust.CasinoSync) ?
+                                gameTypeDetail.SMAgentRollingRateUpline :
+                                gameTypeDetail.SMAgentRollingRate;
+                        }
+                        else
+                        {
+                            maxMComm = (_cust.CasinoSync) ?
+                                gameTypeDetail.MAgentRollingRate :
+                                gameTypeDetail.SMAgentRollingRate;
+                        }
+
+                        MComm = (_cust.CasinoSync) ?
+                            gameTypeDetail.MAgentRollingRate :
+                            gameKindDetail.SMAgentRollingRate;
 
                         maxMComm = Math.Min(maxMComm, Globals.MAX_Comm);
                         maxGroupMComm = Math.Max(maxGroupMComm, maxMComm);
@@ -1294,11 +1317,12 @@ namespace Sunplus.Accounting.Business
                             }
                             else
                             {
-                                maxGroupMComm = (!_cust.PTByGameTypeUpline)
+                                maxGroupMComm = (!_cust.PTByGameTypeUpline && isCreditCustomer)
                                                     ? gameKindDetail.SMAgentRollingRate
                                                     : maxGroupMComm;
                                 MCommGroup = gameKindDetail.SMAgentRollingRate;
                             }
+
                             TemplateHandler.Assign(ref tmpTplData, "chkGroupSetting",
                                                    HtmlHelper.GenCheckBox(gameKindName + sep + Globals.CHKGROUP, false,
                                                                       useGroupPT, "", Globals.CLASS_CHECKBOX_HIDDEN));
@@ -1356,6 +1380,7 @@ namespace Sunplus.Accounting.Business
             //if (!Globals.IBCSetting.Casino.ShowBetSetting)
 
             int custId = _cust.IBCCustID;
+            bool isCreditCutomer = !IsDepositSite(_cust.SiteName);
             string gameKindName = "Live";
             //string tplPT = Sunplus.Accounting.Core.Helper.WebUtils.LoadTemplate(Globals.CASINO_PT_TEMPLATE);
             //Others game kind
@@ -1469,7 +1494,9 @@ namespace Sunplus.Accounting.Business
                             n2 = Math.Min(gameTypeDetail.MinPositionTaking, n2Max);
 
                             //commission
-                            maxAComm = gameTypeDetail.MAgentRollingRateUpline;
+                            maxAComm = isCreditCutomer ?
+                                gameTypeDetail.MAgentRollingRateUpline :
+                                gameTypeDetail.AgentRollingRate;
                             AComm = gameTypeDetail.AgentRollingRate;
                         }
                         else //copy from master
@@ -1580,7 +1607,7 @@ namespace Sunplus.Accounting.Business
                                 n2 = Math.Min(gameKindDetail.MinPositionTaking, n2Max);
 
                                 //commission
-                                maxGroupAComm = (!_cust.PTByGameType)
+                                maxGroupAComm = (!_cust.PTByGameType && isCreditCutomer)
                                                     ? gameKindDetail.MAgentRollingRateUpline
                                                     : maxGroupAComm;
                                 ACommGroup = gameKindDetail.AgentRollingRate;
@@ -1596,7 +1623,7 @@ namespace Sunplus.Accounting.Business
                                 n2Max = a2;
                                 n2 = Math.Min(gameKindDetail.MinPositionTaking, n2Max);
                                 //commission
-                                maxGroupAComm = (!_cust.PTByGameTypeUpline)
+                                maxGroupAComm = (!_cust.PTByGameTypeUpline && isCreditCutomer)
                                                     ? gameKindDetail.MAgentRollingRate
                                                     : maxGroupAComm;
                                 ACommGroup = gameKindDetail.MAgentRollingRate;
@@ -1705,7 +1732,9 @@ namespace Sunplus.Accounting.Business
                         if (_cust.CasinoSync)
                         {
                             //commission
-                            maxAComm = gameTypeDetail.MAgentRollingRate;
+                            maxAComm = isCreditCutomer ?
+                                gameTypeDetail.MAgentRollingRate :
+                                gameKindDetail.AgentRollingRate;
                             AComm = gameTypeDetail.AgentRollingRate;
                         }
                         else //copy from master
@@ -1786,6 +1815,7 @@ namespace Sunplus.Accounting.Business
                 default: //Agent on member
                     return GenCSHTMLAgentOnMember(tplPT, _cust, csGroup);
             }
+
             return string.Empty;
         }
 
@@ -2328,6 +2358,7 @@ namespace Sunplus.Accounting.Business
             try
             {
                 int custId = _cust.IBCCustID;
+                bool isCreditCutomer = !IsDepositSite(_cust.SiteName);
                 string gameKindName = "Live";
                 if (!Globals.IBCSetting.Casino.ShowBetSetting)
                     TemplateHandler.RemoveBlock(ref tplPT, Globals.TAG_BET_SETTING);
@@ -2506,7 +2537,7 @@ namespace Sunplus.Accounting.Business
                                              ? Math.Min(gameKindDetail.APositionTakingUpline,
                                                         gameKindDetail.MaxPositionTakingUpline)
                                              : maxGroupAPresetPT;
-                                    maxGroupMComm = (!_cust.PTByGameType)
+                                    maxGroupMComm = (!_cust.PTByGameType && isCreditCutomer)
                                                         ? gameKindDetail.AgentRollingRateUpline
                                                         : maxGroupMComm;
                                     MCommGroup = gameKindDetail.MemberRollingRate;
@@ -3057,6 +3088,16 @@ namespace Sunplus.Accounting.Business
             {
                 throw ex;
             }
+        }
+
+        public static bool IsDepositSite(string siteName)
+        {
+            var depositCustomerAccess = new DepositCustomerAccess();
+            var dataTableDeposit = depositCustomerAccess.SelAllLicensee();
+            bool result = dataTableDeposit.Select()
+                                          .Where(s => CastAide.AsString(s["LicenseeName"]) == siteName)
+                                          .Any();
+            return result;
         }
     }
 }
