@@ -3,7 +3,7 @@
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
-namespace Fanex.Tarus.VirtualSport.Core.Configurations
+namespace Fanex.Tarus.Infrastructure.Configurations
 {
     using System;
     using System.Configuration;

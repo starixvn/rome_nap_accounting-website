@@ -2,7 +2,22 @@
     roleId: 0,
     roleName: '',
     isUpdateCompleted: false,
+    getSettingInfoDictionary: function (custSettings) {
+        var settingInfoDictionary = {};
+        var virtualSportsLength = custSettings.VirtualSportsSettingInfo.length;
+        for (var i = 0; i < virtualSportsLength; i++) {
+            var sport = custSettings.VirtualSportsSettingInfo[i];
+            var settingLength = sport.SettingInfo.length;
+            for (var j = 0; j < settingLength; j++) {
+                var settingInfo = sport.SettingInfo[j];
+                settingInfoDictionary[settingInfo.Name] = settingInfo.Value;
+            }
+        }
+
+        return settingInfoDictionary;
+    },
     getDefaultSettings: function (uplineData) {
+        var settingInfoDictionary = vsDownlineSettings.getSettingInfoDictionary(uplineData);
         this.roleId = parseInt($("#hiddenRoleID").val());
         var htmlTilte = '<tr class="title">\
                                     <td colspan="4" align="center">\
@@ -35,29 +50,29 @@
             var maxBetv = "maxbetv" + sport.Id;
             var maxPerMatchv = "maxpermatchv" + sport.Id;
 
-            var minBet = parseFloat(uplineData[minBetv]);
-            var maxBet = parseFloat(uplineData[maxBetv]);
-            var maxPerMatch = parseFloat(uplineData[maxPerMatchv]);
+            var minBet = parseFloat(settingInfoDictionary[minBetv]);
+            var maxBet = parseFloat(settingInfoDictionary[maxBetv]);
+            var maxPerMatch = parseFloat(settingInfoDictionary[maxPerMatchv]);
             //current line
             if (minBet == 0) {
                 if (this.roleId == 2) {
-                    minBet = parseFloat(uplineData[minBetv + '_min']);
+                    minBet = parseFloat(settingInfoDictionary[minBetv + '_min']);
                 }
                 else {
-                    minBet = parseFloat(uplineData[minBetv + '_max']);
+                    minBet = parseFloat(settingInfoDictionary[minBetv + '_max']);
                 }
             }
             if (maxBet == 0) {
                 if (this.roleId == 2) {
-                    minBet = parseFloat(uplineData[minBetv + '_max']);
+                    minBet = parseFloat(settingInfoDictionary[minBetv + '_max']);
                 }
                 else {
-                    maxBet = parseFloat(uplineData[maxBetv + '_min']);
+                    maxBet = parseFloat(settingInfoDictionary[maxBetv + '_min']);
                 }
 
             }
             if (maxPerMatch == 0) {
-                maxPerMatch = parseFloat(uplineData[maxPerMatchv + '_max']);
+                maxPerMatch = parseFloat(settingInfoDictionary[maxPerMatchv + '_max']);
             }
 
             var html = '<tr>\
@@ -81,21 +96,16 @@
             $('#tblSettingLimit tbody').append(html);
             //upline
             if (vsDownlineSettings.roleId == 3) {
-                $("#" + minBetv).get(0).uplineVal = parseFloat(uplineData[minBetv]);
-                $("#" + maxBetv).get(0).uplineVal = parseFloat(uplineData[maxBetv]);
-                $("#" + maxPerMatchv).get(0).uplineVal = parseFloat(uplineData[maxPerMatchv]);
+                $("#" + minBetv).get(0).uplineVal = parseFloat(settingInfoDictionary[minBetv]);
+                $("#" + maxBetv).get(0).uplineVal = parseFloat(settingInfoDictionary[maxBetv]);
+                $("#" + maxPerMatchv).get(0).uplineVal = parseFloat(settingInfoDictionary[maxPerMatchv]);
 
             }
             else {
-                if (vsDownlineSettings.roleId == 2) {
-                    $("#" + minBetv).get(0).uplineVal = parseFloat(uplineData[minBetv + '_min']);
-                    $("#" + maxBetv).get(0).uplineVal = parseFloat(uplineData[maxBetv + '_max']);
-                }
-                else {
-                    $("#" + minBetv).get(0).uplineVal = parseFloat(uplineData[minBetv + '_max']);
-                    $("#" + maxBetv).get(0).uplineVal = parseFloat(uplineData[maxBetv + '_min']);
-                }
-                $("#" + maxPerMatchv).get(0).uplineVal = parseFloat(uplineData[maxPerMatchv + '_max']);
+                $("#" + minBetv).get(0).uplineVal = parseFloat(settingInfoDictionary[minBetv + '_max']);
+                $("#" + maxBetv).get(0).uplineVal = parseFloat(settingInfoDictionary[maxBetv + '_min']);
+            
+                $("#" + maxPerMatchv).get(0).uplineVal = parseFloat(settingInfoDictionary[maxPerMatchv + '_max']);
             }
 
             if (minBet < ($("#" + minBetv).get(0).uplineVal)) {
@@ -111,14 +121,25 @@
 
         //PT
         var uplineValMax, selectedValue;
+
+        var v180Settings = null;
+        for (var i = 0; i < uplineData.VirtualSportsSettingInfo.length; i++) {
+            var settingInfo = uplineData.VirtualSportsSettingInfo[i];
+            if (settingInfo.Id == 180) {
+                for (var j = 0; j < settingInfo.SettingInfo.length; j++) {
+                    uplineData[settingInfo.SettingInfo[j].Name] = settingInfo.SettingInfo[j].Value;
+                }
+            }
+        }
+
         if (vsDownlineSettings.roleId == 3) {
-            uplineValMax = parseFloat(uplineData["v180spositiontaking_1201"]);
+            uplineValMax = parseFloat(uplineData["v180spositiontaking"]);
         }
         else if (vsDownlineSettings.roleId == 2) {
-            uplineValMax = parseFloat(uplineData["v180mpositiontaking_1201"]);
+            uplineValMax = parseFloat(uplineData["v180mpositiontaking"]);
         }
         else {
-            uplineValMax = parseFloat(uplineData["v180apositiontaking_1201"]);
+            uplineValMax = parseFloat(uplineData["v180apositiontaking"]);
         }
 
         if (isNaN(uplineValMax)) uplineValMax = 0;

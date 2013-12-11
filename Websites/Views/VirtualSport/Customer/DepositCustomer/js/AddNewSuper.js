@@ -2,16 +2,16 @@
     isUpdateCompleted: false,
     assignVirtualSportsSettings: function (params) {
         var totalSports = window.virtualSports.length;
+        params.push({
+            Name: "disablevirtualsports",
+            Value: !$("#cbxEnableVirtualSports").is(":checked")
+        });
+
         if (totalSports > 0) {
             for (var i = 0; i < totalSports; ++i) {
                 var sport = window.virtualSports[i];
                 var bettypes = sport.Bettype;
                 var id = sport.Id;
-
-                params.push({
-                    Name: "disablevirtualsports"
-                    , Value: !$("#cbxEnableVirtualSports").is(":checked")
-                });
 
                 params.push({
                     Name: "v" + id + "minbet"
@@ -124,7 +124,7 @@
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 if (parseInt(data.ErrorCode) != 0) {
-                    common.showErr(data.ErrorMessage);                    
+                    common.showErr(data.ErrorMessage);
                     common.unBlock();
                 }
                 else {
