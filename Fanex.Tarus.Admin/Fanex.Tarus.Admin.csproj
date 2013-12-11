@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="Business\AutoFollowBet\AutoFollowBetService.cs" />
     <Compile Include="Business\AutoFollowBet\IAutoFollowBetService.cs" />
+    <Compile Include="Business\AutoFollowBet\SourceTypeConstants.cs" />
     <Compile Include="Business\BACustomer\BACustomerService.cs" />
     <Compile Include="Business\BACustomer\IBACustomerService.cs" />
     <Compile Include="Business\MailingList\ISpecialDeleteService.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Controller\RacingDefaultSettingController.cs" />
     <Compile Include="Controller\SecurityCode\AdminSecurityCodeController.cs" />
     <Compile Include="Controller\SMAManagement\SMAManagementController.cs" />
+    <Compile Include="Criteria\AutoFollowBet\GetAutoFollowedBetCriteria.cs" />
     <Compile Include="Criteria\MailingList\SMATurnover\GetMailingListCriteria.cs" />
     <Compile Include="Criteria\MailingList\SMATurnover\UpdateMailingListCriteria.cs" />
     <Compile Include="Criteria\SecurityCode\GetUserListCriteria.cs" />
@@ -117,6 +119,7 @@
     <Compile Include="Entities\SecurityCode\CustomerInfo.cs" />
     <Compile Include="Entities\SMAManagement\FilterInfo.cs" />
     <Compile Include="Entities\SMAManagement\SMAList.cs" />
+    <Compile Include="Models\AutoFollowBet\FollowTypeInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource\Error.Designer.cs">
       <DependentUpon>Error.resx</DependentUpon>

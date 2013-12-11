@@ -8,6 +8,7 @@
     using Fanex.Tarus.Admin.Entities;
     using DNAide.Core;
     using System.Collections.Generic;
+    using Fanex.Tarus.Admin.Criteria.AutoFollowBet;
 
     public class AutoFollowBetController : BaseController
     {
@@ -67,16 +68,19 @@
         //    return jsonResult;
         //}
 
-        public JsonResult GetAutoFollowedBet(int status)
+        public JsonResult GetAutoFollowedBet(GetAutoFollowedBetCriteria criteria)
         {
             var listFollowedCustomer = new List<FollowedCustomer>();
-            listFollowedCustomer = _autoFollowBetService.SelFollowedCustomer(status);
+            listFollowedCustomer = _autoFollowBetService.SelFollowedCustomer(criteria);
             var jsonResult = Json(listFollowedCustomer);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;
-           
         }
 
-    
+        public JsonResult GetFollowType()
+        {
+            var result = _autoFollowBetService.GetFollowType();
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

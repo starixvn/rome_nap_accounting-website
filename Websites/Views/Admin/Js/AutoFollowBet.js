@@ -9,6 +9,7 @@ $(function () {
         modal: true
     });
 
+    autoFollowBet.initPage();
 });
 
 function showPopup() {
@@ -31,6 +32,22 @@ var autoFollowBet = {
     width: 400,
     height: 500,
     status: 0,
+
+    followTypeEnums: {
+        LiveStatus: 0,
+        HDP: 1,
+        _1stHDP: 2,
+        OverUnder: 3,
+        _1stOverUnder: 4
+    },
+    Tables: {
+        dropdownFollowType: null,
+        TextboxUsername: null,
+        dropdownSource: null
+    },
+    CachedData: {
+        FollowTypes: null
+    },
     buildGrid: function (model) {
         var arr = [];
         if (model.length > 0) {
@@ -51,39 +68,76 @@ var autoFollowBet = {
     },
 
     GetAutoFollowedBet: function () {
-        autoFollowBet.status = $('#dlStatus').val();
-        var data = { Status: $('#dlStatus').val() };
-        try { parent.BlockUI(); } catch (e) { }
+        var selectParams = autoFollowBet.getSelectListInfoParams();
+        autoFollowBet.status = selectParams.Status;
+        autoFollowBet.blockUI();
         $.ajax({
             type: "POST",
             url: "GetAutoFollowedBet",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            data: JSON.stringify(data),
+            data: JSON.stringify(selectParams),
             success: function (model) {
-                var arr = [];
-                if (model.length > 0) {
-                    for (var i = 0; i < model.length; i++) {
-                        if (i % 2 != 0)
-                            arr.push(autoFollowBet.renderRow(i, 'bgeven', model[i].Username, model[i].Rate, model[i].EnableBA));
-                        else
-                            arr.push(autoFollowBet.renderRow(i, '', model[i].Username, model[i].Rate, model[i].EnableBA));
-                    }
-                    $("#tobdyMainGrid").html(arr.join(''));
-                    $("#divMainGrid").removeClass("hidden").reRenderScroller(435, gridHeight, true);
-                }
-                else {
-                    $("#tobdyMainGrid").html('<tr><td colspan="4" style="border-right:0px none"><div class="c b" style="width:369px">There is no information available</div></td></tr>');
-                    $("#divMainGrid").removeClass("hidden").reRenderScroller(432, gridHeight, true);
-                }
-                try { parent.jQuery.unblockUI(); } catch (e) { }
+                autoFollowBet.unblockUI(model);
             },
             complete: function () {
-                try { parent.jQuery.unblockUI(); } catch (e) { }
+                autoFollowBet.unblockUI();
             }
-
         });
     },
+    getSelectListInfoParams: function () {
+        var followTypes = [];
+        var cachedFollowTypes = autoFollowBet.CachedData.FollowTypes;
+        var optionLength = cachedFollowTypes.length;
+        var prefixId = 'dropdown-followType';
+        for (var i = 0; i < optionLength; i++) {
+            var followType = cachedFollowTypes[i];
+            var subTypesLength = followType.ChildsInfo.length;
+            var subType = [];
+            for (var j = 0; j < subTypesLength; j++) {
+                var info = followType.ChildsInfo[j];
+                subType.push({
+                    Id: info.Id,
+                    Name: info.Name,
+                    IsSelected: $("#" + prefixId + followType.Id + "_" + info.Id).attr("checked")
+                });
+            }
+
+            followTypes.push({
+                Id: followType.Id,
+                Name: followType.Name,
+                IsSelected: $("#" + prefixId + followType.Id).attr("checked"),
+                ChildsInfo: subType
+            });
+        }
+
+        return {
+            Username: autoFollowBet.Tables.TextboxUsername.val(),
+            Status: autoFollowBet.Tables.dropdownBAEnabled.val(),
+            Source: autoFollowBet.Tables.dropdownSource.val(),
+            FollowTypes: followTypes
+        };
+    },
+    renderFollowBetResult: function (model) {
+        var arr = [];
+        if (model.length > 0) {
+            for (var i = 0; i < model.length; i++) {
+                if (i % 2 != 0) {
+                    arr.push(autoFollowBet.renderRow(i, 'bgeven', model[i].Username, model[i].Rate, model[i].EnableBA));
+                }
+                else {
+                    arr.push(autoFollowBet.renderRow(i, '', model[i].Username, model[i].Rate, model[i].EnableBA));
+                }
+            }
+            $("#tobdyMainGrid").html(arr.join(''));
+            $("#divMainGrid").removeClass("hidden").reRenderScroller(435, gridHeight, true);
+        }
+        else {
+            $("#tobdyMainGrid").html('<tr><td colspan="4" style="border-right:0px none"><div class="c b" style="width:369px">There is no information available</div></td></tr>');
+            $("#divMainGrid").removeClass("hidden").reRenderScroller(432, gridHeight, true);
+        }
+    },
+
     renderRow: function (i, css, Username, Rate, EnableBA) {
         var idlbRate = 'lbrate' + i;
         var imgEdit = 'imgEdit' + i;
@@ -316,8 +370,135 @@ var autoFollowBet = {
         if (e.keyCode == 13) {
             autoFollowBet.addNewFollewCustomer();
         }
+    },
+
+    initPage: function () {
+        autoFollowBet.cacheDOMElement();
+        autoFollowBet.getFollowType();
+    },
+    cacheDOMElement: function () {
+        autoFollowBet.Tables.TextboxUsername = $("#textbox-username");
+        autoFollowBet.Tables.dropdownSource = $("#dropdown-source");
+        autoFollowBet.Tables.dropdownBAEnabled = $("#dlStatus");
+    },
+    getFollowType: function () {
+        autoFollowBet.blockUI();
+        autoFollowBet.callAjax(this,
+            "../AutoFollowBet/GetFollowType",
+            null,
+            autoFollowBet.renderFollowType,
+            autoFollowBet.renderFollowType,
+            autoFollowBet.unblockUI,
+            true);
+    },
+    renderFollowType: function (result) {
+        autoFollowBet.CachedData.FollowTypes = result;
+        var followTypeEnums = autoFollowBet.followTypeEnums;
+        autoFollowBet.Tables.dropdownFollowType = $("#dropdown-followtype");
+        var ddwnFollowTypes = [];
+        if (result && result.length > 0) {
+            var optionLength = result.length;
+            var prefixId = 'dropdown-followType';
+            for (var i = 0; i < optionLength; i++) {
+                var followType = result[i];
+                var subTypesLength = followType.ChildsInfo.length;
+                var subType = [];
+                for (var j = 0; j < subTypesLength; j++) {
+                    var info = followType.ChildsInfo[j];
+                    subType.push({
+                        Id: prefixId + followType.Id + "_" + info.Id,
+                        Value: info.Id,
+                        Text: info.Name,
+                        Checked: true,
+                        Enable: true,
+                        CssClass: "",
+                        Items: []
+                    });
+                }
+
+                ddwnFollowTypes.push({
+                    Id: prefixId + followType.Id,
+                    Value: followType.Id,
+                    Text: followType.Name,
+                    Checked: true,
+                    Enable: true,
+                    CssClass: "",
+                    Items: subType
+                });
+            }
+        }
+
+        autoFollowBet.Tables.dropdownFollowType.multiSelect(
+        {
+            minWidth: 160,
+            maxHeight: 450,
+            shadow: true,
+            showHeader: true,
+            isCheckAll: true,
+            showFooter: false,
+            showTooltip: true,
+            checkAllText: viewResources.All,
+            isUsedCustomCheckAllText: true,
+            customCheckAllText: viewResources.All,
+            noItemText: viewResources.No_type_found,
+            selectedList: 3,
+            listData: ddwnFollowTypes
+        });
+
+        autoFollowBet.Tables.dropdownFollowType = $("#dropdown-followtype");
+    },
+    blockUI: function () {
+        try {
+            parent.BlockUI();
+        }
+        catch (e) {
+        }
+    },
+    unblockUI: function () {
+        try {
+            parent.jQuery.unblockUI();
+        }
+        catch (e) {
+        }
+    },
+    callAjax: function (reportHandler,
+        url,
+        requestParams,
+        successFunction,
+        errorFunction,
+        completeFunction,
+        isKeepingMessage) {
+        $.ajax({
+            type: "POST",
+            url: url,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: requestParams ? JSON.stringify(requestParams) : null,
+            beforeSend: function () {
+            },
+            success: function (rs) {
+                if (!isKeepingMessage) {
+                    AccReport.popUp.hide();
+                }
+
+                if (successFunction && typeof (successFunction) == 'function') {
+                    successFunction.call(reportHandler, rs);
+                }
+            },
+            error: function (jqXHR, event, ajaxSettings) {
+                if (errorFunction && typeof (errorFunction) == 'function') {
+                    errorFunction.call(reportHandler);
+                }
+            },
+            complete: function () {
+                if (completeFunction && typeof (completeFunction) == 'function') {
+                    completeFunction();
+                }
+            }
+        });
     }
 };
+
 //$(document).ready(function () {
 //    autoFollowBet.buildGrid(autoFollowBet.model);
 //});

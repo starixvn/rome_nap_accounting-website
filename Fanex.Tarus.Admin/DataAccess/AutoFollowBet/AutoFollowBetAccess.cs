@@ -1,32 +1,40 @@
-﻿using System.Data;
-using Fanex.Data;
-using Fanex.Tarus.Admin.Entities;
-using DNAide.Core;
-using System;
-using Sunplus.Accounting.Core.Extensions;
+﻿// --------------------------------------------------------------------------
+// <copyright file="AutoFollowBetAccess.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
+
 namespace Fanex.Tarus.Admin.DataAccess.AutoFollowBet
 {
+    using System;
+    using System.Data;
+    using DNAide.Core;
+    using Fanex.Data;
+    using Fanex.Tarus.Admin.Criteria.AutoFollowBet;
+    using Fanex.Tarus.Admin.Entities;
+    using Sunplus.Accounting.Core.Extensions;
+
     public class AutoFollowBetAccess : IAutoFollowBetAccess
     {
-    
-
-
         #region IAutoFollowBetAccess Members
 
-        public DataTable AutoFollowBetSelCustomer(int status)
+        public DataTable AutoFollowBetSelCustomer(GetAutoFollowedBetCriteria criteria)
         {
             var datatable = new DataTable();
             try
             {
-                
+
                 using (var dbContext = new ObjectDb("Acc_AutoFollowBetSelCustomer"))
                 {
-                    dbContext.AddInParameter("status", DbType.Int32, status);
+                    dbContext.AddInParameter("status", DbType.Int32, criteria.Status);
                     var ds = dbContext.ExecuteDataSet();
                     if (ds.Tables.Count > 0)
                         datatable = ds.Tables[0];
                 }
-                
+
             }
 
             catch (Exception ex)
@@ -34,7 +42,7 @@ namespace Fanex.Tarus.Admin.DataAccess.AutoFollowBet
                 LogExtensions.ExceptionHandler(ex);
             }
             return datatable;
-            
+
         }
 
         public Result AutoFollowBetDelCustomer(string username)
@@ -48,7 +56,7 @@ namespace Fanex.Tarus.Admin.DataAccess.AutoFollowBet
                 dbContext.ExecuteNonQuery();
                 result.ErrorMessage = CastAide.AsString(dbContext.GetParameterValue("ErrMsg"));
                 result.ErrorCode = CastAide.AsInt32(dbContext.GetParameterValue("ErrCode"));
-                
+
             }
             return result;
         }
