@@ -592,6 +592,13 @@ namespace Sunplus.Accounting.Business.LogDisplay
                                  where GetMixedSportTag(attr.Name.ToString()) && !hidden.Contains<string>(attr.Name.ToString())
                                  select new TrackingElement() { N = LogFormater.GetResourceName(attr.Name.ToString()), Val = attr.Value, P = attr.Name.ToString() }).ToList();
                 }
+                else if (180 <= sport.Id && sport.Id <= 186)
+                {
+                    rex = new Regex("v[0-9]", RegexOptions.IgnoreCase);
+                    sportVals = (from attr in attrs
+                                 where !rex.IsMatch(attr.Name.ToString()) && !hidden.Contains<string>(attr.Name.ToString().ToLower())
+                                 select LogFormater.FormatElement(attr)).ToList();
+                }
                 else
                 {
                     var strId = "v" + sport.Id;
@@ -601,6 +608,7 @@ namespace Sunplus.Accounting.Business.LogDisplay
                                  where !GetMixedSportTag(attr.Name.ToString()) && rex.IsMatch(attr.Name.ToString()) && !hidden.Contains<string>(attr.Name.ToString())
                                  select LogFormater.FormatElement(attr)).ToList();
                 }
+
                 var group = new TrackingGroup { N = LogFormater.GetResourceName(sport.Label), Vals = sportVals };
                 groups.Add(group);
             };
