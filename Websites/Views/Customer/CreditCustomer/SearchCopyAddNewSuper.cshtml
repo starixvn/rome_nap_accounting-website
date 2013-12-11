@@ -15,6 +15,23 @@
         name="frmSearchCopyAddNewSuper"></iframe>
 </div>
 <script type="text/javascript">
+
+    jQuery(document).ready(function () {
+
+        pre_resize();
+        //Add events to page
+        $(window).resize(function () {
+            pre_resize();
+        });
+    });
+
+    function pre_resize() {
+        var windowHeight = $(window).height();
+        var height = windowHeight - 50;
+
+        $("#frmSearchCopyAddNewSuper").height(height + "px");
+    }
+ 
     function ShowSearchCopy() {
         $("#tabSearchCopy").addClass("current");
         $("#tabFullMode").removeClass("current");

@@ -29,7 +29,9 @@ PTSetting.SportType = new function () {
 
     var RemoveSportBookMinPT = function () {
         var $content = $("#frmSportbookMinPT").contents();
-        $content.find('.tblcollapse')[0].remove();
+        for (var i = 0; i < 3; i++) {
+            $content.find('.tblcollapse tr:eq(0)').remove();
+        }
         //disable edit
         setTimeout(function () {
             $content.find('.PTSelect').attr('disabled', true);
@@ -82,7 +84,7 @@ PTSetting.SportType = new function () {
 
     var RemoveVirtualSportsCustInfo = function () {
         var $content = $("#frmVirtualSports").contents();
-        $content.find('.tblcollapse')[0].remove();
+        $content.find('.tblcollapse tr:eq(0)').remove();
         //disable edit
         setTimeout(function () {
             $content.find('.BettingLimitTextBox4').attr('readonly', 'readonly');
@@ -124,7 +126,7 @@ PTSetting.SportType = new function () {
 
     this.SetFrameLoaded = function () {
         var tabId = $("#listSports").val();
-        
+
         //remove settings
         switch (tabId) {
             case '1': RemoveSportBookCustInfo(); RemoveButtons('#frmSportbook'); break;

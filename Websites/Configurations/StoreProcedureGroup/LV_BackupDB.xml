@@ -18,4 +18,7 @@
   <Function Name="Live Casino - Update Ex.Rate">
     <Setting Key="TP_Admin_Exchange_UpdateExchange" SpName="TP_Admin_Exchange_UpdateExchange" DbName="LV_BackupDB" Plain="1" />
   </Function>
+  <Function Name="Live Casino - Search and Copy">
+    <Setting Key="TP_User_Customer_AutoInsertSuperFromExisting" SpName="TP_User_Customer_AutoInsertSuperFromExisting" DbName="LV_BackupDB" Plain="1" />
+  </Function>
 </Functions>

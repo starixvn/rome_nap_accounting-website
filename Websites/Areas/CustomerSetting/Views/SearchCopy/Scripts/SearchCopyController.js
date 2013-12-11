@@ -19,7 +19,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         internaluser: false
     };
 
-    $scope.existedUser = { userid: -1, username: '', selectedSite: {}, sites: [], selectedCurrency: '', maxCredit: '' };
+    $scope.existedUser = { userid: -1, username: '', selectedSite: {}, sites: [], selectedCurrencyId: 0, selectedCurrency: '', maxCredit: '' };
     $scope.newUser = {};
 
     $scope.sports = [
@@ -43,6 +43,12 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $("#maxCredit").ForceDecimalOnly().ForceCurrencyOnly();
     };
 
+    $scope.resize = function (frameId) {
+        var windowHeight = $(window).height();
+        var height = windowHeight - 100;
+        $(frameId).height(height + "px");
+    };
+
     /* define functions*/
     $scope.addEvents = function () {
         $("#existedUserName").focus(function () {
@@ -54,14 +60,6 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             $("#checkExisted").show();
             $(".tabsports div").show();
             $scope.searchExistingUser(this.value);
-        });
-
-        $("#panelStep1").click(function () {
-            $scope.step2Back();
-        });
-
-        $("#panelStep2").click(function () {
-            $scope.step1Next();
         });
     };
 
@@ -168,32 +166,41 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             case 'tabSportsbook':
                 url += "/EditSuper/EditSuperPage?custId=" + $scope.existedUser.userid + "&uname=" + $scope.existedUser.username;
                 $scope.loadData("#frmSportbook", url);
+                $scope.resize("#frmSportbook");
                 break;
             case 'tabSportsbookMinPT': url += "/EditSuperMinPt/EditSuperMinPtPage?&custId=" + $scope.existedUser.userid + "&uname=" + $scope.existedUser.username;
                 $scope.loadData("#frmSportbookMinPT", url);
+                $scope.resize("#frmSportbookMinPT");
                 break;
             case 'tabRacing': url += "/EditSuperPTRacing/Index?custid=" + $scope.existedUser.userid;
                 $scope.loadData("#frmRacing", url);
+                $scope.resize("#frmRacing");
                 break;
             case 'tabRacingMinPT': url += "/customer/pt/racing/SuperMinUpdate.aspx?custId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmRacingMinPT", url);
+                $scope.resize("#frmRacingMinPT");
                 break;
             case 'tabCasino': url += "/Customer/PositionTakingCS.aspx?custId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmCasino", url);
+                $scope.resize("#frmCasino");
                 break;
             case 'tabVirtualSports': url += "/VirtualSportSuperPT/EditSuper?custId=" + $scope.existedUser.userid + "&uname=" + $scope.existedUser.username + "&roleId=4";
                 $scope.loadData("#frmVirtualSports", url);
+                $scope.resize("#frmVirtualSports");
                 break;
             case 'tabBingo': url += "/Customer/PT/Bingo/SuperUpdate.aspx?custId=" + $scope.existedUser.userid;
                 $scope.loadData("#frmBingo", url);
+                $scope.resize("#frmBingo");
                 break;
             case 'tabLiveCasino': url += "/LiveCasino/PTSetting/EditSuper.aspx?custId=" + $scope.existedUser.userid + "&exchangeId=20&roleId=4";
-                $scope.loadData("#frmLiveCasino", url); break;
+                $scope.loadData("#frmLiveCasino", url);
+                $scope.resize("#frmLiveCasino");
+                break;
             case 'tabGenealInformation': $("#divGeneralInformation").show();
         }
 
         $("#divSport").show();
-        $("#divSport div").show();
+        $("#divSport div").show();               
     };
 
     $scope.loadData = function (frameId, url) {
@@ -294,7 +301,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 var site_currency = result.split(',');
                 $scope.existedUser.selectedSite.SiteName = site_currency[0];
                 $scope.existedUser.maxCredit = numeral(site_currency[1]).format("0,0");
-                $scope.existedUser.selectedCurrency = site_currency[2];
+                $scope.existedUser.selectedCurrencyId = site_currency[2];
+                $scope.existedUser.selectedCurrency = site_currency[3];
                 $scope.getAllSites();
             }
                 , error: function (xhr, ajaxOptions, thrownError) {
@@ -334,7 +342,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
 
     $scope.copyExistingUser = function () {
         var param = {
-            username: $scope.newUser.username,
+            UserName: $scope.newUser.username,
             Userpwd: $scope.newUser.password,
             FirstName: $scope.newUser.firstname,
             LastName: $scope.newUser.lastname,
@@ -344,6 +352,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             Fax: $scope.newUser.fax,
             Credit: $scope.existedUser.maxCredit.replace(/,/g, ''),
             IsInternal: $scope.newUser.internaluser,
+            CurrencyId: parseInt($scope.existedUser.selectedCurrencyId),
             ExistingCustId: $scope.existedUser.userid,
             Creator: $("#currentUserId").val()
         };

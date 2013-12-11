@@ -71,9 +71,6 @@
     <Reference Include="ExcelUtil">
       <HintPath>..\Dependency\ExcelUtil.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Dependency\Fanex.CustomerSetting.Module.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.ProgressiveBonus">
       <HintPath>..\Dependency\Fanex.CustomerSetting.Module.ProgressiveBonus.dll</HintPath>
     </Reference>
@@ -92,7 +89,8 @@
       <HintPath>..\Dependency\IBCUtils.dll</HintPath>
     </Reference>
     <Reference Include="LiveCasinoLibrary, Version=1.0.0.11, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Dependency\Bingo\LiveCasinoLibrary.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\LiveCasinoLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
