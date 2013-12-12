@@ -15,7 +15,10 @@ angular.module(searchCopyService, []).
                  document.getElementById(containerid).innerHTML = "<div class='alertboxerr'><div>" + msg + "</div></div>";
                  break;
              case 2:
-                 document.getElementById(containerid).innerHTML = "<div class='alertboxwrn'><div>" + msg + "</div></div>"; ;
+                 document.getElementById(containerid).innerHTML = "<div class='alertboxwrn'><div>" + msg + "</div></div>";
+                 break;
+             case 3:
+                 document.getElementById(containerid).innerHTML = msg;
                  break;
              default:
                  break
@@ -24,7 +27,7 @@ angular.module(searchCopyService, []).
 
      hideAlertMessage: function (containerid) {
          $("#" + containerid).addClass("hidden");
-     }     
+     }
  }).
  value('validate', {
      setRequired: function (id) {

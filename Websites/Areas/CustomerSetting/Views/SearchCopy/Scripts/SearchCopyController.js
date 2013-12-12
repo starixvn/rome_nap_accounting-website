@@ -90,10 +90,6 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $scope.selectedSport = $scope.sports[0];
                 $scope.resetFrameSource();
             }
-            else {
-                message.showAlertMessage("errorMsg", "The super doesn’t exist!", 1);
-                $("#errorMsg").width("550");
-            }
         }
     };
 
@@ -200,7 +196,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         }
 
         $("#divSport").show();
-        $("#divSport div").show();               
+        $("#divSport div").show();
     };
 
     $scope.loadData = function (frameId, url) {
@@ -357,6 +353,12 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             Creator: $("#currentUserId").val()
         };
 
+        message.hideAlertMessage("errorMsg");
+
+        try { parent.parent.BlockUI(); } catch (e) { }
+        try { parent.BlockUI(); } catch (e) { }
+        $("body").addClass("wait");
+
         $.ajax({
             type: "POST",
             url: toUrl("Super/CopyExistingSuper"),
@@ -364,21 +366,19 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             dataType: "json",
             data: JSON.stringify(param),
             success: function (result) {
-                var success = result != null && result.IsSuccessful == true;
-                if (success) {
-                    message.hideAlertMessage("errorMsg");
-                    message.showAlertMessage("errorMsg", "Created Super Successfully !", 0);
+
+                try { parent.parent.jQuery.unblockUI(); } catch (e) { }
+                try { parent.jQuery.unblockUI(); } catch (e) { }
+                $('body').removeClass('wait');
+
+                if (result != null) {
+                    message.showAlertMessage("errorMsg", result.Message, 3);
                     $("#errorMsg").width("700");
-                } else {
-                    if (result != null) {
-                        message.showAlertMessage("errorMsg", result.Message, 1);
-                        $("#errorMsg").width("700");
-                    }
-                    else {
-                        message.showAlertMessage("errorMsg", "Created Super Un-successfully !", 1);
-                        $("#errorMsg").width("700");
-                    }
                 }
+                else {
+                    message.showAlertMessage("errorMsg", "Error for copying existing user !", 1);
+                    $("#errorMsg").width("700");
+                }              
             }
             , error: function (xhr, ajaxOptions, thrownError) {
                 message.showAlertMessage("errorMsg", "Error for copying existing user !", 1);
