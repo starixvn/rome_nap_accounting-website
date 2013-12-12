@@ -22,9 +22,9 @@
         manualCopyHeader: true,
         isShowPager: true,
         fullWidth: true,
-        fullHeight: false,
+        fullHeight: true,
         gridWidth: 980, //=totalColumnWidth + totalColumn*4 +totalColumn
-        gridHeight: 500,
+        gridHeight: 120,
         freezeWidth: 0, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
         numberFreezeCol: 0
     },
@@ -58,10 +58,22 @@
             url: window.rootUrl + "BetList/GetBetListByCustInfo_SystemParLayTab",
             data: BetListByCustInfo.paramGetBetlistSystemParlay,
             success: function (result) {
+
                 BetListByCustInfo.gridOpts.isShowPager = false;
                 $("#betListSystemParlayContent").html(result);
                 $("#BetlistSystemParlay").initGrid(BetListByCustInfo.gridOpts);
-                $('#BetlistSystemParlay').removeClass("display-none").gridScroller(BetListByCustInfo.gridOpts);
+                $('#BetlistSystemParlay').removeClass("display-none").gridScroller({
+                    tblContentId: 'tblContent',
+                    manualCopyHeader: true,
+                    isShowPager: true,
+                    fullWidth: true,
+                    fullHeight: false,
+                    gridWidth: 980,
+                    gridHeight: 500,
+                    freezeWidth: 0,
+                    numberFreezeCol: 0
+                });
+
                 BetListByCustInfo.initPager(_length,
                     BetListByCustInfo.paramGetBetBetlist.pageSize,
                     BetListByCustInfo.paramGetBetBetlist.pageIndex - 1);
