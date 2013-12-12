@@ -22,9 +22,9 @@
         manualCopyHeader: true,
         isShowPager: true,
         fullWidth: true,
-        fullHeight: true,
+        fullHeight: false,
         gridWidth: 980, //=totalColumnWidth + totalColumn*4 +totalColumn
-        gridHeight: 120,
+        gridHeight: 500,
         freezeWidth: 0, //=totalColumnWidth + (totalColumn-1)*4 + (totalColumn-1)
         numberFreezeCol: 0
     },
