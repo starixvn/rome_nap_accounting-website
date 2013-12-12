@@ -101,6 +101,7 @@
     <Compile Include="Configurations\StoreProcedureSection.cs" />
     <Compile Include="Configurations\WebSettings.cs" />
     <Compile Include="Constants\BetType.cs" />
+    <Compile Include="Constants\RoleIdConstants.cs" />
     <Compile Include="Constants\Sports.cs" />
     <Compile Include="Extensions\LogExtensions.cs" />
     <Compile Include="Extensions\ResourceExtension.cs" />
