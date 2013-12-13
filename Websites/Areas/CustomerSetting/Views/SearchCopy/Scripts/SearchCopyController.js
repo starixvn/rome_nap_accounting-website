@@ -238,9 +238,10 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             username: username
         };
 
-        try { parent.parent.BlockUI(); } catch (e) { }
         try { parent.BlockUI(); } catch (e) { }
-        $("body").addClass("wait");
+        try { parent.parent.BlockUI(); } catch (e) { }
+        try { parent.parent.parent.BlockUI(); } catch (e) { }                
+        //$("body").addClass("wait");
 
         $.ajax({
             type: "POST",
@@ -248,11 +249,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify(param),
-            success: function (customerSettingView) {
-                try { parent.parent.jQuery.unblockUI(); } catch (e) { }
-                try { parent.jQuery.unblockUI(); } catch (e) { }
-                $('body').removeClass('wait');
-
+            success: function (customerSettingView) {                
+               
                 var custid = customerSettingView.UserId;
                 var statusSports = customerSettingView.StatusSports;
 
@@ -273,6 +271,11 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                     message.showAlertMessage("errorMsg", "The super doesn’t exist !", 1);
                     $("#errorMsg").width("550");
                 }
+
+                try { parent.jQuery.unblockUI() } catch (e) { }
+                try { parent.parent.jQuery.unblockUI(); } catch (e) { }
+                try { parent.parent.parent.jQuery.unblockUI(); } catch (e) { }
+                //$('body').removeClass('wait');
             }
             , error: function (xhr, ajaxOptions, thrownError) {
                 message.showAlertMessage("errorMsg", "Error for searching existing user !", 1);
@@ -355,9 +358,10 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
 
         message.hideAlertMessage("errorMsg");
 
-        try { parent.parent.BlockUI(); } catch (e) { }
         try { parent.BlockUI(); } catch (e) { }
-        $("body").addClass("wait");
+        try { parent.parent.BlockUI(); } catch (e) { }
+        try { parent.parent.parent.BlockUI(); } catch (e) { }
+        //$("body").addClass("wait");        
 
         $.ajax({
             type: "POST",
@@ -365,12 +369,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify(param),
-            success: function (result) {
-
-                try { parent.parent.jQuery.unblockUI(); } catch (e) { }
-                try { parent.jQuery.unblockUI(); } catch (e) { }
-                $('body').removeClass('wait');
-
+            success: function (result) {           
                 if (result != null) {
                     message.showAlertMessage("errorMsg", result.Message, 3);
                     $("#errorMsg").width("700");
@@ -378,7 +377,12 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 else {
                     message.showAlertMessage("errorMsg", "Error for copying existing user !", 1);
                     $("#errorMsg").width("700");
-                }              
+                }
+
+                try { parent.jQuery.unblockUI() } catch (e) { }
+                try { parent.parent.jQuery.unblockUI(); } catch (e) { }
+                try { parent.parent.parent.jQuery.unblockUI(); } catch (e) { }
+                //$('body').removeClass('wait');
             }
             , error: function (xhr, ajaxOptions, thrownError) {
                 message.showAlertMessage("errorMsg", "Error for copying existing user !", 1);
