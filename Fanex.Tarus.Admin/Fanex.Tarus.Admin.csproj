@@ -70,7 +70,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\AutoFollowBet\AutoFollowBetService.cs" />
+    <Compile Include="Business\AutoFollowBet\BAStatusConstants.cs" />
     <Compile Include="Business\AutoFollowBet\IAutoFollowBetService.cs" />
+    <Compile Include="Business\AutoFollowBet\LiveStatusConstants.cs" />
     <Compile Include="Business\AutoFollowBet\SourceTypeConstants.cs" />
     <Compile Include="Business\BACustomer\BACustomerService.cs" />
     <Compile Include="Business\BACustomer\IBACustomerService.cs" />
@@ -91,7 +93,9 @@
     <Compile Include="Controller\RacingDefaultSettingController.cs" />
     <Compile Include="Controller\SecurityCode\AdminSecurityCodeController.cs" />
     <Compile Include="Controller\SMAManagement\SMAManagementController.cs" />
-    <Compile Include="Criteria\AutoFollowBet\GetAutoFollowedBetCriteria.cs" />
+    <Compile Include="Criteria\AutoFollowBet\DeleteAutoFollowedBetCustomerCriteria.cs" />
+    <Compile Include="Criteria\AutoFollowBet\GetAutoFollowedBetCustomerCriteria.cs" />
+    <Compile Include="Criteria\AutoFollowBet\UpdateAutoFollowedBetCustomerCriteria.cs" />
     <Compile Include="Criteria\MailingList\SMATurnover\GetMailingListCriteria.cs" />
     <Compile Include="Criteria\MailingList\SMATurnover\UpdateMailingListCriteria.cs" />
     <Compile Include="Criteria\SecurityCode\GetUserListCriteria.cs" />
@@ -112,6 +116,7 @@
     <Compile Include="DataAccess\SMAManagement\SMAManagementAccess.cs" />
     <Compile Include="Entities\CustomerSecurityCode.cs" />
     <Compile Include="Entities\FollowedCustomer.cs" />
+    <Compile Include="Entities\FollowedCustomerDTO.cs" />
     <Compile Include="Entities\Licensee.cs" />
     <Compile Include="Entities\MailingList\SpecialDeleteMailing.cs" />
     <Compile Include="Entities\RacingDefaultSetting.cs" />

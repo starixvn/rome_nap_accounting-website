@@ -9,18 +9,18 @@
 
 namespace Fanex.Tarus.Admin.DataAccess.AutoFollowBet
 {
-    using System.Data;
-    using Fanex.Tarus.Admin.Entities;
+    using System.Collections.Generic;
     using Fanex.Tarus.Admin.Criteria.AutoFollowBet;
+    using Fanex.Tarus.Admin.Entities;
 
     public interface IAutoFollowBetAccess
     {
-        DataTable AutoFollowBetSelCustomer(GetAutoFollowedBetCriteria criteria);
-
-        Result AutoFollowBetDelCustomer(string username);
-
         Result AutoFollowBetInsCustomer(string username, double rate);
 
-        Result AutoFollowBetUpdCustomer(string username, double rate); 
+        List<FollowedCustomer> GetAutoFollowedBetCustomer(GetAutoFollowedBetCustomerCriteria criteria);
+
+        Result DeleteAutoFollowedBetCustomer(DeleteAutoFollowedBetCustomerCriteria criteria);
+
+        Result UpdateAutoFollowedBetCustomer(UpdateAutoFollowedBetCustomerCriteria criteria);
     }
 }

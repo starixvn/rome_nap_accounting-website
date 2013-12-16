@@ -1,47 +1,46 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="FollowedCustomer.cs" company="">
-// TODO: Update copyright text.
+﻿// --------------------------------------------------------------------------
+// <copyright file="FollowedCustomer.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
 
 namespace Fanex.Tarus.Admin.Entities
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Followed Customer.
     /// </summary>
     [Serializable]
     public class FollowedCustomer
     {
-        public FollowedCustomer() { }
-        public FollowedCustomer(string username, double rate, bool enableBA)
-        {
-            Username = username;
-            Rate = rate;
-            EnableBA = enableBA;
-        }
-
         public string CustId { get; set; }
 
         public string Username { get; set; }
 
+        public int SourceId { get; set; }
+
+        public string Source { get; set; }
+
         public double Rate { get; set; }
 
-        public bool EnableBA { get; set; }
-
-        public bool IsFollowed { get; set; }
+        public bool BAStatus { get; set; }
 
         public string Licensee { get; set; }
+        
+        public int LiveStatus { get; set; }
 
-    }
+        public int FollowedHDP { get; set; }
 
-    public class FollowedCustomerDTO
-    {
-        public List<FollowedCustomer> FollowedCus { get; set; }
-        public int TotalCustomer { get; set; } 
+        public int Followed1stHDP { get; set; }
+
+        public int FollowedOverUnder { get; set; }
+
+        public int Followed1stOverUnder { get; set; }
+
+        public bool IsFollowed { get; set; }
     }
 }

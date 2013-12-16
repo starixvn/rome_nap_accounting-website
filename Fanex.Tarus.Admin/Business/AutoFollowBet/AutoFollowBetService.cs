@@ -11,8 +11,6 @@ namespace Fanex.Tarus.Admin.Business.AutoFollowBet
 {
     using System;
     using System.Collections.Generic;
-    using System.Data;
-    using DNAide.Core;
     using Fanex.Common;
     using Fanex.Tarus.Admin.Criteria.AutoFollowBet;
     using Fanex.Tarus.Admin.DataAccess.AutoFollowBet;
@@ -45,61 +43,16 @@ namespace Fanex.Tarus.Admin.Business.AutoFollowBet
             _autoFollowBetAccess = crossTransferAccess ?? new AutoFollowBetAccess();
         }
 
-        #region IAutoFollowBetService Members
-
-        /// <summary>
-        /// Selects the followed customer.
-        /// </summary>
-        /// <param name="status">The status.</param>
-        /// <returns>Return list of followed customer.</returns>
-        public List<FollowedCustomer> SelFollowedCustomer(GetAutoFollowedBetCriteria criteria)
-        {
-            var listFollowedCustomer = new List<FollowedCustomer>();
-            DataTable dtb = _autoFollowBetAccess.AutoFollowBetSelCustomer(criteria);
-            dtb.DefaultView.Sort = "username DESC";
-            foreach (DataRow row in dtb.Rows)
-            {
-                listFollowedCustomer.Add(new FollowedCustomer(CastAide.AsString(row["username"]), CastAide.AsDouble(row["rate"]), CastAide.AsBoolean(row["IsBA"])));
-            }
-
-            return listFollowedCustomer;
-        }
-
-        /// <summary>
-        /// Deletes the followed customer.
-        /// </summary>
-        /// <param name="username">The username.</param>
-        /// <returns>Return Result.</returns>
-        public Result DelFollowedCustomer(string username)
-        {
-            var result = new Result();
-            result = _autoFollowBetAccess.AutoFollowBetDelCustomer(username);
-            return result;
-        }
-
         /// <summary>
         /// Increases the followed customer.
         /// </summary>
         /// <param name="username">The username.</param>
         /// <param name="rate">The currency rate.</param>
         /// <returns></returns>
-        public Entities.Result InsFollowedCustomer(string username, double rate)
+        public Result InsFollowedCustomer(string username, double rate)
         {
             var result = new Result();
             result = _autoFollowBetAccess.AutoFollowBetInsCustomer(username, rate);
-            return result;
-        }
-
-        /// <summary>
-        /// Updates the followed customer.
-        /// </summary>
-        /// <param name="username">The username.</param>
-        /// <param name="rate">The currency rate.</param>
-        /// <returns></returns>
-        public Entities.Result UpdFollowedCustomer(string username, double rate)
-        {
-            var result = new Result();
-            result = _autoFollowBetAccess.AutoFollowBetUpdCustomer(username, rate);
             return result;
         }
 
@@ -145,6 +98,115 @@ namespace Fanex.Tarus.Admin.Business.AutoFollowBet
             return null;
         }
 
-        #endregion IAutoFollowBetService Members
+        /// <summary>
+        /// Gets the followed customer.
+        /// </summary>
+        /// <param name="status">The status.</param>
+        /// <returns>Return list of followed customer.</returns>
+        public List<FollowedCustomer> GetAutoFollowedBetCustomer(GetAutoFollowedBetCustomerCriteria criteria)
+        {
+            try
+            {
+                var rawData = _autoFollowBetAccess.GetAutoFollowedBetCustomer(criteria);
+                var listFollowedCustomer = new List<FollowedCustomer>();
+                foreach (var data in rawData)
+                {
+                    var followedCustomer = new FollowedCustomer
+                    {
+                        Username = data.Username,
+                        Rate = data.Rate,
+                        BAStatus = data.BAStatus,
+
+                        SourceId = data.SourceId,
+                        LiveStatus = data.LiveStatus,
+                        FollowedHDP = data.FollowedHDP,
+                        Followed1stHDP = data.Followed1stHDP,
+                        FollowedOverUnder = data.FollowedOverUnder,
+                        Followed1stOverUnder = data.Followed1stOverUnder
+                    };
+
+                    followedCustomer.Source = GetSourceTypeName(followedCustomer.SourceId);
+                    listFollowedCustomer.Add(followedCustomer);
+                }
+
+                return listFollowedCustomer;
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Deletes the followed customer.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <returns>Return Result.</returns>
+        public Result DeleteAutoFollowedBetCustomer(DeleteAutoFollowedBetCustomerCriteria criteria)
+        {
+            try
+            {
+                var result = new Result();
+                result = _autoFollowBetAccess.DeleteAutoFollowedBetCustomer(criteria);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Updates the followed customer.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <param name="rate">The currency rate.</param>
+        /// <returns></returns>
+        public Result UpdateAutoFollowedBetCustomer(UpdateAutoFollowedBetCustomerCriteria criteria)
+        {
+            try
+            {
+                if (!criteria.IsValid())
+                {
+                    return null;
+                }
+
+                var result = new Result();
+                result = _autoFollowBetAccess.UpdateAutoFollowedBetCustomer(criteria);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return null;
+        }
+
+        private string GetSourceTypeName(int sourceId)
+        {
+            string result = string.Empty;
+            switch (sourceId)
+            {
+                case SourceTypeConstants.All:
+                    result = "All";
+                    break;
+                case SourceTypeConstants.Auto:
+                    result = "Auto";
+                    break;
+                case SourceTypeConstants.Manual:
+                    result = "Manual";
+                    break;
+                default:
+                    result = string.Empty;
+                    break;
+            }
+
+            return result;
+        }
     }
 }

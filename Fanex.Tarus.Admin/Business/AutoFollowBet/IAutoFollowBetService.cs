@@ -16,14 +16,14 @@ namespace Fanex.Tarus.Admin.Business.AutoFollowBet
 
     public interface IAutoFollowBetService
     {
-        List<FollowedCustomer> SelFollowedCustomer(GetAutoFollowedBetCriteria criteria);
-
-        Result DelFollowedCustomer(string username);
-
         Result InsFollowedCustomer(string username, double rate);
 
-        Result UpdFollowedCustomer(string username, double rate);
-
         List<FollowTypeInfo> GetFollowType();
+
+        List<FollowedCustomer> GetAutoFollowedBetCustomer(GetAutoFollowedBetCustomerCriteria criteria);
+
+        Result DeleteAutoFollowedBetCustomer(DeleteAutoFollowedBetCustomerCriteria criteria);
+
+        Result UpdateAutoFollowedBetCustomer(UpdateAutoFollowedBetCustomerCriteria criteria);
     }
 }

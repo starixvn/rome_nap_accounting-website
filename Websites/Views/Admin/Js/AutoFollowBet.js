@@ -1,6 +1,4 @@
-﻿var gridHeight = $(window).height() - 150;
-
-$(function () {
+﻿$(function () {
     $('#addNewFollowCustomer').dialog({
         title: "Add New Follow Customer",
         autoOpen: false,
@@ -19,15 +17,6 @@ function showPopup() {
     $('#addNewFollowCustomer').removeClass("hidden").dialog("open");
 }
 
-function isPositiveDouble(rate) {
-    var validChars = '0123456789.';
-    for (var i = 0; i < rate.length; i++) {
-        if (validChars.indexOf(rate.charAt(i)) == -1)
-            return false;
-    }
-    return true;
-}
-
 var autoFollowBet = {
     width: 400,
     height: 500,
@@ -35,10 +24,35 @@ var autoFollowBet = {
 
     followTypeEnums: {
         LiveStatus: 0,
+        LiveStatus_Both: 2,
+        LiveStatus_Live: 1,
+        LiveStatus_NonLive: 0,
+        LiveStatus_All: 3,
+        LiveStatus_None: -2,
+
         HDP: 1,
+        HDP_Follow: 1,
+        HDP_NotFollow: 0,
+        HDP_All: 2,
+        HDP_None: -2,
+
         _1stHDP: 2,
+        _1stHDP_Follow: 1,
+        _1stHDP_NotFollow: 0,
+        _1stHDP_All: 2,
+        _1stHDP_None: -2,
+
         OverUnder: 3,
-        _1stOverUnder: 4
+        OverUnder_Follow: 1,
+        OverUnder_NotFollow: 0,
+        OverUnder_All: 2,
+        OverUnder_None: -2,
+
+        _1stOverUnder: 4,
+        _1stOverUnder_Follow: 1,
+        _1stOverUnder_NotFollow: 0,
+        _1stOverUnder_All: 2,
+        _1stOverUnder_None: -2
     },
     Tables: {
         dropdownFollowType: null,
@@ -46,260 +60,458 @@ var autoFollowBet = {
         dropdownSource: null
     },
     CachedData: {
-        FollowTypes: null
-    },
-    buildGrid: function (model) {
-        var arr = [];
-        if (model.length > 0) {
-            for (var i = 0; i < model.length; i++) {
-                if (i % 2 != 0)
-                    arr.push(autoFollowBet.renderRow(i, 'bgeven', model[i].Username, model[i].Rate, model[i].EnableBA));
-                else
-                    arr.push(autoFollowBet.renderRow(i, '', model[i].Username, model[i].Rate, model[i].EnableBA));
-            }
-            $("#tobdyMainGrid").html(arr.join(''));
-            $("#divMainGrid").removeClass("hidden").reRenderScroller(435, gridHeight, true);
-        }
-        else {
-            $("#tobdyMainGrid").html('<tr><td colspan="4" style="border-right:0px none"><div class="c b" style="width:369px">There is no information available</div></td></tr>');
-            $("#divMainGrid").removeClass("hidden").reRenderScroller(433, gridHeight, true);
-        }
-        try { parent.jQuery.unblockUI(); } catch (e) { }
+        FollowTypes: null,
+        FollowedCustomerList: null,
+        editIcon: '../App_Themes/Images/icn_edit.png',
+        saveIcon: '../App_Themes/Images/Save.png',
+        undoIcon: '../App_Themes/Images/undo.png',
+        deleteIcon: '../App_Themes/Images/icn_del.png',
+        getListInfoParams: {
+            Username: null,
+            BAStatus: null,
+            Source: null,
+            LiveStatus: null,
+
+            HDP: null,
+            _1stHDP: null,
+            OverUnder: null,
+            _1stOverUnder: null
+        },
+        deleteInfoParams: {
+            Username: null,
+            RowId: null
+        },
+        updateInfoParams: {
+            RowId: null,
+            Username: null,
+            SourceId: null,
+            Source: null,
+            Rate: null,
+            LiveStatus: null,
+            FollowedHDP: null,
+            Followed1stHDP: null,
+            FollowedOverUnder: null,
+            Followed1stOverUnder: null
+        },
+        gridHeight: $(window).height() - 150,
+        gridWidth: 913
     },
 
     GetAutoFollowedBet: function () {
-        var selectParams = autoFollowBet.getSelectListInfoParams();
-        autoFollowBet.status = selectParams.Status;
         autoFollowBet.blockUI();
-        $.ajax({
-            type: "POST",
-            url: "GetAutoFollowedBet",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: JSON.stringify(selectParams),
-            success: function (model) {
-                autoFollowBet.unblockUI(model);
-            },
-            complete: function () {
-                autoFollowBet.unblockUI();
-            }
-        });
+        var postParams = autoFollowBet.getListInfoParams();
+        autoFollowBet.CachedData.getListInfoParams = postParams;
+        autoFollowBet.callAjax(this,
+            "../AutoFollowBet/GetAutoFollowedBetCustomer",
+            postParams,
+            autoFollowBet.renderFollowBetResult,
+            autoFollowBet.renderFollowBetResult,
+            autoFollowBet.unblockUI,
+            false);
     },
-    getSelectListInfoParams: function () {
-        var followTypes = [];
-        var cachedFollowTypes = autoFollowBet.CachedData.FollowTypes;
-        var optionLength = cachedFollowTypes.length;
-        var prefixId = 'dropdown-followType';
-        for (var i = 0; i < optionLength; i++) {
-            var followType = cachedFollowTypes[i];
-            var subTypesLength = followType.ChildsInfo.length;
-            var subType = [];
-            for (var j = 0; j < subTypesLength; j++) {
-                var info = followType.ChildsInfo[j];
-                subType.push({
-                    Id: info.Id,
-                    Name: info.Name,
-                    IsSelected: $("#" + prefixId + followType.Id + "_" + info.Id).attr("checked")
-                });
-            }
-
-            followTypes.push({
-                Id: followType.Id,
-                Name: followType.Name,
-                IsSelected: $("#" + prefixId + followType.Id).attr("checked"),
-                ChildsInfo: subType
-            });
-        }
-
+    getListInfoParams: function () {
         return {
             Username: autoFollowBet.Tables.TextboxUsername.val(),
-            Status: autoFollowBet.Tables.dropdownBAEnabled.val(),
+            BAStatus: autoFollowBet.Tables.dropdownBAEnabled.val(),
             Source: autoFollowBet.Tables.dropdownSource.val(),
-            FollowTypes: followTypes
+            LiveStatus: autoFollowBet.GetLiveStatusParam(),
+
+            HDP: autoFollowBet.GetHDPParam(),
+            _1stHDP: autoFollowBet.Get1stHDPParam(),
+            OverUnder: autoFollowBet.GetOverUnderParam(),
+            _1stOverUnder: autoFollowBet.Get1stOverUnderParam()
         };
     },
-    renderFollowBetResult: function (model) {
+    GetLiveStatusParam: function () {
+        var followTypeEnums = autoFollowBet.followTypeEnums;
+        var groupId = "#dropdown-followType" + followTypeEnums.LiveStatus;
+        if ($(groupId).attr("checked")) {
+            return followTypeEnums.LiveStatus_All.toString();
+        }
+
+        var paramList = [];
+        if ($(groupId + "_" + followTypeEnums.LiveStatus_Both).attr("checked")) {
+            paramList.push(followTypeEnums.LiveStatus_Both);
+        }
+
+        if ($(groupId + "_" + followTypeEnums.LiveStatus_Live).attr("checked")) {
+            paramList.push(followTypeEnums.LiveStatus_Live);
+        }
+
+        if ($(groupId + "_" + followTypeEnums.LiveStatus_NonLive).attr("checked")) {
+            paramList.push(followTypeEnums.LiveStatus_NonLive);
+        }
+
+        return paramList.join(",");
+    },
+    GetHDPParam: function () {
+        var followTypeEnums = autoFollowBet.followTypeEnums;
+        var groupId = "#dropdown-followType" + followTypeEnums.HDP;
+        if ($(groupId).attr("checked")) {
+            return followTypeEnums.HDP_All.toString();
+        }
+
+        var paramList = [];
+        if ($(groupId + "_" + followTypeEnums.HDP_Follow).attr("checked")) {
+            paramList.push(followTypeEnums.HDP_Follow);
+        }
+
+        if ($(groupId + "_" + followTypeEnums.HDP_NotFollow).attr("checked")) {
+            paramList.push(followTypeEnums.HDP_NotFollow);
+        }
+
+        return paramList.join(",");
+    },
+    Get1stHDPParam: function () {
+        var followTypeEnums = autoFollowBet.followTypeEnums;
+        var groupId = "#dropdown-followType" + followTypeEnums._1stHDP;
+        if ($(groupId).attr("checked")) {
+            return followTypeEnums._1stHDP_All.toString();
+        }
+
+        var paramList = [];
+        if ($(groupId + "_" + followTypeEnums._1stHDP_Follow).attr("checked")) {
+            paramList.push(followTypeEnums._1stHDP_Follow);
+        }
+
+        if ($(groupId + "_" + followTypeEnums._1stHDP_NotFollow).attr("checked")) {
+            paramList.push(followTypeEnums._1stHDP_NotFollow);
+        }
+
+        return paramList.join(",");
+    },
+    GetOverUnderParam: function () {
+        var followTypeEnums = autoFollowBet.followTypeEnums;
+        var groupId = "#dropdown-followType" + followTypeEnums.OverUnder;
+        if ($(groupId).attr("checked")) {
+            return followTypeEnums.OverUnder_All.toString();
+        }
+
+        var paramList = [];
+        if ($(groupId + "_" + followTypeEnums.OverUnder_Follow).attr("checked")) {
+            paramList.push(followTypeEnums.OverUnder_Follow);
+        }
+
+        if ($(groupId + "_" + followTypeEnums.OverUnder_NotFollow).attr("checked")) {
+            paramList.push(followTypeEnums.OverUnder_NotFollow);
+        }
+
+        return paramList.join(",");
+    },
+    Get1stOverUnderParam: function () {
+        var followTypeEnums = autoFollowBet.followTypeEnums;
+        var groupId = "#dropdown-followType" + followTypeEnums._1stOverUnder;
+        if ($(groupId).attr("checked")) {
+            return followTypeEnums._1stOverUnder_All.toString();
+        }
+
+        var paramList = [];
+        if ($(groupId + "_" + followTypeEnums._1stOverUnder_Follow).attr("checked")) {
+            paramList.push(followTypeEnums._1stOverUnder_Follow);
+        }
+
+        if ($(groupId + "_" + followTypeEnums._1stOverUnder_NotFollow).attr("checked")) {
+            paramList.push(followTypeEnums._1stOverUnder_NotFollow);
+        }
+
+        return paramList.join(",");
+    },
+    renderFollowBetResult: function (result) {
+        autoFollowBet.CachedData.FollowedCustomerList = result;
         var arr = [];
-        if (model.length > 0) {
-            for (var i = 0; i < model.length; i++) {
-                if (i % 2 != 0) {
-                    arr.push(autoFollowBet.renderRow(i, 'bgeven', model[i].Username, model[i].Rate, model[i].EnableBA));
-                }
-                else {
-                    arr.push(autoFollowBet.renderRow(i, '', model[i].Username, model[i].Rate, model[i].EnableBA));
-                }
+        var rowHTML;
+        if (result && result.length > 0) {
+            var resultLength = result.length;
+            for (var i = 0; i < resultLength; i++) {
+                var followInfo = result[i];
+                var rowHTML = autoFollowBet.renderFollowBetRow(i, i % 2 != 0, followInfo);
+                arr.push(rowHTML);
             }
-            $("#tobdyMainGrid").html(arr.join(''));
-            $("#divMainGrid").removeClass("hidden").reRenderScroller(435, gridHeight, true);
+
+            autoFollowBet.Tables.reportGridBody.html(arr.join(''));
+            autoFollowBet.Tables.reportGrid.removeClass("hidden")
+                                           .reRenderScroller(autoFollowBet.CachedData.gridWidth, autoFollowBet.CachedData.gridHeight, true);
         }
         else {
-            $("#tobdyMainGrid").html('<tr><td colspan="4" style="border-right:0px none"><div class="c b" style="width:369px">There is no information available</div></td></tr>');
-            $("#divMainGrid").removeClass("hidden").reRenderScroller(432, gridHeight, true);
+
+            var rowHTML = '<tr>\
+                                <td colspan="11" style="border-right: 0px none">\
+                                    <div class="c b" style="width: 911px">' + viewResources.No_Info + '</div>\
+                                </td>\
+                            </tr>';
+            autoFollowBet.Tables.reportGridBody.html(rowHTML);
+            autoFollowBet.Tables.reportGrid.removeClass("hidden")
+                                           .reRenderScroller(autoFollowBet.CachedData.gridWidth, autoFollowBet.CachedData.gridHeight, true);
         }
     },
+    renderFollowBetRow: function (rowId, isEvenRow, followInfo) {
+        var followTypeEnums = autoFollowBet.followTypeEnums;
+        var cssClass = isEvenRow ? 'bgeven' : '';
+        var strRow = '';
+        strRow += '<tr class="' + cssClass + ' followInfo_' + rowId + '">';
+        strRow += '<td><div class="col120 c">' + followInfo.Username + '</div></td>';
+        strRow += '<td><div class="col80 c">' + followInfo.Source + '</div></td>';
+        strRow += '<td class="td-labelrate col80">\
+                        <div class="c labelrate">' + followInfo.Rate + '</div>\
+                   </td>';
+        strRow += '<td class="c col140">\
+                        <select class="dropdown-livestatus editablefield" disabled="disabled">' +
+                            autoFollowBet.generateDropdownLiveStatusOptions(followInfo.LiveStatus) +
+                        '</select>\
+                   </td>';
+        strRow += '<td class="c col60">\
+                        <input class="hdpstatus editablefield" type="checkbox" disabled="disabled"' +
+                            (followInfo.FollowedHDP == followTypeEnums.HDP_Follow ? ' checked = "checked"' : '') + '/>\
+                   </td>';
+        strRow += '<td class="c col80">\
+                        <input class="_1sthdpstatus editablefield" type="checkbox" disabled="disabled"' +
+                            (followInfo.Followed1stHDP == followTypeEnums._1stHDP_Follow ? checked = "checked" : '') + '/>\
+                   </td>';
+        strRow += '<td class="c col60">\
+                        <input class="overunderstatus editablefield" type="checkbox" disabled="disabled"' +
+                            (followInfo.FollowedOverUnder == followTypeEnums.OverUnder_Follow ? ' checked = "checked"' : '') + '/>\
+                   </td>';
+        strRow += '<td class="c col80">\
+                        <input class="_1stoverunderstatus editablefield" type="checkbox" disabled="disabled"' +
+                            (followInfo.Followed1stOverUnder == followTypeEnums._1stOverUnder_Follow ? checked = "checked" : '') + '/>\
+                   </td>';
+        strRow += '<td class="col60 c"><div class="col35 ' + (followInfo.BAStatus ? 'checkBA' : '') + '"></div></td>';
 
-    renderRow: function (i, css, Username, Rate, EnableBA) {
-        var idlbRate = 'lbrate' + i;
-        var imgEdit = 'imgEdit' + i;
-        var imgSave = 'imgSave' + i;
-        var imgUndo = 'imgUndo' + i;
-        var Save = 'Save';
-        var Cancel = 'Cancel'
-        var strrow = '';
-        strrow += '<tr class="' + css + '">';
-        strrow += '<td><div class="col120 c">' + Username + '</div></td>';
-        strrow += '<td id="td' + idlbRate + '"><div id="' + idlbRate + '" class="col120 c">' + Rate + '</div></td>';
-        if (EnableBA)
-            strrow += '<td><div class="col35 c checkBA"></div></td>';
-        else
-            strrow += '<td><div class="col60 c"></div></td>';
-        strrow += '<td>';
-        strrow += '<div class="col60 c">';
-        strrow += '<img id="' + imgEdit + '" src= "' + window.rootUrl + 'App_Themes/Images/icn_edit.png"   onclick="autoFollowBet.beginEdit(event, \'' + imgEdit + '\', \'' + imgSave + '\', \'' + imgUndo + '\', \'' + idlbRate + '\', \'' + Username + '\',\'' + Rate + '\')" style="cursor:pointer;" title="Edit"  />';
-        strrow += '<img id="' + imgSave + '" src="' + window.rootUrl + 'App_Themes/Images/Save.png" onclick="autoFollowBet.updFollowBetCustomer( event, \'' + imgEdit + '\', \'' + imgSave + '\', \'' + imgUndo + '\',\'' + Username + '\', \'' + idlbRate + '\', \'' + Rate + '\')" style="cursor:pointer;display:none" title="Save" />';
-        strrow += '<img id="' + imgUndo + '" src="' + window.rootUrl + 'App_Themes/Images/undo.png" onclick="autoFollowBet.undoEdit( event, \'' + idlbRate + '\', \'' + Rate + '\')" style="cursor:pointer;display:none" title="Cancel" />';
-        strrow += '<td>';
-        strrow += '<div class="col60 c">';
-        strrow += '<img src="' + window.rootUrl + 'App_Themes/Images/icn_del.png" style="cursor:pointer;" onclick="autoFollowBet.delAutoFollowedBet( \'' + Username + '\')" title="Delete" /></div></td>';
-        return strrow;
+        strRow += '<td>';
+        strRow += '<div class="col60 c">';
 
+        strRow += '<img class="editcontrol editicon"' +
+            ' src="' + autoFollowBet.CachedData.editIcon + '"' +
+            ' onclick="autoFollowBet.beginEditFollowInfo(event, \'' + rowId + '\')"' +
+            ' title="' + viewResources.Edit + '"/>';
+        strRow += '<img class="saveicon editcontrol display-none"' +
+            ' src="' + autoFollowBet.CachedData.saveIcon + '"' +
+            ' onclick="autoFollowBet.updateFollowInfo(event, \'' + rowId + '\')"' +
+            ' title="' + viewResources.Save + '" />';
+        strRow += '<img class="undoicon editcontrol display-none"' +
+            ' src="' + autoFollowBet.CachedData.undoIcon + '"' +
+            ' onclick="autoFollowBet.undoEditFollowInfo(event, \'' + rowId + '\')"' +
+            ' title="' + viewResources.Cancel + '" />';
+        strRow += '<td>';
+        strRow += '<div class="col60 c">';
+        strRow += '<img class="deleteicon editcontrol"' +
+            ' src="' + autoFollowBet.CachedData.deleteIcon + '"' +
+            ' onclick="autoFollowBet.deleteFollowInfo(event, \'' + rowId + '\')"' +
+            ' title="' + viewResources.Delete + '" /></div></td>';
+        return strRow;
     },
-    beginEdit: function (e, idImgEdit, idImgSave, idImgUndo, id, Username, Rate) {
-
-        var iconEdit = $('#' + idImgEdit);
-        var iconSave = $('#' + idImgSave);
-        var iconUndo = $('#' + idImgUndo);
+    beginEditFollowInfo: function (event, rowId) {
+        var followInfo = autoFollowBet.CachedData.FollowedCustomerList[rowId];
+        var rowInfo = $(".followInfo_" + rowId);
+        rowInfo.find(".editablefield").attr("disabled", null);
+        var iconEdit = rowInfo.find('.editicon');
+        var iconSave = rowInfo.find('.saveicon');
+        var iconUndo = rowInfo.find('.undoicon');
         iconEdit.hide();
         iconSave.show()
         iconUndo.show();
-        var rate = $('#' + id).html();
-        var lbRate = $('#td' + id);
+        var rate = rowInfo.find('.labelrate').html();
+        var tdLabelRate = rowInfo.find('.td-labelrate');
 
-        var tbxrate = 'tbx' + id;
-        lbRate.html('<input  id="' + tbxrate + '" style="width:115px" maxlength="5" type="text" onkeyup="autoFollowBet.onKeyEnterUdp(event ,\'' + idImgEdit + '\', \'' + idImgSave + '\', \'' + idImgUndo + '\',\'' + Username + '\', \'' + id + '\', \'' + Rate + '\');" class="txt" editor="true"/>');
-        $('#' + tbxrate).val(rate);
+        tdLabelRate.html('<input class="textboxrate txt" maxlength="4" type="text"' +
+            'onkeyup="autoFollowBet.onEditFollowInfo(event ,\'' + rowId + '\');" editor="true"/>');
+        rowInfo.find('.textboxrate').val(rate);
     },
-
-    updFollowBetCustomer: function (e, idImgEdit, idImgSave, idImgUndo, username, idlbRate, Rate) {
-        try { parent.BlockUI(); } catch (e) { }
-
-        var iconEdit = $('#' + idImgEdit);
-        var iconSave = $('#' + idImgSave);
-        var iconUndo = $('#' + idImgUndo);
-        var rate = $('#tbx' + idlbRate).val();
-
-
-        if (isPositiveDouble(rate) && parseFloat(rate) > 0) {
-            var data = '{"username":"' + username + '","rate":"' + rate + '"}';
-            $.ajax({
-                type: "POST",
-                url: "UpdAutoFollowedBet",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                async: false,
-                data: data,
-                success: function (rs) {
-                    if (parseInt(rs.ErrorCode) != 0) {
-                        showAlertMessage("msgError", rs.ErrorMessage, 1);
-                        $("#msgError").show().find("div:first").width(390);
-                        var lbRate = $('#td' + idlbRate);
-                        lbRate.html('<div id="' + idlbRate + '" class="col120 c">' + Rate + '</div>');
-                        iconEdit.show();
-                        iconSave.hide()
-                        iconUndo.hide();
-                    }
-                    else {
-                        showAlertMessage("msgError", "Updated Successfully!", 0);
-                        $("#msgError").show().find("div:first").width(390);
-                        var data = { Status: autoFollowBet.status };
-                        $.ajax({
-                            type: "POST",
-                            url: "GetAutoFollowedBet",
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            data: JSON.stringify(data),
-                            success: function (rs) {
-                                autoFollowBet.buildGrid(rs);
-                            }
-                        });
-                    }
-                    try { parent.jQuery.unblockUI(); } catch (e) { }
-
-                }
-            });
-
-        }
-        else {
-            showAlertMessage("msgError", "Invalid Rate . Please input positive double value!", 1);
-            $("#msgError").show().find("div:first").width(390);
-            var lbRate = $('#td' + idlbRate);
-            lbRate.html('<div id="' + idlbRate + '" class="col120 c">' + Rate + '</div>');
-            var target = e.target || e.srcElement;
-            var tr = $(target).parents("tr:first");
-            iconEdit.show();
-            iconSave.hide()
-            iconUndo.hide();
-            try { parent.jQuery.unblockUI(); } catch (e) { }
-
-        }
-        var t = setTimeout(function () {
-            $("#msgError").empty();
-        }, 4000);
+    generateDropdownLiveStatusOptions: function (liveStatus) {
+        var option = '';
+        var followTypeEnums = autoFollowBet.followTypeEnums;
+        option += '<option value="' + followTypeEnums.LiveStatus_Both + '"' +
+                        (liveStatus == followTypeEnums.LiveStatus_Both ? ' selected="selected"' : '') +
+                   '>' + viewResources.Both + '</option>';
+        option += '<option value="' + followTypeEnums.LiveStatus_Live + '"' +
+                        (liveStatus == followTypeEnums.LiveStatus_Live ? ' selected="selected"' : '') +
+                   '>' + viewResources.Live + '</option>';
+        option += '<option value="' + followTypeEnums.LiveStatus_NonLive + '"' +
+                        (liveStatus == followTypeEnums.LiveStatus_NonLive ? ' selected="selected"' : '') +
+                   '>' + viewResources.Non_Live + '</option>';
+        return option;
     },
-    undoEdit: function (e, idRate, Rate) {
-        var target = e.target || e.srcElement;
-        var tr = $(target).parents("tr:first");
-        var iconEdit = $(target).parent().find("img[title='Edit']");
-        var iconSave = $(target).parent().find("img[title='Save']");
-        var iconUndo = $(target).parent().find("img[title='Cancel']");
-        iconEdit.show();
-        iconSave.hide();
+    undoEditFollowInfo: function (event, rowId) {
+        var followInfo = autoFollowBet.CachedData.FollowedCustomerList[rowId];
+        var rowInfo = $(".followInfo_" + rowId);
+        rowInfo.find(".editablefield").attr("disabled", "disabled");
+        var iconEdit = rowInfo.find('.editicon');
+        var iconSave = rowInfo.find('.saveicon');
+        var iconUndo = rowInfo.find('.undoicon');
+        iconSave.hide()
         iconUndo.hide();
-        var lbRate = $('#td' + idRate);
-        lbRate.html('<div id="' + idRate + '" class="col120 c">' + Rate + '</div>');
+        iconEdit.show();
+        var rate = rowInfo.find('.labelrate').html();
+        var tdLabelRate = rowInfo.find('.td-labelrate');
+        tdLabelRate.html('<div class="col80 c labelrate">' + followInfo.Rate + '</div>');
 
+        var dropdownLiveStatus = rowInfo.find('.dropdown-livestatus');
+        dropdownLiveStatus.find('option[value=' + followInfo.LiveStatus + ']').attr('selected', 'selected');
+        var hdpStatus = rowInfo.find('.hdpstatus');
+        hdpStatus.attr("checked", followInfo.FollowedHDP ? "checked" : null);
+        var _1stHDPStatus = rowInfo.find('._1sthdpstatus');
+        _1stHDPStatus.attr("checked", followInfo.Followed1stHDP ? "checked" : null);
+        var overUnderStatus = rowInfo.find('.overunderstatus');
+        overUnderStatus.attr("checked", followInfo.FollowedOverUnder ? "checked" : null);
+        var _1stOverUnderStatus = rowInfo.find('._1stoverunderstatus');
+        _1stOverUnderStatus.attr("checked", followInfo.Followed1stOverUnder ? "checked" : null);
     },
-
-    delAutoFollowedBet: function (username) {
-        try { parent.BlockUI(); } catch (e) { }
-        var data = '{"username":"' + username + '"}';
-        if (confirm("Are you sure you want to delete followed customer?")) {
-            $.ajax({
-                type: "POST",
-                url: "DelAutoFollowedBet",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                data: data,
-                success: function (rs) {
-                    if (parseInt(rs.ErrorCode) != 0) {
-                        showAlertMessage("msgError", rs.ErrorMessage, 1);
-                        $("#msgError").show().find("div:first").width(390);
-                    }
-                    else {
-                        showAlertMessage("msgError", "Deleted Successfully!", 0);
-                        $("#msgError").show().find("div:first").width(390);
-                        var data = { Status: autoFollowBet.status };
-                        $.ajax({
-                            type: "POST",
-                            url: "GetAutoFollowedBet",
-                            data: JSON.stringify(data),
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            success: function (rs) {
-                                autoFollowBet.buildGrid(rs);
-                            }
-                        });
-                    }
-
-                    var t = setTimeout(function () {
-                        $("#msgError").empty();
-                    }, 4000);
-                }
-            });
+    deleteFollowInfo: function (event, rowId) {
+        autoFollowBet.blockUI();
+        var followInfo = autoFollowBet.CachedData.FollowedCustomerList[rowId];
+        var isDelete = confirm(viewResources.Warning_Admin_AutoFollowBetManagement_DeleteFollowInfo);
+        if (!isDelete) {
+            autoFollowBet.unblockUI();
         }
-        try { parent.jQuery.unblockUI(); } catch (e) { }
-    },
 
+        var postParams = {
+            Username: followInfo.Username,
+            RowId: rowId
+        };
+
+        autoFollowBet.CachedData.deleteInfoParams = postParams;
+        autoFollowBet.callAjax(this,
+            "../AutoFollowBet/DeleteAutoFollowedBetCustomer",
+            postParams,
+            autoFollowBet.renderDeleteFollowInfoResult,
+            autoFollowBet.renderDeleteFollowInfoResult,
+            autoFollowBet.unblockUI,
+            true);
+    },
+    renderDeleteFollowInfoResult: function (rs) {
+        var rowId = autoFollowBet.CachedData.deleteInfoParams.RowId;
+        if (parseInt(rs.ErrorCode) != 0) {
+            showAlertMessage("errormessage", rs.ErrorMessage, 1);
+            autoFollowBet.Tables.errorMessage.removeClass("display-none").find("div:first").width(390);
+            return;
+        }
+
+        showAlertMessage("errormessage", viewResources.Success_Admin_AutoFollowBetManagement_DeleteFollowInfo, 0);
+        autoFollowBet.Tables.errorMessage.removeClass("display-none").find("div:first").width(390);
+        var rowInfo = $(".followInfo_" + rowId);
+        rowInfo.remove();
+        autoFollowBet.Tables.reportGrid.removeClass("hidden")
+                                           .reRenderScroller(autoFollowBet.CachedData.gridWidth, autoFollowBet.CachedData.gridHeight, true);
+
+        var t = setTimeout(function () {
+            autoFollowBet.Tables.errorMessage.addClass("display-none").empty();
+        }, 3000);
+    },
+    updateFollowInfo: function (event, rowId) {
+        autoFollowBet.blockUI();
+        var postParams = autoFollowBet.getUpdateInfoParams(rowId);
+
+        autoFollowBet.CachedData.updateInfoParams = postParams;
+        if (!autoFollowBet.validateUpdateInfoParams(postParams)) {
+            autoFollowBet.unblockUI();
+            return;
+        }
+
+        autoFollowBet.callAjax(this,
+            "../AutoFollowBet/UpdateAutoFollowedBetCustomer",
+            postParams,
+            autoFollowBet.renderUpdateFollowInfoResult,
+            autoFollowBet.renderUpdateFollowInfoResult,
+            autoFollowBet.unblockUI,
+            true);
+    },
+    getUpdateInfoParams: function (rowId) {
+        var followTypeEnums = autoFollowBet.followTypeEnums;
+        var followInfo = autoFollowBet.CachedData.FollowedCustomerList[rowId];
+
+        var rowInfo = $(".followInfo_" + rowId);
+        var iconEdit = rowInfo.find('.editicon');
+        var iconSave = rowInfo.find('.saveicon');
+        var iconUndo = rowInfo.find('.undoicon');
+        var rate = rowInfo.find('.textboxrate').val();
+        var dropdownLiveStatus = rowInfo.find('.dropdown-livestatus');
+        var hdpStatus = rowInfo.find('.hdpstatus');
+        var _1stHDPStatus = rowInfo.find('._1sthdpstatus');
+        var overUnderStatus = rowInfo.find('.overunderstatus');
+        var _1stOverUnderStatus = rowInfo.find('._1stoverunderstatus');
+
+        return {
+            RowId: rowId,
+            Username: followInfo.Username,
+            SourceId: followInfo.SourceId,
+            Source: followInfo.Source,
+            Rate: rate,
+            LiveStatus: dropdownLiveStatus.find("option:selected").val(),
+            FollowedHDP: hdpStatus.attr("checked") ? followTypeEnums.HDP_Follow : followTypeEnums.HDP_NotFollow,
+            Followed1stHDP: _1stHDPStatus.attr("checked") ? followTypeEnums._1stHDP_Follow : followTypeEnums._1stHDP_NotFollow,
+            FollowedOverUnder: overUnderStatus.attr("checked") ? followTypeEnums.OverUnder_Follow : followTypeEnums.OverUnder_NotFollow,
+            Followed1stOverUnder: _1stOverUnderStatus.attr("checked") ? followTypeEnums._1stOverUnder_Follow : followTypeEnums._1stOverUnder_NotFollow
+        };
+    },
+    validateUpdateInfoParams: function (postParams) {
+        var rate = parseFloat(postParams.Rate);
+        var rowInfo = $(".followInfo_" + postParams.RowId);
+        if (postParams.Rate == '') {
+            showAlertMessage("errormessage", viewResources.Error_Admin_AutoFollowBetManagement_InvalidRate_Empty, 1);
+            autoFollowBet.Tables.errorMessage.removeClass("display-none").find("div:first").width(450);
+            rowInfo.find('.textboxrate').focus();
+            return false;
+        }
+
+        if (!$.isNumeric(postParams.Rate)) {
+            showAlertMessage("errormessage", viewResources.Error_Admin_AutoFollowBetManagement_InvalidRate_Number, 1);
+            autoFollowBet.Tables.errorMessage.removeClass("display-none").find("div:first").width(450);
+            rowInfo.find('.textboxrate').focus();
+            return false;
+        }
+
+        if (rate < 0 || 3 < rate) {
+            showAlertMessage("errormessage", viewResources.Error_Admin_AutoFollowBetManagement_InvalidRate_Range, 1);
+            autoFollowBet.Tables.errorMessage.removeClass("display-none").find("div:first").width(450);
+            rowInfo.find('.textboxrate').focus();
+            return false;
+        }
+
+        if (parseFloat(rate.toFixed(2)) != rate) {
+            showAlertMessage("errormessage", viewResources.Error_Admin_AutoFollowBetManagement_InvalidRate_DecimalDigit, 1);
+            autoFollowBet.Tables.errorMessage.removeClass("display-none").find("div:first").width(450);
+            rowInfo.find('.textboxrate').focus();
+            return false;
+        }
+
+        autoFollowBet.Tables.errorMessage.empty().addClass("display-none");
+        return true;
+    },
+    renderUpdateFollowInfoResult: function (result) {
+        if (parseInt(result.ErrorCode) != 0) {
+            showAlertMessage("errormessage", result.ErrorMessage, 1);
+            autoFollowBet.Tables.errorMessage.removeClass("display-none").find("div:first").width(450);
+            return;
+        }
+
+        showAlertMessage("errormessage", viewResources.Success_Admin_AutoFollowBetManagement_UpdateFollowInfo, 0);
+        autoFollowBet.Tables.errorMessage.removeClass("display-none").find("div:first").width(450);
+        autoFollowBet.endEditFollowInfo();
+        var t = setTimeout(function () {
+            autoFollowBet.Tables.errorMessage.addClass("display-none").empty();
+        }, 3000);
+    },
+    endEditFollowInfo: function () {
+        var rowId = autoFollowBet.CachedData.updateInfoParams.RowId;
+        var rowInfo = $(".followInfo_" + rowId);
+        rowInfo.find(".editablefield").attr("disabled", "disabled");
+        var iconEdit = rowInfo.find('.editicon');
+        var iconSave = rowInfo.find('.saveicon');
+        var iconUndo = rowInfo.find('.undoicon');
+        iconSave.hide()
+        iconUndo.hide();
+        iconEdit.show();
+
+        var tdLabelRate = rowInfo.find('.td-labelrate');
+        tdLabelRate.html('<div class="col80 c labelrate">' + autoFollowBet.CachedData.updateInfoParams.Rate + '</div>');
+
+        autoFollowBet.CachedData.FollowedCustomerList[rowId].Rate = autoFollowBet.CachedData.updateInfoParams.Rate;
+        autoFollowBet.CachedData.FollowedCustomerList[rowId].LiveStatus = autoFollowBet.CachedData.updateInfoParams.LiveStatus;
+        autoFollowBet.CachedData.FollowedCustomerList[rowId].FollowedHDP = autoFollowBet.CachedData.updateInfoParams.FollowedHDP;
+        autoFollowBet.CachedData.FollowedCustomerList[rowId].Followed1stHDP = autoFollowBet.CachedData.updateInfoParams.Followed1stHDP;
+        autoFollowBet.CachedData.FollowedCustomerList[rowId].FollowedOverUnder = autoFollowBet.CachedData.updateInfoParams.FollowedOverUnder;
+        autoFollowBet.CachedData.FollowedCustomerList[rowId].Followed1stOverUnder = autoFollowBet.CachedData.updateInfoParams.Followed1stOverUnder;
+    },
     addNewFollewCustomer: function () {
         var username = $("#txtUserName").val();
         var rate = $("#txtRate").val();
@@ -359,13 +571,6 @@ var autoFollowBet = {
 
 
     },
-
-    onKeyEnterUdp: function (e, idImgEdit, idImgSave, idImgUndo, username, idlbRate, Rate) {
-        if (e.keyCode == 13) {
-            autoFollowBet.updFollowBetCustomer(e, idImgEdit, idImgSave, idImgUndo, username, idlbRate, Rate);
-        }
-    },
-
     onKeyEnterAdd: function (e) {
         if (e.keyCode == 13) {
             autoFollowBet.addNewFollewCustomer();
@@ -380,6 +585,9 @@ var autoFollowBet = {
         autoFollowBet.Tables.TextboxUsername = $("#textbox-username");
         autoFollowBet.Tables.dropdownSource = $("#dropdown-source");
         autoFollowBet.Tables.dropdownBAEnabled = $("#dlStatus");
+        autoFollowBet.Tables.errorMessage = $("#errormessage");
+        autoFollowBet.Tables.reportGrid = $("#autofollowbet-grid");
+        autoFollowBet.Tables.reportGridBody = $("#autofollowbet-gridbody");
     },
     getFollowType: function () {
         autoFollowBet.blockUI();
@@ -477,10 +685,6 @@ var autoFollowBet = {
             beforeSend: function () {
             },
             success: function (rs) {
-                if (!isKeepingMessage) {
-                    AccReport.popUp.hide();
-                }
-
                 if (successFunction && typeof (successFunction) == 'function') {
                     successFunction.call(reportHandler, rs);
                 }
@@ -496,6 +700,10 @@ var autoFollowBet = {
                 }
             }
         });
+    },
+    onEditFollowInfo: function (event, rowId) {
+        //        var rowInfo = $(".followInfo_" + rowId);
+        //        var rate = rowInfo.find(".textboxrate").val();
     }
 };
 

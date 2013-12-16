@@ -154,13 +154,11 @@
   </Function>
 
   <Function Name="Admin-AutoFollowBet">
-    <Setting Key="Acc_AutoFollowBetDelCustomer" SpName="Acc_AutoFollowBetDelCustomer" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="AutoFollowBetInsBACus" SpName="Acc_AutoFollowBetInsBACustomer" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="Acc_AutoFollowBetInsCustomer" SpName="Acc_AutoFollowBetInsCustomer" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="AutoFollowBetSelBACus" SpName="Acc_AutoFollowBetSelBACustomer" DbName="DBTXN.CustDB.bodbAdminNet"/>
-    <Setting Key="Acc_AutoFollowBetSelCustomer" SpName="Acc_AutoFollowBetSelCustomer" DbName="DBTXN.CustDB.bodbAdminNet"/>
-    <Setting Key="Acc_AutoFollowBetUpdCustomer" SpName="Acc_AutoFollowBetUpdRate" DbName="DBTXN.CustDB.bodbAdminNet"/>    
-  </Function>
+   
+   </Function>
 
   <Function Name="Transfer">
     <Setting Key="Acc_CustomerUpdTransferOption" SpName="Acc_CustomerUpdTransferOption" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>

@@ -9,12 +9,15 @@
 
 namespace Fanex.Tarus.Admin.Business.AutoFollowBet
 {
+    /// <summary>
+    /// Source Type Constants.
+    /// </summary>
     public class SourceTypeConstants
     {
-        public static readonly int All = -1;
+        public const int All = 2;
 
-        public static readonly int Auto = 1;
+        public const int Auto = 1;
 
-        public static readonly int Manual = 0;
+        public const int Manual = 0;
     }
 }
