@@ -10,12 +10,12 @@ namespace Fanex.Tarus.VirtualSport.Business.Customer.DepositCustomer
     using System.Collections.Generic;
     using System.Data;
     using DNAide.Core;
-    using Fanex.Tarus.VirtualSport.Core.Configurations;
-    using Fanex.Tarus.VirtualSport.DataAccess.Customer.DepositCustomer;
-    using Fanex.Tarus.VirtualSport.Entities.Customer.DepositCustomer;
-    using Fanex.Tarus.VirtualSport.Entities;
     using Fanex.Tarus.Infrastructure.Common;
-    using Fanex.Tarus.Infrastructure.Extensions;    
+    using Fanex.Tarus.Infrastructure.Configurations;
+    using Fanex.Tarus.Infrastructure.Extensions;
+    using Fanex.Tarus.VirtualSport.DataAccess.Customer.DepositCustomer;
+    using Fanex.Tarus.VirtualSport.Entities;
+    using Fanex.Tarus.VirtualSport.Entities.Customer.DepositCustomer;    
     
     public class CustomerService : ICustomerService
     {

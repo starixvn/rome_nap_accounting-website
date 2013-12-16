@@ -37,8 +37,7 @@ common.init = function () {
     this.arrSelectCopyToWinplacept_Racing = $("#divRacingContainer").find("select[copyto][winplacept]");
     this.arrSelectCopyToHouseautopt_Racing = $("#divRacingContainer").find("select[copyto][houseautopt]");
     this.arrCheckBoxEnable_Racing = $("#divRacingContainer").find("input[type='checkbox'][copyto]");
-
-
+    
     $("#divSBNGContainer").find("input[type='text']").ForceDecimalOnly().ForceCurrencyOnly();
     $("#divSBNGContainer").find("input[type='text'][soccer][minbet]").keyup(function () {
         if ($("#cbxCopyAllSportsBook").is(":checked")) {
@@ -188,6 +187,10 @@ common.resetValues = function () {
     $("#tbxAgentName").val("");
     $("#tbxUserNameAddNew").val("");
 
+    $("#tbxDummyMasterName").val("");
+    $("#tbxDummyAgentName").val("");
+    $("#tbxDummyMemberName").val("");
+
     $("#divSBNGContainer").find("input[type='text']").val("0");
     $("#divSBNGContainer").find("select").find("option[value='0']").attr("selected", "selected");
 
@@ -238,6 +241,7 @@ common.isNumber = function (n) {
 
 common.hideDivMsg = function () {
     $("#divErr").hide();
+    $("#divSuccess").hide();
 };
 
 common.showErr = function (text) {
@@ -274,9 +278,9 @@ common.isEmpty = function (val) {
 };
 
 common.validateUserName = function (str) {
-    if (str.indexOf("<") >= 0) return false;
-    if (str.indexOf(">") >= 0) return false;
-    return true;
+    return str.indexOf("<") == -1 ||
+           str.indexOf(">") == -1 ||
+           str.indexOf(",") == -1;
 };
 
 common.verifyDataContrain = function () {

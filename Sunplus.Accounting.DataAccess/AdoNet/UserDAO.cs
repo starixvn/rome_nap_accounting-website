@@ -421,7 +421,6 @@ namespace Sunplus.Accounting.DataAccess.AdoNet
             p.Add("balanceupday", balanceUpDay);
             p.Add("movebetday", Sunplus.Accounting.DataAccess.Report.ReportUtils.BalanceUp.MoveBetsDay);
             p.Add("includeaccbal", isInlucdeAccBal);
-            var spElement = GetStoreProcedure(Core.Configurations.StoreProcedureGroup.BetListSection.StoreCollection.BetListStores, "AllStatement_Full");
 
             ObjectDb objectDb = new ObjectDb("AllStatement_Full", 600);
             objectDb.AssignParamValues(p);

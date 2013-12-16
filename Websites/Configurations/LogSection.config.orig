@@ -1,0 +1,224 @@
+﻿<?xml version="1.0"?>
+<LogSection>
+  <LogType>
+    <type id="1" name="setting" isTracking="true"></type>
+    <type id="2" name="status" isTracking="true"></type>
+    <type id="3" name="credit" isTracking="false"></type>
+    <type id="4" name="login" isTracking="false"></type>
+  </LogType>
+  <TrackingTemplate>
+    <tracking level="1" action="*" hasGroup="false" isDefault="true" hiddenDefault="userid,username,gametypeid,signupby,subaccid,v162updatepositiontaking_1101">
+      <filters>
+        <!-- only racing -->
+        <action id="321" prefix="v151_51" regx="(minb|maxb|mpm)"></action>
+        <action id="322" prefix="v151_51" regx="(minb|maxb|mpm)"></action>
+        <action id="323" prefix="v151_51" regx="(minb|maxb|mpm)"></action>
+        <action id="324" prefix="v151_51" regx="(minb|maxb|mpm)"></action>
+        <action id="325" prefix="v152_41" regx="(minb|maxb|mpm)"></action>
+        <action id="326" prefix="v152_41" regx="(minb|maxb|mpm)"></action>
+        <action id="327" prefix="v152_41" regx="(minb|maxb|mpm)"></action>
+        <action id="328" prefix="v152_41" regx="(minb|maxb|mpm)"></action>
+        <action id="329" prefix="v152_51" regx="(minb|maxb|mpm)"></action>
+
+        <action id="330" prefix="v152_51" regx="(minb|maxb|mpm)"></action>
+        <action id="331" prefix="v152_51" regx="(minb|maxb|mpm)"></action>
+        <action id="332" prefix="v152_51" regx="(minb|maxb|mpm)"></action>
+        <action id="333" prefix="v153_51" regx="(minb|maxb|mpm)"></action>
+        <action id="334" prefix="v153_51" regx="(minb|maxb|mpm)"></action>
+        <action id="335" prefix="v153_51" regx="(minb|maxb|mpm)"></action>
+        <action id="336" prefix="v153_51" regx="(minb|maxb|mpm)"></action>
+        <action id="337" prefix="v151_31" regx="(minb|maxb|mpm)"></action>
+        <action id="338" prefix="v151_31" regx="(minb|maxb|mpm)"></action>
+        <action id="339" prefix="v151_31" regx="(minb|maxb|mpm)"></action>
+
+        <action id="340" prefix="v151_31" regx="(minb|maxb|mpm)"></action>
+        <action id="341" prefix="v151_31" regx="(minb|maxb|mpm)"></action>
+        <action id="342" prefix="v151_41" regx="(minb|maxb|mpm)"></action>
+        <action id="343" prefix="v151_41" regx="(minb|maxb|mpm)"></action>
+        <action id="344" prefix="v151_41" regx="(minb|maxb|mpm)"></action>
+
+        <action id="1125" prefix="v151_51" regx="(minb|maxb|mpm)"></action>
+        <action id="1126" prefix="v152_41" regx="(minb|maxb|mpm)"></action>
+        <action id="1127" prefix="v152_51" regx="(minb|maxb|mpm)"></action>
+        <action id="1128" prefix="v153_51" regx="(minb|maxb|mpm)"></action>
+        <action id="1129" prefix="v151_31" regx="(minb|maxb|mpm)"></action>
+        <action id="1130" prefix="v151_41" regx="(minb|maxb|mpm)"></action>
+
+        <action id="2001" prefix="v152_31" regx="(minb|maxb|mpm)"></action>
+        <action id="2002" prefix="v152_41" regx="(minb|maxb|mpm)"></action>
+        <action id="2003" prefix="v151_51" regx="(minb|maxb|mpm)"></action>
+        <action id="2004" prefix="v152_41" regx="(minb|maxb|mpm)"></action>
+        <action id="2005" prefix="v152_51" regx="(minb|maxb|mpm)"></action>
+        <action id="2006" prefix="v153_51" regx="(minb|maxb|mpm)"></action>
+        
+        <!--Live Casino-->
+        <action id="224" prefix="v162_1101" regx="(minb|maxb|mpm)"></action>
+        <action id="225" prefix="v162_1101" regx="(minb|maxb|mpm)"></action>
+        <action id="226" prefix="v162_1101" regx="(minb|maxb|mpm)"></action>
+        <action id="227" prefix="v162_1101" regx="(minb|maxb|mpm)"></action>
+        
+        <action id="424" prefix="v162_1101" regx="(minb|maxb|mpm)"></action>
+        <action id="425" prefix="v162_1101" regx="(minb|maxb|mpm)"></action>
+        <action id="426" prefix="v162_1101" regx="(minb|maxb|mpm)"></action>
+        <action id="427" prefix="v162_1101" regx="(minb|maxb|mpm)"></action>
+        <action id="428" prefix="v162_1101" regx="(minb|maxb|mpm)"></action>
+        <action id="429" prefix="v162_1101" regx="(minb|maxb|mpm)"></action>
+
+        <action id="503" prefix="v162_1101" regx="(minb|maxb|mpm)"></action>
+
+        <action id="1134" prefix="v162_1101" regx="(minb|maxb|mpm)"></action>
+
+        <action id="356" prefix="v162_1101" regx="(minb|maxb|mpm)"></action>
+        <action id="357" prefix="v162_1101" regx="(minb|maxb|mpm)"></action>
+        <action id="358" prefix="v162_1101" regx="(minb|maxb|mpm)"></action>
+        <action id="359" prefix="v162_1101" regx="(minb|maxb|mpm)"></action>
+
+        <action id="360" prefix="v162_1101" regx="(minb|maxb|mpm)"></action>
+        <action id="361" prefix="v162_1101" regx="(minb|maxb|mpm)"></action>
+        <action id="362" prefix="v162_1101" regx="(minb|maxb|mpm)"></action>
+        <action id="363" prefix="v162_1101" regx="(minb|maxb|mpm)"></action>
+        <action id="364" prefix="v162_1101" regx="(minb|maxb|mpm)"></action>
+        <action id="365" prefix="v162_1101" regx="(minb|maxb|mpm)"></action>
+        <action id="366" prefix="v162_1101" regx="(minb|maxb|mpm)"></action>
+
+        <action id="121" prefix="v162_1101" regx="(minb|maxb|mpm)"></action>
+        <action id="122" prefix="v162_1101" regx="(minb|maxb|mpm)"></action>
+        <!--/Live Casino-->
+
+      </filters>
+      <formater>
+        <param name="transferoption"></param>
+        <param name="ip"></param>
+      </formater>
+    </tracking>
+    <tracking level="2" action="*" hasGroup="false" isDefault="false" hiddenDefault="custid,userid,username">
+      <filters>
+        <action id="406"></action>
+        <action id="418"></action>
+        <action id="419"></action>
+        <action id="420"></action>
+        <action id="421"></action>
+      </filters>
+      <formater>
+        <param name="transferoption"></param>
+        <param name="ip"></param>        
+      </formater>
+    </tracking>
+    <tracking level="3" action="*" hasGroup="true" hiddenDefault="custid,userid,username,UMMBv1,UMMBv2,UMMBv3,UMMBv5,UMMBv8,UMMBv10,UMMBv11,UMMBv99,UMMBv99MP,UMMBv161" groupDefault="sportbook">
+      <filters>
+        <!-- collection-->
+        <action id="400"></action>
+        <action id="401"></action>
+        <action id="402"></action>
+        <action id="403"></action>
+        <action id="404"></action>
+        <action id="410"></action>
+        <action id="411"></action>
+        <action id="412"></action>
+        <action id="500"></action>
+        <action id="501"></action>
+        <action id="300"></action>
+        <action id="305"></action>
+        <action id="306"></action>
+        <action id="301"></action>
+        <action id="302"></action>
+        <action id="303"></action>
+        <action id="304"></action>
+        <action id="2000"></action>
+        <action id="407"></action>
+        <action id="412"></action>
+        <action id="413"></action>
+        <action id="307"></action>
+        <action id="313"></action>
+
+        <!--deposit-->
+        <action id="2008"></action>
+        <action id="2009"></action>
+        <action id="2010"></action>
+        <action id="2011"></action>
+        <action id="2012"></action>
+        <action id="2013"></action>
+        <action id="2019"></action>
+        <action id="2036"></action>
+        <action id="2202"></action>
+        <action id="2203"></action>
+        <action id="2204"></action>
+        <action id="2205"></action>
+        <action id="2412"></action>
+        <action id="2413"></action>
+        <action id="2414"></action>
+        <action id="2415"></action>
+        <action id="2601"></action>
+        <action id="2602"></action>
+        <action id="2603"></action>
+        <action id="2604"></action>
+        <action id="2605"></action>
+        <action id="2606"></action>
+        <action id="2607"></action>
+        <action id="2608"></action>
+        <action id="2701"></action>
+        <action id="2702"></action>
+        <action id="2703"></action>
+        <action id="2704"></action>
+        <action id="2705"></action>
+        <action id="2706"></action>
+        <action id="2707"></action>
+        <action id="2709"></action>
+        <!--/deposit-->
+        
+        <!--Virtual Sports - Soccer-->
+        <action id="370" groupName="virtualSport"></action>
+        <action id="371" groupName="virtualSport"></action>
+        <action id="372" groupName="virtualSport"></action>
+        <action id="430" groupName="virtualSport"></action>
+        <action id="431" groupName="virtualSport"></action>
+        <action id="432" groupName="virtualSport"></action>
+        <action id="433" groupName="virtualSport"></action>
+        <action id="434" groupName="virtualSport"></action>
+        <action id="435" groupName="virtualSport"></action>
+        <action id="504"></action>
+        <!--/Virtual Sports - Soccer-->
+      </filters>
+    </tracking>
+  </TrackingTemplate>
+  <Groups>
+    <group name="sportbook">
+      <sports>
+        <add id="1" label="soccer"></add>
+        <add id="2" label="basketball"></add>
+        <add id="3" label="football"></add>
+        <add id="5" label="tennis"></add>
+        <add id="8" label="baseball"></add>
+        <add id="10" label="Golf"></add>
+        <add id="11" label="motorsports"></add>
+        <add id="99" label="othersports"></add>
+        <add id="999" label="mixsportparlay"></add>
+<<<<<<< HEAD
+        <add id="151" label="horse racing"></add>
+        <add id="152" label="greyhounds"></add>
+        <add id="153" label="harness"></add>
+=======
+        <add id="154" label="hrfixedodds"></add>
+>>>>>>> origin/master
+        <add id="161" label="numbergame"></add>
+        <add id="180" label="virtual soccer"></add>
+        <add id="181" label="virtual horse racing"></add>
+        <add id="182" label="virtual greyhounds"></add>
+        <add id="183" label="virtual speedway"></add>
+        <add id="184" label="virtual motor racing"></add>
+        <add id="185" label="virtual cycling"></add>
+        <add id="186" label="virtual tennis"></add>
+      </sports>
+    </group>
+    <group name="virtualSport">
+      <sports>
+        <add id="180" label="Virtual Sports"></add>        
+      </sports>
+    </group>
+  </Groups>
+  <LogFormater>
+    <param name="transferoption" value="1"></param>
+    <param name="ip" value="2"></param>
+    <param name="signupip" value="2"></param>
+  </LogFormater>
+</LogSection>

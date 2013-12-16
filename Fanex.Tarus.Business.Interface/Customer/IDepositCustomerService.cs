@@ -17,8 +17,8 @@ namespace Fanex.Tarus.Business.Interface.Customer
         string GetAgentSetting(int custId);
         string GetMemberSetting(int custId);
 
-        string GetMasterSettingForAddNew(int custId);
-        string GetAgentSettingForAddNew(int custId);
+        string GetMasterSettingForAddNew(int custId, int roleId);
+        string GetAgentSettingForAddNew(int custId, int roleId);
 
         Result UpdateSuperSetting(NewLicenseePostParam newLicenseePostParam);
         Result UpdateMasterSetting(NewLicenseePostParam newLicenseePostParam);

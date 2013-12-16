@@ -107,11 +107,6 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
                 menuService.GetUserMenu();
                 menuService.GetReportMenu("ACC-REPORT");
                 menuService.GetBAMenu();
-                //Log User Info
-                if(username.ToLower().Equals("pgmsteven"))
-                {
-                    LogUserInfo(context, username);
-                }
 				
 				// Progressive Bonus
 				Fanex.CustomerSetting.Module.Core.Web.AppSession.AdminId = custId;
@@ -156,13 +151,13 @@ public class ProcessLogin : IHttpHandler, IRequiresSessionState
         }
     }
     
-    private static void LogUserInfo(HttpContext context, string userName)
-    {
-        var userBrowser = context.Request.Browser.Browser + "\n";
-        userBrowser += context.Request.Browser.Version + "\n";
-        var logContent = new Exception( userName + "\n" + DateTime.Now + "\n" + userBrowser);
-        Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(logContent);
-    }
+    //private static void LogUserInfo(HttpContext context, string userName)
+    //{
+    //    var userBrowser = context.Request.Browser.Browser + "\n";
+    //    userBrowser += context.Request.Browser.Version + "\n";
+    //    var logContent = new Exception( userName + "\n" + DateTime.Now + "\n" + userBrowser);
+    //    Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(logContent);
+    //}
 
     
 
