@@ -181,98 +181,98 @@ namespace Sunplus.Accounting.Business.Customer
 		{
             Hashtable arrcontent = new Hashtable();
             try
-			{
-			
-			string htmlcontent = "";
-			if (string.IsNullOrEmpty(userName))
-			{
-				htmlcontent = AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"), AlertMessage.MsgType.Error);
-			}
-			else
-			{
-				var customerService = new CustomerService();
-				var ds = customerService.GetCustomerInfo(userName, AppSession.SYSTEM);
+            {
 
-				if (ds == null || ds.ResultSet.Tables.Count == 0)
-				{
-					//return AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"), AlertMessage.MsgType.Error);
-					htmlcontent = AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"), AlertMessage.MsgType.Error);
-				}
-				else
-				{
-					//Add CustSearch
+                string htmlcontent = "";
+                if (string.IsNullOrEmpty(userName))
+                {
+                    htmlcontent = AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"), AlertMessage.MsgType.Error);
+                }
+                else
+                {
+                    var customerService = new CustomerService();
+                    var ds = customerService.GetCustomerInfo(userName, AppSession.SYSTEM);
 
-					#region assign data
+                    if (ds == null || ds.ResultSet.Tables.Count == 0)
+                    {
+                        //return AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"), AlertMessage.MsgType.Error);
+                        htmlcontent = AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"), AlertMessage.MsgType.Error);
+                    }
+                    else
+                    {
+                        //Add CustSearch
 
-					if (ds.ResultSet.Tables[0].Rows.Count == 0)
-					{
-						//return AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"), AlertMessage.MsgType.Error);
-						htmlcontent = AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"), AlertMessage.MsgType.Error);
-					}
-					else
-					{
-						DataRow row1 = ds.ResultSet.Tables[0].Rows[0];
+                        #region assign data
 
-						DataRow row2 = ds.ResultSet.Tables[1].Rows[0];
-						DataRow row3 = null;
-						if (ds.ResultSet.Tables.Count > 2)
-						{
-							row3 = ds.ResultSet.Tables[2].Rows[0];
-						}
-						userName = row1["username"].ToString();
-						AppSession.CustUName = userName;
-						AppSession.MemberID = CastAide.AsInt32(row2["MemberID"]);
-						AppSession.AgentID = CastAide.AsInt32(row2["AgentID"]);
-						AppSession.MasterID = CastAide.AsInt32(row2["MasterID"]);
-						AppSession.SuperID = CastAide.AsInt32(row2["SuperID"]);
-						AppSession.MemberUserName = CastAide.AsString(row2["MemberName"]);
-						AppSession.AgentUserName = CastAide.AsString(row2["AgentName"]);
-						AppSession.MasterUserName = CastAide.AsString(row2["MasterName"]);
-						AppSession.SusperUserName = CastAide.AsString(row2["SuperName"]);
+                        if (ds.ResultSet.Tables[0].Rows.Count == 0)
+                        {
+                            //return AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"), AlertMessage.MsgType.Error);
+                            htmlcontent = AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"), AlertMessage.MsgType.Error);
+                        }
+                        else
+                        {
+                            DataRow row1 = ds.ResultSet.Tables[0].Rows[0];
 
-						string downlinename = "";
-						int custId = Convert.ToInt32(row1["custid"]);
-						int roleId = Convert.ToInt32(row1["roleid"]);
+                            DataRow row2 = ds.ResultSet.Tables[1].Rows[0];
+                            DataRow row3 = null;
+                            if (ds.ResultSet.Tables.Count > 2)
+                            {
+                                row3 = ds.ResultSet.Tables[2].Rows[0];
+                            }
+                            userName = row1["username"].ToString();
+                            AppSession.CustUName = userName;
+                            AppSession.MemberID = CastAide.AsInt32(row2["MemberID"]);
+                            AppSession.AgentID = CastAide.AsInt32(row2["AgentID"]);
+                            AppSession.MasterID = CastAide.AsInt32(row2["MasterID"]);
+                            AppSession.SuperID = CastAide.AsInt32(row2["SuperID"]);
+                            AppSession.MemberUserName = CastAide.AsString(row2["MemberName"]);
+                            AppSession.AgentUserName = CastAide.AsString(row2["AgentName"]);
+                            AppSession.MasterUserName = CastAide.AsString(row2["MasterName"]);
+                            AppSession.SusperUserName = CastAide.AsString(row2["SuperName"]);
 
-						bool isDeposit = WebSettings.IsApplySplitingDepositeCustomer ? DNAide.Core.CastAide.AsBoolean(row1["IsDeposit"]) : false;
+                            string downlinename = "";
+                            int custId = Convert.ToInt32(row1["custid"]);
+                            int roleId = Convert.ToInt32(row1["roleid"]);
 
-						Hashtable jsparam = new Hashtable();
-						jsparam.Add("custid", custId);
-						jsparam.Add("roleid", roleId);
+                            bool isDeposit = WebSettings.IsApplySplitingDepositeCustomer ? DNAide.Core.CastAide.AsBoolean(row1["IsDeposit"]) : false;
 
-						AppSession.CustID = custId;
-						AppSession.CustRoleId = roleId;
-						AppSession.IsSyncCSCurrentCust = CastAide.AsBoolean(row1["synccasino"], false);
-						AppSession.IsSyncBingoCurrentCust = CastAide.AsBoolean(row1["syncbingo"], false);
-						AppSession.IsSyncLCSCurrentCust = WebSettings.EnableLiveCasino ? CastAide.AsBoolean(row1["synclivecasino"], false) : false;
-						AppSession.IsHideVirtualSportsCurrentCust = WebSettings.EnableVirtualSports ? CastAide.AsBoolean(row1["hidevirtualsports"], false) : false;
+                            Hashtable jsparam = new Hashtable();
+                            jsparam.Add("custid", custId);
+                            jsparam.Add("roleid", roleId);
 
-						string firstname = Convert.IsDBNull(row1["firstname"]) ? "" : row1["firstname"].ToString();
-						string lastname = Convert.IsDBNull(row1["lastname"]) ? "" : row1["lastname"].ToString();
-						DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdUserSearch(AppSession.AccId, userName, firstname, lastname);
+                            AppSession.CustID = custId;
+                            AppSession.CustRoleId = roleId;
+                            AppSession.IsSyncCSCurrentCust = CastAide.AsBoolean(row1["synccasino"], false);
+                            AppSession.IsSyncBingoCurrentCust = CastAide.AsBoolean(row1["syncbingo"], false);
+                            AppSession.IsSyncLCSCurrentCust = WebSettings.EnableLiveCasino ? CastAide.AsBoolean(row1["synclivecasino"], false) : false;
+                            AppSession.IsHideVirtualSportsCurrentCust = WebSettings.EnableVirtualSports ? CastAide.AsBoolean(row1["hidevirtualsports"], false) : false;
 
-						string lastLoginDate = Convert.IsDBNull(row1["lastlogged"]) ? "" : Convert.ToDateTime(row1["lastlogged"]).ToShortDateString();
-						string lastLoginTime = Convert.IsDBNull(row1["lastlogged"]) ? "" : " " + Convert.ToDateTime(row1["lastlogged"]).ToShortTimeString();
-						string lastIp = Convert.IsDBNull(row1["lastloginip"]) ? "" : row1["lastloginip"].ToString();
-						string customerSite = (roleId == (int)Globals.AccountType.Member) ? CastAide.AsString(row1["membersite"], "") : CastAide.AsString(row1["site"], "");
-						string createdate = Convert.IsDBNull(row1["createdate"]) ? "" : Convert.ToDateTime(row1["createdate"]).ToShortDateString();
-						string createtime = Convert.IsDBNull(row1["createdate"]) ? "" : Convert.ToDateTime(row1["createdate"]).ToShortTimeString();
+                            string firstname = Convert.IsDBNull(row1["firstname"]) ? "" : row1["firstname"].ToString();
+                            string lastname = Convert.IsDBNull(row1["lastname"]) ? "" : row1["lastname"].ToString();
+                            DataAccess.IBCDLL.Customer.UpdateCustomer.CustomerUpdUserSearch(AppSession.AccId, userName, firstname, lastname);
 
-						string pwdExpiryDate = Convert.IsDBNull(row1["pwdexpiry"]) ? "" : Convert.ToDateTime(row1["pwdexpiry"]).ToShortDateString();
-						string pwdExpiryTime = Convert.IsDBNull(row1["pwdexpiry"]) ? "" : " " + Convert.ToDateTime(row1["pwdexpiry"]).ToShortTimeString();
-						decimal credit = Convert.ToDecimal(row1["credit"]);
-						decimal virtualRate = Convert.ToDecimal(row1["virtualmultiplier"]);
-						decimal actualRate = Convert.ToDecimal(row1["actualrate"]);
-						string currency = row1["currency"].ToString();
-						bool important = Convert.IsDBNull(row1["important"]) ? false : Convert.ToBoolean(row1["important"]);
-						bool suspend = Convert.IsDBNull(row1["suspended"]) ? false : Convert.ToBoolean(row1["suspended"]);
-						bool autosuspend = Convert.IsDBNull(row1["autosuspend"]) ? false : Convert.ToBoolean(row1["autosuspend"]);
-						bool UplineAutoSuspend = CastAide.AsBoolean(row2["uplineautosuspend"]);
+                            string lastLoginDate = Convert.IsDBNull(row1["lastlogged"]) ? "" : Convert.ToDateTime(row1["lastlogged"]).ToShortDateString();
+                            string lastLoginTime = Convert.IsDBNull(row1["lastlogged"]) ? "" : " " + Convert.ToDateTime(row1["lastlogged"]).ToShortTimeString();
+                            string lastIp = Convert.IsDBNull(row1["lastloginip"]) ? "" : row1["lastloginip"].ToString();
+                            string customerSite = (roleId == (int)Globals.AccountType.Member) ? CastAide.AsString(row1["membersite"], "") : CastAide.AsString(row1["site"], "");
+                            string createdate = Convert.IsDBNull(row1["createdate"]) ? "" : Convert.ToDateTime(row1["createdate"]).ToShortDateString();
+                            string createtime = Convert.IsDBNull(row1["createdate"]) ? "" : Convert.ToDateTime(row1["createdate"]).ToShortTimeString();
 
-						bool closed = Convert.IsDBNull(row1["closed"]) ? false : Convert.ToBoolean(row1["closed"]);
-						bool isBA = CastAide.AsInt32(row1["isba"]) == 1 ? true : false;
-						arrcontent.Add("isba", isBA);
-						CustomerDetail _custparent = new CustomerDetail();
+                            string pwdExpiryDate = Convert.IsDBNull(row1["pwdexpiry"]) ? "" : Convert.ToDateTime(row1["pwdexpiry"]).ToShortDateString();
+                            string pwdExpiryTime = Convert.IsDBNull(row1["pwdexpiry"]) ? "" : " " + Convert.ToDateTime(row1["pwdexpiry"]).ToShortTimeString();
+                            decimal credit = Convert.ToDecimal(row1["credit"]);
+                            decimal virtualRate = Convert.ToDecimal(row1["virtualmultiplier"]);
+                            decimal actualRate = Convert.ToDecimal(row1["actualrate"]);
+                            string currency = row1["currency"].ToString();
+                            bool important = Convert.IsDBNull(row1["important"]) ? false : Convert.ToBoolean(row1["important"]);
+                            bool suspend = Convert.IsDBNull(row1["suspended"]) ? false : Convert.ToBoolean(row1["suspended"]);
+                            bool autosuspend = Convert.IsDBNull(row1["autosuspend"]) ? false : Convert.ToBoolean(row1["autosuspend"]);
+                            bool UplineAutoSuspend = CastAide.AsBoolean(row2["uplineautosuspend"]);
+
+                            bool closed = Convert.IsDBNull(row1["closed"]) ? false : Convert.ToBoolean(row1["closed"]);
+                            bool isBA = CastAide.AsInt32(row1["isba"]) == 1 ? true : false;
+                            arrcontent.Add("isba", isBA);
+                            CustomerDetail _custparent = new CustomerDetail();
 
 						int parentId = 0;
 						string lastTxnDate = string.Empty;
@@ -281,58 +281,59 @@ namespace Sunplus.Accounting.Business.Customer
 						string mobile = row1["mobilephone"] + "";
 						string fax = row1["fax"] + "";
 						string nickname = CastAide.AsString(row1["username2"], string.Empty);
+                          
 
-						virtualRate = virtualRate * 100;
-						actualRate = (virtualRate + 100) * actualRate / 100;
-						string vRate = ((virtualRate > 0) ? "+" : string.Empty) + IBCUtils.FormatHandler.FormatNumber4(virtualRate) + " (" + IBCUtils.FormatHandler.FormatNumber4(actualRate) + ")";
-						if (row3 != null && roleId <= 4)
-						{
-							lastTxnDate = Convert.IsDBNull(row3["lastTxn"]) ? "" : Convert.ToDateTime(row3["lastTxn"]).ToShortDateString();
-							lastTxnTime = Convert.IsDBNull(row3["lastTxn"]) ? "" : " " + Convert.ToDateTime(row3["lastTxn"]).ToShortTimeString();
-						}
+                            virtualRate = virtualRate * 100;
+                            actualRate = (virtualRate + 100) * actualRate / 100;
+                            string vRate = ((virtualRate > 0) ? "+" : string.Empty) + IBCUtils.FormatHandler.FormatNumber4(virtualRate) + " (" + IBCUtils.FormatHandler.FormatNumber4(actualRate) + ")";
+                            if (row3 != null && roleId <= 4)
+                            {
+                                lastTxnDate = Convert.IsDBNull(row3["lastTxn"]) ? "" : Convert.ToDateTime(row3["lastTxn"]).ToShortDateString();
+                                lastTxnTime = Convert.IsDBNull(row3["lastTxn"]) ? "" : " " + Convert.ToDateTime(row3["lastTxn"]).ToShortTimeString();
+                            }
 
-						//=============Balance, cash, oustanding
-						decimal outStanding = 0, accOutstanding = 0;
-						decimal cash = 0, totalBal = 0;
-						decimal yesterdayCash = 0, yesterdayBal = 0;
-						decimal betCredit = 0, usedCredit = 0;
+                            //=============Balance, cash, oustanding
+                            decimal outStanding = 0, accOutstanding = 0;
+                            decimal cash = 0, totalBal = 0;
+                            decimal yesterdayCash = 0, yesterdayBal = 0;
+                            decimal betCredit = 0, usedCredit = 0;
 
-						switch (roleId)
-						{
-							case 1: // member
-								parentId = Convert.ToInt32(row2["agentId"]);
-								accOutstanding = Convert.IsDBNull(row3["outstanding"]) ? 0 : Convert.ToDecimal(row3["outstanding"]);
-								cash = Convert.IsDBNull(row3["cash"]) ? 0 : Convert.ToDecimal(row3["cash"]);
-								betCredit = credit + cash - accOutstanding;
-								yesterdayCash = Convert.IsDBNull(row3["Yesterday_Cash"]) ? 0 : Convert.ToDecimal(row3["Yesterday_Cash"]);
-								downlinename = "";
-								break;
+                            switch (roleId)
+                            {
+                                case 1: // member
+                                    parentId = Convert.ToInt32(row2["agentId"]);
+                                    accOutstanding = Convert.IsDBNull(row3["outstanding"]) ? 0 : Convert.ToDecimal(row3["outstanding"]);
+                                    cash = Convert.IsDBNull(row3["cash"]) ? 0 : Convert.ToDecimal(row3["cash"]);
+                                    betCredit = credit + cash - accOutstanding;
+                                    yesterdayCash = Convert.IsDBNull(row3["Yesterday_Cash"]) ? 0 : Convert.ToDecimal(row3["Yesterday_Cash"]);
+                                    downlinename = "";
+                                    break;
 
-							case 2: // agent
-								parentId = Convert.ToInt32(row2["masterid"]);
-								accOutstanding = Convert.IsDBNull(row3["agentPositionTaking"]) ? 0 : Convert.ToDecimal(row3["agentPositionTaking"]);
-								outStanding = Convert.IsDBNull(row3["customerOutstanding"]) ? 0 : Convert.ToDecimal(row3["customerOutstanding"]);
-								cash = Convert.IsDBNull(row3["agentCash"]) ? 0 : Convert.ToDecimal(row3["agentCash"]);
-								totalBal = cash + (Convert.IsDBNull(row3["customerCash"]) ? 0 : Convert.ToDecimal(row3["customerCash"]));
-								yesterdayCash = Convert.IsDBNull(row3["yesterday_agentCash"]) ? 0 : Convert.ToDecimal(row3["yesterday_agentCash"]);
-								yesterdayBal = yesterdayCash + (Convert.IsDBNull(row3["Yesterday_CustomerCash"]) ? 0 : Convert.ToDecimal(row3["Yesterday_CustomerCash"]));
-								usedCredit = IBCUtils.FormatHandler.GetDecimal(row3["agentUsedCredit"]);
-								downlinename = "Member";
-								break;
+                                case 2: // agent
+                                    parentId = Convert.ToInt32(row2["masterid"]);
+                                    accOutstanding = Convert.IsDBNull(row3["agentPositionTaking"]) ? 0 : Convert.ToDecimal(row3["agentPositionTaking"]);
+                                    outStanding = Convert.IsDBNull(row3["customerOutstanding"]) ? 0 : Convert.ToDecimal(row3["customerOutstanding"]);
+                                    cash = Convert.IsDBNull(row3["agentCash"]) ? 0 : Convert.ToDecimal(row3["agentCash"]);
+                                    totalBal = cash + (Convert.IsDBNull(row3["customerCash"]) ? 0 : Convert.ToDecimal(row3["customerCash"]));
+                                    yesterdayCash = Convert.IsDBNull(row3["yesterday_agentCash"]) ? 0 : Convert.ToDecimal(row3["yesterday_agentCash"]);
+                                    yesterdayBal = yesterdayCash + (Convert.IsDBNull(row3["Yesterday_CustomerCash"]) ? 0 : Convert.ToDecimal(row3["Yesterday_CustomerCash"]));
+                                    usedCredit = IBCUtils.FormatHandler.GetDecimal(row3["agentUsedCredit"]);
+                                    downlinename = "Member";
+                                    break;
 
-							case 3: // master
-								parentId = Convert.ToInt32(row2["superId"]);
-								accOutstanding = Convert.IsDBNull(row3["masterPositionTaking"]) ? 0 : Convert.ToDecimal(row3["masterPositionTaking"]);
-								outStanding = Convert.IsDBNull(row3["customerOutstanding"]) ? 0 : Convert.ToDecimal(row3["customerOutstanding"]);
-								cash = Convert.IsDBNull(row3["masterCash"]) ? 0 : Convert.ToDecimal(row3["masterCash"]);
-								totalBal = cash + (Convert.IsDBNull(row3["customerCash"]) ? 0 : Convert.ToDecimal(row3["customerCash"])) +
-									(Convert.IsDBNull(row3["agentCash"]) ? 0 : Convert.ToDecimal(row3["agentCash"]));
-								yesterdayCash = Convert.IsDBNull(row3["yesterday_masterCash"]) ? 0 : Convert.ToDecimal(row3["yesterday_masterCash"]);
-								yesterdayBal = yesterdayCash + (Convert.IsDBNull(row3["yesterday_customerCash"]) ? 0 : Convert.ToDecimal(row3["yesterday_customerCash"])) +
-									(Convert.IsDBNull(row3["yesterday_agentCash"]) ? 0 : Convert.ToDecimal(row3["yesterday_agentCash"]));
-								usedCredit = IBCUtils.FormatHandler.GetDecimal(row3["masterUsedCredit"]);
-								downlinename = "Agent";
-								break;
+                                case 3: // master
+                                    parentId = Convert.ToInt32(row2["superId"]);
+                                    accOutstanding = Convert.IsDBNull(row3["masterPositionTaking"]) ? 0 : Convert.ToDecimal(row3["masterPositionTaking"]);
+                                    outStanding = Convert.IsDBNull(row3["customerOutstanding"]) ? 0 : Convert.ToDecimal(row3["customerOutstanding"]);
+                                    cash = Convert.IsDBNull(row3["masterCash"]) ? 0 : Convert.ToDecimal(row3["masterCash"]);
+                                    totalBal = cash + (Convert.IsDBNull(row3["customerCash"]) ? 0 : Convert.ToDecimal(row3["customerCash"])) +
+                                        (Convert.IsDBNull(row3["agentCash"]) ? 0 : Convert.ToDecimal(row3["agentCash"]));
+                                    yesterdayCash = Convert.IsDBNull(row3["yesterday_masterCash"]) ? 0 : Convert.ToDecimal(row3["yesterday_masterCash"]);
+                                    yesterdayBal = yesterdayCash + (Convert.IsDBNull(row3["yesterday_customerCash"]) ? 0 : Convert.ToDecimal(row3["yesterday_customerCash"])) +
+                                        (Convert.IsDBNull(row3["yesterday_agentCash"]) ? 0 : Convert.ToDecimal(row3["yesterday_agentCash"]));
+                                    usedCredit = IBCUtils.FormatHandler.GetDecimal(row3["masterUsedCredit"]);
+                                    downlinename = "Agent";
+                                    break;
 
 							case 4: // super
 								parentId = 0;
@@ -350,346 +351,346 @@ namespace Sunplus.Accounting.Business.Customer
 								downlinename = "Master";
 								break;
 
-							default:
-								break;
-						}
+                                default:
+                                    break;
+                            }
 
-					#endregion assign data
+                        #endregion assign data
 
-						if (parentId > 0)
-						{
-							_custparent = IBCProvider.IBCCustomer.GetCustomerStatus(parentId);
-						}
+                            if (parentId > 0)
+                            {
+                                _custparent = IBCProvider.IBCCustomer.GetCustomerStatus(parentId);
+                            }
 
-						bool isAllowEditCS = true;
-						bool disabledCSParent = false;
-						if (parentId != 0)
-						{
-							isAllowEditCS = Permissions.IsAllowEditCasino(parentId, _custparent.IsCasinoSync);
-							disabledCSParent = _custparent.IsDisableCasino;
-						}
+                            bool isAllowEditCS = true;
+                            bool disabledCSParent = false;
+                            if (parentId != 0)
+                            {
+                                isAllowEditCS = Permissions.IsAllowEditCasino(parentId, _custparent.IsCasinoSync);
+                                disabledCSParent = _custparent.IsDisableCasino;
+                            }
 
-						bool isAllowEditBI = true;
-						bool disabledBIParent = false;
-						if (parentId != 0)
-						{
-							isAllowEditBI = Permissions.IsAllowEditBingo(parentId, _custparent.IsBingoSync);
-							disabledBIParent = _custparent.IsDisabledBingoGame;
-						}
+                            bool isAllowEditBI = true;
+                            bool disabledBIParent = false;
+                            if (parentId != 0)
+                            {
+                                isAllowEditBI = Permissions.IsAllowEditBingo(parentId, _custparent.IsBingoSync);
+                                disabledBIParent = _custparent.IsDisabledBingoGame;
+                            }
 
-						bool isAllowEditLCS = true;
-						bool isAllowEditVS = true;
-						bool disabledLCSParent = false;
-						if (parentId != 0)
-						{
-							isAllowEditLCS = Permissions.IsAllowEditLiveCasino(parentId, _custparent.IsLiveCasinoSync);
-							isAllowEditVS = Permissions.IsAllowEditVirtualSports(parentId, _custparent.IsHideVirtualSports);
-							disabledLCSParent = _custparent.IsDisableLiveCasino;
-						}
+                            bool isAllowEditLCS = true;
+                            bool isAllowEditVS = true;
+                            bool disabledLCSParent = false;
+                            if (parentId != 0)
+                            {
+                                isAllowEditLCS = Permissions.IsAllowEditLiveCasino(parentId, _custparent.IsLiveCasinoSync);
+                                isAllowEditVS = Permissions.IsAllowEditVirtualSports(parentId, _custparent.IsHideVirtualSports);
+                                disabledLCSParent = _custparent.IsDisableLiveCasino;
+                            }
 
-						var disalbedVSParent = false;
-						if (parentId != 0)
-						{
-							disalbedVSParent = _custparent.IsDisableVirtualSports;
-						}
+                            var disalbedVSParent = false;
+                            if (parentId != 0)
+                            {
+                                disalbedVSParent = _custparent.IsDisableVirtualSports;
+                            }
 
-						string statusClass = " ";
-						string statusTip = "";
-						bool isOpenStatus = true;
-						if (!CastAide.AsBoolean(row1["Enabled"]))
-						{
-							statusClass = "memberDisabled ";
-							statusTip = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledAccount");
-							isOpenStatus = false;
-						}
-						else if (CastAide.AsBoolean(row1["closed"]))
-						{
-							statusClass = "memberClosed ";
-							statusTip = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblClosedAccount");
-							isOpenStatus = false;
-						}
-						else if (CastAide.AsBoolean(row1["suspended"]))
-						{
-							statusClass = "memberSuspended ";
-							statusTip = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblSuspendedAccount");
-							isOpenStatus = false;
-						}
-						else
-						{
-							statusClass = " ";
-						}
+                            string statusClass = " ";
+                            string statusTip = "";
+                            bool isOpenStatus = true;
+                            if (!CastAide.AsBoolean(row1["Enabled"]))
+                            {
+                                statusClass = "memberDisabled ";
+                                statusTip = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledAccount");
+                                isOpenStatus = false;
+                            }
+                            else if (CastAide.AsBoolean(row1["closed"]))
+                            {
+                                statusClass = "memberClosed ";
+                                statusTip = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblClosedAccount");
+                                isOpenStatus = false;
+                            }
+                            else if (CastAide.AsBoolean(row1["suspended"]))
+                            {
+                                statusClass = "memberSuspended ";
+                                statusTip = ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblSuspendedAccount");
+                                isOpenStatus = false;
+                            }
+                            else
+                            {
+                                statusClass = " ";
+                            }
 
-						if (roleId <= UserInfo.ROLE_SUPER)
-						{
-							string name = "";
-							string fullname = firstname + " - " + lastname;
-							//name=fullname.Length < 26 ? fullname : fullname.Substring(0,26) + "...";
-							name = fullname;
-							var tplURL = "CustomerInfo/CustomerInfo.htm";
-							if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL) && roleId == 4)
-							{
-								tplURL = "CustomerInfo/CustomerInfoSuper.htm";
-							}
-							htmlcontent = WebUtils.LoadTemplateBySystem(tplURL, true);
-							//Customer info
-							string shortUserName = userName.Length < 20 ? userName : userName.Substring(0, 20) + "...";
+                            if (roleId <= UserInfo.ROLE_SUPER)
+                            {
+                                string name = "";
+                                string fullname = firstname + " - " + lastname;
+                                //name=fullname.Length < 26 ? fullname : fullname.Substring(0,26) + "...";
+                                name = fullname;
+                                var tplURL = "CustomerInfo/CustomerInfo.htm";
+                                if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL) && roleId == 4)
+                                {
+                                    tplURL = "CustomerInfo/CustomerInfoSuper.htm";
+                                }
+                                htmlcontent = WebUtils.LoadTemplateBySystem(tplURL, true);
+                                //Customer info
+                                string shortUserName = userName.Length < 20 ? userName : userName.Substring(0, 20) + "...";
 
-							if (roleId == 1)
-							{
-								TemplateHandler.Assign(ref htmlcontent, "{memberClass}", "memberClass");
-								TemplateHandler.Assign(ref htmlcontent, "{onclickUName}", "onclick=\"parent.submitSearch('" + userName + "');\" ");
-							}
-							else
-							{
-								TemplateHandler.Assign(ref htmlcontent, "{cursorhand}", "");
-								TemplateHandler.Assign(ref htmlcontent, "{onclickUName}", " ");
-							}
+                                if (roleId == 1)
+                                {
+                                    TemplateHandler.Assign(ref htmlcontent, "{memberClass}", "memberClass");
+                                    TemplateHandler.Assign(ref htmlcontent, "{onclickUName}", "onclick=\"parent.submitSearch('" + userName + "');\" ");
+                                }
+                                else
+                                {
+                                    TemplateHandler.Assign(ref htmlcontent, "{cursorhand}", "");
+                                    TemplateHandler.Assign(ref htmlcontent, "{onclickUName}", " ");
+                                }
 
-							TemplateHandler.Assign(ref htmlcontent, "{statusClass}", statusClass);
-							TemplateHandler.Assign(ref htmlcontent, "{UserName}", shortUserName);
-							TemplateHandler.Assign(ref htmlcontent, "{FullUserName}", userName);
-							TemplateHandler.Assign(ref htmlcontent, "{CustomerName}", name);
-							TemplateHandler.Assign(ref htmlcontent, "{FullCustomerName}", fullname);
-							TemplateHandler.Assign(ref htmlcontent, "{NickName}", nickname);
-							TemplateHandler.Assign(ref htmlcontent, "{CustomerFax}", fax);
-							TemplateHandler.Assign(ref htmlcontent, "{CustomerPhone}", phone);
-							TemplateHandler.Assign(ref htmlcontent, "{CustomerMobile}", mobile);
-							//info for internal agent login
-							string rndStr = Encryption.RandomString(6);
-							string accKey = FormsAuthentication.HashPasswordForStoringInConfigFile(AppSession.AccPwd + rndStr, "MD5");
-							TemplateHandler.Assign(ref htmlcontent, "{ThemePath}", WebSettings.ThemePath);
-							TemplateHandler.Assign(ref htmlcontent, "{RndStr}", rndStr);
-							TemplateHandler.Assign(ref htmlcontent, "{AccKey}", accKey);
-							TemplateHandler.Assign(ref htmlcontent, "{AccId}", AppSession.AccId.ToString());
-							TemplateHandler.Assign(ref htmlcontent, "{InternalAgent}", WebSettings.InternalAgentUrl);
+                                TemplateHandler.Assign(ref htmlcontent, "{statusClass}", statusClass);
+                                TemplateHandler.Assign(ref htmlcontent, "{UserName}", shortUserName);
+                                TemplateHandler.Assign(ref htmlcontent, "{FullUserName}", userName);
+                                TemplateHandler.Assign(ref htmlcontent, "{CustomerName}", name);
+                                TemplateHandler.Assign(ref htmlcontent, "{FullCustomerName}", fullname);
+                                TemplateHandler.Assign(ref htmlcontent, "{NickName}", nickname);
+                                TemplateHandler.Assign(ref htmlcontent, "{CustomerFax}", fax);
+                                TemplateHandler.Assign(ref htmlcontent, "{CustomerPhone}", phone);
+                                TemplateHandler.Assign(ref htmlcontent, "{CustomerMobile}", mobile);
+                                //info for internal agent login
+                                string rndStr = Encryption.RandomString(6);
+                                string accKey = FormsAuthentication.HashPasswordForStoringInConfigFile(AppSession.AccPwd + rndStr, "MD5");
+                                TemplateHandler.Assign(ref htmlcontent, "{ThemePath}", WebSettings.ThemePath);
+                                TemplateHandler.Assign(ref htmlcontent, "{RndStr}", rndStr);
+                                TemplateHandler.Assign(ref htmlcontent, "{AccKey}", accKey);
+                                TemplateHandler.Assign(ref htmlcontent, "{AccId}", AppSession.AccId.ToString());
+                                TemplateHandler.Assign(ref htmlcontent, "{InternalAgent}", WebSettings.InternalAgentUrl);
 
-							//Render Enabled
-							if (isOpenStatus)
-							{
-								TemplateHandler.Assign(ref htmlcontent, "{enabledbg}", string.Empty);
-								TemplateHandler.Assign(ref htmlcontent, "{enabledtooltipover}", string.Empty);
-								TemplateHandler.Assign(ref htmlcontent, "{enabledtooltipout}", string.Empty);
-							}
-							else
-							{
-								//TemplateHandler.Assign(ref htmlcontent, "{enabledbg}", "background-color:yellow;");
-								TemplateHandler.Assign(ref htmlcontent, "{enabledbg}", "");
-								TemplateHandler.Assign(ref htmlcontent, "{enabledtooltipover}", "Tip('" + statusTip + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)");
-								TemplateHandler.Assign(ref htmlcontent, "{enabledtooltipout}", "UnTip()");
-							}
+                                //Render Enabled
+                                if (isOpenStatus)
+                                {
+                                    TemplateHandler.Assign(ref htmlcontent, "{enabledbg}", string.Empty);
+                                    TemplateHandler.Assign(ref htmlcontent, "{enabledtooltipover}", string.Empty);
+                                    TemplateHandler.Assign(ref htmlcontent, "{enabledtooltipout}", string.Empty);
+                                }
+                                else
+                                {
+                                    //TemplateHandler.Assign(ref htmlcontent, "{enabledbg}", "background-color:yellow;");
+                                    TemplateHandler.Assign(ref htmlcontent, "{enabledbg}", "");
+                                    TemplateHandler.Assign(ref htmlcontent, "{enabledtooltipover}", "Tip('" + statusTip + "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)");
+                                    TemplateHandler.Assign(ref htmlcontent, "{enabledtooltipout}", "UnTip()");
+                                }
 
-							GenUplineBox(ref htmlcontent, roleId, row2);
-							bool isInternalUser = false;
-							if (DataUtils.IsExistKey(row1, "IsInternal"))
-								isInternalUser = Convert.IsDBNull(row1["IsInternal"]) ? false : Convert.ToBoolean(row1["IsInternal"]);
-							AppSession.IsInternal = isInternalUser;
-							if (!Permissions.FinancePermission.IsViewFiAcc(isInternalUser))
-							{
-								//return AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"), AlertMessage.MsgType.Error);
-								htmlcontent = AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"), AlertMessage.MsgType.Error);
-							}
-							if (WebSettings.OfferDoubleComm)
-							{
-								var doubleComm = CastAide.AsBoolean(row1["doublecommlosing"]);
-								GenTransLinskBox(ref htmlcontent, custId, roleId, !WebSettings.disabledHR, isInternalUser, userName, isDeposit, doubleComm);
-							}
-							else
-							{
-								GenTransLinskBox(ref htmlcontent, custId, roleId, !WebSettings.disabledHR, isInternalUser, userName, isDeposit, false);
-							}
+                                GenUplineBox(ref htmlcontent, roleId, row2);
+                                bool isInternalUser = false;
+                                if (DataUtils.IsExistKey(row1, "IsInternal"))
+                                    isInternalUser = Convert.IsDBNull(row1["IsInternal"]) ? false : Convert.ToBoolean(row1["IsInternal"]);
+                                AppSession.IsInternal = isInternalUser;
+                                if (!Permissions.FinancePermission.IsViewFiAcc(isInternalUser))
+                                {
+                                    //return AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"), AlertMessage.MsgType.Error);
+                                    htmlcontent = AlertMessage.GetMsg(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "thereisnodata"), AlertMessage.MsgType.Error);
+                                }
+                                if (WebSettings.OfferDoubleComm)
+                                {
+                                    var doubleComm = CastAide.AsBoolean(row1["doublecommlosing"]);
+                                    GenTransLinskBox(ref htmlcontent, custId, roleId, !WebSettings.disabledHR, isInternalUser, userName, isDeposit, doubleComm);
+                                }
+                                else
+                                {
+                                    GenTransLinskBox(ref htmlcontent, custId, roleId, !WebSettings.disabledHR, isInternalUser, userName, isDeposit, false);
+                                }
 
-							GenLoginDetail(ref htmlcontent, custId, roleId, row1, row3, userName);
+                                GenLoginDetail(ref htmlcontent, custId, roleId, row1, row3, userName);
 
-							try
-							{
-								if (roleId > 1)
-								{
-									bool NicknameLoginOnly = Convert.IsDBNull(row1["NicknameLoginOnly"]) ? false : Convert.ToBoolean(row1["NicknameLoginOnly"]);
-									TemplateHandler.Assign(ref htmlcontent, "{loginoptions}", NicknameLoginOnly ? "Nickname Only" : "Username/Nickname");
-								}
-								else
-								{
-									TemplateHandler.RemoveBlock(ref htmlcontent, "loginoption");
-								}
-							}
-							catch (Exception ex) { }
+                                try
+                                {
+                                    if (roleId > 1)
+                                    {
+                                        bool NicknameLoginOnly = Convert.IsDBNull(row1["NicknameLoginOnly"]) ? false : Convert.ToBoolean(row1["NicknameLoginOnly"]);
+                                        TemplateHandler.Assign(ref htmlcontent, "{loginoptions}", NicknameLoginOnly ? "Nickname Only" : "Username/Nickname");
+                                    }
+                                    else
+                                    {
+                                        TemplateHandler.RemoveBlock(ref htmlcontent, "loginoption");
+                                    }
+                                }
+                                catch (Exception ex) { }
 
-							#region BalanceInfo
+                                #region BalanceInfo
 
-							string balanceinfo = WebUtils.LoadTemplateBySystem("CustomerInfo/BalanceInfo.htm");
+                                string balanceinfo = WebUtils.LoadTemplateBySystem("CustomerInfo/BalanceInfo.htm");
 
-							bool isManageCustomerAccess = Permissions.GetHostPermission(Enumerations.Functions.Customer.OtherCust); // 4: id of [Customer] function
-							bool hasTransferPermission = Permissions.GetHostPermission(Enumerations.Functions.Transfer.OtherTrans); // 2: Transfer
-							bool isManageVirtualRateAccess = Permissions.GetHostPermission(Enumerations.Functions.ExRates.VirtualRate); // [VirtualRate]
-							TemplateHandler.Assign(ref balanceinfo, "{colorTotalCash}", ((hasTransferPermission && Functions.Customer.IsApplyCssBalanceInfo) ? " canchange" : string.Empty) + ((cash >= 0) ? " b" : " hilight"));
+                                bool isManageCustomerAccess = Permissions.GetHostPermission(Enumerations.Functions.Customer.OtherCust); // 4: id of [Customer] function
+                                bool hasTransferPermission = Permissions.GetHostPermission(Enumerations.Functions.Transfer.OtherTrans); // 2: Transfer
+                                bool isManageVirtualRateAccess = Permissions.GetHostPermission(Enumerations.Functions.ExRates.VirtualRate); // [VirtualRate]
+                                TemplateHandler.Assign(ref balanceinfo, "{colorTotalCash}", ((hasTransferPermission && Functions.Customer.IsApplyCssBalanceInfo) ? " canchange" : string.Empty) + ((cash >= 0) ? " b" : " hilight"));
 
-							TemplateHandler.Assign(ref balanceinfo, "{colorYesterdayCash}", ((hasTransferPermission && Functions.Customer.IsApplyCssBalanceInfo) ? " canchange" : string.Empty) + ((yesterdayCash >= 0) ? " b" : " hilight"));
-							if (string.IsNullOrEmpty(cash.ToString())) cash = 0;
-							if (string.IsNullOrEmpty(yesterdayCash.ToString())) yesterdayCash = 0;
-							TemplateHandler.Assign(ref balanceinfo, "{TotalCashBal}", IBCUtils.FormatHandler.FormatNumber20(cash));
+                                TemplateHandler.Assign(ref balanceinfo, "{colorYesterdayCash}", ((hasTransferPermission && Functions.Customer.IsApplyCssBalanceInfo) ? " canchange" : string.Empty) + ((yesterdayCash >= 0) ? " b" : " hilight"));
+                                if (string.IsNullOrEmpty(cash.ToString())) cash = 0;
+                                if (string.IsNullOrEmpty(yesterdayCash.ToString())) yesterdayCash = 0;
+                                TemplateHandler.Assign(ref balanceinfo, "{TotalCashBal}", IBCUtils.FormatHandler.FormatNumber20(cash));
 
-							TemplateHandler.Assign(ref balanceinfo, "{TotalCashBalCur}", string.Format("{0:n}", cash));
-							TemplateHandler.Assign(ref balanceinfo, "{CurTotalCashBalCur}", currency + " ");
+                                TemplateHandler.Assign(ref balanceinfo, "{TotalCashBalCur}", string.Format("{0:n}", cash));
+                                TemplateHandler.Assign(ref balanceinfo, "{CurTotalCashBalCur}", currency + " ");
 
-							TemplateHandler.Assign(ref balanceinfo, "{YesterdayCashBal}", IBCUtils.FormatHandler.FormatNumber20(yesterdayCash));
-							TemplateHandler.Assign(ref balanceinfo, "{YesterdayCashBalCur}", string.Format("{0:n}", yesterdayCash));
-							TemplateHandler.Assign(ref balanceinfo, "{CurYesterdayCashBalCur}", currency + " ");
+                                TemplateHandler.Assign(ref balanceinfo, "{YesterdayCashBal}", IBCUtils.FormatHandler.FormatNumber20(yesterdayCash));
+                                TemplateHandler.Assign(ref balanceinfo, "{YesterdayCashBalCur}", string.Format("{0:n}", yesterdayCash));
+                                TemplateHandler.Assign(ref balanceinfo, "{CurYesterdayCashBalCur}", currency + " ");
 
-							TemplateHandler.Assign(ref balanceinfo, "{AccOutstandTxn}", string.Format("{0:n}", currency + " " + IBCUtils.FormatHandler.FormatNumber20(accOutstanding)));
-							//Check Given Credit Permission
-							bool isallowupdategivencredit = Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit);
-							if (isallowupdategivencredit == true)
-							{
-								TemplateHandler.Assign(ref balanceinfo, "{givencreditOnclick}", "return ChangeGivenCredit(true);");
-								TemplateHandler.Assign(ref balanceinfo, "{givencreditClass}", "canchange");
-								TemplateHandler.RemoveBlock(ref balanceinfo, "NotAllowGiven");
-							}
-							else
-							{
-								TemplateHandler.Assign(ref balanceinfo, "{virtualRateClass}", string.Empty);
-								TemplateHandler.RemoveBlock(ref balanceinfo, "AllowGiven");
-							}
+                                TemplateHandler.Assign(ref balanceinfo, "{AccOutstandTxn}", string.Format("{0:n}", currency + " " + IBCUtils.FormatHandler.FormatNumber20(accOutstanding)));
+                                //Check Given Credit Permission
+                                bool isallowupdategivencredit = Permissions.GetHostPermission(Enumerations.Functions.Customer.Credit);
+                                if (isallowupdategivencredit == true)
+                                {
+                                    TemplateHandler.Assign(ref balanceinfo, "{givencreditOnclick}", "return ChangeGivenCredit(true);");
+                                    TemplateHandler.Assign(ref balanceinfo, "{givencreditClass}", "canchange");
+                                    TemplateHandler.RemoveBlock(ref balanceinfo, "NotAllowGiven");
+                                }
+                                else
+                                {
+                                    TemplateHandler.Assign(ref balanceinfo, "{virtualRateClass}", string.Empty);
+                                    TemplateHandler.RemoveBlock(ref balanceinfo, "AllowGiven");
+                                }
 
-							if (isManageVirtualRateAccess)
-							{
-								TemplateHandler.Assign(ref balanceinfo, "{virtualRateOnclick}", "return OpenEditVirtualExRate(" + custId + ",'" + userName + "','" + AccCommon.GetRoleName(roleId) + "');");
-								TemplateHandler.Assign(ref balanceinfo, "{virtualRateClass}", "canchange");
-							}
-							else
-							{
-								TemplateHandler.Assign(ref balanceinfo, "{virtualRateOnclick}", string.Empty);
-								TemplateHandler.Assign(ref balanceinfo, "{virtualRateClass}", string.Empty);
-							}
-							TemplateHandler.Assign(ref balanceinfo, "{GivenCreditCurrency}", currency + " ");
-							TemplateHandler.Assign(ref balanceinfo, "{GivenCredit}", string.Format("{0:n}", credit));
+                                if (isManageVirtualRateAccess)
+                                {
+                                    TemplateHandler.Assign(ref balanceinfo, "{virtualRateOnclick}", "return OpenEditVirtualExRate(" + custId + ",'" + userName + "','" + AccCommon.GetRoleName(roleId) + "');");
+                                    TemplateHandler.Assign(ref balanceinfo, "{virtualRateClass}", "canchange");
+                                }
+                                else
+                                {
+                                    TemplateHandler.Assign(ref balanceinfo, "{virtualRateOnclick}", string.Empty);
+                                    TemplateHandler.Assign(ref balanceinfo, "{virtualRateClass}", string.Empty);
+                                }
+                                TemplateHandler.Assign(ref balanceinfo, "{GivenCreditCurrency}", currency + " ");
+                                TemplateHandler.Assign(ref balanceinfo, "{GivenCredit}", string.Format("{0:n}", credit));
 
-							TemplateHandler.Assign(ref balanceinfo, "{VirtualRate}", vRate);
+                                TemplateHandler.Assign(ref balanceinfo, "{VirtualRate}", vRate);
 
-							if (roleId > 1)
-							{
-								TemplateHandler.RemoveBlock(ref balanceinfo, "betcredit");
+                                if (roleId > 1)
+                                {
+                                    TemplateHandler.RemoveBlock(ref balanceinfo, "betcredit");
 
-								//TemplateHandler.Assign(ref balanceinfo, "{IsHiddenAgentInfo}", "");
-								TemplateHandler.Assign(ref balanceinfo, "{colorTotalBal}", ((hasTransferPermission && Functions.Customer.IsApplyCssBalanceInfo) ? " canchange" : string.Empty) + ((totalBal >= 0) ? " b" : " hilight"));
-								TemplateHandler.Assign(ref balanceinfo, "{TotalBal}", string.Format("{0:####.##}", totalBal));
-								TemplateHandler.Assign(ref balanceinfo, "{TotalBalCur}", string.Format("{0:n}", IBCUtils.FormatHandler.FormatNumber20(totalBal)));
-								TemplateHandler.Assign(ref balanceinfo, "{CurTotalBalCur}", currency + " ");
+                                    //TemplateHandler.Assign(ref balanceinfo, "{IsHiddenAgentInfo}", "");
+                                    TemplateHandler.Assign(ref balanceinfo, "{colorTotalBal}", ((hasTransferPermission && Functions.Customer.IsApplyCssBalanceInfo) ? " canchange" : string.Empty) + ((totalBal >= 0) ? " b" : " hilight"));
+                                    TemplateHandler.Assign(ref balanceinfo, "{TotalBal}", string.Format("{0:####.##}", totalBal));
+                                    TemplateHandler.Assign(ref balanceinfo, "{TotalBalCur}", string.Format("{0:n}", IBCUtils.FormatHandler.FormatNumber20(totalBal)));
+                                    TemplateHandler.Assign(ref balanceinfo, "{CurTotalBalCur}", currency + " ");
 
-								TemplateHandler.Assign(ref balanceinfo, "{colorYesterdayBal}", ((hasTransferPermission && Functions.Customer.IsApplyCssBalanceInfo) ? " canchange" : string.Empty) + ((yesterdayBal >= 0) ? " b" : " hilight"));
-								TemplateHandler.Assign(ref balanceinfo, "{YesterdayBal}", string.Format("{0:####.##}", yesterdayBal));
-								TemplateHandler.Assign(ref balanceinfo, "{YesterdayBalCur}", string.Format("{0:n}", IBCUtils.FormatHandler.FormatNumber20(yesterdayBal)));
-								TemplateHandler.Assign(ref balanceinfo, "{CurYesterdayBalCur}", currency + " ");
+                                    TemplateHandler.Assign(ref balanceinfo, "{colorYesterdayBal}", ((hasTransferPermission && Functions.Customer.IsApplyCssBalanceInfo) ? " canchange" : string.Empty) + ((yesterdayBal >= 0) ? " b" : " hilight"));
+                                    TemplateHandler.Assign(ref balanceinfo, "{YesterdayBal}", string.Format("{0:####.##}", yesterdayBal));
+                                    TemplateHandler.Assign(ref balanceinfo, "{YesterdayBalCur}", string.Format("{0:n}", IBCUtils.FormatHandler.FormatNumber20(yesterdayBal)));
+                                    TemplateHandler.Assign(ref balanceinfo, "{CurYesterdayBalCur}", currency + " ");
 
-								TemplateHandler.Assign(ref balanceinfo, "{OutstandTxn}", string.Format("{0:n}", currency + " " + IBCUtils.FormatHandler.FormatNumber20(outStanding)));
-								TemplateHandler.Assign(ref balanceinfo, "{UsedCredit}", string.Format("{0:n}", currency + " " + IBCUtils.FormatHandler.FormatNumber20(usedCredit)));
-								TemplateHandler.Assign(ref balanceinfo, "{AgentType}", downlinename);
-								TemplateHandler.Assign(ref balanceinfo, "{hiddenbalance}", "");
-								TemplateHandler.Assign(ref balanceinfo, "{ishiddenmember}", "hidden");
+                                    TemplateHandler.Assign(ref balanceinfo, "{OutstandTxn}", string.Format("{0:n}", currency + " " + IBCUtils.FormatHandler.FormatNumber20(outStanding)));
+                                    TemplateHandler.Assign(ref balanceinfo, "{UsedCredit}", string.Format("{0:n}", currency + " " + IBCUtils.FormatHandler.FormatNumber20(usedCredit)));
+                                    TemplateHandler.Assign(ref balanceinfo, "{AgentType}", downlinename);
+                                    TemplateHandler.Assign(ref balanceinfo, "{hiddenbalance}", "");
+                                    TemplateHandler.Assign(ref balanceinfo, "{ishiddenmember}", "hidden");
 
-								GetDownlineCountingInfo(ref balanceinfo, ds, roleId);
-							}
-							else
-							{
-								TemplateHandler.Assign(ref balanceinfo, "{BetCredit}", currency + " " + Sunplus.Accounting.Core.Helper.Utils.GetDecimalRoundDown(betCredit));
+                                    GetDownlineCountingInfo(ref balanceinfo, ds, roleId);
+                                }
+                                else
+                                {
+                                    TemplateHandler.Assign(ref balanceinfo, "{BetCredit}", currency + " " + Sunplus.Accounting.Core.Helper.Utils.GetDecimalRoundDown(betCredit));
 
-								TemplateHandler.Assign(ref balanceinfo, "{hiddenbalance}", "hidden");
-								TemplateHandler.Assign(ref balanceinfo, "{ishiddenmember}", "");
+                                    TemplateHandler.Assign(ref balanceinfo, "{hiddenbalance}", "hidden");
+                                    TemplateHandler.Assign(ref balanceinfo, "{ishiddenmember}", "");
 
-								TemplateHandler.Assign(ref balanceinfo, "{masterhidden}", "hidden");
-								TemplateHandler.Assign(ref balanceinfo, "{agenthidden}", "hidden");
-								TemplateHandler.Assign(ref balanceinfo, "{memberhidden}", "hidden");
-							}
+                                    TemplateHandler.Assign(ref balanceinfo, "{masterhidden}", "hidden");
+                                    TemplateHandler.Assign(ref balanceinfo, "{agenthidden}", "hidden");
+                                    TemplateHandler.Assign(ref balanceinfo, "{memberhidden}", "hidden");
+                                }
 
-							TemplateHandler.Assign(ref htmlcontent, "{BalanceInfo}", balanceinfo);
+                                TemplateHandler.Assign(ref htmlcontent, "{BalanceInfo}", balanceinfo);
 
-							#endregion BalanceInfo
+                                #endregion BalanceInfo
 
-							//Setting
+                                //Setting
 
-							#region Setting
+                                #region Setting
 
 							var strCloseStatus = "";
 						
 
-                            if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL)
-                                && roleId == 4 &&
-                                !WebSettings.ExternalAdminUsersEditSuperStatus.Contains(AppSession.AccId.ToString())
-                                && closed)
-						{
-								strCloseStatus = "<span class='chkchecked'></span>";
-							}
+                                if (AppSession.CurrentSystemNAME.Equals(Enumerations.AccountingSystem.EXTERNAL)
+                                    && roleId == 4 &&
+                                    !WebSettings.ExternalAdminUsersEditSuperStatus.Contains(AppSession.AccId.ToString())
+                                    && closed)
+                                {
+                                    strCloseStatus = "<span class='chkchecked'></span>";
+                                }
 
-							TemplateHandler.Assign(ref htmlcontent, "{closedCustomer}", strCloseStatus != "" ? strCloseStatus : GetClosedStatus(isManageCustomerAccess, "closed", closed, (roleId > 1), _custparent.IsClosed, isallowupdategivencredit));
+                                TemplateHandler.Assign(ref htmlcontent, "{closedCustomer}", strCloseStatus != "" ? strCloseStatus : GetClosedStatus(isManageCustomerAccess, "closed", closed, (roleId > 1), _custparent.IsClosed, isallowupdategivencredit));
 
-							//Limit per IP
-							if (roleId < 2) //Member
-							{
-								TemplateHandler.Assign(ref htmlcontent, "{LimitPerIP}", "");								
-							}
-							else
-							{
-								int currentLimitPerIP = CastAide.AsInt16(row1["LimitPerIP"]); ;
-								int parentLimiPerIP = 0;
+                                //Limit per IP
+                                if (roleId < 2) //Member
+                                {
+                                    TemplateHandler.Assign(ref htmlcontent, "{LimitPerIP}", "");
+                                }
+                                else
+                                {
+                                    int currentLimitPerIP = CastAide.AsInt16(row1["LimitPerIP"]); ;
+                                    int parentLimiPerIP = 0;
 
-								if (roleId > 1 && roleId < 4)
-								{
-									parentLimiPerIP = _custparent.LimitPerIP;
-								}
-								int maxLimitPerIP = Sunplus.Accounting.Core.Common.Constants.MaxLimitPerIP;
+                                    if (roleId > 1 && roleId < 4)
+                                    {
+                                        parentLimiPerIP = _custparent.LimitPerIP;
+                                    }
+                                    int maxLimitPerIP = Sunplus.Accounting.Core.Common.Constants.MaxLimitPerIP;
 
-								string strLimitPerIP = WebUtils.LoadTemplate("LimitedPerIP.htm");
-								string optionLimitPerIP = "";
-								if (parentLimiPerIP == 0)
-								{
-									for (int i = 0; i <= maxLimitPerIP; i++)
-									{
-										if (i == currentLimitPerIP)
-										{
-											optionLimitPerIP += "<option value='" + i.ToString() + "' selected='true'>" + i.ToString() + "</option>";
-										}
-										else
-										{
-											optionLimitPerIP += "<option value='" + i.ToString() + "' >" + i.ToString() + "</option>";
-										}
-									}
-									TemplateHandler.Assign(ref strLimitPerIP, "{disabledLimit}", "");
-									TemplateHandler.Assign(ref strLimitPerIP, "{LimitPerIPOption}", optionLimitPerIP);
+                                    string strLimitPerIP = WebUtils.LoadTemplate("LimitedPerIP.htm");
+                                    string optionLimitPerIP = "";
+                                    if (parentLimiPerIP == 0)
+                                    {
+                                        for (int i = 0; i <= maxLimitPerIP; i++)
+                                        {
+                                            if (i == currentLimitPerIP)
+                                            {
+                                                optionLimitPerIP += "<option value='" + i.ToString() + "' selected='true'>" + i.ToString() + "</option>";
+                                            }
+                                            else
+                                            {
+                                                optionLimitPerIP += "<option value='" + i.ToString() + "' >" + i.ToString() + "</option>";
+                                            }
+                                        }
+                                        TemplateHandler.Assign(ref strLimitPerIP, "{disabledLimit}", "");
+                                        TemplateHandler.Assign(ref strLimitPerIP, "{LimitPerIPOption}", optionLimitPerIP);
 
-									TemplateHandler.Assign(ref strLimitPerIP, "{lblUpdateDownline}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblApplyDownline"));
-									TemplateHandler.Assign(ref strLimitPerIP, "{disabledDL}", currentLimitPerIP > 0 ? " disabled='true' " : "");
-									if (Permissions.GetHostPermission(Enumerations.Functions.Customer.OtherCust))
-									{
-										TemplateHandler.Assign(ref strLimitPerIP, "{jsonclick}", "showhideLimitPerIP()");
-										TemplateHandler.Assign(ref strLimitPerIP, "{classname}", "canchange");
-									}
-									else
-									{
-										TemplateHandler.Assign(ref strLimitPerIP, "{jsonclick}", "");
-										TemplateHandler.Assign(ref strLimitPerIP, "{classname}", "");
-									}
-									if (roleId < 3)
-									{
-										TemplateHandler.Assign(ref strLimitPerIP, "{ishideapplydownline}", "style='display:none;'");
-									}
-								}
-								else
-								{
-									TemplateHandler.RemoveBlock(ref strLimitPerIP, "IsUpdateDL");
-									TemplateHandler.Assign(ref strLimitPerIP, "{jsonclick}", "");
-									TemplateHandler.Assign(ref strLimitPerIP, "{classname}", "");
-								}
-								TemplateHandler.Assign(ref strLimitPerIP, "{currValue}", currentLimitPerIP);
-								TemplateHandler.Assign(ref htmlcontent, "{LimitPerIP}", strLimitPerIP);
-							}
-							//End limit per IP
+                                        TemplateHandler.Assign(ref strLimitPerIP, "{lblUpdateDownline}", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblApplyDownline"));
+                                        TemplateHandler.Assign(ref strLimitPerIP, "{disabledDL}", currentLimitPerIP > 0 ? " disabled='true' " : "");
+                                        if (Permissions.GetHostPermission(Enumerations.Functions.Customer.OtherCust))
+                                        {
+                                            TemplateHandler.Assign(ref strLimitPerIP, "{jsonclick}", "showhideLimitPerIP()");
+                                            TemplateHandler.Assign(ref strLimitPerIP, "{classname}", "canchange");
+                                        }
+                                        else
+                                        {
+                                            TemplateHandler.Assign(ref strLimitPerIP, "{jsonclick}", "");
+                                            TemplateHandler.Assign(ref strLimitPerIP, "{classname}", "");
+                                        }
+                                        if (roleId < 3)
+                                        {
+                                            TemplateHandler.Assign(ref strLimitPerIP, "{ishideapplydownline}", "style='display:none;'");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        TemplateHandler.RemoveBlock(ref strLimitPerIP, "IsUpdateDL");
+                                        TemplateHandler.Assign(ref strLimitPerIP, "{jsonclick}", "");
+                                        TemplateHandler.Assign(ref strLimitPerIP, "{classname}", "");
+                                    }
+                                    TemplateHandler.Assign(ref strLimitPerIP, "{currValue}", currentLimitPerIP);
+                                    TemplateHandler.Assign(ref htmlcontent, "{LimitPerIP}", strLimitPerIP);
+                                }
+                                //End limit per IP
 
-							//Enable P2P
-							var p2pStatus = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PStatus"];
-							bool visibleP2PStatus = CastAide.AsBoolean(p2pStatus.Value);
-							if (!visibleP2PStatus)
-							{
-								TemplateHandler.RemoveBlock(ref htmlcontent, "p2pstatus");
-							}
+                                //Enable P2P
+                                var p2pStatus = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PStatus"];
+                                bool visibleP2PStatus = CastAide.AsBoolean(p2pStatus.Value);
+                                if (!visibleP2PStatus)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "p2pstatus");
+                                }
 
                             // Louis: Auto suspend status
                             var hasReadPermission_AutoSuspend = Permissions.HasPermission(Enumerations.Functions.Customer.AutoSuspend);
@@ -698,310 +699,310 @@ namespace Sunplus.Accounting.Business.Customer
                                 TemplateHandler.RemoveBlock(ref htmlcontent, "autosuspendstatus");
                             }
 
-							if (Functions.Settings.IsVisibleSpecial)
-							{
-								TemplateHandler.Assign(ref htmlcontent, "{specialCustomer}", StatusSpan(isManageCustomerAccess, "special", important, (roleId > 1)));
-							}
-
-							//HuyNguyen Dangerous
-							if (Functions.Settings.IsVisibleDangerous)
-							{
-								if (roleId > 2)
-								{
-									TemplateHandler.RemoveBlock(ref htmlcontent, "edited-dangerous");
-								}
-								else
-								{
-									TemplateHandler.RemoveBlock(ref htmlcontent, "dangerous");
-									string[] dangeruostype = new string[] { "Original", "ABT", "Other Sports" };
-
-									int dangerLevel = Convert.IsDBNull(row1["danger"]) ? 0 : Convert.ToInt32(row1["danger"]);
-									int danger2Level = Convert.IsDBNull(row1["danger2"]) ? 0 : Convert.ToInt32(row1["danger2"]);
-									int danger3Level = Convert.IsDBNull(row1["danger3"]) ? 0 : Convert.ToInt32(row1["danger3"]);
-
-									int[] currentlevels = new int[] { dangerLevel, danger2Level, danger3Level };
-
-									TemplateHandler.Assign(ref htmlcontent, "{ThemePath}", WebSettings.ThemePath);
-									TemplateHandler.Assign(ref htmlcontent, "{dangerousCustomer}", GetSettingControlDangerous(roleId, isManageCustomerAccess, dangeruostype, currentlevels, isBA));
-								}
-							}
-
-							#region Progressive Bonus
-
-                            bool isAllowProgressiveBonus = isManageCustomerAccess && IsAllowEditProgressiveBonus(parentId, custId);
-							if (!isAllowProgressiveBonus)							
-							{
-								TemplateHandler.RemoveBlock(ref htmlcontent, "ProgressiveBonus");
-							}
-
-							#endregion Progressive Bonus
-
-							#region Abnormal
-
-							if (WebSettings.EnableAbnormal)
-							{
-								if (roleId > 2)
-								{
-									TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Abnormal");
-								}
-								else
-								{
-									TemplateHandler.RemoveBlock(ref htmlcontent, "Abnormal");
-									int currentLevel = Convert.IsDBNull(row1["abnormal"]) ? 0 : Convert.ToInt32(row1["abnormal"]);
-									TemplateHandler.Assign(ref htmlcontent, "{AbnormalCustomer}", GetSettingAbnormal(roleId, isManageCustomerAccess, currentLevel));
-								}
-							}
-							else
-							{
-								TemplateHandler.RemoveBlock(ref htmlcontent, "AbnormalSession");
-							}
-
-                            #endregion Abnormal
-
-							GenSettingControl(ref htmlcontent, row1, row3, roleId, parentId, _custparent,
-											  isManageCustomerAccess, suspend, autosuspend, UplineAutoSuspend, isAllowEditCS,
-											  disabledCSParent, isAllowEditBI, disabledBIParent, isAllowEditLCS,
-											  disabledLCSParent, disalbedVSParent);
-
-							#endregion Setting
-
-							//Menu detail
-
-							#region MenuDetail
-
-							GenMenuMinMaxPT(ref htmlcontent, row2, custId, roleId, currency, userName, (isAllowEditBI && AppSession.IsSyncBingoCurrentCust), isDeposit);
-
-							string infoUrl = "";
-							string detailUrl = "";
-							string downlineListURL = "";
-							string addDownlineURL = "";
-							string addDownlineHtml = "');\"> Add New (New)</a><br /></span><span class=\"{IsHidden1}\"><a class=\"button_left02\" href=\"javascript:parent.gotoURL('centerFr','";
-							string addDownlineURL_New = "";
-							string detailUrlNew = "";
-							string bingoLinkSetting = "";
-							string pokerLinkSetting = "";
-							var liveCasinoSetting = "";
-							string RacingUpdateURL = "";
-							var VirtualSportsSetting = "";
-							switch (roleId)
-							{
-								case 1: // member
-									parentId = Convert.ToInt32(row2["agentId"]);
-									bingoLinkSetting = "Customer/PT/Bingo/MemberUpdate.aspx?custId=" + custId;
-									pokerLinkSetting = "Customer/PT/Poker/MemberUpdate.aspx?custId=" + custId;
-									detailUrl = isDeposit ? "DepositCustomer/EditSettingAgent" : "Customer/v2/EditCustomerNew.aspx?set=1&custId=" + custId + "&agentId=" + row2["agentId"] + "&uname=" + userName + "&m=0";
-									detailUrlNew = isDeposit ? "DepositCustomer/EditSettingAgent" : "EditMember/EditMemberPage?custId=" + custId + "&agentId=" + row2["agentId"] + "&uname=" + userName;
-									infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Super";
-									liveCasinoSetting = string.Format("LiveCasino/PTSetting/EditMember.aspx?custId={0}&uplineId={1}", custId, parentId);
-									VirtualSportsSetting = string.Format("VirtualSportMemberPT/EditMember?custId={0}&uplineId={1}", custId, parentId);
-									TemplateHandler.Assign(ref htmlcontent, "{IsHidden1}", "hidden");
-									TemplateHandler.Assign(ref htmlcontent, "{IsShow1}", "");
-									RacingUpdateURL = string.Format("EditMemberPTRacing/Index?custid={0}&uplineid={1}", custId, parentId);
-
-									break;
-
-								case 2: // agent
-									int _masterID = CastAide.AsInt32(row2["masterid"], -1);
-									RacingUpdateURL = string.Format("EditAgentPTRacing/Index?custid={0}&uplineid={1}", custId, _masterID);
-									bingoLinkSetting = "Customer/PT/Bingo/AgentUpdate.aspx?custId=" + custId;
-									pokerLinkSetting = "Customer/PT/Poker/AgentUpdate.aspx?custId=" + custId;
-									downlineListURL = "Customer/MemberList.aspx?agentId=" + custId;
-									addDownlineURL_New = isDeposit ? "DepositCustomer/AddNewAgent" : "AddNewMember/AddNewMemberPage?agentId=" + custId + "&username=" + userName;
-									addDownlineURL = isDeposit ? "DepositCustomer/AddNewAgent" : "Customer/v2/AddNewMember.aspx?set=1&agentId=" + custId + "&username=" + userName;
-									detailUrl = isDeposit ? "DepositCustomer/EditSettingAgent" : "Customer/v2/EditAgent.aspx?set=1&custId=" + custId + "&masterId=" + _masterID.ToString() + "&uname=" + userName;
-									detailUrlNew = isDeposit ? "DepositCustomer/EditSettingAgent" : "EditAgent/EditAgentPage?" + "custId=" + custId + "&masterId=" + _masterID.ToString() + "&uname=" + userName;
-									infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Agent";
-									liveCasinoSetting = string.Format("LiveCasino/PTSetting/EditAgent.aspx?custId={0}&uplineId={1}", custId, _masterID);
-									VirtualSportsSetting = string.Format("VirtualSportAgentPT/EditAgent?custId={0}&uplineId={1}", custId, _masterID);
-									TemplateHandler.Assign(ref htmlcontent, "{type}", "Agent");
-									if (!CustomerUtils.IsTransferDaily(Convert.ToString(_masterID))) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime");
-									break;
-
-								case 3: // master
-									int _superID = CastAide.AsInt32(row2["superId"], -1);
-									RacingUpdateURL = string.Format("EditMasterPTRacing/Index?custid={0}&uplineid={1}", custId, _superID);
-									bingoLinkSetting = "Customer/PT/Bingo/MasterUpdate.aspx?custId=" + custId;
-									pokerLinkSetting = "Customer/PT/Poker/MasterUpdate.aspx?custId=" + custId;
-									detailUrl = isDeposit ? "DepositCustomer/EditSettingAgent" : "Customer/v2/EditMaster.aspx?set=1&custId=" + custId + "&superId=" + _superID.ToString() + "&uname=" + userName;
-									detailUrlNew = isDeposit ? "DepositCustomer/EditSettingAgent" : "EditMaster/EditMasterPage?custId=" + custId + "&superId=" + _superID.ToString() + "&uname=" + userName;
-									infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Master";
-									addDownlineURL_New = isDeposit ? "DepositCustomer/AddNewAgent" : "AddNewAgent/AddNewAgentPage?masterId=" + custId + "&username=" + userName;
-									addDownlineURL = isDeposit ? "DepositCustomer/AddNewAgent" : "Customer/v2/AddNewAgent.aspx?set=1&masterId=" + custId + "&username=" + userName;
-									downlineListURL = "Customer/AgentList.aspx?masterId=" + custId;
-									liveCasinoSetting = string.Format("LiveCasino/PTSetting/EditMaster.aspx?custId={0}&uplineId={1}", custId, _superID);
-									VirtualSportsSetting = string.Format("VirtualSportMasterPT/EditMaster?custId={0}&uplineId={1}", custId, _superID);
-									TemplateHandler.Assign(ref htmlcontent, "{type}", "Master");
-									break;
-
-                                case 4: // super
-									parentId = 0;
-									RacingUpdateURL = string.Format("EditSuperPTRacing/Index?custid={0}", custId);
-									bingoLinkSetting = "Customer/PT/Bingo/SuperUpdate.aspx?custId=" + custId;
-									pokerLinkSetting = "Customer/PT/Poker/SuperUpdate.aspx?custId=" + custId;
-									addDownlineURL_New = isDeposit ? "DepositCustomer/AddNewAgent" : "AddNewMaster/AddNewMasterPage?superId=" + custId + "&username=" + userName;
-									addDownlineURL = isDeposit ? "DepositCustomer/AddNewAgent" : "Customer/V2/AddNewMaster.aspx?set=1&superId=" + custId + "&username=" + userName;
-									downlineListURL = "Customer/MasterAgentList.aspx?superId=" + custId;
-									detailUrl = isDeposit ? "DepositCustomer/EditSettingSuper" : "Customer/v2/AddNewSuper.aspx?set=1&custId=" + custId + "&uname=" + userName;
-									detailUrlNew = isDeposit ? "DepositCustomer/EditSettingSuper" : "EditSuper/EditSuperPage?custId=" + custId + "&uname=" + userName;
-									infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Super";
-									liveCasinoSetting = string.Format("LiveCasino/PTSetting/EditSuper.aspx?custId={0}&exchangeId={1}", custId, CastAide.AsInt32(row1["exchangeid"]));
-									VirtualSportsSetting = string.Format("VirtualSportSuperPT/EditSuper?custId={0}&uname={1}", custId, userName);
-									TemplateHandler.Assign(ref htmlcontent, "{type}", "Super");
-									if (custId < 100) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime"); // for dummy super
-									break;
-
-								default:
-									break;
-							}
-
-							switch (WebSettings.IsShowCustomerSettingRenovation)
-							{
-								case 1:
-									//run add new old and add new new
-									addDownlineURL = addDownlineURL_New + addDownlineHtml + addDownlineURL;
-									break;
-
-								case 2:
-									//run only add new new
-									addDownlineURL = addDownlineURL_New;
-									break;
-
-								case 3:
-									//run add new new and edit new:
-									addDownlineURL = addDownlineURL_New;
-									detailUrl = detailUrlNew;
-									break;
-
-								default:
-									//run only add new old
-									break;
-							}
-
-							if (isDeposit)
-							{
-								//TemplateHandler.RemoveBlock(ref htmlcontent, "edit-casino");
-								TemplateHandler.RemoveBlock(ref htmlcontent, "edit-finance");
-								TemplateHandler.RemoveBlock(ref htmlcontent, "edit-bingo");
-								TemplateHandler.RemoveBlock(ref htmlcontent, "edit-p2p");
-								/*TemplateHandler.RemoveBlock(ref htmlcontent, "edit-LiveCasino");*/
-								TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime");
-								TemplateHandler.RemoveBlock(ref htmlcontent, "maxexposure");
-								TemplateHandler.RemoveBlock(ref htmlcontent, "horseracing-editlink");
-								TemplateHandler.RemoveBlock(ref htmlcontent, "detail_edit_menu");
-								TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualSport");
-							}
-							TemplateHandler.Assign(ref htmlcontent, "{RacingUpdateURL}", RacingUpdateURL);
-							TemplateHandler.Assign(ref htmlcontent, "{linkSettingInfo}", infoUrl);
-							TemplateHandler.Assign(ref htmlcontent, "{bingoLinkSetting}", bingoLinkSetting);
-							TemplateHandler.Assign(ref htmlcontent, "{pokerLinkSetting}", pokerLinkSetting + "&roleId=" + roleId.ToString());
-							TemplateHandler.Assign(ref htmlcontent, "{livecasinoLinkSetting}", liveCasinoSetting + "&roleId=" + roleId.ToString());
-							TemplateHandler.Assign(ref htmlcontent, "{virtualSportLinkSetting}", VirtualSportsSetting + "&roleId=" + roleId.ToString());
-
-                            string bettingSetting = WebSettings.ExternalBettingLimitConfig;
-                            //AppSession.GroupID
-                            try
-                            {
-                                if (!String.IsNullOrEmpty(bettingSetting) && bettingSetting.Contains("|"))
+                                if (Functions.Settings.IsVisibleSpecial)
                                 {
-                                    var groupId = bettingSetting.Split(new char[] { '|' })[0].Split(new char[] { ',' });
-                                    if (!groupId.Contains(AppSession.GroupID.ToString()) && roleId == 4)
+                                    TemplateHandler.Assign(ref htmlcontent, "{specialCustomer}", StatusSpan(isManageCustomerAccess, "special", important, (roleId > 1)));
+                                }
+
+                                //HuyNguyen Dangerous
+                                if (Functions.Settings.IsVisibleDangerous)
+                                {
+                                    if (roleId > 2)
                                     {
-                                        TemplateHandler.RemoveBlock(ref htmlcontent, "edit-BetSetting");
+                                        TemplateHandler.RemoveBlock(ref htmlcontent, "edited-dangerous");
                                     }
                                     else
                                     {
-                                        TemplateHandler.Assign(ref htmlcontent, "{bettingLimitLinkSetting}", string.Format("customersetting/betsetting/sportsbook/index/{0}/{1}/{2}/{3}", custId, custId, AppSession.AccId.ToString(), AppSession.SYSTEM));
+                                        TemplateHandler.RemoveBlock(ref htmlcontent, "dangerous");
+                                        string[] dangeruostype = new string[] { "Original", "ABT", "Other Sports" };
+
+                                        int dangerLevel = Convert.IsDBNull(row1["danger"]) ? 0 : Convert.ToInt32(row1["danger"]);
+                                        int danger2Level = Convert.IsDBNull(row1["danger2"]) ? 0 : Convert.ToInt32(row1["danger2"]);
+                                        int danger3Level = Convert.IsDBNull(row1["danger3"]) ? 0 : Convert.ToInt32(row1["danger3"]);
+
+                                        int[] currentlevels = new int[] { dangerLevel, danger2Level, danger3Level };
+
+                                        TemplateHandler.Assign(ref htmlcontent, "{ThemePath}", WebSettings.ThemePath);
+                                        TemplateHandler.Assign(ref htmlcontent, "{dangerousCustomer}", GetSettingControlDangerous(roleId, isManageCustomerAccess, dangeruostype, currentlevels, isBA));
+                                    }
+                                }
+
+                                #region Progressive Bonus
+
+                                bool isAllowProgressiveBonus = isManageCustomerAccess && IsAllowEditProgressiveBonus(parentId, custId);
+                                if (!isAllowProgressiveBonus)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "ProgressiveBonus");
+                                }
+
+                                #endregion Progressive Bonus
+
+                                #region Abnormal
+
+                                if (WebSettings.EnableAbnormal)
+                                {
+                                    if (roleId > 2)
+                                    {
+                                        TemplateHandler.RemoveBlock(ref htmlcontent, "edit-Abnormal");
+                                    }
+                                    else
+                                    {
+                                        TemplateHandler.RemoveBlock(ref htmlcontent, "Abnormal");
+                                        int currentLevel = Convert.IsDBNull(row1["abnormal"]) ? 0 : Convert.ToInt32(row1["abnormal"]);
+                                        TemplateHandler.Assign(ref htmlcontent, "{AbnormalCustomer}", GetSettingAbnormal(roleId, isManageCustomerAccess, currentLevel));
                                     }
                                 }
                                 else
                                 {
-                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-BetSetting");
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "AbnormalSession");
                                 }
-                            }
+
+                                #endregion Abnormal
+
+                                GenSettingControl(ref htmlcontent, row1, row3, roleId, parentId, _custparent,
+                                                  isManageCustomerAccess, suspend, autosuspend, UplineAutoSuspend, isAllowEditCS,
+                                                  disabledCSParent, isAllowEditBI, disabledBIParent, isAllowEditLCS,
+                                                  disabledLCSParent, disalbedVSParent);
+
+                                #endregion Setting
+
+                                //Menu detail
+
+                                #region MenuDetail
+
+                                GenMenuMinMaxPT(ref htmlcontent, row2, custId, roleId, currency, userName, (isAllowEditBI && AppSession.IsSyncBingoCurrentCust), isDeposit);
+
+                                string infoUrl = "";
+                                string detailUrl = "";
+                                string downlineListURL = "";
+                                string addDownlineURL = "";
+                                string addDownlineHtml = "');\"> Add New (New)</a><br /></span><span class=\"{IsHidden1}\"><a class=\"button_left02\" href=\"javascript:parent.gotoURL('centerFr','";
+                                string addDownlineURL_New = "";
+                                string detailUrlNew = "";
+                                string bingoLinkSetting = "";
+                                string pokerLinkSetting = "";
+                                var liveCasinoSetting = "";
+                                string RacingUpdateURL = "";
+                                var VirtualSportsSetting = "";
+                                switch (roleId)
+                                {
+                                    case 1: // member
+                                        parentId = Convert.ToInt32(row2["agentId"]);
+                                        bingoLinkSetting = "Customer/PT/Bingo/MemberUpdate.aspx?custId=" + custId;
+                                        pokerLinkSetting = "Customer/PT/Poker/MemberUpdate.aspx?custId=" + custId;
+                                        detailUrl = isDeposit ? "DepositCustomer/EditSettingAgent" : "Customer/v2/EditCustomerNew.aspx?set=1&custId=" + custId + "&agentId=" + row2["agentId"] + "&uname=" + userName + "&m=0";
+                                        detailUrlNew = isDeposit ? "DepositCustomer/EditSettingAgent" : "EditMember/EditMemberPage?custId=" + custId + "&agentId=" + row2["agentId"] + "&uname=" + userName;
+                                        infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Super";
+                                        liveCasinoSetting = string.Format("LiveCasino/PTSetting/EditMember.aspx?custId={0}&uplineId={1}", custId, parentId);
+                                        VirtualSportsSetting = string.Format("VirtualSportMemberPT/EditMember?custId={0}&uplineId={1}", custId, parentId);
+                                        TemplateHandler.Assign(ref htmlcontent, "{IsHidden1}", "hidden");
+                                        TemplateHandler.Assign(ref htmlcontent, "{IsShow1}", "");
+                                        RacingUpdateURL = string.Format("EditMemberPTRacing/Index?custid={0}&uplineid={1}", custId, parentId);
+
+                                        break;
+
+                                    case 2: // agent
+                                        int _masterID = CastAide.AsInt32(row2["masterid"], -1);
+                                        RacingUpdateURL = string.Format("EditAgentPTRacing/Index?custid={0}&uplineid={1}", custId, _masterID);
+                                        bingoLinkSetting = "Customer/PT/Bingo/AgentUpdate.aspx?custId=" + custId;
+                                        pokerLinkSetting = "Customer/PT/Poker/AgentUpdate.aspx?custId=" + custId;
+                                        downlineListURL = "Customer/MemberList.aspx?agentId=" + custId;
+                                        addDownlineURL_New = isDeposit ? "DepositCustomer/AddNewAgent" : "AddNewMember/AddNewMemberPage?agentId=" + custId + "&username=" + userName;
+                                        addDownlineURL = isDeposit ? "DepositCustomer/AddNewAgent" : "Customer/v2/AddNewMember.aspx?set=1&agentId=" + custId + "&username=" + userName;
+                                        detailUrl = isDeposit ? "DepositCustomer/EditSettingAgent" : "Customer/v2/EditAgent.aspx?set=1&custId=" + custId + "&masterId=" + _masterID.ToString() + "&uname=" + userName;
+                                        detailUrlNew = isDeposit ? "DepositCustomer/EditSettingAgent" : "EditAgent/EditAgentPage?" + "custId=" + custId + "&masterId=" + _masterID.ToString() + "&uname=" + userName;
+                                        infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Agent";
+                                        liveCasinoSetting = string.Format("LiveCasino/PTSetting/EditAgent.aspx?custId={0}&uplineId={1}", custId, _masterID);
+                                        VirtualSportsSetting = string.Format("VirtualSportAgentPT/EditAgent?custId={0}&uplineId={1}", custId, _masterID);
+                                        TemplateHandler.Assign(ref htmlcontent, "{type}", "Agent");
+                                        if (!CustomerUtils.IsTransferDaily(Convert.ToString(_masterID))) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime");
+                                        break;
+
+                                    case 3: // master
+                                        int _superID = CastAide.AsInt32(row2["superId"], -1);
+                                        RacingUpdateURL = string.Format("EditMasterPTRacing/Index?custid={0}&uplineid={1}", custId, _superID);
+                                        bingoLinkSetting = "Customer/PT/Bingo/MasterUpdate.aspx?custId=" + custId;
+                                        pokerLinkSetting = "Customer/PT/Poker/MasterUpdate.aspx?custId=" + custId;
+                                        detailUrl = isDeposit ? "DepositCustomer/EditSettingAgent" : "Customer/v2/EditMaster.aspx?set=1&custId=" + custId + "&superId=" + _superID.ToString() + "&uname=" + userName;
+                                        detailUrlNew = isDeposit ? "DepositCustomer/EditSettingAgent" : "EditMaster/EditMasterPage?custId=" + custId + "&superId=" + _superID.ToString() + "&uname=" + userName;
+                                        infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Master";
+                                        addDownlineURL_New = isDeposit ? "DepositCustomer/AddNewAgent" : "AddNewAgent/AddNewAgentPage?masterId=" + custId + "&username=" + userName;
+                                        addDownlineURL = isDeposit ? "DepositCustomer/AddNewAgent" : "Customer/v2/AddNewAgent.aspx?set=1&masterId=" + custId + "&username=" + userName;
+                                        downlineListURL = "Customer/AgentList.aspx?masterId=" + custId;
+                                        liveCasinoSetting = string.Format("LiveCasino/PTSetting/EditMaster.aspx?custId={0}&uplineId={1}", custId, _superID);
+                                        VirtualSportsSetting = string.Format("VirtualSportMasterPT/EditMaster?custId={0}&uplineId={1}", custId, _superID);
+                                        TemplateHandler.Assign(ref htmlcontent, "{type}", "Master");
+                                        break;
+
+                                    case 4: // super
+                                        parentId = 0;
+                                        RacingUpdateURL = string.Format("EditSuperPTRacing/Index?custid={0}", custId);
+                                        bingoLinkSetting = "Customer/PT/Bingo/SuperUpdate.aspx?custId=" + custId;
+                                        pokerLinkSetting = "Customer/PT/Poker/SuperUpdate.aspx?custId=" + custId;
+                                        addDownlineURL_New = isDeposit ? "DepositCustomer/AddNewAgent" : "AddNewMaster/AddNewMasterPage?superId=" + custId + "&username=" + userName;
+                                        addDownlineURL = isDeposit ? "DepositCustomer/AddNewAgent" : "Customer/V2/AddNewMaster.aspx?set=1&superId=" + custId + "&username=" + userName;
+                                        downlineListURL = "Customer/MasterAgentList.aspx?superId=" + custId;
+                                        detailUrl = isDeposit ? "DepositCustomer/EditSettingSuper" : "Customer/v2/AddNewSuper.aspx?set=1&custId=" + custId + "&uname=" + userName;
+                                        detailUrlNew = isDeposit ? "DepositCustomer/EditSettingSuper" : "EditSuper/EditSuperPage?custId=" + custId + "&uname=" + userName;
+                                        infoUrl = "Customer/EditCustomerInfo.aspx?custId=" + custId + "&type=Super";
+                                        liveCasinoSetting = string.Format("LiveCasino/PTSetting/EditSuper.aspx?custId={0}&exchangeId={1}", custId, CastAide.AsInt32(row1["exchangeid"]));
+                                        VirtualSportsSetting = string.Format("VirtualSportSuperPT/EditSuper?custId={0}&uname={1}", custId, userName);
+                                        TemplateHandler.Assign(ref htmlcontent, "{type}", "Super");
+                                        if (custId < 100) TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime"); // for dummy super
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+
+                                switch (WebSettings.IsShowCustomerSettingRenovation)
+                                {
+                                    case 1:
+                                        //run add new old and add new new
+                                        addDownlineURL = addDownlineURL_New + addDownlineHtml + addDownlineURL;
+                                        break;
+
+                                    case 2:
+                                        //run only add new new
+                                        addDownlineURL = addDownlineURL_New;
+                                        break;
+
+                                    case 3:
+                                        //run add new new and edit new:
+                                        addDownlineURL = addDownlineURL_New;
+                                        detailUrl = detailUrlNew;
+                                        break;
+
+                                    default:
+                                        //run only add new old
+                                        break;
+                                }
+
+                                if (isDeposit)
+                                {
+                                    //TemplateHandler.RemoveBlock(ref htmlcontent, "edit-casino");
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-finance");
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-bingo");
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-p2p");
+                                    /*TemplateHandler.RemoveBlock(ref htmlcontent, "edit-LiveCasino");*/
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "editTransferTime");
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "maxexposure");
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "horseracing-editlink");
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "detail_edit_menu");
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualSport");
+                                }
+                                TemplateHandler.Assign(ref htmlcontent, "{RacingUpdateURL}", RacingUpdateURL);
+                                TemplateHandler.Assign(ref htmlcontent, "{linkSettingInfo}", infoUrl);
+                                TemplateHandler.Assign(ref htmlcontent, "{bingoLinkSetting}", bingoLinkSetting);
+                                TemplateHandler.Assign(ref htmlcontent, "{pokerLinkSetting}", pokerLinkSetting + "&roleId=" + roleId.ToString());
+                                TemplateHandler.Assign(ref htmlcontent, "{livecasinoLinkSetting}", liveCasinoSetting + "&roleId=" + roleId.ToString());
+                                TemplateHandler.Assign(ref htmlcontent, "{virtualSportLinkSetting}", VirtualSportsSetting + "&roleId=" + roleId.ToString());
+
+                                string bettingSetting = WebSettings.ExternalBettingLimitConfig;
+                                //AppSession.GroupID
+                                try
+                                {
+                                    if (!String.IsNullOrEmpty(bettingSetting) && bettingSetting.Contains("|"))
+                                    {
+                                        var groupId = bettingSetting.Split(new char[] { '|' })[0].Split(new char[] { ',' });
+                                        if (!groupId.Contains(AppSession.GroupID.ToString()) && roleId == 4)
+                                        {
+                                            TemplateHandler.RemoveBlock(ref htmlcontent, "edit-BetSetting");
+                                        }
+                                        else
+                                        {
+                                            TemplateHandler.Assign(ref htmlcontent, "{bettingLimitLinkSetting}", string.Format("customersetting/betsetting/sportsbook/index/{0}/{1}/{2}/{3}", custId, custId, AppSession.AccId.ToString(), AppSession.SYSTEM));
+                                        }
+                                    }
+                                    else
+                                    {
+                                        TemplateHandler.RemoveBlock(ref htmlcontent, "edit-BetSetting");
+                                    }
+                                }
                             catch
                             {
-                                TemplateHandler.RemoveBlock(ref htmlcontent, "edit-BetSetting");
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-BetSetting");
+                                }
+
+
+
+                                //---- for menu details -----------
+                                AssignEditFinance(ref htmlcontent, roleId);
+                                TemplateHandler.Assign(ref htmlcontent, "{ParentId}", parentId.ToString());
+                                TemplateHandler.Assign(ref htmlcontent, "{RoleId}", roleId.ToString());
+                                TemplateHandler.Assign(ref htmlcontent, "{IsShow1}", "hidden");
+                                TemplateHandler.Assign(ref htmlcontent, "{linkSettingDetail}", detailUrl);
+                                TemplateHandler.Assign(ref htmlcontent, "{linkDownlineList}", downlineListURL);
+                                TemplateHandler.Assign(ref htmlcontent, "{linkAddnewDownline}", addDownlineURL);
+                                string _username = row1["username"].ToString();
+                                TemplateHandler.Assign(ref htmlcontent, "{CustId}", row1["custid"].ToString());
+                                TemplateHandler.Assign(ref htmlcontent, "{Username}", _username);
+                                //Edit Casino
+                                //Qui.Nguyen  -- Casino setting
+
+                                if (!Permissions.IsAllowCasino())
+                                {
+                                    if (WebSettings.disableCS)
+                                        TemplateHandler.RemoveBlock(ref htmlcontent, "edit-casino");
+                                    if ((roleId < (int)Globals.AccountType.Super) && !isAllowEditCS)
+                                        TemplateHandler.RemoveBlock(ref htmlcontent, "edit-casino");
+                                }
+
+                                //Removed check allow Current for HR
+                                if (WebSettings.disabledHR) //|| !AccCommon.IsAllowCurrencyHR(currency))
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "horseracing-editlink");
+                                }
+                                //---------------------------------
+                                if (!BingoSettings.BingoGame.Enabled || !isAllowEditBI)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-bingo");
+                                }
+                                if (!WebSettings.EnableLiveCasino || !isAllowEditLCS)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-LiveCasino");
+                                }
+                                if (!WebSettings.EnableVirtualSports || !isAllowEditVS)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualSport");
+                                }
+
+                                #endregion MenuDetail
+
+                                TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(jsparam));
+
+                                var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
+                                bool visibleP2PSetting = CastAide.AsBoolean(p2pSetting.Value);
+                                if (!visibleP2PSetting)
+                                {
+                                    TemplateHandler.RemoveBlock(ref htmlcontent, "edit-p2p");
+                                }
                             }
+                            else
+                            {
+                                htmlcontent = WebUtils.LoadTemplate("CustomerInfo/CustomerNoInfo.htm");
+                                //Customer info
+                                TemplateHandler.Assign(ref htmlcontent, "{UserName}", userName);
+                                TemplateHandler.Assign(ref htmlcontent, "{CustomerName}", firstname + " - " + lastname);
+                                TemplateHandler.Assign(ref htmlcontent, "{CustomerFax}", fax);
+                                TemplateHandler.Assign(ref htmlcontent, "{CustomerPhone}", phone);
+                                TemplateHandler.Assign(ref htmlcontent, "{CustomerMobile}", mobile);
 
+                                TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(jsparam));
 
+                                //info for internal agent login
+                                //GenOnlineList(ref htmlcontent, custId);
+                            }
+                            if (roleId == 1)
+                            {
+                                TemplateHandler.RemoveBlock(ref htmlcontent, "hideonmember");
+                            }
+                        }
+                    }
+                }
 
-							//---- for menu details -----------
-							AssignEditFinance(ref htmlcontent, roleId);
-							TemplateHandler.Assign(ref htmlcontent, "{ParentId}", parentId.ToString());
-							TemplateHandler.Assign(ref htmlcontent, "{RoleId}", roleId.ToString());
-							TemplateHandler.Assign(ref htmlcontent, "{IsShow1}", "hidden");
-							TemplateHandler.Assign(ref htmlcontent, "{linkSettingDetail}", detailUrl);
-							TemplateHandler.Assign(ref htmlcontent, "{linkDownlineList}", downlineListURL);
-							TemplateHandler.Assign(ref htmlcontent, "{linkAddnewDownline}", addDownlineURL);
-							string _username = row1["username"].ToString();
-							TemplateHandler.Assign(ref htmlcontent, "{CustId}", row1["custid"].ToString());
-							TemplateHandler.Assign(ref htmlcontent, "{Username}", _username);
-							//Edit Casino
-							//Qui.Nguyen  -- Casino setting
-
-							if (!Permissions.IsAllowCasino())
-							{
-								if (WebSettings.disableCS)
-									TemplateHandler.RemoveBlock(ref htmlcontent, "edit-casino");
-								if ((roleId < (int)Globals.AccountType.Super) && !isAllowEditCS)
-									TemplateHandler.RemoveBlock(ref htmlcontent, "edit-casino");
-							}
-
-							//Removed check allow Current for HR
-							if (WebSettings.disabledHR) //|| !AccCommon.IsAllowCurrencyHR(currency))
-							{
-								TemplateHandler.RemoveBlock(ref htmlcontent, "horseracing-editlink");
-							}
-							//---------------------------------
-							if (!BingoSettings.BingoGame.Enabled || !isAllowEditBI)
-							{
-								TemplateHandler.RemoveBlock(ref htmlcontent, "edit-bingo");
-							}
-							if (!WebSettings.EnableLiveCasino || !isAllowEditLCS)
-							{
-								TemplateHandler.RemoveBlock(ref htmlcontent, "edit-LiveCasino");
-							}
-							if (!WebSettings.EnableVirtualSports || !isAllowEditVS)
-							{
-								TemplateHandler.RemoveBlock(ref htmlcontent, "edit-VirtualSport");
-							}
-
-                            #endregion MenuDetail
-
-							TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(jsparam));
-
-							var p2pSetting = PokerSection.Instance[PokerSection.PokerCollections.CustomerSetting]["visibleP2PSetting"];
-							bool visibleP2PSetting = CastAide.AsBoolean(p2pSetting.Value);
-							if (!visibleP2PSetting)
-							{
-								TemplateHandler.RemoveBlock(ref htmlcontent, "edit-p2p");
-							}
-						}
-						else
-						{
-							htmlcontent = WebUtils.LoadTemplate("CustomerInfo/CustomerNoInfo.htm");
-							//Customer info
-							TemplateHandler.Assign(ref htmlcontent, "{UserName}", userName);
-							TemplateHandler.Assign(ref htmlcontent, "{CustomerName}", firstname + " - " + lastname);
-							TemplateHandler.Assign(ref htmlcontent, "{CustomerFax}", fax);
-							TemplateHandler.Assign(ref htmlcontent, "{CustomerPhone}", phone);
-							TemplateHandler.Assign(ref htmlcontent, "{CustomerMobile}", mobile);
-
-							TemplateHandler.Assign(ref htmlcontent, "{jsparams}", AssignJS(jsparam));
-
-							//info for internal agent login
-							//GenOnlineList(ref htmlcontent, custId);
-						}
-						if (roleId == 1)
-						{
-							TemplateHandler.RemoveBlock(ref htmlcontent, "hideonmember");
-						}
-					}
-				}
-			}
-
-			arrcontent.Add("strcontent", htmlcontent);
-            return arrcontent;
+                arrcontent.Add("strcontent", htmlcontent);
+                return arrcontent;
             }
             catch (Exception ex)
             {
@@ -1009,7 +1010,7 @@ namespace Sunplus.Accounting.Business.Customer
                 return arrcontent;
             }
 			
-		}
+        }
 		private string GetSettingAbnormal(int roleId, bool isManageCustomerAccess, int currentLevel)
 		{
 			try
@@ -1209,6 +1210,31 @@ namespace Sunplus.Accounting.Business.Customer
 			}
 
             #endregion DoubleComm
+
+            #region HRFixedOdds
+
+            if (WebSettings.OfferHorseRacingFixedOdds)
+            {
+                bool isEnableHorseRacingFixedOdds = Convert.IsDBNull(row1["DisableHRFixedOdds"]) ?
+                    false :
+                    !Convert.ToBoolean(row1["DisableHRFixedOdds"]);
+                bool disableDownlinesHorseRacingFixedOdds = !Convert.IsDBNull(row1["DisableDownlinesHRFixedOdds"]) ?
+                    Convert.ToBoolean(row1["DisableDownlinesHRFixedOdds"]) :
+                    false;
+
+                sg.Add(GetSettingControlEnableHorseRacingFixedOdds(
+                    roleId,
+                    CustParent.IsEnableHorseRacingFixedOdds,
+                    isManageCustomerAccess,
+                    "enableHorseRacingFixedOdds",
+                    isEnableHorseRacingFixedOdds,
+                    (roleId > 1),
+                    !disableDownlinesHorseRacingFixedOdds,
+                    CastAide.AsBoolean(row1["Enabled"])));
+                TemplateHandler.Assign(ref htmlcontent, "{chkEnableHorseRacingFixedOdds}", isEnableHorseRacingFixedOdds ? 1 : 0);
+            }
+
+            #endregion HRFixedOdds
 
 			TemplateHandler.Assign(ref htmlcontent, "{settingcontrol}", sg.GetHTMLSettingControl());
 		}
@@ -1861,6 +1887,62 @@ namespace Sunplus.Accounting.Business.Customer
 			return new SettingControl(ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblAllowDoubleComm"), currStatus, false, jsonclick, jsonmouseout, jsonmouseover, classname, statusName, roleID, false, "DoubleComm");
 		}
 
+        private SettingControl GetSettingControlEnableHorseRacingFixedOdds(
+            int roleId,
+            bool parentStatus,
+            bool isManageCustomerAccess,
+            string statusName,
+            bool currentStatus,
+            bool hasDownline,
+            bool disableDownLine,
+            bool isEnabled)
+        {
+            string classname = "";
+            string jsonclick = "";
+            string jsonmouseover = "";
+            string jsonmouseout = "";
+            if (isManageCustomerAccess)
+            {
+                if (isEnabled)
+                {
+                    if (4 == roleId || parentStatus)
+                    {
+                        classname = "canchange";
+                        jsonclick = "return ShowDisablePop(this);";
+                    }
+                    else
+                    {
+                        classname = "cannotchange";
+                        jsonmouseout = "UnTip()";
+                        jsonmouseover = "Tip('" +
+                            ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledHorseRacingFixedOddsUpline") +
+                            "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
+                    }
+                }
+                else
+                {
+                    classname = "cannotchange";
+                    jsonmouseout = "UnTip()";
+                    jsonmouseover = "Tip('" +
+                        ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblDisabledAccount") +
+                        "', BALLOON, true, ABOVE, true, OFFSETX, -100, PADDING, 8)";
+                }
+            }
+
+            return new SettingControl(
+                ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblEnableHorseRacingFixedOdds"),
+                currentStatus,
+                false,
+                jsonclick,
+                jsonmouseout,
+                jsonmouseover,
+                classname,
+                statusName,
+                roleId,
+                disableDownLine,
+                "EnableHorseRacingFixedOdds");
+        }
+
 		private SettingControl GetSettingControlEnableAutoMaster(int roleID, bool isManageCustomerAccess, string statusName, bool currStatus, bool isenabled)
 		{
 			if (!Permissions.IsEnabledAutoMaster(true) || roleID != 3)
@@ -1933,8 +2015,16 @@ namespace Sunplus.Accounting.Business.Customer
 			}
 		}
 
-		private SettingControl GetSettingControlLiveCasino(int roleId, bool isManageCustomerAccess, string statusName, bool currStatus,
-			bool hasDownLine, bool syncLiveCasino, bool isAllowEdit, bool isenabled, bool disabledUpline, bool disableDownLine)
+        private SettingControl GetSettingControlLiveCasino(int roleId,
+            bool isManageCustomerAccess,
+            string statusName,
+            bool currStatus,
+            bool hasDownLine,
+            bool syncLiveCasino,
+            bool isAllowEdit,
+            bool isenabled,
+            bool disabledUpline,
+            bool disableDownLine)
 		{
 			if (!WebSettings.EnableLiveCasino || !isAllowEdit || !syncLiveCasino)
 			{
@@ -2313,8 +2403,8 @@ namespace Sunplus.Accounting.Business.Customer
 		public Result UpdateCustomerSite(int custId, string newSite)
 		{
 			Result result;
-			if (!Permissions.GetHostPermission(Enumerations.Functions.Customer.MoveSite))
-				return new Result { ErrorCode = 500, ErrorMessage = ResourceExtension.GetResourceValue(Sunplus.Accounting.Core.Extensions.ResourceExtension.Resources.ErrorMsg, "_500") };
+            if (!Permissions.GetHostPermission(Enumerations.Functions.Customer.MoveSite))
+                return new Result { ErrorCode = 500, ErrorMessage = ResourceExtension.GetResourceValue(Sunplus.Accounting.Core.Extensions.ResourceExtension.Resources.ErrorMsg, "_500") };
 			if (string.IsNullOrEmpty(newSite))
 			{
 				result = new Result { ErrorCode = 1, ErrorMessage = "Site is empty" };
@@ -2441,7 +2531,7 @@ namespace Sunplus.Accounting.Business.Customer
 			{
 				//System.Threading.Thread.Sleep(2000);
 				var csService = new PT.Casino.CasinoManager();
-				//custInfo.SiteName = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(custInfo.IBCCustID);                
+                //custInfo.SiteName = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(custInfo.IBCCustID);                
 
 				csService.AutoInsertCasinoAccount(custInfo, userId, userName, ip);
 			}
@@ -2484,20 +2574,21 @@ namespace Sunplus.Accounting.Business.Customer
 				LogExtensions.ExceptionHandler(ex);
 				return null;
 			}
-		}
+        }
 
-		private static bool IsAllowEditProgressiveBonus(int parentId, int custId)
-		{
-			bool webSetting = ProgressiveSection.Instance.Active;
-			if (!webSetting)
-			{
-				return false;
-			}
-			if (parentId == 0) // Super
-			{
-				return true;
-			}
-            var progressiveStatus = new ProgressiveRepository().GetStatusProgressiveBonus(new GetProductCriteria() {
+        private static bool IsAllowEditProgressiveBonus(int parentId, int custId)
+        {
+            bool webSetting = ProgressiveSection.Instance.Active;
+            if (!webSetting)
+            {
+                return false;
+            }
+            if (parentId == 0) // Super
+            {
+                return true;
+            }
+            var progressiveStatus = new ProgressiveRepository().GetStatusProgressiveBonus(new GetProductCriteria()
+            {
                 CustId = custId
             });
 

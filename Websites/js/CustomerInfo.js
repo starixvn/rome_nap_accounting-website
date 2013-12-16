@@ -1,7 +1,7 @@
-﻿(function($) {
+﻿(function ($) {
     var cache = [];
     // Arguments are image paths relative to the current page.
-    $.preLoadImages = function() {
+    $.preLoadImages = function () {
         var args_len = arguments.length;
         for (var i = args_len; i--; ) {
             var cacheImage = document.createElement('img');
@@ -20,15 +20,15 @@ function ClearUsername() {
 }
 function LoginAgent(agentName) {
     document.AgLoginForm.custName.value = agentName;
-    document.AgLoginForm.submit(); 
+    document.AgLoginForm.submit();
 }
 function ChangeGivenCredit(ischanging) {
     try {
-    
+
         if (typeof ischanging != 'undefined' && ischanging) {
             var spanGC = document.getElementById('spanGivenCredit');
             var txtGC = document.getElementById('txtGivenCredit');
-            txtGC.value = replaceAll(replaceAll(spanGC.innerHTML," ",""), ",", "");
+            txtGC.value = replaceAll(replaceAll(spanGC.innerHTML, " ", ""), ",", "");
             spanGC.style.display = 'none';
             txtGC.style.display = ''
             txtGC.focus();
@@ -49,7 +49,7 @@ function checkKeyPress(e) {
         if (typeof e == 'undefined') e = window.event;
         var key = (typeof e.keyCode == 'undefined') ? e.which : e.keyCode;
         if (key == 27) {
-            
+
             ChangeGivenCredit();
             return false;
         }
@@ -62,7 +62,7 @@ function checkKeyPress(e) {
             var fr = self.frames['frmUpdate'];
             if (typeof fr != 'undefined' && fr) {
                 fr.location.href = 'Handlers/UpdateGivenCredit.ashx?amount=' + givencredit + '&custid=' + GetCustId();
-               
+
                 return true;
             }
         }
@@ -78,7 +78,7 @@ function changeStatus(type, hasDownLine) {
         switch (type) {
             case "suspended":
                 yes = ($('#suspended').attr('class').indexOf("chkuncheck") > -1);
-                if (typeof hasDownLine != 'undefined' && hasDownLine) { 
+                if (typeof hasDownLine != 'undefined' && hasDownLine) {
                     if (yes) {
                         if (!confirm("Are you sure you want to change Suspended status for this customer? \n Warning, all members under this agent can't place bet!"))
                             return;
@@ -101,12 +101,12 @@ function changeStatus(type, hasDownLine) {
                 break;
             case "Outright":
                 yes = ($('#disabledOutright').attr('class').indexOf("chkchecked") > -1);
-                if (typeof hasDownLine !='undefined' && hasDownLine && yes) {
-                    if (!confirm("Are you sure you want to change " + type +" status for this customer? \n Warning, all members under this agent can't place Outright bet!")) 
+                if (typeof hasDownLine != 'undefined' && hasDownLine && yes) {
+                    if (!confirm("Are you sure you want to change " + type + " status for this customer? \n Warning, all members under this agent can't place Outright bet!"))
                         return;
                 }
                 else
-                    if (!confirm("Are you sure you want to change " + type +" status for this customer?")) 
+                    if (!confirm("Are you sure you want to change " + type + " status for this customer?"))
                         return;
                 break;
             case "special":
@@ -121,7 +121,7 @@ function changeStatus(type, hasDownLine) {
             case "autompt":
                 if (!confirm("Are you sure you want to change Auto MPT status for this customer?"))
                     return;
-                yes = ($('#AllowAutoPT').attr('class').indexOf("chkuncheck") > -1);    
+                yes = ($('#AllowAutoPT').attr('class').indexOf("chkuncheck") > -1);
                 //yes = (document.getElementById('AllowAutoPT').innerHTML == "No");
                 break;
             case "closed":
@@ -145,11 +145,11 @@ function changeStatus(type, hasDownLine) {
             case "SelectedBetting":
                 yes = ($('#SelectedBetting').attr('class').indexOf("chkuncheck") > -1);
                 if (!confirm("Are you sure you want to change Selected Betting status for this customer?")) return;
-                if ( yes == false && hasDownLine) {
-                    if (confirm("WARNING!!! \n\n Are you sure you want to update Selected Betting on this customer and all downlines?")) isUpdateDownline=true;
+                if (yes == false && hasDownLine) {
+                    if (confirm("WARNING!!! \n\n Are you sure you want to update Selected Betting on this customer and all downlines?")) isUpdateDownline = true;
                     else
-                    isUpdateDownline=false;
-                    }
+                        isUpdateDownline = false;
+                }
                 break;
             case "AutoSuspend":
                 //yes = (document.getElementById('AutoSuspend').innerHTML == "No");
@@ -166,7 +166,7 @@ function changeStatus(type, hasDownLine) {
             case "Internal":
                 if (!confirm("Are you sure you want to change " + type + " status for this customer?")) return;
                 yes = ($('#internalUser').attr('class').indexOf("chkuncheck") > -1);
-                break;           
+                break;
             default: return;
         }
         var _URL = 'Handlers/UpdateCustomerStatus.ashx?isupddownline=' + isUpdateDownline + '&type=' + type + '&status=';
@@ -178,10 +178,10 @@ function changeStatus(type, hasDownLine) {
     catch (ex) {
         alert(ex);
     }
-} 
+}
 function updateLimitPerIP(limitperid, isUpdateDownline) {
     var _URL = 'Handlers/UpdateCustomerStatus.ashx?isupddownline=' + isUpdateDownline + '&type=limitperip&status=true';
-    _URL +="&limitperid="+ limitperid;
+    _URL += "&limitperid=" + limitperid;
     _URL += "&custid=" + GetCustId();
     var fr = self.frames['frmUpdate'];
     if (typeof fr != 'undefined' && fr) fr.location.href = _URL;
@@ -210,7 +210,7 @@ function updateCloseStatus(type, hasDownLine) {
 }
 //showPopup(title, url, left, top, width, height, isreload, duration, fnRecall)
 function openInfoPanel(url) {
-    showPopup("Edit Customer", url, "", "", 600, 360, true, 2000,null);
+    showPopup("Edit Customer", url, "", "", 600, 360, true, 2000, null);
 }
 function openMinMaxPtPanel(url) {
     if (url == "") return;
@@ -230,7 +230,7 @@ function ChangeDangerousLevel(typename, level, name, color) {
     if (isDigitOnly(level) == false) {
         return false;
     }
-    
+
     if (parseInt(level) < 0 || parseInt(level) > 10) {
         return false;
     }
@@ -265,104 +265,104 @@ function ChangeAbnormalLevel(level) {
         return false;
     }
     if ($('#box_02_headertext').parent().is('.memberDisabled')) {
-         alert("This account was disabled");
-         $("#" + currlevelbox).css('display', 'none');
-         $('#AbnormalAgentoverlay').css('display', 'none');
+        alert("This account was disabled");
+        $("#" + currlevelbox).css('display', 'none');
+        $('#AbnormalAgentoverlay').css('display', 'none');
     }
-    else{
-    var curLevel = document.getElementById('currentLevel').value;
-    //alert(curLevel + '&' + level);
-    if (curLevel == level || !confirm("Are you sure you want to change Abnormal level to '" + level + "' for this customer?")) {
+    else {
+        var curLevel = document.getElementById('currentLevel').value;
+        //alert(curLevel + '&' + level);
+        if (curLevel == level || !confirm("Are you sure you want to change Abnormal level to '" + level + "' for this customer?")) {
+            if (currlevelbox != "") {
+                $("#" + currlevelbox).css('display', 'none');
+            }
+            return;
+        }
         if (currlevelbox != "") {
             $("#" + currlevelbox).css('display', 'none');
         }
-        return;
-    }
-    if (currlevelbox != "") {
-        $("#" + currlevelbox).css('display', 'none');
-    }
-    if (PTBlockUI) PTBlockUI();
-    var custId = GetCustId();
-    var levelName = '';
-    if (level == 0)
-        levelName = "None";
-    else
-        levelName = level;
-    var param = { "custId": custId, "updateDownline": 0, "abnormalLevel": level };
-    $.ajax({
-        type: "POST",
-        url: "AbnormalBet/UpdateAbnormalCustomer",
-        data: $.toJSON(param),
-        contentType: "application/json; charset=utf-8",
-        success: function (rs) {
-            if (rs.ErrorCode == 0 && rs.ErrorMessage == "") {
-                document.getElementById('currentLevel').value = level;
-                document.getElementById('spanAbnormal').innerHTML = levelName;
-                switch (level) {
-                    case "0":
-                        {
-                            document.getElementById('tdvalue').style.backgroundColor = 'White';
-                            break;
-                        }
-                    case "1":
-                        {
-                            document.getElementById('tdvalue').style.backgroundColor = 'Pink';
-                            break;
-                        }
-                    case "2":
-                        {
-                            document.getElementById('tdvalue').style.backgroundColor = 'Yellow';
-                            break;
-                        }
-                    case "3":
-                        {
-                            document.getElementById('tdvalue').style.backgroundColor = "orange";
-                            break;
-                        }
-                    case "4":
-                        {
-                            document.getElementById('tdvalue').style.backgroundColor = "green";
-                            break;
-                        }
-                    case "5":
-                        {
-                            document.getElementById('tdvalue').style.backgroundColor = "Red";
-                            break;
-                        }
-                    case "6":
-                        {
-                            document.getElementById('tdvalue').style.backgroundColor = "Purple";
-                            break;
-                        }
-                    case "7":
-                        {
-                            document.getElementById('tdvalue').style.backgroundColor = "Brown";
-                            break;
-                        }
-                    case "8":
-                        {
-                            document.getElementById('tdvalue').style.backgroundColor = "Gray";
-                            break;
-                        }
-                    case "9":
-                        {
-                            document.getElementById('tdvalue').style.backgroundColor = "Lime";
-                            break;
-                        }
-                    case "10":
-                        {
-                            document.getElementById('tdvalue').style.backgroundColor = "Aqua";
-                            break;
-                        }
+        if (PTBlockUI) PTBlockUI();
+        var custId = GetCustId();
+        var levelName = '';
+        if (level == 0)
+            levelName = "None";
+        else
+            levelName = level;
+        var param = { "custId": custId, "updateDownline": 0, "abnormalLevel": level };
+        $.ajax({
+            type: "POST",
+            url: "AbnormalBet/UpdateAbnormalCustomer",
+            data: $.toJSON(param),
+            contentType: "application/json; charset=utf-8",
+            success: function (rs) {
+                if (rs.ErrorCode == 0 && rs.ErrorMessage == "") {
+                    document.getElementById('currentLevel').value = level;
+                    document.getElementById('spanAbnormal').innerHTML = levelName;
+                    switch (level) {
+                        case "0":
+                            {
+                                document.getElementById('tdvalue').style.backgroundColor = 'White';
+                                break;
+                            }
+                        case "1":
+                            {
+                                document.getElementById('tdvalue').style.backgroundColor = 'Pink';
+                                break;
+                            }
+                        case "2":
+                            {
+                                document.getElementById('tdvalue').style.backgroundColor = 'Yellow';
+                                break;
+                            }
+                        case "3":
+                            {
+                                document.getElementById('tdvalue').style.backgroundColor = "orange";
+                                break;
+                            }
+                        case "4":
+                            {
+                                document.getElementById('tdvalue').style.backgroundColor = "green";
+                                break;
+                            }
+                        case "5":
+                            {
+                                document.getElementById('tdvalue').style.backgroundColor = "Red";
+                                break;
+                            }
+                        case "6":
+                            {
+                                document.getElementById('tdvalue').style.backgroundColor = "Purple";
+                                break;
+                            }
+                        case "7":
+                            {
+                                document.getElementById('tdvalue').style.backgroundColor = "Brown";
+                                break;
+                            }
+                        case "8":
+                            {
+                                document.getElementById('tdvalue').style.backgroundColor = "Gray";
+                                break;
+                            }
+                        case "9":
+                            {
+                                document.getElementById('tdvalue').style.backgroundColor = "Lime";
+                                break;
+                            }
+                        case "10":
+                            {
+                                document.getElementById('tdvalue').style.backgroundColor = "Aqua";
+                                break;
+                            }
+                    }
                 }
-            }
-           
 
-        }
+
+            }
             , error: function (e) {
                 if (PTUnBlockUI) PTUnBlockUI();
             }
-    });
+        });
     }
     if (PTUnBlockUI) PTUnBlockUI();
 }
@@ -376,11 +376,11 @@ function replaceAll(text, strA, strB) {
 
 /* New version */
 // function change dangerous for agent
-function ChangeDangerousLevelAgent(typename,type, level) {
+function ChangeDangerousLevelAgent(typename, type, level) {
     if (isDigitOnly(level) == false) {
         return false;
     }
-    
+
     if (parseInt(level) < 0 || parseInt(level) > 10) {
         return false;
     }
@@ -402,7 +402,7 @@ function ChangeDangerousLevelAgent(typename,type, level) {
             overlay("dangerousAgentoverlay");
         }
     }
-    
+
 }
 
 
@@ -437,7 +437,7 @@ function ChangeAbnormalLevelAgent(level) {
 function left_Tab1_Click(item) {
     $("#left_tab1 .current").removeClass("current");
     $("#" + item.id).addClass("current");
-    $('#box_04_contents').each(function() {
+    $('#box_04_contents').each(function () {
         $(this).children().css("display", "none");
     });
 
@@ -448,10 +448,10 @@ function left_Tab1_Click(item) {
     }
     else {
         $("#box_04_content_2").css("display", "block");
-        try{
+        try {
             $('#ctrDownlines').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
         }
-        catch (error){}
+        catch (error) { }
         if (totalPage > 1) {
             $(".pagerbox").css("display", "block");
         }
@@ -461,28 +461,27 @@ function left_Tab1_Click(item) {
 function left_Tab2_Click(item) {
     $("#left_tab2 .current").removeClass("current");
     $("#" + item.id).addClass("current");
-   
-    for (var i=1;i<=4;i++)
-    {
-         $("#box_05_content_" + i).addClass("hidden");
+
+    for (var i = 1; i <= 4; i++) {
+        $("#box_05_content_" + i).addClass("hidden");
     }
-   
+
     if (item.id.indexOf("_1") >= 0) {
         $("#box_05_content_1").removeClass("hidden");
-     
-        
+
+
     }
     else if (item.id.indexOf("_2") >= 0) {
         $("#box_05_content_2").removeClass("hidden");
-     
+
     }
     else if (item.id.indexOf("_3") >= 0) {
         $("#box_05_content_3").removeClass("hidden");
-     
+
     }
     else {
         $("#box_05_content_4").removeClass("hidden");
-      
+
         $('#pane21').jScrollPane({ showArrows: true, scrollbarWidth: 15, arrowSize: 16 });
     }
 }
@@ -491,7 +490,7 @@ function detail_tab_Click(item) {
     $("#detail_tab .left_tab_on").removeClass("left_tab_on");
     $("#" + item.id).addClass("left_tab_on");
 
-    $('#detail_tab_contents').each(function() {
+    $('#detail_tab_contents').each(function () {
         $(this).children('div').css("display", "none");
     });
 
@@ -510,15 +509,15 @@ function detail_tabnew_Click(item) {
     $("#de_left .current").removeClass("current");
     $("#" + item.id).addClass("current");
 
-    $('#detail_tab_contents').each(function() {
+    $('#detail_tab_contents').each(function () {
         $(this).children('div').addClass("hidden");
     });
 
     if (item.id.indexOf("_1") >= 0) {
-        $("#detail_tab_content_1").removeClass("hidden");//.css("display", "block");
+        $("#detail_tab_content_1").removeClass("hidden"); //.css("display", "block");
     }
     else if (item.id.indexOf("_2") >= 0) {
-    $("#detail_tab_content_2").removeClass("hidden"); ;
+        $("#detail_tab_content_2").removeClass("hidden"); ;
     }
     else {
         $("#detail_tab_content_3").removeClass("hidden"); ;
@@ -529,7 +528,7 @@ function menudetailclick(item) {
     $("#de_left .current").removeClass("current");
     $("#" + item.id).addClass("current");
 }
-    
+
 function StatementClick() {
     parent.ParentStatementClick();
 }
@@ -537,7 +536,7 @@ function StatementClick() {
 //document.myFunc = function() { alert('!') } //is called from parent
 
 function DoTransfer(span, value, isYesterday) {
-    if (span.className.indexOf('canchange')==-1) return;
+    if (span.className.indexOf('canchange') == -1) return;
     //parent.BlockUI();
     var yesterdayTransfer = (isYesterday) ? '&isYesterday=1' : '';
     var url = 'Transfer.aspx?amount=' + value + yesterdayTransfer;
@@ -569,7 +568,7 @@ function collapseInfo() {
 }
 
 function changeDisableDangerAgent(type, level) {
-    if ($('#disabledDangerchk'+ type + "_" + level).attr('checked')) {
+    if ($('#disabledDangerchk' + type + "_" + level).attr('checked')) {
 
         $('#disabledangerouschkDL' + type + "_" + level).attr('disabled', false);
         $('#UpdateDangerous' + type + "_" + level).attr("disabled", false);
@@ -581,13 +580,13 @@ function changeDisableDangerAgent(type, level) {
 }
 
 function changeDisableAbnormalAgent(level) {
-    if ($('#disabledAbnormalchk'+ level).attr('checked')) {
+    if ($('#disabledAbnormalchk' + level).attr('checked')) {
 
-        $('#disableAbnormalchkDL'+ level).attr('disabled', false);
-        $('#UpdateAbnormal'+ level).attr("disabled", false);
+        $('#disableAbnormalchkDL' + level).attr('disabled', false);
+        $('#UpdateAbnormal' + level).attr("disabled", false);
     }
     else {
-        $('#disableAbnormalchkDL'+ level).attr('disabled', true);
+        $('#disableAbnormalchkDL' + level).attr('disabled', true);
         $('#UpdateAbnormal' + level).attr("disabled", true);
     }
 }
@@ -691,8 +690,8 @@ function UpdateDangerousCustomer(typename, type, level) {
                                 }
                         }
                     }
-                   
-                 if (rs && rs.ErrorCode == 0 && rs.ErrorMessage == "") {
+
+                    if (rs && rs.ErrorCode == 0 && rs.ErrorMessage == "") {
                         switch (typename) {
                             case "Original":
                                 {
@@ -883,7 +882,7 @@ function updateDoubleCommLosing(hasDownLine) {
     var param = {
         custId: GetCustId(),
         isDoubleComm: !yes
-        };
+    };
     $.ajax({
         type: "POST",
         url: "CustomerSetting/UpdateDoubleComm",

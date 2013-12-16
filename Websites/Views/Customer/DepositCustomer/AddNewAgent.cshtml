@@ -222,8 +222,10 @@ var arrRacing = [];
 </script>
 <script type="text/javascript">
     var dataJsonStr = '@Model.DataJson';
-    dataJsonStr = dataJsonStr.replace(/&quot;/g, '"');
+    dataJsonStr = dataJsonStr.replace(/&quot;&quot;/g, '"');
     var dataJson = jQuery.parseJSON(dataJsonStr);
+    dataJson.VirtualSportsSettingInfo = dataJson.VirtualSportsSettingInfo.replace(/&quot;/g, '"');
+    dataJson.VirtualSportsSettingInfo = jQuery.parseJSON(dataJson.VirtualSportsSettingInfo);
 </script>
 <input id="hiddenAccID" type="hidden" value="@Sunplus.Accounting.Core.Common.AppSession.AccId"/>
 <input id="hiddenCustID" type="hidden" value="@Sunplus.Accounting.Core.Common.AppSession.CustID"/>

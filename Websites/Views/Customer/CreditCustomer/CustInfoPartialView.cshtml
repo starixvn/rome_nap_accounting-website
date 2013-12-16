@@ -1,5 +1,9 @@
 ﻿@using Fanex.Tarus.Customer.CreditCustomer.Entities;
+@using Sunplus.Accounting.Core.Configurations;
 @model Fanex.Tarus.Customer.CreditCustomer.Entities.CustomerSettingView
+@{
+    bool isOfferHRFixedOdds = WebSettings.OfferHorseRacingFixedOdds;
+}
 @if (Model.IsUpdateMinMaxPt)
 {
     <table class="tblcollapse" style="width:750px; margin-bottom: 10px;">
@@ -110,6 +114,19 @@ else if ((Model.IsSuperSetting && Model.IsMemberSetting) || (Model.IsMasterSetti
                             <td><span data-bind="text: customer.commissionSetting.playerDiscountNumber"></span></td>
                         </tr>
                         <!--/game-comm-->
+                        @if (isOfferHRFixedOdds)
+                        {
+                         <!--hr-fixed-odds-->
+                        <tr>
+                            <td class="r" style="width: 25%;">
+                                 HR Fixed Odds
+                            </td>
+                            <td><span data-bind="text: customer.commissionSetting2.playerDiscountHRFixedOdds"></span></td>
+                            <td><span data-bind="text: customer.commissionSetting.discountHRFixedOdds"></span></td>
+                            <td><span data-bind="text: customer.commissionSetting.playerDiscountHRFixedOdds"></span></td>
+                        </tr>
+                        <!--/hr-fixed-odds-->
+                        }
                     </table>
                 }
                 else
@@ -152,6 +169,18 @@ else if ((Model.IsSuperSetting && Model.IsMemberSetting) || (Model.IsMasterSetti
                             <td><span data-bind="text: customer.commissionSetting.playerDiscountNumber"></span></td>
                         </tr>
                         <!--/game-comm-->
+                         @if (isOfferHRFixedOdds)
+                         {
+                        <!--hr-fixed-odds-->
+                        <tr>
+                            <td class="r" style="width: 25%;">
+                                HR Fixed Odds
+                            </td>
+                            <td><span data-bind="text: customer.commissionSetting.discountHRFixedOdds"></span></td>
+                            <td><span data-bind="text: customer.commissionSetting.playerDiscountHRFixedOdds"></span></td>
+                        </tr>
+                        <!--/hr-fixed-odds-->
+                         }
                     </table>
                 }
                 
@@ -568,9 +597,19 @@ else
                             <select class="selectcomm" name="listGameComm" id="listGameComm">
                             </select>
                         </td>
-                        <td colspan="2">
-                        </td>
                         <!--/game-comm-->
+                         @if (isOfferHRFixedOdds)
+                         {
+                         <!--hr-fixed-odds-->
+                        <td class="r">
+                           HR Fixed Odds
+                        </td>
+                        <td class="l">
+                            <select class="selectcomm" name="listHRFixOddsComm" id="listHRFixOddsComm">
+                            </select>
+                        </td>
+                        <!--/hr-fixed-odds-->
+                         }
                     </tr>
                 </table>
             }
@@ -650,6 +689,24 @@ else
                         </td>
                     </tr>
                     <!--/game-comm-->
+                     @if (isOfferHRFixedOdds)
+                     {
+                    <!--hr-fixed-odds-->
+                    <tr>
+                        <td class="r" style="width: 25%;">
+                           HR Fixed Odds
+                        </td>
+                        <td>
+                            <input class="selectcomm" type="text" id="txtDiscountHRFixOdds" name="txtDiscountHRFixOdds" disabled="disabled"
+                                data-bind="value: customer.commissionSetting.discountHRFixedOdds" style="text-align: right;" />
+                        </td>
+                        <td>
+                            <select class="selectcomm" name="listHRFixOdds" id="listHRFixOddsComm">
+                            </select>
+                        </td>
+                    </tr>
+                    <!--/hr-fixed-odds-->
+                     }
                 </table>
             }
         </td>
@@ -657,3 +714,7 @@ else
     <!--/MinMaxPT-->
 </table>
 }
+
+<script language="javascript" type="text/javascript">
+    var  _isOfferHRFixedOdds = "@isOfferHRFixedOdds";
+</script>
