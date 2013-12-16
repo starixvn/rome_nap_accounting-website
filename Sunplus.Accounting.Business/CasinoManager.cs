@@ -1705,7 +1705,7 @@ namespace Sunplus.Accounting.Business
                                 ACommGroup = gameKindDetail.MAgentRollingRate;
                             }
 
-                            maxGroupAComm = Math.Min(maxGroupAComm, Globals.MAX_Comm);   
+                            maxGroupAComm = Math.Min(maxGroupAComm, Globals.MAX_Comm);
                             maxGroupMPresetPT = m2Max;
                             maxGroupAPT = a2Max;
                             maxGroupAMinPT = n2Max;
@@ -2682,8 +2682,12 @@ namespace Sunplus.Accounting.Business
                                     a1Min = (!_cust.PTByGameTypeUpline) ? gameKindDetail.MinPositionTaking : minPT;
                                 }
 
-                                maxGroupMComm = Math.Min(maxGroupMComm, Globals.MAX_Comm);
-                                MCommGroup = Math.Min(MCommGroup, Globals.MAX_Comm);
+                                if (isCreditCustomer)
+                                {
+                                    maxGroupMComm = Math.Min(maxGroupMComm, Globals.MAX_Comm);
+                                    MCommGroup = Math.Min(MCommGroup, Globals.MAX_Comm);
+                                }
+
                                 maxGroupAPresetPT = a2;
                                 a1 = gameKindDetail.APositionTaking;
                                 a1Min = Math.Min(a1, a1Min);
