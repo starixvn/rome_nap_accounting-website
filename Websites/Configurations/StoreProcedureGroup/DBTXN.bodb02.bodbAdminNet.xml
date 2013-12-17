@@ -114,14 +114,14 @@
     <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="DBTXN.bodb02.bodbAdminNet_ex" Plain="0" />
   </Function>
   <Function Name="Customer - Add Licensee">
-    <Setting Key="NewLicensee_AdNewSuper" SpName="Acc_Dep_CustomerInsMember_Com_Copy" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="NewLicensee_AdNewMaster" SpName="Acc_Dep_CustomerInsMember_SAg_Copy" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="NewLicensee_AdNewAgent" SpName="Acc_Dep_CustomerInsMember_MAg_Copy" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="NewLicensee_AdNewMember" SpName="Acc_Dep_CustomerInsMember_Ag_Copy" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="DepositCust_UpdateSuperSetting" SpName="Acc_Dep_CustomerUpdMember_Com_Copy" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="DepositCust_UpdateMasterSetting" SpName="Acc_Dep_CustomerUpdMember_SAg_Copy" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="DepositCust_UpdateAgentSetting" SpName="Acc_Dep_CustomerUpdMember_MAg_Copy" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="DepositCust_UpdateMemberSetting" SpName="Acc_Dep_CustomerUpdMember_Ag_Copy" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="NewLicensee_AdNewSuper" SpName="Acc_Dep_CustomerInsMember_Com" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="NewLicensee_AdNewMaster" SpName="Acc_Dep_CustomerInsMember_SAg" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="NewLicensee_AdNewAgent" SpName="Acc_Dep_CustomerInsMember_MAg" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="NewLicensee_AdNewMember" SpName="Acc_Dep_CustomerInsMember_Ag" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="DepositCust_UpdateSuperSetting" SpName="Acc_Dep_CustomerUpdMember_Com" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="DepositCust_UpdateMasterSetting" SpName="Acc_Dep_CustomerUpdMember_SAg" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="DepositCust_UpdateAgentSetting" SpName="Acc_Dep_CustomerUpdMember_MAg" DbName="DBTXN.bodb02.bodbAdminNet" />
+    <Setting Key="DepositCust_UpdateMemberSetting" SpName="Acc_Dep_CustomerUpdMember_Ag" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Customer - Edit Licensee">
     <Setting Key="Customer_EditLicensee_GetLicenseeInfo" SpName="Acc_ExchangeSel" DbName="DBTXN.bodb02.bodbAdminNet"  />

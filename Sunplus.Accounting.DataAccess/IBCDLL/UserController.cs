@@ -236,7 +236,7 @@ namespace Sunplus.Accounting.DataAccess.IBCDLL
             catch (Exception ex)
             {
                 error.ErrorCode = IbcError.INTERNAL_ERROR;
-                error.ErrorMsg = ex.Message;
+                error.ErrorMsg = IbcError.INTERNAL_ERROR_MSG;//ex.Message;
                 
                 Sunplus.Accounting.Core.Extensions.LogExtensions.ExceptionHandler(ex);
             }
