@@ -916,7 +916,3 @@ var autoFollowBet = {
         autoFollowBet.Tables.resultMessage_AddDialog.removeClass("display-none").find("div:first").width(maxMessageWidth);
     }
 };
-
-//$(document).ready(function () {
-//    autoFollowBet.buildGrid(autoFollowBet.model);
-//});
