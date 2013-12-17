@@ -17,6 +17,9 @@ namespace Fanex.Tarus.Admin.Controller
     using Fanex.Tarus.Web.Controllers;
     using Fanex.Tarus.Web.Controllers.Filters;
 
+    /// <summary>
+    /// Auto Follow Bet Controller.
+    /// </summary>
     public class AutoFollowBetController : BaseController
     {
         private readonly IAutoFollowBetService _autoFollowBetService;
@@ -36,16 +39,6 @@ namespace Fanex.Tarus.Admin.Controller
         public ActionResult Index()
         {
             return View("~/Views/Admin/AutoFollowBetCustomer.cshtml");
-        }
-
-        [AuthenticateHost]
-        public JsonResult InsAutoFollowedBet(string username, string rate)
-        {
-            var result = new Result();
-            result = _autoFollowBetService.InsFollowedCustomer(username, CastAide.AsDouble(rate));
-            var jsonResult = Json(result);
-            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            return jsonResult;
         }
 
         public JsonResult GetFollowType()
@@ -71,6 +64,13 @@ namespace Fanex.Tarus.Admin.Controller
         public JsonResult UpdateAutoFollowedBetCustomer(UpdateAutoFollowedBetCustomerCriteria criteria)
         {
             var result = _autoFollowBetService.UpdateAutoFollowedBetCustomer(criteria);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [AuthenticateHost]
+        public JsonResult AddAutoFollowedBetCustomer(AddAutoFollowedBetCustomerCriteria criteria)
+        {
+            var result = _autoFollowBetService.AddAutoFollowedBetCustomer(criteria);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
     }

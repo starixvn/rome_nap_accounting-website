@@ -139,5 +139,6 @@
     <Setting Key="Admin_AutoFollowBetManagement_Select" SpName="Acc_AutoFollowBetSelCustomer" DbName="DBTXN.bodb02.bodbAdminNet"/>
     <Setting Key="Admin_AutoFollowBetManagement_Delete" SpName="Acc_AutoFollowBetDelCustomer" DbName="DBTXN.bodb02.bodbAdminNet"/>
     <Setting Key="Admin_AutoFollowBetManagement_Update" SpName="Acc_AutoFollowBetUpdRate" DbName="DBTXN.bodb02.bodbAdminNet"/>
+    <Setting Key="Admin_AutoFollowBetManagement_Add" SpName="Acc_AutoFollowBetInsCustomer" DbName="DBTXN.bodb02.bodbAdminNet"/>
   </Function>
 </Functions>

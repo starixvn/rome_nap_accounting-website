@@ -155,7 +155,6 @@
 
   <Function Name="Admin-AutoFollowBet">
     <Setting Key="AutoFollowBetInsBACus" SpName="Acc_AutoFollowBetInsBACustomer" DbName="DBTXN.CustDB.bodbAdminNet"/>
-    <Setting Key="Acc_AutoFollowBetInsCustomer" SpName="Acc_AutoFollowBetInsCustomer" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="AutoFollowBetSelBACus" SpName="Acc_AutoFollowBetSelBACustomer" DbName="DBTXN.CustDB.bodbAdminNet"/>
    
    </Function>

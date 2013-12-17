@@ -16,8 +16,6 @@ namespace Fanex.Tarus.Admin.Business.AutoFollowBet
 
     public interface IAutoFollowBetService
     {
-        Result InsFollowedCustomer(string username, double rate);
-
         List<FollowTypeInfo> GetFollowType();
 
         List<FollowedCustomer> GetAutoFollowedBetCustomer(GetAutoFollowedBetCustomerCriteria criteria);
@@ -25,5 +23,7 @@ namespace Fanex.Tarus.Admin.Business.AutoFollowBet
         Result DeleteAutoFollowedBetCustomer(DeleteAutoFollowedBetCustomerCriteria criteria);
 
         Result UpdateAutoFollowedBetCustomer(UpdateAutoFollowedBetCustomerCriteria criteria);
+
+        Result AddAutoFollowedBetCustomer(AddAutoFollowedBetCustomerCriteria criteria);
     }
 }

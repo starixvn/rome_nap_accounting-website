@@ -15,12 +15,12 @@ namespace Fanex.Tarus.Admin.DataAccess.AutoFollowBet
 
     public interface IAutoFollowBetAccess
     {
-        Result AutoFollowBetInsCustomer(string username, double rate);
-
         List<FollowedCustomer> GetAutoFollowedBetCustomer(GetAutoFollowedBetCustomerCriteria criteria);
 
         Result DeleteAutoFollowedBetCustomer(DeleteAutoFollowedBetCustomerCriteria criteria);
 
         Result UpdateAutoFollowedBetCustomer(UpdateAutoFollowedBetCustomerCriteria criteria);
+
+        Result AddAutoFollowedBetCustomer(AddAutoFollowedBetCustomerCriteria criteria);
     }
 }

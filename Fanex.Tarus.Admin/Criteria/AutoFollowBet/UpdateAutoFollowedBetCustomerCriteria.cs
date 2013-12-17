@@ -9,8 +9,8 @@
 
 namespace Fanex.Tarus.Admin.Criteria.AutoFollowBet
 {
-    using System.Collections;
     using System;
+    using System.Collections;
 
     /// <summary>
     /// Update Auto Follow Bet Criteria.
@@ -59,7 +59,7 @@ namespace Fanex.Tarus.Admin.Criteria.AutoFollowBet
 
         public bool IsValid()
         {
-            return 0 <= Rate &&
+            return (decimal)0.3 <= Rate &&
                 Rate <= 3 &&
                 Math.Round(Rate, 2) == Rate;
         }

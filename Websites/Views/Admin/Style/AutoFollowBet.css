@@ -11,6 +11,16 @@
     width: 35px;
 }
 
+.col90
+{
+    width: 90px;
+}
+
+.col150
+{
+    width: 150px;
+}
+
 #textbox-username
 {
     width: 140px;
@@ -78,3 +88,36 @@
 {
     margin-bottom: 10px;
 }
+
+#dialog-addnewfollowedcustomer #textbox-username-addnewdialog
+{
+    width: 145px;
+}
+
+#dialog-addnewfollowedcustomer #textbox-rate-addnewdialog
+{
+    width: 92px;
+}
+
+#dropdown-livestatus-adddialog
+{
+    width: 76px;
+}
+
+.filter-adddialog
+{
+    border-collapse: collapse;
+}
+
+.filter-adddialog .title2
+{
+    background-color: #CDDEF3;
+    font-weight: bold;
+}
+
+.filter-adddialog th, .filter-adddialog td
+{
+    border: #7C98A4 solid 1px;
+    padding: 2px;
+}
+

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="DeleteAutoFollowedCustomerBetCriteria.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="DeleteAutoFollowedBetCustomerCriteria.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -9,8 +9,6 @@
 
 namespace Fanex.Tarus.Admin.Criteria.AutoFollowBet
 {
-    using System.Collections.Generic;
-    using Fanex.Tarus.Admin.Models.AutoFollowBet;
     using System.Collections;
 
     /// <summary>

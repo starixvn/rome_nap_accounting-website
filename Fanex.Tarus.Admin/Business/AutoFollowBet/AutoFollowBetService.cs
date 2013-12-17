@@ -44,18 +44,9 @@ namespace Fanex.Tarus.Admin.Business.AutoFollowBet
         }
 
         /// <summary>
-        /// Increases the followed customer.
+        /// Gets the follow type.
         /// </summary>
-        /// <param name="username">The username.</param>
-        /// <param name="rate">The currency rate.</param>
-        /// <returns></returns>
-        public Result InsFollowedCustomer(string username, double rate)
-        {
-            var result = new Result();
-            result = _autoFollowBetAccess.AutoFollowBetInsCustomer(username, rate);
-            return result;
-        }
-
+        /// <returns>The follow type.</returns>
         public List<FollowTypeInfo> GetFollowType()
         {
             try
@@ -101,8 +92,8 @@ namespace Fanex.Tarus.Admin.Business.AutoFollowBet
         /// <summary>
         /// Gets the followed customer.
         /// </summary>
-        /// <param name="status">The status.</param>
-        /// <returns>Return list of followed customer.</returns>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The followed customer.</returns>
         public List<FollowedCustomer> GetAutoFollowedBetCustomer(GetAutoFollowedBetCustomerCriteria criteria)
         {
             try
@@ -142,8 +133,8 @@ namespace Fanex.Tarus.Admin.Business.AutoFollowBet
         /// <summary>
         /// Deletes the followed customer.
         /// </summary>
-        /// <param name="username">The username.</param>
-        /// <returns>Return Result.</returns>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The followed customer.</returns>
         public Result DeleteAutoFollowedBetCustomer(DeleteAutoFollowedBetCustomerCriteria criteria)
         {
             try
@@ -163,9 +154,8 @@ namespace Fanex.Tarus.Admin.Business.AutoFollowBet
         /// <summary>
         /// Updates the followed customer.
         /// </summary>
-        /// <param name="username">The username.</param>
-        /// <param name="rate">The currency rate.</param>
-        /// <returns></returns>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The followed customer.</returns>
         public Result UpdateAutoFollowedBetCustomer(UpdateAutoFollowedBetCustomerCriteria criteria)
         {
             try
@@ -175,8 +165,7 @@ namespace Fanex.Tarus.Admin.Business.AutoFollowBet
                     return null;
                 }
 
-                var result = new Result();
-                result = _autoFollowBetAccess.UpdateAutoFollowedBetCustomer(criteria);
+                var result = _autoFollowBetAccess.UpdateAutoFollowedBetCustomer(criteria);
                 return result;
             }
             catch (Exception ex)
@@ -187,6 +176,36 @@ namespace Fanex.Tarus.Admin.Business.AutoFollowBet
             return null;
         }
 
+        /// <summary>
+        /// Add the followed customer.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The followed customer.</returns>
+        public Result AddAutoFollowedBetCustomer(AddAutoFollowedBetCustomerCriteria criteria)
+        {
+            try
+            {
+                if (!criteria.IsValid())
+                {
+                    return null;
+                }
+
+                var result = _autoFollowBetAccess.AddAutoFollowedBetCustomer(criteria);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the name of the source type.
+        /// </summary>
+        /// <param name="sourceId">The source identifier.</param>
+        /// <returns>The name of the source type.</returns>
         private string GetSourceTypeName(int sourceId)
         {
             string result = string.Empty;

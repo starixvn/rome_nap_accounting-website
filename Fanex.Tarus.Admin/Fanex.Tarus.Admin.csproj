@@ -93,6 +93,7 @@
     <Compile Include="Controller\RacingDefaultSettingController.cs" />
     <Compile Include="Controller\SecurityCode\AdminSecurityCodeController.cs" />
     <Compile Include="Controller\SMAManagement\SMAManagementController.cs" />
+    <Compile Include="Criteria\AutoFollowBet\AddAutoFollowedBetCustomerCriteria.cs" />
     <Compile Include="Criteria\AutoFollowBet\DeleteAutoFollowedBetCustomerCriteria.cs" />
     <Compile Include="Criteria\AutoFollowBet\GetAutoFollowedBetCustomerCriteria.cs" />
     <Compile Include="Criteria\AutoFollowBet\UpdateAutoFollowedBetCustomerCriteria.cs" />

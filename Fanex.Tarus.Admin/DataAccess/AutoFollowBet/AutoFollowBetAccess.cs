@@ -16,25 +16,16 @@ namespace Fanex.Tarus.Admin.DataAccess.AutoFollowBet
     using Fanex.Tarus.Admin.Criteria.AutoFollowBet;
     using Fanex.Tarus.Admin.Entities;
 
+    /// <summary>
+    /// Auto Follow Bet Access.
+    /// </summary>
     public class AutoFollowBetAccess : IAutoFollowBetAccess
     {
-        public Result AutoFollowBetInsCustomer(string username, double rate)
-        {
-            var result = new Result();
-            using (var dbContext = new ObjectDb("Acc_AutoFollowBetInsCustomer"))
-            {
-                dbContext.AddInParameter("username", DbType.String, username);
-                dbContext.AddInParameter("rate", DbType.Double, rate);
-                dbContext.AddOutParameter("ErrMsg", DbType.String, 4000);
-                dbContext.AddOutParameter("ErrCode", DbType.Int32, sizeof(int));
-                dbContext.ExecuteNonQuery();
-                result.ErrorMessage = CastAide.AsString(dbContext.GetParameterValue("ErrMsg"));
-                result.ErrorCode = CastAide.AsInt32(dbContext.GetParameterValue("ErrCode"));
-
-            }
-            return result;
-        }
-
+        /// <summary>
+        /// Gets the automatic followed bet customer.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The automatic followed bet customer.</returns>
         public List<FollowedCustomer> GetAutoFollowedBetCustomer(GetAutoFollowedBetCustomerCriteria criteria)
         {
             var datatable = new DataTable();
@@ -56,7 +47,7 @@ namespace Fanex.Tarus.Admin.DataAccess.AutoFollowBet
                 {
                     Username = CastAide.AsString(row["username"]),
                     Rate = CastAide.AsDouble(row["rate"]),
-                    BAStatus = true,
+                    BAStatus = CastAide.AsBoolean(row["isba"]),
 
                     SourceId = CastAide.AsInt32(row["src"]),
                     LiveStatus = CastAide.AsInt32(row["FollowLive"]),
@@ -70,29 +61,58 @@ namespace Fanex.Tarus.Admin.DataAccess.AutoFollowBet
             return listFollowedCustomer;
         }
 
+        /// <summary>
+        /// Deletes the automatic followed bet customer.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The automatic followed bet customer.</returns>
         public Result DeleteAutoFollowedBetCustomer(DeleteAutoFollowedBetCustomerCriteria criteria)
         {
             var result = new Result();
-            using (var dbContext = new ObjectDb(criteria.GetSettingKey()))
+            using (var databaseContext = new ObjectDb(criteria.GetSettingKey()))
             {
-                dbContext.AssignParamValues(criteria.GetStoreProcedureParams());
-                dbContext.ExecuteNonQuery();
-                result.ErrorMessage = CastAide.AsString(dbContext.GetParameterValue("ErrMsg"));
-                result.ErrorCode = CastAide.AsInt32(dbContext.GetParameterValue("ErrCode"));
+                databaseContext.AssignParamValues(criteria.GetStoreProcedureParams());
+                databaseContext.ExecuteNonQuery();
+                result.ErrorMessage = CastAide.AsString(databaseContext.GetParameterValue("ErrMsg"));
+                result.ErrorCode = CastAide.AsInt32(databaseContext.GetParameterValue("ErrCode"));
             }
 
             return result;
         }
 
+        /// <summary>
+        /// Updates the automatic followed bet customer.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The automatic followed bet customer.</returns>
         public Result UpdateAutoFollowedBetCustomer(UpdateAutoFollowedBetCustomerCriteria criteria)
         {
             var result = new Result();
-            using (var dbContext = new ObjectDb(criteria.GetSettingKey()))
+            using (var databaseContext = new ObjectDb(criteria.GetSettingKey()))
             {
-                dbContext.AssignParamValues(criteria.GetStoreProcedureParams());
-                dbContext.ExecuteNonQuery();
-                result.ErrorMessage = CastAide.AsString(dbContext.GetParameterValue("ErrMsg"));
-                result.ErrorCode = CastAide.AsInt32(dbContext.GetParameterValue("ErrCode"));
+                databaseContext.AssignParamValues(criteria.GetStoreProcedureParams());
+                databaseContext.ExecuteNonQuery();
+                result.ErrorMessage = CastAide.AsString(databaseContext.GetParameterValue("ErrMsg"));
+                result.ErrorCode = CastAide.AsInt32(databaseContext.GetParameterValue("ErrCode"));
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Adds the automatic followed bet customer.
+        /// </summary>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The automatic followed bet customer.</returns>
+        public Result AddAutoFollowedBetCustomer(AddAutoFollowedBetCustomerCriteria criteria)
+        {
+            var result = new Result();
+            using (var databaseContext = new ObjectDb(criteria.GetSettingKey()))
+            {
+                databaseContext.AssignParamValues(criteria.GetStoreProcedureParams());
+                databaseContext.ExecuteNonQuery();
+                result.ErrorMessage = CastAide.AsString(databaseContext.GetParameterValue("ErrMsg"));
+                result.ErrorCode = CastAide.AsInt32(databaseContext.GetParameterValue("ErrCode"));
             }
 
             return result;

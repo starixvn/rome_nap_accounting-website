@@ -3,23 +3,26 @@
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/common.css" />
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/table.css" />
 <link rel="stylesheet" type="text/css" href="~/App_Themes/Public/input.css" />
-<link href="~/App_Themes/Public/Message.css" rel="stylesheet" type="text/css" />
-<link href="~/App_Themes/Report/reportgrid.css" rel="stylesheet" type="text/css" />
-<script src="~/js/jQuery/Template/jquery.tmpl.js" type="text/javascript"></script>
-<link href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" rel="stylesheet"
-    type="text/css" />
-<link href="~/js/MultipleSelect/jquery.multiselect.css" rel="stylesheet" type="text/css" />
-<link href="~/Views/Admin/Style/AutoFollowBet.css" rel="stylesheet" type="text/css" />
-<script src="~/js/jQuery/json2.js" type="text/javascript"></script>
-<script src="~/js/common.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Public/Message.css" />
+<link rel="stylesheet" type="text/css" href="~/App_Themes/Report/reportgrid.css" />
+<link rel="stylesheet" type="text/css" href="~/js/jQuery/UI/css/custom-theme/jquery-ui-1.8.10.custom.css" />
+<link rel="stylesheet" type="text/css" href="~/js/ToolTip/Tipsy-Tooltip/tipsy.css" />
+<link rel="stylesheet" type="text/css" href="~/js/MultipleSelect/jquery.multiselect.css" />
+<link rel="stylesheet" type="text/css" href="~/js/jQuery/Pager/pagination.css" />
+<link rel="stylesheet" type="text/css" href="~/Views/Admin/Style/AutoFollowBet.css" />
+<script type="text/javascript" src="~/js/jQuery/Template/jquery.tmpl.js"></script>
+<script type="text/javascript" src="~/js/jQuery/json2.js"></script>
+<script type="text/javascript" src="~/js/common.js"></script>
 <script type="text/javascript" src="~/js/jQuery/jquery-1.7.2.min.js"></script>
-<script src="~/js/BlockUI.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
-<script src="~/js/Datetime.js" type="text/javascript"></script>
-<script src="~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js" type="text/javascript"></script>
-<script src="~/js/jQuery/gridscroller.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
-<script src="~/js/showhidepopup.js" type="text/javascript"></script>
+<script type="text/javascript" src="~/js/BlockUI.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+<script type="text/javascript" src="~/js/Datetime.js"></script>
+<script type="text/javascript" src="~/js/jQuery/UI/jquery-ui-1.8.10.custom.min.js"></script>
+<script type="text/javascript" src="~/js/jQuery/gridscroller.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+<script type="text/javascript" src="~/js/showhidepopup.js"></script>
+<script type="text/javascript" src="~/js/ToolTip/Tipsy-Tooltip/jquery.tipsy.js"></script>
 <script type="text/javascript" src="~/js/MultipleSelect/jquery.multiselect.js"></script>
-<script src="~/Views/Admin/Js/AutoFollowBet.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version" type="text/javascript"></script>
+<script type="text/javascript" src="~/js/jQuery/Pager/jpager.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
+<script type="text/javascript" src="~/Views/Admin/Js/AutoFollowBet.js?ver=@Sunplus.Accounting.Core.Configurations.WebSettings.Version"></script>
 <script type="text/javascript">
     window.rootUrl = '@Url.Content("~")';
     var viewResources = {
@@ -40,7 +43,17 @@
         Error_Admin_AutoFollowBetManagement_InvalidRate_Number: 'Invalid rate with number value!',
         Error_Admin_AutoFollowBetManagement_InvalidRate_Range: 'Invalid Rate! Rate must range between 0.3 and 3.',
         Error_Admin_AutoFollowBetManagement_InvalidRate_DecimalDigit: 'Invalid Rate! Don\'t enter the number with more than 2 decimal places.',
-        Success_Admin_AutoFollowBetManagement_UpdateFollowInfo: 'Updated successfully!'
+        Success_Admin_AutoFollowBetManagement_UpdateFollowInfo: 'Updated successfully!',
+
+        Add_New_Followed_Customer: 'Add New Follow Customer',
+        Error_Admin_AutoFollowBetManagement_LiveStatus_Empty: 'Please select at least one live status!',
+        Error_Admin_AutoFollowBetManagement_HDPStatus_Empty: 'Please select at least one HDP status!',
+        Error_Admin_AutoFollowBetManagement_1stHDPStatus_Empty: 'Please select at least one 1st HDP status!',
+        Error_Admin_AutoFollowBetManagement_OverUnderStatus_Empty: 'Please select at least one Over Under status!',
+        Error_Admin_AutoFollowBetManagement_1stOverUnderStatus_Empty: 'Please select at least one 1st Over Under status!',
+
+        Error_Admin_AutoFollowBetManagement_Username_Empty: 'Please input username!',
+        Success_Admin_AutoFollowBetManagement_AddFollowInfo: 'Added Successfully!'
     };
 
 </script>
@@ -116,7 +129,7 @@
                     <div id="gridTitle" class="gridtitle">
                     </div>
                     <div class="btngroup">
-                        <input type="button" onclick="showPopup()" value="  " name="btnAdd" id="AddCustomer"
+                        <input id="button-addnewfollowedcustomer" type="button" value="  " name="btnAdd"
                             class="btnAdd" title="Add Exist Customer" />
                     </div>
                 </div>
@@ -191,44 +204,116 @@
                         </table>
                     </div>
                 </div>
+                <div class="content-pagination bgtitle clearfix">
+                    <div class="pagination-scroll">
+                        <table style="width: 100%" cellspacing="0" cellpadding="1">
+                            <tr>
+                                <td>
+                                    <div id="pagination" class="pagination">
+                                        &nbsp;</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div id="addNewFollowCustomer" class="hidden">
-    <span id="errMsgDig"></span>
-    <table style="padding-left: 60px">
-        <tr>
-            <td>
-                <div class="w60 l">
-                    Username
-                </div>
-            </td>
-            <td>
-                <div class="w150">
-                    <input type="text" id="txtUserName" onkeyup="autoFollowBet.onKeyEnterAdd(event)"
-                        style="width: 145px" />
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="w60 l">
-                    Rate
-                </div>
-            </td>
-            <td>
-                <div class="w150">
-                    <input type="text" id="txtRate" onkeyup="autoFollowBet.onKeyEnterAdd(event)" style="width: 145px" />
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="padding-top: 5px; padding-left: 50px">
-                <div class="c">
-                    <input type="button" id="btnAddNew" value="Add New" class="btn" onclick="autoFollowBet.addNewFollewCustomer()" />
-                </div>
-            </td>
-        </tr>
-    </table>
-</div>
+    <div id="dialog-addnewfollowedcustomer" class="display-none">
+        <span id="resultmessage-adddialog"></span>
+        <table>
+            <tr>
+                <td>
+                    <div class="col60 r">
+                        Username
+                    </div>
+                </td>
+                <td>
+                    <div class="col150">
+                        <input id="textbox-username-addnewdialog" type="text" maxlength="50" />
+                    </div>
+                </td>
+                <td>
+                    <div class="col40 r">
+                        Rate
+                    </div>
+                </td>
+                <td>
+                    <div class="col90">
+                        <input id="textbox-rate-addnewdialog" type="text" maxlength="4" class="c" />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <table class="filter-adddialog">
+                        <tr>
+                            <td class="title2">
+                                <div class="col100 c">
+                                    Live/None Live
+                                </div>
+                            </td>
+                            <td class="title2">
+                                <div class="col60 c">
+                                    HDP
+                                </div>
+                            </td>
+                            <td class="title2">
+                                <div class="col60 c">
+                                    1st HDP
+                                </div>
+                            </td>
+                            <td class="title2">
+                                <div class="col60 c">
+                                    O/U
+                                </div>
+                            </td>
+                            <td class="title2">
+                                <div class="col60 c">
+                                    1st O/U
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="col100 c">
+                                    <select id="dropdown-livestatus-adddialog">
+                                        <option value="@LiveStatusConstants.Both" selected="selected">Both</option>
+                                        <option value="@LiveStatusConstants.Live">Live</option>
+                                        <option value="@LiveStatusConstants.NonLive">Non Live</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col60 c">
+                                    <input class="hdpstatus" type="checkbox" checked="checked" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col60 c">
+                                    <input class="_1sthdpstatus" type="checkbox" checked="checked" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col60 c">
+                                    <input class="overunderstatus" type="checkbox" checked="checked" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col60 c">
+                                    <input class="_1stoverunderstatus" type="checkbox" checked="checked" />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <div class="r">
+                        <input id="buttonsubmit-addnewdialog" type="button" value="Add New" class="btn" />
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
