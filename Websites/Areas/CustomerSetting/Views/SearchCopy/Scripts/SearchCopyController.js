@@ -54,12 +54,15 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         $("#existedUserName").focus(function () {
             message.hideAlertMessage("errorMsg");
             $("#checkExisted").hide();
+
+            $scope.existedUser.userid = "-1"
         });
 
         $("#existedUserName").focusout(function () {
             $("#checkExisted").show();
             $(".tabsports div").show();
-            $scope.searchExistingUser(this.value);
+
+            $scope.searchExistingUser(this.value, null);
         });
     };
 
@@ -70,7 +73,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             $("#errorMsg").width("550");
         }
         else {
-            if ($scope.existedUser.userid != "-1") {
+            var callbackFunc = function () {
                 message.hideAlertMessage("errorMsg");
 
                 $("#step1").hide();
@@ -88,8 +91,11 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $("#spanstep2").addClass("step2-active");
 
                 $scope.selectedSport = $scope.sports[0];
+                $scope.resetGeneralInfo();
                 $scope.resetFrameSource();
-            }
+            };
+
+            $scope.searchExistingUser($scope.existedUser.username, callbackFunc);
         }
     };
 
@@ -125,8 +131,34 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             validate.setRequired("#password");
             return false;
         }
+        if ($scope.existedUser.maxCredit == undefined || $scope.existedUser.maxCredit == "") {
+            message.showAlertMessage("errorMsg", "The max credit is required !", 1);
+            $("#errorMsg").width("700");
+            validate.setRequired("#maxCredit");
+            return false;
+        }
+
+        var maxCredit = $scope.existedUser.maxCredit.replace(/,/g, '');
+        if (isNaN(maxCredit) || parseInt(maxCredit) < 0) {
+            message.showAlertMessage("errorMsg", "Please input max credit correctly !", 1);
+            $("#errorMsg").width("700");
+            validate.setRequired("#maxCredit");
+            return false;
+        }
 
         return true;
+    };
+
+    $scope.resetGeneralInfo = function () {
+        $scope.newUser.username = "";
+        $scope.newUser.password = "";
+        $scope.newUser.firstname = "";
+        $scope.newUser.lastname = "";
+        $scope.newUser.phone = "";
+        $scope.newUser.mobilephone = "";
+        $scope.newUser.fax = "";
+
+        $("input").removeClass("ng-dirty");
     };
 
     $scope.resetFrameSource = function () {
@@ -225,8 +257,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         }
     };
 
-    $scope.searchExistingUser = function (username) {
-        if (username == "") {
+    $scope.searchExistingUser = function (username, callback) {
+        if (username == undefined || username == "") {
             $("#checkExisted").removeClass('success');
             $("#checkExisted").removeClass('not_success');
             return;
@@ -240,7 +272,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
 
         try { parent.BlockUI(); } catch (e) { }
         try { parent.parent.BlockUI(); } catch (e) { }
-        try { parent.parent.parent.BlockUI(); } catch (e) { }                
+        try { parent.parent.parent.BlockUI(); } catch (e) { }
         //$("body").addClass("wait");
 
         $.ajax({
@@ -249,8 +281,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify(param),
-            success: function (customerSettingView) {                
-               
+            success: function (customerSettingView) {
+
                 var custid = customerSettingView.UserId;
                 var statusSports = customerSettingView.StatusSports;
 
@@ -264,6 +296,10 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                     //step2                    
                     $scope.disableSports(statusSports);
                     $scope.getSiteCreditAndCurrencyByUserId(custid);
+
+                    if (callback) {
+                        callback();
+                    }
                 }
                 else {
                     $("#checkExisted").removeClass('success');
@@ -369,7 +405,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: JSON.stringify(param),
-            success: function (result) {           
+            success: function (result) {
                 if (result != null) {
                     message.showAlertMessage("errorMsg", result.Message, 3);
                     $("#errorMsg").width("700");

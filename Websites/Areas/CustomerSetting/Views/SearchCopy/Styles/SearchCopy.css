@@ -47,12 +47,12 @@ body.wait *, body.wait
 
 .btnNextL
 {
-    background:transparent url(styles/images/btnLeft.png) no-repeat left center; height:20px; cursor:pointer; padding-left:23px; padding-top:4px;
+    background:transparent url(styles/images/btnLeft.png) no-repeat left center; height:20px; cursor:pointer; text-align:center; padding-top:7px;
 }
 
 .btnNextR
 {
-    background:transparent url(styles/images/btnRight.png) no-repeat center right; text-align:left; width:96px;height:24px; font-size:10pt; font-weight:bold; color:#fff;cursor:pointer; margin-left:0px !important;
+    background:transparent url(styles/images/btnRight.png) no-repeat center right; text-align:left; width:96px;font-size:10pt; font-weight:bold; color:#fff;cursor:pointer; margin-left:0px !important;
 }
 
 .btnStep

@@ -84,12 +84,14 @@ PTSetting.SportType = new function () {
 
     var RemoveVirtualSportsCustInfo = function () {
         var $content = $("#frmVirtualSports").contents();
-        $content.find('.tblcollapse tr:eq(0)').remove();
+        for (var i = 0; i < 5; i++) {
+            $content.find('.tblcollapse tr:eq(0)').remove();
+        }
         //disable edit
         setTimeout(function () {
             $content.find('.BettingLimitTextBox4').attr('readonly', 'readonly');
-            $content.find('.PTSelect').attr('disabled', true);
-            $content.find('.btnUpdate').attr('disabled', true);
+            $content.find('.PTSelect').attr('disabled', true);            
+            $content.find('.btnUpdate').remove();
         }, delayTime);
     };
 
