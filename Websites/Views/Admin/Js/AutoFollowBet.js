@@ -89,7 +89,7 @@ var autoFollowBet = {
         gridWidth: 913,
         pageIndex: 0,
         totalItems: 0,
-        pageSize: 1
+        pageSize: 50
     },
 
     GetAutoFollowedBet: function () {
@@ -300,7 +300,7 @@ var autoFollowBet = {
             start_per_page: 50,
             step_per_page: 50,
             max_items_per_page: 500,
-            item_per_page_arr: [1, 5, 10, 20, 50, 100, 200, 500],
+            item_per_page_arr: [50, 100, 200, 500],
             callback: autoFollowBet.pageSelectCallback,
             items_per_page: itemsPerPage,
             current_page: currentPage
