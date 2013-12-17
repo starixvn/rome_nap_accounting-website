@@ -112,7 +112,6 @@ public class UpdateCSSetting : BaseHandler
             bool isA = roleid == Globals.AgentLevel.ToString();
             bool isC = roleid == Globals.MemberLevel.ToString();
 
-
             if (isS)
             {
                 roleid = Globals.Super;
@@ -182,30 +181,7 @@ public class UpdateCSSetting : BaseHandler
 
             csCustomer.SiteName = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(custid);
 
-            //var custSetting = csCustomer.GetCustSetting(custInfo.IBCCustID);            
-            if (bInserting)
-            {
-                CSCustomerDetail parentCustInfo = null;
-                Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider pCustInfo = new Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider();
-                if (custInfo.RoleId.ToString() == "3")
-                {
-                    parentCustInfo = pCustInfo.GetCustInfoIBC(custInfo.SIBCCustID);
-                }
-
-                else if (custInfo.RoleId.ToString() == "2")
-                {
-                    parentCustInfo = pCustInfo.GetCustInfoIBC(custInfo.MIBCCustID);
-                }
-
-                else if (custInfo.RoleId.ToString() == "1")
-                {
-                    parentCustInfo = pCustInfo.GetCustInfoIBC(custInfo.AIBCCustID);
-                }
-
-                if (parentCustInfo != null)
-                    isEnableCasino = !parentCustInfo.CasinoDisabled;
-            }
-
+            //var custSetting = csCustomer.GetCustSetting(custInfo.IBCCustID);   
             if (!bInserting)
             {
                 status = csCustomer.UpdateMaxTransferMisc(
@@ -226,10 +202,30 @@ public class UpdateCSSetting : BaseHandler
                     context.Response.Write("<script>parent.ShowMessage('" + AlertMessage.GetMsg(Resources.Language.updCustSettingFailed, AlertMessage.MsgType.Error) + "', 0); parent.ResetBtnState(); </script>");
                     return;
                 }
-
             }
             else
             {
+                CSCustomerDetail parentCustInfo = null;
+                Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider pCustInfo = new Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider();
+                if (custInfo.RoleId.ToString() == "3")
+                {
+                    parentCustInfo = pCustInfo.GetCustInfoIBC(custInfo.SIBCCustID);
+                }
+
+                else if (custInfo.RoleId.ToString() == "2")
+                {
+                    parentCustInfo = pCustInfo.GetCustInfoIBC(custInfo.MIBCCustID);
+                }
+
+                else if (custInfo.RoleId.ToString() == "1")
+                {
+                    parentCustInfo = pCustInfo.GetCustInfoIBC(custInfo.AIBCCustID);
+                }
+
+                if (parentCustInfo != null)
+                {
+                    isEnableCasino = !parentCustInfo.CasinoDisabled;
+                }
 
                 if (isS)
                 {

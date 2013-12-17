@@ -53,7 +53,7 @@ public partial class PositionTakingCS : RequiredAuthorizationPage
                 {
                     case Globals.AccountType.Super:
                         //urlAgentList = "<script>DelayReloadPage('SuperAgentList.aspx?" + strQuery + "&hr=" + (!WebSettings.disabledHR) + "', 2000);</script>";
-                        urlAgentList = "SuperAgentList.aspx?" + strQuery ;
+                        urlAgentList = "SuperAgentList.aspx?" + strQuery;
                         uplineId = 0;
                         break;
                     case Globals.AccountType.Master:
@@ -63,13 +63,13 @@ public partial class PositionTakingCS : RequiredAuthorizationPage
                         if (uplineId < 100)
                         {
                             //urlAgentList = "<script type='text/javascript'>DelayReloadPage('MasterAgentList.aspx?bycom=1" + strQuery + "&hr=" + (!WebSettings.disabledHR) + "',2000,'" + strUrl + "');</script>";
-                            urlAgentList = "MasterAgentList.aspx?bycom=1&" + strQuery ;
+                            urlAgentList = "MasterAgentList.aspx?bycom=1&" + strQuery;
                         }
                         else
                         {
 
                             //urlAgentList = "<script type='text/javascript'>DelayReloadPage('MasterAgentList.aspx?superId=" + uplineId + "" + strQuery + "&hr=" + (isAllowHR && !WebSettings.disabledHR).ToString() + "',2000,'" + strUrl + "');</script>";
-                            urlAgentList = "MasterAgentList.aspx?superId=" + uplineId + "&" + strQuery ;
+                            urlAgentList = "MasterAgentList.aspx?superId=" + uplineId + "&" + strQuery;
                         }
 
                         break;
@@ -77,21 +77,21 @@ public partial class PositionTakingCS : RequiredAuthorizationPage
                         uplineId = _c.MIBCCustID;
 
                         //urlAgentList = "<script type='text/javascript'> DelayReloadPage('AgentList.aspx?masterId=" + uplineId + "&hr=" + (isAllowHR && !WebSettings.disabledHR).ToString() + "',2000,'" + strUrl + "'); </script>";
-                        urlAgentList = "AgentList.aspx?masterId=" + uplineId ;
+                        urlAgentList = "AgentList.aspx?masterId=" + uplineId;
 
                         break;
                     case Globals.AccountType.Member:
                         uplineId = _c.AIBCCustID;
 
                         //urlAgentList = "<script type='text/javascript'>DelayReloadPage('MemberList.aspx?agentId=" + uplineId + "&hr=" + (isAllowHR && !WebSettings.disabledHR).ToString()+ "',2000);</script>";
-                        urlAgentList = "MemberList.aspx?agentId=" + uplineId ;
+                        urlAgentList = "MemberList.aspx?agentId=" + uplineId;
                         break;
                 }
 
                 var _cUpline = new CSCustomerDetail();
-                    
+
                 #endregion
-                #region set RNG casino site                
+                #region set RNG casino site
                 _cust.SiteName = _c.SiteName;
                 #endregion
 
@@ -101,7 +101,7 @@ public partial class PositionTakingCS : RequiredAuthorizationPage
                     if (_c.RoleId < (int)CustInfo.Roles.Super)
                     {
                         _cUpline = CasinoManager.GetCustInfoIBC(uplineId);
-//                        var uplineDetail = IBCProvider.IBCCustomer.GetBasicCustInfoIBC(CastAide.AsInt32(uplineId));
+                        //                        var uplineDetail = IBCProvider.IBCCustomer.GetBasicCustInfoIBC(CastAide.AsInt32(uplineId));
                         //casinoLibray.CheckCustSetting(userId)
                         bool syncInfo = _cust.CheckCustSetting(_c.IBCCustID);
                         if (syncInfo && !_c.CasinoSync)
@@ -109,7 +109,7 @@ public partial class PositionTakingCS : RequiredAuthorizationPage
                             _c.CasinoSync = true;
                             var isUpdIbc = CasinoProvider.Instance.UpdateCSStatusAfterSync(_c.IBCCustID, _c.CasinoSync, _cUpline.CasinoDisabled, AppSession.AccId, BaseManager.CurrentUserIp);
                         }
-                        else if(!syncInfo && _c.CasinoSync)
+                        else if (!syncInfo && _c.CasinoSync)
                             _c.CasinoSync = false;
                     }
                 }
@@ -123,7 +123,6 @@ public partial class PositionTakingCS : RequiredAuthorizationPage
                 {
                     if (_c.CasinoSync) //this customer have already been sync to Casino 
                         CasinoManager.GetCustSettingCS(ref _c); //get more information from Casino
-
                     
                     bool _IsLicensee = IsLicensee(_c.SiteName);
                     var group = _IsLicensee ? Globals.CasinoGroup.Group2 : Globals.CasinoGroup.Group1;
@@ -152,18 +151,14 @@ public partial class PositionTakingCS : RequiredAuthorizationPage
                     }
 
                     CasinoManager.GetCustSettingCS(ref _cUpline);
-                    _c.PTByGameTypeUpline = _cUpline.PTByGameType;
-                    _c.PTByGameType = _cUpline.PTByGameType;
                     _c.UpperCustID = uplineId;
                     if (_c.CasinoSync) //this customer have already been sync to Casino 
                     {
-                        //PageTitle = Resources.Language.lblUpdatePTCasino;
                         CasinoManager.GetCustSettingCS(ref _c); //get more information from Casino
                     }
-                    //else
-                    //{
-                    //    PageTitle = Resources.Language.lblInsertCasinoSetting;
-                    //}
+
+                    _c.PTByGameTypeUpline = _cUpline.PTByGameType;
+                    _c.PTByGameType = _cUpline.PTByGameType;
                     bool _IsLicensee = IsLicensee(_c.SiteName);
                     var group = _IsLicensee ? Globals.CasinoGroup.Group2 : Globals.CasinoGroup.Group1;
                     ctrHTML.Text = CasinoManager.GenCasinoPTHTML(_c, group, ptType);
@@ -176,7 +171,7 @@ public partial class PositionTakingCS : RequiredAuthorizationPage
         }
         catch (Exception ex)
         {
-           
+
             ctrHTML.Text = AlertMessage.GetMsg(ex.Message, AlertMessage.MsgType.Error);
         }
 
@@ -210,10 +205,10 @@ public partial class PositionTakingCS : RequiredAuthorizationPage
 
     bool IsLicensee(string siteName)
     {
-        
+
         var licenseeAccess = new DepositCustomerAccess();
         var dtLicensee = licenseeAccess.SelAllLicensee();
         bool result = dtLicensee.Select().Where(s => CastAide.AsString(s["LicenseeName"]) == siteName).Count() > 0;
-        return result; 
+        return result;
     }
 }
