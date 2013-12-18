@@ -21,9 +21,10 @@ namespace Fanex.Tarus.Web.Controllers.Customer
             _depositCustomerService = depositCustomerService ?? new DepositCustomerService();
         }
 
-        public DepositCustomerController():this(null)
+        public DepositCustomerController()
+            : this(null)
         {
-            
+
         }
 
         [AuthenticateRead]
@@ -63,7 +64,7 @@ namespace Fanex.Tarus.Web.Controllers.Customer
 
             var dataJson = _depositCustomerService.GetSuperSetting(AppSession.CustID);
             return View("~/Views/Customer/DepositCustomer/EditSettingSuper.cshtml",
-                new Models.Customer.DepositCustomer.SuperSetting {DataJson = string.IsNullOrWhiteSpace(dataJson) ? "null" : dataJson});
+                new Models.Customer.DepositCustomer.SuperSetting { DataJson = string.IsNullOrWhiteSpace(dataJson) ? "null" : dataJson });
         }
 
         [AuthenticateRead]
@@ -157,10 +158,10 @@ namespace Fanex.Tarus.Web.Controllers.Customer
                     dataJson = _depositCustomerService.GetSuperSetting(AppSession.CustID);
                     break;
                 case 2:
-                    dataJson = _depositCustomerService.GetMasterSettingForAddNew(AppSession.CustID);
+                    dataJson = _depositCustomerService.GetMasterSettingForAddNew(AppSession.CustID, roleId);
                     break;
                 default:
-                    dataJson = _depositCustomerService.GetAgentSettingForAddNew(AppSession.CustID);
+                    dataJson = _depositCustomerService.GetAgentSettingForAddNew(AppSession.CustID, roleId);
                     break;
             }
 
