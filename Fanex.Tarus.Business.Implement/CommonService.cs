@@ -1,59 +1,70 @@
-﻿namespace Fanex.Tarus.Business.Implement
+﻿// --------------------------------------------------------------------------
+// <copyright file="CommonService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
+// </history>
+
+namespace Fanex.Tarus.Business.Implement
 {
     using System;
-
     using Fanex.Tarus.Business.Interface;
     using Fanex.Tarus.Entities;
-
     using Sunplus.Accounting.Core.Configurations;
     using Sunplus.Accounting.Core.Extensions;
     using Sunplus.UMControllerLibrary;
+    using Sunplus.Accounting.Core.Common;
 
+    /// <summary>
+    /// Common Service.
+    /// </summary>
     public class CommonService : BaseService, ICommonService
     {
+        /// <summary>
+        /// Gets the downtime information.
+        /// </summary>
+        /// <returns>The downtime information.</returns>
         public Downtime GetDowntimeInfo()
         {
             bool isDowntime = false;
-
             var downTime = new Downtime
-                               {
-                                   From = "0:00",
-                                   To = "0:00",
-                                   IsDowntime = false
-                               };
+            {
+                From = "0:00",
+                To = "0:00",
+                IsDowntime = false
+            };
+
             if (!WebSettings.IsUMTime)
+            {
                 return downTime;
+            }
 
-            string timeFrom = "", timeTo = "";
-
-            var umCtrl = new UMBusiness();
+            string timeFrom = string.Empty;
+            string timeTo = string.Empty;
+            var underMaintainenceBusiness = new UMBusiness();
 
             try
             {
-
-                
-                isDowntime = umCtrl.isUnderMaintainence(Sites.AccountSite, WebSettings.LbServiceUrl, ref timeFrom, ref timeTo);//Get Agnet Site UM Status.
-
-                //isUM = false;
-
+                // Get Agent Site UM Status.
+                isDowntime = underMaintainenceBusiness.isUnderMaintainence(
+                    Sites.AccountSite,
+                    WebSettings.LbServiceUrl,
+                    ref timeFrom,
+                    ref timeTo);
             }
-
             catch (Exception ex)
             {
                 LogExtensions.ExceptionHandler(ex);
             }
 
-
-
             if (isDowntime)
             {
-                
                 downTime.From = timeFrom;
                 downTime.To = timeTo;
                 downTime.IsDowntime = true;
             }
-
-
 
             return downTime;
         }
