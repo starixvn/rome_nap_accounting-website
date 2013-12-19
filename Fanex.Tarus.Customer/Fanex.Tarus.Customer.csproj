@@ -63,8 +63,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependency\Fanex\Fanex.PTRacing.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.PTVirtualSports">
-      <HintPath>..\Dependency\VirtualSports\Fanex.PTVirtualSports.dll</HintPath>
+    <Reference Include="Fanex.PTVirtualSports, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Fanex\Fanex.PTVirtualSports.dll</HintPath>
     </Reference>
     <Reference Include="IBCFile">
       <HintPath>..\Dependency\Fanex\IBCFile.dll</HintPath>
