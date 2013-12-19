@@ -3,13 +3,15 @@
 
   <Function Name="Helper">
     <Setting Key="InsertCountry" SpName="Acc_InsCountry" DbName="DBTXN.bodb02.bodbAdminNet"/>
-    <Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="DBTXN.bodb02.bodbAdminNet"/>
+	<Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="DBTXN.bodb02.bodbAdminNet"/>
   </Function>
   
   <Function Name="Report">
     <Setting Key="Delebet" SpName="Acc_Rpt_DeleteBet" DbName="DBTXN.bodb02.bodbAdminNet"/>    
+  </Function> 
+  <Function Name="Customer Status">
+    <Setting Key="LeftPanel_CustomerInfo_UpdateDisableHRFixedOdds" SpName="Acc_CustomerUpdDisableHRFixedOdds_xpre" DbName="DBTXN.CustDB.bodbAdminNet" Plain="0" />
   </Function>
-  
   <Function Name="UserControl">    
     <Setting Key="AdminSel" SpName="Acc_AccAdminSel" DbName="DBTXN.bodb02.bodbAdminNet"/><!--not use-->
     <Setting Key="AdminUpdPageAccess" SpName="Acc_AccAdminUpdPageAccess" DbName="DBTXN.bodb02.bodbAdminNet"/>
@@ -38,7 +40,7 @@
     <Setting Key="Licensee_UpdAgent_VirtualSports" SpName="Acc_Dep_CustomerUpdMemberVirtualSports_MAg" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="NewLicensee_AdNewMember_VirtualSports" SpName="Acc_Dep_CustomerInsMemberVirtualSports_Ag" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Licensee_UpdMember_VirtualSports" SpName="Acc_Dep_CustomerUpdMemberVirtualSports_Ag" DbName="DBTXN.bodb02.bodbAdminNet" />
-    
+    <Setting Key="Acc_CustomerUpdSuperVS_MinMaxBet" SpName="Acc_CustomerUpdSuperVS_MinMaxBet" DbName="DBTXN.bodb02.bodbAdminNet" Plain="0" />
   </Function>
 
   <Function Name="Special Delete">
@@ -67,7 +69,9 @@
     
   </Function>
 
-  
+  <Function Name="P2P">
+    <Setting Key="Acc_P2PUpdDefaultSetting" SpName="Acc_P2PUpdDefaultSetting" DbName="DBTXN.bodb02.bodbAdminNet"  />
+  </Function>
 
   <Function Name="Transfer">
     <Setting Key="Acc_FinanceCrossTransferMulUpd" SpName="Acc_FinanceCrossTransferMulUpd" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
@@ -81,11 +85,11 @@
     <Setting Key="Acc_BettransInsCrossTransfer" SpName="Acc_BettransInsCrossTransfer" DbName="DBTXN.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_BettransInsTransfer" SpName="Acc_BettransInsTransfer" DbName="DBTXN.bodb02.bodbAdminNet"  />
     <Setting Key="BettransInsTransfer_Admin" SpName="BettransInsTransfer_Admin" DbName="DBTXN.bodb02.bodbAdminNet"  />
-    
+    <Setting Key="Acc_BettransInsTransfer_Confirm" SpName="Acc_BettransInsTransfer_Confirm" DbName="DBTXN.bodb02.bodbAdminNet"  />
     
   </Function>
 
-  <Function Name="Exchange Daily">
+  <Function Name="Exchange Daily">    
     <Setting Key="Acc_ExchangeUpdateBaseRate" SpName="Acc_ExchangeUpdateBaseRate" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
 
@@ -96,8 +100,9 @@
   <Function Name="User Info">
     <Setting Key="Acc_CustomerPwdUpd" SpName="Acc_CustomerPwdUpd" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustomerSyncUpd" SpName="Acc_CustomerSyncUpd" DbName="DBTXN.bodb02.bodbAdminNet" />
-  </Function>
 
+  </Function>
+	
   <Function Name="Customer - HR">
     <Setting Key="Acc_CustomerUpdMember_MinMaxBetHR" SpName="Acc_CustomerUpdMember_MinMaxBetHR" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdAgent_MinMaxBetHR" SpName="Acc_CustomerUpdAgent_MinMaxBetHR" DbName="DBTXN.bodb02.bodbAdminNet" />
@@ -109,24 +114,11 @@
   </Function>
 
   
-  
-  <Function Name="External Betting Limit">
-    <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="DBTXN.bodb02.bodbAdminNet_ex" Plain="0" />
-  </Function>
-  <Function Name="Customer - Add Licensee">
-    <Setting Key="NewLicensee_AdNewSuper" SpName="Acc_Dep_CustomerInsMember_Com" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="NewLicensee_AdNewMaster" SpName="Acc_Dep_CustomerInsMember_SAg" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="NewLicensee_AdNewAgent" SpName="Acc_Dep_CustomerInsMember_MAg" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="NewLicensee_AdNewMember" SpName="Acc_Dep_CustomerInsMember_Ag" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="DepositCust_UpdateSuperSetting" SpName="Acc_Dep_CustomerUpdMember_Com" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="DepositCust_UpdateMasterSetting" SpName="Acc_Dep_CustomerUpdMember_SAg" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="DepositCust_UpdateAgentSetting" SpName="Acc_Dep_CustomerUpdMember_MAg" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="DepositCust_UpdateMemberSetting" SpName="Acc_Dep_CustomerUpdMember_Ag" DbName="DBTXN.bodb02.bodbAdminNet" />
-  </Function>
-  <Function Name="Customer - Edit Licensee">
-    <Setting Key="Customer_EditLicensee_GetLicenseeInfo" SpName="Acc_ExchangeSel" DbName="DBTXN.bodb02.bodbAdminNet"  />
-    <Setting Key="Customer_EditLicensee_UpdateLicenseeInfo" SpName="Acc_ExchangeSel" DbName="DBTXN.bodb02.bodbAdminNet"  />
-
+   <Function Name="Progressive Bonus">
+    <Setting Key="CustomerUpdDisableCasinoBonus" SpName="Acc_CustomerUpdDisableCasinoBonus" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
 
+	<Function Name="External Betting Limit">		
+		<Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="DBTXN.bodb02.bodbAdminNet_ex" Plain="0" />
+	</Function>
 </Functions>
