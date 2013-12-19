@@ -39,8 +39,7 @@
     <Setting Key="NewLicensee_AdNewAgent_VirtualSports" SpName="Acc_Dep_CustomerInsMemberVirtualSports_MAg" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="Licensee_UpdAgent_VirtualSports" SpName="Acc_Dep_CustomerUpdMemberVirtualSports_MAg" DbName="DBTXN.bodb02.bodbAdminNet" />
     <Setting Key="NewLicensee_AdNewMember_VirtualSports" SpName="Acc_Dep_CustomerInsMemberVirtualSports_Ag" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Licensee_UpdMember_VirtualSports" SpName="Acc_Dep_CustomerUpdMemberVirtualSports_Ag" DbName="DBTXN.bodb02.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdSuperVS_MinMaxBet" SpName="Acc_CustomerUpdSuperVS_MinMaxBet" DbName="DBTXN.bodb02.bodbAdminNet" Plain="0" />
+    <Setting Key="Licensee_UpdMember_VirtualSports" SpName="Acc_Dep_CustomerUpdMemberVirtualSports_Ag" DbName="DBTXN.bodb02.bodbAdminNet" />    
   </Function>
 
   <Function Name="Special Delete">
