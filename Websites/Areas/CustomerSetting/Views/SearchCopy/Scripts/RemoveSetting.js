@@ -1,39 +1,40 @@
 ﻿var PTSetting = PTSetting || {};
 PTSetting.SportType = new function () {
 
-    var delayTime = 500;
+    var delayTime = 1000;
 
     var RemoveButtons = function (frameId) {
         var $content = $(frameId).contents();
         setTimeout(function () {
             $content.find('.maincontent_header').remove();
             $content.find('table:has(td.custBtn1)').remove();
+            $content.find("#divShowInfo").remove();
         }, delayTime);
-
-        $content.find("#divShowInfo").remove();
     };
 
     var RemoveSportBookCustInfo = function () {
         var $content = $("#frmSportbook").contents();
-        for (var i = 0; i < 6; i++) {
-            $content.find(".tblcollapse tr:eq(0)").remove();
-        }
-        //disable edit
-        setTimeout(function () {
+
+        //setTimeout(function () {
+            for (var i = 0; i < 6; i++) {
+                $content.find(".tblcollapse tr:eq(0)").remove();
+            }
+            //disable edit
             $content.find('.BettingLimitTextBox4').attr('readonly', 'readonly');
             $content.find('.BettingLimitTextBox5').attr('readonly', 'readonly');
             $content.find('.selectcomm').attr('disabled', 'disabled');
             $content.find('.PTSelect').attr('disabled', 'disabled');
-        }, delayTime);
+        //}, delayTime);
     };
 
     var RemoveSportBookMinPT = function () {
         var $content = $("#frmSportbookMinPT").contents();
-        for (var i = 0; i < 3; i++) {
-            $content.find('.tblcollapse tr:eq(0)').remove();
-        }
-        //disable edit
+
         setTimeout(function () {
+            for (var i = 0; i < 3; i++) {
+                $content.find('.tblcollapse tr:eq(0)').remove();
+            }
+            //disable edit
             $content.find('.PTSelect').attr('disabled', true);
             $content.find('input:button').attr('disabled', true);
         }, delayTime);
@@ -42,9 +43,10 @@ PTSetting.SportType = new function () {
 
     var RemoveRacingCustInfo = function () {
         var $content = $("#frmRacing").contents();
-        $content.find('#divCustInfo').remove();
-        //disable edit
+
         setTimeout(function () {
+            $content.find('#divCustInfo').remove();
+            //disable edit
             $content.find('input:checkbox').attr('disabled', true);
             $content.find('input:text').attr('disabled', true);
             $content.find('select').attr('disabled', true);
@@ -53,28 +55,26 @@ PTSetting.SportType = new function () {
 
     var RemoveRacingMinPT = function () {
         var $content = $("#frmRacingMinPT").contents();
+        
         setTimeout(function () {
             $content.find('.maincontent_box').remove();
             $content = $content.find('#SettingContent');
             $content.find('.tblcollapse')[0].remove();
-        }, delayTime);
-
-        //disable edit
-        setTimeout(function () {
+            //disable edit
             $content.find('input:checkbox').attr('disabled', true);
             $content.find('select').attr('disabled', true);
         }, delayTime);
     };
 
     var RemoveCasinoCustInfo = function () {
-        var $content = $("#frmCasino").contents();
-        for (var i = 0; i < 2; i++) {
-            $content.find('.tblcollapse tr:eq(0)').remove();
-        }
-        $content.find('.maincontent_box').remove();
-
-        //disable edit
+        var $content = $("#frmCasino").contents();                
+        
         setTimeout(function () {
+            for (var i = 0; i < 2; i++) {
+                $content.find('.tblcollapse tr:eq(0)').remove();
+            }
+            $content.find('.maincontent_box').remove();
+            //disable edit
             $content.find('input:checkbox').attr('disabled', true);
             $content.find('input:text').attr('readonly', 'readonly');
             $content.find('select').attr('disabled', true);
@@ -84,11 +84,12 @@ PTSetting.SportType = new function () {
 
     var RemoveVirtualSportsCustInfo = function () {
         var $content = $("#frmVirtualSports").contents();
-        for (var i = 0; i < 5; i++) {
-            $content.find('.tblcollapse tr:eq(0)').remove();
-        }
-        //disable edit
+              
         setTimeout(function () {
+            for (var i = 0; i < 5; i++) {
+                $content.find('.tblcollapse tr:eq(0)').remove();
+            }
+            //disable edit
             $content.find('.BettingLimitTextBox4').attr('readonly', 'readonly');
             $content.find('.PTSelect').attr('disabled', true);            
             $content.find('.btnUpdate').remove();
@@ -96,15 +97,15 @@ PTSetting.SportType = new function () {
     };
 
     var RemoveBingoCustInfo = function () {
-        var $content = $("#frmBingo").contents();
-        for (var i = 0; i < 5; i++) {
-            $content.find('.tblcollapse tr:eq(0)').remove();
-        }
-        $content.find('.maincontent_box').remove();
-        $content.find('#tblHideUpdate').remove();
-
-        //disable edit
+        var $content = $("#frmBingo").contents();                
+        
         setTimeout(function () {
+            for (var i = 0; i < 5; i++) {
+                $content.find('.tblcollapse tr:eq(0)').remove();
+            }
+            $content.find('.maincontent_box').remove();
+            $content.find('#tblHideUpdate').remove();
+            //disable edit
             $content.find('input:checkbox').attr('disabled', true);
             $content.find('input:text').attr('readonly', 'readonly');
             $content.find('select').attr('disabled', true);
@@ -114,12 +115,14 @@ PTSetting.SportType = new function () {
 
     var RemoveLiveCasinoCustInfo = function () {
         var $content = $("#frmLiveCasino").contents();
-        for (var i = 0; i < 2; i++) {
-            $content.find('.tblcollapse tr:eq(0)').remove();
-        }
-        $content.find('.maincontent_box').remove();
-        //disable edit
+        
         setTimeout(function () {
+            for (var i = 0; i < 5; i++) {
+                $content.find('.tblcollapse tr:eq(0)').remove();
+            }
+            $content.find('.maincontent_box').remove();
+            $content.find('.btnUpdate').remove();
+            //disable edit
             $content.find('input:checkbox').attr('disabled', true);
             $content.find('select').attr('disabled', true);
             $content.find('.btnUpdateSetting').remove();

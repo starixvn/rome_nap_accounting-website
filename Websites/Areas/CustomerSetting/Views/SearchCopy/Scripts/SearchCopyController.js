@@ -19,10 +19,10 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         internaluser: false
     };
 
-    $scope.existedUser = { userid: -1, username: '', selectedSite: {}, sites: [], selectedCurrencyId: 0, selectedCurrency: '', maxCredit: '' };
+    $scope.existedUser = { userid: -1, username: '', selectedSite: {}, sites: [], selectedCurrencyId: 0, selectedCurrency: '', maxCredit: '', IsSyncCasino: 0, IsSyncBingo: 0, IsSyncLiveCasino: 0 };
     $scope.newUser = {};
 
-    $scope.sports = [
+    var sports = [
             { sportname: '-- choose sport --', sportvalue: 'choosesport' },
             { sportname: 'Sportsbook', sportvalue: 'tabSportsbook' },
             { sportname: 'Sportsbook Min PT', sportvalue: 'tabSportsbookMinPT' },
@@ -33,6 +33,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             { sportname: 'Bingo', sportvalue: 'tabBingo' },
             { sportname: 'Live Casino', sportvalue: 'tabLiveCasino' }
     ];
+
+    $scope.sports = angular.copy(sports);
     $scope.selectedSport = $scope.sports[0];
 
     /* initialization */
@@ -62,7 +64,9 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             $("#checkExisted").show();
             $(".tabsports div").show();
 
-            $scope.searchExistingUser(this.value, null);
+            if ($scope.existedUser.userid == "-1") {
+                $scope.searchExistingUser(this.value, null);
+            }
         });
     };
 
@@ -90,12 +94,16 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                 $("#spanstep2").removeClass("step2-inactive");
                 $("#spanstep2").addClass("step2-active");
 
-                $scope.selectedSport = $scope.sports[0];
                 $scope.resetGeneralInfo();
                 $scope.resetFrameSource();
             };
 
-            $scope.searchExistingUser($scope.existedUser.username, callbackFunc);
+            if ($scope.existedUser.userid == "-1") {
+                $scope.searchExistingUser($scope.existedUser.username, callbackFunc);
+            }
+            else {
+                callbackFunc();
+            }
         }
     };
 
@@ -239,22 +247,22 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
     };
 
     $scope.disableSports = function (statusSports) {
-        if (statusSports.HideRacing == true) {
-            $("#listSports option[value='3']").remove();
-            $("#listSports option[value='4']").remove();
-        }
-        if (statusSports.HideCasino == true) {
-            $("#listSports option[value='5']").remove();
-        }
-        if (statusSports.HideVirtualSports == true) {
-            $("#listSports option[value='6']").remove();
+        if (statusSports.HideLiveCasino == true) {
+            $scope.sports.splice(8, 1);
         }
         if (statusSports.HideBingo == true) {
-            $("#listSports option[value='7']").remove();
+            $scope.sports.splice(7, 1);
         }
-        if (statusSports.HideLiveCasino == true) {
-            $("#listSports option[value='8']").remove();
+        if (statusSports.HideVirtualSports == true) {
+            $scope.sports.splice(6, 1);
         }
+        if (statusSports.HideCasino == true) {
+            $scope.sports.splice(5, 1);
+        }
+        if (statusSports.HideRacing == true) {
+            $scope.sports.splice(4, 1);
+            $scope.sports.splice(3, 1);            
+        }        
     };
 
     $scope.searchExistingUser = function (username, callback) {
@@ -284,8 +292,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             success: function (customerSettingView) {
 
                 var custid = customerSettingView.UserId;
-                var statusSports = customerSettingView.StatusSports;
-
+                //var statusSports = customerSettingView.StatusSports;
+                 
                 $scope.existedUser.userid = custid;
                 if (custid != "-1") {
                     //step1
@@ -293,10 +301,12 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                     $("#checkExisted").removeClass('not_success');
                     $("#checkExisted").addClass('success');
 
-                    //step2                    
-                    $scope.disableSports(statusSports);
-                    $scope.getSiteCreditAndCurrencyByUserId(custid);
-
+                    //step2                                        
+                    $scope.sports = angular.copy(sports);
+                    $scope.selectedSport = $scope.sports[0];
+                    
+                    $scope.getSiteCreditCurrencyAndSyncDataByUserId(custid);
+                  
                     if (callback) {
                         callback();
                     }
@@ -320,25 +330,42 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         });
     };
 
-    $scope.getSiteCreditAndCurrencyByUserId = function (custid) {
+    $scope.getSiteCreditCurrencyAndSyncDataByUserId = function (custid) {
         var param = {
             custid: custid
         };
 
         $.ajax({
             type: "POST",
-            url: toUrl("Super/GetSiteCreditAndCurrencyByUserId"),
+            url: toUrl("Super/GetSiteCreditCurrencyAndSyncDataByUserId"),
             contentType: "application/json; charset=utf-8",
             dataType: 'html',
             data: JSON.stringify(param),
             success: function (result) {
                 message.hideAlertMessage("errorMsg");
+
                 var site_currency = result.split(',');
                 $scope.existedUser.selectedSite.SiteName = site_currency[0];
                 $scope.existedUser.maxCredit = numeral(site_currency[1]).format("0,0");
                 $scope.existedUser.selectedCurrencyId = site_currency[2];
                 $scope.existedUser.selectedCurrency = site_currency[3];
+                $scope.existedUser.syncCasino = site_currency[4];
+                $scope.existedUser.syncBingo = site_currency[5];
+                $scope.existedUser.syncLiveCasino = site_currency[6];
                 $scope.getAllSites();
+
+                var statusSports = {
+                    HideSportsbook: false,
+                    HideSportsbookMinPT: false,
+                    HideRacing: false,
+                    HideRacingMinPT: false,
+                    HideCasino: $scope.existedUser.syncCasino == "1" ? false : true,
+                    HideVirtualSports: false,
+                    HideBingo: $scope.existedUser.syncBingo == "1" ? false : true,
+                    HideLiveCasino: $scope.existedUser.syncLiveCasino == "1" ? false : true
+                };
+                $scope.disableSports(statusSports);
+
             }
                 , error: function (xhr, ajaxOptions, thrownError) {
                     message.showAlertMessage("errorMsg", "Error for getting site by user id !", 1);
@@ -389,7 +416,10 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
             IsInternal: $scope.newUser.internaluser,
             CurrencyId: parseInt($scope.existedUser.selectedCurrencyId),
             ExistingCustId: $scope.existedUser.userid,
-            Creator: $("#currentUserId").val()
+            Creator: $("#currentUserId").val(),
+            IsSyncCasino: $scope.existedUser.syncCasino == "1" ? true : false,
+            IsSyncBingo: $scope.existedUser.syncBingo == "1" ? true : false,
+            IsSyncLiveCasino: $scope.existedUser.syncLiveCasino == "1" ? true : false
         };
 
         message.hideAlertMessage("errorMsg");
