@@ -180,6 +180,7 @@
 
   <Function Name="Transfer">
     <Setting Key="Acc_CustomerUpdTransferOption" SpName="Acc_CustomerUpdTransferOption" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="Acc_BettransInsTransfer_Confirm" SpName="Acc_BettransInsTransfer_Confirm" DbName="DBTXN.CustDB.bodbAdminNet"  />
   </Function>
 
   <Function Name="Credit Term">
