@@ -226,5 +226,12 @@
     <Setting Key="Acc_CustomerUpdMemberFI_MAg" SpName="Acc_CustomerUpdMemberFI_MAg" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="Acc_CustomerUpdMemberFI_SAg" SpName="Acc_CustomerUpdMemberFI_SAg" DbName="DBTXN.CustDB.bodbAdminNet"/>
   </Function>
-  
+
+  <Function Name="Transfer">
+    <Setting Key="Acc_BettransInsTransfer" SpName="Acc_BettransInsTransfer" DbName="DBTXN.CustDB.bodbAdminNet"  />
+  </Function>
+
+  <Function Name="Login - internal">
+    <Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="DBTXN.CustDB.bodbAdminNet"/>
+  </Function>
 </Functions>

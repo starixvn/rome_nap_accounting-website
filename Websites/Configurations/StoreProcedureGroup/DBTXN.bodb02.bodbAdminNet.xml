@@ -2,8 +2,7 @@
 <Functions>
 
   <Function Name="Helper">
-    <Setting Key="InsertCountry" SpName="Acc_InsCountry" DbName="DBTXN.bodb02.bodbAdminNet"/>
-	<Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="DBTXN.bodb02.bodbAdminNet"/>
+    <Setting Key="InsertCountry" SpName="Acc_InsCountry" DbName="DBTXN.bodb02.bodbAdminNet"/>	
   </Function>
   
   <Function Name="Report">
@@ -78,7 +77,7 @@
     <Setting Key="Acc_DailyTxn_UpdChecker" SpName="Acc_DailyTxn_UpdChecker" DbName="DBTXN.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_BettransDelTransaction" SpName="Acc_BettransDelTransaction" DbName="DBTXN.bodb02.bodbAdminNet"  />
     <Setting Key="Acc_BettransInsCrossTransfer" SpName="Acc_BettransInsCrossTransfer" DbName="DBTXN.bodb02.bodbAdminNet"  />
-    <Setting Key="Acc_BettransInsTransfer" SpName="Acc_BettransInsTransfer" DbName="DBTXN.bodb02.bodbAdminNet"  />
+    
     <Setting Key="BettransInsTransfer_Admin" SpName="BettransInsTransfer_Admin" DbName="DBTXN.bodb02.bodbAdminNet"  />
    
     
