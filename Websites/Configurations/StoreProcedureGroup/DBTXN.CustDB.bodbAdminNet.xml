@@ -14,8 +14,13 @@
 	  <Setting Key="Acc_CustomerUpdAgent_CommissionHR" SpName="Acc_CustomerUpdAgent_CommissionHR" DbName="DBTXN.CustDB.bodbAdminNet"/>
 	  <Setting Key="Acc_CustomerUpdMaster_CommissionHR" SpName="Acc_CustomerUpdMaster_CommissionHR" DbName="DBTXN.CustDB.bodbAdminNet"/>
 	  <Setting Key="Acc_CustomerUpdSuper_CommissionHR" SpName="Acc_CustomerUpdSuper_CommissionHR" DbName="DBTXN.CustDB.bodbAdminNet"/>
-  </Function>
 
+    
+  </Function>
+  <Function Name="Helper">
+    <Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="DBTXN.CustDB.bodbAdminNet"/>
+
+  </Function>
   <Function Name="Customer - Setting">
     <Setting Key="Acc_CustOverrideUpd" SpName="Acc_CustOverrideUpd" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag" DbName="DBTXN.CustDB.bodbAdminNet"/>
@@ -226,5 +231,7 @@
     <Setting Key="Acc_CustomerUpdMemberFI_MAg" SpName="Acc_CustomerUpdMemberFI_MAg" DbName="DBTXN.CustDB.bodbAdminNet"/>
     <Setting Key="Acc_CustomerUpdMemberFI_SAg" SpName="Acc_CustomerUpdMemberFI_SAg" DbName="DBTXN.CustDB.bodbAdminNet"/>
   </Function>
-  
+  <Function Name="External Betting Limit">
+    <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="DBTXN.CustDB.bodbAdminNet_ex" Plain="0" />
+  </Function>
 </Functions>

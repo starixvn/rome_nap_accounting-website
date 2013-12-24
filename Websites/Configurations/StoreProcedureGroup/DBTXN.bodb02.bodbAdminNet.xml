@@ -3,7 +3,7 @@
 
   <Function Name="Helper">
     <Setting Key="InsertCountry" SpName="Acc_InsCountry" DbName="DBTXN.bodb02.bodbAdminNet"/>
-	<Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="DBTXN.bodb02.bodbAdminNet"/>
+	
   </Function>
   
   <Function Name="Report">
@@ -113,7 +113,5 @@
     <Setting Key="CustomerUpdDisableCasinoBonus" SpName="Acc_CustomerUpdDisableCasinoBonus" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
 
-	<Function Name="External Betting Limit">		
-		<Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="DBTXN.bodb02.bodbAdminNet_ex" Plain="0" />
-	</Function>
+
 </Functions>
