@@ -152,8 +152,6 @@ public partial class PositionTakingCS : RequiredAuthorizationPage
                     }
 
                     CasinoManager.GetCustSettingCS(ref _cUpline);
-                    _c.PTByGameTypeUpline = _cUpline.PTByGameType;
-                    _c.PTByGameType = _cUpline.PTByGameType;
                     _c.UpperCustID = uplineId;
                     if (_c.CasinoSync) //this customer have already been sync to Casino 
                     {
@@ -164,6 +162,9 @@ public partial class PositionTakingCS : RequiredAuthorizationPage
                     //{
                     //    PageTitle = Resources.Language.lblInsertCasinoSetting;
                     //}
+                    
+                    _c.PTByGameTypeUpline = _cUpline.PTByGameType;
+                    _c.PTByGameType = _cUpline.PTByGameType;
                     bool _IsLicensee = IsLicensee(_c.SiteName);
                     var group = _IsLicensee ? Globals.CasinoGroup.Group2 : Globals.CasinoGroup.Group1;
                     ctrHTML.Text = CasinoManager.GenCasinoPTHTML(_c, group, ptType);
