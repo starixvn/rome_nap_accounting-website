@@ -261,8 +261,8 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         }
         if (statusSports.HideRacing == true) {
             $scope.sports.splice(4, 1);
-            $scope.sports.splice(3, 1);            
-        }        
+            $scope.sports.splice(3, 1);
+        }
     };
 
     $scope.searchExistingUser = function (username, callback) {
@@ -293,7 +293,7 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
 
                 var custid = customerSettingView.UserId;
                 //var statusSports = customerSettingView.StatusSports;
-                 
+
                 $scope.existedUser.userid = custid;
                 if (custid != "-1") {
                     //step1
@@ -304,9 +304,9 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
                     //step2                                        
                     $scope.sports = angular.copy(sports);
                     $scope.selectedSport = $scope.sports[0];
-                    
-                    $scope.getSiteCreditCurrencyAndSyncDataByUserId(custid);
-                  
+
+                    $scope.getCustomerInfoByUserId(custid);
+
                     if (callback) {
                         callback();
                     }
@@ -330,28 +330,28 @@ searchCopyController.controller('SearchCopyController', ['$scope', 'message', 'v
         });
     };
 
-    $scope.getSiteCreditCurrencyAndSyncDataByUserId = function (custid) {
+    $scope.getCustomerInfoByUserId = function (custid) {
         var param = {
             custid: custid
         };
 
         $.ajax({
             type: "POST",
-            url: toUrl("Super/GetSiteCreditCurrencyAndSyncDataByUserId"),
+            url: toUrl("Super/GetCustomerInfoByUserId"),
             contentType: "application/json; charset=utf-8",
-            dataType: 'html',
+            dataType: "json",            
             data: JSON.stringify(param),
-            success: function (result) {
+            success: function (custInfo) {
                 message.hideAlertMessage("errorMsg");
 
-                var site_currency = result.split(',');
-                $scope.existedUser.selectedSite.SiteName = site_currency[0];
-                $scope.existedUser.maxCredit = numeral(site_currency[1]).format("0,0");
-                $scope.existedUser.selectedCurrencyId = site_currency[2];
-                $scope.existedUser.selectedCurrency = site_currency[3];
-                $scope.existedUser.syncCasino = site_currency[4];
-                $scope.existedUser.syncBingo = site_currency[5];
-                $scope.existedUser.syncLiveCasino = site_currency[6];
+                $scope.existedUser.selectedSite.SiteName = custInfo.Site;
+                $scope.existedUser.maxCredit = numeral(custInfo.Credit).format("0,0");
+                $scope.existedUser.selectedCurrencyId = custInfo.CurrencyId;
+                $scope.existedUser.selectedCurrency = custInfo.Currency;
+                $scope.existedUser.syncCasino = custInfo.IsSyncCasino;
+                $scope.existedUser.syncBingo = custInfo.IsSyncBingo;
+                $scope.existedUser.syncLiveCasino = custInfo.IsSyncLiveCasino;
+
                 $scope.getAllSites();
 
                 var statusSports = {
