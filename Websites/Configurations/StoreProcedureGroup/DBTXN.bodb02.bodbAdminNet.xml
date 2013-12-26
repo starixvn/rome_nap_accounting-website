@@ -115,7 +115,7 @@
 
 
   <Function Name="SearchCopy">    
-    <Setting Key="Acc_CustomerInsMember_CloneSetting_Com" SpName="Acc_CustomerInsMember_CloneSetting_Com" DbName="DBTXN.bodb02.bodbAdminNet"/>    
+    <Setting Key="Acc_CustomerInsMember_CloneSetting_Com" SpName="Acc_CustomerInsMember_CloneSetting_Com" DbName="DBTXN.CustDB.bodbAdminNet"/>    
   </Function>
 
 </Functions>
