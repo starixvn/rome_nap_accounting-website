@@ -159,6 +159,9 @@ public partial class PositionTakingCS : RequiredAuthorizationPage
 
                     _c.PTByGameTypeUpline = _cUpline.PTByGameType;
                     _c.PTByGameType = _cUpline.PTByGameType;
+                    
+                    _c.PTByGameTypeUpline = _cUpline.PTByGameType;
+                    _c.PTByGameType = _cUpline.PTByGameType;
                     bool _IsLicensee = IsLicensee(_c.SiteName);
                     var group = _IsLicensee ? Globals.CasinoGroup.Group2 : Globals.CasinoGroup.Group1;
                     ctrHTML.Text = CasinoManager.GenCasinoPTHTML(_c, group, ptType);
