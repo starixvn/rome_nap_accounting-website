@@ -219,6 +219,7 @@
     <Setting Key="Acc_DailyCreatedCustomer_Details" SpName="Acc_DailyCreatedCustomer_Details" DbName="DBACC.bodb02.bodbAdminNet"  />
     <Setting Key="SelDuplicateTickets" SpName="Acc_CheckDuplicateTickets" DbName="DBACC.bodb02.bodbAdminNet"  />
     <Setting Key="HistoryDailyTurnover" SpName="Acc_Rpt_DailyTurnover" DbName="DBACC.bodb02.bodbAdminNet"  />
+	<Setting Key="DailyTurnover" SpName="Acc_Rpt_DailyTurnover" DbName="DBACC.bodb02.bodbAdminNet"  />
     <Setting Key="DailyTurnoverChangeDetail" SpName="Acc_Rpt_DailyTurnover_ChangedDetail" DbName="DBACC.bodb02.bodbAdminNet"  />
   </Function>
 
@@ -254,7 +255,7 @@
   </Function>
 
   <Function Name="Bet List - ScoreInformation">
-    <Setting Key="BetList_ScoreInformation_SelScoreInformation" SpName="Acc_Rpt_DailyWLDirect_Result_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="BetList_ScoreInformation_SelScoreInformation" SpName="Acc_Rpt_DailyWLDirect_Result" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
 
   <Function Name="Admin - Security Code">
@@ -305,6 +306,6 @@
   <Function Name="Left Panel - Transfer">
     <Setting Key="Acc_CustomerSelIsCrossTransfer" SpName="Acc_CustomerSelIsCrossTransfer" DbName="DBACC.bodb02.bodbAdminNet"/>
     <Setting Key="Acc_DailyTxn_FinanceBettype_Sel" SpName="Acc_DailyTxn_FinanceBettype_Sel" DbName="DBACC.bodb02.bodbAdminNet"/>
-    <Setting Key="Acc_CustomerSelFITransferStatus" SpName="Acc_CustomerSelFITransferStatus" DbName="DBACC.bodb02.bodbAdminNet"/>
+	  <Setting Key="Acc_CustomerSelFITransferStatus" SpName="Acc_CustomerSelFITransferStatus" DbName="DBACC.bodb02.bodbAdminNet"/>
   </Function>
 </Functions>

@@ -296,9 +296,7 @@ addNewAgent.fillRacingSettingAndPT = function (dataJson) {
             uplineValMax = parseFloat(dataJson["v" + racing.Id + "discount_" + tote.Id]);
             if (isNaN(uplineValMax)) uplineValMax = 0;
 
-            var maxRacingComm = this.roleId == 1 ?
-                parseFloat(dataJson["v" + racing.Id + "discount_" + tote.Id]).formatMoneyFromVal() :
-                parseFloat(dataJson["v" + racing.Id + "discount_" + tote.Id + "_max"]).formatMoneyFromVal();
+            var maxRacingComm = parseFloat(dataJson["v" + racing.Id + "discount_" + tote.Id]).formatMoneyFromVal();
             $("#v" + racing.Id + "discount_" + tote.Id).find("option").each(function () {
                 if (parseFloat($(this).val()) > maxRacingComm) $(this).remove();
             });

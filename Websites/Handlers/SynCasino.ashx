@@ -17,6 +17,9 @@ using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Helper;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
+using Fanex.Tarus.DataAccess.Implement.Customer;
+using System.Linq;
+using DNAide.Core;
 
 public class UpdateCSSetting : BaseHandler
 {
@@ -47,11 +50,11 @@ public class UpdateCSSetting : BaseHandler
     {
         get
         {
-            var customerInfo = (CSCustomerDetail) (HttpContext.Current.Session[Globals.SESSION_CUSTOMER]);
+            var customerInfo = (CSCustomerDetail)(HttpContext.Current.Session[Globals.SESSION_CUSTOMER]);
             return customerInfo.IBCCustID;
         }
     }
-    
+
     public string RenderTable(DataTable dt)
     {
         string strRet = "<table border=1>";
@@ -88,17 +91,17 @@ public class UpdateCSSetting : BaseHandler
         }
 
         CSCustomerDetail custInfo = Sunplus.Accounting.Business.CasinoManager.GetCustInfoIBC(custid);
-        
+
         string roleid;
         HttpRequest request = null;
         string strReturn = "<script>parent.ShowMessage('msg')</script>"; // Return error script
         Customer csCustomer = new CasinoLibrary.SBAgent.Customer();
         bool isEnableCasino = true;
-        
+
         try
         {
             bool bInserting = !custInfo.CasinoSync;
-            
+
             request = context.Request;
             roleid = custInfo.RoleId.ToString();
 
@@ -108,8 +111,7 @@ public class UpdateCSSetting : BaseHandler
             bool isM = roleid == Globals.MasterLevel.ToString();
             bool isA = roleid == Globals.AgentLevel.ToString();
             bool isC = roleid == Globals.MemberLevel.ToString();
-            
-            
+
             if (isS)
             {
                 roleid = Globals.Super;
@@ -159,9 +161,9 @@ public class UpdateCSSetting : BaseHandler
                 if (intMaxTransfer < 0 || intMaxTransfer < (int)(custInfo.MinTransferCreditLimit))
                 {
                     context.Response.Write(@"<script>parent.ShowMessage('" + AlertMessage.GetMsg(Resources.Language.transferCreditMsg, AlertMessage.MsgType.Error) + "'); parent.document.getElementById('" + Globals.TXT_MAXTRANSTERCREDIT + "').focus(); </script>");
-                    return;                    
+                    return;
                 }
-                
+
             }
             else
             {
@@ -170,25 +172,48 @@ public class UpdateCSSetting : BaseHandler
                     context.Response.Write(@"<script>parent.ShowMessage('" + AlertMessage.GetMsg(Resources.Language.transferCreditMsg, AlertMessage.MsgType.Error) + "'); parent.document.getElementById('" + Globals.TXT_MAXTRANSTERCREDIT + "').focus(); </script>");
                     return;
                 }
-            }                       
+            }
 
             bool bAutoReset = false;
             bAutoReset = request["cbxAutoReset"] != null;
             bool isDisableCasino = request["chkDisabledCasino"] == null;
             isEnableCasino = !isDisableCasino || !custInfo.CasinoSync;
-            
+
             csCustomer.SiteName = new Sunplus.Accounting.DataAccess.AdoNet.CustomerDAO().GetRNGSiteNameByCustId(custid);
-            
-            //var custSetting = csCustomer.GetCustSetting(custInfo.IBCCustID);            
-            if (bInserting)
+
+            //var custSetting = csCustomer.GetCustSetting(custInfo.IBCCustID);   
+            if (!bInserting)
+            {
+                status = csCustomer.UpdateMaxTransferMisc(
+                      custid,
+                      isEnableCasino,
+                      (!isEnableCasino) ? true : DNAide.Core.CastAide.AsBoolean(request[Globals.HIDDEN_UPDDOWNLLINE]),
+                      isMaxTransfer,
+                      intMaxTransfer, // max transfer credit
+                      bAutoReset,
+                      bPTByGameType,
+                    //!bGameKindGroup,                             
+                      request.UserHostAddress,
+                      AppSession.CustID,
+                      AppSession.Username,
+                      3);
+                if (!status)
+                {
+                    context.Response.Write("<script>parent.ShowMessage('" + AlertMessage.GetMsg(Resources.Language.updCustSettingFailed, AlertMessage.MsgType.Error) + "', 0); parent.ResetBtnState(); </script>");
+                    return;
+                }
+            }
+            else
             {
                 CSCustomerDetail parentCustInfo = null;
                 Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider pCustInfo = new Sunplus.Accounting.DataAccess.APIClient.IBCLibProvider();
-                if (custInfo.RoleId.ToString() == "3") {
+                if (custInfo.RoleId.ToString() == "3")
+                {
                     parentCustInfo = pCustInfo.GetCustInfoIBC(custInfo.SIBCCustID);
                 }
-                    
-                else if (custInfo.RoleId.ToString() == "2") {
+
+                else if (custInfo.RoleId.ToString() == "2")
+                {
                     parentCustInfo = pCustInfo.GetCustInfoIBC(custInfo.MIBCCustID);
                 }
 
@@ -196,41 +221,17 @@ public class UpdateCSSetting : BaseHandler
                 {
                     parentCustInfo = pCustInfo.GetCustInfoIBC(custInfo.AIBCCustID);
                 }
-                                    
-                if (parentCustInfo!=null)
-                    isEnableCasino = !parentCustInfo.CasinoDisabled;
-            }
-            
-            if (!bInserting)
-            {                                         
-               status = csCustomer.UpdateMaxTransferMisc(
-                     custid,
-                     isEnableCasino,
-                     (!isEnableCasino)?true:DNAide.Core.CastAide.AsBoolean(request[Globals.HIDDEN_UPDDOWNLLINE]),
-                     isMaxTransfer,
-                     intMaxTransfer, // max transfer credit
-                     bAutoReset,
-                     bPTByGameType,
-                    //!bGameKindGroup,                             
-                     request.UserHostAddress,
-                     AppSession.CustID,
-                     AppSession.Username,
-                     3);
-                if (!status)
+
+                if (parentCustInfo != null)
                 {
-                    context.Response.Write("<script>parent.ShowMessage('" + AlertMessage.GetMsg(Resources.Language.updCustSettingFailed, AlertMessage.MsgType.Error) + "', 0); parent.ResetBtnState(); </script>");
-                    return;
+                    isEnableCasino = !parentCustInfo.CasinoDisabled;
                 }
-                
-            }
-            else
-            {
 
                 if (isS)
                 {
                     bPTByGameType = !bGameKindGroup;
                 }
-                
+
                 status = csCustomer.InsertCustSetting(
                      Globals.CASINO_GROUP1,
                      custid,
@@ -259,7 +260,7 @@ public class UpdateCSSetting : BaseHandler
                      request.ServerVariables["REMOTE_ADDR"],
                      AppSession.AccId,
                      AppSession.Username,
-                     3, 
+                     3,
                      bAutoReset,
                      false,//EnableCasinoBonus
                      false//EnableCasinoJackpot
@@ -281,6 +282,7 @@ public class UpdateCSSetting : BaseHandler
                 return;
             }
             // Update cust game kind and game type
+            var isDepositCustomer = IsDepositSite(csCustomer.SiteName);
             DataTable dtGameKinds = GameKindsDataTable();
             DataTable dtGameTypes = GameTypesDataTable();
             DataTable dtGameTypesStake = GameTypesStakesDataTable();
@@ -310,8 +312,10 @@ public class UpdateCSSetting : BaseHandler
                     !isC?"0":request[gameKind + Globals.SEP_GAMEKIND_GAMETYPE + 0 + Globals.SEP_GAMEKIND_GAMETYPE + Globals.Member + Globals.Comm],
                     custInfo.RoleId,
                     HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"],
-                    AppSession.AccId, AppSession.Username, 3
-                    
+                    AppSession.AccId,
+                    AppSession.Username,
+                    3,
+                    isDepositCustomer ? "1" : "0"                  
                 });
 
 
@@ -358,28 +362,31 @@ public class UpdateCSSetting : BaseHandler
                         isAuto = request[gameKind + Globals.SEP_GAMEKIND_GAMETYPE + gameTypeId + Globals.SEP_GAMEKIND_GAMETYPE + Globals.strCHK + Globals.Super + Globals.strAutoPT] != null;
 
                         dtGameTypes.Rows.Add(new object[] { 
-                        custid,
-                        gameTypeId,
-                        0,
-                        (!(isS||isM)||isAuto?"0":request[gameKind + Globals.SEP_GAMEKIND_GAMETYPE + gameTypeId + Globals.SEP_GAMEKIND_GAMETYPE + Globals.Super + Globals.strPresetPT]),
-                        (!(isM||isA)?"0":request[gameKind + Globals.SEP_GAMEKIND_GAMETYPE + gameTypeId + Globals.SEP_GAMEKIND_GAMETYPE + Globals.Master + Globals.strPresetPT]),
-                        (!(isA||isC)?"0":request[gameKind + Globals.SEP_GAMEKIND_GAMETYPE + gameTypeId + Globals.SEP_GAMEKIND_GAMETYPE + Globals.Agent + Globals.strPresetPT]),
-                        isAuto?"1":"0",
-                        (!isAuto?"0":request[gameKind + Globals.SEP_GAMEKIND_GAMETYPE + gameTypeId + Globals.SEP_GAMEKIND_GAMETYPE + Globals.Super + Globals.strAutoPT]),
-                        (!(isS||isM||isA)?"0":request[gameKind + Globals.SEP_GAMEKIND_GAMETYPE + gameTypeId + Globals.SEP_GAMEKIND_GAMETYPE + roleid + Globals.strMinPT]),
-                        0,
-                        !isS?"0":request[gameKind + Globals.SEP_GAMEKIND_GAMETYPE + gameTypeId + Globals.SEP_GAMEKIND_GAMETYPE + Globals.Super + Globals.Comm],
-                        !isM?"0":request[gameKind + Globals.SEP_GAMEKIND_GAMETYPE + gameTypeId + Globals.SEP_GAMEKIND_GAMETYPE + Globals.Master + Globals.Comm],
-                        !isA?"0":request[gameKind + Globals.SEP_GAMEKIND_GAMETYPE + gameTypeId + Globals.SEP_GAMEKIND_GAMETYPE + Globals.Agent + Globals.Comm],
-                        !isC?"0":request[gameKind + Globals.SEP_GAMEKIND_GAMETYPE + gameTypeId + Globals.SEP_GAMEKIND_GAMETYPE + Globals.Member + Globals.Comm],
-                        GetSelectedStakeLevels(stakeList, gameKind, gameTypeId),
-                        custInfo.RoleId,
-                        HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"],
-                        AppSession.AccId, AppSession.Username, 3
-                    });
+                            custid,
+                            gameTypeId,
+                            0,
+                            (!(isS||isM)||isAuto?"0":request[gameKind + Globals.SEP_GAMEKIND_GAMETYPE + gameTypeId + Globals.SEP_GAMEKIND_GAMETYPE + Globals.Super + Globals.strPresetPT]),
+                            (!(isM||isA)?"0":request[gameKind + Globals.SEP_GAMEKIND_GAMETYPE + gameTypeId + Globals.SEP_GAMEKIND_GAMETYPE + Globals.Master + Globals.strPresetPT]),
+                            (!(isA||isC)?"0":request[gameKind + Globals.SEP_GAMEKIND_GAMETYPE + gameTypeId + Globals.SEP_GAMEKIND_GAMETYPE + Globals.Agent + Globals.strPresetPT]),
+                            isAuto?"1":"0",
+                            (!isAuto?"0":request[gameKind + Globals.SEP_GAMEKIND_GAMETYPE + gameTypeId + Globals.SEP_GAMEKIND_GAMETYPE + Globals.Super + Globals.strAutoPT]),
+                            (!(isS||isM||isA)?"0":request[gameKind + Globals.SEP_GAMEKIND_GAMETYPE + gameTypeId + Globals.SEP_GAMEKIND_GAMETYPE + roleid + Globals.strMinPT]),
+                            0,
+                            !isS?"0":request[gameKind + Globals.SEP_GAMEKIND_GAMETYPE + gameTypeId + Globals.SEP_GAMEKIND_GAMETYPE + Globals.Super + Globals.Comm],
+                            !isM?"0":request[gameKind + Globals.SEP_GAMEKIND_GAMETYPE + gameTypeId + Globals.SEP_GAMEKIND_GAMETYPE + Globals.Master + Globals.Comm],
+                            !isA?"0":request[gameKind + Globals.SEP_GAMEKIND_GAMETYPE + gameTypeId + Globals.SEP_GAMEKIND_GAMETYPE + Globals.Agent + Globals.Comm],
+                            !isC?"0":request[gameKind + Globals.SEP_GAMEKIND_GAMETYPE + gameTypeId + Globals.SEP_GAMEKIND_GAMETYPE + Globals.Member + Globals.Comm],
+                            GetSelectedStakeLevels(stakeList, gameKind, gameTypeId),
+                            custInfo.RoleId,
+                            HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"],
+                            AppSession.AccId, 
+                            AppSession.Username, 
+                            3,
+                            isDepositCustomer ? "1" : "0"          
+                        });
                     }
                 }
-            }            
+            }
 
             if (dtGameKinds.Rows.Count > 0)
             {
@@ -413,18 +420,18 @@ public class UpdateCSSetting : BaseHandler
                                                                            (!isEnableCasino) ? true : DNAide.Core.CastAide.AsBoolean(request[Globals.HIDDEN_UPDDOWNLLINE]));
                 status = csCustomer.RemoveAccount(custInfo.UserName, request.UserHostAddress, AppSession.AccId, AppSession.Username, 3);
             }
-            
-            
+
+
 
             if (errMsg != string.Empty)
             {
                 context.Response.Write(@"<script>parent.ShowMessage('" + AlertMessage.GetMsg(errMsg, AlertMessage.MsgType.Error) + "');</script>");
                 return;
-            }            
+            }
         }
         catch (Exception ex)
         {
-            
+
             LogExtensions.ExceptionHandler(ex);
             context.Response.Write(strReturn.Replace("msg", ex.Message.Replace("'", "\\'").Replace("\n", "")));
 
@@ -438,8 +445,8 @@ public class UpdateCSSetting : BaseHandler
         }
 
         // Return result
-        context.Response.Write(@"<script>parent.showAlertMessage('err','Update Casino Setting Successfully',0);parent.afterUpdate(true, 2000);</script>");                                        
-                                           
+        context.Response.Write(@"<script>parent.showAlertMessage('err','Update Casino Setting Successfully',0);parent.afterUpdate(true, 2000);</script>");
+
 
         // Clear session variable
         // context.Session[Globals.SESSION_CUSTOMER] = null;
@@ -466,7 +473,10 @@ public class UpdateCSSetting : BaseHandler
             new DataColumn("MemberRollingRate"),
             new DataColumn("RoleId"),
             new DataColumn("FromIP"),
-            new DataColumn("ModifyBy"), new DataColumn("ModifyUserName"), new DataColumn("FromSystem")
+            new DataColumn("ModifyBy"), 
+            new DataColumn("ModifyUserName"), 
+            new DataColumn("FromSystem"), 
+            new DataColumn("IsDepositCustomer")
         });
 
         return dtGameKinds;
@@ -493,7 +503,10 @@ public class UpdateCSSetting : BaseHandler
             new DataColumn("StakeLevelList"),
             new DataColumn("RoleId"),
             new DataColumn("FromIP"),
-            new DataColumn("ModifyBy"), new DataColumn("ModifyUserName"), new DataColumn("FromSystem")
+            new DataColumn("ModifyBy"), 
+            new DataColumn("ModifyUserName"), 
+            new DataColumn("FromSystem"), 
+            new DataColumn("IsDepositCustomer")
         });
 
         return dtGameTypes;
@@ -565,4 +578,13 @@ public class UpdateCSSetting : BaseHandler
         }
     }
 
+    public bool IsDepositSite(string siteName)
+    {
+        var depositCustomerAccess = new DepositCustomerAccess();
+        var dataTableDeposit = depositCustomerAccess.SelAllLicensee();
+        bool result = dataTableDeposit.Select()
+                                      .Where(s => CastAide.AsString(s["LicenseeName"]) == siteName)
+                                      .Any();
+        return result;
+    }
 }

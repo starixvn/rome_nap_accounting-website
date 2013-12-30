@@ -55,8 +55,8 @@ public partial class test : System.Web.UI.Page
             //        var test = domains[key];
             //    }
             //}
-          
-            
+
+            LogExtensions.ExceptionHandler(new Exception("^^!"));
 
         }
         catch (Exception ex)

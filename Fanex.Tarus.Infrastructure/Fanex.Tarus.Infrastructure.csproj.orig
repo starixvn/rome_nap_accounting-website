@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CCC0446A-42E7-4850-B09C-4DAC278F23B3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Fanex.Tarus.Infrastructure</RootNamespace>
+    <AssemblyName>Fanex.Tarus.Infrastructure</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DNAide, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\DNAide.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelUtil, Version=29.3.0.1000, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\ExcelUtil.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Caching, Version=1.0.404.95, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Fanex\Fanex.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Fanex\Fanex.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.MailDeliver.MailClient, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Fanex\Fanex.MailDeliver.MailClient.dll</HintPath>
+    </Reference>
+    <Reference Include="RemotingRef, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\Fanex\RemotingRef.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Caching\CacheHelper.cs" />
+    <Compile Include="Caching\CacheRef.cs" />
+    <Compile Include="Common\AppSession.cs" />
+    <Compile Include="Common\Enumerations.cs" />
+    <Compile Include="Configurations\AppSettings.cs" />
+    <Compile Include="Configurations\StoreProcedureGroup\AdminSession.cs" />
+    <Compile Include="Configurations\StoreProcedureGroup\BetAggregatorSection.cs" />
+    <Compile Include="Configurations\StoreProcedureGroup\BetListSection.cs" />
+    <Compile Include="Configurations\StoreProcedureGroup\CasinoSession.cs" />
+    <Compile Include="Configurations\StoreProcedureGroup\CreditTermSession.cs" />
+    <Compile Include="Configurations\StoreProcedureGroup\CustomerSession.cs" />
+    <Compile Include="Configurations\StoreProcedureGroup\ExchangeRateSession.cs" />
+    <Compile Include="Configurations\StoreProcedureGroup\HelperSession.cs" />
+    <Compile Include="Configurations\StoreProcedureGroup\LogDisplaySection.cs" />
+    <Compile Include="Configurations\StoreProcedureGroup\P2PSession.cs" />
+    <Compile Include="Configurations\StoreProcedureGroup\RacingSession.cs" />
+    <Compile Include="Configurations\StoreProcedureGroup\ReportSession.cs" />
+    <Compile Include="Configurations\StoreProcedureGroup\SettlementSession.cs" />
+    <Compile Include="Configurations\StoreProcedureGroup\SpecialDeleteGroupSection.cs" />
+    <Compile Include="Configurations\StoreProcedureGroup\SportbookPtSession.cs" />
+    <Compile Include="Configurations\StoreProcedureGroup\TransactionGroupSection.cs" />
+    <Compile Include="Configurations\StoreProcedureGroup\UserControlSession.cs" />
+    <Compile Include="Configurations\StoreProcedureGroup\ViewPtSession.cs" />
+    <Compile Include="Configurations\StoreProcedureSection.cs" />
+    <Compile Include="Configurations\VirtualSportsSection.cs" />
+    <Compile Include="Configurations\WebSettings.cs" />
+    <Compile Include="Constants\BetType.cs" />
+    <Compile Include="Constants\RoleIdConstants.cs" />
+<<<<<<< HEAD
+=======
+    <Compile Include="Constants\SMALevelNameConstants.cs" />
+>>>>>>> master
+    <Compile Include="Constants\Sports.cs" />
+    <Compile Include="Extensions\LogExtensions.cs" />
+    <Compile Include="Extensions\ResourceExtension.cs" />
+    <Compile Include="Extensions\SendMailExtension.cs" />
+    <Compile Include="Helper\AlertMessage.cs" />
+    <Compile Include="Helper\DataUtils.cs" />
+    <Compile Include="Helper\ExcelGemboxUtils.cs" />
+    <Compile Include="Helper\ReportHelpers.cs" />
+    <Compile Include="Helper\SportHelper\BetTeam.cs" />
+    <Compile Include="Helper\SportHelper\Bettype.cs" />
+    <Compile Include="Helper\SportHelper\CalcOdds.cs" />
+    <Compile Include="Helper\Utils.cs" />
+    <Compile Include="Helper\WebUtils.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resource\ErrorLanguage.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ErrorLanguage.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\GamingResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GamingResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\Labels.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Labels.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\NumberUtil.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\ErrorLanguage.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ErrorLanguage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\GamingResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GamingResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\Labels.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Labels.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sunplus.Accounting.Core\Sunplus.Accounting.Core.csproj">
+      <Project>{09B74F02-6C21-4C5E-A52C-B6D56595A262}</Project>
+      <Name>Sunplus.Accounting.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Business\" />
+    <Folder Include="Criteria\" />
+    <Folder Include="DataAccess\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

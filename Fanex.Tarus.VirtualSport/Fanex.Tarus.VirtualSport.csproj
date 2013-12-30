@@ -60,7 +60,7 @@
     </Reference>
     <Reference Include="Fanex.PTVirtualSports, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependency\VirtualSports\Fanex.PTVirtualSports.dll</HintPath>
+      <HintPath>..\Dependency\Fanex\Fanex.PTVirtualSports.dll</HintPath>
     </Reference>
     <Reference Include="IBCUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
