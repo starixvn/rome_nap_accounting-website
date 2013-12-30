@@ -9,6 +9,9 @@
 
 namespace Fanex.Tarus.Infrastructure.Constants
 {
+    /// <summary>
+    /// Role ID Constants.
+    /// </summary>
     public class RoleIdConstants
     {
         public const int Super = 4;
