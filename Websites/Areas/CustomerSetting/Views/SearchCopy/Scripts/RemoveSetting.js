@@ -15,16 +15,15 @@ PTSetting.SportType = new function () {
     var RemoveSportBookCustInfo = function () {
         var $content = $("#frmSportbook").contents();
 
-        //setTimeout(function () {
+        setTimeout(function () {
             for (var i = 0; i < 6; i++) {
                 $content.find(".tblcollapse tr:eq(0)").remove();
             }
             //disable edit
-            $content.find('.BettingLimitTextBox4').attr('readonly', 'readonly');
-            $content.find('.BettingLimitTextBox5').attr('readonly', 'readonly');
+            $content.find('input:text').attr('disabled', true);            
             $content.find('.selectcomm').attr('disabled', 'disabled');
             $content.find('.PTSelect').attr('disabled', 'disabled');
-        //}, delayTime);
+        }, delayTime);
     };
 
     var RemoveSportBookMinPT = function () {
@@ -76,7 +75,7 @@ PTSetting.SportType = new function () {
             $content.find('.maincontent_box').remove();
             //disable edit
             $content.find('input:checkbox').attr('disabled', true);
-            $content.find('input:text').attr('readonly', 'readonly');
+            $content.find('input:text').attr('disabled', true);                           
             $content.find('select').attr('disabled', true);
             $content.find('a').css('display', 'none');
         }, delayTime);
@@ -90,7 +89,7 @@ PTSetting.SportType = new function () {
                 $content.find('.tblcollapse tr:eq(0)').remove();
             }
             //disable edit
-            $content.find('.BettingLimitTextBox4').attr('readonly', 'readonly');
+            $content.find('input:text').attr('disabled', true);                        
             $content.find('.PTSelect').attr('disabled', true);            
             $content.find('.btnUpdate').remove();
         }, delayTime);
@@ -107,7 +106,7 @@ PTSetting.SportType = new function () {
             $content.find('#tblHideUpdate').remove();
             //disable edit
             $content.find('input:checkbox').attr('disabled', true);
-            $content.find('input:text').attr('readonly', 'readonly');
+            $content.find('input:text').attr('disabled', true);                           
             $content.find('select').attr('disabled', true);
             $content.find('.canchange').css('display', 'none');
         }, delayTime);
@@ -130,18 +129,18 @@ PTSetting.SportType = new function () {
     };
 
     this.SetFrameLoaded = function () {
-        var tabId = $("#listSports").val();
+        var sport = $('#listSports option:selected').text();        
 
         //remove settings
-        switch (tabId) {
-            case '1': RemoveSportBookCustInfo(); RemoveButtons('#frmSportbook'); break;
-            case '2': RemoveSportBookMinPT(); RemoveButtons('#frmSportbookMinPT'); break;
-            case '3': RemoveRacingCustInfo(); RemoveButtons('#frmRacing'); break;
-            case '4': RemoveRacingMinPT(); RemoveButtons('#frmRacingMinPT'); break;
-            case '5': RemoveCasinoCustInfo(); RemoveButtons('#frmCasino'); break;
-            case '6': RemoveVirtualSportsCustInfo(); RemoveButtons('#frmVirtualSports'); break;
-            case '7': RemoveBingoCustInfo(); RemoveButtons('#frmBingo'); break;
-            case '8': RemoveLiveCasinoCustInfo(); RemoveButtons('#frmLiveCasino'); break;
+        switch (sport) {
+            case 'Sportsbook': RemoveSportBookCustInfo(); RemoveButtons('#frmSportbook'); break;
+            case 'Sportsbook Min PT': RemoveSportBookMinPT(); RemoveButtons('#frmSportbookMinPT'); break;
+            case 'Racing': RemoveRacingCustInfo(); RemoveButtons('#frmRacing'); break;
+            case 'Racing Min PT': RemoveRacingMinPT(); RemoveButtons('#frmRacingMinPT'); break;
+            case 'Casino': RemoveCasinoCustInfo(); RemoveButtons('#frmCasino'); break;
+            case 'Virtual Sports': RemoveVirtualSportsCustInfo(); RemoveButtons('#frmVirtualSports'); break;
+            case 'Bingo': RemoveBingoCustInfo(); RemoveButtons('#frmBingo'); break;
+            case 'Live Casino': RemoveLiveCasinoCustInfo(); RemoveButtons('#frmLiveCasino'); break;
         }
     }
 };
