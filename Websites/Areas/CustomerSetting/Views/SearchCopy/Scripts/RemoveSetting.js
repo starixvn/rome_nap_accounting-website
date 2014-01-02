@@ -78,6 +78,7 @@ PTSetting.SportType = new function () {
             $content.find('input:text').attr('disabled', true);                           
             $content.find('select').attr('disabled', true);
             $content.find('a').css('display', 'none');
+            $content.find('input:button').attr('disabled', true);
         }, delayTime);
     };
 
@@ -109,6 +110,7 @@ PTSetting.SportType = new function () {
             $content.find('input:text').attr('disabled', true);                           
             $content.find('select').attr('disabled', true);
             $content.find('.canchange').css('display', 'none');
+            $content.find('input:button').attr('disabled', true);
         }, delayTime);
     };
 
