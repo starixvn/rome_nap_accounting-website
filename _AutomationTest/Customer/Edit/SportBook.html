@@ -1,0 +1,1636 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+html {
+  font-family: Arial,Helvetica,sans-serif;
+  background-color: white;
+  color: black;
+}
+table {
+  border-collapse: collapse;
+  empty-cells: show;
+  margin: 1em 0em;
+  border: 1px solid black;
+}
+th, td {
+  border: 1px solid black;
+  padding: 0.1em 0.2em;
+  height: 1.5em;
+  width: 12em;
+}
+td.colspan4, th.colspan4 {
+    width: 48em;
+}
+td.colspan3, th.colspan3 {
+    width: 36em;
+}
+td.colspan2, th.colspan2 {
+    width: 24em;
+}
+th {
+  background-color: rgb(192, 192, 192);
+  color: black;
+  height: 1.7em;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+td.name {
+  background-color: rgb(240, 240, 240);
+  letter-spacing: 0.1em;
+}
+td.name, th.name {
+  width: 10em;
+}
+</style>
+<title>SportBook</title>
+</head>
+<body>
+<h1>SportBook</h1>
+<table border="1" id="setting">
+<tr>
+<th class="name" colspan="5">Settings</th>
+</tr>
+<tr>
+<td class="name">Suite Setup</td>
+<td>Init</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Suite Teardown</td>
+<td>Close browser</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Force Tags</td>
+<td>Sanity</td>
+<td>EditSB</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../../Interfaces/UILogin.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../../Interfaces/ui_main.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../../Interfaces/UILeftPanel.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../../Interfaces/Customer/UIEditSB.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../../Actions/common_actions.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../../Actions/customer.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Library</td>
+<td>String</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../../Actions/Customer/SB.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<table border="1" id="variable">
+<tr>
+<th class="name" colspan="5">Variables</th>
+</tr>
+<tr>
+<td class="name">${SBSuperName}</td>
+<td>supertestIQCAuto04</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">${SBMasterName}</td>
+<td>supertestIQCAuto0401</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">${SBAgentName}</td>
+<td>supertestIQCAuto040101</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">${SBMemberName}</td>
+<td>supertestIQCAuto040101001</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">${BetSettingFilename}</td>
+<td>BetlimitEditAccount.txt</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<table border="1" id="testcase">
+<tr>
+<th class="name" colspan="5">Test Cases</th>
+</tr>
+<tr>
+<td class="name"><a name="test_Super">Super</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1. Search Super &gt;&gt; Edit \ Position Taking\n<br>
+\n<br>
+2. Update Super bet setting\n<br>
+\n<br>
++ Soccer: Minbet 10 ;Maxbet 100 ;Maxpermatch 1000 ;MaxPT 0.9; Comm Group A: 0.002\n<br>
+\n<br>
++ NumberGame: Minbet 10 ;Maxbet 100 ;Maxpermatch 1000 ;MaxPT 0.9; NG Comm: 0.002\n<br>
+\n<br>
++ HR Fixed Odds: Minbet 10 ;Maxbet 100 ;Maxpermatch 1000 ;MaxPT 0.9; HR Fixed Odds Comm : 0.009\n<br>
+\n<br>
+3. Check current Super bet setting\n<br>
+\n<br>
+4. Reset Master Super bet setting\n<br>
+\n<br>
++ Soccer: Minbet 0 ;Maxbet 0 ;Maxpermatch 0 ;MaxPT 0.8; Comm Group A: 0.0025\n<br>
+\n<br>
++ NumberGame: Minbet 10 ;Maxbet 100 ;Maxpermatch 1000 ;MaxPT 0.8; NG Comm: 0.0025\n<br>
+\n<br>
++ HR Fixed Odds: Minbet 10 ;Maxbet 100 ;Maxpermatch 1000 ;MaxPT 0.8; HR Fixed Odds Comm : 0.01\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Super Soccer NG and HR Fixed Oddsbet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>${SBSuperName}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditSB}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ESBbtnUpdate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${betlimifile}=</td>
+<td>Set Variable</td>
+<td>${CURDIR}/${BetSettingFilename}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit Reset Sport Bet Setting By File</td>
+<td>Super</td>
+<td>Soccer|Handicap;Number Game|1st Last Over/Under;HR Fixed Odds|Money Line</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${betlimifile}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditSB}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ESBbtnUpdate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Check Sport Bet Setting By File</td>
+<td>Super</td>
+<td>Soccer|Handicap;Number Game|1st Last Over/Under;HR Fixed Odds|Money Line</td>
+<td>${betlimifile}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit Reset Sport Bet Setting By File</td>
+<td>Super</td>
+<td>Soccer|Handicap;Number Game|1st Last Over/Under;HR Fixed Odds|Money Line</td>
+<td>${betlimifile}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Master">Master</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1. Search Master &gt;&gt; Edit \ Position Taking\n<br>
+\n<br>
+2. Update Master bet setting\n<br>
+\n<br>
++ Soccer: Minbet 10 ;Maxbet 100 ;Maxpermatch 1000 ;MaxPT 0.7; Comm Group A: 0.002\n<br>
+\n<br>
++ NumberGame: Minbet 10 ;Maxbet 100 ;Maxpermatch 1000 ;MaxPT 0.7; NG Comm: 0.002\n<br>
+\n<br>
++ HR Fixed Odds: Minbet 10 ;Maxbet 100 ;Maxpermatch 1000 ;MaxPT 0.7; HR Fixed Odds Comm : 0.009\n<br>
+\n<br>
+3. Check current Master bet setting\n<br>
+\n<br>
+4. Reset Master Soccer bet setting\n<br>
+\n<br>
++ Soccer: Minbet 0 ;Maxbet 0 ;Maxpermatch 0 ;MaxPT 0.6; Comm Group A: 0.0025\n<br>
+\n<br>
++ NumberGame: Minbet 10 ;Maxbet 100 ;Maxpermatch 1000 ;MaxPT 0.6; NG Comm: 0.0025\n<br>
+\n<br>
++ HR Fixed Odds: Minbet 10 ;Maxbet 100 ;Maxpermatch 1000 ;MaxPT 0.6; HR Fixed Odds Comm : 0.01\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Master Soccer NG and HR Fixed Oddsbet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>${SBMasterName}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditSB}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ESBbtnUpdate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${betlimifile}=</td>
+<td>Set Variable</td>
+<td>${CURDIR}/${BetSettingFilename}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit Reset Sport Bet Setting By File</td>
+<td>Master</td>
+<td>Soccer|Handicap;Number Game|1st Last Over/Under;HR Fixed Odds|Money Line</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${betlimifile}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditSB}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ESBbtnUpdate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Check Sport Bet Setting By File</td>
+<td>Master</td>
+<td>Soccer|Handicap;Number Game|1st Last Over/Under;HR Fixed Odds|Money Line</td>
+<td>${betlimifile}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit Reset Sport Bet Setting By File</td>
+<td>Master</td>
+<td>Soccer|Handicap;Number Game|1st Last Over/Under;HR Fixed Odds|Money Line</td>
+<td>${betlimifile}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Agent">Agent</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1. Search Agent &gt;&gt; Edit \ Position Taking\n<br>
+\n<br>
+2. Update Agent bet setting\n<br>
+\n<br>
++ Soccer: Minbet 10 ;Maxbet 100 ;Maxpermatch 1000 ;MaxPT 0.5; Comm Group A: 0.002\n<br>
+\n<br>
++ NumberGame: Minbet 10 ;Maxbet 100 ;Maxpermatch 1000 ;MaxPT 0.5; NG Comm: 0.002\n<br>
+\n<br>
++ HR Fixed Odds: Minbet 10 ;Maxbet 100 ;Maxpermatch 1000 ;MaxPT 0.5; HR Fixed Odds Comm : 0.009\n<br>
+\n<br>
+3. Check current Agent bet setting\n<br>
+\n<br>
+4. Reset Agent Soccer bet setting\n<br>
+\n<br>
++ Soccer: Minbet 0 ;Maxbet 0 ;Maxpermatch 0 ;MaxPT 0.4; Comm Group A: 0.0025\n<br>
+\n<br>
++ NumberGame: Minbet 10 ;Maxbet 100 ;Maxpermatch 1000 ;MaxPT 0.4; NG Comm: 0.0025\n<br>
+\n<br>
++ HR Fixed Odds: Minbet 10 ;Maxbet 100 ;Maxpermatch 1000 ;MaxPT 0.4; HR Fixed Odds Comm : 0.01\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Agent Soccer NG and HR Fixed Oddsbet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>${SBAgentName}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditSB}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ESBbtnUpdate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${betlimifile}=</td>
+<td>Set Variable</td>
+<td>${CURDIR}/${BetSettingFilename}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit Reset Sport Bet Setting By File</td>
+<td>Agent</td>
+<td>Soccer|Handicap;Number Game|1st Last Over/Under;HR Fixed Odds|Money Line</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${betlimifile}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditSB}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ESBbtnUpdate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Check Sport Bet Setting By File</td>
+<td>Agent</td>
+<td>Soccer|Handicap;Number Game|1st Last Over/Under;HR Fixed Odds|Money Line</td>
+<td>${betlimifile}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit Reset Sport Bet Setting By File</td>
+<td>Agent</td>
+<td>Soccer|Handicap;Number Game|1st Last Over/Under;HR Fixed Odds|Money Line</td>
+<td>${betlimifile}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Member">Member</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1. Search Member &gt;&gt; Edit \ Position Taking\n<br>
+\n<br>
+2. Update Member bet setting\n<br>
+\n<br>
++ Soccer: Minbet 10 ;Maxbet 100 ;Maxpermatch 1000 ;MaxPT 0.3; Comm Group A: 0.002\n<br>
+\n<br>
++ NumberGame: Minbet 10 ;Maxbet 100 ;Maxpermatch 1000 ;MaxPT 0.3; NG Comm: 0.002\n<br>
+\n<br>
++ HR Fixed Odds: Minbet 10 ;Maxbet 100 ;Maxpermatch 1000 ;MaxPT 0.3; HR Fixed Odds Comm : 0.009\n<br>
+\n<br>
+\n<br>
+3. Check current Member bet setting\n<br>
+\n<br>
+4. Reset Member Soccer bet setting\n<br>
+\n<br>
++ Soccer: Minbet 0 ;Maxbet 0 ;Maxpermatch 0 ;MaxPT 0.2; Comm Group A: 0.0025\n<br>
+\n<br>
++ NumberGame: Minbet 10 ;Maxbet 100 ;Maxpermatch 1000 ;MaxPT 0.2; NG Comm: 0.0025\n<br>
+\n<br>
++ HR Fixed Odds: Minbet 10 ;Maxbet 100 ;Maxpermatch 1000 ;MaxPT 0.2; HR Fixed Odds Comm : 0.01\n<br>
+\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Member Soccer NG and HR Fixed Oddsbet setting</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>${SBMemberName}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditSBMember}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ESBbtnUpdate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${betlimifile}=</td>
+<td>Set Variable</td>
+<td>${CURDIR}/${BetSettingFilename}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit Reset Sport Bet Setting By File</td>
+<td>Member</td>
+<td>Soccer|Handicap;Number Game|1st Last Over/Under;HR Fixed Odds|Money Line</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${betlimifile}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditSBMember}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ESBbtnUpdate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Check Sport Bet Setting By File</td>
+<td>Member</td>
+<td>Soccer|Handicap;Number Game|1st Last Over/Under;HR Fixed Odds|Money Line</td>
+<td>${betlimifile}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit Reset Sport Bet Setting By File</td>
+<td>Member</td>
+<td>Soccer|Handicap;Number Game|1st Last Over/Under;HR Fixed Odds|Money Line</td>
+<td>${betlimifile}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Super Min PT">Super Min PT</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1. Search Super &gt;&gt; Edit &gt;&gt; Min PT &gt;&gt; Sportbook\n<br>
+\n<br>
+2. Update Super Master Min PT\n<br>
+\n<br>
++ \ Bettype: Handicap\n<br>
+\n<br>
++ Min PT: 0.01\n<br>
+\n<br>
+3. Check current Super Soccer Min PT\n<br>
+\n<br>
+4. Update Super Number Game Min PT\n<br>
+\n<br>
++ \ Bettype: 1st last Odd/Event\n<br>
+\n<br>
++ Min PT: 0.01\n<br>
+\n<br>
+5. Check current Super Number Game Min PT\n<br>
+\n<br>
+6. Reset Super Soccer Min PT\n<br>
+\n<br>
++ \ Bettype: Handicap\n<br>
+\n<br>
++ Min PT: 0\n<br>
+\n<br>
+7. Reset Super Number Game Min PT\n<br>
+\n<br>
++ Bettype: 1st last Odd/Event\n<br>
+\n<br>
++ Min PT: 0</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Super Soccer Min PT</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>${SBSuperName}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to MinMaxPT page</td>
+<td>${lnkMinPTSB}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ESBbtnUpdate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit Sport Min PT</td>
+<td>Super</td>
+<td>Soccer</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>Handicap</td>
+<td>0.01</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check successful msg</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Should Be Equal As Strings</td>
+<td>${msg}</td>
+<td>Updated successfully!</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check current Super Soccer Min PT</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to MinMaxPT page</td>
+<td>${lnkMinPTSB}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ESBbtnUpdate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentminPT}=</td>
+<td>Get Sport Min PT</td>
+<td>Super</td>
+<td>Soccer</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>Handicap</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Should Be Equal As Numbers</td>
+<td>0.01</td>
+<td>${currentminPT}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Super Number Game Min PT</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit Sport Min PT</td>
+<td>Super</td>
+<td>Number Game</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1st Last Odd/Event</td>
+<td>0.01</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check successful msg</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Should Be Equal As Strings</td>
+<td>${msg}</td>
+<td>Updated successfully!</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check current Super Number Game Min PT</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to MinMaxPT page</td>
+<td>${lnkMinPTSB}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ESBbtnUpdate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentminPT}=</td>
+<td>Get Sport Min PT</td>
+<td>Super</td>
+<td>Number Game</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1st Last Odd/Event</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Should Be Equal As Numbers</td>
+<td>0.01</td>
+<td>${currentminPT}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Reset Super Soccer and \ Number Game Min PT</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit Sport Min PT</td>
+<td>Super</td>
+<td>Soccer</td>
+<td>Handicap</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit Sport Min PT</td>
+<td>Super</td>
+<td>Number Game</td>
+<td>1st Last Odd/Event</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Master Min PT">Master Min PT</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1. Search Master &gt;&gt; Edit &gt;&gt; Min PT &gt;&gt; Sportbook\n<br>
+\n<br>
+2. Update Soccer Master Min PT\n<br>
+\n<br>
++ Bettype: Handicap\n<br>
+\n<br>
++ Min PT: 0.01\n<br>
+\n<br>
+3. Check current Master Soccer Min PT\n<br>
+\n<br>
+4. Update Master Number Game Min PT\n<br>
+\n<br>
++ \ Bettype: 1st last Odd/Event\n<br>
+\n<br>
++ Min PT: 0.01\n<br>
+\n<br>
+5. Check current Master Number Game Min PT\n<br>
+\n<br>
+6. Reset Master Soccer Min PT\n<br>
+\n<br>
++ \ Bettype: Handicap\n<br>
+\n<br>
++ Min PT: 0\n<br>
+\n<br>
+7. Reset Master Number Game Min PT\n<br>
+\n<br>
++ \ Bettype: 1st last Odd/Event\n<br>
+\n<br>
++ Min PT: 0</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Master Soccer Min PT</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>${SBMasterName}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to MinMaxPT page</td>
+<td>${lnkMinPTSB}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ESBbtnUpdate}</td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit Sport Min PT</td>
+<td>Master</td>
+<td>Soccer</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>Handicap</td>
+<td>0.01</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check successful msg</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Should Be Equal As Strings</td>
+<td>${msg}</td>
+<td>Updated successfully!</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check current Master Soccer Min PT</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to MinMaxPT page</td>
+<td>${lnkMinPTSB}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ESBbtnUpdate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentminPT}=</td>
+<td>Get Sport Min PT</td>
+<td>Master</td>
+<td>Soccer</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>Handicap</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Should Be Equal As Numbers</td>
+<td>0.01</td>
+<td>${currentminPT}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Master Number Game Min PT</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit Sport Min PT</td>
+<td>Master</td>
+<td>Number Game</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1st Last Odd/Event</td>
+<td>0.01</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check successful msg</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Should Be Equal As Strings</td>
+<td>${msg}</td>
+<td>Updated successfully!</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to MinMaxPT page</td>
+<td>${lnkMinPTSB}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ESBbtnUpdate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentminPT}=</td>
+<td>Get Sport Min PT</td>
+<td>Master</td>
+<td>Number Game</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1st Last Odd/Event</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check current Master Number Game Min PT</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Should Be Equal As Numbers</td>
+<td>0.01</td>
+<td>${currentminPT}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Reset Master Soccer and Number Game Min PT</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit Sport Min PT</td>
+<td>Master</td>
+<td>Soccer</td>
+<td>Handicap</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit Sport Min PT</td>
+<td>Master</td>
+<td>Number Game</td>
+<td>1st Last Odd/Event</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Agent Min PT">Agent Min PT</a></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">1. Search Agent &gt;&gt; Edit &gt;&gt; Min PT &gt;&gt; Sportbook\n<br>
+\n<br>
+2. Update Agent Master Min PT\n<br>
+\n<br>
++ \ Bettype: Handicap\n<br>
+\n<br>
++ Min PT: 0.01\n<br>
+\n<br>
+3. Check current Agent Soccer Min PT\n<br>
+\n<br>
+4. Update Agent Number Game Min PT\n<br>
++ \ Bettype: 1st last Odd/Event\n<br>
+\n<br>
++ Min PT: 0.01\n<br>
+\n<br>
+5. Check current Agent Number Game Min PT\n<br>
+\n<br>
+6. Reset Agent Soccer Min PT\n<br>
+\n<br>
++ \ Bettype: Handicap\n<br>
+\n<br>
++ Min PT: 0\n<br>
+\n<br>
+7. Reset Agent Number Game Min PT\n<br>
+\n<br>
++ \ Bettype: 1st last Odd/Event\n<br>
+\n<br>
++ Min PT: 0</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Tags]</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Agent Soccer Min PT</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>${SBAgentName}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to MinMaxPT page</td>
+<td>${lnkMinPTSB}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ESBbtnUpdate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit Sport Min PT</td>
+<td>Agent</td>
+<td>Soccer</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>Handicap</td>
+<td>0.01</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check successful msg</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Should Be Equal As Strings</td>
+<td>${msg}</td>
+<td>Updated successfully!</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check current Agent Soccer Min PT</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to MinMaxPT page</td>
+<td>${lnkMinPTSB}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ESBbtnUpdate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentminPT}=</td>
+<td>Get Sport Min PT</td>
+<td>Agent</td>
+<td>Soccer</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>Handicap</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Should Be Equal As Numbers</td>
+<td>0.01</td>
+<td>${currentminPT}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Edit Agent Number Game Min PT</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit Sport Min PT</td>
+<td>Agent</td>
+<td>Number Game</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1st Last Odd/Event</td>
+<td>0.01</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check successful msg</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Should Be Equal As Strings</td>
+<td>${msg}</td>
+<td>Updated successfully!</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Check current Agent Number Game Min PT</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to MinMaxPT page</td>
+<td>${lnkMinPTSB}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ESBbtnUpdate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${currentminPT}=</td>
+<td>Get Sport Min PT</td>
+<td>Agent</td>
+<td>Number Game</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>1st Last Odd/Event</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword And Continue On Failure</td>
+<td>Should Be Equal As Numbers</td>
+<td>0.01</td>
+<td>${currentminPT}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Reset Agent Soccer and \ Number Game Min PT</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit Sport Min PT</td>
+<td>Agent</td>
+<td>Soccer</td>
+<td>Handicap</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Edit Sport Min PT</td>
+<td>Agent</td>
+<td>Number Game</td>
+<td>1st Last Odd/Event</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="test_Super Soccer NG HR Fixed Odds">Super Soccer NG HR Fixed Odds</a></td>
+<td>[Tags]</td>
+<td>ta001</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>#################</td>
+<td>Add new master to super</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>${SBSuperName}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditSB}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ESBbtnUpdate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>${SBMasterName}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditSB}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ESBbtnUpdate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${betlimifile}=</td>
+<td>Set Variable</td>
+<td>${CURDIR}/BetlimitEditAccount.txt</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit Reset Sport Bet Setting By File</td>
+<td>Master</td>
+<td>Soccer|Handicap;Number Game|1st Last Over/Under;HR Fixed Odds|Money Line</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${betlimifile}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Check Sport Bet Setting By File</td>
+<td>Master</td>
+<td>Soccer|Handicap;Number Game|1st Last Over/Under;HR Fixed Odds|Money Line</td>
+<td>${betlimifile}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>${SBAgentName}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditSB}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ESBbtnUpdate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${betlimifile}=</td>
+<td>Set Variable</td>
+<td>${CURDIR}/BetlimitEditAccount.txt</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit Reset Sport Bet Setting By File</td>
+<td>Agent</td>
+<td>Soccer|Handicap;Number Game|1st Last Over/Under;HR Fixed Odds|Money Line</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${betlimifile}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Check Sport Bet Setting By File</td>
+<td>Agent</td>
+<td>Soccer|Handicap;Number Game|1st Last Over/Under;HR Fixed Odds|Money Line</td>
+<td>${betlimifile}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Search user</td>
+<td>${SBMemberName}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Navigate to Edit page</td>
+<td>${lnkEditSBMember}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Wait Until Page Contains Element</td>
+<td>${ESBbtnUpdate}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${betlimifile}=</td>
+<td>Set Variable</td>
+<td>${CURDIR}/BetlimitEditAccount.txt</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${msg}=</td>
+<td>Edit Reset Sport Bet Setting By File</td>
+<td>Member</td>
+<td>Soccer|Handicap;Number Game|1st Last Over/Under;HR Fixed Odds|Money Line</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${betlimifile}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Check Sport Bet Setting By File</td>
+<td>Member</td>
+<td>Soccer|Handicap;Number Game|1st Last Over/Under;HR Fixed Odds|Money Line</td>
+<td>${betlimifile}</td>
+</tr>
+</table>
+</body>
+</html>

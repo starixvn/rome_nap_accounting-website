@@ -1,0 +1,361 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+html {
+  font-family: Arial,Helvetica,sans-serif;
+  background-color: white;
+  color: black;
+}
+table {
+  border-collapse: collapse;
+  empty-cells: show;
+  margin: 1em 0em;
+  border: 1px solid black;
+}
+th, td {
+  border: 1px solid black;
+  padding: 0.1em 0.2em;
+  height: 1.5em;
+  width: 12em;
+}
+td.colspan4, th.colspan4 {
+    width: 48em;
+}
+td.colspan3, th.colspan3 {
+    width: 36em;
+}
+td.colspan2, th.colspan2 {
+    width: 24em;
+}
+th {
+  background-color: rgb(192, 192, 192);
+  color: black;
+  height: 1.7em;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+td.name {
+  background-color: rgb(240, 240, 240);
+  letter-spacing: 0.1em;
+}
+td.name, th.name {
+  width: 10em;
+}
+</style>
+<title>Livecasino</title>
+</head>
+<body>
+<h1>Livecasino</h1>
+<table border="1" id="setting">
+<tr>
+<th class="name" colspan="5">Settings</th>
+</tr>
+<tr>
+<td class="name">Library</td>
+<td>Selenium2Library</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Library</td>
+<td>Collections</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name">Resource</td>
+<td>../customer.html</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<table border="1" id="keyword">
+<tr>
+<th class="name" colspan="5">Keywords</th>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Edit LiveCasino Bet setting">Edit LiveCasino Bet setting</a></td>
+<td>[Arguments]</td>
+<td>${type}</td>
+<td>${maxPT}</td>
+<td>${comm}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${checkPartyBaccarat}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">This action is used to edit Live Casino bet setting.Just use it when current frame is Edit Casino page\n<br>
+\ \ \n<br>
+\n<br>
+${type}: the account type (Super, Master, Agent or Member)\n<br>
+\n<br>
+\ \n<br>
+${maxPT}: the Soccer min bet value \n<br>
+\n<br>
+\n<br>
+${comm}: the comm value\n<br>
+\n<br>
+\n<br>
+${checkPartyBaccarat}: 0 or 1 to uncheck/check Party Baccarat bet limit\n<br>
+\n<br>
+${outputMsg}: the output value that get in web page after clicking on Submit button\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># set xpath of control</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpComm}</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Super' or '${type}'=='Member'</td>
+<td>//select[@class='pt comm' and (@id='Comm' or not(@h))]</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>//select[@class='pt comm' and @c]</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMaxPT}</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Super'</td>
+<td>//select[@id='MaxPT']</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>//select[@class='pt comm' and (@h or @mx)]</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpkw}</td>
+<td>Set Variable If</td>
+<td>'${checkPartyBaccarat}'=='0'</td>
+<td>Unselect Checkbox</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>Select Checkbox</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmprdPartyBaccarat050}</td>
+<td>Replace String</td>
+<td>${ELCSrdPartyBaccarat}</td>
+<td>1-100</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>0.5-50</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmprdPartyBaccarat}</td>
+<td>Set Variable If</td>
+<td>'${checkPartyBaccarat}'=='0'</td>
+<td>${tmprdPartyBaccarat050}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>${ELCSrdPartyBaccarat}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Set value</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select From List By Value</td>
+<td>${tmpComm}</td>
+<td>${comm}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Select From List By Value</td>
+<td>${tmpMaxPT}</td>
+<td>${maxPT}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword If</td>
+<td>'${type}'=='Member'</td>
+<td>Click Element</td>
+<td>${tmprdPartyBaccarat}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Run Keyword If</td>
+<td>'${type}'&lt;&gt; 'Member'</td>
+<td>${tmpkw}</td>
+<td>${ELCSchkPartyBaccarat}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Click Update</td>
+<td>${ELCSlblUsername}</td>
+<td>${ELCSbtnUpdate}</td>
+<td>${cfAccountPrefix}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${outputMsg}</td>
+<td>Get Edit Msg</td>
+<td>${ELCSdivMsg}</td>
+<td>${cfTimeOut} * 3</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>Sleep</td>
+<td>5s</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Return]</td>
+<td>${outputMsg}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"><a name="keyword_Get LiveCasino Bet setting">Get LiveCasino Bet setting</a></td>
+<td>[Arguments]</td>
+<td>${type}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Documentation]</td>
+<td class="colspan3" colspan="3">This action is used to get Live Casino bet setting.Just use it when current frame is Edit Casino page\n<br>
+\ \ \n<br>
+\n<br>
+${type}: the account type (Super, Master, Agent or Member)\n<br>
+\n<br>
+\n<br>
+${outputlist}: the output list contains maxPT, Comm and status of PartyBaccaract checkbox\n<br>
+</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># set xpath of control</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpComm}</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Super' or '${type}'=='Member'</td>
+<td>//select[@class='pt comm' and (@id='Comm' or not(@h))]</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>//select[@class='pt comm' and @c]</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${tmpMaxPT}</td>
+<td>Set Variable If</td>
+<td>'${type}'=='Super'</td>
+<td>//select[@id='MaxPT']</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>...</td>
+<td>//select[@class='pt comm' and (@h or @mx)]</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td># Get value</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${maxPT}</td>
+<td>Get Selected List Value</td>
+<td>${tmpMaxPT}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${comm}</td>
+<td>Get Selected List Value</td>
+<td>${tmpComm}</td>
+<td></td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>${outputlist}</td>
+<td>Create List</td>
+<td>${maxPT}</td>
+<td>${comm}</td>
+</tr>
+<tr>
+<td class="name"></td>
+<td>[Return]</td>
+<td>${outputlist}</td>
+<td></td>
+<td></td>
+</tr>
+</table>
+</body>
+</html>
