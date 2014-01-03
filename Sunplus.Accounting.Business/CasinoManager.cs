@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Web;
 using CasinoLibrary.SBAgent;
 using DNAide.Core;
 using DNAide.Utils;
 using DNAide.Web;
+using Fanex.Tarus.DataAccess.Implement.Customer;
 using Sunplus.Accounting.Core.Common;
 using Sunplus.Accounting.Core.Extensions;
 using Sunplus.Accounting.Core.Web;
 using Sunplus.Accounting.DataAccess;
 using Sunplus.Accounting.DataAccess.AdoNet;
 using Sunplus.Accounting.Entities.Casino;
-
-
+using Fanex.Tarus.Infrastructure.Constants;
 
 /// <summary>
 /// Manage class for Casino Business
@@ -544,6 +545,7 @@ namespace Sunplus.Accounting.Business
                 List<GameKindDetail> lsGameKind = (_cust.CasinoSync)
                                                       ? GetGameKinds(_cust.IBCCustID, _cust.SiteName)
                                                       : GetGameKinds(csGroup, _cust.SiteName);
+
                 listGameKind = lsGameKind;
                 bool useGroupPT = (_cust.NoCSData) ? true : !_cust.PTByGameType;
                 string postGameData = "";
@@ -602,10 +604,14 @@ namespace Sunplus.Accounting.Business
                                                                               false, strSMinPTGroupID,
                                                                               funcOnChangeGroupSetting, "select-pt"));
                                 TemplateHandler.Assign(ref tmpTplData, "group_comm_pt",
-                                                       HtmlHelper.GenSelectOption(maxGroupSComm, SCommGroup, intervalComm,
-                                                                              false,
-                                                                              strSCommGroupID, funcOnChangeGroupSetting,
-                                                                              "selectcomm"));
+                                                       GenSelectOption(maxGroupSComm,
+                                                           SCommGroup,
+                                                           intervalComm,
+                                                           false,
+                                                           strSCommGroupID,
+                                                           funcOnChangeGroupSetting,
+                                                           "selectcomm",
+                                                           RoleIdConstants.Super));
                                 TemplateHandler.Assign(ref tmpTplData, "group_max_pt_btn",
                                                        HtmlHelper.GenChangePTButtons(SPTGroupID, false));
                                 TemplateHandler.Assign(ref tmpTplData, "group_min_pt_btn",
@@ -635,8 +641,14 @@ namespace Sunplus.Accounting.Business
                                                    HtmlHelper.GenSelectOption(maxSMinPT, SMinPT, intervalPT, useGroupPT,
                                                                           strSMinPTID, funcOnChange, "select-pt"));
                             TemplateHandler.Assign(ref tmpTplPrivate, "comm_pt",
-                                                   HtmlHelper.GenSelectOption(maxSComm, SComm, intervalComm, useGroupPT,
-                                                                          strSCommID, funcOnChange, "selectcomm"));
+                                                   GenSelectOption(maxSComm,
+                                                       SComm,
+                                                       intervalComm,
+                                                       useGroupPT,
+                                                       strSCommID,
+                                                       funcOnChange,
+                                                       "selectcomm",
+                                                       RoleIdConstants.Super));
                             TemplateHandler.Assign(ref tmpTplPrivate, "gametype", gameTypeDetail.GameTypeName);
                             TemplateHandler.Assign(ref tmpTplPrivate, "col-span-bl", betlimitColspan);
 
@@ -732,10 +744,14 @@ namespace Sunplus.Accounting.Business
                                                                           useGroupPT, funcClickGroup));
                                 TemplateHandler.Assign(ref tmpTplData, "lblGroupSetting", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblGroupSetting"));
                                 TemplateHandler.Assign(ref tmpTplData, "group_comm_pt",
-                                                       HtmlHelper.GenSelectOption(maxGroupSComm, SCommGroup, intervalComm,
-                                                                              !useGroupPT,
-                                                                              strSCommGroupID, funcOnChangeGroupSetting,
-                                                                              "selectcomm"));
+                                                       GenSelectOption(maxGroupSComm,
+                                                           SCommGroup,
+                                                           intervalComm,
+                                                           !useGroupPT,
+                                                           strSCommGroupID,
+                                                           funcOnChangeGroupSetting,
+                                                           "selectcomm",
+                                                           RoleIdConstants.Super));
                                 TemplateHandler.Assign(ref tmpTplData, "group_comm_pt_btn", "");
                                 TemplateHandler.Assign(ref tmpTplData, "group_comm_pt_txt",
                                                        HtmlHelper.GenTextBox(
@@ -754,8 +770,14 @@ namespace Sunplus.Accounting.Business
                             SComm = gameTypeDetail.SMAgentRollingRate;
 
                             TemplateHandler.Assign(ref tmpTplPrivate, "comm_pt",
-                                                   HtmlHelper.GenSelectOption(maxSComm, SComm, intervalComm, useGroupPT,
-                                                                          strSCommID, funcOnChange, "selectcomm"));
+                                                   GenSelectOption(maxSComm,
+                                                       SComm,
+                                                       intervalComm,
+                                                       useGroupPT,
+                                                       strSCommID,
+                                                       funcOnChange,
+                                                       "selectcomm",
+                                                       RoleIdConstants.Super));
                             TemplateHandler.Assign(ref tmpTplPrivate, "gametype", gameTypeDetail.GameTypeName);
 
                             //label error
@@ -786,6 +808,7 @@ namespace Sunplus.Accounting.Business
                             }
                         }
                     }
+
                     totalGameKind++;
                     if (lsGameType.Count > 0)
                         isFirstGameKind = false;
@@ -825,6 +848,7 @@ namespace Sunplus.Accounting.Business
             //if (!Globals.IBCSetting.Casino.ShowBetSetting)
 
             int custId = _cust.IBCCustID;
+            bool isCreditCustomer = !IsDepositSite(_cust.SiteName);
             string gameKindName = "Live";
             //string tplPT = Sunplus.Accounting.Core.Helper.WebUtils.LoadTemplate(Globals.CASINO_PT_TEMPLATE);
             //Others game kind
@@ -995,17 +1019,20 @@ namespace Sunplus.Accounting.Business
                         maxSAutoPT = (!_cust.PTByGameType) ? Globals.MAX_MaxPTValue : u3Max;
                         maxMPT = (!_cust.PTByGameType) ? Globals.MAX_MaxPTValue : m3Max;
                         maxMMinPT = (!_cust.PTByGameType) ? Globals.MAX_MaxPTValue : n3Max;
-                        //Commission
-                        maxMComm = (_cust.CasinoSync)
-                                       ? gameTypeDetail.SMAgentRollingRateUpline
-                                       : gameTypeDetail.SMAgentRollingRate;
-                        maxMComm = (!_cust.PTByGameType) ? Globals.MAX_Comm : Math.Min(maxMComm, Globals.MAX_Comm);
+                        //Commission                       
+                        maxMComm = (_cust.CasinoSync) ?
+                            gameTypeDetail.SMAgentRollingRateUpline :
+                            gameTypeDetail.SMAgentRollingRate;
+
+                        maxMComm = (!_cust.PTByGameType) ?
+                            Globals.MAX_Comm :
+                            Math.Min(maxMComm, Globals.MAX_Comm);
                         //max group comm
                         maxGroupMComm = Math.Max(maxGroupMComm, maxMComm);
+                        MComm = (_cust.CasinoSync) ?
+                            gameTypeDetail.MAgentRollingRate :
+                            gameTypeDetail.SMAgentRollingRate;
 
-                        MComm = (_cust.CasinoSync)
-                                    ? gameTypeDetail.MAgentRollingRate
-                                    : gameTypeDetail.SMAgentRollingRate;
                         MComm = Math.Min(MComm, Globals.MAX_Comm);
                         //////////END Commission///////
                         SPresetPT = s3;
@@ -1038,10 +1065,24 @@ namespace Sunplus.Accounting.Business
                         TemplateHandler.Assign(ref tmpTplPrivate, "min_pt",
                                                HtmlHelper.GenSelectOption(maxMMinPT, MMinPT, intervalPT, useGroupPT,
                                                                       strMMinPTID, funcOnChange, "select-pt"));
-                        TemplateHandler.Assign(ref tmpTplPrivate, "comm_pt",
-                                               HtmlHelper.GenSelectOption(maxMComm, MComm, intervalComm, useGroupPT,
-                                                                      strMCommID, funcOnChange,
-                                                                      Globals.CLASS_SELECT_COMMISSION));
+
+                        var selectOptions = isCreditCustomer ?
+                              HtmlHelper.GenSelectOption(maxMComm,
+                                  MComm,
+                                  intervalComm,
+                                  useGroupPT,
+                                  strMCommID,
+                                  funcOnChange,
+                                  Globals.CLASS_SELECT_COMMISSION) :
+                              GenSelectOption(maxMComm,
+                                  MComm,
+                                  intervalComm,
+                                  useGroupPT,
+                                  strMCommID,
+                                  funcOnChange,
+                                  Globals.CLASS_SELECT_COMMISSION,
+                                  RoleIdConstants.Master);
+                        TemplateHandler.Assign(ref tmpTplPrivate, "comm_pt", selectOptions);
                         TemplateHandler.Assign(ref tmpTplPrivate, "gametype", gameTypeDetail.GameTypeName);
                         TemplateHandler.Assign(ref tmpTplPrivate, "col-span-bl", betlimitColspan);
 
@@ -1097,18 +1138,16 @@ namespace Sunplus.Accounting.Business
                         postGameData = postGameData.Substring(0, subLength) +
                                        Globals.CLOSE_STAKELIST_MARK + Globals.SEP_GAMETYPE; // ),
 
-                        //postGameData = postGameData.Substring(0, postGameData.Length - 2) +
-                        //               Globals.CLOSE_STAKELIST_MARK + Globals.SEP_GAMETYPE; // ),
-
                         if (totalGameType == lsGameType.Count)
                         {
                             //assign group value
                             if (_cust.CasinoSync)
                             {
                                 s4 = (!_cust.PTByGameType) ? gameKindDetail.SPositionTakingUpline : maxGroupSPresetPT;
-                                maxGroupMComm = (!_cust.PTByGameType)
-                                                    ? gameKindDetail.SMAgentRollingRateUpline
-                                                    : maxGroupMComm;
+                                if (!_cust.PTByGameType)
+                                {
+                                    maxGroupMComm = gameKindDetail.SMAgentRollingRateUpline;
+                                }
                             }
                             else
                             {
@@ -1151,9 +1190,19 @@ namespace Sunplus.Accounting.Business
 
                             //Commission
 
-                            MCommGroup = (_cust.CasinoSync)
-                                             ? Math.Min(gameKindDetail.MAgentRollingRate, maxGroupMComm)
-                                             : Math.Min(gameKindDetail.SMAgentRollingRate, maxGroupMComm);
+                            if (isCreditCustomer)
+                            {
+                                MCommGroup = (_cust.CasinoSync) ?
+                                    Math.Min(gameKindDetail.MAgentRollingRate, maxGroupMComm) :
+                                    Math.Min(gameKindDetail.SMAgentRollingRate, maxGroupMComm);
+                            }
+                            else
+                            {
+                                MCommGroup = (_cust.CasinoSync) ?
+                                    gameKindDetail.MAgentRollingRate :
+                                    gameKindDetail.SMAgentRollingRate;
+                            }
+
                             //////////END Commission///////
                             SPresetPTGroup = s3;
                             SAutoPTGroup = u3;
@@ -1173,11 +1222,24 @@ namespace Sunplus.Accounting.Business
                                                    HtmlHelper.GenSelectOption(maxGroupMMinPT, MMinPTGroup, intervalPT,
                                                                           false, strMMinPTGroupID, funcOnChangeGroup,
                                                                           "select-pt"));
-                            TemplateHandler.Assign(ref tmpTplData, "group_comm_pt",
-                                                   HtmlHelper.GenSelectOption(maxGroupMComm, MCommGroup, intervalComm, false,
-                                                                          strMCommGroupID, funcOnChangeGroup,
-                                                                          Globals.CLASS_SELECT_COMMISSION));
 
+                            selectOptions = isCreditCustomer ?
+                                  HtmlHelper.GenSelectOption(maxGroupMComm,
+                                      MCommGroup,
+                                      intervalComm,
+                                      false,
+                                      strMCommGroupID,
+                                      funcOnChangeGroup,
+                                      Globals.CLASS_SELECT_COMMISSION) :
+                                  GenSelectOption(maxGroupMComm,
+                                      MCommGroup,
+                                      intervalComm,
+                                      false,
+                                      strMCommGroupID,
+                                      funcOnChangeGroup,
+                                      Globals.CLASS_SELECT_COMMISSION,
+                                      RoleIdConstants.Master);
+                            TemplateHandler.Assign(ref tmpTplData, "group_comm_pt", selectOptions);
                             TemplateHandler.Assign(ref tmpTplData, "group_preset_pt",
                                                    HtmlHelper.GenSelectOption(maxGroupSPresetPT, SPresetPTGroup, intervalPT,
                                                                           gameKindDetail.IsAutoPositionTaking,
@@ -1255,28 +1317,40 @@ namespace Sunplus.Accounting.Business
                                                             Globals.CS_SELECTOPTION_ONCHANGE_PARAM);
                         postGameData += gameTypeDetail.GameTypeID + Globals.SEP_GAMETYPE;
 
-                        maxMComm = (_cust.CasinoSync)
-                                       ? gameTypeDetail.SMAgentRollingRateUpline
-                                       : gameTypeDetail.SMAgentRollingRate;
-                        MComm = (_cust.CasinoSync)
-                                    ? gameTypeDetail.MAgentRollingRate
-                                    : gameKindDetail.SMAgentRollingRate;
+                        maxMComm = (_cust.CasinoSync) ?
+                            gameTypeDetail.SMAgentRollingRateUpline :
+                            gameTypeDetail.SMAgentRollingRate;
+
+                        MComm = (_cust.CasinoSync) ?
+                            gameTypeDetail.MAgentRollingRate :
+                            gameKindDetail.SMAgentRollingRate;
 
                         maxMComm = Math.Min(maxMComm, Globals.MAX_Comm);
                         maxGroupMComm = Math.Max(maxGroupMComm, maxMComm);
                         MComm = Math.Min(MComm, Globals.MAX_Comm);
 
-                        TemplateHandler.Assign(ref tmpTplPrivate, "comm_pt",
-                                               HtmlHelper.GenSelectOption(maxMComm, MComm, intervalComm, useGroupPT,
-                                                                      strMCommID, funcOnChange,
-                                                                      Globals.CLASS_SELECT_COMMISSION));
+                        string selectOptions = isCreditCustomer ?
+                            HtmlHelper.GenSelectOption(maxMComm,
+                                MComm,
+                                intervalComm,
+                                useGroupPT,
+                                strMCommID,
+                                funcOnChange,
+                                Globals.CLASS_SELECT_COMMISSION) :
+                            GenSelectOption(maxMComm,
+                                MComm,
+                                intervalComm,
+                                useGroupPT,
+                                strMCommID,
+                                funcOnChange,
+                                Globals.CLASS_SELECT_COMMISSION,
+                                RoleIdConstants.Master);
+
+                        TemplateHandler.Assign(ref tmpTplPrivate, "comm_pt", selectOptions);
                         TemplateHandler.Assign(ref tmpTplPrivate, "gametype", gameTypeDetail.GameTypeName);
-
-                        //label error
-
                         TemplateHandler.Assign(ref tmpTplPrivate, "comm_pt_error",
-                                               HtmlHelper.GenLabel(strMCommID + sep + Globals.CTR_LABEL_PREFIX, "",
-                                                               Globals.CLASS_ERROR_MAXVALUE));
+                                           HtmlHelper.GenLabel(strMCommID + sep + Globals.CTR_LABEL_PREFIX, "",
+                                                           Globals.CLASS_ERROR_MAXVALUE));
 
                         gameTypeData.Append(tmpTplPrivate);
                         totalGameType++;
@@ -1298,15 +1372,29 @@ namespace Sunplus.Accounting.Business
                                                     : maxGroupMComm;
                                 MCommGroup = gameKindDetail.SMAgentRollingRate;
                             }
+
                             TemplateHandler.Assign(ref tmpTplData, "chkGroupSetting",
                                                    HtmlHelper.GenCheckBox(gameKindName + sep + Globals.CHKGROUP, false,
                                                                       useGroupPT, "", Globals.CLASS_CHECKBOX_HIDDEN));
                             TemplateHandler.Assign(ref tmpTplData, "lblGroupSetting", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblGroupSetting"));
-                            TemplateHandler.Assign(ref tmpTplData, "group_comm_pt",
-                                                   HtmlHelper.GenSelectOption(maxGroupMComm, MCommGroup, intervalComm,
-                                                                          !useGroupPT,
-                                                                          strMCommGroupID, funcOnChangeGroupSetting,
-                                                                          Globals.CLASS_SELECT_COMMISSION));
+
+                            selectOptions = isCreditCustomer ?
+                                  HtmlHelper.GenSelectOption(maxGroupMComm,
+                                      MCommGroup,
+                                      intervalComm,
+                                      !useGroupPT,
+                                      strMCommGroupID,
+                                      funcOnChangeGroupSetting,
+                                      Globals.CLASS_SELECT_COMMISSION) :
+                                  GenSelectOption(maxGroupMComm,
+                                      MCommGroup,
+                                      intervalComm,
+                                      !useGroupPT,
+                                      strMCommGroupID,
+                                      funcOnChangeGroupSetting,
+                                      Globals.CLASS_SELECT_COMMISSION,
+                                      RoleIdConstants.Master);
+                            TemplateHandler.Assign(ref tmpTplData, "group_comm_pt", selectOptions);
                             TemplateHandler.Assign(ref tmpTplData, "group_comm_pt_btn", "");
                             //END
                             TemplateHandler.Assign(ref tmpTplData, "row-span-gamekind",
@@ -1355,6 +1443,7 @@ namespace Sunplus.Accounting.Business
             //if (!Globals.IBCSetting.Casino.ShowBetSetting)
 
             int custId = _cust.IBCCustID;
+            bool isCreditCustomer = !IsDepositSite(_cust.SiteName);
             string gameKindName = "Live";
             //string tplPT = Sunplus.Accounting.Core.Helper.WebUtils.LoadTemplate(Globals.CASINO_PT_TEMPLATE);
             //Others game kind
@@ -1509,9 +1598,24 @@ namespace Sunplus.Accounting.Business
                         TemplateHandler.Assign(ref tmpTplPrivate, "min_pt",
                                                HtmlHelper.GenSelectOption(maxAMinPT, AMinPT, intervalPT, useGroupPT,
                                                                       strAMinPTID, ""));
-                        TemplateHandler.Assign(ref tmpTplPrivate, "comm_pt",
-                                               HtmlHelper.GenSelectOption(maxAComm, AComm, intervalComm, useGroupPT,
-                                                                      strACommID, "", Globals.CLASS_SELECT_COMMISSION));
+
+                        string selectOptions = isCreditCustomer ?
+                                  HtmlHelper.GenSelectOption(maxAComm,
+                                      AComm,
+                                      intervalComm,
+                                      useGroupPT,
+                                      strACommID,
+                                      string.Empty,
+                                      Globals.CLASS_SELECT_COMMISSION) :
+                                  GenSelectOption(maxAComm,
+                                      AComm,
+                                      intervalComm,
+                                      useGroupPT,
+                                      strACommID,
+                                      string.Empty,
+                                      Globals.CLASS_SELECT_COMMISSION,
+                                      RoleIdConstants.Agent);
+                        TemplateHandler.Assign(ref tmpTplPrivate, "comm_pt", selectOptions);
                         TemplateHandler.Assign(ref tmpTplPrivate, "gametype", gameTypeDetail.GameTypeName);
                         TemplateHandler.Assign(ref tmpTplPrivate, "col-span-bl", betlimitColspan);
 
@@ -1600,10 +1704,8 @@ namespace Sunplus.Accounting.Business
                                                     : maxGroupAComm;
                                 ACommGroup = gameKindDetail.MAgentRollingRate;
                             }
+
                             maxGroupAComm = Math.Min(maxGroupAComm, Globals.MAX_Comm);
-                            ACommGroup = (!_cust.PTByGameType)
-                                             ? Math.Min(ACommGroup, Globals.MAX_Comm)
-                                             : Math.Min(ACommGroup, maxGroupAComm);
                             maxGroupMPresetPT = m2Max;
                             maxGroupAPT = a2Max;
                             maxGroupAMinPT = n2Max;
@@ -1625,11 +1727,24 @@ namespace Sunplus.Accounting.Business
                                                    HtmlHelper.GenSelectOption(maxGroupAMinPT, AMinPTGroup, intervalPT,
                                                                           false, strAMinPTGroupID, funcOnChangeGroup,
                                                                           "select-pt"));
-                            TemplateHandler.Assign(ref tmpTplData, "group_comm_pt",
-                                                   HtmlHelper.GenSelectOption(maxGroupAComm, ACommGroup, intervalComm, false,
-                                                                          strACommGroupID, funcOnChangeGroup,
-                                                                          Globals.CLASS_SELECT_COMMISSION));
 
+                            selectOptions = isCreditCustomer ?
+                                      HtmlHelper.GenSelectOption(maxGroupAComm,
+                                          ACommGroup,
+                                          intervalComm,
+                                          false,
+                                          strACommGroupID,
+                                          funcOnChangeGroup,
+                                          Globals.CLASS_SELECT_COMMISSION) :
+                                      GenSelectOption(maxGroupAComm,
+                                          ACommGroup,
+                                          intervalComm,
+                                          false,
+                                          strACommGroupID,
+                                          funcOnChangeGroup,
+                                          Globals.CLASS_SELECT_COMMISSION,
+                                          RoleIdConstants.Agent);
+                            TemplateHandler.Assign(ref tmpTplData, "group_comm_pt", selectOptions);
                             TemplateHandler.Assign(ref tmpTplData, "group_preset_pt",
                                                    HtmlHelper.GenSelectOption(maxGroupMPresetPT, MPresetPTGroup, intervalPT,
                                                                           false,
@@ -1679,6 +1794,8 @@ namespace Sunplus.Accounting.Business
                         string funcOnChangeGroupSetting = string.Format(Globals.CS_SELECTOPTION_ONCHANGE_GROUP_FUNC,
                                                                         Globals.CS_SELECTOPTION_ONCHANGE_GROUP_PARAM);
                         string funcClickGroup = string.Format(Globals.CS_ChkGROUP_CLICK_FUNC, "this");
+
+                        string selectOptions;
                         if (0 == totalGameType)
                         {
                             postGameData += gameKindDetail.CodeID + Globals.OPEN_GAMETYPELIST_MARK;
@@ -1686,11 +1803,24 @@ namespace Sunplus.Accounting.Business
                                                    HtmlHelper.GenCheckBox(gameKindName + sep + Globals.CHKGROUP, false,
                                                                       useGroupPT, Globals.CLASS_CHECKBOX_HIDDEN, ""));
                             TemplateHandler.Assign(ref tmpTplData, "lblGroupSetting", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblGroupSetting"));
-                            TemplateHandler.Assign(ref tmpTplData, "group_comm_pt",
-                                                   HtmlHelper.GenSelectOption(maxGroupAComm, ACommGroup, intervalComm,
-                                                                          !useGroupPT,
-                                                                          strACommGroupID, funcOnChangeGroupSetting,
-                                                                          Globals.CLASS_SELECT_COMMISSION));
+
+                            selectOptions = isCreditCustomer ?
+                                  HtmlHelper.GenSelectOption(maxGroupAComm,
+                                      ACommGroup,
+                                      intervalComm,
+                                      !useGroupPT,
+                                      strACommGroupID,
+                                      funcOnChangeGroupSetting,
+                                      Globals.CLASS_SELECT_COMMISSION) :
+                                  GenSelectOption(maxGroupAComm,
+                                      ACommGroup,
+                                      intervalComm,
+                                      !useGroupPT,
+                                      strACommGroupID,
+                                      funcOnChangeGroupSetting,
+                                      Globals.CLASS_SELECT_COMMISSION,
+                                      RoleIdConstants.Agent);
+                            TemplateHandler.Assign(ref tmpTplData, "group_comm_pt", selectOptions);
                             TemplateHandler.Assign(ref tmpTplData, "group_comm_pt_btn", "");
                         }
 
@@ -1714,10 +1844,23 @@ namespace Sunplus.Accounting.Business
                             AComm = gameKindDetail.MAgentRollingRate;
                         }
 
-                        TemplateHandler.Assign(ref tmpTplPrivate, "comm_pt",
-                                               HtmlHelper.GenSelectOption(maxAComm, AComm, intervalComm, useGroupPT,
-                                                                      strACommID, funcOnChange,
-                                                                      Globals.CLASS_SELECT_COMMISSION));
+                        selectOptions = isCreditCustomer ?
+                                   HtmlHelper.GenSelectOption(maxAComm,
+                                       AComm,
+                                       intervalComm,
+                                       useGroupPT,
+                                       strACommID,
+                                       funcOnChange,
+                                       Globals.CLASS_SELECT_COMMISSION) :
+                                   GenSelectOption(maxAComm,
+                                       AComm,
+                                       intervalComm,
+                                       useGroupPT,
+                                       strACommID,
+                                       funcOnChange,
+                                       Globals.CLASS_SELECT_COMMISSION,
+                                       RoleIdConstants.Agent);
+                        TemplateHandler.Assign(ref tmpTplPrivate, "comm_pt", selectOptions);
                         TemplateHandler.Assign(ref tmpTplPrivate, "gametype", gameTypeDetail.GameTypeName);
 
                         //label error
@@ -1785,6 +1928,7 @@ namespace Sunplus.Accounting.Business
                 default: //Agent on member
                     return GenCSHTMLAgentOnMember(tplPT, _cust, csGroup);
             }
+
             return string.Empty;
         }
 
@@ -2327,6 +2471,7 @@ namespace Sunplus.Accounting.Business
             try
             {
                 int custId = _cust.IBCCustID;
+                bool isCreditCustomer = !IsDepositSite(_cust.SiteName);
                 string gameKindName = "Live";
                 if (!Globals.IBCSetting.Casino.ShowBetSetting)
                     TemplateHandler.RemoveBlock(ref tplPT, Globals.TAG_BET_SETTING);
@@ -2447,11 +2592,23 @@ namespace Sunplus.Accounting.Business
                                                    HtmlHelper.GenSelectOption(maxAPresetPT, a1Min, APresetPT, intervalPT,
                                                                           useGroupPT,
                                                                           strAPresetPTID, funcOnChange));
-
-                            TemplateHandler.Assign(ref tmpTplPrivate, "comm_pt",
-                                                   HtmlHelper.GenSelectOption(maxMComm, MComm, intervalComm, useGroupPT,
-                                                                          strMCommID, funcOnChange,
-                                                                          Globals.CLASS_SELECT_COMMISSION));
+                            var selectOptions = isCreditCustomer ?
+                                HtmlHelper.GenSelectOption(maxMComm,
+                                    MComm,
+                                    intervalComm,
+                                    useGroupPT,
+                                    strMCommID,
+                                    funcOnChange,
+                                    Globals.CLASS_SELECT_COMMISSION) :
+                                GenSelectOption(maxMComm,
+                                    MComm,
+                                    intervalComm,
+                                    useGroupPT,
+                                    strMCommID,
+                                    funcOnChange,
+                                    Globals.CLASS_SELECT_COMMISSION,
+                                    RoleIdConstants.Member);
+                            TemplateHandler.Assign(ref tmpTplPrivate, "comm_pt", selectOptions);
                             TemplateHandler.Assign(ref tmpTplPrivate, "gametype", gameTypeDetail.GameTypeName);
                             TemplateHandler.Assign(ref tmpTplPrivate, "col-span-bl", betlimitColspan);
 
@@ -2501,15 +2658,17 @@ namespace Sunplus.Accounting.Business
                                 //assign group
                                 if (_cust.CasinoSync)
                                 {
-                                    a2 = (!_cust.PTByGameType)
-                                             ? Math.Min(gameKindDetail.APositionTakingUpline,
-                                                        gameKindDetail.MaxPositionTakingUpline)
-                                             : maxGroupAPresetPT;
-                                    maxGroupMComm = (!_cust.PTByGameType)
-                                                        ? gameKindDetail.AgentRollingRateUpline
-                                                        : maxGroupMComm;
+                                    a2 = (!_cust.PTByGameType) ?
+                                        Math.Min(gameKindDetail.APositionTakingUpline,
+                                                 gameKindDetail.MaxPositionTakingUpline) :
+                                        maxGroupAPresetPT;
+                                    maxGroupMComm = (!_cust.PTByGameType) ?
+                                        gameKindDetail.AgentRollingRateUpline :
+                                        maxGroupMComm;
                                     MCommGroup = gameKindDetail.MemberRollingRate;
-                                    a1Min = (!_cust.PTByGameType) ? gameKindDetail.MinPositionTakingUpline : minPT;
+                                    a1Min = (!_cust.PTByGameType) ?
+                                        gameKindDetail.MinPositionTakingUpline :
+                                        minPT;
                                 }
                                 else
                                 {
@@ -2522,8 +2681,13 @@ namespace Sunplus.Accounting.Business
                                     MCommGroup = gameKindDetail.AgentRollingRate;
                                     a1Min = (!_cust.PTByGameTypeUpline) ? gameKindDetail.MinPositionTaking : minPT;
                                 }
-                                maxGroupMComm = Math.Min(maxGroupMComm, Globals.MAX_Comm);
-                                MCommGroup = Math.Min(MCommGroup, Globals.MAX_Comm);
+
+                                if (isCreditCustomer)
+                                {
+                                    maxGroupMComm = Math.Min(maxGroupMComm, Globals.MAX_Comm);
+                                    MCommGroup = Math.Min(MCommGroup, Globals.MAX_Comm);
+                                }
+
                                 maxGroupAPresetPT = a2;
                                 a1 = gameKindDetail.APositionTaking;
                                 a1Min = Math.Min(a1, a1Min);
@@ -2533,12 +2697,24 @@ namespace Sunplus.Accounting.Business
                                                                           useGroupPT, "", Globals.CLASS_CHECKBOX_HIDDEN));
                                 //remove group setting check box
                                 TemplateHandler.Assign(ref tmpTplData, "lblGroupSetting", ResourceExtension.GetResourceValue(ResourceExtension.Resources.Language, "lblGroupSetting"));
-                                TemplateHandler.Assign(ref tmpTplData, "group_comm_pt",
-                                                       HtmlHelper.GenSelectOption(maxGroupMComm, MCommGroup, intervalComm,
-                                                                              false,
-                                                                              strMCommGroupID, funcOnChangeGroup,
-                                                                              Globals.CLASS_SELECT_COMMISSION));
 
+                                selectOptions = isCreditCustomer ?
+                                    HtmlHelper.GenSelectOption(maxGroupMComm,
+                                        MCommGroup,
+                                        intervalComm,
+                                        false,
+                                        strMCommGroupID,
+                                        funcOnChangeGroup,
+                                        Globals.CLASS_SELECT_COMMISSION) :
+                                    GenSelectOption(maxGroupMComm,
+                                        MCommGroup,
+                                        intervalComm,
+                                        false,
+                                        strMCommGroupID,
+                                        funcOnChangeGroup,
+                                        Globals.CLASS_SELECT_COMMISSION,
+                                        RoleIdConstants.Member);
+                                TemplateHandler.Assign(ref tmpTplData, "group_comm_pt", selectOptions);
                                 TemplateHandler.Assign(ref tmpTplData, "group_preset_pt",
                                                        HtmlHelper.GenSelectOption(maxGroupAPresetPT, a1Min, APresetPTGroup,
                                                                               intervalPT, false,
@@ -3056,6 +3232,219 @@ namespace Sunplus.Accounting.Business
             {
                 throw ex;
             }
+        }
+
+        public static bool IsDepositSite(string siteName)
+        {
+            var depositCustomerAccess = new DepositCustomerAccess();
+            var dataTableDeposit = depositCustomerAccess.SelAllLicensee();
+            bool result = dataTableDeposit.Select()
+                                          .Where(s => CastAide.AsString(s["LicenseeName"]) == siteName)
+                                          .Any();
+            return result;
+        }
+
+        public static string GenSelectOption(
+            double maxValue,
+            double currentVal,
+            int interval,
+            bool disabled,
+            string id,
+            string onChangeFunc,
+            string classStyle,
+            int roleId)
+        {
+            try
+            {
+                string tplSelect = WebUtils.LoadTemplate(Globals.TPL_CTR_SELECTOPTION);
+                var options = new StringBuilder();
+                switch (roleId)
+                {
+                    case RoleIdConstants.Super:
+                        options = GenSelectOption_Super(maxValue,
+                            id,
+                            currentVal,
+                            interval);
+                        break;
+                    case RoleIdConstants.Master:
+                        options = GenSelectOption_Master(maxValue,
+                            id,
+                            currentVal,
+                            interval);
+                        break;
+                    case RoleIdConstants.Agent:
+                        options = GenSelectOption_Agent(maxValue,
+                            id,
+                            currentVal,
+                            interval);
+                        break;
+                    case RoleIdConstants.Member:
+                        options = GenSelectOption_Member(id, currentVal);
+                        break;
+                    default:
+                        options = GenSelectOption_Member(id, currentVal);
+                        break;
+                }
+
+                TemplateHandler.Assign(ref tplSelect, "ddl-Id", id);
+                TemplateHandler.Assign(ref tplSelect, "class", classStyle);
+                TemplateHandler.Assign(ref tplSelect, "onchange", onChangeFunc);
+                TemplateHandler.Assign(ref tplSelect, "options-val", options.ToString());
+                TemplateHandler.Assign(ref tplSelect, "disabled", disabled ? "disabled='disabled'" : "");
+                return tplSelect;
+            }
+            catch (Exception ex)
+            {
+                LogExtensions.ExceptionHandler(ex);
+            }
+
+            return string.Empty;
+        }
+
+        public static StringBuilder GenSelectOption_Member(
+            string id,
+            double currentVal)
+        {
+            var options = new StringBuilder();
+            string optionId = id +
+                Globals.SEP_GAMEKIND_GAMETYPE +
+                Globals.CTR_OPTIONS_PREFIX +
+                Globals.SEP_GAMEKIND_GAMETYPE +
+                currentVal;
+            string selectOption = string.Format(
+                   "<option value='{0}' id='{1}' selected='true'>{2}</option>",
+                   currentVal,
+                   optionId,
+                   currentVal);
+            options.Append(selectOption);
+            return options;
+        }
+
+        public static StringBuilder GenSelectOption_Super(
+            double maxValue,
+            string id,
+            double currentVal,
+            int interval)
+        {
+            var options = new StringBuilder();
+            int groupValue = Convert.ToInt32(maxValue * 10000);
+            currentVal = Math.Max(currentVal, 0);
+            if (currentVal > maxValue)
+            {
+                currentVal = maxValue;
+            }
+
+            while (groupValue >= 0)
+            {
+                double selValue = Convert.ToDouble(groupValue) / 10000;
+                string optionId = id +
+                    Globals.SEP_GAMEKIND_GAMETYPE +
+                    Globals.CTR_OPTIONS_PREFIX +
+                    Globals.SEP_GAMEKIND_GAMETYPE +
+                    selValue;
+                string selectOption = string.Format(
+                    "<option value='{0}' id='{1}' {2}>{3}</option>",
+                    selValue,
+                    optionId,
+                    currentVal == selValue ? "selected='true'" : string.Empty,
+                    selValue);
+                options.Append(selectOption);
+                groupValue = groupValue - interval;
+            }
+
+            return options;
+        }
+
+        public static StringBuilder GenSelectOption_Master(
+            double maxValue,
+            string id,
+            double currentVal,
+            int interval)
+        {
+            var options = new StringBuilder();
+            int groupValue = Convert.ToInt32(maxValue * 10000);
+            currentVal = Math.Max(currentVal, 0);
+
+            string optionId;
+            string selectOption;
+            var optionGroupId = id +
+                Globals.SEP_GAMEKIND_GAMETYPE +
+                Globals.CTR_OPTIONS_PREFIX +
+                Globals.SEP_GAMEKIND_GAMETYPE;
+
+            if (currentVal > maxValue)
+            {
+                optionId = optionGroupId + currentVal;
+                selectOption = string.Format(
+                    "<option value='{0}' id='{1}' {2}>{3}</option>",
+                    currentVal,
+                    optionId,
+                    "selected='true'",
+                    currentVal);
+                options.Append(selectOption);
+            }
+
+            while (groupValue >= 0)
+            {
+                double selValue = Convert.ToDouble(groupValue) / 10000;
+                optionId = optionGroupId + selValue;
+                selectOption = string.Format(
+                    "<option value='{0}' id='{1}' {2}>{3}</option>",
+                    selValue,
+                    optionId,
+                    currentVal == selValue ? "selected='true'" : string.Empty,
+                    selValue);
+                options.Append(selectOption);
+                groupValue = groupValue - interval;
+            }
+
+            return options;
+        }
+
+        public static StringBuilder GenSelectOption_Agent(
+            double maxValue,
+            string id,
+            double currentVal,
+            int interval)
+        {
+            var options = new StringBuilder();
+            int groupValue = Convert.ToInt32(maxValue * 10000);
+            currentVal = Math.Max(currentVal, 0);
+
+            string optionId;
+            string selectOption;
+            var optionGroupId = id +
+                Globals.SEP_GAMEKIND_GAMETYPE +
+                Globals.CTR_OPTIONS_PREFIX +
+                Globals.SEP_GAMEKIND_GAMETYPE;
+
+            if (currentVal > maxValue)
+            {
+                optionId = optionGroupId + currentVal;
+                selectOption = string.Format(
+                    "<option value='{0}' id='{1}' {2}>{3}</option>",
+                    currentVal,
+                    optionId,
+                    "selected='true'",
+                    currentVal);
+                options.Append(selectOption);
+            }
+
+            while (groupValue >= 0)
+            {
+                double selValue = Convert.ToDouble(groupValue) / 10000;
+                optionId = optionGroupId + selValue;
+                selectOption = string.Format(
+                    "<option value='{0}' id='{1}' {2}>{3}</option>",
+                    selValue,
+                    optionId,
+                    currentVal == selValue ? "selected='true'" : string.Empty,
+                    selValue);
+                options.Append(selectOption);
+                groupValue = groupValue - interval;
+            }
+
+            return options;
         }
     }
 }

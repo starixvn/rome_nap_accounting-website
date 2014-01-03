@@ -32,7 +32,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                 using (ObjectDb db = new ObjectDb("Age_CustomerSelUserInfo", 600))
                 {
                     db.AssignParamValues(param);
-                    
+
                     var ds = db.ExecuteDataSet();
                     var output = db.GetOuputParams();
 
@@ -100,7 +100,7 @@ namespace Sunplus.Accounting.DataAccess.APIClient
             {
                 var param = new Hashtable();
                 param.Add("custid", _IBCCustId);
-                
+
                 DbResult drCustomer = null;
 
                 using (ObjectDb db = new ObjectDb("Age_CustomerSelUserInfo", 600))
@@ -167,7 +167,10 @@ namespace Sunplus.Accounting.DataAccess.APIClient
                             _custSetting.DefaultTransferCredit = CastAide.AsDouble((dt.Rows[0]["SuperMaxTransfer"]));
                         }
                     }
-
+                    
+                    var dataTableCustomerSettings = _cust.GetCustSetting(_custSetting.IBCCustID);
+                    _custSetting.PTByGameType = CastAide.AsBoolean((dataTableCustomerSettings.Rows[0]["PTByGameType"]));
+                    _custSetting.PTByGameKind = CastAide.AsBoolean((dataTableCustomerSettings.Rows[0]["PTByGameKind"]));
                     _custSetting.NoIBCData = false;
                 }
                 Globals.IBCSetting.Casino.UseWebConfigProviderType = true;
@@ -444,10 +447,10 @@ namespace Sunplus.Accounting.DataAccess.APIClient
             try
             {
                 var param = new Hashtable();
-                param.Add("username", username);                
+                param.Add("username", username);
 
                 DbResult drCustomer = null;
-                
+
                 using (ObjectDb db = new ObjectDb("CustomerSetting_CustomerSelCustomerInfo", 600))
                 {
                     db.AssignParamValues(param);
