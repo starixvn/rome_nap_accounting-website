@@ -152,7 +152,7 @@ var autoFollowBet = {
     getListInfoParams: function () {
         return {
             Username: autoFollowBet.Tables.TextboxUsername.val(),
-            Follower: autoFollowBet.Tables.TextboxFollower.val(),
+            Follower: $.trim(autoFollowBet.Tables.TextboxFollower.val()),
             BAStatus: autoFollowBet.Tables.dropdownBAEnabled.val(),
             Source: autoFollowBet.Tables.dropdownSource.val(),
             LiveStatus: autoFollowBet.GetLiveStatusParam(),
