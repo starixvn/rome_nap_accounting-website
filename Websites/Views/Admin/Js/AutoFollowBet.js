@@ -269,11 +269,9 @@ var autoFollowBet = {
             var isEvenRow = true;
             for (var i = 0; i < resultLength; i++) {
                 var followInfo = result[i];
-                if (followInfo.IsDeleted) {
-                    continue;
-                }
-
-                if (indexRange.startIndex <= rowIndex && rowIndex <= indexRange.endIndex) {
+                if (!followInfo.IsDeleted &&
+                    indexRange.startIndex <= rowIndex &&
+                    rowIndex <= indexRange.endIndex) {
                     rowHTML = autoFollowBet.renderFollowBetRow(rowIndex, isEvenRow, followInfo);
                     arr.push(rowHTML);
                     isEvenRow = !isEvenRow;
@@ -331,16 +329,20 @@ var autoFollowBet = {
             var indexRange = autoFollowBet.getIndexRange(autoFollowBet.CachedData.pageIndex);
             var rowIndex = 0;
             var isEvenRow = true;
+            var showItemIndex = 0;
             for (var i = 0; i < resultLength; i++) {
                 var followInfo = report[i];
-                if (followInfo.IsDeleted) {
-                    continue;
-                }
-
-                if (indexRange.startIndex <= rowIndex && rowIndex < indexRange.endIndex) {
+                if (!followInfo.IsDeleted &&
+                    indexRange.startIndex <= showItemIndex &&
+                    showItemIndex <= indexRange.endIndex) {
                     rowHTML = autoFollowBet.renderFollowBetRow(rowIndex, isEvenRow, followInfo);
                     arr.push(rowHTML);
                     isEvenRow = !isEvenRow;
+
+                }
+
+                if (!followInfo.IsDeleted) {
+                    showItemIndex++;
                 }
 
                 rowIndex++;
@@ -366,7 +368,7 @@ var autoFollowBet = {
     getIndexRange: function (currentPage) {
         var pageSize = parseInt(autoFollowBet.CachedData.pageSize);
         var startIndex = (currentPage * pageSize);
-        var endIndex = startIndex + pageSize;
+        var endIndex = startIndex + pageSize - 1;
         if (endIndex > autoFollowBet.CachedData.totalItems) {
             endIndex = autoFollowBet.CachedData.totalItems;
         }
